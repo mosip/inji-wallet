@@ -11,9 +11,10 @@ import {
   isVCLoaded,
   setBackgroundColour,
 } from '../common/VCUtils';
-import VerifiedIcon from '../../VerifiedIcon';
 import {VCItemField} from '../common/VCItemField';
 import {useTranslation} from 'react-i18next';
+import {getIDType} from '../../../shared/openId4VCI/Utils';
+import {VCVerification} from '../../VCVerification';
 
 export const VCCardViewContent: React.FC<
   ExistingMosipVCItemContentProps | EsignetMosipVCItemContentProps
@@ -47,7 +48,7 @@ export const VCCardViewContent: React.FC<
       ]}>
       <Column>
         <Row align="space-between">
-          <Row margin="5 0 0 5">
+          <Row margin="0 0 0 5">
             {SvgImage.VcItemContainerProfileImage(props, props.credential)}
             <Column margin={'0 0 0 20'}>
               {fieldItemIterator(
@@ -60,24 +61,30 @@ export const VCCardViewContent: React.FC<
           </Row>
           <Column>{props.credential ? selectableOrCheck : null}</Column>
         </Row>
-        {fieldItemIterator(
-          props.fields.slice(2),
-          props.credential,
-          props.wellknown,
-          props,
-        )}
+        <Column margin="0 0 0 8">
+          {fieldItemIterator(
+            props.fields.slice(2),
+            props.credential,
+            props.wellknown,
+            props,
+          )}
+        </Column>
         <Row align={'space-between'} margin="0 8 5 8">
           <VCItemField
-            key={'status'}
-            fieldName={t('status')}
-            fieldValue={
-              !isVCLoaded(props.credential, props.fields) ? null : (
-                <VerifiedIcon />
-              )
-            }
+            key={'idType'}
+            fieldName={t('idType')}
+            fieldValue={getIDType(props.credential)}
             wellknown={props.wellknown}
             verifiableCredential={props.credential}
           />
+          <VCItemField
+            key={'status'}
+            fieldName={t('status')}
+            fieldValue={<VCVerification wellknown={props.wellknown} />}
+            wellknown={props.wellknown}
+            verifiableCredential={props.credential}
+          />
+
           <Column
             testID="logo"
             style={{

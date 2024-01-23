@@ -59,6 +59,7 @@
     "id": "ID",
     "qrCodeHeader": "QR Code",
     "nationalCard": "National Card",
+    "insuranceCard": "Insurance Card",
     "uin": "UIN",
     "vid": "VID",
     "enableVerification": "Activate",
