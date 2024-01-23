@@ -8,10 +8,19 @@ export interface Typegen0 {
       data: unknown;
       __tip: 'See the XState TS docs to learn how to strongly type this.';
     };
+    'done.invoke.backup.backingUp.uploadBackupFile:invocation[0]': {
+      type: 'done.invoke.backup.backingUp.uploadBackupFile:invocation[0]';
+      data: unknown;
+      __tip: 'See the XState TS docs to learn how to strongly type this.';
+    };
     'done.invoke.backup.backingUp.zipBackupFile:invocation[0]': {
       type: 'done.invoke.backup.backingUp.zipBackupFile:invocation[0]';
       data: unknown;
       __tip: 'See the XState TS docs to learn how to strongly type this.';
+    };
+    'error.platform.backup.backingUp.uploadBackupFile:invocation[0]': {
+      type: 'error.platform.backup.backingUp.uploadBackupFile:invocation[0]';
+      data: unknown;
     };
     'error.platform.backup.backingUp.zipBackupFile:invocation[0]': {
       type: 'error.platform.backup.backingUp.zipBackupFile:invocation[0]';
@@ -21,6 +30,7 @@ export interface Typegen0 {
   };
   invokeSrcNameMap: {
     checkStorageAvailability: 'done.invoke.backup.backingUp.checkStorageAvailability:invocation[0]';
+    uploadBackupFile: 'done.invoke.backup.backingUp.uploadBackupFile:invocation[0]';
     writeDataToFile: 'done.invoke.backup.backingUp.writeDataToFile:invocation[0]';
     zipBackupFile: 'done.invoke.backup.backingUp.zipBackupFile:invocation[0]';
   };
@@ -34,9 +44,10 @@ export interface Typegen0 {
     fetchAllDataFromDB: 'done.invoke.backup.backingUp.checkStorageAvailability:invocation[0]';
     sendDataBackupFailureEvent:
       | 'done.invoke.backup.backingUp.checkStorageAvailability:invocation[0]'
+      | 'error.platform.backup.backingUp.uploadBackupFile:invocation[0]'
       | 'error.platform.backup.backingUp.zipBackupFile:invocation[0]';
     sendDataBackupStartEvent: 'FETCH_DATA';
-    sendDataBackupSuccessEvent: 'done.invoke.backup.backingUp.zipBackupFile:invocation[0]';
+    sendDataBackupSuccessEvent: 'done.invoke.backup.backingUp.uploadBackupFile:invocation[0]';
     setDataFromStorage: 'STORE_RESPONSE';
     setFileName: 'FILE_NAME';
   };
@@ -46,6 +57,7 @@ export interface Typegen0 {
   };
   eventsCausingServices: {
     checkStorageAvailability: 'FETCH_DATA';
+    uploadBackupFile: 'done.invoke.backup.backingUp.zipBackupFile:invocation[0]';
     writeDataToFile: 'STORE_RESPONSE';
     zipBackupFile: 'FILE_NAME';
   };
@@ -56,6 +68,7 @@ export interface Typegen0 {
     | 'backingUp.fetchDataFromDB'
     | 'backingUp.idle'
     | 'backingUp.success'
+    | 'backingUp.uploadBackupFile'
     | 'backingUp.writeDataToFile'
     | 'backingUp.zipBackupFile'
     | 'init'
@@ -66,6 +79,7 @@ export interface Typegen0 {
           | 'fetchDataFromDB'
           | 'idle'
           | 'success'
+          | 'uploadBackupFile'
           | 'writeDataToFile'
           | 'zipBackupFile';
       };
