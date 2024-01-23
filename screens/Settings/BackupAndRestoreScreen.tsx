@@ -95,7 +95,7 @@ const BackupAndRestoreScreen = () => {
   const LastBackup = (
     <SectionLayout
       headerText={'Last Backup: No Backup Found'}
-      headerIcon={SvgImage.DataBackupIcon()}>
+      headerIcon={SvgImage.DataBackupIcon(34, 24)}>
       <Row>
         <View style={{marginBottom: 19}}>
           <Text
@@ -111,6 +111,7 @@ const BackupAndRestoreScreen = () => {
         </View>
       </Row>
       <Row style={{marginLeft: 4, marginRight: 4}}>
+        {/* TODO: Button is not occupying the space in larger screens */}
         <Button
           testID="backup"
           type="gradient"
@@ -125,7 +126,7 @@ const BackupAndRestoreScreen = () => {
   const AccountSection = (
     <SectionLayout
       headerText={'Google Drive'}
-      headerIcon={SvgImage.GoogleDriveIcon()}>
+      headerIcon={SvgImage.GoogleDriveIcon(28, 25)}>
       <View style={{marginBottom: 19}}>
         <Text
           style={{
