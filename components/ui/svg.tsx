@@ -188,13 +188,13 @@ export class SvgImage {
     );
   }
 
-  static DataBackupIcon() {
+  static DataBackupIcon(width, height) {
     return (
       <Backup
         color1={Theme.Colors.linearGradientStart}
         color2={Theme.Colors.linearGradientEnd}
-        width={25}
-        height={25}
+        width={width}
+        height={height}
       />
     );
   }
@@ -217,8 +217,8 @@ export class SvgImage {
     return <MagnifierZoom />;
   }
 
-  static GoogleDriveIcon() {
-    return <GoogleDriveIcon />;
+  static GoogleDriveIcon(width, height) {
+    return <GoogleDriveIcon width={width} height={height} />;
   }
 }
 

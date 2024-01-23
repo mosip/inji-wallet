@@ -19,7 +19,7 @@ export const DataBackup: React.FC = ({} = props => {
           controller.DATA_BACKUP();
         }}>
         <ListItem topDivider bottomDivider>
-          {SvgImage.DataBackupIcon()}
+          {SvgImage.DataBackupIcon(25, 25)}
           <ListItem.Content>
             <ListItem.Title style={{paddingTop: 3}}>
               <Row>
