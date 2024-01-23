@@ -542,7 +542,6 @@ export const PurpleTheme = {
     },
     idInputContainer: {
       marginTop: 20,
-      marginRight: Dimensions.get('window').width * 0.26,
     },
     idInputPicker: {
       width: Dimensions.get('window').width * 0.32,
@@ -640,6 +639,19 @@ export const PurpleTheme = {
       borderRadius: 10,
       height: 50,
       marginTop: -10,
+    },
+    keyboardAvoidStyle: {
+      flex: 1,
+      paddingVertical: 40,
+      paddingHorizontal: 24,
+      alignItems: 'center',
+      justifyContent: 'space-between',
+    },
+    passwordKeyboardAvoidStyle: {
+      flex: 1,
+      backgroundColor: Colors.White,
+      paddingVertical: 40,
+      paddingHorizontal: 24,
     },
   }),
   QrCodeStyles: StyleSheet.create({

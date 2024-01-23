@@ -139,4 +139,10 @@ fileignoreconfig:
     checksum: 4a031b46646aa982c8f40e4c7fe0bd3e05a76a6af1ff1c2de7350ba6ebf9a839 
   - filename: screens/Home/IntroSlidersScreen.tsx
     checksum: 24b993e0406a49ace5b95dd05f7c4702220ec3d3f3fc2e774f20c023ef73822a 
+  - filename: screens/Home/MyVcs/GetIdInputModal.tsx
+    checksum: 067664e19817d3aba98b0cfa68ef57a04958a982ee23b96b612e4bf466a73890
+  - filename: screens/PasscodeScreen.tsx
+    checksum: 9af4308001e7e260ffffd26955ca49df3b388e34686509371e23dd837b11d030
+  - filename: screens/Home/MyVcs/IdInputModal.tsx
+    checksum: b735aedc84164d03c199fe89ccbf9df58f8997bfb4f60e7058a22bfe952fda3e
     version: ""
