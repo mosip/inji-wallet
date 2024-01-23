@@ -1,10 +1,11 @@
 import React, {useState} from 'react';
-import {Pressable} from 'react-native';
+import {Pressable, View} from 'react-native';
 import {Icon, ListItem} from 'react-native-elements';
-import {Text} from '../../components/ui';
+import {Row, Text} from '../../components/ui';
 import {Theme} from '../../components/ui/styleUtils';
 import {useBackupScreen} from './BackupController';
 import {BackupToggle} from './BackupToggle';
+import {SvgImage} from '../../components/ui/svg';
 
 export const DataBackup: React.FC = ({} = props => {
   const controller = useBackupScreen(props);
@@ -18,17 +19,22 @@ export const DataBackup: React.FC = ({} = props => {
           controller.DATA_BACKUP();
         }}>
         <ListItem topDivider bottomDivider>
-          <Icon
-            type={'feather'}
-            name={'file'}
-            color={Theme.Colors.Icon}
-            size={25}
-          />
+          {SvgImage.DataBackupIcon()}
           <ListItem.Content>
             <ListItem.Title style={{paddingTop: 3}}>
-              <Text weight="semibold" color={Theme.Colors.settingsLabel}>
-                Data Backup
-              </Text>
+              <Row>
+                <Text
+                  weight="semibold"
+                  color={Theme.Colors.settingsLabel}
+                  style={{paddingRight: 10}}>
+                  Backup & Restore
+                </Text>
+                <Text
+                  style={Theme.BackupStyles.newStyles}
+                  color={Theme.Colors.whiteText}>
+                  New
+                </Text>
+              </Row>
             </ListItem.Title>
           </ListItem.Content>
         </ListItem>

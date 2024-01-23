@@ -18,6 +18,7 @@ import {ReceivedCards} from './ReceivedCards';
 import testIDProps from '../../shared/commonUtil';
 import {SvgImage} from '../../components/ui/svg';
 import {DataBackup} from './DataBackup';
+import {isAndroid} from '../../shared/constants';
 
 const LanguageSetting: React.FC = () => {
   const {t} = useTranslation('SettingScreen');
@@ -160,7 +161,7 @@ export const SettingScreen: React.FC<
 
             <AboutInji appId={controller.appId} />
 
-            {DATA_BACKUP === 'true' && <DataBackup />}
+            {DATA_BACKUP === 'true' && isAndroid() && <DataBackup />}
 
             {CREDENTIAL_REGISTRY_EDIT === 'true' && (
               <EditableListItem

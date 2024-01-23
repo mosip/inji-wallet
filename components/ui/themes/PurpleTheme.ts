@@ -998,6 +998,13 @@ export const PurpleTheme = {
       marginVertical: 6,
     },
   }),
+  BackupStyles: StyleSheet.create({
+    newStyles: {
+      backgroundColor: Colors.Orange,
+      paddingHorizontal: 10,
+      borderRadius: 3,
+    },
+  }),
   UpdateModalStyles: StyleSheet.create({
     modal: {
       width: Dimensions.get('screen').width,

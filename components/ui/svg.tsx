@@ -23,6 +23,7 @@ import MagnifierZoom from '../../assets/Magnifier_Zoom.svg';
 import GoogleDriveIcon from '../../assets/google-drive-28.svg';
 import {displayType} from '../../machines/issuersMachine';
 import {IssuerProps} from '../openId4VCI/Issuer';
+import Backup from '../../assets/Backup.svg';
 import {
   EsignetMosipVCItemContentProps,
   ExistingMosipVCItemContentProps,
@@ -183,6 +184,17 @@ export class SvgImage {
       <CameraCaptureIcon
         color1={Theme.Colors.linearGradientStart}
         color2={Theme.Colors.linearGradientEnd}
+      />
+    );
+  }
+
+  static DataBackupIcon() {
+    return (
+      <Backup
+        color1={Theme.Colors.linearGradientStart}
+        color2={Theme.Colors.linearGradientEnd}
+        width={25}
+        height={25}
       />
     );
   }
