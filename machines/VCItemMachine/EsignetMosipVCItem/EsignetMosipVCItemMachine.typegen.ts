@@ -87,9 +87,7 @@ export interface Typegen0 {
       | 'done.invoke.vc-item-openid4vci.addingWalletBindingId:invocation[0]'
       | 'done.invoke.vc-item-openid4vci.updatingPrivateKey:invocation[0]';
     sendVcUpdated: 'STORE_RESPONSE';
-    sendWalletBindingSuccess:
-      | 'done.invoke.vc-item-openid4vci.addingWalletBindingId:invocation[0]'
-      | 'done.invoke.vc-item-openid4vci.updatingPrivateKey:invocation[0]';
+    sendWalletBindingSuccess: 'SHOW_BINDING_STATUS';
     setContext: 'GET_VC_RESPONSE' | 'STORE_RESPONSE';
     setGeneratedOn: 'GET_VC_RESPONSE';
     setOtp: 'INPUT_OTP';
@@ -116,12 +114,14 @@ export interface Typegen0 {
     setWalletBindingId:
       | 'done.invoke.vc-item-openid4vci.addingWalletBindingId:invocation[0]'
       | 'done.invoke.vc-item-openid4vci.updatingPrivateKey:invocation[0]';
-    setWalletBindingSuccess: 'done.invoke.vc-item-openid4vci.updatingPrivateKey:invocation[0]';
+    setWalletBindingSuccess: 'SHOW_BINDING_STATUS';
     storeContext:
       | 'PIN_CARD'
       | 'done.invoke.vc-item-openid4vci.addingWalletBindingId:invocation[0]'
       | 'done.invoke.vc-item-openid4vci.updatingPrivateKey:invocation[0]';
-    updatePrivateKey: 'done.invoke.vc-item-openid4vci.updatingPrivateKey:invocation[0]';
+    updatePrivateKey:
+      | 'done.invoke.vc-item-openid4vci.addingWalletBindingId:invocation[0]'
+      | 'done.invoke.vc-item-openid4vci.updatingPrivateKey:invocation[0]';
     updateVc:
       | 'STORE_RESPONSE'
       | 'done.invoke.vc-item-openid4vci.addingWalletBindingId:invocation[0]'
@@ -130,7 +130,9 @@ export interface Typegen0 {
   eventsCausingDelays: {};
   eventsCausingGuards: {
     hasCredential: 'GET_VC_RESPONSE';
-    isCustomSecureKeystore: 'done.invoke.vc-item-openid4vci.addKeyPair:invocation[0]';
+    isCustomSecureKeystore:
+      | 'done.invoke.vc-item-openid4vci.addKeyPair:invocation[0]'
+      | 'done.invoke.vc-item-openid4vci.addingWalletBindingId:invocation[0]';
   };
   eventsCausingServices: {
     addWalletBindnigId: 'done.invoke.vc-item-openid4vci.addKeyPair:invocation[0]';
@@ -156,6 +158,7 @@ export interface Typegen0 {
     | 'requestingBindingOtp'
     | 'showBindingWarning'
     | 'showingWalletBindingError'
+    | 'updatingContextVariables'
     | 'updatingPrivateKey'
     | {
         acceptingBindingOtp?: 'idle' | 'resendOTP';

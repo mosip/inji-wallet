@@ -62,9 +62,9 @@ fileignoreconfig:
   - filename: machines/VCItemMachine/ExistingMosipVCItem/ExistingMosipVCItemMachine.ts
     checksum: 8bc83e91cd46caedfd99bf5e7c5f729f455da5556dc551e820dc4615ebb6eb76
   - filename: machines/VCItemMachine/EsignetMosipVCItem/EsignetMosipVCItemMachine.typegen.ts
-    checksum: 3c74c78f0457f2e7abd032e0f57e6f1194676d6e101c91ee6bf14a4e6c07790e
+    checksum: 0de47337ba60b29c8e4d4231439c77028197d3d8d3139eb367c471138c40f93d
   - filename: machines/VCItemMachine/ExistingMosipVCItem/ExistingMosipVCItemMachine.typegen.ts
-    checksum: eceab7e4fea382d030a559668b8a506f451b76616d655d175779589d67e2c4fb
+    checksum: 86ecb95b58456d42676247eb768a7fba980a3c0ef83d515f8b9ce0c44d8c6906
   - filename: shared/telemetry/TelemetryUtils.js
     checksum: a0686e9a5c006176fd720b84bc36ca947db1422caf65c90cd0c2d1102a9e96df
   - filename: ios/fastlane/Fastfile

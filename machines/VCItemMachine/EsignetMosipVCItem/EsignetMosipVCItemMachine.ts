@@ -83,6 +83,7 @@ const model = createModel(
       SHOW_ACTIVITY: () => ({}),
       REMOVE: (vcMetadata: VCMetadata) => ({vcMetadata}),
       UPDATE_VC_METADATA: (vcMetadata: VCMetadata) => ({vcMetadata}),
+      SHOW_BINDING_STATUS: () => ({}),
     },
   },
 );
@@ -262,33 +263,8 @@ export const EsignetMosipVCItemMachine = model.createMachine(
           src: 'addWalletBindnigId',
           onDone: [
             {
-              cond: context =>
-                isHardwareKeystoreExists && context.isMachineInKebabPopupState,
-              target: '#vc-item-openid4vci.kebabPopUp',
-              actions: [
-                'setWalletBindingId',
-                'setThumbprintForWalletBindingId',
-                'storeContext',
-                'updateVc',
-                'setWalletBindingErrorEmpty',
-                'sendWalletBindingSuccess',
-                'sendActivationSuccessEvent',
-                'logWalletBindingSuccess',
-              ],
-            },
-            {
-              cond: context =>
-                isHardwareKeystoreExists && !context.isMachineInKebabPopupState,
-              target: 'idle',
-              actions: [
-                'setWalletBindingId',
-                'setThumbprintForWalletBindingId',
-                'storeContext',
-                'updateVc',
-                'setWalletBindingErrorEmpty',
-                'sendActivationSuccessEvent',
-                'logWalletBindingSuccess',
-              ],
+              cond: 'isCustomSecureKeystore',
+              target: 'updatingContextVariables',
             },
             {
               target: 'updatingPrivateKey',
@@ -307,40 +283,13 @@ export const EsignetMosipVCItemMachine = model.createMachine(
           ],
         },
       },
+
       updatingPrivateKey: {
         invoke: {
           src: 'updatePrivateKey',
-          onDone: [
-            {
-              cond: context => context.isMachineInKebabPopupState,
-              actions: [
-                'setWalletBindingId',
-                'setThumbprintForWalletBindingId',
-                'storeContext',
-                'updatePrivateKey',
-                'updateVc',
-                'setWalletBindingErrorEmpty',
-                'sendWalletBindingSuccess',
-                'sendActivationSuccessEvent',
-                'logWalletBindingSuccess',
-              ],
-              target: '#vc-item-openid4vci.kebabPopUp',
-            },
-            {
-              actions: [
-                'setWalletBindingId',
-                'setThumbprintForWalletBindingId',
-                'storeContext',
-                'updatePrivateKey',
-                'updateVc',
-                'setWalletBindingErrorEmpty',
-                'setWalletBindingSuccess',
-                'logWalletBindingSuccess',
-                'sendActivationSuccessEvent',
-              ],
-              target: 'idle',
-            },
-          ],
+          onDone: {
+            target: 'updatingContextVariables',
+          },
           onError: {
             actions: [
               'setWalletBindingError',
@@ -349,6 +298,33 @@ export const EsignetMosipVCItemMachine = model.createMachine(
             ],
             target: 'showingWalletBindingError',
           },
+        },
+      },
+
+      updatingContextVariables: {
+        entry: [
+          'setWalletBindingId',
+          'setThumbprintForWalletBindingId',
+          'storeContext',
+          'updatePrivateKey',
+          'updateVc',
+          'setWalletBindingErrorEmpty',
+          'sendActivationSuccessEvent',
+          'logWalletBindingSuccess',
+          send('SHOW_BINDING_STATUS'),
+        ],
+        on: {
+          SHOW_BINDING_STATUS: [
+            {
+              cond: context => context.isMachineInKebabPopupState,
+              actions: 'sendWalletBindingSuccess',
+              target: '#vc-item-openid4vci.kebabPopUp',
+            },
+            {
+              actions: 'setWalletBindingSuccess',
+              target: 'idle',
+            },
+          ],
         },
       },
       idle: {
