@@ -475,7 +475,6 @@
     "gotoSettings": "Go to settings"
   },
   "ScanScreen": {
-    "header": "Scan",
     "noShareableVcs": "No shareable cards are available.",
     "sharingVc": "Sharing card",
     "bluetoothStateIos": "Bluetooth is turned OFF, please turn it ON from Control center",

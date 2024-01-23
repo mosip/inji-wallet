@@ -139,4 +139,22 @@ fileignoreconfig:
     checksum: 4a031b46646aa982c8f40e4c7fe0bd3e05a76a6af1ff1c2de7350ba6ebf9a839 
   - filename: screens/Home/IntroSlidersScreen.tsx
     checksum: 24b993e0406a49ace5b95dd05f7c4702220ec3d3f3fc2e774f20c023ef73822a 
+  - filename: .env
+    checksum: 4259c7c600ef49bfca798a7807a03afe9fefb1a04efd3adf224397c18117a8c1
+  - filename: ios/Podfile.lock
+    checksum: f32d1580e34e354c0eb27d53d2d1c2b766b0902fc6366c407d84c24d6d8d38e3
+  - filename: package-lock.json
+    checksum: 2fb6ce0541ab33a7a981213911d7af60cf4c8144bf0d1587522ce22a48b104d6
+  - filename: components/VC/Views/VCCardViewContent.tsx
+    checksum: 02655ff3d7f8a8ea4f3664485f98c961802c598242ec44408594a2ddb721fa5e
+  - filename: screens/Home/IntroSlidersScreen.tsx
+    checksum: 99aad6f5e474f4d5dfa563245d7b627f5fed28a1a4fe8879cc8b8cc538a66f4e
+  - filename: shared/storage.ts
+    checksum: fa967759d765432926475a5534c26adfa61727c8e3334c795d7ee1e5b2dd0e1f
+  - filename: shared/constants.ts
+    checksum: ae922a7acafab9c42746bd54e194c44532af81122837594c397713cef6922ca0
+  - filename: shared/fileStorage.ts
+    checksum: 451e8873a635d955fe426d9a5fcf191f2d4fd74984a1a4518760e2d10e9e1817
+  - filename: screens/Settings/BackupController.tsx
+    checksum: daf682b5616e45bd7b9a7c76becc617fea56be83124c3c4db838c2046e977481
     version: ""

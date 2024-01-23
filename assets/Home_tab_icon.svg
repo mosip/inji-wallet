@@ -1,0 +1,14 @@
+<svg id="tab_home_icon" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="19.795" height="19.801" viewBox="0 0 19.795 19.801">
+  <defs>
+    <linearGradient id="linear-gradient" x1="0.5" x2="0.5" y2="1" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="@fill"/>
+      <stop offset="1" stop-color="@fill2"/>
+    </linearGradient>
+    <clipPath id="clip-path">
+      <rect id="Rectangle_7018" data-name="Rectangle 7018" width="19.795" height="19.801" stroke="rgba(0,0,0,0)" stroke-width="1" fill="url(#linear-gradient)"/>
+    </clipPath>
+  </defs>
+  <g id="Group_57426" data-name="Group 57426" clip-path="url(#clip-path)">
+    <path id="Path_155522" data-name="Path 155522" d="M2.124,14.849c0-.96-.006-1.92,0-2.88,0-.2-.043-.254-.247-.252A1.79,1.79,0,0,1,.065,10.366,1.771,1.771,0,0,1,.439,8.721c.061-.075.131-.142.2-.21L8.512.638a1.826,1.826,0,0,1,2.778,0Q15.247,4.6,19.2,8.556a1.822,1.822,0,0,1-.02,2.707,1.767,1.767,0,0,1-1.313.456c-.159-.009-.2.033-.2.2q.01,2.861,0,5.722a2.12,2.12,0,0,1-1.651,2.105,2.328,2.328,0,0,1-.555.057q-1.5,0-3,0a.6.6,0,0,1-.669-.666c0-1.488-.015-2.977.007-4.465a1.027,1.027,0,0,0-1.1-1.087c-.554.018-1.108,0-1.662,0A.974.974,0,0,0,8,14.635q0,2.223,0,4.446c0,.5-.213.719-.713.719q-1.469,0-2.938,0a2.13,2.13,0,0,1-2.221-2.225q0-1.363,0-2.725" transform="translate(0 0)" stroke="rgba(0,0,0,0)" stroke-width="1" fill="url(#linear-gradient)"/>
+  </g>
+</svg>

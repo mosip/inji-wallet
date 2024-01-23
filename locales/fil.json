@@ -474,7 +474,6 @@
     "gotoSettings": "Pumunta sa setting"
   },
   "ScanScreen": {
-    "header": "Scan",
     "noShareableVcs": "Walang magagamit na mga card na maibabahagi.",
     "sharingVc": "Pagbabahagi ng card",
     "bluetoothStateIos": "Naka-OFF ang Bluetooth, paki-ON ito mula sa control center",
