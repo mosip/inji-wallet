@@ -23,6 +23,7 @@ const model = createModel(
     walletBindingSuccess: false,
     tamperedVcs: [] as VCMetadata[],
     downloadingFailedVcs: [] as VCMetadata[],
+    verificationErrorMessage: '' as string,
   },
   {
     events: {
@@ -55,6 +56,8 @@ const model = createModel(
       REMOVE_TAMPERED_VCS: () => ({}),
       DOWNLOAD_LIMIT_EXPIRED: (vcMetadata: VCMetadata) => ({vcMetadata}),
       DELETE_VC: () => ({}),
+      VERIFY_VC_FAILED: (errorMessage: string) => ({errorMessage}),
+      RESET_VERIFY_ERROR: () => ({}),
     },
   },
 );
@@ -214,6 +217,21 @@ export const vcMachine =
             DELETE_VC: {
               target: 'deletingFailedVcs',
             },
+            VERIFY_VC_FAILED: {
+              actions: [
+                log((_, event) => 'balag->VERIFY_VC_FAILED event triggered->'),
+                'setVerificationErrorMessage',
+              ],
+              target: '#vc.ready.myVcs.refreshing',
+            },
+            RESET_VERIFY_ERROR: {
+              actions: [
+                log(
+                  (_, event) => 'balag->RESET_VERIFY_ERROR event triggered->',
+                ),
+                'resetVerificationErrorMessage',
+              ],
+            },
           },
         },
         tamperedVCs: {
@@ -282,6 +300,14 @@ export const vcMachine =
             ...context.downloadingFailedVcs,
             event.vcMetadata,
           ],
+        }),
+
+        setVerificationErrorMessage: model.assign({
+          verificationErrorMessage: (context, event) => event.errorMessage,
+        }),
+
+        resetVerificationErrorMessage: model.assign({
+          verificationErrorMessage: (_context, event) => '',
         }),
 
         resetDownloadFailedVcs: model.assign({
@@ -524,4 +550,8 @@ export function selectIsTampered(state: State) {
 
 export function selectDownloadingFailedVcs(state: State) {
   return state.context.downloadingFailedVcs;
+}
+
+export function selectVerificationErrorMessage(state: State) {
+  return state.context.verificationErrorMessage;
 }

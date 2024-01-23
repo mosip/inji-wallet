@@ -33,11 +33,6 @@ export interface Typegen0 {
       data: unknown;
       __tip: 'See the XState TS docs to learn how to strongly type this.';
     };
-    'done.invoke.issuersMachine.verifyingCredential:invocation[0]': {
-      type: 'done.invoke.issuersMachine.verifyingCredential:invocation[0]';
-      data: unknown;
-      __tip: 'See the XState TS docs to learn how to strongly type this.';
-    };
     'error.platform.checkInternet': {
       type: 'error.platform.checkInternet';
       data: unknown;
@@ -56,10 +51,6 @@ export interface Typegen0 {
     };
     'error.platform.issuersMachine.performAuthorization:invocation[0]': {
       type: 'error.platform.issuersMachine.performAuthorization:invocation[0]';
-      data: unknown;
-    };
-    'error.platform.issuersMachine.verifyingCredential:invocation[0]': {
-      type: 'error.platform.issuersMachine.verifyingCredential:invocation[0]';
       data: unknown;
     };
     'xstate.init': {type: 'xstate.init'};
@@ -84,7 +75,7 @@ export interface Typegen0 {
       | 'TRY_AGAIN'
       | 'done.invoke.issuersMachine.performAuthorization:invocation[0]';
     loadKeyPair: 'STORE_RESPONSE';
-    logDownloaded: 'done.invoke.issuersMachine.verifyingCredential:invocation[0]';
+    logDownloaded: 'VERIFY_SUCCESS';
     resetError:
       | 'RESET_ERROR'
       | 'TRY_AGAIN'
@@ -96,9 +87,10 @@ export interface Typegen0 {
       | 'error.platform.issuersMachine.downloadCredentials:invocation[0]'
       | 'error.platform.issuersMachine.downloadIssuerConfig:invocation[0]'
       | 'error.platform.issuersMachine.performAuthorization:invocation[0]';
-    sendErrorEndEvent: 'error.platform.issuersMachine.verifyingCredential:invocation[0]';
+    sendErrorEndEvent: 'VERIFY_ERROR';
     sendImpressionEvent: 'done.invoke.issuersMachine.displayIssuers:invocation[0]';
-    sendSuccessEndEvent: 'done.invoke.issuersMachine.verifyingCredential:invocation[0]';
+    sendSuccessEndEvent: 'VERIFY_SUCCESS';
+    sendVerificationError: 'VERIFY_ERROR';
     setCredentialWrapper: 'done.invoke.issuersMachine.downloadCredentials:invocation[0]';
     setError:
       | 'error.platform.issuersMachine.displayIssuers:invocation[0]'
@@ -125,10 +117,11 @@ export interface Typegen0 {
     setTokenResponse: 'done.invoke.issuersMachine.performAuthorization:invocation[0]';
     setVerifiableCredential: 'done.invoke.issuersMachine.downloadCredentials:invocation[0]';
     storeKeyPair: 'done.invoke.issuersMachine.generateKeyPair:invocation[0]';
-    storeVcMetaContext: 'done.invoke.issuersMachine.verifyingCredential:invocation[0]';
-    storeVcsContext: 'done.invoke.issuersMachine.verifyingCredential:invocation[0]';
-    storeVerifiableCredentialData: 'done.invoke.issuersMachine.verifyingCredential:invocation[0]';
-    storeVerifiableCredentialMeta: 'done.invoke.issuersMachine.verifyingCredential:invocation[0]';
+    storeVcMetaContext: 'VERIFY_SUCCESS';
+    storeVcsContext: 'VERIFY_SUCCESS';
+    storeVerifiableCredentialData: 'VERIFY_SUCCESS';
+    storeVerifiableCredentialMeta: 'VERIFY_SUCCESS';
+    updateVerificationErrorMessage: 'VERIFY_ERROR';
   };
   eventsCausingDelays: {};
   eventsCausingGuards: {

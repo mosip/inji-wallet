@@ -42,6 +42,8 @@ import {TelemetryConstants} from '../../../shared/telemetry/TelemetryConstants';
 
 import {API_URLS} from '../../../shared/api';
 
+import {VerificationErrorType} from '../../../shared/vcjs/verifyCredential';
+
 const model = createModel(
   {
     serviceRefs: {} as AppServices,
@@ -73,6 +75,7 @@ const model = createModel(
     privateKey: '',
     isMachineInKebabPopupState: false,
     bindingAuthFailedMessage: '' as string,
+    verificationErrorMessage: '',
   },
   {
     events: {
@@ -102,6 +105,8 @@ const model = createModel(
       REMOVE: (vcMetadata: VCMetadata) => ({vcMetadata}),
       UPDATE_VC_METADATA: (vcMetadata: VCMetadata) => ({vcMetadata}),
       TAMPERED_VC: (key: string) => ({key}),
+      VERIFY_SUCCESS: () => ({}),
+      VERIFY_ERROR: (errorMessage: string) => ({errorMessage}),
     },
   },
 );
@@ -234,20 +239,8 @@ export const ExistingMosipVCItemMachine =
                   },
                 ],
                 CREDENTIAL_DOWNLOADED: {
-                  actions: ['setStoreVerifiableCredential', 'storeContext'],
-                },
-                STORE_RESPONSE: {
-                  actions: [
-                    'setVerifiableCredential',
-                    'updateVc',
-                    'logDownloaded',
-                    'sendTelemetryEvents',
-                    'removeVcFromInProgressDownloads',
-                  ],
+                  actions: ['setStoreVerifiableCredential'],
                   target: '#vc-item.checkingVerificationStatus',
-                },
-                STORE_ERROR: {
-                  target: '#vc-item.checkingServerData.savingFailed',
                 },
               },
             },
@@ -490,18 +483,34 @@ export const ExistingMosipVCItemMachine =
         verifyingCredential: {
           invoke: {
             src: 'verifyCredential',
-            onDone: [
-              {
-                actions: ['markVcValid', 'storeContext', 'updateVc'],
-                target: 'idle',
-              },
-            ],
-            onError: [
-              {
-                actions: log((_, event) => (event.data as Error).message),
-                target: 'idle',
-              },
-            ],
+          },
+          on: {
+            VERIFY_SUCCESS: {
+              actions: [
+                log((_, event) => 'Verification Success.'),
+                'storeContext',
+              ],
+            },
+            VERIFY_ERROR: {
+              //To-Do Handle Error Scenarios
+              actions: [
+                log((_, event) => 'Verify Error'),
+                'updateVerificationErrorMessage',
+                'sendVerificationError',
+              ],
+            },
+            STORE_RESPONSE: {
+              actions: [
+                'setVerifiableCredential',
+                'updateVc',
+                'logDownloaded',
+                'sendTelemetryEvents',
+                'removeVcFromInProgressDownloads',
+              ],
+            },
+            STORE_ERROR: {
+              target: '#vc-item.checkingServerData.savingFailed',
+            },
           },
         },
         checkingVerificationStatus: {
@@ -863,6 +872,21 @@ export const ExistingMosipVCItemMachine =
           },
         ),
 
+        sendVerificationError: send(
+          (_context, event) => {
+            return {
+              type: 'VERIFY_VC_FAILED',
+              errorMessage: _context.verificationErrorMessage,
+            };
+          },
+          {
+            to: context => context.serviceRefs.vc,
+          },
+        ),
+        updateVerificationErrorMessage: assign({
+          verificationErrorMessage: (context, event) => event.errorMessage,
+        }),
+
         setWalletBindingError: assign({
           walletBindingError: () => {
             const errorMessage = i18n.t(`errors.genericError`, {
@@ -1190,14 +1214,6 @@ export const ExistingMosipVCItemMachine =
           },
         ),
 
-        markVcValid: assign(context => {
-          return {
-            ...context,
-            isVerified: true,
-            lastVerifiedOn: Date.now(),
-          };
-        }),
-
         setTransactionId: assign({
           transactionId: () => String(new Date().valueOf()).substring(3, 13),
         }),
@@ -1423,7 +1439,6 @@ export const ExistingMosipVCItemMachine =
                   requestId: context.vcMetadata.requestId,
                 },
               );
-
               callback(
                 model.events.CREDENTIAL_DOWNLOADED({
                   credential: response.credential,
@@ -1445,8 +1460,17 @@ export const ExistingMosipVCItemMachine =
           return () => clearInterval(pollInterval);
         },
 
-        verifyCredential: async context => {
-          return verifyCredential(context.verifiableCredential);
+        verifyCredential: context => async (callback, onReceive) => {
+          const verificationResult = await verifyCredential(
+            context.storeVerifiableCredential,
+          );
+          if (verificationResult.isVerified) {
+            callback(model.events.VERIFY_SUCCESS());
+          } else {
+            callback(
+              model.events.VERIFY_ERROR(verificationResult.errorMessage),
+            );
+          }
         },
 
         requestOtp: async context => {

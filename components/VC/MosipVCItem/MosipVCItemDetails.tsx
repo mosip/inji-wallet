@@ -246,7 +246,7 @@ export const MosipVCItemDetails: React.FC<
                       justifyContent: 'flex-start',
                       alignItems: 'center',
                     }}>
-                    {props.vc?.isVerified && <VerifiedIcon />}
+                    {props.vc && <VerifiedIcon />}
                     <Text
                       testID="valid"
                       style={{maxWidth: 80}}

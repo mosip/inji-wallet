@@ -10,6 +10,7 @@ import {
   selectInProgressVcDownloads,
   selectIsTampered,
   selectDownloadingFailedVcs,
+  selectVerificationErrorMessage,
 } from '../../machines/vc';
 import {
   selectWalletBindingError,
@@ -63,6 +64,10 @@ export function useMyVcsTab(props: HomeScreenTabProps) {
     isTampered: useSelector(vcService, selectIsTampered),
 
     downloadFailedVcs: useSelector(vcService, selectDownloadingFailedVcs),
+    verificationErrorMessage: useSelector(
+      vcService,
+      selectVerificationErrorMessage,
+    ),
 
     SET_STORE_VC_ITEM_STATUS: () =>
       service.send(MyVcsTabEvents.SET_STORE_VC_ITEM_STATUS()),
@@ -99,5 +104,6 @@ export function useMyVcsTab(props: HomeScreenTabProps) {
 
     REMOVE_TAMPERED_VCS: () => vcService?.send(VcEvents.REMOVE_TAMPERED_VCS()),
     DELETE_VC: () => vcService?.send(VcEvents.DELETE_VC()),
+    RESET_VERIFY_ERROR: () => vcService?.send(VcEvents.RESET_VERIFY_ERROR()),
   };
 }
