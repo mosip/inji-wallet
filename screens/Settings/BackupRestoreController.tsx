@@ -7,10 +7,12 @@ import {
   selectIsBackUpRestoreSuccess,
 } from '../../machines/backupRestore';
 import {GlobalContext} from '../../shared/GlobalContext';
+import {VcEvents} from '../../machines/vc';
 
 export function useBackupRestoreScreen() {
   const {appService} = useContext(GlobalContext);
   const backupRestoreService = appService.children.get('backupRestore');
+  const vcService = appService.children.get('vc');
 
   return {
     isBackUpRestoring: useSelector(
@@ -36,6 +38,7 @@ export function useBackupRestoreScreen() {
     },
     OK: () => {
       backupRestoreService.send(BackupRestoreEvents.OK());
+      vcService?.send(VcEvents.REFRESH_MY_VCS());
     },
   };
 }

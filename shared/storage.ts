@@ -21,8 +21,6 @@ import {
   SETTINGS_STORE_KEY,
 } from './constants';
 import FileStorage, {
-  backupDirectoryPath,
-  getBackupFilePath,
   getFilePath,
   getDirectorySize,
   vcDirectoryPath,
@@ -30,7 +28,6 @@ import FileStorage, {
 import {__AppId} from './GlobalVariables';
 import {getErrorEventData, sendErrorEvent} from './telemetry/TelemetryUtils';
 import {TelemetryConstants} from './telemetry/TelemetryConstants';
-import {getBackupFileName} from './commonUtil';
 
 export const MMKV = new MMKVLoader().initialize();
 
@@ -348,19 +345,6 @@ class Storage {
 
 export default Storage;
 
-export async function writeToBackupFile(data): Promise<string> {
-  //TODO: Move to fileStorage
-  const fileName = getBackupFileName();
-  const isDirectoryExists = await FileStorage.exists(backupDirectoryPath);
-  if (isDirectoryExists) {
-    await FileStorage.removeItem(backupDirectoryPath);
-  }
-  await FileStorage.createDirectory(backupDirectoryPath);
-  const path = getBackupFilePath(fileName);
-  await FileStorage.writeFile(path, JSON.stringify(data));
-  return fileName;
-}
-
 function removeWalletBindingDataBeforeBackup(data: string) {
   const vcData = JSON.parse(data);
   vcData.walletBindingResponse = null;
@@ -380,5 +364,10 @@ export async function isMinimumLimitForBackupReached() {
 }
 
 export async function isMinimumLimitForBackupRestorationReached() {
-  return false;
+  // TODO: Have two checks, one for downloading the ZIP file from the cloud &
+  //  then by looking at it's metadata to check it's expanded size
+  // APIs:
+  // 1. CloudStorage.stat(file, context)
+  // 2. getUncompressedSize()
+  return await Storage.isMinimumLimitReached('minStorageRequired');
 }

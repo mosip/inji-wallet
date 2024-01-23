@@ -28,7 +28,6 @@ export interface Typegen0 {
   };
   eventsCausingActions: {
     loadDataToMemory: 'DATA_FROM_FILE';
-    setBackedUpFileName: 'done.invoke.backupRestore.restoreBackup.checkStorageAvailibility:invocation[0]';
     setDataFromBackupFile: 'DATA_FROM_FILE';
   };
   eventsCausingDelays: {};

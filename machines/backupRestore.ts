@@ -1,15 +1,14 @@
 import {EventFrom, StateFrom, send} from 'xstate';
 import {createModel} from 'xstate/lib/model';
 import {AppServices} from '../shared/GlobalContext';
-import {
-  isMinimumLimitForBackupRestorationReached,
-  writeToBackupFile,
-} from '../shared/storage';
 import fileStorage, {
+  backupDirectoryPath,
   getBackupFilePath,
   unZipAndRemoveFile,
 } from '../shared/fileStorage';
 import {StoreEvents} from './store';
+import Storage from '../shared/storage';
+import {ReadDirItem} from 'react-native-fs';
 
 const model = createModel(
   {
@@ -66,7 +65,6 @@ export const backupRestoreMachine = model.createMachine(
                   target: 'failure',
                 },
                 {
-                  actions: ['setBackedUpFileName'],
                   target: 'unzipBackupFile',
                 },
               ],
@@ -124,10 +122,6 @@ export const backupRestoreMachine = model.createMachine(
   },
   {
     actions: {
-      setBackedUpFileName: model.assign({
-        fileName: 'backup_1705993427049',
-      }),
-
       loadDataToMemory: send(
         context => {
           return StoreEvents.RESTORE_BACKUP(context.dataFromBackupFile);
@@ -144,13 +138,27 @@ export const backupRestoreMachine = model.createMachine(
 
     services: {
       checkStorageAvailability: () => async () => {
-        return Promise.resolve(isMinimumLimitForBackupRestorationReached());
+        return await Storage.isMinimumLimitReached('minStorageRequired');
       },
       unzipBackupFile: context => async () => {
-        const result = await unZipAndRemoveFile(context.fileName);
+        let items: ReadDirItem[] = await fileStorage.getAllFilesInDirectory(
+          backupDirectoryPath,
+        );
+        let bkpZip: string;
+        if (
+          items.length === 1 &&
+          items[0].isFile() &&
+          items[0].name.endsWith('.zip')
+        ) {
+          bkpZip = items[0].name.substring(0, items[0].name.length - 4);
+        } else {
+          const ref = items.findIndex(i => i.name.endsWith('.zip'));
+          bkpZip = items[ref].name;
+        }
+        context.fileName = bkpZip;
+        const result = await unZipAndRemoveFile(bkpZip);
         return result;
       },
-
       readBackupFile: context => async callack => {
         const dataFromBackupFile = await fileStorage.readFile(
           getBackupFilePath(context.fileName),
