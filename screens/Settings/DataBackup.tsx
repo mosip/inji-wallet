@@ -4,9 +4,9 @@ import {Icon, ListItem} from 'react-native-elements';
 import {Row, Text} from '../../components/ui';
 import {Theme} from '../../components/ui/styleUtils';
 import {useBackupScreen} from './BackupController';
-import {BackupToggle} from './BackupToggle';
 import {SvgImage} from '../../components/ui/svg';
 import BackupAndRestoreScreen from './BackupAndRestoreScreen';
+import {BackupConfirmation} from './BackupConfirmation';
 
 export const DataBackup: React.FC = ({} = props => {
   const controller = useBackupScreen(props);
@@ -48,7 +48,7 @@ export const DataBackup: React.FC = ({} = props => {
       </Pressable>
 
       {showConfirmation && (
-        <BackupToggle
+        <BackupConfirmation
           isVisible={showConfirmation}
           onDismiss={() => controller.DISMISS()}
           onConfirmation={() => setShowBackAndRestoreScreen(true)}
