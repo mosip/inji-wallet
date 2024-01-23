@@ -19,7 +19,10 @@ import {
 import {WalletBindingResponse} from '../../../shared/cryptoutil/cryptoUtil';
 import {logoType} from '../../../machines/issuersMachine';
 import {SvgImage} from '../../ui/svg';
-import {getCredentialIssuersWellKnownConfig} from '../../../shared/openId4VCI/Utils';
+import {
+  ACTIVATION_NOT_NEEDED,
+  getCredentialIssuersWellKnownConfig,
+} from '../../../shared/openId4VCI/Utils';
 import {
   DETAIL_VIEW_ADD_ON_FIELDS,
   DETAIL_VIEW_DEFAULT_FIELDS,
@@ -30,11 +33,13 @@ import {
   setBackgroundColour,
 } from '../common/VCUtils';
 import {ActivityIndicator} from '../../ui/ActivityIndicator';
+import {ProfileIcon} from '../../ProfileIcon';
 
 const getIssuerLogo = (isOpenId4VCI: boolean, issuerLogo: logoType) => {
   if (isOpenId4VCI) {
     return (
       <Image
+        testID="esignetLogo"
         src={issuerLogo?.url}
         alt={issuerLogo?.alt_text}
         style={Theme.Styles.issuerLogo}
@@ -50,15 +55,23 @@ const getProfileImage = (
   isOpenId4VCI,
 ) => {
   if (isOpenId4VCI) {
-    if (verifiableCredential?.credentialSubject.face) {
-      return {uri: verifiableCredential?.credentialSubject.face};
+    if (verifiableCredential?.credentialSubject?.face) {
+      return (
+        <Image
+          source={{uri: verifiableCredential?.credentialSubject.face}}
+          style={Theme.Styles.openCardImage}
+        />
+      );
     }
-  } else {
-    if (props.vc?.credential?.biometrics?.face) {
-      return {uri: props.vc?.credential.biometrics.face};
-    }
+  } else if (props?.vc?.credential?.biometrics?.face) {
+    return (
+      <Image
+        source={{uri: props?.vc?.credential.biometrics.face}}
+        style={Theme.Styles.openCardImage}
+      />
+    );
   }
-  return <Icon name="person" color={Theme.Colors.Icon} size={88} />;
+  return <ProfileIcon />;
 };
 
 export const VCDetailView: React.FC<
@@ -105,17 +118,8 @@ export const VCDetailView: React.FC<
         source={Theme.OpenCard}>
         <Row padding="10" margin="0 10 0 8">
           <Column crossAlign="center">
-            <Image
-              source={getProfileImage(
-                props,
-                verifiableCredential,
-                isOpenId4VCI,
-              )}
-              style={Theme.Styles.openCardImage}
-            />
-
+            {getProfileImage(props, verifiableCredential, isOpenId4VCI)}
             <QrCodeOverlay qrCodeDetails={String(verifiableCredential)} />
-
             <Column margin="20 0 0 0">{issuerLogo}</Column>
           </Column>
           <Column align="space-evenly" margin={'0 0 0 10'} style={{flex: 1}}>
@@ -147,7 +151,8 @@ export const VCDetailView: React.FC<
       ))}
 
       {props.activeTab !== 1 ? (
-        props.isBindingPending ? (
+        props.isBindingPending &&
+        ACTIVATION_NOT_NEEDED.indexOf(props.vc.vcMetadata.issuer) === -1 ? (
           <Column style={Theme.Styles.openCardBgContainer} padding="10">
             <Column margin={'0 0 4 0'} crossAlign={'flex-start'}>
               <Icon

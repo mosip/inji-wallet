@@ -13,28 +13,24 @@ import {
   isHardwareKeystoreExists,
 } from './cryptoutil/cryptoUtil';
 import {VCMetadata} from './VCMetadata';
-import {ENOENT, getItem} from '../machines/store';
+import {ENOENT} from '../machines/store';
 import {
   androidVersion,
   isAndroid,
   MY_VCS_STORE_KEY,
-  RECEIVED_VCS_STORE_KEY,
   SETTINGS_STORE_KEY,
 } from './constants';
 import FileStorage, {
+  backupDirectoryPath,
+  getBackupFilePath,
   getFilePath,
-  getFilePathOfEncryptedHmac,
-  getFilePathOfHmac,
+  getDirectorySize,
   vcDirectoryPath,
 } from './fileStorage';
 import {__AppId} from './GlobalVariables';
-import {
-  getErrorEventData,
-  getImpressionEventData,
-  sendErrorEvent,
-  sendImpressionEvent,
-} from './telemetry/TelemetryUtils';
+import {getErrorEventData, sendErrorEvent} from './telemetry/TelemetryUtils';
 import {TelemetryConstants} from './telemetry/TelemetryConstants';
+import {getBackupFileName} from './commonUtil';
 
 export const MMKV = new MMKVLoader().initialize();
 
@@ -43,7 +39,7 @@ export const API_CACHED_STORAGE_KEYS = {
   fetchIssuerConfig: (issuerId: string) =>
     `CACHE_FETCH_ISSUER_CONFIG_${issuerId}`,
   fetchIssuerWellknownConfig: (issuerId: string) =>
-      `CACHE_FETCH_ISSUER_WELLKNOWN_CONFIG_${issuerId}`,
+    `CACHE_FETCH_ISSUER_WELLKNOWN_CONFIG_${issuerId}`,
 };
 
 async function generateHmac(
@@ -57,6 +53,45 @@ async function generateHmac(
 }
 
 class Storage {
+  static exportData = async (encryptionKey: string) => {
+    const completeBackupData = {};
+    const dataFromDB: Record<string, any> = {};
+
+    const allKeysInDB = await MMKV.indexer.strings.getKeys();
+    const keysToBeExported = allKeysInDB.filter(key =>
+      key.includes('CACHE_FETCH_ISSUER_WELLKNOWN_CONFIG_'),
+    );
+    keysToBeExported.push(MY_VCS_STORE_KEY);
+
+    const encryptedDataPromises = keysToBeExported.map(key =>
+      MMKV.getItem(key),
+    );
+
+    Promise.all(encryptedDataPromises).then(encryptedDataList => {
+      keysToBeExported.forEach(async (key, index) => {
+        let encryptedData = encryptedDataList[index];
+        if (encryptedData != null) {
+          const decryptedData = await decryptJson(encryptionKey, encryptedData);
+          dataFromDB[key] = JSON.parse(decryptedData);
+        }
+      });
+    });
+
+    completeBackupData['dataFromDB'] = dataFromDB;
+    completeBackupData['VC_Records'] = {};
+
+    let vcKeys = allKeysInDB.filter(key => key.indexOf('VC_') === 0);
+    for (let ind in vcKeys) {
+      const key = vcKeys[ind];
+      const vc = await Storage.readVCFromFile(key);
+      const decryptedVCData = await decryptJson(encryptionKey, vc);
+      const deactivatedVC =
+        removeWalletBindingDataBeforeBackup(decryptedVCData);
+      completeBackupData['VC_Records'][key] = deactivatedVC;
+    }
+    return completeBackupData;
+  };
+
   static isVCStorageInitialised = async (): Promise<boolean> => {
     try {
       const res = await FileStorage.getInfo(vcDirectoryPath);
@@ -164,37 +199,6 @@ class Storage {
       encryptionKey,
     );
     const HMACofVC = await generateHmac(encryptionKey, data);
-    const hmacStoredinFile = await this.readHmacForVCFromFile(key);
-
-    if (HMACofVC !== storedHMACofCurrentVC) {
-      if (__DEV__) {
-        sendImpressionEvent(
-          getImpressionEventData('VC Corruption Event', 'VC Download', {
-            key: key,
-            'HMAC stored in MMKV': this.hexEncode(storedHMACofCurrentVC!),
-            'Length HMAC stored in MMKV': storedHMACofCurrentVC?.length,
-            'HMAC of VC': this.hexEncode(HMACofVC),
-            'Length of HMAC of VC': HMACofVC.length,
-            'HMAC stored in file': this.hexEncode(hmacStoredinFile),
-            'File vs mmkv data':
-              hmacStoredinFile === this.hexEncode(storedHMACofCurrentVC!),
-          }),
-        );
-      }
-      console.log(
-        `VC corruption Details: ${JSON.stringify({
-          key: key,
-          'HMAC stored in MMKV': this.hexEncode(storedHMACofCurrentVC!),
-          'Length HMAC stored in MMKV': storedHMACofCurrentVC?.length,
-          'HMAC of VC': this.hexEncode(HMACofVC),
-          'Length of HMAC of VC': HMACofVC.length,
-          'HMAC stored in file': this.hexEncode(hmacStoredinFile),
-          'File vs mmkv data':
-            hmacStoredinFile === this.hexEncode(storedHMACofCurrentVC!),
-        })}`,
-      );
-    }
-
     return HMACofVC !== storedHMACofCurrentVC;
   }
 
@@ -206,51 +210,11 @@ class Storage {
     return null;
   }
 
-  //TODO: added temporarily for INJI-612
-  private static async readHmacForVCFromFile(key: string) {
-    const HMACofCurrentVC = await FileStorage.readFile(getFilePathOfHmac(key));
-    return HMACofCurrentVC;
-  }
-
   private static async readHmacForDataCorruptionCheck(
     key: string,
     encryptionKey: string,
   ) {
     const encryptedHMACofCurrentVC = await MMKV.getItem(key);
-    const encryptedHMACofCurrentVCFromMMKVFile = await FileStorage.readFile(
-      getFilePathOfEncryptedHmac(key),
-    );
-
-    if (encryptedHMACofCurrentVC !== encryptedHMACofCurrentVCFromMMKVFile) {
-      if (__DEV__) {
-        sendImpressionEvent(
-          getImpressionEventData('Encrypted HMac Corruption', 'VC Download', {
-            key: key,
-            'Encrypted HMAC of Current VC from MMKV store':
-              encryptedHMACofCurrentVC,
-            'Encrypted HMAC of Current VC from file':
-              encryptedHMACofCurrentVCFromMMKVFile,
-            'encryptedHMACofCurrentVC vs encryptedHMACofCurrentVCFromMMKVFile': `${
-              encryptedHMACofCurrentVCFromMMKVFile === encryptedHMACofCurrentVC
-            }`,
-          }),
-        );
-      }
-
-      console.log(
-        `VC corruption Details: ${{
-          key: key,
-          'Encrypted HMAC of Current VC from MMKV store':
-            encryptedHMACofCurrentVC,
-          'Encrypted HMAC of Current VC from file':
-            encryptedHMACofCurrentVCFromMMKVFile,
-          'encryptedHMACofCurrentVC vs encryptedHMACofCurrentVCFromMMKVFile': `${
-            encryptedHMACofCurrentVCFromMMKVFile === encryptedHMACofCurrentVC
-          }`,
-        }}`,
-      );
-    }
-
     if (encryptedHMACofCurrentVC) {
       return decryptJson(encryptionKey, encryptedHMACofCurrentVC);
     }
@@ -268,17 +232,6 @@ class Storage {
   }
 
   // TODO: INJI-612 refactor
-  private static hexEncode(inp: string) {
-    var hex, i;
-    var result = '';
-    for (i = 0; i < inp.length; i++) {
-      hex = inp.charCodeAt(i).toString(16);
-      result += ('000' + hex).slice(-4);
-    }
-    return result;
-  }
-
-  // TODO: INJI-612 refactor
   private static async storeVcHmac(
     encryptionKey: string,
     data: string,
@@ -286,12 +239,6 @@ class Storage {
   ) {
     const HMACofVC = await generateHmac(encryptionKey, data);
     const encryptedHMACofVC = await encryptJson(encryptionKey, HMACofVC);
-    const keyOfEncodedHmacStorage = getFilePathOfHmac(key);
-    const keyOfEncryptedHmacStorage = getFilePathOfEncryptedHmac(key);
-
-    const encodedHMACofVC = this.hexEncode(HMACofVC);
-    await FileStorage.writeFile(keyOfEncodedHmacStorage, encodedHMACofVC);
-    await FileStorage.writeFile(keyOfEncryptedHmacStorage, encryptedHMACofVC);
     await MMKV.setItem(key, encryptedHMACofVC);
   }
 
@@ -341,3 +288,33 @@ class Storage {
 }
 
 export default Storage;
+
+export async function writeToBackupFile(data): Promise<string> {
+  const fileName = getBackupFileName();
+  const isDirectoryExists = await FileStorage.exists(backupDirectoryPath);
+  if (isDirectoryExists) {
+    await FileStorage.removeItem(backupDirectoryPath);
+  }
+  await FileStorage.createDirectory(backupDirectoryPath);
+  const path = getBackupFilePath(fileName);
+  await FileStorage.writeFile(path, JSON.stringify(data));
+  return fileName;
+}
+
+function removeWalletBindingDataBeforeBackup(data: string) {
+  const vcData = JSON.parse(data);
+  vcData.walletBindingResponse = null;
+  vcData.publicKey = null;
+  vcData.privateKey = null;
+  return vcData;
+}
+
+export async function isMinimumLimitForBackupReached() {
+  const directorySize = await getDirectorySize(vcDirectoryPath);
+  const freeDiskStorageInBytes =
+    isAndroid() && androidVersion < 29
+      ? getFreeDiskStorageOldSync()
+      : getFreeDiskStorageSync();
+
+  return freeDiskStorageInBytes <= 2 * directorySize;
+}

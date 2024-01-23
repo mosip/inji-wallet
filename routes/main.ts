@@ -24,12 +24,12 @@ const home: TabScreen = {
     headerShown: false,
   },
 };
-export const scan: TabScreen = {
-  name: BOTTOM_TAB_ROUTES.scan,
+export const share: TabScreen = {
+  name: BOTTOM_TAB_ROUTES.share,
   component: ScanLayout,
   icon: 'qr-code-scanner',
   options: {
-    title: i18n.t('MainLayout:scan'),
+    title: i18n.t('MainLayout:share'),
     headerShown: false,
   },
 };
@@ -46,12 +46,12 @@ const history: TabScreen = {
 
 export const mainRoutes: TabScreen[] = [];
 mainRoutes.push(home);
-mainRoutes.push(scan);
+mainRoutes.push(share);
 mainRoutes.push(history);
 
 export type MainBottomTabParamList = {
   home: undefined;
-  scan: undefined;
+  share: undefined;
   history: undefined;
 };
 

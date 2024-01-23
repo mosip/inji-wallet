@@ -1,7 +1,14 @@
 /* eslint-disable sonarjs/no-duplicate-string */
-import {Dimensions, I18nManager, StyleSheet, ViewStyle} from 'react-native';
+import {
+  Dimensions,
+  I18nManager,
+  StatusBar,
+  StyleSheet,
+  ViewStyle,
+} from 'react-native';
 import {Spacing} from '../styleUtils';
 import {isIOS} from '../../../shared/constants';
+import Constants from 'expo-constants';
 
 const Colors = {
   Black: '#231F20',
@@ -47,6 +54,9 @@ const Colors = {
   stroke: '#8449A5',
   iconBg: '#fbf5ff',
   warningLogoBg: '#F3E2FF',
+  tooltip: '#B7B7B7',
+  toolTipContent: '#4B4B4B',
+  toolTipPointer: '#E0E0E0',
 };
 
 export type ElevationLevel = 0 | 1 | 2 | 3 | 4 | 5 | 6;
@@ -119,6 +129,8 @@ export const PurpleTheme = {
     linearGradientEnd: Colors.endColor,
     LinearGradientStroke: Colors.stroke,
     warningLogoBgColor: Colors.warningLogoBg,
+    tooltipIcon: Colors.tooltip,
+    toolTipPointerColor: Colors.toolTipPointer,
   },
   Styles: StyleSheet.create({
     title: {
@@ -539,17 +551,21 @@ export const PurpleTheme = {
       bottom: isIOS() ? 50 : 20,
       height: isIOS() ? 100 : 'auto',
     },
+    picker: {
+      fontFamily: 'Inter_600SemiBold',
+      fontSize: 18,
+    },
     idInputBottom: {
       position: 'relative',
-      bottom: 14,
+      bottom: 18,
       borderBottomColor: Colors.Purple,
       borderBottomWidth: 1,
-      minWidth: 200,
+      minWidth: 210,
     },
     idInput: {
       position: 'relative',
-      bottom: 14,
-      minWidth: 200,
+      bottom: 18,
+      minWidth: 210,
     },
     getId: {
       justifyContent: 'center',
@@ -598,6 +614,33 @@ export const PurpleTheme = {
       position: 'absolute',
     },
     boxShadow: generateBoxShadowStyle(),
+    tooltipContainerStyle: {
+      backgroundColor: '#FAFAFA',
+      borderWidth: 1,
+      borderColor: '#E0E0E0',
+      marginLeft: 15,
+    },
+    tooltipContentDescription: {
+      color: Colors.toolTipContent,
+      marginTop: 10,
+    },
+    tooltipHrLine: {
+      borderBottomColor: Colors.Grey5,
+      borderBottomWidth: 1,
+      marginTop: 10,
+    },
+    introSliderHeader: {
+      marginTop: isIOS()
+        ? Constants.statusBarHeight + 40
+        : StatusBar.currentHeight + 40,
+      width: '100%',
+      marginBottom: 50,
+    },
+    introSliderButton: {
+      borderRadius: 10,
+      height: 50,
+      marginTop: -10,
+    },
   }),
   QrCodeStyles: StyleSheet.create({
     magnifierZoom: {
@@ -705,7 +748,7 @@ export const PurpleTheme = {
     },
     error: {
       position: 'absolute',
-      top: 24,
+      top: 30,
       left: 5,
       color: Colors.Red,
       fontFamily: 'Inter_600SemiBold',
@@ -1252,26 +1295,40 @@ export const PurpleTheme = {
     issuerBoxContainer: {
       margin: 5,
       flex: 1,
-      padding: 10,
       borderRadius: 6,
       alignItems: 'flex-start',
       justifyContent: 'space-evenly',
-      flexDirection: 'column',
-      paddingHorizontal: 6,
-      paddingVertical: 8,
+      flexDirection: 'row',
+      paddingHorizontal: 10,
+      paddingVertical: 10,
       backgroundColor: Colors.White,
     },
     issuerBoxContainerPressed: {
       margin: 5,
       flex: 1,
-      padding: 10,
+
       borderRadius: 6,
       alignItems: 'flex-start',
       justifyContent: 'space-evenly',
-      flexDirection: 'column',
-      paddingHorizontal: 6,
-      paddingVertical: 8,
+      flexDirection: 'row',
+      paddingHorizontal: 10,
+      paddingVertical: 10,
       backgroundColor: Colors.Grey,
+    },
+    issuerBoxContent: {
+      flex: 1,
+      alignSelf: 'center',
+      justifyContent: 'center',
+      paddingLeft: 15,
+    },
+    issuerBoxIconContainer: {
+      alignSelf: 'center',
+      justifyContent: 'center',
+    },
+    issuersSearchSubText: {
+      marginBottom: 14,
+      fontSize: 12,
+      marginHorizontal: 9,
     },
     issuerHeading: {
       fontFamily: 'Inter_600SemiBold',

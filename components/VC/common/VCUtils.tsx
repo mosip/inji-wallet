@@ -2,7 +2,6 @@ import {
   CredentialSubject,
   VerifiableCredential,
 } from '../../../types/VC/ExistingMosipVC/vc';
-import VerifiedIcon from '../../VerifiedIcon';
 import i18n, {getLocalizedField} from '../../../i18n';
 import {Row} from '../../ui';
 import {VCItemField} from './VCItemField';
@@ -13,19 +12,26 @@ import {Image} from 'react-native';
 import {Theme} from '../../ui/styleUtils';
 import {SvgImage} from '../../ui/svg';
 import {CREDENTIAL_REGISTRY_EDIT} from 'react-native-dotenv';
+import {getIDType} from '../../../shared/openId4VCI/Utils';
+import {VCVerification} from '../../VCVerification';
 
 export const getFieldValue = (
   verifiableCredential: VerifiableCredential,
   field: string,
+  wellknown: any,
   props: any,
 ) => {
   switch (field) {
     case 'status':
-      return <VerifiedIcon />;
+      return <VCVerification wellknown={wellknown} />;
     case 'idType':
-      return i18n.t('VcDetails:nationalCard');
+      return getIDType(verifiableCredential);
     case 'dateOfBirth':
       return formattedDateOfBirth(verifiableCredential);
+    case 'expiresOn':
+      return formattedDateTime(
+        verifiableCredential?.credentialSubject.expiresOn,
+      );
     case 'credentialRegistry':
       return props?.vc?.credentialRegistry;
     case 'address':
@@ -64,9 +70,9 @@ export const setBackgroundColour = (wellknown: any) => {
 };
 
 export const setTextColor = (wellknown: any) => {
-  if (wellknown && wellknown.credentials_supported[0]?.display) {
+  if (wellknown && wellknown?.credentials_supported[0]?.display) {
     return {
-      color: wellknown.credentials_supported[0].display[0]?.text_color
+      color: wellknown.credentials_supported[0]?.display[0]?.text_color
         ? wellknown.credentials_supported[0].display[0].text_color
         : Theme.Colors.textValue,
     };
@@ -105,6 +111,13 @@ function formattedDateOfBirth(verifiableCredential: any) {
   return dateOfBirth;
 }
 
+function formattedDateTime(timeStamp: any) {
+  if (timeStamp) {
+    return new Date(timeStamp).toLocaleDateString();
+  }
+  return timeStamp;
+}
+
 export const fieldItemIterator = (
   fields: any[],
   verifiableCredential: any,
@@ -113,7 +126,12 @@ export const fieldItemIterator = (
 ) => {
   return fields.map(field => {
     const fieldName = getFieldName(field, wellknown);
-    const fieldValue = getFieldValue(verifiableCredential, field, props);
+    const fieldValue = getFieldValue(
+      verifiableCredential,
+      field,
+      wellknown,
+      props,
+    );
     if (
       (field === 'credentialRegistry' &&
         CREDENTIAL_REGISTRY_EDIT === 'false') ||
@@ -126,7 +144,7 @@ export const fieldItemIterator = (
         style={{flexDirection: 'row', flex: 1}}
         align="space-between"
         let
-        margin="0 8 5 8">
+        margin="0 8 5 0">
         <VCItemField
           key={field}
           fieldName={fieldName}
@@ -147,6 +165,7 @@ export const getIssuerLogo = (isOpenId4VCI: boolean, issuerLogo: logoType) => {
   if (isOpenId4VCI) {
     return (
       <Image
+        testID="esignetLogo"
         src={issuerLogo?.url}
         alt={issuerLogo?.alt_text}
         style={Theme.Styles.issuerLogo}

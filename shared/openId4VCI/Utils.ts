@@ -4,21 +4,43 @@ import {isIOS} from '../constants';
 import pem2jwk from 'simple-pem2jwk';
 import {displayType, issuerType} from '../../machines/issuersMachine';
 import getAllConfigurations from '../commonprops/commonProps';
-import {CredentialWrapper} from '../../types/VC/EsignetMosipVC/vc';
+
 import {VCMetadata} from '../VCMetadata';
 import i18next from 'i18next';
 import {getJWT} from '../cryptoutil/cryptoUtil';
 import {CACHED_API} from '../api';
+import i18n from '../../i18n';
+import {VerifiableCredential} from '../../types/VC/ExistingMosipVC/vc';
+import {CredentialWrapper} from '../../types/VC/EsignetMosipVC/vc';
 
 export const Protocols = {
   OpenId4VCI: 'OpenId4VCI',
   OTP: 'OTP',
 };
 
+export const Issuers = {
+  Sunbird: 'Sunbird',
+  ESignet: 'ESignet',
+};
+
+export const ID_TYPE = {
+  MOSIPVerifiableCredential: i18n.t('VcDetails:nationalCard'),
+  InsuranceCredential: i18n.t('VcDetails:insuranceCard'),
+};
+
+export const getIDType = (verifiableCredential: VerifiableCredential) => {
+  return ID_TYPE[verifiableCredential.type[1]];
+};
+
+export const ACTIVATION_NOT_NEEDED = [Issuers.Sunbird];
+
 export const Issuers_Key_Ref = 'OpenId4VCI_KeyPair';
 
 export const getIdentifier = (context, credential) => {
-  const credId = credential.credential.id.split('/');
+  const credentialIdentifier = credential.credential.id;
+  const credId = credentialIdentifier.startsWith('did')
+    ? credentialIdentifier.split(':')
+    : credentialIdentifier.split('/');
   return (
     context.selectedIssuer.credential_issuer +
     ':' +
@@ -53,7 +75,9 @@ export const getBody = async context => {
     format: 'ldp_vc',
     credential_definition: {
       '@context': ['https://www.w3.org/2018/credentials/v1'],
-      type: ['VerifiableCredential', 'MOSIPVerifiableCredential'],
+      type: context.selectedIssuer?.credential_type
+        ? context.selectedIssuer.credential_type
+        : ['VerifiableCredential', 'MOSIPVerifiableCredential'],
     },
     proof: {
       proof_type: 'jwt',
@@ -107,7 +131,6 @@ export const constructAuthorizationConfiguration = (
     clientId: selectedIssuer.client_id,
     scopes: selectedIssuer.scopes_supported,
     additionalHeaders: selectedIssuer.additional_headers,
-    wellKnownEndpoint: selectedIssuer['.well-known'],
     redirectUrl: selectedIssuer.redirect_uri,
     serviceConfiguration: {
       authorizationEndpoint: selectedIssuer.authorization_endpoint,
@@ -150,12 +173,17 @@ export const getCredentialIssuersWellKnownConfig = async (
   let response = null;
   if (wellknown) {
     response = await CACHED_API.fetchIssuerWellknownConfig(issuer, wellknown);
-    fields = !response
-      ? []
-      : Object.keys(
-          response?.credentials_supported[0].credential_definition
-            .credentialSubject,
-        );
+    if (!response) {
+      fields = [];
+    } else if (response?.credentials_supported[0].order) {
+      fields = response?.credentials_supported[0].order;
+    } else {
+      fields = Object.keys(
+        response?.credentials_supported[0].credential_definition
+          .credentialSubject,
+      );
+      console.log('fields => ', fields);
+    }
   }
   return {
     wellknown: response,

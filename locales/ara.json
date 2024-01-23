@@ -59,6 +59,7 @@
     "id": "بطاقة تعريف",
     "qrCodeHeader": "رمز الاستجابة السريعة",
     "nationalCard": "البطاقة الوطنية",
+    "insuranceCard": "بطاقة التأمين",
     "uin": "UIN",
     "vid": "VID",
     "enableVerification": "تفعيل",
@@ -169,7 +170,7 @@
         "downloadingCredentials": "تنزيل بيانات الاعتماد"
       }
     },
-    "errors":{
+    "errors": {
       "noInternetConnection": {
         "title": "لا يوجد اتصال بالإنترنت",
         "message": "الرجاء التحقق من اتصالك وإعادة المحاولة"
@@ -180,7 +181,7 @@
       },
       "generic": {
         "title": "هناك خطأ ما!",
-        "message":"نواجه بعض المشاكل مع طلبك. حاول مرة اخرى."
+        "message": "نواجه بعض المشاكل مع طلبك. حاول مرة اخرى."
       }
     }
   },
@@ -250,22 +251,26 @@
     "backButton": "العودة إلى المنزل"
   },
   "GetIdInputModal": {
-    "header": "استرجع UIN / VID الخاص بك",
+    "header": "استرجع UIN/VID الخاص بك",
     "applicationIdLabel": "الرجاء إدخال معرف التطبيق الخاص بك",
     "enterApplicationId": "أدخل معرف التطبيق",
-    "requestingOTP": "جارٍ طلب OTP ...",
-    "qstnMarkToolTip": "معرف التطبيق متاح في الإقرار الذي تم استلامه بعد التسجيل.",
-    "getUIN": "احصل على UIN / VID"
+    "requestingOTP": "جارٍ طلب كلمة المرور لمرة واحدة (OTP)...",
+    "toolTipTitle": "ما قلته انا؟",
+    "toolTipDescription": "يشير معرف التطبيق (AID) إلى المعرف الفريد الممنوح للمقيم أثناء أي حدث في دورة حياة المعرف، مثل إصدار المعرف، أو تحديث المعرف، أو استرداد المعرف المفقود، في مركز التسجيل. ",
+    "getUIN": "احصل على UIN/VID"
   },
   "IdInputModal": {
-    "header": "استرجع هويتك",
-    "guideLabel": "حدد نوع المعرف وأدخل UIN أو VID المقدم من MOSIP للمعرف الذي ترغب في استرداده",
-    "generateVc": "إنشاء بطاقة",
-    "downloadID": "معرف التنزيل",
-    "enterId": "أدخل {{idType}}",
-    "noUIN/VID": "ليس لديك UIN / VID؟ ",
-    "getItHere": "احصل عليها الآن",
-    "requestingOTP": "جارٍ طلب OTP ..."
+    "header": "قم بتنزيل معرفك",
+    "guideLabel": "حدد نوع المعرف وأدخل UIN أو VID المقدم من MOSIP الذي ترغب في تنزيله. ",
+    "generateVc": "توليد البطاقة",
+    "downloadID": "تحميل معرف",
+    "enterId": "يدخل {{idType}}",
+    "noUIN/VID": "ليس لديك UIN/VID؟",
+    "getItHere": "احصل عليه الآن باستخدام AID الخاص بك.",
+    "requestingOTP": "جارٍ طلب كلمة المرور لمرة واحدة (OTP)...",
+    "toolTipTitle": "ما هو {{idType}}؟",
+    "toolTipUINDescription": "رقم التعريف الفريد (UIN)، كما يوحي الاسم، هو رقم فريد مخصص للمقيم. ",
+    "toolTipVIDDescription": "يعد VID / Virtual ID معرفًا مستعارًا يمكن استخدامه لمعاملات المصادقة. "
   },
   "OtpVerificationModal": {
     "title": "التحقق من OTP",
@@ -308,7 +313,7 @@
         "title": "لا يوجد اتصال بالإنترنت",
         "message": "الرجاء التحقق من اتصالك وإعادة المحاولة"
       },
-      "downloadLimitExpires":{
+      "downloadLimitExpires": {
         "title": "الخطأ تحميل",
         "message": "حدثت مشكلة أثناء تنزيل البطاقات التالية. حاول مرة اخرى"
       }
@@ -356,7 +361,7 @@
   },
   "MainLayout": {
     "home": "المنزل",
-    "scan": "مسح",
+    "share": "يشارك",
     "history": "تاريخ",
     "request": "طلب",
     "settings": "إعدادات"
@@ -466,7 +471,7 @@
     "gotoSettings": "اذهب للاعدادات"
   },
   "ScanScreen": {
-    "header": "مسح رمز الاستجابة السريعة",
+    "header": "مسح",
     "noShareableVcs": "لا تتوفر بطاقات قابلة للمشاركة",
     "bluetoothStateAndroid": "يرجى تشغيل البلوتوث من الإعدادات السريعة لدعم المشاركة المحلية",
     "bluetoothStateIos": "يرجى تشغيل البلوتوث من مركز التحكم لدعم المشاركة المحلية",

@@ -178,21 +178,19 @@ async function generateCacheAPIFunctionWithCachePreference(
 ) {
   const existingCredentials = await Keychain.getGenericPassword();
   try {
-    const response = (await getItem(
+    const response = await getItem(
       cacheKey,
       null,
       existingCredentials?.password,
-    )) as string;
+    );
 
     if (response) {
-      return JSON.parse(response);
+      return response;
     } else {
       const response = await fetchCall();
-      setItem(
-        cacheKey,
-        JSON.stringify(response),
-        existingCredentials?.password,
-      ).then(() => console.log('Cached response for ' + cacheKey));
+      setItem(cacheKey, response, existingCredentials?.password).then(() =>
+        console.log('Cached response for ' + cacheKey),
+      );
 
       return response;
     }
@@ -219,11 +217,9 @@ async function generateCacheAPIFunctionWithAPIPreference(
   const existingCredentials = await Keychain.getGenericPassword();
   try {
     const response = await fetchCall();
-    setItem(
-      cacheKey,
-      JSON.stringify(response),
-      existingCredentials.password,
-    ).then(() => console.log('Cached response for ' + cacheKey));
+    setItem(cacheKey, response, existingCredentials.password).then(() =>
+      console.log('Cached response for ' + cacheKey),
+    );
     return response;
   } catch (error) {
     console.warn(`Failed to load due to network issue in API preferred api call.
@@ -233,14 +229,14 @@ async function generateCacheAPIFunctionWithAPIPreference(
 
     console.log(error);
 
-    const response = (await getItem(
+    const response = await getItem(
       cacheKey,
       null,
       existingCredentials.password,
-    )) as string;
+    );
 
     if (response) {
-      return JSON.parse(response);
+      return response;
     } else {
       if (response == null) {
         throw error;

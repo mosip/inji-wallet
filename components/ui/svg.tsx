@@ -1,7 +1,6 @@
 import React from 'react';
 import Svg, {Image} from 'react-native-svg';
 import {Theme} from './styleUtils';
-import {Icon} from 'react-native-elements';
 import {ImageBackground} from 'react-native';
 import PinICon from '../../assets/Pin_Icon.svg';
 import InjiSmallLogo from '../../assets/Inji_Logo.svg';
@@ -29,12 +28,14 @@ import {
 } from '../VC/MosipVCItem/MosipVCItemContent';
 import {VCMetadata} from '../../shared/VCMetadata';
 import {VerifiableCredential} from '../../types/VC/ExistingMosipVC/vc';
+import {ProfileIcon} from '../ProfileIcon';
 
 export class SvgImage {
   static MosipLogo(props: LogoProps) {
     const {width, height} = props;
     return <Logo width={width} height={height} />;
   }
+
   static pinIcon() {
     return (
       <PinICon
@@ -112,19 +113,20 @@ export class SvgImage {
   static IssuerIcon(issuer: IssuerProps) {
     return (
       <Svg
-        width="78"
-        height="35"
+        width="40"
+        height="40"
         {...testIDProps(`issuerIcon-${issuer.testID}`)}>
         <Image
           href={getIssuerLogo(issuer.displayDetails)}
           x="0"
           y="0"
-          height="32"
-          width="32"
+          height="40"
+          width="40"
         />
       </Svg>
     );
   }
+
   static WarningLogo() {
     return (
       <WarningLogo
@@ -133,6 +135,7 @@ export class SvgImage {
       />
     );
   }
+
   static OtpVerificationIcon() {
     return (
       <OtpVerificationIcon
@@ -141,19 +144,23 @@ export class SvgImage {
       />
     );
   }
+
   static VcItemContainerProfileImage(
     props: ExistingMosipVCItemContentProps | EsignetMosipVCItemContentProps,
     verifiableCredential: VerifiableCredential,
   ) {
-    return verifiableCredential ? (
+    const imageUri = faceImageSource(props, verifiableCredential);
+    return verifiableCredential && imageUri ? (
       <ImageBackground
         imageStyle={Theme.Styles.faceImage}
-        source={faceImageSource(props, verifiableCredential)}
+        source={{uri: imageUri}}
         style={Theme.Styles.closeCardImage}>
-        {props.isPinned && SvgImage.pinIcon()}
+        {props?.isPinned && SvgImage.pinIcon()}
       </ImageBackground>
     ) : (
-      <Icon name="person" color={Theme.Colors.Icon} size={88} />
+      <>
+        <ProfileIcon />
+      </>
     );
   }
 
@@ -169,6 +176,7 @@ export class SvgImage {
       />
     );
   }
+
   static CameraCaptureIcon() {
     return (
       <CameraCaptureIcon
@@ -177,9 +185,11 @@ export class SvgImage {
       />
     );
   }
+
   static SuccessLogo() {
     return <SuccessLogo {...testIDProps('SuccessLogo')} />;
   }
+
   static NoInternetConnection() {
     return (
       <NoInternetConnection {...testIDProps('noInternetConnectionImage')} />
@@ -203,11 +213,9 @@ function faceImageSource(
   props: faceImageSourceProps,
   verifiableCredential: VerifiableCredential,
 ) {
-  return {
-    uri: props.vcMetadata.isFromOpenId4VCI()
-      ? verifiableCredential?.credentialSubject?.face
-      : props.context.credential.biometrics.face,
-  };
+  return props?.vcMetadata?.isFromOpenId4VCI()
+    ? verifiableCredential?.credentialSubject?.face
+    : props?.context?.credential?.biometrics?.face;
 }
 
 interface LogoProps {

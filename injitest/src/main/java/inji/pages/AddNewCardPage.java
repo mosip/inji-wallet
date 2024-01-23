@@ -28,6 +28,7 @@ public class AddNewCardPage extends BasePage{
     private WebElement continueButton;
 
     @AndroidFindBy(xpath = "(//android.widget.TextView)[4]")
+    @iOSXCUITFindBy(accessibility = "issuersScreenDescription")
     private WebElement addNewCardGuideMessage;
     
     @AndroidFindBy(xpath = "(//android.widget.TextView)[5]")//remove once get accesibility id
