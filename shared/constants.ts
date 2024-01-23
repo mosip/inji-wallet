@@ -113,10 +113,11 @@ export const DETAIL_VIEW_DEFAULT_FIELDS = [
 ];
 
 //todo UIN & VID to be removed once we get the fields in the wellknown endpoint
-export const CARD_VIEW_ADD_ON_FIELDS = ['idType', 'UIN', 'VID'];
+export const CARD_VIEW_ADD_ON_FIELDS = ['UIN', 'VID'];
 export const DETAIL_VIEW_ADD_ON_FIELDS = [
   'UIN',
   'VID',
   'status',
   'credentialRegistry',
+  'idType',
 ];
