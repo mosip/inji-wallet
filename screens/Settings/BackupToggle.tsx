@@ -1,9 +1,10 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {MessageOverlay} from '../../components/MessageOverlay';
 import {Button, Text} from '../../components/ui';
 import {Modal} from '../../components/ui/Modal';
 import {Theme} from '../../components/ui/styleUtils';
 import {useBackupScreen} from './BackupController';
+import BackupAndRestoreScreen from './BackupAndRestoreScreen';
 
 export const BackupToggle: React.FC<BackupToggleProps> = props => {
   const [dataBackup, setDataBackup] = useState(false);
@@ -43,6 +44,8 @@ export const BackupToggle: React.FC<BackupToggleProps> = props => {
           styles={Theme.MessageOverlayStyles.button}
         />
       </Modal>
+
+      {true && <BackupAndRestoreScreen />}
       <MessageOverlay
         isVisible={controller.isBackingUpSuccess}
         onButtonPress={() => {
