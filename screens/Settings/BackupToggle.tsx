@@ -5,23 +5,17 @@ import {Button, Row, Text} from '../../components/ui';
 import {Modal} from '../../components/ui/Modal';
 import {Theme} from '../../components/ui/styleUtils';
 import {SvgImage} from '../../components/ui/svg';
-import BackupAndRestoreScreen from './BackupAndRestoreScreen';
 import {useBackupScreen} from './BackupController';
 
+//TODO: Make this component adaptable to all screen size
 export const BackupToggle: React.FC<BackupToggleProps> = props => {
   const [dataBackup, setDataBackup] = useState(false);
 
   const controller = useBackupScreen(props);
 
-  const toggleSwitch = () => {
-    setDataBackup(!dataBackup);
-    if (!dataBackup) {
-      controller.FETCH_DATA();
-    }
-  };
-
   return (
     <React.Fragment>
+      {/* //TODO: Remove modal and make it screen as per mockup */}
       <Modal
         isVisible={props.isVisible}
         headerTitle={'Data Backup Toggle'}
@@ -73,7 +67,7 @@ export const BackupToggle: React.FC<BackupToggleProps> = props => {
         <Button
           type="gradient"
           title={'Proceed'}
-          onPress={() => {}}
+          onPress={props.onConfirmation}
           margin={[0, 8, 0, 0]}
         />
         <Button
@@ -84,7 +78,6 @@ export const BackupToggle: React.FC<BackupToggleProps> = props => {
         />
       </Modal>
 
-      {true && <BackupAndRestoreScreen />}
       <MessageOverlay
         isVisible={controller.isBackingUpSuccess}
         onButtonPress={() => {

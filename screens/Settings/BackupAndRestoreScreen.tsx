@@ -36,7 +36,6 @@ const SectionLayout: React.FC<SectionLayoutProps> = ({
             fontFamily: 'Inter',
             fontWeight: '600',
             fontSize: 14,
-            // lineSpacing: 17,
           }}>
           {headerText}
         </Text>
@@ -45,7 +44,6 @@ const SectionLayout: React.FC<SectionLayoutProps> = ({
       <Row
         style={{
           padding: 16,
-          // paddingTop: 32,
           backgroundColor: Theme.Colors.whiteBackgroundColor,
           borderBottomLeftRadius: 6,
           borderBottomRightRadius: 6,
@@ -95,7 +93,9 @@ type AccountInformationProps = {
 const BackupAndRestoreScreen = () => {
   const controller = useBackupScreen();
   const LastBackup = (
-    <SectionLayout headerText={'Last Backup: No Backup Found'}>
+    <SectionLayout
+      headerText={'Last Backup: No Backup Found'}
+      headerIcon={SvgImage.DataBackupIcon()}>
       <Row>
         <View style={{marginBottom: 19}}>
           <Text
@@ -110,13 +110,13 @@ const BackupAndRestoreScreen = () => {
           </Text>
         </View>
       </Row>
-      <Row style={{backgroundColor: 'red'}}>
+      <Row style={{marginLeft: 4, marginRight: 4}}>
         <Button
           testID="backup"
           type="gradient"
           title={'Backup'}
           onPress={controller.DATA_BACKUP}
-          styles={Theme.MessageOverlayStyles.button}
+          styles={{...Theme.MessageOverlayStyles.button, flex: 1}}
         />
       </Row>
     </SectionLayout>
@@ -146,46 +146,6 @@ const BackupAndRestoreScreen = () => {
   );
 
   const RestoreSection = (
-    /*   <View
-      style={{
-        marginLeft: 18,
-        marginRight: 18,
-        marginTop: 16,
-        rowGap: 2,
-      }}>
-      <Row
-        style={{
-          alignItems: 'center',
-          padding: 16,
-          backgroundColor: Theme.Colors.whiteBackgroundColor,
-          borderTopLeftRadius: 6,
-          borderTopRightRadius: 6,
-        }}>
-        <Icon
-          name="restore"
-          type="MaterialIcons"
-          size={30}
-          color={Theme.Colors.Icon}
-        />
-        <Text style={{justifyContent: 'center'}}>Restore</Text>
-      </Row>
-      <Row
-        style={{
-          padding: 16,
-          paddingTop: 32,
-          backgroundColor: Theme.Colors.whiteBackgroundColor,
-          borderBottomLeftRadius: 6,
-          borderBottomRightRadius: 6,
-        }}>
-        <Button
-          testID="backup"
-          type="outline"
-          title={'Restore'}
-          onPress={() => {}}
-          styles={Theme.MessageOverlayStyles.button}
-        />
-      </Row>
-    </View> */
     <SectionLayout
       headerText="Restore"
       headerIcon={
@@ -196,13 +156,15 @@ const BackupAndRestoreScreen = () => {
           color={Theme.Colors.Icon}
         />
       }>
-      <Button
-        testID="backup"
-        type="outline"
-        title={'Restore'}
-        onPress={() => {}}
-        styles={{...Theme.MessageOverlayStyles.button, marginTop: 10}}
-      />
+      <Row style={{marginLeft: 4, marginRight: 4}}>
+        <Button
+          testID="backup"
+          type="outline"
+          title={'Restore'}
+          onPress={() => {}}
+          styles={{...Theme.MessageOverlayStyles.button, marginTop: 10}}
+        />
+      </Row>
     </SectionLayout>
   );
 
