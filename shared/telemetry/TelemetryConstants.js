@@ -12,6 +12,7 @@ export const TelemetryConstants = {
     vcLockOrRevoke: 'VC Lock / VC Revoke',
     getVcUsingAid: 'Get VC using AID',
     fetchData: 'Fetch Data',
+    dataBackup: 'Data Backup',
   }),
 
   EndEventStatus: Object.freeze({
@@ -62,5 +63,6 @@ export const TelemetryConstants = {
     vcList: 'VC List',
     vcShareSuccessPage: 'VC Successfully Shared Page',
     vcReceivedSuccessPage: 'VC Successfully Received Page',
+    dataBackupScreen: 'Data Backup Screen',
   }),
 };

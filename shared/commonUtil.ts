@@ -2,6 +2,8 @@ import argon2 from 'react-native-argon2';
 import {AnyState} from 'xstate';
 import {getDeviceNameSync} from 'react-native-device-info';
 import {isAndroid} from './constants';
+import {generateSecureRandom} from 'react-native-securerandom';
+import forge from 'node-forge';
 
 export const hashData = async (
   data: string,
@@ -11,6 +13,21 @@ export const hashData = async (
   const result = await argon2(data, salt, config);
   return result.rawHash as string;
 };
+
+export const generateRandomString = async () => {
+  const randomBytes = await generateSecureRandom(64);
+  const randomString = randomBytes.reduce(
+    (acc, byte) => acc + byte.toString(16).padStart(2, '0'),
+    '',
+  );
+  return randomString;
+};
+export const generateBackupEncryptionKey = (
+  password: string,
+  salt: string,
+  iterations: number,
+  length: number,
+) => forge.pkcs5.pbkdf2(password, salt, iterations, length);
 
 export interface Argon2iConfig {
   iterations: number;
@@ -74,4 +91,8 @@ export const faceMatchConfig = (resp: string) => {
       },
     },
   };
+};
+
+export const getBackupFileName = () => {
+  return `backup_${Date.now()}`;
 };

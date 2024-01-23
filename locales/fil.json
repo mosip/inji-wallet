@@ -58,6 +58,7 @@
     "id": "Id",
     "qrCodeHeader": "QR Code",
     "nationalCard": "Pambansang Kard",
+    "insuranceCard": "Insurance Card",
     "uin": "UIN",
     "vid": "VID",
     "enableVerification": "I-activate",

@@ -13,27 +13,24 @@ import {
   isHardwareKeystoreExists,
 } from './cryptoutil/cryptoUtil';
 import {VCMetadata} from './VCMetadata';
-import {ENOENT, getItem} from '../machines/store';
+import {ENOENT} from '../machines/store';
 import {
   androidVersion,
   isAndroid,
   MY_VCS_STORE_KEY,
-  RECEIVED_VCS_STORE_KEY,
   SETTINGS_STORE_KEY,
 } from './constants';
 import FileStorage, {
+  backupDirectoryPath,
+  getBackupFilePath,
   getFilePath,
-  getFilePathOfEncryptedHmac,
+  getDirectorySize,
   vcDirectoryPath,
 } from './fileStorage';
 import {__AppId} from './GlobalVariables';
-import {
-  getErrorEventData,
-  getImpressionEventData,
-  sendErrorEvent,
-  sendImpressionEvent,
-} from './telemetry/TelemetryUtils';
+import {getErrorEventData, sendErrorEvent} from './telemetry/TelemetryUtils';
 import {TelemetryConstants} from './telemetry/TelemetryConstants';
+import {getBackupFileName} from './commonUtil';
 
 export const MMKV = new MMKVLoader().initialize();
 
@@ -56,6 +53,45 @@ async function generateHmac(
 }
 
 class Storage {
+  static exportData = async (encryptionKey: string) => {
+    const completeBackupData = {};
+    const dataFromDB: Record<string, any> = {};
+
+    const allKeysInDB = await MMKV.indexer.strings.getKeys();
+    const keysToBeExported = allKeysInDB.filter(key =>
+      key.includes('CACHE_FETCH_ISSUER_WELLKNOWN_CONFIG_'),
+    );
+    keysToBeExported.push(MY_VCS_STORE_KEY);
+
+    const encryptedDataPromises = keysToBeExported.map(key =>
+      MMKV.getItem(key),
+    );
+
+    Promise.all(encryptedDataPromises).then(encryptedDataList => {
+      keysToBeExported.forEach(async (key, index) => {
+        let encryptedData = encryptedDataList[index];
+        if (encryptedData != null) {
+          const decryptedData = await decryptJson(encryptionKey, encryptedData);
+          dataFromDB[key] = JSON.parse(decryptedData);
+        }
+      });
+    });
+
+    completeBackupData['dataFromDB'] = dataFromDB;
+    completeBackupData['VC_Records'] = {};
+
+    let vcKeys = allKeysInDB.filter(key => key.indexOf('VC_') === 0);
+    for (let ind in vcKeys) {
+      const key = vcKeys[ind];
+      const vc = await Storage.readVCFromFile(key);
+      const decryptedVCData = await decryptJson(encryptionKey, vc);
+      const deactivatedVC =
+        removeWalletBindingDataBeforeBackup(decryptedVCData);
+      completeBackupData['VC_Records'][key] = deactivatedVC;
+    }
+    return completeBackupData;
+  };
+
   static isVCStorageInitialised = async (): Promise<boolean> => {
     try {
       const res = await FileStorage.getInfo(vcDirectoryPath);
@@ -252,3 +288,33 @@ class Storage {
 }
 
 export default Storage;
+
+export async function writeToBackupFile(data): Promise<string> {
+  const fileName = getBackupFileName();
+  const isDirectoryExists = await FileStorage.exists(backupDirectoryPath);
+  if (isDirectoryExists) {
+    await FileStorage.removeItem(backupDirectoryPath);
+  }
+  await FileStorage.createDirectory(backupDirectoryPath);
+  const path = getBackupFilePath(fileName);
+  await FileStorage.writeFile(path, JSON.stringify(data));
+  return fileName;
+}
+
+function removeWalletBindingDataBeforeBackup(data: string) {
+  const vcData = JSON.parse(data);
+  vcData.walletBindingResponse = null;
+  vcData.publicKey = null;
+  vcData.privateKey = null;
+  return vcData;
+}
+
+export async function isMinimumLimitForBackupReached() {
+  const directorySize = await getDirectorySize(vcDirectoryPath);
+  const freeDiskStorageInBytes =
+    isAndroid() && androidVersion < 29
+      ? getFreeDiskStorageOldSync()
+      : getFreeDiskStorageSync();
+
+  return freeDiskStorageInBytes <= 2 * directorySize;
+}

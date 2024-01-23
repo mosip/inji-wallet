@@ -2,7 +2,7 @@ fileignoreconfig:
   - filename: package.json
     checksum: 4770aabfda162fbc0b9a8c53d7dee483ce29b82c6cd3e17e81e3e628d93dbadc
   - filename: package-lock.json
-    checksum: 82c06097d5f030255c1aed47bae1f2df241759612fdd0715b4f66b0e1535cbb9
+    checksum: e4569b3ec846749ae56bd9ad907c6cd05c27ab111475ceb501e667ec38367609
   - filename: lib/jsonld-signatures/suites/ed255192018/ed25519.ts
     checksum: 493b6e31144116cb612c24d98b97d8adcad5609c0a52c865a6847ced0a0ddc3a
   - filename: components/PasscodeVerify.tsx
@@ -36,17 +36,17 @@ fileignoreconfig:
   - filename: shared/telemetry/TelemetryUtils.js
     checksum: ffe9aac2dcc590b98b0d588885c088eff189504ade653a77f74b67312bfd27ad
   - filename: shared/fileStorage.ts
-    checksum: f86dc7aa4a69e7109310e7ab5529a8599f38f15eb79f3f4da545aceaaf90d731
+    checksum: 5c4c9bc78446e6b25bf6e6ac276918757d6275a27ba93d253338ca629ebc0240
   - filename: shared/storage.ts
-    checksum: c31270346f2ef717a31168a93d0311ce6f925434eb613ec7cf86553222630cdb
+    checksum: 837dda0fd0a3e160e62f10df44003d29e29dfce897550a85a8e74fe77a2a06db
   - filename: screens/Issuers/IssuersScreen.tsx
     checksum: 9c53e3770dbefe26e0de67ee4b7d5cc9c52d9823cbb136a1a5104dcb0a101071
   - filename: ios/Podfile.lock
-    checksum: 2487c4e11fb1bd95032cc4511435d9420fc0dfc62f3c015d177213fa089df7f2
+    checksum: 1da328d6edcd284799be962d59281b120a5bb2a6873ca6a01da321857e59a7d3
   - filename: screens/Home/IntroSlidersScreen.tsx
     checksum: 72ef913857448ef05763e52e32356faa2d1f3de8130a1c638d1897f44823031f
   - filename: shared/commonUtil.ts
-    checksum: b9ff87d627c74ba1cf2f1d0bfab6c11192573c45a4c581c3beadb3c612bfe1ab
+    checksum: 4a53bb615f2ea0fbf687bd7027c4c246e819dd88bc273941ed611e763d9d2356
   - filename: screens/Home/MyVcs/GetIdInputModal.tsx
     checksum: 5c736ed79a372d0ffa7c02eb33d0dc06edbbb08d120978ff287f5f06cd6c7746
   - filename: shared/openId4VCI/Utils.ts
@@ -82,9 +82,11 @@ fileignoreconfig:
   - filename: assets/fingerprint_icon.svg
     checksum: b2d3a50ca1336f60123d96a8cc8ea663c3316ed2d8c31833bce7e393ca51695b
   - filename: machines/store.ts
-    checksum: ca2328c39d2757ffebf85c0b6663da1073eb58349f2630c9418b2f16c350cbd1
+    checksum: 9970da0ea685018a90f7306fb88945d135dd019439099dd56b6109d915a8a24f
   - filename: assets/Flip_Camera_Icon.svg
     checksum: 736b5a7ddb86bd4376229ce198dbf8a663e7ac89fc3311bd4f19afd4a2b36ffd
+  - filename: ios/fastlane/Fastfile
+    checksum: 086080bc7a04accf5094c457b5acf84d9fec5d7dfa72eaaaf02e433ecf4f996b
   - filename: assets/Finger_Print_Icon.svg
     checksum: 776d4fe4fc4b54d185ccf97daf0511b9fe2c0e0f7c1a809047020e5e8a100db6
   - filename: android/app/build.gradle
@@ -100,7 +102,33 @@ fileignoreconfig:
   - filename: assets/Issuer_search_clearing_button.svg
     checksum: f4e8a054fc4168e08bc9e9fe3e644cebabacdfc31ef0cbe36dd281766f47df5e
   - filename: screens/Home/MyVcs/IdInputModal.tsx
-    checksum: 7ee46d8ef4761c0e9b59f3e602e6e30be5f47221817c819e91ab10ca2203089f 
+    checksum: 7ee46d8ef4761c0e9b59f3e602e6e30be5f47221817c819e91ab10ca2203089f
+  - filename: .env
+    checksum: d3023fb22734e6c7bd626f24007ba7b93e791cb0bcb8a086cb8e99f04bc31c7c
+  - filename: machines/backup.ts
+    checksum: d4b95b075ce39ed80b119014188f8903dbb46d46dd19a3757eea2ae8a06ba7ad
+  - filename: machines/backup.typegen.ts
+    checksum: 4ae5dbf36353cb7568a278628256e68caded071f1e91d6e1b25ac9aefb1f81cf
+  - filename: screens/Settings/BackupController.tsx
+    checksum: 054665c377b4a8e246ae1bfb419ab86d0cb1c120ae92cdc27ceed9cf1f39679b
+  - filename: screens/Settings/BackupViaPassword.tsx
+    checksum: 5fb2f98fb8a4efeb6b691b8a29e62eba64a99e9b2129bc0af1d11bc56bdfb374
+  - filename: screens/Settings/DataBackup.tsx
+    checksum: 6f3eaf26a58712b3ddd36dfa49d0d608eb873455ca91374545148c23e36fd43b
+  - filename: shared/constants.ts
+    checksum: 062fb9bc4ba7dc7c91558caee5a4fd41ba748b0dcd108c62b50a2fdd06eaa289
+  - filename: shared/commonUtil.ts
+    checksum: 4f353f525ce0d2c9c7caf734aa9ce4a7a5ce8d526528a491974052256b8cbe76
+  - filename: screens/Settings/BackupController.tsx
+    checksum: d2a355356bcaf8f7ef3b53ba93710cec15fefd0fdf31efd779eebd2bfab61c19
+  - filename: shared/constants.ts
+    checksum: 3961940d2df158b6c287cb689b8841d278eae273a4e5553ae2ae612340f8b8c8
+  - filename: shared/api.ts
+    checksum: 96a87e2128c30d16526cb1cb91b7da58f266d8c32d830adff11ca4d04e8c459f
+  - filename: machines/backupWithEncryption.ts
+    checksum: 038c12d30b2312fcbd9230a1c6ddb494d2e561fe0d09741335fa80ab67e2c550
+  - filename: machines/backupWithEncryption.typegen.ts
+    checksum: f5f9a71082e3f30f89e98a7913535327b31b942709ee8b5efb40e18c73ddee2a 
   - filename: screens/Home/MyVcs/OtpVerificationModal.tsx
     checksum: 1db1f39701019383e1e40e6ed5278177e6c9bb3d28def0935cf6d4bd9e41e63a 
   - filename: screens/Home/MyVcs/GetIdInputModal.tsx
@@ -109,4 +137,24 @@ fileignoreconfig:
     checksum: 4d155c6e5468effb0b82e62f6878f2bd7ff7e7c9540e16bdd28cb81b80672ac3 
   - filename: .github/workflows/push-triggers.yml
     checksum: 4a031b46646aa982c8f40e4c7fe0bd3e05a76a6af1ff1c2de7350ba6ebf9a839 
+  - filename: screens/Home/IntroSlidersScreen.tsx
+    checksum: 24b993e0406a49ace5b95dd05f7c4702220ec3d3f3fc2e774f20c023ef73822a 
+  - filename: .env
+    checksum: 4259c7c600ef49bfca798a7807a03afe9fefb1a04efd3adf224397c18117a8c1
+  - filename: ios/Podfile.lock
+    checksum: f32d1580e34e354c0eb27d53d2d1c2b766b0902fc6366c407d84c24d6d8d38e3
+  - filename: package-lock.json
+    checksum: 2fb6ce0541ab33a7a981213911d7af60cf4c8144bf0d1587522ce22a48b104d6
+  - filename: components/VC/Views/VCCardViewContent.tsx
+    checksum: 02655ff3d7f8a8ea4f3664485f98c961802c598242ec44408594a2ddb721fa5e
+  - filename: screens/Home/IntroSlidersScreen.tsx
+    checksum: 99aad6f5e474f4d5dfa563245d7b627f5fed28a1a4fe8879cc8b8cc538a66f4e
+  - filename: shared/storage.ts
+    checksum: fa967759d765432926475a5534c26adfa61727c8e3334c795d7ee1e5b2dd0e1f
+  - filename: shared/constants.ts
+    checksum: ae922a7acafab9c42746bd54e194c44532af81122837594c397713cef6922ca0
+  - filename: shared/fileStorage.ts
+    checksum: 451e8873a635d955fe426d9a5fcf191f2d4fd74984a1a4518760e2d10e9e1817
+  - filename: screens/Settings/BackupController.tsx
+    checksum: daf682b5616e45bd7b9a7c76becc617fea56be83124c3c4db838c2046e977481
     version: ""

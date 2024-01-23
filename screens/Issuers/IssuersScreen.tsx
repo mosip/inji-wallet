@@ -1,6 +1,6 @@
 import React, {useLayoutEffect, useState} from 'react';
 import {useTranslation} from 'react-i18next';
-import {FlatList, Image, Pressable, View} from 'react-native';
+import {FlatList, Pressable, View} from 'react-native';
 import {Issuer} from '../../components/openId4VCI/Issuer';
 import {Error} from '../../components/ui/Error';
 import {Header} from '../../components/ui/Header';
@@ -10,7 +10,7 @@ import {RootRouteProps} from '../../routes';
 import {HomeRouteProps} from '../../routes/main';
 import {useIssuerScreenController} from './IssuerScreenController';
 import {Loader} from '../../components/ui/Loader';
-import testIDProps, {removeWhiteSpace} from '../../shared/commonUtil';
+import {removeWhiteSpace} from '../../shared/commonUtil';
 import {
   ErrorMessage,
   getDisplayObjectForCurrentLanguage,
@@ -218,9 +218,7 @@ export const IssuersScreen: React.FC<
             testID="issuersScreenDescription"
             style={{
               ...Theme.TextStyles.regularGrey,
-              paddingTop: 0.5,
-              marginVertical: 14,
-              marginHorizontal: 9,
+              ...Theme.IssuersScreenStyles.issuersSearchSubText,
             }}>
             {t('description')}
           </Text>
@@ -241,7 +239,7 @@ export const IssuersScreen: React.FC<
                     {...props}
                   />
                 )}
-                numColumns={2}
+                numColumns={1}
                 keyExtractor={item => item.credential_issuer}
               />
             )}
