@@ -45,6 +45,11 @@ public class RetrieveIdPage extends BasePage {
 	@AndroidFindBy(xpath = "//*[contains(@text,'AID is not ready yet')]")
 	@iOSXCUITFindBy(accessibility = "AID is not ready yet")
 	private WebElement aidIsNotReadyYetMessage;
+	
+	@AndroidFindBy(xpath = "//*[contains(@text,'Select ID type and enter the MOSIP provided UIN or VID you')]")
+	@iOSXCUITFindBy(accessibility = "Select ID type and enter the MOSIP provided UIN or VID you wish to download. In the next step, you will be asked to enter OTP.")
+	private WebElement downloadIdGuideMessage;
+	
 
 	public RetrieveIdPage(AppiumDriver driver) {
 		super(driver);
@@ -52,6 +57,10 @@ public class RetrieveIdPage extends BasePage {
 
 	public boolean isRetrieveIdPageLoaded() {
 		return this.isElementDisplayed(retrieveIdText);
+	}
+	
+	public String getRetrieveIdPageHeader() {
+		return this.getTextFromLocator(retrieveIdText);
 	}
 
 	public RetrieveIdPage setEnterIdTextBox(String uinOrVid) {
@@ -68,6 +77,14 @@ public class RetrieveIdPage extends BasePage {
 	public GenerateUinOrVidPage clickOnGetItNowText() {
 		this.clickOnElement(getItNowText);
 		return new GenerateUinOrVidPage(driver);
+	}
+	
+	public String verifyGetItTextDisplayed() {
+		return this.getTextFromLocator(getItNowText);
+	}
+	
+	public boolean verifyDownloadIdPageGuideMessage() {
+		return this.isElementDisplayed(downloadIdGuideMessage);
 	}
 
 	public boolean isInvalidUinMassageLoaded() {

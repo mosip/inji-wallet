@@ -62,6 +62,10 @@ public class HomePage extends BasePage {
     @AndroidFindBy(accessibility = "share")
     @iOSXCUITFindBy(accessibility = "share")
     private WebElement shareButton;
+    
+    @AndroidFindBy(uiAutomator = "new UiSelector().className(\"android.widget.TextView\").instance(6);")// fix with accecibility
+    @iOSXCUITFindBy(accessibility = "share")
+    private WebElement shareButtonByForText;
 
     @AndroidFindBy(accessibility = "nationalCard")
     @iOSXCUITFindBy(accessibility = "nationalCard")
@@ -164,6 +168,10 @@ public class HomePage extends BasePage {
     public SharePage clickOnShareButton() {
         clickOnElement(shareButton);
         return new SharePage(driver);
+    }
+    
+    public String getShareButton() {
+    	return getTextFromLocator(shareButtonByForText);
     }
 
     public boolean isIdTypeDisplayed() {

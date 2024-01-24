@@ -66,7 +66,7 @@ public class TestDataReader {
             case "invalidenv":
                 return "https://api.dev3.mosip";
             case "isDeviceFarmRun":
-                return "false";
+                return "true";
             default:
                 return "Key not found";
         }
