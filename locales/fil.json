@@ -63,6 +63,7 @@
     "vid": "VID",
     "enableVerification": "I-activate",
     "profileAuthenticated": "Ang mga kredensyal ay pinagana para sa online na pagpapatotoo.",
+    "credentialActivated": "Na-activate",
     "offlineAuthDisabledHeader": "Nakabinbin ang pag-activate para sa online na pag-login!",
     "offlineAuthDisabledMessage": "Mangyaring i-click ang pindutan sa ibaba upang i-activate ang kredensyal na ito upang magamit para sa online na pag-login.",
     "verificationEnabledSuccess": "Na-activate para sa online na pag-login",
@@ -97,7 +98,8 @@
   },
   "WalletBinding": {
     "inProgress": "Isinasagawa",
-    "profileAuthenticated": "Na-activate para sa online na pag-login"
+    "profileAuthenticated": "Na-activate para sa online na pag-login",
+    "credentialActivated": "Na-activate"
   },
   "BindingVcWarningOverlay": {
     "alert": "Pakikumpirma",

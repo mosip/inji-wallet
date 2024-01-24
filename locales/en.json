@@ -64,6 +64,7 @@
     "vid": "VID",
     "enableVerification": "Activate",
     "profileAuthenticated": "Credentials are enabled for online authentication.",
+    "credentialActivated": "Activated",
     "offlineAuthDisabledHeader": "Activation pending for online login",
     "offlineAuthDisabledMessage": "Please click the button below to activate this credential to be used for online login.",
     "verificationEnabledSuccess": "Activated for online login",
@@ -98,7 +99,8 @@
   },
   "WalletBinding": {
     "inProgress": "In progress",
-    "profileAuthenticated": "Activated for online login"
+    "profileAuthenticated": "Activated for online login",
+    "credentialActivated": "Activated"
   },
   "BindingVcWarningOverlay": {
     "alert": "Alert",
