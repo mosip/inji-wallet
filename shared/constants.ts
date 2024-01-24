@@ -16,6 +16,14 @@ export const RECEIVED_VCS_STORE_KEY = 'receivedVCs';
 
 export const MY_LOGIN_STORE_KEY = 'myLogins';
 
+export const BACKUP_ENC_KEY = 'backupEncKey';
+
+export const BACKUP_ENC_KEY_TYPE = 'backupEncKeyType';
+
+export const BACKUP_ENC_TYPE_VAL_PASSWORD = 'password';
+
+export const BACKUP_ENC_TYPE_VAL_PHONE = 'phone';
+
 export let individualId = {id: '', idType: 'UIN' as VcIdType};
 
 export const GET_INDIVIDUAL_ID = (currentIndividualId: IndividualId) => {
@@ -63,6 +71,22 @@ export const argon2iConfigForUinVid: Argon2iConfig = {
   mode: 'argon2i',
 };
 
+export const argon2iConfigForBackupFileName: Argon2iConfig = {
+  iterations: 5,
+  memory: 16 * 1024,
+  parallelism: 2,
+  hashLength: 8,
+  mode: 'argon2id',
+};
+export const argon2iConfigForPasswordAndPhoneNumber: Argon2iConfig = {
+  // TODO: expected iterations for hashing password and phone Number is 600000
+  iterations: 500,
+  memory: 16 * 1024,
+  parallelism: 2,
+  hashLength: 30,
+  mode: 'argon2id',
+};
+
 export const argon2iSalt =
   '1234567891011121314151617181920212223242526272829303132333435363';
 
@@ -74,23 +98,3 @@ export type IndividualId = {
 export const NETWORK_REQUEST_FAILED = 'Network request failed';
 export const REQUEST_TIMEOUT = 'request timedout';
 export const BIOMETRIC_CANCELLED = 'User has cancelled biometric';
-
-export const CARD_VIEW_DEFAULT_FIELDS = ['fullName'];
-
-export const DETAIL_VIEW_DEFAULT_FIELDS = [
-  'fullName',
-  'gender',
-  'phone',
-  'dateOfBirth',
-  'email',
-  'address',
-];
-
-//todo UIN & VID to be removed once we get the fields in the wellknown endpoint
-export const CARD_VIEW_ADD_ON_FIELDS = ['idType', 'UIN', 'VID'];
-export const DETAIL_VIEW_ADD_ON_FIELDS = [
-  'UIN',
-  'VID',
-  'status',
-  'credentialRegistry',
-];

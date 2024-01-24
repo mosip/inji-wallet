@@ -87,7 +87,7 @@ public class DetailedVcViewPage extends BasePage{
     private WebElement esignetLogo;
     
     @AndroidFindBy(accessibility = "arrowLeft")
-    @iOSXCUITFindBy(accessibility = "arrowLeft")
+    @iOSXCUITFindBy(accessibility = "close")
     public WebElement backArrow;
 
     public DetailedVcViewPage(AppiumDriver driver) {

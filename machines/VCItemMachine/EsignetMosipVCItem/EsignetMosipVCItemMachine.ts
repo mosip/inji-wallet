@@ -51,6 +51,7 @@ const model = createModel(
     transactionId: '',
     bindingTransactionId: '',
     walletBindingResponse: null as WalletBindingResponse,
+    tempWalletBindingIdResponse: null as WalletBindingResponse,
     walletBindingError: '',
     walletBindingSuccess: false,
     isMachineInKebabPopupState: false,
@@ -82,6 +83,7 @@ const model = createModel(
       SHOW_ACTIVITY: () => ({}),
       REMOVE: (vcMetadata: VCMetadata) => ({vcMetadata}),
       UPDATE_VC_METADATA: (vcMetadata: VCMetadata) => ({vcMetadata}),
+      SHOW_BINDING_STATUS: () => ({}),
     },
   },
 );
@@ -145,9 +147,15 @@ export const EsignetMosipVCItemMachine = model.createMachine(
             actions: 'sendActivationStartEvent',
             target: 'requestingBindingOtp',
           },
-          CANCEL: {
-            target: 'idle',
-          },
+          CANCEL: [
+            {
+              cond: context => context.isMachineInKebabPopupState,
+              target: '#vc-item-openid4vci.kebabPopUp',
+            },
+            {
+              target: 'idle',
+            },
+          ],
         },
       },
       requestingBindingOtp: {
@@ -168,10 +176,17 @@ export const EsignetMosipVCItemMachine = model.createMachine(
       },
       showingWalletBindingError: {
         on: {
-          CANCEL: {
-            target: 'idle',
-            actions: 'setWalletBindingErrorEmpty',
-          },
+          CANCEL: [
+            {
+              cond: context => context.isMachineInKebabPopupState,
+              actions: ['setWalletBindingErrorEmpty'],
+              target: '#vc-item-openid4vci.kebabPopUp',
+            },
+            {
+              actions: ['setWalletBindingErrorEmpty'],
+              target: 'idle',
+            },
+          ],
         },
       },
       acceptingBindingOtp: {
@@ -181,14 +196,25 @@ export const EsignetMosipVCItemMachine = model.createMachine(
             target: 'addKeyPair',
             actions: ['setOtp'],
           },
-          DISMISS: {
-            target: 'idle',
-            actions: [
-              'sendActivationFailedEndEvent',
-              'clearOtp',
-              'clearTransactionId',
-            ],
-          },
+          DISMISS: [
+            {
+              cond: context => context.isMachineInKebabPopupState,
+              target: '#vc-item-openid4vci.kebabPopUp',
+              actions: [
+                'sendActivationFailedEndEvent',
+                'clearOtp',
+                'clearTransactionId',
+              ],
+            },
+            {
+              target: 'idle',
+              actions: [
+                'sendActivationFailedEndEvent',
+                'clearOtp',
+                'clearTransactionId',
+              ],
+            },
+          ],
           RESEND_OTP: {
             target: '.resendOTP',
           },
@@ -198,12 +224,14 @@ export const EsignetMosipVCItemMachine = model.createMachine(
           idle: {},
           resendOTP: {
             invoke: {
-              src: 'requestOtp',
-              onDone: [
-                {
-                  target: 'idle',
-                },
-              ],
+              src: 'requestBindingOtp',
+              onDone: {
+                target: 'idle',
+              },
+              onError: {
+                actions: 'setWalletBindingError',
+                target: '#vc-item-openid4vci.showingWalletBindingError',
+              },
             },
           },
         },
@@ -236,23 +264,15 @@ export const EsignetMosipVCItemMachine = model.createMachine(
           onDone: [
             {
               cond: 'isCustomSecureKeystore',
-              target: 'idle',
-              actions: [
-                'setWalletBindingId',
-                'setThumbprintForWalletBindingId',
-                'storeContext',
-                'updateVc',
-                'setWalletBindingErrorEmpty',
-                'sendActivationSuccessEvent',
-                'logWalletBindingSuccess',
-              ],
+              target: 'updatingContextVariables',
             },
             {
               target: 'updatingPrivateKey',
-              actions: [
-                'setWalletBindingId',
-                'setThumbprintForWalletBindingId',
-              ],
+              /*The walletBindingResponse is used for conditional rendering in wallet binding. 
+                However, it wrongly considers activation as successful even when there's an error 
+                in updatingPrivateKey state. So created a temporary context variable to store the binding 
+                response and use it in updatingPrivateKey state*/
+              actions: 'setTempWalletBindingResponse',
             },
           ],
           onError: [
@@ -263,25 +283,48 @@ export const EsignetMosipVCItemMachine = model.createMachine(
           ],
         },
       },
+
       updatingPrivateKey: {
         invoke: {
           src: 'updatePrivateKey',
           onDone: {
-            actions: [
-              'storeContext',
-              'updatePrivateKey',
-              'updateVc',
-              'setWalletBindingErrorEmpty',
-              'setWalletBindingSuccess',
-              'logWalletBindingSuccess',
-              'sendActivationSuccessEvent',
-            ],
-            target: 'idle',
+            target: 'updatingContextVariables',
           },
           onError: {
-            actions: ['setWalletBindingError', 'logWalletBindingFailure'],
+            actions: [
+              'setWalletBindingError',
+              'logWalletBindingFailure',
+              'sendActivationFailedEndEvent',
+            ],
             target: 'showingWalletBindingError',
           },
+        },
+      },
+
+      updatingContextVariables: {
+        entry: [
+          'setWalletBindingId',
+          'setThumbprintForWalletBindingId',
+          'storeContext',
+          'updatePrivateKey',
+          'updateVc',
+          'setWalletBindingErrorEmpty',
+          'sendActivationSuccessEvent',
+          'logWalletBindingSuccess',
+          send('SHOW_BINDING_STATUS'),
+        ],
+        on: {
+          SHOW_BINDING_STATUS: [
+            {
+              cond: context => context.isMachineInKebabPopupState,
+              actions: 'sendWalletBindingSuccess',
+              target: '#vc-item-openid4vci.kebabPopUp',
+            },
+            {
+              actions: 'setWalletBindingSuccess',
+              target: 'idle',
+            },
+          ],
         },
       },
       idle: {
@@ -325,176 +368,33 @@ export const EsignetMosipVCItemMachine = model.createMachine(
             target: 'idle',
           },
           ADD_WALLET_BINDING_ID: {
-            target: '#vc-item-openid4vci.kebabPopUp.showBindingWarning',
+            target: '#vc-item-openid4vci.showBindingWarning',
           },
           PIN_CARD: {
             target: '#vc-item-openid4vci.pinCard',
-            actions: 'setPinCard',
+            actions: [
+              'setPinCard',
+              assign({
+                isMachineInKebabPopupState: () => false,
+              }),
+            ],
           },
           SHOW_ACTIVITY: {
             target: '#vc-item-openid4vci.kebabPopUp.showActivities',
           },
           REMOVE: {
-            actions: 'setVcKey',
+            actions: [
+              'setVcKey',
+              assign({
+                isMachineInKebabPopupState: () => false,
+              }),
+            ],
             target: '#vc-item-openid4vci.kebabPopUp.removeWallet',
           },
         },
         initial: 'idle',
         states: {
           idle: {},
-          showBindingWarning: {
-            on: {
-              CONFIRM: {
-                actions: 'sendActivationStartEvent',
-                target: '#vc-item-openid4vci.kebabPopUp.requestingBindingOtp',
-              },
-              CANCEL: {
-                target: '#vc-item-openid4vci.kebabPopUp',
-              },
-            },
-          },
-          requestingBindingOtp: {
-            invoke: {
-              src: 'requestBindingOtp',
-              onDone: [
-                {
-                  target: '#vc-item-openid4vci.kebabPopUp.acceptingBindingOtp',
-                  actions: [log('accceptingOTP')],
-                },
-              ],
-              onError: [
-                {
-                  actions: 'setWalletBindingError',
-                  target:
-                    '#vc-item-openid4vci.kebabPopUp.showingWalletBindingError',
-                },
-              ],
-            },
-          },
-          showingWalletBindingError: {
-            on: {
-              CANCEL: {
-                target: '#vc-item-openid4vci.kebabPopUp',
-                actions: 'setWalletBindingErrorEmpty',
-              },
-            },
-          },
-          acceptingBindingOtp: {
-            entry: ['clearOtp'],
-            on: {
-              INPUT_OTP: {
-                target: '#vc-item-openid4vci.kebabPopUp.addKeyPair',
-                actions: ['setOtp'],
-              },
-              DISMISS: {
-                target: '#vc-item-openid4vci.kebabPopUp',
-                actions: [
-                  'sendActivationFailedEndEvent',
-                  'clearOtp',
-                  'clearTransactionId',
-                ],
-              },
-              RESEND_OTP: {
-                target: '.resendOTP',
-              },
-            },
-            initial: 'idle',
-            states: {
-              idle: {},
-              resendOTP: {
-                invoke: {
-                  src: 'requestOtp',
-                  onDone: [
-                    {
-                      target: 'idle',
-                    },
-                  ],
-                },
-              },
-            },
-          },
-          addKeyPair: {
-            invoke: {
-              src: 'generateKeyPair',
-              onDone: [
-                {
-                  cond: 'isCustomSecureKeystore',
-                  target:
-                    '#vc-item-openid4vci.kebabPopUp.addingWalletBindingId',
-                  actions: ['setPublicKey'],
-                },
-                {
-                  target:
-                    '#vc-item-openid4vci.kebabPopUp.addingWalletBindingId',
-                  actions: ['setPublicKey', 'setPrivateKey'],
-                },
-              ],
-              onError: [
-                {
-                  actions: 'setWalletBindingError',
-                  target:
-                    '#vc-item-openid4vci.kebabPopUp.showingWalletBindingError',
-                },
-              ],
-            },
-          },
-          addingWalletBindingId: {
-            invoke: {
-              src: 'addWalletBindnigId',
-              onDone: [
-                {
-                  cond: 'isCustomSecureKeystore',
-                  target: '#vc-item-openid4vci.kebabPopUp',
-                  actions: [
-                    'setWalletBindingId',
-                    'setThumbprintForWalletBindingId',
-                    'storeContext',
-                    'updateVc',
-                    'setWalletBindingErrorEmpty',
-                    'sendWalletBindingSuccess',
-                    'sendActivationSuccessEvent',
-                    'logWalletBindingSuccess',
-                  ],
-                },
-                {
-                  target: '#vc-item-openid4vci.kebabPopUp.updatingPrivateKey',
-                  actions: [
-                    'setWalletBindingId',
-                    'setThumbprintForWalletBindingId',
-                  ],
-                },
-              ],
-              onError: [
-                {
-                  actions: ['setWalletBindingError', 'logWalletBindingFailure'],
-                  target:
-                    '#vc-item-openid4vci.kebabPopUp.showingWalletBindingError',
-                },
-              ],
-            },
-          },
-          updatingPrivateKey: {
-            invoke: {
-              src: 'updatePrivateKey',
-              onDone: {
-                actions: [
-                  'storeContext',
-                  'updatePrivateKey',
-                  'updateVc',
-                  'setWalletBindingErrorEmpty',
-                  'sendWalletBindingSuccess',
-                  'sendActivationSuccessEvent',
-                  'logWalletBindingSuccess',
-                ],
-                target: '#vc-item-openid4vci.kebabPopUp',
-              },
-              onError: {
-                actions: 'setWalletBindingError',
-                target:
-                  '#vc-item-openid4vci.kebabPopUp.showingWalletBindingError',
-              },
-            },
-          },
           showActivities: {
             on: {
               DISMISS: '#vc-item-openid4vci.kebabPopUp',
@@ -597,7 +497,12 @@ export const EsignetMosipVCItemMachine = model.createMachine(
 
       storeContext: send(
         context => {
-          const {serviceRefs, ...data} = context;
+          const {
+            serviceRefs,
+            isMachineInKebabPopupState,
+            tempWalletBindingIdResponse,
+            ...data
+          } = context;
           data.credentialRegistry = MIMOTO_BASE_URL;
           return StoreEvents.SET(
             VCMetadata.fromVC(context.vcMetadata).getVcKey(),
@@ -691,7 +596,17 @@ export const EsignetMosipVCItemMachine = model.createMachine(
         );
       },
 
-      sendActivationFailedEndEvent: context =>
+      sendActivationFailedEndEvent: (context, event, meta) => {
+        const [errorId, errorMessage] =
+          event.data.message === 'Could not store private key in keystore'
+            ? [
+                TelemetryConstants.ErrorId.updatePrivateKey,
+                TelemetryConstants.ErrorMessage.privateKeyUpdationFailed,
+              ]
+            : [
+                TelemetryConstants.ErrorId.userCancel,
+                TelemetryConstants.ErrorMessage.activationCancelled,
+              ];
         sendEndEvent(
           getEndEventData(
             context.isMachineInKebabPopupState
@@ -699,11 +614,12 @@ export const EsignetMosipVCItemMachine = model.createMachine(
               : TelemetryConstants.FlowType.vcActivation,
             TelemetryConstants.EndEventStatus.failure,
             {
-              errorId: TelemetryConstants.ErrorId.userCancel,
-              errorMessage: TelemetryConstants.ErrorMessage.activationCancelled,
+              errorId: errorId,
+              errorMessage: errorMessage,
             },
           ),
-        ),
+        );
+      },
 
       sendActivationSuccessEvent: context =>
         sendEndEvent(
@@ -732,7 +648,14 @@ export const EsignetMosipVCItemMachine = model.createMachine(
         privateKey: () => '',
       }),
       setWalletBindingId: assign({
-        walletBindingResponse: (context, event) =>
+        walletBindingResponse: (context, event) => {
+          return isHardwareKeystoreExists
+            ? (event.data as WalletBindingResponse)
+            : context.tempWalletBindingIdResponse;
+        },
+      }),
+      setTempWalletBindingResponse: assign({
+        tempWalletBindingIdResponse: (context, event) =>
           event.data as WalletBindingResponse,
       }),
       setThumbprintForWalletBindingId: send(
@@ -826,7 +749,7 @@ export const EsignetMosipVCItemMachine = model.createMachine(
     services: {
       updatePrivateKey: async context => {
         const hasSetPrivateKey: boolean = await savePrivateKey(
-          context.walletBindingResponse.walletBindingId,
+          context.tempWalletBindingIdResponse.walletBindingId,
           context.privateKey,
         );
         if (!hasSetPrivateKey) {

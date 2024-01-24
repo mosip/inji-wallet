@@ -59,10 +59,12 @@
     "id": "ID",
     "qrCodeHeader": "QR Code",
     "nationalCard": "National Card",
+    "insuranceCard": "Insurance Card",
     "uin": "UIN",
     "vid": "VID",
     "enableVerification": "Activate",
     "profileAuthenticated": "Credentials are enabled for online authentication.",
+    "credentialActivated": "Activated",
     "offlineAuthDisabledHeader": "Activation pending for online login",
     "offlineAuthDisabledMessage": "Please click the button below to activate this credential to be used for online login.",
     "verificationEnabledSuccess": "Activated for online login",
@@ -97,7 +99,8 @@
   },
   "WalletBinding": {
     "inProgress": "In progress",
-    "profileAuthenticated": "Activated for online login"
+    "profileAuthenticated": "Activated for online login",
+    "credentialActivated": "Activated"
   },
   "BindingVcWarningOverlay": {
     "alert": "Alert",
@@ -474,7 +477,6 @@
     "gotoSettings": "Go to settings"
   },
   "ScanScreen": {
-    "header": "Scan",
     "noShareableVcs": "No shareable cards are available.",
     "sharingVc": "Sharing card",
     "bluetoothStateIos": "Bluetooth is turned OFF, please turn it ON from Control center",
@@ -524,8 +526,9 @@
       },
       "accepted": {
         "title": "ID shared successfully!",
-        "message": "Your ID has been successfully shared with",
-        "gotohome": "Go to Home"
+        "message": "Your ID has been successfully shared.",
+        "home": "Home",
+        "history": "History"
       },
       "rejected": {
         "title": "Notice",
