@@ -1,11 +1,23 @@
-import React from 'react';
-import {View} from 'react-native';
+import * as Google from 'expo-auth-session/providers/google';
+import React, {useEffect, useState} from 'react';
+import {Image, Platform, View} from 'react-native';
+import {CloudStorage} from 'react-native-cloud-storage';
+import {GOOGLE_ANDROID_CLIENT_ID} from 'react-native-dotenv';
 import {Icon, ListItem} from 'react-native-elements';
-import {Button, Column, Row, Text} from '../../components/ui';
+import {
+  Button,
+  Centered,
+  Column,
+  HorizontallyCentered,
+  Row,
+  Text,
+} from '../../components/ui';
+import {LoaderAnimation} from '../../components/ui/LoaderAnimation';
 import {Modal} from '../../components/ui/Modal';
 import {Theme} from '../../components/ui/styleUtils';
-import {useBackupScreen} from './BackupController';
 import {SvgImage} from '../../components/ui/svg';
+import {request as apiRequest} from '../../shared/request';
+import {useBackupScreen} from './BackupController';
 
 const SectionLayout: React.FC<SectionLayoutProps> = ({
   headerIcon,
@@ -60,19 +72,21 @@ type SectionLayoutProps = {
   children: React.ReactNode;
 };
 
-const AccountInformation: React.FC<AccountInformationProps> = ({
-  associatedAccount,
-  email,
-}) => {
+const AccountInformation: React.FC<ProfileInfo> = ({email, picture}) => {
   return (
     <Row style={{marginBottom: 21, columnGap: 11}}>
       <Column align="center">
-        <Icon name="person" />
+        <Image
+          style={{height: 40, width: 40, borderRadius: 45}}
+          source={{
+            uri: picture,
+          }}
+        />
       </Column>
       <Column>
         <Row>
           <Text style={{color: Theme.Colors.helpText, fontSize: 12}}>
-            {associatedAccount}
+            Associated account
           </Text>
         </Row>
         <Row>
@@ -85,14 +99,66 @@ const AccountInformation: React.FC<AccountInformationProps> = ({
   );
 };
 
-type AccountInformationProps = {
-  associatedAccount: string;
+type ProfileInfo = {
   email: string;
+  picture: string;
 };
 
-const BackupAndRestoreScreen = () => {
+const BackupAndRestoreScreen = props => {
   const controller = useBackupScreen();
-  const LastBackup = (
+  const [request, response, promptAsync] = Google.useAuthRequest({
+    androidClientId: GOOGLE_ANDROID_CLIENT_ID,
+    scopes: ['https://www.googleapis.com/auth/drive.appdata'],
+  });
+  const [profileInfo, setProfileInfo] = useState(null);
+  const [authenticationResponseType, setAuthenticationResponseType] = useState<
+    null | 'cancel' | 'dismiss' | 'opened' | 'locked' | 'success'
+  >(null);
+
+  useEffect(() => {
+    //TODO: Check right logic to trigger signin
+    if (request && authenticationResponseType === null) {
+      CloudStorage.isCloudAvailable().then(value => {
+        if (!value) {
+          if (Platform.OS == 'android') {
+            promptAsync();
+          }
+          if (Platform.OS == 'ios') {
+            //todo: ask to sign in into  to icloud
+          }
+        }
+      });
+    }
+  }, [request]);
+
+  useEffect(() => {
+    extractUserInfo();
+  }, [response]);
+
+  const extractUserInfo: () => Promise<void> = async () => {
+    if (response)
+      console.log('response google signin ', JSON.stringify(response, null, 2));
+    if (response?.type == 'success') {
+      CloudStorage.setGoogleDriveAccessToken(
+        response?.authentication?.accessToken,
+      );
+      const profileResponse = await apiRequest(
+        'GET',
+        `https://www.googleapis.com/oauth2/v1/userinfo?alt=json&access_token=${response.authentication?.accessToken}`,
+        undefined,
+        '',
+      );
+      setProfileInfo({
+        email: profileResponse.email,
+        picture: profileResponse.picture,
+      });
+      setAuthenticationResponseType(response.type);
+    } else if (response?.type === 'dismiss') {
+      setAuthenticationResponseType(response.type);
+    }
+  };
+
+  const LastBackupSection = (
     <SectionLayout
       headerText={'Last Backup: No Backup Found'}
       headerIcon={SvgImage.DataBackupIcon(34, 24)}>
@@ -140,8 +206,8 @@ const BackupAndRestoreScreen = () => {
         </Text>
       </View>
       <AccountInformation
-        associatedAccount={'Associated account'}
-        email={'email'}
+        email={profileInfo?.email}
+        picture={profileInfo?.picture}
       />
     </SectionLayout>
   );
@@ -175,11 +241,25 @@ const BackupAndRestoreScreen = () => {
       headerTitle={'Backup & Restore'}
       headerElevation={2}
       arrowLeft={true}
-      onDismiss={controller.DISMISS}>
-      <View style={{backgroundColor: Theme.Colors.lightGreyBackgroundColor}}>
-        {LastBackup}
-        {AccountSection}
-        {RestoreSection}
+      onDismiss={props.onBackPress}>
+      <View
+        style={{
+          backgroundColor: Theme.Colors.lightGreyBackgroundColor,
+          flex: 1,
+        }}>
+        {authenticationResponseType === 'success' ? (
+          <React.Fragment>
+            {LastBackupSection}
+            {AccountSection}
+            {RestoreSection}
+          </React.Fragment>
+        ) : (
+          <HorizontallyCentered>
+            <Centered>
+              <LoaderAnimation />
+            </Centered>
+          </HorizontallyCentered>
+        )}
       </View>
     </Modal>
   );

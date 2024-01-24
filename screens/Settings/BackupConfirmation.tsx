@@ -66,7 +66,7 @@ export const BackupConfirmation: React.FC<BackupConfirmationProps> = props => {
               onPress={props.onConfirmation}
               margin={[0, 0, 0, 0]}
             />
-            <Button type="clear" title={'Go Back'} onPress={() => {}} />
+            <Button type="clear" title={'Go Back'} onPress={props.goBack} />
           </Column>
         </Column>
       </Modal>

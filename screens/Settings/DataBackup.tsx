@@ -1,12 +1,12 @@
 import React, {useState} from 'react';
-import {Pressable, View} from 'react-native';
-import {Icon, ListItem} from 'react-native-elements';
+import {Pressable} from 'react-native';
+import {ListItem} from 'react-native-elements';
 import {Row, Text} from '../../components/ui';
 import {Theme} from '../../components/ui/styleUtils';
-import {useBackupScreen} from './BackupController';
 import {SvgImage} from '../../components/ui/svg';
 import BackupAndRestoreScreen from './BackupAndRestoreScreen';
 import {BackupConfirmation} from './BackupConfirmation';
+import {useBackupScreen} from './BackupController';
 
 export const DataBackup: React.FC = ({} = props => {
   const controller = useBackupScreen(props);
@@ -51,10 +51,19 @@ export const DataBackup: React.FC = ({} = props => {
         <BackupConfirmation
           isVisible={showConfirmation}
           onDismiss={() => controller.DISMISS()}
-          onConfirmation={() => setShowBackAndRestoreScreen(true)}
+          onConfirmation={() => {
+            setShowBackAndRestoreScreen(true);
+          }}
+          goBack={() => setShowConfirmation(false)}
         />
       )}
-      {showBackAndRestoreScreen && <BackupAndRestoreScreen />}
+      {showBackAndRestoreScreen && (
+        <BackupAndRestoreScreen
+          onBackPress={() => {
+            setShowBackAndRestoreScreen(false);
+          }}
+        />
+      )}
     </React.Fragment>
   );
 });
