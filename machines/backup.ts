@@ -62,7 +62,7 @@ export const backupMachine = model.createMachine(
         },
       },
       backingUp: {
-        initial: 'idle',
+        initial: 'checkStorageAvailability',
         states: {
           idle: {},
           checkStorageAvailability: {
@@ -118,6 +118,13 @@ export const backupMachine = model.createMachine(
                 target: 'success',
               },
               onError: {
+                actions: [
+                  (context, event) =>
+                    console.log(
+                      'error happened while uploading backup file ',
+                      event,
+                    ),
+                ],
                 target: 'failure',
               },
             },

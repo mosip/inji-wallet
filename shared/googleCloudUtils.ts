@@ -3,10 +3,15 @@ import {CloudStorage, CloudStorageScope} from 'react-native-cloud-storage';
 import {GCLOUD_BACKUP_DIR_NAME} from './constants';
 
 export const getToken = async (): Promise<string> => {
-  const res = await GoogleSignin.getTokens();
-  //signin if ampty
-  // await  GoogleSignin.signInSilently()
-  return res.accessToken;
+  try {
+    const res = await GoogleSignin.getTokens();
+    //signin if ampty
+    // await  GoogleSignin.signInSilently()
+    return res.accessToken;
+  } catch (error) {
+    console.error('Error while getting token ', error);
+    return '';
+  }
 };
 
 export const removeOldDriveBackupFiles = async (fileName: string) => {
