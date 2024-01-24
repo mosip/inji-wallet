@@ -2,11 +2,14 @@ import {EventFrom, StateFrom, send} from 'xstate';
 import {createModel} from 'xstate/lib/model';
 import {AppServices} from '../shared/GlobalContext';
 import {StoreEvents} from './store';
-import Storage, {
+import {
   isMinimumLimitForBackupReached,
   writeToBackupFile,
 } from '../shared/storage';
-import {compressAndRemoveFile} from '../shared/fileStorage';
+import {
+  compressAndRemoveFile,
+  uploadBackupFileToDrive,
+} from '../shared/fileStorage';
 import {
   getEndEventData,
   getImpressionEventData,
@@ -101,6 +104,17 @@ export const backupMachine = model.createMachine(
             invoke: {
               src: 'zipBackupFile',
               onDone: {
+                target: 'uploadBackupFile',
+              },
+              onError: {
+                target: 'failure',
+              },
+            },
+          },
+          uploadBackupFile: {
+            invoke: {
+              src: 'uploadBackupFile',
+              onDone: {
                 target: 'success',
               },
               onError: {
@@ -190,6 +204,10 @@ export const backupMachine = model.createMachine(
 
       zipBackupFile: context => async () => {
         const result = await compressAndRemoveFile(context.fileName);
+        return result;
+      },
+      uploadBackupFile: context => async () => {
+        const result = await uploadBackupFileToDrive(context.fileName);
         return result;
       },
     },

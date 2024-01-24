@@ -24,6 +24,8 @@ export const BACKUP_ENC_TYPE_VAL_PASSWORD = 'password';
 
 export const BACKUP_ENC_TYPE_VAL_PHONE = 'phone';
 
+export const GCLOUD_BACKUP_DIR_NAME = 'backup';
+
 export let individualId = {id: '', idType: 'UIN' as VcIdType};
 
 export const GET_INDIVIDUAL_ID = (currentIndividualId: IndividualId) => {

@@ -2,7 +2,7 @@ fileignoreconfig:
   - filename: package.json
     checksum: 4770aabfda162fbc0b9a8c53d7dee483ce29b82c6cd3e17e81e3e628d93dbadc
   - filename: package-lock.json
-    checksum: e4569b3ec846749ae56bd9ad907c6cd05c27ab111475ceb501e667ec38367609
+    checksum: 9eb9f7432dc67b46dbcfa482032655cca665d98197de5d2aee6ad55e0be4e41f
   - filename: lib/jsonld-signatures/suites/ed255192018/ed25519.ts
     checksum: 493b6e31144116cb612c24d98b97d8adcad5609c0a52c865a6847ced0a0ddc3a
   - filename: components/PasscodeVerify.tsx
@@ -138,3 +138,5 @@ fileignoreconfig:
   - filename: .github/workflows/push-triggers.yml
     checksum: 4a031b46646aa982c8f40e4c7fe0bd3e05a76a6af1ff1c2de7350ba6ebf9a839 
     version: ""
+  - filename: machines/backup.ts
+    checksum: 08845c4bffb507f2dda7b6de37133241c820033e9f3bfc941de956eb5009975e
