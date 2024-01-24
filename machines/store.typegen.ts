@@ -40,6 +40,7 @@ export interface Typegen0 {
       | 'REMOVE'
       | 'REMOVE_ITEMS'
       | 'REMOVE_VC_METADATA'
+      | 'RESTORE_BACKUP'
       | 'SET'
       | 'UPDATE';
     notifyParent:

@@ -17,6 +17,7 @@ export interface Typegen0 {
   };
   invokeSrcNameMap: {
     checkStorageAvailability: 'done.invoke.backupRestore.restoreBackup.checkStorageAvailibility:invocation[0]';
+    deleteBkpDir: 'done.invoke.backupRestore.restoreBackup.deleteBackupDir:invocation[0]';
     readBackupFile: 'done.invoke.backupRestore.restoreBackup.readBackupFile:invocation[0]';
     unzipBackupFile: 'done.invoke.backupRestore.restoreBackup.unzipBackupFile:invocation[0]';
   };
@@ -36,6 +37,7 @@ export interface Typegen0 {
   };
   eventsCausingServices: {
     checkStorageAvailability: 'EXTRACT_DATA';
+    deleteBkpDir: 'STORE_RESPONSE';
     readBackupFile: 'done.invoke.backupRestore.restoreBackup.unzipBackupFile:invocation[0]';
     unzipBackupFile: 'done.invoke.backupRestore.restoreBackup.checkStorageAvailibility:invocation[0]';
   };
@@ -43,6 +45,7 @@ export interface Typegen0 {
     | 'init'
     | 'restoreBackup'
     | 'restoreBackup.checkStorageAvailibility'
+    | 'restoreBackup.deleteBackupDir'
     | 'restoreBackup.failure'
     | 'restoreBackup.idle'
     | 'restoreBackup.loadDataToMemory'
@@ -52,6 +55,7 @@ export interface Typegen0 {
     | {
         restoreBackup?:
           | 'checkStorageAvailibility'
+          | 'deleteBackupDir'
           | 'failure'
           | 'idle'
           | 'loadDataToMemory'

@@ -96,10 +96,18 @@ export const backupRestoreMachine = model.createMachine(
             entry: 'loadDataToMemory',
             on: {
               STORE_RESPONSE: {
-                target: 'success',
+                target: 'deleteBackupDir',
               },
               STORE_ERROR: {
                 target: 'failure',
+              },
+            },
+          },
+          deleteBackupDir: {
+            invoke: {
+              src: 'deleteBkpDir',
+              onDone: {
+                target: 'success',
               },
             },
           },
@@ -140,6 +148,8 @@ export const backupRestoreMachine = model.createMachine(
       checkStorageAvailability: () => async () => {
         return await Storage.isMinimumLimitReached('minStorageRequired');
       },
+      deleteBkpDir: () => async () =>
+        fileStorage.removeItem(backupDirectoryPath),
       unzipBackupFile: context => async () => {
         let items: ReadDirItem[] = await fileStorage.getAllFilesInDirectory(
           backupDirectoryPath,
