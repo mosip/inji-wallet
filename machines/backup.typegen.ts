@@ -46,7 +46,7 @@ export interface Typegen0 {
       | 'done.invoke.backup.backingUp.checkStorageAvailability:invocation[0]'
       | 'error.platform.backup.backingUp.uploadBackupFile:invocation[0]'
       | 'error.platform.backup.backingUp.zipBackupFile:invocation[0]';
-    sendDataBackupStartEvent: 'FETCH_DATA';
+    sendDataBackupStartEvent: 'DATA_BACKUP' | 'FETCH_DATA';
     sendDataBackupSuccessEvent: 'done.invoke.backup.backingUp.uploadBackupFile:invocation[0]';
     setDataFromStorage: 'STORE_RESPONSE';
     setFileName: 'FILE_NAME';
@@ -56,7 +56,7 @@ export interface Typegen0 {
     isMinimumStorageRequiredForBackupReached: 'done.invoke.backup.backingUp.checkStorageAvailability:invocation[0]';
   };
   eventsCausingServices: {
-    checkStorageAvailability: 'FETCH_DATA';
+    checkStorageAvailability: 'DATA_BACKUP' | 'FETCH_DATA';
     uploadBackupFile: 'done.invoke.backup.backingUp.zipBackupFile:invocation[0]';
     writeDataToFile: 'STORE_RESPONSE';
     zipBackupFile: 'FILE_NAME';

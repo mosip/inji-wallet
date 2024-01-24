@@ -27,6 +27,7 @@
     "@react-navigation/bottom-tabs": "^6.0.7",
     "@react-navigation/native": "^6.0.8",
     "@react-navigation/native-stack": "^6.1.0",
+    "@robinbobin/react-native-google-drive-api-wrapper": "^1.2.4",
     "@xstate/react": "^3.0.1",
     "base64url-universal": "^1.1.0",
     "buffer": "^6.0.3",

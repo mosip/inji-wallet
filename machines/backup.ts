@@ -133,7 +133,10 @@ export const backupMachine = model.createMachine(
             entry: 'sendDataBackupSuccessEvent',
           },
           failure: {
-            entry: 'sendDataBackupFailureEvent',
+            entry: [
+              'sendDataBackupFailureEvent',
+              (ctx, event) => console.log('failure state ', event),
+            ],
           },
         },
         on: {

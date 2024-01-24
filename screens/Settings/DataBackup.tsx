@@ -15,11 +15,14 @@ import * as Google from 'expo-auth-session/providers/google';
 import {GOOGLE_ANDROID_CLIENT_ID} from 'react-native-dotenv';
 import {Modal} from '../../components/ui/Modal';
 import {LoaderAnimation} from '../../components/ui/LoaderAnimation';
+import {getToken} from '../../shared/googleCloudUtils';
+import {GoogleSignin} from 'react-native-google-signin';
 
 export const DataBackup: React.FC = ({} = props => {
   const controller = useBackupScreen(props);
   const [isLoading, setIsLoading] = useState(false);
   const [hadBackUpAlreadyDone, setHadBackUpAlreadyDone] = useState(false);
+  //TODO: rename to showAccountSelection
   const [showConfirmation, setShowConfirmation] = useState(false);
   const [showBackAndRestoreScreen, setShowBackAndRestoreScreen] =
     useState(false);
@@ -65,8 +68,17 @@ export const DataBackup: React.FC = ({} = props => {
     }
   };
 
-  const handleBackupAndRestore = () => {
-    if (hadBackUpAlreadyDone) setShowBackAndRestoreScreen(true);
+  const handleBackupAndRestore = async () => {
+    const accessToken = await getToken();
+    console.log('accessToken ', accessToken);
+    const profileResponse = await GoogleSignin.getCurrentUser();
+    console.log('profileResponse ', profileResponse);
+    setProfileInfo({
+      email: profileResponse?.user.email,
+      picture: profileResponse?.user.photo,
+    });
+
+    if (accessToken !== '') setShowBackAndRestoreScreen(true);
     else setShowConfirmation(true);
   };
 

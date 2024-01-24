@@ -15,7 +15,7 @@ export const CloudSignOn: React.FC<CloudSignOnProps> = props => {
   });
 
   useEffect(() => {
-    if (response.type == 'success') {
+    if (response?.type == 'success') {
       CloudStorage.setGoogleDriveAccessToken(
         response.authentication.accessToken,
       );
