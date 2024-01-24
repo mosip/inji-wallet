@@ -13,9 +13,12 @@ import {request as apiRequest} from '../../shared/request';
 import * as WebBrowser from 'expo-web-browser';
 import * as Google from 'expo-auth-session/providers/google';
 import {GOOGLE_ANDROID_CLIENT_ID} from 'react-native-dotenv';
+import {Modal} from '../../components/ui/Modal';
+import {LoaderAnimation} from '../../components/ui/LoaderAnimation';
 
 export const DataBackup: React.FC = ({} = props => {
   const controller = useBackupScreen(props);
+  const [isLoading, setIsLoading] = useState(false);
   const [hadBackUpAlreadyDone, setHadBackUpAlreadyDone] = useState(false);
   const [showConfirmation, setShowConfirmation] = useState(false);
   const [showBackAndRestoreScreen, setShowBackAndRestoreScreen] =
@@ -56,6 +59,7 @@ export const DataBackup: React.FC = ({} = props => {
         picture: profileResponse.picture,
       });
       setAuthenticationResponseType(response.type);
+      setShowBackAndRestoreScreen(true);
     } else if (response?.type === 'dismiss') {
       setAuthenticationResponseType(response.type);
     }
@@ -64,6 +68,11 @@ export const DataBackup: React.FC = ({} = props => {
   const handleBackupAndRestore = () => {
     if (hadBackUpAlreadyDone) setShowBackAndRestoreScreen(true);
     else setShowConfirmation(true);
+  };
+
+  const handleAccountSelection = () => {
+    setIsLoading(true);
+    promptAsync();
   };
 
   return (
@@ -90,17 +99,23 @@ export const DataBackup: React.FC = ({} = props => {
           </ListItem.Content>
         </ListItem>
       </Pressable>
+      {isLoading && (
+        <Modal isVisible>
+          <LoaderAnimation />
+        </Modal>
+      )}
 
       {showConfirmation && (
         <AccountSelection
           isVisible={showConfirmation}
           onDismiss={() => controller.DISMISS()}
-          onProceed={promptAsync}
+          onProceed={handleAccountSelection}
           goBack={() => setShowConfirmation(false)}
         />
       )}
       {showBackAndRestoreScreen && (
         <BackupAndRestoreScreen
+          profileInfo={profileInfo}
           onBackPress={() => {
             setShowBackAndRestoreScreen(false);
           }}
