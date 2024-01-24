@@ -4,12 +4,13 @@ import {
   ExistingMosipVCItemProps,
   MosipVCItem,
 } from './MosipVCItem/MosipVCItem';
-import {CARD_TEMPLATIZATION} from 'react-native-dotenv';
 import {VCCardView} from './Views/VCCardView';
+import {Issuers} from '../../shared/openId4VCI/Utils';
 
 export const VcItemContainer: React.FC<
   ExistingMosipVCItemProps | EsignetMosipVCItemProps
 > = props => {
-  if (CARD_TEMPLATIZATION === 'true') return <VCCardView {...props} />;
+  if (props.vcMetadata.issuer === Issuers.Sunbird)
+    return <VCCardView {...props} />;
   return <MosipVCItem {...props} />;
 };

@@ -19,6 +19,7 @@ import {
 } from '../../shared/telemetry/TelemetryUtils';
 import {TelemetryConstants} from '../../shared/telemetry/TelemetryConstants';
 import {getVCsOrderedByPinStatus} from '../../shared/Utils';
+import {Issuers} from '../../shared/openId4VCI/Utils';
 
 export const SendVcScreen: React.FC = () => {
   const {t} = useTranslation('SendVcScreen');
@@ -102,18 +103,22 @@ export const SendVcScreen: React.FC = () => {
         <Column
           style={Theme.SendVcScreenStyles.shareOptionButtonsContainer}
           backgroundColor={Theme.Colors.whiteBackgroundColor}>
-          {!controller.selectedVc.shouldVerifyPresence && (
-            <Button
-              type="gradient"
-              title={t('acceptRequestAndVerify')}
-              styles={{marginTop: 12}}
-              disabled={controller.selectedIndex == null}
-              onPress={controller.VERIFY_AND_ACCEPT_REQUEST}
-            />
-          )}
+          {!controller.selectedVc.shouldVerifyPresence &&
+            controller.selectedVc?.vcMetadata &&
+            VCMetadata.fromVcMetadataString(controller.selectedVc.vcMetadata)
+              .issuer != Issuers.Sunbird && (
+              <Button
+                type="gradient"
+                title={t('acceptRequestAndVerify')}
+                styles={{marginTop: 12}}
+                disabled={controller.selectedIndex == null}
+                onPress={controller.VERIFY_AND_ACCEPT_REQUEST}
+              />
+            )}
 
           <Button
             type="gradient"
+            styles={{marginTop: 12}}
             title={t('acceptRequest')}
             disabled={controller.selectedIndex == null}
             onPress={controller.ACCEPT_REQUEST}
@@ -143,7 +148,7 @@ export const SendVcScreen: React.FC = () => {
         onBackdropPress={controller.DISMISS}>
         <Row>
           <Button
-            testID='cancel'
+            testID="cancel"
             fill
             type="clear"
             title={t('common:cancel')}
@@ -151,7 +156,7 @@ export const SendVcScreen: React.FC = () => {
             margin={[0, 8, 0, 0]}
           />
           <Button
-            testID='tryAgain'
+            testID="tryAgain"
             fill
             title={t('common:tryAgain')}
             onPress={controller.RETRY_VERIFICATION}

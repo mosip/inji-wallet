@@ -59,10 +59,12 @@
     "id": "पहचान",
     "qrCodeHeader": "क्यू आर संहिता",
     "nationalCard": "राष्ट्रीय कार्ड",
+    "insuranceCard": "बीमा कार्ड",
     "uin": "UIN",
     "vid": "VID",
     "enableVerification": "सक्रिय",
     "profileAuthenticated": "ऑनलाइन प्रमाणीकरण के लिए क्रेडेंशियल सक्षम हैं।",
+    "credentialActivated": "सक्रिय",
     "offlineAuthDisabledHeader": "ऑनलाइन लॉगिन के लिए सक्रियण लंबित है!",
     "offlineAuthDisabledMessage": "ऑनलाइन लॉगिन के लिए उपयोग किए जाने वाले इस क्रेडेंशियल को सक्रिय करने के लिए कृपया नीचे दिए गए बटन पर क्लिक करें।",
     "verificationEnabledSuccess": "ऑनलाइन लॉगिन के लिए सक्रिय",
@@ -94,7 +96,8 @@
   },
   "WalletBinding": {
     "inProgress": "चालू",
-    "profileAuthenticated": "ऑनलाइन लॉगिन के लिए सक्रिय"
+    "profileAuthenticated": "ऑनलाइन लॉगिन के लिए सक्रिय",
+    "credentialActivated": "सक्रिय"
   },
   "BindingVcWarningOverlay": {
     "alert": "कृपया पुष्टि करें",
@@ -470,7 +473,6 @@
     "gotoSettings": "सेटिंग्स में जाओ"
   },
   "ScanScreen": {
-    "header": "स्कैन",
     "noShareableVcs": "कोई साझा करने योग्य कार्ड उपलब्ध नहीं हैं।",
     "sharingVc": "कार्ड साझा करना",
     "bluetoothStateIos": "ब्लूटूथ बंद है, कृपया इसे नियंत्रण केंद्र से चालू करें",
