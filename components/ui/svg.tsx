@@ -80,6 +80,7 @@ export class SvgImage {
       />
     );
   }
+
   static pinIcon() {
     return (
       <PinICon
@@ -203,7 +204,7 @@ export class SvgImage {
       </ImageBackground>
     ) : (
       <>
-        <ProfileIcon />
+        <ProfileIcon isPinned={props?.isPinned} />
       </>
     );
   }
