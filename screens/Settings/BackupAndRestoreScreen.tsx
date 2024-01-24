@@ -139,7 +139,7 @@ const BackupAndRestoreScreen: React.FC<BackupAndRestoreProps> = props => {
 
   const AccountSection = (
     <SectionLayout
-      headerText={'Google Drive'}
+      headerText={'Google Drive Settings'}
       headerIcon={SvgImage.GoogleDriveIcon(28, 25)}>
       <View style={{marginBottom: 19}}>
         <Text
@@ -154,8 +154,8 @@ const BackupAndRestoreScreen: React.FC<BackupAndRestoreProps> = props => {
         </Text>
       </View>
       <AccountInformation
-        email={props.profileInfo.email}
-        picture={props.profileInfo.picture}
+        email={props.profileInfo?.email}
+        picture={props.profileInfo?.picture}
       />
     </SectionLayout>
   );
@@ -195,11 +195,16 @@ const BackupAndRestoreScreen: React.FC<BackupAndRestoreProps> = props => {
           backgroundColor: Theme.Colors.lightGreyBackgroundColor,
           flex: 1,
         }}>
-        <React.Fragment>
-          {LastBackupSection}
-          {AccountSection}
-          {RestoreSection}
-        </React.Fragment>
+        {props.isLoading ? (
+          // TODO: Show Loader animation in center of screen
+          <LoaderAnimation />
+        ) : (
+          <React.Fragment>
+            {LastBackupSection}
+            {AccountSection}
+            {RestoreSection}
+          </React.Fragment>
+        )}
       </View>
     </Modal>
   );
@@ -208,5 +213,6 @@ const BackupAndRestoreScreen: React.FC<BackupAndRestoreProps> = props => {
 export default BackupAndRestoreScreen;
 
 interface BackupAndRestoreProps {
-  profileInfo: ProfileInfo;
+  profileInfo: ProfileInfo | undefined;
+  isLoading: boolean;
 }

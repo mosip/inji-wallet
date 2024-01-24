@@ -1,90 +1,60 @@
-import React, {useEffect, useState} from 'react';
-import {Platform, Pressable} from 'react-native';
+import React, {useState} from 'react';
+import {Pressable} from 'react-native';
 import {ListItem} from 'react-native-elements';
 import {Row, Text} from '../../components/ui';
+import {Error} from '../../components/ui/Error';
+import {LoaderAnimation} from '../../components/ui/LoaderAnimation';
+import {Modal} from '../../components/ui/Modal';
 import {Theme} from '../../components/ui/styleUtils';
 import {SvgImage} from '../../components/ui/svg';
+import Cloud, {
+  ProfileInfo,
+  SignInResult,
+  isSignedInResult,
+} from '../../shared/googleCloudUtils';
+import {AccountSelection} from './AccountSelection';
 import BackupAndRestoreScreen from './BackupAndRestoreScreen';
 import {useBackupScreen} from './BackupController';
-import {AccountSelection} from './AccountSelection';
-import {CloudStorage} from 'react-native-cloud-storage';
-import {request} from 'react-native-permissions';
-import {request as apiRequest} from '../../shared/request';
-import * as WebBrowser from 'expo-web-browser';
-import * as Google from 'expo-auth-session/providers/google';
-import {GOOGLE_ANDROID_CLIENT_ID} from 'react-native-dotenv';
-import {Modal} from '../../components/ui/Modal';
-import {LoaderAnimation} from '../../components/ui/LoaderAnimation';
-import {getToken} from '../../shared/googleCloudUtils';
-import {GoogleSignin} from 'react-native-google-signin';
 
-export const DataBackup: React.FC = ({} = props => {
-  const controller = useBackupScreen(props);
+export const DataBackup: React.FC = ({} = () => {
+  const controller = useBackupScreen();
   const [isLoading, setIsLoading] = useState(false);
-  const [hadBackUpAlreadyDone, setHadBackUpAlreadyDone] = useState(false);
+  const [isSelectingAccount, setIsSelectingAccount] = useState(false);
   //TODO: rename to showAccountSelection
   const [showConfirmation, setShowConfirmation] = useState(false);
   const [showBackAndRestoreScreen, setShowBackAndRestoreScreen] =
     useState(false);
 
-  const [profileInfo, setProfileInfo] = useState(null);
+  const [profileInfo, setProfileInfo] = useState<ProfileInfo | undefined>();
 
   // TODO : Check if the setup is already done
 
-  const [request, response, promptAsync] = Google.useAuthRequest({
-    androidClientId: GOOGLE_ANDROID_CLIENT_ID,
-    scopes: ['https://www.googleapis.com/auth/drive.appdata'],
-  });
-
   const [authenticationResponseType, setAuthenticationResponseType] = useState<
-    null | 'cancel' | 'dismiss' | 'opened' | 'locked' | 'success'
+    keyof typeof Cloud.status | null
   >(null);
 
-  useEffect(() => {
-    extractUserInfo();
-  }, [response]);
-
-  const extractUserInfo: () => Promise<void> = async () => {
-    if (response)
-      console.log('response google signin ', JSON.stringify(response, null, 2));
-    if (response?.type == 'success') {
-      CloudStorage.setGoogleDriveAccessToken(
-        response?.authentication?.accessToken,
-      );
-      const profileResponse = await apiRequest(
-        'GET',
-        `https://www.googleapis.com/oauth2/v1/userinfo?alt=json&access_token=${response.authentication?.accessToken}`,
-        undefined,
-        '',
-      );
-      setProfileInfo({
-        email: profileResponse.email,
-        picture: profileResponse.picture,
-      });
-      setAuthenticationResponseType(response.type);
-      setShowBackAndRestoreScreen(true);
-    } else if (response?.type === 'dismiss') {
-      setAuthenticationResponseType(response.type);
-    }
-  };
-
   const handleBackupAndRestore = async () => {
-    const accessToken = await getToken();
-    console.log('accessToken ', accessToken);
-    const profileResponse = await GoogleSignin.getCurrentUser();
-    console.log('profileResponse ', profileResponse);
-    setProfileInfo({
-      email: profileResponse?.user.email,
-      picture: profileResponse?.user.photo,
-    });
-
-    if (accessToken !== '') setShowBackAndRestoreScreen(true);
-    else setShowConfirmation(true);
+    setIsLoading(true);
+    const result: isSignedInResult = await Cloud.isSignedInAlready();
+    if (result.isSignedIn) {
+      setProfileInfo(result.profileInfo);
+      setShowBackAndRestoreScreen(true);
+    } else {
+      setShowConfirmation(true);
+    }
+    setIsLoading(false);
   };
 
-  const handleAccountSelection = () => {
-    setIsLoading(true);
-    promptAsync();
+  const handleAccountSelection = async () => {
+    setIsSelectingAccount(true);
+    setAuthenticationResponseType(null);
+    setShowBackAndRestoreScreen(true);
+    const result: SignInResult = await Cloud.signIn();
+    if (result.status == Cloud.status.SUCCESS) {
+      setProfileInfo(result.profileInfo);
+    }
+    setAuthenticationResponseType(result.status);
+    setIsSelectingAccount(false);
   };
 
   return (
@@ -111,6 +81,37 @@ export const DataBackup: React.FC = ({} = props => {
           </ListItem.Content>
         </ListItem>
       </Pressable>
+
+      {authenticationResponseType === Cloud.status.DECLINED && (
+        // TODO: make Error UI to match mockup
+        <Error
+          isModal
+          isVisible
+          title="Permission Denied!"
+          message="We noticed that you've cancelled the creation of data backup settings. We strongly recommend revisiting the data backup settings to ensure your data availability. Click “Configure Settings” to set up data backup now, or “Cancel” to go back to settings screen."
+          image={SvgImage.NoInternetConnection()}
+          goBack={() => {
+            setAuthenticationResponseType(null);
+            setShowBackAndRestoreScreen(false);
+            setIsLoading(false);
+            setShowConfirmation(false);
+          }}
+          goBackButtonVisible
+          tryAgain={handleAccountSelection}
+          tryAgainButtonTranslationKey="configureSettings"
+          testID="CloudBackupConsentDenied"
+        />
+      )}
+
+      {showBackAndRestoreScreen && (
+        <BackupAndRestoreScreen
+          profileInfo={profileInfo}
+          onBackPress={() => {
+            setShowBackAndRestoreScreen(false);
+          }}
+          isLoading={isSelectingAccount}
+        />
+      )}
       {isLoading && (
         <Modal isVisible>
           <LoaderAnimation />
@@ -123,14 +124,6 @@ export const DataBackup: React.FC = ({} = props => {
           onDismiss={() => controller.DISMISS()}
           onProceed={handleAccountSelection}
           goBack={() => setShowConfirmation(false)}
-        />
-      )}
-      {showBackAndRestoreScreen && (
-        <BackupAndRestoreScreen
-          profileInfo={profileInfo}
-          onBackPress={() => {
-            setShowBackAndRestoreScreen(false);
-          }}
         />
       )}
     </React.Fragment>

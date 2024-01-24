@@ -24,14 +24,28 @@ export const Error: React.FC<ErrorProps> = props => {
           <Text style={Theme.ErrorStyles.message} testID="errorMessage">
             {props.message}
           </Text>
+          {props.helpText && (
+            <Text style={Theme.ErrorStyles.message} testID="errorMessage">
+              {props.helpText}
+            </Text>
+          )}
         </View>
         {props.tryAgain && (
           <Button
             onPress={props.tryAgain}
             width={Dimensions.get('screen').width * 0.54}
-            title={t('tryAgain')}
+            title={t(props.tryAgainButtonTranslationKey)}
             type="outline"
-            testID="tryAgain"
+            testID={props.tryAgainButtonTranslationKey}
+          />
+        )}
+        {props.goBackButtonVisible && (
+          <Button
+            onPress={props.goBack}
+            width={Dimensions.get('screen').width * 0.54}
+            title={t('goBack')}
+            type="outline"
+            testID="goBack"
           />
         )}
       </View>
@@ -86,6 +100,8 @@ export const Error: React.FC<ErrorProps> = props => {
 
 Error.defaultProps = {
   isModal: false,
+  goBackButtonVisible: false,
+  tryAgainButtonTranslationKey: 'tryAgain',
 };
 
 export interface ErrorProps {
@@ -93,9 +109,12 @@ export interface ErrorProps {
   isVisible: boolean;
   title: string;
   message: string;
+  helpText?: string;
   image: React.ReactElement;
   goBack?: () => void;
+  goBackButtonVisible?: boolean;
   tryAgain: null | (() => void);
+  tryAgainButtonTranslationKey?: string;
   testID: string;
   onDismiss?: () => void;
 }

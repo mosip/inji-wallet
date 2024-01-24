@@ -609,6 +609,8 @@
     "dismiss": "Dismiss",
     "editLabel": "Edit {{label}}",
     "tryAgain": "Try again",
+    "goBack": "Go Back",
+    "configureSettings": "Configure Settings",
     "ignore": "Ignore",
     "camera": {
       "errors": {
