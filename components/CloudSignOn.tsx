@@ -37,6 +37,7 @@ export const CloudSignOn: React.FC<CloudSignOnProps> = props => {
           }
         });
       }}
+      margin={[0, 0, 0, 0]}
     />
   );
 };

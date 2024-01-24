@@ -103,60 +103,8 @@ type ProfileInfo = {
   email: string;
   picture: string;
 };
-
-const BackupAndRestoreScreen = props => {
+const BackupAndRestoreScreen: React.FC<BackupAndRestoreProps> = props => {
   const controller = useBackupScreen();
-  const [request, response, promptAsync] = Google.useAuthRequest({
-    androidClientId: GOOGLE_ANDROID_CLIENT_ID,
-    scopes: ['https://www.googleapis.com/auth/drive.appdata'],
-  });
-  const [profileInfo, setProfileInfo] = useState(null);
-  const [authenticationResponseType, setAuthenticationResponseType] = useState<
-    null | 'cancel' | 'dismiss' | 'opened' | 'locked' | 'success'
-  >(null);
-
-  useEffect(() => {
-    //TODO: Check right logic to trigger signin
-    if (request && authenticationResponseType === null) {
-      CloudStorage.isCloudAvailable().then(value => {
-        if (!value) {
-          if (Platform.OS == 'android') {
-            promptAsync();
-          }
-          if (Platform.OS == 'ios') {
-            //todo: ask to sign in into  to icloud
-          }
-        }
-      });
-    }
-  }, [request]);
-
-  useEffect(() => {
-    extractUserInfo();
-  }, [response]);
-
-  const extractUserInfo: () => Promise<void> = async () => {
-    if (response)
-      console.log('response google signin ', JSON.stringify(response, null, 2));
-    if (response?.type == 'success') {
-      CloudStorage.setGoogleDriveAccessToken(
-        response?.authentication?.accessToken,
-      );
-      const profileResponse = await apiRequest(
-        'GET',
-        `https://www.googleapis.com/oauth2/v1/userinfo?alt=json&access_token=${response.authentication?.accessToken}`,
-        undefined,
-        '',
-      );
-      setProfileInfo({
-        email: profileResponse.email,
-        picture: profileResponse.picture,
-      });
-      setAuthenticationResponseType(response.type);
-    } else if (response?.type === 'dismiss') {
-      setAuthenticationResponseType(response.type);
-    }
-  };
 
   const LastBackupSection = (
     <SectionLayout
@@ -206,8 +154,8 @@ const BackupAndRestoreScreen = props => {
         </Text>
       </View>
       <AccountInformation
-        email={profileInfo?.email}
-        picture={profileInfo?.picture}
+        email={props.profileInfo.email}
+        picture={props.profileInfo.picture}
       />
     </SectionLayout>
   );
@@ -247,22 +195,18 @@ const BackupAndRestoreScreen = props => {
           backgroundColor: Theme.Colors.lightGreyBackgroundColor,
           flex: 1,
         }}>
-        {authenticationResponseType === 'success' ? (
-          <React.Fragment>
-            {LastBackupSection}
-            {AccountSection}
-            {RestoreSection}
-          </React.Fragment>
-        ) : (
-          <HorizontallyCentered>
-            <Centered>
-              <LoaderAnimation />
-            </Centered>
-          </HorizontallyCentered>
-        )}
+        <React.Fragment>
+          {LastBackupSection}
+          {AccountSection}
+          {RestoreSection}
+        </React.Fragment>
       </View>
     </Modal>
   );
 };
 
 export default BackupAndRestoreScreen;
+
+interface BackupAndRestoreProps {
+  profileInfo: ProfileInfo;
+}

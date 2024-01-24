@@ -6,9 +6,10 @@ import {Modal} from '../../components/ui/Modal';
 import {Theme} from '../../components/ui/styleUtils';
 import {SvgImage} from '../../components/ui/svg';
 import {useBackupScreen} from './BackupController';
+import {CloudSignOn} from '../../components/CloudSignOn';
 
 //TODO: Make this component adaptable to all screen size
-export const BackupConfirmation: React.FC<BackupConfirmationProps> = props => {
+export const AccountSelection: React.FC<AccountSelectionProps> = props => {
   const [dataBackup, setDataBackup] = useState(false);
 
   const controller = useBackupScreen(props);
@@ -63,7 +64,10 @@ export const BackupConfirmation: React.FC<BackupConfirmationProps> = props => {
             <Button
               type="gradient"
               title={'Proceed'}
-              onPress={props.onConfirmation}
+              onPress={() => {
+                console.log('>>>>>>> click on proeceed');
+                props.onProceed();
+              }}
               margin={[0, 0, 0, 0]}
             />
             <Button type="clear" title={'Go Back'} onPress={props.goBack} />
@@ -91,7 +95,8 @@ export const BackupConfirmation: React.FC<BackupConfirmationProps> = props => {
   );
 };
 
-interface BackupConfirmationProps {
+interface AccountSelectionProps {
   isVisible: boolean;
   onDismiss: () => void;
+  onProceed: () => void;
 }
