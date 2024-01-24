@@ -25,6 +25,7 @@ import {
   SETTINGS_STORE_KEY,
 } from '../shared/constants';
 import {logState} from '../shared/commonUtil';
+import {backupMachine, createBackupMachine} from './backup';
 
 const model = createModel(
   {
@@ -260,6 +261,11 @@ export const appMachine = model.createMachine(
             settingsMachine.id,
           );
 
+          serviceRefs.backup = spawn(
+            createBackupMachine(serviceRefs),
+            backupMachine.id,
+          );
+
           serviceRefs.activityLog = spawn(
             createActivityLogMachine(serviceRefs),
             activityLogMachine.id,
@@ -293,6 +299,7 @@ export const appMachine = model.createMachine(
           context.serviceRefs.settings.subscribe(logState);
           context.serviceRefs.activityLog.subscribe(logState);
           context.serviceRefs.scan.subscribe(logState);
+          context.serviceRefs.backup.subscribe(logState);
 
           if (isAndroid()) {
             context.serviceRefs.request.subscribe(logState);

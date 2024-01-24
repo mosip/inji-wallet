@@ -58,10 +58,12 @@
     "id": "Id",
     "qrCodeHeader": "QR Code",
     "nationalCard": "Pambansang Kard",
+    "insuranceCard": "Insurance Card",
     "uin": "UIN",
     "vid": "VID",
     "enableVerification": "I-activate",
     "profileAuthenticated": "Ang mga kredensyal ay pinagana para sa online na pagpapatotoo.",
+    "credentialActivated": "Na-activate",
     "offlineAuthDisabledHeader": "Nakabinbin ang pag-activate para sa online na pag-login!",
     "offlineAuthDisabledMessage": "Mangyaring i-click ang pindutan sa ibaba upang i-activate ang kredensyal na ito upang magamit para sa online na pag-login.",
     "verificationEnabledSuccess": "Na-activate para sa online na pag-login",
@@ -96,7 +98,8 @@
   },
   "WalletBinding": {
     "inProgress": "Isinasagawa",
-    "profileAuthenticated": "Na-activate para sa online na pag-login"
+    "profileAuthenticated": "Na-activate para sa online na pag-login",
+    "credentialActivated": "Na-activate"
   },
   "BindingVcWarningOverlay": {
     "alert": "Pakikumpirma",
@@ -473,7 +476,6 @@
     "gotoSettings": "Pumunta sa setting"
   },
   "ScanScreen": {
-    "header": "Scan",
     "noShareableVcs": "Walang magagamit na mga card na maibabahagi.",
     "sharingVc": "Pagbabahagi ng card",
     "bluetoothStateIos": "Naka-OFF ang Bluetooth, paki-ON ito mula sa control center",

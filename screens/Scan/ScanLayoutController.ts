@@ -65,10 +65,12 @@ export function useScanLayout() {
   const onRetry = () => scanService.send(ScanEvents.RETRY());
   const GOTO_HOME = () => {
     scanService.send(ScanEvents.DISMISS());
+    changeTabBarVisible('flex');
     navigation.navigate(BOTTOM_TAB_ROUTES.home);
   };
   const GOTO_HISTORY = () => {
     scanService.send(ScanEvents.DISMISS());
+    changeTabBarVisible('flex');
     navigation.navigate(BOTTOM_TAB_ROUTES.history);
   };
 

@@ -19,14 +19,15 @@ import {ActivityLogEvents} from './activityLog';
 import {log} from 'xstate/lib/actions';
 import {verifyCredential} from '../shared/vcjs/verifyCredential';
 import {
-  getBody,
-  vcDownloadTimeout,
-  OIDCErrors,
-  ErrorMessage,
-  updateCredentialInformation,
   constructAuthorizationConfiguration,
+  ErrorMessage,
+  getBody,
   getVCMetadata,
+  Issuers,
   Issuers_Key_Ref,
+  OIDCErrors,
+  updateCredentialInformation,
+  vcDownloadTimeout,
 } from '../shared/openId4VCI/Utils';
 import {
   getEndEventData,
@@ -43,6 +44,7 @@ import {
 import {CACHED_API} from '../shared/api';
 import {request} from '../shared/request';
 import {BiometricCancellationError} from '../shared/error/BiometricCancellationError';
+import {VCMetadata} from '../shared/VCMetadata';
 
 const model = createModel(
   {
@@ -631,6 +633,13 @@ export const IssuersMachine = model.createMachine(
         );
       },
       verifyCredential: async context => {
+        //this issuer specific check has to be removed once vc validation is done.
+        if (
+          VCMetadata.fromVcMetadataString(getVCMetadata(context)).issuer ===
+          Issuers.Sunbird
+        ) {
+          return true;
+        }
         return verifyCredential(context.verifiableCredential?.credential);
       },
     },
@@ -722,6 +731,7 @@ export interface displayType {
   title: string;
   description: string;
 }
+
 export interface issuerType {
   credential_issuer: string;
   protocol: string;

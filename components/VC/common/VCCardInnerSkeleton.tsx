@@ -3,7 +3,6 @@ import {Column, Row} from '../../ui';
 import {ImageBackground} from 'react-native';
 import {VCItemField} from './VCItemField';
 import React from 'react';
-import {SvgImage} from '../../ui/svg';
 import LinearGradient from 'react-native-linear-gradient';
 import ShimmerPlaceHolder from 'react-native-shimmer-placeholder';
 
@@ -16,7 +15,12 @@ export const VCCardInnerSkeleton = () => {
       <Column>
         <Row margin={'0 20 10 10'}>
           <Column style={{marginTop: 10}}>
-            {SvgImage.VcItemContainerProfileImage(undefined, null)}
+            <ShimmerPlaceHolder
+              LinearGradient={LinearGradient}
+              width={80}
+              height={80}
+              style={{borderRadius: 5}}
+            />
           </Column>
           <Column margin={'0 0 0 20'}>
             {

@@ -19,17 +19,19 @@ import {
 import {WalletBindingResponse} from '../../../shared/cryptoutil/cryptoUtil';
 import {logoType} from '../../../machines/issuersMachine';
 import {SvgImage} from '../../ui/svg';
-import {getCredentialIssuersWellKnownConfig} from '../../../shared/openId4VCI/Utils';
+import {
+  getCredentialIssuersWellKnownConfig,
+  isActivationNeeded,
+} from '../../../shared/openId4VCI/Utils';
 import {
   DETAIL_VIEW_ADD_ON_FIELDS,
   DETAIL_VIEW_DEFAULT_FIELDS,
-} from '../../../shared/constants';
-import {
   fieldItemIterator,
   isVCLoaded,
   setBackgroundColour,
 } from '../common/VCUtils';
 import {ActivityIndicator} from '../../ui/ActivityIndicator';
+import {ProfileIcon} from '../../ProfileIcon';
 
 const getIssuerLogo = (isOpenId4VCI: boolean, issuerLogo: logoType) => {
   if (isOpenId4VCI) {
@@ -67,7 +69,7 @@ const getProfileImage = (
       />
     );
   }
-  return <Icon name="person" color={Theme.Colors.Icon} size={88} />;
+  return <ProfileIcon />;
 };
 
 export const VCDetailView: React.FC<
@@ -116,7 +118,6 @@ export const VCDetailView: React.FC<
           <Column crossAlign="center">
             {getProfileImage(props, verifiableCredential, isOpenId4VCI)}
             <QrCodeOverlay qrCodeDetails={String(verifiableCredential)} />
-
             <Column margin="20 0 0 0">{issuerLogo}</Column>
           </Column>
           <Column align="space-evenly" margin={'0 0 0 10'} style={{flex: 1}}>
@@ -148,7 +149,8 @@ export const VCDetailView: React.FC<
       ))}
 
       {props.activeTab !== 1 ? (
-        props.isBindingPending ? (
+        props.isBindingPending &&
+        isActivationNeeded(props.vc.vcMetadata.issuer) ? (
           <Column style={Theme.Styles.openCardBgContainer} padding="10">
             <Column margin={'0 0 4 0'} crossAlign={'flex-start'}>
               <Icon
@@ -205,7 +207,11 @@ export const VCDetailView: React.FC<
                 weight="bold"
                 size="smaller"
                 margin="10 10 10 10"
-                children={t('profileAuthenticated')}></Text>
+                children={
+                  isActivationNeeded(props.vc.vcMetadata.issuer)
+                    ? t('profileAuthenticated')
+                    : t('credentialActivated')
+                }></Text>
             </Row>
           </Column>
         )

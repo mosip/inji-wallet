@@ -59,10 +59,12 @@
     "id": "بطاقة تعريف",
     "qrCodeHeader": "رمز الاستجابة السريعة",
     "nationalCard": "البطاقة الوطنية",
+    "insuranceCard": "بطاقة التأمين",
     "uin": "UIN",
     "vid": "VID",
     "enableVerification": "تفعيل",
     "profileAuthenticated": "يتم تمكين بيانات الاعتماد للمصادقة عبر الإنترنت.",
+    "credentialActivated": "مفعل",
     "offlineAuthDisabledHeader": "التنشيط معلق لتسجيل الدخول عبر الإنترنت!",
     "offlineAuthDisabledMessage": "الرجاء النقر فوق الزر أدناه لتنشيط بيانات الاعتماد هذه لاستخدامها في تسجيل الدخول عبر الإنترنت.",
     "verificationEnabledSuccess": "تم التنشيط لتسجيل الدخول عبر الإنترنت",
@@ -97,7 +99,8 @@
   },
   "WalletBinding": {
     "inProgress": "في تَقَدم",
-    "profileAuthenticated": "تم التنشيط لتسجيل الدخول عبر الإنترنت"
+    "profileAuthenticated": "تم التنشيط لتسجيل الدخول عبر الإنترنت",
+    "credentialActivated": "مفعل"
   },
   "BindingVcWarningOverlay": {
     "alert": "يرجى تأكيد",
@@ -470,7 +473,6 @@
     "gotoSettings": "اذهب للاعدادات"
   },
   "ScanScreen": {
-    "header": "مسح",
     "noShareableVcs": "لا تتوفر بطاقات قابلة للمشاركة",
     "bluetoothStateAndroid": "يرجى تشغيل البلوتوث من الإعدادات السريعة لدعم المشاركة المحلية",
     "bluetoothStateIos": "يرجى تشغيل البلوتوث من مركز التحكم لدعم المشاركة المحلية",
