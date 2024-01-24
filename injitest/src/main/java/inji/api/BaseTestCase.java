@@ -42,7 +42,6 @@ public class BaseTestCase {
 	public String idrepoCookie = null;
 	public static String uinEmail;
 	public static String uinPhone;
-	public static String JsonFile = "personaData.json";
 
 	public static String uin="";
 	public static String perpetualVid="";

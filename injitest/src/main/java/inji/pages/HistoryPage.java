@@ -84,24 +84,6 @@ public class HistoryPage extends BasePage {
         return false;
     }
     
-
-    
-    public  int countOccurrences(String text, String searchText) {
-    	int count = 0;
-        int index = 0;
-        
-        
-
-        while ((index = text.indexOf(searchText, index)) != -1) {
-            count++;
-            index += searchText.length(); // Move to the next possible occurrence
-            
-        }
-
-        return count;
-    }
-
-
     public boolean verifyActivityLogHeader(String vcNumber, Target os) {
         switch (os) {
             case ANDROID:
