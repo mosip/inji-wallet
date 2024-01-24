@@ -34,6 +34,10 @@ export const getIDType = (verifiableCredential: VerifiableCredential) => {
 
 export const ACTIVATION_NOT_NEEDED = [Issuers.Sunbird];
 
+export const isActivationNeeded = (issuer: string) => {
+  return ACTIVATION_NOT_NEEDED.indexOf(issuer) === -1;
+};
+
 export const Issuers_Key_Ref = 'OpenId4VCI_KeyPair';
 
 export const getIdentifier = (context, credential) => {

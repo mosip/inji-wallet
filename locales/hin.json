@@ -64,6 +64,7 @@
     "vid": "VID",
     "enableVerification": "सक्रिय",
     "profileAuthenticated": "ऑनलाइन प्रमाणीकरण के लिए क्रेडेंशियल सक्षम हैं।",
+    "credentialActivated": "सक्रिय",
     "offlineAuthDisabledHeader": "ऑनलाइन लॉगिन के लिए सक्रियण लंबित है!",
     "offlineAuthDisabledMessage": "ऑनलाइन लॉगिन के लिए उपयोग किए जाने वाले इस क्रेडेंशियल को सक्रिय करने के लिए कृपया नीचे दिए गए बटन पर क्लिक करें।",
     "verificationEnabledSuccess": "ऑनलाइन लॉगिन के लिए सक्रिय",
@@ -95,7 +96,8 @@
   },
   "WalletBinding": {
     "inProgress": "चालू",
-    "profileAuthenticated": "ऑनलाइन लॉगिन के लिए सक्रिय"
+    "profileAuthenticated": "ऑनलाइन लॉगिन के लिए सक्रिय",
+    "credentialActivated": "Activated"
   },
   "BindingVcWarningOverlay": {
     "alert": "कृपया पुष्टि करें",
