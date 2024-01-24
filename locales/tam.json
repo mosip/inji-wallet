@@ -96,7 +96,7 @@
   "WalletBinding": {
     "inProgress": "செயல்பாட்டில் உள்ளது",
     "profileAuthenticated": "சுயவிவரம் அங்கீகரிக்கப்பட்டது",
-    "credentialActivated": "Activated"
+    "credentialActivated": "செயல்படுத்தப்பட்டது"
   },
   "BindingVcWarningOverlay": {
     "alert": "தயவுசெய்து உறுதிப்படுத்தவும்",

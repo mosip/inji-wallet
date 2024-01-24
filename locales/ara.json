@@ -100,7 +100,7 @@
   "WalletBinding": {
     "inProgress": "في تَقَدم",
     "profileAuthenticated": "تم التنشيط لتسجيل الدخول عبر الإنترنت",
-    "credentialActivated": "Activated"
+    "credentialActivated": "مفعل"
   },
   "BindingVcWarningOverlay": {
     "alert": "يرجى تأكيد",

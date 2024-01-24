@@ -97,7 +97,7 @@
   "WalletBinding": {
     "inProgress": "चालू",
     "profileAuthenticated": "ऑनलाइन लॉगिन के लिए सक्रिय",
-    "credentialActivated": "Activated"
+    "credentialActivated": "सक्रिय"
   },
   "BindingVcWarningOverlay": {
     "alert": "कृपया पुष्टि करें",

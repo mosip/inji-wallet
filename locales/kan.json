@@ -96,7 +96,7 @@
   "WalletBinding": {
     "inProgress": "ಪ್ರಗತಿಯಲ್ಲಿದೆ",
     "profileAuthenticated": "ಆನ್‌ಲೈನ್ ಲಾಗಿನ್‌ಗಾಗಿ ಸಕ್ರಿಯಗೊಳಿಸಲಾಗಿದೆ",
-    "credentialActivated": "Activated"
+    "credentialActivated": "ಸಕ್ರಿಯಗೊಳಿಸಲಾಗಿದೆ"
   },
   "BindingVcWarningOverlay": {
     "alert": "ದಯವಿಟ್ಟು ದ್ರುಡೀಕರಿಸಿ",
