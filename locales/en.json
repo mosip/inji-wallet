@@ -535,8 +535,10 @@
         "message": "Your Card was discarded by Verifier"
       },
       "bleError": {
-        "title": "Failed to transfer",
-        "message": "Something went wrong while transferring Card. Please try again.",
+        "title": "An Error Occurred!",
+        "message": "Due to Technical Error, we were unable to share the card with the relying party.",
+        "retry": "Retry",
+        "home": "Home",
         "hint": "Error: {{code}}"
       }
     }

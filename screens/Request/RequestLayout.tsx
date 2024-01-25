@@ -11,6 +11,7 @@ import {useReceivedVcsTab} from '../Home/ReceivedVcsTabController';
 import {REQUEST_ROUTES} from '../../routes/routesConstants';
 import {SquircleIconPopUpModal} from '../../components/ui/SquircleIconPopUpModal';
 import {ProgressingModal} from '../../components/ProgressingModal';
+import {SharingErrorModal} from '../Scan/SharingErrorModal';
 const RequestStack = createNativeStackNavigator();
 
 export const RequestLayout: React.FC = () => {
@@ -79,23 +80,10 @@ export const RequestLayout: React.FC = () => {
         />
       )}
 
-      <ProgressingModal
-        title={t('status.disconnected.title')}
-        hint={t('status.disconnected.message')}
-        isVisible={controller.isDisconnected}
-        isHintVisible={true}
-        progress={true}
-        onCancel={controller.DISMISS}
-        onRetry={controller.RESET}
-      />
-
-      <ProgressingModal
-        title={t('status.bleError.title')}
-        hint={t('status.bleError.message')}
-        isVisible={controller.isBleError}
-        isHintVisible={true}
-        progress={true}
-        onCancel={controller.DISMISS}
+      <SharingErrorModal
+        testId={'sharingErrorModal'}
+        isVisible={controller.isDisconnected || controller.isBleError}
+        onBackToHome={controller.DISMISS}
         onRetry={controller.RESET}
       />
     </React.Fragment>

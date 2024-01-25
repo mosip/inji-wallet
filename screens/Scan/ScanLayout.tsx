@@ -10,6 +10,7 @@ import {SharingSuccessModal} from './SuccessfullySharedModal';
 import {Theme} from '../../components/ui/styleUtils';
 import {Icon} from 'react-native-elements';
 import {Loader} from '../../components/ui/Loader';
+import {SharingErrorModal} from './SharingErrorModal';
 
 const ScanStack = createNativeStackNavigator();
 
@@ -73,14 +74,11 @@ export const ScanLayout: React.FC = () => {
         testId={'sharingSuccessModal'}
       />
 
-      <ProgressingModal
+      <SharingErrorModal
+        testId={'sharingErrorModal'}
         isVisible={controller.isDisconnected}
-        title={t('RequestScreen:status.disconnected.title')}
-        isHintVisible={true}
-        hint={t('RequestScreen:status.disconnected.message')}
-        onCancel={controller.DISMISS}
+        onBackToHome={controller.DISMISS}
         onRetry={controller.onRetry}
-        progress
       />
     </React.Fragment>
   );
