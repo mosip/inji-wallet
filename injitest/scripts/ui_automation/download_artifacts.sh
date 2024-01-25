@@ -37,9 +37,12 @@ download_customer_artifacts() {
 
     response=$(aws devicefarm list-artifacts --arn "arn:aws:devicefarm:us-west-2:931337674770:run:b356580b-c561-4fd2-bfdf-8993aebafc5a/36910efb-e008-49f7-ac59-5eb8a22dd293" --type FILE --query 'artifacts[?name==`Customer Artifacts`].[url]' --output json)
         url=$(echo "$response" | jq -r '.[0][0]')
-        echo "Downloading customer artifact from $url"
         cd "artifacts/$ARTIFACT_DIRECTORY"
-        curl -O "$url"
+
+        echo "Downloading customer artifact from $url"
+        curl -JL "$url" -o "$PLATFORM.zip"
+        echo "$(pwd)"
+        echo "$(ls -l)"
         echo "Artifacts downloaded successfully"
 }
 
