@@ -171,7 +171,7 @@ jobs:
       - name: Download IOS Artifacts
         run: | 
           cd injitest/scripts/ui_automation
-          ./download_artifacts.sh "$RUN_ARN" "Android"
+          ./download_artifacts.sh "$RUN_ARN" "IOS"
 
       - name: Upload Artifact to Actions
         uses: actions/upload-artifact@v3.1.1
