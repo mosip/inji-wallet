@@ -185,19 +185,15 @@ export interface Typegen0 {
       | 'done.invoke.vc-item.requestingBindingOtp:invocation[0]'
       | 'done.invoke.vc-item.requestingOtp:invocation[0]'
       | 'done.invoke.vc-item.updatingPrivateKey:invocation[0]'
-      | 'done.invoke.vc-item.verifyingCredential:invocation[0]'
       | 'error.platform.vc-item.requestingLock:invocation[0]'
-      | 'error.platform.vc-item.requestingRevoke:invocation[0]'
-      | 'error.platform.vc-item.verifyingCredential:invocation[0]';
+      | 'error.platform.vc-item.requestingRevoke:invocation[0]';
     clearTransactionId:
       | ''
       | 'CANCEL'
       | 'DISMISS'
       | 'STORE_RESPONSE'
       | 'done.invoke.vc-item.addingWalletBindingId:invocation[0]'
-      | 'done.invoke.vc-item.updatingPrivateKey:invocation[0]'
-      | 'done.invoke.vc-item.verifyingCredential:invocation[0]'
-      | 'error.platform.vc-item.verifyingCredential:invocation[0]';
+      | 'done.invoke.vc-item.updatingPrivateKey:invocation[0]';
     incrementDownloadCounter:
       | 'POLL'
       | 'done.invoke.vc-item.checkingServerData.loadDownloadLimitConfig:invocation[0]';
@@ -220,7 +216,9 @@ export interface Typegen0 {
     removeTamperedVcItem: 'TAMPERED_VC';
     removeVcFromInProgressDownloads: 'STORE_RESPONSE';
     removeVcItem: 'CONFIRM';
-    removeVcMetaDataFromStorage: 'STORE_ERROR';
+    removeVcMetaDataFromStorage:
+      | 'STORE_ERROR'
+      | 'error.platform.vc-item.verifyingCredential:invocation[0]';
     removeVcMetaDataFromVcMachine: 'DISMISS';
     requestStoredContext: 'GET_VC_RESPONSE' | 'REFRESH';
     requestVcContext: 'DISMISS' | 'xstate.init';
@@ -239,6 +237,7 @@ export interface Typegen0 {
     sendTamperedVc: 'TAMPERED_VC';
     sendTelemetryEvents: 'STORE_RESPONSE';
     sendVcUpdated: 'PIN_CARD';
+    sendVerificationError: 'STORE_RESPONSE';
     sendWalletBindingSuccess:
       | 'done.invoke.vc-item.kebabPopUp.addingWalletBindingId:invocation[0]'
       | 'done.invoke.vc-item.kebabPopUp.updatingPrivateKey:invocation[0]';
@@ -270,7 +269,7 @@ export interface Typegen0 {
       | 'error.platform.vc-item.requestingRevoke:invocation[0]';
     setVcKey: 'REMOVE';
     setVcMetadata: 'UPDATE_VC_METADATA';
-    setVerifiableCredential: 'STORE_RESPONSE';
+    setVerifiableCredential: 'done.invoke.vc-item.verifyingCredential:invocation[0]';
     setWalletBindingError:
       | 'error.platform.vc-item.addKeyPair:invocation[0]'
       | 'error.platform.vc-item.addingWalletBindingId:invocation[0]'
@@ -291,7 +290,6 @@ export interface Typegen0 {
       | 'done.invoke.vc-item.kebabPopUp.addingWalletBindingId:invocation[0]';
     setWalletBindingSuccess: 'done.invoke.vc-item.updatingPrivateKey:invocation[0]';
     storeContext:
-      | 'CREDENTIAL_DOWNLOADED'
       | 'done.invoke.vc-item.addingWalletBindingId:invocation[0]'
       | 'done.invoke.vc-item.kebabPopUp.addingWalletBindingId:invocation[0]'
       | 'done.invoke.vc-item.kebabPopUp.updatingPrivateKey:invocation[0]'
@@ -306,8 +304,8 @@ export interface Typegen0 {
       | 'done.invoke.vc-item.addingWalletBindingId:invocation[0]'
       | 'done.invoke.vc-item.kebabPopUp.addingWalletBindingId:invocation[0]'
       | 'done.invoke.vc-item.kebabPopUp.updatingPrivateKey:invocation[0]'
-      | 'done.invoke.vc-item.updatingPrivateKey:invocation[0]'
-      | 'done.invoke.vc-item.verifyingCredential:invocation[0]';
+      | 'done.invoke.vc-item.updatingPrivateKey:invocation[0]';
+    updateVerificationErrorMessage: 'error.platform.vc-item.verifyingCredential:invocation[0]';
   };
   eventsCausingDelays: {};
   eventsCausingGuards: {
@@ -330,7 +328,7 @@ export interface Typegen0 {
     checkStatus: 'done.invoke.vc-item.checkingServerData.verifyingDownloadLimitExpiry:invocation[0]';
     downloadCredential: 'DOWNLOAD_READY';
     generateKeyPair: 'INPUT_OTP';
-    loadDownloadLimitConfig: 'STORE_RESPONSE';
+    loadDownloadLimitConfig: 'STORE_ERROR' | 'STORE_RESPONSE';
     requestBindingOtp: 'CONFIRM';
     requestLock: 'INPUT_OTP';
     requestOtp: 'LOCK_VC' | 'RESEND_OTP';
@@ -359,6 +357,7 @@ export interface Typegen0 {
     | 'checkingStore'
     | 'checkingVc'
     | 'checkingVerificationStatus'
+    | 'handlingCredentialVerificationFailure'
     | 'idle'
     | 'invalid'
     | 'invalid.backend'
