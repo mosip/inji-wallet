@@ -149,7 +149,7 @@ sleep 100
 
 #Start the run
 RUN_ARN=$(start_run_on_device_farm $PROJECT_ARN $APP_UPLOAD_ARN $DEVICE_POOL_ARN $TEST_PACKAGE_ARN $TEST_SPEC_ARN $RUN_NAME)
-echo "Run ARN is ------- $RUN_ARN"
+echo "RUN_ARN=$RUN_ARN" >> $GITHUB_ENV
 echo "Run Started Successfully!"
 
 echo "RUN ARN IS ---> $RUN_ARN"

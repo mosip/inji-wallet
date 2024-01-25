@@ -65,7 +65,7 @@ export const VCCardView: React.FC<
       CARD_VIEW_DEFAULT_FIELDS,
     ).then(response => {
       setWellknown(response.wellknown);
-      setFields(response.fields.slice(0, 1).concat(CARD_VIEW_ADD_ON_FIELDS));
+      setFields(response.fields.slice(0, 3).concat(CARD_VIEW_ADD_ON_FIELDS));
     });
   }, [verifiableCredential?.wellKnown]);
 
