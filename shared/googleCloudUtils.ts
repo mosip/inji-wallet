@@ -40,7 +40,6 @@ export const removeOldDriveBackupFiles = async (fileName: string) => {
 
 class Cloud {
   private static configured = false;
-  private static accessToken: undefined | string = undefined;
   static status = {
     DECLINED: 'DECLINED',
     SUCCESS: 'SUCCESS',
@@ -139,13 +138,9 @@ class Cloud {
   }
 
   private static async getAccessToken() {
-    if (this.accessToken) {
-      return this.accessToken;
-    }
     try {
       const tokenResult = await GoogleSignin.getTokens();
-      this.accessToken = tokenResult.accessToken;
-      return this.accessToken;
+      return tokenResult.accessToken;
     } catch (error) {
       console.error('Error while getting access token ', error);
       throw error;

@@ -1,22 +1,11 @@
-import * as Google from 'expo-auth-session/providers/google';
-import React, {useEffect, useState} from 'react';
-import {Image, Platform, View} from 'react-native';
-import {CloudStorage} from 'react-native-cloud-storage';
-import {GOOGLE_ANDROID_CLIENT_ID} from 'react-native-dotenv';
+import React from 'react';
+import {Image, View} from 'react-native';
 import {Icon, ListItem} from 'react-native-elements';
-import {
-  Button,
-  Centered,
-  Column,
-  HorizontallyCentered,
-  Row,
-  Text,
-} from '../../components/ui';
+import {Button, Column, Row, Text} from '../../components/ui';
 import {LoaderAnimation} from '../../components/ui/LoaderAnimation';
 import {Modal} from '../../components/ui/Modal';
 import {Theme} from '../../components/ui/styleUtils';
 import {SvgImage} from '../../components/ui/svg';
-import {request as apiRequest} from '../../shared/request';
 import {useBackupScreen} from './BackupController';
 
 const SectionLayout: React.FC<SectionLayoutProps> = ({
@@ -108,7 +97,7 @@ const BackupAndRestoreScreen: React.FC<BackupAndRestoreProps> = props => {
 
   const LastBackupSection = (
     <SectionLayout
-      headerText={'Last Backup: No Backup Found'}
+      headerText={'Last Backup Details'}
       headerIcon={SvgImage.DataBackupIcon(34, 24)}>
       <Row>
         <View style={{marginBottom: 19}}>
@@ -171,6 +160,19 @@ const BackupAndRestoreScreen: React.FC<BackupAndRestoreProps> = props => {
           color={Theme.Colors.Icon}
         />
       }>
+      <Row>
+        <View style={{marginBottom: 19}}>
+          <Text
+            style={{
+              fontFamily: 'Inter',
+              fontWeight: 'normal',
+              fontSize: 14,
+              color: Theme.Colors.helpText,
+            }}>
+            Restore your data from Google Drive
+          </Text>
+        </View>
+      </Row>
       <Row style={{marginLeft: 4, marginRight: 4}}>
         <Button
           testID="backup"
@@ -215,4 +217,5 @@ export default BackupAndRestoreScreen;
 interface BackupAndRestoreProps {
   profileInfo: ProfileInfo | undefined;
   isLoading: boolean;
+  onBackPress: () => void;
 }

@@ -1,12 +1,11 @@
 import React, {useState} from 'react';
-import {View} from 'react-native';
+import {GestureResponderEvent, View} from 'react-native';
 import {MessageOverlay} from '../../components/MessageOverlay';
 import {Button, Column, Row, Text} from '../../components/ui';
 import {Modal} from '../../components/ui/Modal';
 import {Theme} from '../../components/ui/styleUtils';
 import {SvgImage} from '../../components/ui/svg';
 import {useBackupScreen} from './BackupController';
-import {CloudSignOn} from '../../components/CloudSignOn';
 
 //TODO: Make this component adaptable to all screen size
 export const AccountSelection: React.FC<AccountSelectionProps> = props => {
@@ -96,7 +95,7 @@ export const AccountSelection: React.FC<AccountSelectionProps> = props => {
 };
 
 interface AccountSelectionProps {
+  goBack: (event: GestureResponderEvent) => void;
   isVisible: boolean;
-  onDismiss: () => void;
   onProceed: () => void;
 }
