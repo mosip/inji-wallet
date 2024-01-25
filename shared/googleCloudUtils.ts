@@ -1,4 +1,7 @@
-import {GoogleSignin, statusCodes} from 'react-native-google-signin';
+import {
+  GoogleSignin,
+  statusCodes,
+} from '@react-native-google-signin/google-signin';
 import {CloudStorage, CloudStorageScope} from 'react-native-cloud-storage';
 import {GOOGLE_ANDROID_CLIENT_ID} from 'react-native-dotenv';
 import {request} from '../shared/request';
@@ -9,12 +12,9 @@ export const getToken = async (): Promise<string> => {
     await GoogleSignin.configure({
       scopes: [
         'https://www.googleapis.com/auth/drive.appdata',
-        'https://www.googleapis.com/auth/drive.metadata',
-        'https://www.googleapis.com/auth/drive.appfolder',
         'https://www.googleapis.com/auth/drive.file',
       ], // what API you want to access on behalf of the user, default is email and profile
       androidClientId: GOOGLE_ANDROID_CLIENT_ID, // client ID of type WEB for your server. Required to get the idToken on the user object, and for offline access.
-      forceConsentPrompt: false,
     });
     await GoogleSignin.signIn();
     const tokenResult = await GoogleSignin.getTokens();
@@ -50,12 +50,9 @@ class Cloud {
     await GoogleSignin.configure({
       scopes: [
         'https://www.googleapis.com/auth/drive.appdata',
-        'https://www.googleapis.com/auth/drive.metadata',
-        'https://www.googleapis.com/auth/drive.appfolder',
         'https://www.googleapis.com/auth/drive.file',
       ], // what API you want to access on behalf of the user, default is email and profile
       androidClientId: GOOGLE_ANDROID_CLIENT_ID, // client ID of type WEB for your server. Required to get the idToken on the user object, and for offline access.
-      forceConsentPrompt: false,
     });
     this.configured = true;
   }
@@ -89,6 +86,7 @@ class Cloud {
       const isSignedIn = await GoogleSignin.isSignedIn();
       if (!isSignedIn) {
         await GoogleSignin.signInSilently();
+        console.log('Not signed in');
         const profileInfo = await this.profileInfo();
         return {
           isSignedIn: true,
@@ -96,6 +94,7 @@ class Cloud {
         };
       } else {
         const profileInfo = await this.profileInfo();
+        console.log(' signed in');
         return {
           isSignedIn: true,
           profileInfo,
@@ -113,9 +112,7 @@ class Cloud {
   }
 
   private static initialize(): void {
-    if (!this.configured) {
-      this.configure();
-    }
+    this.configure();
   }
 
   private static async profileInfo(): Promise<ProfileInfo | undefined> {
@@ -137,10 +134,12 @@ class Cloud {
     }
   }
 
-  private static async getAccessToken() {
+  public static async getAccessToken() {
     try {
       const tokenResult = await GoogleSignin.getTokens();
-      return tokenResult.accessToken;
+      await GoogleSignin.clearCachedAccessToken(tokenResult.accessToken);
+      const {accessToken} = await GoogleSignin.getTokens();
+      return accessToken;
     } catch (error) {
       console.error('Error while getting access token ', error);
       throw error;

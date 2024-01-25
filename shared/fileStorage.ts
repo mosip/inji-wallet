@@ -12,7 +12,7 @@ import {
 import * as RNZipArchive from 'react-native-zip-archive';
 import {CloudStorage, CloudStorageScope} from 'react-native-cloud-storage';
 import {GCLOUD_BACKUP_DIR_NAME} from './constants';
-import {getToken, removeOldDriveBackupFiles} from './googleCloudUtils';
+import Cloud, {getToken, removeOldDriveBackupFiles} from './googleCloudUtils';
 import {
   GDrive,
   MimeTypes,
@@ -89,7 +89,7 @@ export async function uploadBackupFileToDrive(
 ): Promise<string> {
   try {
     console.log('uploadBackupFileToDrive');
-    const tokenResult = await getToken();
+    const tokenResult = await Cloud.getAccessToken();
     console.log('uploadBackupFileToDrive tokenResult ', tokenResult);
     const filePath = zipFilePath(fileName);
 
@@ -97,14 +97,15 @@ export async function uploadBackupFileToDrive(
     const fileContent = await readFile(filePath, 'base64');
     console.log('Read file success ');
     // upload file
-    const gdrive = new GDrive();
-    gdrive.accessToken = tokenResult;
-
-    console.log(await gdrive.files.list());
+    CloudStorage.setGoogleDriveAccessToken(tokenResult)
+    await CloudStorage.writeFile(`/${fileName}.zip`,fileContent)
     console.log('write file success ');
 
+    var files = await CloudStorage.readdir('/')
+    console.log('files', files)
+
     //remove old files
-    await removeOldDriveBackupFiles(fileName);
+    // await removeOldDriveBackupFiles(fileName);
     return Promise.resolve('success');
   } catch (error) {
     console.log('Error while uploadBackupFileToDrive ', error);
