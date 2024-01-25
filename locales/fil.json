@@ -534,8 +534,10 @@
         "message": "Ang iyong card ay itinapon ng verifier"
       },
       "bleError": {
-        "title": "Nabigong ilipat!",
-        "message": "Nagkaproblema habang inililipat ang card. Pakisubukang muli.",
+        "title": "May pagkakamaling naganap!",
+        "message": "Dahil sa Technical Error, hindi namin naibahagi ang card sa umaasa na partido.",
+        "retry": "Subukan muli",
+        "home": "Bahay",
         "hint": "Error: {{code}}"
       }
     }

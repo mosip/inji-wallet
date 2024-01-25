@@ -528,8 +528,10 @@
         "message": "Su tarjeta fue descartada por el Verificador"
       },
       "bleError": {
-        "title": "No se pudo transferir",
-        "message": "Ocurrió un error al transferir la tarjeta. Por favor, inténtalo de nuevo.",
+        "title": "¡Ocurrió un error!",
+        "message": "Debido a un error técnico, no pudimos compartir la tarjeta con la persona que confía.",
+        "retry": "Rever",
+        "home": "Hogar",
         "hint": "Error: {{code}}"
       }
     }
