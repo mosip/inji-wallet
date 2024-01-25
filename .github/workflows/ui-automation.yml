@@ -100,7 +100,7 @@ jobs:
         uses: actions/upload-artifact@v3.1.1
         with:
           name: Android-Artifacts
-          path: injitest/scripts/ui_automation/artifacts/android_artifacts
+          path: injitest/scripts/ui_automation/artifacts/android_artifacts/
           retention-days: 10
       
       # - name: Update slack channel
@@ -177,7 +177,7 @@ jobs:
         uses: actions/upload-artifact@v3.1.1
         with:
           name: IOS-Artifacts
-          path: injitest/scripts/ui_automation/artifacts/ios_artifacts
+          path: injitest/scripts/ui_automation/artifacts/ios_artifacts/
           retention-days: 10
 
       # - name: Update slack channel
