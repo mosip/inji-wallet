@@ -46,8 +46,6 @@ import Cloud, {
   isSignedInResult,
 } from '../../../shared/CloudBackupAndRestoreUtils';
 
-import {VerificationErrorType} from '../../../shared/vcjs/verifyCredential';
-
 const model = createModel(
   {
     serviceRefs: {} as AppServices,
@@ -230,7 +228,6 @@ export const ExistingMosipVCItemMachine =
                 src: 'downloadCredential',
                 id: 'downloadCredential',
               },
-              initial: 'idle',
               on: {
                 POLL: [
                   {
