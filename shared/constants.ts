@@ -100,24 +100,3 @@ export type IndividualId = {
 export const NETWORK_REQUEST_FAILED = 'Network request failed';
 export const REQUEST_TIMEOUT = 'request timedout';
 export const BIOMETRIC_CANCELLED = 'User has cancelled biometric';
-
-export const CARD_VIEW_DEFAULT_FIELDS = ['fullName'];
-
-export const DETAIL_VIEW_DEFAULT_FIELDS = [
-  'fullName',
-  'gender',
-  'phone',
-  'dateOfBirth',
-  'email',
-  'address',
-];
-
-//todo UIN & VID to be removed once we get the fields in the wellknown endpoint
-export const CARD_VIEW_ADD_ON_FIELDS = ['UIN', 'VID'];
-export const DETAIL_VIEW_ADD_ON_FIELDS = [
-  'UIN',
-  'VID',
-  'status',
-  'credentialRegistry',
-  'idType',
-];

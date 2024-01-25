@@ -11,7 +11,7 @@ export function selectVerifiableCredential(state: State) {
 }
 
 export function selectKebabPopUp(state: State) {
-  return state.matches('kebabPopUp');
+  return state.context.isMachineInKebabPopupState;
 }
 
 export function selectContext(state: State) {
@@ -41,25 +41,25 @@ export function selectBindingAuthFailedError(state: State) {
   return state.context.bindingAuthFailedMessage;
 }
 
-export function selectKebabPopUpAcceptingBindingOtp(state: State) {
-  return state.matches('kebabPopUp.acceptingBindingOtp');
+export function selectAcceptingBindingOtp(state: State) {
+  return state.matches('acceptingBindingOtp');
 }
 
 export function selectKebabPopUpShowWalletBindingError(state: State) {
-  return state.matches('kebabPopUp.showingWalletBindingError');
+  return state.matches('showingWalletBindingError');
 }
 
-export function selectKebabPopUpWalletBindingInProgress(state: State) {
-  return state.matches('kebabPopUp.requestingBindingOtp') ||
-    state.matches('kebabPopUp.addingWalletBindingId') ||
-    state.matches('kebabPopUp.addKeyPair') ||
-    state.matches('kebabPopUp.updatingPrivateKey')
+export function selectWalletBindingInProgress(state: State) {
+  return state.matches('requestingBindingOtp') ||
+    state.matches('addingWalletBindingId') ||
+    state.matches('addKeyPair') ||
+    state.matches('updatingPrivateKey')
     ? true
     : false;
 }
 
-export function selectKebabPopUpBindingWarning(state: State) {
-  return state.matches('kebabPopUp.showBindingWarning');
+export function selectBindingWarning(state: State) {
+  return state.matches('showBindingWarning');
 }
 
 export function selectRemoveWalletWarning(state: State) {
@@ -79,8 +79,5 @@ export function selectShowActivities(state: State) {
 }
 
 export function selectShowWalletBindingError(state: State) {
-  return (
-    state.matches('showingWalletBindingError') ||
-    state.matches('kebabPopUp.showingWalletBindingError')
-  );
+  return state.matches('showingWalletBindingError');
 }

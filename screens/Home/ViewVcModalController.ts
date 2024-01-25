@@ -12,6 +12,9 @@ import {
   selectShowWalletBindingError,
   selectWalletBindingSuccess,
   selectBindingAuthFailedError,
+  selectAcceptingBindingOtp,
+  selectWalletBindingInProgress,
+  selectBindingWarning,
 } from '../../machines/VCItemMachine/commonSelectors';
 import {
   selectIsAcceptingOtpInput,
@@ -23,9 +26,6 @@ import {
   ExistingMosipVCItemEvents,
   ExistingMosipVCItemMachine,
   selectRequestBindingOtp,
-  selectAcceptingBindingOtp,
-  selectWalletBindingInProgress,
-  selectBindingWarning,
 } from '../../machines/VCItemMachine/ExistingMosipVCItem/ExistingMosipVCItemMachine';
 import {selectPasscode} from '../../machines/auth';
 import {biometricsMachine, selectIsSuccess} from '../../machines/biometrics';

@@ -118,6 +118,7 @@ export const SendVcScreen: React.FC = () => {
 
           <Button
             type="gradient"
+            styles={{marginTop: 12}}
             title={t('acceptRequest')}
             disabled={controller.selectedIndex == null}
             onPress={controller.ACCEPT_REQUEST}
