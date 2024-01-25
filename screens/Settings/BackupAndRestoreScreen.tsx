@@ -1,12 +1,14 @@
-import React from 'react';
+import React, {Fragment} from 'react';
 import {Image, View} from 'react-native';
 import {Icon, ListItem} from 'react-native-elements';
-import {Button, Column, Row, Text} from '../../components/ui';
+import {Button, Centered, Column, Row, Text} from '../../components/ui';
 import {LoaderAnimation} from '../../components/ui/LoaderAnimation';
 import {Modal} from '../../components/ui/Modal';
 import {Theme} from '../../components/ui/styleUtils';
 import {SvgImage} from '../../components/ui/svg';
 import {useBackupScreen} from './BackupController';
+import {MessageOverlay} from '../../components/MessageOverlay';
+import {BannerNotification} from '../../components/BannerNotification';
 
 const SectionLayout: React.FC<SectionLayoutProps> = ({
   headerIcon,
@@ -93,7 +95,7 @@ type ProfileInfo = {
   picture: string;
 };
 const BackupAndRestoreScreen: React.FC<BackupAndRestoreProps> = props => {
-  const controller = useBackupScreen();
+  const backupController = useBackupScreen();
 
   const LastBackupSection = (
     <SectionLayout
@@ -115,13 +117,20 @@ const BackupAndRestoreScreen: React.FC<BackupAndRestoreProps> = props => {
       </Row>
       <Row style={{marginLeft: 4, marginRight: 4}}>
         {/* TODO: Button is not occupying the space in larger screens */}
-        <Button
-          testID="backup"
-          type="gradient"
-          title={'Backup'}
-          onPress={controller.DATA_BACKUP}
-          styles={{...Theme.MessageOverlayStyles.button, flex: 1}}
-        />
+        {backupController.isBackupInProgress ? (
+          <Centered>
+            {/* // TODO: Show Loader animation in center */}
+            <LoaderAnimation showLogo={false} />
+          </Centered>
+        ) : (
+          <Button
+            testID="backup"
+            type="gradient"
+            title={'Backup'}
+            onPress={backupController.DATA_BACKUP}
+            styles={{...Theme.MessageOverlayStyles.button, flex: 1}}
+          />
+        )}
       </Row>
     </SectionLayout>
   );
@@ -186,29 +195,46 @@ const BackupAndRestoreScreen: React.FC<BackupAndRestoreProps> = props => {
   );
 
   return (
-    <Modal
-      isVisible
-      headerTitle={'Backup & Restore'}
-      headerElevation={2}
-      arrowLeft={true}
-      onDismiss={props.onBackPress}>
-      <View
-        style={{
-          backgroundColor: Theme.Colors.lightGreyBackgroundColor,
-          flex: 1,
-        }}>
-        {props.isLoading ? (
-          // TODO: Show Loader animation in center of screen
-          <LoaderAnimation />
-        ) : (
-          <React.Fragment>
-            {LastBackupSection}
-            {AccountSection}
-            {RestoreSection}
-          </React.Fragment>
+    <Fragment>
+      <Modal
+        isVisible
+        headerTitle={'Backup & Restore'}
+        headerElevation={2}
+        arrowLeft={true}
+        onDismiss={props.onBackPress}>
+        {backupController.isBackingUpSuccess && (
+          <BannerNotification
+            message="Your backup was successful!"
+            onClosePress={backupController.DISMISS}
+            testId="backupSuccessToast"
+            customStyle={{zIndex: 1000}}
+          />
         )}
-      </View>
-    </Modal>
+        <View
+          style={{
+            backgroundColor: Theme.Colors.lightGreyBackgroundColor,
+            flex: 1,
+          }}>
+          {props.isLoading ? (
+            // TODO: Show Loader animation in center of screen
+            <LoaderAnimation />
+          ) : (
+            <React.Fragment>
+              {LastBackupSection}
+              {AccountSection}
+              {RestoreSection}
+            </React.Fragment>
+          )}
+        </View>
+      </Modal>
+
+      <MessageOverlay
+        isVisible={backupController.isBackingUpFailure}
+        onButtonPress={() => {}}
+        buttonText="OK"
+        title={'Backup Failed'}
+      />
+    </Fragment>
   );
 };
 

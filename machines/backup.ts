@@ -51,6 +51,13 @@ export const backupMachine = model.createMachine(
     },
     id: 'backup',
     initial: 'init',
+    on: {
+      DATA_BACKUP: [
+        {
+          target: 'backingUp',
+        },
+      ],
+    },
     states: {
       init: {
         on: {
@@ -104,7 +111,9 @@ export const backupMachine = model.createMachine(
             invoke: {
               src: 'zipBackupFile',
               onDone: {
-                target: 'uploadBackupFile',
+                //TODO: change target to uploadBackupFile (Moving to success for local testing)
+                target: 'success',
+                // target: 'uploadBackupFile',
               },
               onError: {
                 target: 'failure',
@@ -234,6 +243,13 @@ export function createBackupMachine(serviceRefs: AppServices) {
     ...backupMachine.context,
     serviceRefs,
   });
+}
+export function selectIsBackupInprogress(state: State) {
+  return (
+    state.matches('backingUp') &&
+    !state.matches('backingUp.success') &&
+    !state.matches('backingUp.failure')
+  );
 }
 export function selectIsBackingUp(state: State) {
   return state.matches('backingUp');

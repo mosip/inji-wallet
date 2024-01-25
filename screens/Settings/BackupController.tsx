@@ -5,6 +5,7 @@ import {
   selectIsBackingUp,
   selectIsBackingUpSuccess,
   selectIsBackingUpSFailure,
+  selectIsBackupInprogress,
 } from '../../machines/backup';
 import {GlobalContext} from '../../shared/GlobalContext';
 
@@ -16,6 +17,7 @@ export function useBackupScreen() {
     isBackingUp: useSelector(backupService, selectIsBackingUp),
     isBackingUpSuccess: useSelector(backupService, selectIsBackingUpSuccess),
     isBackingUpFailure: useSelector(backupService, selectIsBackingUpSFailure),
+    isBackupInProgress: useSelector(backupService, selectIsBackupInprogress),
     DATA_BACKUP: () => {
       backupService.send(BackupEvents.DATA_BACKUP());
     },

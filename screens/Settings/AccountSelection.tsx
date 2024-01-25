@@ -73,23 +73,6 @@ export const AccountSelection: React.FC<AccountSelectionProps> = props => {
           </Column>
         </Column>
       </Modal>
-
-      <MessageOverlay
-        isVisible={controller.isBackingUpSuccess}
-        onButtonPress={() => {
-          controller.OK(), setDataBackup(false);
-        }}
-        buttonText="OK"
-        title={'Backup Successful'}
-      />
-      <MessageOverlay
-        isVisible={controller.isBackingUpFailure}
-        onButtonPress={() => {
-          controller.OK(), setDataBackup(false);
-        }}
-        buttonText="OK"
-        title={'Backup Failed'}
-      />
     </React.Fragment>
   );
 };

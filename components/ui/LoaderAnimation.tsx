@@ -1,20 +1,29 @@
-import React, { Fragment } from 'react';
-import { View } from 'react-native';
+import React, {Fragment} from 'react';
+import {View} from 'react-native';
 import Spinner from 'react-native-spinkit';
-import { Theme } from './styleUtils';
+import {Theme} from './styleUtils';
 import testIDProps from '../../shared/commonUtil';
-import { SvgImage } from './svg';
+import {SvgImage} from './svg';
 
-export const LoaderAnimation: React.FC = () => {
+export const LoaderAnimation: React.FC<LoaderAnimationProps> = ({showLogo}) => {
   return (
     <Fragment>
-      {SvgImage.ProgressIcon()}
+      {showLogo && SvgImage.ProgressIcon()}
       <View {...testIDProps('threeDotsLoader')}>
         <Spinner
           type="ThreeBounce"
           color={Theme.Colors.Loading}
-          style={{ marginLeft: 6 }} />
+          style={{marginLeft: 6}}
+        />
       </View>
     </Fragment>
   );
 };
+
+LoaderAnimation.defaultProps = {
+  showLogo: true,
+};
+
+interface LoaderAnimationProps {
+  showLogo?: boolean;
+}

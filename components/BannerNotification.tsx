@@ -7,7 +7,7 @@ import testIDProps from '../shared/commonUtil';
 
 export const BannerNotification: React.FC<BannerNotificationProps> = props => {
   return (
-    <View {...testIDProps(props.testId)}>
+    <View {...testIDProps(props.testId)} style={props.customStyle}>
       <Row style={Theme.Styles.downloadingVcPopUp}>
         <Text color={Theme.Colors.whiteText} weight="semibold" size="smaller">
           {props.message}
@@ -24,8 +24,13 @@ export const BannerNotification: React.FC<BannerNotificationProps> = props => {
   );
 };
 
+BannerNotification.defaultProps = {
+  customStyle: {},
+};
+
 export interface BannerNotificationProps {
   message: string;
   onClosePress: () => void;
   testId: string;
+  customStyle?: Object;
 }
