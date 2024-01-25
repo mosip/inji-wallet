@@ -38,4 +38,5 @@ declare module 'react-native-dotenv' {
    * Flag for Toggling debug mode
    */
   export const DEBUG_MODE: string;
+  export const GOOGLE_ANDROID_CLIENT_ID: string;
 }

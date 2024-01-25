@@ -19,14 +19,15 @@ import {ActivityLogEvents} from './activityLog';
 import {log} from 'xstate/lib/actions';
 import {verifyCredential} from '../shared/vcjs/verifyCredential';
 import {
-  getBody,
-  vcDownloadTimeout,
-  OIDCErrors,
-  ErrorMessage,
-  updateCredentialInformation,
   constructAuthorizationConfiguration,
+  ErrorMessage,
+  getBody,
   getVCMetadata,
+  Issuers,
   Issuers_Key_Ref,
+  OIDCErrors,
+  updateCredentialInformation,
+  vcDownloadTimeout,
 } from '../shared/openId4VCI/Utils';
 import {
   getEndEventData,
@@ -43,6 +44,7 @@ import {
 import {CACHED_API} from '../shared/api';
 import {request} from '../shared/request';
 import {BiometricCancellationError} from '../shared/error/BiometricCancellationError';
+import {VCMetadata} from '../shared/VCMetadata';
 
 const model = createModel(
   {
@@ -577,12 +579,12 @@ export const IssuersMachine = model.createMachine(
       checkInternet: async () => await NetInfo.fetch(),
       downloadIssuerConfig: async (context, _) => {
         let issuersConfig = await CACHED_API.fetchIssuerConfig(
-            context.selectedIssuerId,
+          context.selectedIssuerId,
         );
         if (context.selectedIssuer['.well-known']) {
           await CACHED_API.fetchIssuerWellknownConfig(
-              context.selectedIssuerId,
-              context.selectedIssuer['.well-known'],
+            context.selectedIssuerId,
+            context.selectedIssuer['.well-known'],
           );
         }
         return issuersConfig;
@@ -631,6 +633,13 @@ export const IssuersMachine = model.createMachine(
         );
       },
       verifyCredential: async context => {
+        //this issuer specific check has to be removed once vc validation is done.
+        if (
+          VCMetadata.fromVcMetadataString(getVCMetadata(context)).issuer ===
+          Issuers.Sunbird
+        ) {
+          return true;
+        }
         return verifyCredential(context.verifiableCredential?.credential);
       },
     },
@@ -722,6 +731,7 @@ export interface displayType {
   title: string;
   description: string;
 }
+
 export interface issuerType {
   credential_issuer: string;
   protocol: string;
@@ -731,8 +741,11 @@ export interface issuerType {
   scopes_supported: [string];
   additional_headers: object;
   authorization_endpoint: string;
+  authorization_alias: string;
   token_endpoint: string;
+  proxy_token_endpoint: string;
   credential_endpoint: string;
+  credential_type: [string];
   credential_audience: string;
   display: [displayType];
 }

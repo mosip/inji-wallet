@@ -24,13 +24,13 @@ public class TestDataReader {
             case "invalidOtp":
                 return "666666";
             case "newuin":
-                return "2492180164";
+                return "2176493605";
             case "revokevid":
                 return "6205860394830280";
             case "vid":
                 return "8349769368792139";
             case "newaid":
-                return "10001101410012320231225215314";
+                return "10007100470009820240117074603";
             case "invalidpasscode":
                 return "123456";
             case "invaliduin":
@@ -66,7 +66,7 @@ public class TestDataReader {
             case "invalidenv":
                 return "https://api.dev3.mosip";
             case "isDeviceFarmRun":
-                return "false";
+                return "true";
             default:
                 return "Key not found";
         }

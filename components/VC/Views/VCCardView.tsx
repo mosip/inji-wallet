@@ -21,8 +21,8 @@ import {getCredentialIssuersWellKnownConfig} from '../../../shared/openId4VCI/Ut
 import {
   CARD_VIEW_ADD_ON_FIELDS,
   CARD_VIEW_DEFAULT_FIELDS,
-} from '../../../shared/constants';
-import {isVCLoaded} from '../common/VCUtils';
+  isVCLoaded,
+} from '../common/VCUtils';
 
 export const VCCardView: React.FC<
   ExistingMosipVCItemProps | EsignetMosipVCItemProps
@@ -65,7 +65,7 @@ export const VCCardView: React.FC<
       CARD_VIEW_DEFAULT_FIELDS,
     ).then(response => {
       setWellknown(response.wellknown);
-      setFields(response.fields.slice(0, 1).concat(CARD_VIEW_ADD_ON_FIELDS));
+      setFields(response.fields.slice(0, 3).concat(CARD_VIEW_ADD_ON_FIELDS));
     });
   }, [verifiableCredential?.wellKnown]);
 

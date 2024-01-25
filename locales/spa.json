@@ -471,7 +471,6 @@
     "gotoSettings": "Ir a la configuración"
   },
   "ScanScreen": {
-    "header": "Escanear",
     "noShareableVcs": "No hay tarjetas para compartir disponibles.",
     "sharingVc": "tarjeta compartida",
     "bluetoothStateIos": "Bluetooth está desactivado, actívelo desde el centro de control",
@@ -520,8 +519,9 @@
       },
       "accepted": {
         "title": "¡Éxito!",
-        "message": "Tu tarjeta ha sido compartida exitosamente con el Verificador",
-        "gotohome": "Ir a casa"
+        "message": "Su identificación se ha compartido correctamente.",
+        "home": "Hogar",
+        "history": "Historia"
       },
       "rejected": {
         "title": "Aviso",

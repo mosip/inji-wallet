@@ -41,4 +41,8 @@ public class IosUtil {
         driver.perform(Collections.singleton(sequence));
 
     }
+
+    public static void enableAirplaneMode(){}
+
+    public static void disableAirplaneMode(){}
 }

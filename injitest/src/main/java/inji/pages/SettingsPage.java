@@ -76,7 +76,7 @@ public class SettingsPage extends BasePage {
     @AndroidFindBy(xpath = "//*[contains(@text,'Tumanggap ng Card')]")
     public WebElement receiveCardInfilipinoLanguageText;
 
-    @AndroidFindBy(xpath = "(//*[@resource-id=\"padView\"])[3]")
+    @AndroidFindBy(accessibility = "ar")
     @iOSXCUITFindBy(accessibility = "عربى")
     private WebElement arabicLanguageButton;
     

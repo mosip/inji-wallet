@@ -7,7 +7,10 @@ import org.openqa.selenium.WebElement;
 import inji.utils.IosUtil;
 
 public class ReceiveCardPage extends BasePage {
-    @AndroidFindBy(accessibility = "showQrCode")
+	@AndroidFindBy(uiAutomator = "new UiSelector().textContains(\"Allow\")")
+	private WebElement allowButton;
+	
+	@AndroidFindBy(accessibility = "showQrCode")
     private WebElement receiveCardHeader;
 
     @AndroidFindBy(uiAutomator = "new UiSelector().textContains(\"Ipakita ang QR code na ito para humiling ng resident card\")")
@@ -26,6 +29,11 @@ public class ReceiveCardPage extends BasePage {
         super(driver);
     }
 
+    public void clickOnAllowButton() {
+        if (isElementDisplayed(bluetoothPopUp)) {
+            clickOnElement(allowButton);
+        }
+    }
     public boolean isReceiveCardHeaderDisplayed() {
         return this.isElementDisplayed(receiveCardHeader);
     }

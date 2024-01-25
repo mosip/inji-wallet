@@ -8,7 +8,7 @@ import {RequestRouteProps, RootRouteProps} from '../routes';
 import {mainRoutes, share} from '../routes/main';
 import {Theme} from '../components/ui/styleUtils';
 import {useTranslation} from 'react-i18next';
-import {Row} from '../components/ui';
+import {Column, Row} from '../components/ui';
 import {Image} from 'react-native';
 import {SettingScreen} from './Settings/SettingScreen';
 import {HelpScreen} from '../components/HelpScreen';
@@ -16,6 +16,8 @@ import {HelpScreen} from '../components/HelpScreen';
 import {GlobalContext} from '../shared/GlobalContext';
 import {ScanEvents} from '../machines/bleShare/scan/scanMachine';
 import testIDProps from '../shared/commonUtil';
+import {SvgImage} from '../components/ui/svg';
+
 const {Navigator, Screen} = createBottomTabNavigator();
 
 export const MainLayout: React.FC<
@@ -54,12 +56,13 @@ export const MainLayout: React.FC<
             ...route.options,
             title: t(route.name),
             tabBarIcon: ({focused}) => (
-              <Icon
+              <Column
                 {...testIDProps(route.name + 'Icon')}
-                name={route.icon}
-                color={focused ? Theme.Colors.Icon : Theme.Colors.GrayIcon}
-                style={focused ? Theme.Styles.bottomTabIconStyle : null}
-              />
+                align="center"
+                crossAlign="center"
+                style={focused ? Theme.Styles.bottomTabIconStyle : null}>
+                {SvgImage[`${route.name}`](focused)}
+              </Column>
             ),
           }}
         />

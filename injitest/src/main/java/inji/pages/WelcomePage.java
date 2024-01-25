@@ -9,11 +9,11 @@ import org.testng.Assert;
 public class WelcomePage extends BasePage {
 
     @AndroidFindBy(accessibility = "introTitle")
-    @iOSXCUITFindBy(iOSClassChain = "**/XCUIElementTypeStaticText[`label == \"Welcome!\"`]")
+    @iOSXCUITFindBy(xpath = "(//XCUIElementTypeStaticText[@name=\"introTitle\"])[1]")
     private WebElement welcomeText;
 
     @AndroidFindBy(accessibility = "introText")
-    @iOSXCUITFindBy(xpath = "//*[contains(@value,'Keep your digital')]")
+    @iOSXCUITFindBy(xpath = "(//XCUIElementTypeStaticText[@name=\"introText\"])[1]")
     private WebElement welcomeTextDescription;
 
     @AndroidFindBy(accessibility = "skip")
@@ -21,10 +21,10 @@ public class WelcomePage extends BasePage {
     private WebElement skipButton;
 
     @AndroidFindBy(accessibility = "next")
-    @iOSXCUITFindBy(iOSClassChain = "**/XCUIElementTypeOther[`label == \"Next\"`][4]")
+    @iOSXCUITFindBy(xpath = "(//XCUIElementTypeOther[@name=\"Susunod\" or @name=\"next\" or @name=\"अगला\" or @name=\"ಮುಂದೆ\" or @name=\"அடுத்தது\"])[4]\n")
     private WebElement nextButton;
 
-    @AndroidFindBy(uiAutomator = "new UiSelector().textContains(\"Back\")")
+    @AndroidFindBy(accessibility = "back")
     @iOSXCUITFindBy(iOSClassChain = "**/XCUIElementTypeButton[`label == \"Back\"`][1]")
     public WebElement backButton;
 
@@ -34,23 +34,6 @@ public class WelcomePage extends BasePage {
     
     public String  verifyLanguageforWelcomePageLoaded(){
     	return getTextFromLocator(welcomeText);
-
-//    	switch (language) {
-//    	case "Hindi":
-//    		boolean isHederLoadedInHindi  = (actualText.equalsIgnoreCase("सुरक्षित साझाकरण!")==true) ? true : false;
-//    		return isHederLoadedInHindi ;
-//    	case "Filipino":
-//    		boolean isHederLoadedInFilipino  = (actualText.equalsIgnoreCase("Ligtas na Pagbabahagi!")==true) ? true : false;
-//    		return isHederLoadedInFilipino ;
-//    	case "Tamil":
-//    		boolean isHederLoadedInTamil  = (actualText.equalsIgnoreCase("பாதுகாப்பான பகிர்வு!")==true) ? true : false;
-//    		return isHederLoadedInTamil ;
-//    	case "Kannada":
-//    		boolean isHederLoadedInKannada  = (actualText.equalsIgnoreCase("ಸುರಕ್ಷಿತ ಹಂಚಿಕೆ!")==true) ? true : false;
-//    		return isHederLoadedInKannada ;
-//    	}
-//    	Assert.fail("noCaseFound");
-//    	return false;
     }
     
     public boolean isWelcomePageLoaded() {
