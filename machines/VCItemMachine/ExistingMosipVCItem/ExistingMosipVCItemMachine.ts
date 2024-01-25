@@ -42,8 +42,6 @@ import {TelemetryConstants} from '../../../shared/telemetry/TelemetryConstants';
 
 import {API_URLS} from '../../../shared/api';
 
-import {VerificationErrorType} from '../../../shared/vcjs/verifyCredential';
-
 const model = createModel(
   {
     serviceRefs: {} as AppServices,
@@ -105,8 +103,6 @@ const model = createModel(
       REMOVE: (vcMetadata: VCMetadata) => ({vcMetadata}),
       UPDATE_VC_METADATA: (vcMetadata: VCMetadata) => ({vcMetadata}),
       TAMPERED_VC: (key: string) => ({key}),
-      VERIFY_SUCCESS: () => ({}),
-      VERIFY_ERROR: (errorMessage: string) => ({errorMessage}),
     },
   },
 );
@@ -900,6 +896,7 @@ export const ExistingMosipVCItemMachine =
             to: context => context.serviceRefs.vc,
           },
         ),
+
         updateVerificationErrorMessage: assign({
           verificationErrorMessage: (context, event) =>
             'Verify credential is failed',

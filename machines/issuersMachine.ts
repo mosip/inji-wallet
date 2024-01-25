@@ -73,8 +73,6 @@ const model = createModel(
       CANCEL: () => ({}),
       STORE_RESPONSE: (response?: unknown) => ({response}),
       STORE_ERROR: (error: Error, requester?: string) => ({error, requester}),
-      VERIFY_SUCCESS: () => ({}),
-      VERIFY_ERROR: (errorMessage: string) => ({errorMessage}),
     },
   },
 );
@@ -591,6 +589,7 @@ export const IssuersMachine = model.createMachine(
           to: context => context.serviceRefs.vc,
         },
       ),
+
       updateVerificationErrorMessage: assign({
         verificationErrorMessage: (context, event) => event.errorMessage,
       }),
