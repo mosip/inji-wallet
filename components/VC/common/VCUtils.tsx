@@ -15,6 +15,26 @@ import {CREDENTIAL_REGISTRY_EDIT} from 'react-native-dotenv';
 import {getIDType} from '../../../shared/openId4VCI/Utils';
 import {VCVerification} from '../../VCVerification';
 
+export const CARD_VIEW_DEFAULT_FIELDS = ['fullName'];
+export const DETAIL_VIEW_DEFAULT_FIELDS = [
+  'fullName',
+  'gender',
+  'phone',
+  'dateOfBirth',
+  'email',
+  'address',
+];
+
+//todo UIN & VID to be removed once we get the fields in the wellknown endpoint
+export const CARD_VIEW_ADD_ON_FIELDS = ['UIN', 'VID'];
+export const DETAIL_VIEW_ADD_ON_FIELDS = [
+  'UIN',
+  'VID',
+  'status',
+  'credentialRegistry',
+  'idType',
+];
+
 export const getFieldValue = (
   verifiableCredential: VerifiableCredential,
   field: string,

@@ -44,6 +44,8 @@ public class VcDownloadAndVerifyUsingUinTest extends IosBaseTest {
         addNewCardPage.clickOnDownloadViaUin();
 
         assertTrue(retrieveIdPage.isRetrieveIdPageLoaded(), "Verify if retrieve id page is displayed");
+        assertEquals(retrieveIdPage.getRetrieveIdPageHeader(),"Download your ID");
+        assertTrue(retrieveIdPage.verifyDownloadIdPageGuideMessage(), "Verify if retrieve id page guide message is displayed");
         OtpVerificationPage otpVerification = retrieveIdPage.setEnterIdTextBox(TestDataReader.readData("uin")).clickOnGenerateCardButton();
 
         assertTrue(otpVerification.isOtpVerificationPageLoaded(), "Verify if otp verification page is displayed");
@@ -265,7 +267,7 @@ public class VcDownloadAndVerifyUsingUinTest extends IosBaseTest {
 
         assertTrue(otpVerification.isOtpVerificationPageLoaded(), "Verify if otp verification page is displayed");
         assertTrue(otpVerification.verifyOtpVerificationTimerCompleted(), "Verify timer has stop for otp verification");
-        assertTrue(otpVerification.verifyResendCodeButtonDisplayed(), "Verify if resend code is displayed");
+        assertTrue(otpVerification.verifyOtpVerificationTimerDisplayedAfterClickOnResend(), "Verify if resend code is displayed");
         
         otpVerification.clickOnCrossIcon();
         assertTrue(otpVerification.confirmPopupHeaderDisplayed(), "Verify if comfirm popup displayed");

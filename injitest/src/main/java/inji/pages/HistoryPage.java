@@ -5,7 +5,10 @@ import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.pagefactory.AndroidFindBy;
 import io.appium.java_client.pagefactory.iOSXCUITFindBy;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
+
+import com.google.common.collect.ImmutableMap;
 
 import java.util.List;
 
@@ -80,7 +83,7 @@ public class HistoryPage extends BasePage {
         }
         return false;
     }
-
+    
     public boolean verifyActivityLogHeader(String vcNumber, Target os) {
         switch (os) {
             case ANDROID:
