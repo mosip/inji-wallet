@@ -386,36 +386,52 @@ export const ExistingMosipVCItemMachine =
         verifyingCredential: {
           invoke: {
             src: 'verifyCredential',
+            onDone: [
+              {
+                actions: [
+                  log((_, event) => 'Verification Success.'),
+                  'setVerifiableCredential',
+                  'markVcValid',
+                  'storeContext',
+                ],
+              },
+            ],
+            onError: [
+              {
+                //To-Do Handle Error Scenarios
+                actions: [
+                  log((_, event) => 'Verify Error'),
+                  'updateVerificationErrorMessage',
+                ],
+                target: 'handlingCredentialVerificationFailure',
+              },
+            ],
           },
           on: {
-            VERIFY_SUCCESS: {
-              actions: [
-                log((_, event) => 'Verification Success.'),
-                'storeContext',
-              ],
-            },
-            VERIFY_ERROR: {
-              //To-Do Handle Error Scenarios
-              actions: [
-                log((_, event) => 'Verify Error'),
-                'updateVerificationErrorMessage',
-                'sendVerificationError',
-              ],
-            },
             STORE_RESPONSE: {
               actions: [
-                'setVerifiableCredential',
                 'updateVc',
                 'logDownloaded',
                 'sendTelemetryEvents',
                 'removeVcFromInProgressDownloads',
               ],
+              target: 'idle',
             },
             STORE_ERROR: {
               target: '#vc-item.checkingServerData.savingFailed',
             },
           },
         },
+
+        handlingCredentialVerificationFailure: {
+          entry: ['removeVcMetaDataFromStorage'],
+          on: {
+            STORE_RESPONSE: {
+              actions: ['sendVerificationError'],
+            },
+          },
+        },
+
         checkingVerificationStatus: {
           description:
             'Check if VC verification is still valid. VCs stored on the device must be re-checked once every [N] time has passed.',
@@ -826,10 +842,11 @@ export const ExistingMosipVCItemMachine =
         ),
 
         sendVerificationError: send(
-          (_context, event) => {
+          (context, event) => {
             return {
               type: 'VERIFY_VC_FAILED',
-              errorMessage: _context.verificationErrorMessage,
+              errorMessage: context.verificationErrorMessage,
+              vcMetadata: context.vcMetadata,
             };
           },
           {
@@ -837,7 +854,8 @@ export const ExistingMosipVCItemMachine =
           },
         ),
         updateVerificationErrorMessage: assign({
-          verificationErrorMessage: (context, event) => event.errorMessage,
+          verificationErrorMessage: (context, event) =>
+            'Verify credential is failed',
         }),
 
         setWalletBindingError: assign({
@@ -997,10 +1015,10 @@ export const ExistingMosipVCItemMachine =
         ),
 
         removeVcFromInProgressDownloads: send(
-          (_context, event) => {
+          context => {
             return {
               type: 'REMOVE_VC_FROM_IN_PROGRESS_DOWNLOADS',
-              requestId: event.response.requestId,
+              requestId: context.vcMetadata.requestId,
             };
           },
           {
@@ -1185,6 +1203,14 @@ export const ExistingMosipVCItemMachine =
             to: context => context.serviceRefs.store,
           },
         ),
+
+        markVcValid: assign(context => {
+          return {
+            ...context,
+            isVerified: true,
+            lastVerifiedOn: Date.now(),
+          };
+        }),
 
         setTransactionId: assign({
           transactionId: () => String(new Date().valueOf()).substring(3, 13),
@@ -1405,6 +1431,7 @@ export const ExistingMosipVCItemMachine =
                   requestId: context.vcMetadata.requestId,
                 },
               );
+
               callback(
                 model.events.CREDENTIAL_DOWNLOADED({
                   credential: response.credential,
@@ -1426,16 +1453,12 @@ export const ExistingMosipVCItemMachine =
           return () => clearInterval(pollInterval);
         },
 
-        verifyCredential: context => async (callback, onReceive) => {
+        verifyCredential: async context => {
           const verificationResult = await verifyCredential(
             context.storeVerifiableCredential,
           );
-          if (verificationResult.isVerified) {
-            callback(model.events.VERIFY_SUCCESS());
-          } else {
-            callback(
-              model.events.VERIFY_ERROR(verificationResult.errorMessage),
-            );
+          if (!verificationResult.isVerified) {
+            throw new Error(verificationResult.errorMessage);
           }
         },
 

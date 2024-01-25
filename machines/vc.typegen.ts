@@ -33,8 +33,9 @@ export interface Typegen0 {
     removeTamperedVcs: 'REMOVE_TAMPERED_VCS';
     removeVcFromInProgressDownlods:
       | 'DOWNLOAD_LIMIT_EXPIRED'
-      | 'REMOVE_VC_FROM_IN_PROGRESS_DOWNLOADS';
-    removeVcFromMyVcs: 'REMOVE_VC_FROM_CONTEXT';
+      | 'REMOVE_VC_FROM_IN_PROGRESS_DOWNLOADS'
+      | 'VERIFY_VC_FAILED';
+    removeVcFromMyVcs: 'REMOVE_VC_FROM_CONTEXT' | 'VERIFY_VC_FAILED';
     resetAreAllVcsDownloaded: 'RESET_ARE_ALL_VCS_DOWNLOADED';
     resetDownloadFailedVcs: 'STORE_RESPONSE';
     resetVerificationErrorMessage: 'RESET_VERIFY_ERROR';

@@ -354,24 +354,31 @@ export const IssuersMachine = model.createMachine(
           'once the credential is downloaded, it is verified before saving',
         invoke: {
           src: 'verifyCredential',
-        },
-        on: {
-          VERIFY_SUCCESS: {
-            actions: ['sendSuccessEndEvent'],
-            target: 'storing',
-          },
-          VERIFY_ERROR: {
-            actions: [
-              log('Verification Error.'),
-              'updateVerificationErrorMessage',
-              'sendVerificationError',
-              'sendErrorEndEvent',
-            ],
-            //TODO: Move to state according to the required flow when verification of VC fails
-            target: 'idle',
-          },
+          onDone: [
+            {
+              actions: ['sendSuccessEndEvent'],
+              target: 'storing',
+            },
+          ],
+          onError: [
+            {
+              actions: [
+                log('Verification Error.'),
+                'resetLoadingReason',
+                'updateVerificationErrorMessage',
+                'sendErrorEndEvent',
+              ],
+              //TODO: Move to state according to the required flow when verification of VC fails
+              target: 'handlingCredentialVerificationFailure',
+            },
+          ],
         },
       },
+
+      handlingCredentialVerificationFailure: {
+        entry: 'sendVerificationError',
+      },
+
       storing: {
         description: 'all the verified credential is stored.',
         entry: [
@@ -586,10 +593,10 @@ export const IssuersMachine = model.createMachine(
         );
       },
       sendVerificationError: send(
-        (_context, event) => {
+        (context, event) => {
           return {
             type: 'VERIFY_VC_FAILED',
-            errorMessage: _context.verificationErrorMessage,
+            errorMessage: context.verificationErrorMessage,
           };
         },
         {
@@ -674,12 +681,9 @@ export const IssuersMachine = model.createMachine(
         const verificationResult = await verifyCredential(
           context.verifiableCredential?.credential,
         );
-        if (verificationResult.isVerified) {
-          callback(model.events.VERIFY_SUCCESS());
-        } else {
-          callback(model.events.VERIFY_ERROR(verificationResult.errorMessage));
+        if (!verificationResult.isVerified) {
+          throw new Error(verificationResult.errorMessage);
         }
-        return verifyCredential(context.verifiableCredential?.credential);
       },
     },
     guards: {
