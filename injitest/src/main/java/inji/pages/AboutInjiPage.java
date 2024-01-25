@@ -26,8 +26,8 @@ public class AboutInjiPage extends BasePage {
     @iOSXCUITFindBy(accessibility = "arrowLeft")
     private WebElement backButton;
     
-    @AndroidFindBy(uiAutomator = "new UiSelector().textContains(\"Click here\")")
-    @iOSXCUITFindBy(accessibility = "Click here")
+    @AndroidFindBy(accessibility = "clickHere")
+    @iOSXCUITFindBy(accessibility = "clickHere")
     public WebElement clickHereButton;
     
     public AboutInjiPage(AppiumDriver driver) {

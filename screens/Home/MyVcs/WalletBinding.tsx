@@ -19,7 +19,7 @@ import {
   sendErrorEvent,
 } from '../../../shared/telemetry/TelemetryUtils';
 import {TelemetryConstants} from '../../../shared/telemetry/TelemetryConstants';
-import {ACTIVATION_NOT_NEEDED} from '../../../shared/openId4VCI/Utils';
+import {isActivationNeeded} from '../../../shared/openId4VCI/Utils';
 
 export const WalletBinding: React.FC<WalletBindingProps> = props => {
   const controller = useKebabPopUp(props);
@@ -59,7 +59,7 @@ export const WalletBinding: React.FC<WalletBindingProps> = props => {
   const {t} = useTranslation('WalletBinding');
 
   return controller.emptyWalletBindingId &&
-    ACTIVATION_NOT_NEEDED.indexOf(props?.vcMetadata.issuer) === -1 ? (
+    isActivationNeeded(props?.vcMetadata.issuer) ? (
     <ListItem bottomDivider onPress={controller.ADD_WALLET_BINDING_ID}>
       <ListItem.Content>
         <ListItem.Title {...testIDProps('pendingActivationOrActivated')}>
@@ -120,7 +120,11 @@ export const WalletBinding: React.FC<WalletBindingProps> = props => {
             weight="bold"
             size="small"
             margin="10 10 10 10"
-            children={t('profileAuthenticated')}></Text>
+            children={
+              isActivationNeeded(props?.vcMetadata.issuer)
+                ? t('profileAuthenticated')
+                : t('credentialActivated')
+            }></Text>
         </Row>
       </Row>
     </ListItem>

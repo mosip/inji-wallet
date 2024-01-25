@@ -21,8 +21,8 @@ import {getCredentialIssuersWellKnownConfig} from '../../../shared/openId4VCI/Ut
 import {
   CARD_VIEW_ADD_ON_FIELDS,
   CARD_VIEW_DEFAULT_FIELDS,
-} from '../../../shared/constants';
-import {isVCLoaded} from '../common/VCUtils';
+  isVCLoaded,
+} from '../common/VCUtils';
 
 export const VCCardView: React.FC<
   ExistingMosipVCItemProps | EsignetMosipVCItemProps

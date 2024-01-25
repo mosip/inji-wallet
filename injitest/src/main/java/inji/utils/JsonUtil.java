@@ -106,7 +106,7 @@ public class JsonUtil {
 
         try {
             
-                File f = new File(TestRunner.getResourcePath() + "/" + "resources/"+document);
+                File f = new File(TestRunner.getResourcePath() + "/"+document);
 
                 if (f.exists()) {
                     InputStream is = new FileInputStream(f);

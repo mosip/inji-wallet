@@ -94,8 +94,9 @@ public class PinVcTest extends IosBaseTest {
         moreOptionsPage.clickOnPinOrUnPinCard();
 
         assertTrue(homePage.isPinIconDisplayed(), "Verify if pin icon on vc is displayed");
-        ScanPage scanPage=homePage.clickOnScanButton();
 
+        SharePage scanPage=homePage.clickOnShareButton();
+        
         assertTrue(scanPage.isCameraPageLoaded(), "Verify camera page is displayed");
         assertTrue(scanPage.isFlipCameraClickable(),"Verify if flip camera is enabled");
     }

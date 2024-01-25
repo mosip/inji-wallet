@@ -416,6 +416,23 @@ export const PurpleTheme = {
       borderRadius: 6,
       backgroundColor: Colors.LightPurple,
     },
+    ProfileIconContainer: {
+      alignSelf: 'center',
+      justifyContent: 'center',
+      width: 90,
+      height: 90,
+      borderRadius: 15,
+      borderWidth: 0.3,
+      borderColor: Colors.Purple,
+      backgroundColor: Colors.White,
+    },
+    ProfileIconInnerStyle: {
+      flex: 1,
+    },
+    ProfileIconPinnedStyle: {
+      alignSelf: 'center',
+      justifyContent: 'center',
+    },
     IconContainer: {
       padding: 6,
       width: 36,

@@ -20,14 +20,12 @@ import {WalletBindingResponse} from '../../../shared/cryptoutil/cryptoUtil';
 import {logoType} from '../../../machines/issuersMachine';
 import {SvgImage} from '../../ui/svg';
 import {
-  ACTIVATION_NOT_NEEDED,
   getCredentialIssuersWellKnownConfig,
+  isActivationNeeded,
 } from '../../../shared/openId4VCI/Utils';
 import {
   DETAIL_VIEW_ADD_ON_FIELDS,
   DETAIL_VIEW_DEFAULT_FIELDS,
-} from '../../../shared/constants';
-import {
   fieldItemIterator,
   isVCLoaded,
   setBackgroundColour,
@@ -152,7 +150,7 @@ export const VCDetailView: React.FC<
 
       {props.activeTab !== 1 ? (
         props.isBindingPending &&
-        ACTIVATION_NOT_NEEDED.indexOf(props.vc.vcMetadata.issuer) === -1 ? (
+        isActivationNeeded(props.vc.vcMetadata.issuer) ? (
           <Column style={Theme.Styles.openCardBgContainer} padding="10">
             <Column margin={'0 0 4 0'} crossAlign={'flex-start'}>
               <Icon
@@ -209,7 +207,11 @@ export const VCDetailView: React.FC<
                 weight="bold"
                 size="smaller"
                 margin="10 10 10 10"
-                children={t('profileAuthenticated')}></Text>
+                children={
+                  isActivationNeeded(props.vc.vcMetadata.issuer)
+                    ? t('profileAuthenticated')
+                    : t('credentialActivated')
+                }></Text>
             </Row>
           </Column>
         )
