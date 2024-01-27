@@ -19,12 +19,15 @@ import {
   sendStartEvent,
 } from '../shared/telemetry/TelemetryUtils';
 import {TelemetryConstants} from '../shared/telemetry/TelemetryConstants';
+import {bytesToMB} from '../shared/commonUtil';
+import {BackupFileMeta} from '../types/backup-and-restore/backup';
 
 const model = createModel(
   {
     serviceRefs: {} as AppServices,
     dataFromStorage: {},
     fileName: '',
+    fileMeta: null as null | BackupFileMeta,
   },
   {
     events: {
@@ -112,6 +115,7 @@ export const backupMachine = model.createMachine(
               src: 'zipBackupFile',
               onDone: {
                 //TODO: change target to uploadBackupFile (Moving to success for local testing)
+                actions: 'extractBackupSuccessMetaData',
                 target: 'success',
                 // target: 'uploadBackupFile',
               },
@@ -174,6 +178,20 @@ export const backupMachine = model.createMachine(
         fileName: (_context, event) => {
           return event.filename;
         },
+      }),
+
+      extractBackupSuccessMetaData: model.assign((context, event) => {
+        console.log("event in action")
+        const {ctime: creationTime, size} = event.data;
+        const backupFileMeta = {
+          backupCreationTime: creationTime,
+          backupFileSize: bytesToMB(size),
+        };
+        console.log('backupFileMeta in action ', backupFileMeta);
+        return {
+          ...context,
+          fileMeta: backupFileMeta,
+        };
       }),
 
       fetchAllDataFromDB: send(StoreEvents.EXPORT(), {
@@ -259,5 +277,8 @@ export function selectIsBackingUpSuccess(state: State) {
 }
 export function selectIsBackingUpSFailure(state: State) {
   return state.matches('backingUp.failure');
+}
+export function selectBackupFileMeta(state: State) {
+  return state.context.fileMeta;
 }
 type State = StateFrom<typeof backupMachine>;

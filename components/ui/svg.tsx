@@ -34,6 +34,7 @@ import {
 import {VCMetadata} from '../../shared/VCMetadata';
 import {VerifiableCredential} from '../../types/VC/ExistingMosipVC/vc';
 import {ProfileIcon} from '../ProfileIcon';
+import CloudUploadDoneIcon from "../../assets/Cloud_Upload_Done_Icon.svg";
 
 export class SvgImage {
   static MosipLogo(props: LogoProps) {
@@ -246,6 +247,10 @@ export class SvgImage {
 
   static SuccessLogo() {
     return <SuccessLogo {...testIDProps('SuccessLogo')} />;
+  }
+
+  static CloudUploadDoneIcon(){
+    return <CloudUploadDoneIcon {...testIDProps('cloudUploadDoneIcon')}/>
   }
 
   static NoInternetConnection() {

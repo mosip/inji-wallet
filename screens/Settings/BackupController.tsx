@@ -6,6 +6,7 @@ import {
   selectIsBackingUpSuccess,
   selectIsBackingUpSFailure,
   selectIsBackupInprogress,
+  selectBackupFileMeta,
 } from '../../machines/backup';
 import {GlobalContext} from '../../shared/GlobalContext';
 
@@ -14,6 +15,7 @@ export function useBackupScreen() {
   const backupService = appService.children.get('backup');
 
   return {
+    backupFileMeta: useSelector(backupService,selectBackupFileMeta),
     isBackingUp: useSelector(backupService, selectIsBackingUp),
     isBackingUpSuccess: useSelector(backupService, selectIsBackingUpSuccess),
     isBackingUpFailure: useSelector(backupService, selectIsBackingUpSFailure),

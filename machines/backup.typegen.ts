@@ -41,13 +41,16 @@ export interface Typegen0 {
     services: never;
   };
   eventsCausingActions: {
+    extractBackupSuccessMetaData: 'done.invoke.backup.backingUp.zipBackupFile:invocation[0]';
     fetchAllDataFromDB: 'done.invoke.backup.backingUp.checkStorageAvailability:invocation[0]';
     sendDataBackupFailureEvent:
       | 'done.invoke.backup.backingUp.checkStorageAvailability:invocation[0]'
       | 'error.platform.backup.backingUp.uploadBackupFile:invocation[0]'
       | 'error.platform.backup.backingUp.zipBackupFile:invocation[0]';
     sendDataBackupStartEvent: 'DATA_BACKUP' | 'FETCH_DATA';
-    sendDataBackupSuccessEvent: 'done.invoke.backup.backingUp.uploadBackupFile:invocation[0]';
+    sendDataBackupSuccessEvent:
+      | 'done.invoke.backup.backingUp.uploadBackupFile:invocation[0]'
+      | 'done.invoke.backup.backingUp.zipBackupFile:invocation[0]';
     setDataFromStorage: 'STORE_RESPONSE';
     setFileName: 'FILE_NAME';
   };
@@ -57,7 +60,7 @@ export interface Typegen0 {
   };
   eventsCausingServices: {
     checkStorageAvailability: 'DATA_BACKUP' | 'FETCH_DATA';
-    uploadBackupFile: 'done.invoke.backup.backingUp.zipBackupFile:invocation[0]';
+    uploadBackupFile: never;
     writeDataToFile: 'STORE_RESPONSE';
     zipBackupFile: 'FILE_NAME';
   };

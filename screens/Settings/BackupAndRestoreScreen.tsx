@@ -1,6 +1,6 @@
 import React, {Fragment} from 'react';
-import {Image, View} from 'react-native';
-import {Icon, ListItem} from 'react-native-elements';
+import {View} from 'react-native';
+import {Icon} from 'react-native-elements';
 import {Button, Centered, Column, Row, Text} from '../../components/ui';
 import {LoaderAnimation} from '../../components/ui/LoaderAnimation';
 import {Modal} from '../../components/ui/Modal';
@@ -9,91 +9,11 @@ import {SvgImage} from '../../components/ui/svg';
 import {useBackupScreen} from './BackupController';
 import {MessageOverlay} from '../../components/MessageOverlay';
 import {BannerNotification} from '../../components/BannerNotification';
+import {SectionLayout} from '../../components/SectionLayout';
+import {AccountInformation} from '../../components/AccountInformation';
+import {ProfileInfo} from '../../shared/googleCloudUtils';
+import {Timestamp} from '../../components/ui/Timestamp';
 
-const SectionLayout: React.FC<SectionLayoutProps> = ({
-  headerIcon,
-  headerText,
-  children,
-}) => {
-  return (
-    <View
-      style={{
-        marginLeft: 18,
-        marginRight: 18,
-        marginTop: 16,
-        rowGap: 2,
-      }}>
-      <Row
-        style={{
-          alignItems: 'center',
-          padding: 16,
-          backgroundColor: Theme.Colors.whiteBackgroundColor,
-          borderTopLeftRadius: 6,
-          borderTopRightRadius: 6,
-        }}>
-        {headerIcon}
-        <Text
-          style={{
-            justifyContent: 'center',
-            paddingLeft: 12,
-            fontFamily: 'Inter',
-            fontWeight: '600',
-            fontSize: 14,
-          }}>
-          {headerText}
-        </Text>
-        <ListItem.Subtitle></ListItem.Subtitle>
-      </Row>
-      <Row
-        style={{
-          padding: 16,
-          backgroundColor: Theme.Colors.whiteBackgroundColor,
-          borderBottomLeftRadius: 6,
-          borderBottomRightRadius: 6,
-        }}>
-        <Column>{children}</Column>
-      </Row>
-    </View>
-  );
-};
-
-type SectionLayoutProps = {
-  headerIcon?: React.ReactNode;
-  headerText: string;
-  children: React.ReactNode;
-};
-
-const AccountInformation: React.FC<ProfileInfo> = ({email, picture}) => {
-  return (
-    <Row style={{marginBottom: 21, columnGap: 11}}>
-      <Column align="center">
-        <Image
-          style={{height: 40, width: 40, borderRadius: 45}}
-          source={{
-            uri: picture,
-          }}
-        />
-      </Column>
-      <Column>
-        <Row>
-          <Text style={{color: Theme.Colors.helpText, fontSize: 12}}>
-            Associated account
-          </Text>
-        </Row>
-        <Row>
-          <Text style={{fontSize: 13, fontFamily: 'Helvetica Neue'}}>
-            {email}
-          </Text>
-        </Row>
-      </Column>
-    </Row>
-  );
-};
-
-type ProfileInfo = {
-  email: string;
-  picture: string;
-};
 const BackupAndRestoreScreen: React.FC<BackupAndRestoreProps> = props => {
   const backupController = useBackupScreen();
 
@@ -103,16 +23,46 @@ const BackupAndRestoreScreen: React.FC<BackupAndRestoreProps> = props => {
       headerIcon={SvgImage.DataBackupIcon(34, 24)}>
       <Row>
         <View style={{marginBottom: 19}}>
-          <Text
-            style={{
-              fontFamily: 'Inter',
-              fontWeight: 'normal',
-              fontSize: 14,
-              color: Theme.Colors.helpText,
-            }}>
-            Backup your Data to Google Drive. You can restore them when you
-            reinstall INJI.
-          </Text>
+          {backupController.isBackupInProgress ? (
+            <Text
+              style={{
+                fontFamily: 'Inter',
+                fontWeight: 'normal',
+                fontSize: 14,
+                color: Theme.Colors.helpText,
+              }}>
+              You can still use the application while data backup is in
+              progress. Closing the app will terminate the data backup process.
+            </Text>
+          ) : backupController.isBackingUpSuccess ? (
+            <View>
+              <Row>
+                {/* TODO: Fix UI of backup success content to match mockup */}
+                <Column>{SvgImage.CloudUploadDoneIcon()}</Column>
+                {backupController.backupFileMeta && (
+                  <Column>
+                    <Timestamp
+                      time={backupController.backupFileMeta.backupCreationTime}
+                    />
+                    <Text>
+                      Size: {backupController.backupFileMeta.backupFileSize}MB
+                    </Text>
+                  </Column>
+                )}
+              </Row>
+            </View>
+          ) : (
+            <Text
+              style={{
+                fontFamily: 'Inter',
+                fontWeight: 'normal',
+                fontSize: 14,
+                color: Theme.Colors.helpText,
+              }}>
+              Backup your Data to Google Drive. You can restore them when you
+              reinstall INJI.
+            </Text>
+          )}
         </View>
       </Row>
       <Row style={{marginLeft: 4, marginRight: 4}}>
@@ -230,7 +180,7 @@ const BackupAndRestoreScreen: React.FC<BackupAndRestoreProps> = props => {
 
       <MessageOverlay
         isVisible={backupController.isBackingUpFailure}
-        onButtonPress={() => {}}
+        onButtonPress={backupController.DISMISS}
         buttonText="OK"
         title={'Backup Failed'}
       />

@@ -79,11 +79,13 @@ export const getBackupFilePath = (key: string) => {
   return `${backupDirectoryPath}/${key}.injibackup`;
 };
 
-export async function compressAndRemoveFile(fileName: string): Promise<string> {
+export async function compressAndRemoveFile(fileName: string): Promise<StatResult> {
   const result = await compressFile(fileName);
   await removeFile(fileName);
-  return result;
+  const backupFileMeta = await new FileStorage().getInfo(result);
+  return backupFileMeta;
 }
+
 export async function uploadBackupFileToDrive(
   fileName: string,
 ): Promise<string> {
