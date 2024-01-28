@@ -3,7 +3,7 @@ import {Pressable} from 'react-native';
 import {ListItem} from 'react-native-elements';
 import {Row, Text} from '../../components/ui';
 import {Error} from '../../components/ui/Error';
-import {LoaderAnimation} from '../../components/ui/LoaderAnimation';
+import {Loader} from '../../components/ui/Loader';
 import {Modal} from '../../components/ui/Modal';
 import {Theme} from '../../components/ui/styleUtils';
 import {SvgImage} from '../../components/ui/svg';
@@ -64,8 +64,7 @@ export const DataBackup: React.FC = ({} = () => {
       )}
       {controller.isLoading && (
         <Modal isVisible>
-          {/* :Loader similar to issuer screen load with same content */}
-          <LoaderAnimation />
+          <Loader title={'Loading setting up'} subTitle="Loading..."></Loader>
         </Modal>
       )}
 
