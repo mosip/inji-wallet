@@ -11,6 +11,7 @@ import {useReceivedVcsTab} from '../Home/ReceivedVcsTabController';
 import {REQUEST_ROUTES} from '../../routes/routesConstants';
 import {SquircleIconPopUpModal} from '../../components/ui/SquircleIconPopUpModal';
 import {ProgressingModal} from '../../components/ProgressingModal';
+import {DataBackupAllScreenBanner} from '../../components/DataBackupAllScreenBanner';
 const RequestStack = createNativeStackNavigator();
 
 export const RequestLayout: React.FC = () => {
@@ -20,6 +21,7 @@ export const RequestLayout: React.FC = () => {
 
   return (
     <React.Fragment>
+      <DataBackupAllScreenBanner />
       <RequestStack.Navigator
         initialRouteName="RequestScreen"
         screenListeners={{

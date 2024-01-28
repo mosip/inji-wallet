@@ -19,6 +19,7 @@ import testIDProps from '../../shared/commonUtil';
 import {SvgImage} from '../../components/ui/svg';
 import {DataBackup} from './DataBackup';
 import {isAndroid} from '../../shared/constants';
+import {DataBackupAllScreenBanner} from '../../components/DataBackupAllScreenBanner';
 
 const LanguageSetting: React.FC = () => {
   const {t} = useTranslation('SettingScreen');
@@ -77,6 +78,7 @@ export const SettingScreen: React.FC<
         headerTitle={t('header')}
         headerElevation={2}
         onDismiss={controller.TOGGLE_SETTINGS}>
+        <DataBackupAllScreenBanner />
         <ScrollView>
           <Column
             style={{display: Platform.OS !== 'ios' ? 'flex' : 'none'}}

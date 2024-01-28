@@ -16,6 +16,7 @@ import {EsignetMosipVCItemMachine} from '../../machines/VCItemMachine/EsignetMos
 import {ErrorMessageOverlay} from '../../components/MessageOverlay';
 import {Pressable} from 'react-native';
 import testIDProps from '../../shared/commonUtil';
+import {DataBackupAllScreenBanner} from '../../components/DataBackupAllScreenBanner';
 
 export const HomeScreen: React.FC<HomeRouteProps> = props => {
   const {t} = useTranslation('HomeScreen');
@@ -67,6 +68,7 @@ export const HomeScreen: React.FC<HomeRouteProps> = props => {
 
   return (
     <React.Fragment>
+      <DataBackupAllScreenBanner />
       <Column fill backgroundColor={Theme.Colors.lightGreyBackgroundColor}>
         {controller.haveTabsLoaded && (
           <Column fill>
