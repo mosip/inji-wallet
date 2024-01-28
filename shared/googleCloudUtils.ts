@@ -135,9 +135,12 @@ class Cloud {
     }
     return this.uploadBackupFileToDrive(fileName,retryCounter - 1);
   }
-  static async downloadLatestBackup(): Promise<string> {
+  static async downloadLatestBackup(): Promise<string|null> {
     const allFiles = await CloudStorage.readdir(`/`, CloudStorageScope.AppData);
     const fileContent = await CloudStorage.readFile(allFiles[0]);
+
+    if (fileContent.length === 0) return Promise.resolve(null);
+    
     return Promise.resolve(fileContent);
   }
 }
