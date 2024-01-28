@@ -1063,8 +1063,7 @@ export const PurpleTheme = {
   }),
   BackupAndRestoreStyles: StyleSheet.create({
     backupProgressText: {
-      fontFamily: 'Inter',
-      fontWeight: 'normal',
+      fontFamily: 'Inter_400Regular',
       fontSize: 14,
       color: Colors.Gray44,
     },
@@ -1079,11 +1078,15 @@ export const PurpleTheme = {
       paddingVertical: 15,
     },
     cloudLabel: {
-      fontWeight: 'medium',
+      fontWeight: '600',
       paddingHorizontal: 10,
       textAlign: 'center',
       paddingTop: 15,
-      fontFamily: 'inter',
+      fontFamily: 'Inter_500Medium',
+      fontSize: 14,
+      letterSpacing: 0,
+      lineHeight: 17,
+      minHeight: 50,
     },
   }),
   TextEditOverlayStyles: StyleSheet.create({

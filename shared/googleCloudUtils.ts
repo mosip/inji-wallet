@@ -1,9 +1,12 @@
-import { GoogleSignin, statusCodes } from '@react-native-google-signin/google-signin';
+import {
+  GoogleSignin,
+  statusCodes,
+} from '@react-native-google-signin/google-signin';
 import {CloudStorage, CloudStorageScope} from 'react-native-cloud-storage';
 import {GOOGLE_ANDROID_CLIENT_ID} from 'react-native-dotenv';
 import {request} from './request';
-import {readFile} from "react-native-fs";
-import {zipFilePath} from "./fileStorage";
+import {readFile} from 'react-native-fs';
+import {zipFilePath} from './fileStorage';
 
 class Cloud {
   static status = {
@@ -24,10 +27,10 @@ class Cloud {
     try {
       const accessToken = await this.getAccessToken();
       const profileResponse = await request(
-          'GET',
-          `https://www.googleapis.com/oauth2/v1/userinfo?alt=json&access_token=${accessToken}`,
-          undefined,
-          '',
+        'GET',
+        `https://www.googleapis.com/oauth2/v1/userinfo?alt=json&access_token=${accessToken}`,
+        undefined,
+        '',
       );
       return {
         email: profileResponse.email,
@@ -78,7 +81,6 @@ class Cloud {
       const isSignedIn = await GoogleSignin.isSignedIn();
       if (!isSignedIn) {
         await GoogleSignin.signInSilently();
-        console.log('Not signed in');
         const profileInfo = await this.profileInfo();
         return {
           isSignedIn: true,
@@ -86,7 +88,6 @@ class Cloud {
         };
       } else {
         const profileInfo = await this.profileInfo();
-        console.log(' signed in');
         return {
           isSignedIn: true,
           profileInfo,
@@ -102,14 +103,17 @@ class Cloud {
       };
     }
   }
-  static async  removeOldDriveBackupFiles(fileName: string){
+  static async removeOldDriveBackupFiles(fileName: string) {
     const allFiles = await CloudStorage.readdir(`/`, CloudStorageScope.AppData);
     for (const oldFileName of allFiles.filter(file => file != fileName)) {
       await CloudStorage.unlink(`/${oldFileName}`);
     }
   }
-  static async uploadBackupFileToDrive(fileName: string, retryCounter: number): Promise<string> {
-    if (retryCounter < 0) return Promise.reject("failure");
+  static async uploadBackupFileToDrive(
+    fileName: string,
+    retryCounter: number,
+  ): Promise<string> {
+    if (retryCounter < 0) return Promise.reject('failure');
 
     const cloudFileName = `/${fileName}.zip`;
 
@@ -120,27 +124,35 @@ class Cloud {
       const filePath = zipFilePath(fileName);
       const fileContent = await readFile(filePath, 'base64');
 
-      await CloudStorage.writeFile(cloudFileName,fileContent,CloudStorageScope.AppData);
-
+      await CloudStorage.writeFile(
+        cloudFileName,
+        fileContent,
+        CloudStorageScope.AppData,
+      );
     } catch (error) {
-      console.log(`Error occured while cloud upload.. retrying ${retryCounter} : Error : ${error}`);
+      console.log(
+        `Error occurred while cloud upload.. retrying ${retryCounter} : Error : ${error}`,
+      );
     }
 
-    const isFileUploaded = await CloudStorage.exists(cloudFileName,CloudStorageScope.AppData);
+    const isFileUploaded = await CloudStorage.exists(
+      cloudFileName,
+      CloudStorageScope.AppData,
+    );
 
-    if (isFileUploaded){
-      console.log("file is there") // remove
+    if (isFileUploaded) {
+      console.log('file is there'); // remove
       await this.removeOldDriveBackupFiles(cloudFileName);
       return Promise.resolve('success');
     }
-    return this.uploadBackupFileToDrive(fileName,retryCounter - 1);
+    return this.uploadBackupFileToDrive(fileName, retryCounter - 1);
   }
-  static async downloadLatestBackup(): Promise<string|null> {
+  static async downloadLatestBackup(): Promise<string | null> {
     const allFiles = await CloudStorage.readdir(`/`, CloudStorageScope.AppData);
     const fileContent = await CloudStorage.readFile(allFiles[0]);
 
     if (fileContent.length === 0) return Promise.resolve(null);
-    
+
     return Promise.resolve(fileContent);
   }
 }
@@ -152,7 +164,7 @@ export type ProfileInfo = {
 };
 
 export type SignInResult = {
-  status: keyof typeof Cloud.status;
+  status: (typeof Cloud.status)[keyof typeof Cloud.status];
   profileInfo?: ProfileInfo;
 };
 

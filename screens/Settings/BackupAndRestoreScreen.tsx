@@ -1,7 +1,14 @@
 import React, {Fragment} from 'react';
 import {View} from 'react-native';
 import {Icon} from 'react-native-elements';
-import {Button, Centered, Column, Row, Text} from '../../components/ui';
+import {
+  Button,
+  Centered,
+  Column,
+  HorizontallyCentered,
+  Row,
+  Text,
+} from '../../components/ui';
 import {LoaderAnimation} from '../../components/ui/LoaderAnimation';
 import {Modal} from '../../components/ui/Modal';
 import {Theme} from '../../components/ui/styleUtils';
@@ -35,14 +42,20 @@ const BackupAndRestoreScreen: React.FC<BackupAndRestoreProps> = props => {
           ) : backupController.isBackingUpSuccess ? (
             <View>
               <Row>
-                {/* TODO: Fix UI of backup success content to match mockup */}
                 <Column>{SvgImage.CloudUploadDoneIcon()}</Column>
                 {backupController.backupFileMeta && (
-                  <Column>
+                  <Column margin={'0 0 0 9'} align="center">
                     <Timestamp
                       time={backupController.backupFileMeta.backupCreationTime}
                     />
-                    <Text>
+                    <Text
+                      style={{
+                        fontFamily: 'helvetica-neue-regular',
+                        fontWeight: 'normal',
+                        fontSize: 12,
+                        color: '#707070',
+                        lineHeight: 14,
+                      }}>
                       Size: {backupController.backupFileMeta.backupFileSize}MB
                     </Text>
                   </Column>
@@ -58,11 +71,9 @@ const BackupAndRestoreScreen: React.FC<BackupAndRestoreProps> = props => {
           )}
         </View>
       </Row>
-      <Row style={{marginLeft: 4, marginRight: 4}}>
-        {/* TODO: Button is not occupying the space in larger screens */}
+      <Row style={{marginLeft: 1, marginRight: 1}}>
         {backupController.isBackupInProgress ? (
-          <Centered>
-            {/* // TODO: Show Loader animation in center */}
+          <Centered fill>
             <LoaderAnimation showLogo={false} />
           </Centered>
         ) : (
@@ -100,18 +111,25 @@ const BackupAndRestoreScreen: React.FC<BackupAndRestoreProps> = props => {
       <Row>
         <View style={{marginBottom: 19}}>
           <Text style={Theme.BackupAndRestoreStyles.backupProgressText}>
-            Restore your data from Google Drive
+            {false
+              ? 'We’re restoring your data, please do not close the application. This might take upto <X> minutes based on your data.'
+              : 'Restore your data from Google Drive'}
           </Text>
         </View>
       </Row>
-      <Row style={{marginLeft: 4, marginRight: 4}}>
-        <Button
-          testID="backup"
-          type="outline"
-          title={'Restore'}
-          onPress={() => {}}
-          styles={{...Theme.MessageOverlayStyles.button, marginTop: 10}}
-        />
+      <Row style={{marginLeft: 1, marginRight: 1}}>
+        {/* TODO: Change false to restoreInProgress */}
+        {false ? (
+          <LoaderAnimation showLogo={false} />
+        ) : (
+          <Button
+            testID="backup"
+            type="outline"
+            title={'Restore'}
+            onPress={() => {}}
+            styles={{...Theme.MessageOverlayStyles.button, marginTop: 10}}
+          />
+        )}
       </Row>
     </SectionLayout>
   );
@@ -138,8 +156,9 @@ const BackupAndRestoreScreen: React.FC<BackupAndRestoreProps> = props => {
             flex: 1,
           }}>
           {props.isLoading ? (
-            // TODO: Show Loader animation in center of screen
-            <LoaderAnimation />
+            <Column fill align="center" crossAlign="center">
+              <LoaderAnimation />
+            </Column>
           ) : (
             <React.Fragment>
               {LastBackupSection}

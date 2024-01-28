@@ -29,9 +29,11 @@ export const SectionLayout: React.FC<SectionLayoutProps> = ({
           style={{
             justifyContent: 'center',
             paddingLeft: 12,
-            fontFamily: 'Inter',
+            fontFamily: 'Inter_500Medium',
             fontWeight: '600',
             fontSize: 14,
+            letterSpacing: 0,
+            lineHeight: 17,
           }}>
           {headerText}
         </Text>
@@ -43,7 +45,7 @@ export const SectionLayout: React.FC<SectionLayoutProps> = ({
           borderBottomLeftRadius: 6,
           borderBottomRightRadius: 6,
         }}>
-        <Column>{children}</Column>
+        <Column fill>{children}</Column>
       </Row>
     </View>
   );
