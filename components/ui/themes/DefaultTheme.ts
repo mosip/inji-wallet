@@ -218,6 +218,20 @@ export const DefaultTheme = {
       position: 'relative',
       paddingHorizontal: 12,
     },
+    dataBackupFailure: {
+      justifyContent: 'space-between',
+      backgroundColor: Colors.Red,
+      height: 39,
+      position: 'relative',
+      paddingHorizontal: 12,
+    },
+    dataBackupSuccess: {
+      justifyContent: 'space-between',
+      backgroundColor: Colors.Green,
+      height: 39,
+      position: 'relative',
+      paddingHorizontal: 12,
+    },
     homeScreenContainer: {
       alignItems: 'center',
       justifyContent: 'center',
