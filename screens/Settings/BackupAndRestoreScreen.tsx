@@ -19,7 +19,11 @@ const BackupAndRestoreScreen: React.FC<BackupAndRestoreProps> = props => {
 
   const LastBackupSection = (
     <SectionLayout
-      headerText={'Last Backup Details'}
+      headerText={
+        backupController.isBackupInProgress
+          ? 'Backup in progress...'
+          : 'Last Backup Details'
+      }
       headerIcon={SvgImage.DataBackupIcon(34, 24)}>
       <Row>
         <View style={{marginBottom: 19}}>
@@ -59,8 +63,9 @@ const BackupAndRestoreScreen: React.FC<BackupAndRestoreProps> = props => {
                 fontSize: 14,
                 color: Theme.Colors.helpText,
               }}>
-              Backup your Data to Google Drive. You can restore them when you
-              reinstall INJI.
+              {backupController.isBackupInProgress
+                ? 'You can still use the application while data backup is in progress. Closing the app will terminate the data backup process.'
+                : 'Backup your Data to Google Drive. You can restore them when you reinstall INJI.'}
             </Text>
           )}
         </View>
