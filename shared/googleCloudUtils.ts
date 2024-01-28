@@ -1,64 +1,57 @@
-import {
-  GoogleSignin,
-  statusCodes,
-} from '@react-native-google-signin/google-signin';
+import { GoogleSignin, statusCodes } from '@react-native-google-signin/google-signin';
 import {CloudStorage, CloudStorageScope} from 'react-native-cloud-storage';
 import {GOOGLE_ANDROID_CLIENT_ID} from 'react-native-dotenv';
-import {request} from '../shared/request';
-import {GCLOUD_BACKUP_DIR_NAME} from './constants';
-
-export const getToken = async (): Promise<string> => {
-  try {
-    await GoogleSignin.configure({
-      scopes: [
-        'https://www.googleapis.com/auth/drive.appdata',
-        'https://www.googleapis.com/auth/drive.file',
-      ], // what API you want to access on behalf of the user, default is email and profile
-      androidClientId: GOOGLE_ANDROID_CLIENT_ID, // client ID of type WEB for your server. Required to get the idToken on the user object, and for offline access.
-    });
-    await GoogleSignin.signIn();
-    const tokenResult = await GoogleSignin.getTokens();
-    console.log('GoogleSignin result ', JSON.stringify(tokenResult, null, 2));
-    return tokenResult.accessToken;
-  } catch (error) {
-    console.error('Error while getting token ', error);
-    return '';
-  }
-};
-
-export const removeOldDriveBackupFiles = async (fileName: string) => {
-  const allFiles = await CloudStorage.readdir(
-    `${GCLOUD_BACKUP_DIR_NAME}`,
-    CloudStorageScope.AppData,
-  );
-  console.log('allFiles ', allFiles);
-  return;
-  for (const oldFileName of allFiles.filter(file => file != fileName)) {
-    await CloudStorage.unlink(`${GCLOUD_BACKUP_DIR_NAME}/${oldFileName}`);
-  }
-};
+import {request} from './request';
+import {readFile} from "react-native-fs";
+import {zipFilePath} from "./fileStorage";
 
 class Cloud {
-  private static configured = false;
   static status = {
     DECLINED: 'DECLINED',
     SUCCESS: 'SUCCESS',
     FAILURE: 'FAILURE',
   };
-
-  private static async configure(): Promise<void> {
-    await GoogleSignin.configure({
+  private static configure() {
+    GoogleSignin.configure({
       scopes: [
         'https://www.googleapis.com/auth/drive.appdata',
         'https://www.googleapis.com/auth/drive.file',
-      ], // what API you want to access on behalf of the user, default is email and profile
-      androidClientId: GOOGLE_ANDROID_CLIENT_ID, // client ID of type WEB for your server. Required to get the idToken on the user object, and for offline access.
+      ],
+      androidClientId: GOOGLE_ANDROID_CLIENT_ID,
     });
-    this.configured = true;
   }
-
+  private static async profileInfo(): Promise<ProfileInfo | undefined> {
+    try {
+      const accessToken = await this.getAccessToken();
+      const profileResponse = await request(
+          'GET',
+          `https://www.googleapis.com/oauth2/v1/userinfo?alt=json&access_token=${accessToken}`,
+          undefined,
+          '',
+      );
+      return {
+        email: profileResponse.email,
+        picture: profileResponse.picture,
+      };
+    } catch (error) {
+      console.error('Error while getting profile info ', error);
+      throw error;
+    }
+  }
+  static async getAccessToken() {
+    try {
+      const tokenResult = await GoogleSignin.getTokens();
+      await GoogleSignin.clearCachedAccessToken(tokenResult.accessToken);
+      await GoogleSignin.signInSilently();
+      const {accessToken} = await GoogleSignin.getTokens();
+      return accessToken;
+    } catch (error) {
+      console.error('Error while getting access token ', error);
+      throw error;
+    }
+  }
   static async signIn(): Promise<SignInResult> {
-    this.initialize();
+    this.configure();
     try {
       await GoogleSignin.signIn();
       const profileInfo = await this.profileInfo();
@@ -79,10 +72,9 @@ class Cloud {
       };
     }
   }
-
   static async isSignedInAlready(): Promise<isSignedInResult> {
     try {
-      this.initialize();
+      this.configure();
       const isSignedIn = await GoogleSignin.isSignedIn();
       if (!isSignedIn) {
         await GoogleSignin.signInSilently();
@@ -110,43 +102,45 @@ class Cloud {
       };
     }
   }
-
-  private static initialize(): void {
-    this.configure();
-  }
-
-  private static async profileInfo(): Promise<ProfileInfo | undefined> {
-    try {
-      const accessToken = await this.getAccessToken();
-      const profileResponse = await request(
-        'GET',
-        `https://www.googleapis.com/oauth2/v1/userinfo?alt=json&access_token=${accessToken}`,
-        undefined,
-        '',
-      );
-      return {
-        email: profileResponse.email,
-        picture: profileResponse.picture,
-      };
-    } catch (error) {
-      console.error('Error while getting profile info ', error);
-      throw error;
+  static async  removeOldDriveBackupFiles(fileName: string){
+    const allFiles = await CloudStorage.readdir(`/`, CloudStorageScope.AppData);
+    for (const oldFileName of allFiles.filter(file => file != fileName)) {
+      await CloudStorage.unlink(`/${oldFileName}`);
     }
   }
+  static async uploadBackupFileToDrive(fileName: string, retryCounter: number): Promise<string> {
+    if (retryCounter < 0) return Promise.reject("failure");
 
-  public static async getAccessToken() {
+    const cloudFileName = `/${fileName}.zip`;
+
     try {
-      const tokenResult = await GoogleSignin.getTokens();
-      await GoogleSignin.clearCachedAccessToken(tokenResult.accessToken);
-      const {accessToken} = await GoogleSignin.getTokens();
-      return accessToken;
+      const tokenResult = await Cloud.getAccessToken();
+      CloudStorage.setGoogleDriveAccessToken(tokenResult);
+
+      const filePath = zipFilePath(fileName);
+      const fileContent = await readFile(filePath, 'base64');
+
+      await CloudStorage.writeFile(cloudFileName,fileContent,CloudStorageScope.AppData);
+
     } catch (error) {
-      console.error('Error while getting access token ', error);
-      throw error;
+      console.log(`Error occured while cloud upload.. retrying ${retryCounter} : Error : ${error}`);
     }
+
+    const isFileUploaded = await CloudStorage.exists(cloudFileName,CloudStorageScope.AppData);
+
+    if (isFileUploaded){
+      console.log("file is there") // remove
+      await this.removeOldDriveBackupFiles(cloudFileName);
+      return Promise.resolve('success');
+    }
+    return this.uploadBackupFileToDrive(fileName,retryCounter - 1);
+  }
+  static async downloadLatestBackup(): Promise<string> {
+    const allFiles = await CloudStorage.readdir(`/`, CloudStorageScope.AppData);
+    const fileContent = await CloudStorage.readFile(allFiles[0]);
+    return Promise.resolve(fileContent);
   }
 }
-
 export default Cloud;
 
 export type ProfileInfo = {

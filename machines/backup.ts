@@ -8,7 +8,6 @@ import {
 } from '../shared/storage';
 import {
   compressAndRemoveFile,
-  uploadBackupFileToDrive,
 } from '../shared/fileStorage';
 import {
   getEndEventData,
@@ -19,6 +18,8 @@ import {
   sendStartEvent,
 } from '../shared/telemetry/TelemetryUtils';
 import {TelemetryConstants} from '../shared/telemetry/TelemetryConstants';
+import Cloud from "../shared/googleCloudUtils";
+import {UPLOAD_MAX_RETRY} from "../shared/constants";
 import {bytesToMB} from '../shared/commonUtil';
 import {BackupFileMeta} from '../types/backup-and-restore/backup';
 
@@ -114,10 +115,8 @@ export const backupMachine = model.createMachine(
             invoke: {
               src: 'zipBackupFile',
               onDone: {
-                //TODO: change target to uploadBackupFile (Moving to success for local testing)
-                actions: 'extractBackupSuccessMetaData',
-                target: 'success',
-                // target: 'uploadBackupFile',
+                  actions: 'extractBackupSuccessMetaData',
+                  target: 'uploadBackupFile',
               },
               onError: {
                 target: 'failure',
@@ -244,7 +243,7 @@ export const backupMachine = model.createMachine(
         return result;
       },
       uploadBackupFile: context => async () => {
-        const result = await uploadBackupFileToDrive(context.fileName);
+        const result = await Cloud.uploadBackupFileToDrive(context.fileName,UPLOAD_MAX_RETRY);
         return result;
       },
     },

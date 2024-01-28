@@ -23,8 +23,7 @@ export const BACKUP_ENC_KEY_TYPE = 'backupEncKeyType';
 export const BACKUP_ENC_TYPE_VAL_PASSWORD = 'password';
 
 export const BACKUP_ENC_TYPE_VAL_PHONE = 'phone';
-
-export const GCLOUD_BACKUP_DIR_NAME = 'backup';
+export const UPLOAD_MAX_RETRY = 2;
 
 export let individualId = {id: '', idType: 'UIN' as VcIdType};
 
