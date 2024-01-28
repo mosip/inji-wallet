@@ -20,25 +20,31 @@ export const IntroSlidersScreen: React.FC<RootRouteProps> = props => {
       key: 'one',
       title: t('stepOneTitle'),
       text: t('stepOneText'),
-      image: Theme.protectPrivacy,
+      image: Theme.IntroWelcome,
     },
     {
       key: 'two',
       title: t('stepTwoTitle'),
       text: t('stepTwoText'),
-      image: Theme.walletIntro,
+      image: Theme.SecureSharing,
     },
     {
       key: 'three',
       title: t('stepThreeTitle'),
       text: t('stepThreeText'),
-      image: Theme.sharingIntro,
+      image: Theme.DigitalWallet,
     },
     {
       key: 'four',
       title: t('stepFourTitle'),
       text: t('stepFourText'),
-      image: Theme.IntroScanner,
+      image: Theme.IntroShare,
+    },
+    {
+      key: 'five',
+      title: t('stepFiveTitle'),
+      text: t('stepFiveText'),
+      image: Theme.IntroBackup,
     },
   ];
 
@@ -53,13 +59,15 @@ export const IntroSlidersScreen: React.FC<RootRouteProps> = props => {
               {SvgImage.InjiSmallLogo()}
             </Column>
 
-            <Button
-              testID={isPasscodeSet ? 'back' : 'skip'}
-              type="plain"
-              title={isPasscodeSet ? t('back') : t('skip')}
-              onPress={isPasscodeSet ? controller.BACK : controller.NEXT}
-              styles={{height: 40, maxWidth: 115}}
-            />
+            {item.key !== 'five' && (
+              <Button
+                testID={isPasscodeSet ? 'back' : 'skip'}
+                type="plain"
+                title={isPasscodeSet ? t('back') : t('skip')}
+                onPress={isPasscodeSet ? controller.BACK : controller.NEXT}
+                styles={{height: 40, maxWidth: 115}}
+              />
+            )}
           </Row>
           <Image
             source={item.image}

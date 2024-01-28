@@ -1417,10 +1417,11 @@ export const DefaultTheme = {
   ICON_LARGE_SIZE: 33,
   CloseCard: require('../../../assets/Card_Bg1.png'),
   OpenCard: require('../../../assets/Card_Bg1.png'),
-  sharingIntro: require('../../../assets/Intro_Secure_Sharing.png'),
-  walletIntro: require('../../../assets/Intro_Wallet_Binding.png'),
-  IntroScanner: require('../../../assets/Intro_Scanner.png'),
-  protectPrivacy: require('../../../assets/Intro_Unlock_Method.png'),
+  IntroWelcome: require('../../../assets/Intro_Unlock.png'),
+  SecureSharing: require('../../../assets/Intro_Secure_Sharing.png'),
+  DigitalWallet: require('../../../assets/Intro_Wallet.png'),
+  IntroShare: require('../../../assets/Intro_Share.png'),
+  IntroBackup: require('../../../assets/Intro_Backup.png'),
   elevation(level: ElevationLevel): ViewStyle {
     // https://ethercreative.github.io/react-native-shadow-generator/
 

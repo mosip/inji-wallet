@@ -159,4 +159,6 @@ fileignoreconfig:
     checksum: 451e8873a635d955fe426d9a5fcf191f2d4fd74984a1a4518760e2d10e9e1817
   - filename: screens/Settings/BackupController.tsx
     checksum: daf682b5616e45bd7b9a7c76becc617fea56be83124c3c4db838c2046e977481
+  - filename: screens/Home/IntroSlidersScreen.tsx
+    checksum: af4a7e2d04b1141b7c32acfabeb3213a32eaca2a8e8f61e6958b6c97219dce57 
     version: ""
