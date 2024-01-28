@@ -1,6 +1,5 @@
 import React from 'react';
 import {View} from 'react-native';
-import {ListItem} from 'react-native-elements';
 import {Column, Row, Text} from './ui';
 import {Theme} from './ui/styleUtils';
 
@@ -36,7 +35,6 @@ export const SectionLayout: React.FC<SectionLayoutProps> = ({
           }}>
           {headerText}
         </Text>
-        <ListItem.Subtitle></ListItem.Subtitle>
       </Row>
       <Row
         style={{
@@ -52,7 +50,7 @@ export const SectionLayout: React.FC<SectionLayoutProps> = ({
 };
 
 export type SectionLayoutProps = {
-  headerIcon?: React.ReactNode;
+  headerIcon: React.ReactNode;
   headerText: string;
   children: React.ReactNode;
 };

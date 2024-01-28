@@ -27,6 +27,8 @@ import GoogleDriveIcon from '../../assets/google-drive-28.svg';
 import {displayType} from '../../machines/issuersMachine';
 import {IssuerProps} from '../openId4VCI/Issuer';
 import Backup from '../../assets/Backup.svg';
+import Restore from '../../assets/Restore.svg';
+import PermissionDenied from '../../assets/Permission_Denied.svg';
 import {
   EsignetMosipVCItemContentProps,
   ExistingMosipVCItemContentProps,
@@ -34,7 +36,7 @@ import {
 import {VCMetadata} from '../../shared/VCMetadata';
 import {VerifiableCredential} from '../../types/VC/ExistingMosipVC/vc';
 import {ProfileIcon} from '../ProfileIcon';
-import CloudUploadDoneIcon from "../../assets/Cloud_Upload_Done_Icon.svg";
+import CloudUploadDoneIcon from '../../assets/Cloud_Upload_Done_Icon.svg';
 
 export class SvgImage {
   static MosipLogo(props: LogoProps) {
@@ -237,6 +239,7 @@ export class SvgImage {
   static DataBackupIcon(width, height) {
     return (
       <Backup
+        {...testIDProps('dataBackupIcon')}
         color1={Theme.Colors.linearGradientStart}
         color2={Theme.Colors.linearGradientEnd}
         width={width}
@@ -245,12 +248,20 @@ export class SvgImage {
     );
   }
 
+  static RestoreIcon() {
+    return <Restore {...testIDProps('restoreIcon')} />;
+  }
+
   static SuccessLogo() {
     return <SuccessLogo {...testIDProps('SuccessLogo')} />;
   }
 
-  static CloudUploadDoneIcon(){
-    return <CloudUploadDoneIcon {...testIDProps('cloudUploadDoneIcon')}/>
+  static PermissionDenied() {
+    return <PermissionDenied {...testIDProps('permissionDeniedImage')} />;
+  }
+
+  static CloudUploadDoneIcon() {
+    return <CloudUploadDoneIcon {...testIDProps('cloudUploadDoneIcon')} />;
   }
 
   static NoInternetConnection() {

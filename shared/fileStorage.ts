@@ -6,6 +6,7 @@ import {
   ReadDirItem,
   readFile,
   stat,
+  StatResult,
   unlink,
   writeFile,
 } from 'react-native-fs';

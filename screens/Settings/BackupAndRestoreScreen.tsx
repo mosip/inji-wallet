@@ -114,16 +114,7 @@ const BackupAndRestoreScreen: React.FC<BackupAndRestoreProps> = props => {
   );
 
   const RestoreSection = (
-    <SectionLayout
-      headerText="Restore"
-      headerIcon={
-        <Icon
-          name="restore"
-          type="MaterialIcons"
-          size={30}
-          color={Theme.Colors.Icon}
-        />
-      }>
+    <SectionLayout headerText="Restore" headerIcon={SvgImage.RestoreIcon()}>
       <Row>
         <View style={{marginBottom: 19}}>
           <Text
