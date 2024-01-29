@@ -7,8 +7,8 @@ import org.openqa.selenium.WebElement;
 
 public class GenerateUinOrVidPage extends BasePage {
 
-    @AndroidFindBy(xpath = "//*[contains(@text,'Retrieve your UIN/VID')]")
-    @iOSXCUITFindBy(iOSClassChain = "**/XCUIElementTypeStaticText[`label == \"Retrieve your UIN/VID\"`]")
+    @AndroidFindBy(accessibility = "getIdHeader")
+    @iOSXCUITFindBy(accessibility = "getIdHeader")
     private WebElement retrieveUinVidText;
 
     @AndroidFindBy(accessibility = "getIdInputModalIndividualId")

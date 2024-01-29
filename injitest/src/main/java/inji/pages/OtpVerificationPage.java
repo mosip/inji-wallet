@@ -16,11 +16,11 @@ public class OtpVerificationPage extends BasePage {
     @iOSXCUITFindBy(accessibility = "otpVerificationError")
     private WebElement invalidOtpMessage;
 
-    @AndroidFindBy(xpath = "//*[contains(@text,'Something is wrong. Please try again later!')]")
+    @AndroidFindBy(accessibility = "walletBindingErrorTitle")
     @iOSXCUITFindBy(iOSClassChain = "**/XCUIElementTypeStaticText[`label == \"Something is wrong. Please try again later!\"`]")
     private WebElement invalidOtpMessageInVcActivation;
 
-    @AndroidFindBy(xpath = "//*[contains(@text,'Cancel')]")
+    @AndroidFindBy(xpath = "cancel")
     @iOSXCUITFindBy(accessibility = "cancel")
     private WebElement cancelButton;
 
@@ -44,7 +44,7 @@ public class OtpVerificationPage extends BasePage {
     @iOSXCUITFindBy(iOSClassChain = "**/XCUIElementTypeStaticText[`label == \"VID not available in database\"`]")
     private WebElement vidNotAvailableMessage;
 
-    @AndroidFindBy(accessibility = "resendCode")
+    @AndroidFindBy(uiAutomator = "new UiSelector().resourceId(\"resendCodeView\")") //as parent component has correct property 
     @iOSXCUITFindBy(accessibility = "resendCode")
     private WebElement resendCodeButton;
 
@@ -102,8 +102,12 @@ public class OtpVerificationPage extends BasePage {
         return this.isElementDisplayed(vidNotAvailableMessage);
     }
 
-    public boolean verifyResendCodeButtonDisplayed() {
-        return this.isElementDisplayed(resendCodeButton);
+    public boolean verifyResendCodeButtonDisplayedEnabled() {
+        return this.isElementEnabled(resendCodeButton);
+    }
+    
+    public void clickOnResendButton() {
+        clickOnElement(resendCodeButton);
     }
 
     public boolean confirmPopupHeaderDisplayed() {
@@ -111,6 +115,11 @@ public class OtpVerificationPage extends BasePage {
     }
 
     public boolean verifyOtpVerificationTimerCompleted() {
-        return this.WaitTillElementVisible(otpVerificationTimer, 230);
+        return this.WaitTillElementVisible(otpVerificationTimer, 190);
+    }
+    
+    public boolean verifyOtpVerificationTimerDisplayedAfterClickOnResend() {
+        return this.isElementDisplayed(otpVerificationTimer);
+
     }
 }
