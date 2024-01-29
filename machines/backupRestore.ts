@@ -43,6 +43,13 @@ export const backupRestoreMachine = model.createMachine(
     },
     id: 'backupRestore',
     initial: 'init',
+    on: {
+      BACKUP_RESTORE: [
+        {
+          target: 'restoreBackup',
+        },
+      ],
+    },
     states: {
       init: {
         on: {
@@ -181,7 +188,11 @@ export function createBackupRestoreMachine(serviceRefs: AppServices) {
   });
 }
 export function selectIsBackUpRestoring(state: State) {
-  return state.matches('restoreBackup');
+  return (
+    state.matches('restoreBackup') &&
+    !state.matches('restoreBackup.success') &&
+    !state.matches('restoreBackup.failure')
+  );
 }
 export function selectIsBackUpRestoreSuccess(state: State) {
   return state.matches('restoreBackup.success');

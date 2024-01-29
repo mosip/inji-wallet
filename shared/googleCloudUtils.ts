@@ -6,7 +6,7 @@ import {CloudStorage, CloudStorageScope} from 'react-native-cloud-storage';
 import {GOOGLE_ANDROID_CLIENT_ID} from 'react-native-dotenv';
 import {readFile, writeFile} from 'react-native-fs';
 import {NETWORK_REQUEST_FAILED} from './constants';
-import {backupDirectoryPath, zipFilePath} from './fileStorage';
+import fileStorage, {backupDirectoryPath, zipFilePath} from './fileStorage';
 import {request} from './request';
 import {getBackupFileName} from './commonUtil';
 
@@ -130,7 +130,7 @@ class Cloud {
       const filePath = zipFilePath(fileName);
       const fileContent = await readFile(filePath, 'base64');
 
-      await CloudStorage.writeFile(
+      const writeResult = await CloudStorage.writeFile(
         cloudFileName,
         fileContent,
         CloudStorageScope.AppData,
@@ -141,6 +141,10 @@ class Cloud {
       );
 
       if (isFileUploaded) {
+        const backupFileMeta = await fileStorage.getInfo(filePath);
+        // return backupFileMeta;
+        console.log('wrote to cloudFileName ', cloudFileName);
+        console.log('writeResult ', writeResult);
         await this.removeOldDriveBackupFiles(cloudFileName);
         return Promise.resolve(Cloud.status.SUCCESS);
       }
@@ -164,16 +168,26 @@ class Cloud {
   }
 
   static async downloadLatestBackup(): Promise<string | null> {
+    const tokenResult = await Cloud.getAccessToken();
+    CloudStorage.setGoogleDriveAccessToken(tokenResult);
     const allFiles = await CloudStorage.readdir(`/`, CloudStorageScope.AppData);
+    console.log('allFiles ', allFiles);
     // TODO: do basic sanity about this .zip file
     const fileName = allFiles[0];
-    const fileContent = await CloudStorage.readFile(fileName);
+    const fileContent = await CloudStorage.readFile(
+      fileName,
+      CloudStorageScope.AppData,
+    );
 
     if (fileContent.length === 0) return Promise.resolve(null);
     // write the file content in the bkp directory path
-    await writeFile(backupDirectoryPath + '/' + fileName, fileContent);
+    await writeFile(
+      backupDirectoryPath + '/' + fileName,
+      fileContent,
+      'base64',
+    );
     // return the path
-    return Promise.resolve(backupDirectoryPath + '/' + fileName);
+    return Promise.resolve(fileName.split('.zip')[0]);
   }
 }
 
