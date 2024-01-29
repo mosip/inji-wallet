@@ -152,22 +152,10 @@ export const backupRestoreMachine = model.createMachine(
       deleteBkpDir: () => async () =>
         fileStorage.removeItem(backupDirectoryPath),
       unzipBackupFile: context => async () => {
-        await Cloud.downloadLatestBackup();
-        let items: ReadDirItem[] = await fileStorage.getAllFilesInDirectory(
-          backupDirectoryPath,
-        );
-        let bkpZip: string;
-        if (
-          items.length === 1 &&
-          items[0].isFile() &&
-          items[0].name.endsWith('.zip')
-        ) {
-          bkpZip = items[0].name.substring(0, items[0].name.length - 4);
-        } else {
-          const ref = items.findIndex(i => i.name.endsWith('.zip'));
-          bkpZip = items[ref].name;
+        const bkpZip = await Cloud.downloadLatestBackup();
+        if (bkpZip === null) {
+          return new Error('unable to download backup file');
         }
-        context.fileName = bkpZip;
         const result = await unZipAndRemoveFile(bkpZip);
         return result;
       },

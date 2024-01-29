@@ -4,10 +4,11 @@ import {
 } from '@react-native-google-signin/google-signin';
 import {CloudStorage, CloudStorageScope} from 'react-native-cloud-storage';
 import {GOOGLE_ANDROID_CLIENT_ID} from 'react-native-dotenv';
-import {readFile} from 'react-native-fs';
+import {readFile, writeFile} from 'react-native-fs';
 import {NETWORK_REQUEST_FAILED} from './constants';
-import {zipFilePath} from './fileStorage';
+import {backupDirectoryPath, zipFilePath} from './fileStorage';
 import {request} from './request';
+import {getBackupFileName} from './commonUtil';
 
 class Cloud {
   static status = {
@@ -161,16 +162,21 @@ class Cloud {
       uploadError,
     );
   }
+
   static async downloadLatestBackup(): Promise<string | null> {
     const allFiles = await CloudStorage.readdir(`/`, CloudStorageScope.AppData);
+    // TODO: do basic sanity about this .zip file
     const fileName = allFiles[0];
     const fileContent = await CloudStorage.readFile(fileName);
 
     if (fileContent.length === 0) return Promise.resolve(null);
+    // write the file content in the bkp directory path
     await writeFile(backupDirectoryPath + '/' + fileName, fileContent);
-    return Promise.resolve(fileContent);
+    // return the path
+    return Promise.resolve(backupDirectoryPath + '/' + fileName);
   }
 }
+
 export default Cloud;
 
 export type ProfileInfo = {
