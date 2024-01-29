@@ -11,6 +11,7 @@ import {
   writeFile,
 } from 'react-native-fs';
 import * as RNZipArchive from 'react-native-zip-archive';
+import {getBackupFileName} from './commonUtil';
 
 interface CacheData {
   data?: any;
@@ -74,20 +75,33 @@ export const getBackupFilePath = (key: string) => {
   return `${backupDirectoryPath}/${key}.injibackup`;
 };
 
-export async function compressAndRemoveFile(fileName: string): Promise<StatResult> {
+export async function compressAndRemoveFile(
+  fileName: string,
+): Promise<StatResult> {
   const result = await compressFile(fileName);
   await removeFile(fileName);
   const backupFileMeta = await new FileStorage().getInfo(result);
   return backupFileMeta;
 }
 
+export async function unZipAndRemoveFile(fileName: string): Promise<string> {
+  const result = unzipFile(fileName);
+  await removeFile(fileName);
+  return result;
+}
+
 async function compressFile(fileName: string): Promise<string> {
   return await RNZipArchive.zip(backupDirectoryPath, zipFilePath(fileName));
+}
+
+async function unzipFile(fileName: string): Promise<string> {
+  return await RNZipArchive.unzip(zipFilePath(fileName), backupDirectoryPath);
 }
 
 async function removeFile(fileName: string) {
   await new FileStorage().removeItem(getBackupFilePath(fileName));
 }
+
 export async function getDirectorySize(path: string) {
   const directorySize = await new FileStorage()
     .getAllFilesInDirectory(path)
@@ -99,4 +113,17 @@ export async function getDirectorySize(path: string) {
       return folderEntriesSizeInBytes;
     });
   return directorySize;
+}
+
+export async function writeToBackupFile(data): Promise<string> {
+  const fileName = getBackupFileName();
+  const isDirectoryExists = await exists(backupDirectoryPath);
+  if (isDirectoryExists) {
+    await removeFile(backupDirectoryPath);
+  }
+  // TODO: create dir using a named instance of FileStorage later
+  await new FileStorage().createDirectory(backupDirectoryPath);
+  const path = getBackupFilePath(fileName);
+  await writeFile(path, JSON.stringify(data));
+  return fileName;
 }

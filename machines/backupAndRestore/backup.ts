@@ -7,12 +7,12 @@ import {
   TECHNICAL_ERROR,
   UPLOAD_MAX_RETRY,
 } from '../../shared/constants';
-import {compressAndRemoveFile} from '../../shared/fileStorage';
-import Cloud from '../../shared/googleCloudUtils';
 import {
-  isMinimumLimitForBackupReached,
+  compressAndRemoveFile,
   writeToBackupFile,
-} from '../../shared/storage';
+} from '../../shared/fileStorage';
+import Cloud from '../../shared/googleCloudUtils';
+import {isMinimumLimitForBackupReached} from '../../shared/storage';
 import {TelemetryConstants} from '../../shared/telemetry/TelemetryConstants';
 import {
   getEndEventData,

@@ -4,9 +4,17 @@ import BaseTest.AndroidBaseTest;
 import inji.constants.Target;
 import inji.pages.*;
 import inji.utils.TestDataReader;
+import io.appium.java_client.PerformsTouchActions;
+import io.appium.java_client.TouchAction;
+import io.appium.java_client.touch.offset.PointOption;
+
 import org.testng.annotations.Test;
 
+import com.google.common.collect.ImmutableMap;
+
 import static org.testng.Assert.assertTrue;
+
+import org.openqa.selenium.JavascriptExecutor;
 
 import static org.testng.Assert.*;
 
@@ -36,13 +44,10 @@ public class VerifyHelpPageTest extends AndroidBaseTest {
         HelpPage helpPage = homePage.clickOnHelpIcon();
         
         assertEquals(helpPage.isHelpPageContentEmpty(),false,"verifying text is not empty");
-       // helpPage.scrollPerformInHelpPage();
-       // assertTrue(helpPage.isBiometricIsChangeTextDescription(), "Verify if biometric is  text change displayed");
-
+        
         assertTrue(helpPage.isHelpPageLoaded(), "Verify if help page is displayed");
         helpPage.exitHelpPage();
 
-        
         assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
     }
 

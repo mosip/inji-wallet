@@ -37,8 +37,6 @@ fileignoreconfig:
     checksum: ffe9aac2dcc590b98b0d588885c088eff189504ade653a77f74b67312bfd27ad
   - filename: shared/fileStorage.ts
     checksum: 451e8873a635d955fe426d9a5fcf191f2d4fd74984a1a4518760e2d10e9e1817
-  - filename: shared/storage.ts
-    checksum: fa967759d765432926475a5534c26adfa61727c8e3334c795d7ee1e5b2dd0e1f
   - filename: screens/Issuers/IssuersScreen.tsx
     checksum: 9c53e3770dbefe26e0de67ee4b7d5cc9c52d9823cbb136a1a5104dcb0a101071
   - filename: ios/Podfile.lock
@@ -65,8 +63,6 @@ fileignoreconfig:
     checksum: 86ecb95b58456d42676247eb768a7fba980a3c0ef83d515f8b9ce0c44d8c6906
   - filename: shared/telemetry/TelemetryUtils.js
     checksum: a0686e9a5c006176fd720b84bc36ca947db1422caf65c90cd0c2d1102a9e96df
-  - filename: ios/fastlane/Fastfile
-    checksum: 78edb7772ca7bf64fc0c603cb82771c793e03afff37ccbbfd1b9f578ec0e5369
   - filename: machines/bleShare/scan/scanMachine.ts
     checksum: a514c958ca3da3c5b22a1a95ad680af8f05fb22638fab79b3842aa8fcc1b4a17
   - filename: locales/spa.json
@@ -85,16 +81,12 @@ fileignoreconfig:
     checksum: 9970da0ea685018a90f7306fb88945d135dd019439099dd56b6109d915a8a24f
   - filename: assets/Flip_Camera_Icon.svg
     checksum: 736b5a7ddb86bd4376229ce198dbf8a663e7ac89fc3311bd4f19afd4a2b36ffd
-  - filename: ios/fastlane/Fastfile
-    checksum: 086080bc7a04accf5094c457b5acf84d9fec5d7dfa72eaaaf02e433ecf4f996b
   - filename: assets/Finger_Print_Icon.svg
     checksum: 776d4fe4fc4b54d185ccf97daf0511b9fe2c0e0f7c1a809047020e5e8a100db6
   - filename: android/app/build.gradle
     checksum: d5409b8eda2e1bf5b2552a909595a9e0aea4fd4e7572cf1746c99eee1583b83a
   - filename: .github/workflows/push-triggers.yml
     checksum: abc19ea38c8d7b79f15695d015709cc88a34a995181aaf12bc8344f940f3cbc4
-  - filename: ios/fastlane/Fastfile
-    checksum: 086080bc7a04accf5094c457b5acf84d9fec5d7dfa72eaaaf02e433ecf4f996b
   - filename: android/fastlane/Fastfile
     checksum: a25f155bcbbae7ab09563637c23771f7349738f12a6ddc8ae71c29c61ed535af
   - filename: .github/workflows/internal-build.yml
@@ -103,12 +95,12 @@ fileignoreconfig:
     checksum: f4e8a054fc4168e08bc9e9fe3e644cebabacdfc31ef0cbe36dd281766f47df5e
   - filename: screens/Home/MyVcs/IdInputModal.tsx
     checksum: 7ee46d8ef4761c0e9b59f3e602e6e30be5f47221817c819e91ab10ca2203089f
-  - filename: .env
-    checksum: d3023fb22734e6c7bd626f24007ba7b93e791cb0bcb8a086cb8e99f04bc31c7c
+  - filename: machines/backup.typegen.ts
+    checksum: 4ae5dbf36353cb7568a278628256e68caded071f1e91d6e1b25ac9aefb1f81cf
+  - filename: screens/Settings/BackupController.tsx
+    checksum: 054665c377b4a8e246ae1bfb419ab86d0cb1c120ae92cdc27ceed9cf1f39679b
   - filename: screens/Settings/BackupViaPassword.tsx
     checksum: 5fb2f98fb8a4efeb6b691b8a29e62eba64a99e9b2129bc0af1d11bc56bdfb374
-  - filename: screens/Settings/DataBackup.tsx
-    checksum: 6f3eaf26a58712b3ddd36dfa49d0d608eb873455ca91374545148c23e36fd43b
   - filename: shared/constants.ts
     checksum: ae922a7acafab9c42746bd54e194c44532af81122837594c397713cef6922ca0
   - filename: shared/commonUtil.ts
@@ -118,27 +110,43 @@ fileignoreconfig:
   - filename: machines/backupWithEncryption.ts
     checksum: 038c12d30b2312fcbd9230a1c6ddb494d2e561fe0d09741335fa80ab67e2c550
   - filename: machines/backupWithEncryption.typegen.ts
-    checksum: f5f9a71082e3f30f89e98a7913535327b31b942709ee8b5efb40e18c73ddee2a 
+    checksum: f5f9a71082e3f30f89e98a7913535327b31b942709ee8b5efb40e18c73ddee2a
   - filename: screens/Home/MyVcs/OtpVerificationModal.tsx
-    checksum: 1db1f39701019383e1e40e6ed5278177e6c9bb3d28def0935cf6d4bd9e41e63a 
+    checksum: 1db1f39701019383e1e40e6ed5278177e6c9bb3d28def0935cf6d4bd9e41e63a
   - filename: screens/Home/MyVcs/GetIdInputModal.tsx
-    checksum: e85d18cd3349e0127f1cc7173fcdfd31824e609508512a613997a73756cd4dec 
+    checksum: e85d18cd3349e0127f1cc7173fcdfd31824e609508512a613997a73756cd4dec
   - filename: .github/workflows/android-custom-build.yml
-    checksum: 4d155c6e5468effb0b82e62f6878f2bd7ff7e7c9540e16bdd28cb81b80672ac3 
+    checksum: 4d155c6e5468effb0b82e62f6878f2bd7ff7e7c9540e16bdd28cb81b80672ac3
   - filename: .github/workflows/push-triggers.yml
     checksum: 4a031b46646aa982c8f40e4c7fe0bd3e05a76a6af1ff1c2de7350ba6ebf9a839 
-  - filename: .env
-    checksum: 4259c7c600ef49bfca798a7807a03afe9fefb1a04efd3adf224397c18117a8c1
   - filename: components/VC/Views/VCCardViewContent.tsx
     checksum: 02655ff3d7f8a8ea4f3664485f98c961802c598242ec44408594a2ddb721fa5e
   - filename: screens/Settings/BackupController.tsx
-    checksum: daf682b5616e45bd7b9a7c76becc617fea56be83124c3c4db838c2046e977481
-  - filename: machines/backupAndRestore.ts
-    checksum: cbc0eb6170b2c7c5fafaaf3bdb21c461f457ab1be8b092dfd6291c16b5b015db
-  - filename: machines/backupAndRestore.typegen.ts
-    checksum: 49e5c28ddeaf09ee5a169a0b8b77245601df67169f0fb48abf48678fd7e148bc
+    checksum: 4a031b46646aa982c8f40e4c7fe0bd3e05a76a6af1ff1c2de7350ba6ebf9a839
+  - filename: machines/backupRestore.ts
+    checksum: d71d89a1faac64ebadaba48786de42cd9a7a7d5765238415defe822c162ab0b2
+  - filename: machines/backupRestore.typegen.ts
+    checksum: acc8934db32c3398082b1f89d9908765d3deb4dd49eaf5f68496a89fbd02b7a8
+  - filename: machines/settings.typegen.ts
+    checksum: e4ae05822f1b1c23f3f70d03dd46fd8f29ba6b52d40f2f24c121f536fbb5f2c4
+  - filename: .env
+    checksum: ae9586991aff83b0cbefb01fccfda729c7cb0fa3aa34696e88a16aa7c5c34bb5
   - filename: machines/backupAndRestore/backup.ts
-    checksum: 2daa767260bf800a98e6f3abd75037882b3cdfb814581473bcc4af01a6a49d22
-  - filename: machines/backupAndRestore/backup.typegen.ts
-    checksum: df63c6bf9281b1683089fe4b7f83b7c918d237d994c9fcf0855947c367cfeea4
+    checksum: bbfededbb1f8ff7cca636f10c6b81ff5775b550030fada4935fff3db30cca2f1
+  - filename: .github/workflows/ui-automation.yml
+    checksum: 0b26a5dcb7524ba15d6aaeaf04f2ef94be9d25ef702d9072d6628bcd58e50f36
+  - filename: injitest/src/test/java/androidTestCases/PinVcTest.java
+    checksum: cf9ddace5e416970eec6f078567e7fe16c12f357e667ebd8f1018089b117d61f
+  - filename: injitest/src/test/java/androidTestCases/NoNetworkAndroidTest.java
+    checksum: c300122d39af06f68ecd0b6dc287daa0370fc6b744072944ddcc7fe4ded79fb3
+  - filename: injitest/src/test/java/androidTestCases/CredentialRegistryTest.java
+    checksum: 126ad4f513d5e417fdc3ccbace187315b8aae4399806d3259421f8bca7d41254
+  - filename: injitest/src/test/java/iosTestCases/NoNetworkIosTest.java
+    checksum: 698b2fed274f17a6daa76b0558bb0a733825fa224144f42aecb4affb8e3897a8
+  - filename: ios/fastlane/Fastfile
+    checksum: a4e3772dc67a07ecbcfc58be0d6d4f7fa799cec7ac25bd269ac29459c8669ca4
+  - filename: shared/storage.ts
+    checksum: 5700dbefff3da97dc85be1d171bd80a3e72d6f488e77db4044a14520cbc1642a
+  - filename: injitest/src/test/java/iosTestCases/CredentialRegistryTest.java
+    checksum: b0808e0c511412cde21fd169a9bbeaf3b77cb48f25418e12d341cc3ce1df5898
     version: ""
