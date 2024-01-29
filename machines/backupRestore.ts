@@ -6,8 +6,8 @@ import fileStorage, {
   getBackupFilePath,
   unZipAndRemoveFile,
 } from '../shared/fileStorage';
-import {StoreEvents} from './store';
 import Storage from '../shared/storage';
+import {StoreEvents} from './store';
 import {ReadDirItem} from 'react-native-fs';
 
 const model = createModel(

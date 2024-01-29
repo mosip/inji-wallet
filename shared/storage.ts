@@ -91,45 +91,14 @@ class Storage {
 
   static loadBackupData = async (data, encryptionKey) => {
     try {
+      // 1. opening the file
       const completeBackupData = JSON.parse(data);
-
-      const allVCs = completeBackupData['VC_Records'];
-      const allVCKeys = Object.keys(allVCs);
-      allVCKeys.forEach(async key => {
-        const vc = allVCs[key];
-        const encryptedVC = await encryptJson(
-          encryptionKey,
-          JSON.stringify(vc),
-        );
-        await this.setItem(key, encryptedVC, encryptionKey);
-      });
-      const dataFromDB = completeBackupData['dataFromDB'];
-
-      const dataFromMyVCKey = dataFromDB[MY_VCS_STORE_KEY];
-      const encryptedMyVCKeyFromMMKV = await MMKV.getItem(MY_VCS_STORE_KEY);
-      let newDataForMyVCKey;
-      if (encryptedMyVCKeyFromMMKV != null) {
-        const myVCKeyFromMMKV = await decryptJson(
-          encryptionKey,
-          encryptedMyVCKeyFromMMKV,
-        );
-        newDataForMyVCKey = [
-          ...JSON.parse(myVCKeyFromMMKV),
-          ...dataFromMyVCKey,
-        ];
-      } else {
-        newDataForMyVCKey = dataFromMyVCKey;
-      }
-      const encryptedDataForMyVCKey = await encryptJson(
-        encryptionKey,
-        JSON.stringify(newDataForMyVCKey),
-      );
-      await this.setItem(
-        MY_VCS_STORE_KEY,
-        encryptedDataForMyVCKey,
+      // 2. Load and store VC_records & MMKV things
+      const dataFromDB = await Storage.loadVCs(
+        completeBackupData,
         encryptionKey,
       );
-
+      // 3. Update the Well Known configs of the VCs
       const allKeysFromDB = Object.keys(dataFromDB);
       const cacheKeys = allKeysFromDB.filter(key =>
         key.includes('CACHE_FETCH_ISSUER_WELLKNOWN_CONFIG_'),
@@ -141,7 +110,6 @@ class Storage {
           JSON.stringify(value),
         );
         await this.setItem(key, encryptedValue, encryptionKey);
-
         return true;
       });
     } catch (error) {
@@ -235,6 +203,40 @@ class Storage {
       throw error;
     }
   };
+
+  private static async loadVCs(completeBackupData: any, encryptionKey: any) {
+    const allVCs = completeBackupData['VC_Records'];
+    const allVCKeys = Object.keys(allVCs);
+    allVCKeys.forEach(async key => {
+      const vc = allVCs[key];
+      const encryptedVC = await encryptJson(encryptionKey, JSON.stringify(vc));
+      await this.setItem(key, encryptedVC, encryptionKey);
+    });
+    const dataFromDB = completeBackupData['dataFromDB'];
+
+    const dataFromMyVCKey = dataFromDB[MY_VCS_STORE_KEY];
+    const encryptedMyVCKeyFromMMKV = await MMKV.getItem(MY_VCS_STORE_KEY);
+    let newDataForMyVCKey;
+    if (encryptedMyVCKeyFromMMKV != null) {
+      const myVCKeyFromMMKV = await decryptJson(
+        encryptionKey,
+        encryptedMyVCKeyFromMMKV,
+      );
+      newDataForMyVCKey = [...JSON.parse(myVCKeyFromMMKV), ...dataFromMyVCKey];
+    } else {
+      newDataForMyVCKey = dataFromMyVCKey;
+    }
+    const encryptedDataForMyVCKey = await encryptJson(
+      encryptionKey,
+      JSON.stringify(newDataForMyVCKey),
+    );
+    await this.setItem(
+      MY_VCS_STORE_KEY,
+      encryptedDataForMyVCKey,
+      encryptionKey,
+    );
+    return dataFromDB;
+  }
 
   private static async isVCAlreadyDownloaded(
     key: string,

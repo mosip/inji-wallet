@@ -358,6 +358,7 @@ export const storeMachine =
                   break;
                 }
                 case 'RESTORE_BACKUP': {
+                  // the backup data is in plain text
                   response = await loadBackupData(
                     event.data,
                     context.encryptionKey,
@@ -573,6 +574,7 @@ export async function exportData(encryptionKey: string) {
 export async function loadBackupData(data, encryptionKey) {
   await Storage.loadBackupData(data, encryptionKey);
 }
+
 export async function getItem(
   key: string,
   defaultValue: unknown,
