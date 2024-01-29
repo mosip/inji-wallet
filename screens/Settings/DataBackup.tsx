@@ -10,9 +10,11 @@ import {SvgImage} from '../../components/ui/svg';
 import {AccountSelection} from './AccountSelection';
 import {useBackupAndRestore} from './BackupAndRestoreController';
 import BackupAndRestoreScreen from './BackupAndRestoreScreen';
+import {useTranslation} from 'react-i18next';
 
 export const DataBackup: React.FC = ({} = () => {
   const controller = useBackupAndRestore();
+  const {t} = useTranslation('DataBackupScreen');
 
   return (
     <React.Fragment>
@@ -26,12 +28,12 @@ export const DataBackup: React.FC = ({} = () => {
                   weight="semibold"
                   color={Theme.Colors.settingsLabel}
                   style={{paddingRight: 10}}>
-                  Backup & Restore
+                  {t('dataBackupAndRestore')}
                 </Text>
                 <Text
                   style={Theme.BackupStyles.newStyles}
                   color={Theme.Colors.whiteText}>
-                  New
+                  {t('new')}
                 </Text>
               </Row>
             </ListItem.Title>
@@ -44,8 +46,8 @@ export const DataBackup: React.FC = ({} = () => {
         <Error
           isModal
           isVisible={controller.isSigningInFailed}
-          title="Permission Denied!"
-          message="We noticed that you've cancelled the creation of data backup settings. We strongly recommend revisiting the data backup settings to ensure your data availability. Click “Configure Settings” to set up data backup now, or “Cancel” to go back to settings screen."
+          title={t('errors.permissionErrorTitle')}
+          message={t('errors.permissionErrorMessage')}
           image={SvgImage.NoInternetConnection()}
           goBack={controller.GO_BACK}
           goBackButtonVisible
@@ -63,8 +65,10 @@ export const DataBackup: React.FC = ({} = () => {
         />
       )}
       {controller.isLoading && (
-        <Modal isVisible>
-          <Loader title={'Loading setting up'} subTitle="Loading..."></Loader>
+        <Modal isVisible showClose={false}>
+          <Loader
+            title={t('loadingTitle')}
+            subTitle={t('loadingSubtitle')}></Loader>
         </Modal>
       )}
 

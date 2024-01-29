@@ -583,6 +583,16 @@
       }
     }
   },
+  "DataBackupScreen" :{
+    "dataBackupAndRestore" : "Backup & Restore",
+    "new" : "New",
+    "loadingTitle": "Loading setting up",
+    "loadingSubtitle": "Loading...",
+    "errors":{
+      "permissionErrorTitle": "Permission Denied!",
+      "permissionErrorMessage": "We noticed that you've cancelled the creation of data backup settings. We strongly recommend revisiting the data backup settings to ensure your data availability. Click “Configure Settings” to set up data backup now, or “Cancel” to go back to settings screen."
+    }
+  },
   "WelcomeScreen": {
     "title": "Open Source Identity Solution",
     "unlockApplication": "Unlock Application",

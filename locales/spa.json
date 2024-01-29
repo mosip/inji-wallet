@@ -577,6 +577,16 @@
     },
     "ignore": "Ignorar"
   },
+  "DataBackupScreen" :{
+    "dataBackupAndRestore" : "Copia de seguridad de restauracion",
+    "new" : "Nueva",
+    "loadingTitle": "Cargando configuración",
+    "loadingSubtitle": "Cargando...",
+    "errors":{
+      "permissionErrorTitle": "¡Permiso denegado!",
+      "permissionErrorMessage": "Notamos que canceló la creación de la configuración de copia de seguridad de datos. Recomendamos encarecidamente revisar la configuración de la copia de seguridad de datos para garantizar la disponibilidad de sus datos. Haga clic en `Configurar ajustes` para configurar la copia de seguridad de datos ahora, o `Cancelar` para volver a la pantalla de configuración."
+    }
+  },
   "SetupLanguage": {
     "header": "Elige lengua",
     "description": "Selecciona tu idioma preferido",

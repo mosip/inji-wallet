@@ -582,6 +582,16 @@
       }
     }
   },
+  "DataBackupScreen" :{
+    "dataBackupAndRestore" : "I-backup at I-restore",
+    "new" : "Bago",
+    "loadingTitle": "Nilo-load ang pag-set up",
+    "loadingSubtitle": "Naglo-load...",
+    "errors":{
+      "permissionErrorTitle": "Tinanggihan ang Pahintulot!",
+      "permissionErrorMessage": "Napansin namin na kinansela mo ang paggawa ng mga setting ng backup ng data. Lubos naming inirerekumenda na muling bisitahin ang mga setting ng pag-back up ng data upang matiyak ang availability ng iyong data. I-click ang `I-configure ang Mga Setting` upang i-set up ang pag-backup ng data ngayon, o `Kanselahin` upang bumalik sa screen ng mga setting."
+    }
+  },
   "WelcomeScreen": {
     "title": "Open Source Identity Solution",
     "unlockApplication": "I-unlock ang Application",
