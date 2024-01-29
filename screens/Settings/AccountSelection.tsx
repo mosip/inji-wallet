@@ -6,10 +6,12 @@ import {Modal} from '../../components/ui/Modal';
 import {Theme} from '../../components/ui/styleUtils';
 import {SvgImage} from '../../components/ui/svg';
 import {useBackupScreen} from './BackupController';
+import {useTranslation} from 'react-i18next';
 
 //TODO: Make this component adaptable to all screen size
 export const AccountSelection: React.FC<AccountSelectionProps> = props => {
   const controller = useBackupScreen(props);
+  const {t} = useTranslation('AccountSelection');
 
   return (
     <React.Fragment>
@@ -24,32 +26,31 @@ export const AccountSelection: React.FC<AccountSelectionProps> = props => {
             <Text
               size="large"
               style={Theme.BackupAndRestoreStyles.backupProcessInfo}>
-              You’re just a few steps away from backing up your data
+              {t('backupProcessInfo')}
             </Text>
             <Text
               size="regular"
               color={Theme.Colors.GrayText}
               style={Theme.BackupAndRestoreStyles.cloudInfo}>
-              To initiate the data backup, please tap on the “Proceed” button to
-              link your Google Drive with Inji.
+              {t('cloudInfo')}
             </Text>
           </Column>
 
           <Row style={{paddingHorizontal: 120, paddingBottom: 50}}>
             <View>{SvgImage.GoogleDriveIcon(45, 45)}</View>
             <Text style={Theme.BackupAndRestoreStyles.cloudLabel}>
-              Google Drive
+              {t('googleDriveTitle')}
             </Text>
           </Row>
 
           <Column>
             <Button
               type="gradient"
-              title={'Proceed'}
+              title={t('proceed')}
               onPress={props.onProceed}
               margin={[0, 0, 0, 0]}
             />
-            <Button type="clear" title={'Go Back'} onPress={props.goBack} />
+            <Button type="clear" title={t('goBack')} onPress={props.goBack} />
           </Column>
         </Column>
       </Modal>

@@ -589,6 +589,14 @@
       "permissionErrorMessage": "لقد لاحظنا أنك قمت بإلغاء إنشاء إعدادات النسخ الاحتياطي للبيانات. ونحن نوصي بشدة بإعادة النظر في إعدادات النسخ الاحتياطي للبيانات لضمان توفر البيانات الخاصة بك. انقر فوق تكوين الإعدادات لإعداد النسخ الاحتياطي للبيانات الآن، أو يلغي للعودة إلى شاشة الإعدادات."
     }
   },
+  "AccountSelection" :{
+    "backupProcessInfo" : "أنت على بعد خطوات قليلة من إجراء نسخ احتياطي لبياناتك",
+    "cloudInfo" : "To initiate the data backup, please tap on the “Proceed” button to link your Google Drive with Inji.",
+    "googleDriveTitle": "جوجل درايف",
+    "loadingSubtitle": "تحميل...",
+    "proceed": "يتابع",
+    "goBack": "عُد"
+  },
   "WelcomeScreen": {
     "title": "حل هوية مفتوحة المصدر",
     "unlockApplication": "فتح التطبيق",

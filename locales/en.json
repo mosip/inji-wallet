@@ -592,6 +592,14 @@
       "permissionErrorTitle": "Permission Denied!",
       "permissionErrorMessage": "We noticed that you've cancelled the creation of data backup settings. We strongly recommend revisiting the data backup settings to ensure your data availability. Click “Configure Settings” to set up data backup now, or “Cancel” to go back to settings screen."
     }
+  },  
+  "AccountSelection" :{
+    "backupProcessInfo" : "You’re just a few steps away from backing up your data",
+    "cloudInfo" : "To initiate the data backup, please tap on the “Proceed” button to link your Google Drive with Inji.",
+    "googleDriveTitle": "Google Drive",
+    "loadingSubtitle": "Loading...",
+    "proceed": "Proceed",
+    "goBack": "Go Back"
   },
   "WelcomeScreen": {
     "title": "Open Source Identity Solution",
