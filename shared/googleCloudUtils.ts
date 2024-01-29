@@ -163,10 +163,11 @@ class Cloud {
   }
   static async downloadLatestBackup(): Promise<string | null> {
     const allFiles = await CloudStorage.readdir(`/`, CloudStorageScope.AppData);
-    const fileContent = await CloudStorage.readFile(allFiles[0]);
+    const fileName = allFiles[0];
+    const fileContent = await CloudStorage.readFile(fileName);
 
     if (fileContent.length === 0) return Promise.resolve(null);
-
+    await writeFile(backupDirectoryPath + '/' + fileName, fileContent);
     return Promise.resolve(fileContent);
   }
 }

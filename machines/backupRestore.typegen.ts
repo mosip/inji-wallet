@@ -36,7 +36,7 @@ export interface Typegen0 {
     isMinimumStorageRequiredForBackupRestorationReached: 'done.invoke.backupRestore.restoreBackup.checkStorageAvailibility:invocation[0]';
   };
   eventsCausingServices: {
-    checkStorageAvailability: 'EXTRACT_DATA';
+    checkStorageAvailability: 'BACKUP_RESTORE' | 'EXTRACT_DATA';
     deleteBkpDir: 'STORE_RESPONSE';
     readBackupFile: 'done.invoke.backupRestore.restoreBackup.unzipBackupFile:invocation[0]';
     unzipBackupFile: 'done.invoke.backupRestore.restoreBackup.checkStorageAvailibility:invocation[0]';

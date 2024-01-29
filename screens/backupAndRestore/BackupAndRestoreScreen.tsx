@@ -14,9 +14,12 @@ import {SvgImage} from '../../components/ui/svg';
 import {ProfileInfo} from '../../shared/googleCloudUtils';
 import {useBackupScreen} from './BackupController';
 import {BackupAndRestoreAllScreenBanner} from '../../components/BackupAndRestoreAllScreenBanner';
+import {useBackupRestoreScreen} from '../Settings/BackupRestoreController';
 
 const BackupAndRestoreScreen: React.FC<BackupAndRestoreProps> = props => {
   const backupController = useBackupScreen();
+  const restoreController = useBackupRestoreScreen();
+
   const {t} = useTranslation('BackupAndRestore');
 
   const Loading = (
@@ -117,20 +120,22 @@ const BackupAndRestoreScreen: React.FC<BackupAndRestoreProps> = props => {
       <Row>
         <View style={{marginBottom: 19}}>
           <Text style={Theme.BackupAndRestoreStyles.backupProgressText}>
-            {false ? t('restoreInProgress') : t('restoreInfo')}
+            {restoreController.isBackUpRestoring
+              ? t('restoreInProgress')
+              : t('restoreInfo')}
           </Text>
         </View>
       </Row>
       <Row style={{marginLeft: 1, marginRight: 1}}>
         {/* TODO: Change false to restoreInProgress */}
-        {false ? (
+        {restoreController.isBackUpRestoring ? (
           Loading
         ) : (
           <Button
             testID="backup"
             type="outline"
             title={t('restore')}
-            onPress={() => {}}
+            onPress={restoreController.BACKUP_RESTORE}
             styles={{...Theme.MessageOverlayStyles.button, marginTop: 10}}
           />
         )}

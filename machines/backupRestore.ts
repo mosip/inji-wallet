@@ -9,6 +9,7 @@ import fileStorage, {
 import Storage from '../shared/storage';
 import {StoreEvents} from './store';
 import {ReadDirItem} from 'react-native-fs';
+import Cloud from '../shared/googleCloudUtils';
 
 const model = createModel(
   {
@@ -53,7 +54,7 @@ export const backupRestoreMachine = model.createMachine(
         },
       },
       restoreBackup: {
-        initial: 'idle',
+        initial: 'checkStorageAvailibility',
         states: {
           idle: {},
           checkStorageAvailibility: {
@@ -151,6 +152,7 @@ export const backupRestoreMachine = model.createMachine(
       deleteBkpDir: () => async () =>
         fileStorage.removeItem(backupDirectoryPath),
       unzipBackupFile: context => async () => {
+        await Cloud.downloadLatestBackup();
         let items: ReadDirItem[] = await fileStorage.getAllFilesInDirectory(
           backupDirectoryPath,
         );
