@@ -8,6 +8,21 @@ export const BackupAndRestoreAllScreenBanner: React.FC = () => {
   const backUpController = useBackupScreen();
   const {t} = useTranslation('BackupAndRestoreBanner');
 
+  function backupFailure() {
+    const translationPath = t(
+      `backupFailure.${backUpController.backupErrorReason}`,
+    );
+
+    return (
+      <BannerNotification
+        message={translationPath}
+        onClosePress={backUpController.DISMISS}
+        testId={'dataBackupFailure'}
+        customStyle={Theme.Styles.dataBackupFailure}
+      />
+    );
+  }
+
   return (
     <>
       {backUpController.isBackingUpSuccess && (
@@ -19,14 +34,7 @@ export const BackupAndRestoreAllScreenBanner: React.FC = () => {
         />
       )}
 
-      {backUpController.isBackingUpFailure && (
-        <BannerNotification
-          message={t('backupFailure')}
-          onClosePress={backUpController.DISMISS}
-          testId={'dataBackupFailure'}
-          customStyle={Theme.Styles.dataBackupFailure}
-        />
-      )}
+      {backUpController.isBackingUpFailure && backupFailure()}
     </>
   );
 };

@@ -105,10 +105,6 @@ fileignoreconfig:
     checksum: 7ee46d8ef4761c0e9b59f3e602e6e30be5f47221817c819e91ab10ca2203089f
   - filename: .env
     checksum: d3023fb22734e6c7bd626f24007ba7b93e791cb0bcb8a086cb8e99f04bc31c7c
-  - filename: machines/backup.ts
-    checksum: d4b95b075ce39ed80b119014188f8903dbb46d46dd19a3757eea2ae8a06ba7ad
-  - filename: machines/backup.typegen.ts
-    checksum: 4ae5dbf36353cb7568a278628256e68caded071f1e91d6e1b25ac9aefb1f81cf
   - filename: screens/Settings/BackupViaPassword.tsx
     checksum: 5fb2f98fb8a4efeb6b691b8a29e62eba64a99e9b2129bc0af1d11bc56bdfb374
   - filename: screens/Settings/DataBackup.tsx
@@ -131,8 +127,6 @@ fileignoreconfig:
     checksum: 4d155c6e5468effb0b82e62f6878f2bd7ff7e7c9540e16bdd28cb81b80672ac3 
   - filename: .github/workflows/push-triggers.yml
     checksum: 4a031b46646aa982c8f40e4c7fe0bd3e05a76a6af1ff1c2de7350ba6ebf9a839 
-  - filename: machines/backup.ts
-    checksum: 08845c4bffb507f2dda7b6de37133241c820033e9f3bfc941de956eb5009975e
   - filename: .env
     checksum: 4259c7c600ef49bfca798a7807a03afe9fefb1a04efd3adf224397c18117a8c1
   - filename: components/VC/Views/VCCardViewContent.tsx
@@ -144,5 +138,7 @@ fileignoreconfig:
   - filename: machines/backupAndRestore.typegen.ts
     checksum: 49e5c28ddeaf09ee5a169a0b8b77245601df67169f0fb48abf48678fd7e148bc
   - filename: machines/backupAndRestore/backup.ts
-    checksum: 2176b5dcc46930197985cad0bb56b83684402a65df978d62d31ff7c9da9bd4ae
+    checksum: cd317054e6e263346c3749a173f040184295c2bf4d086b3f9d57d001b20653ee
+  - filename: machines/backupAndRestore/backup.typegen.ts
+    checksum: be379c1506ed8ce19c4581bbaa6b44d38b45d006ed0167d353ddfda8abf782a1
     version: ""

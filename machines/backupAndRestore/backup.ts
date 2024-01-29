@@ -17,7 +17,11 @@ import {
 } from '../../shared/telemetry/TelemetryUtils';
 import {TelemetryConstants} from '../../shared/telemetry/TelemetryConstants';
 import Cloud from '../../shared/googleCloudUtils';
-import {UPLOAD_MAX_RETRY} from '../../shared/constants';
+import {
+  NETWORK_REQUEST_FAILED,
+  TECHNICAL_ERROR,
+  UPLOAD_MAX_RETRY,
+} from '../../shared/constants';
 import {bytesToMB} from '../../shared/commonUtil';
 import {BackupFileMeta} from '../../types/backup-and-restore/backup';
 
@@ -27,6 +31,7 @@ const model = createModel(
     dataFromStorage: {},
     fileName: '',
     fileMeta: null as null | BackupFileMeta,
+    errorReason: '' as string,
   },
   {
     events: {
@@ -129,13 +134,7 @@ export const backupMachine = model.createMachine(
                 target: 'success',
               },
               onError: {
-                actions: [
-                  (context, event) =>
-                    console.log(
-                      'error happened while uploading backup file ',
-                      event,
-                    ),
-                ],
+                actions: ['setBackupErrorReason'],
                 target: 'failure',
               },
             },
@@ -179,13 +178,11 @@ export const backupMachine = model.createMachine(
       }),
 
       extractBackupSuccessMetaData: model.assign((context, event) => {
-        console.log('event in action');
         const {ctime: creationTime, size} = event.data;
         const backupFileMeta = {
           backupCreationTime: creationTime,
           backupFileSize: bytesToMB(size),
         };
-        console.log('backupFileMeta in action ', backupFileMeta);
         return {
           ...context,
           fileMeta: backupFileMeta,
@@ -199,6 +196,16 @@ export const backupMachine = model.createMachine(
             context.serviceRefs.store,
           );
           return context.serviceRefs.store;
+        },
+      }),
+
+      setBackupErrorReason: model.assign({
+        errorReason: (_context, event) => {
+          const reasons = {
+            [TECHNICAL_ERROR]: 'technicalError',
+            [NETWORK_REQUEST_FAILED]: 'networkError',
+          };
+          return reasons[event.data] || reasons[TECHNICAL_ERROR];
         },
       }),
 
@@ -292,10 +299,13 @@ export function selectIsBackingUp(state: State) {
 export function selectIsBackingUpSuccess(state: State) {
   return state.matches('backingUp.success');
 }
-export function selectIsBackingUpSFailure(state: State) {
+export function selectIsBackingUpFailure(state: State) {
   return state.matches('backingUp.failure');
 }
 export function selectBackupFileMeta(state: State) {
   return state.context.fileMeta;
+}
+export function selectBackupErrorReason(state: State) {
+  return state.context.errorReason;
 }
 type State = StateFrom<typeof backupMachine>;

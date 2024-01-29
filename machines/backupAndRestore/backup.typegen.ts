@@ -49,6 +49,7 @@ export interface Typegen0 {
       | 'error.platform.backup.backingUp.zipBackupFile:invocation[0]';
     sendDataBackupStartEvent: 'DATA_BACKUP' | 'FETCH_DATA';
     sendDataBackupSuccessEvent: 'done.invoke.backup.backingUp.uploadBackupFile:invocation[0]';
+    setBackupErrorReason: 'error.platform.backup.backingUp.uploadBackupFile:invocation[0]';
     setDataFromStorage: 'STORE_RESPONSE';
     setFileName: 'FILE_NAME';
   };

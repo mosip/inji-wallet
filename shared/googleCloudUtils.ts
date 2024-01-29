@@ -4,9 +4,10 @@ import {
 } from '@react-native-google-signin/google-signin';
 import {CloudStorage, CloudStorageScope} from 'react-native-cloud-storage';
 import {GOOGLE_ANDROID_CLIENT_ID} from 'react-native-dotenv';
-import {request} from './request';
 import {readFile} from 'react-native-fs';
+import {NETWORK_REQUEST_FAILED} from './constants';
 import {zipFilePath} from './fileStorage';
+import {request} from './request';
 
 class Cloud {
   static status = {
@@ -112,10 +113,14 @@ class Cloud {
   static async uploadBackupFileToDrive(
     fileName: string,
     retryCounter: number,
+    error: string | undefined = undefined,
   ): Promise<string> {
-    if (retryCounter < 0) return Promise.reject('failure');
+    if (retryCounter < 0 || error === NETWORK_REQUEST_FAILED) {
+      return Promise.reject(error);
+    }
 
     const cloudFileName = `/${fileName}.zip`;
+    let uploadError: string | undefined = undefined;
 
     try {
       const tokenResult = await Cloud.getAccessToken();
@@ -129,23 +134,32 @@ class Cloud {
         fileContent,
         CloudStorageScope.AppData,
       );
+      const isFileUploaded = await CloudStorage.exists(
+        cloudFileName,
+        CloudStorageScope.AppData,
+      );
+
+      if (isFileUploaded) {
+        await this.removeOldDriveBackupFiles(cloudFileName);
+        return Promise.resolve(Cloud.status.SUCCESS);
+      }
     } catch (error) {
       console.log(
         `Error occurred while cloud upload.. retrying ${retryCounter} : Error : ${error}`,
       );
+      if (
+        error.toString() === 'Error: NetworkError' ||
+        error.toString() === ' Error: NetworkError'
+      ) {
+        uploadError = NETWORK_REQUEST_FAILED;
+      }
     }
 
-    const isFileUploaded = await CloudStorage.exists(
-      cloudFileName,
-      CloudStorageScope.AppData,
+    return this.uploadBackupFileToDrive(
+      fileName,
+      retryCounter - 1,
+      uploadError,
     );
-
-    if (isFileUploaded) {
-      console.log('file is there'); // remove
-      await this.removeOldDriveBackupFiles(cloudFileName);
-      return Promise.resolve('success');
-    }
-    return this.uploadBackupFileToDrive(fileName, retryCounter - 1);
   }
   static async downloadLatestBackup(): Promise<string | null> {
     const allFiles = await CloudStorage.readdir(`/`, CloudStorageScope.AppData);

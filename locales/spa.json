@@ -589,7 +589,10 @@
   },
   "BackupAndRestoreBanner": {
     "backupSuccessful": "¡Su copia de seguridad fue exitosa!",
-    "backupFailure": "Debido a <Conexión inestable>, no pudimos realizar la copia de seguridad de los datos. Vuelve a intentarlo más tarde."
+    "backupFailure": {
+      "networkError": "Debido a Conexión inestable, no pudimos realizar la copia de seguridad de los datos. Vuelve a intentarlo más tarde.",
+      "technicalError": "Debido a un error técnico, no pudimos realizar una copia de seguridad de los datos. Por favor, inténtelo de nuevo más tarde."
+    }
   },
   "AccountSelection" :{
     "backupProcessInfo" : "Estás a solo unos pasos de hacer una copia de seguridad de tus datos",

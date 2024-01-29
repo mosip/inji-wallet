@@ -4,9 +4,10 @@ import {
   BackupEvents,
   selectIsBackingUp,
   selectIsBackingUpSuccess,
-  selectIsBackingUpSFailure,
+  selectIsBackingUpFailure,
   selectIsBackupInprogress,
   selectBackupFileMeta,
+  selectBackupErrorReason,
 } from '../../machines/backupAndRestore/backup';
 import {GlobalContext} from '../../shared/GlobalContext';
 
@@ -16,9 +17,10 @@ export function useBackupScreen() {
 
   return {
     backupFileMeta: useSelector(backupService, selectBackupFileMeta),
+    backupErrorReason: useSelector(backupService, selectBackupErrorReason),
     isBackingUp: useSelector(backupService, selectIsBackingUp),
     isBackingUpSuccess: useSelector(backupService, selectIsBackingUpSuccess),
-    isBackingUpFailure: useSelector(backupService, selectIsBackingUpSFailure),
+    isBackingUpFailure: useSelector(backupService, selectIsBackingUpFailure),
     isBackupInProgress: useSelector(backupService, selectIsBackupInprogress),
     DATA_BACKUP: () => {
       backupService.send(BackupEvents.DATA_BACKUP());

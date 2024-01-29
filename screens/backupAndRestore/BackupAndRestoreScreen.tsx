@@ -13,6 +13,7 @@ import {Theme} from '../../components/ui/styleUtils';
 import {SvgImage} from '../../components/ui/svg';
 import {ProfileInfo} from '../../shared/googleCloudUtils';
 import {useBackupScreen} from './BackupController';
+import {BackupAndRestoreAllScreenBanner} from '../../components/BackupAndRestoreAllScreenBanner';
 
 const BackupAndRestoreScreen: React.FC<BackupAndRestoreProps> = props => {
   const backupController = useBackupScreen();
@@ -146,22 +147,16 @@ const BackupAndRestoreScreen: React.FC<BackupAndRestoreProps> = props => {
         arrowLeft={true}
         // TODO: on backpress dont stop the backup progress
         onDismiss={props.onBackPress}>
-        {backupController.isBackingUpSuccess && (
-          <BannerNotification
-            message={t('successBanner')}
-            onClosePress={backupController.DISMISS}
-            testId="backupSuccessToast"
-            customStyle={{zIndex: 1000}}
-          />
-        )}
+        <BackupAndRestoreAllScreenBanner />
         <View
           style={{
             backgroundColor: Theme.Colors.lightGreyBackgroundColor,
             flex: 1,
           }}>
           {props.isLoading ? (
-            // TODO: Show Loader animation in center of screen
-            <LoaderAnimation />
+            <Column fill align="center" crossAlign="center">
+              <LoaderAnimation />
+            </Column>
           ) : (
             <React.Fragment>
               {LastBackupSection}

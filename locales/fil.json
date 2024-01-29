@@ -594,7 +594,10 @@
   },
   "BackupAndRestoreBanner": {
     "backupSuccessful": "Ang iyong backup ay matagumpay!",
-    "backupFailure": "Dahil sa <Hindi Matatag na Koneksyon>, hindi namin nagawang isagawa ang pag-backup ng data. Pakisubukang muli sa ibang pagkakataon."
+    "backupFailure": {
+      "networkError": "Dahil sa Hindi Matatag na Koneksyon, hindi namin nagawang isagawa ang pag-backup ng data. Pakisubukang muli sa ibang pagkakataon.",
+      "technicalError": "Dahil sa Technical Error, hindi namin nagawang magsagawa ng pag-backup ng data. Subukang muli mamaya."
+    }
   },
   "AccountSelection" :{
     "backupProcessInfo" : "Ilang hakbang ka na lang mula sa pag-back up ng iyong data",
