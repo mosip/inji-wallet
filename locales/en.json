@@ -593,6 +593,10 @@
       "permissionErrorMessage": "We noticed that you've cancelled the creation of data backup settings. We strongly recommend revisiting the data backup settings to ensure your data availability. Click “Configure Settings” to set up data backup now, or “Cancel” to go back to settings screen."
     }
   },  
+  "BackupAndRestoreBanner": {
+    "backupSuccessful": "Your backup was successful!",
+    "backupFailure": "Due to <Unstable Connection>, we were unable to perform data backup. Please try again later."
+  },
   "AccountSelection" :{
     "backupProcessInfo" : "You’re just a few steps away from backing up your data",
     "cloudInfo" : "To initiate the data backup, please tap on the “Proceed” button to link your Google Drive with Inji.",

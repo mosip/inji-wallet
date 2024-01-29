@@ -592,6 +592,10 @@
       "permissionErrorMessage": "Napansin namin na kinansela mo ang paggawa ng mga setting ng backup ng data. Lubos naming inirerekumenda na muling bisitahin ang mga setting ng pag-back up ng data upang matiyak ang availability ng iyong data. I-click ang `I-configure ang Mga Setting` upang i-set up ang pag-backup ng data ngayon, o `Kanselahin` upang bumalik sa screen ng mga setting."
     }
   },
+  "BackupAndRestoreBanner": {
+    "backupSuccessful": "Ang iyong backup ay matagumpay!",
+    "backupFailure": "Dahil sa <Hindi Matatag na Koneksyon>, hindi namin nagawang isagawa ang pag-backup ng data. Pakisubukang muli sa ibang pagkakataon."
+  },
   "AccountSelection" :{
     "backupProcessInfo" : "Ilang hakbang ka na lang mula sa pag-back up ng iyong data",
     "cloudInfo" : "Upang simulan ang pag-backup ng data, mangyaring mag-tap sa button na `Magpatuloy` upang i-link ang iyong Google Drive sa Inji.",

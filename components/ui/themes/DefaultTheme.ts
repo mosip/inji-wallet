@@ -218,6 +218,13 @@ export const DefaultTheme = {
       position: 'relative',
       paddingHorizontal: 12,
     },
+    backupRestoreBanner: {
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      height: 39,
+      position: 'relative',
+      paddingHorizontal: 12,
+    },
     dataBackupFailure: {
       justifyContent: 'space-between',
       backgroundColor: Colors.Red,

@@ -2,14 +2,17 @@ import React from 'react';
 import {useBackupScreen} from '../screens/backupAndRestore/BackupController';
 import {BannerNotification} from './BannerNotification';
 import {Theme} from './ui/styleUtils';
+import {useTranslation} from 'react-i18next';
 
 export const BackupAndRestoreAllScreenBanner: React.FC = () => {
   const backUpController = useBackupScreen();
+  const {t} = useTranslation('BackupAndRestoreBanner');
+
   return (
     <>
       {backUpController.isBackingUpSuccess && (
         <BannerNotification
-          message={'Your backup was successful!'}
+          message={t('backupSuccessful')}
           onClosePress={backUpController.DISMISS}
           testId={'dataBackupSuccess'}
           customStyle={Theme.Styles.dataBackupSuccess}
@@ -18,9 +21,7 @@ export const BackupAndRestoreAllScreenBanner: React.FC = () => {
 
       {backUpController.isBackingUpFailure && (
         <BannerNotification
-          message={
-            'Due to <Unstable Connection>, we were unable to perform data backup. Please try again later.'
-          }
+          message={t('backupFailure')}
           onClosePress={backUpController.DISMISS}
           testId={'dataBackupFailure'}
           customStyle={Theme.Styles.dataBackupFailure}

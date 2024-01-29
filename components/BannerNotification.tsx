@@ -8,7 +8,12 @@ import testIDProps from '../shared/commonUtil';
 export const BannerNotification: React.FC<BannerNotificationProps> = props => {
   return (
     <View {...testIDProps(props.testId)} style={props.customStyle}>
-      <Row style={!props.customStyle && Theme.Styles.downloadingVcPopUp}>
+      <Row
+        style={
+          props.customStyle
+            ? Theme.Styles.backupRestoreBanner
+            : Theme.Styles.downloadingVcPopUp
+        }>
         <Text color={Theme.Colors.whiteText} weight="semibold" size="smaller">
           {props.message}
         </Text>
