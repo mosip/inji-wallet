@@ -28,13 +28,7 @@ const BackupAndRestoreScreen: React.FC<BackupAndRestoreProps> = props => {
       <Row>
         <View style={{marginBottom: 19}}>
           {backupController.isBackupInProgress ? (
-            <Text
-              style={{
-                fontFamily: 'Inter',
-                fontWeight: 'normal',
-                fontSize: 14,
-                color: Theme.Colors.helpText,
-              }}>
+            <Text style={Theme.BackupAndRestoreStyles.backupProgressText}>
               You can still use the application while data backup is in
               progress. Closing the app will terminate the data backup process.
             </Text>
@@ -56,13 +50,7 @@ const BackupAndRestoreScreen: React.FC<BackupAndRestoreProps> = props => {
               </Row>
             </View>
           ) : (
-            <Text
-              style={{
-                fontFamily: 'Inter',
-                fontWeight: 'normal',
-                fontSize: 14,
-                color: Theme.Colors.helpText,
-              }}>
+            <Text style={Theme.BackupAndRestoreStyles.backupProgressText}>
               {backupController.isBackupInProgress
                 ? 'You can still use the application while data backup is in progress. Closing the app will terminate the data backup process.'
                 : 'Backup your Data to Google Drive. You can restore them when you reinstall INJI.'}
@@ -95,13 +83,7 @@ const BackupAndRestoreScreen: React.FC<BackupAndRestoreProps> = props => {
       headerText={'Google Drive Settings'}
       headerIcon={SvgImage.GoogleDriveIcon(28, 25)}>
       <View style={{marginBottom: 19}}>
-        <Text
-          style={{
-            fontFamily: 'Inter',
-            fontWeight: 'normal',
-            fontSize: 14,
-            color: Theme.Colors.helpText,
-          }}>
+        <Text style={Theme.BackupAndRestoreStyles.backupProgressText}>
           The backup will be stored in the Google Drive associated to your
           chosen gmail account.
         </Text>
@@ -117,13 +99,7 @@ const BackupAndRestoreScreen: React.FC<BackupAndRestoreProps> = props => {
     <SectionLayout headerText="Restore" headerIcon={SvgImage.RestoreIcon()}>
       <Row>
         <View style={{marginBottom: 19}}>
-          <Text
-            style={{
-              fontFamily: 'Inter',
-              fontWeight: 'normal',
-              fontSize: 14,
-              color: Theme.Colors.helpText,
-            }}>
+          <Text style={Theme.BackupAndRestoreStyles.backupProgressText}>
             Restore your data from Google Drive
           </Text>
         </View>

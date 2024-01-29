@@ -1056,6 +1056,31 @@ export const DefaultTheme = {
       height: Dimensions.get('screen').height,
     },
   }),
+  BackupAndRestoreStyles: StyleSheet.create({
+    backupProgressText: {
+      fontFamily: 'Inter',
+      fontWeight: 'normal',
+      fontSize: 14,
+      color: Colors.Gray44,
+    },
+    backupProcessInfo: {
+      fontWeight: 'bold',
+      paddingHorizontal: 20,
+      textAlign: 'center',
+    },
+    cloudInfo: {
+      paddingHorizontal: 20,
+      textAlign: 'center',
+      paddingVertical: 15,
+    },
+    cloudLabel: {
+      fontWeight: 'medium',
+      paddingHorizontal: 10,
+      textAlign: 'center',
+      paddingTop: 15,
+      fontFamily: 'inter',
+    },
+  }),
   TextEditOverlayStyles: StyleSheet.create({
     overlay: {
       elevation: 5,
