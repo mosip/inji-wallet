@@ -10,6 +10,15 @@ import {Modal} from './Modal';
 
 export const Error: React.FC<ErrorProps> = props => {
   const {t} = useTranslation('common');
+  const tryAgainButtonProps = {
+    type: props.goBackButtonVisible ? 'gradient' : 'outline',
+    onPress: props.tryAgain,
+    title: t(props.tryAgainButtonTranslationKey),
+    testID: props.tryAgainButtonTranslationKey,
+  };
+  if (!props.goBackButtonVisible) {
+    tryAgainButtonProps['width'] = Dimensions.get('screen').width * 0.54;
+  }
 
   const errorContent = () => {
     return (
@@ -30,21 +39,13 @@ export const Error: React.FC<ErrorProps> = props => {
             </Text>
           )}
         </View>
-        {props.tryAgain && (
-          <Button
-            onPress={props.tryAgain}
-            width={Dimensions.get('screen').width * 0.54}
-            title={t(props.tryAgainButtonTranslationKey)}
-            type="outline"
-            testID={props.tryAgainButtonTranslationKey}
-          />
-        )}
+        {props.tryAgain && <Button {...tryAgainButtonProps} />}
         {props.goBackButtonVisible && (
           <Button
             onPress={props.goBack}
             width={Dimensions.get('screen').width * 0.54}
             title={t('goBack')}
-            type="outline"
+            type="clear"
             testID="goBack"
           />
         )}

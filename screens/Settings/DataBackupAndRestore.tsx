@@ -48,7 +48,7 @@ export const DataBackupAndRestore: React.FC = ({} = () => {
           isVisible={controller.isSigningInFailed}
           title={t('errors.permissionErrorTitle')}
           message={t('errors.permissionErrorMessage')}
-          image={SvgImage.NoInternetConnection()}
+          image={SvgImage.PermissionDenied()}
           goBack={controller.GO_BACK}
           goBackButtonVisible
           tryAgain={controller.TRY_AGAIN}
