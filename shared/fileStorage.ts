@@ -71,16 +71,19 @@ export const getFilePath = (key: string) => {
   return `${vcDirectoryPath}/${key}.txt`;
 };
 
-export const getBackupFilePath = (key: string) => {
-  return `${backupDirectoryPath}/${key}.injibackup`;
+export const getBackupFilePath = (
+  key: string,
+  extension: string = '.injibackup',
+) => {
+  return `${backupDirectoryPath}/${key}${extension}`;
 };
 
 export async function compressAndRemoveFile(
-  fileName: string,
+  fileNameSansExtension: string,
 ): Promise<StatResult> {
-  const result = await compressFile(fileName);
-  await removeFile(fileName);
-  const backupFileMeta = await new FileStorage().getInfo(result);
+  const compressedFilePath = await compressFile(fileNameSansExtension);
+  await removeFile(fileNameSansExtension);
+  const backupFileMeta = await new FileStorage().getInfo(compressedFilePath);
   return backupFileMeta;
 }
 
@@ -98,8 +101,9 @@ async function unzipFile(fileName: string): Promise<string> {
   return await RNZipArchive.unzip(zipFilePath(fileName), backupDirectoryPath);
 }
 
-async function removeFile(fileName: string) {
-  await new FileStorage().removeItem(getBackupFilePath(fileName));
+async function removeFile(fileName: string, extension: string = '.injibackup') {
+  const file = getBackupFilePath(fileName, extension);
+  await new FileStorage().removeItem(file);
 }
 
 export async function getDirectorySize(path: string) {
@@ -119,7 +123,10 @@ export async function writeToBackupFile(data): Promise<string> {
   const fileName = getBackupFileName();
   const isDirectoryExists = await exists(backupDirectoryPath);
   if (isDirectoryExists) {
-    await removeFile(backupDirectoryPath);
+    //remove old backup
+    const [availableBackupFile] =
+      await new FileStorage().getAllFilesInDirectory(backupDirectoryPath);
+    await removeFile(availableBackupFile.name, '');
   }
   // TODO: create dir using a named instance of FileStorage later
   await new FileStorage().createDirectory(backupDirectoryPath);
