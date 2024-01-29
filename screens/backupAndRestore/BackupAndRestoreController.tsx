@@ -5,6 +5,7 @@ import {
   BackupAndRestoreEvents,
   backupAndRestoreMachine,
   selectIsLoading,
+  selectIsNetworkOff,
   selectIsSigningIn,
   selectIsSigningFailure as selectIsSigningInFailure,
   selectIsSigningInSuccessful,
@@ -26,6 +27,7 @@ export function useBackupAndRestore() {
   return {
     isLoading: useSelector(service, selectIsLoading),
     profileInfo: useSelector(service, selectProfileInfo),
+    isNetworkOff: useSelector(service, selectIsNetworkOff),
 
     showAccountSelectionConfirmation: useSelector(
       service,
@@ -41,5 +43,6 @@ export function useBackupAndRestore() {
       service.send(BackupAndRestoreEvents.PROCEED()),
     GO_BACK: () => service.send(BackupAndRestoreEvents.GO_BACK()),
     TRY_AGAIN: () => service.send(BackupAndRestoreEvents.TRY_AGAIN()),
+    DISMISS: () => service.send(BackupAndRestoreEvents.DISMISS()),
   };
 }

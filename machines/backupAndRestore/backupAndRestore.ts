@@ -6,11 +6,14 @@ import Cloud, {
   SignInResult,
   isSignedInResult,
 } from '../../shared/googleCloudUtils';
+import NetInfo from '@react-native-community/netinfo';
+import {ErrorMessage} from '../../shared/openId4VCI/Utils';
 
 const model = createModel(
   {
     isLoading: false as boolean,
     profileInfo: undefined as ProfileInfo | undefined,
+    errorMessage: '' as string,
   },
   {
     events: {
@@ -18,6 +21,7 @@ const model = createModel(
       PROCEED: () => ({}),
       GO_BACK: () => ({}),
       TRY_AGAIN: () => ({}),
+      DISMISS: () => ({}),
     },
   },
 );
@@ -63,11 +67,41 @@ export const backupAndRestoreMachine = model.createMachine(
       selectCloudAccount: {
         on: {
           PROCEED: {
-            target: 'signIn',
+            target: 'checkInternet',
           },
           GO_BACK: 'init',
         },
         states: {},
+      },
+      checkInternet: {
+        invoke: {
+          src: 'checkInternet',
+          onDone: [
+            {
+              cond: 'isInternetConnected',
+              target: 'signIn',
+            },
+            {
+              actions: ['setNoInternet'],
+              target: 'noInternet',
+            },
+          ],
+          onError: {
+            actions: () =>
+              console.log('Error Occurred while checking Internet'),
+            target: 'noInternet',
+          },
+        },
+      },
+      noInternet: {
+        on: {
+          TRY_AGAIN: {
+            target: 'checkInternet',
+          },
+          DISMISS: {
+            target: 'init',
+          },
+        },
       },
       signIn: {
         id: 'signIn',
@@ -111,9 +145,13 @@ export const backupAndRestoreMachine = model.createMachine(
       setProfileInfo: model.assign({
         profileInfo: (_context, event) => event.data.profileInfo,
       }),
+      setNoInternet: model.assign({
+        errorMessage: () => ErrorMessage.NO_INTERNET,
+      }),
     },
 
     services: {
+      checkInternet: async () => await NetInfo.fetch(),
       isUserSignedAlready: () => async () => {
         return await Cloud.isSignedInAlready();
       },
@@ -123,6 +161,7 @@ export const backupAndRestoreMachine = model.createMachine(
     },
 
     guards: {
+      isInternetConnected: (_, event) => event.data.isConnected,
       isSignedIn: (_context, event) =>
         (event.data as isSignedInResult).isSignedIn,
       isSignInSuccessful: (_context, event) =>
@@ -142,6 +181,10 @@ export function selectIsLoading(state: State) {
 
 export function selectProfileInfo(state: State) {
   return state.context.profileInfo;
+}
+
+export function selectIsNetworkOff(state: State) {
+  return state.matches('noInternet');
 }
 
 export function selectShowAccountSelectionConfirmation(state: State) {

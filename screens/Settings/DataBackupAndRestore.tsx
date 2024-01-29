@@ -63,6 +63,19 @@ export const DataBackupAndRestore: React.FC = ({} = () => {
         />
       )}
 
+      {controller.isNetworkOff && (
+        <Error
+          testID={`networkOffError`}
+          isVisible={controller.isNetworkOff}
+          isModal={true}
+          title={t('errors.noInternetConnection.title')}
+          message={t('errors.noInternetConnection.message')}
+          onDismiss={controller.DISMISS}
+          tryAgain={controller.TRY_AGAIN}
+          image={SvgImage.NoInternetConnection()}
+        />
+      )}
+
       {(controller.isSigningIn || controller.isSigningInSuccessful) && (
         <BackupAndRestoreScreen
           profileInfo={controller.profileInfo}
@@ -72,9 +85,7 @@ export const DataBackupAndRestore: React.FC = ({} = () => {
       )}
       {controller.isLoading && (
         <Modal isVisible showClose={false}>
-          <Loader
-            title={t('loadingTitle')}
-            subTitle={t('loadingSubtitle')}></Loader>
+          <Loader title={t('loadingSubtitle')}></Loader>
         </Modal>
       )}
 
