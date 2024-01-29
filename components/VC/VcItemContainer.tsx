@@ -10,6 +10,5 @@ import {VCCardView} from './Views/VCCardView';
 export const VcItemContainer: React.FC<
   ExistingMosipVCItemProps | EsignetMosipVCItemProps
 > = props => {
-  if (CARD_TEMPLATIZATION === 'true') return <VCCardView {...props} />;
-  return <MosipVCItem {...props} />;
+  return <VCCardView {...props} />;
 };

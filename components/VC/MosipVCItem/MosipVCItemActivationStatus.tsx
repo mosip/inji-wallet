@@ -1,10 +1,7 @@
 import React from 'react';
-import {useTranslation} from 'react-i18next';
 import {Icon} from 'react-native-elements';
 import {VerifiableCredential} from '../../../types/VC/ExistingMosipVC/vc';
-import {Row, Text} from '../../ui';
 import {Theme} from '../../ui/styleUtils';
-import {View} from 'react-native';
 
 const WalletUnverifiedIcon: React.FC = () => {
   return (
@@ -14,8 +11,7 @@ const WalletUnverifiedIcon: React.FC = () => {
       size={Theme.ICON_MID_SIZE}
       type="material-community"
       containerStyle={{
-        marginEnd: 5,
-        bottom: 1,
+        marginLeft: 10,
       }}
     />
   );
@@ -28,95 +24,29 @@ const WalletVerifiedIcon: React.FC = () => {
       color={Theme.Colors.VerifiedIcon}
       size={Theme.ICON_MID_SIZE}
       containerStyle={{
-        marginEnd: 5,
-        bottom: 1,
+        marginLeft: 10,
       }}
     />
   );
 };
 
-const WalletUnverifiedActivationDetails: React.FC<
-  WalletUnVerifiedDetailsProps
+export const MiniCardViewActivationStatus: React.FC<
+  ExistingMiniCardViewActivationStatusProps
 > = props => {
-  const {t} = useTranslation('VcDetails');
   return (
-    <Row style={Theme.Styles.vcActivationDetailsWrapper}>
-      <View style={{flex: 1, alignSelf: 'center', justifyContent: 'center'}}>
-        {props.verifiableCredential && <WalletUnverifiedIcon />}
-      </View>
-      <View style={{flex: 4}}>
-        <Text
-          color={Theme.Colors.Details}
-          testID="activationPending"
-          weight="regular"
-          style={
-            !props.verifiableCredential
-              ? Theme.Styles.loadingTitle
-              : Theme.Styles.statusLabel
-          }
-          children={t('offlineAuthDisabledHeader')}></Text>
-      </View>
-    </Row>
+    <>
+      {props.verifiableCredential ? (
+        props.emptyWalletBindingId ? (
+          <WalletUnverifiedIcon />
+        ) : (
+          <WalletVerifiedIcon />
+        )
+      ) : null}
+    </>
   );
 };
 
-const WalletVerifiedActivationDetails: React.FC<
-  WalletVerifiedDetailsProps
-> = props => {
-  const {t} = useTranslation('WalletBinding');
-  return (
-    <Row style={Theme.Styles.vcActivationDetailsWrapper}>
-      <View style={{flex: 1, alignSelf: 'center', justifyContent: 'center'}}>
-        <WalletVerifiedIcon />
-      </View>
-      <View style={{flex: 4}}>
-        <Text
-          color={Theme.Colors.statusLabel}
-          testID="activated"
-          weight="regular"
-          size="smaller"
-          margin="0 0 0 5"
-          style={
-            !props.verifiableCredential
-              ? Theme.Styles.loadingTitle
-              : Theme.Styles.statusLabel
-          }
-          children={t('profileAuthenticated')}></Text>
-      </View>
-    </Row>
-  );
-};
-
-export const MosipVCItemActivationStatus: React.FC<
-  ExistingMosipVCItemActivationStatusProps
-> = props => {
-  return (
-    <Row style={Theme.Styles.vcActivationStatusContainer}>
-      {props.emptyWalletBindingId ? (
-        <WalletUnverifiedActivationDetails
-          verifiableCredential={props.verifiableCredential}
-        />
-      ) : (
-        <WalletVerifiedActivationDetails
-          verifiableCredential={props.verifiableCredential}
-          showOnlyBindedVc={props.showOnlyBindedVc}
-        />
-      )}
-    </Row>
-  );
-};
-
-interface ExistingMosipVCItemActivationStatusProps {
-  showOnlyBindedVc: boolean;
+interface ExistingMiniCardViewActivationStatusProps {
   verifiableCredential: VerifiableCredential;
   emptyWalletBindingId: boolean;
-}
-
-interface WalletVerifiedDetailsProps {
-  showOnlyBindedVc: boolean;
-  verifiableCredential: VerifiableCredential;
-}
-
-interface WalletUnVerifiedDetailsProps {
-  verifiableCredential: VerifiableCredential;
 }

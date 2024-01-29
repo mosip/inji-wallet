@@ -8,7 +8,7 @@ import {
 import {ErrorMessageOverlay} from '../../MessageOverlay';
 import {Theme} from '../../ui/styleUtils';
 import {MosipVCItemContent} from './MosipVCItemContent';
-import {MosipVCItemActivationStatus} from './MosipVCItemActivationStatus';
+import {MiniCardViewActivationStatus} from './MosipVCItemActivationStatus';
 import {Row} from '../../ui';
 import {KebabPopUp} from '../../KebabPopUp';
 import {VCMetadata} from '../../../shared/VCMetadata';
@@ -68,11 +68,9 @@ export const MosipVCItem: React.FC<
         <View style={Theme.Styles.horizontalLine} />
         {props.isSharingVc ? null : (
           <Row style={Theme.Styles.activationTab}>
-            <MosipVCItemActivationStatus
-              vcMetadata={props.vcMetadata}
+            <MiniCardViewActivationStatus
               verifiableCredential={verifiableCredential}
               emptyWalletBindingId={emptyWalletBindingId}
-              showOnlyBindedVc={props.showOnlyBindedVc}
             />
             <Row style={Theme.Styles.verticalLineWrapper}>
               <View style={Theme.Styles.verticalLine} />
@@ -110,12 +108,11 @@ export interface ExistingMosipVCItemProps {
   margin?: string;
   selectable?: boolean;
   selected?: boolean;
-  showOnlyBindedVc?: boolean;
   onPress?: (vcRef?: ActorRefFrom<typeof ExistingMosipVCItemMachine>) => void;
   onShow?: (vcRef?: ActorRefFrom<typeof ExistingMosipVCItemMachine>) => void;
-  isSharingVc?: boolean;
   isDownloading?: boolean;
   isPinned?: boolean;
+  flow?: string;
 }
 
 export interface EsignetMosipVCItemProps {
@@ -123,10 +120,9 @@ export interface EsignetMosipVCItemProps {
   margin?: string;
   selectable?: boolean;
   selected?: boolean;
-  showOnlyBindedVc?: boolean;
   onPress?: (vcRef?: ActorRefFrom<typeof EsignetMosipVCItemMachine>) => void;
   onShow?: (vcRef?: ActorRefFrom<typeof EsignetMosipVCItemMachine>) => void;
-  isSharingVc?: boolean;
   isDownloading?: boolean;
   isPinned?: boolean;
+  flow?: string;
 }

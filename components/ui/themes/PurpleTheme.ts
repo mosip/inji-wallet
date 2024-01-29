@@ -166,12 +166,10 @@ export const PurpleTheme = {
       height: '100%',
     },
     kebabPressableContainer: {
-      display: 'flex',
-      flexDirection: 'row',
-      width: '100%',
       height: '100%',
-      justifyContent: 'center',
       alignItems: 'center',
+      justifyContent: 'center',
+      width: '15%',
     },
     verifiedIconContainer: {
       marginRight: 3,
@@ -373,13 +371,13 @@ export const PurpleTheme = {
       height: 173.276,
     },
     logo: {
-      width: 40,
-      height: 40,
+      height: 35,
+      width: 35,
     },
     issuerLogo: {
       resizeMode: 'contain',
       aspectRatio: 1,
-      height: 60,
+      height: 35,
     },
     vcDetailsLogo: {
       width: 50,
@@ -450,12 +448,13 @@ export const PurpleTheme = {
     },
     faceImage: {
       borderRadius: 10,
-      height: 96,
-      width: 88,
+      height: 53,
+      width: 40,
     },
     closeCardImage: {
-      width: 88,
-      height: 96,
+      width: 40,
+      height: 53,
+      borderRadius: 100,
     },
     openCardImage: {
       width: 100,

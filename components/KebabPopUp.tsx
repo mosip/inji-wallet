@@ -25,7 +25,7 @@ export const KebabPopUp: React.FC<KebabPopUpProps> = props => {
         accessible={true}
         name={props.iconName}
         type={props.iconType}
-        color={Theme.Colors.GrayIcon}
+        {...(props.iconColor ? props.iconColor : Theme.Colors.helpText)}
         size={Theme.ICON_SMALL_SIZE}
       />
       <Overlay
@@ -111,4 +111,5 @@ export interface KebabPopUpProps {
   isVisible: boolean;
   onDismiss: () => void;
   service: ActorRefFrom<typeof ExistingMosipVCItemMachine>;
+  iconColor?: any;
 }

@@ -137,4 +137,6 @@ fileignoreconfig:
     checksum: 4d155c6e5468effb0b82e62f6878f2bd7ff7e7c9540e16bdd28cb81b80672ac3 
   - filename: .github/workflows/push-triggers.yml
     checksum: 4a031b46646aa982c8f40e4c7fe0bd3e05a76a6af1ff1c2de7350ba6ebf9a839 
+  - filename: components/VC/Views/VCCardViewContent.tsx
+    checksum: c54dadf8bec1cb7ca42325d37d38554bcbca6efdb464c3291d53fc7d84965a8d
     version: ""

@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {Pressable, View} from 'react-native';
+import {Pressable} from 'react-native';
 import {ActorRefFrom} from 'xstate';
 import {
   ExistingMosipVCItemEvents,
@@ -7,15 +7,12 @@ import {
 } from '../../../machines/VCItemMachine/ExistingMosipVCItem/ExistingMosipVCItemMachine';
 import {ErrorMessageOverlay} from '../../MessageOverlay';
 import {Theme} from '../../ui/styleUtils';
-import {Row} from '../../ui';
-import {KebabPopUp} from '../../KebabPopUp';
 import {VCMetadata} from '../../../shared/VCMetadata';
 import {format} from 'date-fns';
 import {EsignetMosipVCItemMachine} from '../../../machines/VCItemMachine/EsignetMosipVCItem/EsignetMosipVCItemMachine';
 
 import {VCCardSkeleton} from '../common/VCCardSkeleton';
 import {VCCardViewContent} from './VCCardViewContent';
-import {MosipVCItemActivationStatus} from '../MosipVCItem/MosipVCItemActivationStatus';
 import {useVcItemController} from '../MosipVCItem/VcItemController';
 import {getCredentialIssuersWellKnownConfig} from '../../../shared/openId4VCI/Utils';
 import {
@@ -65,7 +62,7 @@ export const VCCardView: React.FC<
       CARD_VIEW_DEFAULT_FIELDS,
     ).then(response => {
       setWellknown(response.wellknown);
-      setFields(response.fields.slice(0, 1).concat(CARD_VIEW_ADD_ON_FIELDS));
+      setFields(response.fields);
     });
   }, [verifiableCredential?.wellKnown]);
 
@@ -88,6 +85,7 @@ export const VCCardView: React.FC<
           vcMetadata={props.vcMetadata}
           context={context}
           verifiableCredential={verifiableCredential}
+          emptyWalletBindingId={emptyWalletBindingId}
           credential={credential}
           fields={fields}
           wellknown={wellknown}
@@ -98,36 +96,11 @@ export const VCCardView: React.FC<
           isPinned={props.isPinned}
           onPress={() => props.onPress(service)}
           isDownloading={props.isDownloading}
+          flow={props.flow}
+          isKebabPopUp={isKebabPopUp}
+          DISMISS={DISMISS}
+          KEBAB_POPUP={KEBAB_POPUP}
         />
-        <View style={Theme.Styles.horizontalLine} />
-        {props.isSharingVc ? null : (
-          <Row style={Theme.Styles.activationTab}>
-            <MosipVCItemActivationStatus
-              vcMetadata={props.vcMetadata}
-              verifiableCredential={verifiableCredential}
-              emptyWalletBindingId={emptyWalletBindingId}
-              showOnlyBindedVc={props.showOnlyBindedVc}
-            />
-            <Row style={Theme.Styles.verticalLineWrapper}>
-              <View style={Theme.Styles.verticalLine} />
-            </Row>
-            <Row style={Theme.Styles.kebabIcon}>
-              <Pressable
-                onPress={KEBAB_POPUP}
-                accessible={false}
-                style={Theme.Styles.kebabPressableContainer}>
-                <KebabPopUp
-                  vcMetadata={props.vcMetadata}
-                  iconName="dots-three-horizontal"
-                  iconType="entypo"
-                  isVisible={isKebabPopUp}
-                  onDismiss={DISMISS}
-                  service={service}
-                />
-              </Pressable>
-            </Row>
-          </Row>
-        )}
       </Pressable>
       <ErrorMessageOverlay
         isVisible={isSavingFailedInIdle}
@@ -144,12 +117,11 @@ export interface ExistingMosipVCItemProps {
   margin?: string;
   selectable?: boolean;
   selected?: boolean;
-  showOnlyBindedVc?: boolean;
   onPress?: (vcRef?: ActorRefFrom<typeof ExistingMosipVCItemMachine>) => void;
   onShow?: (vcRef?: ActorRefFrom<typeof ExistingMosipVCItemMachine>) => void;
-  isSharingVc?: boolean;
   isDownloading?: boolean;
   isPinned?: boolean;
+  flow?: string;
 }
 
 export interface EsignetMosipVCItemProps {
@@ -157,10 +129,9 @@ export interface EsignetMosipVCItemProps {
   margin?: string;
   selectable?: boolean;
   selected?: boolean;
-  showOnlyBindedVc?: boolean;
   onPress?: (vcRef?: ActorRefFrom<typeof EsignetMosipVCItemMachine>) => void;
   onShow?: (vcRef?: ActorRefFrom<typeof EsignetMosipVCItemMachine>) => void;
-  isSharingVc?: boolean;
   isDownloading?: boolean;
   isPinned?: boolean;
+  flow?: string;
 }
