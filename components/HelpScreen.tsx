@@ -5,7 +5,7 @@ import {Modal} from './ui/Modal';
 import {ScrollView} from 'react-native-gesture-handler';
 import {Column, Text} from './ui';
 import {Theme} from './ui/styleUtils';
-import {DataBackupAllScreenBanner} from './DataBackupAllScreenBanner';
+import {BackupAndRestoreAllScreenBanner} from './BackupAndRestoreAllScreenBanner';
 
 export const HelpScreen: React.FC<HelpScreenProps> = props => {
   const {t} = useTranslation('HelpScreen');
@@ -29,7 +29,7 @@ export const HelpScreen: React.FC<HelpScreenProps> = props => {
         onDismiss={() => {
           setShowHelpPage(!showHelpPage);
         }}>
-        <DataBackupAllScreenBanner />
+        <BackupAndRestoreAllScreenBanner />
         <ScrollView>
           <Column fill padding="10" align="space-between">
             <Text margin="7" style={Theme.TextStyles.header}>

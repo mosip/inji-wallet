@@ -110,10 +110,7 @@ const BackupAndRestoreScreen: React.FC<BackupAndRestoreProps> = props => {
       <Row>
         <View style={{marginBottom: 19}}>
           <Text style={Theme.BackupAndRestoreStyles.backupProgressText}>
-            {t('restoreInfo')}
-            {false
-              ? 'We’re restoring your data, please do not close the application. This might take upto <X> minutes based on your data.'
-              : t('restoreInfo')}
+            {false ? t('restoreInProgress') : t('restoreInfo')}
           </Text>
         </View>
       </Row>

@@ -12,7 +12,7 @@ import {useNavigation, NavigationProp} from '@react-navigation/native';
 import {MainBottomTabParamList} from '../../routes/main';
 import {BOTTOM_TAB_ROUTES} from '../../routes/routesConstants';
 import {isIOS} from '../../shared/constants';
-import {DataBackupAllScreenBanner} from '../../components/DataBackupAllScreenBanner';
+import {BackupAndRestoreAllScreenBanner} from '../../components/BackupAndRestoreAllScreenBanner';
 
 export const ScanScreen: React.FC = () => {
   type ScanScreenNavigation = NavigationProp<MainBottomTabParamList>;
@@ -217,7 +217,7 @@ export const ScanScreen: React.FC = () => {
       fill
       padding="24 0"
       backgroundColor={Theme.Colors.whiteBackgroundColor}>
-      <DataBackupAllScreenBanner />
+      <BackupAndRestoreAllScreenBanner />
       <Centered
         align="space-evenly"
         backgroundColor={Theme.Colors.whiteBackgroundColor}>

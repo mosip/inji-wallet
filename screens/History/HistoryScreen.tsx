@@ -7,7 +7,7 @@ import {useHistoryTab} from './HistoryScreenController';
 import {ActivityLogText} from '../../components/ActivityLogText';
 import {MainRouteProps} from '../../routes/main';
 import {Theme} from '../../components/ui/styleUtils';
-import {DataBackupAllScreenBanner} from '../../components/DataBackupAllScreenBanner';
+import {BackupAndRestoreAllScreenBanner} from '../../components/BackupAndRestoreAllScreenBanner';
 
 export const HistoryScreen: React.FC<MainRouteProps> = () => {
   const {t} = useTranslation('HistoryScreen');
@@ -24,7 +24,7 @@ export const HistoryScreen: React.FC<MainRouteProps> = () => {
             onRefresh={controller.REFRESH}
           />
         }>
-        <DataBackupAllScreenBanner />
+        <BackupAndRestoreAllScreenBanner />
         {controller.activities.map(activity => (
           <ActivityLogText
             key={`${activity.timestamp}-${activity._vcKey}`}

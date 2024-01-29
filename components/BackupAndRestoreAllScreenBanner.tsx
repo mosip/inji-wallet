@@ -3,13 +3,12 @@ import {useBackupScreen} from '../screens/backupAndRestore/BackupController';
 import {BannerNotification} from './BannerNotification';
 import {Theme} from './ui/styleUtils';
 
-export const DataBackupAllScreenBanner: React.FC = () => {
+export const BackupAndRestoreAllScreenBanner: React.FC = () => {
   const backUpController = useBackupScreen();
   return (
     <>
       {backUpController.isBackingUpSuccess && (
         <BannerNotification
-          isBackup={true}
           message={'Your backup was successful!'}
           onClosePress={backUpController.DISMISS}
           testId={'dataBackupSuccess'}
@@ -19,7 +18,6 @@ export const DataBackupAllScreenBanner: React.FC = () => {
 
       {backUpController.isBackingUpFailure && (
         <BannerNotification
-          isBackup={true}
           message={
             'Due to <Unstable Connection>, we were unable to perform data backup. Please try again later.'
           }
