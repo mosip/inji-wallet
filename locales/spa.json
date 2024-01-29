@@ -593,7 +593,24 @@
     "googleDriveTitle": "Google Drive",
     "loadingSubtitle": "Cargando...",
     "proceed": "Proceder",
-    "goBack": "Regresa"
+    "goBack": "Regresa",
+    "associatedAccount" : "Cuenta asociada"
+  },
+  "BackupAndRestore":{
+    "title": "Copia de seguridad y restauración",
+    "backupProgressState": "Copia de seguridad en progreso...",
+    "lastBackupDetails": "Detalles de la última copia de seguridad",
+    "backupInProgress": "Aún puedes usar la aplicación mientras se realiza la copia de seguridad de los datos. Cerrar la aplicación finalizará el proceso de copia de seguridad de los datos.",
+    "noBackup": "Haga una copia de seguridad de sus datos en Google Drive. Puede restaurarlos cuando reinstale INJI.",
+    "storage": "La copia de seguridad se almacenará en Google Drive asociado a su cuenta de Gmail elegida.",
+    "backup": "Copia de seguridad",
+    "size": "Tamaño: ",
+    "restore": "Restaurar",
+    "restoreInfo": "Restaura tus datos desde Google Drive",
+    "driveSettings": "Configuración de Google Drive",
+    "successBanner": "¡Su copia de seguridad fue exitosa!",
+    "backupFailed": "Copia de seguridad fallida",
+    "ok": "bien"
   },
   "SetupLanguage": {
     "header": "Elige lengua",

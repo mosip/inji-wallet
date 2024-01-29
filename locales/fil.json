@@ -598,7 +598,24 @@
     "googleDriveTitle": "Google Drive",
     "loadingSubtitle": "Naglo-load...",
     "proceed": "Magpatuloy",
-    "goBack": "Bumalik ka"
+    "goBack": "Bumalik ka",
+    "associatedAccount" : "Kaugnay na account"
+  },
+  "BackupAndRestore":{
+    "title": "Backup at Restore",
+    "backupProgressState": "Isinasagawa ang pag-backup...",
+    "lastBackupDetails": "Mga Detalye ng Huling Backup",
+    "backupInProgress": "Maaari mo pa ring gamitin ang application habang isinasagawa ang pag-backup ng data. Ang pagsasara ng app ay magwawakas sa proseso ng pag-backup ng data.",
+    "noBackup": "I-backup ang iyong Data sa Google Drive. Maaari mong ibalik ang mga ito kapag na-install mong muli ang INJI.",
+    "storage": "Ang backup ay maiimbak sa Google Drive na nauugnay sa iyong napiling gmail account.",
+    "backup": "Backup",
+    "size": "Size: ",
+    "restore": "Ibalik",
+    "restoreInfo": "Ibalik ang iyong data mula sa Google Drive",
+    "driveSettings": "Mga Setting ng Google Drive",
+    "successBanner": "Ang iyong backup ay matagumpay!",
+    "backupFailed": "Nabigo ang pag-backup",
+    "ok": "OK"
   },
   "WelcomeScreen": {
     "title": "Open Source Identity Solution",
