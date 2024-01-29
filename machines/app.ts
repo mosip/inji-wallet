@@ -26,6 +26,10 @@ import {
 } from '../shared/constants';
 import {logState} from '../shared/commonUtil';
 import {backupMachine, createBackupMachine} from './backup';
+import {
+  backupRestoreMachine,
+  createBackupRestoreMachine,
+} from './backupRestore';
 
 const model = createModel(
   {
@@ -266,6 +270,11 @@ export const appMachine = model.createMachine(
             backupMachine.id,
           );
 
+          serviceRefs.backupRestore = spawn(
+            createBackupRestoreMachine(serviceRefs),
+            backupRestoreMachine.id,
+          );
+
           serviceRefs.activityLog = spawn(
             createActivityLogMachine(serviceRefs),
             activityLogMachine.id,
@@ -300,6 +309,7 @@ export const appMachine = model.createMachine(
           context.serviceRefs.activityLog.subscribe(logState);
           context.serviceRefs.scan.subscribe(logState);
           context.serviceRefs.backup.subscribe(logState);
+          context.serviceRefs.backupRestore.subscribe(logState);
 
           if (isAndroid()) {
             context.serviceRefs.request.subscribe(logState);

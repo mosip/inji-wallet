@@ -2,10 +2,8 @@ import {EventFrom, StateFrom, send} from 'xstate';
 import {createModel} from 'xstate/lib/model';
 import {AppServices} from '../shared/GlobalContext';
 import {StoreEvents} from './store';
-import Storage, {
-  isMinimumLimitForBackupReached,
-  writeToBackupFile,
-} from '../shared/storage';
+import {isMinimumLimitForBackupReached} from '../shared/storage';
+import {writeToBackupFile} from '../shared/fileStorage';
 import {compressAndRemoveFile} from '../shared/fileStorage';
 import {
   getEndEventData,
