@@ -25,6 +25,7 @@ const Colors = {
   DimGray: '#737373',
   platinumGrey: '#EDEDED',
   Orange: '#F2811D',
+  Blue: '#0000FF',
   LightGrey: '#F7F7F7',
   ShadeOfGrey: '#6F6F6F',
   mediumDarkGrey: '#7B7B7B',
@@ -128,6 +129,7 @@ export const DefaultTheme = {
     warningLogoBgColor: Colors.warningLogoBg,
     tooltipIcon: Colors.toolTip,
     toolTipPointerColor: Colors.toolTipPointer,
+    urlLink: Colors.Blue,
   },
   Styles: StyleSheet.create({
     title: {

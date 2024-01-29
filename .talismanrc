@@ -159,4 +159,8 @@ fileignoreconfig:
     checksum: 451e8873a635d955fe426d9a5fcf191f2d4fd74984a1a4518760e2d10e9e1817
   - filename: screens/Settings/BackupController.tsx
     checksum: daf682b5616e45bd7b9a7c76becc617fea56be83124c3c4db838c2046e977481
+  - filename: locales/en.json
+    checksum: e87723f4bb733fa3d95cc0d4f3831ecaa8310975c177af4f4c73c35b69fa025e
+  - filename: locales/fil.json
+    checksum: 9b3aa32c09ab18c29bfd5fdbe822e1bda511627a887f8f232c52959d2170c3d3
     version: ""

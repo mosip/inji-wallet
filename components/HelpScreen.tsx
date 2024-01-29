@@ -1,15 +1,35 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {useTranslation} from 'react-i18next';
-import {Pressable} from 'react-native';
+import {Linking, Pressable} from 'react-native';
 import {Modal} from './ui/Modal';
 import {ScrollView} from 'react-native-gesture-handler';
 import {Column, Text} from './ui';
 import {Theme} from './ui/styleUtils';
+import getAllConfigurations from '../shared/commonprops/commonProps';
 
 export const HelpScreen: React.FC<HelpScreenProps> = props => {
   const {t} = useTranslation('HelpScreen');
 
   const [showHelpPage, setShowHelpPage] = useState(false);
+  const [hereUrl, setHereUrl] = useState('');
+
+  useEffect(() => {
+    getAllConfigurations().then(response => {
+      setHereUrl(response.aboutInjiUrl);
+    });
+  }, []);
+
+  const here = () => {
+    return (
+      <Text
+        style={{color: Theme.Colors.urlLink, fontFamily: 'Inter_600SemiBold'}}
+        onPress={() => {
+          hereUrl && Linking.openURL(hereUrl);
+        }}>
+        {t('here')}
+      </Text>
+    );
+  };
 
   return (
     <React.Fragment>
@@ -41,7 +61,10 @@ export const HelpScreen: React.FC<HelpScreenProps> = props => {
             <Text margin="7" style={Theme.TextStyles.header}>
               {t('howToAddCard?')}
             </Text>
-            <Text style={Theme.TextStyles.helpDetails}>{t('detail-3')}</Text>
+            <Text style={Theme.TextStyles.helpDetails}>
+              {t('detail-3')}
+              {here()}
+            </Text>
             <Text margin="7" style={Theme.TextStyles.header}>
               {t('howToRemoveCardFromWallet?')}
             </Text>
@@ -66,6 +89,38 @@ export const HelpScreen: React.FC<HelpScreenProps> = props => {
               {t('whatCanDoBiometricsChanged?')}
             </Text>
             <Text style={Theme.TextStyles.helpDetails}>{t('detail-9')}</Text>
+            <Text margin="7" style={Theme.TextStyles.header}>
+              {t('whatIsAndId?')}
+            </Text>
+            <Text style={Theme.TextStyles.helpDetails}>{t('detail-10')}</Text>
+            <Text margin="7" style={Theme.TextStyles.header}>
+              {t('whatAreDifferentTypesOfId?')}
+            </Text>
+            <Text style={Theme.TextStyles.helpDetails}>
+              {t('detail-11')}
+              {here()}
+            </Text>
+            <Text margin="7" style={Theme.TextStyles.header}>
+              {t('whereCanIFindTheseIs?')}
+            </Text>
+            <Text style={Theme.TextStyles.helpDetails}>{t('detail-12a')}</Text>
+            <Text style={Theme.TextStyles.helpDetails}>{t('detail-12b')}</Text>
+            <Text style={Theme.TextStyles.helpDetails}>{t('detail-12c')}</Text>
+            <Text margin="7" style={Theme.TextStyles.header}>
+              {t('whyDoesMyVcSayActivationIsPending?')}
+            </Text>
+            <Text style={Theme.TextStyles.helpDetails}>
+              {t('detail-13')}
+              {here()}
+            </Text>
+            <Text margin="7" style={Theme.TextStyles.header}>
+              {t('whatDoYouMeanByActivatedForOnlineLogin?')}
+            </Text>
+            <Text style={Theme.TextStyles.helpDetails}>
+              {t('detail-14a')}
+              {here()}
+            </Text>
+            <Text style={Theme.TextStyles.helpDetails}>{t('detail-14b')}</Text>
           </Column>
         </ScrollView>
       </Modal>
