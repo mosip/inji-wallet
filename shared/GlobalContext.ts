@@ -9,7 +9,7 @@ import {settingsMachine} from '../machines/settings';
 import {storeMachine} from '../machines/store';
 import {vcMachine} from '../machines/vc';
 import {revokeVidsMachine} from '../machines/revoke';
-import {backupMachine} from '../machines/backup';
+import {backupMachine} from '../machines/backupAndRestore/backup';
 
 export const GlobalContext = createContext({} as GlobalServices);
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import {useBackupScreen} from '../screens/Settings/BackupController';
+import {useBackupScreen} from '../screens/backupAndRestore/BackupController';
 import {BannerNotification} from './BannerNotification';
 import {Theme} from './ui/styleUtils';
 

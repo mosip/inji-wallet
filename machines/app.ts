@@ -25,7 +25,7 @@ import {
   SETTINGS_STORE_KEY,
 } from '../shared/constants';
 import {logState} from '../shared/commonUtil';
-import {backupMachine, createBackupMachine} from './backup';
+import {backupMachine, createBackupMachine} from './backupAndRestore/backup';
 
 const model = createModel(
   {

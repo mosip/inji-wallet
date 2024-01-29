@@ -1,11 +1,11 @@
 import {EventFrom, StateFrom} from 'xstate';
 import {createModel} from 'xstate/lib/model';
-import {AppServices} from '../shared/GlobalContext';
+import {AppServices} from '../../shared/GlobalContext';
 import Cloud, {
   ProfileInfo,
   SignInResult,
   isSignedInResult,
-} from '../shared/googleCloudUtils';
+} from '../../shared/googleCloudUtils';
 
 const model = createModel(
   {

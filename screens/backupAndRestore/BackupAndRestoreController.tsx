@@ -10,7 +10,7 @@ import {
   selectIsSigningInSuccessful,
   selectProfileInfo,
   selectShowAccountSelectionConfirmation,
-} from '../../machines/backupAndRestore';
+} from '../../machines/backupAndRestore/backupAndRestore';
 // import { logState } from '../../shared/commonUtil';
 
 export function useBackupAndRestore() {

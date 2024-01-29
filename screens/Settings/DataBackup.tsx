@@ -7,9 +7,9 @@ import {Loader} from '../../components/ui/Loader';
 import {Modal} from '../../components/ui/Modal';
 import {Theme} from '../../components/ui/styleUtils';
 import {SvgImage} from '../../components/ui/svg';
-import {AccountSelection} from './AccountSelection';
-import {useBackupAndRestore} from './BackupAndRestoreController';
-import BackupAndRestoreScreen from './BackupAndRestoreScreen';
+import {AccountSelectionConfirmation} from '../backupAndRestore/AccountSelectionConfirmation';
+import {useBackupAndRestore} from '../backupAndRestore/BackupAndRestoreController';
+import BackupAndRestoreScreen from '../backupAndRestore/BackupAndRestoreScreen';
 import {useTranslation} from 'react-i18next';
 
 export const DataBackup: React.FC = ({} = () => {
@@ -73,7 +73,7 @@ export const DataBackup: React.FC = ({} = () => {
       )}
 
       {controller.showAccountSelectionConfirmation && (
-        <AccountSelection
+        <AccountSelectionConfirmation
           isVisible={controller.showAccountSelectionConfirmation}
           onProceed={controller.PROCEED_ACCOUNT_SELECTION}
           goBack={controller.GO_BACK}

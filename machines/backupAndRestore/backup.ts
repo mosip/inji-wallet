@@ -1,14 +1,12 @@
 import {EventFrom, StateFrom, send} from 'xstate';
 import {createModel} from 'xstate/lib/model';
-import {AppServices} from '../shared/GlobalContext';
-import {StoreEvents} from './store';
+import {AppServices} from '../../shared/GlobalContext';
+import {StoreEvents} from '../store';
 import {
   isMinimumLimitForBackupReached,
   writeToBackupFile,
-} from '../shared/storage';
-import {
-  compressAndRemoveFile,
-} from '../shared/fileStorage';
+} from '../../shared/storage';
+import {compressAndRemoveFile} from '../../shared/fileStorage';
 import {
   getEndEventData,
   getImpressionEventData,
@@ -16,12 +14,12 @@ import {
   sendEndEvent,
   sendImpressionEvent,
   sendStartEvent,
-} from '../shared/telemetry/TelemetryUtils';
-import {TelemetryConstants} from '../shared/telemetry/TelemetryConstants';
-import Cloud from "../shared/googleCloudUtils";
-import {UPLOAD_MAX_RETRY} from "../shared/constants";
-import {bytesToMB} from '../shared/commonUtil';
-import {BackupFileMeta} from '../types/backup-and-restore/backup';
+} from '../../shared/telemetry/TelemetryUtils';
+import {TelemetryConstants} from '../../shared/telemetry/TelemetryConstants';
+import Cloud from '../../shared/googleCloudUtils';
+import {UPLOAD_MAX_RETRY} from '../../shared/constants';
+import {bytesToMB} from '../../shared/commonUtil';
+import {BackupFileMeta} from '../../types/backup-and-restore/backup';
 
 const model = createModel(
   {
@@ -115,8 +113,8 @@ export const backupMachine = model.createMachine(
             invoke: {
               src: 'zipBackupFile',
               onDone: {
-                  actions: 'extractBackupSuccessMetaData',
-                  target: 'uploadBackupFile',
+                actions: 'extractBackupSuccessMetaData',
+                target: 'uploadBackupFile',
               },
               onError: {
                 target: 'failure',
@@ -180,7 +178,7 @@ export const backupMachine = model.createMachine(
       }),
 
       extractBackupSuccessMetaData: model.assign((context, event) => {
-        console.log("event in action")
+        console.log('event in action');
         const {ctime: creationTime, size} = event.data;
         const backupFileMeta = {
           backupCreationTime: creationTime,
@@ -243,7 +241,10 @@ export const backupMachine = model.createMachine(
         return result;
       },
       uploadBackupFile: context => async () => {
-        const result = await Cloud.uploadBackupFileToDrive(context.fileName,UPLOAD_MAX_RETRY);
+        const result = await Cloud.uploadBackupFileToDrive(
+          context.fileName,
+          UPLOAD_MAX_RETRY,
+        );
         return result;
       },
     },

@@ -11,10 +11,10 @@ import {
 import {Modal} from '../../components/ui/Modal';
 import {Theme} from '../../components/ui/styleUtils';
 import {SvgImage} from '../../components/ui/svg';
-import {useBackupScreen} from './BackupController';
 
-export const AccountSelection: React.FC<AccountSelectionProps> = props => {
-  const controller = useBackupScreen(props);
+export const AccountSelectionConfirmation: React.FC<
+  AccountSelectionConfirmationProps
+> = props => {
   const {t} = useTranslation('AccountSelection');
 
   return (
@@ -62,7 +62,7 @@ export const AccountSelection: React.FC<AccountSelectionProps> = props => {
   );
 };
 
-interface AccountSelectionProps {
+interface AccountSelectionConfirmationProps {
   goBack: () => void;
   isVisible: boolean;
   onProceed: () => void;
