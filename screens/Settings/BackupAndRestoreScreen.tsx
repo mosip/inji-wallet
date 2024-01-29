@@ -43,9 +43,6 @@ const BackupAndRestoreScreen: React.FC<BackupAndRestoreProps> = props => {
                     <Timestamp
                       time={backupController.backupFileMeta.backupCreationTime}
                     />
-                    <Text>
-                      {t('size}')}
-                      {backupController.backupFileMeta.backupFileSize}MB
                     <Text
                       style={{
                         fontFamily: 'helvetica-neue-regular',
@@ -54,7 +51,8 @@ const BackupAndRestoreScreen: React.FC<BackupAndRestoreProps> = props => {
                         color: '#707070',
                         lineHeight: 14,
                       }}>
-                      Size: {backupController.backupFileMeta.backupFileSize}MB
+                      {t('size}')}
+                      {backupController.backupFileMeta.backupFileSize}MB
                     </Text>
                   </Column>
                 )}
@@ -115,18 +113,10 @@ const BackupAndRestoreScreen: React.FC<BackupAndRestoreProps> = props => {
             {t('restoreInfo')}
             {false
               ? 'We’re restoring your data, please do not close the application. This might take upto <X> minutes based on your data.'
-              : 'Restore your data from Google Drive'}
+              : t('restoreInfo')}
           </Text>
         </View>
       </Row>
-      <Row style={{marginLeft: 4, marginRight: 4}}>
-        <Button
-          testID="backup"
-          type="outline"
-          title={t('restore')}
-          onPress={() => {}}
-          styles={{...Theme.MessageOverlayStyles.button, marginTop: 10}}
-        />
       <Row style={{marginLeft: 1, marginRight: 1}}>
         {/* TODO: Change false to restoreInProgress */}
         {false ? (
@@ -135,7 +125,7 @@ const BackupAndRestoreScreen: React.FC<BackupAndRestoreProps> = props => {
           <Button
             testID="backup"
             type="outline"
-            title={'Restore'}
+            title={t('restore')}
             onPress={() => {}}
             styles={{...Theme.MessageOverlayStyles.button, marginTop: 10}}
           />

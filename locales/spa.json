@@ -606,6 +606,7 @@
     "backup": "Copia de seguridad",
     "size": "Tamaño: ",
     "restore": "Restaurar",
+    "restoreInProgress": "Estamos restaurando tus datos, no cierres la aplicación. Esto puede tardar hasta <X> minutos según tus datos.",
     "restoreInfo": "Restaura tus datos desde Google Drive",
     "driveSettings": "Configuración de Google Drive",
     "successBanner": "¡Su copia de seguridad fue exitosa!",

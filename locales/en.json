@@ -612,6 +612,7 @@
     "backup": "Backup",
     "size": "Size: ",
     "restore": "Restore",
+    "restoreInProgress": "We’re restoring your data, please do not close the application. This might take upto <X> minutes based on your data.",
     "restoreInfo": "Restore your data from Google Drive",
     "driveSettings": "Google Drive Settings",
     "successBanner": "Your backup was successful!",
