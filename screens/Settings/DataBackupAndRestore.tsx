@@ -1,6 +1,7 @@
 import React from 'react';
+import {useTranslation} from 'react-i18next';
 import {Pressable} from 'react-native';
-import {ListItem} from 'react-native-elements';
+import {Icon, ListItem} from 'react-native-elements';
 import {Row, Text} from '../../components/ui';
 import {Error} from '../../components/ui/Error';
 import {Loader} from '../../components/ui/Loader';
@@ -10,7 +11,6 @@ import {SvgImage} from '../../components/ui/svg';
 import {AccountSelectionConfirmation} from '../backupAndRestore/AccountSelectionConfirmation';
 import {useBackupAndRestore} from '../backupAndRestore/BackupAndRestoreController';
 import BackupAndRestoreScreen from '../backupAndRestore/BackupAndRestoreScreen';
-import {useTranslation} from 'react-i18next';
 
 export const DataBackupAndRestore: React.FC = ({} = () => {
   const controller = useBackupAndRestore();
@@ -38,6 +38,12 @@ export const DataBackupAndRestore: React.FC = ({} = () => {
               </Row>
             </ListItem.Title>
           </ListItem.Content>
+          <Icon
+            name="chevron-right"
+            size={21}
+            color={Theme.Colors.chevronRightColor}
+            style={{marginRight: 15}}
+          />
         </ListItem>
       </Pressable>
 
