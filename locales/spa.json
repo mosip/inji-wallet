@@ -88,6 +88,8 @@
     "title": "Mas opciones",
     "unPinCard": "Desanclar tarjeta",
     "pinCard": "Tarjeta PIN",
+    "share": "Compartir",
+    "shareWithSelfie": "Compartir con selfie",
     "offlineAuthenticationDisabled!": "Activación pendiente para iniciar sesión en línea",
     "offlineAuthDisabledMessage": "Haga clic aquí para permitir que estas credenciales se utilicen para la autenticación en línea.",
     "viewActivityLog": "Ver registro de actividad",

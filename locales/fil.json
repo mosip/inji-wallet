@@ -87,6 +87,8 @@
     "title": "Higit pang mga Opsyon",
     "unPinCard": "I-unpin ang Card",
     "pinCard": "Pin Card",
+    "share": "Ibahagi",
+    "shareWithSelfie": "Ibahagi sa Selfie",
     "offlineAuthenticationDisabled!": "Nakabinbin ang pag-activate para sa online na pag-login",
     "offlineAuthDisabledMessage": "Mag-click dito upang paganahin ang mga kredensyal na ito na magamit para sa online na pagpapatotoo.",
     "viewActivityLog": "Tingnan ang log ng aktibidad",

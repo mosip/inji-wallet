@@ -1,3 +1,4 @@
+import React from 'react';
 import {Icon, ListItem, Overlay} from 'react-native-elements';
 import {Theme} from '../components/ui/styleUtils';
 import {Column, Row, Text} from '../components/ui';
@@ -12,6 +13,7 @@ import {RemoveVcWarningOverlay} from '../screens/Home/MyVcs/RemoveVcWarningOverl
 import {ScrollView} from 'react-native-gesture-handler';
 import {VCMetadata} from '../shared/VCMetadata';
 import testIDProps from '../shared/commonUtil';
+import {ShareVc} from '../screens/Home/Kebab/ShareVc';
 
 export const KebabPopUp: React.FC<KebabPopUpProps> = props => {
   const controller = useKebabPopUp(props);
@@ -55,7 +57,16 @@ export const KebabPopUp: React.FC<KebabPopUpProps> = props => {
               </ListItem.Title>
             </ListItem.Content>
           </ListItem>
-
+          <ShareVc
+            testID="shareVcFromKebab"
+            label={t('share')}
+            service={props.service}
+          />
+          <ShareVc
+            testID="shareVcWithSelfieFromKebab"
+            label={t('shareWithSelfie')}
+            service={props.service}
+          />
           <WalletBinding
             label={t('offlineAuthenticationDisabled!')}
             content={t('offlineAuthDisabledMessage')}

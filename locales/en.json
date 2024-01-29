@@ -88,6 +88,8 @@
     "title": "More Options",
     "unPinCard": "Unpin Card",
     "pinCard": "Pin Card",
+    "share": "Share",
+    "shareWithSelfie": "Share with Selfie",
     "offlineAuthenticationDisabled!": "Activation pending for online login",
     "offlineAuthDisabledMessage": "Click here to enable this credentials to be used for online authentication.",
     "viewActivityLog": "View Activity Log",
