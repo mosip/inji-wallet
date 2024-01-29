@@ -559,7 +559,7 @@ export const PurpleTheme = {
     },
     idInputContainer: {
       marginTop: 20,
-      marginRight: Dimensions.get('window').width * 0.26,
+      width: Dimensions.get('window').width * 0.86,
     },
     idInputPicker: {
       width: Dimensions.get('window').width * 0.32,
