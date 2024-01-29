@@ -1,23 +1,55 @@
 import React, {Fragment} from 'react';
+import {useTranslation} from 'react-i18next';
 import {View} from 'react-native';
-import {Icon} from 'react-native-elements';
+import {AccountInformation} from '../../components/AccountInformation';
+import {BannerNotification} from '../../components/BannerNotification';
+import {MessageOverlay} from '../../components/MessageOverlay';
+import {SectionLayout} from '../../components/SectionLayout';
 import {Button, Centered, Column, Row, Text} from '../../components/ui';
 import {LoaderAnimation} from '../../components/ui/LoaderAnimation';
 import {Modal} from '../../components/ui/Modal';
+import {Timestamp} from '../../components/ui/Timestamp';
 import {Theme} from '../../components/ui/styleUtils';
 import {SvgImage} from '../../components/ui/svg';
-import {useBackupScreen} from './BackupController';
-import {MessageOverlay} from '../../components/MessageOverlay';
-import {BannerNotification} from '../../components/BannerNotification';
-import {SectionLayout} from '../../components/SectionLayout';
-import {AccountInformation} from '../../components/AccountInformation';
 import {ProfileInfo} from '../../shared/googleCloudUtils';
-import {Timestamp} from '../../components/ui/Timestamp';
-import {useTranslation} from 'react-i18next';
+import {useBackupScreen} from './BackupController';
 
 const BackupAndRestoreScreen: React.FC<BackupAndRestoreProps> = props => {
   const backupController = useBackupScreen();
   const {t} = useTranslation('BackupAndRestore');
+
+  const Loading = (
+    <Centered fill>
+      <LoaderAnimation showLogo={false} />
+    </Centered>
+  );
+
+  function LastBackupDetails(): React.ReactNode {
+    return (
+      <View>
+        <Row>
+          <Column>{SvgImage.CloudUploadDoneIcon()}</Column>
+          {backupController.backupFileMeta && (
+            <Column margin={'0 0 0 9'} align="center">
+              <Timestamp
+                time={backupController.backupFileMeta.backupCreationTime}
+              />
+              <Text
+                style={{
+                  fontFamily: 'helvetica-neue-regular',
+                  fontWeight: 'normal',
+                  fontSize: 12,
+                  color: '#707070',
+                  lineHeight: 14,
+                }}>
+                Size: {backupController.backupFileMeta.backupFileSize}MB
+              </Text>
+            </Column>
+          )}
+        </Row>
+      </View>
+    );
+  }
 
   const LastBackupSection = (
     <SectionLayout
@@ -34,30 +66,7 @@ const BackupAndRestoreScreen: React.FC<BackupAndRestoreProps> = props => {
               {t('backupInProgress')}
             </Text>
           ) : backupController.isBackingUpSuccess ? (
-            <View>
-              <Row>
-                {/* TODO: Fix UI of backup success content to match mockup */}
-                <Column>{SvgImage.CloudUploadDoneIcon()}</Column>
-                {backupController.backupFileMeta && (
-                  <Column>
-                    <Timestamp
-                      time={backupController.backupFileMeta.backupCreationTime}
-                    />
-                    <Text
-                      style={{
-                        fontFamily: 'helvetica-neue-regular',
-                        fontWeight: 'normal',
-                        fontSize: 12,
-                        color: '#707070',
-                        lineHeight: 14,
-                      }}>
-                      {t('size}')}
-                      {backupController.backupFileMeta.backupFileSize}MB
-                    </Text>
-                  </Column>
-                )}
-              </Row>
-            </View>
+            LastBackupDetails()
           ) : (
             <Text style={Theme.BackupAndRestoreStyles.backupProgressText}>
               {backupController.isBackupInProgress
@@ -70,10 +79,7 @@ const BackupAndRestoreScreen: React.FC<BackupAndRestoreProps> = props => {
       <Row style={{marginLeft: 4, marginRight: 4}}>
         {/* TODO: Button is not occupying the space in larger screens */}
         {backupController.isBackupInProgress ? (
-          <Centered>
-            {/* // TODO: Show Loader animation in center */}
-            <LoaderAnimation showLogo={false} />
-          </Centered>
+          Loading
         ) : (
           <Button
             testID="backup"
@@ -117,7 +123,7 @@ const BackupAndRestoreScreen: React.FC<BackupAndRestoreProps> = props => {
       <Row style={{marginLeft: 1, marginRight: 1}}>
         {/* TODO: Change false to restoreInProgress */}
         {false ? (
-          <LoaderAnimation showLogo={false} />
+          Loading
         ) : (
           <Button
             testID="backup"
@@ -138,6 +144,7 @@ const BackupAndRestoreScreen: React.FC<BackupAndRestoreProps> = props => {
         headerTitle={t('title')}
         headerElevation={2}
         arrowLeft={true}
+        // TODO: on backpress dont stop the backup progress
         onDismiss={props.onBackPress}>
         {backupController.isBackingUpSuccess && (
           <BannerNotification

@@ -17,7 +17,7 @@ import {RequestRouteProps, RootRouteProps} from '../../routes';
 import {ReceivedCards} from './ReceivedCards';
 import testIDProps from '../../shared/commonUtil';
 import {SvgImage} from '../../components/ui/svg';
-import {DataBackup} from './DataBackup';
+import {DataBackupAndRestore} from './DataBackupAndRestore';
 import {isAndroid} from '../../shared/constants';
 import {BackupAndRestoreAllScreenBanner} from '../../components/BackupAndRestoreAllScreenBanner';
 
@@ -163,7 +163,7 @@ export const SettingScreen: React.FC<
 
             <AboutInji appId={controller.appId} />
 
-            {DATA_BACKUP === 'true' && isAndroid() && <DataBackup />}
+            {DATA_BACKUP === 'true' && isAndroid() && <DataBackupAndRestore />}
 
             {CREDENTIAL_REGISTRY_EDIT === 'true' && (
               <EditableListItem

@@ -12,7 +12,7 @@ import {useBackupAndRestore} from '../backupAndRestore/BackupAndRestoreControlle
 import BackupAndRestoreScreen from '../backupAndRestore/BackupAndRestoreScreen';
 import {useTranslation} from 'react-i18next';
 
-export const DataBackup: React.FC = ({} = () => {
+export const DataBackupAndRestore: React.FC = ({} = () => {
   const controller = useBackupAndRestore();
   const {t} = useTranslation('DataBackupScreen');
 
