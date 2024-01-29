@@ -34,7 +34,7 @@ export const Error: React.FC<ErrorProps> = props => {
             {props.message}
           </Text>
           {props.helpText && (
-            <Text style={Theme.ErrorStyles.message} testID="errorMessage">
+            <Text style={Theme.ErrorStyles.message} testID="errorHelpText">
               {props.helpText}
             </Text>
           )}

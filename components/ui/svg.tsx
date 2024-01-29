@@ -279,7 +279,13 @@ export class SvgImage {
   }
 
   static GoogleDriveIcon(width, height) {
-    return <GoogleDriveIcon width={width} height={height} />;
+    return (
+      <GoogleDriveIcon
+        width={width}
+        height={height}
+        {...testIDProps('googleDriveIcon')}
+      />
+    );
   }
 }
 

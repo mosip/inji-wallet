@@ -23,18 +23,19 @@ export const Timestamp: React.FC<TimestampProps> = props => {
     const day = date.getDate();
     const month = months[date.getMonth()];
     const year = date.getFullYear();
-    const hours = date.getHours();
-    const minutes = date.getMinutes();
+    const formattedHours = (date.getHours() % 12 || 12)
+      .toString()
+      .padStart(2, '0');
+    const formattedMinutes = date.getMinutes().toString().padStart(2, '0');
+    const period = date.getHours() >= 12 ? 'PM' : 'AM';
 
-    const period = hours >= 12 ? 'PM' : 'AM';
-    const formattedHours = hours % 12 || 12;
-
-    return `${day} ${month} ${year}, ${formattedHours}:${minutes} ${period}`;
+    return `${day} ${month} ${year}, ${formattedHours}:${formattedMinutes} ${period}`;
   }
 
   return (
     <View>
       <Text
+        testID={`${props.testId}Time`}
         size="regular"
         style={{
           fontFamily: 'Inter_500Medium',
@@ -50,5 +51,6 @@ export const Timestamp: React.FC<TimestampProps> = props => {
 };
 
 interface TimestampProps {
-  time: Date;
+  time: number;
+  testId: string;
 }

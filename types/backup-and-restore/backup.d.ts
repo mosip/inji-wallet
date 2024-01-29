@@ -1,4 +1,4 @@
-export interface BackupFileMeta {
-  backupCreationTime: Date;
+export interface BackupDetails {
+  backupCreationTime: number;
   backupFileSize: string;
 }

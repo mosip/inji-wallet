@@ -2,14 +2,17 @@ import React from 'react';
 import {View} from 'react-native';
 import {Column, Row, Text} from './ui';
 import {Theme} from './ui/styleUtils';
+import testIDProps from '../shared/commonUtil';
 
 export const SectionLayout: React.FC<SectionLayoutProps> = ({
   headerIcon,
   headerText,
   children,
+  testId,
 }) => {
   return (
     <View
+      {...testIDProps(testId)}
       style={{
         marginLeft: 18,
         marginRight: 18,
@@ -34,7 +37,8 @@ export const SectionLayout: React.FC<SectionLayoutProps> = ({
             fontSize: 14,
             letterSpacing: 0,
             lineHeight: 17,
-          }}>
+          }}
+          testID={`${testId}Header`}>
           {headerText}
         </Text>
       </Row>
@@ -55,4 +59,5 @@ export type SectionLayoutProps = {
   headerIcon: React.ReactNode;
   headerText: string;
   children: React.ReactNode;
+  testId: string;
 };

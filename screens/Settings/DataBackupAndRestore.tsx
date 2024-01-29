@@ -11,6 +11,7 @@ import {SvgImage} from '../../components/ui/svg';
 import {AccountSelectionConfirmation} from '../backupAndRestore/AccountSelectionConfirmation';
 import {useBackupAndRestore} from '../backupAndRestore/BackupAndRestoreController';
 import BackupAndRestoreScreen from '../backupAndRestore/BackupAndRestoreScreen';
+import testIDProps from '../../shared/commonUtil';
 
 export const DataBackupAndRestore: React.FC = ({} = () => {
   const controller = useBackupAndRestore();
@@ -25,12 +26,14 @@ export const DataBackupAndRestore: React.FC = ({} = () => {
             <ListItem.Title style={{paddingTop: 3}}>
               <Row>
                 <Text
+                  testID="dataBackupAndRestore"
                   weight="semibold"
                   color={Theme.Colors.settingsLabel}
                   style={{paddingRight: 10}}>
                   {t('dataBackupAndRestore')}
                 </Text>
                 <Text
+                  testID="newLabel"
                   style={Theme.BackupStyles.newStyles}
                   color={Theme.Colors.whiteText}>
                   {t('new')}
@@ -41,6 +44,7 @@ export const DataBackupAndRestore: React.FC = ({} = () => {
           <Icon
             name="chevron-right"
             size={21}
+            {...testIDProps('rightArrowIcon')}
             color={Theme.Colors.chevronRightColor}
             style={{marginRight: 15}}
           />

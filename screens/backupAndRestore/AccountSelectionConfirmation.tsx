@@ -30,12 +30,14 @@ export const AccountSelectionConfirmation: React.FC<
         <Column>
           <Text
             size="large"
-            style={Theme.BackupAndRestoreStyles.backupProcessInfo}>
+            style={Theme.BackupAndRestoreStyles.backupProcessInfo}
+            testID="backupProcessInfo">
             {t('backupProcessInfo')}
           </Text>
           <Text
             size="regular"
             color={Theme.Colors.GrayText}
+            testID="cloudInfo"
             style={Theme.BackupAndRestoreStyles.cloudInfo}>
             {t('cloudInfo')}
           </Text>
@@ -47,15 +49,27 @@ export const AccountSelectionConfirmation: React.FC<
           style={{paddingHorizontal: 120, paddingVertical: 50}}>
           <Row>
             {SvgImage.GoogleDriveIcon(45, 45)}
-            <Text style={Theme.BackupAndRestoreStyles.cloudLabel}>
+            <Text
+              style={Theme.BackupAndRestoreStyles.cloudLabel}
+              testID="googleDriveTitle">
               {t('googleDriveTitle')}
             </Text>
           </Row>
         </HorizontallyCentered>
 
         <Column fill align="flex-end" crossAlign="center">
-          <Button type="gradient" title={'Proceed'} onPress={props.onProceed} />
-          <Button type="clear" title={t('goBack')} onPress={props.goBack} />
+          <Button
+            type="gradient"
+            testID="proceed"
+            title={t('proceed')}
+            onPress={props.onProceed}
+          />
+          <Button
+            type="clear"
+            testID="goBack"
+            title={t('goBack')}
+            onPress={props.goBack}
+          />
         </Column>
       </Column>
     </Modal>

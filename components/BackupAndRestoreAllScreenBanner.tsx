@@ -9,15 +9,15 @@ export const BackupAndRestoreAllScreenBanner: React.FC = () => {
   const {t} = useTranslation('BackupAndRestoreBanner');
 
   function backupFailure() {
-    const translationPath = t(
+    const translation = t(
       `backupFailure.${backUpController.backupErrorReason}`,
     );
 
     return (
       <BannerNotification
-        message={translationPath}
+        message={translation}
         onClosePress={backUpController.DISMISS}
-        testId={'dataBackupFailure'}
+        testId={`backupFailure-${backUpController.backupErrorReason}`}
         customStyle={Theme.Styles.dataBackupFailure}
       />
     );

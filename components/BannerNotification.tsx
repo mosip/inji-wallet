@@ -18,7 +18,7 @@ export const BannerNotification: React.FC<BannerNotificationProps> = props => {
           {props.message}
         </Text>
         <Icon
-          testID="close"
+          {...testIDProps('close')}
           name="close"
           onPress={props.onClosePress}
           color={Theme.Colors.whiteText}

@@ -36,9 +36,11 @@ const BackupAndRestoreScreen: React.FC<BackupAndRestoreProps> = props => {
           {backupController.lastBackupDetails && (
             <Column margin={'0 0 0 9'} align="center">
               <Timestamp
+                testId="lastBackup"
                 time={backupController.lastBackupDetails.backupCreationTime}
               />
               <Text
+                testID="lastBackupSize"
                 style={{
                   fontFamily: 'helvetica-neue-regular',
                   fontWeight: 'normal',
@@ -57,6 +59,7 @@ const BackupAndRestoreScreen: React.FC<BackupAndRestoreProps> = props => {
 
   const LastBackupSection = (
     <SectionLayout
+      testId="LastBackupSection"
       headerText={
         backupController.isBackupInProgress
           ? t('backupProgressState')
@@ -66,13 +69,17 @@ const BackupAndRestoreScreen: React.FC<BackupAndRestoreProps> = props => {
       <Row>
         <View style={{marginBottom: 19}}>
           {backupController.isBackupInProgress ? (
-            <Text style={Theme.BackupAndRestoreStyles.backupProgressText}>
+            <Text
+              testID="backupInProgress"
+              style={Theme.BackupAndRestoreStyles.backupProgressText}>
               {t('backupInProgress')}
             </Text>
           ) : backupController.lastBackupDetails ? (
             LastBackupDetails()
           ) : (
-            <Text style={Theme.BackupAndRestoreStyles.backupProgressText}>
+            <Text
+              testID="noBackup"
+              style={Theme.BackupAndRestoreStyles.backupProgressText}>
               {t('noBackup')}
             </Text>
           )}
@@ -96,10 +103,13 @@ const BackupAndRestoreScreen: React.FC<BackupAndRestoreProps> = props => {
 
   const AccountSection = (
     <SectionLayout
+      testId="AccountSection"
       headerText={t('driveSettings')}
       headerIcon={SvgImage.GoogleDriveIcon(28, 25)}>
       <View style={{marginBottom: 19}}>
-        <Text style={Theme.BackupAndRestoreStyles.backupProgressText}>
+        <Text
+          testID="storageInfo"
+          style={Theme.BackupAndRestoreStyles.backupProgressText}>
           {t('storage')}
         </Text>
       </View>
@@ -112,11 +122,18 @@ const BackupAndRestoreScreen: React.FC<BackupAndRestoreProps> = props => {
 
   const RestoreSection = (
     <SectionLayout
+      testId="restoreSection"
       headerText={t('restore')}
       headerIcon={SvgImage.RestoreIcon()}>
       <Row>
         <View style={{marginBottom: 19}}>
-          <Text style={Theme.BackupAndRestoreStyles.backupProgressText}>
+          <Text
+            style={Theme.BackupAndRestoreStyles.backupProgressText}
+            testID={
+              restoreController.isBackUpRestoring
+                ? 'restoreInProgress'
+                : 'restoreInfo'
+            }>
             {restoreController.isBackUpRestoring
               ? t('restoreInProgress')
               : t('restoreInfo')}
@@ -128,7 +145,7 @@ const BackupAndRestoreScreen: React.FC<BackupAndRestoreProps> = props => {
           Loading
         ) : (
           <Button
-            testID="backup"
+            testID="restore"
             type="outline"
             title={t('restore')}
             onPress={restoreController.BACKUP_RESTORE}
@@ -143,6 +160,7 @@ const BackupAndRestoreScreen: React.FC<BackupAndRestoreProps> = props => {
     <Modal
       isVisible
       headerTitle={t('title')}
+      testID="backupAndRestore"
       headerElevation={2}
       arrowLeft={true}
       onDismiss={props.onBackPress}>

@@ -35,6 +35,8 @@ export const ACTIVITY_LOG_STORE_KEY = 'activityLog';
 
 export const SETTINGS_STORE_KEY = 'settings';
 
+export const LAST_BACKUP_DETAILS = 'lastBackupDetails';
+
 export const APP_ID_LENGTH = 12;
 
 // Numbers and Upper case Alphabets without confusing characters like 0, 1, 2, I, O, Z
