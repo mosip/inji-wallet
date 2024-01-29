@@ -43,10 +43,9 @@ export const MyBindedVcs: React.FC<MyBindedVcsProps> = props => {
                               vcMetadata={vcMetadata}
                               margin="0 2 8 2"
                               onPress={controller.SELECT_VC_ITEM(index)}
-                              showOnlyBindedVc
+                              flow="Qr Login"
                               selectable
                               selected={index === controller.selectedIndex}
-                              isSharingVc
                               isPinned={vcMetadata.isPinned}
                             />
                           ),

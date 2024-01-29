@@ -36,7 +36,7 @@ export const SelectVcOverlay: React.FC<SelectVcOverlayProps> = props => {
               margin="0 2 8 2"
               onPress={controller.selectVcItem(index)}
               selectable
-              isSharingVc
+              flow="Vc Share"
               selected={index === controller.selectedIndex}
             />
           ))}

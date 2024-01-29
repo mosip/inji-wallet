@@ -94,7 +94,7 @@ export const SendVcScreen: React.FC = () => {
               onPress={controller.SELECT_VC_ITEM(index)}
               selectable
               selected={index === controller.selectedIndex}
-              isSharingVc
+              flow="Vc Share"
               isPinned={vcMetadata.isPinned}
             />
           ))}
@@ -143,7 +143,7 @@ export const SendVcScreen: React.FC = () => {
         onBackdropPress={controller.DISMISS}>
         <Row>
           <Button
-            testID='cancel'
+            testID="cancel"
             fill
             type="clear"
             title={t('common:cancel')}
@@ -151,7 +151,7 @@ export const SendVcScreen: React.FC = () => {
             margin={[0, 8, 0, 0]}
           />
           <Button
-            testID='tryAgain'
+            testID="tryAgain"
             fill
             title={t('common:tryAgain')}
             onPress={controller.RETRY_VERIFICATION}

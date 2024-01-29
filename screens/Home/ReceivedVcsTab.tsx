@@ -29,7 +29,7 @@ export const ReceivedVcsTab: React.FC<HomeScreenTabProps> = props => {
             vcMetadata={vcMetadata}
             margin="0 2 8 2"
             onPress={controller.VIEW_VC}
-            isSharingVc
+            flow="Vc Share"
           />
         ))}
         {controller.receivedVcsMetadata.length === 0 && (

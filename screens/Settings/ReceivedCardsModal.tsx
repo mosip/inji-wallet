@@ -36,7 +36,7 @@ export const ReceivedCardsModal: React.FC<ReceivedCardsProps> = ({
             key={vcMetadata.getVcKey()}
             vcMetadata={vcMetadata}
             margin="0 2 8 2"
-            isSharingVc
+            flow="Vc Share"
             onPress={controller.VIEW_VC}
           />
         ))}
