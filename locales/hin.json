@@ -83,11 +83,11 @@
   },
   "HomeScreenKebabPopUp": {
     "title": "अधिक विकल्प",
-    "unPinCard": "अनपिन कार्ड",
-    "pinCard": "पिन कार्ड",
+    "unPinCard": "अनपिन",
+    "pinCard": "पिन",
     "share": "शेयर करना",
     "shareWithSelfie": "सेल्फी के साथ साझा करें",
-    "offlineAuthenticationDisabled!": "ऑनलाइन लॉगिन के लिए सक्रियण लंबित है",
+    "offlineAuthenticationDisabled!": "ऑनलाइन लॉगिन के लिए सक्रिय करें",
     "offlineAuthDisabledMessage": "ऑनलाइन प्रमाणीकरण के लिए इस क्रेडेंशियल का उपयोग सक्षम करने के लिए यहां क्लिक करें।",
     "viewActivityLog": "गतिविधि लॉग देखें",
     "removeFromWallet": "वॉलेट से हटाए",
@@ -96,7 +96,7 @@
   },
   "WalletBinding": {
     "inProgress": "चालू",
-    "profileAuthenticated": "ऑनलाइन लॉगिन के लिए सक्रिय"
+    "profileAuthenticated": "QR कोड लॉगिन"
   },
   "BindingVcWarningOverlay": {
     "alert": "कृपया पुष्टि करें",

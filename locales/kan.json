@@ -82,11 +82,11 @@
   },
   "HomeScreenKebabPopUp": {
     "title": "ಇನ್ನಷ್ಟು ಆಯ್ಕೆಗಳು",
-    "unPinCard": "ಅನ್‌ಪಿನ್ ಕಾರ್ಡ್",
-    "pinCard": "ಪಿನ್ ಕಾರ್ಡ್",
+    "unPinCard": "ಅನ್‌ಪಿನ್",
+    "pinCard": "ಪಿನ್",
     "share": "ಹಂಚಿಕೊಳ್ಳಿ",
     "shareWithSelfie": "ಸೆಲ್ಫಿಯೊಂದಿಗೆ ಹಂಚಿಕೊಳ್ಳಿ",
-    "offlineAuthenticationDisabled!": "ಆನ್‌ಲೈನ್ ಲಾಗಿನ್‌ಗಾಗಿ ಸಕ್ರಿಯಗೊಳಿಸುವಿಕೆ ಬಾಕಿ ಉಳಿದಿದೆ",
+    "offlineAuthenticationDisabled!": "ಆನ್‌ಲೈನ್ ಲಾಗಿನ್‌ಗಾಗಿ ಸಕ್ರಿಯಗೊಳಿಸಿ",
     "offlineAuthDisabledMessage": "ಆನ್‌ಲೈನ್ ದೃಢೀಕರಣಕ್ಕಾಗಿ ಬಳಸಲು ಈ ರುಜುವಾತುಗಳನ್ನು ಸಕ್ರಿಯಗೊಳಿಸಲು ಇಲ್ಲಿ ಕ್ಲಿಕ್ ಮಾಡಿ.",
     "viewActivityLog": "ಚಟುವಟಿಕೆ ಲಾಗ್ ಅನ್ನು ವೀಕ್ಷಿಸಿ",
     "removeFromWallet": "ಕೈಚೀಲದಿಂದ ತೆಗೆದುಹಾಕಿ",
@@ -95,7 +95,7 @@
   },
   "WalletBinding": {
     "inProgress": "ಪ್ರಗತಿಯಲ್ಲಿದೆ",
-    "profileAuthenticated": "ಆನ್‌ಲೈನ್ ಲಾಗಿನ್‌ಗಾಗಿ ಸಕ್ರಿಯಗೊಳಿಸಲಾಗಿದೆ"
+    "profileAuthenticated": "QR ಕೋಡ್ ಲಾಗಿನ್"
   },
   "BindingVcWarningOverlay": {
     "alert": "ದಯವಿಟ್ಟು ದ್ರುಡೀಕರಿಸಿ",

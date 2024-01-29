@@ -82,11 +82,11 @@
   },
   "HomeScreenKebabPopUp": {
     "title": "மேலும் விருப்பங்கள்",
-    "unPinCard": "கார்டை அன்பின் செய்யவும்",
-    "pinCard": "பின் அட்டை",
+    "unPinCard": "அன்பின்",
+    "pinCard": "பின்",
     "share": "பகிர்",
     "shareWithSelfie": "செல்ஃபியுடன் பகிரவும்",
-    "offlineAuthenticationDisabled!": "ஆன்லைன் உள்நுழைவுக்கான செயல்படுத்தல் நிலுவையில் உள்ளது",
+    "offlineAuthenticationDisabled!": "ஆன்லைன் உள்நுழைவுக்கு செயல்படுத்தவும்",
     "offlineAuthDisabledMessage": "இந்த நற்சான்றிதழ்களை ஆன்லைன் அங்கீகாரத்திற்காகப் பயன்படுத்த இங்கே கிளிக் செய்யவும்.",
     "viewActivityLog": "செயல்பாட்டு பதிவைக் காண்க",
     "removeFromWallet": "பணப்பையிலிருந்து அகற்று",
@@ -95,7 +95,7 @@
   },
   "WalletBinding": {
     "inProgress": "செயல்பாட்டில் உள்ளது",
-    "profileAuthenticated": "சுயவிவரம் அங்கீகரிக்கப்பட்டது"
+    "profileAuthenticated": "QR குறியீடு உள்நுழைவு"
   },
   "BindingVcWarningOverlay": {
     "alert": "தயவுசெய்து உறுதிப்படுத்தவும்",

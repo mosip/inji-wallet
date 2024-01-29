@@ -86,11 +86,11 @@
   },
   "HomeScreenKebabPopUp": {
     "title": "More Options",
-    "unPinCard": "Unpin Card",
-    "pinCard": "Pin Card",
+    "unPinCard": "Unpin",
+    "pinCard": "Pin",
     "share": "Share",
     "shareWithSelfie": "Share with Selfie",
-    "offlineAuthenticationDisabled!": "Activation pending for online login",
+    "offlineAuthenticationDisabled!": "Activate for online login",
     "offlineAuthDisabledMessage": "Click here to enable this credentials to be used for online authentication.",
     "viewActivityLog": "View Activity Log",
     "removeFromWallet": "Remove from Wallet",
@@ -99,7 +99,7 @@
   },
   "WalletBinding": {
     "inProgress": "In progress",
-    "profileAuthenticated": "Activated for online login"
+    "profileAuthenticated": "QR Code Login"
   },
   "BindingVcWarningOverlay": {
     "alert": "Alert",

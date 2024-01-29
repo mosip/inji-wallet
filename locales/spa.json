@@ -86,11 +86,11 @@
   },
   "HomeScreenKebabPopUp": {
     "title": "Mas opciones",
-    "unPinCard": "Desanclar tarjeta",
-    "pinCard": "Tarjeta PIN",
+    "unPinCard": "Desanclar",
+    "pinCard": "PIN",
     "share": "Compartir",
     "shareWithSelfie": "Compartir con selfie",
-    "offlineAuthenticationDisabled!": "Activación pendiente para iniciar sesión en línea",
+    "offlineAuthenticationDisabled!": "Activar para iniciar sesión en línea",
     "offlineAuthDisabledMessage": "Haga clic aquí para permitir que estas credenciales se utilicen para la autenticación en línea.",
     "viewActivityLog": "Ver registro de actividad",
     "removeFromWallet": "Quitar de Wallet",
@@ -99,7 +99,7 @@
   },
   "WalletBinding": {
     "inProgress": "En curso",
-    "profileAuthenticated": "Activado para iniciar sesión en línea"
+    "profileAuthenticated": "inicio de sesión con código QR"
   },
   "BindingVcWarningOverlay": {
     "alert": "Alerta",

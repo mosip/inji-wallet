@@ -86,11 +86,11 @@
   },
   "HomeScreenKebabPopUp": {
     "title": "المزيد من الخيارات",
-    "unPinCard": "قم بفك البطاقة",
-    "pinCard": "البطاقة الشخصية",
+    "unPinCard": "إزالة التثبيت",
+    "pinCard": "دبوس",
     "share": "يشارك",
     "shareWithSelfie": "شارك مع سيلفي",
-    "offlineAuthenticationDisabled!": "التنشيط معلق لتسجيل الدخول عبر الإنترنت",
+    "offlineAuthenticationDisabled!": "تفعيل لتسجيل الدخول عبر الإنترنت",
     "offlineAuthDisabledMessage": "انقر هنا لتمكين استخدام بيانات الاعتماد هذه للمصادقة عبر الإنترنت.",
     "viewActivityLog": "عرض سجل النشاط",
     "removeFromWallet": "إزالة من المحفظة",
@@ -99,7 +99,7 @@
   },
   "WalletBinding": {
     "inProgress": "في تَقَدم",
-    "profileAuthenticated": "تم التنشيط لتسجيل الدخول عبر الإنترنت"
+    "profileAuthenticated": "رمز الاستجابة السريعة تسجيل الدخول",
   },
   "BindingVcWarningOverlay": {
     "alert": "يرجى تأكيد",

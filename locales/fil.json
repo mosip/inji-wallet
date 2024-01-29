@@ -85,11 +85,11 @@
   },
   "HomeScreenKebabPopUp": {
     "title": "Higit pang mga Opsyon",
-    "unPinCard": "I-unpin ang Card",
-    "pinCard": "Pin Card",
+    "unPinCard": "I-unpin",
+    "pinCard": "Pin",
     "share": "Ibahagi",
     "shareWithSelfie": "Ibahagi sa Selfie",
-    "offlineAuthenticationDisabled!": "Nakabinbin ang pag-activate para sa online na pag-login",
+    "offlineAuthenticationDisabled!": "I-activate para sa online na pag-login",
     "offlineAuthDisabledMessage": "Mag-click dito upang paganahin ang mga kredensyal na ito na magamit para sa online na pagpapatotoo.",
     "viewActivityLog": "Tingnan ang log ng aktibidad",
     "removeFromWallet": "Alisin sa wallet",
@@ -98,7 +98,7 @@
   },
   "WalletBinding": {
     "inProgress": "Isinasagawa",
-    "profileAuthenticated": "Na-activate para sa online na pag-login"
+    "profileAuthenticated": "Pag-login sa QR Code"
   },
   "BindingVcWarningOverlay": {
     "alert": "Pakikumpirma",
