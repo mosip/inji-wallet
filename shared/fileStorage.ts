@@ -88,8 +88,8 @@ export async function compressAndRemoveFile(
 }
 
 export async function unZipAndRemoveFile(fileName: string): Promise<string> {
-  const result = unzipFile(fileName);
-  await removeFile(fileName);
+  const result = await unzipFile(fileName);
+  await removeFile(fileName, '.zip');
   return result;
 }
 
@@ -126,7 +126,8 @@ export async function writeToBackupFile(data): Promise<string> {
     //remove old backup
     const [availableBackupFile] =
       await new FileStorage().getAllFilesInDirectory(backupDirectoryPath);
-    await removeFile(availableBackupFile.name, '');
+
+    availableBackupFile && (await removeFile(availableBackupFile.name, ''));
   }
   // TODO: create dir using a named instance of FileStorage later
   await new FileStorage().createDirectory(backupDirectoryPath);

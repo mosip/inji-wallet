@@ -163,6 +163,7 @@ export const backupRestoreMachine = model.createMachine(
         if (bkpZip === null) {
           return new Error('unable to download backup file');
         }
+        context.fileName = bkpZip;
         const result = await unZipAndRemoveFile(bkpZip);
         return result;
       },

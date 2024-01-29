@@ -107,9 +107,20 @@ class Cloud {
   }
   static async removeOldDriveBackupFiles(fileName: string) {
     const allFiles = await CloudStorage.readdir(`/`, CloudStorageScope.AppData);
-    for (const oldFileName of allFiles.filter(file => file != fileName)) {
+    const toBeRemovedFiles = allFiles.filter(file => file !== fileName);
+    console.log(
+      'removeOldDriveBackupFiles toBeRemovedFiles ',
+      toBeRemovedFiles,
+    );
+    for (const oldFileName of toBeRemovedFiles) {
+      console.log('removing -> ', oldFileName);
       await CloudStorage.unlink(`/${oldFileName}`);
     }
+    const allFilesPost = await CloudStorage.readdir(
+      `/`,
+      CloudStorageScope.AppData,
+    );
+    console.log('removeOldDriveBackupFiles allFiles ', allFilesPost);
   }
   static async uploadBackupFileToDrive(
     fileName: string,
@@ -145,7 +156,7 @@ class Cloud {
         // return backupFileMeta;
         console.log('wrote to cloudFileName ', cloudFileName);
         console.log('writeResult ', writeResult);
-        await this.removeOldDriveBackupFiles(cloudFileName);
+        await this.removeOldDriveBackupFiles(`${fileName}.zip`);
         return Promise.resolve(Cloud.status.SUCCESS);
       }
     } catch (error) {
@@ -170,7 +181,7 @@ class Cloud {
   static async downloadLatestBackup(): Promise<string | null> {
     const tokenResult = await Cloud.getAccessToken();
     CloudStorage.setGoogleDriveAccessToken(tokenResult);
-    const allFiles = await CloudStorage.readdir(`/`, CloudStorageScope.AppData);
+    const allFiles = await CloudStorage.readdir('/', CloudStorageScope.AppData);
     console.log('allFiles ', allFiles);
     // TODO: do basic sanity about this .zip file
     const fileName = allFiles[0];
