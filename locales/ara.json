@@ -579,12 +579,12 @@
       }
     }
   },
-  "DataBackupScreen" :{
-    "dataBackupAndRestore" : "اسنرجاع البيانات",
-    "new" : "جديد",
+  "DataBackupScreen": {
+    "dataBackupAndRestore": "اسنرجاع البيانات",
+    "new": "جديد",
     "loadingTitle": "جارٍ تحميل الإعداد",
     "loadingSubtitle": "تحميل...",
-    "errors":{
+    "errors": {
       "permissionErrorTitle": "تم رفض الإذن!",
       "permissionErrorMessage": "لقد لاحظنا أنك قمت بإلغاء إنشاء إعدادات النسخ الاحتياطي للبيانات. ونحن نوصي بشدة بإعادة النظر في إعدادات النسخ الاحتياطي للبيانات لضمان توفر البيانات الخاصة بك. انقر فوق تكوين الإعدادات لإعداد النسخ الاحتياطي للبيانات الآن، أو يلغي للعودة إلى شاشة الإعدادات."
     }
@@ -593,19 +593,20 @@
     "backupSuccessful": "تمت عملية النسخ الاحتياطي الخاصة بك بنجاح!",
     "backupFailure": {
       "networkError": "بسبب <الاتصال غير المستقر>، لم نتمكن من إجراء النسخ الاحتياطي للبيانات. الرجاء معاودة المحاولة في وقت لاحق.",
-      "technicalError": "بسبب خطأ فني، لم نتمكن من إجراء النسخ الاحتياطي للبيانات. الرجاء معاودة المحاولة في وقت لاحق."
+      "technicalError": "بسبب خطأ فني، لم نتمكن من إجراء النسخ الاحتياطي للبيانات. الرجاء معاودة المحاولة في وقت لاحق.",
+      "noDataForBackup": "عذرًا، ولكن لا توجد بيانات متاحة لإجراء نسخ احتياطي في الوقت الحالي."
     }
   },
-  "AccountSelection" :{
-    "backupProcessInfo" : "أنت على بعد خطوات قليلة من إجراء نسخ احتياطي لبياناتك",
-    "cloudInfo" : "To initiate the data backup, please tap on the “Proceed” button to link your Google Drive with Inji.",
+  "AccountSelection": {
+    "backupProcessInfo": "أنت على بعد خطوات قليلة من إجراء نسخ احتياطي لبياناتك",
+    "cloudInfo": "To initiate the data backup, please tap on the “Proceed” button to link your Google Drive with Inji.",
     "googleDriveTitle": "جوجل درايف",
     "loadingSubtitle": "تحميل...",
     "proceed": "يتابع",
     "goBack": "عُد",
-    "associatedAccount" : "الحساب المرتبط"
+    "associatedAccount": "الحساب المرتبط"
   },
-  "BackupAndRestore":{
+  "BackupAndRestore": {
     "title": "اسنرجاع البيانات",
     "backupProgressState": "جاري النسخ الاحتياطي...",
     "lastBackupDetails": "تفاصيل النسخ الاحتياطي الأخير",

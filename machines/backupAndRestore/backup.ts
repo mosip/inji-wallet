@@ -1,12 +1,19 @@
 import {EventFrom, StateFrom, send} from 'xstate';
 import {createModel} from 'xstate/lib/model';
 import {AppServices} from '../../shared/GlobalContext';
-import {StoreEvents} from '../store';
+import {bytesToMB} from '../../shared/commonUtil';
+import {
+  NETWORK_REQUEST_FAILED,
+  TECHNICAL_ERROR,
+  UPLOAD_MAX_RETRY,
+} from '../../shared/constants';
+import {compressAndRemoveFile} from '../../shared/fileStorage';
+import Cloud from '../../shared/googleCloudUtils';
 import {
   isMinimumLimitForBackupReached,
   writeToBackupFile,
 } from '../../shared/storage';
-import {compressAndRemoveFile} from '../../shared/fileStorage';
+import {TelemetryConstants} from '../../shared/telemetry/TelemetryConstants';
 import {
   getEndEventData,
   getImpressionEventData,
@@ -15,15 +22,8 @@ import {
   sendImpressionEvent,
   sendStartEvent,
 } from '../../shared/telemetry/TelemetryUtils';
-import {TelemetryConstants} from '../../shared/telemetry/TelemetryConstants';
-import Cloud from '../../shared/googleCloudUtils';
-import {
-  NETWORK_REQUEST_FAILED,
-  TECHNICAL_ERROR,
-  UPLOAD_MAX_RETRY,
-} from '../../shared/constants';
-import {bytesToMB} from '../../shared/commonUtil';
 import {BackupFileMeta} from '../../types/backup-and-restore/backup';
+import {StoreEvents} from '../store';
 
 const model = createModel(
   {
@@ -40,6 +40,7 @@ const model = createModel(
       FETCH_DATA: () => ({}),
       DISMISS: () => ({}),
       STORE_RESPONSE: (response: unknown) => ({response}),
+      STORE_ERROR: (error: Error, requester?: string) => ({error, requester}),
       FILE_NAME: (filename: string) => ({filename}),
     },
   },
@@ -92,7 +93,7 @@ export const backupMachine = model.createMachine(
                   target: 'fetchDataFromDB',
                 },
               ],
-              onError: [],
+              onError: {actions: ['setBackUpNotPossible'], target: 'failure'},
             },
           },
           fetchDataFromDB: {
@@ -101,6 +102,10 @@ export const backupMachine = model.createMachine(
               STORE_RESPONSE: {
                 actions: 'setDataFromStorage',
                 target: 'writeDataToFile',
+              },
+              STORE_ERROR: {
+                actions: ['setBackUpNotPossible'],
+                target: 'failure',
               },
             },
           },
@@ -177,6 +182,10 @@ export const backupMachine = model.createMachine(
         },
       }),
 
+      setBackUpNotPossible: model.assign({
+        errorReason: 'noDataForBackup',
+      }),
+
       extractBackupSuccessMetaData: model.assign((context, event) => {
         const {ctime: creationTime, size} = event.data;
         const backupFileMeta = {
@@ -191,10 +200,6 @@ export const backupMachine = model.createMachine(
 
       fetchAllDataFromDB: send(StoreEvents.EXPORT(), {
         to: context => {
-          console.log(
-            '>>>>>>>>>>>>. fetchAllDataFromDB',
-            context.serviceRefs.store,
-          );
           return context.serviceRefs.store;
         },
       }),

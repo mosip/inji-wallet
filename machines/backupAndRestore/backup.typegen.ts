@@ -18,6 +18,10 @@ export interface Typegen0 {
       data: unknown;
       __tip: 'See the XState TS docs to learn how to strongly type this.';
     };
+    'error.platform.backup.backingUp.checkStorageAvailability:invocation[0]': {
+      type: 'error.platform.backup.backingUp.checkStorageAvailability:invocation[0]';
+      data: unknown;
+    };
     'error.platform.backup.backingUp.uploadBackupFile:invocation[0]': {
       type: 'error.platform.backup.backingUp.uploadBackupFile:invocation[0]';
       data: unknown;
@@ -44,11 +48,16 @@ export interface Typegen0 {
     extractBackupSuccessMetaData: 'done.invoke.backup.backingUp.zipBackupFile:invocation[0]';
     fetchAllDataFromDB: 'done.invoke.backup.backingUp.checkStorageAvailability:invocation[0]';
     sendDataBackupFailureEvent:
+      | 'STORE_ERROR'
       | 'done.invoke.backup.backingUp.checkStorageAvailability:invocation[0]'
+      | 'error.platform.backup.backingUp.checkStorageAvailability:invocation[0]'
       | 'error.platform.backup.backingUp.uploadBackupFile:invocation[0]'
       | 'error.platform.backup.backingUp.zipBackupFile:invocation[0]';
     sendDataBackupStartEvent: 'DATA_BACKUP' | 'FETCH_DATA';
     sendDataBackupSuccessEvent: 'done.invoke.backup.backingUp.uploadBackupFile:invocation[0]';
+    setBackUpNotPossible:
+      | 'STORE_ERROR'
+      | 'error.platform.backup.backingUp.checkStorageAvailability:invocation[0]';
     setBackupErrorReason: 'error.platform.backup.backingUp.uploadBackupFile:invocation[0]';
     setDataFromStorage: 'STORE_RESPONSE';
     setFileName: 'FILE_NAME';

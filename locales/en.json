@@ -597,7 +597,8 @@
     "backupSuccessful": "Your backup was successful!",
     "backupFailure": {
       "networkError": "Due to Unstable Connection, we were unable to perform data backup. Please try again later.",
-      "technicalError": "Due to Technical Error, we were unable to perform data backup. Please try again later."
+      "technicalError": "Due to Technical Error, we were unable to perform data backup. Please try again later.",
+      "noDataForBackup": "We're sorry, but there is no data available to back up at the moment."
     }
   },
   "AccountSelection": {

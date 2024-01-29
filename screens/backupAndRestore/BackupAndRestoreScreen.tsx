@@ -139,41 +139,31 @@ const BackupAndRestoreScreen: React.FC<BackupAndRestoreProps> = props => {
   );
 
   return (
-    <Fragment>
-      <Modal
-        isVisible
-        headerTitle={t('title')}
-        headerElevation={2}
-        arrowLeft={true}
-        // TODO: on backpress dont stop the backup progress
-        onDismiss={props.onBackPress}>
-        <BackupAndRestoreAllScreenBanner />
-        <View
-          style={{
-            backgroundColor: Theme.Colors.lightGreyBackgroundColor,
-            flex: 1,
-          }}>
-          {props.isLoading ? (
-            <Column fill align="center" crossAlign="center">
-              <LoaderAnimation />
-            </Column>
-          ) : (
-            <React.Fragment>
-              {LastBackupSection}
-              {AccountSection}
-              {RestoreSection}
-            </React.Fragment>
-          )}
-        </View>
-      </Modal>
-
-      <MessageOverlay
-        isVisible={backupController.isBackingUpFailure}
-        onButtonPress={backupController.DISMISS}
-        buttonText={t('ok')}
-        title={'Backup Failed'}
-      />
-    </Fragment>
+    <Modal
+      isVisible
+      headerTitle={t('title')}
+      headerElevation={2}
+      arrowLeft={true}
+      onDismiss={props.onBackPress}>
+      <BackupAndRestoreAllScreenBanner />
+      <View
+        style={{
+          backgroundColor: Theme.Colors.lightGreyBackgroundColor,
+          flex: 1,
+        }}>
+        {props.isLoading ? (
+          <Column fill align="center" crossAlign="center">
+            <LoaderAnimation />
+          </Column>
+        ) : (
+          <React.Fragment>
+            {LastBackupSection}
+            {AccountSection}
+            {RestoreSection}
+          </React.Fragment>
+        )}
+      </View>
+    </Modal>
   );
 };
 

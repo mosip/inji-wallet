@@ -34,6 +34,7 @@ export interface Typegen0 {
     forwardStoreRequest:
       | 'APPEND'
       | 'CLEAR'
+      | 'EXPORT'
       | 'GET'
       | 'PREPEND'
       | 'REMOVE'
