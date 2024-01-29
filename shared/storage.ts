@@ -273,7 +273,8 @@ class Storage {
     const configurations = await getAllConfigurations();
     if (!configurations[limitInMB]) return false;
 
-    const minimumStorageLimitInBytes = configurations[limitInMB] * BYTES_IN_MEGABYTE;
+    const minimumStorageLimitInBytes =
+      configurations[limitInMB] * BYTES_IN_MEGABYTE;
 
     const freeDiskStorageInBytes =
       isAndroid() && androidVersion < 29
@@ -310,11 +311,16 @@ function removeWalletBindingDataBeforeBackup(data: string) {
 }
 
 export async function isMinimumLimitForBackupReached() {
-  const directorySize = await getDirectorySize(vcDirectoryPath);
-  const freeDiskStorageInBytes =
-    isAndroid() && androidVersion < 29
-      ? getFreeDiskStorageOldSync()
-      : getFreeDiskStorageSync();
+  try {
+    const directorySize = await getDirectorySize(vcDirectoryPath);
+    const freeDiskStorageInBytes =
+      isAndroid() && androidVersion < 29
+        ? getFreeDiskStorageOldSync()
+        : getFreeDiskStorageSync();
 
-  return freeDiskStorageInBytes <= 2 * directorySize;
+    return freeDiskStorageInBytes <= 2 * directorySize;
+  } catch (error) {
+    console.log('Error in isMinimumLimitForBackupReached:', error);
+    throw error;
+  }
 }

@@ -87,6 +87,7 @@ export const backupMachine = model.createMachine(
                   target: 'fetchDataFromDB',
                 },
               ],
+              onError: [],
             },
           },
           fetchDataFromDB: {
@@ -192,7 +193,13 @@ export const backupMachine = model.createMachine(
       }),
 
       fetchAllDataFromDB: send(StoreEvents.EXPORT(), {
-        to: context => context.serviceRefs.store,
+        to: context => {
+          console.log(
+            '>>>>>>>>>>>>. fetchAllDataFromDB',
+            context.serviceRefs.store,
+          );
+          return context.serviceRefs.store;
+        },
       }),
 
       sendDataBackupStartEvent: () => {
@@ -228,7 +235,15 @@ export const backupMachine = model.createMachine(
 
     services: {
       checkStorageAvailability: () => async () => {
-        return Promise.resolve(isMinimumLimitForBackupReached());
+        try {
+          console.log('Checking storage availability...');
+          const isAvailable = await isMinimumLimitForBackupReached();
+          console.log('Storage availability:', isAvailable);
+          return isAvailable;
+        } catch (error) {
+          console.log('Error in checkStorageAvailability:', error);
+          throw error;
+        }
       },
 
       writeDataToFile: context => async callack => {
@@ -250,8 +265,10 @@ export const backupMachine = model.createMachine(
     },
 
     guards: {
-      isMinimumStorageRequiredForBackupReached: (_context, event) =>
-        Boolean(event.data),
+      isMinimumStorageRequiredForBackupReached: (_context, event) => {
+        console.log('is min reach ', Boolean(event.data));
+        return Boolean(event.data);
+      },
     },
   },
 );
