@@ -4,7 +4,7 @@ import {useKebabPopUp} from '../../../components/KebabPopUpController';
 import testIDProps from '../../../shared/commonUtil';
 import {Text} from '../../../components/ui';
 import {ActorRefFrom} from 'xstate';
-import {ExistingMosipVCItemEvents} from '../../../machines/VCItemMachine/ExistingMosipVCItem/ExistingMosipVCItemMachine';
+import {ExistingMosipVCItemMachine} from '../../../machines/VCItemMachine/ExistingMosipVCItem/ExistingMosipVCItemMachine';
 
 export const ShareVc: React.FC<ShareVcProps> = props => {
   const controller = useKebabPopUp(props);
@@ -27,5 +27,5 @@ export const ShareVc: React.FC<ShareVcProps> = props => {
 interface ShareVcProps {
   testID?: string;
   label: string;
-  service: ActorRefFrom<typeof ExistingMosipVCItemEvents>;
+  service: ActorRefFrom<typeof ExistingMosipVCItemMachine>;
 }
