@@ -1,4 +1,4 @@
-import React, {Fragment} from 'react';
+import React, {Fragment, useEffect} from 'react';
 import {useTranslation} from 'react-i18next';
 import {View} from 'react-native';
 import {AccountInformation} from '../../components/AccountInformation';
@@ -33,10 +33,10 @@ const BackupAndRestoreScreen: React.FC<BackupAndRestoreProps> = props => {
       <View>
         <Row>
           <Column>{SvgImage.CloudUploadDoneIcon()}</Column>
-          {backupController.backupFileMeta && (
+          {backupController.lastBackupDetails && (
             <Column margin={'0 0 0 9'} align="center">
               <Timestamp
-                time={backupController.backupFileMeta.backupCreationTime}
+                time={backupController.lastBackupDetails.backupCreationTime}
               />
               <Text
                 style={{
@@ -46,7 +46,7 @@ const BackupAndRestoreScreen: React.FC<BackupAndRestoreProps> = props => {
                   color: '#707070',
                   lineHeight: 14,
                 }}>
-                Size: {backupController.backupFileMeta.backupFileSize}MB
+                Size: {backupController.lastBackupDetails.backupFileSize}MB
               </Text>
             </Column>
           )}
@@ -69,19 +69,16 @@ const BackupAndRestoreScreen: React.FC<BackupAndRestoreProps> = props => {
             <Text style={Theme.BackupAndRestoreStyles.backupProgressText}>
               {t('backupInProgress')}
             </Text>
-          ) : backupController.isBackingUpSuccess ? (
+          ) : backupController.lastBackupDetails ? (
             LastBackupDetails()
           ) : (
             <Text style={Theme.BackupAndRestoreStyles.backupProgressText}>
-              {backupController.isBackupInProgress
-                ? t('backupInProgress')
-                : t('noBackup')}
+              {t('noBackup')}
             </Text>
           )}
         </View>
       </Row>
       <Row style={{marginLeft: 4, marginRight: 4}}>
-        {/* TODO: Button is not occupying the space in larger screens */}
         {backupController.isBackupInProgress ? (
           Loading
         ) : (
@@ -127,7 +124,6 @@ const BackupAndRestoreScreen: React.FC<BackupAndRestoreProps> = props => {
         </View>
       </Row>
       <Row style={{marginLeft: 1, marginRight: 1}}>
-        {/* TODO: Change false to restoreInProgress */}
         {restoreController.isBackUpRestoring ? (
           Loading
         ) : (

@@ -95,8 +95,8 @@ fileignoreconfig:
     checksum: f4e8a054fc4168e08bc9e9fe3e644cebabacdfc31ef0cbe36dd281766f47df5e
   - filename: screens/Home/MyVcs/IdInputModal.tsx
     checksum: 7ee46d8ef4761c0e9b59f3e602e6e30be5f47221817c819e91ab10ca2203089f
-  - filename: machines/backup.typegen.ts
-    checksum: 4ae5dbf36353cb7568a278628256e68caded071f1e91d6e1b25ac9aefb1f81cf
+  - filename: machines/backupAndRestore/backup.typegen.ts
+    checksum: b90328a59b129cde41c5e049b52fa3e6f3361772c5a19e3d13b092e4edc59028
   - filename: screens/Settings/BackupController.tsx
     checksum: 054665c377b4a8e246ae1bfb419ab86d0cb1c120ae92cdc27ceed9cf1f39679b
   - filename: screens/Settings/BackupViaPassword.tsx
@@ -132,7 +132,7 @@ fileignoreconfig:
   - filename: .env
     checksum: ae9586991aff83b0cbefb01fccfda729c7cb0fa3aa34696e88a16aa7c5c34bb5
   - filename: machines/backupAndRestore/backup.ts
-    checksum: bbfededbb1f8ff7cca636f10c6b81ff5775b550030fada4935fff3db30cca2f1
+    checksum: a5f138eb43ad614cc20e07c53c2a755c86b06301456a90c2f6c6d469afa55b7c
   - filename: .github/workflows/ui-automation.yml
     checksum: 0b26a5dcb7524ba15d6aaeaf04f2ef94be9d25ef702d9072d6628bcd58e50f36
   - filename: injitest/src/test/java/androidTestCases/PinVcTest.java

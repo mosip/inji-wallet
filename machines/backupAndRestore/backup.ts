@@ -7,7 +7,8 @@ import {
   TECHNICAL_ERROR,
   UPLOAD_MAX_RETRY,
 } from '../../shared/constants';
-import {
+import fileStorage, {
+  backupDirectoryPath,
   compressAndRemoveFile,
   writeToBackupFile,
 } from '../../shared/fileStorage';
@@ -30,7 +31,7 @@ const model = createModel(
     serviceRefs: {} as AppServices,
     dataFromStorage: {},
     fileName: '',
-    fileMeta: null as null | BackupFileMeta,
+    lastBackupDetails: null as null | BackupFileMeta,
     errorReason: '' as string,
   },
   {
@@ -68,6 +69,13 @@ export const backupMachine = model.createMachine(
     },
     states: {
       init: {
+        invoke: {
+          src: 'fetchLastBackupData',
+          onDone: {
+            actions: 'extractLastBackupDetails',
+          },
+          onError: {},
+        },
         on: {
           DATA_BACKUP: [
             {
@@ -124,7 +132,7 @@ export const backupMachine = model.createMachine(
             invoke: {
               src: 'zipBackupFile',
               onDone: {
-                actions: 'extractBackupSuccessMetaData',
+                actions: 'extractLastBackupDetails',
                 target: 'uploadBackupFile',
               },
               onError: {
@@ -186,7 +194,7 @@ export const backupMachine = model.createMachine(
         errorReason: 'noDataForBackup',
       }),
 
-      extractBackupSuccessMetaData: model.assign((context, event) => {
+      extractLastBackupDetails: model.assign((context, event) => {
         const {ctime: creationTime, size} = event.data;
         const backupFileMeta = {
           backupCreationTime: creationTime,
@@ -194,7 +202,7 @@ export const backupMachine = model.createMachine(
         };
         return {
           ...context,
-          fileMeta: backupFileMeta,
+          lastBackupDetails: backupFileMeta,
         };
       }),
 
@@ -246,6 +254,15 @@ export const backupMachine = model.createMachine(
     },
 
     services: {
+      fetchLastBackupData: () => async () => {
+        const availableBackupFiles = await fileStorage.getAllFilesInDirectory(
+          backupDirectoryPath,
+        );
+        if (availableBackupFiles.length > 0) {
+          return await fileStorage.getInfo(availableBackupFiles[0].path);
+        }
+      },
+
       checkStorageAvailability: () => async () => {
         try {
           console.log('Checking storage availability...');
@@ -307,8 +324,8 @@ export function selectIsBackingUpSuccess(state: State) {
 export function selectIsBackingUpFailure(state: State) {
   return state.matches('backingUp.failure');
 }
-export function selectBackupFileMeta(state: State) {
-  return state.context.fileMeta;
+export function lastBackupDetails(state: State) {
+  return state.context.lastBackupDetails;
 }
 export function selectBackupErrorReason(state: State) {
   return state.context.errorReason;
