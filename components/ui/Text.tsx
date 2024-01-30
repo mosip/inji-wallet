@@ -22,7 +22,8 @@ export const Text: React.FC<TextProps> = (props: TextProps) => {
       style={textStyles}
       numberOfLines={props.numLines}
       ellipsizeMode={props.ellipsizeMode}
-      accessible={props.accessible}>
+      accessible={props.accessible}
+      onPress={props.onPress}>
       {props.children}
     </RNText>
   );
@@ -41,4 +42,5 @@ interface TextProps {
   ellipsizeMode?: 'head' | 'middle' | 'tail' | 'clip' | undefined;
   style?: StyleProp<TextStyle>;
   accessible?: boolean | true;
+  onPress?: () => void;
 }

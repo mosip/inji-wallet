@@ -34,11 +34,13 @@ export interface Typegen0 {
     forwardStoreRequest:
       | 'APPEND'
       | 'CLEAR'
+      | 'EXPORT'
       | 'GET'
       | 'PREPEND'
       | 'REMOVE'
       | 'REMOVE_ITEMS'
       | 'REMOVE_VC_METADATA'
+      | 'RESTORE_BACKUP'
       | 'SET'
       | 'UPDATE';
     notifyParent:
