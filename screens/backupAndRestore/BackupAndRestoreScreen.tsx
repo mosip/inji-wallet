@@ -1,9 +1,7 @@
-import React, {Fragment, useEffect} from 'react';
+import React from 'react';
 import {useTranslation} from 'react-i18next';
-import {View} from 'react-native';
+import {ScrollView, View} from 'react-native';
 import {AccountInformation} from '../../components/AccountInformation';
-import {BannerNotification} from '../../components/BannerNotification';
-import {MessageOverlay} from '../../components/MessageOverlay';
 import {SectionLayout} from '../../components/SectionLayout';
 import {Button, Centered, Column, Row, Text} from '../../components/ui';
 import {LoaderAnimation} from '../../components/ui/LoaderAnimation';
@@ -124,7 +122,8 @@ const BackupAndRestoreScreen: React.FC<BackupAndRestoreProps> = props => {
     <SectionLayout
       testId="restoreSection"
       headerText={t('restore')}
-      headerIcon={SvgImage.RestoreIcon()}>
+      headerIcon={SvgImage.RestoreIcon()}
+      marginBottom={16}>
       <Row>
         <View style={{marginBottom: 19}}>
           <Text
@@ -165,7 +164,7 @@ const BackupAndRestoreScreen: React.FC<BackupAndRestoreProps> = props => {
       arrowLeft={true}
       onDismiss={props.onBackPress}>
       <BackupAndRestoreAllScreenBanner />
-      <View
+      <ScrollView
         style={{
           backgroundColor: Theme.Colors.lightGreyBackgroundColor,
           flex: 1,
@@ -181,7 +180,7 @@ const BackupAndRestoreScreen: React.FC<BackupAndRestoreProps> = props => {
             {RestoreSection}
           </React.Fragment>
         )}
-      </View>
+      </ScrollView>
     </Modal>
   );
 };

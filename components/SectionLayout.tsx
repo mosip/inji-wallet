@@ -9,6 +9,7 @@ export const SectionLayout: React.FC<SectionLayoutProps> = ({
   headerText,
   children,
   testId,
+  marginBottom,
 }) => {
   return (
     <View
@@ -17,6 +18,7 @@ export const SectionLayout: React.FC<SectionLayoutProps> = ({
         marginLeft: 18,
         marginRight: 18,
         marginTop: 16,
+        marginBottom,
         rowGap: 2,
       }}>
       <Row
@@ -55,9 +57,14 @@ export const SectionLayout: React.FC<SectionLayoutProps> = ({
   );
 };
 
+SectionLayout.defaultProps = {
+  marginBottom: 0,
+};
+
 export type SectionLayoutProps = {
   headerIcon: React.ReactNode;
   headerText: string;
   children: React.ReactNode;
   testId: string;
+  marginBottom?: number;
 };
