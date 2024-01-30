@@ -8,14 +8,24 @@ import fileStorage, {
 } from '../shared/fileStorage';
 import Storage from '../shared/storage';
 import {StoreEvents} from './store';
-import {ReadDirItem} from 'react-native-fs';
 import Cloud from '../shared/googleCloudUtils';
+import {NETWORK_REQUEST_FAILED, TECHNICAL_ERROR} from '../shared/constants';
+import {TelemetryConstants} from '../shared/telemetry/TelemetryConstants';
+import {
+  sendStartEvent,
+  getStartEventData,
+  sendImpressionEvent,
+  getImpressionEventData,
+  sendEndEvent,
+  getEndEventData,
+} from '../shared/telemetry/TelemetryUtils';
 
 const model = createModel(
   {
     serviceRefs: {} as AppServices,
     fileName: '',
     dataFromBackupFile: {},
+    errorReason: '' as string,
   },
   {
     events: {
@@ -65,12 +75,14 @@ export const backupRestoreMachine = model.createMachine(
         states: {
           idle: {},
           checkStorageAvailibility: {
+            entry: ['sendDataRestoreStartEvent'],
             invoke: {
               src: 'checkStorageAvailability',
               onDone: [
                 {
                   cond: 'isMinimumStorageRequiredForBackupRestorationReached',
-                  target: 'failure',
+                  actions: 'setRestoreTechnicalError',
+                  target: ['failure'],
                 },
                 {
                   target: 'unzipBackupFile',
@@ -85,6 +97,7 @@ export const backupRestoreMachine = model.createMachine(
                 target: 'readBackupFile',
               },
               onError: {
+                actions: 'setRestoreNetworkError',
                 target: 'failure',
               },
             },
@@ -107,6 +120,7 @@ export const backupRestoreMachine = model.createMachine(
                 target: 'deleteBackupDir',
               },
               STORE_ERROR: {
+                actions: 'setRestoreTechnicalError',
                 target: 'failure',
               },
             },
@@ -119,8 +133,12 @@ export const backupRestoreMachine = model.createMachine(
               },
             },
           },
-          success: {},
-          failure: {},
+          success: {
+            entry: 'sendDataRestoreSuccessEvent',
+          },
+          failure: {
+            entry: 'sendDataRestoreFailureEvent',
+          },
         },
         on: {
           OK: {
@@ -138,20 +156,55 @@ export const backupRestoreMachine = model.createMachine(
   },
   {
     actions: {
-      loadDataToMemory: send(
-        context => {
-          return StoreEvents.RESTORE_BACKUP(context.dataFromBackupFile);
-        },
-        {to: context => context.serviceRefs.store},
-      ),
-
-      setDataFromBackupFile: model.assign({
-        dataFromBackupFile: (_context, event) => {
-          return event.dataFromBackupFile;
-        },
+      setRestoreTechnicalError: model.assign({
+        errorReason: 'technicalError',
       }),
+      setRestoreNetworkError: model.assign({
+        errorReason: 'networkError',
+      }),
+      sendDataRestoreStartEvent: () => {
+        sendStartEvent(
+          getStartEventData(TelemetryConstants.FlowType.dataRestore),
+        );
+        sendImpressionEvent(
+          getImpressionEventData(
+            TelemetryConstants.FlowType.dataRestore,
+            TelemetryConstants.Screens.dataRestoreScreen,
+          ),
+        );
+      },
+
+      sendDataRestoreSuccessEvent: () => {
+        sendEndEvent(
+          getEndEventData(
+            TelemetryConstants.FlowType.dataRestore,
+            TelemetryConstants.EndEventStatus.success,
+          ),
+        );
+      },
+
+      sendDataRestoreFailureEvent: () => {
+        sendEndEvent(
+          getEndEventData(
+            TelemetryConstants.FlowType.dataRestore,
+            TelemetryConstants.EndEventStatus.failure,
+          ),
+        );
+      },
     },
 
+    loadDataToMemory: send(
+      context => {
+        return StoreEvents.RESTORE_BACKUP(context.dataFromBackupFile);
+      },
+      {to: context => context.serviceRefs.store},
+    ),
+
+    setDataFromBackupFile: model.assign({
+      dataFromBackupFile: (_context, event) => {
+        return event.dataFromBackupFile;
+      },
+    }),
     services: {
       checkStorageAvailability: () => async () => {
         return await Storage.isMinimumLimitReached('minStorageRequired');
