@@ -230,13 +230,29 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = props => {
         minHeight={'auto'}
       />
 
-      <MessageOverlay
+      {/* <Error
+          testID={`verificationError`}
+          testIDPrimaryButton={`goBackButton`}
+          isVisible={isVerificationError}
+          isModal={true}
+          title={'An Error occurred!'}
+          message={verificationErrorMessage}
+          primaryButtonText={'Go Back'}
+          primaryButtonEvent={controller.RESET_VERIFY_ERROR}
+          image={SvgImage.SomethingWentWrong()}
+          showClose={false}
+        />   */}
+
+      <Error
+        testID={`verificationError`}
         isVisible={isVerificationError}
-        title={'Technical Error'}
+        isModal={true}
+        title={'An Error occurred!'}
         message={verificationErrorMessage}
-        onButtonPress={controller.RESET_VERIFY_ERROR}
-        buttonText={t('common:ok')}
-        minHeight={'auto'}
+        onDismiss={controller.DISMISS}
+        tryAgain={controller.TRY_AGAIN}
+        image={SvgImage.NoInternetConnection()}
+        showClose={true}
       />
 
       {controller.isNetworkOff && (
@@ -249,6 +265,7 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = props => {
           onDismiss={controller.DISMISS}
           tryAgain={controller.TRY_AGAIN}
           image={SvgImage.NoInternetConnection()}
+          showClose={true}
         />
       )}
     </React.Fragment>

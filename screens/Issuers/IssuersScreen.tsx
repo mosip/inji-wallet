@@ -170,6 +170,7 @@ export const IssuersScreen: React.FC<
         goBack={goBack}
         tryAgain={controller.TRY_AGAIN}
         image={getImage()}
+        showClose={true}
       />
     );
   }

@@ -1,7 +1,7 @@
 import {useFocusEffect} from '@react-navigation/native';
 import React from 'react';
 import {useTranslation} from 'react-i18next';
-import {BackHandler, Dimensions, View} from 'react-native';
+import {BackHandler, Dimensions, View, StyleSheet} from 'react-native';
 import {Button, Column, Row, Text} from '.';
 import {Header} from './Header';
 import {Theme} from './styleUtils';
@@ -10,11 +10,24 @@ import {Modal} from './Modal';
 
 export const Error: React.FC<ErrorProps> = props => {
   const {t} = useTranslation('common');
-
+  const styles = StyleSheet.create({
+    container: {
+      flex: 1,
+    },
+    contentContainer: {
+      flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+    image: {
+      width: '50%',
+      height: 200,
+    },
+  });
   const errorContent = () => {
     return (
-      <View style={{alignItems: 'center'}}>
-        <View>
+      <View style={styles.container}>
+        <View style={styles.contentContainer}>
           <Row align="center" style={Theme.ErrorStyles.image}>
             {props.image}
           </Row>
@@ -24,14 +37,34 @@ export const Error: React.FC<ErrorProps> = props => {
           <Text style={Theme.ErrorStyles.message} testID="errorMessage">
             {props.message}
           </Text>
+          {props.tryAgain && (
+            <Button
+              onPress={props.tryAgain}
+              width={Dimensions.get('screen').width * 0.54}
+              title={t('tryAgain')}
+              type="outline"
+              testID="tryAgain"
+            />
+          )}
         </View>
-        {props.tryAgain && (
+        {props.primaryButtonEvent && (
           <Button
-            onPress={props.tryAgain}
-            width={Dimensions.get('screen').width * 0.54}
-            title={t('tryAgain')}
-            type="outline"
-            testID="tryAgain"
+            testID={props.testIDPrimaryButton ?? ''}
+            type="gradient"
+            margin="0 0 16"
+            title={props.primaryButtonText ?? ''}
+            onPress={props.primaryButtonEvent}
+          />
+        )}
+        {props.textButtonEvent && (
+          <Button
+            testID={props.testIDTextButton ?? ''}
+            type="clear"
+            margin="0 0 16"
+            title={props.textButtonText ?? ''}
+            onPress={() => {
+              props.textButtonEvent;
+            }}
           />
         )}
       </View>
@@ -57,6 +90,7 @@ export const Error: React.FC<ErrorProps> = props => {
   return props.isModal ? (
     <Modal
       isVisible={props.isVisible}
+      showClose={props.showClose}
       onDismiss={props.onDismiss}
       style={{
         ...Theme.ModalStyles.modal,
@@ -91,11 +125,18 @@ Error.defaultProps = {
 export interface ErrorProps {
   isModal?: boolean;
   isVisible: boolean;
+  showClose: boolean;
   title: string;
   message: string;
   image: React.ReactElement;
-  goBack?: () => void;
-  tryAgain: null | (() => void);
   testID: string;
+  tryAgain?: null | (() => void);
+  goBack?: () => void;
   onDismiss?: () => void;
+  testIDPrimaryButton?: string | null;
+  primaryButtonText?: string;
+  primaryButtonEvent?: () => void;
+  testIDTextButton?: string | null;
+  textButtonText?: string | null;
+  textButtonEvent?: () => void | null;
 }
