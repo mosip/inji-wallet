@@ -852,7 +852,7 @@ export const ExistingMosipVCItemMachine =
         ),
         updateVerificationErrorMessage: assign({
           verificationErrorMessage: (context, event) =>
-            'Verify credential is failed',
+            'Due to <Technical Error>, we were unable to download the card.',
         }),
 
         setWalletBindingError: assign({

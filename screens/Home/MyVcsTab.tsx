@@ -225,13 +225,16 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = props => {
         minHeight={'auto'}
       />
 
-      <MessageOverlay
+      <Error
+        testID={`verificationError`}
         isVisible={isVerificationError}
-        title={'Technical Error'}
+        isModal={true}
+        title={'An Error occurred!'}
         message={verificationErrorMessage}
-        onButtonPress={controller.RESET_VERIFY_ERROR}
-        buttonText={t('common:ok')}
-        minHeight={'auto'}
+        onDismiss={controller.DISMISS}
+        tryAgain={controller.TRY_AGAIN}
+        image={SvgImage.NoInternetConnection()}
+        showClose={true}
       />
 
       {controller.isNetworkOff && (
