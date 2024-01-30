@@ -65,8 +65,6 @@ fileignoreconfig:
     checksum: a0686e9a5c006176fd720b84bc36ca947db1422caf65c90cd0c2d1102a9e96df
   - filename: machines/bleShare/scan/scanMachine.ts
     checksum: a514c958ca3da3c5b22a1a95ad680af8f05fb22638fab79b3842aa8fcc1b4a17
-  - filename: locales/spa.json
-    checksum: eac9685c6b205ece5759e414669d27ad7ce383453d7b5e7d9f5ce75d290cc860
   - filename: screens/PasscodeScreen.tsx
     checksum: 5d3003027b245234f8c00bfc98836f1fb90a5d9525ffacf61c53f3d50954aa6a
   - filename: screens/PasscodeScreen.tsx
@@ -155,4 +153,19 @@ fileignoreconfig:
     checksum: 0d751a7dec88014b831835784f138ff73d0aeb09008d5c4fbd66d1114f2bb1c4
   - filename: components/BackupAndRestoreAllScreenBanner.tsx
     checksum: d6f69f99ef882f202333924c1b0f0908b6bcb64a68093e4fe812b4a7e73d211f
+    checksum: f26489ce4ac607884437ad06c3117cc34d6cbcbcd3dd5719790fbe01a0853ee5
+  - filename: locales/hin.json
+    checksum: 50e2f505c481ee51689b4f77ad7ffa73c615295b108644d348a070e45769536f
+  - filename: locales/kan.json
+    checksum: 0fbe475140833c41bd507aef69a52ee5d4f50b7bb48bdeece3439c50e8fac40e
+  - filename: locales/ara.json
+    checksum: 750acb34283ba1d6f4bf9228f178d86b507c9951482e826dc0c39bc65f09542c
+  - filename: locales/tam.json
+    checksum: 1a1b6756808b1640dea3bb31931ee13b2b52c1a8afc5b2cf8b92b218605e2ef0
+  - filename: locales/en.json
+    checksum: 168ed8395903f524df4c6ae245cc09922efe115420123a6bf531a6cbbcb37eec
+  - filename: locales/spa.json
+    checksum: 0512efe6eb481f24aa31c5647776d7590b88275b5ab7d7e4c51bb6b9b8e0a0c0
+  - filename: locales/fil.json
+    checksum: f55e257a5deb40b4d3c07ed7beae31c62a75188e776b9e3154f7f07353b86f3f
     version: ""

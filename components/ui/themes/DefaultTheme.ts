@@ -25,6 +25,7 @@ const Colors = {
   DimGray: '#737373',
   platinumGrey: '#EDEDED',
   Orange: '#F2811D',
+  Blue: '#0000FF',
   LightGrey: '#F7F7F7',
   ShadeOfGrey: '#6F6F6F',
   mediumDarkGrey: '#7B7B7B',
@@ -128,6 +129,7 @@ export const DefaultTheme = {
     warningLogoBgColor: Colors.warningLogoBg,
     tooltipIcon: Colors.toolTip,
     toolTipPointerColor: Colors.toolTipPointer,
+    urlLink: Colors.Orange,
   },
   Styles: StyleSheet.create({
     title: {
@@ -769,9 +771,21 @@ export const DefaultTheme = {
       fontFamily: 'Inter_600SemiBold',
       lineHeight: 18,
     },
+    helpHeader: {
+      color: Colors.Black,
+      fontFamily: 'Inter_700Bold',
+      fontSize: 18,
+      lineHeight: 19,
+      paddingTop: 5,
+      margin: 7,
+    },
     helpDetails: {
       margin: 5,
       color: Colors.Gray44,
+      fontFamily: 'Inter_600SemiBold',
+    },
+    urlLinkText: {
+      color: Colors.Orange,
       fontFamily: 'Inter_600SemiBold',
     },
     aboutDetails: {
