@@ -224,11 +224,11 @@ export const backupRestoreMachine = model.createMachine(
         const result = await unZipAndRemoveFile(bkpZip);
         return result;
       },
-      readBackupFile: context => async callack => {
+      readBackupFile: context => async callback => {
         const dataFromBackupFile = await fileStorage.readFile(
           getBackupFilePath(context.fileName),
         );
-        callack(model.events.DATA_FROM_FILE(dataFromBackupFile));
+        callback(model.events.DATA_FROM_FILE(dataFromBackupFile));
       },
     },
 

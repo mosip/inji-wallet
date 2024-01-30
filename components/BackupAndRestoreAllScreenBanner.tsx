@@ -34,10 +34,10 @@ export const BackupAndRestoreAllScreenBanner: React.FC = () => {
 
     return (
       <BannerNotification
-        key={`restoreFailure-${backUpController.backupErrorReason}`}
+        key={`restoreFailure-${restoreController.restoreErrorReason}`}
         message={translation}
         onClosePress={restoreController.DISMISS}
-        testId={`restoreFailure-${backUpController.backupErrorReason}`}
+        testId={`restoreFailure-${restoreController.restoreErrorReason}`}
         customStyle={Theme.Styles.dataBackupFailure}
       />
     );
