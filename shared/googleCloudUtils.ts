@@ -101,7 +101,15 @@ class Cloud {
         'Error while checking if user is already signed in ',
         error,
       );
+      let errorReason: null | string = null;
+      if (
+        error.toString() === 'Error: NetworkError' ||
+        error.toString() === ' Error: NetworkError'
+      )
+        errorReason = NETWORK_REQUEST_FAILED;
+      //TODO: resolve and reject promise so it can be handled in onError
       return {
+        error: errorReason || error,
         isSignedIn: false,
       };
     }
@@ -229,6 +237,7 @@ export type SignInResult = {
 
 export type isSignedInResult = {
   isSignedIn: boolean;
+  error?: string | null;
   profileInfo?: ProfileInfo;
 };
 

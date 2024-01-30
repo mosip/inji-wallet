@@ -8,6 +8,7 @@ import Cloud, {
 } from '../../shared/googleCloudUtils';
 import NetInfo from '@react-native-community/netinfo';
 import {ErrorMessage} from '../../shared/openId4VCI/Utils';
+import {NETWORK_REQUEST_FAILED} from '../../shared/constants';
 
 const model = createModel(
   {
@@ -56,6 +57,10 @@ export const backupAndRestoreMachine = model.createMachine(
               cond: 'isSignedIn',
               actions: ['setProfileInfo', 'unsetIsLoading'],
               target: 'backupAndRestore',
+            },
+            {
+              cond: 'isNetworkError',
+              target: 'noInternet',
             },
             {
               actions: ['unsetIsLoading'],
@@ -162,6 +167,7 @@ export const backupAndRestoreMachine = model.createMachine(
 
     guards: {
       isInternetConnected: (_, event) => event.data.isConnected,
+      isNetworkError: (_, event) => event.data.error === NETWORK_REQUEST_FAILED,
       isSignedIn: (_context, event) =>
         (event.data as isSignedInResult).isSignedIn,
       isSignInSuccessful: (_context, event) =>
