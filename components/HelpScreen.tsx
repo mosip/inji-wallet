@@ -11,15 +11,16 @@ export const HelpScreen: React.FC<HelpScreenProps> = props => {
   const {t} = useTranslation('HelpScreen');
 
   const [showHelpPage, setShowHelpPage] = useState(false);
-  const [hereUrl, setHereUrl] = useState('');
+  var [injiHelpUrl, setInjiHelpUrl] = useState('');
 
   useEffect(() => {
     getAllConfigurations().then(response => {
-      setHereUrl(response.aboutInjiUrl);
+      setInjiHelpUrl(response.aboutInjiUrl);
     });
   }, []);
 
-  var diffTypesOfIdsUrl = hereUrl.slice(0, -4);
+  const diffTypesOfIdsUrl =
+    'https://docs.mosip.io/1.2.0/id-lifecycle-management/identifiers';
 
   const hyperLinkString = (
     word: string,
@@ -96,7 +97,7 @@ export const HelpScreen: React.FC<HelpScreenProps> = props => {
               {t('detail-3')}
               {hyperLinkString(
                 'here',
-                hereUrl,
+                injiHelpUrl,
                 '/end-user-guide#downloading-vc',
               )}
             </Text>
@@ -111,7 +112,7 @@ export const HelpScreen: React.FC<HelpScreenProps> = props => {
               {t('detail-13')}
               {hyperLinkString(
                 'here',
-                hereUrl,
+                injiHelpUrl,
                 '/end-user-guide#activating-a-vc',
               )}
             </Text>
@@ -122,7 +123,7 @@ export const HelpScreen: React.FC<HelpScreenProps> = props => {
               {t('detail-14a')}
               {hyperLinkString(
                 'here',
-                hereUrl,
+                injiHelpUrl,
                 '/overview/features/feature-workflows#id-4.-qr-code-login-process',
               )}
             </Text>
@@ -135,14 +136,14 @@ export const HelpScreen: React.FC<HelpScreenProps> = props => {
               {t('howToShareACard?')}
             </Text>
             <Text style={Theme.TextStyles.helpDetails}>{t('detail-6')}</Text>
-            <Text margin="7" style={Theme.TextStyles.header}>
+            <Text style={Theme.TextStyles.header}>
               {t('howToRemoveACardFromTheWallet?')}
             </Text>
             <Text style={Theme.TextStyles.helpDetails}>
               {t('detail-4a')}
               {hyperLinkString(
                 'here',
-                hereUrl,
+                injiHelpUrl,
                 '/end-user-guide#deleting-a-vc',
               )}
               {t('detail-4b')}
