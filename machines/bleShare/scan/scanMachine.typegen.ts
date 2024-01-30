@@ -38,8 +38,7 @@ export interface Typegen0 {
     disconnect:
       | 'done.invoke.scan.clearingConnection:invocation[0]'
       | 'done.invoke.scan.disconnectDevice:invocation[0]'
-      | 'done.invoke.scan.reviewing.navigatingToHistory:invocation[0]'
-      | 'done.invoke.scan.reviewing.navigatingToHome:invocation[0]';
+      | 'done.invoke.scan.reviewing.disconnect:invocation[0]';
     monitorConnection: 'done.invoke.scan:invocation[0]';
     requestBluetooth: 'done.invoke.scan.checkBluetoothState.requesting:invocation[0]';
     requestNearByDevicesPermission: 'done.invoke.scan.checkNearbyDevicesPermission.requesting:invocation[0]';
@@ -144,12 +143,7 @@ export interface Typegen0 {
     checkNearByDevicesPermission: 'APP_ACTIVE' | 'START_PERMISSION_CHECK';
     checkStorageAvailability: 'RESET' | 'SCREEN_FOCUS';
     createVp: never;
-    disconnect:
-      | ''
-      | 'DISCONNECT'
-      | 'DISMISS'
-      | 'LOCATION_ENABLED'
-      | 'SCREEN_BLUR';
+    disconnect: '' | 'DISMISS' | 'LOCATION_ENABLED' | 'SCREEN_BLUR';
     monitorConnection: 'DISMISS' | 'SCREEN_BLUR' | 'xstate.init';
     requestBluetooth: 'BLUETOOTH_STATE_DISABLED';
     requestNearByDevicesPermission: 'NEARBY_DISABLED';
@@ -200,9 +194,8 @@ export interface Typegen0 {
     | 'reviewing.accepted'
     | 'reviewing.cancelling'
     | 'reviewing.creatingVp'
+    | 'reviewing.disconnect'
     | 'reviewing.invalidIdentity'
-    | 'reviewing.navigatingToHistory'
-    | 'reviewing.navigatingToHome'
     | 'reviewing.rejected'
     | 'reviewing.selectingVc'
     | 'reviewing.sendingVc'
@@ -231,9 +224,8 @@ export interface Typegen0 {
           | 'accepted'
           | 'cancelling'
           | 'creatingVp'
+          | 'disconnect'
           | 'invalidIdentity'
-          | 'navigatingToHistory'
-          | 'navigatingToHome'
           | 'rejected'
           | 'selectingVc'
           | 'sendingVc'

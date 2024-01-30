@@ -35,18 +35,15 @@ export const MiniCardViewActivationStatus: React.FC<
 > = props => {
   return (
     <>
-      {props.verifiableCredential ? (
-        props.emptyWalletBindingId ? (
-          <WalletUnverifiedIcon />
-        ) : (
-          <WalletVerifiedIcon />
-        )
-      ) : null}
+      {props.emptyWalletBindingId ? (
+        <WalletUnverifiedIcon />
+      ) : (
+        <WalletVerifiedIcon />
+      )}
     </>
   );
 };
 
 interface ExistingMiniCardViewActivationStatusProps {
-  verifiableCredential: VerifiableCredential;
   emptyWalletBindingId: boolean;
 }

@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {Pressable} from 'react-native';
+import {Pressable, View} from 'react-native';
 import {ActorRefFrom} from 'xstate';
 import {
   ExistingMosipVCItemEvents,
@@ -67,7 +67,11 @@ export const VCCardView: React.FC<
   }, [verifiableCredential?.wellKnown]);
 
   if (!isVCLoaded(verifiableCredential, fields)) {
-    return <VCCardSkeleton />;
+    return (
+      <View style={Theme.Styles.closeCardBgContainer}>
+        <VCCardSkeleton />
+      </View>
+    );
   }
 
   return (
@@ -75,7 +79,6 @@ export const VCCardView: React.FC<
       <Pressable
         accessible={false}
         onPress={() => props.onPress(service)}
-        disabled={!verifiableCredential}
         style={
           props.selected
             ? Theme.Styles.selectedBindedVc

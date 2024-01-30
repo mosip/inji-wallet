@@ -228,7 +228,8 @@ export const PurpleTheme = {
       flex: 1,
       backgroundColor: Colors.Grey6,
       borderRadius: 4,
-      padding: 5,
+      padding: 10,
+      paddingRight: 20,
     },
     closeDetailsContainer: {
       flex: 1,

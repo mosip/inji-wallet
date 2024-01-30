@@ -60,7 +60,6 @@ export const VCCardViewContent: React.FC<
               fieldValue={getLocalizedField(
                 props.credential?.credentialSubject['fullName'],
               )}
-              verifiableCredential={props.credential}
               wellknown={props.wellknown}
             />
 
@@ -73,7 +72,6 @@ export const VCCardViewContent: React.FC<
                 )
               }
               wellknown={props.wellknown}
-              verifiableCredential={props.credential}
             />
           </Column>
 
@@ -87,7 +85,6 @@ export const VCCardViewContent: React.FC<
           {props.flow === 'Qr Login' || props.flow === 'Vc Share' ? null : (
             <>
               <MiniCardViewActivationStatus
-                verifiableCredential={props.verifiableCredential}
                 emptyWalletBindingId={props.emptyWalletBindingId}
               />
               <Pressable

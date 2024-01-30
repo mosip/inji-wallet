@@ -65,13 +65,6 @@ export const WalletBinding: React.FC<WalletBindingProps> = props => {
             {props.label}
           </Text>
         </ListItem.Title>
-        <Text
-          testID="content"
-          weight="semibold"
-          color={Theme.Colors.walletbindingContent}
-          size="smaller">
-          {props.content}
-        </Text>
       </ListItem.Content>
 
       <BindingVcWarningOverlay

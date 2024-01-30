@@ -146,16 +146,16 @@ export class SvgImage {
     verifiableCredential: VerifiableCredential,
   ) {
     const imageUri = faceImageSource(props, verifiableCredential);
-    return verifiableCredential && imageUri ? (
-      <ImageBackground
-        imageStyle={Theme.Styles.faceImage}
-        source={{uri: imageUri}}
-        style={Theme.Styles.closeCardImage}>
-        {props.isPinned && SvgImage.pinIcon()}
-      </ImageBackground>
-    ) : (
-      <Icon name="person" color={Theme.Colors.Icon} size={88} />
-    );
+    if (imageUri) {
+      return (
+        <ImageBackground
+          imageStyle={Theme.Styles.faceImage}
+          source={{uri: imageUri}}
+          style={Theme.Styles.closeCardImage}>
+          {props.isPinned && SvgImage.pinIcon()}
+        </ImageBackground>
+      );
+    }
   }
 
   static FlipCameraIcon() {

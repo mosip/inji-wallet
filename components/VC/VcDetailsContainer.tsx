@@ -11,6 +11,5 @@ import {VCDetailView} from './Views/VCDetailView';
 export const VcDetailsContainer: React.FC<
   ExistingMosipVCItemDetailsProps | EsignetMosipVCItemDetailsProps
 > = props => {
-  if (CARD_TEMPLATIZATION === 'true') return <VCDetailView {...props} />;
-  return <MosipVCItemDetails {...props} />;
+  return <VCDetailView {...props} />;
 };

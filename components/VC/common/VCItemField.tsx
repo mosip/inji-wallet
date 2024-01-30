@@ -2,25 +2,9 @@ import {Column, Text} from '../../ui';
 import {Theme} from '../../ui/styleUtils';
 import React from 'react';
 import {setTextColor} from './VCUtils';
-import LinearGradient from 'react-native-linear-gradient';
-import ShimmerPlaceHolder from 'react-native-shimmer-placeholder';
 import {Tooltip} from 'react-native-elements';
 
-export const VCItemFieldName = ({
-  verifiableCredential,
-  fieldName,
-  wellknown,
-}) => {
-  if (!verifiableCredential) {
-    return (
-      <ShimmerPlaceHolder
-        LinearGradient={LinearGradient}
-        width={150}
-        style={{marginBottom: 5, borderRadius: 5}}
-      />
-    );
-  }
-
+export const VCItemFieldName = ({fieldName, wellknown}) => {
   return (
     <>
       {fieldName && (
@@ -37,22 +21,7 @@ export const VCItemFieldName = ({
   );
 };
 
-export const VCItemFieldValue = ({
-  verifiableCredential,
-  fieldName,
-  fieldValue,
-  wellknown,
-}) => {
-  if (!verifiableCredential) {
-    return (
-      <ShimmerPlaceHolder
-        LinearGradient={LinearGradient}
-        width={180}
-        style={{borderRadius: 5}}
-      />
-    );
-  }
-
+export const VCItemFieldValue = ({fieldName, fieldValue, wellknown}) => {
   return (
     <Tooltip
       toggleOnPress={fieldValue.length > 20}
@@ -69,7 +38,11 @@ export const VCItemFieldValue = ({
         weight="semibold"
         numLines={1}
         ellipsizeMode={'tail'}
-        style={[Theme.Styles.subtitle, setTextColor(wellknown)]}>
+        style={[
+          Theme.Styles.subtitle,
+          setTextColor(wellknown),
+          {marginTop: 5},
+        ]}>
         {fieldValue}
       </Text>
     </Tooltip>
