@@ -19,9 +19,6 @@ export const HelpScreen: React.FC<HelpScreenProps> = props => {
     });
   }, []);
 
-  const diffTypesOfIdsUrl =
-    'https://docs.mosip.io/1.2.0/id-lifecycle-management/identifiers';
-
   const hyperLinkString = (
     word: string,
     urlString: string,
@@ -29,7 +26,7 @@ export const HelpScreen: React.FC<HelpScreenProps> = props => {
   ) => {
     return (
       <Text
-        style={{color: Theme.Colors.urlLink, fontFamily: 'Inter_600SemiBold'}}
+        style={Theme.TextStyles.urlLinkText}
         onPress={() => {
           urlString && Linking.openURL(urlString + extension);
         }}>
@@ -57,40 +54,42 @@ export const HelpScreen: React.FC<HelpScreenProps> = props => {
         }}>
         <ScrollView>
           <Column fill padding="10" align="space-between">
-            <Text margin="7" style={Theme.TextStyles.header}>
-              {t('whatIsAnId?')}
-            </Text>
+            <Text style={Theme.TextStyles.helpHeader}>{t('whatIsAnId?')}</Text>
             <Text style={Theme.TextStyles.helpDetails}>{t('detail-10')}</Text>
-            <Text margin="7" style={Theme.TextStyles.header}>
+            <Text style={Theme.TextStyles.helpHeader}>
               {t('whatAreTheDifferentTypesOfId?')}
             </Text>
-            <Text style={Theme.TextStyles.helpDetails}>
-              {t('detail-11')}
-              {hyperLinkString(
-                'here',
-                diffTypesOfIdsUrl,
-                '1.2.0/id-lifecycle-management/identifiers',
-              )}
+            <Text margin="5">
+              <Text style={Theme.TextStyles.helpDetails}>{t('detail-11')}</Text>
+              <Text
+                style={Theme.TextStyles.urlLinkText}
+                onPress={() => {
+                  Linking.openURL(
+                    'https://docs.mosip.io/1.2.0/id-lifecycle-management/identifiers',
+                  );
+                }}>
+                {t('here')}
+              </Text>
             </Text>
-            <Text margin="7" style={Theme.TextStyles.header}>
+            <Text style={Theme.TextStyles.helpHeader}>
               {t('whereCanIFindTheseIds?')}
             </Text>
             <Text style={Theme.TextStyles.helpDetails}>{t('detail-12a')}</Text>
             <Text style={Theme.TextStyles.helpDetails}>{t('detail-12b')}</Text>
             <Text style={Theme.TextStyles.helpDetails}>{t('detail-12c')}</Text>
-            <Text margin="7" style={Theme.TextStyles.header}>
+            <Text style={Theme.TextStyles.helpHeader}>
               {t('whatIsaDigitalCredential?')}
             </Text>
             <Text style={Theme.TextStyles.helpDetails}>{t('detail-1')}</Text>
-            <Text margin="7" style={Theme.TextStyles.header}>
+            <Text style={Theme.TextStyles.helpHeader}>
               {t('whatCanWeDoWithDigitalCredential?')}
             </Text>
             <Text style={Theme.TextStyles.helpDetails}>{t('detail-2')}</Text>
-            <Text margin="7" style={Theme.TextStyles.header}>
+            <Text style={Theme.TextStyles.helpHeader}>
               {t('whatIsAVerifiableCredential?')}
             </Text>
             <Text style={Theme.TextStyles.helpDetails}>{t('detail-15')}</Text>
-            <Text margin="7" style={Theme.TextStyles.header}>
+            <Text style={Theme.TextStyles.helpHeader}>
               {t('howToAddCard?')}
             </Text>
             <Text style={Theme.TextStyles.helpDetails}>
@@ -101,11 +100,11 @@ export const HelpScreen: React.FC<HelpScreenProps> = props => {
                 '/end-user-guide#downloading-vc',
               )}
             </Text>
-            <Text margin="7" style={Theme.TextStyles.header}>
+            <Text style={Theme.TextStyles.helpHeader}>
               {t('canIAddMultipleCards?')}
             </Text>
             <Text style={Theme.TextStyles.helpDetails}>{t('detail-5')}</Text>
-            <Text margin="7" style={Theme.TextStyles.header}>
+            <Text style={Theme.TextStyles.helpHeader}>
               {t('whyDoesMyVcSayActivationIsPending?')}
             </Text>
             <Text style={Theme.TextStyles.helpDetails}>
@@ -116,7 +115,7 @@ export const HelpScreen: React.FC<HelpScreenProps> = props => {
                 '/end-user-guide#activating-a-vc',
               )}
             </Text>
-            <Text margin="7" style={Theme.TextStyles.header}>
+            <Text style={Theme.TextStyles.helpHeader}>
               {t('whatDoYouMeanByActivatedForOnlineLogin?')}
             </Text>
             <Text style={Theme.TextStyles.helpDetails}>
@@ -128,11 +127,11 @@ export const HelpScreen: React.FC<HelpScreenProps> = props => {
               )}
             </Text>
             <Text style={Theme.TextStyles.helpDetails}>{t('detail-14b')}</Text>
-            <Text margin="7" style={Theme.TextStyles.header}>
+            <Text style={Theme.TextStyles.helpHeader}>
               {t('howToActivateACardForOnlineLogin?')}
             </Text>
             <Text style={Theme.TextStyles.helpDetails}>{t('detail-7')}</Text>
-            <Text margin="7" style={Theme.TextStyles.header}>
+            <Text style={Theme.TextStyles.helpHeader}>
               {t('howToShareACard?')}
             </Text>
             <Text style={Theme.TextStyles.helpDetails}>{t('detail-6')}</Text>
@@ -148,11 +147,11 @@ export const HelpScreen: React.FC<HelpScreenProps> = props => {
               )}
               {t('detail-4b')}
             </Text>
-            <Text margin="7" style={Theme.TextStyles.header}>
+            <Text style={Theme.TextStyles.helpHeader}>
               {t('howToViewActivityLogs?')}
             </Text>
             <Text style={Theme.TextStyles.helpDetails}>{t('detail-8')}</Text>
-            <Text margin="7" style={Theme.TextStyles.header}>
+            <Text style={Theme.TextStyles.helpHeader}>
               {t('whatHappensWhenAndroidKeystoreBiometricIsChanged?')}
             </Text>
             <Text style={Theme.TextStyles.helpDetails}>{t('detail-9')}</Text>

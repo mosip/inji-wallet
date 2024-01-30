@@ -750,9 +750,21 @@ export const DefaultTheme = {
       fontFamily: 'Inter_600SemiBold',
       lineHeight: 18,
     },
+    helpHeader: {
+      color: Colors.Black,
+      fontFamily: 'Inter_700Bold',
+      fontSize: 18,
+      lineHeight: 19,
+      paddingTop: 5,
+      margin: 7,
+    },
     helpDetails: {
       margin: 5,
       color: Colors.Gray44,
+      fontFamily: 'Inter_600SemiBold',
+    },
+    urlLinkText: {
+      color: Colors.Orange,
       fontFamily: 'Inter_600SemiBold',
     },
     aboutDetails: {
