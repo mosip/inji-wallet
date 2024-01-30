@@ -60,8 +60,8 @@ public class SharePage extends BasePage {
         return isElementDisplayed(noShareableCards);
     }
     
-    public boolean isBluetoothIsTurnedOffMessageDisplayed() {
-        return isElementDisplayed(bluetoothIsTurnedOffMessage);
+    public String isBluetoothIsTurnedOffMessageDisplayed() {
+        return getTextFromLocator(bluetoothIsTurnedOffMessage);
     }
 
     public boolean isCameraPageLoaded() {
