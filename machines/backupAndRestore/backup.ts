@@ -3,6 +3,7 @@ import {createModel} from 'xstate/lib/model';
 import {AppServices} from '../../shared/GlobalContext';
 import {bytesToMB} from '../../shared/commonUtil';
 import {
+  LAST_BACKUP_DETAILS,
   NETWORK_REQUEST_FAILED,
   TECHNICAL_ERROR,
   UPLOAD_MAX_RETRY,
@@ -23,7 +24,7 @@ import {
   sendImpressionEvent,
   sendStartEvent,
 } from '../../shared/telemetry/TelemetryUtils';
-import {BackupFileMeta} from '../../types/backup-and-restore/backup';
+import {BackupDetails} from '../../types/backup-and-restore/backup';
 import {StoreEvents} from '../store';
 
 const model = createModel(
@@ -31,7 +32,7 @@ const model = createModel(
     serviceRefs: {} as AppServices,
     dataFromStorage: {},
     fileName: '',
-    lastBackupDetails: null as null | BackupFileMeta,
+    lastBackupDetails: null as null | BackupDetails,
     errorReason: '' as string,
   },
   {
@@ -60,22 +61,19 @@ export const backupMachine = model.createMachine(
     },
     id: 'backup',
     initial: 'init',
+    entry: 'getLastBackupDetails',
     on: {
       DATA_BACKUP: [
         {
           target: 'backingUp',
         },
       ],
+      STORE_RESPONSE: {
+        actions: 'setLastBackupDetails',
+      },
     },
     states: {
       init: {
-        invoke: {
-          src: 'fetchLastBackupData',
-          onDone: {
-            actions: 'extractLastBackupDetails',
-          },
-          onError: {},
-        },
         on: {
           DATA_BACKUP: [
             {
@@ -132,7 +130,6 @@ export const backupMachine = model.createMachine(
             invoke: {
               src: 'zipBackupFile',
               onDone: {
-                actions: 'extractLastBackupDetails',
                 target: 'uploadBackupFile',
               },
               onError: {
@@ -144,11 +141,16 @@ export const backupMachine = model.createMachine(
             invoke: {
               src: 'uploadBackupFile',
               onDone: {
-                target: 'success',
+                actions: ['extractLastBackupDetails', 'storeLastBackupDetails'],
               },
               onError: {
                 actions: ['setBackupErrorReason'],
                 target: 'failure',
+              },
+            },
+            on: {
+              STORE_RESPONSE: {
+                target: 'success',
               },
             },
           },
@@ -195,15 +197,34 @@ export const backupMachine = model.createMachine(
       }),
 
       extractLastBackupDetails: model.assign((context, event) => {
-        const {ctime: creationTime, size} = event.data;
-        const backupFileMeta = {
-          backupCreationTime: creationTime,
-          backupFileSize: bytesToMB(size),
-        };
+        const {backupDetails} = event.data;
         return {
           ...context,
-          lastBackupDetails: backupFileMeta,
+          lastBackupDetails: backupDetails,
         };
+      }),
+
+      setLastBackupDetails: model.assign((context, event) => {
+        return {
+          ...context,
+          lastBackupDetails: event.response,
+        };
+      }),
+
+      storeLastBackupDetails: send(
+        context => {
+          const {lastBackupDetails} = context;
+          return StoreEvents.SET(LAST_BACKUP_DETAILS, lastBackupDetails);
+        },
+        {
+          to: context => context.serviceRefs.store,
+        },
+      ),
+
+      getLastBackupDetails: send(StoreEvents.GET(LAST_BACKUP_DETAILS), {
+        to: context => {
+          return context.serviceRefs.store;
+        },
       }),
 
       fetchAllDataFromDB: send(StoreEvents.EXPORT(), {
@@ -218,7 +239,7 @@ export const backupMachine = model.createMachine(
             [TECHNICAL_ERROR]: 'technicalError',
             [NETWORK_REQUEST_FAILED]: 'networkError',
           };
-          return reasons[event.data] || reasons[TECHNICAL_ERROR];
+          return reasons[event.data.error] || reasons[TECHNICAL_ERROR];
         },
       }),
 
@@ -254,15 +275,6 @@ export const backupMachine = model.createMachine(
     },
 
     services: {
-      fetchLastBackupData: () => async () => {
-        const availableBackupFiles = await fileStorage.getAllFilesInDirectory(
-          backupDirectoryPath,
-        );
-        if (availableBackupFiles.length > 0) {
-          return await fileStorage.getInfo(availableBackupFiles[0].path);
-        }
-      },
-
       checkStorageAvailability: () => async () => {
         try {
           console.log('Checking storage availability...');

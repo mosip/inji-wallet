@@ -5,10 +5,11 @@ import {
 import {CloudStorage, CloudStorageScope} from 'react-native-cloud-storage';
 import {GOOGLE_ANDROID_CLIENT_ID} from 'react-native-dotenv';
 import {readFile, writeFile} from 'react-native-fs';
+import {BackupDetails} from '../types/backup-and-restore/backup';
+import {bytesToMB} from './commonUtil';
 import {NETWORK_REQUEST_FAILED} from './constants';
 import fileStorage, {backupDirectoryPath, zipFilePath} from './fileStorage';
 import {request} from './request';
-import {getBackupFileName} from './commonUtil';
 
 class Cloud {
   static status = {
@@ -126,9 +127,12 @@ class Cloud {
     fileName: string,
     retryCounter: number,
     error: string | undefined = undefined,
-  ): Promise<string> {
+  ): Promise<CloudUploadResult> {
     if (retryCounter < 0 || error === NETWORK_REQUEST_FAILED) {
-      return Promise.reject(error);
+      return Promise.reject({
+        status: this.status.FAILURE,
+        error: error || 'Retry limit reached',
+      });
     }
 
     const cloudFileName = `/${fileName}.zip`;
@@ -152,12 +156,19 @@ class Cloud {
       );
 
       if (isFileUploaded) {
-        const backupFileMeta = await fileStorage.getInfo(filePath);
-        // return backupFileMeta;
+        const {ctime: creationTime, size} = await fileStorage.getInfo(filePath);
+        const backupDetails = {
+          backupCreationTime: creationTime,
+          backupFileSize: bytesToMB(size),
+        };
         console.log('wrote to cloudFileName ', cloudFileName);
         console.log('writeResult ', writeResult);
         await this.removeOldDriveBackupFiles(`${fileName}.zip`);
-        return Promise.resolve(Cloud.status.SUCCESS);
+        return Promise.resolve({
+          status: this.status.SUCCESS,
+          error: null,
+          backupDetails,
+        });
       }
     } catch (error) {
       console.log(
@@ -168,6 +179,8 @@ class Cloud {
         error.toString() === ' Error: NetworkError'
       ) {
         uploadError = NETWORK_REQUEST_FAILED;
+      } else {
+        uploadError = error;
       }
     }
 
@@ -217,4 +230,10 @@ export type SignInResult = {
 export type isSignedInResult = {
   isSignedIn: boolean;
   profileInfo?: ProfileInfo;
+};
+
+export type CloudUploadResult = {
+  status: string;
+  error: string | null;
+  backupDetails?: BackupDetails;
 };

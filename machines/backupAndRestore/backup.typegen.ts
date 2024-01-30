@@ -18,11 +18,6 @@ export interface Typegen0 {
       data: unknown;
       __tip: 'See the XState TS docs to learn how to strongly type this.';
     };
-    'done.invoke.backup.init:invocation[0]': {
-      type: 'done.invoke.backup.init:invocation[0]';
-      data: unknown;
-      __tip: 'See the XState TS docs to learn how to strongly type this.';
-    };
     'error.platform.backup.backingUp.checkStorageAvailability:invocation[0]': {
       type: 'error.platform.backup.backingUp.checkStorageAvailability:invocation[0]';
       data: unknown;
@@ -39,7 +34,6 @@ export interface Typegen0 {
   };
   invokeSrcNameMap: {
     checkStorageAvailability: 'done.invoke.backup.backingUp.checkStorageAvailability:invocation[0]';
-    fetchLastBackupData: 'done.invoke.backup.init:invocation[0]';
     uploadBackupFile: 'done.invoke.backup.backingUp.uploadBackupFile:invocation[0]';
     writeDataToFile: 'done.invoke.backup.backingUp.writeDataToFile:invocation[0]';
     zipBackupFile: 'done.invoke.backup.backingUp.zipBackupFile:invocation[0]';
@@ -51,10 +45,9 @@ export interface Typegen0 {
     services: never;
   };
   eventsCausingActions: {
-    extractLastBackupDetails:
-      | 'done.invoke.backup.backingUp.zipBackupFile:invocation[0]'
-      | 'done.invoke.backup.init:invocation[0]';
+    extractLastBackupDetails: 'done.invoke.backup.backingUp.uploadBackupFile:invocation[0]';
     fetchAllDataFromDB: 'done.invoke.backup.backingUp.checkStorageAvailability:invocation[0]';
+    getLastBackupDetails: 'DATA_BACKUP' | 'xstate.init';
     sendDataBackupFailureEvent:
       | 'STORE_ERROR'
       | 'done.invoke.backup.backingUp.checkStorageAvailability:invocation[0]'
@@ -62,13 +55,15 @@ export interface Typegen0 {
       | 'error.platform.backup.backingUp.uploadBackupFile:invocation[0]'
       | 'error.platform.backup.backingUp.zipBackupFile:invocation[0]';
     sendDataBackupStartEvent: 'DATA_BACKUP' | 'FETCH_DATA';
-    sendDataBackupSuccessEvent: 'done.invoke.backup.backingUp.uploadBackupFile:invocation[0]';
+    sendDataBackupSuccessEvent: 'STORE_RESPONSE';
     setBackUpNotPossible:
       | 'STORE_ERROR'
       | 'error.platform.backup.backingUp.checkStorageAvailability:invocation[0]';
     setBackupErrorReason: 'error.platform.backup.backingUp.uploadBackupFile:invocation[0]';
     setDataFromStorage: 'STORE_RESPONSE';
     setFileName: 'FILE_NAME';
+    setLastBackupDetails: 'STORE_RESPONSE';
+    storeLastBackupDetails: 'done.invoke.backup.backingUp.uploadBackupFile:invocation[0]';
   };
   eventsCausingDelays: {};
   eventsCausingGuards: {
@@ -76,7 +71,6 @@ export interface Typegen0 {
   };
   eventsCausingServices: {
     checkStorageAvailability: 'DATA_BACKUP' | 'FETCH_DATA';
-    fetchLastBackupData: 'DATA_BACKUP' | 'DISMISS' | 'xstate.init';
     uploadBackupFile: 'done.invoke.backup.backingUp.zipBackupFile:invocation[0]';
     writeDataToFile: 'STORE_RESPONSE';
     zipBackupFile: 'FILE_NAME';
