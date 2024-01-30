@@ -164,7 +164,7 @@ const BackupAndRestoreScreen: React.FC<BackupAndRestoreProps> = props => {
       arrowLeft={true}
       onDismiss={props.onBackPress}>
       <BackupAndRestoreAllScreenBanner />
-      <ScrollView
+      <View
         style={{
           backgroundColor: Theme.Colors.lightGreyBackgroundColor,
           flex: 1,
@@ -174,13 +174,13 @@ const BackupAndRestoreScreen: React.FC<BackupAndRestoreProps> = props => {
             <LoaderAnimation />
           </Column>
         ) : (
-          <React.Fragment>
+          <ScrollView>
             {LastBackupSection}
             {AccountSection}
             {RestoreSection}
-          </React.Fragment>
+          </ScrollView>
         )}
-      </ScrollView>
+      </View>
     </Modal>
   );
 };
