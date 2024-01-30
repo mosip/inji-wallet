@@ -583,8 +583,11 @@
     "loadingTitle": "Cargando configuración",
     "loadingSubtitle": "Cargando...",
     "errors": {
-      "permissionErrorTitle": "¡Permiso denegado!",
-      "permissionErrorMessage": "Notamos que canceló la creación de la configuración de copia de seguridad de datos. Recomendamos encarecidamente revisar la configuración de la copia de seguridad de datos para garantizar la disponibilidad de sus datos. Haga clic en `Configurar ajustes` para configurar la copia de seguridad de datos ahora, o `Cancelar` para volver a la pantalla de configuración.",
+      "permissionDenied": {
+        "title": "¡Permiso denegado!",
+        "message": "Notamos que canceló la creación de la configuración de copia de seguridad de datos. Recomendamos encarecidamente revisar la configuración de la copia de seguridad de datos para garantizar la disponibilidad de sus datos.",
+        "helpText": "Haga clic en \"Configurar ajustes\" para configurar la copia de seguridad de datos ahora, o \"Cancelar\" para volver a la pantalla de configuración."
+      },
       "noInternetConnection": {
         "title": "Sin conexión a Internet",
         "message": "Por favor verifique su conexión y vuelva a intentarlo"

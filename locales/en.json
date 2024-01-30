@@ -589,8 +589,11 @@
     "loadingTitle": "Loading setting up",
     "loadingSubtitle": "Loading...",
     "errors": {
-      "permissionErrorTitle": "Permission Denied!",
-      "permissionErrorMessage": "We noticed that you've cancelled the creation of data backup settings. We strongly recommend revisiting the data backup settings to ensure your data availability. Click “Configure Settings” to set up data backup now, or “Cancel” to go back to settings screen.",
+      "permissionDenied": {
+        "title": "Permission Denied!",
+        "message": "We noticed that you've cancelled the creation of data backup settings. We strongly recommend revisiting the data backup settings to ensure your data availability. ",
+        "helpText": "Click “Configure Settings” to set up data backup now, or “Cancel” to go back to settings screen."
+      },
       "noInternetConnection": {
         "title": "No internet connection",
         "message": "Please check your connection and retry"

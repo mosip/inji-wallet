@@ -52,12 +52,14 @@ export const DataBackupAndRestore: React.FC = ({} = () => {
       </Pressable>
 
       {controller.isSigningInFailed && (
-        // TODO: make Error UI to match mockup
         <Error
           isModal
+          alignActionsOnEnd
+          showClose={false}
           isVisible={controller.isSigningInFailed}
-          title={t('errors.permissionErrorTitle')}
-          message={t('errors.permissionErrorMessage')}
+          title={t('errors.permissionDenied.title')}
+          message={t('errors.permissionDenied.message')}
+          helpText={t('errors.permissionDenied.helpText')}
           image={SvgImage.PermissionDenied()}
           goBack={controller.GO_BACK}
           goBackButtonVisible
@@ -72,6 +74,7 @@ export const DataBackupAndRestore: React.FC = ({} = () => {
           testID={`networkOffError`}
           isVisible={controller.isNetworkOff}
           isModal={true}
+          showClose
           title={t('errors.noInternetConnection.title')}
           message={t('errors.noInternetConnection.message')}
           onDismiss={controller.DISMISS}
