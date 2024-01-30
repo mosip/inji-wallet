@@ -42,7 +42,7 @@ configure_platform() {
         APP_NAME="Inji_universal.apk"
         APP_TYPE="ANDROID_APP"
         TEST_PACKAGE_NAME="Android-Test"
-        TEST_SPEC_ARN="arn:aws:devicefarm:us-west-2::upload:100e31e8-12ac-11e9-ab14-d663b5a4a910"
+        TEST_SPEC_ARN="arn:aws:devicefarm:us-west-2::upload:100e31e8-12ac-11e9-ab14-d663b5a4a920"
 
         cd "$project_path/../android/app/build/outputs/apk/residentapp/release"
         local app_path=$(pwd)
