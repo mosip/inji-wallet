@@ -4,6 +4,7 @@ import {AppServices} from '../../shared/GlobalContext';
 import {bytesToMB} from '../../shared/commonUtil';
 import {
   LAST_BACKUP_DETAILS,
+  MY_VCS_STORE_KEY,
   NETWORK_REQUEST_FAILED,
   TECHNICAL_ERROR,
   UPLOAD_MAX_RETRY,
@@ -83,9 +84,23 @@ export const backupMachine = model.createMachine(
         },
       },
       backingUp: {
-        initial: 'checkStorageAvailability',
+        initial: 'checkDataAvailabilityForBackup',
         states: {
           idle: {},
+          checkDataAvailabilityForBackup: {
+            entry: 'loadVcs',
+            on: {
+              STORE_RESPONSE: [
+                {
+                  cond: 'isVCFound',
+                  target: 'checkStorageAvailability',
+                },
+                {
+                  target: 'failure',
+                },
+              ],
+            },
+          },
           checkStorageAvailability: {
             entry: ['sendDataBackupStartEvent'],
             invoke: {
@@ -190,6 +205,10 @@ export const backupMachine = model.createMachine(
         fileName: (_context, event) => {
           return event.filename;
         },
+      }),
+
+      loadVcs: send(StoreEvents.GET(MY_VCS_STORE_KEY), {
+        to: context => context.serviceRefs.store,
       }),
 
       setBackUpNotPossible: model.assign({
@@ -309,6 +328,9 @@ export const backupMachine = model.createMachine(
       isMinimumStorageRequiredForBackupReached: (_context, event) => {
         console.log('is min reach ', Boolean(event.data));
         return Boolean(event.data);
+      },
+      isVCFound: (_context, event) => {
+        return event.response && event.response.length > 0;
       },
     },
   },
