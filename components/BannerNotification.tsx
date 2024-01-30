@@ -11,7 +11,8 @@ export const BannerNotification: React.FC<BannerNotificationProps> = props => {
       <Row
         style={
           props.customStyle
-            ? Theme.Styles.backupRestoreBanner
+            ? Theme.Styles
+                .backupRestoreBanner /* TODO: rename to style without mentioning any specific flow */
             : Theme.Styles.downloadingVcPopUp
         }>
         <Text color={Theme.Colors.whiteText} weight="semibold" size="smaller">
@@ -27,10 +28,6 @@ export const BannerNotification: React.FC<BannerNotificationProps> = props => {
       </Row>
     </View>
   );
-};
-
-BannerNotification.defaultProps = {
-  customStyle: {},
 };
 
 export interface BannerNotificationProps {
