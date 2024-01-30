@@ -108,6 +108,7 @@ export const backupMachine = model.createMachine(
               onDone: [
                 {
                   cond: 'isMinimumStorageRequiredForBackupReached',
+                  actions: 'setErrorReasonAsStorageLimitReached',
                   target: 'failure',
                 },
                 {
@@ -213,6 +214,10 @@ export const backupMachine = model.createMachine(
 
       setBackUpNotPossible: model.assign({
         errorReason: 'noDataForBackup',
+      }),
+
+      setErrorReasonAsStorageLimitReached: model.assign({
+        errorReason: 'storageLimitReached',
       }),
 
       extractLastBackupDetails: model.assign((context, event) => {

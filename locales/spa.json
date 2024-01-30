@@ -599,7 +599,8 @@
     "backupFailure": {
       "networkError": "Debido a Conexión inestable, no pudimos realizar la copia de seguridad de los datos. Vuelve a intentarlo más tarde.",
       "technicalError": "Debido a un error técnico, no pudimos realizar una copia de seguridad de los datos. Por favor, inténtelo de nuevo más tarde.",
-      "noDataForBackup": "Lo sentimos, pero no hay datos disponibles para realizar una copia de seguridad en este momento."
+      "noDataForBackup": "Lo sentimos, pero no hay datos disponibles para realizar una copia de seguridad en este momento.",
+      "storageLimitReached": "No podemos completar el proceso de copia de seguridad debido a que no hay suficiente espacio de almacenamiento en su dispositivo. Libere espacio eliminando archivos o aplicaciones innecesarios y vuelva a intentarlo."
     },
     "restoreSuccessful": "¡Tu restauración fue exitosa!",
     "restoreFailure": {

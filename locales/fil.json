@@ -604,7 +604,8 @@
     "backupFailure": {
       "networkError": "Dahil sa Hindi Matatag na Koneksyon, hindi namin nagawang isagawa ang pag-backup ng data. Pakisubukang muli sa ibang pagkakataon.",
       "technicalError": "Dahil sa Technical Error, hindi namin nagawang magsagawa ng pag-backup ng data. Subukang muli mamaya.",
-      "noDataForBackup": "Ikinalulungkot namin, ngunit walang data na magagamit upang i-back up sa ngayon."
+      "noDataForBackup": "Ikinalulungkot namin, ngunit walang data na magagamit upang i-back up sa ngayon.",
+      "storageLimitReached":"Hindi namin makumpleto ang proseso ng pag-backup dahil sa hindi sapat na espasyo sa storage sa iyong device. Mangyaring magbakante ng espasyo sa pamamagitan ng pagtanggal ng mga hindi kinakailangang file o app, at subukang muli."
     },
     "restoreSuccessful": "Ang iyong pag-restore ay matagumpay!",
     "restoreFailure": {
