@@ -122,9 +122,9 @@ fileignoreconfig:
   - filename: screens/Settings/BackupController.tsx
     checksum: 4a031b46646aa982c8f40e4c7fe0bd3e05a76a6af1ff1c2de7350ba6ebf9a839
   - filename: machines/backupRestore.ts
-    checksum: 86800380b5ebbb2bae12507c0fc31e64511f9b28a318082ba79c1148bf56cdc4
+    checksum: 500e48246a9bb08c83a2886a275f9f72acac6edb5f1edce85394ffafaa1ed195
   - filename: machines/backupRestore.typegen.ts
-    checksum: c12ff8427771baee0d33b168c4837239f970f726caa106353ef456ea7908519c
+    checksum: 4a732b953dc97b9949a131039deadfdada4728c2fc7e5c4f1c89dd8101d595c5
   - filename: machines/settings.typegen.ts
     checksum: e4ae05822f1b1c23f3f70d03dd46fd8f29ba6b52d40f2f24c121f536fbb5f2c4
   - filename: .env
@@ -146,11 +146,13 @@ fileignoreconfig:
   - filename: injitest/src/test/java/iosTestCases/CredentialRegistryTest.java
     checksum: b0808e0c511412cde21fd169a9bbeaf3b77cb48f25418e12d341cc3ce1df5898
   - filename: machines/backupAndRestore/backupAndRestore.ts
-    checksum: e86fd9e6e3b244e348432cf03e812f3e85082fd1c0743a76e1083eab6ba0e322
+    checksum: 502c3b372fa3b4ed3b4a047cb0bd0385e6d822833a6ab242c2594ff0685234f8
   - filename: machines/backupAndRestore/backupAndRestore.typegen.ts
-    checksum: a04f9256d0981c1c6843fe1bfb64b5b22a6ad6a1efc08cd4a11fcb6bdfbe9ddb
+    checksum: 509b9660553990841883c54f8986971f21c7315e7450c455bba2766738c58bee
   - filename: machines/backupAndRestore/backup.ts
-    checksum: 2a9f730f8d3079230fa6f4595a50fa5b619feda05d4029a7484d6b63b7622279
+    checksum: a0cad5f0e2633dc11a9eba031408e03dd62b2b94c00fa82d9cb29d3721b68e70
   - filename: machines/backupAndRestore/backup.typegen.ts
-    checksum: bc410af350531501a3858eaecd0d5df8030d4fc0da91788fc29b0020d877a02e
+    checksum: 0d751a7dec88014b831835784f138ff73d0aeb09008d5c4fbd66d1114f2bb1c4
+  - filename: components/BackupAndRestoreAllScreenBanner.tsx
+    checksum: d6f69f99ef882f202333924c1b0f0908b6bcb64a68093e4fe812b4a7e73d211f
     version: ""

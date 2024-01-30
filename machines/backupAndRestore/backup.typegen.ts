@@ -60,6 +60,7 @@ export interface Typegen0 {
     sendDataBackupSuccessEvent: 'STORE_RESPONSE';
     setBackUpNotPossible:
       | 'STORE_ERROR'
+      | 'STORE_RESPONSE'
       | 'error.platform.backup.backingUp.checkStorageAvailability:invocation[0]';
     setBackupErrorReason: 'error.platform.backup.backingUp.uploadBackupFile:invocation[0]';
     setDataFromStorage: 'STORE_RESPONSE';

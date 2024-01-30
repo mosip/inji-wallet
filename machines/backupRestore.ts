@@ -9,7 +9,6 @@ import fileStorage, {
 import Storage from '../shared/storage';
 import {StoreEvents} from './store';
 import Cloud from '../shared/googleCloudUtils';
-import {NETWORK_REQUEST_FAILED, TECHNICAL_ERROR} from '../shared/constants';
 import {TelemetryConstants} from '../shared/telemetry/TelemetryConstants';
 import {
   sendStartEvent,
@@ -19,6 +18,7 @@ import {
   sendEndEvent,
   getEndEventData,
 } from '../shared/telemetry/TelemetryUtils';
+import {VcEvents} from './vc';
 
 const model = createModel(
   {
@@ -129,6 +129,7 @@ export const backupRestoreMachine = model.createMachine(
             invoke: {
               src: 'deleteBkpDir',
               onDone: {
+                actions: 'refreshVCs',
                 target: 'success',
               },
             },
@@ -162,6 +163,21 @@ export const backupRestoreMachine = model.createMachine(
       setRestoreNetworkError: model.assign({
         errorReason: 'networkError',
       }),
+      loadDataToMemory: send(
+        context => {
+          return StoreEvents.RESTORE_BACKUP(context.dataFromBackupFile);
+        },
+        {to: context => context.serviceRefs.store},
+      ),
+      refreshVCs: send(VcEvents.REFRESH_MY_VCS, {
+        to: context => context.serviceRefs.vc,
+      }),
+
+      setDataFromBackupFile: model.assign({
+        dataFromBackupFile: (_context, event) => {
+          return event.dataFromBackupFile;
+        },
+      }),
       sendDataRestoreStartEvent: () => {
         sendStartEvent(
           getStartEventData(TelemetryConstants.FlowType.dataRestore),
@@ -193,18 +209,6 @@ export const backupRestoreMachine = model.createMachine(
       },
     },
 
-    loadDataToMemory: send(
-      context => {
-        return StoreEvents.RESTORE_BACKUP(context.dataFromBackupFile);
-      },
-      {to: context => context.serviceRefs.store},
-    ),
-
-    setDataFromBackupFile: model.assign({
-      dataFromBackupFile: (_context, event) => {
-        return event.dataFromBackupFile;
-      },
-    }),
     services: {
       checkStorageAvailability: () => async () => {
         return await Storage.isMinimumLimitReached('minStorageRequired');
@@ -240,6 +244,9 @@ export function createBackupRestoreMachine(serviceRefs: AppServices) {
     ...backupRestoreMachine.context,
     serviceRefs,
   });
+}
+export function selectErrorReason(state: State) {
+  return state.context.errorReason;
 }
 export function selectIsBackUpRestoring(state: State) {
   return (

@@ -104,6 +104,7 @@ export const backupAndRestoreMachine = model.createMachine(
             target: 'checkInternet',
           },
           DISMISS: {
+            actions: ['unsetIsLoading'],
             target: 'init',
           },
         },

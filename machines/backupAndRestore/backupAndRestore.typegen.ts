@@ -37,7 +37,9 @@ export interface Typegen0 {
     setProfileInfo:
       | 'done.invoke.backupAndRestore.checkSignIn:invocation[0]'
       | 'done.invoke.signIn:invocation[0]';
-    unsetIsLoading: 'done.invoke.backupAndRestore.checkSignIn:invocation[0]';
+    unsetIsLoading:
+      | 'DISMISS'
+      | 'done.invoke.backupAndRestore.checkSignIn:invocation[0]';
   };
   eventsCausingDelays: {};
   eventsCausingGuards: {

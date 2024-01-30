@@ -1,7 +1,6 @@
 import {EventFrom, StateFrom, send} from 'xstate';
 import {createModel} from 'xstate/lib/model';
 import {AppServices} from '../../shared/GlobalContext';
-import {bytesToMB} from '../../shared/commonUtil';
 import {
   LAST_BACKUP_DETAILS,
   MY_VCS_STORE_KEY,
@@ -9,8 +8,7 @@ import {
   TECHNICAL_ERROR,
   UPLOAD_MAX_RETRY,
 } from '../../shared/constants';
-import fileStorage, {
-  backupDirectoryPath,
+import {
   compressAndRemoveFile,
   writeToBackupFile,
 } from '../../shared/fileStorage';
@@ -96,6 +94,7 @@ export const backupMachine = model.createMachine(
                   target: 'checkStorageAvailability',
                 },
                 {
+                  actions: 'setBackUpNotPossible',
                   target: 'failure',
                 },
               ],

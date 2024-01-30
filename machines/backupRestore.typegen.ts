@@ -31,13 +31,14 @@ export interface Typegen0 {
     unzipBackupFile: 'done.invoke.backupRestore.restoreBackup.unzipBackupFile:invocation[0]';
   };
   missingImplementations: {
-    actions: 'loadDataToMemory' | 'setDataFromBackupFile';
+    actions: never;
     delays: never;
     guards: never;
     services: never;
   };
   eventsCausingActions: {
     loadDataToMemory: 'DATA_FROM_FILE';
+    refreshVCs: 'done.invoke.backupRestore.restoreBackup.deleteBackupDir:invocation[0]';
     sendDataRestoreFailureEvent:
       | 'STORE_ERROR'
       | 'done.invoke.backupRestore.restoreBackup.checkStorageAvailibility:invocation[0]'

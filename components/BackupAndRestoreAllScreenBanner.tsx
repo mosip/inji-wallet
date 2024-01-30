@@ -20,6 +20,7 @@ export const BackupAndRestoreAllScreenBanner: React.FC = () => {
       <BannerNotification
         message={translation}
         onClosePress={backUpController.DISMISS}
+        key={`backupFailure-${backUpController.backupErrorReason}`}
         testId={`backupFailure-${backUpController.backupErrorReason}`}
         customStyle={Theme.Styles.dataBackupFailure}
       />
@@ -28,13 +29,12 @@ export const BackupAndRestoreAllScreenBanner: React.FC = () => {
 
   function restoreFailure() {
     const translation = t(
-      `restoreFailure.${
-        restoreController.restoreErrorReason || 'technicalError'
-      }`,
+      `restoreFailure.${restoreController.restoreErrorReason}`,
     );
 
     return (
       <BannerNotification
+        key={`restoreFailure-${backUpController.backupErrorReason}`}
         message={translation}
         onClosePress={restoreController.DISMISS}
         testId={`restoreFailure-${backUpController.backupErrorReason}`}
@@ -49,6 +49,7 @@ export const BackupAndRestoreAllScreenBanner: React.FC = () => {
         <BannerNotification
           message={t('backupSuccessful')}
           onClosePress={backUpController.DISMISS}
+          key={'dataBackupSuccess'}
           testId={'dataBackupSuccess'}
           customStyle={Theme.Styles.dataBackupSuccess}
         />
@@ -60,6 +61,7 @@ export const BackupAndRestoreAllScreenBanner: React.FC = () => {
         <BannerNotification
           message={t('restoreSuccessful')}
           onClosePress={restoreController.DISMISS}
+          key={'restoreBackupSuccess'}
           testId={'restoreBackupSuccess'}
           customStyle={Theme.Styles.dataBackupSuccess}
         />
