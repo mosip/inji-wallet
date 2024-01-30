@@ -60,6 +60,7 @@ export const backupAndRestoreMachine = model.createMachine(
             },
             {
               cond: 'isNetworkError',
+              actions: ['unsetIsLoading'],
               target: 'noInternet',
             },
             {

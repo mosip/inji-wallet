@@ -144,7 +144,7 @@ fileignoreconfig:
   - filename: injitest/src/test/java/iosTestCases/CredentialRegistryTest.java
     checksum: b0808e0c511412cde21fd169a9bbeaf3b77cb48f25418e12d341cc3ce1df5898
   - filename: machines/backupAndRestore/backupAndRestore.ts
-    checksum: 502c3b372fa3b4ed3b4a047cb0bd0385e6d822833a6ab242c2594ff0685234f8
+    checksum: 846117cf13554ffde8544200ca597ceb820363c87bfbe57cffaedadc168b49ce
   - filename: machines/backupAndRestore/backupAndRestore.typegen.ts
     checksum: 509b9660553990841883c54f8986971f21c7315e7450c455bba2766738c58bee
   - filename: machines/backupAndRestore/backup.ts
