@@ -42,6 +42,7 @@ export interface Typegen0 {
   eventsCausingDelays: {};
   eventsCausingGuards: {
     isInternetConnected: 'done.invoke.backupAndRestore.checkInternet:invocation[0]';
+    isNetworkError: 'done.invoke.backupAndRestore.checkSignIn:invocation[0]';
     isSignInSuccessful: 'done.invoke.signIn:invocation[0]';
     isSignedIn: 'done.invoke.backupAndRestore.checkSignIn:invocation[0]';
   };

@@ -597,6 +597,11 @@
       "networkError": "Debido a Conexión inestable, no pudimos realizar la copia de seguridad de los datos. Vuelve a intentarlo más tarde.",
       "technicalError": "Debido a un error técnico, no pudimos realizar una copia de seguridad de los datos. Por favor, inténtelo de nuevo más tarde.",
       "noDataForBackup": "Lo sentimos, pero no hay datos disponibles para realizar una copia de seguridad en este momento."
+    },
+    "restoreSuccessful": "¡Tu restauración fue exitosa!",
+    "restoreFailure": {
+      "networkError": "Debido a una conexión inestable, no pudimos restaurar los datos. Por favor, inténtelo de nuevo más tarde.",
+      "technicalError": "Debido a un error técnico, no pudimos restaurar los datos. Por favor, inténtelo de nuevo más tarde."
     }
   },
   "AccountSelection": {
