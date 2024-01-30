@@ -59,7 +59,10 @@ export const IdInputModal: React.FC<IdInputModalProps> = props => {
               style={Theme.TextStyles.retrieveIdLabel}>
               {t('guideLabel')}
             </Text>
-            <Row crossAlign="center" style={Theme.Styles.idInputContainer}>
+            <Row
+              align="space-between"
+              crossAlign="center"
+              style={Theme.Styles.idInputContainer}>
               <Column style={Theme.Styles.idInputPicker}>
                 <Picker
                   {...testIDProps('selectIdTypePicker')}
@@ -99,7 +102,7 @@ export const IdInputModal: React.FC<IdInputModalProps> = props => {
                       height={Dimensions.get('screen').height * 0.18}
                       triggerComponent={
                         <Icon
-                          testID="toolTipInfo"
+                          {...testIDProps('IdInputToolTipInfo')}
                           name="infocirlceo"
                           type="antdesign"
                           color={Theme.Colors.tooltipIcon}

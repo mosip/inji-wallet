@@ -38,7 +38,7 @@ fileignoreconfig:
   - filename: shared/fileStorage.ts
     checksum: 5c4c9bc78446e6b25bf6e6ac276918757d6275a27ba93d253338ca629ebc0240
   - filename: shared/storage.ts
-    checksum: 837dda0fd0a3e160e62f10df44003d29e29dfce897550a85a8e74fe77a2a06db
+    checksum: 9f5e83b5356fce8f72929b35eb17f2ad2156524c374e77fdb72e08125813f483
   - filename: screens/Issuers/IssuersScreen.tsx
     checksum: 9c53e3770dbefe26e0de67ee4b7d5cc9c52d9823cbb136a1a5104dcb0a101071
   - filename: ios/Podfile.lock
@@ -106,7 +106,7 @@ fileignoreconfig:
   - filename: screens/Home/MyVcs/IdInputModal.tsx
     checksum: 7ee46d8ef4761c0e9b59f3e602e6e30be5f47221817c819e91ab10ca2203089f
   - filename: .env
-    checksum: d3023fb22734e6c7bd626f24007ba7b93e791cb0bcb8a086cb8e99f04bc31c7c
+    checksum: aac8a35413cd999696e7728fe9d6a9f76123be44498cdcad3431c314c91409c4
   - filename: machines/backup.ts
     checksum: d4b95b075ce39ed80b119014188f8903dbb46d46dd19a3757eea2ae8a06ba7ad
   - filename: machines/backup.typegen.ts
@@ -130,17 +130,15 @@ fileignoreconfig:
   - filename: machines/backupWithEncryption.ts
     checksum: 038c12d30b2312fcbd9230a1c6ddb494d2e561fe0d09741335fa80ab67e2c550
   - filename: machines/backupWithEncryption.typegen.ts
-    checksum: f5f9a71082e3f30f89e98a7913535327b31b942709ee8b5efb40e18c73ddee2a 
+    checksum: f5f9a71082e3f30f89e98a7913535327b31b942709ee8b5efb40e18c73ddee2a
   - filename: screens/Home/MyVcs/OtpVerificationModal.tsx
-    checksum: 1db1f39701019383e1e40e6ed5278177e6c9bb3d28def0935cf6d4bd9e41e63a 
+    checksum: 1db1f39701019383e1e40e6ed5278177e6c9bb3d28def0935cf6d4bd9e41e63a
   - filename: screens/Home/MyVcs/GetIdInputModal.tsx
-    checksum: e85d18cd3349e0127f1cc7173fcdfd31824e609508512a613997a73756cd4dec 
+    checksum: e85d18cd3349e0127f1cc7173fcdfd31824e609508512a613997a73756cd4dec
   - filename: .github/workflows/android-custom-build.yml
-    checksum: 4d155c6e5468effb0b82e62f6878f2bd7ff7e7c9540e16bdd28cb81b80672ac3 
+    checksum: 4d155c6e5468effb0b82e62f6878f2bd7ff7e7c9540e16bdd28cb81b80672ac3
   - filename: .github/workflows/push-triggers.yml
     checksum: 4a031b46646aa982c8f40e4c7fe0bd3e05a76a6af1ff1c2de7350ba6ebf9a839 
-  - filename: screens/Home/IntroSlidersScreen.tsx
-    checksum: 24b993e0406a49ace5b95dd05f7c4702220ec3d3f3fc2e774f20c023ef73822a 
   - filename: .env
     checksum: 4259c7c600ef49bfca798a7807a03afe9fefb1a04efd3adf224397c18117a8c1
   - filename: ios/Podfile.lock
@@ -158,5 +156,33 @@ fileignoreconfig:
   - filename: shared/fileStorage.ts
     checksum: 451e8873a635d955fe426d9a5fcf191f2d4fd74984a1a4518760e2d10e9e1817
   - filename: screens/Settings/BackupController.tsx
-    checksum: daf682b5616e45bd7b9a7c76becc617fea56be83124c3c4db838c2046e977481
+    checksum: 4a031b46646aa982c8f40e4c7fe0bd3e05a76a6af1ff1c2de7350ba6ebf9a839
+  - filename: machines/backupRestore.ts
+    checksum: d71d89a1faac64ebadaba48786de42cd9a7a7d5765238415defe822c162ab0b2
+  - filename: machines/backupRestore.typegen.ts
+    checksum: acc8934db32c3398082b1f89d9908765d3deb4dd49eaf5f68496a89fbd02b7a8
+  - filename: machines/settings.typegen.ts
+    checksum: e4ae05822f1b1c23f3f70d03dd46fd8f29ba6b52d40f2f24c121f536fbb5f2c4
+  - filename: .env
+    checksum: f26489ce4ac607884437ad06c3117cc34d6cbcbcd3dd5719790fbe01a0853ee5
+  - filename: machines/backup.ts
+    checksum: df40cc92db9e459ab19d8382713afb24ae89c88a944623bbc21a7e6b9bc327a3
+  - filename: locales/en.json
+    checksum: e87723f4bb733fa3d95cc0d4f3831ecaa8310975c177af4f4c73c35b69fa025e
+  - filename: locales/fil.json
+    checksum: 9b3aa32c09ab18c29bfd5fdbe822e1bda511627a887f8f232c52959d2170c3d3
+  - filename: locales/hin.json
+    checksum: a5f388edb087d12a9395643ba2fbafc93dfde3a3347c3dc17e89d252045660b7
+  - filename: locales/kan.json
+    checksum: c0cc2ca567eaa8a5abaa4c9a361b9b612436d10b50d60ef239fcff633eeeff57
+  - filename: locales/ara.json
+    checksum: 104f58031271f6ba6115de6e7cb5ba7a586ab6e648314c8940b035f60cab692f
+  - filename: locales/tam.json
+    checksum: a257d03d7d011602c50160d044926e7ee8a29e8f8afb3c355c05fd8aa7473534
+  - filename: locales/en.json
+    checksum: b4d07aca4534fb9fd2bb62b146bb41e588e4bc5cad6afc9531f97043ed08dbba
+  - filename: locales/spa.json
+    checksum: 06fca76095c99f313714e2d7b732e2bebb96f18be762e778ee7e3481a5a4e9ef
+  - filename: locales/fil.json
+    checksum: e9eaeb9204e4a6659e0f2a432e57e62cfb8f02b0a2f8d5a6ac81c4cdf4fa4786
     version: ""
