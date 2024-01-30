@@ -212,12 +212,17 @@ class Cloud {
     );
 
     if (fileContent.length === 0) return Promise.resolve(null);
-    // write the file content in the bkp directory path
+    // write the file content in the backup directory path, create backup directory if not exists
+    const isDirectoryExists = await fileStorage.exists(backupDirectoryPath);
+    if (!isDirectoryExists) {
+      await fileStorage.createDirectory(backupDirectoryPath);
+    }
     await writeFile(
       backupDirectoryPath + '/' + fileName,
       fileContent,
       'base64',
     );
+    console.log('successfully written the cloud downloaded zip file');
     // return the path
     return Promise.resolve(fileName.split('.zip')[0]);
   }
