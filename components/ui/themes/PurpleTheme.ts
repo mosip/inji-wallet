@@ -25,6 +25,7 @@ const Colors = {
   DimGray: '#737373',
   platinumGrey: '#EDEDED',
   Orange: '#F2811D',
+  Blue: '#0000FF',
   LightOrange: '#FDF1E6',
   LightGrey: '#FAF9FF',
   ShadeOfGrey: '#6F6F6F',
@@ -131,6 +132,7 @@ export const PurpleTheme = {
     warningLogoBgColor: Colors.warningLogoBg,
     tooltipIcon: Colors.tooltip,
     toolTipPointerColor: Colors.toolTipPointer,
+    urlLink: Colors.Purple,
   },
   Styles: StyleSheet.create({
     title: {
@@ -559,6 +561,7 @@ export const PurpleTheme = {
     },
     idInputContainer: {
       marginTop: 20,
+      width: Dimensions.get('window').width * 0.86,
     },
     idInputPicker: {
       width: Dimensions.get('window').width * 0.32,
@@ -764,9 +767,21 @@ export const PurpleTheme = {
       fontFamily: 'Inter_600SemiBold',
       lineHeight: 18,
     },
+    helpHeader: {
+      color: Colors.Black,
+      fontFamily: 'Inter_700Bold',
+      fontSize: 18,
+      lineHeight: 19,
+      paddingTop: 5,
+      margin: 7,
+    },
     helpDetails: {
       margin: 5,
       color: Colors.Gray44,
+      fontFamily: 'Inter_600SemiBold',
+    },
+    urlLinkText: {
+      color: Colors.Purple,
       fontFamily: 'Inter_600SemiBold',
     },
     aboutDetails: {

@@ -98,7 +98,7 @@ export const IdInputModal: React.FC<IdInputModalProps> = props => {
                     height={Dimensions.get('screen').height * 0.18}
                     triggerComponent={
                       <Icon
-                        testID="toolTipInfo"
+                        {...testIDProps('IdInputToolTipInfo')}
                         name="infocirlceo"
                         type="antdesign"
                         color={Theme.Colors.tooltipIcon}
