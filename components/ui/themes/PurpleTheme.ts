@@ -132,7 +132,7 @@ export const PurpleTheme = {
     warningLogoBgColor: Colors.warningLogoBg,
     tooltipIcon: Colors.tooltip,
     toolTipPointerColor: Colors.toolTipPointer,
-    urlLink: Colors.Blue,
+    urlLink: Colors.Purple,
   },
   Styles: StyleSheet.create({
     title: {

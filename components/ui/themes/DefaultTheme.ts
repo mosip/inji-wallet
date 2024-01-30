@@ -129,7 +129,7 @@ export const DefaultTheme = {
     warningLogoBgColor: Colors.warningLogoBg,
     tooltipIcon: Colors.toolTip,
     toolTipPointerColor: Colors.toolTipPointer,
-    urlLink: Colors.Blue,
+    urlLink: Colors.Orange,
   },
   Styles: StyleSheet.create({
     title: {

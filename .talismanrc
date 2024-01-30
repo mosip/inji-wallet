@@ -171,4 +171,18 @@ fileignoreconfig:
     checksum: e87723f4bb733fa3d95cc0d4f3831ecaa8310975c177af4f4c73c35b69fa025e
   - filename: locales/fil.json
     checksum: 9b3aa32c09ab18c29bfd5fdbe822e1bda511627a887f8f232c52959d2170c3d3
+  - filename: locales/hin.json
+    checksum: a5f388edb087d12a9395643ba2fbafc93dfde3a3347c3dc17e89d252045660b7
+  - filename: locales/kan.json
+    checksum: c0cc2ca567eaa8a5abaa4c9a361b9b612436d10b50d60ef239fcff633eeeff57
+  - filename: locales/ara.json
+    checksum: 104f58031271f6ba6115de6e7cb5ba7a586ab6e648314c8940b035f60cab692f
+  - filename: locales/tam.json
+    checksum: a257d03d7d011602c50160d044926e7ee8a29e8f8afb3c355c05fd8aa7473534
+  - filename: locales/en.json
+    checksum: b4d07aca4534fb9fd2bb62b146bb41e588e4bc5cad6afc9531f97043ed08dbba
+  - filename: locales/spa.json
+    checksum: 06fca76095c99f313714e2d7b732e2bebb96f18be762e778ee7e3481a5a4e9ef
+  - filename: locales/fil.json
+    checksum: e9eaeb9204e4a6659e0f2a432e57e62cfb8f02b0a2f8d5a6ac81c4cdf4fa4786
     version: ""
