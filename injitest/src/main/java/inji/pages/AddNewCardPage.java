@@ -27,18 +27,9 @@ public class AddNewCardPage extends BasePage{
     @iOSXCUITFindBy(accessibility = "Continue")
     private WebElement continueButton;
 
-    @AndroidFindBy(xpath = "(//android.widget.TextView)[4]")
+    @AndroidFindBy(accessibility = "issuersScreenDescription")
     @iOSXCUITFindBy(accessibility = "issuersScreenDescription")
     private WebElement addNewCardGuideMessage;
-    
-    @AndroidFindBy(xpath = "(//android.widget.TextView)[5]")//remove once get accesibility id
-    private WebElement addNewCardGuideMessageForEsignet;
-    
-    @AndroidFindBy(uiAutomator = "new UiSelector().textContains(\"Mangyaring piliin ang iyong gustong tagabigay mula sa mga opsyon sa ibaba upang magdagdag ng bagong card.\")")
-    private WebElement addNewCardGuideMessageInFillpino;
-    
-    @AndroidFindBy(uiAutomator = "new UiSelector().textContains(\"नया कार्ड जोड़ने के लिए कृपया नीचे दिए गए विकल्पों में से अपना पसंदीदा जारीकर्ता चुनें।\")")
-    private WebElement addNewCardGuideMessageInHindi;
     
     @AndroidFindBy(accessibility = "issuerDescription-Mosip")
     @iOSXCUITFindBy(accessibility = "issuerDescription-Mosip")
@@ -58,23 +49,10 @@ public class AddNewCardPage extends BasePage{
     
     public String  verifyLanguageForAddNewCardGuideMessage(){
     	 return getTextFromLocator(addNewCardGuideMessage);
-
-//    	switch (language) {
-//    	case "Hindi":
-//    		boolean isMessagePresentInHindi  = (actualText.equalsIgnoreCase("नया कार्ड जोड़ने के लिए कृपया नीचे दिए गए विकल्पों में से अपना पसंदीदा जारीकर्ता चुनें।")==true) ? true : false;
-//    		return isMessagePresentInHindi ;
-//    	case "English":
-//    		boolean isMessagePresentInEnglish  = (actualText.equalsIgnoreCase("Please choose your preferred issuer from the options below to add a new card.")==true) ? true : false;
-//    		return isMessagePresentInEnglish ;
-//    	case "Filipino":
-//    		boolean isMessagePresentInFilipino  = (actualText.equalsIgnoreCase("Mangyaring piliin ang iyong gustong tagabigay mula sa mga opsyon sa ibaba upang magdagdag ng bagong card.")==true) ? true : false;
-//    		return isMessagePresentInFilipino ;
-//    	}
-//    	return false;
     }
     
     public boolean isAddNewCardPageGuideMessageForEsignetDisplayed() {
-        return this.isElementDisplayed(addNewCardGuideMessageForEsignet);
+        return this.isElementDisplayed(addNewCardGuideMessage);
     }
     
     public boolean isAddNewCardPageLoaded() {
@@ -128,11 +106,11 @@ public class AddNewCardPage extends BasePage{
     }
     
     public boolean isAddNewCardGuideMessageDisplayedInFillopin() {
-        return this.isElementDisplayed(addNewCardGuideMessageInFillpino);
+        return this.isElementDisplayed(addNewCardGuideMessage);
     }
     
     public boolean isAddNewCardGuideMessageDisplayedInHindi() {
-        return this.isElementDisplayed(addNewCardGuideMessageInHindi);
+        return this.isElementDisplayed(addNewCardGuideMessage);
     }
     public boolean isIssuerDescriptionMosipDisplayed() {
         return this.isElementDisplayed(issuerDescriptionMosip);

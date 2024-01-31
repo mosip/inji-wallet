@@ -15,11 +15,7 @@ import {VCCardSkeleton} from '../common/VCCardSkeleton';
 import {VCCardViewContent} from './VCCardViewContent';
 import {useVcItemController} from '../MosipVCItem/VcItemController';
 import {getCredentialIssuersWellKnownConfig} from '../../../shared/openId4VCI/Utils';
-import {
-  CARD_VIEW_ADD_ON_FIELDS,
-  CARD_VIEW_DEFAULT_FIELDS,
-} from '../../../shared/constants';
-import {isVCLoaded} from '../common/VCUtils';
+import {CARD_VIEW_DEFAULT_FIELDS, isVCLoaded} from '../common/VCUtils';
 
 export const VCCardView: React.FC<
   ExistingMosipVCItemProps | EsignetMosipVCItemProps

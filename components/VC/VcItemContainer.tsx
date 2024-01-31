@@ -4,8 +4,8 @@ import {
   ExistingMosipVCItemProps,
   MosipVCItem,
 } from './MosipVCItem/MosipVCItem';
-import {CARD_TEMPLATIZATION} from 'react-native-dotenv';
 import {VCCardView} from './Views/VCCardView';
+import {Issuers} from '../../shared/openId4VCI/Utils';
 
 export const VcItemContainer: React.FC<
   ExistingMosipVCItemProps | EsignetMosipVCItemProps

@@ -15,6 +15,7 @@ import {VCMetadata} from '../../../shared/VCMetadata';
 import {format} from 'date-fns';
 import {EsignetMosipVCItemMachine} from '../../../machines/VCItemMachine/EsignetMosipVCItem/EsignetMosipVCItemMachine';
 import {useVcItemController} from './VcItemController';
+import {VCCardSkeleton} from '../common/VCCardSkeleton';
 
 export const MosipVCItem: React.FC<
   ExistingMosipVCItemProps | EsignetMosipVCItemProps
@@ -41,6 +42,10 @@ export const MosipVCItem: React.FC<
       ExistingMosipVCItemEvents.UPDATE_VC_METADATA(props.vcMetadata),
     );
   }, [props.vcMetadata]);
+
+  if (!verifiableCredential) {
+    return <VCCardSkeleton />;
+  }
 
   return (
     <React.Fragment>

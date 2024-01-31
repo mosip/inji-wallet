@@ -2,7 +2,6 @@ import {
   CredentialSubject,
   VerifiableCredential,
 } from '../../../types/VC/ExistingMosipVC/vc';
-import VerifiedIcon from '../../VerifiedIcon';
 import i18n, {getLocalizedField} from '../../../i18n';
 import {Row} from '../../ui';
 import {VCItemField} from './VCItemField';
@@ -13,27 +12,59 @@ import {Image} from 'react-native';
 import {Theme} from '../../ui/styleUtils';
 import {SvgImage} from '../../ui/svg';
 import {CREDENTIAL_REGISTRY_EDIT} from 'react-native-dotenv';
+import {getIDType} from '../../../shared/openId4VCI/Utils';
+import {VCVerification} from '../../VCVerification';
+
+export const CARD_VIEW_DEFAULT_FIELDS = ['fullName'];
+export const DETAIL_VIEW_DEFAULT_FIELDS = [
+  'fullName',
+  'gender',
+  'phone',
+  'dateOfBirth',
+  'email',
+  'address',
+];
+
+//todo UIN & VID to be removed once we get the fields in the wellknown endpoint
+export const CARD_VIEW_ADD_ON_FIELDS = ['UIN', 'VID'];
+export const DETAIL_VIEW_ADD_ON_FIELDS = [
+  'UIN',
+  'VID',
+  'status',
+  'credentialRegistry',
+  'idType',
+];
 
 export const getFieldValue = (
   verifiableCredential: VerifiableCredential,
   field: string,
+  wellknown: any,
   props: any,
 ) => {
   switch (field) {
     case 'status':
-      return <VerifiedIcon />;
+      return <VCVerification wellknown={wellknown} />;
     case 'idType':
-      return i18n.t('VcDetails:nationalCard');
+      return getIDType(verifiableCredential);
     case 'dateOfBirth':
       return formattedDateOfBirth(verifiableCredential);
+    case 'expiresOn':
+      return formattedDateTime(
+        verifiableCredential?.credentialSubject.expiresOn,
+      );
     case 'credentialRegistry':
       return props?.vc?.credentialRegistry;
     case 'address':
       return getLocalizedField(
         getFullAddress(verifiableCredential?.credentialSubject),
       );
-    default:
-      return getLocalizedField(verifiableCredential?.credentialSubject[field]);
+    default: {
+      const fieldValue = verifiableCredential?.credentialSubject[field];
+      if (Array.isArray(fieldValue) && typeof fieldValue[0] != Object) {
+        return fieldValue;
+      }
+      return getLocalizedField(fieldValue);
+    }
   }
 };
 
@@ -64,9 +95,9 @@ export const setBackgroundColour = (wellknown: any) => {
 };
 
 export const setTextColor = (wellknown: any) => {
-  if (wellknown && wellknown.credentials_supported[0]?.display) {
+  if (wellknown && wellknown?.credentials_supported[0]?.display) {
     return {
-      color: wellknown.credentials_supported[0].display[0]?.text_color
+      color: wellknown.credentials_supported[0]?.display[0]?.text_color
         ? wellknown.credentials_supported[0].display[0].text_color
         : Theme.Colors.textValue,
     };
@@ -105,6 +136,13 @@ function formattedDateOfBirth(verifiableCredential: any) {
   return dateOfBirth;
 }
 
+function formattedDateTime(timeStamp: any) {
+  if (timeStamp) {
+    return new Date(timeStamp).toLocaleDateString();
+  }
+  return timeStamp;
+}
+
 export const fieldItemIterator = (
   fields: any[],
   verifiableCredential: any,
@@ -113,7 +151,12 @@ export const fieldItemIterator = (
 ) => {
   return fields.map(field => {
     const fieldName = getFieldName(field, wellknown);
-    const fieldValue = getFieldValue(verifiableCredential, field, props);
+    const fieldValue = getFieldValue(
+      verifiableCredential,
+      field,
+      wellknown,
+      props,
+    );
     if (
       (field === 'credentialRegistry' &&
         CREDENTIAL_REGISTRY_EDIT === 'false') ||
@@ -126,7 +169,7 @@ export const fieldItemIterator = (
         style={{flexDirection: 'row', flex: 1}}
         align="space-between"
         let
-        margin="0 8 5 8">
+        margin="0 8 5 0">
         <VCItemField
           key={field}
           fieldName={fieldName}

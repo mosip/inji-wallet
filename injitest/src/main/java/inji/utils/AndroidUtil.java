@@ -38,6 +38,23 @@ public class AndroidUtil {
         }
     }
     
+    public static void disableBluetooth() {
+        try {
+        	ProcessBuilder processBuilder=null;
+            String osName = System.getProperty("os.name");
+            if (osName.contains("Windows")) {
+            	processBuilder = new ProcessBuilder("cmd.exe", "/c", "adb shell cmd bluetooth_manager disable");
+               
+            } else {
+            	processBuilder = new ProcessBuilder("/bin/bash", "-c", "adb shell cmd bluetooth_manager disable");
+            }
+            processBuilder.redirectErrorStream(true);
+            processBuilder.start();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    
     public static void ForceStopeApp() {
         try {
         	ProcessBuilder processBuilder=null;

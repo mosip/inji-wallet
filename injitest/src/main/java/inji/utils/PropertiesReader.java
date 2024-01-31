@@ -61,4 +61,10 @@ public class PropertiesReader {
     public String getAppiumServerStartStatus() {
         return getProperty("startAppiumServer");
     }
+    
+    public static String getTestData()
+	{
+		return JsonUtil.readJsonFileText("personaData.json");
+	}
+
 }

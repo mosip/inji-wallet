@@ -1,8 +1,10 @@
 import React from 'react';
 import Svg, {Image} from 'react-native-svg';
 import {Theme} from './styleUtils';
-import {Icon} from 'react-native-elements';
 import {ImageBackground} from 'react-native';
+import Home from '../../assets/Home_tab_icon.svg';
+import History from '../../assets/History_tab_icon.svg';
+import Share from '../../assets/Scan_tab_icon.svg';
 import PinICon from '../../assets/Pin_Icon.svg';
 import InjiSmallLogo from '../../assets/Inji_Logo.svg';
 import LockIcon from '../../assets/Lock_Icon1.svg';
@@ -29,12 +31,56 @@ import {
 } from '../VC/MosipVCItem/MosipVCItemContent';
 import {VCMetadata} from '../../shared/VCMetadata';
 import {VerifiableCredential} from '../../types/VC/ExistingMosipVC/vc';
+import {ProfileIcon} from '../ProfileIcon';
 
 export class SvgImage {
   static MosipLogo(props: LogoProps) {
     const {width, height} = props;
     return <Logo width={width} height={height} />;
   }
+
+  static home(focused: boolean) {
+    //NOTE: Here tab icons names should be same with key "name" in main.ts
+    return (
+      <Home
+        color1={
+          focused ? Theme.Colors.linearGradientStart : Theme.Colors.GrayIcon
+        }
+        color2={
+          focused ? Theme.Colors.linearGradientEnd : Theme.Colors.GrayIcon
+        }
+      />
+    );
+  }
+
+  static share(focused: boolean) {
+    //NOTE: Here tab icons names should be same with key "name" in main.ts
+    return (
+      <Share
+        color1={
+          focused ? Theme.Colors.linearGradientStart : Theme.Colors.GrayIcon
+        }
+        color2={
+          focused ? Theme.Colors.linearGradientEnd : Theme.Colors.GrayIcon
+        }
+      />
+    );
+  }
+
+  static history(focused: boolean) {
+    //NOTE: Here tab icons names should be same with key "name" in main.ts
+    return (
+      <History
+        color1={
+          focused ? Theme.Colors.linearGradientStart : Theme.Colors.GrayIcon
+        }
+        color2={
+          focused ? Theme.Colors.linearGradientEnd : Theme.Colors.GrayIcon
+        }
+      />
+    );
+  }
+
   static pinIcon() {
     return (
       <PinICon
@@ -112,19 +158,20 @@ export class SvgImage {
   static IssuerIcon(issuer: IssuerProps) {
     return (
       <Svg
-        width="78"
-        height="35"
+        width="40"
+        height="40"
         {...testIDProps(`issuerIcon-${issuer.testID}`)}>
         <Image
           href={getIssuerLogo(issuer.displayDetails)}
           x="0"
           y="0"
-          height="32"
-          width="32"
+          height="40"
+          width="40"
         />
       </Svg>
     );
   }
+
   static WarningLogo() {
     return (
       <WarningLogo
@@ -133,6 +180,7 @@ export class SvgImage {
       />
     );
   }
+
   static OtpVerificationIcon() {
     return (
       <OtpVerificationIcon
@@ -141,21 +189,24 @@ export class SvgImage {
       />
     );
   }
+
   static VcItemContainerProfileImage(
     props: ExistingMosipVCItemContentProps | EsignetMosipVCItemContentProps,
     verifiableCredential: VerifiableCredential,
   ) {
     const imageUri = faceImageSource(props, verifiableCredential);
-    if (imageUri) {
-      return (
-        <ImageBackground
-          imageStyle={Theme.Styles.faceImage}
-          source={{uri: imageUri}}
-          style={Theme.Styles.closeCardImage}>
-          {props.isPinned && SvgImage.pinIcon()}
-        </ImageBackground>
-      );
-    }
+    return imageUri ? (
+      <ImageBackground
+        imageStyle={Theme.Styles.faceImage}
+        source={{uri: imageUri}}
+        style={Theme.Styles.closeCardImage}>
+        {props?.isPinned && SvgImage.pinIcon()}
+      </ImageBackground>
+    ) : (
+      <>
+        <ProfileIcon isPinned={props?.isPinned} />
+      </>
+    );
   }
 
   static FlipCameraIcon() {
@@ -170,6 +221,7 @@ export class SvgImage {
       />
     );
   }
+
   static CameraCaptureIcon() {
     return (
       <CameraCaptureIcon
@@ -178,9 +230,11 @@ export class SvgImage {
       />
     );
   }
+
   static SuccessLogo() {
     return <SuccessLogo {...testIDProps('SuccessLogo')} />;
   }
+
   static NoInternetConnection() {
     return (
       <NoInternetConnection {...testIDProps('noInternetConnectionImage')} />

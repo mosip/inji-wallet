@@ -31,12 +31,12 @@ public class MoreOptionsPage extends BasePage {
     @iOSXCUITFindBy(accessibility = "profileAuthenticated")
     private WebElement activatedForOnlineLoginButton;
 
-    @AndroidFindBy(uiAutomator = "new UiSelector().resourceId(\"iconIcon\")")
-    @iOSXCUITFindBy(iOSClassChain = "**/XCUIElementTypeOther[`label == \"\uE5CD\"`][1]")
+    @AndroidFindBy(accessibility = "close")
+    @iOSXCUITFindBy(accessibility = "Close")
     private WebElement closeButton;
 
     @AndroidFindBy(uiAutomator = "new UiSelector().textContains(\"Something is wrong. Please try again later!\")")
-    @iOSXCUITFindBy(iOSClassChain = "**/XCUIElementTypeOther[`label == \"Something is wrong. Please try again later!\"`]")
+    @iOSXCUITFindBy(accessibility = "walletBindingErrorTitle")
     public WebElement somethingIsWrongPopup;
 
     public MoreOptionsPage(AppiumDriver driver) {

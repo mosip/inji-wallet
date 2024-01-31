@@ -1,6 +1,5 @@
 import React from 'react';
 import {Icon} from 'react-native-elements';
-import {VerifiableCredential} from '../../../types/VC/ExistingMosipVC/vc';
 import {Theme} from '../../ui/styleUtils';
 
 const WalletUnverifiedIcon: React.FC = () => {
