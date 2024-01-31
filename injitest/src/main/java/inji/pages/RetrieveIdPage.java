@@ -11,7 +11,7 @@ import org.openqa.selenium.WebElement;
 
 public class RetrieveIdPage extends BasePage {
 	@AndroidFindBy(accessibility = "retrieveIdHeader")
-	@iOSXCUITFindBy(accessibility = "retreiveIdHeader")
+	@iOSXCUITFindBy(accessibility = "retrieveIdHeader")
 	private WebElement retrieveIdText;
 
 	@AndroidFindBy(accessibility = "idInputModalIndividualId")
