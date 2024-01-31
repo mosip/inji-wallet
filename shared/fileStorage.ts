@@ -123,7 +123,6 @@ export async function writeToBackupFile(data): Promise<string> {
   const fileName = getBackupFileName();
   const isDirectoryExists = await exists(backupDirectoryPath);
   if (isDirectoryExists) {
-    //remove old backup
     const [availableBackupFile] =
       await new FileStorage().getAllFilesInDirectory(backupDirectoryPath);
 
