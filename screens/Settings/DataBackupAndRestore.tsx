@@ -9,12 +9,12 @@ import {Modal} from '../../components/ui/Modal';
 import {Theme} from '../../components/ui/styleUtils';
 import {SvgImage} from '../../components/ui/svg';
 import {AccountSelectionConfirmation} from '../backupAndRestore/AccountSelectionConfirmation';
-import {useBackupAndRestore} from '../backupAndRestore/BackupAndRestoreController';
+import {useBackupAndRestoreSetup} from '../backupAndRestore/BackupAndRestoreSetupController';
 import BackupAndRestoreScreen from '../backupAndRestore/BackupAndRestoreScreen';
 import testIDProps from '../../shared/commonUtil';
 
 export const DataBackupAndRestore: React.FC = ({} = () => {
-  const controller = useBackupAndRestore();
+  const controller = useBackupAndRestoreSetup();
   const {t} = useTranslation('DataBackupScreen');
 
   return (
