@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite name="All Test Suite" parallel="tests" thread-count="2">
+<suite name="All Test Suite">
 	<listeners>
 		<listener class-name="inji.listeners.Listeners" />
 	</listeners>
 	<test verbose="2" preserve-order="true" name="android">
-		<parameter name="platformName" value="ANDROID" />
 		<classes>
 		<class name="androidTestCases.VcDownloadAndVerifyUsingUinTest">
 				<methods>
