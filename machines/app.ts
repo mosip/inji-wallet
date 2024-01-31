@@ -1,5 +1,5 @@
 import NetInfo, {NetInfoStateType} from '@react-native-community/netinfo';
-import {AppState, AppStateStatus, Platform} from 'react-native';
+import {AppState, AppStateStatus} from 'react-native';
 import {getDeviceId, getDeviceName} from 'react-native-device-info';
 import {assign, EventFrom, send, spawn, StateFrom} from 'xstate';
 import {createModel} from 'xstate/lib/model';
@@ -25,7 +25,7 @@ import {
   SETTINGS_STORE_KEY,
 } from '../shared/constants';
 import {logState} from '../shared/commonUtil';
-import {backupMachine, createBackupMachine} from './backup';
+import {backupMachine, createBackupMachine} from './backupAndRestore/backup';
 import {
   backupRestoreMachine,
   createBackupRestoreMachine,

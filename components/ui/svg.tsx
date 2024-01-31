@@ -23,8 +23,12 @@ import SuccessLogo from '../../assets/Success_Message_Icon1.svg';
 import NoInternetConnection from '../../assets/No_Internet_Connection.svg';
 import SomethingWentWrong from '../../assets/Something_Went_Wrong.svg';
 import MagnifierZoom from '../../assets/Magnifier_Zoom.svg';
+import GoogleDriveIcon from '../../assets/google-drive-28.svg';
 import {displayType} from '../../machines/issuersMachine';
 import {IssuerProps} from '../openId4VCI/Issuer';
+import Backup from '../../assets/Backup.svg';
+import Restore from '../../assets/Restore.svg';
+import PermissionDenied from '../../assets/Permission_Denied.svg';
 import {
   EsignetMosipVCItemContentProps,
   ExistingMosipVCItemContentProps,
@@ -32,6 +36,7 @@ import {
 import {VCMetadata} from '../../shared/VCMetadata';
 import {VerifiableCredential} from '../../types/VC/ExistingMosipVC/vc';
 import {ProfileIcon} from '../ProfileIcon';
+import CloudUploadDoneIcon from '../../assets/Cloud_Upload_Done_Icon.svg';
 
 export class SvgImage {
   static MosipLogo(props: LogoProps) {
@@ -231,8 +236,32 @@ export class SvgImage {
     );
   }
 
+  static DataBackupIcon(width, height) {
+    return (
+      <Backup
+        {...testIDProps('dataBackupIcon')}
+        color1={Theme.Colors.linearGradientStart}
+        color2={Theme.Colors.linearGradientEnd}
+        width={width}
+        height={height}
+      />
+    );
+  }
+
+  static RestoreIcon() {
+    return <Restore {...testIDProps('restoreIcon')} />;
+  }
+
   static SuccessLogo() {
     return <SuccessLogo {...testIDProps('SuccessLogo')} />;
+  }
+
+  static PermissionDenied() {
+    return <PermissionDenied {...testIDProps('permissionDeniedImage')} />;
+  }
+
+  static CloudUploadDoneIcon() {
+    return <CloudUploadDoneIcon {...testIDProps('cloudUploadDoneIcon')} />;
   }
 
   static NoInternetConnection() {
@@ -247,6 +276,16 @@ export class SvgImage {
 
   static MagnifierZoom() {
     return <MagnifierZoom />;
+  }
+
+  static GoogleDriveIcon(width, height) {
+    return (
+      <GoogleDriveIcon
+        width={width}
+        height={height}
+        {...testIDProps('googleDriveIcon')}
+      />
+    );
   }
 }
 

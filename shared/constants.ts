@@ -23,6 +23,7 @@ export const BACKUP_ENC_KEY_TYPE = 'backupEncKeyType';
 export const BACKUP_ENC_TYPE_VAL_PASSWORD = 'password';
 
 export const BACKUP_ENC_TYPE_VAL_PHONE = 'phone';
+export const UPLOAD_MAX_RETRY = 2;
 
 export let individualId = {id: '', idType: 'UIN' as VcIdType};
 
@@ -33,6 +34,8 @@ export const GET_INDIVIDUAL_ID = (currentIndividualId: IndividualId) => {
 export const ACTIVITY_LOG_STORE_KEY = 'activityLog';
 
 export const SETTINGS_STORE_KEY = 'settings';
+
+export const LAST_BACKUP_DETAILS = 'lastBackupDetails';
 
 export const APP_ID_LENGTH = 12;
 
@@ -95,6 +98,7 @@ export type IndividualId = {
   idType: VcIdType;
 };
 
+export const TECHNICAL_ERROR = 'Technical error';
 export const NETWORK_REQUEST_FAILED = 'Network request failed';
 export const REQUEST_TIMEOUT = 'request timedout';
 export const BIOMETRIC_CANCELLED = 'User has cancelled biometric';

@@ -5,6 +5,7 @@ import {Modal} from './ui/Modal';
 import {ScrollView} from 'react-native-gesture-handler';
 import {Column, Text} from './ui';
 import {Theme} from './ui/styleUtils';
+import {BackupAndRestoreAllScreenBanner} from './BackupAndRestoreAllScreenBanner';
 import getAllConfigurations from '../shared/commonprops/commonProps';
 
 export const HelpScreen: React.FC<HelpScreenProps> = props => {
@@ -52,6 +53,7 @@ export const HelpScreen: React.FC<HelpScreenProps> = props => {
         onDismiss={() => {
           setShowHelpPage(!showHelpPage);
         }}>
+        <BackupAndRestoreAllScreenBanner />
         <ScrollView>
           <Column fill padding="10" align="space-between">
             <Text style={Theme.TextStyles.helpHeader}>{t('whatIsAnId?')}</Text>
