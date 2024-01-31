@@ -19,7 +19,6 @@ export const Error: React.FC<ErrorProps> = props => {
     tryAgainButtonProps['width'] = Dimensions.get('screen').width * 0.54;
     tryAgainButtonProps['type'] = 'outline';
   }
-  console.log('props.alignActionsOnEnd ', props.alignActionsOnEnd);
 
   const errorContent = () => {
     return (

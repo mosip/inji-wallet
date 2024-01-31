@@ -2,8 +2,8 @@ import {useInterpret, useSelector} from '@xstate/react';
 import {useRef} from 'react';
 
 import {
-  BackupAndRestoreEvents,
-  backupAndRestoreMachine,
+  BackupAndRestoreSetupEvents,
+  backupAndRestoreSetupMachine,
   selectIsLoading,
   selectIsNetworkOff,
   selectIsSigningIn,
@@ -11,18 +11,15 @@ import {
   selectIsSigningInSuccessful,
   selectProfileInfo,
   selectShowAccountSelectionConfirmation,
-} from '../../machines/backupAndRestore/backupAndRestore';
-// import { logState } from '../../shared/commonUtil';
+} from '../../machines/backupAndRestore/backupAndRestoreSetup';
 
-export function useBackupAndRestore() {
+export function useBackupAndRestoreSetup() {
   const machine = useRef(
-    backupAndRestoreMachine.withContext({
-      ...backupAndRestoreMachine.context,
+    backupAndRestoreSetupMachine.withContext({
+      ...backupAndRestoreSetupMachine.context,
     }),
   );
   const service = useInterpret(machine.current);
-  //TODO: Remove backUp and restore machine log as it has sensitive info
-  // service.subscribe(logState);
 
   return {
     isLoading: useSelector(service, selectIsLoading),
@@ -38,11 +35,11 @@ export function useBackupAndRestore() {
     isSigningInSuccessful: useSelector(service, selectIsSigningInSuccessful),
 
     BACKUP_AND_RESTORE: () =>
-      service.send(BackupAndRestoreEvents.HANDLE_BACKUP_AND_RESTORE()),
+      service.send(BackupAndRestoreSetupEvents.HANDLE_BACKUP_AND_RESTORE()),
     PROCEED_ACCOUNT_SELECTION: () =>
-      service.send(BackupAndRestoreEvents.PROCEED()),
-    GO_BACK: () => service.send(BackupAndRestoreEvents.GO_BACK()),
-    TRY_AGAIN: () => service.send(BackupAndRestoreEvents.TRY_AGAIN()),
-    DISMISS: () => service.send(BackupAndRestoreEvents.DISMISS()),
+      service.send(BackupAndRestoreSetupEvents.PROCEED()),
+    GO_BACK: () => service.send(BackupAndRestoreSetupEvents.GO_BACK()),
+    TRY_AGAIN: () => service.send(BackupAndRestoreSetupEvents.TRY_AGAIN()),
+    DISMISS: () => service.send(BackupAndRestoreSetupEvents.DISMISS()),
   };
 }

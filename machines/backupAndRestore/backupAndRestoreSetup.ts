@@ -27,13 +27,13 @@ const model = createModel(
   },
 );
 
-export const BackupAndRestoreEvents = model.events;
+export const BackupAndRestoreSetupEvents = model.events;
 
-export const backupAndRestoreMachine = model.createMachine(
+export const backupAndRestoreSetupMachine = model.createMachine(
   {
     predictableActionArguments: true,
     preserveActionOrder: true,
-    tsTypes: {} as import('./backupAndRestore.typegen').Typegen0,
+    tsTypes: {} as import('./backupAndRestoreSetup.typegen').Typegen0,
     schema: {
       context: model.initialContext,
       events: {} as EventFrom<typeof model>,
@@ -178,9 +178,9 @@ export const backupAndRestoreMachine = model.createMachine(
   },
 );
 
-export function createBackupMachine(serviceRefs: AppServices) {
-  return backupAndRestoreMachine.withContext({
-    ...backupAndRestoreMachine.context,
+export function createBackupAndRestoreSetupMachine(serviceRefs: AppServices) {
+  return backupAndRestoreSetupMachine.withContext({
+    ...backupAndRestoreSetupMachine.context,
   });
 }
 export function selectIsLoading(state: State) {
@@ -211,4 +211,4 @@ export function selectIsSigningFailure(state: State) {
   return state.matches('signIn.error');
 }
 
-type State = StateFrom<typeof backupAndRestoreMachine>;
+type State = StateFrom<typeof backupAndRestoreSetupMachine>;
