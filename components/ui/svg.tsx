@@ -6,6 +6,8 @@ import Home from '../../assets/Home_tab_icon.svg';
 import History from '../../assets/History_tab_icon.svg';
 import Share from '../../assets/Scan_tab_icon.svg';
 import PinICon from '../../assets/Pin_Icon.svg';
+import WalletActivatedIcon from '../../assets/Wallet_Activated_Icon.svg';
+import WalletUnActivatedIcon from '../../assets/Wallet_UnActivated_Icon.svg';
 import InjiSmallLogo from '../../assets/Inji_Logo.svg';
 import LockIcon from '../../assets/Lock_Icon1.svg';
 import InjiLogo from '../../assets/Inji_Home_Logo1.svg';
@@ -37,6 +39,28 @@ export class SvgImage {
   static MosipLogo(props: LogoProps) {
     const {width, height} = props;
     return <Logo width={width} height={height} />;
+  }
+
+  static walletActivatedIcon() {
+    return (
+      <WalletActivatedIcon
+        {...testIDProps('wallet-activated-icon')}
+        style={{
+          marginLeft: 10,
+        }}
+      />
+    );
+  }
+
+  static walletUnActivatedIcon() {
+    return (
+      <WalletUnActivatedIcon
+        {...testIDProps('wallet-unactivated-icon')}
+        style={{
+          marginLeft: 10,
+        }}
+      />
+    );
   }
 
   static home(focused: boolean) {

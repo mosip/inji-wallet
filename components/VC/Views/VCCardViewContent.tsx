@@ -9,7 +9,6 @@ import {Column, Row} from '../../ui';
 import {Theme} from '../../ui/styleUtils';
 import {CheckBox, Icon} from 'react-native-elements';
 import {SvgImage} from '../../ui/svg';
-import {MiniCardViewActivationStatus} from '../MosipVCItem/MosipVCItemActivationStatus';
 import {
   getIssuerLogo,
   isVCLoaded,
@@ -84,9 +83,9 @@ export const VCCardViewContent: React.FC<
 
           {props.flow === 'Qr Login' || props.flow === 'Vc Share' ? null : (
             <>
-              <MiniCardViewActivationStatus
-                emptyWalletBindingId={props.emptyWalletBindingId}
-              />
+              {props.emptyWalletBindingId
+                ? SvgImage.walletUnActivatedIcon()
+                : SvgImage.walletActivatedIcon()}
               <Pressable
                 onPress={props.KEBAB_POPUP}
                 accessible={false}
