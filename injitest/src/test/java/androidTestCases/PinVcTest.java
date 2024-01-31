@@ -4,9 +4,11 @@ import BaseTest.AndroidBaseTest;
 import inji.api.BaseTestCase;
 import inji.constants.Target;
 import inji.pages.*;
+import inji.utils.AndroidUtil;
 import inji.utils.TestDataReader;
 import org.testng.annotations.Test;
 
+import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
 import static org.testng.Assert.assertTrue;
@@ -216,9 +218,10 @@ public class PinVcTest extends AndroidBaseTest {
 
         assertTrue(homePage.isPinIconDisplayed(), "Verify if pin icon on vc is displayed");
         SharePage scanPage=homePage.clickOnShareButton();
+        AndroidUtil.disableBluetooth();
         
         scanPage.denyPermissionPopupBluetooth();
-        assertTrue(scanPage.isBluetoothIsTurnedOffMessageDisplayed(), "Verify bluetooth is turned of message displayed");
+        assertEquals(scanPage.isBluetoothIsTurnedOffMessageDisplayed(),"bluetooth is turned off, please turn it ON from quick settings menu");
         
     }
     

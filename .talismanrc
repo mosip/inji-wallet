@@ -168,23 +168,21 @@ fileignoreconfig:
   - filename: machines/backup.ts
     checksum: df40cc92db9e459ab19d8382713afb24ae89c88a944623bbc21a7e6b9bc327a3
   - filename: locales/en.json
-    checksum: e87723f4bb733fa3d95cc0d4f3831ecaa8310975c177af4f4c73c35b69fa025e
-  - filename: locales/fil.json
-    checksum: 9b3aa32c09ab18c29bfd5fdbe822e1bda511627a887f8f232c52959d2170c3d3
+    checksum: 881b12057430b1b465306f6171d8a1c025c69909a29b6f9c405f70c2990ac4f4
   - filename: locales/hin.json
-    checksum: a5f388edb087d12a9395643ba2fbafc93dfde3a3347c3dc17e89d252045660b7
+    checksum: 69bffc48c583a985ed6853988ca9f4a559adbdf14f4763f197e982a3684f3bad
   - filename: locales/kan.json
-    checksum: c0cc2ca567eaa8a5abaa4c9a361b9b612436d10b50d60ef239fcff633eeeff57
+    checksum: f62d0d6cfd1454b396583ea7d0f438bcabd200c6af68f1327a7dfc3f5177d6d5
   - filename: locales/ara.json
-    checksum: 104f58031271f6ba6115de6e7cb5ba7a586ab6e648314c8940b035f60cab692f
+    checksum: 89e413bc5884783f0601f8a22855f3da0cdd0ac9e9f80a1edd4e6a5fb10d94d4
   - filename: locales/tam.json
-    checksum: a257d03d7d011602c50160d044926e7ee8a29e8f8afb3c355c05fd8aa7473534
-  - filename: locales/en.json
-    checksum: b4d07aca4534fb9fd2bb62b146bb41e588e4bc5cad6afc9531f97043ed08dbba
+    checksum: 1beed968fa5d67d57961dbbaaade3596caaf543adb90847b40a558d0b50397bd
   - filename: locales/spa.json
-    checksum: 06fca76095c99f313714e2d7b732e2bebb96f18be762e778ee7e3481a5a4e9ef
+    checksum: a03c5fa839d761f7bf5bbf0ea9bbd48da57116430a99e1d22f0e7184435d468c
   - filename: locales/fil.json
-    checksum: e9eaeb9204e4a6659e0f2a432e57e62cfb8f02b0a2f8d5a6ac81c4cdf4fa4786
+    checksum: 29193fd3b14b7332bf7a485f659197002f29a58af88ed0653cae262e7254c84d
+  - filename: screens/Home/IntroSlidersScreen.tsx
+    checksum: af4a7e2d04b1141b7c32acfabeb3213a32eaca2a8e8f61e6958b6c97219dce57 
   - filename: screens/Home/MyVcs/GetIdInputModal.tsx
     checksum: 067664e19817d3aba98b0cfa68ef57a04958a982ee23b96b612e4bf466a73890
   - filename: screens/PasscodeScreen.tsx
@@ -194,3 +192,4 @@ fileignoreconfig:
   - filename: .github/workflows/ui-automation.yml
     checksum: 0b26a5dcb7524ba15d6aaeaf04f2ef94be9d25ef702d9072d6628bcd58e50f36 
     version: ""
+

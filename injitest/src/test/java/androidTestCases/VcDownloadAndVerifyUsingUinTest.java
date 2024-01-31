@@ -51,12 +51,15 @@ public class VcDownloadAndVerifyUsingUinTest extends AndroidBaseTest {
         assertTrue(addNewCardPage.isIssuerDescriptionMosipDisplayed(), "Verify if issuer description  mosip displayed");
         assertTrue(addNewCardPage.isIssuerDescriptionEsignetDisplayed(), "Verify if issuer description  esignet displayed");
         assertTrue(addNewCardPage.isIssuerSearchBarDisplayed(), "Verify if issuer search bar displayed");
-        addNewCardPage.sendTextInIssuerSearchBar("uin");
+        addNewCardPage.sendTextInIssuerSearchBar("Download MOSIP Credentials");
         RetrieveIdPage retrieveIdPage = addNewCardPage.clickOnDownloadViaUin();
 
         assertTrue(retrieveIdPage.isRetrieveIdPageLoaded(), "Verify if retrieve id page is displayed");
         assertEquals(retrieveIdPage.getRetrieveIdPageHeader(),"Download your ID");
         assertTrue(retrieveIdPage.verifyDownloadIdPageGuideMessage(), "Verify if retrieve id page guide message is displayed");
+        assertTrue(retrieveIdPage.isInfoIconDisplayed(), "Verify if info icon is displayed");
+        //retrieveIdPage.clickInfoIcon();
+        
         OtpVerificationPage otpVerification = retrieveIdPage.setEnterIdTextBox(TestDataReader.readData("uin")).clickOnGenerateCardButton();
 
         assertTrue(otpVerification.isOtpVerificationPageLoaded(), "Verify if otp verification page is displayed");
@@ -312,7 +315,6 @@ public class VcDownloadAndVerifyUsingUinTest extends AndroidBaseTest {
 
         assertTrue(addNewCardPage.isAddNewCardPageLoaded(), "Verify if add new card page is displayed");
         assertTrue(addNewCardPage.isIssuerSearchBarDisplayed(), "Verify if issuer search bar displayed");
-        addNewCardPage.sendTextInIssuerSearchBar("uin");
         RetrieveIdPage retrieveIdPage = addNewCardPage.clickOnDownloadViaUin();
 
         assertTrue(retrieveIdPage.isRetrieveIdPageLoaded(), "Verify if retrieve id page is displayed");

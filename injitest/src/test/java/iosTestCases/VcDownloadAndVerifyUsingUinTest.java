@@ -37,7 +37,7 @@ public class VcDownloadAndVerifyUsingUinTest extends IosBaseTest {
         assertTrue(addNewCardPage.isIssuerDescriptionMosipDisplayed(), "Verify if issuer description  mosip displayed");
         assertTrue(addNewCardPage.isIssuerDescriptionEsignetDisplayed(), "Verify if issuer description  esignet displayed");
         assertTrue(addNewCardPage.isIssuerSearchBarDisplayed(), "Verify if issuer search bar displayed");
-        addNewCardPage.sendTextInIssuerSearchBar("uin");
+        addNewCardPage.sendTextInIssuerSearchBar("Download MOSIP Credentials");
         RetrieveIdPage retrieveIdPage = addNewCardPage.clickOnDownloadViaUin();
 
         //we will remove below line once bug is fixed https://mosip.atlassian.net/browse/INJI-712

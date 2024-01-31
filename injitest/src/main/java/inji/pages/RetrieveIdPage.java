@@ -50,6 +50,8 @@ public class RetrieveIdPage extends BasePage {
 	@iOSXCUITFindBy(accessibility = "Select ID type and enter the MOSIP provided UIN or VID you wish to download. In the next step, you will be asked to enter OTP.")
 	private WebElement downloadIdGuideMessage;
 	
+	@AndroidFindBy(accessibility = "IdInputToolTipInfo")
+	private WebElement infoIcon;
 
 	public RetrieveIdPage(AppiumDriver driver) {
 		super(driver);
@@ -58,6 +60,13 @@ public class RetrieveIdPage extends BasePage {
 	public boolean isRetrieveIdPageLoaded() {
 		return this.isElementDisplayed(retrieveIdText);
 	}
+	
+	public boolean isInfoIconDisplayed() {
+		return this.isElementDisplayed(infoIcon);
+	}
+	public void clickInfoIcon() {
+        clickOnElement(infoIcon);
+    }
 	
 	public String getRetrieveIdPageHeader() {
 		return this.getTextFromLocator(retrieveIdText);

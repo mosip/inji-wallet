@@ -27,7 +27,6 @@ public class AddNewCardPage extends BasePage{
     @iOSXCUITFindBy(accessibility = "Continue")
     private WebElement continueButton;
 
-
     @AndroidFindBy(accessibility = "issuersScreenDescription")
     @iOSXCUITFindBy(accessibility = "issuersScreenDescription")
     private WebElement addNewCardGuideMessage;
@@ -50,7 +49,6 @@ public class AddNewCardPage extends BasePage{
     
     public String  verifyLanguageForAddNewCardGuideMessage(){
     	 return getTextFromLocator(addNewCardGuideMessage);
-
     }
     
     public boolean isAddNewCardPageGuideMessageForEsignetDisplayed() {
