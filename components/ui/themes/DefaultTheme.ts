@@ -55,6 +55,7 @@ const Colors = {
   toolTip: '#B7B7B7',
   toolTipContent: '#4B4B4B',
   toolTipPointer: '#E0E0E0',
+  Mercury: '#E6E6E6',
 };
 
 export type ElevationLevel = 0 | 1 | 2 | 3 | 4 | 5 | 6;
@@ -412,22 +413,21 @@ export const DefaultTheme = {
       borderRadius: 6,
       backgroundColor: Colors.LightOrange,
     },
+    ProfileContainer: {
+      position: 'relative',
+    },
     ProfileIconContainer: {
       alignSelf: 'center',
       justifyContent: 'center',
-      width: 90,
-      height: 90,
-      borderRadius: 15,
-      borderWidth: 0.3,
-      borderColor: Colors.Orange,
+      width: 40,
+      height: 53,
+      borderRadius: 10,
+      borderWidth: 1,
+      borderColor: Colors.Mercury,
       backgroundColor: Colors.White,
     },
-    ProfileIconInnerStyle: {
-      flex: 1,
-    },
     ProfileIconPinnedStyle: {
-      alignSelf: 'center',
-      justifyContent: 'center',
+      position: 'absolute',
     },
     IconContainer: {
       padding: 6,

@@ -99,6 +99,7 @@
   },
   "WalletBinding": {
     "inProgress": "En curso",
+    "credentialActivated": "Activada",
     "profileAuthenticated": "inicio de sesión con código QR"
   },
   "BindingVcWarningOverlay": {

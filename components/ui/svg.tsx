@@ -105,12 +105,12 @@ export class SvgImage {
     );
   }
 
-  static pinIcon() {
+  static pinIcon(customStyle: object) {
     return (
       <PinICon
         color1={Theme.Colors.linearGradientStart}
         color2={Theme.Colors.linearGradientEnd}
-        style={Theme.Styles.pinIcon}
+        style={[Theme.Styles.pinIcon, customStyle]}
         {...testIDProps('pinIcon')}
       />
     );
