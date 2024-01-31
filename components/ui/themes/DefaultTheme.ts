@@ -656,6 +656,19 @@ export const DefaultTheme = {
       height: 50,
       marginTop: -10,
     },
+    keyboardAvoidStyle: {
+      flex: 1,
+      paddingVertical: 40,
+      paddingHorizontal: 24,
+      alignItems: 'center',
+      justifyContent: 'space-between',
+    },
+    passwordKeyboardAvoidStyle: {
+      flex: 1,
+      backgroundColor: Colors.White,
+      paddingVertical: 40,
+      paddingHorizontal: 24,
+    },
   }),
   QrCodeStyles: StyleSheet.create({
     magnifierZoom: {

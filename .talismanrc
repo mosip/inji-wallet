@@ -68,7 +68,7 @@ fileignoreconfig:
   - filename: shared/telemetry/TelemetryUtils.js
     checksum: a0686e9a5c006176fd720b84bc36ca947db1422caf65c90cd0c2d1102a9e96df
   - filename: ios/fastlane/Fastfile
-    checksum: 78edb7772ca7bf64fc0c603cb82771c793e03afff37ccbbfd1b9f578ec0e5369
+    checksum: a4e3772dc67a07ecbcfc58be0d6d4f7fa799cec7ac25bd269ac29459c8669ca4
   - filename: machines/bleShare/scan/scanMachine.ts
     checksum: a514c958ca3da3c5b22a1a95ad680af8f05fb22638fab79b3842aa8fcc1b4a17
   - filename: locales/spa.json
@@ -183,4 +183,13 @@ fileignoreconfig:
     checksum: 29193fd3b14b7332bf7a485f659197002f29a58af88ed0653cae262e7254c84d
   - filename: screens/Home/IntroSlidersScreen.tsx
     checksum: af4a7e2d04b1141b7c32acfabeb3213a32eaca2a8e8f61e6958b6c97219dce57 
+  - filename: screens/Home/MyVcs/GetIdInputModal.tsx
+    checksum: 067664e19817d3aba98b0cfa68ef57a04958a982ee23b96b612e4bf466a73890
+  - filename: screens/PasscodeScreen.tsx
+    checksum: 9af4308001e7e260ffffd26955ca49df3b388e34686509371e23dd837b11d030
+  - filename: screens/Home/MyVcs/IdInputModal.tsx
+    checksum: b735aedc84164d03c199fe89ccbf9df58f8997bfb4f60e7058a22bfe952fda3e
+  - filename: .github/workflows/ui-automation.yml
+    checksum: 0b26a5dcb7524ba15d6aaeaf04f2ef94be9d25ef702d9072d6628bcd58e50f36 
     version: ""
+
