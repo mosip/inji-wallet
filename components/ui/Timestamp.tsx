@@ -4,24 +4,9 @@ import {Text} from '../ui/Text';
 
 export const Timestamp: React.FC<TimestampProps> = props => {
   function formattedDate(): React.ReactNode {
-    const months = [
-      'January',
-      'February',
-      'March',
-      'April',
-      'May',
-      'June',
-      'July',
-      'August',
-      'September',
-      'October',
-      'November',
-      'December',
-    ];
-
     const date = new Date(props.time);
     const day = date.getDate();
-    const month = months[date.getMonth()];
+    const month = date.toLocaleString('default', {month: 'long'});
     const year = date.getFullYear();
     const formattedHours = (date.getHours() % 12 || 12)
       .toString()
