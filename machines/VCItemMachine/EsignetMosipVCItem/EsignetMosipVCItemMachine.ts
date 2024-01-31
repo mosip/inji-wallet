@@ -321,7 +321,7 @@ export const EsignetMosipVCItemMachine = model.createMachine(
               target: '#vc-item-openid4vci.kebabPopUp',
             },
             {
-              actions: 'setWalletBindingSuccess',
+              actions: ['sendWalletBindingSuccess', 'setWalletBindingSuccess'],
               target: 'idle',
             },
           ],

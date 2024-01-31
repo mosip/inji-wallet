@@ -723,7 +723,10 @@ export const ExistingMosipVCItemMachine =
                 target: '#vc-item.kebabPopUp',
               },
               {
-                actions: 'setWalletBindingSuccess',
+                actions: [
+                  'sendWalletBindingSuccess',
+                  'setWalletBindingSuccess',
+                ],
                 target: 'idle',
               },
             ],

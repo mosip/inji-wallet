@@ -34,6 +34,7 @@ export function useViewVcModal({
   vcItemActor,
   isVisible,
   onRevokeDelete,
+  onDismiss,
 }: ViewVcModalProps) {
   const {t} = useTranslation('ViewVcModal');
   const [toastVisible, setToastVisible] = useState(false);
@@ -169,7 +170,10 @@ export function useViewVcModal({
     ADD_WALLET: () =>
       vcItemActor.send(ExistingMosipVCItemEvents.ADD_WALLET_BINDING_ID()),
     onSuccess,
-    DISMISS: () => vcItemActor.send(ExistingMosipVCItemEvents.DISMISS()),
+    DISMISS: () => {
+      vcItemActor.send(ExistingMosipVCItemEvents.DISMISS());
+      onDismiss();
+    },
     LOCK_VC: () => vcItemActor.send(ExistingMosipVCItemEvents.LOCK_VC()),
     INPUT_OTP: (otp: string) =>
       vcItemActor.send(ExistingMosipVCItemEvents.INPUT_OTP(otp)),

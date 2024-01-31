@@ -18,7 +18,6 @@ import {
   sendErrorEvent,
 } from '../../shared/telemetry/TelemetryUtils';
 import {TelemetryConstants} from '../../shared/telemetry/TelemetryConstants';
-import {Icon} from 'react-native-elements';
 
 export const ViewVcModal: React.FC<ViewVcModalProps> = props => {
   const {t} = useTranslation('ViewVcModal');
@@ -52,7 +51,7 @@ export const ViewVcModal: React.FC<ViewVcModalProps> = props => {
       testID="idDetailsHeader"
       arrowLeft={true}
       headerTitle={t('title')}
-      onDismiss={props.onDismiss}
+      onDismiss={controller.DISMISS}
       headerElevation={2}>
       {controller.isBindingSuccess && (
         <BannerNotification
