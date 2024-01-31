@@ -31,12 +31,14 @@ public class WelcomePage extends BasePage {
     public WelcomePage(AppiumDriver driver) {
         super(driver);
     }
+    BasePage basePage = new BasePage(driver);
     
     public String  verifyLanguageforWelcomePageLoaded(){
     	return getTextFromLocator(welcomeText);
     }
     
     public boolean isWelcomePageLoaded() {
+		basePage.retrieToGetElement(welcomeText);
         return this.isElementDisplayed(welcomeText);
     }
     
@@ -51,6 +53,7 @@ public class WelcomePage extends BasePage {
     }
 
     public String getWelcomeDescription() {
+		basePage.retrieToGetElement(welcomeTextDescription);
         return this.getTextFromLocator(welcomeTextDescription);
     }
 

@@ -25,13 +25,13 @@ public class EsignetLoginPage extends BasePage {
     @AndroidFindBy(xpath = "//*[contains(@text,'Enter Your VID')]")
     private WebElement enterYourVidTextHeader;
 
-    @AndroidFindBy(xpath = "//android.widget.EditText[@resource-id=\"Otp_mosip-vid\"]")
+    @AndroidFindBy(uiAutomator = "UiSelector().className(\"android.widget.EditText\").instance(1)")
     private WebElement enterIdTextBox;
 
-    @AndroidFindBy(xpath = "//android.widget.Button[@resource-id=\"get_otp\"]")
+    @AndroidFindBy(uiAutomator = "new UiSelector().className(\"android.widget.Button\").instance(1)")
     private WebElement getOtpButton;
 
-    @AndroidFindBy(xpath = "//android.widget.Button[@resource-id=\"verify_otp\"]")
+    @AndroidFindBy(uiAutomator = "new UiSelector().className(\"android.widget.Button\").instance(1)")
     private WebElement verifyButton;
 
     @AndroidFindBy(xpath = "//*[contains(@text,'OTP has been sent to your registered Mobile Number')]")

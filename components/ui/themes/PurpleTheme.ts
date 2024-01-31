@@ -25,6 +25,7 @@ const Colors = {
   DimGray: '#737373',
   platinumGrey: '#EDEDED',
   Orange: '#F2811D',
+  Blue: '#0000FF',
   LightOrange: '#FDF1E6',
   LightGrey: '#FAF9FF',
   ShadeOfGrey: '#6F6F6F',
@@ -131,6 +132,7 @@ export const PurpleTheme = {
     warningLogoBgColor: Colors.warningLogoBg,
     tooltipIcon: Colors.tooltip,
     toolTipPointerColor: Colors.toolTipPointer,
+    urlLink: Colors.Purple,
   },
   Styles: StyleSheet.create({
     title: {
@@ -752,9 +754,21 @@ export const PurpleTheme = {
       fontFamily: 'Inter_600SemiBold',
       lineHeight: 18,
     },
+    helpHeader: {
+      color: Colors.Black,
+      fontFamily: 'Inter_700Bold',
+      fontSize: 18,
+      lineHeight: 19,
+      paddingTop: 5,
+      margin: 7,
+    },
     helpDetails: {
       margin: 5,
       color: Colors.Gray44,
+      fontFamily: 'Inter_600SemiBold',
+    },
+    urlLinkText: {
+      color: Colors.Purple,
       fontFamily: 'Inter_600SemiBold',
     },
     aboutDetails: {
@@ -1428,10 +1442,11 @@ export const PurpleTheme = {
   ICON_LARGE_SIZE: 33,
   CloseCard: require('../../../assets/Card_Bg1.png'),
   OpenCard: require('../../../assets/Card_Bg1.png'),
-  sharingIntro: require('../../../assets/Intro_Secure_Sharing.png'),
-  walletIntro: require('../../../assets/Intro_Wallet_Binding.png'),
-  IntroScanner: require('../../../assets/Intro_Scanner.png'),
-  protectPrivacy: require('../../../assets/Intro_Unlock_Method.png'),
+  IntroWelcome: require('../../../assets/Intro_Unlock.png'),
+  SecureSharing: require('../../../assets/Intro_Secure_Sharing.png'),
+  DigitalWallet: require('../../../assets/Intro_Wallet.png'),
+  IntroShare: require('../../../assets/Intro_Share.png'),
+  IntroBackup: require('../../../assets/Intro_Backup.png'),
   elevation(level: ElevationLevel): ViewStyle {
     // https://ethercreative.github.io/react-native-shadow-generator/
 

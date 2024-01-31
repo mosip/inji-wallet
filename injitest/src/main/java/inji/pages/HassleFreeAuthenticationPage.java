@@ -22,12 +22,16 @@ public class HassleFreeAuthenticationPage extends BasePage {
     public HassleFreeAuthenticationPage(AppiumDriver driver) {
         super(driver);
     }
+    BasePage basePage = new BasePage(driver);
     
     public String  verifyLanguageforHassleFreeAuthenticationPageLoaded(){
+		basePage.retrieToGetElement(hassleFreeAuthenticationText);
     	return getTextFromLocator(hassleFreeAuthenticationText);
     }
 
     public String getHassleFreeAuthenticationDescription() {
+    	
+		basePage.retrieToGetElement(hassleFreeAuthenticationDescription);
         return this.getTextFromLocator(hassleFreeAuthenticationDescription);
     }
     
