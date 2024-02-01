@@ -632,7 +632,7 @@
   },
   "DataBackupScreen": {
     "dataBackupAndRestore": "Backup & Restore",
-    "new": "New",
+    "new": "NEW",
     "loadingTitle": "Loading setting up",
     "loadingSubtitle": "Loading...",
     "errors": {

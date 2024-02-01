@@ -93,9 +93,7 @@ export const DataBackupAndRestore: React.FC = ({} = () => {
         />
       )}
       {controller.isLoading && (
-        <Modal isVisible showClose={false}>
-          <Loader title={t('loadingSubtitle')}></Loader>
-        </Modal>
+        <Loader title={t('loadingSubtitle')} isModal></Loader>
       )}
 
       {controller.showAccountSelectionConfirmation && (
