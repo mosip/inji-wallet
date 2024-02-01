@@ -23,7 +23,7 @@ export const AccountSelectionConfirmation: React.FC<
       showClose={false}
       onDismiss={props.goBack}>
       <Column style={{flex: 1, justifyContent: 'space-around'}}>
-        <View style={{alignItems: 'center', paddingTop: 30}}>
+        <View style={{alignItems: 'center', paddingTop: 30, paddingBottom: 30}}>
           {SvgImage.DataBackupIcon(80, 100)}
         </View>
 
@@ -46,7 +46,7 @@ export const AccountSelectionConfirmation: React.FC<
         <HorizontallyCentered
           fill
           crossAlign="center"
-          style={{paddingHorizontal: 120, paddingVertical: 50}}>
+          style={{paddingHorizontal: 120, paddingTop: 80}}>
           <Row>
             {SvgImage.GoogleDriveIcon(45, 45)}
             <Text
@@ -57,19 +57,28 @@ export const AccountSelectionConfirmation: React.FC<
           </Row>
         </HorizontallyCentered>
 
-        <Column fill align="flex-end" crossAlign="center">
-          <Button
-            type="gradient"
-            testID="proceed"
-            title={t('proceed')}
-            onPress={props.onProceed}
-          />
-          <Button
-            type="clear"
-            testID="goBack"
-            title={t('goBack')}
-            onPress={props.goBack}
-          />
+        <Column
+          fill
+          align="flex-end"
+          crossAlign="center"
+          style={{paddingBottom: 30, rowGap: 15, paddingHorizontal: 17}}>
+          <Row>
+            <Button
+              testID="proceed"
+              title={t('proceed')}
+              onPress={props.onProceed}
+              type="gradient"
+              fill
+            />
+          </Row>
+          <Row>
+            <Button
+              type="clear"
+              testID="goBack"
+              title={t('goBack')}
+              onPress={props.goBack}
+            />
+          </Row>
         </Column>
       </Column>
     </Modal>

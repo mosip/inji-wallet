@@ -1105,6 +1105,10 @@ export const PurpleTheme = {
       fontWeight: 'bold',
       paddingHorizontal: 20,
       textAlign: 'center',
+      lineHeight: 22,
+      fontSize: 17,
+      fontFamily: 'Inter_600SemiBold',
+      marginHorizontal: 30,
     },
     cloudInfo: {
       paddingHorizontal: 20,

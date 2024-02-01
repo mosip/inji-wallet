@@ -73,7 +73,10 @@ export const Button: React.FC<ButtonProps> = props => {
           ? Theme.Colors.GradientColors
           : Theme.Colors.DisabledColors,
       }}
-      containerStyle={containerStyle}
+      containerStyle={[
+        props.fill ? Theme.ButtonStyles.fill : null,
+        containerStyle,
+      ]}
       type={props.type}
       raised={props.raised}
       title={
