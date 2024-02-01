@@ -34,6 +34,7 @@ import {
 import {TelemetryConstants} from '../../../shared/telemetry/TelemetryConstants';
 
 import {API_URLS} from '../../../shared/api';
+import {BackupEvents} from '../../backupAndRestore/backup';
 
 const model = createModel(
   {
@@ -412,7 +413,7 @@ export const EsignetMosipVCItemMachine = model.createMachine(
             entry: 'removeVcItem',
             on: {
               STORE_RESPONSE: {
-                actions: ['removedVc', 'logVCremoved'],
+                actions: ['removedVc', 'logVCremoved', 'sendBackupEvent'],
                 target: '#vc-item-openid4vci',
               },
             },
@@ -526,6 +527,10 @@ export const EsignetMosipVCItemMachine = model.createMachine(
           to: context => context.serviceRefs.vc,
         },
       ),
+
+      sendBackupEvent: send(BackupEvents.DATA_BACKUP(), {
+        to: context => context.serviceRefs.backup,
+      }),
 
       sendVcUpdated: send(
         context =>

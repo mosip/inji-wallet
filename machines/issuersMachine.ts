@@ -7,6 +7,7 @@ import {
   REQUEST_TIMEOUT,
 } from '../shared/constants';
 import {StoreEvents} from './store';
+import {BackupEvents} from './backupAndRestore/backup';
 import {AppServices} from '../shared/GlobalContext';
 import NetInfo from '@react-native-community/netinfo';
 import {
@@ -376,6 +377,7 @@ export const IssuersMachine = model.createMachine(
           'storeVcsContext',
           'storeVcMetaContext',
           'logDownloaded',
+          'sendBackupEvent',
         ],
       },
       idle: {
@@ -444,6 +446,9 @@ export const IssuersMachine = model.createMachine(
       }),
       getKeyPairFromStore: send(StoreEvents.GET(Issuers_Key_Ref), {
         to: context => context.serviceRefs.store,
+      }),
+      sendBackupEvent: send(BackupEvents.DATA_BACKUP(), {
+        to: context => context.serviceRefs.backup,
       }),
       storeKeyPair: send(
         context => {
