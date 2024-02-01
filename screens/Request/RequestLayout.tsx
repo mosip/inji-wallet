@@ -12,6 +12,8 @@ import {REQUEST_ROUTES} from '../../routes/routesConstants';
 import {SquircleIconPopUpModal} from '../../components/ui/SquircleIconPopUpModal';
 import {ProgressingModal} from '../../components/ProgressingModal';
 import {BackupAndRestoreAllScreenBanner} from '../../components/BackupAndRestoreAllScreenBanner';
+import {SharingStatusModal} from '../Scan/SharingStatusModal';
+import {SvgImage} from '../../components/ui/svg';
 const RequestStack = createNativeStackNavigator();
 
 export const RequestLayout: React.FC = () => {
@@ -81,9 +83,13 @@ export const RequestLayout: React.FC = () => {
         />
       )}
 
-      <SharingErrorModal
+      <SharingStatusModal
         testId={'sharingErrorModal'}
         isVisible={controller.isDisconnected || controller.isBleError}
+        status={'OnFailureError'}
+        image={SvgImage.ErrorLogo()}
+        title={t('status.bleError.title')}
+        message={t('status.bleError.message')}
         onBackToHome={controller.DISMISS}
         onRetry={controller.RESET}
       />

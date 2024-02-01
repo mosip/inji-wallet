@@ -6,11 +6,11 @@ import {useScanLayout} from './ScanLayoutController';
 import {ScanScreen} from './ScanScreen';
 import {ProgressingModal} from '../../components/ProgressingModal';
 import {SCAN_ROUTES} from '../../routes/routesConstants';
-import {SharingSuccessModal} from './SuccessfullySharedModal';
 import {Theme} from '../../components/ui/styleUtils';
 import {Icon} from 'react-native-elements';
 import {Loader} from '../../components/ui/Loader';
-import {SharingErrorModal} from './SharingErrorModal';
+import {SharingStatusModal} from './SharingStatusModal';
+import {SvgImage} from '../../components/ui/svg';
 
 const ScanStack = createNativeStackNavigator();
 
@@ -69,14 +69,28 @@ export const ScanLayout: React.FC = () => {
         />
       </ScanStack.Navigator>
 
-      <SharingSuccessModal
-        isVisible={controller.isAccepted}
+      <SharingStatusModal
         testId={'sharingSuccessModal'}
+        isVisible={controller.isAccepted}
+        status={'onSuccess'}
+        image={SvgImage.SuccessLogo()}
+        title={t('status.accepted.title')}
+        message={t('status.accepted.message')}
+        goToHome={controller.GOTO_HOME}
+        goToHistory={controller.GOTO_HISTORY}
       />
 
-      <SharingErrorModal
+      <SharingStatusModal
         testId={'sharingErrorModal'}
-        isVisible={controller.isDisconnected}
+        isVisible={
+          controller.isDisconnected ||
+          controller.isInvalid ||
+          controller.isBleError
+        }
+        status={'OnFailureError'}
+        image={SvgImage.ErrorLogo()}
+        title={t('status.bleError.title')}
+        message={t('status.bleError.message')}
         onBackToHome={controller.DISMISS}
         onRetry={controller.onRetry}
       />
