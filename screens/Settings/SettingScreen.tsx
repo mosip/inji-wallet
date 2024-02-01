@@ -20,8 +20,9 @@ import {RequestRouteProps, RootRouteProps} from '../../routes';
 import {ReceivedCards} from './ReceivedCards';
 import testIDProps from '../../shared/commonUtil';
 import {SvgImage} from '../../components/ui/svg';
-import {DataBackup} from './DataBackup';
-import {BackupRestore} from './BackupRestore';
+import {DataBackupAndRestore} from './DataBackupAndRestore';
+import {isAndroid} from '../../shared/constants';
+import {BackupAndRestoreAllScreenBanner} from '../../components/BackupAndRestoreAllScreenBanner';
 
 const LanguageSetting: React.FC = () => {
   const {t} = useTranslation('SettingScreen');
@@ -80,6 +81,7 @@ export const SettingScreen: React.FC<
         headerTitle={t('header')}
         headerElevation={2}
         onDismiss={controller.TOGGLE_SETTINGS}>
+        <BackupAndRestoreAllScreenBanner />
         <ScrollView>
           <Column
             style={{display: Platform.OS !== 'ios' ? 'flex' : 'none'}}
@@ -164,8 +166,9 @@ export const SettingScreen: React.FC<
 
             <AboutInji appId={controller.appId} />
 
-            {BACKUP_AND_RESTORE === 'true' && <DataBackup />}
-            {BACKUP_AND_RESTORE === 'true' && <BackupRestore />}
+            {BACKUP_AND_RESTORE === 'true' && isAndroid() && (
+              <DataBackupAndRestore />
+            )}
 
             {CREDENTIAL_REGISTRY_EDIT === 'true' && (
               <EditableListItem

@@ -220,6 +220,27 @@ export const DefaultTheme = {
       position: 'relative',
       paddingHorizontal: 12,
     },
+    backupRestoreBanner: {
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      height: 39,
+      position: 'relative',
+      paddingHorizontal: 12,
+    },
+    dataBackupFailure: {
+      justifyContent: 'space-between',
+      backgroundColor: Colors.Red,
+      height: 39,
+      position: 'relative',
+      paddingHorizontal: 12,
+    },
+    dataBackupSuccess: {
+      justifyContent: 'space-between',
+      backgroundColor: Colors.Green,
+      height: 39,
+      position: 'relative',
+      paddingHorizontal: 12,
+    },
     homeScreenContainer: {
       alignItems: 'center',
       justifyContent: 'center',
@@ -656,6 +677,19 @@ export const DefaultTheme = {
       height: 50,
       marginTop: -10,
     },
+    keyboardAvoidStyle: {
+      flex: 1,
+      paddingVertical: 40,
+      paddingHorizontal: 24,
+      alignItems: 'center',
+      justifyContent: 'space-between',
+    },
+    passwordKeyboardAvoidStyle: {
+      flex: 1,
+      backgroundColor: Colors.White,
+      paddingVertical: 40,
+      paddingHorizontal: 24,
+    },
   }),
   QrCodeStyles: StyleSheet.create({
     magnifierZoom: {
@@ -1043,10 +1077,45 @@ export const DefaultTheme = {
       marginVertical: 6,
     },
   }),
+  BackupStyles: StyleSheet.create({
+    newStyles: {
+      backgroundColor: Colors.Orange,
+      paddingHorizontal: 10,
+      borderRadius: 3,
+    },
+  }),
   UpdateModalStyles: StyleSheet.create({
     modal: {
       width: Dimensions.get('screen').width,
       height: Dimensions.get('screen').height,
+    },
+  }),
+  BackupAndRestoreStyles: StyleSheet.create({
+    backupProgressText: {
+      fontFamily: 'Inter_400Regular',
+      fontSize: 14,
+      color: Colors.Gray44,
+    },
+    backupProcessInfo: {
+      fontWeight: 'bold',
+      paddingHorizontal: 20,
+      textAlign: 'center',
+    },
+    cloudInfo: {
+      paddingHorizontal: 20,
+      textAlign: 'center',
+      paddingVertical: 15,
+    },
+    cloudLabel: {
+      fontWeight: '600',
+      paddingHorizontal: 10,
+      textAlign: 'center',
+      paddingTop: 15,
+      fontFamily: 'Inter_500Medium',
+      fontSize: 14,
+      letterSpacing: 0,
+      lineHeight: 17,
+      minHeight: 50,
     },
   }),
   TextEditOverlayStyles: StyleSheet.create({
@@ -1431,10 +1500,11 @@ export const DefaultTheme = {
   ICON_LARGE_SIZE: 33,
   CloseCard: require('../../../assets/Card_Bg1.png'),
   OpenCard: require('../../../assets/Card_Bg1.png'),
-  sharingIntro: require('../../../assets/Intro_Secure_Sharing.png'),
-  walletIntro: require('../../../assets/Intro_Wallet_Binding.png'),
-  IntroScanner: require('../../../assets/Intro_Scanner.png'),
-  protectPrivacy: require('../../../assets/Intro_Unlock_Method.png'),
+  IntroWelcome: require('../../../assets/Intro_Unlock.png'),
+  SecureSharing: require('../../../assets/Intro_Secure_Sharing.png'),
+  DigitalWallet: require('../../../assets/Intro_Wallet.png'),
+  IntroShare: require('../../../assets/Intro_Share.png'),
+  IntroBackup: require('../../../assets/Intro_Backup.png'),
   elevation(level: ElevationLevel): ViewStyle {
     // https://ethercreative.github.io/react-native-shadow-generator/
 

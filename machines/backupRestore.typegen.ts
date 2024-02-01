@@ -8,10 +8,19 @@ export interface Typegen0 {
       data: unknown;
       __tip: 'See the XState TS docs to learn how to strongly type this.';
     };
+    'done.invoke.backupRestore.restoreBackup.deleteBackupDir:invocation[0]': {
+      type: 'done.invoke.backupRestore.restoreBackup.deleteBackupDir:invocation[0]';
+      data: unknown;
+      __tip: 'See the XState TS docs to learn how to strongly type this.';
+    };
     'done.invoke.backupRestore.restoreBackup.unzipBackupFile:invocation[0]': {
       type: 'done.invoke.backupRestore.restoreBackup.unzipBackupFile:invocation[0]';
       data: unknown;
       __tip: 'See the XState TS docs to learn how to strongly type this.';
+    };
+    'error.platform.backupRestore.restoreBackup.unzipBackupFile:invocation[0]': {
+      type: 'error.platform.backupRestore.restoreBackup.unzipBackupFile:invocation[0]';
+      data: unknown;
     };
     'xstate.init': {type: 'xstate.init'};
   };
@@ -29,14 +38,25 @@ export interface Typegen0 {
   };
   eventsCausingActions: {
     loadDataToMemory: 'DATA_FROM_FILE';
+    refreshVCs: 'done.invoke.backupRestore.restoreBackup.deleteBackupDir:invocation[0]';
+    sendDataRestoreFailureEvent:
+      | 'STORE_ERROR'
+      | 'done.invoke.backupRestore.restoreBackup.checkStorageAvailibility:invocation[0]'
+      | 'error.platform.backupRestore.restoreBackup.unzipBackupFile:invocation[0]';
+    sendDataRestoreStartEvent: 'BACKUP_RESTORE' | 'EXTRACT_DATA';
+    sendDataRestoreSuccessEvent: 'done.invoke.backupRestore.restoreBackup.deleteBackupDir:invocation[0]';
     setDataFromBackupFile: 'DATA_FROM_FILE';
+    setRestoreNetworkError: 'error.platform.backupRestore.restoreBackup.unzipBackupFile:invocation[0]';
+    setRestoreTechnicalError:
+      | 'STORE_ERROR'
+      | 'done.invoke.backupRestore.restoreBackup.checkStorageAvailibility:invocation[0]';
   };
   eventsCausingDelays: {};
   eventsCausingGuards: {
     isMinimumStorageRequiredForBackupRestorationReached: 'done.invoke.backupRestore.restoreBackup.checkStorageAvailibility:invocation[0]';
   };
   eventsCausingServices: {
-    checkStorageAvailability: 'EXTRACT_DATA';
+    checkStorageAvailability: 'BACKUP_RESTORE' | 'EXTRACT_DATA';
     deleteBkpDir: 'STORE_RESPONSE';
     readBackupFile: 'done.invoke.backupRestore.restoreBackup.unzipBackupFile:invocation[0]';
     unzipBackupFile: 'done.invoke.backupRestore.restoreBackup.checkStorageAvailibility:invocation[0]';

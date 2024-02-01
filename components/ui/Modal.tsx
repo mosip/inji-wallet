@@ -107,4 +107,5 @@ export interface ModalProps {
   headerLeft?: React.ReactElement;
   arrowLeft?: boolean;
   onShow?: () => void;
+  children: React.ReactNode;
 }

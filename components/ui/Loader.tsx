@@ -1,11 +1,9 @@
 import React, {Fragment, useEffect} from 'react';
 import {useTranslation} from 'react-i18next';
 import {BackHandler, SafeAreaView, View} from 'react-native';
-import Spinner from 'react-native-spinkit';
 import {Button, Centered, Column, Row, Text} from '../../components/ui';
 import {Theme} from './styleUtils';
-import testIDProps from '../../shared/commonUtil';
-import {SvgImage} from './svg';
+import {LoaderAnimation} from './LoaderAnimation';
 
 export const Loader: React.FC<LoaderProps> = props => {
   const {t} = useTranslation('ScanScreen');
@@ -50,14 +48,7 @@ export const Loader: React.FC<LoaderProps> = props => {
         crossAlign="center"
         fill>
         <Column margin="24 0" align="space-around">
-          {SvgImage.ProgressIcon()}
-          <View {...testIDProps('threeDotsLoader')}>
-            <Spinner
-              type="ThreeBounce"
-              color={Theme.Colors.Loading}
-              style={{marginLeft: 6}}
-            />
-          </View>
+          <LoaderAnimation />
         </Column>
         {(props.isHintVisible || props.onCancel) && (
           <Column style={Theme.SelectVcOverlayStyles.timeoutHintContainer}>

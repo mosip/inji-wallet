@@ -16,6 +16,7 @@ import {CopyButton} from '../../components/CopyButton';
 import testIDProps from '../../shared/commonUtil';
 import {__InjiVersion, __TuvaliVersion} from '../../shared/GlobalVariables';
 import i18next from '../../i18n';
+import {BackupAndRestoreAllScreenBanner} from '../../components/BackupAndRestoreAllScreenBanner';
 
 export const AboutInji: React.FC<AboutInjiProps> = ({appId}) => {
   const {t} = useTranslation('AboutInji');
@@ -62,6 +63,7 @@ export const AboutInji: React.FC<AboutInjiProps> = ({appId}) => {
         onDismiss={() => {
           setShowAboutInji(!showAboutInji);
         }}>
+        <BackupAndRestoreAllScreenBanner />
         <Row
           testID="appID"
           crossAlign="flex-start"

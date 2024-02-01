@@ -22,13 +22,16 @@ public class SecureSharingPage extends BasePage {
     public SecureSharingPage(AppiumDriver driver) {
         super(driver);
     }
+    BasePage basePage = new BasePage(driver);
     
     public String  verifyLanguageforSecureSharingPageLoaded(){
+    	basePage.retrieToGetElement(secureSharingText);
     	return getTextFromLocator(secureSharingText);
 
     }
 
     public String getSecureSharingDescription() {
+    	basePage.retrieToGetElement(secureSharingDescription);
         return this.getTextFromLocator(secureSharingDescription);
     }
 
