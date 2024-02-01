@@ -31,6 +31,7 @@ export const SharingStatusModal: React.FC<SharingStatusModalProps> = props => {
           <Text
             testID="sharingStatusMessage"
             align="center"
+            margin="0 33 0 33"
             style={Theme.TextStyles.regular}
             color={Theme.Colors.statusMessage}>
             {props.message}
