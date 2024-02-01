@@ -654,10 +654,11 @@
       "noDataForBackup": "Ikinalulungkot namin, ngunit walang data na magagamit upang i-back up sa ngayon.",
       "storageLimitReached": "Hindi namin makumpleto ang proseso ng pag-backup dahil sa hindi sapat na espasyo sa storage sa iyong device. Mangyaring magbakante ng espasyo sa pamamagitan ng pagtanggal ng mga hindi kinakailangang file o app, at subukang muli."
     },
-    "restoreSuccessful": "Ang iyong pag-restore ay matagumpay!",
+    "restoreSuccessful": "Matagumpay na naibalik ang iyong backup",
     "restoreFailure": {
       "networkError": "Dahil sa Hindi Matatag na Koneksyon, hindi namin naibalik ang data. Subukang muli mamaya.",
-      "technicalError": "Dahil sa Technical Error, hindi namin naibalik ang data. Subukang muli mamaya."
+      "technicalError": "Dahil sa Technical Error, hindi namin naibalik ang data. Subukang muli mamaya.",
+      "noBackupFile": "Walang backup na file"
     }
   },
   "AccountSelection": {
@@ -679,7 +680,7 @@
     "backup": "Backup",
     "size": "Size: ",
     "restore": "Ibalik",
-    "restoreInProgress": "Ibinabalik namin ang iyong data, mangyaring huwag isara ang application. Maaaring tumagal ito ng hanggang <X> minuto batay sa iyong data.",
+    "restoreInProgress": "Ibinabalik namin ang iyong data, mangyaring huwag isara ang application. Maaari mong ipagpatuloy ang paggamit ng application.",
     "restoreInfo": "Ibalik ang iyong data mula sa Google Drive",
     "driveSettings": "Mga Setting ng Google Drive",
     "successBanner": "Ang iyong backup ay matagumpay!",
