@@ -59,7 +59,7 @@ export const Error: React.FC<ErrorProps> = props => {
           <Column fill crossAlign="center" align="flex-end">
             <Row style={{marginHorizontal: 30}}>
               {props.tryAgain && (
-                <Button styles={{borderRadius: 9}} {...tryAgainButtonProps} />
+                <Button fill type="gradient" {...tryAgainButtonProps} />
               )}
             </Row>
             <Row>
