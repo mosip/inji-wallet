@@ -241,7 +241,15 @@ class Cloud {
       return Promise.resolve(fileName.split('.zip')[0]);
     } catch (error) {
       console.log('error while downloading backup file ', error);
-      throw error;
+      let downloadError;
+      if (error.toString() === 'Error: NetworkError') {
+        downloadError = NETWORK_REQUEST_FAILED;
+      } else if (error.code?.toString() === 'ERR_DIRECTORY_NOT_FOUND') {
+        downloadError = 'No backup file';
+      } else {
+        downloadError = error;
+      }
+      return Promise.reject({error: downloadError});
     }
   }
 }

@@ -19,7 +19,7 @@ import {
   getEndEventData,
 } from '../shared/telemetry/TelemetryUtils';
 import {VcEvents} from './VCItemMachine/vc';
-import {NETWORK_REQUEST_FAILED} from '../shared/constants';
+import {NETWORK_REQUEST_FAILED, TECHNICAL_ERROR} from '../shared/constants';
 
 const model = createModel(
   {
@@ -86,9 +86,22 @@ export const backupRestoreMachine = model.createMachine(
                   target: ['failure'],
                 },
                 {
-                  target: 'unzipBackupFile',
+                  target: 'downloadBackupFileFromCloud',
                 },
               ],
+            },
+          },
+          downloadBackupFileFromCloud: {
+            invoke: {
+              src: 'downloadLatestBackup',
+              onDone: {
+                actions: 'setBackupFileName',
+                target: 'unzipBackupFile',
+              },
+              onError: {
+                actions: ['setRestoreErrorReason'],
+                target: 'failure',
+              },
             },
           },
           unzipBackupFile: {
@@ -161,14 +174,18 @@ export const backupRestoreMachine = model.createMachine(
       setRestoreTechnicalError: model.assign({
         errorReason: 'technicalError',
       }),
+      setBackupFileName: model.assign({
+        fileName: (_context, event) => event.data,
+      }),
 
       setRestoreErrorReason: model.assign({
         errorReason: (_context, event) => {
           const reasons = {
-            ERR_DIRECTORY_NOT_FOUND: 'noBackupFile',
+            'No backup file': 'noBackupFile',
             [NETWORK_REQUEST_FAILED]: 'networkError',
+            [TECHNICAL_ERROR]: 'technicalError',
           };
-          return reasons[event.data.code] || reasons[NETWORK_REQUEST_FAILED];
+          return reasons[event.data.error] || reasons[TECHNICAL_ERROR];
         },
       }),
 
@@ -224,14 +241,17 @@ export const backupRestoreMachine = model.createMachine(
       },
       deleteBkpDir: () => async () =>
         fileStorage.removeItem(backupDirectoryPath),
-      unzipBackupFile: context => async () => {
-        const bkpZip = await Cloud.downloadLatestBackup();
-        if (bkpZip === null) {
+
+      downloadLatestBackup: () => async () => {
+        const backupFileName = await Cloud.downloadLatestBackup();
+        if (backupFileName === null) {
           return new Error('unable to download backup file');
         }
-        context.fileName = bkpZip;
-        const result = await unZipAndRemoveFile(bkpZip);
-        return result;
+        return backupFileName;
+      },
+
+      unzipBackupFile: context => async () => {
+        return await unZipAndRemoveFile(context.fileName);
       },
       readBackupFile: context => async callback => {
         const dataFromBackupFile = await fileStorage.readFile(
