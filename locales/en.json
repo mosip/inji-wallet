@@ -190,24 +190,41 @@
   },
   "HelpScreen": {
     "header": "Help",
-    "whatIsDigitalCredential?": "What is a digital credential?",
+    "here":" here. ",
+    "whatIsaDigitalCredential?": "What is a digital credential?",
     "detail-1": "A digital credential is the digital version of your physical Identity card",
-    "whatCanDoWithDigitalCredential?": "What can we do with digital credentials?",
+    "whatCanWeDoWithDigitalCredential?": "What can we do with digital credentials?",
     "detail-2": "You can avail various Government and private services using your digital credentials.",
     "howToAddCard?": "How to add a card?",
-    "detail-3": "To add a card, click on '+' button on the Home page and select the appropriate option.",
-    "howToRemoveCardFromWallet?": "How to share a card?",
-    "detail-4": "Swipe left on the card > click on More > Remove from Wallet",
-    "canWeAddMultipleCards?": "Can we add multiple cards?",
+    "detail-3": "IDs can be downloaded to INJI Mobile Wallet as Verifiable Credentials. To know how to download VCs with various IDs please read",
+    "howToRemoveACardFromTheWallet?": "How to remove a card from the wallet?",
+    "detail-4a": "You can click on ...(meatballs menu) on a card in the Home page and choose Remove from Wallet option to remove a card from the wallet. To know more, please read", 
+    "detail-4b": " Please note that, the same card can be downloaded again.",
+    "canIAddMultipleCards?": "Can I add multiple cards?",
     "detail-5": "Yes, you can add multiple cards to the wallet by clicking on '+' button on the Home page.",
-    "howToShareCard?": "How to share a card?",
+    "howToShareACard?": "How to share a card?",
     "detail-6": "Click on 'Share' button and scan the QR code from the requesting party. Once the connection is established, the card will be shared.",
-    "howToActivateCardForOnlineLogin?": "How to activate a card for online login?",
+    "howToActivateACardForOnlineLogin?": "How to activate a card for online login?",
     "detail-7": "After successfully adding a card to the wallet, click on 'Activation pending for Online login' on the card. On clicking on 'Activate', the card will be ready to be used for online login.",
-    "howToViewActivity?": "How to view activity logs?",
+    "howToViewActivityLogs?": "How to view activity logs?",
     "detail-8": "On the Home page, click on 'History' to view the details of the user's activitie.",
-    "whatCanDoBiometricsChanged?": "What happens when Android keystore biometric is changed?",
-    "detail-9": "The Android keystore holds important information like private keys for identity proofs. When you change your biometrics, old keys are no longer safe. To keep things secure, we remove identity proofs signed by those old keys. You can simply download your identity proofs again, and they will be signed with the latest, safer keys."
+    "whatHappensWhenAndroidKeystoreBiometricIsChanged?": "What happens when Android keystore biometric is changed?",
+    "detail-9": "The Android keystore holds important information like private keys for identity proofs. When you change your biometrics, old keys are no longer safe. To keep things secure, we remove identity proofs signed by those old keys. You can simply download your identity proofs again, and they will be signed with the latest, safer keys.",
+    "whatIsAnId?":"What is an ID?",
+    "detail-10":"An ID is any document that can prove a person’s identity. In the context of MOSIP, identifiers are alphanumeric digital handles for identities in the system. While a person's identity is represented as a collection of biographic and biometric attributes that can uniquely identify the person, the identity is referred to using identifiers.",
+    "whatAreTheDifferentTypesOfId?": "What are the different types of ID?",
+    "detail-11":"In the context of MOSIP, different IDs are UIN, VID, and AID. Read more about them",
+    "whereCanIFindTheseIds?":"Where can I find these IDs?",
+    "detail-12a": "As part of the enrolment (registration) process, upon registering the demographic information and biometrics of the resident successfully, a registration ID (AID) is allocated to the resident. An acknowledgment slip containing the captured details and the AID is also issued (printed) to the resident as proof of registration.",
+    "detail-12b": "Upon successful processing, a Unique Identification Number (UIN) is allocated to the resident and a notification is sent to the resident on the registered phone number and/or email.",
+    "detail-12c": "VID / Virtual ID is an alias identifier configured for one-time usage and is not linkable. Since these are used for authentication transactions, such identifiers are to be known to the user only or generated with their participation.",
+    "whyDoesMyVcSayActivationIsPending?":"Why does my VC say Activation is pending?",
+    "detail-13": "Once VC is downloaded to your wallet, it is not yet bound with the user’s identity which is why your VC says Activation Pending. Binding your VC to your wallet (with your passcode or biometrics) is crucial to ensure the highest level of security. To activate your VC, please follow the steps",
+    "whatDoYouMeanByActivatedForOnlineLogin?": "What do you mean by Activated for Online login?",
+    "detail-14a": "1. Once the VC is successfully binded with the wallet, you can see that it is Activated for Online login which means this VC can now be used for the QR login process. To know more about QR code login, please read",
+    "detail-14b": "2. The Q&A should be readable and understandable even when the user changes the language in the INJI app.",
+    "whatIsAVerifiableCredential?": "What is a Verifiable Credential?",
+    "detail-15": "A Verifiable Credential is a digitally signed piece of information that represents a statement made by the issuer about a subject and typically includes demographic details. VCs are secure and trustworthy in various online interactions."
   },
   "AddVcModal": {
     "requestingCredential": "Requesting credential...",
@@ -325,12 +342,14 @@
   "OnboardingOverlay": {
     "stepOneTitle": "Welcome!",
     "stepOneText": "Keep your digital credential with you at all times. Inji helps you manage and use them effectively. To get started, add cards to your profile.",
-    "stepTwoTitle": "Trusted Digital Wallet",
-    "stepTwoText": "Store and carry all your important cards in a single trusted wallet.",
-    "stepThreeTitle": "Secure Sharing",
-    "stepThreeText": "Share your cards securely in a hassle free way and avail various services.",
-    "stepFourTitle": "Hassle free authentication",
+    "stepTwoTitle": "Secure Sharing",
+    "stepTwoText": "Share your cards securely in a hassle free way and avail various services.",
+    "stepThreeTitle": "Trusted Digital Wallet",
+    "stepThreeText": "Store and carry all your important cards in a single trusted wallet.",
+    "stepFourTitle": "Quick Access",
     "stepFourText": "Authenticate yourself with ease using the stored digital credential.",
+    "stepFiveTitle": "Backup Data",
+    "stepFiveText": "Protect your data with ease using our Backup & Restore feature. Safely store your VCs against loss or accidents by creating regular backups and recover it effortlessly whenever needed for seamless continuity.",
     "getStarted": "Get Started",
     "goBack": "Go Back",
     "back": "Back",
@@ -583,6 +602,63 @@
       }
     }
   },
+  "DataBackupScreen": {
+    "dataBackupAndRestore": "Backup & Restore",
+    "new": "New",
+    "loadingTitle": "Loading setting up",
+    "loadingSubtitle": "Loading...",
+    "errors": {
+      "permissionDenied": {
+        "title": "Permission Denied!",
+        "message": "We noticed that you've cancelled the creation of data backup settings. We strongly recommend revisiting the data backup settings to ensure your data availability. ",
+        "helpText": "Click “Configure Settings” to set up data backup now, or “Cancel” to go back to settings screen."
+      },
+      "noInternetConnection": {
+        "title": "No internet connection",
+        "message": "Please check your connection and retry"
+      }
+    }
+  },
+  "BackupAndRestoreBanner": {
+    "backupSuccessful": "Your backup was successful!",
+    "backupFailure": {
+      "networkError": "Due to Unstable Connection, we were unable to perform data backup. Please try again later.",
+      "technicalError": "Due to Technical Error, we were unable to perform data backup. Please try again later.",
+      "noDataForBackup": "We're sorry, but there is no data available to back up at the moment.",
+      "storageLimitReached": "We're unable to complete the backup process due to insufficient storage space on your device. Please free up space by deleting unnecessary files or apps, and try again."
+    },
+    "restoreSuccessful": "Your restore was successful!",
+    "restoreFailure": {
+      "networkError": "Due to Unstable Connection, we were unable to restore data. Please try again later.",
+      "technicalError": "Due to Technical Error, we were unable to restore the data. Please try again later."
+    }
+  },
+  "AccountSelection": {
+    "backupProcessInfo": "You’re just a few steps away from backing up your data",
+    "cloudInfo": "To initiate the data backup, please tap on the “Proceed” button to link your Google Drive with Inji.",
+    "googleDriveTitle": "Google Drive",
+    "loadingSubtitle": "Loading...",
+    "proceed": "Proceed",
+    "goBack": "Go Back",
+    "associatedAccount": "Associated account"
+  },
+  "BackupAndRestore": {
+    "title": "Backup & Restore",
+    "backupProgressState": "Backup in progress...",
+    "lastBackupDetails": "Last Backup Details",
+    "backupInProgress": "You can still use the application while data backup is in progress. Closing the app will terminate the data backup process.",
+    "noBackup": "Backup your Data to Google Drive. You can restore them when you reinstall INJI.",
+    "storage": "The backup will be stored in the Google Drive associated to your chosen gmail account.",
+    "backup": "Backup",
+    "size": "Size: ",
+    "restore": "Restore",
+    "restoreInProgress": "We’re restoring your data, please do not close the application. This might take upto <X> minutes based on your data.",
+    "restoreInfo": "Restore your data from Google Drive",
+    "driveSettings": "Google Drive Settings",
+    "successBanner": "Your backup was successful!",
+    "backupFailed": "Backup Failed",
+    "ok": "OK"
+  },
   "WelcomeScreen": {
     "title": "Open Source Identity Solution",
     "unlockApplication": "Unlock Application",
@@ -610,6 +686,8 @@
     "dismiss": "Dismiss",
     "editLabel": "Edit {{label}}",
     "tryAgain": "Try again",
+    "goBack": "Go Back",
+    "configureSettings": "Configure Settings",
     "ignore": "Ignore",
     "camera": {
       "errors": {

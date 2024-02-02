@@ -4,8 +4,11 @@ import {
   BackupEvents,
   selectIsBackingUp,
   selectIsBackingUpSuccess,
-  selectIsBackingUpSFailure,
-} from '../../machines/backup';
+  selectIsBackingUpFailure,
+  selectIsBackupInprogress,
+  selectBackupErrorReason,
+  lastBackupDetails,
+} from '../../machines/backupAndRestore/backup';
 import {GlobalContext} from '../../shared/GlobalContext';
 
 export function useBackupScreen() {
@@ -13,9 +16,12 @@ export function useBackupScreen() {
   const backupService = appService.children.get('backup');
 
   return {
+    lastBackupDetails: useSelector(backupService, lastBackupDetails),
+    backupErrorReason: useSelector(backupService, selectBackupErrorReason),
     isBackingUp: useSelector(backupService, selectIsBackingUp),
     isBackingUpSuccess: useSelector(backupService, selectIsBackingUpSuccess),
-    isBackingUpFailure: useSelector(backupService, selectIsBackingUpSFailure),
+    isBackingUpFailure: useSelector(backupService, selectIsBackingUpFailure),
+    isBackupInProgress: useSelector(backupService, selectIsBackupInprogress),
     DATA_BACKUP: () => {
       backupService.send(BackupEvents.DATA_BACKUP());
     },

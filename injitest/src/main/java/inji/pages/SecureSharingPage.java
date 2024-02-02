@@ -22,31 +22,16 @@ public class SecureSharingPage extends BasePage {
     public SecureSharingPage(AppiumDriver driver) {
         super(driver);
     }
+    BasePage basePage = new BasePage(driver);
     
     public String  verifyLanguageforSecureSharingPageLoaded(){
+    	basePage.retrieToGetElement(secureSharingText);
     	return getTextFromLocator(secureSharingText);
 
-//    	switch (language) {
-//    	case "English":
-//    		boolean isHederLoadedInEnglish  = (actualText.equalsIgnoreCase("Secure Sharing")==true) ? true : false;
-//    		return isHederLoadedInEnglish ;
-//    	case "Hindi":
-//    		boolean isHederLoadedInHindi  = (actualText.equalsIgnoreCase("सुरक्षित साझाकरण")==true) ? true : false;
-//    		return isHederLoadedInHindi ;
-//    	case "Filipino":
-//    		boolean isHederLoadedInFilipino  = (actualText.equalsIgnoreCase("Mabilis na pagpasok")==true) ? true : false;
-//    		return isHederLoadedInFilipino ;
-//    	case "Tamil":
-//    		boolean isHederLoadedInTamil  = (actualText.equalsIgnoreCase("பாதுகாப்பான பகிர்வு")==true) ? true : false;
-//    		return isHederLoadedInTamil ;
-//    	case "Kannada":
-//    		boolean isHederLoadedInKannada  = (actualText.equalsIgnoreCase("ಸುರಕ್ಷಿತ ಹಂಚಿಕೆ")==true) ? true : false;
-//    		return isHederLoadedInKannada ;
-//    	}
-//    	return false;
     }
 
     public String getSecureSharingDescription() {
+    	basePage.retrieToGetElement(secureSharingDescription);
         return this.getTextFromLocator(secureSharingDescription);
     }
 

@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite name="All Test Suite" parallel="tests" thread-count="2">
+<suite name="All Test Suite">
 	<listeners>
 		<listener class-name="inji.listeners.Listeners" />
 	</listeners>
 	<test verbose="2" preserve-order="true" name="android">
-		<parameter name="platformName" value="ANDROID" />
 		<classes>
 		<class name="androidTestCases.VcDownloadAndVerifyUsingUinTest">
 				<methods>
@@ -15,6 +14,7 @@
 					<include name="downloadMultipleVcUsingDifferentUin" />
 					<include name="verifyInvalidUinErrorMessage" />
 					<include name="verifyOtpTimeOutAndGoBack" />
+					<include name="DownloadMultipleVcAndForceStopeAndAgainInvokeApp" />
 				</methods>
 			</class>
 			<class name="androidTestCases.VerifyWelcomePagesTest">
@@ -31,6 +31,7 @@
 					<include name="downloadTwoVcDeleteOneUsingVid" />
 					<include name="verifyInvalidVidErrorMessage" />
 					<include name="downloadAndVerifyVcUsingRevokeVid" />
+					<include name="DownloadMultipleVcAndForceStopeAndAgainInvokeAppViaVid" />
 				</methods>
 			</class>
 			<class name="androidTestCases.UnlockWithPasscodeTest">
@@ -76,8 +77,10 @@
 			<class name="androidTestCases.PinVcTest">
 				<methods>
 					<include name="pinVc" />
+					<include name="verifyMessageAfterDenyBluetoothPopup" />
 					<include name="VerifyCameraOpenAfterPinVc" />
 					<include name="downloadVcViaEsignetAndPinUnpin" />
+					
 				</methods>
 			</class>
 			<class name="androidTestCases.ChangeLanguageTest">
@@ -101,7 +104,7 @@
 					<include name="verifyReceivedCardTabPresent" />
 				</methods>
 			</class>
-			<!--<class name="androidTestCases.NoNetworkAndroidTest">
+			<class name="androidTestCases.NoNetworkAndroidTest">
 				<methods>
 					<include name="setupPasscodeAndDownloadCardWithoutInternet" />
 					<include name="openCameraOnFlightMode" />
@@ -118,6 +121,7 @@
 					<include name="downloadVcUsingUinViaEsignetNoInternateOpenScan" />
 					<include name="downloadVcInOtherLanguageViaEsignetWithoutInternet" />
 					<include name="changeLanguageToTamilWithoutNetwork" />
+					<include name="verifyVcIssuerListWithoutNetwork" />
 				</methods>
 			</class>
 			<class name="androidTestCases.CredentialRegistryTest">
@@ -133,8 +137,9 @@
 					<include name="downloadAndVerifyVcInNewEnvForEsignet" />
 					<include name="downloadAndVerifyVcInInvalidEnvForEsignet" />
 					<include name="downloadAndVerifyVcInInvalidEnvForEsignetInFillpino" />
+					<include name="downloadVcInNewEnvAndVerifyInDetailedVcViewPage" />
 				</methods>
-			</class>-->
+			</class>
 			<class name="androidTestCases.ReceiveCardTest">
 				<methods>
 					<include name="verifyRecivedCardAndQrCode" />

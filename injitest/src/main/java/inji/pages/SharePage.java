@@ -7,7 +7,7 @@ import org.openqa.selenium.WebElement;
 
 import inji.utils.IosUtil;
 
-public class ScanPage extends BasePage {
+public class SharePage extends BasePage {
 
     @AndroidFindBy(accessibility = "camera")
     private WebElement camera;
@@ -17,6 +17,9 @@ public class ScanPage extends BasePage {
 
     @AndroidFindBy(uiAutomator = "new UiSelector().textContains(\"Allow\")")
     private WebElement allowButton;
+    
+    @AndroidFindBy(uiAutomator = "new UiSelector().textContains(\"Deny\")")
+    private WebElement denyButton;
 
     @AndroidFindBy(accessibility = "noShareableVcs")
     @iOSXCUITFindBy(accessibility = "noShareableVcs")
@@ -27,14 +30,24 @@ public class ScanPage extends BasePage {
 
 	@AndroidFindBy(accessibility = "holdPhoneSteadyMessage")
 	 private WebElement holdCameraSteady;
+	
+	@AndroidFindBy(accessibility = "bluetoothIsTurnedOffMessage")
+    private WebElement bluetoothIsTurnedOffMessage;
 
-    public ScanPage(AppiumDriver driver) {
+    public SharePage(AppiumDriver driver) {
         super(driver);
     }
 
-    public ScanPage acceptPermissionPopupBluetooth() {
+    public SharePage acceptPermissionPopupBluetooth() {
         if (isElementDisplayed(allowButton)) {
             clickOnElement(allowButton);
+        }
+        return this;
+    }
+    
+    public SharePage denyPermissionPopupBluetooth() {
+        if (isElementDisplayed(denyButton)) {
+            clickOnElement(denyButton);
         }
         return this;
     }
@@ -45,6 +58,10 @@ public class ScanPage extends BasePage {
 
     public boolean isNoShareableCardsMessageDisplayed() {
         return isElementDisplayed(noShareableCards);
+    }
+    
+    public String isBluetoothIsTurnedOffMessageDisplayed() {
+        return getTextFromLocator(bluetoothIsTurnedOffMessage);
     }
 
     public boolean isCameraPageLoaded() {

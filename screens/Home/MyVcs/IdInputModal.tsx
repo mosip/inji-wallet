@@ -49,104 +49,103 @@ export const IdInputModal: React.FC<IdInputModalProps> = props => {
       headerTitle={t('header')}
       headerElevation={2}>
       <KeyboardAvoidingView
-        style={{flex: 1}}
+        style={Theme.Styles.keyboardAvoidStyle}
         behavior={isIOS() ? 'padding' : 'height'}>
-        <Column fill align="space-between" pY={32} pX={24}>
-          <Column>
-            <Text
-              align="left"
-              size="regular"
-              style={Theme.TextStyles.retrieveIdLabel}>
-              {t('guideLabel')}
-            </Text>
-            <Row crossAlign="center" style={Theme.Styles.idInputContainer}>
-              <Column style={Theme.Styles.idInputPicker}>
-                <Picker
-                  {...testIDProps('selectIdTypePicker')}
-                  selectedValue={controller.idType}
-                  onValueChange={controller.SELECT_ID_TYPE}
-                  style={Theme.Styles.picker}>
-                  <Picker.Item label="UIN" value="UIN" />
-                  <Picker.Item label="VID" value="VID" />
-                </Picker>
-              </Column>
-              <Column
-                align="center"
-                style={{
-                  height: 150,
-                }}>
-                <Input
-                  {...testIDProps('idInputModalIndividualId')}
-                  placeholder={!controller.id ? inputLabel : ''}
-                  inputContainerStyle={
-                    controller.id
-                      ? Theme.Styles.idInputBottom
-                      : Theme.Styles.idInput
-                  }
-                  inputStyle={{
-                    textAlign: I18nManager.isRTL ? 'right' : 'left',
-                    fontWeight: '700',
-                  }}
-                  selectionColor={Theme.Colors.Cursor}
-                  value={controller.id}
-                  keyboardType="number-pad"
-                  rightIcon={
-                    <CustomTooltip
-                      testID="IdInputToolTip"
-                      title={t('toolTipTitle', {idType: controller.idType})}
-                      description={t(`toolTip${controller.idType}Description`)}
-                      width={Dimensions.get('screen').width * 0.85}
-                      height={Dimensions.get('screen').height * 0.18}
-                      triggerComponent={
-                        <Icon
-                          testID="toolTipInfo"
-                          name="infocirlceo"
-                          type="antdesign"
-                          color={Theme.Colors.tooltipIcon}
-                        />
-                      }
-                    />
-                  }
-                  errorStyle={Theme.TextStyles.error}
-                  errorMessage={controller.idError}
-                  onChangeText={controller.INPUT_ID}
-                  ref={setIdInputRef}
-                />
-              </Column>
-            </Row>
-          </Column>
-          <Column>
-            <Button
-              testID="generateVc"
-              type="gradient"
-              title={t('generateVc')}
-              disabled={!controller.id}
-              margin="24 0 6 0"
-              onPress={controller.VALIDATE_INPUT}
-              loading={controller.isRequestingOtp}
-            />
-            {!controller.id && (
-              <Row style={Theme.Styles.getId}>
-                <Text
-                  color={Theme.Colors.getVidColor}
-                  weight="semibold"
-                  size="small">
-                  {t('noUIN/VID')}
-                </Text>
-                <TouchableOpacity activeOpacity={1} onPress={props.onPress}>
-                  <Text
-                    testID="getItNow"
-                    color={Theme.Colors.AddIdBtnBg}
-                    weight="bold"
-                    size="small"
-                    margin="0 0 0 5">
-                    {t('getItHere')}
-                  </Text>
-                </TouchableOpacity>
-              </Row>
-            )}
-          </Column>
+        <Column>
+          <Text
+            align="left"
+            size="regular"
+            style={Theme.TextStyles.retrieveIdLabel}>
+            {t('guideLabel')}
+          </Text>
+          <Row crossAlign="center" style={Theme.Styles.idInputContainer}>
+            <Column style={Theme.Styles.idInputPicker}>
+              <Picker
+                {...testIDProps('selectIdTypePicker')}
+                selectedValue={controller.idType}
+                onValueChange={controller.SELECT_ID_TYPE}
+                style={Theme.Styles.picker}>
+                <Picker.Item label="UIN" value="UIN" />
+                <Picker.Item label="VID" value="VID" />
+              </Picker>
+            </Column>
+            <Column
+              align="center"
+              style={{
+                height: 150,
+              }}>
+              <Input
+                {...testIDProps('idInputModalIndividualId')}
+                placeholder={!controller.id ? inputLabel : ''}
+                inputContainerStyle={
+                  controller.id
+                    ? Theme.Styles.idInputBottom
+                    : Theme.Styles.idInput
+                }
+                inputStyle={{
+                  textAlign: I18nManager.isRTL ? 'right' : 'left',
+                  fontWeight: '700',
+                }}
+                selectionColor={Theme.Colors.Cursor}
+                value={controller.id}
+                keyboardType="number-pad"
+                rightIcon={
+                  <CustomTooltip
+                    testID="IdInputToolTip"
+                    title={t('toolTipTitle', {idType: controller.idType})}
+                    description={t(`toolTip${controller.idType}Description`)}
+                    width={Dimensions.get('screen').width * 0.85}
+                    height={Dimensions.get('screen').height * 0.18}
+                    triggerComponent={
+                      <Icon
+                        {...testIDProps('IdInputToolTipInfo')}
+                        name="infocirlceo"
+                        type="antdesign"
+                        color={Theme.Colors.tooltipIcon}
+                      />
+                    }
+                  />
+                }
+                errorStyle={Theme.TextStyles.error}
+                errorMessage={controller.idError}
+                onChangeText={controller.INPUT_ID}
+                ref={setIdInputRef}
+              />
+            </Column>
+          </Row>
         </Column>
+        <Column>
+          <Button
+            testID="generateVc"
+            type="gradient"
+            title={t('generateVc')}
+            disabled={!controller.id}
+            margin="24 0 6 0"
+            onPress={controller.VALIDATE_INPUT}
+            loading={controller.isRequestingOtp}
+          />
+          {!controller.id && (
+            <Row style={Theme.Styles.getId}>
+              <Text
+                color={Theme.Colors.getVidColor}
+                weight="semibold"
+                size="small">
+                {t('noUIN/VID')}
+              </Text>
+              <TouchableOpacity activeOpacity={1} onPress={props.onPress}>
+                <Text
+                  testID="getItNow"
+                  color={Theme.Colors.AddIdBtnBg}
+                  weight="bold"
+                  size="small"
+                  margin="0 0 0 5">
+                  {t('getItHere')}
+                </Text>
+              </TouchableOpacity>
+            </Row>
+          )}
+        </Column>
+
         <MessageOverlay
           isVisible={controller.isRequestingOtp}
           title={t('requestingOTP')}

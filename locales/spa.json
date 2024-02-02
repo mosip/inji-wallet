@@ -187,24 +187,41 @@
   },
   "HelpScreen": {
     "header": "Ayuda",
-    "whatIsDigitalCredential?": "¿Qué es una credencial digital?",
+    "here": " aquí. ",
+    "whatIsaDigitalCredential?": "¿Qué es una credencial digital?",
     "detail-1": "Una credencial digital es la versión digital de su cédula de identidad física.",
-    "whatCanDoWithDigitalCredential?": "¿Qué podemos hacer con las credenciales digitales?",
+    "whatCanWeDoWithDigitalCredential?": "¿Qué podemos hacer con las credenciales digitales?",
     "detail-2": "Puede aprovechar varios servicios gubernamentales y privados utilizando sus credenciales digitales.",
     "howToAddCard?": "¿Cómo agregar una tarjeta?",
-    "detail-3": "Para agregar una tarjeta, haga clic en el botón ' ' en la página de inicio y seleccione la opción adecuada.",
-    "howToRemoveCardFromWallet?": "¿Cómo compartir una tarjeta?",
-    "detail-4": "Desliza la tarjeta hacia la izquierda > haz clic en Más > Eliminar de Wallet",
-    "canWeAddMultipleCards?": "¿Podemos agregar varias tarjetas?",
+    "detail-3": "Las identificaciones se pueden descargar a INJI Mobile Wallet como credenciales verificables. Para saber cómo descargar VC con varios ID, lea ",
+    "howToRemoveACardFromTheWallet?": "¿Cómo sacar una tarjeta de la billetera?",
+    "detail-4a": "Puede hacer clic en... (menú de albóndigas) en una tarjeta en la página de inicio y elegir la opción Eliminar de la billetera para eliminar una tarjeta de la billetera. Para saber más, por favor lea", 
+    "detail-4b": "Tenga en cuenta que la misma tarjeta se puede descargar nuevamente.",
+    "canIAddMultipleCards?": "¿Puedo agregar varias tarjetas?",
     "detail-5": "Sí, puede agregar varias tarjetas a la billetera haciendo clic en el botón ' ' en la página de inicio.",
-    "howToShareCard?": "¿Cómo compartir una tarjeta?",
+    "howToShareACard?": "¿Cómo compartir una tarjeta?",
     "detail-6": "Haga clic en el botón 'Compartir' y escanee el código QR del solicitante. ",
-    "howToActivateCardForOnlineLogin?": "¿Cómo activar una tarjeta para iniciar sesión en línea?",
+    "howToActivateACardForOnlineLogin?": "¿Cómo activar una tarjeta para iniciar sesión en línea?",
     "detail-7": "Después de agregar exitosamente una tarjeta a la billetera, haga clic en 'Activación pendiente para inicio de sesión en línea' en la tarjeta. ",
-    "howToViewActivity?": "¿Cómo ver los registros de actividad?",
+    "howToViewActivityLogs?": "¿Cómo ver los registros de actividad?",
     "detail-8": "En la página de inicio, haga clic en 'Historial' para ver los detalles de la actividad del usuario.",
-    "whatCanDoBiometricsChanged?": "¿Qué sucede cuando se cambia la biometría del almacén de claves de Android?",
-    "detail-9": "El almacén de claves de Android contiene información importante, como claves privadas para pruebas de identidad. "
+    "whatHappensWhenAndroidKeystoreBiometricIsChanged?": "¿Qué sucede cuando se cambia la biometría del almacén de claves de Android?",
+    "detail-9": "El almacén de claves de Android contiene información importante, como claves privadas para pruebas de identidad.",
+    "whatIsAnId?":"¿Qué es una identificación?",
+    "detail-10":"Un documento de identidad es cualquier documento que pueda acreditar la identidad de una persona. En el contexto de MOSIP, los identificadores son identificadores digitales alfanuméricos para identidades en el sistema. Si bien la identidad de una persona se representa como una colección de atributos biográficos y biométricos que pueden identificar de forma única a la persona, se hace referencia a la identidad mediante identificadores.",
+    "whatAreTheDifferentTypesOfId?": "¿Cuáles son los diferentes tipos de identificación?",
+    "detail-11":"En el contexto de MOSIP, diferentes ID son UIN, VI y AID. Leer más sobre ellos",
+    "whereCanIFindTheseIds?":"¿Dónde puedo encontrar estas identificaciones?",
+    "detail-12a": "Como parte del proceso de inscripción (registro), al registrar exitosamente la información demográfica y biométrica del residente, se le asigna una identificación de registro (AID). También se emite (imprime) al residente un comprobante de acuse de recibo que contiene los detalles capturados y la AID como prueba de registro.",
+    "detail-12b": "Tras el procesamiento exitoso, se asigna un Número de identificación único (UIN) al residente y se le envía una notificación al número de teléfono y/o correo electrónico registrado.",
+    "detail-12c": "VID/ID virtual es un identificador de alias configurado para uso único y no se puede vincular. Dado que se utilizan para transacciones de autenticación, dichos identificadores deben ser conocidos únicamente por el usuario o generarse con su participación.",
+    "whyDoesMyVcSayActivationIsPending?":"¿Por qué mi VC dice que la activación está pendiente?",
+    "detail-13": "Una vez que se descarga el VC en su billetera, aún no está vinculado a la identidad del usuario, por lo que su VC dice Activación pendiente. Vincular su VC a su billetera (con su contraseña o datos biométricos) es crucial para garantizar el más alto nivel de seguridad. Para activar su VC, siga los pasos",
+    "whatDoYouMeanByActivatedForOnlineLogin?": "¿Qué quiere decir con Activado para iniciar sesión en línea?",
+    "detail-14a": "1. Una vez que el VC se vincule exitosamente con la billetera, podrá ver que está activado para iniciar sesión en línea, lo que significa que este VC ahora se puede usar para el proceso de inicio de sesión QR. Para saber más sobre el inicio de sesión con código QR, lea",
+    "detail-14b": "2. Las preguntas y respuestas deben ser legibles y comprensibles incluso cuando el usuario cambia el idioma en la aplicación INJI.",
+    "whatIsAVerifiableCredential?": "¿Qué es una credencial verificable?",
+    "detail-15": "Una credencial verificable es una pieza de información firmada digitalmente que representa una declaración hecha por el emisor sobre un tema y generalmente incluye detalles demográficos. Los capitalistas de riesgo son seguros y confiables en diversas interacciones en línea."
   },
   "AddVcModal": {
     "requestingCredential": "Solicitando credencial...",
@@ -322,12 +339,14 @@
   "OnboardingOverlay": {
     "stepOneTitle": "¡Bienvenido!",
     "stepOneText": "Lleva contigo tu credencial digital en todo momento. ",
-    "stepTwoTitle": "Monedero digital confiable",
-    "stepTwoText": "Guarde y lleve todas sus tarjetas importantes en una única billetera de confianza.",
-    "stepThreeTitle": "Compartir de forma segura",
-    "stepThreeText": "Comparta sus tarjetas de forma segura y sin complicaciones y aproveche varios servicios.",
-    "stepFourTitle": "Autenticación sin problemas",
+    "stepTwoTitle": "Compartir de forma segura",
+    "stepTwoText": "Comparta sus tarjetas de forma segura y sin complicaciones y aproveche varios servicios.",
+    "stepThreeTitle": "Monedero digital confiable",
+    "stepThreeText": "Almacene y lleve todas sus tarjetas importantes en una única billetera de confianza.",
+    "stepFourTitle": "Acceso rapido",
     "stepFourText": "Autentíquese fácilmente utilizando la credencial digital almacenada.",
+    "stepFiveTitle": "Los datos de copia de seguridad",
+    "stepFiveText": "Proteja sus datos con facilidad utilizando nuestra copia de seguridad",
     "getStarted": "Empezar",
     "goBack": "Regresa",
     "back": "Atrás",
@@ -576,6 +595,63 @@
       }
     },
     "ignore": "Ignorar"
+  },
+  "DataBackupScreen": {
+    "dataBackupAndRestore": "Copia de seguridad de restauracion",
+    "new": "Nueva",
+    "loadingTitle": "Cargando configuración",
+    "loadingSubtitle": "Cargando...",
+    "errors": {
+      "permissionDenied": {
+        "title": "¡Permiso denegado!",
+        "message": "Notamos que canceló la creación de la configuración de copia de seguridad de datos. Recomendamos encarecidamente revisar la configuración de la copia de seguridad de datos para garantizar la disponibilidad de sus datos.",
+        "helpText": "Haga clic en \"Configurar ajustes\" para configurar la copia de seguridad de datos ahora, o \"Cancelar\" para volver a la pantalla de configuración."
+      },
+      "noInternetConnection": {
+        "title": "Sin conexión a Internet",
+        "message": "Por favor verifique su conexión y vuelva a intentarlo"
+      }
+    }
+  },
+  "BackupAndRestoreBanner": {
+    "backupSuccessful": "¡Su copia de seguridad fue exitosa!",
+    "backupFailure": {
+      "networkError": "Debido a Conexión inestable, no pudimos realizar la copia de seguridad de los datos. Vuelve a intentarlo más tarde.",
+      "technicalError": "Debido a un error técnico, no pudimos realizar una copia de seguridad de los datos. Por favor, inténtelo de nuevo más tarde.",
+      "noDataForBackup": "Lo sentimos, pero no hay datos disponibles para realizar una copia de seguridad en este momento.",
+      "storageLimitReached": "No podemos completar el proceso de copia de seguridad debido a que no hay suficiente espacio de almacenamiento en su dispositivo. Libere espacio eliminando archivos o aplicaciones innecesarios y vuelva a intentarlo."
+    },
+    "restoreSuccessful": "¡Tu restauración fue exitosa!",
+    "restoreFailure": {
+      "networkError": "Debido a una conexión inestable, no pudimos restaurar los datos. Por favor, inténtelo de nuevo más tarde.",
+      "technicalError": "Debido a un error técnico, no pudimos restaurar los datos. Por favor, inténtelo de nuevo más tarde."
+    }
+  },
+  "AccountSelection": {
+    "backupProcessInfo": "Estás a solo unos pasos de hacer una copia de seguridad de tus datos",
+    "cloudInfo": "Para iniciar la copia de seguridad de los datos, toque el botón `Continuar` para vincular su Google Drive con Inji.",
+    "googleDriveTitle": "Google Drive",
+    "loadingSubtitle": "Cargando...",
+    "proceed": "Proceder",
+    "goBack": "Regresa",
+    "associatedAccount": "Cuenta asociada"
+  },
+  "BackupAndRestore": {
+    "title": "Copia de seguridad y restauración",
+    "backupProgressState": "Copia de seguridad en progreso...",
+    "lastBackupDetails": "Detalles de la última copia de seguridad",
+    "backupInProgress": "Aún puedes usar la aplicación mientras se realiza la copia de seguridad de los datos. Cerrar la aplicación finalizará el proceso de copia de seguridad de los datos.",
+    "noBackup": "Haga una copia de seguridad de sus datos en Google Drive. Puede restaurarlos cuando reinstale INJI.",
+    "storage": "La copia de seguridad se almacenará en Google Drive asociado a su cuenta de Gmail elegida.",
+    "backup": "Copia de seguridad",
+    "size": "Tamaño: ",
+    "restore": "Restaurar",
+    "restoreInProgress": "Estamos restaurando tus datos, no cierres la aplicación. Esto puede tardar hasta <X> minutos según tus datos.",
+    "restoreInfo": "Restaura tus datos desde Google Drive",
+    "driveSettings": "Configuración de Google Drive",
+    "successBanner": "¡Su copia de seguridad fue exitosa!",
+    "backupFailed": "Copia de seguridad fallida",
+    "ok": "bien"
   },
   "SetupLanguage": {
     "header": "Elige lengua",

@@ -159,13 +159,13 @@ public class ChangeLanguageTest extends IosBaseTest {
 
         assertEquals(addNewCardPage.verifyLanguageForAddNewCardGuideMessage(),"Mangyaring piliin ang iyong gustong tagabigay mula sa mga opsyon sa ibaba upang magdagdag ng bagong card.");
         assertTrue(addNewCardPage.isIssuerSearchBarDisplayedInFilipino(),"verify if search bar is displayed in filipino");
-        addNewCardPage.sendTextInIssuerSearchBar("uin");
+        addNewCardPage.sendTextInIssuerSearchBar("I-download ang Mga Kredensyal ng MOSIP ");
         
         assertTrue(addNewCardPage.isDownloadViaUinDisplayed(),"verify if download via uin vid aid");
         addNewCardPage.clickOnBack();
         
         homePage.downloadCard();
-        addNewCardPage.sendTextInIssuerSearchBar("e-signet");
+        addNewCardPage.sendTextInIssuerSearchBar("I-download ang Mga Kredensyal ng MOSIP");
         assertTrue(addNewCardPage.isDownloadViaEsignetDisplayed(),"verify if download via e-signet is displayed");
     }
     
@@ -202,13 +202,13 @@ public class ChangeLanguageTest extends IosBaseTest {
 
         assertEquals(addNewCardPage.verifyLanguageForAddNewCardGuideMessage(),"Mangyaring piliin ang iyong gustong tagabigay mula sa mga opsyon sa ibaba upang magdagdag ng bagong card.");
         assertTrue(addNewCardPage.isIssuerSearchBarDisplayedInFilipino(),"verify if search bar is displayed in filipino");
-        addNewCardPage.sendTextInIssuerSearchBar("ui");
+        addNewCardPage.sendTextInIssuerSearchBar("otp");
         
         assertTrue(addNewCardPage.isDownloadViaUinDisplayed(),"verify if download via uin vid aid");
         addNewCardPage.clickOnBack();
         
         homePage.downloadCard();
-        addNewCardPage.sendTextInIssuerSearchBar("e-si");
+        addNewCardPage.sendTextInIssuerSearchBar("I-download ang");
         assertTrue(addNewCardPage.isDownloadViaEsignetDisplayed(),"verify if download via e-signet is displayed");
     }
     
@@ -245,14 +245,14 @@ public class ChangeLanguageTest extends IosBaseTest {
         
         assertEquals(addNewCardPage.verifyLanguageForAddNewCardGuideMessage(),"नया कार्ड जोड़ने के लिए कृपया नीचे दिए गए विकल्पों में से अपना पसंदीदा जारीकर्ता चुनें।");
         assertTrue(addNewCardPage.isIssuerSearchBarDisplayedInHindi(),"verify if search bar is displayed in hindi");
-        addNewCardPage.sendTextInIssuerSearchBar("uin");
+        addNewCardPage.sendTextInIssuerSearchBar("OTP के माध्यम से MOSIP क्रेडेंशियल डाउनलोड करें");
         
         assertTrue(addNewCardPage.isDownloadViaUinDisplayedInHindi(),"verify if download via uin vid aid displayed in hindi");
         addNewCardPage.clickOnBack();
         
         homePage.downloadCard();
         
-        addNewCardPage.sendTextInIssuerSearchBar("ई-हस्ताक्षर");
+        addNewCardPage.sendTextInIssuerSearchBar("MOSIP क्रेडेंशियल डाउनलोड करेंं");
         assertTrue(addNewCardPage.isDownloadViaEsignetDisplayedInHindi(),"verify if download via e-signet is displayed");
     }
     
@@ -302,6 +302,8 @@ public class ChangeLanguageTest extends IosBaseTest {
         HassleFreeAuthenticationPage hassleFreeAuthenticationPage = new HassleFreeAuthenticationPage(driver);
         assertEquals(hassleFreeAuthenticationPage.verifyLanguageforHassleFreeAuthenticationPageLoaded(), "Walang problema sa pagpapatotoo");
         assertEquals(hassleFreeAuthenticationPage.getHassleFreeAuthenticationDescription(), "I-authenticate ang iyong sarili nang madali gamit ang nakaimbak na digital na kredensyal.");
+        hassleFreeAuthenticationPage.clickOnGoBack();
+        assertEquals(homePage.getShareButton(), "Ibahagi");
     }
     
     @Test
@@ -350,6 +352,8 @@ public class ChangeLanguageTest extends IosBaseTest {
         HassleFreeAuthenticationPage hassleFreeAuthenticationPage = new HassleFreeAuthenticationPage(driver);
         assertEquals(hassleFreeAuthenticationPage.verifyLanguageforHassleFreeAuthenticationPageLoaded(), "परेशानी मुक्त प्रमाणीकरण");
         assertEquals(hassleFreeAuthenticationPage.getHassleFreeAuthenticationDescription(), "संग्रहीत डिजिटल क्रेडेंशियल का उपयोग करके आसानी से स्वयं को प्रमाणित करें।");
+        hassleFreeAuthenticationPage.clickOnGoBack();
+        assertEquals(homePage.getShareButton(), "शेयर करना");
     }
     
     @Test
@@ -398,6 +402,9 @@ public class ChangeLanguageTest extends IosBaseTest {
         HassleFreeAuthenticationPage hassleFreeAuthenticationPage = new HassleFreeAuthenticationPage(driver);
         assertEquals(hassleFreeAuthenticationPage.verifyLanguageforHassleFreeAuthenticationPageLoaded(), "தொந்தரவு இல்லாத அங்கீகாரம்");
         assertEquals(hassleFreeAuthenticationPage.getHassleFreeAuthenticationDescription(), "சேமிக்கப்பட்ட டிஜிட்டல் நற்சான்றிதழைப் பயன்படுத்தி உங்களை எளிதாக அங்கீகரிக்கவும்.");
+        hassleFreeAuthenticationPage.clickOnGoBack(); 
+        assertEquals(homePage.getShareButton(), "பகிர்");
+
     }
     
     @Test
@@ -446,6 +453,8 @@ public class ChangeLanguageTest extends IosBaseTest {
         HassleFreeAuthenticationPage hassleFreeAuthenticationPage = new HassleFreeAuthenticationPage(driver);
         assertEquals(hassleFreeAuthenticationPage.verifyLanguageforHassleFreeAuthenticationPageLoaded(), "ಜಗಳ ಮುಕ್ತ ದೃಢೀಕರಣ");
         assertEquals(hassleFreeAuthenticationPage.getHassleFreeAuthenticationDescription(), "ಸಂಗ್ರಹಿಸಿದ ಡಿಜಿಟಲ್ ರುಜುವಾತುಗಳನ್ನು ಬಳಸಿಕೊಂಡು ಸುಲಭವಾಗಿ ನಿಮ್ಮನ್ನು ದೃಢೀಕರಿಸಿ.");
+        hassleFreeAuthenticationPage.clickOnGoBack();
+        assertEquals(homePage.getShareButton(), "ಹಂಚಿಕೊಳ್ಳಿ");
     }
 
     

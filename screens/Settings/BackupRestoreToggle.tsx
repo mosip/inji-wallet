@@ -3,19 +3,19 @@ import {Switch} from 'react-native-elements';
 import {Text} from '../../components/ui';
 import {Modal} from '../../components/ui/Modal';
 import {Theme} from '../../components/ui/styleUtils';
-import {useBackupScreen} from './BackupController';
+import {useBackupRestoreScreen} from './BackupRestoreController';
 import {Platform} from 'react-native';
 import {MessageOverlay} from '../../components/MessageOverlay';
 
-export const BackupToggle: React.FC<BackupToggleProps> = props => {
-  const [dataBackup, setDataBackup] = useState(false);
+export const BackupRestoreToggle: React.FC<BackupToggleProps> = props => {
+  const [dataBackupRetore, setDataBackupRestore] = useState(false);
 
-  const controller = useBackupScreen(props);
+  const controller = useBackupRestoreScreen();
 
   const toggleSwitch = () => {
-    setDataBackup(!dataBackup);
-    if (!dataBackup) {
-      controller.FETCH_DATA();
+    setDataBackupRestore(!dataBackupRetore);
+    if (!dataBackupRetore) {
+      controller.EXTRACT_DATA();
     }
   };
 
@@ -23,13 +23,13 @@ export const BackupToggle: React.FC<BackupToggleProps> = props => {
     <React.Fragment>
       <Modal
         isVisible={props.isVisible}
-        headerTitle={'Data Backup Toggle'}
+        headerTitle={'Backup Restore Toggle'}
         headerElevation={2}
         arrowLeft={true}
         onDismiss={props.onDismiss}>
-        <Text> Enable Data backup</Text>
+        <Text> Restore Backup</Text>
         <Switch
-          value={dataBackup}
+          value={dataBackupRetore}
           onValueChange={toggleSwitch}
           trackColor={{
             false: Theme.Colors.switchTrackFalse,
@@ -42,20 +42,20 @@ export const BackupToggle: React.FC<BackupToggleProps> = props => {
         />
       </Modal>
       <MessageOverlay
-        isVisible={controller.isBackingUpSuccess}
+        isVisible={controller.isBackUpRestoreSuccess}
         onButtonPress={() => {
-          controller.OK(), setDataBackup(false);
+          controller.OK(), setDataBackupRestore(false);
         }}
         buttonText="OK"
-        title={'Backup Successful'}
+        title={'Backup Restoration Successful'}
       />
       <MessageOverlay
-        isVisible={controller.isBackingUpFailure}
+        isVisible={controller.isBackUpRestoreFailure}
         onButtonPress={() => {
-          controller.OK(), setDataBackup(false);
+          controller.OK(), setDataBackupRestore(false);
         }}
         buttonText="OK"
-        title={'Backup Failed'}
+        title={'Backup Restoration Failed'}
       />
     </React.Fragment>
   );

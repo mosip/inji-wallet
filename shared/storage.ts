@@ -21,8 +21,6 @@ import {
   SETTINGS_STORE_KEY,
 } from './constants';
 import FileStorage, {
-  backupDirectoryPath,
-  getBackupFilePath,
   getFilePath,
   getDirectorySize,
   vcDirectoryPath,
@@ -30,7 +28,7 @@ import FileStorage, {
 import {__AppId} from './GlobalVariables';
 import {getErrorEventData, sendErrorEvent} from './telemetry/TelemetryUtils';
 import {TelemetryConstants} from './telemetry/TelemetryConstants';
-import {getBackupFileName} from './commonUtil';
+import {BYTES_IN_MEGABYTE} from './commonUtil';
 
 export const MMKV = new MMKVLoader().initialize();
 
@@ -92,6 +90,33 @@ class Storage {
     return completeBackupData;
   };
 
+  static loadBackupData = async (data, encryptionKey) => {
+    try {
+      // 1. opening the file
+      const completeBackupData = JSON.parse(data);
+      // 2. Load and store VC_records & MMKV things
+      const dataFromDB = await Storage.loadVCs(
+        completeBackupData,
+        encryptionKey,
+      );
+      // 3. Update the Well Known configs of the VCs
+      const allKeysFromDB = Object.keys(dataFromDB);
+      const cacheKeys = allKeysFromDB.filter(key =>
+        key.includes('CACHE_FETCH_ISSUER_WELLKNOWN_CONFIG_'),
+      );
+      cacheKeys.forEach(async key => {
+        const value = dataFromDB[key];
+        const encryptedValue = await encryptJson(
+          encryptionKey,
+          JSON.stringify(value),
+        );
+        await this.setItem(key, encryptedValue, encryptionKey);
+        return true;
+      });
+    } catch (error) {
+      return error;
+    }
+  };
   static isVCStorageInitialised = async (): Promise<boolean> => {
     try {
       const res = await FileStorage.getInfo(vcDirectoryPath);
@@ -179,6 +204,40 @@ class Storage {
       throw error;
     }
   };
+
+  private static async loadVCs(completeBackupData: any, encryptionKey: any) {
+    const allVCs = completeBackupData['VC_Records'];
+    const allVCKeys = Object.keys(allVCs);
+    allVCKeys.forEach(async key => {
+      const vc = allVCs[key];
+      const encryptedVC = await encryptJson(encryptionKey, JSON.stringify(vc));
+      await this.setItem(key, encryptedVC, encryptionKey);
+    });
+    const dataFromDB = completeBackupData['dataFromDB'];
+
+    const dataFromMyVCKey = dataFromDB[MY_VCS_STORE_KEY];
+    const encryptedMyVCKeyFromMMKV = await MMKV.getItem(MY_VCS_STORE_KEY);
+    let newDataForMyVCKey;
+    if (encryptedMyVCKeyFromMMKV != null) {
+      const myVCKeyFromMMKV = await decryptJson(
+        encryptionKey,
+        encryptedMyVCKeyFromMMKV,
+      );
+      newDataForMyVCKey = [...JSON.parse(myVCKeyFromMMKV), ...dataFromMyVCKey];
+    } else {
+      newDataForMyVCKey = dataFromMyVCKey;
+    }
+    const encryptedDataForMyVCKey = await encryptJson(
+      encryptionKey,
+      JSON.stringify(newDataForMyVCKey),
+    );
+    await this.setItem(
+      MY_VCS_STORE_KEY,
+      encryptedDataForMyVCKey,
+      encryptionKey,
+    );
+    return dataFromDB;
+  }
 
   private static async isVCAlreadyDownloaded(
     key: string,
@@ -273,7 +332,8 @@ class Storage {
     const configurations = await getAllConfigurations();
     if (!configurations[limitInMB]) return false;
 
-    const minimumStorageLimitInBytes = configurations[limitInMB] * 1000 * 1000;
+    const minimumStorageLimitInBytes =
+      configurations[limitInMB] * BYTES_IN_MEGABYTE;
 
     const freeDiskStorageInBytes =
       isAndroid() && androidVersion < 29
@@ -289,18 +349,6 @@ class Storage {
 
 export default Storage;
 
-export async function writeToBackupFile(data): Promise<string> {
-  const fileName = getBackupFileName();
-  const isDirectoryExists = await FileStorage.exists(backupDirectoryPath);
-  if (isDirectoryExists) {
-    await FileStorage.removeItem(backupDirectoryPath);
-  }
-  await FileStorage.createDirectory(backupDirectoryPath);
-  const path = getBackupFilePath(fileName);
-  await FileStorage.writeFile(path, JSON.stringify(data));
-  return fileName;
-}
-
 function removeWalletBindingDataBeforeBackup(data: string) {
   const vcData = JSON.parse(data);
   vcData.walletBindingResponse = null;
@@ -310,11 +358,25 @@ function removeWalletBindingDataBeforeBackup(data: string) {
 }
 
 export async function isMinimumLimitForBackupReached() {
-  const directorySize = await getDirectorySize(vcDirectoryPath);
-  const freeDiskStorageInBytes =
-    isAndroid() && androidVersion < 29
-      ? getFreeDiskStorageOldSync()
-      : getFreeDiskStorageSync();
+  try {
+    const directorySize = await getDirectorySize(vcDirectoryPath);
+    const freeDiskStorageInBytes =
+      isAndroid() && androidVersion < 29
+        ? getFreeDiskStorageOldSync()
+        : getFreeDiskStorageSync();
 
-  return freeDiskStorageInBytes <= 2 * directorySize;
+    return freeDiskStorageInBytes <= 2 * directorySize;
+  } catch (error) {
+    console.log('Error in isMinimumLimitForBackupReached:', error);
+    throw error;
+  }
+}
+
+export async function isMinimumLimitForBackupRestorationReached() {
+  // TODO: Have two checks, one for downloading the ZIP file from the cloud &
+  //  then by looking at it's metadata to check it's expanded size
+  // APIs:
+  // 1. CloudStorage.stat(file, context)
+  // 2. getUncompressedSize()
+  return await Storage.isMinimumLimitReached('minStorageRequired');
 }

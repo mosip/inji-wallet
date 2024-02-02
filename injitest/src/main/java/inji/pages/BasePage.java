@@ -3,12 +3,15 @@ package inji.pages;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.pagefactory.AppiumFieldDecorator;
 import org.openqa.selenium.By;
+import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import static java.time.Duration.ofSeconds;
+
+import java.time.Duration;
 
 public class BasePage {
     protected AppiumDriver driver;
@@ -122,4 +125,22 @@ public class BasePage {
         this.waitForElementToBeVisible(element);
         return element.getText();
     }
+    
+    protected  String retrieToGetElement(WebElement element) {
+    	int maxRetries = 3; 
+    	String text = null;
+    	for (int i = 0; i < maxRetries; i++) {
+			try {
+				 text = getTextFromLocator(element);
+		            break; 
+			} catch (StaleElementReferenceException e) {
+				if (i == maxRetries - 1) {
+					throw e; 
+				}
+			}
+		}
+    	return text;
+    	
+    }
+    
 }

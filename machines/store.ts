@@ -1,5 +1,5 @@
 import * as Keychain from 'react-native-keychain';
-import Storage from '../shared/storage';
+import Storage, {MMKV} from '../shared/storage';
 import binaryToBase64 from 'react-native/Libraries/Utilities/binaryToBase64';
 import {
   EventFrom,
@@ -49,6 +49,7 @@ const model = createModel(
       IGNORE: () => ({}),
       GET: (key: string) => ({key}),
       EXPORT: () => ({}),
+      RESTORE_BACKUP: (data: {}) => ({data}),
       DECRYPT_ERROR: () => ({}),
       KEY_INVALIDATE_ERROR: () => ({}),
       BIOMETRIC_CANCELLED: (requester?: string) => ({requester}),
@@ -191,6 +192,9 @@ export const storeMachine =
               actions: 'forwardStoreRequest',
             },
             EXPORT: {
+              actions: 'forwardStoreRequest',
+            },
+            RESTORE_BACKUP: {
               actions: 'forwardStoreRequest',
             },
             SET: {
@@ -351,6 +355,14 @@ export const storeMachine =
                 }
                 case 'EXPORT': {
                   response = await exportData(context.encryptionKey);
+                  break;
+                }
+                case 'RESTORE_BACKUP': {
+                  // the backup data is in plain text
+                  response = await loadBackupData(
+                    event.data,
+                    context.encryptionKey,
+                  );
                   break;
                 }
                 case 'SET': {
@@ -559,6 +571,10 @@ export async function exportData(encryptionKey: string) {
   return Storage.exportData(encryptionKey);
 }
 
+export async function loadBackupData(data, encryptionKey) {
+  await Storage.loadBackupData(data, encryptionKey);
+}
+
 export async function getItem(
   key: string,
   defaultValue: unknown,
@@ -706,6 +722,7 @@ export async function removeItem(
 
       await setItem(key, newList, encryptionKey);
       await Storage.removeItem(value);
+      await MMKV.removeItem(value);
     }
   } catch (e) {
     console.error('error removeItem:', e);
