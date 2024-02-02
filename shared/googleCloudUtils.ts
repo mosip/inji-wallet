@@ -17,12 +17,14 @@ class Cloud {
     SUCCESS: 'SUCCESS',
     FAILURE: 'FAILURE',
   };
+  private static readonly requiredScopes = [
+    'https://www.googleapis.com/auth/drive.appdata',
+    'https://www.googleapis.com/auth/drive.file',
+  ];
+
   private static configure() {
     GoogleSignin.configure({
-      scopes: [
-        'https://www.googleapis.com/auth/drive.appdata',
-        'https://www.googleapis.com/auth/drive.file',
-      ],
+      scopes: this.requiredScopes,
       androidClientId: GOOGLE_ANDROID_CLIENT_ID,
     });
   }
@@ -59,7 +61,15 @@ class Cloud {
   static async signIn(): Promise<SignInResult> {
     this.configure();
     try {
-      await GoogleSignin.signIn();
+      const {scopes: userProvidedScopes} = await GoogleSignin.signIn();
+      const userNotProvidedRequiredAccessInConsent = !this.requiredScopes.every(
+        requiredScope => userProvidedScopes?.includes(requiredScope),
+      );
+      if (userNotProvidedRequiredAccessInConsent) {
+        return {
+          status: this.status.DECLINED,
+        };
+      }
       const profileInfo = await this.profileInfo();
       return {
         status: this.status.SUCCESS,
