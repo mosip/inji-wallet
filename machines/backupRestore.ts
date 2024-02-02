@@ -19,6 +19,7 @@ import {
   getEndEventData,
 } from '../shared/telemetry/TelemetryUtils';
 import {VcEvents} from './VCItemMachine/vc';
+import {NETWORK_REQUEST_FAILED} from '../shared/constants';
 
 const model = createModel(
   {
@@ -97,7 +98,7 @@ export const backupRestoreMachine = model.createMachine(
                 target: 'readBackupFile',
               },
               onError: {
-                actions: 'setRestoreNetworkError',
+                actions: ['setRestoreErrorReason'],
                 target: 'failure',
               },
             },
@@ -160,9 +161,17 @@ export const backupRestoreMachine = model.createMachine(
       setRestoreTechnicalError: model.assign({
         errorReason: 'technicalError',
       }),
-      setRestoreNetworkError: model.assign({
-        errorReason: 'networkError',
+
+      setRestoreErrorReason: model.assign({
+        errorReason: (_context, event) => {
+          const reasons = {
+            ERR_DIRECTORY_NOT_FOUND: 'noBackupFile',
+            [NETWORK_REQUEST_FAILED]: 'networkError',
+          };
+          return reasons[event.data.code] || reasons[NETWORK_REQUEST_FAILED];
+        },
       }),
+
       loadDataToMemory: send(
         context => {
           return StoreEvents.RESTORE_BACKUP(context.dataFromBackupFile);

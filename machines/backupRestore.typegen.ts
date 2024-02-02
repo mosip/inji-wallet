@@ -46,7 +46,7 @@ export interface Typegen0 {
     sendDataRestoreStartEvent: 'BACKUP_RESTORE' | 'EXTRACT_DATA';
     sendDataRestoreSuccessEvent: 'done.invoke.backupRestore.restoreBackup.deleteBackupDir:invocation[0]';
     setDataFromBackupFile: 'DATA_FROM_FILE';
-    setRestoreNetworkError: 'error.platform.backupRestore.restoreBackup.unzipBackupFile:invocation[0]';
+    setRestoreErrorReason: 'error.platform.backupRestore.restoreBackup.unzipBackupFile:invocation[0]';
     setRestoreTechnicalError:
       | 'STORE_ERROR'
       | 'done.invoke.backupRestore.restoreBackup.checkStorageAvailibility:invocation[0]';

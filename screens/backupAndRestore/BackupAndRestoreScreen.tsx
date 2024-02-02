@@ -49,7 +49,8 @@ const BackupAndRestoreScreen: React.FC<BackupAndRestoreProps> = props => {
                   color: '#707070',
                   lineHeight: 14,
                 }}>
-                Size: {backupController.lastBackupDetails.backupFileSize}MB
+                {t('size')}
+                {backupController.lastBackupDetails.backupFileSize}MB
               </Text>
             </Column>
           )}

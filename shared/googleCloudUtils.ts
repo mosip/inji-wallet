@@ -200,31 +200,39 @@ class Cloud {
   }
 
   static async downloadLatestBackup(): Promise<string | null> {
-    const tokenResult = await Cloud.getAccessToken();
-    CloudStorage.setGoogleDriveAccessToken(tokenResult);
-    const allFiles = await CloudStorage.readdir('/', CloudStorageScope.AppData);
-    console.log('allFiles ', allFiles);
-    // TODO: do basic sanity about this .zip file
-    const fileName = allFiles[0];
-    const fileContent = await CloudStorage.readFile(
-      fileName,
-      CloudStorageScope.AppData,
-    );
+    try {
+      const tokenResult = await Cloud.getAccessToken();
+      CloudStorage.setGoogleDriveAccessToken(tokenResult);
+      const allFiles = await CloudStorage.readdir(
+        '/',
+        CloudStorageScope.AppData,
+      );
+      console.log('allFiles ', allFiles);
+      // TODO: do basic sanity about this .zip file
+      const fileName = allFiles[0];
+      const fileContent = await CloudStorage.readFile(
+        fileName,
+        CloudStorageScope.AppData,
+      );
 
-    if (fileContent.length === 0) return Promise.resolve(null);
-    // write the file content in the backup directory path, create backup directory if not exists
-    const isDirectoryExists = await fileStorage.exists(backupDirectoryPath);
-    if (!isDirectoryExists) {
-      await fileStorage.createDirectory(backupDirectoryPath);
+      if (fileContent.length === 0) return Promise.resolve(null);
+      // write the file content in the backup directory path, create backup directory if not exists
+      const isDirectoryExists = await fileStorage.exists(backupDirectoryPath);
+      if (!isDirectoryExists) {
+        await fileStorage.createDirectory(backupDirectoryPath);
+      }
+      await writeFile(
+        backupDirectoryPath + '/' + fileName,
+        fileContent,
+        'base64',
+      );
+      console.log('successfully written the cloud downloaded zip file');
+      // return the path
+      return Promise.resolve(fileName.split('.zip')[0]);
+    } catch (error) {
+      console.log('error while downloading backup file ', error);
+      throw error;
     }
-    await writeFile(
-      backupDirectoryPath + '/' + fileName,
-      fileContent,
-      'base64',
-    );
-    console.log('successfully written the cloud downloaded zip file');
-    // return the path
-    return Promise.resolve(fileName.split('.zip')[0]);
   }
 }
 

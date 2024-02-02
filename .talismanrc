@@ -121,8 +121,6 @@ fileignoreconfig:
     checksum: 02655ff3d7f8a8ea4f3664485f98c961802c598242ec44408594a2ddb721fa5e
   - filename: screens/Settings/BackupController.tsx
     checksum: 4a031b46646aa982c8f40e4c7fe0bd3e05a76a6af1ff1c2de7350ba6ebf9a839
-  - filename: machines/backupRestore.ts
-    checksum: 34d6d98a46b34f3488af3e65809d550ab4a61405ad5e283f87ee5c79d3291261
   - filename: machines/backupRestore.typegen.ts
     checksum: 4a732b953dc97b9949a131039deadfdada4728c2fc7e5c4f1c89dd8101d595c5
   - filename: machines/settings.typegen.ts
@@ -186,5 +184,7 @@ fileignoreconfig:
     checksum: a98ff1a0dd96d3ead4b8191320be8b0c7a558cda6b0de39f1c62aaa8efef9fb8  
   - filename: components/HelpScreen.tsx
     checksum: bbc69143bd37d065bba3800396301db5a0318e8b7ba51ecd49142dda68783a01  
+  - filename: machines/backupRestore.ts
+    checksum: 69161929238bbe1735050f97201cdbb960565c8d5d13c4c8c4302d58d009df58
     version: ""
 
