@@ -41,7 +41,8 @@ export const VCItemField = ({
       {Array.isArray(fieldValue) ? (
         fieldValue.map(field => (
           <Text
-            testID={`${fieldName}Value`}
+            key={field}
+            testID={`${field}Value`}
             weight="semibold"
             style={[Theme.Styles.subtitle, setTextColor(wellknown)]}>
             {field}

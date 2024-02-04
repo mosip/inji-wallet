@@ -6,17 +6,25 @@ import {SvgImage} from './ui/svg';
 
 export const ProfileIcon: React.FC = props => {
   return (
-    <>
-      <View style={Theme.Styles.ProfileIconContainer}>
+    <React.Fragment>
+      <View
+        style={Theme.Styles.ProfileIconContainer}
+        testID={`ProfileIconOuter`}>
         {props?.isPinned && SvgImage.pinIcon()}
         <View
+          testID={`ProfileIconInner`}
           style={[
             Theme.Styles.ProfileIconInnerStyle,
             !props?.isPinned && Theme.Styles.ProfileIconPinnedStyle,
           ]}>
-          <Icon name="person" color={Theme.Colors.Icon} size={40} />
+          <Icon
+            testID={`ProfileIcon`}
+            name="person"
+            color={Theme.Colors.Icon}
+            size={40}
+          />
         </View>
       </View>
-    </>
+    </React.Fragment>
   );
 };
