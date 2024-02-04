@@ -6,7 +6,6 @@ import i18n, {getLocalizedField} from '../../../i18n';
 import {Row} from '../../ui';
 import {VCItemField} from './VCItemField';
 import React from 'react';
-import {format, parse} from 'date-fns';
 import {logoType} from '../../../machines/issuersMachine';
 import {Image} from 'react-native';
 import {Theme} from '../../ui/styleUtils';
@@ -41,17 +40,17 @@ export const getFieldValue = (
   wellknown: any,
   props: any,
 ) => {
+  const date = new Date(
+    verifiableCredential?.credentialSubject[field],
+  ).toString();
+  if (date !== 'Invalid Date') {
+    return formattedDateTime(verifiableCredential?.credentialSubject[field]);
+  }
   switch (field) {
     case 'status':
       return <VCVerification wellknown={wellknown} />;
     case 'idType':
       return getIDType(verifiableCredential);
-    case 'dateOfBirth':
-      return formattedDateOfBirth(verifiableCredential);
-    case 'expiresOn':
-      return formattedDateTime(
-        verifiableCredential?.credentialSubject.expiresOn,
-      );
     case 'credentialRegistry':
       return props?.vc?.credentialRegistry;
     case 'address':
@@ -125,17 +124,6 @@ function getFullAddress(credential: CredentialSubject) {
     .join(', ');
 }
 
-function formattedDateOfBirth(verifiableCredential: any) {
-  const dateOfBirth = verifiableCredential?.credentialSubject.dateOfBirth;
-  if (dateOfBirth) {
-    const formatString =
-      dateOfBirth.split('/').length === 1 ? 'yyyy' : 'yyyy/MM/dd';
-    const parsedDate = parse(dateOfBirth, formatString, new Date());
-    return format(parsedDate, 'MM/dd/yyyy');
-  }
-  return dateOfBirth;
-}
-
 function formattedDateTime(timeStamp: any) {
   if (timeStamp) {
     return new Date(timeStamp).toLocaleDateString();
@@ -168,7 +156,6 @@ export const fieldItemIterator = (
         key={field}
         style={{flexDirection: 'row', flex: 1}}
         align="space-between"
-        let
         margin="0 8 5 0">
         <VCItemField
           key={field}
