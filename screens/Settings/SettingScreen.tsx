@@ -9,10 +9,7 @@ import {useTranslation} from 'react-i18next';
 import {LanguageSelector} from '../../components/LanguageSelector';
 import {ScrollView} from 'react-native-gesture-handler';
 import {Modal} from '../../components/ui/Modal';
-import {
-  CREDENTIAL_REGISTRY_EDIT,
-  BACKUP_AND_RESTORE,
-} from 'react-native-dotenv';
+import {CREDENTIAL_REGISTRY_EDIT} from 'react-native-dotenv';
 import {AboutInji} from './AboutInji';
 import {EditableListItem} from '../../components/EditableListItem';
 import {RequestRouteProps, RootRouteProps} from '../../routes';
@@ -165,9 +162,7 @@ export const SettingScreen: React.FC<
 
             <AboutInji appId={controller.appId} />
 
-            {BACKUP_AND_RESTORE === 'true' && isAndroid() && (
-              <DataBackupAndRestore />
-            )}
+            {isAndroid() && <DataBackupAndRestore />}
 
             {CREDENTIAL_REGISTRY_EDIT === 'true' && (
               <EditableListItem
