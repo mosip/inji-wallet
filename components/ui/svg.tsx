@@ -22,6 +22,7 @@ import CameraCaptureIcon from '../../assets/Camera_Capture_Icon.svg';
 import SuccessLogo from '../../assets/Success_Message_Icon1.svg';
 import NoInternetConnection from '../../assets/No_Internet_Connection.svg';
 import SomethingWentWrong from '../../assets/Something_Went_Wrong.svg';
+import ErrorOccurred from '../../assets/Error_Occurred.svg';
 import MagnifierZoom from '../../assets/Magnifier_Zoom.svg';
 import {displayType} from '../../machines/issuersMachine';
 import {IssuerProps} from '../openId4VCI/Issuer';
@@ -242,6 +243,10 @@ export class SvgImage {
 
   static SomethingWentWrong() {
     return <SomethingWentWrong {...testIDProps('somethingWentWrongImage')} />;
+  }
+
+  static ErrorOccurred() {
+    return <ErrorOccurred {...testIDProps('errorOccurredImage')} />;
   }
 
   static MagnifierZoom() {

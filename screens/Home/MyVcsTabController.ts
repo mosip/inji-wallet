@@ -33,12 +33,14 @@ import {
   SettingsEvents,
 } from '../../machines/settings';
 import {EsignetMosipVCItemMachine} from '../../machines/VCItemMachine/EsignetMosipVCItem/EsignetMosipVCItemMachine';
+import {useNavigation} from '@react-navigation/native';
 
 export function useMyVcsTab(props: HomeScreenTabProps) {
   const service = props.service as ActorRefFrom<typeof MyVcsTabMachine>;
   const {appService} = useContext(GlobalContext);
   const vcService = appService.children.get('vc');
   const settingsService = appService.children.get('settings');
+  const navigation = useNavigation();
 
   return {
     service,
@@ -104,6 +106,9 @@ export function useMyVcsTab(props: HomeScreenTabProps) {
 
     REMOVE_TAMPERED_VCS: () => vcService?.send(VcEvents.REMOVE_TAMPERED_VCS()),
     DELETE_VC: () => vcService?.send(VcEvents.DELETE_VC()),
-    RESET_VERIFY_ERROR: () => vcService?.send(VcEvents.RESET_VERIFY_ERROR()),
+    RESET_VERIFY_ERROR: () => {
+      vcService?.send(VcEvents.RESET_VERIFY_ERROR());
+      navigation.goBack();
+    },
   };
 }

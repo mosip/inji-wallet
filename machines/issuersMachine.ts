@@ -592,7 +592,7 @@ export const IssuersMachine = model.createMachine(
 
       updateVerificationErrorMessage: assign({
         verificationErrorMessage: (context, event) =>
-          'Due to <Technical Error>, we were unable to download the card.',
+          (event.data as Error).message,
       }),
     },
     services: {

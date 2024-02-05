@@ -230,29 +230,17 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = props => {
         minHeight={'auto'}
       />
 
-      {/* <Error
-          testID={`verificationError`}
-          testIDPrimaryButton={`goBackButton`}
-          isVisible={isVerificationError}
-          isModal={true}
-          title={'An Error occurred!'}
-          message={verificationErrorMessage}
-          primaryButtonText={'Go Back'}
-          primaryButtonEvent={controller.RESET_VERIFY_ERROR}
-          image={SvgImage.SomethingWentWrong()}
-          showClose={false}
-        />   */}
-
       <Error
         testID={`verificationError`}
+        testIDPrimaryButton={`goBackButton`}
         isVisible={isVerificationError}
         isModal={true}
         title={'An Error occurred!'}
         message={verificationErrorMessage}
-        onDismiss={controller.DISMISS}
-        tryAgain={controller.TRY_AGAIN}
-        image={SvgImage.NoInternetConnection()}
-        showClose={true}
+        primaryButtonText={'Go Back'}
+        primaryButtonEvent={controller.RESET_VERIFY_ERROR}
+        image={SvgImage.ErrorOccurred()}
+        showClose={false}
       />
 
       {controller.isNetworkOff && (

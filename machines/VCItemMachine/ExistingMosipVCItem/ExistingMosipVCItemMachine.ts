@@ -493,7 +493,7 @@ export const ExistingMosipVCItemMachine =
               {
                 //To-Do Handle Error Scenarios
                 actions: [
-                  log((_, event) => 'Verify Error'),
+                  log((_, event) => `Verification Error.`),
                   'updateVerificationErrorMessage',
                 ],
                 target: 'handlingCredentialVerificationFailure',
@@ -899,7 +899,7 @@ export const ExistingMosipVCItemMachine =
 
         updateVerificationErrorMessage: assign({
           verificationErrorMessage: (context, event) =>
-            'Due to <Technical Error>, we were unable to download the card.',
+            (event.data as Error).message,
         }),
 
         setWalletBindingError: assign({

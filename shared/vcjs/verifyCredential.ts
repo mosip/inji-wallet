@@ -23,7 +23,6 @@ export async function verifyCredential(
   verifiableCredential: VerifiableCredential | Credential,
 ): Promise<VerificationResult> {
   try {
-    console.log('balaggg->inside->verifyCredential->call');
     let purpose: PublicKeyProofPurpose | AssertionProofPurpose;
     switch (verifiableCredential.proof.proofPurpose) {
       case ProofPurpose.PublicKey:
@@ -58,8 +57,6 @@ export async function verifyCredential(
     };
 
     const result = await vcjs.verifyCredential(vcjsOptions);
-    console.log('balagg->result->', result);
-    console.log('balagg->handleError->', handleError(result, false));
     return handleError(result, false);
 
     //ToDo Handle Expiration error message
@@ -70,36 +67,38 @@ export async function verifyCredential(
 }
 
 function handleError(result: any, isException: boolean) {
-  var errorMessage = '';
-  var errorType = VerificationErrorType.NoError;
+  var errorMessage = VerificationErrorType.NO_ERROR;
   var isVerifiedFlag = true;
 
   var verificationResult: VerificationResult = {
     isVerified: isVerifiedFlag,
-    errorType: errorType,
     errorMessage: errorMessage,
   };
 
   if ((result != null && !result.verified) || isException) {
-    errorMessage = 'Something went wrong during Verify Credential';
-    errorType = VerificationErrorType.TechnicalError;
+    if (result['results'][0].error.name == 'jsonld.InvalidUrl') {
+      errorMessage = VerificationErrorType.NETWORK_ERROR;
+    } else {
+      errorMessage = VerificationErrorType.TECHNICAL_ERROR;
+    }
     isVerifiedFlag = false;
   }
   verificationResult.isVerified = isVerifiedFlag;
   verificationResult.errorMessage = errorMessage;
-
   return verificationResult;
 }
 
-export enum VerificationErrorType {
-  NoError,
-  TechnicalError,
-  ExpirationError,
-  LibraryDownError,
-}
+const VerificationErrorType = {
+  NO_ERROR: '',
+  TECHNICAL_ERROR:
+    'Due to <Technical Error>, we were unable to download the card.',
+  NETWORK_ERROR:
+    'Due to unstable internet connection, we were unable to download the card. Please check your internet connection.',
+  EXPIRATION_ERROR:
+    'We/’re sorry, the VC cannot be downloaded as it has expired.',
+};
 
-interface VerificationResult {
+export interface VerificationResult {
   errorMessage: string;
-  errorType: VerificationErrorType;
   isVerified: boolean;
 }
