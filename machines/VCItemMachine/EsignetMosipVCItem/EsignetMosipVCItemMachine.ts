@@ -12,7 +12,7 @@ import {log} from 'xstate/lib/actions';
 import {Protocols} from '../../../shared/openId4VCI/Utils';
 import {StoreEvents} from '../../../machines/store';
 import {MIMOTO_BASE_URL, MY_VCS_STORE_KEY} from '../../../shared/constants';
-import {VcEvents} from '../../../machines/vc';
+import {VcEvents} from '../vc';
 import i18n from '../../../i18n';
 import {KeyPair} from 'react-native-rsa-native';
 import {

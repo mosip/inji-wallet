@@ -56,7 +56,7 @@ fileignoreconfig:
   - filename: machines/VCItemMachine/EsignetMosipVCItem/EsignetMosipVCItemMachine.ts
     checksum: cca7657da3a1a91b63e0a10605545d1e0d3d152b083a55f9dbb9eed893646e4b
   - filename: machines/VCItemMachine/ExistingMosipVCItem/ExistingMosipVCItemMachine.ts
-    checksum: 8bc83e91cd46caedfd99bf5e7c5f729f455da5556dc551e820dc4615ebb6eb76
+    checksum: 1d06c737c0a59cdda6604eb2a6f384bcaf361a682c19f43ef9e8537e38c53db4
   - filename: machines/VCItemMachine/EsignetMosipVCItem/EsignetMosipVCItemMachine.typegen.ts
     checksum: 0de47337ba60b29c8e4d4231439c77028197d3d8d3139eb367c471138c40f93d
   - filename: machines/VCItemMachine/ExistingMosipVCItem/ExistingMosipVCItemMachine.typegen.ts
@@ -122,7 +122,7 @@ fileignoreconfig:
   - filename: screens/Settings/BackupController.tsx
     checksum: 4a031b46646aa982c8f40e4c7fe0bd3e05a76a6af1ff1c2de7350ba6ebf9a839
   - filename: machines/backupRestore.ts
-    checksum: 3ad985af5b88d949bad3ebb598b644d6fcb21de3f739300658bc44aa20915a00
+    checksum: 34d6d98a46b34f3488af3e65809d550ab4a61405ad5e283f87ee5c79d3291261
   - filename: machines/backupRestore.typegen.ts
     checksum: 4a732b953dc97b9949a131039deadfdada4728c2fc7e5c4f1c89dd8101d595c5
   - filename: machines/settings.typegen.ts

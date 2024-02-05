@@ -1,7 +1,10 @@
 import {useContext} from 'react';
 import {GlobalContext} from '../shared/GlobalContext';
 import {useSelector} from '@xstate/react';
-import {VcEvents, selectWalletBindingSuccess} from '../machines/vc';
+import {
+  VcEvents,
+  selectWalletBindingSuccess,
+} from '../machines/VCItemMachine/vc';
 
 export const UseWalletBindingSuccess = () => {
   const {appService} = useContext(GlobalContext);
