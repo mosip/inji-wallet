@@ -90,12 +90,9 @@ function handleError(result: any, isException: boolean) {
 
 const VerificationErrorType = {
   NO_ERROR: '',
-  TECHNICAL_ERROR:
-    'Due to <Technical Error>, we were unable to download the card.',
-  NETWORK_ERROR:
-    'Due to unstable internet connection, we were unable to download the card. Please check your internet connection.',
-  EXPIRATION_ERROR:
-    'We/’re sorry, the VC cannot be downloaded as it has expired.',
+  TECHNICAL_ERROR: 'technicalError',
+  NETWORK_ERROR: 'networkError',
+  EXPIRATION_ERROR: 'expirationError',
 };
 
 export interface VerificationResult {

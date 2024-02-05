@@ -81,8 +81,11 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = props => {
     failedVCsList.push(`\n${vc.idType}:${vc.id}`);
   });
 
-  const verificationErrorMessage = controller.verificationErrorMessage;
-  const isVerificationError = verificationErrorMessage !== '';
+  const isVerificationError = controller.verificationErrorMessage !== '';
+
+  const verificationErrorMessage = t(
+    `errors.verificationFailed.${controller.verificationErrorMessage}`,
+  );
 
   const downloadFailedVcsErrorMessage = `${t(
     'errors.downloadLimitExpires.message',
@@ -235,9 +238,9 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = props => {
         testIDPrimaryButton={`goBackButton`}
         isVisible={isVerificationError}
         isModal={true}
-        title={'An Error occurred!'}
+        title={t('errors.verificationFailed.title')}
         message={verificationErrorMessage}
-        primaryButtonText={'Go Back'}
+        primaryButtonText={t('errors.verificationFailed.goBackButton')}
         primaryButtonEvent={controller.RESET_VERIFY_ERROR}
         image={SvgImage.ErrorOccurred()}
         showClose={false}
