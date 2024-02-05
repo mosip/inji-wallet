@@ -4,6 +4,7 @@ import React from 'react';
 import {setTextColor} from './VCUtils';
 import LinearGradient from 'react-native-linear-gradient';
 import ShimmerPlaceHolder from 'react-native-shimmer-placeholder';
+import testIDProps from '../../../shared/commonUtil';
 
 export const VCItemField = ({
   verifiableCredential,
@@ -31,7 +32,7 @@ export const VCItemField = ({
   return (
     <Column margin="9 0 0 0">
       <Text
-        testID={`${fieldName}Title`}
+        {...testIDProps(`${fieldName}Title`)}
         weight="regular"
         size="smaller"
         {...setTextColor(wellknown)}
@@ -42,7 +43,7 @@ export const VCItemField = ({
         fieldValue.map(field => (
           <Text
             key={field}
-            testID={`${field}Value`}
+            {...testIDProps(`${field}Value`)}
             weight="semibold"
             style={[Theme.Styles.subtitle, setTextColor(wellknown)]}>
             {field}
@@ -50,7 +51,7 @@ export const VCItemField = ({
         ))
       ) : (
         <Text
-          testID={`${fieldName}Value`}
+          {...testIDProps(`${fieldName}Value`)}
           weight="semibold"
           style={[Theme.Styles.subtitle, setTextColor(wellknown)]}>
           {fieldValue}
