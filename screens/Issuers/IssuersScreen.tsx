@@ -27,6 +27,7 @@ import {MessageOverlay} from '../../components/MessageOverlay';
 import {SearchBar} from '../../components/ui/SearchBar';
 import {SvgImage} from '../../components/ui/svg';
 import {Icon} from 'react-native-elements';
+import {BackupAndRestoreAllScreenBanner} from '../../components/BackupAndRestoreAllScreenBanner';
 
 export const IssuersScreen: React.FC<
   HomeRouteProps | RootRouteProps
@@ -167,10 +168,12 @@ export const IssuersScreen: React.FC<
         isVisible={controller.errorMessageType !== ''}
         title={t(`errors.${controller.errorMessageType}.title`)}
         message={t(`errors.${controller.errorMessageType}.message`)}
-        goBack={goBack}
-        tryAgain={controller.TRY_AGAIN}
         image={getImage()}
         showClose={true}
+        primaryButtonTestID="tryAgain"
+        primaryButtonText="tryAgain"
+        primaryButtonEvent={controller.TRY_AGAIN}
+        textButtonEvent={goBack}
       />
     );
   }
@@ -186,6 +189,7 @@ export const IssuersScreen: React.FC<
 
   return (
     <React.Fragment>
+      <BackupAndRestoreAllScreenBanner />
       {controller.issuers.length > 0 && (
         <Column style={Theme.IssuersScreenStyles.issuerListOuterContainer}>
           <Row

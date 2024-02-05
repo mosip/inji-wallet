@@ -1,5 +1,5 @@
 import {useFocusEffect} from '@react-navigation/native';
-import React from 'react';
+import React, {Fragment} from 'react';
 import {useTranslation} from 'react-i18next';
 import {BackHandler, Dimensions, View, StyleSheet} from 'react-native';
 import {Button, Column, Row, Text} from '.';
@@ -7,74 +7,101 @@ import {Header} from './Header';
 import {Theme} from './styleUtils';
 import testIDProps from '../../shared/commonUtil';
 import {Modal} from './Modal';
+import {ButtonProps as RNEButtonProps} from 'react-native-elements';
 
 export const Error: React.FC<ErrorProps> = props => {
   const {t} = useTranslation('common');
-  const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-    },
-    contentContainer: {
-      flex: 1,
-      justifyContent: 'center',
-      alignItems: 'center',
-    },
-    image: {
-      width: '50%',
-      height: 200,
-    },
-  });
+  console.log('props::', props);
   const errorContent = () => {
     return (
-      <View style={styles.container}>
-        <View style={styles.contentContainer}>
-          <Row align="center" style={Theme.ErrorStyles.image}>
-            {props.image}
-          </Row>
-          <Text style={Theme.ErrorStyles.title} testID="errorTitle">
-            {props.title}
-          </Text>
-          <Text style={Theme.ErrorStyles.message} testID="errorMessage">
-            {props.message}
-          </Text>
-          {props.tryAgain && (
-            <Button
-              onPress={props.tryAgain}
-              width={Dimensions.get('screen').width * 0.54}
-              title={t('tryAgain')}
-              type="outline"
-              testID="tryAgain"
-            />
+      <Fragment>
+        <View style={[{alignItems: 'center'}, props.customStyles]}>
+          <View>
+            <Row align="center" style={Theme.ErrorStyles.image}>
+              {props.image}
+            </Row>
+            <Text
+              style={Theme.ErrorStyles.title}
+              testID={`${props.testID}Title`}>
+              {props.title}
+            </Text>
+            <Text
+              style={Theme.ErrorStyles.message}
+              testID={`${props.testID}Message`}>
+              {props.message}
+            </Text>
+            {props.helpText && (
+              <Text
+                style={Theme.ErrorStyles.message}
+                testID={`${props.testID}HelpText`}>
+                {props.helpText}
+              </Text>
+            )}
+          </View>
+          {!props.alignActionsOnEnd && (
+            <Fragment>
+              {props.primaryButtonText && (
+                <Button
+                  onPress={props.primaryButtonEvent}
+                  title={t(props.primaryButtonText)}
+                  type={
+                    props.primaryButtonText === 'tryAgain'
+                      ? 'outline'
+                      : 'gradient'
+                  }
+                  width={
+                    props.primaryButtonText === 'tryAgain'
+                      ? Dimensions.get('screen').width * 0.54
+                      : undefined
+                  }
+                  testID={props.primaryButtonTestID}
+                />
+              )}
+              {props.textButtonText && (
+                <Button
+                  onPress={props.textButtonEvent}
+                  width={Dimensions.get('screen').width * 0.54}
+                  title={t(props.textButtonText)}
+                  type="clear"
+                  testID={props.textButtonTestID}
+                />
+              )}
+            </Fragment>
           )}
         </View>
-        {props.primaryButtonEvent && (
-          <Button
-            testID={props.testIDPrimaryButton ?? ''}
-            type="gradient"
-            margin="0 0 16"
-            title={props.primaryButtonText ?? ''}
-            onPress={props.primaryButtonEvent}
-          />
+        {props.alignActionsOnEnd && (
+          <Column fill crossAlign="center" align="flex-end" margin="0 0 16">
+            <Row style={{marginHorizontal: 30}}>
+              {props.primaryButtonText && (
+                <Button
+                  styles={{borderRadius: 9}}
+                  onPress={props.primaryButtonEvent}
+                  title={t(props.primaryButtonText)}
+                  type="gradient"
+                  testID={props.primaryButtonTestID}
+                />
+              )}
+            </Row>
+            <Row>
+              {props.textButtonText && (
+                <Button
+                  onPress={props.textButtonEvent}
+                  title={t(props.textButtonText)}
+                  type="clear"
+                  testID={props.textButtonTestID}
+                />
+              )}
+            </Row>
+          </Column>
         )}
-        {props.textButtonEvent && (
-          <Button
-            testID={props.testIDTextButton ?? ''}
-            type="clear"
-            margin="0 0 16"
-            title={props.textButtonText ?? ''}
-            onPress={() => {
-              props.textButtonEvent;
-            }}
-          />
-        )}
-      </View>
+      </Fragment>
     );
   };
 
   useFocusEffect(
     React.useCallback(() => {
       const onBackPress = () => {
-        props.goBack();
+        props.textButtonEvent;
         return true;
       };
 
@@ -96,8 +123,12 @@ export const Error: React.FC<ErrorProps> = props => {
         ...Theme.ModalStyles.modal,
         backgroundColor: Theme.Colors.whiteBackgroundColor,
       }}
+      showClose={props.showClose}
       {...testIDProps(props.testID)}>
-      <Column fill safe align="space-evenly">
+      <Column
+        fill
+        safe
+        align={props.alignActionsOnEnd ? 'space-around' : 'space-evenly'}>
         {errorContent()}
       </Column>
     </Modal>
@@ -120,23 +151,33 @@ export const Error: React.FC<ErrorProps> = props => {
 
 Error.defaultProps = {
   isModal: false,
+  goBackButtonVisible: false,
+  alignActionsOnEnd: false,
+  showClose: true,
+  goBackType: 'clear',
 };
 
 export interface ErrorProps {
+  testID: string;
+  customStyles?: {};
+  goBackType?: RNEButtonProps['type'] | 'gradient';
   isModal?: boolean;
   isVisible: boolean;
-  showClose: boolean;
+  showClose?: boolean;
+  alignActionsOnEnd?: boolean;
   title: string;
   message: string;
+  helpText?: string;
   image: React.ReactElement;
-  testID: string;
-  tryAgain?: null | (() => void);
   goBack?: () => void;
+  goBackButtonVisible?: boolean;
+  tryAgain?: null | (() => void);
   onDismiss?: () => void;
-  testIDPrimaryButton?: string | null;
   primaryButtonText?: string;
   primaryButtonEvent?: () => void;
   testIDTextButton?: string | null;
-  textButtonText?: string | null;
-  textButtonEvent?: () => void | null;
+  textButtonText?: string;
+  textButtonEvent?: () => void;
+  primaryButtonTestID?: string;
+  textButtonTestID?: string;
 }

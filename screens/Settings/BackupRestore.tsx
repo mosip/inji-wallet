@@ -3,19 +3,17 @@ import {Pressable} from 'react-native';
 import {Icon, ListItem} from 'react-native-elements';
 import {Text} from '../../components/ui';
 import {Theme} from '../../components/ui/styleUtils';
-import {useBackupScreen} from './BackupController';
-import {BackupToggle} from './BackupToggle';
+import {useBackupRestoreScreen} from './BackupRestoreController';
+import {BackupRestoreToggle} from './BackupRestoreToggle';
 
-export const DataBackup: React.FC = ({} = props => {
-  const controller = useBackupScreen(props);
-
-  // TODO : Check if the setup is already done
+export const BackupRestore: React.FC = ({} = props => {
+  const controller = useBackupRestoreScreen(props);
 
   return (
     <React.Fragment>
       <Pressable
         onPress={() => {
-          controller.DATA_BACKUP();
+          controller.BACKUP_RESTORE();
         }}>
         <ListItem topDivider bottomDivider>
           <Icon
@@ -27,16 +25,16 @@ export const DataBackup: React.FC = ({} = props => {
           <ListItem.Content>
             <ListItem.Title style={{paddingTop: 3}}>
               <Text weight="semibold" color={Theme.Colors.settingsLabel}>
-                Data Backup
+                Backup Restore
               </Text>
             </ListItem.Title>
           </ListItem.Content>
         </ListItem>
       </Pressable>
 
-      {controller.isBackingUp && (
-        <BackupToggle
-          isVisible={controller.isBackingUp}
+      {controller.isBackUpRestoring && (
+        <BackupRestoreToggle
+          isVisible={controller.isBackUpRestoring}
           onDismiss={() => controller.DISMISS()}
         />
       )}

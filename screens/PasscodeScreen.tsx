@@ -164,24 +164,17 @@ export const PasscodeScreen: React.FC<PasscodeRouteProps> = props => {
 
   return (
     <KeyboardAvoidingView
-      style={{flex: 1}}
+      style={Theme.Styles.passwordKeyboardAvoidStyle}
       behavior={isIOS() ? 'padding' : 'height'}>
-      <Column
-        fill
-        style={{
-          paddingHorizontal: 32,
-        }}
-        backgroundColor={Theme.Colors.whiteBackgroundColor}>
-        {SvgImage.LockIcon()}
-        <Column>
-          {isSettingUp ? passcodeSetup : unlockPasscode}
-          <Text
-            testID="PasscodeError"
-            align="center"
-            color={Theme.Colors.errorMessage}>
-            {controller.error}
-          </Text>
-        </Column>
+      {SvgImage.LockIcon()}
+      <Column>
+        {isSettingUp ? passcodeSetup : unlockPasscode}
+        <Text
+          testID="PasscodeError"
+          align="center"
+          color={Theme.Colors.errorMessage}>
+          {controller.error}
+        </Text>
       </Column>
     </KeyboardAvoidingView>
   );

@@ -61,7 +61,7 @@ public class DeletingVcTest extends AndroidBaseTest {
         historyPage.verifyHistory(TestDataReader.readData("uin") + " Removed from wallet", Target.ANDROID);
         assertTrue(historyPage.verifyDeleteHistory(TestDataReader.readData("uin"), Target.ANDROID), "Verify if deleted history is displayed");
         
-       ScanPage scanPage = homePage.clickOnScanButton();
+       SharePage scanPage = homePage.clickOnShareButton();
         assertTrue(scanPage.isNoShareableCardsMessageDisplayed(), "Verify if no shareable cards are available message is displayed");
     }
 

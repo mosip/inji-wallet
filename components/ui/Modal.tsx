@@ -42,12 +42,9 @@ export const Modal: React.FC<ModalProps> = props => {
             <Row
               fill
               align={props.headerLeft ? 'flex-start' : 'center'}
-              margin={'16 0 0 0'}>
+              margin={props.arrowLeft ? '16 0 0 -15' : '16 0 0 10'}>
               <Column>
-                <Text
-                  testID={props.testID}
-                  style={Theme.TextStyles.header}
-                  margin="0 0 0 -15">
+                <Text testID={props.testID} style={Theme.TextStyles.header}>
                   {props.headerTitle || props.headerLeft}
                 </Text>
                 {!props.requester ? (
@@ -110,4 +107,5 @@ export interface ModalProps {
   headerLeft?: React.ReactElement;
   arrowLeft?: boolean;
   onShow?: () => void;
+  children: React.ReactNode;
 }

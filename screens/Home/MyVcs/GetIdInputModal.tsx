@@ -28,70 +28,69 @@ export const GetIdInputModal: React.FC<GetIdInputModalProps> = props => {
       headerTitle={t('header')}
       headerElevation={2}>
       <KeyboardAvoidingView
-        style={{flex: 1}}
+        style={Theme.Styles.keyboardAvoidStyle}
         behavior={isIOS() ? 'padding' : 'height'}>
-        <Column fill align="space-between" padding="32 24">
-          <Column>
-            <Text
-              testID="getIdDescription"
-              margin="10"
-              style={{color: Theme.Colors.GrayText}}
-              weight="regular">
-              {t('applicationIdLabel')}
-            </Text>
-            <Row crossAlign="flex-end">
-              <Input
-                {...testIDProps('getIdInputModalIndividualId')}
-                placeholder={!controller.id ? inputLabel : ''}
-                labelStyle={{
-                  color: controller.isInvalid
-                    ? Theme.Colors.errorMessage
-                    : Theme.Colors.textValue,
-                  textAlign: 'left',
-                }}
-                inputStyle={{
-                  textAlign: I18nManager.isRTL ? 'right' : 'left',
-                }}
-                selectionColor={Theme.Colors.Cursor}
-                style={Theme.Styles.placeholder}
-                value={controller.id}
-                keyboardType="number-pad"
-                rightIcon={
-                  <CustomTooltip
-                    testID="GetIdInputToolTip"
-                    title={t('toolTipTitle')}
-                    description={t(`toolTipDescription`)}
-                    width={Dimensions.get('screen').width * 0.87}
-                    height={Dimensions.get('screen').height * 0.25}
-                    triggerComponent={
-                      <Icon
-                        testID="toolTipInfo"
-                        name="infocirlceo"
-                        type="antdesign"
-                        color={Theme.Colors.tooltipIcon}
-                      />
-                    }
-                  />
-                }
-                errorStyle={{color: Theme.Colors.errorMessage}}
-                errorMessage={controller.idError}
-                onChangeText={controller.INPUT_ID}
-                ref={node => !controller.idInputRef && controller.READY(node)}
-              />
-            </Row>
-          </Column>
-          <Column>
-            <Button
-              testID="getIdButton"
-              title={t('getUIN')}
-              margin="24 0 0 0"
-              type="gradient"
-              disabled={!controller.id}
-              onPress={controller.VALIDATE_INPUT}
-              loading={controller.isRequestingOtp}
+        <Column>
+          <Text
+            testID="getIdDescription"
+            margin="10"
+            style={{color: Theme.Colors.GrayText}}
+            weight="regular">
+            {t('applicationIdLabel')}
+          </Text>
+          <Row crossAlign="flex-end">
+            <Input
+              {...testIDProps('getIdInputModalIndividualId')}
+              placeholder={!controller.id ? inputLabel : ''}
+              labelStyle={{
+                color: controller.isInvalid
+                  ? Theme.Colors.errorMessage
+                  : Theme.Colors.textValue,
+                textAlign: 'left',
+              }}
+              inputStyle={{
+                textAlign: I18nManager.isRTL ? 'right' : 'left',
+              }}
+              selectionColor={Theme.Colors.Cursor}
+              style={Theme.Styles.placeholder}
+              value={controller.id}
+              keyboardType="number-pad"
+              rightIcon={
+                <CustomTooltip
+                  testID="GetIdInputToolTip"
+                  title={t('toolTipTitle')}
+                  description={t(`toolTipDescription`)}
+                  width={Dimensions.get('screen').width * 0.87}
+                  height={Dimensions.get('screen').height * 0.25}
+                  triggerComponent={
+                    <Icon
+                      {...testIDProps('GetIdToolTipInfo')}
+                      name="infocirlceo"
+                      type="antdesign"
+                      color={Theme.Colors.tooltipIcon}
+                    />
+                  }
+                />
+              }
+              errorStyle={{color: Theme.Colors.errorMessage}}
+              errorMessage={controller.idError}
+              onChangeText={controller.INPUT_ID}
+              ref={node => !controller.idInputRef && controller.READY(node)}
             />
-          </Column>
+          </Row>
         </Column>
+        <Column>
+          <Button
+            testID="getIdButton"
+            title={t('getUIN')}
+            margin="24 0 0 0"
+            type="gradient"
+            disabled={!controller.id}
+            onPress={controller.VALIDATE_INPUT}
+            loading={controller.isRequestingOtp}
+          />
+        </Column>
+
         <MessageOverlay
           isVisible={controller.isRequestingOtp}
           title={t('requestingOTP')}

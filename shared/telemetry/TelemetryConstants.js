@@ -13,6 +13,7 @@ export const TelemetryConstants = {
     getVcUsingAid: 'Get VC using AID',
     fetchData: 'Fetch Data',
     dataBackup: 'Data Backup',
+    dataRestore: 'Data Restore',
   }),
 
   EndEventStatus: Object.freeze({
@@ -37,6 +38,7 @@ export const TelemetryConstants = {
       'Due to the fingerprint / facial recognition update, app security was impacted, and downloaded cards were removed. Please download again',
     vcsAreTampered:
       'Tampered cards detected and removed for security reasons. Please download again',
+    privateKeyUpdationFailed: 'Failed to store private key in keystore',
   }),
 
   ErrorId: Object.freeze({
@@ -50,6 +52,7 @@ export const TelemetryConstants = {
     dataRetrieval: 'DATA_RETRIEVAL',
     appWasReset: 'APP_WAS_RESET',
     vcsAreTampered: 'VC_TAMPERED',
+    updatePrivateKey: 'UPDATE_PRIVATE_KEY',
   }),
 
   Screens: Object.freeze({
@@ -64,5 +67,6 @@ export const TelemetryConstants = {
     vcShareSuccessPage: 'VC Successfully Shared Page',
     vcReceivedSuccessPage: 'VC Successfully Received Page',
     dataBackupScreen: 'Data Backup Screen',
+    dataRestoreScreen: 'Data Restore Screen',
   }),
 };

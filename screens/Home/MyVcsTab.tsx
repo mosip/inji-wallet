@@ -233,30 +233,37 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = props => {
         minHeight={'auto'}
       />
 
-      <Error
-        testID={`verificationError`}
-        testIDPrimaryButton={`goBackButton`}
-        isVisible={isVerificationError}
-        isModal={true}
-        title={t('errors.verificationFailed.title')}
-        message={verificationErrorMessage}
-        primaryButtonText={t('errors.verificationFailed.goBackButton')}
-        primaryButtonEvent={controller.RESET_VERIFY_ERROR}
-        image={SvgImage.ErrorOccurred()}
-        showClose={false}
-      />
+      {isVerificationError && (
+        <Error
+          testID="verificationError"
+          isVisible={isVerificationError}
+          isModal={true}
+          alignActionsOnEnd
+          title={t('errors.verificationFailed.title')}
+          message={verificationErrorMessage}
+          textButtonEvent={controller.RESET_VERIFY_ERROR}
+          image={SvgImage.ErrorOccurred()}
+          showClose={false}
+          primaryButtonText="goBack"
+          primaryButtonEvent={controller.RESET_VERIFY_ERROR}
+          primaryButtonTestID="goBack"
+          customStyles={{marginTop: '30%'}}
+        />
+      )}
 
       {controller.isNetworkOff && (
         <Error
-          testID={`networkOffError`}
+          testID="networkOffError"
           isVisible={controller.isNetworkOff}
           isModal={true}
           title={t('errors.noInternetConnection.title')}
           message={t('errors.noInternetConnection.message')}
           onDismiss={controller.DISMISS}
-          tryAgain={controller.TRY_AGAIN}
           image={SvgImage.NoInternetConnection()}
           showClose={true}
+          primaryButtonText="tryAgain"
+          primaryButtonEvent={controller.TRY_AGAIN}
+          primaryButtonTestID="tryAgain"
         />
       )}
     </React.Fragment>

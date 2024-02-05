@@ -1,0 +1,190 @@
+name: UI - Automation
+run-name: ${{ inputs.runName }}
+
+on:
+  workflow_dispatch:
+    inputs:
+      runName:
+        description: 'Name the run for Actions & DeviceFarm'
+        required: true
+        default: 'Ex: Sanity/Regression[ENV]'
+        type: string
+      buildFor:
+        description: 'Trigger test case run for'
+        required: true
+        default: 'Both[Android and IOS]'
+        type: choice
+        options:
+          - Both[Android and IOS]
+          - Android
+          - IOS
+      testType:
+        description: 'Test type Sanity/Regression'
+        required: true
+        default: 'sanity'
+        type: choice
+        options:
+          - sanity
+          - regression
+      backendServiceUrl:
+        description: 'Mimoto and Esignet backend service URL'
+        required: true
+        default: 'https://api.sandbox.mosip.net'
+        type: string
+
+jobs:
+  android-ui-automation:
+    if: ${{ github.event.inputs.buildFor == 'Both[Android and IOS]' || github.event.inputs.buildFor == 'Android'}}
+    name: Trigger android run
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3.1.0
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '18.x'
+
+      - name: Cache npm dependencies
+        uses: actions/cache@v3.3.1
+        with:
+          path: '~/.npm'
+          key: ${{ runner.os }}-npm-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-npm-
+    
+      - name: Install npm dependencies
+        run: |
+          npm ci
+
+      - name: Generate Android keystore
+        run: |
+          echo "$ANDROID_KEYSTORE_FILE" > release.keystore.b64
+          base64 -d -i release.keystore.b64 > android/app/release.keystore
+        env:
+          ANDROID_KEYSTORE_FILE: ${{ secrets.INJI_ANDROID_RELEASE_KEYSTORE }}
+
+      - name: Create Android Build
+        run: |
+          npx jetify
+          cd android/scripts
+          ./android-build.sh
+        env:
+          MIMOTO_HOST: ${{ github.event.inputs.backendServiceUrl }}
+          ESIGNET_HOST: ${{ github.event.inputs.backendServiceUrl }}
+          APPLICATION_THEME: 'orange'
+          CREDENTIAL_REGISTRY_EDIT: 'false'
+          RELEASE_KEYSTORE_ALIAS: 'androidreleasekey'
+          RELEASE_KEYSTORE_PASSWORD: "${{ secrets.INJI_ANDROID_RELEASE_STOREPASS }}"
+
+      - name: Configure AWS CLI 
+        run: |
+          aws configure set aws_access_key_id ${{ secrets.AWS_DEVICE_FARM_ACCESS_KEY }}
+          aws configure set aws_secret_access_key ${{ secrets.AWS_DEVICE_FARM_SECRET_KEY }}
+          aws configure set region us-west-2
+        
+      - name: Android - Automation
+        id: android-run
+        run: |
+          cd injitest/scripts/ui_automation
+          ./automation_trigger.sh "Android" "$RUN_NAME-Android" "$TEST_TYPE"
+        env:
+          RUN_NAME: ${{ github.event.inputs.runName }}
+          TEST_TYPE: ${{ github.event.inputs.testType }}
+
+      - name: Download Android Artifacts
+        run: | 
+          cd injitest/scripts/ui_automation
+          ./download_artifacts.sh "$RUN_ARN" "Android"
+      
+      - name: Upload Artifact to Actions
+        uses: actions/upload-artifact@v3.1.1
+        with:
+          name: Android-Artifacts
+          path: injitest/scripts/ui_automation/artifacts/android_artifacts/
+          retention-days: 10
+      
+      # - name: Update slack channel
+      #   if: always()
+      #   uses: 8398a7/action-slack@v3
+      #   with:
+      #     status: ${{ job.status }}
+      #     fields: repo,message,author,commit,workflow,job
+      #   env:
+      #     SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_INJI_TEAM }}
+
+  ios-ui-automation:
+    if: ${{ github.event.inputs.buildFor == 'Both[Android and IOS]' || github.event.inputs.buildFor == 'IOS'}}
+    name: Trigger ios run
+    runs-on: macos-13
+
+    steps:
+      - uses: actions/checkout@v3.1.0
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '18.x'
+
+      - name: Cache npm dependencies
+        uses: actions/cache@v3.3.1
+        with:
+          path: '~/.npm'
+          key: ${{ runner.os }}-npm-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-npm-
+    
+      - name: Install npm dependencies
+        run: |
+          npm ci
+
+      - name: Create iOS Build
+        run: |
+          cd ios
+          pod install && pod install
+          fastlane ios_ui_automation_build 
+        env:
+          MIMOTO_HOST: ${{ github.event.inputs.backendServiceUrl }}
+          ESIGNET_HOST: ${{ github.event.inputs.backendServiceUrl }}
+          APPLICATION_THEME: 'orange'
+          APP_FLAVOR: 'residentapp'
+          CREDENTIAL_REGISTRY_EDIT: 'false'
+          INJI_IOS_TEMP_KEYCHAIN_PASSWORD: '${{ secrets.INJI_IOS_TEMP_KEYCHAIN_PASSWORD }}'
+          INJI_IOS_TEMP_KEYCHAIN_USER: '${{ secrets.INJI_IOS_TEMP_KEYCHAIN_USER }}'
+          GIT_AUTHORIZATION: '${{ secrets.GIT_AUTHORIZATION }}'
+          APPLE_KEY_ID: '${{ secrets.APPLE_KEY_ID }}'
+          APPLE_ISSUER_ID: '${{ secrets.APPLE_ISSUER_ID }}'
+          APPLE_KEY_CONTENT: '${{ secrets.APPLE_KEY_CONTENT }}'
+          MATCH_PASSWORD: '${{ secrets.INJI_IOS_MATCH_PASSWORD }}'
+
+      - name: Configure AWS CLI 
+        run: |
+          aws configure set aws_access_key_id ${{ secrets.AWS_DEVICE_FARM_ACCESS_KEY }}
+          aws configure set aws_secret_access_key ${{ secrets.AWS_DEVICE_FARM_SECRET_KEY }}
+          aws configure set region us-west-2
+
+      - name: IOS - Automation
+        run: |
+          cd injitest/scripts/ui_automation
+          ./automation_trigger.sh "IOS" "$RUN_NAME-IOS" "$TEST_TYPE"
+        env:
+          RUN_NAME: ${{ github.event.inputs.runName }}
+          TEST_TYPE: ${{ github.event.inputs.testType }}
+
+      - name: Download IOS Artifacts
+        run: | 
+          cd injitest/scripts/ui_automation
+          ./download_artifacts.sh "$RUN_ARN" "IOS"
+
+      - name: Upload Artifact to Actions
+        uses: actions/upload-artifact@v3.1.1
+        with:
+          name: IOS-Artifacts
+          path: injitest/scripts/ui_automation/artifacts/ios_artifacts/
+          retention-days: 10
+
+      # - name: Update slack channel
+      #   if: always()
+      #   uses: 8398a7/action-slack@v3
+      #   with:
+      #     status: ${{ job.status }}
+      #     fields: repo,message,author,commit,workflow,job
+      #   env:
+      #     SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_INJI_TEAM }}

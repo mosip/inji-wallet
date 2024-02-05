@@ -11,7 +11,7 @@ public class HelpPage extends BasePage {
     @iOSXCUITFindBy(accessibility = "helpScreen")
     private WebElement helpText;
 
-    @AndroidFindBy(uiAutomator = "new UiSelector().resourceId(\"iconIcon\")")
+    @AndroidFindBy(accessibility = "close")
     @iOSXCUITFindBy(accessibility = "close")
     private WebElement crossIcon;
 

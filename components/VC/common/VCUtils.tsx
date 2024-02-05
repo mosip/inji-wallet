@@ -6,7 +6,6 @@ import i18n, {getLocalizedField} from '../../../i18n';
 import {Row} from '../../ui';
 import {VCItemField} from './VCItemField';
 import React from 'react';
-import {format, parse} from 'date-fns';
 import {logoType} from '../../../machines/issuersMachine';
 import {Image} from 'react-native';
 import {Theme} from '../../ui/styleUtils';
@@ -15,31 +14,56 @@ import {CREDENTIAL_REGISTRY_EDIT} from 'react-native-dotenv';
 import {getIDType} from '../../../shared/openId4VCI/Utils';
 import {VCVerification} from '../../VCVerification';
 
+export const CARD_VIEW_DEFAULT_FIELDS = ['fullName'];
+export const DETAIL_VIEW_DEFAULT_FIELDS = [
+  'fullName',
+  'gender',
+  'phone',
+  'dateOfBirth',
+  'email',
+  'address',
+];
+
+//todo UIN & VID to be removed once we get the fields in the wellknown endpoint
+export const CARD_VIEW_ADD_ON_FIELDS = ['UIN', 'VID'];
+export const DETAIL_VIEW_ADD_ON_FIELDS = [
+  'UIN',
+  'VID',
+  'status',
+  'credentialRegistry',
+  'idType',
+];
+
 export const getFieldValue = (
   verifiableCredential: VerifiableCredential,
   field: string,
   wellknown: any,
   props: any,
 ) => {
+  const date = new Date(
+    getLocalizedField(verifiableCredential?.credentialSubject[field]),
+  ).toString();
+  if (date !== 'Invalid Date') {
+    return formattedDateTime(date);
+  }
   switch (field) {
     case 'status':
       return <VCVerification wellknown={wellknown} />;
     case 'idType':
       return getIDType(verifiableCredential);
-    case 'dateOfBirth':
-      return formattedDateOfBirth(verifiableCredential);
-    case 'expiresOn':
-      return formattedDateTime(
-        verifiableCredential?.credentialSubject.expiresOn,
-      );
     case 'credentialRegistry':
       return props?.vc?.credentialRegistry;
     case 'address':
       return getLocalizedField(
         getFullAddress(verifiableCredential?.credentialSubject),
       );
-    default:
-      return getLocalizedField(verifiableCredential?.credentialSubject[field]);
+    default: {
+      const fieldValue = verifiableCredential?.credentialSubject[field];
+      if (Array.isArray(fieldValue) && typeof fieldValue[0] != Object) {
+        return fieldValue;
+      }
+      return getLocalizedField(fieldValue);
+    }
   }
 };
 
@@ -100,17 +124,6 @@ function getFullAddress(credential: CredentialSubject) {
     .join(', ');
 }
 
-function formattedDateOfBirth(verifiableCredential: any) {
-  const dateOfBirth = verifiableCredential?.credentialSubject.dateOfBirth;
-  if (dateOfBirth) {
-    const formatString =
-      dateOfBirth.split('/').length === 1 ? 'yyyy' : 'yyyy/MM/dd';
-    const parsedDate = parse(dateOfBirth, formatString, new Date());
-    return format(parsedDate, 'MM/dd/yyyy');
-  }
-  return dateOfBirth;
-}
-
 function formattedDateTime(timeStamp: any) {
   if (timeStamp) {
     return new Date(timeStamp).toLocaleDateString();
@@ -143,7 +156,6 @@ export const fieldItemIterator = (
         key={field}
         style={{flexDirection: 'row', flex: 1}}
         align="space-between"
-        let
         margin="0 8 5 0">
         <VCItemField
           key={field}

@@ -37,13 +37,15 @@ public class VcDownloadAndVerifyUsingUinTest extends IosBaseTest {
         assertTrue(addNewCardPage.isIssuerDescriptionMosipDisplayed(), "Verify if issuer description  mosip displayed");
         assertTrue(addNewCardPage.isIssuerDescriptionEsignetDisplayed(), "Verify if issuer description  esignet displayed");
         assertTrue(addNewCardPage.isIssuerSearchBarDisplayed(), "Verify if issuer search bar displayed");
-        addNewCardPage.sendTextInIssuerSearchBar("uin");
+        addNewCardPage.sendTextInIssuerSearchBar("Download MOSIP Credentials");
         RetrieveIdPage retrieveIdPage = addNewCardPage.clickOnDownloadViaUin();
 
         //we will remove below line once bug is fixed https://mosip.atlassian.net/browse/INJI-712
         addNewCardPage.clickOnDownloadViaUin();
 
         assertTrue(retrieveIdPage.isRetrieveIdPageLoaded(), "Verify if retrieve id page is displayed");
+        assertEquals(retrieveIdPage.getRetrieveIdPageHeader(),"Download your ID");
+        assertTrue(retrieveIdPage.verifyDownloadIdPageGuideMessage(), "Verify if retrieve id page guide message is displayed");
         OtpVerificationPage otpVerification = retrieveIdPage.setEnterIdTextBox(TestDataReader.readData("uin")).clickOnGenerateCardButton();
 
         assertTrue(otpVerification.isOtpVerificationPageLoaded(), "Verify if otp verification page is displayed");
@@ -265,7 +267,7 @@ public class VcDownloadAndVerifyUsingUinTest extends IosBaseTest {
 
         assertTrue(otpVerification.isOtpVerificationPageLoaded(), "Verify if otp verification page is displayed");
         assertTrue(otpVerification.verifyOtpVerificationTimerCompleted(), "Verify timer has stop for otp verification");
-        assertTrue(otpVerification.verifyResendCodeButtonDisplayed(), "Verify if resend code is displayed");
+        assertTrue(otpVerification.verifyOtpVerificationTimerDisplayedAfterClickOnResend(), "Verify if resend code is displayed");
         
         otpVerification.clickOnCrossIcon();
         assertTrue(otpVerification.confirmPopupHeaderDisplayed(), "Verify if comfirm popup displayed");
