@@ -41,10 +41,10 @@ export const getFieldValue = (
   props: any,
 ) => {
   const date = new Date(
-    verifiableCredential?.credentialSubject[field],
+    getLocalizedField(verifiableCredential?.credentialSubject[field]),
   ).toString();
   if (date !== 'Invalid Date') {
-    return formattedDateTime(verifiableCredential?.credentialSubject[field]);
+    return formattedDateTime(date);
   }
   switch (field) {
     case 'status':
