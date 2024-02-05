@@ -154,7 +154,6 @@ Error.defaultProps = {
   goBackButtonVisible: false,
   alignActionsOnEnd: false,
   showClose: true,
-  goBackType: 'clear',
 };
 
 export interface ErrorProps {
