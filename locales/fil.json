@@ -362,6 +362,12 @@
       "downloadLimitExpires": {
         "title": "Error sa Pag-download",
         "message": "Nagkaroon ng isyu sa pag-download ng mga sumusunod na card. Pakisubukang muli"
+      },
+      "verificationFailed": {
+        "title" : "May pagkakamaling naganap!",
+        "goBackButton": "Bumalik ka",
+        "technicalError": "Dahil sa <Technical Error>, hindi namin na-download ang card.",
+        "networkError": "Dahil sa hindi matatag na koneksyon sa internet, hindi namin na-download ang card. Pakisuri ang iyong koneksyon sa internet."
       }
     }
   },

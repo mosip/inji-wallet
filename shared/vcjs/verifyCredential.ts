@@ -23,7 +23,6 @@ export async function verifyCredential(
   verifiableCredential: VerifiableCredential | Credential,
 ): Promise<VerificationResult> {
   try {
-    console.log('balaggg->inside->verifyCredential->call');
     let purpose: PublicKeyProofPurpose | AssertionProofPurpose;
     switch (verifiableCredential.proof.proofPurpose) {
       case ProofPurpose.PublicKey:
@@ -58,48 +57,45 @@ export async function verifyCredential(
     };
 
     const result = await vcjs.verifyCredential(vcjsOptions);
-    console.log('balagg->result->', result);
-    console.log('balagg->handleError->', handleError(result, false));
-    return handleError(result, false);
+    return handleResponse(result);
 
     //ToDo Handle Expiration error message
   } catch (error) {
-    console.log('Exception during VC Verification->', error);
-    return handleError(null, true);
+    return {
+      isVerified: false,
+      errorMessage: VerificationErrorType.TECHNICAL_ERROR,
+    };
   }
 }
 
-function handleError(result: any, isException: boolean) {
-  var errorMessage = '';
-  var errorType = VerificationErrorType.NoError;
+function handleResponse(result: any) {
+  var errorMessage = VerificationErrorType.NO_ERROR;
   var isVerifiedFlag = true;
 
-  var verificationResult: VerificationResult = {
-    isVerified: isVerifiedFlag,
-    errorType: errorType,
-    errorMessage: errorMessage,
-  };
-
-  if ((result != null && !result.verified) || isException) {
-    errorMessage = 'Something went wrong during Verify Credential';
-    errorType = VerificationErrorType.TechnicalError;
+  if (result != null && !result.verified) {
+    if (result['results'][0].error.name == 'jsonld.InvalidUrl') {
+      errorMessage = VerificationErrorType.NETWORK_ERROR;
+    } else {
+      errorMessage = VerificationErrorType.TECHNICAL_ERROR;
+    }
     isVerifiedFlag = false;
   }
-  verificationResult.isVerified = isVerifiedFlag;
-  verificationResult.errorMessage = errorMessage;
 
+  const verificationResult: VerificationResult = {
+    isVerified: isVerifiedFlag,
+    errorMessage: errorMessage,
+  };
   return verificationResult;
 }
 
-export enum VerificationErrorType {
-  NoError,
-  TechnicalError,
-  ExpirationError,
-  LibraryDownError,
-}
+const VerificationErrorType = {
+  NO_ERROR: '',
+  TECHNICAL_ERROR: 'technicalError',
+  NETWORK_ERROR: 'networkError',
+  EXPIRATION_ERROR: 'expirationError',
+};
 
-interface VerificationResult {
+export interface VerificationResult {
   errorMessage: string;
-  errorType: VerificationErrorType;
   isVerified: boolean;
 }
