@@ -11,7 +11,6 @@ import {ButtonProps as RNEButtonProps} from 'react-native-elements';
 
 export const Error: React.FC<ErrorProps> = props => {
   const {t} = useTranslation('common');
-  console.log('props::', props);
   const errorContent = () => {
     return (
       <Fragment>
