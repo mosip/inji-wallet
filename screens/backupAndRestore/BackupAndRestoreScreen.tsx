@@ -11,7 +11,7 @@ import {Theme} from '../../components/ui/styleUtils';
 import {SvgImage} from '../../components/ui/svg';
 import {ProfileInfo} from '../../shared/googleCloudUtils';
 import {useBackupScreen} from './BackupController';
-import {BackupAndRestoreAllScreenBanner} from '../../components/BackupAndRestoreAllScreenBanner';
+import {BannerNotificationContainer} from '../../components/BannerNotificationContainer';
 import {useBackupRestoreScreen} from '../Settings/BackupRestoreController';
 
 const BackupAndRestoreScreen: React.FC<BackupAndRestoreProps> = props => {
@@ -163,7 +163,7 @@ const BackupAndRestoreScreen: React.FC<BackupAndRestoreProps> = props => {
       headerElevation={2}
       arrowLeft={true}
       onDismiss={props.onBackPress}>
-      <BackupAndRestoreAllScreenBanner />
+      <BannerNotificationContainer />
       <View
         style={{
           backgroundColor: Theme.Colors.lightGreyBackgroundColor,

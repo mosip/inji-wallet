@@ -4,7 +4,6 @@ import {Icon, ListItem, Switch} from 'react-native-elements';
 import {Column, Row, Text} from '../../components/ui';
 import {Theme} from '../../components/ui/styleUtils';
 import {MessageOverlay} from '../../components/MessageOverlay';
-
 import {useSettingsScreen} from './SettingScreenController';
 import {useTranslation} from 'react-i18next';
 import {LanguageSelector} from '../../components/LanguageSelector';
@@ -22,7 +21,7 @@ import testIDProps from '../../shared/commonUtil';
 import {SvgImage} from '../../components/ui/svg';
 import {DataBackupAndRestore} from './DataBackupAndRestore';
 import {isAndroid} from '../../shared/constants';
-import {BackupAndRestoreAllScreenBanner} from '../../components/BackupAndRestoreAllScreenBanner';
+import {BannerNotificationContainer} from '../../components/BannerNotificationContainer';
 
 const LanguageSetting: React.FC = () => {
   const {t} = useTranslation('SettingScreen');
@@ -81,7 +80,7 @@ export const SettingScreen: React.FC<
         headerTitle={t('header')}
         headerElevation={2}
         onDismiss={controller.TOGGLE_SETTINGS}>
-        <BackupAndRestoreAllScreenBanner />
+        <BannerNotificationContainer />
         <ScrollView>
           <Column
             style={{display: Platform.OS !== 'ios' ? 'flex' : 'none'}}

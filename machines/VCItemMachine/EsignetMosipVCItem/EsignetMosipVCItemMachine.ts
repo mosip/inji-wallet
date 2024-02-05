@@ -53,7 +53,6 @@ const model = createModel(
     walletBindingResponse: null as WalletBindingResponse,
     tempWalletBindingIdResponse: null as WalletBindingResponse,
     walletBindingError: '',
-    walletBindingSuccess: false,
     isMachineInKebabPopupState: false,
     bindingAuthFailedMessage: '' as string,
   },
@@ -321,7 +320,7 @@ export const EsignetMosipVCItemMachine = model.createMachine(
               target: '#vc-item-openid4vci.kebabPopUp',
             },
             {
-              actions: ['sendWalletBindingSuccess', 'setWalletBindingSuccess'],
+              actions: 'sendWalletBindingSuccess',
               target: 'idle',
             },
           ],
@@ -331,7 +330,6 @@ export const EsignetMosipVCItemMachine = model.createMachine(
         on: {
           DISMISS: {
             target: 'checkingVc',
-            actions: 'resetWalletBindingSuccess',
           },
           KEBAB_POPUP: {
             target: 'kebabPopUp',
@@ -556,14 +554,6 @@ export const EsignetMosipVCItemMachine = model.createMachine(
       setWalletBindingErrorEmpty: assign({
         walletBindingError: () => '',
         bindingAuthFailedMessage: () => '',
-      }),
-
-      setWalletBindingSuccess: assign({
-        walletBindingSuccess: true,
-      }),
-
-      resetWalletBindingSuccess: assign({
-        walletBindingSuccess: false,
       }),
 
       sendWalletBindingSuccess: send(
