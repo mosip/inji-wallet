@@ -51,7 +51,7 @@ export const ViewVcModal: React.FC<ViewVcModalProps> = props => {
       testID="idDetailsHeader"
       arrowLeft={true}
       headerTitle={t('title')}
-      onDismiss={controller.DISMISS}
+      onDismiss={props.onDismiss}
       headerElevation={2}>
       <BannerNotificationContainer />
       <Column scroll>

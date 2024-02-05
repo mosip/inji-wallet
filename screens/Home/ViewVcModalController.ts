@@ -34,7 +34,6 @@ export function useViewVcModal({
   vcItemActor,
   isVisible,
   onRevokeDelete,
-  onDismiss,
 }: ViewVcModalProps) {
   const {t} = useTranslation('ViewVcModal');
   const [toastVisible, setToastVisible] = useState(false);
@@ -172,7 +171,6 @@ export function useViewVcModal({
     onSuccess,
     DISMISS: () => {
       vcItemActor.send(ExistingMosipVCItemEvents.DISMISS());
-      onDismiss();
     },
     LOCK_VC: () => vcItemActor.send(ExistingMosipVCItemEvents.LOCK_VC()),
     INPUT_OTP: (otp: string) =>
