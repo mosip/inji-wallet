@@ -498,8 +498,8 @@
         "message": "You discarded Wallet's Card"
       },
       "disconnected": {
-        "title": "Connection failed",
-        "message": "The connection was interrupted. Please try again."
+        "title": "Bluetooth connection lost!",
+        "message": "Please check your bluetooth connection and try again."
       },
       "waitingConnection": "Waiting for connection...",
       "exchangingDeviceInfo": {
@@ -514,13 +514,60 @@
         "message": "Please connect to the internet to enable Online sharing mode"
       },
       "bleError": {
-        "title": "Failed to transfer",
-        "message": "Something went wrong while transferring card. Please try again.",
-        "hint": "Error: {{code}}"
-      }
+        "TVW_CON_002": {
+          "title": "Connection failed!",
+          "message": "The connection was interrupted. Please try again."
+        },
+        "TVW_CON_003": {
+          "title": "Connection failed!",
+          "message": "The connection was interrupted. Please ensure that the Bluetooth devices are in discoverable mode and try again."
+        },
+        "TVW_REP_001": {
+          "title": "Corrupted Response Received!",
+          "message": "The data received from the wallet is corrupted and cannot be processed. Request the sender to transfer again."
+        },
+        "TVV_CON_001": {
+          "title": "Connection failed!",
+          "message": "Unable to establish optimal connection with the sender. Please try again."
+        },
+        "TVV_TRA_001": {
+          "title": "Corrupted Response Received!",
+          "message": "The data received from the wallet is corrupted and cannot be processed. Please request the sender to transfer again."
+        },
+        "TVV_TRA_002": {
+          "title": "Corrupted Response Received!",
+          "message": "The data received from the wallet is corrupted and cannot be processed. Please request the sender to transfer again."
+        },
+        "TUV_UNK_001": {
+          "title": "An error occurred!",
+          "message": "Due to technical error, we were unable to share the card with the relying party. Please try again."
+        },
+        "TVW_UNK_001":{
+          "title": "Connection failed!",
+          "message": "The connection was interrupted. Please try again."
+        },
+        "TVW_UNK_002":{
+          "title": "Connection failed!",
+          "message": "The connection was interrupted. Please try again."
+        },
+        "TVW_UNK_003":{
+          "title": "Connection failed!",
+          "message": "The connection was interrupted. Please try again."
+        },
+        "TVV_UNK_001": {
+          "title": "An error occurred!",
+          "message": "An unexpected error occurred while processing the received data. Please check your connection and ask the wallet to resend the card."
+        },
+        "TVV_UNK_002": {
+          "title": "An error occurred!",
+          "message": "An unexpected error occurred while processing the received data. Please check your connection and ask the wallet to resend the card."
+        },
+        "TVV_UNK_003": {
+          "title": "An error occurred!",
+          "message": "An unexpected error occurred while processing the received data. Please check your connection and ask the wallet to resend the card."
+        }
     },
     "online": "Online",
-    "offline": "Offline",
     "gotoSettings": "Go to settings"
   },
   "ScanScreen": {
@@ -581,12 +628,67 @@
         "title": "Notice",
         "message": "Your Card was discarded by Verifier"
       },
+      "disconnected": {
+        "title": "Bluetooth connection lost!",
+        "message": "Please check your bluetooth connection and try again."
+      },
       "bleError": {
-        "title": "An Error Occurred!",
-        "message": "Due to Technical Error, we were unable to share the card with the relying party.",
-        "retry": "Retry",
-        "home": "Home",
-        "hint": "Error: {{code}}"
+        "TVW_CON_001": {
+          "title": "Connection failed!",
+          "message": "Invalid QR code scanned. Please try scanning the valid QR code again from the relying party."
+        },
+        "TVW_CON_002": {
+          "title": "Connection failed!",
+          "message": "Wallet is unable to establish optimal connection with the verifier. Please try again."
+        },
+        "TVW_CON_003": {
+          "title": "Service Discovery Failed!",
+          "message": "We're sorry, but we couldn't discover a bluetooth connection even after multiple attempts. Please ensure that the bluetooth devices are in discoverable mode and try again."
+        },
+        "TVW_REP_001": {
+          "title": "An error occurred!",
+          "message": "Due to technical error, we are unable to transfer the file. Please try again."
+        },
+        "TVV_CON_001": {
+          "title": "Connection failed!",
+          "message": "Wallet is unable to establish an optimal connection with the verifier. Please try again."
+        },
+        "TVV_TRA_001": {
+          "title": "An error occurred!",
+          "message": "Something went wrong while transferring the card. Please try again."
+        },
+        "TVV_TRA_002": {
+          "title": "An error occurred!",
+          "message": "Something went wrong while transferring the card. Please try again."
+        },
+        "TUV_UNK_001": {
+          "title": "An error occurred!",
+          "message": "Due to technical error, we were unable to share the card with the relying party. Please try again."
+        },
+        "TVW_UNK_001": {
+          "title": "An error occurred!",
+          "message": "Due to technical error, we were unable to share the card with the relying party. Please try again."
+        },
+        "TVW_UNK_002": {
+          "title": "An error occurred!",
+          "message": "Due to technical error, we were unable to share the card with the relying party. Please try again."
+        },
+        "TVW_UNK_003": {
+          "title": "An error occurred!",
+          "message": "Due to technical error, we were unable to share the card with the relying party. Please try again."
+        },
+        "TVV_UNK_001": {
+          "title": "An error occurred!",
+          "message": "Something went wrong while transferring the card. Please try again."
+        },
+        "TVV_UNK_002": {
+          "title": "An error occurred!",
+          "message": "Something went wrong while transferring the card. Please try again."
+        },
+        "TVV_UNK_003": {
+          "title": "An error occurred!",
+          "message": "Something went wrong while transferring the card. Please try again."
+        }
       }
     }
   },
@@ -713,6 +815,8 @@
     "accept": "Accept",
     "save": "Save",
     "ok": "Ok",
+    "home": "Home",
+    "retry": "Retry",
     "dismiss": "Dismiss",
     "editLabel": "Edit {{label}}",
     "tryAgain": "Try again",

@@ -26,15 +26,18 @@ import {
   REQUEST_ROUTES,
   RequestStackParamList,
 } from '../../routes/routesConstants';
+import {useTranslation} from 'react-i18next';
 
 type RequestLayoutNavigation = NavigationProp<
   RequestStackParamList & MainBottomTabParamList
 >;
 
 export function useRequestLayout() {
+  const {t} = useTranslation('RequestScreen');
   const {appService} = useContext(GlobalContext);
   const requestService = appService.children.get('request');
   const navigation = useNavigation<RequestLayoutNavigation>();
+  let errorScenario: {title: ''; message: ''};
 
   useEffect(() => {
     const subscriptions = [
@@ -65,6 +68,22 @@ export function useRequestLayout() {
     requestService,
     selectIsNavigatingToHome,
   );
+  const isDisconnected = useSelector(requestService, selectIsDisconnected);
+  const isBleError = useSelector(requestService, selectIsHandlingBleError);
+  const isErrorCode = useSelector(requestService, selectBleError);
+
+  if (isDisconnected) {
+    errorScenario = {
+      title: t(`status.disconnected.title`),
+      message: t(`status.disconnected.message`),
+    };
+  } else if (isBleError) {
+    errorScenario = {
+      title: t(`status.bleError.${isErrorCode.code}.title`),
+      message: t(`status.bleError.${isErrorCode.code}.message`),
+    };
+  }
+
   useEffect(() => {
     if (isNavigationToHome) {
       navigation.navigate(BOTTOM_TAB_ROUTES.home);
@@ -80,9 +99,9 @@ export function useRequestLayout() {
 
     isAccepted: useSelector(requestService, selectIsAccepted),
     isRejected: useSelector(requestService, selectIsRejected),
-    isDisconnected: useSelector(requestService, selectIsDisconnected),
-    isBleError: useSelector(requestService, selectIsHandlingBleError),
-    bleError: useSelector(requestService, selectBleError),
+    isDisconnected,
+    errorScenario,
+    isBleError,
     IsSavingFailedInViewingVc: useSelector(
       requestService,
       selectIsSavingFailedInViewingVc,

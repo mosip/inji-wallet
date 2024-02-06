@@ -74,8 +74,8 @@ export const ScanLayout: React.FC = () => {
         isVisible={controller.isAccepted}
         status={'onSuccess'}
         image={SvgImage.SuccessLogo()}
-        title={t('status.accepted.title')}
-        message={t('status.accepted.message')}
+        title={controller.errorScenario.title}
+        message={controller.errorScenario.message}
         goToHome={controller.GOTO_HOME}
         goToHistory={controller.GOTO_HISTORY}
       />

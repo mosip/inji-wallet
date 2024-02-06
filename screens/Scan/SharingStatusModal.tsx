@@ -78,14 +78,14 @@ export const SharingStatusModal: React.FC<SharingStatusModalProps> = props => {
             <Button
               testID="failedVcSharedRetryButton"
               type="gradient"
-              title={t('status.bleError.retry')}
+              title={t('common.retry')}
               onPress={props.onRetry}
             />
             <Button
               testID="failedVcSharedHomeButton"
               type="clear"
               styles={{marginTop: 12}}
-              title={t('status.bleError.home')}
+              title={t('common.home')}
               onPress={props.onBackToHome}
             />
           </Column>

@@ -19,6 +19,7 @@ import {
   selectIsDone,
 } from '../../machines/bleShare/scan/selectors';
 import {
+  selectBleError,
   selectIsAccepted,
   selectIsDisconnected,
   selectIsExchangingDeviceInfo,
@@ -47,8 +48,10 @@ export function useScanLayout() {
   const isLocationDisabled = useSelector(scanService, selectIsLocationDisabled);
   const isLocationDenied = useSelector(scanService, selectIsLocationDenied);
   const isBleError = useSelector(scanService, selectIsHandlingBleError);
-
+  const isErrorCode = useSelector(scanService, selectBleError);
+  const isDisconnected = useSelector(scanService, selectIsDisconnected);
   const locationError = {message: '', button: ''};
+  let errorScenario: {title: ''; message: ''};
 
   if (isLocationDisabled) {
     locationError.message = t('errors.locationDisabled.message');
@@ -182,14 +185,6 @@ export function useScanLayout() {
       message: t('status.offline'),
       onBackdropPress: DISMISS,
     };
-  } else if (isBleError) {
-    statusOverlay = {
-      title: t('status.bleError.title'),
-      hint: t('status.bleError.message'),
-      onButtonPress: DISMISS,
-      onRetry,
-      progress: true,
-    };
   }
 
   useEffect(() => {
@@ -212,6 +207,18 @@ export function useScanLayout() {
   const isScanning = useSelector(scanService, selectIsScanning);
   const isQrLoginDone = useSelector(scanService, selectIsQrLoginDone);
 
+  if (isDisconnected) {
+    errorScenario = {
+      title: t(`status.disconnected.title`),
+      message: t(`status.disconnected.message`),
+    };
+  } else if (isBleError) {
+    errorScenario = {
+      title: t(`status.bleError.${isErrorCode.code}.title`),
+      message: t(`status.bleError.${isErrorCode.code}.message`),
+    };
+  }
+
   useEffect(() => {
     if (isDone) {
       changeTabBarVisible('flex');
@@ -233,8 +240,9 @@ export function useScanLayout() {
     isDone,
     GOTO_HOME,
     GOTO_HISTORY,
-    isDisconnected: useSelector(scanService, selectIsDisconnected),
+    isDisconnected,
     statusOverlay,
+    errorScenario,
     isStayInProgress,
     isBleError,
     DISMISS,

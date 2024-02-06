@@ -88,8 +88,8 @@ export const RequestLayout: React.FC = () => {
         isVisible={controller.isDisconnected || controller.isBleError}
         status={'OnFailureError'}
         image={SvgImage.ErrorLogo()}
-        title={t('status.bleError.title')}
-        message={t('status.bleError.message')}
+        title={controller.errorScenario.title}
+        message={controller.errorScenario.message}
         onBackToHome={controller.DISMISS}
         onRetry={controller.RESET}
       />
