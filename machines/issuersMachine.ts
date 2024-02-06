@@ -367,13 +367,13 @@ export const IssuersMachine = model.createMachine(
                 'sendErrorEndEvent',
               ],
               //TODO: Move to state according to the required flow when verification of VC fails
-              target: 'handlingCredentialVerificationFailure',
+              target: 'handleVCVerificationFailure',
             },
           ],
         },
       },
 
-      handlingCredentialVerificationFailure: {
+      handleVCVerificationFailure: {
         entry: 'sendVerificationError',
       },
 
@@ -595,6 +595,7 @@ export const IssuersMachine = model.createMachine(
           return {
             type: 'VERIFY_VC_FAILED',
             errorMessage: context.verificationErrorMessage,
+            vcMetadata: getVCMetadata(context),
           };
         },
         {
@@ -670,7 +671,7 @@ export const IssuersMachine = model.createMachine(
           0,
         );
       },
-      verifyCredential: context => async (callback, onReceive) => {
+      verifyCredential: async context => {
         //this issuer specific check has to be removed once vc validation is done.
         if (
           VCMetadata.fromVcMetadataString(getVCMetadata(context)).issuer ===

@@ -385,22 +385,14 @@ export const ExistingMosipVCItemMachine =
             src: 'verifyCredential',
             onDone: [
               {
-                actions: [
-                  log((_, event) => 'Verification Success.'),
-                  'setVerifiableCredential',
-                  'markVcValid',
-                  'storeContext',
-                ],
+                actions: ['setVerifiableCredential', 'storeContext'],
               },
             ],
             onError: [
               {
                 //To-Do Handle Error Scenarios
-                actions: [
-                  log((_, event) => 'Verify Error'),
-                  'updateVerificationErrorMessage',
-                ],
-                target: 'handlingCredentialVerificationFailure',
+                actions: ['updateVerificationErrorMessage'],
+                target: 'handleVCVerificationFailure',
               },
             ],
           },
@@ -420,7 +412,7 @@ export const ExistingMosipVCItemMachine =
           },
         },
 
-        handlingCredentialVerificationFailure: {
+        handleVCVerificationFailure: {
           entry: ['removeVcMetaDataFromStorage'],
           on: {
             STORE_RESPONSE: {
@@ -850,9 +842,10 @@ export const ExistingMosipVCItemMachine =
             to: context => context.serviceRefs.vc,
           },
         ),
+
         updateVerificationErrorMessage: assign({
           verificationErrorMessage: (context, event) =>
-            'Due to <Technical Error>, we were unable to download the card.',
+            (event.data as Error).message,
         }),
 
         setWalletBindingError: assign({
