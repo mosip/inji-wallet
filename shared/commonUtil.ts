@@ -97,7 +97,7 @@ export const getBackupFileName = () => {
   return `backup_${Date.now()}`;
 };
 
-export const BYTES_IN_MEGABYTE = 1000 * 100;
+export const BYTES_IN_MEGABYTE = 1000 * 1000;
 
 export const bytesToMB = (bytes: number): string => {
   if (bytes <= 0) {
