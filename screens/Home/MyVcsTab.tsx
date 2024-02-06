@@ -81,7 +81,7 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = props => {
     failedVCsList.push(`\n${vc.idType}:${vc.id}`);
   });
 
-  const isVerificationError = controller.verificationErrorMessage !== '';
+  const isVerificationFailed = controller.verificationErrorMessage !== '';
 
   const verificationErrorMessage = t(
     `errors.verificationFailed.${controller.verificationErrorMessage}`,
@@ -233,10 +233,10 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = props => {
         minHeight={'auto'}
       />
 
-      {isVerificationError && (
+      {isVerificationFailed && (
         <Error
           testID="verificationError"
-          isVisible={isVerificationError}
+          isVisible={isVerificationFailed}
           isModal={true}
           alignActionsOnEnd
           title={t('errors.verificationFailed.title')}

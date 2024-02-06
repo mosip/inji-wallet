@@ -360,22 +360,14 @@ export const ExistingMosipVCItemMachine =
             src: 'verifyCredential',
             onDone: [
               {
-                actions: [
-                  log((_, event) => 'Verification Success.'),
-                  'setVerifiableCredential',
-                  'markVcValid',
-                  'storeContext',
-                ],
+                actions: ['setVerifiableCredential', 'storeContext'],
               },
             ],
             onError: [
               {
                 //To-Do Handle Error Scenarios
-                actions: [
-                  log((_, event) => `Verification Error.`),
-                  'updateVerificationErrorMessage',
-                ],
-                target: 'handlingCredentialVerificationFailure',
+                actions: ['updateVerificationErrorMessage'],
+                target: 'handleVCVerificationFailure',
               },
             ],
           },
@@ -395,7 +387,7 @@ export const ExistingMosipVCItemMachine =
           },
         },
 
-        handlingCredentialVerificationFailure: {
+        handleVCVerificationFailure: {
           entry: ['removeVcMetaDataFromStorage'],
           on: {
             STORE_RESPONSE: {

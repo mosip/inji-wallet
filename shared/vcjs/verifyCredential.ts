@@ -57,25 +57,22 @@ export async function verifyCredential(
     };
 
     const result = await vcjs.verifyCredential(vcjsOptions);
-    return handleError(result, false);
+    return handleResponse(result);
 
     //ToDo Handle Expiration error message
   } catch (error) {
-    console.log('Exception during VC Verification->', error);
-    return handleError(null, true);
+    return {
+      isVerified: false,
+      errorMessage: VerificationErrorType.TECHNICAL_ERROR,
+    };
   }
 }
 
-function handleError(result: any, isException: boolean) {
+function handleResponse(result: any) {
   var errorMessage = VerificationErrorType.NO_ERROR;
   var isVerifiedFlag = true;
 
-  var verificationResult: VerificationResult = {
-    isVerified: isVerifiedFlag,
-    errorMessage: errorMessage,
-  };
-
-  if ((result != null && !result.verified) || isException) {
+  if (result != null && !result.verified) {
     if (result['results'][0].error.name == 'jsonld.InvalidUrl') {
       errorMessage = VerificationErrorType.NETWORK_ERROR;
     } else {
@@ -83,8 +80,11 @@ function handleError(result: any, isException: boolean) {
     }
     isVerifiedFlag = false;
   }
-  verificationResult.isVerified = isVerifiedFlag;
-  verificationResult.errorMessage = errorMessage;
+
+  const verificationResult: VerificationResult = {
+    isVerified: isVerifiedFlag,
+    errorMessage: errorMessage,
+  };
   return verificationResult;
 }
 

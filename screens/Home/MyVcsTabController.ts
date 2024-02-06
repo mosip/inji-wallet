@@ -112,7 +112,6 @@ export function useMyVcsTab(props: HomeScreenTabProps) {
     REMOVE_TAMPERED_VCS: () => vcService?.send(VcEvents.REMOVE_TAMPERED_VCS()),
     DELETE_VC: () => vcService?.send(VcEvents.DELETE_VC()),
     RESET_VERIFY_ERROR: () => {
-      console.log('inside reset:::');
       vcService?.send(VcEvents.RESET_VERIFY_ERROR());
       navigation.reset({
         index: 0,
