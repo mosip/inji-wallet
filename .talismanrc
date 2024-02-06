@@ -128,7 +128,7 @@ fileignoreconfig:
   - filename: machines/settings.typegen.ts
     checksum: e4ae05822f1b1c23f3f70d03dd46fd8f29ba6b52d40f2f24c121f536fbb5f2c4
   - filename: .env
-    checksum: ae9586991aff83b0cbefb01fccfda729c7cb0fa3aa34696e88a16aa7c5c34bb5
+    checksum: 399e4dadae9dbd22612f48c8583fd64d6f07e9e1fcb0b57a1a8874b056da4b6c
   - filename: .github/workflows/ui-automation.yml
     checksum: 0b26a5dcb7524ba15d6aaeaf04f2ef94be9d25ef702d9072d6628bcd58e50f36
   - filename: injitest/src/test/java/androidTestCases/PinVcTest.java
