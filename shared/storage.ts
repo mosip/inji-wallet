@@ -205,16 +205,37 @@ class Storage {
     }
   };
 
+  static getRestoredVcUpdatedRequestId = (unixTimeStamp, requestId) => {
+    const restoredVcRequestedId = requestId.split('_'); //checks if this restored VC is already restored before
+    const isVcRestoredBefore = restoredVcRequestedId.length > 1;
+    if (isVcRestoredBefore) {
+      return unixTimeStamp + '_' + restoredVcRequestedId[1];
+    }
+    return unixTimeStamp + '_' + requestId;
+  };
+
   private static async loadVCs(completeBackupData: any, encryptionKey: any) {
     const allVCs = completeBackupData['VC_Records'];
     const allVCKeys = Object.keys(allVCs);
-    allVCKeys.forEach(async key => {
-      const vc = allVCs[key];
-      const encryptedVC = await encryptJson(encryptionKey, JSON.stringify(vc));
-      await this.setItem(key, encryptedVC, encryptionKey);
-    });
     const dataFromDB = completeBackupData['dataFromDB'];
 
+    allVCKeys.map(async key => {
+      let vc = allVCs[key];
+      const unixTimeStamp = Date.now();
+      const prevRequestId = vc.vcMetadata.requestId;
+      vc.vcMetadata.requestId = this.getRestoredVcUpdatedRequestId(
+        unixTimeStamp,
+        vc.vcMetadata.requestId,
+      );
+      dataFromDB.myVCs.map(myVcMetadata => {
+        if (myVcMetadata.requestId === prevRequestId) {
+          myVcMetadata.requestId = vc.vcMetadata.requestId;
+        }
+      });
+      const updatedVcKey = new VCMetadata(vc.vcMetadata).getVcKey();
+      const encryptedVC = await encryptJson(encryptionKey, JSON.stringify(vc));
+      await this.setItem(updatedVcKey, encryptedVC, encryptionKey);
+    });
     const dataFromMyVCKey = dataFromDB[MY_VCS_STORE_KEY];
     const encryptedMyVCKeyFromMMKV = await MMKV.getItem(MY_VCS_STORE_KEY);
     let newDataForMyVCKey;
