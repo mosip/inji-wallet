@@ -1015,7 +1015,7 @@ export const ExistingMosipVCItemMachine =
           context => {
             return {
               type: 'REMOVE_VC_FROM_IN_PROGRESS_DOWNLOADS',
-              requestId: context.vcMetadata.requestId,
+              vcMetadata: context.vcMetadata,
             };
           },
           {
