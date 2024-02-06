@@ -1,8 +1,7 @@
 import {useSelector} from '@xstate/react';
 import {useContext} from 'react';
 import {useTranslation} from 'react-i18next';
-
-import {selectShareableVcsMetadata} from '../../machines/vc';
+import {selectShareableVcsMetadata} from '../../machines/VCItemMachine/vc';
 import {GlobalContext} from '../../shared/GlobalContext';
 import {
   selectIsLocationDenied,
