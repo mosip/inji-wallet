@@ -1,23 +1,35 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {useTranslation} from 'react-i18next';
-import {Linking, Pressable, View} from 'react-native';
+import {FlatList, Linking, Pressable, SafeAreaView, View} from 'react-native';
 import {Modal} from './ui/Modal';
-import {ScrollView} from 'react-native-gesture-handler';
 import {Column, Text} from './ui';
 import {Theme} from './ui/styleUtils';
 import {BackupAndRestoreAllScreenBanner} from './BackupAndRestoreAllScreenBanner';
 import getAllConfigurations from '../shared/commonprops/commonProps';
 
 export const HelpScreen: React.FC<HelpScreenProps> = props => {
-  const {t} = useTranslation('HelpScreenFor' + props.source);
+  const {t} = useTranslation('HelpScreen');
   const [showHelpPage, setShowHelpPage] = useState(false);
   var [injiHelpUrl, setInjiHelpUrl] = useState('');
+  const listingRef = useRef();
 
   useEffect(() => {
     getAllConfigurations().then(response => {
       setInjiHelpUrl(response.aboutInjiUrl);
     });
   }, []);
+
+  useEffect(() => {
+    if (props.source === 'BackUp') {
+      setTimeout(() => {
+        if (listingRef?.current != null) {
+          listingRef.current.scrollToIndex({
+            index: 15,
+          });
+        }
+      }, 3000);
+    }
+  }, [showHelpPage]);
 
   const getTextField = (value: string, component?: React.ReactElement) => {
     return (
@@ -39,117 +51,77 @@ export const HelpScreen: React.FC<HelpScreenProps> = props => {
   };
   const BackupFaqMap = [
     {
-      heading: t('questions.one'),
-      value: <React.Fragment>{getTextField(t('answers.one'))}</React.Fragment>,
-    },
-    {
-      heading: t('questions.two'),
-      value: <React.Fragment>{getTextField(t('answers.two'))}</React.Fragment>,
-    },
-    {
-      heading: t('questions.three'),
-      value: (
-        <React.Fragment>{getTextField(t('answers.three'))}</React.Fragment>
+      title: t('questions.backup.one'),
+      data: (
+        <React.Fragment>{getTextField(t('answers.backup.one'))}</React.Fragment>
       ),
     },
     {
-      heading: t('questions.four'),
-      value: <React.Fragment>{getTextField(t('answers.four'))}</React.Fragment>,
-    },
-    {
-      heading: t('questions.five'),
-      value: <React.Fragment>{getTextField(t('answers.five'))}</React.Fragment>,
-    },
-    {
-      heading: t('questions.six'),
-      value: <React.Fragment>{getTextField(t('answers.six'))}</React.Fragment>,
-    },
-    {
-      heading: t('questions.seven'),
-      value: (
-        <React.Fragment>{getTextField(t('answers.seven'))}</React.Fragment>
+      title: t('questions.backup.two'),
+      data: (
+        <React.Fragment>{getTextField(t('answers.backup.two'))}</React.Fragment>
       ),
     },
     {
-      heading: t('questions.eight'),
-      value: (
-        <React.Fragment>{getTextField(t('answers.eight'))}</React.Fragment>
+      title: t('questions.backup.three'),
+      data: (
+        <React.Fragment>
+          {getTextField(t('answers.backup.three'))}
+        </React.Fragment>
+      ),
+    },
+    {
+      title: t('questions.backup.four'),
+      data: (
+        <React.Fragment>
+          {getTextField(t('answers.backup.four'))}
+        </React.Fragment>
+      ),
+    },
+    {
+      title: t('questions.backup.five'),
+      data: (
+        <React.Fragment>
+          {getTextField(t('answers.backup.five'))}
+        </React.Fragment>
+      ),
+    },
+    {
+      title: t('questions.backup.six'),
+      data: (
+        <React.Fragment>{getTextField(t('answers.backup.six'))}</React.Fragment>
+      ),
+    },
+    {
+      title: t('questions.backup.seven'),
+      data: (
+        <React.Fragment>
+          {getTextField(t('answers.backup.seven'))}
+        </React.Fragment>
+      ),
+    },
+    {
+      title: t('questions.backup.eight'),
+      data: (
+        <React.Fragment>
+          {getTextField(t('answers.backup.eight'))}
+        </React.Fragment>
       ),
     },
   ];
-
   const InjiFaqMap = [
     {
-      heading: t('questions.one'),
-      value: <React.Fragment>{getTextField(t('answers.one'))}</React.Fragment>,
+      title: t('questions.inji.one'),
+      data: (
+        <React.Fragment>{getTextField(t('answers.inji.one'))}</React.Fragment>
+      ),
     },
     {
-      heading: t('questions.two'),
-      value: <React.Fragment>{getTextField(t('answers.two'))}</React.Fragment>,
-    },
-    {
-      heading: t('questions.three'),
-      value: (
+      title: t('questions.inji.two'),
+      data: (
         <React.Fragment>
           {getTextField(
-            t('answers.three'),
-            getLinkedText(
-              injiHelpUrl + '/end-user-guide#downloading-vc',
-              t('here'),
-            ),
-          )}
-        </React.Fragment>
-      ),
-    },
-    {
-      heading: t('questions.four'),
-      value: (
-        <React.Fragment>
-          {getTextField(
-            t('answers.four-a'),
-            getLinkedText(
-              injiHelpUrl + '/end-user-guide#deleting-a-vc',
-              t('here'),
-            ),
-          )}
-          {getTextField(t('answers.four-b'))}
-        </React.Fragment>
-      ),
-    },
-    {
-      heading: t('questions.five'),
-      value: <React.Fragment>{getTextField(t('answers.five'))}</React.Fragment>,
-    },
-    {
-      heading: t('questions.six'),
-      value: <React.Fragment>{getTextField(t('answers.six'))}</React.Fragment>,
-    },
-    {
-      heading: t('questions.seven'),
-      value: (
-        <React.Fragment>{getTextField(t('answers.seven'))}</React.Fragment>
-      ),
-    },
-    {
-      heading: t('questions.eight'),
-      value: (
-        <React.Fragment>{getTextField(t('answers.eight'))}</React.Fragment>
-      ),
-    },
-    {
-      heading: t('questions.nine'),
-      value: <React.Fragment>{getTextField(t('answers.nine'))}</React.Fragment>,
-    },
-    {
-      heading: t('questions.ten'),
-      value: <React.Fragment>{getTextField(t('answers.ten'))}</React.Fragment>,
-    },
-    {
-      heading: t('questions.eleven'),
-      value: (
-        <React.Fragment>
-          {getTextField(
-            t('answers.eleven'),
+            t('answers.inji.two'),
             getLinkedText(
               'https://docs.mosip.io/1.2.0/id-lifecycle-management/identifiers',
               t('here'),
@@ -159,21 +131,59 @@ export const HelpScreen: React.FC<HelpScreenProps> = props => {
       ),
     },
     {
-      heading: t('questions.twelve'),
-      value: (
+      title: t('questions.inji.three'),
+      data: (
         <React.Fragment>
-          {getTextField(t('answers.twelve-a'))}
-          {getTextField(t('answers.twelve-b'))}
-          {getTextField(t('answers.twelve-c'))}
+          {getTextField(t('answers.inji.three-a'))}
+          {getTextField(t('answers.inji.three-b'))}
+          {getTextField(t('answers.inji.three-c'))}
         </React.Fragment>
       ),
     },
     {
-      heading: t('questions.thirteen'),
-      value: (
+      title: t('questions.inji.four'),
+      data: (
+        <React.Fragment>{getTextField(t('answers.inji.four'))}</React.Fragment>
+      ),
+    },
+    {
+      title: t('questions.inji.five'),
+      data: (
+        <React.Fragment>{getTextField(t('answers.inji.five'))}</React.Fragment>
+      ),
+    },
+    {
+      title: t('questions.inji.six'),
+      data: (
+        <React.Fragment>{getTextField(t('answers.inji.six'))}</React.Fragment>
+      ),
+    },
+    {
+      title: t('questions.inji.seven'),
+      data: (
         <React.Fragment>
           {getTextField(
-            t('answers.thirteen'),
+            t('answers.inji.seven'),
+            getLinkedText(
+              injiHelpUrl + '/end-user-guide#downloading-vc',
+              t('here'),
+            ),
+          )}
+        </React.Fragment>
+      ),
+    },
+    {
+      title: t('questions.inji.eight'),
+      data: (
+        <React.Fragment>{getTextField(t('answers.inji.eight'))}</React.Fragment>
+      ),
+    },
+    {
+      title: t('questions.inji.nine'),
+      data: (
+        <React.Fragment>
+          {getTextField(
+            t('answers.inji.nine'),
             getLinkedText(
               injiHelpUrl + '/end-user-guide#activating-a-vc',
               t('here'),
@@ -183,31 +193,72 @@ export const HelpScreen: React.FC<HelpScreenProps> = props => {
       ),
     },
     {
-      heading: t('questions.fourteen'),
-      value: (
+      title: t('questions.inji.ten'),
+      data: (
         <React.Fragment>
           {getTextField(
-            t('answers.fourteen-a'),
+            t('answers.inji.ten-a'),
             getLinkedText(
               injiHelpUrl +
                 '/overview/features/feature-workflows#id-4.-qr-code-login-process',
               t('here'),
             ),
           )}
-          {getTextField(t('answers.fourteen-b'))}
+          {getTextField(t('answers.inji.ten-b'))}
         </React.Fragment>
       ),
     },
     {
-      heading: t('questions.fifteen'),
-      value: (
-        <React.Fragment>{getTextField(t('answers.fifteen'))}</React.Fragment>
+      title: t('questions.inji.eleven'),
+      data: (
+        <React.Fragment>
+          {getTextField(t('answers.inji.eleven'))}
+        </React.Fragment>
+      ),
+    },
+    {
+      title: t('questions.inji.twelve'),
+      data: (
+        <React.Fragment>
+          {getTextField(t('answers.inji.twelve'))}
+        </React.Fragment>
+      ),
+    },
+    {
+      title: t('questions.inji.thirteen'),
+      data: (
+        <React.Fragment>
+          {getTextField(
+            t('answers.inji.thirteen-a'),
+            getLinkedText(
+              injiHelpUrl + '/end-user-guide#deleting-a-vc',
+              t('here'),
+            ),
+          )}
+          {getTextField(t('answers.inji.thirteen-b'))}
+        </React.Fragment>
+      ),
+    },
+
+    {
+      title: t('questions.inji.fourteen'),
+      data: (
+        <React.Fragment>
+          {getTextField(t('answers.inji.fourteen'))}
+        </React.Fragment>
+      ),
+    },
+    {
+      title: t('questions.inji.fifteen'),
+      data: (
+        <React.Fragment>
+          {getTextField(t('answers.inji.fifteen'))}
+        </React.Fragment>
       ),
     },
   ];
 
   const faqMap = props.source === 'Inji' ? InjiFaqMap : BackupFaqMap;
-
   return (
     <React.Fragment>
       <Pressable
@@ -226,18 +277,21 @@ export const HelpScreen: React.FC<HelpScreenProps> = props => {
           setShowHelpPage(!showHelpPage);
         }}>
         <BackupAndRestoreAllScreenBanner />
-        <ScrollView>
+        <SafeAreaView style={{flex: 1}}>
           <Column fill padding="10" align="space-between">
-            {faqMap.map(faq => {
-              return (
+            <FlatList
+              ref={listingRef}
+              keyExtractor={(item, index) => 'FAQ' + index.toString()}
+              renderItem={({item}) => (
                 <View>
-                  <Text style={Theme.TextStyles.helpHeader}>{faq.heading}</Text>
-                  {faq.value}
+                  <Text style={Theme.TextStyles.helpHeader}>{item.title}</Text>
+                  {item.data}
                 </View>
-              );
-            })}
+              )}
+              data={[...InjiFaqMap, ...BackupFaqMap]}
+            />
           </Column>
-        </ScrollView>
+        </SafeAreaView>
       </Modal>
     </React.Fragment>
   );

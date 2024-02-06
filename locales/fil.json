@@ -186,69 +186,70 @@
       }
     }
   },
-  "HelpScreenForBackUp": {
-    "header": "Tulong",
-    "questions": {
-      "one": "Ano ang data backup? ",
-      "two": "Bakit ako kukuha ng backup?",
-      "three": "Paano i-backup sa iyong google account?",
-      "four": "Paano mag-backup sa iyong iCloud?",
-      "five": "Dapat ko bang palaging ibigay ang parehong email ID?",
-      "six": "Paano ko maibabalik ang backup na kinuha ko?",
-      "seven": "Bakit ako nakakakuha ng error na \"no backup file found\"?",
-      "eight": "Ano ang mangyayari kapag I-clear ko ang Storage ng INJI app mula sa mga setting ng device?"
-    },
-    "answers": {
-      "one": "Kasama sa pag-backup ng data ang paggawa ng kopya ng iyong Mga Na-verify na Kredensyal na nasa iyong wallet sa iyong Google Drive/iCloud, na tinitiyak na sa kaganapan ng pagkawala ng data, maaari mong ibalik ang iyong mga file sa dati nilang estado.",
-      "two": "Ang pagkuha ng backup ay mahalaga para sa pagprotekta sa iyong data. Pinoprotektahan nito ang hindi sinasadyang pagtanggal, pagkabigo ng device, o mga hindi inaasahang kaganapan, na tinitiyak na mababawi mo ang iyong mahalagang impormasyon.",
-      "three": " Una, tiyaking naka-activate ang isang Google Account sa iyong device. ",
-      "four": "Una, tiyaking nauugnay ang iyong iOS device sa isang apple account. ",
-      "five": "Para sa pagkakapare-pareho at seguridad, ipinapayong gamitin ang parehong email ID para sa mga backup. ",
-      "six": "Upang mag-restore ng backup, pumunta sa mga setting ng app, piliin ang opsyon sa pag-restore, at piliin ang backup na file. ",
-      "seven": "Maaaring mangyari ang error na ito kung walang mga backup na file na nauugnay sa ibinigay na email ID o kung ang mga backup na file ay nakaimbak sa ibang lokasyon. ",
-      "eight": "Pakitandaan na ang pagkilos na ito ay ginagawa nang maingat dahil nililimas nito ang data ng app na nangangahulugan na ang lahat ng iyong na-download na VC ay iki-clear. "
-    }
-  },
-  "HelpScreenForInji": {
+  "HelpScreen": {
     "header": "Tulong",
     "here": "dito",
     "questions": {
-      "one": "Ano ang isang digital na kredensyal?",
-      "two": "Ano ang maaari nating gawin sa mga digital na kredensyal?",
-      "three": "Paano magdagdag ng card?",
-      "four": "Paano mag-alis ng card mula sa wallet?",
-      "five": "Maaari ba akong magdagdag ng maraming card?",
-      "six": "Paano magbahagi ng card?",
-      "seven": "Paano i-activate ang isang card para sa online na pag-login?",
-      "eight": "Paano tingnan ang mga log ng aktibidad?",
-      "nine": "Ano ang mangyayari kapag binago ang biometric ng Android keystore?",
-      "ten": "Ano ang ID?",
-      "eleven": "Ano ang iba't ibang uri ng ID?",
-      "twelve": "Saan ko mahahanap ang mga ID na ito?",
-      "thirteen": "Bakit sinasabi ng aking VC na nakabinbin ang Activation?",
-      "fourteen": "Ano ang ibig mong sabihin sa Activated for Online login?",
-      "fifteen": "Ano ang isang Nabe-verify na Kredensyal?"
+      "inji": {
+        "one": "Ano ang ID?",
+        "two": "Ano ang iba't ibang uri ng ID?",
+        "three": "Saan ko mahahanap ang mga ID na ito?",
+        "four": "Ano ang isang digital na kredensyal?",
+        "five": "Ano ang maaari nating gawin sa mga digital na kredensyal?",
+        "six": "Ano ang isang Nabe-verify na Kredensyal?",
+        "seven": "Paano magdagdag ng card?",
+        "eight": "Maaari ba akong magdagdag ng maraming card?",
+        "nine": "Bakit sinasabi ng aking VC na nakabinbin ang Activation?",
+        "ten": "Ano ang ibig mong sabihin sa Activated for Online login?",
+        "eleven": "Paano i-activate ang isang card para sa online na pag-login?",
+        "twelve": "Paano magbahagi ng card?",
+        "thirteen": "Paano mag-alis ng card mula sa wallet?",
+        "fourteen": "Paano tingnan ang mga log ng aktibidad?",
+        "fifteen": "Ano ang mangyayari kapag binago ang biometric ng Android keystore?"
+      },
+      "backup": {
+        "one": "Ano ang data backup? ",
+        "two": "Bakit ako kukuha ng backup?",
+        "three": "Paano i-backup sa iyong google account?",
+        "four": "Paano mag-backup sa iyong iCloud?",
+        "five": "Dapat ko bang palaging ibigay ang parehong email ID?",
+        "six": "Paano ko maibabalik ang backup na kinuha ko?",
+        "seven": "Bakit ako nakakakuha ng error na \"no backup file found\"?",
+        "eight": "Ano ang mangyayari kapag I-clear ko ang Storage ng INJI app mula sa mga setting ng device?"
+      }
     },
     "answers": {
-      "one": "Ang digital na kredensyal ay ang digital na bersyon ng iyong pisikal na Identity card",
-      "two": "Maaari kang makakuha ng iba't ibang serbisyo ng Pamahalaan at pribadong gamit ang iyong mga digital na kredensyal.",
-      "three": "Maaaring ma-download ang mga ID sa INJI Mobile Wallet bilang Mga Nabe-verify na Kredensyal. ",
-      "four-a": "Maaari kang mag-click sa ...(meatballs menu) sa isang card sa Home page at piliin ang Remove from Wallet na opsyon upang alisin ang isang card mula sa wallet. ",
-      "four-b": " Pakitandaan na, maaaring i-download muli ang parehong card.",
-      "five": "Oo, maaari kang magdagdag ng maramihang mga card sa wallet sa pamamagitan ng pag-click sa pindutang ' ' sa Home page.",
-      "six": "Mag-click sa pindutang 'Ibahagi' at i-scan ang QR code mula sa humihiling na partido. ",
-      "seven": "Matapos matagumpay na magdagdag ng card sa wallet, mag-click sa 'Activation pending for Online login' sa card. ",
-      "eight": "Sa Home page, mag-click sa 'Kasaysayan' upang tingnan ang mga detalye ng aktibidad ng user.",
-      "nine": "Ang Android keystore ay nagtataglay ng mahalagang impormasyon tulad ng mga pribadong key para sa mga patunay ng pagkakakilanlan. ",
-      "ten": "Ang ID ay anumang dokumento na maaaring patunayan ang pagkakakilanlan ng isang tao. ",
-      "eleven": "Sa konteksto ng MOSIP, iba't ibang ID ang UIN, VID, at AID. ",
-      "twelve-a": "Bilang bahagi ng proseso ng pagpapatala (pagpaparehistro), kapag matagumpay na nairehistro ang demograpikong impormasyon at biometrics ng residente, isang registration ID (AID) ang inilalaan sa residente. ",
-      "twelve-b": "Sa matagumpay na pagproseso, ang isang Unique Identification Number (UIN) ay ilalaan sa residente at isang abiso ang ipapadala sa residente sa nakarehistrong numero ng telepono at/o email.",
-      "twelve-c": "Ang VID / Virtual ID ay isang alias identifier na na-configure para sa isang beses na paggamit at hindi nali-link. ",
-      "thirteen": "Kapag na-download na ang VC sa iyong wallet, hindi pa ito nakatali sa pagkakakilanlan ng user kaya naman ang sabi ng VC mo ay Nakabinbin ang Aktibidad. ",
-      "fourteen-a": "1. Kapag matagumpay na na-binded ang VC sa wallet, makikita mo na ito ay Activated for Online login which means itong VC ay magagamit na para sa QR login process. ",
-      "fourteen-b": "2. Ang Q",
-      "fifteen": "Ang Nabe-verify na Kredensyal ay isang digitally signed na piraso ng impormasyon na kumakatawan sa isang pahayag na ginawa ng issuer tungkol sa isang paksa at karaniwang may kasamang mga detalye ng demograpiko. "
+      "inji": {
+        "one": "Ang ID ay anumang dokumento na maaaring patunayan ang pagkakakilanlan ng isang tao. ",
+        "two": "Sa konteksto ng MOSIP, ang iba't ibang ID ay UIN, VID, at AID. ",
+        "three-a": "Bilang bahagi ng proseso ng pagpapatala (pagpaparehistro), kapag matagumpay na nairehistro ang demograpikong impormasyon at biometrics ng residente, isang registration ID (AID) ang inilalaan sa residente. ",
+        "three-b": "Sa matagumpay na pagproseso, ang isang Unique Identification Number (UIN) ay ilalaan sa residente at isang abiso ang ipapadala sa residente sa nakarehistrong numero ng telepono at/o email.",
+        "three-c": "Ang VID / Virtual ID ay isang alias identifier na na-configure para sa isang beses na paggamit at hindi nali-link. ",
+        "four": "Ang digital na kredensyal ay ang digital na bersyon ng iyong pisikal na Identity card",
+        "five": "Maaari kang makakuha ng iba't ibang serbisyo ng Pamahalaan at pribadong gamit ang iyong mga digital na kredensyal.",
+        "six": "Ang Nabe-verify na Kredensyal ay isang digitally signed na piraso ng impormasyon na kumakatawan sa isang pahayag na ginawa ng issuer tungkol sa isang paksa at karaniwang may kasamang mga detalye ng demograpiko. ",
+        "seven": "Maaaring ma-download ang mga ID sa INJI Mobile Wallet bilang Mga Nabe-verify na Kredensyal. ",
+        "eight": "Oo, maaari kang magdagdag ng maramihang mga card sa wallet sa pamamagitan ng pag-click sa pindutang ' ' sa Home page.",
+        "nine": "Kapag na-download na ang VC sa iyong wallet, hindi pa ito nakatali sa pagkakakilanlan ng user kung kaya't sinasabi ng iyong VC na Nakabinbin ang Aktibidad. ",
+        "ten-a": "1. Kapag matagumpay na na-binded ang VC sa wallet, makikita mo na ito ay Activated for Online login which means itong VC ay magagamit na para sa QR login process. ",
+        "ten-b": "2. Ang Q",
+        "eleven": "Pagkatapos matagumpay na magdagdag ng card sa wallet, mag-click sa 'Activation pending for Online login' sa card. ",
+        "twelve": "Mag-click sa pindutang 'Ibahagi' at i-scan ang QR code mula sa humihiling na partido. ",
+        "thirteen-a": "Maaari kang mag-click sa ...(meatballs menu) sa isang card sa Home page at piliin ang Remove from Wallet na opsyon upang alisin ang isang card mula sa wallet. ",
+        "thirteen-b": " Pakitandaan na, maaaring i-download muli ang parehong card.",
+        "fourteen": "Sa Home page, mag-click sa 'Kasaysayan' upang tingnan ang mga detalye ng aktibidad ng user.",
+        "fifteen": "Ang Android keystore ay nagtataglay ng mahalagang impormasyon tulad ng mga pribadong key para sa mga patunay ng pagkakakilanlan. "
+      },
+      "backup": {
+        "one": "Kasama sa pag-backup ng data ang paggawa ng kopya ng iyong Mga Na-verify na Kredensyal na nasa iyong wallet sa iyong Google Drive/iCloud, na tinitiyak na sa kaganapan ng pagkawala ng data, maaari mong ibalik ang iyong mga file sa dati nilang estado.",
+        "two": "Ang pagkuha ng backup ay mahalaga para sa pagprotekta sa iyong data. ",
+        "three": " Una, tiyaking naka-activate ang isang Google Account sa iyong device. ",
+        "four": "Una, tiyaking nauugnay ang iyong iOS device sa isang apple account. ",
+        "five": "Para sa pagkakapare-pareho at seguridad, ipinapayong gamitin ang parehong email ID para sa mga backup. ",
+        "six": "Upang mag-restore ng backup, pumunta sa mga setting ng app, piliin ang opsyon sa pag-restore, at piliin ang backup na file. ",
+        "seven": "Maaaring mangyari ang error na ito kung walang mga backup na file na nauugnay sa ibinigay na email ID o kung ang mga backup na file ay nakaimbak sa ibang lokasyon. ",
+        "eight": "Pakitandaan na ang pagkilos na ito ay ginagawa nang maingat dahil nililimas nito ang data ng app na nangangahulugan na ang lahat ng iyong na-download na VC ay iki-clear. "
+      }
     }
   },
   "AddVcModal": {
