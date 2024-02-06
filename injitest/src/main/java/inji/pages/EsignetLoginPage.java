@@ -105,21 +105,12 @@ public class EsignetLoginPage extends BasePage {
     }
 
     public void clickOnGetOtpButton() {
-        clickOnDoneButton();
         clickOnElement(getOtpButton);
     }
-    private void clickOnDoneButton() {
-        if (isElementDisplayed(DoneButton)) {
-            clickOnElement(DoneButton);
-        }
+
+    public void clickOnVerifyButton() {
+    	((HidesKeyboard) driver).hideKeyboard();
+        clickOnElement(verifyButton);
     }
 
-        public void clickOnVerifyButton () {
-            ((HidesKeyboard) driver).hideKeyboard();
-            clickOnElement(verifyButton);
-        }
-
-        public void clickOnVerifyButtonIos () {
-            clickOnElement(verifyButton);
-        }
 }
