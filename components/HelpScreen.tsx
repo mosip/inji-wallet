@@ -258,7 +258,6 @@ export const HelpScreen: React.FC<HelpScreenProps> = props => {
     },
   ];
 
-  const faqMap = props.source === 'Inji' ? InjiFaqMap : BackupFaqMap;
   return (
     <React.Fragment>
       <Pressable
