@@ -1,8 +1,7 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {useTranslation} from 'react-i18next';
-import {Linking, Pressable} from 'react-native';
+import {FlatList, Linking, Pressable, SafeAreaView, View} from 'react-native';
 import {Modal} from './ui/Modal';
-import {ScrollView} from 'react-native-gesture-handler';
 import {Column, Text} from './ui';
 import {Theme} from './ui/styleUtils';
 import {BackupAndRestoreAllScreenBanner} from './BackupAndRestoreAllScreenBanner';
@@ -10,9 +9,9 @@ import getAllConfigurations from '../shared/commonprops/commonProps';
 
 export const HelpScreen: React.FC<HelpScreenProps> = props => {
   const {t} = useTranslation('HelpScreen');
-
   const [showHelpPage, setShowHelpPage] = useState(false);
   var [injiHelpUrl, setInjiHelpUrl] = useState('');
+  const listingRef = useRef();
 
   useEffect(() => {
     getAllConfigurations().then(response => {
@@ -20,21 +19,244 @@ export const HelpScreen: React.FC<HelpScreenProps> = props => {
     });
   }, []);
 
-  const hyperLinkString = (
-    word: string,
-    urlString: string,
-    extension?: string,
-  ) => {
+  useEffect(() => {
+    if (props.source === 'BackUp') {
+      setTimeout(() => {
+        if (listingRef?.current != null) {
+          listingRef.current.scrollToIndex({
+            index: 15,
+          });
+        }
+      }, 3000);
+    }
+  }, [showHelpPage]);
+
+  const getTextField = (value: string, component?: React.ReactElement) => {
+    return (
+      <Text style={Theme.TextStyles.helpDetails}>
+        {value} {component}
+      </Text>
+    );
+  };
+  const getLinkedText = (link: string, linkText: string) => {
     return (
       <Text
         style={Theme.TextStyles.urlLinkText}
         onPress={() => {
-          urlString && Linking.openURL(urlString + extension);
+          Linking.openURL(link);
         }}>
-        {t(word)}
+        {linkText}
       </Text>
     );
   };
+  const BackupFaqMap = [
+    {
+      title: t('questions.backup.one'),
+      data: (
+        <React.Fragment>{getTextField(t('answers.backup.one'))}</React.Fragment>
+      ),
+    },
+    {
+      title: t('questions.backup.two'),
+      data: (
+        <React.Fragment>{getTextField(t('answers.backup.two'))}</React.Fragment>
+      ),
+    },
+    {
+      title: t('questions.backup.three'),
+      data: (
+        <React.Fragment>
+          {getTextField(t('answers.backup.three'))}
+        </React.Fragment>
+      ),
+    },
+    {
+      title: t('questions.backup.four'),
+      data: (
+        <React.Fragment>
+          {getTextField(t('answers.backup.four'))}
+        </React.Fragment>
+      ),
+    },
+    {
+      title: t('questions.backup.five'),
+      data: (
+        <React.Fragment>
+          {getTextField(t('answers.backup.five'))}
+        </React.Fragment>
+      ),
+    },
+    {
+      title: t('questions.backup.six'),
+      data: (
+        <React.Fragment>{getTextField(t('answers.backup.six'))}</React.Fragment>
+      ),
+    },
+    {
+      title: t('questions.backup.seven'),
+      data: (
+        <React.Fragment>
+          {getTextField(t('answers.backup.seven'))}
+        </React.Fragment>
+      ),
+    },
+    {
+      title: t('questions.backup.eight'),
+      data: (
+        <React.Fragment>
+          {getTextField(t('answers.backup.eight'))}
+        </React.Fragment>
+      ),
+    },
+  ];
+  const InjiFaqMap = [
+    {
+      title: t('questions.inji.one'),
+      data: (
+        <React.Fragment>{getTextField(t('answers.inji.one'))}</React.Fragment>
+      ),
+    },
+    {
+      title: t('questions.inji.two'),
+      data: (
+        <React.Fragment>
+          {getTextField(
+            t('answers.inji.two'),
+            getLinkedText(
+              'https://docs.mosip.io/1.2.0/id-lifecycle-management/identifiers',
+              t('here'),
+            ),
+          )}
+        </React.Fragment>
+      ),
+    },
+    {
+      title: t('questions.inji.three'),
+      data: (
+        <React.Fragment>
+          {getTextField(t('answers.inji.three-a'))}
+          {getTextField(t('answers.inji.three-b'))}
+          {getTextField(t('answers.inji.three-c'))}
+        </React.Fragment>
+      ),
+    },
+    {
+      title: t('questions.inji.four'),
+      data: (
+        <React.Fragment>{getTextField(t('answers.inji.four'))}</React.Fragment>
+      ),
+    },
+    {
+      title: t('questions.inji.five'),
+      data: (
+        <React.Fragment>{getTextField(t('answers.inji.five'))}</React.Fragment>
+      ),
+    },
+    {
+      title: t('questions.inji.six'),
+      data: (
+        <React.Fragment>{getTextField(t('answers.inji.six'))}</React.Fragment>
+      ),
+    },
+    {
+      title: t('questions.inji.seven'),
+      data: (
+        <React.Fragment>
+          {getTextField(
+            t('answers.inji.seven'),
+            getLinkedText(
+              injiHelpUrl + '/end-user-guide#downloading-vc',
+              t('here'),
+            ),
+          )}
+        </React.Fragment>
+      ),
+    },
+    {
+      title: t('questions.inji.eight'),
+      data: (
+        <React.Fragment>{getTextField(t('answers.inji.eight'))}</React.Fragment>
+      ),
+    },
+    {
+      title: t('questions.inji.nine'),
+      data: (
+        <React.Fragment>
+          {getTextField(
+            t('answers.inji.nine'),
+            getLinkedText(
+              injiHelpUrl + '/end-user-guide#activating-a-vc',
+              t('here'),
+            ),
+          )}
+        </React.Fragment>
+      ),
+    },
+    {
+      title: t('questions.inji.ten'),
+      data: (
+        <React.Fragment>
+          {getTextField(
+            t('answers.inji.ten-a'),
+            getLinkedText(
+              injiHelpUrl +
+                '/overview/features/feature-workflows#id-4.-qr-code-login-process',
+              t('here'),
+            ),
+          )}
+          {getTextField(t('answers.inji.ten-b'))}
+        </React.Fragment>
+      ),
+    },
+    {
+      title: t('questions.inji.eleven'),
+      data: (
+        <React.Fragment>
+          {getTextField(t('answers.inji.eleven'))}
+        </React.Fragment>
+      ),
+    },
+    {
+      title: t('questions.inji.twelve'),
+      data: (
+        <React.Fragment>
+          {getTextField(t('answers.inji.twelve'))}
+        </React.Fragment>
+      ),
+    },
+    {
+      title: t('questions.inji.thirteen'),
+      data: (
+        <React.Fragment>
+          {getTextField(
+            t('answers.inji.thirteen-a'),
+            getLinkedText(
+              injiHelpUrl + '/end-user-guide#deleting-a-vc',
+              t('here'),
+            ),
+          )}
+          {getTextField(t('answers.inji.thirteen-b'))}
+        </React.Fragment>
+      ),
+    },
+
+    {
+      title: t('questions.inji.fourteen'),
+      data: (
+        <React.Fragment>
+          {getTextField(t('answers.inji.fourteen'))}
+        </React.Fragment>
+      ),
+    },
+    {
+      title: t('questions.inji.fifteen'),
+      data: (
+        <React.Fragment>
+          {getTextField(t('answers.inji.fifteen'))}
+        </React.Fragment>
+      ),
+    },
+  ];
 
   return (
     <React.Fragment>
@@ -54,116 +276,27 @@ export const HelpScreen: React.FC<HelpScreenProps> = props => {
           setShowHelpPage(!showHelpPage);
         }}>
         <BackupAndRestoreAllScreenBanner />
-        <ScrollView>
+        <SafeAreaView style={{flex: 1}}>
           <Column fill padding="10" align="space-between">
-            <Text style={Theme.TextStyles.helpHeader}>{t('whatIsAnId?')}</Text>
-            <Text style={Theme.TextStyles.helpDetails}>{t('detail-10')}</Text>
-            <Text style={Theme.TextStyles.helpHeader}>
-              {t('whatAreTheDifferentTypesOfId?')}
-            </Text>
-            <Text margin="5">
-              <Text style={Theme.TextStyles.helpDetails}>{t('detail-11')}</Text>
-              <Text
-                style={Theme.TextStyles.urlLinkText}
-                onPress={() => {
-                  Linking.openURL(
-                    'https://docs.mosip.io/1.2.0/id-lifecycle-management/identifiers',
-                  );
-                }}>
-                {t('here')}
-              </Text>
-            </Text>
-            <Text style={Theme.TextStyles.helpHeader}>
-              {t('whereCanIFindTheseIds?')}
-            </Text>
-            <Text style={Theme.TextStyles.helpDetails}>{t('detail-12a')}</Text>
-            <Text style={Theme.TextStyles.helpDetails}>{t('detail-12b')}</Text>
-            <Text style={Theme.TextStyles.helpDetails}>{t('detail-12c')}</Text>
-            <Text style={Theme.TextStyles.helpHeader}>
-              {t('whatIsaDigitalCredential?')}
-            </Text>
-            <Text style={Theme.TextStyles.helpDetails}>{t('detail-1')}</Text>
-            <Text style={Theme.TextStyles.helpHeader}>
-              {t('whatCanWeDoWithDigitalCredential?')}
-            </Text>
-            <Text style={Theme.TextStyles.helpDetails}>{t('detail-2')}</Text>
-            <Text style={Theme.TextStyles.helpHeader}>
-              {t('whatIsAVerifiableCredential?')}
-            </Text>
-            <Text style={Theme.TextStyles.helpDetails}>{t('detail-15')}</Text>
-            <Text style={Theme.TextStyles.helpHeader}>
-              {t('howToAddCard?')}
-            </Text>
-            <Text style={Theme.TextStyles.helpDetails}>
-              {t('detail-3')}
-              {hyperLinkString(
-                'here',
-                injiHelpUrl,
-                '/end-user-guide#downloading-vc',
+            <FlatList
+              ref={listingRef}
+              keyExtractor={(item, index) => 'FAQ' + index.toString()}
+              renderItem={({item}) => (
+                <View>
+                  <Text style={Theme.TextStyles.helpHeader}>{item.title}</Text>
+                  {item.data}
+                </View>
               )}
-            </Text>
-            <Text style={Theme.TextStyles.helpHeader}>
-              {t('canIAddMultipleCards?')}
-            </Text>
-            <Text style={Theme.TextStyles.helpDetails}>{t('detail-5')}</Text>
-            <Text style={Theme.TextStyles.helpHeader}>
-              {t('whyDoesMyVcSayActivationIsPending?')}
-            </Text>
-            <Text style={Theme.TextStyles.helpDetails}>
-              {t('detail-13')}
-              {hyperLinkString(
-                'here',
-                injiHelpUrl,
-                '/end-user-guide#activating-a-vc',
-              )}
-            </Text>
-            <Text style={Theme.TextStyles.helpHeader}>
-              {t('whatDoYouMeanByActivatedForOnlineLogin?')}
-            </Text>
-            <Text style={Theme.TextStyles.helpDetails}>
-              {t('detail-14a')}
-              {hyperLinkString(
-                'here',
-                injiHelpUrl,
-                '/overview/features/feature-workflows#id-4.-qr-code-login-process',
-              )}
-            </Text>
-            <Text style={Theme.TextStyles.helpDetails}>{t('detail-14b')}</Text>
-            <Text style={Theme.TextStyles.helpHeader}>
-              {t('howToActivateACardForOnlineLogin?')}
-            </Text>
-            <Text style={Theme.TextStyles.helpDetails}>{t('detail-7')}</Text>
-            <Text style={Theme.TextStyles.helpHeader}>
-              {t('howToShareACard?')}
-            </Text>
-            <Text style={Theme.TextStyles.helpDetails}>{t('detail-6')}</Text>
-            <Text style={Theme.TextStyles.header}>
-              {t('howToRemoveACardFromTheWallet?')}
-            </Text>
-            <Text style={Theme.TextStyles.helpDetails}>
-              {t('detail-4a')}
-              {hyperLinkString(
-                'here',
-                injiHelpUrl,
-                '/end-user-guide#deleting-a-vc',
-              )}
-              {t('detail-4b')}
-            </Text>
-            <Text style={Theme.TextStyles.helpHeader}>
-              {t('howToViewActivityLogs?')}
-            </Text>
-            <Text style={Theme.TextStyles.helpDetails}>{t('detail-8')}</Text>
-            <Text style={Theme.TextStyles.helpHeader}>
-              {t('whatHappensWhenAndroidKeystoreBiometricIsChanged?')}
-            </Text>
-            <Text style={Theme.TextStyles.helpDetails}>{t('detail-9')}</Text>
+              data={[...InjiFaqMap, ...BackupFaqMap]}
+            />
           </Column>
-        </ScrollView>
+        </SafeAreaView>
       </Modal>
     </React.Fragment>
   );
 };
 
 interface HelpScreenProps {
+  source: 'Inji' | 'BackUp';
   triggerComponent: React.ReactElement;
 }
