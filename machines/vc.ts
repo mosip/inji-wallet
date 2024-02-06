@@ -48,15 +48,18 @@ const model = createModel(
       WALLET_BINDING_SUCCESS: () => ({}),
       RESET_WALLET_BINDING_SUCCESS: () => ({}),
       ADD_VC_TO_IN_PROGRESS_DOWNLOADS: (requestId: string) => ({requestId}),
-      REMOVE_VC_FROM_IN_PROGRESS_DOWNLOADS: (requestId: string) => ({
-        requestId,
+      REMOVE_VC_FROM_IN_PROGRESS_DOWNLOADS: (vcMetadata: VCMetadata) => ({
+        vcMetadata,
       }),
       RESET_ARE_ALL_VCS_DOWNLOADED: () => ({}),
       TAMPERED_VC: (VC: VCMetadata) => ({VC}),
       REMOVE_TAMPERED_VCS: () => ({}),
       DOWNLOAD_LIMIT_EXPIRED: (vcMetadata: VCMetadata) => ({vcMetadata}),
       DELETE_VC: () => ({}),
-      VERIFY_VC_FAILED: (errorMessage: string) => ({errorMessage}),
+      VERIFY_VC_FAILED: (errorMessage: string, vcMetadata?: VCMetadata) => ({
+        errorMessage,
+        vcMetadata,
+      }),
       RESET_VERIFY_ERROR: () => ({}),
     },
   },
@@ -219,7 +222,6 @@ export const vcMachine =
             },
             VERIFY_VC_FAILED: {
               actions: [
-                'removeVcFromMyVcs',
                 'removeVcFromInProgressDownlods',
                 'setVerificationErrorMessage',
               ],
@@ -329,13 +331,10 @@ export const vcMachine =
           inProgressVcDownloads: (context, event) => {
             let updatedInProgressList: Set<string> =
               context.inProgressVcDownloads;
-            if (!event.vcMetadata && !event.requestId) {
+            if (!event.vcMetadata) {
               return updatedInProgressList;
             }
-            const removeVcRequestID =
-              event.type === 'REMOVE_VC_FROM_IN_PROGRESS_DOWNLOADS'
-                ? event.requestId
-                : event.vcMetadata.requestId;
+            const removeVcRequestID = event.vcMetadata.requestId;
             updatedInProgressList.delete(removeVcRequestID);
 
             return updatedInProgressList;
@@ -382,15 +381,10 @@ export const vcMachine =
         }),
 
         removeVcFromMyVcs: model.assign({
-          myVcs: (context, event) => {
-            let updatedMyVcs: VCMetadata[] = context.myVcs;
-            if (event.vcMetadata) {
-              updatedMyVcs = context.myVcs.filter(
-                (vc: VCMetadata) => !vc.equals(event.vcMetadata),
-              );
-            }
-            return updatedMyVcs;
-          },
+          myVcs: (context, event) =>
+            context.myVcs.filter(
+              (vc: VCMetadata) => !vc.equals(event.vcMetadata),
+            ),
         }),
 
         removeDownloadingFailedVcsFromMyVcs: model.assign({
