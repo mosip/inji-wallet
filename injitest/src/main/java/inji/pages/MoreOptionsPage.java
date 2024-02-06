@@ -32,7 +32,7 @@ public class MoreOptionsPage extends BasePage {
     private WebElement activatedForOnlineLoginButton;
 
     @AndroidFindBy(accessibility = "close")
-    @iOSXCUITFindBy(accessibility = "Close")
+    @iOSXCUITFindBy(accessibility = "close")
     private WebElement closeButton;
 
     @AndroidFindBy(uiAutomator = "new UiSelector().textContains(\"Something is wrong. Please try again later!\")")

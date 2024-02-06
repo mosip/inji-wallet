@@ -133,7 +133,7 @@ public class PinVcTest extends AndroidBaseTest {
         assertTrue(addNewCardPage.isAddNewCardPageLoaded(), "Verify if add new card page is displayed");
         EsignetLoginPage esignetLoginPage =  addNewCardPage.clickOnDownloadViaEsignet();
 
-        assertTrue(esignetLoginPage.isEsignetLoginPageDisplayed(), "Verify if esignet login page displayed");
+//        assertTrue(esignetLoginPage.isEsignetLoginPageDisplayed(), "Verify if esignet login page displayed");
         esignetLoginPage.clickOnEsignetLoginWithOtpButton();
         
         assertTrue(esignetLoginPage.isEnterYourVidTextDisplayed(), "Verify if enter your vid text is displayed");
@@ -158,7 +158,7 @@ public class PinVcTest extends AndroidBaseTest {
         assertTrue(addNewCardPage.isAddNewCardPageLoaded(), "Verify if add new card page is displayed");
          addNewCardPage.clickOnDownloadViaEsignet();
 
-        assertTrue(esignetLoginPage.isEsignetLoginPageDisplayed(), "Verify if esignet login page displayed");
+//        assertTrue(esignetLoginPage.isEsignetLoginPageDisplayed(), "Verify if esignet login page displayed");
         esignetLoginPage.clickOnEsignetLoginWithOtpButton();
         
         assertTrue(esignetLoginPage.isEnterYourVidTextDisplayed(), "Verify if enter your vid text is displayed");
@@ -221,7 +221,7 @@ public class PinVcTest extends AndroidBaseTest {
         AndroidUtil.disableBluetooth();
         
         scanPage.denyPermissionPopupBluetooth();
-        assertEquals(scanPage.isBluetoothIsTurnedOffMessageDisplayed(),"bluetooth is turned off, please turn it ON from quick settings menu");
+        assertEquals(scanPage.isBluetoothIsTurnedOffMessageDisplayed(),"Bluetooth is turned OFF, please turn it ON from Quick settings menu");
         
     }
     

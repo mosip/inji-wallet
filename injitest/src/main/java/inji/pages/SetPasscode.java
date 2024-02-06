@@ -13,6 +13,11 @@ public class SetPasscode extends BasePage {
     @AndroidFindBy(xpath = "//*[contains(@text,'Set Passcode')]")
     private WebElement setPasscode;
 
+
+    @iOSXCUITFindBy(accessibility = "Done")
+    private WebElement DoneButton;
+
+
     public SetPasscode(AppiumDriver driver) {
         super(driver);
     }
@@ -41,7 +46,7 @@ public class SetPasscode extends BasePage {
                 enterOtpAndroidForEsignet(array);
                 break;
             case IOS:
-                enterOtpIos(array);
+                enterOtpIosForEsignet(array);
                 break;
         }
         new ConfirmPasscode(driver);
@@ -61,9 +66,24 @@ public class SetPasscode extends BasePage {
         }
     }
 
+
+    private void enterOtpIosForEsignet(char[] arr) {
+        for (int i = 1; i <= 6; i++) {
+            clickOnDoneButton();
+            String locator = "//XCUIElementTypeOther[@name=\"e-Signet\"]/XCUIElementTypeOther[6]/XCUIElementTypeTextField[" + i + "]";
+            driver.findElement(By.xpath(locator)).sendKeys(String.valueOf(arr[i - 1]));
+
+        }
+    }
+
+    private void clickOnDoneButton() {
+        if(isElementDisplayed(DoneButton,3)) {
+            clickOnElement(DoneButton);
+        }
+    }
     private void enterOtpAndroidForEsignet(char[] arr) {
-        for (int i = 3; i <= 8; i++) {
-            int index = i - 3;
+        for (int i = 2; i <= 8; i++) {
+            int index = i - 2;
             if (index < arr.length) {
                 String locator = "(//*[@class='android.widget.EditText'])[" + i + "]";
                 driver.findElement(By.xpath(locator)).sendKeys(String.valueOf(arr[index]));
