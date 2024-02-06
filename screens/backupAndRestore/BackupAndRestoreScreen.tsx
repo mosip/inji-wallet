@@ -13,6 +13,9 @@ import {ProfileInfo} from '../../shared/googleCloudUtils';
 import {useBackupScreen} from './BackupController';
 import {BannerNotificationContainer} from '../../components/BannerNotificationContainer';
 import {useBackupRestoreScreen} from '../Settings/BackupRestoreController';
+import {Icon} from 'react-native-elements';
+import testIDProps from '../../shared/commonUtil';
+import {HelpScreen} from '../../components/HelpScreen';
 
 const BackupAndRestoreScreen: React.FC<BackupAndRestoreProps> = props => {
   const backupController = useBackupScreen();
@@ -162,6 +165,22 @@ const BackupAndRestoreScreen: React.FC<BackupAndRestoreProps> = props => {
       testID="backupAndRestore"
       headerElevation={2}
       arrowLeft={true}
+      headerRight={
+        <HelpScreen
+          source={'BackUp'}
+          triggerComponent={
+            <Icon
+              {...testIDProps('help')}
+              accessible={true}
+              name="question"
+              type="font-awesome"
+              size={21}
+              style={Theme.Styles.IconContainer}
+              color={Theme.Colors.Icon}
+            />
+          }
+        />
+      }
       onDismiss={props.onBackPress}>
       <BannerNotificationContainer />
       <View

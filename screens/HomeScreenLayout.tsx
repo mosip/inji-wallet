@@ -3,7 +3,6 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import React from 'react';
 import {useTranslation} from 'react-i18next';
 import {Icon} from 'react-native-elements';
-import {HelpScreen} from '../components/HelpScreen';
 import {Row} from '../components/ui';
 import {Header} from '../components/ui/Header';
 import {Theme} from '../components/ui/styleUtils';
@@ -13,6 +12,7 @@ import {IssuersScreen} from './Issuers/IssuersScreen';
 import {SettingScreen} from './Settings/SettingScreen';
 import testIDProps from '../shared/commonUtil';
 import {SvgImage} from '../components/ui/svg';
+import {HelpScreen} from '../components/HelpScreen';
 
 export const HomeScreenLayout: React.FC<RootRouteProps> = props => {
   const {t} = useTranslation('IssuersScreen');
@@ -50,6 +50,7 @@ export const HomeScreenLayout: React.FC<RootRouteProps> = props => {
     headerRight: () => (
       <Row align="space-between">
         <HelpScreen
+          source={'Inji'}
           triggerComponent={
             <Icon
               {...testIDProps('help')}

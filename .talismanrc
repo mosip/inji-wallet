@@ -159,7 +159,7 @@ fileignoreconfig:
   - filename: machines/backup.ts
     checksum: df40cc92db9e459ab19d8382713afb24ae89c88a944623bbc21a7e6b9bc327a3
   - filename: locales/en.json
-    checksum: 881b12057430b1b465306f6171d8a1c025c69909a29b6f9c405f70c2990ac4f4
+    checksum: 3bc37ce3bab898761fb14d6ae284e5922ff14fb55eee7c5b5ced4326dd35ced2
   - filename: locales/hin.json
     checksum: 69bffc48c583a985ed6853988ca9f4a559adbdf14f4763f197e982a3684f3bad
   - filename: locales/kan.json
@@ -184,5 +184,7 @@ fileignoreconfig:
     checksum: 0b26a5dcb7524ba15d6aaeaf04f2ef94be9d25ef702d9072d6628bcd58e50f36 
   - filename: components/BannerNotificationContainer.tsx
     checksum: a98ff1a0dd96d3ead4b8191320be8b0c7a558cda6b0de39f1c62aaa8efef9fb8  
+  - filename: components/HelpScreen.tsx
+    checksum: bbc69143bd37d065bba3800396301db5a0318e8b7ba51ecd49142dda68783a01  
     version: ""
 
