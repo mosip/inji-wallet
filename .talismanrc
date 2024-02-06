@@ -186,5 +186,9 @@ fileignoreconfig:
     checksum: bbc69143bd37d065bba3800396301db5a0318e8b7ba51ecd49142dda68783a01  
   - filename: machines/backupRestore.ts
     checksum: e84d409ad0968c8ad189f4fa8553996820f46056dd3b25ab5e60851c2d1f3e03
+  - filename: machines/backupAndRestore/backupAndRestoreSetup.ts
+    checksum: 75b07071aef4278f40f16861232b922e5ee8594efc9467984b072966fa7793b8
+  - filename: machines/backupAndRestore/backupAndRestoreSetup.typegen.ts
+    checksum: 76e81749435d83e4cd222ebb91245d1c6baaab7814d9e7899298ca8ca55c97fb
     version: ""
 

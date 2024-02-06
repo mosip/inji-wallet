@@ -32,6 +32,12 @@ export interface Typegen0 {
     services: never;
   };
   eventsCausingActions: {
+    sendBackupAndRestoreSetupCancelEvent: 'DISMISS' | 'GO_BACK';
+    sendBackupAndRestoreSetupErrorEvent: 'done.invoke.signIn:invocation[0]';
+    sendBackupAndRestoreSetupSuccessEvent:
+      | 'done.invoke.backupAndRestore.checkSignIn:invocation[0]'
+      | 'done.invoke.signIn:invocation[0]';
+    sendDataBackupAndRestoreSetupStartEvent: 'HANDLE_BACKUP_AND_RESTORE';
     setIsLoading: 'HANDLE_BACKUP_AND_RESTORE';
     setNoInternet: 'done.invoke.backupAndRestore.checkInternet:invocation[0]';
     setProfileInfo:

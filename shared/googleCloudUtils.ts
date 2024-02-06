@@ -81,10 +81,12 @@ class Cloud {
       if (error.code === statusCodes.SIGN_IN_CANCELLED) {
         return {
           status: this.status.DECLINED,
+          error,
         };
       }
       return {
         status: this.status.FAILURE,
+        error,
       };
     }
   }
@@ -264,6 +266,7 @@ export type ProfileInfo = {
 export type SignInResult = {
   status: (typeof Cloud.status)[keyof typeof Cloud.status];
   profileInfo?: ProfileInfo;
+  error?: string;
 };
 
 export type isSignedInResult = {
