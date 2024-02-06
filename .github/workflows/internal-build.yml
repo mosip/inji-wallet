@@ -105,6 +105,7 @@ jobs:
       RELEASE_KEYSTORE_PASSWORD: '${{ secrets.INJI_ANDROID_RELEASE_STOREPASS }}'
       INJI_ANDROID_PLAY_STORE_CONFIG_JSON: ${{ secrets.INJI_ANDROID_PLAY_STORE_CONFIG_JSON }}
       SLACK_WEBHOOK_URL: '${{ secrets.SLACK_WEBHOOK_INJI_TEAM }}'
+      GOOGLE_ANDROID_CLIENT_ID: ${{secrets.INJI_GOOGLE_CLIENT_ID}}
 
   build-android-beta:
     if: ${{ inputs.release == 'beta' && (inputs.buildFor == 'Both[Android and IOS]' || inputs.buildFor == 'Android') }}
@@ -130,6 +131,7 @@ jobs:
       RELEASE_KEYSTORE_PASSWORD: '${{ secrets.INJI_ANDROID_RELEASE_STOREPASS }}'
       INJI_ANDROID_PLAY_STORE_CONFIG_JSON: ${{ secrets.INJI_ANDROID_PLAY_STORE_CONFIG_JSON }}
       SLACK_WEBHOOK_URL: '${{ secrets.SLACK_WEBHOOK_INJI_TEAM }}'
+      GOOGLE_ANDROID_CLIENT_ID: ${{secrets.INJI_GOOGLE_CLIENT_ID}}
 
   build-ios:
     if: ${{ inputs.buildFor == 'Both[Android and IOS]' || inputs.buildFor == 'IOS'}}

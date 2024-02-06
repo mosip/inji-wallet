@@ -1,5 +1,5 @@
 import * as Keychain from 'react-native-keychain';
-import Storage from '../shared/storage';
+import Storage, {MMKV} from '../shared/storage';
 import binaryToBase64 from 'react-native/Libraries/Utilities/binaryToBase64';
 import {
   EventFrom,
@@ -722,6 +722,7 @@ export async function removeItem(
 
       await setItem(key, newList, encryptionKey);
       await Storage.removeItem(value);
+      await MMKV.removeItem(value);
     }
   } catch (e) {
     console.error('error removeItem:', e);

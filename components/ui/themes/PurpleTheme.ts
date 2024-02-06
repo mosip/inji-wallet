@@ -225,6 +225,27 @@ export const PurpleTheme = {
       position: 'relative',
       paddingHorizontal: 12,
     },
+    backupRestoreBanner: {
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      height: 39,
+      position: 'relative',
+      paddingHorizontal: 12,
+    },
+    dataBackupFailure: {
+      justifyContent: 'space-between',
+      backgroundColor: Colors.Red,
+      height: 39,
+      position: 'relative',
+      paddingHorizontal: 12,
+    },
+    dataBackupSuccess: {
+      justifyContent: 'space-between',
+      backgroundColor: Colors.Green,
+      height: 39,
+      position: 'relative',
+      paddingHorizontal: 12,
+    },
     homeScreenContainer: {
       alignItems: 'center',
       justifyContent: 'center',
@@ -1061,10 +1082,45 @@ export const PurpleTheme = {
       marginVertical: 6,
     },
   }),
+  BackupStyles: StyleSheet.create({
+    newStyles: {
+      backgroundColor: Colors.Orange,
+      paddingHorizontal: 10,
+      borderRadius: 3,
+    },
+  }),
   UpdateModalStyles: StyleSheet.create({
     modal: {
       width: Dimensions.get('screen').width,
       height: Dimensions.get('screen').height,
+    },
+  }),
+  BackupAndRestoreStyles: StyleSheet.create({
+    backupProgressText: {
+      fontFamily: 'Inter_400Regular',
+      fontSize: 14,
+      color: Colors.Gray44,
+    },
+    backupProcessInfo: {
+      fontWeight: 'bold',
+      paddingHorizontal: 20,
+      textAlign: 'center',
+    },
+    cloudInfo: {
+      paddingHorizontal: 20,
+      textAlign: 'center',
+      paddingVertical: 15,
+    },
+    cloudLabel: {
+      fontWeight: '600',
+      paddingHorizontal: 10,
+      textAlign: 'center',
+      paddingTop: 15,
+      fontFamily: 'Inter_500Medium',
+      fontSize: 14,
+      letterSpacing: 0,
+      lineHeight: 17,
+      minHeight: 50,
     },
   }),
   TextEditOverlayStyles: StyleSheet.create({

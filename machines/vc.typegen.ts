@@ -17,6 +17,7 @@ export interface Typegen0 {
     getReceivedVcsResponse: 'GET_RECEIVED_VCS';
     getVcItemResponse: 'GET_VC_ITEM';
     loadMyVcs:
+      | 'DOWNLOAD_LIMIT_EXPIRED'
       | 'REFRESH_MY_VCS'
       | 'REMOVE_TAMPERED_VCS'
       | 'STORE_RESPONSE'
@@ -54,7 +55,6 @@ export interface Typegen0 {
   eventsCausingServices: {};
   matchesStates:
     | 'deletingFailedVcs'
-    | 'downloadLimitExpired'
     | 'init'
     | 'init.myVcs'
     | 'init.receivedVcs'

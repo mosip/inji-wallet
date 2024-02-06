@@ -93,4 +93,5 @@ interface LayoutProps {
   pY?: number | string | undefined;
   pX?: number | string | undefined;
   safe?: boolean;
+  children: React.ReactNode;
 }

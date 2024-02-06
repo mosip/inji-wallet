@@ -15,7 +15,7 @@ export const CloudSignOn: React.FC<CloudSignOnProps> = props => {
   });
 
   useEffect(() => {
-    if (response.type == 'success') {
+    if (response?.type == 'success') {
       CloudStorage.setGoogleDriveAccessToken(
         response.authentication.accessToken,
       );
@@ -37,6 +37,7 @@ export const CloudSignOn: React.FC<CloudSignOnProps> = props => {
           }
         });
       }}
+      margin={[0, 0, 0, 0]}
     />
   );
 };

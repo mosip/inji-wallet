@@ -7,13 +7,19 @@ import testIDProps from '../shared/commonUtil';
 
 export const BannerNotification: React.FC<BannerNotificationProps> = props => {
   return (
-    <View {...testIDProps(props.testId)}>
-      <Row style={Theme.Styles.downloadingVcPopUp}>
+    <View {...testIDProps(props.testId)} style={props.customStyle}>
+      <Row
+        style={
+          props.customStyle
+            ? Theme.Styles
+                .backupRestoreBanner /* TODO: rename to style without mentioning any specific flow */
+            : Theme.Styles.downloadingVcPopUp
+        }>
         <Text color={Theme.Colors.whiteText} weight="semibold" size="smaller">
           {props.message}
         </Text>
         <Icon
-          testID="close"
+          {...testIDProps('close')}
           name="close"
           onPress={props.onClosePress}
           color={Theme.Colors.whiteText}
@@ -28,4 +34,5 @@ export interface BannerNotificationProps {
   message: string;
   onClosePress: () => void;
   testId: string;
+  customStyle?: Object;
 }
