@@ -148,14 +148,12 @@ fileignoreconfig:
   - filename: machines/backupAndRestore/backupAndRestore.typegen.ts
     checksum: 509b9660553990841883c54f8986971f21c7315e7450c455bba2766738c58bee
   - filename: machines/backupAndRestore/backup.ts
-    checksum: a0cad5f0e2633dc11a9eba031408e03dd62b2b94c00fa82d9cb29d3721b68e70
+    checksum: 1a31a33327bbb34d602f0c1bfc911c7bf4ea0ece0b0ff9c6f44016ccf421d990
   - filename: machines/backupAndRestore/backup.typegen.ts
-    checksum: 0d751a7dec88014b831835784f138ff73d0aeb09008d5c4fbd66d1114f2bb1c4
+    checksum: 1c944f2373136b77546e9e9bd3024c56fbc52694eb0459223d9cdf4d3b04b837
   - filename: components/BackupAndRestoreAllScreenBanner.tsx
     checksum: 2c98e7e83959c9dac4dd12da32f81483c3d334bd05e279637cf465475fbf54b8
     checksum: f26489ce4ac607884437ad06c3117cc34d6cbcbcd3dd5719790fbe01a0853ee5
-  - filename: machines/backup.ts
-    checksum: df40cc92db9e459ab19d8382713afb24ae89c88a944623bbc21a7e6b9bc327a3
   - filename: locales/en.json
     checksum: 3bc37ce3bab898761fb14d6ae284e5922ff14fb55eee7c5b5ced4326dd35ced2
   - filename: locales/hin.json

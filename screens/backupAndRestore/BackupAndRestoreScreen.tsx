@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {useTranslation} from 'react-i18next';
 import {ScrollView, View} from 'react-native';
 import {AccountInformation} from '../../components/AccountInformation';
@@ -23,6 +23,12 @@ const BackupAndRestoreScreen: React.FC<BackupAndRestoreProps> = props => {
 
   const {t} = useTranslation('BackupAndRestore');
 
+  useEffect(() => {
+    if (!props.isLoading) {
+      backupController.LAST_BACKUP_DETAILS();
+    }
+  }, [props.isLoading]);
+
   const Loading = (
     <Centered fill>
       <LoaderAnimation showLogo={false} />
@@ -32,9 +38,9 @@ const BackupAndRestoreScreen: React.FC<BackupAndRestoreProps> = props => {
   function LastBackupDetails(): React.ReactNode {
     return (
       <View>
-        <Row>
-          <Column>{SvgImage.CloudUploadDoneIcon()}</Column>
-          {backupController.lastBackupDetails && (
+        {backupController.lastBackupDetails && (
+          <Row>
+            <Column>{SvgImage.CloudUploadDoneIcon()}</Column>
             <Column margin={'0 0 0 9'} align="center">
               <Timestamp
                 testId="lastBackup"
@@ -53,8 +59,8 @@ const BackupAndRestoreScreen: React.FC<BackupAndRestoreProps> = props => {
                 {backupController.lastBackupDetails.backupFileSize}MB
               </Text>
             </Column>
-          )}
-        </Row>
+          </Row>
+        )}
       </View>
     );
   }
@@ -189,7 +195,7 @@ const BackupAndRestoreScreen: React.FC<BackupAndRestoreProps> = props => {
           backgroundColor: Theme.Colors.lightGreyBackgroundColor,
           flex: 1,
         }}>
-        {props.isLoading ? (
+        {props.isLoading || backupController.isLoading ? (
           <Column fill align="center" crossAlign="center">
             <LoaderAnimation />
           </Column>

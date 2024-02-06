@@ -126,6 +126,28 @@ class Cloud {
       };
     }
   }
+  static async lastBackupDetails(
+    cloudFileName?: string | undefined,
+  ): Promise<BackupDetails> {
+    const tokenResult = await Cloud.getAccessToken();
+    CloudStorage.setGoogleDriveAccessToken(tokenResult);
+    if (!cloudFileName) {
+      const allFiles = await CloudStorage.readdir(
+        `/`,
+        CloudStorageScope.AppData,
+      );
+      cloudFileName = allFiles[0];
+    }
+    const {birthtimeMs: creationTime, size} = await CloudStorage.stat(
+      cloudFileName,
+      CloudStorageScope.AppData,
+    );
+    const backupDetails = {
+      backupCreationTime: creationTime,
+      backupFileSize: bytesToMB(size),
+    };
+    return backupDetails;
+  }
   static async removeOldDriveBackupFiles(fileName: string) {
     const allFiles = await CloudStorage.readdir(`/`, CloudStorageScope.AppData);
     const toBeRemovedFiles = allFiles.filter(file => file !== fileName);
@@ -165,7 +187,7 @@ class Cloud {
       const filePath = zipFilePath(fileName);
       const fileContent = await readFile(filePath, 'base64');
 
-      const writeResult = await CloudStorage.writeFile(
+      await CloudStorage.writeFile(
         cloudFileName,
         fileContent,
         CloudStorageScope.AppData,
@@ -176,13 +198,8 @@ class Cloud {
       );
 
       if (isFileUploaded) {
-        const {ctime: creationTime, size} = await fileStorage.getInfo(filePath);
-        const backupDetails = {
-          backupCreationTime: creationTime,
-          backupFileSize: bytesToMB(size),
-        };
+        const backupDetails = await this.lastBackupDetails(cloudFileName);
         console.log('wrote to cloudFileName ', cloudFileName);
-        console.log('writeResult ', writeResult);
         await this.removeOldDriveBackupFiles(`${fileName}.zip`);
         return Promise.resolve({
           status: this.status.SUCCESS,
@@ -276,7 +293,7 @@ export type isSignedInResult = {
 };
 
 export type CloudUploadResult = {
-  status: string;
+  status: (typeof Cloud.status)[keyof typeof Cloud.status];
   error: string | null;
   backupDetails?: BackupDetails;
 };
