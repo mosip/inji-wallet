@@ -1,4 +1,5 @@
 import React from 'react';
+import {View} from 'react-native';
 import {BannerNotification} from './BannerNotification';
 import {UseWalletBindingSuccess} from './WalletBindingSuccessController';
 import {BackupAndRestoreBannerNotification} from './BackupAndRestoreBannerNotification';
@@ -13,12 +14,14 @@ export const BannerNotificationContainer: React.FC = () => {
       <BackupAndRestoreBannerNotification />
 
       {WalletBindingSuccess && (
-        <BannerNotification
-          message={t('MyVcsTab:activated')}
-          onClosePress={WalletBindingController.DISMISS}
-          key={'activatedVcPopup'}
-          testId={'activatedVcPopup'}
-        />
+        <View style={{marginTop: 10, marginBottom: 10}}>
+          <BannerNotification
+            message={t('MyVcsTab:activated')}
+            onClosePress={WalletBindingController.DISMISS}
+            key={'activatedVcPopup'}
+            testId={'activatedVcPopup'}
+          />
+        </View>
       )}
     </>
   );

@@ -183,6 +183,6 @@ fileignoreconfig:
   - filename: .github/workflows/ui-automation.yml
     checksum: 0b26a5dcb7524ba15d6aaeaf04f2ef94be9d25ef702d9072d6628bcd58e50f36 
   - filename: components/BannerNotificationContainer.tsx
-    checksum: 3fc523a1aa09669de9dec9fa8d6d71a8c581c0529638bfba1be39f28a8853637  
+    checksum: a98ff1a0dd96d3ead4b8191320be8b0c7a558cda6b0de39f1c62aaa8efef9fb8  
     version: ""
 
