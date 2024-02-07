@@ -1,5 +1,5 @@
 import {useInterpret, useSelector} from '@xstate/react';
-import {useRef} from 'react';
+import {useContext, useRef} from 'react';
 
 import {
   BackupAndRestoreSetupEvents,
@@ -12,6 +12,9 @@ import {
   selectProfileInfo,
   selectShowAccountSelectionConfirmation,
 } from '../../machines/backupAndRestore/backupAndRestoreSetup';
+import {GlobalContext} from '../../shared/GlobalContext';
+import {selectIsBackUpAndRestoreOptionExplored} from '../../machines/settings';
+import {SettingsEvents} from '../../machines/settings';
 
 export function useBackupAndRestoreSetup() {
   const machine = useRef(
@@ -20,6 +23,8 @@ export function useBackupAndRestoreSetup() {
     }),
   );
   const service = useInterpret(machine.current);
+  const {appService} = useContext(GlobalContext);
+  const settingsService = appService.children.get('settings');
 
   return {
     isLoading: useSelector(service, selectIsLoading),
@@ -33,9 +38,16 @@ export function useBackupAndRestoreSetup() {
     isSigningIn: useSelector(service, selectIsSigningIn),
     isSigningInFailed: useSelector(service, selectIsSigningInFailure),
     isSigningInSuccessful: useSelector(service, selectIsSigningInSuccessful),
-
-    BACKUP_AND_RESTORE: () =>
+    isBackupAndRestoreExplored: useSelector(
+      settingsService,
+      selectIsBackUpAndRestoreOptionExplored,
+    ),
+    BACKUP_AND_RESTORE: () => {
       service.send(BackupAndRestoreSetupEvents.HANDLE_BACKUP_AND_RESTORE()),
+        settingsService.send(
+          SettingsEvents.SET_BACKUP_AND_RESTORE_OPTION_EXPLORED(),
+        );
+    },
     PROCEED_ACCOUNT_SELECTION: () =>
       service.send(BackupAndRestoreSetupEvents.PROCEED()),
     GO_BACK: () => service.send(BackupAndRestoreSetupEvents.GO_BACK()),
