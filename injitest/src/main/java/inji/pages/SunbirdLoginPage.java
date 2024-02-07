@@ -22,43 +22,54 @@ public class SunbirdLoginPage extends BasePage {
     private WebElement loginWithKBA;
     
     @AndroidFindBy(uiAutomator = "UiSelector().className(\"android.widget.EditText\").instance(0)")
+    @iOSXCUITFindBy(iOSClassChain = "**/XCUIElementTypeTextField[`name == \"Please fill in this field\"`][1]")
     private WebElement enterPolicyTextBox;
     
     @AndroidFindBy(uiAutomator = "UiSelector().className(\"android.widget.EditText\").instance(1)")
+    @iOSXCUITFindBy(iOSClassChain = "**/XCUIElementTypeTextField[`name == \"Please fill in this field\"`][2]")
     private WebElement enterFullnameTextBox;
     
     @AndroidFindBy(uiAutomator = "UiSelector().className(\"android.widget.Spinner\")")
+    @iOSXCUITFindBy(iOSClassChain = "**/XCUIElementTypeOther[`name == \"Please fill in this field\"`]")
     private WebElement enterDateOfBirthTextBox;
     
     @AndroidFindBy(uiAutomator = "UiSelector().className(\"android.widget.Button\").instance(2)")
+    @iOSXCUITFindBy(accessibility = "Done")
     private WebElement clickOnSetButton;
     
     @AndroidFindBy(xpath = "//android.view.View[@content-desc='01 January 2024']")
+    @iOSXCUITFindBy(iOSClassChain = "**/XCUIElementTypeButton[`name == \"Monday, 1 January\"`]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther")
     private WebElement DateOfBirth;
-    
     @AndroidFindBy(uiAutomator = "UiSelector().className(\"android.widget.Button\").instance(1)")
+    @iOSXCUITFindBy(iOSClassChain = "**/XCUIElementTypeButton[`name == \"Login\"`]")
     private WebElement loginButton;
-    
+
     @AndroidFindBy(xpath = "//android.widget.ImageButton[@content-desc=\"Previous month\"]")
+    @iOSXCUITFindBy(accessibility = "Previous Month")
     private WebElement previousMonth;
     
     @AndroidFindBy(accessibility = "activated")
+    @iOSXCUITFindBy(accessibility = "Activated")
     private WebElement activatedStatus;
     
     @AndroidFindBy(accessibility = "a square logo of a Sunbird")
+    @iOSXCUITFindBy(accessibility = "a square logo of a Sunbird")
     private WebElement sunbirdLogo;
 
     @AndroidFindBy(accessibility = "NameValue")
+    @iOSXCUITFindBy(accessibility = "NameValue")
     private WebElement fullName;
 
     @AndroidFindBy(accessibility = "Policy NameValue")
+    @iOSXCUITFindBy(accessibility = "Policy NameValue")
     private WebElement policyName;
 
     @AndroidFindBy(accessibility = "ID TypeValue")
+    @iOSXCUITFindBy(accessibility = "ID TypeValue")
     private WebElement idType;
 
-
-
+    @iOSXCUITFindBy(accessibility = "Continue")
+    private WebElement continueButton;
 
     public SunbirdLoginPage(AppiumDriver driver) {
         super(driver);
@@ -132,6 +143,9 @@ public class SunbirdLoginPage extends BasePage {
     public String getIdTypeForSunbirdCard() {
         basePage.retrieToGetElement(idType);
         return this.getTextFromLocator(idType);
+    }
+    public void clickOnContinueButtonInSigninPopupIos(){
+        clickOnElement(continueButton);
     }
 
 }
