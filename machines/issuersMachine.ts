@@ -46,6 +46,7 @@ import {CACHED_API} from '../shared/api';
 import {request} from '../shared/request';
 import {BiometricCancellationError} from '../shared/error/BiometricCancellationError';
 import {VCMetadata} from '../shared/VCMetadata';
+import Cloud, {isSignedInResult} from '../shared/googleCloudUtils';
 
 const model = createModel(
   {
@@ -377,8 +378,14 @@ export const IssuersMachine = model.createMachine(
           'storeVcsContext',
           'storeVcMetaContext',
           'logDownloaded',
-          'sendBackupEvent',
         ],
+        invoke: {
+          src: 'isUserSignedAlready',
+          onDone: {
+            cond: 'isSignedIn',
+            actions: ['sendBackupEvent'],
+          },
+        },
       },
       idle: {
         on: {
@@ -578,6 +585,9 @@ export const IssuersMachine = model.createMachine(
       },
     },
     services: {
+      isUserSignedAlready: () => async () => {
+        return await Cloud.isSignedInAlready();
+      },
       downloadIssuersList: async () => {
         return await CACHED_API.fetchIssuers();
       },
@@ -649,6 +659,8 @@ export const IssuersMachine = model.createMachine(
       },
     },
     guards: {
+      isSignedIn: (_context, event) =>
+        (event.data as isSignedInResult).isSignedIn,
       hasKeyPair: context => !!context.publicKey,
       isInternetConnected: (_, event) => !!event.data.isConnected,
       isOIDCflowCancelled: (_, event) => {
