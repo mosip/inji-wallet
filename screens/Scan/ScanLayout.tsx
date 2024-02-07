@@ -6,16 +6,18 @@ import {useScanLayout} from './ScanLayoutController';
 import {ScanScreen} from './ScanScreen';
 import {ProgressingModal} from '../../components/ProgressingModal';
 import {SCAN_ROUTES} from '../../routes/routesConstants';
-import {SharingSuccessModal} from './SuccessfullySharedModal';
+import {SharingStatusModal} from './SharingStatusModal';
 import {Theme} from '../../components/ui/styleUtils';
 import {Icon} from 'react-native-elements';
 import {Loader} from '../../components/ui/Loader';
+import {SvgImage} from '../../components/ui/svg';
 
 const ScanStack = createNativeStackNavigator();
 
 export const ScanLayout: React.FC = () => {
   const {t} = useTranslation('ScanScreen');
   const controller = useScanLayout();
+  let bleErrorCode = controller.bleError.code;
 
   if (
     controller.statusOverlay != null &&
@@ -68,19 +70,37 @@ export const ScanLayout: React.FC = () => {
         />
       </ScanStack.Navigator>
 
-      <SharingSuccessModal
+      <SharingStatusModal
         isVisible={controller.isAccepted}
         testId={'sharingSuccessModal'}
+        status={'successfullyShared'}
+        title={t('status.accepted.title')}
+        message={t('status.accepted.message')}
+        image={SvgImage.SuccessLogo()}
+        goToHome={controller.GOTO_HOME}
+        goToHistory={controller.GOTO_HISTORY}
       />
 
-      <ProgressingModal
+      <SharingStatusModal
         isVisible={controller.isDisconnected}
-        title={t('RequestScreen:status.disconnected.title')}
-        isHintVisible={true}
-        hint={t('RequestScreen:status.disconnected.message')}
-        onCancel={controller.DISMISS}
+        testId={'walletSideSharingErrorModal'}
+        status={'walletSideSharingError'}
+        title={t('status.disconnected.title')}
+        message={t('status.disconnected.message')}
+        image={SvgImage.ErrorLogo()}
+        onBackToHome={controller.DISMISS}
         onRetry={controller.onRetry}
-        progress
+      />
+
+      <SharingStatusModal
+        isVisible={controller.isBleError}
+        testId={'walletSideSharingErrorModal'}
+        status={'walletSideSharingError'}
+        title={t(`status.bleError.${bleErrorCode}.title`)}
+        message={t(`status.bleError.${bleErrorCode}.message`)}
+        image={SvgImage.ErrorLogo()}
+        onBackToHome={controller.DISMISS}
+        onRetry={controller.onRetry}
       />
     </React.Fragment>
   );
