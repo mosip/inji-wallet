@@ -513,9 +513,58 @@
         "message": "Mangyaring kumonekta sa internet upang paganahin ang Online sharing mode"
       },
       "bleError": {
-        "title": "Nabigong ilipat",
-        "message": "Nagkaproblema habang inililipat ang card. Pakisubukang muli.",
-        "hint": "Error: {{code}}"
+        "TVW_CON_002":{
+          "title": "Nabigo ang koneksyon!",
+          "message": "Naputol ang koneksyon. Pakisubukang muli."
+        },
+        "TVW_CON_003":{
+          "title": "Nabigo ang koneksyon!",
+          "message": "Naputol ang koneksyon. Pakitiyak na ang mga Bluetooth device ay nasa discoverable mode at subukang muli."
+        },
+        "TVW_REP_001":{
+          "title": "Natanggap ang Sirang Tugon!",
+          "message": "Ang data na natanggap mula sa wallet ay sira at hindi maproseso. Hilingin sa nagpadala na maglipat muli."
+        },
+        "TVV_CON_001":{
+          "title": "Nabigo ang koneksyon!",
+          "message": "Hindi makapagtatag ng pinakamainam na koneksyon sa nagpadala. Pakisubukang muli."
+        },
+        "TVV_TRA_001":{
+          "title": "Natanggap ang Sirang Tugon!",
+          "message": "Ang data na natanggap mula sa wallet ay sira at hindi maproseso. Mangyaring hilingin ang nagpadala na maglipat muli."
+        },
+        "TVV_TRA_002":{
+          "title": "Natanggap ang Sirang Tugon!",
+          "message": "Ang data na natanggap mula sa wallet ay sira at hindi maproseso. Mangyaring hilingin ang nagpadala na maglipat muli."
+        },
+        "TUV_UNK_001":{
+          "title": "May pagkakamaling naganap!",
+          "message": "Dahil sa teknikal na error, hindi namin naibahagi ang card sa umaasa na partido. Pakisubukang muli."
+        },
+        "TVW_UNK_001":{
+          "title": "Nabigo ang koneksyon!",
+          "message": "Naputol ang koneksyon. Pakisubukang muli."
+        },
+        "TVW_UNK_002":{
+          "title": "Nabigo ang koneksyon!",
+          "message": "Naputol ang koneksyon. Pakisubukang muli."
+        },
+        "TVW_UNK_003":{
+          "title": "Nabigo ang koneksyon!",
+          "message": "Naputol ang koneksyon. Pakisubukang muli."
+        },
+        "TVV_UNK_001":{
+          "title": "May pagkakamaling naganap!",
+          "message": "An unexpected error occurred while processing the received data. Please check your connection and ask the wallet to resend the card."
+        },
+        "TVV_UNK_002":{
+          "title": "May pagkakamaling naganap!",
+          "message": "An unexpected error occurred while processing the received data. Please check your connection and ask the wallet to resend the card."
+        },
+        "TVV_UNK_003":{
+          "title": "May pagkakamaling naganap!",
+          "message": "An unexpected error occurred while processing the received data. Please check your connection and ask the wallet to resend the card."
+        }
       }
     },
     "online": "Online",
@@ -581,9 +630,64 @@
         "message": "Ang iyong card ay itinapon ng verifier"
       },
       "bleError": {
-        "title": "Nabigong ilipat!",
-        "message": "Nagkaproblema habang inililipat ang card. Pakisubukang muli.",
-        "hint": "Error: {{code}}"
+        "retry": "Subukan muli",
+        "home": "Bahay",
+        "TVW_CON_001":{
+          "title": "Nabigo ang koneksyon!",
+          "message": "Di-wastong QR code ang na-scan. Pakisubukang i-scan muli ang wastong QR code mula sa umaasa na partido."
+        },
+        "TVW_CON_002":{
+          "title": "Nabigo ang koneksyon!",
+          "message": "Ang wallet ay hindi makapagtatag ng pinakamainam na koneksyon sa verifier. Pakisubukang muli."
+        },
+        "TVW_CON_003":{
+          "title": "Nabigo ang Pagtuklas ng Serbisyo!",
+          "message": "Serbisyo DisPaumanhin, ngunit hindi kami makatuklas ng koneksyon sa bluetooth kahit na pagkatapos ng maraming pagsubok. Pakitiyak na ang mga bluetooth device ay nasa discoverable mode at subukang muli.covery Failed!"
+        },
+        "TVW_REP_001":{
+          "title": "May pagkakamaling naganap!",
+          "message": "Dahil sa teknikal na error, hindi namin mailipat ang file. Pakisubukang muli. nangyari!"
+        },
+        "TVV_CON_001":{
+          "title": "Nabigo ang koneksyon!",
+          "message": "Ang wallet ay hindi makapagtatag ng pinakamainam na koneksyon sa verifier. Pakisubukang muli."
+        },
+        "TVV_TRA_001":{
+          "title": "May pagkakamaling naganap!",
+          "message": "Nagkaproblema habang inililipat ang card. Pakisubukang muli."
+        },
+        "TVV_TRA_002":{
+          "title": "May pagkakamaling naganap!",
+          "message": "Nagkaproblema habang inililipat ang card. Pakisubukang muli."
+        },
+        "TUV_UNK_001":{
+          "title": "May pagkakamaling naganap!",
+          "message": "Dahil sa teknikal na error, hindi namin naibahagi ang card sa umaasa na partido. Pakisubukang muli."
+        },
+        "TVW_UNK_001":{
+          "title": "May pagkakamaling naganap!",
+          "message": "Dahil sa teknikal na error, hindi namin naibahagi ang card sa umaasa na partido. Pakisubukang muli."
+        },
+        "TVW_UNK_002":{
+          "title": "May pagkakamaling naganap!",
+          "message": "Dahil sa teknikal na error, hindi namin naibahagi ang card sa umaasa na partido. Pakisubukang muli."
+        },
+        "TVW_UNK_003":{
+          "title": "May pagkakamaling naganap!",
+          "message": "Dahil sa teknikal na error, hindi namin naibahagi ang card sa umaasa na partido. Pakisubukang muli."
+        },
+        "TVV_UNK_001":{
+          "title": "May pagkakamaling naganap!",
+          "message": "Nagkaproblema habang inililipat ang card. Pakisubukang muli."
+        },
+        "TVV_UNK_002":{
+          "title": "May pagkakamaling naganap!",
+          "message": "Nagkaproblema habang inililipat ang card. Pakisubukang muli."
+        },
+        "TVV_UNK_003":{
+          "title": "May pagkakamaling naganap!",
+          "message": "Nagkaproblema habang inililipat ang card. Pakisubukang muli."
+        }
       }
     }
   },

@@ -184,14 +184,6 @@ export function useScanLayout() {
       message: t('status.offline'),
       onBackdropPress: DISMISS,
     };
-  } else if (isBleError) {
-    statusOverlay = {
-      title: t('status.bleError.title'),
-      hint: t('status.bleError.message'),
-      onButtonPress: DISMISS,
-      onRetry,
-      progress: true,
-    };
   }
 
   useEffect(() => {

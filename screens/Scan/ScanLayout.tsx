@@ -88,8 +88,8 @@ export const ScanLayout: React.FC = () => {
         title={t('status.disconnected.title')}
         message={t('status.disconnected.message')}
         image={SvgImage.ErrorLogo()}
-        onBackToHome={controller.DISMISS}
         onRetry={controller.onRetry}
+        onBackToHome={controller.GOTO_HOME}
       />
 
       <SharingStatusModal
@@ -99,7 +99,7 @@ export const ScanLayout: React.FC = () => {
         title={t(`status.bleError.${bleErrorCode}.title`)}
         message={t(`status.bleError.${bleErrorCode}.message`)}
         image={SvgImage.ErrorLogo()}
-        onBackToHome={controller.DISMISS}
+        onBackToHome={controller.GOTO_HOME}
         onRetry={controller.onRetry}
       />
     </React.Fragment>
