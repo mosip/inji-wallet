@@ -93,7 +93,7 @@ const BackupAndRestoreScreen: React.FC<BackupAndRestoreProps> = props => {
           )}
         </View>
       </Row>
-      <Row style={{marginLeft: 4, marginRight: 4}}>
+      <Row style={{marginLeft: 1, marginRight: 1}}>
         {backupController.isBackupInProgress ? (
           Loading
         ) : (

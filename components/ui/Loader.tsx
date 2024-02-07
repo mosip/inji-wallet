@@ -37,7 +37,7 @@ export const Loader: React.FC<LoaderProps> = props => {
         </Modal>
       ) : (
         <Fragment>
-          <Row style={{backgroundColor: 'red'}}>
+          <Row>
             <SafeAreaView style={Theme.ModalStyles.header}>
               <Row
                 fill
