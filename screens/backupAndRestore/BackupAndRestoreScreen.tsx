@@ -35,6 +35,12 @@ const BackupAndRestoreScreen: React.FC<BackupAndRestoreProps> = props => {
     </Centered>
   );
 
+  useEffect(() => {
+    if (props.shouldTriggerAutoBackup === true) {
+      backupController.DATA_BACKUP();
+    }
+  }, [props.shouldTriggerAutoBackup]);
+
   function LastBackupDetails(): React.ReactNode {
     return (
       <View>
@@ -217,4 +223,5 @@ interface BackupAndRestoreProps {
   profileInfo: ProfileInfo | undefined;
   isLoading: boolean;
   onBackPress: () => void;
+  shouldTriggerAutoBackup: boolean;
 }

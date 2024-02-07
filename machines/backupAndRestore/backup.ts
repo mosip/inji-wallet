@@ -125,7 +125,7 @@ export const backupMachine = model.createMachine(
         states: {
           idle: {},
           checkDataAvailabilityForBackup: {
-            entry: 'loadVcs',
+            entry: ['sendDataBackupStartEvent', 'loadVcs'],
             on: {
               STORE_RESPONSE: [
                 {
@@ -140,7 +140,6 @@ export const backupMachine = model.createMachine(
             },
           },
           checkStorageAvailability: {
-            entry: ['sendDataBackupStartEvent'],
             invoke: {
               src: 'checkStorageAvailability',
               onDone: [

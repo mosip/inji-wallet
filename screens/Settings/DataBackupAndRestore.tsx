@@ -100,6 +100,7 @@ export const DataBackupAndRestore: React.FC = ({} = () => {
           profileInfo={controller.profileInfo}
           onBackPress={controller.GO_BACK}
           isLoading={controller.isSigningIn}
+          shouldTriggerAutoBackup={controller.shouldTriggerAutoBackup}
         />
       )}
       {controller.isLoading && (
