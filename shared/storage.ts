@@ -53,7 +53,7 @@ async function generateHmac(
 class Storage {
   static exportData = async (encryptionKey: string) => {
     const completeBackupData = {};
-    const dataFromDB: Record<string, any> = {};
+    let dataFromDB: Record<string, any> = {};
 
     const allKeysInDB = await MMKV.indexer.strings.getKeys();
     const keysToBeExported = allKeysInDB.filter(key =>
@@ -64,17 +64,22 @@ class Storage {
     const encryptedDataPromises = keysToBeExported.map(key =>
       MMKV.getItem(key),
     );
-
-    Promise.all(encryptedDataPromises).then(encryptedDataList => {
-      keysToBeExported.forEach(async (key, index) => {
+    try {
+      const encryptedDataList = await Promise.all(encryptedDataPromises);
+      for (let index = 0; index < keysToBeExported.length; index++) {
+        const key = keysToBeExported[index];
         let encryptedData = encryptedDataList[index];
         if (encryptedData != null) {
           const decryptedData = await decryptJson(encryptionKey, encryptedData);
           dataFromDB[key] = JSON.parse(decryptedData);
         }
-      });
+      }
+    } catch (error) {
+      console.error('decryption of back up data is failed due to this error:');
+    }
+    dataFromDB['myVCs'].map(myVcMetadata => {
+      myVcMetadata.isPinned = false;
     });
-
     completeBackupData['dataFromDB'] = dataFromDB;
     completeBackupData['VC_Records'] = {};
 
