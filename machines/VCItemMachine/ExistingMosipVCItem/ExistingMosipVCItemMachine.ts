@@ -1173,14 +1173,6 @@ export const ExistingMosipVCItemMachine =
           },
         ),
 
-        markVcValid: assign(context => {
-          return {
-            ...context,
-            isVerified: true,
-            lastVerifiedOn: Date.now(),
-          };
-        }),
-
         setTransactionId: assign({
           transactionId: () => String(new Date().valueOf()).substring(3, 13),
         }),
