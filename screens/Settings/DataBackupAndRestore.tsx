@@ -35,7 +35,7 @@ export const DataBackupAndRestore: React.FC = ({} = () => {
                 {!controller.isBackupAndRestoreExplored && (
                   <Text
                     testID="newLabel"
-                    style={Theme.BackupStyles.newStyles}
+                    style={Theme.Styles.newLabel}
                     color={Theme.Colors.whiteText}>
                     {t('new')}
                   </Text>

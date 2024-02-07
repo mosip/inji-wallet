@@ -690,6 +690,15 @@ export const DefaultTheme = {
       paddingVertical: 40,
       paddingHorizontal: 24,
     },
+    newLabel: {
+      backgroundColor: Colors.Orange,
+      paddingHorizontal: 5,
+      paddingVertical: 4,
+      borderRadius: 4,
+      fontSize: 10,
+      fontFamily: 'Inter_700Bold',
+      lineHeight: 12,
+    },
   }),
   QrCodeStyles: StyleSheet.create({
     magnifierZoom: {
@@ -1075,13 +1084,6 @@ export const DefaultTheme = {
       alignItems: 'flex-start',
       marginHorizontal: 18,
       marginVertical: 6,
-    },
-  }),
-  BackupStyles: StyleSheet.create({
-    newStyles: {
-      backgroundColor: Colors.Orange,
-      paddingHorizontal: 10,
-      borderRadius: 3,
     },
   }),
   UpdateModalStyles: StyleSheet.create({
