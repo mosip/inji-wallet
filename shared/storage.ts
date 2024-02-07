@@ -210,15 +210,6 @@ class Storage {
     }
   };
 
-  static getRestoredVcUpdatedRequestId = (unixTimeStamp, requestId) => {
-    const restoredVcRequestedId = requestId.split('_'); //checks if this restored VC is already restored before
-    const isVcRestoredBefore = restoredVcRequestedId.length > 1;
-    if (isVcRestoredBefore) {
-      return unixTimeStamp + '_' + restoredVcRequestedId[1];
-    }
-    return unixTimeStamp + '_' + requestId;
-  };
-
   private static async loadVCs(completeBackupData: any, encryptionKey: any) {
     const allVCs = completeBackupData['VC_Records'];
     const allVCKeys = Object.keys(allVCs);
@@ -226,15 +217,15 @@ class Storage {
 
     allVCKeys.map(async key => {
       let vc = allVCs[key];
-      const unixTimeStamp = Date.now();
-      const prevRequestId = vc.vcMetadata.requestId;
-      vc.vcMetadata.requestId = this.getRestoredVcUpdatedRequestId(
-        unixTimeStamp,
-        vc.vcMetadata.requestId,
-      );
+      const currentUnixTimeStamp = Date.now();
+      const prevUnixTimeStamp = vc.vcMetadata.timestamp;
+      vc.vcMetadata.timestamp = currentUnixTimeStamp;
       dataFromDB.myVCs.map(myVcMetadata => {
-        if (myVcMetadata.requestId === prevRequestId) {
-          myVcMetadata.requestId = vc.vcMetadata.requestId;
+        if (
+          myVcMetadata.requestId === vc.vcMetadata.requestId &&
+          myVcMetadata.timestamp === prevUnixTimeStamp
+        ) {
+          myVcMetadata.timestamp = currentUnixTimeStamp;
         }
       });
       const updatedVcKey = new VCMetadata(vc.vcMetadata).getVcKey();
