@@ -12,12 +12,15 @@ import {REQUEST_ROUTES} from '../../routes/routesConstants';
 import {SquircleIconPopUpModal} from '../../components/ui/SquircleIconPopUpModal';
 import {ProgressingModal} from '../../components/ProgressingModal';
 import {BackupAndRestoreAllScreenBanner} from '../../components/BackupAndRestoreAllScreenBanner';
+import {SharingStatusModal} from '../Scan/SharingStatusModal';
+import {SvgImage} from '../../components/ui/svg';
 const RequestStack = createNativeStackNavigator();
 
 export const RequestLayout: React.FC = () => {
   const {t} = useTranslation('RequestScreen');
   const controller = useRequestLayout();
   const receivedCardsController = useReceivedVcsTab();
+  let bleErrorCode = controller.bleError.code;
 
   return (
     <React.Fragment>
@@ -81,23 +84,23 @@ export const RequestLayout: React.FC = () => {
         />
       )}
 
-      <ProgressingModal
-        title={t('status.disconnected.title')}
-        hint={t('status.disconnected.message')}
+      <SharingStatusModal
         isVisible={controller.isDisconnected}
-        isHintVisible={true}
-        progress={true}
-        onCancel={controller.DISMISS}
+        testId={'sharingErrorModal'}
+        status={'verifierSharingErrorModal'}
+        title={t('status.disconnected.title')}
+        message={t('status.disconnected.message')}
+        image={SvgImage.ErrorLogo()}
         onRetry={controller.RESET}
       />
 
-      <ProgressingModal
-        title={t('status.bleError.title')}
-        hint={t('status.bleError.message')}
+      <SharingStatusModal
         isVisible={controller.isBleError}
-        isHintVisible={true}
-        progress={true}
-        onCancel={controller.DISMISS}
+        testId={'sharingErrorModal'}
+        status={'verifierSharingErrorModal'}
+        title={t(`status.bleError.${bleErrorCode}.title`)}
+        message={t(`status.bleError.${bleErrorCode}.message`)}
+        image={SvgImage.ErrorLogo()}
         onRetry={controller.RESET}
       />
     </React.Fragment>

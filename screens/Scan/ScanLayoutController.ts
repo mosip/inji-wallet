@@ -19,6 +19,7 @@ import {
   selectIsDone,
 } from '../../machines/bleShare/scan/selectors';
 import {
+  selectBleError,
   selectIsAccepted,
   selectIsDisconnected,
   selectIsExchangingDeviceInfo,
@@ -47,6 +48,7 @@ export function useScanLayout() {
   const isLocationDisabled = useSelector(scanService, selectIsLocationDisabled);
   const isLocationDenied = useSelector(scanService, selectIsLocationDenied);
   const isBleError = useSelector(scanService, selectIsHandlingBleError);
+  const bleError = useSelector(scanService, selectBleError);
 
   const locationError = {message: '', button: ''};
 
@@ -237,6 +239,7 @@ export function useScanLayout() {
     statusOverlay,
     isStayInProgress,
     isBleError,
+    bleError,
     DISMISS,
     isAccepted,
     onRetry,
