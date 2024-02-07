@@ -1103,6 +1103,10 @@ export const PurpleTheme = {
       fontSize: 14,
       color: Colors.Gray44,
     },
+    actionOrLoaderContainer: {
+      marginLeft: 1,
+      marginRight: 1,
+    },
     backupProcessInfo: {
       fontWeight: 'bold',
       paddingHorizontal: 20,

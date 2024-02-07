@@ -1107,6 +1107,10 @@ export const DefaultTheme = {
       fontFamily: 'Inter_600SemiBold',
       marginHorizontal: 30,
     },
+    actionOrLoaderContainer: {
+      marginLeft: 1,
+      marginRight: 1,
+    },
     cloudInfo: {
       paddingHorizontal: 20,
       textAlign: 'center',
