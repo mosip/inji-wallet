@@ -31,7 +31,7 @@ public class SharePage extends BasePage {
 
 	@AndroidFindBy(accessibility = "holdPhoneSteadyMessage")
     @iOSXCUITFindBy(accessibility = "holdPhoneSteadyMessage")
-	 private WebElement holdCameraSteady;
+    private WebElement holdCameraSteady;
 	
 	@AndroidFindBy(accessibility = "bluetoothIsTurnedOffMessage")
     private WebElement bluetoothIsTurnedOffMessage;
