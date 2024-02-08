@@ -4,10 +4,7 @@ import {Theme} from '../../components/ui/styleUtils';
 import {Modal} from '../../components/ui/Modal';
 import {Pressable, Dimensions} from 'react-native';
 import {Button, Column, Row, Text} from '../../components/ui';
-import {useScanLayout} from './ScanLayoutController';
-import {useSendVcScreen} from './SendVcScreenController';
 import testIDProps from '../../shared/commonUtil';
-import {SvgImage} from '../../components/ui/svg';
 import {Icon} from 'react-native-elements';
 
 export const SharingStatusModal: React.FC<SharingStatusModalProps> = props => {
