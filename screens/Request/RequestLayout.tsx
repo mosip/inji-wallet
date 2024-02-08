@@ -63,7 +63,7 @@ export const RequestLayout: React.FC = () => {
             headerLeft: () => (
               <HeaderBackButton
                 onPress={() => {
-                  controller.RESET();
+                  controller.GOTO_HOME();
                 }}
                 style={Theme.Styles.IconContainer}
                 tintColor={Theme.Colors.Icon}

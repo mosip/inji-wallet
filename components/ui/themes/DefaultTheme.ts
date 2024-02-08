@@ -459,6 +459,7 @@ export const DefaultTheme = {
       height: 36,
       borderRadius: 10,
       backgroundColor: Colors.LightOrange,
+      justifyContent: 'center',
     },
     cameraFlipIcon: {
       height: 42,
@@ -516,10 +517,6 @@ export const DefaultTheme = {
       paddingHorizontal: 18,
       paddingVertical: 9,
       justifyContent: 'space-between',
-    },
-    iconContainer: {
-      flexDirection: 'row',
-      alignItems: 'flex-end',
     },
     scannerContainer: {
       borderRadius: 24,

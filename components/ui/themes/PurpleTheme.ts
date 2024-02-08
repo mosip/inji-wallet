@@ -464,6 +464,7 @@ export const PurpleTheme = {
       height: 36,
       borderRadius: 10,
       backgroundColor: Colors.LightPurple,
+      justifyContent: 'center',
     },
     cameraFlipIcon: {
       width: 42,
@@ -520,10 +521,6 @@ export const PurpleTheme = {
       paddingHorizontal: 18,
       paddingVertical: 9,
       justifyContent: 'space-between',
-    },
-    iconContainer: {
-      flexDirection: 'row',
-      alignItems: 'flex-end',
     },
     scannerContainer: {
       borderRadius: 24,
