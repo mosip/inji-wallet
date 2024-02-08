@@ -1,7 +1,7 @@
 import {useSelector} from '@xstate/react';
 import {useContext, useState} from 'react';
 import {ActorRefFrom} from 'xstate';
-import {selectShareableVcsMetadata} from '../../machines/vc';
+import {selectShareableVcsMetadata} from '../../machines/VCItemMachine/vc';
 import {ExistingMosipVCItemMachine} from '../../machines/VCItemMachine/ExistingMosipVCItem/ExistingMosipVCItemMachine';
 import {GlobalContext} from '../../shared/GlobalContext';
 import {

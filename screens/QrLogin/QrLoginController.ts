@@ -24,8 +24,7 @@ import {
   selectIsSendingAuthenticate,
   selectEssentialClaims,
 } from '../../machines/QrLoginMachine';
-import {selectBindedVcsMetadata} from '../../machines/vc';
-import {ExistingMosipVCItemMachine} from '../../machines/VCItemMachine/ExistingMosipVCItem/ExistingMosipVCItemMachine';
+import {selectBindedVcsMetadata} from '../../machines/VCItemMachine/vc';
 import {GlobalContext} from '../../shared/GlobalContext';
 import {VC} from '../../types/VC/ExistingMosipVC/vc';
 import {QrLoginProps} from './QrLogin';

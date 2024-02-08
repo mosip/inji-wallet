@@ -10,7 +10,7 @@ import {
   selectInProgressVcDownloads,
   selectIsTampered,
   selectDownloadingFailedVcs,
-} from '../../machines/vc';
+} from '../../machines/VCItemMachine/vc';
 import {
   selectWalletBindingError,
   selectShowWalletBindingError,

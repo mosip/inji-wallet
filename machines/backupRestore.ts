@@ -18,7 +18,7 @@ import {
   sendEndEvent,
   getEndEventData,
 } from '../shared/telemetry/TelemetryUtils';
-import {VcEvents} from './vc';
+import {VcEvents} from './VCItemMachine/vc';
 
 const model = createModel(
   {
