@@ -10,6 +10,8 @@ import {SharingSuccessModal} from './SuccessfullySharedModal';
 import {Theme} from '../../components/ui/styleUtils';
 import {Icon} from 'react-native-elements';
 import {Loader} from '../../components/ui/Loader';
+import {Text} from '../../components/ui';
+import {View, I18nManager} from 'react-native';
 
 const ScanStack = createNativeStackNavigator();
 
@@ -48,6 +50,25 @@ export const ScanLayout: React.FC = () => {
             options={{
               title: t('sharingVc'),
               headerBackVisible: false,
+              headerTitle: props => (
+                <View
+                  style={{
+                    flex: 1,
+                    flexDirection: 'row',
+                    marginLeft: I18nManager.isRTL ? 40 : 15,
+                    marginTop: 15,
+                  }}>
+                  <Text
+                    style={{
+                      fontSize: 26,
+                      fontFamily: 'Inter_600SemiBold',
+                      paddingTop: 20,
+                      paddingBottom: 10,
+                    }}>
+                    {props.children}
+                  </Text>
+                </View>
+              ),
               headerRight: () => (
                 <Icon
                   name="close"
@@ -62,8 +83,26 @@ export const ScanLayout: React.FC = () => {
           name={SCAN_ROUTES.ScanScreen}
           component={ScanScreen}
           options={{
-            headerTitleStyle: {fontSize: 30, fontFamily: 'Inter_600SemiBold'},
             title: t('MainLayout:share'),
+            headerTitle: props => (
+              <View
+                style={{
+                  flex: 1,
+                  flexDirection: 'row',
+                  marginLeft: I18nManager.isRTL ? 40 : 15,
+                  marginTop: 15,
+                }}>
+                <Text
+                  style={{
+                    fontSize: 26,
+                    fontFamily: 'Inter_600SemiBold',
+                    paddingTop: 20,
+                    paddingBottom: 10,
+                  }}>
+                  {props.children}
+                </Text>
+              </View>
+            ),
           }}
         />
       </ScanStack.Navigator>
