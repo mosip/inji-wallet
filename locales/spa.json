@@ -603,9 +603,12 @@
     "loadingSubtitle": "Cargando...",
     "errors": {
       "permissionDenied": {
-        "title": "¡Permiso denegado!",
-        "message": "Notamos que canceló la creación de la configuración de copia de seguridad de datos. Recomendamos encarecidamente revisar la configuración de la copia de seguridad de datos para garantizar la disponibilidad de sus datos.",
-        "helpText": "Haga clic en \"Configurar ajustes\" para configurar la copia de seguridad de datos ahora, o \"Cancelar\" para volver a la pantalla de configuración."
+        "title": "Permisos requeridos",
+        "message": "Para continuar con la copia de seguridad de los datos, permita el acceso a su Google Drive. Toque \"Permitir acceso\" para finalizar la configuración o toque \"Ahora no\" para regresar a Configuración.",
+        "actions": {
+          "allowAccess": "Permitir el acceso",
+          "notNow": "Ahora no"
+        }
       },
       "noInternetConnection": {
         "title": "Sin conexión a Internet",
@@ -616,15 +619,16 @@
   "BackupAndRestoreBanner": {
     "backupSuccessful": "¡Su copia de seguridad fue exitosa!",
     "backupFailure": {
-      "networkError": "Debido a Conexión inestable, no pudimos realizar la copia de seguridad de los datos. Vuelve a intentarlo más tarde.",
+      "networkError": "Debido a una conexión a Internet inestable, no pudimos realizar una copia de seguridad de los datos. Por favor, inténtelo de nuevo más tarde.",
       "technicalError": "Debido a un error técnico, no pudimos realizar una copia de seguridad de los datos. Por favor, inténtelo de nuevo más tarde.",
       "noDataForBackup": "Lo sentimos, pero no hay datos disponibles para realizar una copia de seguridad en este momento.",
       "storageLimitReached": "No podemos completar el proceso de copia de seguridad debido a que no hay suficiente espacio de almacenamiento en su dispositivo. Libere espacio eliminando archivos o aplicaciones innecesarios y vuelva a intentarlo."
     },
-    "restoreSuccessful": "¡Tu restauración fue exitosa!",
+    "restoreSuccessful": "Su copia de seguridad ha sido restaurada exitosamente",
     "restoreFailure": {
-      "networkError": "Debido a una conexión inestable, no pudimos restaurar los datos. Por favor, inténtelo de nuevo más tarde.",
-      "technicalError": "Debido a un error técnico, no pudimos restaurar los datos. Por favor, inténtelo de nuevo más tarde."
+      "networkError": "Debido a una conexión a Internet inestable, no pudimos realizar la restauración de datos. Por favor, inténtelo de nuevo más tarde.",
+      "technicalError": "Debido a un error técnico, no pudimos realizar la restauración de datos. Por favor, inténtelo de nuevo más tarde.",
+      "noBackupFile": "El archivo de copia de seguridad no existe"
     }
   },
   "AccountSelection": {
@@ -646,7 +650,7 @@
     "backup": "Copia de seguridad",
     "size": "Tamaño: ",
     "restore": "Restaurar",
-    "restoreInProgress": "Estamos restaurando tus datos, no cierres la aplicación. Esto puede tardar hasta <X> minutos según tus datos.",
+    "restoreInProgress": "Estamos restaurando sus datos, no cierre la aplicación. Puede continuar usando la aplicación.",
     "restoreInfo": "Restaura tus datos desde Google Drive",
     "driveSettings": "Configuración de Google Drive",
     "successBanner": "¡Su copia de seguridad fue exitosa!",

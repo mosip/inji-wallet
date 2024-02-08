@@ -9,6 +9,17 @@ import Cloud, {
 import NetInfo from '@react-native-community/netinfo';
 import {ErrorMessage} from '../../shared/openId4VCI/Utils';
 import {NETWORK_REQUEST_FAILED} from '../../shared/constants';
+import {
+  getEndEventData,
+  getErrorEventData,
+  getImpressionEventData,
+  getStartEventData,
+  sendEndEvent,
+  sendErrorEvent,
+  sendImpressionEvent,
+  sendStartEvent,
+} from '../../shared/telemetry/TelemetryUtils';
+import {TelemetryConstants} from '../../shared/telemetry/TelemetryConstants';
 
 const model = createModel(
   {
@@ -44,7 +55,10 @@ export const backupAndRestoreSetupMachine = model.createMachine(
       init: {
         on: {
           HANDLE_BACKUP_AND_RESTORE: {
-            actions: 'setIsLoading',
+            actions: [
+              'sendDataBackupAndRestoreSetupStartEvent',
+              'setIsLoading',
+            ],
             target: 'checkSignIn',
           },
         },
@@ -75,7 +89,10 @@ export const backupAndRestoreSetupMachine = model.createMachine(
           PROCEED: {
             target: 'checkInternet',
           },
-          GO_BACK: 'init',
+          GO_BACK: {
+            actions: 'sendBackupAndRestoreSetupCancelEvent',
+            target: 'init',
+          },
         },
         states: {},
       },
@@ -105,7 +122,7 @@ export const backupAndRestoreSetupMachine = model.createMachine(
             target: 'checkInternet',
           },
           DISMISS: {
-            actions: ['unsetIsLoading'],
+            actions: ['unsetIsLoading', 'sendBackupAndRestoreSetupCancelEvent'],
             target: 'init',
           },
         },
@@ -121,6 +138,7 @@ export const backupAndRestoreSetupMachine = model.createMachine(
               target: 'backupAndRestore',
             },
             {
+              actions: 'sendBackupAndRestoreSetupErrorEvent',
               target: '.error',
             },
           ],
@@ -130,13 +148,17 @@ export const backupAndRestoreSetupMachine = model.createMachine(
           idle: {},
           error: {
             on: {
-              GO_BACK: '#backupAndRestore.init',
+              GO_BACK: {
+                actions: 'sendBackupAndRestoreSetupCancelEvent',
+                target: '#backupAndRestore.init',
+              },
               TRY_AGAIN: '#backupAndRestore.signIn',
             },
           },
         },
       },
       backupAndRestore: {
+        entry: 'sendBackupAndRestoreSetupSuccessEvent',
         on: {GO_BACK: 'init'},
       },
     },
@@ -155,6 +177,48 @@ export const backupAndRestoreSetupMachine = model.createMachine(
       setNoInternet: model.assign({
         errorMessage: () => ErrorMessage.NO_INTERNET,
       }),
+      sendDataBackupAndRestoreSetupStartEvent: () => {
+        sendStartEvent(
+          getStartEventData(
+            TelemetryConstants.FlowType.dataBackupAndRestoreSetup,
+          ),
+        );
+        sendImpressionEvent(
+          getImpressionEventData(
+            TelemetryConstants.FlowType.dataBackupAndRestoreSetup,
+            TelemetryConstants.Screens.dataBackupAndRestoreSetupScreen,
+          ),
+        );
+      },
+
+      sendBackupAndRestoreSetupSuccessEvent: () => {
+        sendEndEvent(
+          getEndEventData(
+            TelemetryConstants.FlowType.dataBackupAndRestoreSetup,
+            TelemetryConstants.EndEventStatus.success,
+          ),
+        );
+      },
+
+      sendBackupAndRestoreSetupCancelEvent: () => {
+        sendEndEvent(
+          getEndEventData(
+            TelemetryConstants.FlowType.dataBackupAndRestoreSetup,
+            TelemetryConstants.EndEventStatus.cancel,
+            {comment: 'User cancelled backup and restore setup'},
+          ),
+        );
+      },
+
+      sendBackupAndRestoreSetupErrorEvent: (_context, event) => {
+        sendErrorEvent(
+          getErrorEventData(
+            TelemetryConstants.FlowType.dataBackupAndRestoreSetup,
+            TelemetryConstants.ErrorId.userCancel,
+            JSON.stringify(event.data),
+          ),
+        );
+      },
     },
 
     services: {
