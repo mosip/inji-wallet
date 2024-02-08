@@ -862,7 +862,7 @@ export const ExistingMosipVCItemMachine =
           },
         ),
 
-        sendBackupEvent: send(BackupEvents.DATA_BACKUP(), {
+        sendBackupEvent: send(BackupEvents.DATA_BACKUP(true), {
           to: context => context.serviceRefs.backup,
         }),
 

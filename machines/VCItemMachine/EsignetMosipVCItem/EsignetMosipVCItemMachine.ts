@@ -544,7 +544,7 @@ export const EsignetMosipVCItemMachine = model.createMachine(
         },
       ),
 
-      sendBackupEvent: send(BackupEvents.DATA_BACKUP(), {
+      sendBackupEvent: send(BackupEvents.DATA_BACKUP(true), {
         to: context => context.serviceRefs.backup,
       }),
 

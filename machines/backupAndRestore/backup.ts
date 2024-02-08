@@ -33,11 +33,12 @@ const model = createModel(
     fileName: '',
     lastBackupDetails: null as null | BackupDetails,
     errorReason: '' as string,
+    isAutoBackUp: true as boolean,
     isLoading: true as boolean,
   },
   {
     events: {
-      DATA_BACKUP: () => ({}),
+      DATA_BACKUP: (isAutoBackUp: boolean) => ({isAutoBackUp}),
       OK: () => ({}),
       FETCH_DATA: () => ({}),
       DISMISS: () => ({}),
@@ -65,61 +66,66 @@ export const backupMachine = model.createMachine(
     on: {
       DATA_BACKUP: [
         {
+          cond: 'checkIfAutoBackup',
+          actions: ['setIsAutoBackup', 'loadVcs'],
+        },
+        {
           target: 'backingUp',
         },
       ],
-      LAST_BACKUP_DETAILS: {
-        target: 'fetchLastBackupDetails',
-      },
+      STORE_RESPONSE: [
+              {
+                cond: 'isVCFound',
+                target: 'backingUp',
+              },
+              {
+                target: 'init',
+              },
+            ],
+            LAST_BACKUP_DETAILS: {
+                    target: 'fetchLastBackupDetails',
+                  },
     },
     states: {
-      init: {
-        on: {
-          DATA_BACKUP: [
-            {
-              target: 'backingUp',
-            },
-          ],
-        },
-      },
+      init: {},
       fetchLastBackupDetails: {
-        initial: 'checkStore',
-        states: {
-          checkStore: {
-            entry: 'getLastBackupDetailsFromStore',
-            on: {
-              STORE_RESPONSE: [
-                {
-                  cond: 'isDataAvailableInStorage',
-                  actions: [
-                    'setLastBackupDetails',
-                    'unsetIsLoading',
-                    'storeLastBackupDetails',
-                  ],
-                  target: '#backup.init',
+              initial: 'checkStore',
+              states: {
+                checkStore: {
+                  entry: 'getLastBackupDetailsFromStore',
+                  on: {
+                    STORE_RESPONSE: [
+                      {
+                        cond: 'isDataAvailableInStorage',
+                        actions: [
+                          'setLastBackupDetails',
+                          'unsetIsLoading',
+                          'storeLastBackupDetails',
+                        ],
+                        target: '#backup.init',
+                      },
+                      {target: 'checkCloud'},
+                    ],
+                    STORE_ERROR: {
+                      target: 'checkCloud',
+                    },
+                  },
                 },
-                {target: 'checkCloud'},
-              ],
-              STORE_ERROR: {
-                target: 'checkCloud',
+                checkCloud: {
+                  invoke: {
+                    src: 'getLastBackupDetailsFromCloud',
+                    onDone: {
+                      actions: ['setLastBackupDetails', 'unsetIsLoading'],
+                      target: '#backup.init',
+                    },
+                    onError: {
+                      actions: 'unsetIsLoading',
+                      target: '#backup.init',
+                    },
+                  },
+                },
               },
             },
-          },
-          checkCloud: {
-            invoke: {
-              src: 'getLastBackupDetailsFromCloud',
-              onDone: {
-                actions: ['setLastBackupDetails', 'unsetIsLoading'],
-                target: '#backup.init',
-              },
-              onError: {
-                actions: 'unsetIsLoading',
-                target: '#backup.init',
-              },
-            },
-          },
-        },
-      },
       backingUp: {
         initial: 'checkDataAvailabilityForBackup',
         states: {
@@ -196,22 +202,47 @@ export const backupMachine = model.createMachine(
               onDone: {
                 actions: ['extractLastBackupDetails', 'storeLastBackupDetails'],
               },
-              onError: {
-                actions: ['setBackupErrorReason'],
-                target: 'failure',
-              },
+              onError: [
+                {
+                  cond: 'checkIfAutoBackup',
+                  actions: ['setBackupErrorReason'],
+                  target: 'silentFailure',
+                },
+                {
+                  actions: ['setBackupErrorReason'],
+                  target: 'failure',
+                },
+              ],
             },
             on: {
-              STORE_RESPONSE: {
-                target: 'success',
-              },
+              STORE_RESPONSE: [
+                {
+                  cond: 'checkIfAutoBackup',
+                  target: 'silentSuccess',
+                },
+                {
+                  target: 'success',
+                },
+              ],
             },
           },
           success: {
             entry: 'sendDataBackupSuccessEvent',
           },
+          silentSuccess: {
+            entry: 'sendDataBackupSuccessEvent',
+          },
           failure: {
-            entry: ['sendDataBackupFailureEvent'],
+            entry: [
+              'sendDataBackupFailureEvent',
+              (ctx, event) => console.log('failure state ', event),
+            ],
+          },
+          silentFailure: {
+            entry: [
+              'sendDataBackupFailureEvent',
+              (ctx, event) => console.log('failure state ', event),
+            ],
           },
         },
         on: {
@@ -239,6 +270,12 @@ export const backupMachine = model.createMachine(
       setDataFromStorage: model.assign({
         dataFromStorage: (_context, event) => {
           return event.response;
+        },
+      }),
+
+      setIsAutoBackup: model.assign({
+        isAutoBackUp: (_context, event) => {
+          return event.isAutoBackUp;
         },
       }),
 
@@ -382,6 +419,9 @@ export const backupMachine = model.createMachine(
         console.log('is min reach ', Boolean(event.data));
         return Boolean(event.data);
       },
+      checkIfAutoBackup: (context, event) => {
+        return event.isAutoBackUp ?? context.isAutoBackUp;
+      },
       isVCFound: (_context, event) => {
         return event.response && event.response.length > 0;
       },
@@ -402,7 +442,9 @@ export function selectIsBackupInprogress(state: State) {
   return (
     state.matches('backingUp') &&
     !state.matches('backingUp.success') &&
-    !state.matches('backingUp.failure')
+    !state.matches('backingUp.silentSuccess') &&
+    !state.matches('backingUp.failure') &&
+    !state.matches('backingUp.silentFailure')
   );
 }
 export function selectIsBackingUp(state: State) {

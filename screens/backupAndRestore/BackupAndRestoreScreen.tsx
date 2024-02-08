@@ -37,7 +37,7 @@ const BackupAndRestoreScreen: React.FC<BackupAndRestoreProps> = props => {
 
   useEffect(() => {
     if (props.shouldTriggerAutoBackup === true) {
-      backupController.DATA_BACKUP();
+      backupController.DATA_BACKUP(true);
     }
   }, [props.shouldTriggerAutoBackup]);
 
@@ -107,7 +107,7 @@ const BackupAndRestoreScreen: React.FC<BackupAndRestoreProps> = props => {
             testID="backup"
             type="gradient"
             title={t('backup')}
-            onPress={backupController.DATA_BACKUP}
+            onPress={backupController.MANUAL_DATA_BACKUP}
             styles={{...Theme.MessageOverlayStyles.button, flex: 1}}
           />
         )}
