@@ -52,19 +52,19 @@ async function generateHmac(
 
 class Storage {
   static exportData = async (encryptionKey: string) => {
-    const completeBackupData = {};
-    let dataFromDB: Record<string, any> = {};
-
-    const allKeysInDB = await MMKV.indexer.strings.getKeys();
-    const keysToBeExported = allKeysInDB.filter(key =>
-      key.includes('CACHE_FETCH_ISSUER_WELLKNOWN_CONFIG_'),
-    );
-    keysToBeExported.push(MY_VCS_STORE_KEY);
-
-    const encryptedDataPromises = keysToBeExported.map(key =>
-      MMKV.getItem(key),
-    );
     try {
+      const completeBackupData = {};
+      let dataFromDB: Record<string, any> = {};
+
+      const allKeysInDB = await MMKV.indexer.strings.getKeys();
+      const keysToBeExported = allKeysInDB.filter(key =>
+        key.includes('CACHE_FETCH_ISSUER_WELLKNOWN_CONFIG_'),
+      );
+      keysToBeExported.push(MY_VCS_STORE_KEY);
+
+      const encryptedDataPromises = keysToBeExported.map(key =>
+        MMKV.getItem(key),
+      );
       const encryptedDataList = await Promise.all(encryptedDataPromises);
       for (let index = 0; index < keysToBeExported.length; index++) {
         const key = keysToBeExported[index];
@@ -74,25 +74,34 @@ class Storage {
           dataFromDB[key] = JSON.parse(decryptedData);
         }
       }
-    } catch (error) {
-      console.error('decryption of back up data is failed due to this error:');
-    }
-    dataFromDB['myVCs'].map(myVcMetadata => {
-      myVcMetadata.isPinned = false;
-    });
-    completeBackupData['dataFromDB'] = dataFromDB;
-    completeBackupData['VC_Records'] = {};
 
-    let vcKeys = allKeysInDB.filter(key => key.indexOf('VC_') === 0);
-    for (let ind in vcKeys) {
-      const key = vcKeys[ind];
-      const vc = await Storage.readVCFromFile(key);
-      const decryptedVCData = await decryptJson(encryptionKey, vc);
-      const deactivatedVC =
-        removeWalletBindingDataBeforeBackup(decryptedVCData);
-      completeBackupData['VC_Records'][key] = deactivatedVC;
+      dataFromDB[MY_VCS_STORE_KEY].map(myVcMetadata => {
+        myVcMetadata.isPinned = false;
+      });
+
+      completeBackupData['dataFromDB'] = dataFromDB;
+      completeBackupData['VC_Records'] = {};
+
+      let vcKeys = allKeysInDB.filter(key => key.indexOf('VC_') === 0);
+      for (let ind in vcKeys) {
+        const key = vcKeys[ind];
+        const vc = await Storage.readVCFromFile(key);
+        const decryptedVCData = await decryptJson(encryptionKey, vc);
+        const deactivatedVC =
+          removeWalletBindingDataBeforeBackup(decryptedVCData);
+        completeBackupData['VC_Records'][key] = deactivatedVC;
+      }
+      return completeBackupData;
+    } catch (error) {
+      sendErrorEvent(
+        getErrorEventData(
+          TelemetryConstants.FlowType.dataBackup,
+          error.message,
+          error.stack,
+        ),
+      );
+      console.error('exporting data is failed due to this error:', error);
     }
-    return completeBackupData;
   };
 
   static loadBackupData = async (data, encryptionKey) => {
@@ -215,12 +224,12 @@ class Storage {
     const allVCKeys = Object.keys(allVCs);
     const dataFromDB = completeBackupData['dataFromDB'];
 
-    allVCKeys.map(async key => {
+    allVCKeys.forEach(async key => {
       let vc = allVCs[key];
       const currentUnixTimeStamp = Date.now();
       const prevUnixTimeStamp = vc.vcMetadata.timestamp;
       vc.vcMetadata.timestamp = currentUnixTimeStamp;
-      dataFromDB.myVCs.map(myVcMetadata => {
+      dataFromDB.myVCs.forEach(myVcMetadata => {
         if (
           myVcMetadata.requestId === vc.vcMetadata.requestId &&
           myVcMetadata.timestamp === prevUnixTimeStamp

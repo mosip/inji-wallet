@@ -125,7 +125,7 @@ export const getVCMetadata = context => {
     id: context.verifiableCredential?.credential.credentialSubject.UIN
       ? context.verifiableCredential?.credential.credentialSubject.UIN
       : context.verifiableCredential?.credential.credentialSubject.VID,
-    timestamp: context.timestamp ? context.timestamp : '',
+    timestamp: context.timestamp ?? '',
   });
 };
 

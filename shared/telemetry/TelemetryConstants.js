@@ -14,6 +14,7 @@ export const TelemetryConstants = {
     fetchData: 'Fetch Data',
     dataBackup: 'Data Backup',
     dataRestore: 'Data Restore',
+    decryption: 'Decryption',
   }),
 
   EndEventStatus: Object.freeze({
