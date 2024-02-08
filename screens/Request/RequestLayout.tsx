@@ -11,6 +11,7 @@ import {useReceivedVcsTab} from '../Home/ReceivedVcsTabController';
 import {REQUEST_ROUTES} from '../../routes/routesConstants';
 import {SquircleIconPopUpModal} from '../../components/ui/SquircleIconPopUpModal';
 import {ProgressingModal} from '../../components/ProgressingModal';
+import {BannerNotificationContainer} from '../../components/BannerNotificationContainer';
 import {BackupAndRestoreAllScreenBanner} from '../../components/BackupAndRestoreAllScreenBanner';
 import {SharingStatusModal} from '../Scan/SharingStatusModal';
 import {SvgImage} from '../../components/ui/svg';
@@ -24,7 +25,7 @@ export const RequestLayout: React.FC = () => {
 
   return (
     <React.Fragment>
-      <BackupAndRestoreAllScreenBanner />
+      <BannerNotificationContainer />
       <RequestStack.Navigator
         initialRouteName="RequestScreen"
         screenListeners={{

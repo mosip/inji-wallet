@@ -27,7 +27,7 @@ import {MessageOverlay} from '../../components/MessageOverlay';
 import {SearchBar} from '../../components/ui/SearchBar';
 import {SvgImage} from '../../components/ui/svg';
 import {Icon} from 'react-native-elements';
-import {BackupAndRestoreAllScreenBanner} from '../../components/BackupAndRestoreAllScreenBanner';
+import {BannerNotificationContainer} from '../../components/BannerNotificationContainer';
 
 export const IssuersScreen: React.FC<
   HomeRouteProps | RootRouteProps
@@ -186,7 +186,7 @@ export const IssuersScreen: React.FC<
 
   return (
     <React.Fragment>
-      <BackupAndRestoreAllScreenBanner />
+      <BannerNotificationContainer />
       {controller.issuers.length > 0 && (
         <Column style={Theme.IssuersScreenStyles.issuerListOuterContainer}>
           <Row

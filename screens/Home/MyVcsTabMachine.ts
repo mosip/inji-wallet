@@ -9,7 +9,7 @@ import {
 } from 'xstate';
 import {createModel} from 'xstate/lib/model';
 import {StoreEvents} from '../../machines/store';
-import {VcEvents} from '../../machines/vc';
+import {VcEvents} from '../../machines/VCItemMachine/vc';
 import {ExistingMosipVCItemMachine} from '../../machines/VCItemMachine/ExistingMosipVCItem/ExistingMosipVCItemMachine';
 import {AppServices} from '../../shared/GlobalContext';
 import {MY_VCS_STORE_KEY} from '../../shared/constants';

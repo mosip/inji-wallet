@@ -5,7 +5,7 @@ import {Theme} from './ui/styleUtils';
 import {useTranslation} from 'react-i18next';
 import {useBackupRestoreScreen} from '../screens/Settings/BackupRestoreController';
 
-export const BackupAndRestoreAllScreenBanner: React.FC = () => {
+export const BackupAndRestoreBannerNotification: React.FC = () => {
   const backUpController = useBackupScreen();
   const restoreController = useBackupRestoreScreen();
 
