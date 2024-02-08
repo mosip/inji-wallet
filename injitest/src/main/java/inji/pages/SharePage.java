@@ -35,6 +35,7 @@ public class SharePage extends BasePage {
 
     @iOSXCUITFindBy(accessibility = "enableBluetoothButton")
     private WebElement enableBluetoothButton;
+
 	@AndroidFindBy(accessibility = "bluetoothIsTurnedOffMessage")
     private WebElement bluetoothIsTurnedOffMessage;
 
