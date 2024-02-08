@@ -185,14 +185,6 @@ fileignoreconfig:
   - filename: components/BannerNotificationContainer.tsx
     checksum: a98ff1a0dd96d3ead4b8191320be8b0c7a558cda6b0de39f1c62aaa8efef9fb8  
   - filename: components/HelpScreen.tsx
-    checksum: bbc69143bd37d065bba3800396301db5a0318e8b7ba51ecd49142dda68783a01
-  - filename: injitest/src/main/java/inji/pages/SunbirdLoginPage.java
-    checksum: 44f3d54b38364691a0565ba10fb5b46e11af08fb2544ef2bbb9cce5542d3c156
-  - filename: injitest/src/test/java/iosTestCases/PinVcTest.java
-    checksum: 3d3324d77ca307f328cb263a68d99d1cc2719013e87b7fbe5c2dae8325dbe419
-  - filename: injitest/src/test/java/androidTestCases/VcDownloadAndVerifyUsingSunbirdTest.java
-    checksum: 733532383f6993c22e809ed0ee053238a42197e852262023a9370a5bc7a4fcd3
-  - filename: injitest/src/test/java/iosTestCases/VcDownloadAndVerifyUsingSunbirdTest.java
-    checksum: afc49d2f76f653f91866d89809d912b8617aefec8ef7f4cafaf45cfb1578169b 
+    checksum: bbc69143bd37d065bba3800396301db5a0318e8b7ba51ecd49142dda68783a01  
     version: ""
 
