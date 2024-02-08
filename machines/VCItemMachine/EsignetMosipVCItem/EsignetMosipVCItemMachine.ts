@@ -12,7 +12,7 @@ import {log} from 'xstate/lib/actions';
 import {Protocols} from '../../../shared/openId4VCI/Utils';
 import {StoreEvents} from '../../../machines/store';
 import {MIMOTO_BASE_URL, MY_VCS_STORE_KEY} from '../../../shared/constants';
-import {VcEvents} from '../../../machines/vc';
+import {VcEvents} from '../vc';
 import i18n from '../../../i18n';
 import {KeyPair} from 'react-native-rsa-native';
 import {
@@ -53,7 +53,6 @@ const model = createModel(
     walletBindingResponse: null as WalletBindingResponse,
     tempWalletBindingIdResponse: null as WalletBindingResponse,
     walletBindingError: '',
-    walletBindingSuccess: false,
     isMachineInKebabPopupState: false,
     bindingAuthFailedMessage: '' as string,
   },
@@ -321,7 +320,7 @@ export const EsignetMosipVCItemMachine = model.createMachine(
               target: '#vc-item-openid4vci.kebabPopUp',
             },
             {
-              actions: 'setWalletBindingSuccess',
+              actions: 'sendWalletBindingSuccess',
               target: 'idle',
             },
           ],
@@ -331,7 +330,6 @@ export const EsignetMosipVCItemMachine = model.createMachine(
         on: {
           DISMISS: {
             target: 'checkingVc',
-            actions: 'resetWalletBindingSuccess',
           },
           KEBAB_POPUP: {
             target: 'kebabPopUp',
@@ -556,14 +554,6 @@ export const EsignetMosipVCItemMachine = model.createMachine(
       setWalletBindingErrorEmpty: assign({
         walletBindingError: () => '',
         bindingAuthFailedMessage: () => '',
-      }),
-
-      setWalletBindingSuccess: assign({
-        walletBindingSuccess: true,
-      }),
-
-      resetWalletBindingSuccess: assign({
-        walletBindingSuccess: false,
       }),
 
       sendWalletBindingSuccess: send(

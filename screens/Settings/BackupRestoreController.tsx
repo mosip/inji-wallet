@@ -8,7 +8,7 @@ import {
   selectErrorReason,
 } from '../../machines/backupRestore';
 import {GlobalContext} from '../../shared/GlobalContext';
-import {VcEvents} from '../../machines/vc';
+import {VcEvents} from '../../machines/VCItemMachine/vc';
 
 export function useBackupRestoreScreen() {
   const {appService} = useContext(GlobalContext);

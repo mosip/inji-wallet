@@ -7,7 +7,6 @@ import {RevokeConfirmModal} from '../../components/RevokeConfirm';
 import {OIDcAuthenticationModal} from '../../components/OIDcAuth';
 import {useViewVcModal, ViewVcModalProps} from './ViewVcModalController';
 import {useTranslation} from 'react-i18next';
-import {BannerNotification} from '../../components/BannerNotification';
 import {OtpVerificationModal} from './MyVcs/OtpVerificationModal';
 import {BindingVcWarningOverlay} from './MyVcs/BindingVcWarningOverlay';
 import {VcDetailsContainer} from '../../components/VC/VcDetailsContainer';
@@ -18,7 +17,7 @@ import {
   sendErrorEvent,
 } from '../../shared/telemetry/TelemetryUtils';
 import {TelemetryConstants} from '../../shared/telemetry/TelemetryConstants';
-import {Icon} from 'react-native-elements';
+import {BannerNotificationContainer} from '../../components/BannerNotificationContainer';
 
 export const ViewVcModal: React.FC<ViewVcModalProps> = props => {
   const {t} = useTranslation('ViewVcModal');
@@ -54,13 +53,7 @@ export const ViewVcModal: React.FC<ViewVcModalProps> = props => {
       headerTitle={t('title')}
       onDismiss={props.onDismiss}
       headerElevation={2}>
-      {controller.isBindingSuccess && (
-        <BannerNotification
-          message={t('activated')}
-          onClosePress={controller.DISMISS}
-          testId={'activatedVcPopup'}
-        />
-      )}
+      <BannerNotificationContainer />
       <Column scroll>
         <Column fill>
           <VcDetailsContainer

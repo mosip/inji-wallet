@@ -103,13 +103,7 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = props => {
             testId={'downloadingVcPopup'}
           />
         )}
-        {controller.isBindingSuccess && (
-          <BannerNotification
-            message={t('activated')}
-            onClosePress={controller.DISMISS_WALLET_BINDING_NOTIFICATION_BANNER}
-            testId={'activatedVcPopup'}
-          />
-        )}
+
         <Column fill pY={11} pX={8}>
           {vcMetadataOrderedByPinStatus.length > 0 && (
             <React.Fragment>

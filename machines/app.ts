@@ -6,7 +6,7 @@ import {createModel} from 'xstate/lib/model';
 import {authMachine, createAuthMachine} from './auth';
 import {createSettingsMachine, settingsMachine} from './settings';
 import {StoreEvents, storeMachine} from './store';
-import {createVcMachine, vcMachine} from './vc';
+import {createVcMachine, vcMachine} from './VCItemMachine/vc';
 import {activityLogMachine, createActivityLogMachine} from './activityLog';
 import {
   createRequestMachine,
