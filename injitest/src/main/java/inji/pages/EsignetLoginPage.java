@@ -36,8 +36,10 @@ public class EsignetLoginPage extends BasePage {
     private WebElement getOtpButton;
 
     @AndroidFindBy(uiAutomator = "new UiSelector().className(\"android.widget.Button\").instance(1)")
-    @iOSXCUITFindBy(accessibility = "Verify")
     private WebElement verifyButton;
+
+    @iOSXCUITFindBy(accessibility = "Verify")
+    private WebElement verifyButtonIos;
 
     @AndroidFindBy(xpath = "//*[contains(@text,'OTP has been sent to your registered Mobile Number')]")
     @iOSXCUITFindBy(xpath = "//*[contains(@text,'OTP has been sent to your registered Mobile Number')]")
@@ -111,6 +113,10 @@ public class EsignetLoginPage extends BasePage {
     public void clickOnVerifyButton() {
     	((HidesKeyboard) driver).hideKeyboard();
         clickOnElement(verifyButton);
+    }
+
+    public void clickOnVerifyButtonIos() {
+        clickOnElement(verifyButtonIos);
     }
 
 }

@@ -44,7 +44,7 @@ public class AddNewCardPage extends BasePage{
     private WebElement issuerSearchBar;
 
     @AndroidFindBy(accessibility = "issuerHeading-Sunbird")
-    @iOSXCUITFindBy(accessibility = "issuerHeading-Sunbird")
+    @iOSXCUITFindBy(accessibility = "issuer-Sunbird")
     private WebElement downloadViaSunbird;
     
     public AddNewCardPage(AppiumDriver driver) {
