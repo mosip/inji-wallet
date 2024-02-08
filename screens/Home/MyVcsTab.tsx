@@ -222,14 +222,17 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = props => {
 
       {controller.isNetworkOff && (
         <Error
-          testID={`networkOffError`}
+          testID="networkOffError"
           isVisible={controller.isNetworkOff}
-          isModal={true}
+          isModal
           title={t('errors.noInternetConnection.title')}
           message={t('errors.noInternetConnection.message')}
           onDismiss={controller.DISMISS}
-          tryAgain={controller.TRY_AGAIN}
           image={SvgImage.NoInternetConnection()}
+          showClose
+          primaryButtonText="tryAgain"
+          primaryButtonEvent={controller.TRY_AGAIN}
+          primaryButtonTestID="tryAgain"
         />
       )}
     </React.Fragment>

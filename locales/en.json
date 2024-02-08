@@ -637,9 +637,11 @@
     "loadingSubtitle": "Loading...",
     "errors": {
       "permissionDenied": {
-        "title": "Permission Denied!",
-        "message": "We noticed that you've cancelled the creation of data backup settings. We strongly recommend revisiting the data backup settings to ensure your data availability. ",
-        "helpText": "Click “Configure Settings” to set up data backup now, or “Cancel” to go back to settings screen."
+        "message": "To continue with the data backup, allow access to your Google Drive. Tap \"Allow Access\" to finish setup, or tap \"Not Now\" to return to Settings.",
+        "actions": {
+          "allowAccess": "Allow Access",
+          "notNow": "Not Now"
+        }
       },
       "noInternetConnection": {
         "title": "No internet connection",
@@ -716,7 +718,6 @@
     "editLabel": "Edit {{label}}",
     "tryAgain": "Try again",
     "goBack": "Go Back",
-    "configureSettings": "Configure Settings",
     "ignore": "Ignore",
     "camera": {
       "errors": {

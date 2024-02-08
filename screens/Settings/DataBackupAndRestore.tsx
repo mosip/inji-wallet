@@ -5,7 +5,6 @@ import {Icon, ListItem} from 'react-native-elements';
 import {Row, Text} from '../../components/ui';
 import {Error} from '../../components/ui/Error';
 import {Loader} from '../../components/ui/Loader';
-import {Modal} from '../../components/ui/Modal';
 import {Theme} from '../../components/ui/styleUtils';
 import {SvgImage} from '../../components/ui/svg';
 import {AccountSelectionConfirmation} from '../backupAndRestore/AccountSelectionConfirmation';
@@ -59,28 +58,38 @@ export const DataBackupAndRestore: React.FC = ({} = () => {
           alignActionsOnEnd
           showClose={false}
           isVisible={controller.isSigningInFailed}
-          title={t('errors.permissionDenied.title')}
           message={t('errors.permissionDenied.message')}
           helpText={t('errors.permissionDenied.helpText')}
           image={SvgImage.PermissionDenied()}
-          goBack={controller.GO_BACK}
-          goBackButtonVisible
-          tryAgain={controller.TRY_AGAIN}
-          tryAgainButtonTranslationKey="configureSettings"
+          primaryButtonText={
+            'DataBackupScreen:errors.permissionDenied.actions.allowAccess'
+          }
+          primaryButtonEvent={controller.TRY_AGAIN}
+          textButtonText={
+            'DataBackupScreen:errors.permissionDenied.actions.notNow'
+          }
+          textButtonEvent={controller.GO_BACK}
+          onDismiss={controller.GO_BACK}
+          primaryButtonTestID="allowAccess"
+          textButtonTestID="notNow"
+          customImageStyles={{paddingBottom: 0, marginBottom: -6}}
+          customStyles={{marginTop: '30%'}}
           testID="CloudBackupConsentDenied"
         />
       )}
 
       {controller.isNetworkOff && (
         <Error
-          testID={`networkOffError`}
+          testID="networkOffError"
+          primaryButtonTestID="tryAgain"
+          primaryButtonText="tryAgain"
+          primaryButtonEvent={controller.TRY_AGAIN}
           isVisible={controller.isNetworkOff}
           isModal={true}
           showClose
           title={t('errors.noInternetConnection.title')}
           message={t('errors.noInternetConnection.message')}
           onDismiss={controller.DISMISS}
-          tryAgain={controller.TRY_AGAIN}
           image={SvgImage.NoInternetConnection()}
         />
       )}

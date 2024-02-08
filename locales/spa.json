@@ -603,9 +603,11 @@
     "loadingSubtitle": "Cargando...",
     "errors": {
       "permissionDenied": {
-        "title": "¡Permiso denegado!",
-        "message": "Notamos que canceló la creación de la configuración de copia de seguridad de datos. Recomendamos encarecidamente revisar la configuración de la copia de seguridad de datos para garantizar la disponibilidad de sus datos.",
-        "helpText": "Haga clic en \"Configurar ajustes\" para configurar la copia de seguridad de datos ahora, o \"Cancelar\" para volver a la pantalla de configuración."
+        "message": "Para continuar con la copia de seguridad de los datos, permita el acceso a su Google Drive. Toque \"Permitir acceso\" para finalizar la configuración o toque \"Ahora no\" para regresar a Configuración.",
+        "actions": {
+          "allowAccess": "Permitir el acceso",
+          "notNow": "Ahora no"
+        }
       },
       "noInternetConnection": {
         "title": "Sin conexión a Internet",

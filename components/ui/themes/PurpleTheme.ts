@@ -1485,7 +1485,7 @@ export const PurpleTheme = {
       lineHeight: 20,
       marginTop: 6,
       marginBottom: 25,
-      marginHorizontal: 40,
+      marginHorizontal: 26,
       color: Colors.mediumDarkGrey,
     },
   }),
