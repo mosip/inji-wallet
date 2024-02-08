@@ -13,7 +13,7 @@ import {
   selectShowAccountSelectionConfirmation,
 } from '../../machines/backupAndRestore/backupAndRestoreSetup';
 import {GlobalContext} from '../../shared/GlobalContext';
-import {selectIsBackUpAndRestoreOptionExplored} from '../../machines/settings';
+import {selectIsBackUpAndRestoreExplored} from '../../machines/settings';
 import {SettingsEvents} from '../../machines/settings';
 
 export function useBackupAndRestoreSetup() {
@@ -40,12 +40,12 @@ export function useBackupAndRestoreSetup() {
     isSigningInSuccessful: useSelector(service, selectIsSigningInSuccessful),
     isBackupAndRestoreExplored: useSelector(
       settingsService,
-      selectIsBackUpAndRestoreOptionExplored,
+      selectIsBackUpAndRestoreExplored,
     ),
     BACKUP_AND_RESTORE: () => {
       service.send(BackupAndRestoreSetupEvents.HANDLE_BACKUP_AND_RESTORE()),
         settingsService.send(
-          SettingsEvents.SET_BACKUP_AND_RESTORE_OPTION_EXPLORED(),
+          SettingsEvents.SET_IS_BACKUP_AND_RESTORE_EXPLORED(),
         );
     },
     PROCEED_ACCOUNT_SELECTION: () =>

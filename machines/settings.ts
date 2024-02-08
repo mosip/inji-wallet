@@ -31,7 +31,7 @@ const model = createModel(
     credentialRegistry: MIMOTO_BASE_URL,
     esignetHostUrl: ESIGNET_BASE_URL,
     appId: null,
-    isBackupAndRestoreOptionExplored: false as boolean,
+    isBackupAndRestoreExplored: false as boolean,
     hasUserShownWithHardwareKeystoreNotExists: false,
     credentialRegistryResponse: '' as string,
   },
@@ -55,7 +55,7 @@ const model = createModel(
       BACK: () => ({}),
       CANCEL: () => ({}),
       ACCEPT_HARDWARE_SUPPORT_NOT_EXISTS: () => ({}),
-      SET_BACKUP_AND_RESTORE_OPTION_EXPLORED: () => ({}),
+      SET_IS_BACKUP_AND_RESTORE_EXPLORED: () => ({}),
     },
   },
 );
@@ -102,7 +102,7 @@ export const settingsMachine = model.createMachine(
           UPDATE_NAME: {
             actions: ['updateName', 'storeContext'],
           },
-          SET_BACKUP_AND_RESTORE_OPTION_EXPLORED: {
+          SET_IS_BACKUP_AND_RESTORE_EXPLORED: {
             actions: ['setBackupAndRestoreOptionExplored', 'storeContext'],
           },
           UPDATE_VC_LABEL: {
@@ -210,7 +210,7 @@ export const settingsMachine = model.createMachine(
         name: (_, event) => event.name,
       }),
       setBackupAndRestoreOptionExplored: model.assign({
-        isBackupAndRestoreOptionExplored: () => true,
+        isBackupAndRestoreExplored: () => true,
       }),
       updateEsignetHostUrl: model.assign({
         esignetHostUrl: (_, event) => event.esignetHostUrl,
@@ -332,6 +332,6 @@ export function selectIsResetInjiProps(state: State) {
   return state.matches('resetInjiProps');
 }
 
-export function selectIsBackUpAndRestoreOptionExplored(state: State) {
-  return state.context.isBackupAndRestoreOptionExplored;
+export function selectIsBackUpAndRestoreExplored(state: State) {
+  return state.context.isBackupAndRestoreExplored;
 }
