@@ -32,12 +32,14 @@ export const DataBackupAndRestore: React.FC = ({} = () => {
                   style={{paddingRight: 10}}>
                   {t('dataBackupAndRestore')}
                 </Text>
-                <Text
-                  testID="newLabel"
-                  style={Theme.BackupStyles.newStyles}
-                  color={Theme.Colors.whiteText}>
-                  {t('new')}
-                </Text>
+                {!controller.isBackupAndRestoreExplored && (
+                  <Text
+                    testID="newLabel"
+                    style={Theme.BackupStyles.newStyles}
+                    color={Theme.Colors.whiteText}>
+                    {t('new')}
+                  </Text>
+                )}
               </Row>
             </ListItem.Title>
           </ListItem.Content>
