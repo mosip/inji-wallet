@@ -5,6 +5,7 @@ import Cloud, {
   ProfileInfo,
   SignInResult,
   isSignedInResult,
+  IsIOSResult,
 } from '../../shared/googleCloudUtils';
 import NetInfo from '@react-native-community/netinfo';
 import {ErrorMessage} from '../../shared/openId4VCI/Utils';
@@ -140,6 +141,10 @@ export const backupAndRestoreSetupMachine = model.createMachine(
               target: 'backupAndRestore',
             },
             {
+              cond: 'isIOS',
+              target: 'backupAndRestore',
+            },
+            {
               actions: 'sendBackupAndRestoreSetupErrorEvent',
               target: '.error',
             },
@@ -244,8 +249,10 @@ export const backupAndRestoreSetupMachine = model.createMachine(
       isNetworkError: (_, event) => event.data.error === NETWORK_REQUEST_FAILED,
       isSignedIn: (_context, event) =>
         (event.data as isSignedInResult).isSignedIn,
+
       isSignInSuccessful: (_context, event) =>
         (event.data as SignInResult).status === Cloud.status.SUCCESS,
+      isIOS: (_context, event) => (event.data as IsIOSResult).isIOS,
     },
   },
 );

@@ -663,7 +663,7 @@
   },
   "AccountSelection": {
     "backupProcessInfo": "أنت على بعد خطوات قليلة من إجراء نسخ احتياطي لبياناتك",
-    "cloudInfo": "To initiate the data backup, please tap on the “Proceed” button to link your Google Drive with Inji.",
+    "cloudInfo": "To initiate the data backup, please tap on the “Proceed” button to link your {{driveName}} with Inji.",
     "googleDriveTitle": "جوجل درايف",
     "loadingSubtitle": "تحميل...",
     "proceed": "يتابع",
@@ -675,7 +675,7 @@
     "backupProgressState": "جاري النسخ الاحتياطي...",
     "lastBackupDetails": "تفاصيل النسخ الاحتياطي الأخير",
     "backupInProgress": "لا يزال بإمكانك استخدام التطبيق أثناء إجراء النسخ الاحتياطي للبيانات. سيؤدي إغلاق التطبيق إلى إنهاء عملية النسخ الاحتياطي للبيانات.",
-    "noBackup": "قم بعمل نسخة احتياطية لبياناتك على Google Drive. يمكنك استعادتها عند إعادة تثبيت INJI.",
+    "noBackup": "قم بعمل نسخة احتياطية لبياناتك على {{driveName}}. يمكنك استعادتها عند إعادة تثبيت INJI.",
     "storage": "سيتم تخزين النسخة الاحتياطية في Google Drive المرتبط بحساب Gmail الذي اخترته.",
     "backup": "دعم",
     "size": "مقاس:",

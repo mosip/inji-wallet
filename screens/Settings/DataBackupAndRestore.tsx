@@ -11,10 +11,14 @@ import {AccountSelectionConfirmation} from '../backupAndRestore/AccountSelection
 import {useBackupAndRestoreSetup} from '../backupAndRestore/BackupAndRestoreSetupController';
 import BackupAndRestoreScreen from '../backupAndRestore/BackupAndRestoreScreen';
 import testIDProps from '../../shared/commonUtil';
+import {useOverlayVisibleAfterTimeout} from '../../shared/hooks/useOverlayVisibleAfterTimeout';
 
 export const DataBackupAndRestore: React.FC = ({} = () => {
   const controller = useBackupAndRestoreSetup();
   const {t} = useTranslation('DataBackupScreen');
+  const accountSelectionModalVisible = useOverlayVisibleAfterTimeout(
+    controller.showAccountSelectionConfirmation,
+  );
 
   return (
     <React.Fragment>
@@ -107,13 +111,11 @@ export const DataBackupAndRestore: React.FC = ({} = () => {
         <Loader title={t('loadingSubtitle')} isModal></Loader>
       )}
 
-      {controller.showAccountSelectionConfirmation && (
-        <AccountSelectionConfirmation
-          isVisible={controller.showAccountSelectionConfirmation}
-          onProceed={controller.PROCEED_ACCOUNT_SELECTION}
-          goBack={controller.GO_BACK}
-        />
-      )}
+      <AccountSelectionConfirmation
+        isVisible={accountSelectionModalVisible}
+        onProceed={controller.PROCEED_ACCOUNT_SELECTION}
+        goBack={controller.GO_BACK}
+      />
     </React.Fragment>
   );
 });

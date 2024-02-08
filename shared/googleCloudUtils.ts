@@ -7,7 +7,7 @@ import {GOOGLE_ANDROID_CLIENT_ID} from 'react-native-dotenv';
 import {readFile, writeFile} from 'react-native-fs';
 import {BackupDetails} from '../types/backup-and-restore/backup';
 import {bytesToMB} from './commonUtil';
-import {NETWORK_REQUEST_FAILED} from './constants';
+import {isAndroid, isIOS, NETWORK_REQUEST_FAILED} from './constants';
 import fileStorage, {backupDirectoryPath, zipFilePath} from './fileStorage';
 import {request} from './request';
 
@@ -59,7 +59,10 @@ class Cloud {
       throw error;
     }
   }
-  static async signIn(): Promise<SignInResult> {
+  static async signIn(): Promise<SignInResult | IsIOSResult> {
+    if (isIOS()) {
+      return {isIOS: true};
+    }
     this.configure();
     try {
       const {scopes: userProvidedScopes} = await GoogleSignin.signIn();
@@ -93,6 +96,12 @@ class Cloud {
   }
   static async isSignedInAlready(): Promise<isSignedInResult> {
     try {
+      if (isIOS()) {
+        const isSignedIn = await CloudStorage.isCloudAvailable();
+        return {
+          isSignedIn: false,
+        };
+      }
       this.configure();
       const isSignedIn = await GoogleSignin.isSignedIn();
       if (!isSignedIn) {
@@ -151,8 +160,10 @@ class Cloud {
     return backupDetails;
   }
   static async removeOldDriveBackupFiles(fileName: string) {
-    const allFiles = await CloudStorage.readdir(`/`, CloudStorageScope.AppData);
-    const toBeRemovedFiles = allFiles.filter(file => file !== fileName);
+    const allFiles = await CloudStorage.readdir('/', CloudStorageScope.AppData);
+    const toBeRemovedFiles = allFiles
+      .filter(file => file !== fileName)
+      .filter(file => file.match(/backup_[0-9]*.zip/g));
     console.log(
       'removeOldDriveBackupFiles toBeRemovedFiles ',
       toBeRemovedFiles,
@@ -184,8 +195,14 @@ class Cloud {
 
     try {
       CloudStorage.setTimeout(this.timeout);
-      const tokenResult = await Cloud.getAccessToken();
-      CloudStorage.setGoogleDriveAccessToken(tokenResult);
+      if (Platform.OS === 'android') {
+        const tokenResult = await Cloud.getAccessToken();
+        CloudStorage.setGoogleDriveAccessToken(tokenResult);
+      }
+      if (Platform.OS === 'ios') {
+        await CloudStorage.isCloudAvailable();
+        //todo: if not reject
+      }
 
       const filePath = zipFilePath(fileName);
       const fileContent = await readFile(filePath, 'base64');
@@ -234,19 +251,24 @@ class Cloud {
   static async downloadLatestBackup(): Promise<string | null> {
     try {
       CloudStorage.setTimeout(this.timeout);
+    if (Platform.OS === 'android') {
       const tokenResult = await Cloud.getAccessToken();
       CloudStorage.setGoogleDriveAccessToken(tokenResult);
-      const allFiles = await CloudStorage.readdir(
-        '/',
-        CloudStorageScope.AppData,
-      );
-      console.log('allFiles ', allFiles);
-      // TODO: do basic sanity about this .zip file
-      const fileName = allFiles[0];
-      const fileContent = await CloudStorage.readFile(
-        fileName,
-        CloudStorageScope.AppData,
-      );
+    }
+    if (Platform.OS === 'ios') {
+      await CloudStorage.isCloudAvailable();
+      //todo: if not reject
+    }
+    const allFiles = (
+      await CloudStorage.readdir('/', CloudStorageScope.AppData)
+    ).filter(file => file.match(/backup_[0-9]*.zip/g));
+    // TODO: do basic sanity about this .zip file
+    console.log('all files ', allFiles);
+    const fileName = `/${allFiles[0]}`;
+    const fileContent = await CloudStorage.readFile(
+      fileName,
+      CloudStorageScope.AppData,
+    );
 
       if (fileContent.length === 0) return Promise.resolve(null);
       // write the file content in the backup directory path, create backup directory if not exists
@@ -288,6 +310,10 @@ export type SignInResult = {
   status: (typeof Cloud.status)[keyof typeof Cloud.status];
   profileInfo?: ProfileInfo;
   error?: string;
+};
+
+export type IsIOSResult = {
+  isIOS?: boolean;
 };
 
 export type isSignedInResult = {

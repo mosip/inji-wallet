@@ -102,3 +102,5 @@ export const TECHNICAL_ERROR = 'Technical error';
 export const NETWORK_REQUEST_FAILED = 'Network request failed';
 export const REQUEST_TIMEOUT = 'request timedout';
 export const BIOMETRIC_CANCELLED = 'User has cancelled biometric';
+export const GOOGLE_DRIVE_NAME = 'Google Drive';
+export const ICLOUD_DRIVE_NAME = 'iCloud';

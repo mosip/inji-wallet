@@ -16,6 +16,8 @@ import {useBackupRestoreScreen} from '../Settings/BackupRestoreController';
 import {Icon} from 'react-native-elements';
 import testIDProps from '../../shared/commonUtil';
 import {HelpScreen} from '../../components/HelpScreen';
+import {isAndroid} from '../../shared/constants';
+import {getDriveName} from '../../shared/commonUtil';
 
 const BackupAndRestoreScreen: React.FC<BackupAndRestoreProps> = props => {
   const backupController = useBackupScreen();
@@ -102,7 +104,7 @@ const BackupAndRestoreScreen: React.FC<BackupAndRestoreProps> = props => {
             <Text
               testID="noBackup"
               style={Theme.BackupAndRestoreStyles.backupProgressText}>
-              {t('noBackup')}
+              {t('noBackup', {driveName: getDriveName()})}
             </Text>
           )}
         </View>
@@ -216,7 +218,7 @@ const BackupAndRestoreScreen: React.FC<BackupAndRestoreProps> = props => {
         ) : (
           <ScrollView>
             {LastBackupSection}
-            {AccountSection}
+            {isAndroid() && AccountSection}
             {RestoreSection}
           </ScrollView>
         )}

@@ -176,6 +176,8 @@ fileignoreconfig:
     checksum: 9af4308001e7e260ffffd26955ca49df3b388e34686509371e23dd837b11d030
   - filename: screens/Home/MyVcs/IdInputModal.tsx
     checksum: b735aedc84164d03c199fe89ccbf9df58f8997bfb4f60e7058a22bfe952fda3e
+  - filename: machines/backupAndRestore/backupAndRestoreSetup.ts
+    checksum: 791a6065f7d0acb62c636fe316daf46132f3ada75bb1891a4ed9440ff62bd500
   - filename: .github/workflows/ui-automation.yml
     checksum: 0b26a5dcb7524ba15d6aaeaf04f2ef94be9d25ef702d9072d6628bcd58e50f36 
   - filename: components/BannerNotificationContainer.tsx
