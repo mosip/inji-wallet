@@ -5,7 +5,7 @@ import {
   VcEvents,
   selectIsRefreshingReceivedVcs,
   selectReceivedVcsMetadata,
-} from '../../machines/vc';
+} from '../../machines/VCItemMachine/vc';
 import {ExistingMosipVCItemMachine} from '../../machines/VCItemMachine/ExistingMosipVCItem/ExistingMosipVCItemMachine';
 import {GlobalContext} from '../../shared/GlobalContext';
 import {

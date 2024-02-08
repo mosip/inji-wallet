@@ -1,16 +1,16 @@
 import {EventFrom, send, sendParent, StateFrom} from 'xstate';
 import {createModel} from 'xstate/lib/model';
-import {StoreEvents} from './store';
-import {VC} from '../types/VC/ExistingMosipVC/vc';
-import {AppServices} from '../shared/GlobalContext';
+import {StoreEvents} from '../store';
+import {VC} from '../../types/VC/ExistingMosipVC/vc';
+import {AppServices} from '../../shared/GlobalContext';
 import {log, respond} from 'xstate/lib/actions';
-import {ExistingMosipVCItemEvents} from './VCItemMachine/ExistingMosipVCItem/ExistingMosipVCItemMachine';
-import {MY_VCS_STORE_KEY, RECEIVED_VCS_STORE_KEY} from '../shared/constants';
-import {parseMetadatas, VCMetadata} from '../shared/VCMetadata';
-import {Protocols} from '../shared/openId4VCI/Utils';
-import {EsignetMosipVCItemEvents} from './VCItemMachine/EsignetMosipVCItem/EsignetMosipVCItemMachine';
-import {ActivityLogEvents} from './activityLog';
-import {ActivityLog} from '../components/ActivityLogEvent';
+import {ExistingMosipVCItemEvents} from './ExistingMosipVCItem/ExistingMosipVCItemMachine';
+import {MY_VCS_STORE_KEY, RECEIVED_VCS_STORE_KEY} from '../../shared/constants';
+import {parseMetadatas, VCMetadata} from '../../shared/VCMetadata';
+import {Protocols} from '../../shared/openId4VCI/Utils';
+import {EsignetMosipVCItemEvents} from './EsignetMosipVCItem/EsignetMosipVCItemMachine';
+import {ActivityLogEvents} from '../activityLog';
+import {ActivityLog} from '../../components/ActivityLogEvent';
 
 const model = createModel(
   {
