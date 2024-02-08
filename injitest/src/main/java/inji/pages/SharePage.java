@@ -32,7 +32,9 @@ public class SharePage extends BasePage {
 	@AndroidFindBy(accessibility = "holdPhoneSteadyMessage")
     @iOSXCUITFindBy(accessibility = "holdPhoneSteadyMessage")
     private WebElement holdCameraSteady;
-	
+
+    @iOSXCUITFindBy(accessibility = "enableBluetoothButton")
+    private WebElement enableBluetoothButton;
 	@AndroidFindBy(accessibility = "bluetoothIsTurnedOffMessage")
     private WebElement bluetoothIsTurnedOffMessage;
 
@@ -104,6 +106,10 @@ public class SharePage extends BasePage {
     
     public String isBluetoothIsTurnedOffMessageDisplayed() {
         return getTextFromLocator(bluetoothIsTurnedOffMessage);
+    }
+
+    public String isEnableBluetoothButtonButtonDisplayed() {
+        return getTextFromLocator(enableBluetoothButton);
     }
 
     public boolean isCameraPageLoaded() {
