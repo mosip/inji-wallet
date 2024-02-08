@@ -52,6 +52,8 @@ export const RequestLayout: React.FC = () => {
                   onPress={() => {
                     controller.RESET();
                   }}
+                  style={Theme.Styles.IconContainer}
+                  tintColor={Theme.Colors.Icon}
                 />
               ),
             }}
@@ -62,6 +64,15 @@ export const RequestLayout: React.FC = () => {
           component={RequestScreen}
           options={{
             title: t('receiveCard').toUpperCase(),
+            headerLeft: () => (
+              <HeaderBackButton
+                onPress={() => {
+                  controller.RESET();
+                }}
+                style={Theme.Styles.IconContainer}
+                tintColor={Theme.Colors.Icon}
+              />
+            ),
           }}
         />
       </RequestStack.Navigator>

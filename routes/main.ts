@@ -41,7 +41,6 @@ const history: TabScreen = {
   options: {
     headerTitleStyle: Theme.Styles.HistoryHeaderTitleStyle,
     title: i18n.t('MainLayout:history'),
-    headerRight: null,
   },
 };
 
