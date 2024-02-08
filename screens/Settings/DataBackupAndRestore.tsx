@@ -73,7 +73,7 @@ export const DataBackupAndRestore: React.FC = ({} = () => {
           primaryButtonTestID="allowAccess"
           textButtonTestID="notNow"
           customImageStyles={{paddingBottom: 0, marginBottom: -6}}
-          customStyles={{marginTop: '30%'}}
+          customStyles={{marginTop: '10%'}}
           testID="CloudBackupConsentDenied"
         />
       )}

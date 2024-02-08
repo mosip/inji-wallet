@@ -23,7 +23,7 @@ export const AccountSelectionConfirmation: React.FC<
       showClose={false}
       onDismiss={props.goBack}>
       <Column style={{flex: 1, justifyContent: 'space-around'}}>
-        <View style={{alignItems: 'center', paddingTop: 30, paddingBottom: 30}}>
+        <View style={{alignItems: 'center', paddingTop: 10, paddingBottom: 30}}>
           {SvgImage.DataBackupIcon(80, 100)}
         </View>
 
@@ -46,7 +46,7 @@ export const AccountSelectionConfirmation: React.FC<
         <HorizontallyCentered
           fill
           crossAlign="center"
-          style={{paddingHorizontal: 120, paddingTop: 60}}>
+          style={{paddingHorizontal: 120, paddingTop: 40}}>
           <Row>
             {SvgImage.GoogleDriveIcon(45, 45)}
             <Text

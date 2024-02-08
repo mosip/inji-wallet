@@ -79,7 +79,9 @@ export interface Typegen0 {
     setLastBackupDetails:
       | 'STORE_RESPONSE'
       | 'done.invoke.backup.fetchLastBackupDetails.checkCloud:invocation[0]';
-    storeLastBackupDetails: 'done.invoke.backup.backingUp.uploadBackupFile:invocation[0]';
+    storeLastBackupDetails:
+      | 'STORE_RESPONSE'
+      | 'done.invoke.backup.backingUp.uploadBackupFile:invocation[0]';
     unsetIsLoading:
       | 'STORE_RESPONSE'
       | 'done.invoke.backup.fetchLastBackupDetails.checkCloud:invocation[0]'

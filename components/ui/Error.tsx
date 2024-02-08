@@ -115,11 +115,6 @@ export const Error: React.FC<ErrorProps> = props => {
       isVisible={props.isVisible}
       showClose={props.showClose}
       onDismiss={props.onDismiss}
-      style={{
-        ...Theme.ModalStyles.modal,
-        backgroundColor: Theme.Colors.whiteBackgroundColor,
-      }}
-      showClose={props.showClose}
       {...testIDProps(props.testID)}>
       <Column
         fill

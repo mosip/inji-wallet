@@ -91,7 +91,11 @@ export const backupMachine = model.createMachine(
               STORE_RESPONSE: [
                 {
                   cond: 'isDataAvailableInStorage',
-                  actions: ['setLastBackupDetails', 'unsetIsLoading'],
+                  actions: [
+                    'setLastBackupDetails',
+                    'unsetIsLoading',
+                    'storeLastBackupDetails',
+                  ],
                   target: '#backup.init',
                 },
                 {target: 'checkCloud'},
@@ -208,10 +212,7 @@ export const backupMachine = model.createMachine(
             entry: 'sendDataBackupSuccessEvent',
           },
           failure: {
-            entry: [
-              'sendDataBackupFailureEvent',
-              (ctx, event) => console.log('failure state ', event),
-            ],
+            entry: ['sendDataBackupFailureEvent'],
           },
         },
         on: {

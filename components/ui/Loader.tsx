@@ -17,6 +17,54 @@ export const Loader: React.FC<LoaderProps> = props => {
     return () => backHandler.remove();
   }, []);
 
+  function loaderContent() {
+    return (
+      <Centered
+        style={{backgroundColor: Theme.Colors.whiteBackgroundColor}}
+        crossAlign="center"
+        fill>
+        <Column margin="24 0" align="space-around">
+          <LoaderAnimation />
+        </Column>
+        {(props.isHintVisible || props.onCancel) && (
+          <Column style={Theme.SelectVcOverlayStyles.timeoutHintContainer}>
+            {props.hint && (
+              <Text
+                align="center"
+                margin="10"
+                color={Theme.Colors.TimeoutHintText}
+                size="small"
+                style={Theme.TextStyles.bold}>
+                {props.hint}
+              </Text>
+            )}
+            {props.onStayInProgress && (
+              <Button
+                type="clear"
+                title={t('status.stayOnTheScreen')}
+                onPress={props.onStayInProgress}
+              />
+            )}
+            {props.onRetry && (
+              <Button
+                type="clear"
+                title={t('status.retry')}
+                onPress={props.onRetry}
+              />
+            )}
+            {props.onCancel && (
+              <Button
+                type="clear"
+                title={t('common:cancel')}
+                onPress={props.onCancel}
+              />
+            )}
+          </Column>
+        )}
+      </Centered>
+    );
+  }
+
   return (
     <Fragment>
       {props.isModal ? (
@@ -30,9 +78,7 @@ export const Loader: React.FC<LoaderProps> = props => {
             style={{backgroundColor: Theme.Colors.whiteBackgroundColor}}
             crossAlign="center"
             fill>
-            <Column margin="24 0" align="space-around">
-              <LoaderAnimation />
-            </Column>
+            {loaderContent()}
           </Centered>
         </Modal>
       ) : (
@@ -62,49 +108,7 @@ export const Loader: React.FC<LoaderProps> = props => {
             </SafeAreaView>
           </Row>
           <View style={Theme.Styles.hrLineFill}></View>
-          <Centered
-            style={{backgroundColor: Theme.Colors.whiteBackgroundColor}}
-            crossAlign="center"
-            fill>
-            <Column margin="24 0" align="space-around">
-              <LoaderAnimation />
-            </Column>
-            {(props.isHintVisible || props.onCancel) && (
-              <Column style={Theme.SelectVcOverlayStyles.timeoutHintContainer}>
-                {props.hint && (
-                  <Text
-                    align="center"
-                    margin="10"
-                    color={Theme.Colors.TimeoutHintText}
-                    size="small"
-                    style={Theme.TextStyles.bold}>
-                    {props.hint}
-                  </Text>
-                )}
-                {props.onStayInProgress && (
-                  <Button
-                    type="clear"
-                    title={t('status.stayOnTheScreen')}
-                    onPress={props.onStayInProgress}
-                  />
-                )}
-                {props.onRetry && (
-                  <Button
-                    type="clear"
-                    title={t('status.retry')}
-                    onPress={props.onRetry}
-                  />
-                )}
-                {props.onCancel && (
-                  <Button
-                    type="clear"
-                    title={t('common:cancel')}
-                    onPress={props.onCancel}
-                  />
-                )}
-              </Column>
-            )}
-          </Centered>
+          {loaderContent()}
         </Fragment>
       )}
     </Fragment>
