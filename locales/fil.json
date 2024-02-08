@@ -651,15 +651,15 @@
   "BackupAndRestoreBanner": {
     "backupSuccessful": "Ang iyong backup ay matagumpay!",
     "backupFailure": {
-      "networkError": "Dahil sa Hindi Matatag na Koneksyon, hindi namin nagawang isagawa ang pag-backup ng data. Pakisubukang muli sa ibang pagkakataon.",
+      "networkError": "Dahil sa hindi matatag na koneksyon sa internet, hindi kami nakapagsagawa ng pag-backup ng data. Subukang muli mamaya.",
       "technicalError": "Dahil sa Technical Error, hindi namin nagawang magsagawa ng pag-backup ng data. Subukang muli mamaya.",
       "noDataForBackup": "Ikinalulungkot namin, ngunit walang data na magagamit upang i-back up sa ngayon.",
       "storageLimitReached": "Hindi namin makumpleto ang proseso ng pag-backup dahil sa hindi sapat na espasyo sa storage sa iyong device. Mangyaring magbakante ng espasyo sa pamamagitan ng pagtanggal ng mga hindi kinakailangang file o app, at subukang muli."
     },
     "restoreSuccessful": "Matagumpay na naibalik ang iyong backup",
     "restoreFailure": {
-      "networkError": "Dahil sa Hindi Matatag na Koneksyon, hindi namin naibalik ang data. Subukang muli mamaya.",
-      "technicalError": "Dahil sa Technical Error, hindi namin naibalik ang data. Subukang muli mamaya.",
+      "networkError": "Dahil sa hindi matatag na koneksyon sa internet, hindi namin nagawang magsagawa ng data restore. Subukang muli mamaya.",
+      "technicalError": "Dahil sa teknikal na error, hindi namin nagawang maisagawa ang pag-restore ng data. Subukang muli mamaya.",
       "noBackupFile": "Walang backup na file"
     }
   },

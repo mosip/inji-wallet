@@ -618,15 +618,15 @@
   "BackupAndRestoreBanner": {
     "backupSuccessful": "¡Su copia de seguridad fue exitosa!",
     "backupFailure": {
-      "networkError": "Debido a Conexión inestable, no pudimos realizar la copia de seguridad de los datos. Vuelve a intentarlo más tarde.",
+      "networkError": "Debido a una conexión a Internet inestable, no pudimos realizar una copia de seguridad de los datos. Por favor, inténtelo de nuevo más tarde.",
       "technicalError": "Debido a un error técnico, no pudimos realizar una copia de seguridad de los datos. Por favor, inténtelo de nuevo más tarde.",
       "noDataForBackup": "Lo sentimos, pero no hay datos disponibles para realizar una copia de seguridad en este momento.",
       "storageLimitReached": "No podemos completar el proceso de copia de seguridad debido a que no hay suficiente espacio de almacenamiento en su dispositivo. Libere espacio eliminando archivos o aplicaciones innecesarios y vuelva a intentarlo."
     },
     "restoreSuccessful": "Su copia de seguridad ha sido restaurada exitosamente",
     "restoreFailure": {
-      "networkError": "Debido a una conexión inestable, no pudimos restaurar los datos. Por favor, inténtelo de nuevo más tarde.",
-      "technicalError": "Debido a un error técnico, no pudimos restaurar los datos. Por favor, inténtelo de nuevo más tarde.",
+      "networkError": "Debido a una conexión a Internet inestable, no pudimos realizar la restauración de datos. Por favor, inténtelo de nuevo más tarde.",
+      "technicalError": "Debido a un error técnico, no pudimos realizar la restauración de datos. Por favor, inténtelo de nuevo más tarde.",
       "noBackupFile": "El archivo de copia de seguridad no existe"
     }
   },
