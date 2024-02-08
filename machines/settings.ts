@@ -31,6 +31,7 @@ const model = createModel(
     credentialRegistry: MIMOTO_BASE_URL,
     esignetHostUrl: ESIGNET_BASE_URL,
     appId: null,
+    isBackupAndRestoreExplored: false as boolean,
     hasUserShownWithHardwareKeystoreNotExists: false,
     credentialRegistryResponse: '' as string,
   },
@@ -54,6 +55,7 @@ const model = createModel(
       BACK: () => ({}),
       CANCEL: () => ({}),
       ACCEPT_HARDWARE_SUPPORT_NOT_EXISTS: () => ({}),
+      SET_IS_BACKUP_AND_RESTORE_EXPLORED: () => ({}),
     },
   },
 );
@@ -99,6 +101,9 @@ export const settingsMachine = model.createMachine(
           },
           UPDATE_NAME: {
             actions: ['updateName', 'storeContext'],
+          },
+          SET_IS_BACKUP_AND_RESTORE_EXPLORED: {
+            actions: ['setBackupAndRestoreOptionExplored', 'storeContext'],
           },
           UPDATE_VC_LABEL: {
             actions: ['updateVcLabel', 'storeContext'],
@@ -204,7 +209,9 @@ export const settingsMachine = model.createMachine(
       updateName: model.assign({
         name: (_, event) => event.name,
       }),
-
+      setBackupAndRestoreOptionExplored: model.assign({
+        isBackupAndRestoreExplored: () => true,
+      }),
       updateEsignetHostUrl: model.assign({
         esignetHostUrl: (_, event) => event.esignetHostUrl,
       }),
@@ -323,4 +330,8 @@ export function selectBiometricUnlockEnabled(state: State) {
 
 export function selectIsResetInjiProps(state: State) {
   return state.matches('resetInjiProps');
+}
+
+export function selectIsBackUpAndRestoreExplored(state: State) {
+  return state.context.isBackupAndRestoreExplored;
 }

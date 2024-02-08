@@ -15,6 +15,7 @@ export const TelemetryConstants = {
     dataBackup: 'Data Backup',
     dataRestore: 'Data Restore',
     decryption: 'Decryption',
+    dataBackupAndRestoreSetup: 'Data Backup & Restore Setup',
   }),
 
   EndEventStatus: Object.freeze({
@@ -69,5 +70,6 @@ export const TelemetryConstants = {
     vcReceivedSuccessPage: 'VC Successfully Received Page',
     dataBackupScreen: 'Data Backup Screen',
     dataRestoreScreen: 'Data Restore Screen',
+    dataBackupAndRestoreSetupScreen: 'Data Backup & Restore Setup Screen',
   }),
 };

@@ -31,6 +31,7 @@ const Colors = {
   mediumDarkGrey: '#7B7B7B',
   White: '#FFFFFF',
   Red: '#D52929',
+  LightRed: '#DB2E2E',
   Green: '#4B9D20',
   Transparent: 'transparent',
   Warning: '#f0ad4e',
@@ -211,35 +212,6 @@ export const DefaultTheme = {
       height: Dimensions.get('window').height * 0.045,
       borderRadius: 6,
       backgroundColor: Colors.LightOrange,
-    },
-    downloadingVcPopUp: {
-      alignItems: 'center',
-      justifyContent: 'space-between',
-      backgroundColor: Colors.Green,
-      height: 39,
-      position: 'relative',
-      paddingHorizontal: 12,
-    },
-    backupRestoreBanner: {
-      alignItems: 'center',
-      justifyContent: 'space-between',
-      height: 39,
-      position: 'relative',
-      paddingHorizontal: 12,
-    },
-    dataBackupFailure: {
-      justifyContent: 'space-between',
-      backgroundColor: Colors.Red,
-      height: 39,
-      position: 'relative',
-      paddingHorizontal: 12,
-    },
-    dataBackupSuccess: {
-      justifyContent: 'space-between',
-      backgroundColor: Colors.Green,
-      height: 39,
-      position: 'relative',
-      paddingHorizontal: 12,
     },
     homeScreenContainer: {
       alignItems: 'center',
@@ -690,6 +662,42 @@ export const DefaultTheme = {
       paddingVertical: 40,
       paddingHorizontal: 24,
     },
+    newLabel: {
+      backgroundColor: Colors.Orange,
+      paddingHorizontal: 5,
+      paddingVertical: 4,
+      borderRadius: 4,
+      fontSize: 10,
+      fontFamily: 'Inter_700Bold',
+      lineHeight: 12,
+    },
+  }),
+  BannerStyles: StyleSheet.create({
+    container: {
+      alignItems: 'flex-start',
+      justifyContent: 'space-between',
+      backgroundColor: '#DB2E2E',
+      width: '100%',
+      position: 'relative',
+      paddingHorizontal: 18,
+      paddingVertical: 12,
+      marginVertical: 1,
+      columnGap: 7,
+    },
+    text: {
+      textAlignVertical: 'center',
+      fontSize: 12,
+      lineHeight: 15,
+      padding: 1,
+      fontFamily: 'Inter_600SemiBold',
+    },
+    dismiss: {paddingLeft: 9},
+    success: {
+      backgroundColor: Colors.Green,
+    },
+    error: {
+      backgroundColor: Colors.LightRed,
+    },
   }),
   QrCodeStyles: StyleSheet.create({
     magnifierZoom: {
@@ -1077,13 +1085,6 @@ export const DefaultTheme = {
       marginVertical: 6,
     },
   }),
-  BackupStyles: StyleSheet.create({
-    newStyles: {
-      backgroundColor: Colors.Orange,
-      paddingHorizontal: 10,
-      borderRadius: 3,
-    },
-  }),
   UpdateModalStyles: StyleSheet.create({
     modal: {
       width: Dimensions.get('screen').width,
@@ -1100,6 +1101,14 @@ export const DefaultTheme = {
       fontWeight: 'bold',
       paddingHorizontal: 20,
       textAlign: 'center',
+      lineHeight: 22,
+      fontSize: 17,
+      fontFamily: 'Inter_600SemiBold',
+      marginHorizontal: 30,
+    },
+    actionOrLoaderContainer: {
+      marginLeft: 1,
+      marginRight: 1,
     },
     cloudInfo: {
       paddingHorizontal: 20,
@@ -1456,6 +1465,7 @@ export const DefaultTheme = {
       lineHeight: 21,
       paddingTop: 4,
       textAlign: 'center',
+      marginBottom: 10,
     },
     message: {
       textAlign: 'center',
@@ -1464,7 +1474,7 @@ export const DefaultTheme = {
       lineHeight: 20,
       marginTop: 6,
       marginBottom: 25,
-      marginHorizontal: 40,
+      marginHorizontal: 26,
       color: Colors.mediumDarkGrey,
     },
   }),
