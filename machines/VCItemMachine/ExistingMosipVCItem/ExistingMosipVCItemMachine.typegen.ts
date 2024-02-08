@@ -180,7 +180,6 @@ export interface Typegen0 {
     removeVcMetaDataFromVcMachine: 'DISMISS';
     requestStoredContext: 'GET_VC_RESPONSE' | 'REFRESH';
     requestVcContext: 'DISMISS' | 'xstate.init';
-    resetWalletBindingSuccess: 'DISMISS';
     revokeVID: 'done.invoke.vc-item.requestingRevoke:invocation[0]';
     sendActivationFailedEndEvent:
       | 'DISMISS'
@@ -235,7 +234,6 @@ export interface Typegen0 {
     setWalletBindingId:
       | 'done.invoke.vc-item.addingWalletBindingId:invocation[0]'
       | 'done.invoke.vc-item.updatingPrivateKey:invocation[0]';
-    setWalletBindingSuccess: 'SHOW_BINDING_STATUS';
     storeContext:
       | 'CREDENTIAL_DOWNLOADED'
       | 'done.invoke.vc-item.addingWalletBindingId:invocation[0]'
