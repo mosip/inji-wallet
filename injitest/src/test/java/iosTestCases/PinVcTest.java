@@ -161,6 +161,7 @@ public class PinVcTest extends IosBaseTest {
         assertTrue(moreOptionsPage.isMoreOptionsPageLoaded(), "Verify if more options page is displayed");
         moreOptionsPage.clickOnPinOrUnPinCard();
     }
+
     
     @Test
     public void verifyMessageAfterDenyBluetoothPopup() throws InterruptedException {

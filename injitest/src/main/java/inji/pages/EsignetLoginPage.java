@@ -36,6 +36,7 @@ public class EsignetLoginPage extends BasePage {
     private WebElement getOtpButton;
 
     @AndroidFindBy(uiAutomator = "new UiSelector().className(\"android.widget.Button\").instance(1)")
+    @iOSXCUITFindBy(accessibility = "Verify")
     private WebElement verifyButton;
 
     @iOSXCUITFindBy(accessibility = "Verify")
