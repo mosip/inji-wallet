@@ -37,7 +37,7 @@ export const SharingStatusModal: React.FC<SharingStatusModalProps> = props => {
             {props.message}
           </Text>
         </Column>
-        {props.status === 'successfullyShared' ? (
+        {props.status === 'withHomeAndHistoryIcons' ? (
           <Row
             align="space-evenly"
             style={{marginBottom: Dimensions.get('screen').height * 0.06}}>
@@ -71,34 +71,34 @@ export const SharingStatusModal: React.FC<SharingStatusModalProps> = props => {
             </Pressable>
           </Row>
         ) : null}
-        {props.status === 'walletSideSharingError' ? (
+        {props.status === 'withGradientAndClearButtons' ? (
           <Column
             align="space-evenly"
             style={{marginBottom: Dimensions.get('screen').height * 0.02}}>
             <Button
               testID="failedVcSharedRetryButton"
               type="gradient"
-              title={t('status.bleError.retry')}
-              onPress={props.onRetry}
+              title={props.gradientButtonTitle}
+              onPress={props.onGradientButton}
             />
             <Button
               testID="failedVcSharedHomeButton"
               type="clear"
               styles={{marginTop: 12}}
-              title={t('status.bleError.home')}
-              onPress={props.onBackToHome}
+              title={props.clearButtonTitle}
+              onPress={props.onClearButton}
             />
           </Column>
         ) : null}
-        {props.status === 'verifierSharingErrorModal' ? (
+        {props.status === 'withGradientButton' ? (
           <Column
             align="space-evenly"
             style={{marginBottom: Dimensions.get('screen').height * 0.04}}>
             <Button
               testID="failedVcSharedRetryButton"
               type="gradient"
-              title={t('common:ok')}
-              onPress={props.onRetry}
+              title={props.gradientButtonTitle}
+              onPress={props.onGradientButton}
             />
           </Column>
         ) : null}
@@ -114,8 +114,10 @@ interface SharingStatusModalProps {
   title: String;
   message: String;
   image: React.ReactElement;
+  gradientButtonTitle?: String;
+  clearButtonTitle?: String;
   goToHome?: () => void;
   goToHistory?: () => void;
-  onRetry?: () => void;
-  onBackToHome?: () => void;
+  onGradientButton?: () => void;
+  onClearButton?: () => void;
 }

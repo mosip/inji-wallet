@@ -87,21 +87,23 @@ export const RequestLayout: React.FC = () => {
       <SharingStatusModal
         isVisible={controller.isDisconnected}
         testId={'sharingErrorModal'}
-        status={'verifierSharingErrorModal'}
+        status={'withGradientButton'}
         title={t('status.disconnected.title')}
         message={t('status.disconnected.message')}
+        gradientButtonTitle={t('common:ok')}
         image={SvgImage.ErrorLogo()}
-        onRetry={controller.RESET}
+        onGradientButton={controller.RESET}
       />
 
       <SharingStatusModal
         isVisible={controller.isBleError}
         testId={'sharingErrorModal'}
-        status={'verifierSharingErrorModal'}
+        status={'withGradientButton'}
         title={t(`status.bleError.${bleErrorCode}.title`)}
         message={t(`status.bleError.${bleErrorCode}.message`)}
+        gradientButtonTitle={t('common:ok')}
         image={SvgImage.ErrorLogo()}
-        onRetry={controller.RESET}
+        onGradientButton={controller.RESET}
       />
     </React.Fragment>
   );

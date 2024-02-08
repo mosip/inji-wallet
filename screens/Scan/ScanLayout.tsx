@@ -73,7 +73,7 @@ export const ScanLayout: React.FC = () => {
       <SharingStatusModal
         isVisible={controller.isAccepted}
         testId={'sharingSuccessModal'}
-        status={'successfullyShared'}
+        status={'withHomeAndHistoryIcons'}
         title={t('status.accepted.title')}
         message={t('status.accepted.message')}
         image={SvgImage.SuccessLogo()}
@@ -84,23 +84,27 @@ export const ScanLayout: React.FC = () => {
       <SharingStatusModal
         isVisible={controller.isDisconnected}
         testId={'walletSideSharingErrorModal'}
-        status={'walletSideSharingError'}
+        status={'withGradientAndClearButtons'}
+        image={SvgImage.ErrorLogo()}
         title={t('status.disconnected.title')}
         message={t('status.disconnected.message')}
-        image={SvgImage.ErrorLogo()}
-        onRetry={controller.onRetry}
-        onBackToHome={controller.GOTO_HOME}
+        gradientButtonTitle={t('status.bleError.retry')}
+        clearButtonTitle={t('status.bleError.home')}
+        onGradientButton={controller.onRetry}
+        onClearButton={controller.GOTO_HOME}
       />
 
       <SharingStatusModal
         isVisible={controller.isBleError}
         testId={'walletSideSharingErrorModal'}
-        status={'walletSideSharingError'}
+        status={'withGradientAndClearButtons'}
+        image={SvgImage.ErrorLogo()}
         title={t(`status.bleError.${bleErrorCode}.title`)}
         message={t(`status.bleError.${bleErrorCode}.message`)}
-        image={SvgImage.ErrorLogo()}
-        onBackToHome={controller.GOTO_HOME}
-        onRetry={controller.onRetry}
+        gradientButtonTitle={t('status.bleError.retry')}
+        clearButtonTitle={t('status.bleError.home')}
+        onGradientButton={controller.onRetry}
+        onClearButton={controller.GOTO_HOME}
       />
     </React.Fragment>
   );
