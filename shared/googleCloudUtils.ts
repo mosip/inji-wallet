@@ -99,7 +99,7 @@ class Cloud {
       if (isIOS()) {
         const isSignedIn = await CloudStorage.isCloudAvailable();
         return {
-          isSignedIn: false,
+          isSignedIn,
         };
       }
       this.configure();

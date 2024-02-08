@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {useTranslation} from 'react-i18next';
 import {Pressable} from 'react-native';
 import {Icon, ListItem} from 'react-native-elements';
@@ -19,6 +19,17 @@ export const DataBackupAndRestore: React.FC = ({} = () => {
   const accountSelectionModalVisible = useOverlayVisibleAfterTimeout(
     controller.showAccountSelectionConfirmation,
   );
+  const isLoaderVisible = useOverlayVisibleAfterTimeout(controller.isLoading);
+
+  useEffect(() => {
+    {
+      console.log(
+        'accountSelectionModalVisible ',
+        accountSelectionModalVisible,
+      );
+      console.log('isLoading ', controller.isLoading);
+    }
+  }, [accountSelectionModalVisible, controller.isLoading]);
 
   return (
     <React.Fragment>
@@ -107,9 +118,7 @@ export const DataBackupAndRestore: React.FC = ({} = () => {
           shouldTriggerAutoBackup={controller.shouldTriggerAutoBackup}
         />
       )}
-      {controller.isLoading && (
-        <Loader title={t('loadingSubtitle')} isModal></Loader>
-      )}
+      {isLoaderVisible && <Loader title={t('loadingSubtitle')} isModal />}
 
       <AccountSelectionConfirmation
         isVisible={accountSelectionModalVisible}

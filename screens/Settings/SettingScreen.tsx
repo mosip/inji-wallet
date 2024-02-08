@@ -165,9 +165,7 @@ export const SettingScreen: React.FC<
 
             <AboutInji appId={controller.appId} />
 
-            {BACKUP_AND_RESTORE === 'true' && isAndroid() && (
-              <DataBackupAndRestore />
-            )}
+            {BACKUP_AND_RESTORE === 'true' && <DataBackupAndRestore />}
 
             {CREDENTIAL_REGISTRY_EDIT === 'true' && (
               <EditableListItem

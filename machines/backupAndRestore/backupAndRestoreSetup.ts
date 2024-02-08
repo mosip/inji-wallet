@@ -1,15 +1,20 @@
-import {EventFrom, StateFrom} from 'xstate';
+import NetInfo from '@react-native-community/netinfo';
+import {EventFrom, StateFrom, send} from 'xstate';
 import {createModel} from 'xstate/lib/model';
 import {AppServices} from '../../shared/GlobalContext';
+import {
+  NETWORK_REQUEST_FAILED,
+  SETTINGS_STORE_KEY,
+  isIOS,
+} from '../../shared/constants';
 import Cloud, {
+  IsIOSResult,
   ProfileInfo,
   SignInResult,
   isSignedInResult,
-  IsIOSResult,
 } from '../../shared/googleCloudUtils';
-import NetInfo from '@react-native-community/netinfo';
 import {ErrorMessage} from '../../shared/openId4VCI/Utils';
-import {NETWORK_REQUEST_FAILED} from '../../shared/constants';
+import {TelemetryConstants} from '../../shared/telemetry/TelemetryConstants';
 import {
   getEndEventData,
   getErrorEventData,
@@ -20,13 +25,16 @@ import {
   sendImpressionEvent,
   sendStartEvent,
 } from '../../shared/telemetry/TelemetryUtils';
-import {TelemetryConstants} from '../../shared/telemetry/TelemetryConstants';
+import {SettingsEvents} from '../settings';
+import {StoreEvents} from '../store';
 
 const model = createModel(
   {
     isLoading: false as boolean,
     profileInfo: undefined as ProfileInfo | undefined,
     errorMessage: '' as string,
+    serviceRefs: {} as AppServices,
+    showConfirmation: false as boolean,
     shouldTriggerAutoBackup: false as boolean,
   },
   {
@@ -36,6 +44,7 @@ const model = createModel(
       GO_BACK: () => ({}),
       TRY_AGAIN: () => ({}),
       DISMISS: () => ({}),
+      STORE_RESPONSE: (response: unknown) => ({response}),
     },
   },
 );
@@ -62,23 +71,21 @@ export const backupAndRestoreSetupMachine = model.createMachine(
               'setIsLoading',
               'unsetShouldTriggerAutoBackup',
             ],
-            target: 'checkSignIn',
+            target: 'fetchShowConfirmationInfo',
           },
         },
       },
-      checkSignIn: {
-        invoke: {
-          src: 'isUserSignedAlready',
-          onDone: [
+      fetchShowConfirmationInfo: {
+        /*TODO: Check if this call to store can be replaced by settings machine itself
+         *This would avoid extra read calls to storage
+         */
+        entry: 'fetchShowConfirmationInfo',
+        on: {
+          STORE_RESPONSE: [
             {
-              cond: 'isSignedIn',
-              actions: ['setProfileInfo', 'unsetIsLoading'],
-              target: 'backupAndRestore',
-            },
-            {
-              cond: 'isNetworkError',
-              actions: ['unsetIsLoading'],
-              target: 'noInternet',
+              cond: 'isConfirmationAlreadyShown',
+              actions: 'setShowConfirmation',
+              target: 'checkSignIn',
             },
             {
               actions: ['unsetIsLoading'],
@@ -86,18 +93,71 @@ export const backupAndRestoreSetupMachine = model.createMachine(
             },
           ],
         },
+        states: {},
       },
       selectCloudAccount: {
         on: {
-          PROCEED: {
-            target: 'checkInternet',
-          },
           GO_BACK: {
             actions: 'sendBackupAndRestoreSetupCancelEvent',
             target: 'init',
           },
+          PROCEED: [
+            {
+              actions: 'setIsLoading',
+              target: 'checkSignIn',
+            },
+          ],
         },
         states: {},
+      },
+      checkSignIn: {
+        invoke: {
+          src: 'isUserSignedAlready',
+          onDone: [
+            {
+              cond: 'isSignedIn',
+              actions: [
+                () => console.log('isSignedIn'),
+                'setProfileInfo',
+                'unsetIsLoading',
+              ],
+              target: 'backupAndRestore',
+            },
+            {
+              cond: 'isNetworkError',
+              actions: [() => console.log('isNetworkError'), 'unsetIsLoading'],
+              target: 'noInternet',
+            },
+            {
+              cond: 'isNotSignedInIOSAndViaConfirmationFlow',
+              actions: [
+                () => console.log('isNotSignedInIOSAndViaConfirmationFlow'),
+                'unsetIsLoading',
+                'setErrorReasonAsAccountRequired',
+              ],
+              target: '.error',
+            },
+            {
+              cond: 'isNotSignedInIOS',
+              actions: [
+                () => console.log('isNotSignedInIOS'),
+                'unsetIsLoading',
+                'setErrorReasonAsAccountRequired',
+              ],
+              target: 'backupAndRestore',
+            },
+            {
+              actions: [
+                () => console.log('isSignedInAndroid'),
+                'unsetIsLoading',
+              ],
+              target: 'signIn',
+            },
+          ],
+        },
+        states: {
+          error: {entry: 'unsetIsLoading'},
+        },
       },
       checkInternet: {
         invoke: {
@@ -165,7 +225,10 @@ export const backupAndRestoreSetupMachine = model.createMachine(
         },
       },
       backupAndRestore: {
-        entry: 'sendBackupAndRestoreSetupSuccessEvent',
+        entry: [
+          'sendBackupAndRestoreSetupSuccessEvent',
+          'setAccountSelectionConfirmationShown',
+        ],
         on: {GO_BACK: 'init'},
       },
     },
@@ -179,7 +242,7 @@ export const backupAndRestoreSetupMachine = model.createMachine(
         isLoading: false,
       }),
       setProfileInfo: model.assign({
-        profileInfo: (_context, event) => event.data.profileInfo,
+        profileInfo: (_context, event) => event.data?.profileInfo,
       }),
       setNoInternet: model.assign({
         errorMessage: () => ErrorMessage.NO_INTERNET,
@@ -226,6 +289,21 @@ export const backupAndRestoreSetupMachine = model.createMachine(
           ),
         );
       },
+      setShowConfirmation: model.assign({
+        showConfirmation: (_context, event) =>
+          !event.response.isAccountSelectionConfirmationShown || false,
+      }),
+      setErrorReasonAsAccountRequired: model.assign({
+        errorMessage: 'noAccountAvailable',
+      }),
+      setAccountSelectionConfirmationShown: send(
+        () => SettingsEvents.SHOWN_ACCOUNT_SELECTION_CONFIRMATION(),
+        {to: context => context.serviceRefs.settings},
+      ),
+      fetchShowConfirmationInfo: send(
+        () => StoreEvents.GET(SETTINGS_STORE_KEY),
+        {to: context => context.serviceRefs.store},
+      ),
       setShouldTriggerAutoBackup: model.assign({
         shouldTriggerAutoBackup: true,
       }),
@@ -249,10 +327,25 @@ export const backupAndRestoreSetupMachine = model.createMachine(
       isNetworkError: (_, event) => event.data.error === NETWORK_REQUEST_FAILED,
       isSignedIn: (_context, event) =>
         (event.data as isSignedInResult).isSignedIn,
-
+      isNotSignedInIOS: (_context, event) => {
+        return !(event.data as isSignedInResult).isSignedIn && isIOS();
+      },
+      isNotSignedInIOSAndViaConfirmationFlow: (context, event) => {
+        return (
+          !context.showConfirmation &&
+          !(event.data as isSignedInResult).isSignedIn &&
+          isIOS()
+        );
+      },
+      isConfirmationAlreadyShown: (_context, event) => {
+        return (
+          (event.response as Object)['isAccountSelectionConfirmationShown'] ||
+          false
+        );
+      },
       isSignInSuccessful: (_context, event) =>
         (event.data as SignInResult).status === Cloud.status.SUCCESS,
-      isIOS: (_context, event) => (event.data as IsIOSResult).isIOS,
+      isIOS: (_context, event) => (event.data as IsIOSResult).isIOS || false,
     },
   },
 );
@@ -260,6 +353,7 @@ export const backupAndRestoreSetupMachine = model.createMachine(
 export function createBackupAndRestoreSetupMachine(serviceRefs: AppServices) {
   return backupAndRestoreSetupMachine.withContext({
     ...backupAndRestoreSetupMachine.context,
+    serviceRefs,
   });
 }
 export function selectIsLoading(state: State) {
@@ -291,7 +385,7 @@ export function selectIsSigningInSuccessful(state: State) {
 }
 
 export function selectIsSigningFailure(state: State) {
-  return state.matches('signIn.error');
+  return state.matches('signIn.error') || state.matches('checkSignIn.error');
 }
 
 type State = StateFrom<typeof backupAndRestoreSetupMachine>;

@@ -16,20 +16,26 @@ import {
 import {GlobalContext} from '../../shared/GlobalContext';
 import {selectIsBackUpAndRestoreExplored} from '../../machines/settings';
 import {SettingsEvents} from '../../machines/settings';
+import {logState} from '../../shared/commonUtil';
 
 export function useBackupAndRestoreSetup() {
+  const {appService} = useContext(GlobalContext);
+  const settingsService = appService.children.get('settings');
+  const storeService = appService.children.get('store');
   const machine = useRef(
     backupAndRestoreSetupMachine.withContext({
       ...backupAndRestoreSetupMachine.context,
+      serviceRefs: {settings: settingsService, store: storeService},
     }),
   );
   const service = useInterpret(machine.current);
-  const {appService} = useContext(GlobalContext);
-  const settingsService = appService.children.get('settings');
   const isBackupAndRestoreExplored = useSelector(
     settingsService,
     selectIsBackUpAndRestoreExplored,
   );
+
+  // service.subscribe(logState);
+
   return {
     isLoading: useSelector(service, selectIsLoading),
     profileInfo: useSelector(service, selectProfileInfo),

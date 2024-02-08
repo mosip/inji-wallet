@@ -176,8 +176,8 @@ fileignoreconfig:
     checksum: 9af4308001e7e260ffffd26955ca49df3b388e34686509371e23dd837b11d030
   - filename: screens/Home/MyVcs/IdInputModal.tsx
     checksum: b735aedc84164d03c199fe89ccbf9df58f8997bfb4f60e7058a22bfe952fda3e
-  - filename: machines/backupAndRestore/backupAndRestoreSetup.ts
-    checksum: 791a6065f7d0acb62c636fe316daf46132f3ada75bb1891a4ed9440ff62bd500
+  - filename: machines/backupAndRestore/backupAndRestoreSetup.typegen.ts
+    checksum: 36bd994bc1c55243e9381fba89abec9c9c765e576c239f9b5b2226f54f0ad302
   - filename: .github/workflows/ui-automation.yml
     checksum: 0b26a5dcb7524ba15d6aaeaf04f2ef94be9d25ef702d9072d6628bcd58e50f36 
   - filename: components/BannerNotificationContainer.tsx
@@ -187,7 +187,7 @@ fileignoreconfig:
   - filename: machines/backupRestore.ts
     checksum: 8fa9d8b430e2c2c632dfed0d701d375ac3d436a198a9c7acde93ec6507764550
   - filename: machines/backupAndRestore/backupAndRestoreSetup.ts
-    checksum: 75b07071aef4278f40f16861232b922e5ee8594efc9467984b072966fa7793b8
+    checksum: 05a9cfc72c3aa606cfbcaeb1298db69ee7c4922662300064726b46225ea858a7
   - filename: machines/backupAndRestore/backupAndRestoreSetup.typegen.ts
     checksum: 76e81749435d83e4cd222ebb91245d1c6baaab7814d9e7899298ca8ca55c97fb
   - filename: machines/backupAndRestore/backup.ts
