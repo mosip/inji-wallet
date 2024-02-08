@@ -39,9 +39,6 @@ public class EsignetLoginPage extends BasePage {
     @iOSXCUITFindBy(accessibility = "Verify")
     private WebElement verifyButton;
 
-    @iOSXCUITFindBy(accessibility = "Verify")
-    private WebElement verifyButtonIos;
-
     @AndroidFindBy(xpath = "//*[contains(@text,'OTP has been sent to your registered Mobile Number')]")
     @iOSXCUITFindBy(xpath = "//*[contains(@text,'OTP has been sent to your registered Mobile Number')]")
     private WebElement otpSendMessage;
@@ -117,7 +114,7 @@ public class EsignetLoginPage extends BasePage {
     }
 
     public void clickOnVerifyButtonIos() {
-        clickOnElement(verifyButtonIos);
+        clickOnElement(verifyButton);
     }
 
 }
