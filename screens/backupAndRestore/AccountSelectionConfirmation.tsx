@@ -46,7 +46,7 @@ export const AccountSelectionConfirmation: React.FC<
         <HorizontallyCentered
           fill
           crossAlign="center"
-          style={{paddingHorizontal: 120, paddingTop: 40}}>
+          style={{paddingHorizontal: 120, paddingTop: 50}}>
           <Row>
             {SvgImage.GoogleDriveIcon(45, 45)}
             <Text

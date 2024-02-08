@@ -21,13 +21,11 @@ export const Error: React.FC<ErrorProps> = props => {
               style={[Theme.ErrorStyles.image, props.customImageStyles]}>
               {props.image}
             </Row>
-            {props.title && (
-              <Text
-                style={Theme.ErrorStyles.title}
-                testID={`${props.testID}Title`}>
-                {props.title}
-              </Text>
-            )}
+            <Text
+              style={Theme.ErrorStyles.title}
+              testID={`${props.testID}Title`}>
+              {props.title}
+            </Text>
             <Text
               style={Theme.ErrorStyles.message}
               testID={`${props.testID}Message`}>
@@ -156,7 +154,7 @@ export interface ErrorProps {
   isVisible: boolean;
   showClose?: boolean;
   alignActionsOnEnd?: boolean;
-  title?: string;
+  title: string;
   message: string;
   helpText?: string;
   image: React.ReactElement;

@@ -58,6 +58,7 @@ export const DataBackupAndRestore: React.FC = ({} = () => {
           alignActionsOnEnd
           showClose={false}
           isVisible={controller.isSigningInFailed}
+          title={t('errors.permissionDenied.title')}
           message={t('errors.permissionDenied.message')}
           helpText={t('errors.permissionDenied.helpText')}
           image={SvgImage.PermissionDenied()}
@@ -73,7 +74,7 @@ export const DataBackupAndRestore: React.FC = ({} = () => {
           primaryButtonTestID="allowAccess"
           textButtonTestID="notNow"
           customImageStyles={{paddingBottom: 0, marginBottom: -6}}
-          customStyles={{marginTop: '10%'}}
+          customStyles={{marginTop: '20%'}}
           testID="CloudBackupConsentDenied"
         />
       )}

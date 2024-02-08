@@ -1465,6 +1465,7 @@ export const DefaultTheme = {
       lineHeight: 21,
       paddingTop: 4,
       textAlign: 'center',
+      marginBottom: 10,
     },
     message: {
       textAlign: 'center',
