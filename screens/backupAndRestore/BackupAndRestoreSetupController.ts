@@ -25,7 +25,10 @@ export function useBackupAndRestoreSetup() {
   const service = useInterpret(machine.current);
   const {appService} = useContext(GlobalContext);
   const settingsService = appService.children.get('settings');
-
+  const isBackupAndRestoreExplored = useSelector(
+    settingsService,
+    selectIsBackUpAndRestoreExplored,
+  );
   return {
     isLoading: useSelector(service, selectIsLoading),
     profileInfo: useSelector(service, selectProfileInfo),
@@ -38,15 +41,14 @@ export function useBackupAndRestoreSetup() {
     isSigningIn: useSelector(service, selectIsSigningIn),
     isSigningInFailed: useSelector(service, selectIsSigningInFailure),
     isSigningInSuccessful: useSelector(service, selectIsSigningInSuccessful),
-    isBackupAndRestoreExplored: useSelector(
-      settingsService,
-      selectIsBackUpAndRestoreExplored,
-    ),
+    isBackupAndRestoreExplored,
     BACKUP_AND_RESTORE: () => {
-      service.send(BackupAndRestoreSetupEvents.HANDLE_BACKUP_AND_RESTORE()),
+      service.send(BackupAndRestoreSetupEvents.HANDLE_BACKUP_AND_RESTORE());
+      if (!isBackupAndRestoreExplored) {
         settingsService.send(
           SettingsEvents.SET_IS_BACKUP_AND_RESTORE_EXPLORED(),
         );
+      }
     },
     PROCEED_ACCOUNT_SELECTION: () =>
       service.send(BackupAndRestoreSetupEvents.PROCEED()),
