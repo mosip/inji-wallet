@@ -332,18 +332,6 @@ export const vcMachine =
               event.vc;
         },
 
-        setVcUpdate: (context, event) => {
-          Object.keys(context.vcs).map(vcUniqueId => {
-            const eventVCMetadata = VCMetadata.fromVC(event.vc);
-
-            if (vcUniqueId === eventVCMetadata.getVcKey()) {
-              context.vcs[eventVCMetadata.getVcKey()] = context.vcs[vcUniqueId];
-              delete context.vcs[vcUniqueId];
-              return context.vcs[eventVCMetadata.getVcKey()];
-            }
-          });
-        },
-
         setUpdatedVcMetadatas: send(
           _context => {
             return StoreEvents.SET(MY_VCS_STORE_KEY, _context.myVcs);

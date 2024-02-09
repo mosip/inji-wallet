@@ -41,7 +41,6 @@ const model = createModel(
     vcMetadata: {} as VCMetadata,
     generatedOn: new Date() as Date,
     verifiableCredential: null as VerifiableCredential,
-    isPinned: false,
     hashedId: '',
     publicKey: '',
     privateKey: '',
@@ -344,12 +343,9 @@ export const EsignetMosipVCItemMachine = model.createMachine(
         },
       },
       pinCard: {
-        entry: 'storeContext',
-        on: {
-          STORE_RESPONSE: {
-            actions: ['sendVcUpdated', 'VcUpdated'],
-            target: 'idle',
-          },
+        entry: 'sendVcUpdated',
+        always: {
+          target: 'idle',
         },
       },
       kebabPopUp: {
@@ -511,27 +507,17 @@ export const EsignetMosipVCItemMachine = model.createMachine(
           to: context => context.serviceRefs.store,
         },
       ),
-      setPinCard: assign(context => {
-        return {
-          ...context,
-          isPinned: !context.isPinned,
-        };
+
+      setPinCard: assign({
+        vcMetadata: context =>
+          new VCMetadata({
+            ...context.vcMetadata,
+            isPinned: !context.vcMetadata.isPinned,
+          }),
       }),
-      VcUpdated: send(
-        context => {
-          const {serviceRefs, ...vc} = context;
-          return {type: 'VC_UPDATE', vc};
-        },
-        {
-          to: context => context.serviceRefs.vc,
-        },
-      ),
 
       sendVcUpdated: send(
-        context =>
-          VcEvents.VC_METADATA_UPDATED(
-            new VCMetadata({...context.vcMetadata, isPinned: context.isPinned}),
-          ),
+        context => VcEvents.VC_METADATA_UPDATED(context.vcMetadata),
         {
           to: context => context.serviceRefs.vc,
         },
