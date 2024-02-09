@@ -246,7 +246,8 @@ export const vcMachine =
         })),
 
         getVcItemResponse: respond((context, event) => {
-          const vc = context.vcs[event.vcMetadata?.getVcKey()];
+          const vc =
+            context.vcs[VCMetadata.fromVC(event.vcMetadata)?.getVcKey()];
           if (event.protocol === Protocols.OpenId4VCI) {
             return EsignetMosipVCItemEvents.GET_VC_RESPONSE(vc);
           }
