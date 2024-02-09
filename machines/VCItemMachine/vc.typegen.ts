@@ -7,7 +7,7 @@ export interface Typegen0 {
   };
   invokeSrcNameMap: {};
   missingImplementations: {
-    actions: 'setVcUpdate';
+    actions: never;
     delays: never;
     guards: never;
     services: never;
@@ -44,7 +44,6 @@ export interface Typegen0 {
     setReceivedVcs: 'STORE_RESPONSE';
     setTamperedVcs: 'TAMPERED_VC';
     setUpdatedVcMetadatas: 'VC_METADATA_UPDATED';
-    setVcUpdate: 'VC_UPDATE';
     setWalletBindingSuccess: 'WALLET_BINDING_SUCCESS';
     updateMyVcs: 'VC_METADATA_UPDATED';
   };

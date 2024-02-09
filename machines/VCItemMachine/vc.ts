@@ -39,7 +39,6 @@ const model = createModel(
         vc,
         vcMetadata,
       }),
-      VC_UPDATE: (vc: VC) => ({vc}),
       REFRESH_MY_VCS: () => ({}),
       REFRESH_MY_VCS_TWO: (vc: VC) => ({vc}),
       REFRESH_RECEIVED_VCS: () => ({}),
@@ -184,9 +183,6 @@ export const vcMachine =
             },
             VC_DOWNLOADED_FROM_OPENID4VCI: {
               actions: 'setDownloadedVCFromOpenId4VCI',
-            },
-            VC_UPDATE: {
-              actions: 'setVcUpdate',
             },
             RESET_WALLET_BINDING_SUCCESS: {
               actions: 'resetWalletBindingSuccess',
