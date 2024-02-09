@@ -139,9 +139,16 @@ class Cloud {
   static async lastBackupDetails(
     cloudFileName?: string | undefined,
   ): Promise<BackupDetails> {
-    CloudStorage.setTimeout(this.timeout);
-    const tokenResult = await Cloud.getAccessToken();
-    CloudStorage.setGoogleDriveAccessToken(tokenResult);
+      CloudStorage.setTimeout(this.timeout);
+    if (isAndroid()) {
+      const tokenResult = await Cloud.getAccessToken();
+      CloudStorage.setGoogleDriveAccessToken(tokenResult);
+    }
+    if (isIOS()) {
+      await CloudStorage.isCloudAvailable();
+      //todo: if not reject
+    }
+
     if (!cloudFileName) {
       const allFiles = await CloudStorage.readdir(
         `/`,
@@ -194,12 +201,12 @@ class Cloud {
     let uploadError: string | undefined = undefined;
 
     try {
-      CloudStorage.setTimeout(this.timeout);
-      if (Platform.OS === 'android') {
+        CloudStorage.setTimeout(this.timeout);
+      if (isAndroid()) {
         const tokenResult = await Cloud.getAccessToken();
         CloudStorage.setGoogleDriveAccessToken(tokenResult);
       }
-      if (Platform.OS === 'ios') {
+      if (isIOS()) {
         await CloudStorage.isCloudAvailable();
         //todo: if not reject
       }
@@ -251,11 +258,11 @@ class Cloud {
   static async downloadLatestBackup(): Promise<string | null> {
     try {
       CloudStorage.setTimeout(this.timeout);
-    if (Platform.OS === 'android') {
+    if (isAndroid()) {
       const tokenResult = await Cloud.getAccessToken();
       CloudStorage.setGoogleDriveAccessToken(tokenResult);
     }
-    if (Platform.OS === 'ios') {
+    if (isIOS()) {
       await CloudStorage.isCloudAvailable();
       //todo: if not reject
     }

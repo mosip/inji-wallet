@@ -88,7 +88,7 @@ export const backupAndRestoreSetupMachine = model.createMachine(
               target: 'checkSignIn',
             },
             {
-              actions: ['unsetIsLoading'],
+              actions: ['unsetIsLoading', 'setShowConfirmation'],
               target: 'selectCloudAccount',
             },
           ],
@@ -338,9 +338,11 @@ export const backupAndRestoreSetupMachine = model.createMachine(
         );
       },
       isConfirmationAlreadyShown: (_context, event) => {
+        console.log('isConfirmationAlreadyShown ', event.response as Object);
         return (
-          (event.response as Object)['isAccountSelectionConfirmationShown'] ||
-          false
+          (event.response as Object)['encryptedData'][
+            'isAccountSelectionConfirmationShown'
+          ] || false
         );
       },
       isSignInSuccessful: (_context, event) =>
