@@ -632,14 +632,17 @@
   },
   "DataBackupScreen": {
     "dataBackupAndRestore": "Backup & Restore",
-    "new": "New",
+    "new": "NEW",
     "loadingTitle": "Loading setting up",
     "loadingSubtitle": "Loading...",
     "errors": {
       "permissionDenied": {
-        "title": "Permission Denied!",
-        "message": "We noticed that you've cancelled the creation of data backup settings. We strongly recommend revisiting the data backup settings to ensure your data availability. ",
-        "helpText": "Click “Configure Settings” to set up data backup now, or “Cancel” to go back to settings screen."
+        "title": "Permissions required",
+        "message": "To continue with the data backup, allow access to your Google Drive. Tap \"Allow Access\" to finish setup, or tap \"Not Now\" to return to Settings.",
+        "actions": {
+          "allowAccess": "Allow Access",
+          "notNow": "Not Now"
+        }
       },
       "noInternetConnection": {
         "title": "No internet connection",
@@ -650,15 +653,16 @@
   "BackupAndRestoreBanner": {
     "backupSuccessful": "Your backup was successful!",
     "backupFailure": {
-      "networkError": "Due to Unstable Connection, we were unable to perform data backup. Please try again later.",
-      "technicalError": "Due to Technical Error, we were unable to perform data backup. Please try again later.",
+      "networkError": "Due to unstable internet connection, we were unable to perform data backup. Please try again later.",
+      "technicalError": "Due to technical error, we were unable to perform data backup. Please try again later.",
       "noDataForBackup": "We're sorry, but there is no data available to back up at the moment.",
       "storageLimitReached": "We're unable to complete the backup process due to insufficient storage space on your device. Please free up space by deleting unnecessary files or apps, and try again."
     },
-    "restoreSuccessful": "Your restore was successful!",
+    "restoreSuccessful": "Your backup has been restored successfully",
     "restoreFailure": {
-      "networkError": "Due to Unstable Connection, we were unable to restore data. Please try again later.",
-      "technicalError": "Due to Technical Error, we were unable to restore the data. Please try again later."
+      "networkError": "Due to unstable internet connection, we were unable to perform data restore. Please try again later.",
+      "technicalError": "Due to technical error, we were unable to perform data restore. Please try again later.",
+      "noBackupFile": "Backup file doesn't exist"
     }
   },
   "AccountSelection": {
@@ -680,7 +684,7 @@
     "backup": "Backup",
     "size": "Size: ",
     "restore": "Restore",
-    "restoreInProgress": "We’re restoring your data, please do not close the application. This might take upto <X> minutes based on your data.",
+    "restoreInProgress": "We're restoring your data, please do not close the application. You may continue using the application.",
     "restoreInfo": "Restore your data from Google Drive",
     "driveSettings": "Google Drive Settings",
     "successBanner": "Your backup was successful!",
@@ -715,7 +719,6 @@
     "editLabel": "Edit {{label}}",
     "tryAgain": "Try again",
     "goBack": "Go Back",
-    "configureSettings": "Configure Settings",
     "ignore": "Ignore",
     "camera": {
       "errors": {

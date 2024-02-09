@@ -95,6 +95,7 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = props => {
       <Column fill style={{display: props.isVisible ? 'flex' : 'none'}}>
         {controller.isRequestSuccessful && (
           <BannerNotification
+            type="success"
             message={t('downloadingYourCard')}
             onClosePress={() => {
               controller.RESET_STORE_VC_ITEM_STATUS();
@@ -103,7 +104,6 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = props => {
             testId={'downloadingVcPopup'}
           />
         )}
-
         <Column fill pY={11} pX={8}>
           {vcMetadataOrderedByPinStatus.length > 0 && (
             <React.Fragment>
@@ -222,14 +222,17 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = props => {
 
       {controller.isNetworkOff && (
         <Error
-          testID={`networkOffError`}
+          testID="networkOffError"
           isVisible={controller.isNetworkOff}
-          isModal={true}
+          isModal
           title={t('errors.noInternetConnection.title')}
           message={t('errors.noInternetConnection.message')}
           onDismiss={controller.DISMISS}
-          tryAgain={controller.TRY_AGAIN}
           image={SvgImage.NoInternetConnection()}
+          showClose
+          primaryButtonText="tryAgain"
+          primaryButtonEvent={controller.TRY_AGAIN}
+          primaryButtonTestID="tryAgain"
         />
       )}
     </React.Fragment>

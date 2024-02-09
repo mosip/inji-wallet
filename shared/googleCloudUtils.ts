@@ -17,12 +17,14 @@ class Cloud {
     SUCCESS: 'SUCCESS',
     FAILURE: 'FAILURE',
   };
+  private static readonly requiredScopes = [
+    'https://www.googleapis.com/auth/drive.appdata',
+    'https://www.googleapis.com/auth/drive.file',
+  ];
+
   private static configure() {
     GoogleSignin.configure({
-      scopes: [
-        'https://www.googleapis.com/auth/drive.appdata',
-        'https://www.googleapis.com/auth/drive.file',
-      ],
+      scopes: this.requiredScopes,
       androidClientId: GOOGLE_ANDROID_CLIENT_ID,
     });
   }
@@ -59,7 +61,15 @@ class Cloud {
   static async signIn(): Promise<SignInResult> {
     this.configure();
     try {
-      await GoogleSignin.signIn();
+      const {scopes: userProvidedScopes} = await GoogleSignin.signIn();
+      const userNotProvidedRequiredAccessInConsent = !this.requiredScopes.every(
+        requiredScope => userProvidedScopes?.includes(requiredScope),
+      );
+      if (userNotProvidedRequiredAccessInConsent) {
+        return {
+          status: this.status.DECLINED,
+        };
+      }
       const profileInfo = await this.profileInfo();
       return {
         status: this.status.SUCCESS,
@@ -71,10 +81,12 @@ class Cloud {
       if (error.code === statusCodes.SIGN_IN_CANCELLED) {
         return {
           status: this.status.DECLINED,
+          error,
         };
       }
       return {
         status: this.status.FAILURE,
+        error,
       };
     }
   }
@@ -113,6 +125,28 @@ class Cloud {
         isSignedIn: false,
       };
     }
+  }
+  static async lastBackupDetails(
+    cloudFileName?: string | undefined,
+  ): Promise<BackupDetails> {
+    const tokenResult = await Cloud.getAccessToken();
+    CloudStorage.setGoogleDriveAccessToken(tokenResult);
+    if (!cloudFileName) {
+      const allFiles = await CloudStorage.readdir(
+        `/`,
+        CloudStorageScope.AppData,
+      );
+      cloudFileName = allFiles[0];
+    }
+    const {birthtimeMs: creationTime, size} = await CloudStorage.stat(
+      cloudFileName,
+      CloudStorageScope.AppData,
+    );
+    const backupDetails = {
+      backupCreationTime: creationTime,
+      backupFileSize: bytesToMB(size),
+    };
+    return backupDetails;
   }
   static async removeOldDriveBackupFiles(fileName: string) {
     const allFiles = await CloudStorage.readdir(`/`, CloudStorageScope.AppData);
@@ -153,7 +187,7 @@ class Cloud {
       const filePath = zipFilePath(fileName);
       const fileContent = await readFile(filePath, 'base64');
 
-      const writeResult = await CloudStorage.writeFile(
+      await CloudStorage.writeFile(
         cloudFileName,
         fileContent,
         CloudStorageScope.AppData,
@@ -164,13 +198,8 @@ class Cloud {
       );
 
       if (isFileUploaded) {
-        const {ctime: creationTime, size} = await fileStorage.getInfo(filePath);
-        const backupDetails = {
-          backupCreationTime: creationTime,
-          backupFileSize: bytesToMB(size),
-        };
+        const backupDetails = await this.lastBackupDetails(cloudFileName);
         console.log('wrote to cloudFileName ', cloudFileName);
-        console.log('writeResult ', writeResult);
         await this.removeOldDriveBackupFiles(`${fileName}.zip`);
         return Promise.resolve({
           status: this.status.SUCCESS,
@@ -200,31 +229,47 @@ class Cloud {
   }
 
   static async downloadLatestBackup(): Promise<string | null> {
-    const tokenResult = await Cloud.getAccessToken();
-    CloudStorage.setGoogleDriveAccessToken(tokenResult);
-    const allFiles = await CloudStorage.readdir('/', CloudStorageScope.AppData);
-    console.log('allFiles ', allFiles);
-    // TODO: do basic sanity about this .zip file
-    const fileName = allFiles[0];
-    const fileContent = await CloudStorage.readFile(
-      fileName,
-      CloudStorageScope.AppData,
-    );
+    try {
+      const tokenResult = await Cloud.getAccessToken();
+      CloudStorage.setGoogleDriveAccessToken(tokenResult);
+      const allFiles = await CloudStorage.readdir(
+        '/',
+        CloudStorageScope.AppData,
+      );
+      console.log('allFiles ', allFiles);
+      // TODO: do basic sanity about this .zip file
+      const fileName = allFiles[0];
+      const fileContent = await CloudStorage.readFile(
+        fileName,
+        CloudStorageScope.AppData,
+      );
 
-    if (fileContent.length === 0) return Promise.resolve(null);
-    // write the file content in the backup directory path, create backup directory if not exists
-    const isDirectoryExists = await fileStorage.exists(backupDirectoryPath);
-    if (!isDirectoryExists) {
-      await fileStorage.createDirectory(backupDirectoryPath);
+      if (fileContent.length === 0) return Promise.resolve(null);
+      // write the file content in the backup directory path, create backup directory if not exists
+      const isDirectoryExists = await fileStorage.exists(backupDirectoryPath);
+      if (!isDirectoryExists) {
+        await fileStorage.createDirectory(backupDirectoryPath);
+      }
+      await writeFile(
+        backupDirectoryPath + '/' + fileName,
+        fileContent,
+        'base64',
+      );
+      console.log('successfully written the cloud downloaded zip file');
+      // return the path
+      return Promise.resolve(fileName.split('.zip')[0]);
+    } catch (error) {
+      console.log('error while downloading backup file ', error);
+      let downloadError;
+      if (error.toString() === 'Error: NetworkError') {
+        downloadError = NETWORK_REQUEST_FAILED;
+      } else if (error.code?.toString() === 'ERR_DIRECTORY_NOT_FOUND') {
+        downloadError = 'No backup file';
+      } else {
+        downloadError = error;
+      }
+      return Promise.reject({error: downloadError});
     }
-    await writeFile(
-      backupDirectoryPath + '/' + fileName,
-      fileContent,
-      'base64',
-    );
-    console.log('successfully written the cloud downloaded zip file');
-    // return the path
-    return Promise.resolve(fileName.split('.zip')[0]);
   }
 }
 
@@ -238,6 +283,7 @@ export type ProfileInfo = {
 export type SignInResult = {
   status: (typeof Cloud.status)[keyof typeof Cloud.status];
   profileInfo?: ProfileInfo;
+  error?: string;
 };
 
 export type isSignedInResult = {
@@ -247,7 +293,7 @@ export type isSignedInResult = {
 };
 
 export type CloudUploadResult = {
-  status: string;
+  status: (typeof Cloud.status)[keyof typeof Cloud.status];
   error: string | null;
   backupDetails?: BackupDetails;
 };
