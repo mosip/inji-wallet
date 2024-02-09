@@ -37,7 +37,7 @@ export const SharingStatusModal: React.FC<SharingStatusModalProps> = props => {
             {props.message}
           </Text>
         </Column>
-        {props.status === 'withHomeAndHistoryIcons' ? (
+        {props.buttonStatus === 'homeAndHistoryIcons' ? (
           <Row
             align="space-evenly"
             style={{marginBottom: Dimensions.get('screen').height * 0.06}}>
@@ -71,7 +71,7 @@ export const SharingStatusModal: React.FC<SharingStatusModalProps> = props => {
             </Pressable>
           </Row>
         ) : null}
-        {props.status === 'withGradientAndClearButtons' ? (
+        {props.gradientButtonTitle && (
           <Column
             align="space-evenly"
             style={{marginBottom: Dimensions.get('screen').height * 0.02}}>
@@ -81,6 +81,10 @@ export const SharingStatusModal: React.FC<SharingStatusModalProps> = props => {
               title={props.gradientButtonTitle}
               onPress={props.onGradientButton}
             />
+          </Column>
+        )}
+        {props.clearButtonTitle && (
+          <Column align="center">
             <Button
               testID="failedVcSharedHomeButton"
               type="clear"
@@ -89,19 +93,7 @@ export const SharingStatusModal: React.FC<SharingStatusModalProps> = props => {
               onPress={props.onClearButton}
             />
           </Column>
-        ) : null}
-        {props.status === 'withGradientButton' ? (
-          <Column
-            align="space-evenly"
-            style={{marginBottom: Dimensions.get('screen').height * 0.04}}>
-            <Button
-              testID="failedVcSharedRetryButton"
-              type="gradient"
-              title={props.gradientButtonTitle}
-              onPress={props.onGradientButton}
-            />
-          </Column>
-        ) : null}
+        )}
       </Modal>
     </React.Fragment>
   );
@@ -110,7 +102,7 @@ export const SharingStatusModal: React.FC<SharingStatusModalProps> = props => {
 interface SharingStatusModalProps {
   isVisible: boolean;
   testId: string;
-  status: String;
+  buttonStatus?: String;
   title: String;
   message: String;
   image: React.ReactElement;

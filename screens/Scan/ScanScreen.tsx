@@ -191,7 +191,6 @@ export const ScanScreen: React.FC = () => {
           isVisible={controller.selectIsInvalid}
           testId={'invalidQrPopup'}
           image={SvgImage.ErrorLogo()}
-          status={'withGradientAndClearButtons'}
           title={t(`status.bleError.TVW_CON_001.title`)}
           message={t(`status.bleError.TVW_CON_001.message`)}
           gradientButtonTitle={t('status.bleError.retry')}

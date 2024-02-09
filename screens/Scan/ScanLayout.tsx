@@ -73,7 +73,7 @@ export const ScanLayout: React.FC = () => {
       <SharingStatusModal
         isVisible={controller.isAccepted}
         testId={'sharingSuccessModal'}
-        status={'withHomeAndHistoryIcons'}
+        buttonStatus={'homeAndHistoryIcons'}
         title={t('status.accepted.title')}
         message={t('status.accepted.message')}
         image={SvgImage.SuccessLogo()}
@@ -84,7 +84,6 @@ export const ScanLayout: React.FC = () => {
       <SharingStatusModal
         isVisible={controller.isDisconnected}
         testId={'walletSideSharingErrorModal'}
-        status={'withGradientAndClearButtons'}
         image={SvgImage.ErrorLogo()}
         title={t('status.disconnected.title')}
         message={t('status.disconnected.message')}
@@ -97,7 +96,6 @@ export const ScanLayout: React.FC = () => {
       <SharingStatusModal
         isVisible={controller.isBleError}
         testId={'walletSideSharingErrorModal'}
-        status={'withGradientAndClearButtons'}
         image={SvgImage.ErrorLogo()}
         title={t(`status.bleError.${bleErrorCode}.title`)}
         message={t(`status.bleError.${bleErrorCode}.message`)}
