@@ -33,6 +33,7 @@ const model = createModel(
     fileName: '',
     lastBackupDetails: null as null | BackupDetails,
     errorReason: '' as string,
+    isLoading: true as boolean,
   },
   {
     events: {
@@ -40,6 +41,7 @@ const model = createModel(
       OK: () => ({}),
       FETCH_DATA: () => ({}),
       DISMISS: () => ({}),
+      LAST_BACKUP_DETAILS: () => ({}),
       STORE_RESPONSE: (response: unknown) => ({response}),
       STORE_ERROR: (error: Error, requester?: string) => ({error, requester}),
       FILE_NAME: (filename: string) => ({filename}),
@@ -60,15 +62,14 @@ export const backupMachine = model.createMachine(
     },
     id: 'backup',
     initial: 'init',
-    entry: 'getLastBackupDetails',
     on: {
       DATA_BACKUP: [
         {
           target: 'backingUp',
         },
       ],
-      STORE_RESPONSE: {
-        actions: 'setLastBackupDetails',
+      LAST_BACKUP_DETAILS: {
+        target: 'fetchLastBackupDetails',
       },
     },
     states: {
@@ -79,6 +80,44 @@ export const backupMachine = model.createMachine(
               target: 'backingUp',
             },
           ],
+        },
+      },
+      fetchLastBackupDetails: {
+        initial: 'checkStore',
+        states: {
+          checkStore: {
+            entry: 'getLastBackupDetailsFromStore',
+            on: {
+              STORE_RESPONSE: [
+                {
+                  cond: 'isDataAvailableInStorage',
+                  actions: [
+                    'setLastBackupDetails',
+                    'unsetIsLoading',
+                    'storeLastBackupDetails',
+                  ],
+                  target: '#backup.init',
+                },
+                {target: 'checkCloud'},
+              ],
+              STORE_ERROR: {
+                target: 'checkCloud',
+              },
+            },
+          },
+          checkCloud: {
+            invoke: {
+              src: 'getLastBackupDetailsFromCloud',
+              onDone: {
+                actions: ['setLastBackupDetails', 'unsetIsLoading'],
+                target: '#backup.init',
+              },
+              onError: {
+                actions: 'unsetIsLoading',
+                target: '#backup.init',
+              },
+            },
+          },
         },
       },
       backingUp: {
@@ -173,10 +212,7 @@ export const backupMachine = model.createMachine(
             entry: 'sendDataBackupSuccessEvent',
           },
           failure: {
-            entry: [
-              'sendDataBackupFailureEvent',
-              (ctx, event) => console.log('failure state ', event),
-            ],
+            entry: ['sendDataBackupFailureEvent'],
           },
         },
         on: {
@@ -195,6 +231,12 @@ export const backupMachine = model.createMachine(
   },
   {
     actions: {
+      setIsLoading: model.assign({
+        isLoading: true,
+      }),
+      unsetIsLoading: model.assign({
+        isLoading: false,
+      }),
       setDataFromStorage: model.assign({
         dataFromStorage: (_context, event) => {
           return event.response;
@@ -228,9 +270,11 @@ export const backupMachine = model.createMachine(
       }),
 
       setLastBackupDetails: model.assign((context, event) => {
+        const lastBackupDetails =
+          event.type === 'STORE_RESPONSE' ? event.response : event.data;
         return {
           ...context,
-          lastBackupDetails: event.response,
+          lastBackupDetails: lastBackupDetails,
         };
       }),
 
@@ -244,11 +288,14 @@ export const backupMachine = model.createMachine(
         },
       ),
 
-      getLastBackupDetails: send(StoreEvents.GET(LAST_BACKUP_DETAILS), {
-        to: context => {
-          return context.serviceRefs.store;
+      getLastBackupDetailsFromStore: send(
+        StoreEvents.GET(LAST_BACKUP_DETAILS),
+        {
+          to: context => {
+            return context.serviceRefs.store;
+          },
         },
-      }),
+      ),
 
       fetchAllDataFromDB: send(StoreEvents.EXPORT(), {
         to: context => {
@@ -298,6 +345,9 @@ export const backupMachine = model.createMachine(
     },
 
     services: {
+      getLastBackupDetailsFromCloud: () => async () =>
+        await Cloud.lastBackupDetails(),
+
       checkStorageAvailability: () => async () => {
         try {
           console.log('Checking storage availability...');
@@ -336,6 +386,9 @@ export const backupMachine = model.createMachine(
       isVCFound: (_context, event) => {
         return event.response && event.response.length > 0;
       },
+      isDataAvailableInStorage: (_context, event) => {
+        return event.response != null;
+      },
     },
   },
 );
@@ -355,6 +408,9 @@ export function selectIsBackupInprogress(state: State) {
 }
 export function selectIsBackingUp(state: State) {
   return state.matches('backingUp');
+}
+export function selectIsLoading(state: State) {
+  return state.context.isLoading;
 }
 export function selectIsBackingUpSuccess(state: State) {
   return state.matches('backingUp.success');

@@ -466,10 +466,10 @@ export const IssuersMachine = model.createMachine(
 
       storeVerifiableCredentialData: send(
         context =>
-          StoreEvents.SET(
-            getVCMetadata(context).getVcKey(),
-            context.credentialWrapper,
-          ),
+          StoreEvents.SET(getVCMetadata(context).getVcKey(), {
+            ...context.credentialWrapper,
+            vcMetadata: getVCMetadata(context),
+          }),
         {
           to: context => context.serviceRefs.store,
         },

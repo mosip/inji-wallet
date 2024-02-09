@@ -113,4 +113,8 @@ public class EsignetLoginPage extends BasePage {
         clickOnElement(verifyButton);
     }
 
+    public void clickOnVerifyButtonIos() {
+        clickOnElement(verifyButton);
+    }
+
 }

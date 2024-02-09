@@ -740,9 +740,12 @@
     "loadingSubtitle": "Naglo-load...",
     "errors": {
       "permissionDenied": {
-        "title": "Tinanggihan ang Pahintulot!",
-        "message": "Napansin namin na kinansela mo ang paggawa ng mga setting ng backup ng data. Lubos naming inirerekumenda na muling bisitahin ang mga setting ng pag-back up ng data upang matiyak ang availability ng iyong data.",
-        "helpText": "I-click ang \"I-configure ang Mga Setting\" upang i-set up ang pag-backup ng data ngayon, o \"Kanselahin\" upang bumalik sa screen ng mga setting."
+        "title": "Kinakailangan ang mga Pahintulot",
+        "message": "Upang magpatuloy sa pag-backup ng data, payagan ang pag-access sa iyong Google Drive. I-tap ang \"Allow Access\" para tapusin ang pag-setup, o i-tap ang \"Not Now\" para bumalik sa Settings.",
+        "actions": {
+          "allowAccess": "Payagan ang Access",
+          "notNow": "Hindi ngayon"
+        }
       },
       "noInternetConnection": {
         "title": "Pakisuri ang iyong koneksyon at subukang muli",
@@ -753,15 +756,16 @@
   "BackupAndRestoreBanner": {
     "backupSuccessful": "Ang iyong backup ay matagumpay!",
     "backupFailure": {
-      "networkError": "Dahil sa Hindi Matatag na Koneksyon, hindi namin nagawang isagawa ang pag-backup ng data. Pakisubukang muli sa ibang pagkakataon.",
+      "networkError": "Dahil sa hindi matatag na koneksyon sa internet, hindi kami nakapagsagawa ng pag-backup ng data. Subukang muli mamaya.",
       "technicalError": "Dahil sa Technical Error, hindi namin nagawang magsagawa ng pag-backup ng data. Subukang muli mamaya.",
       "noDataForBackup": "Ikinalulungkot namin, ngunit walang data na magagamit upang i-back up sa ngayon.",
       "storageLimitReached": "Hindi namin makumpleto ang proseso ng pag-backup dahil sa hindi sapat na espasyo sa storage sa iyong device. Mangyaring magbakante ng espasyo sa pamamagitan ng pagtanggal ng mga hindi kinakailangang file o app, at subukang muli."
     },
-    "restoreSuccessful": "Ang iyong pag-restore ay matagumpay!",
+    "restoreSuccessful": "Matagumpay na naibalik ang iyong backup",
     "restoreFailure": {
-      "networkError": "Dahil sa Hindi Matatag na Koneksyon, hindi namin naibalik ang data. Subukang muli mamaya.",
-      "technicalError": "Dahil sa Technical Error, hindi namin naibalik ang data. Subukang muli mamaya."
+      "networkError": "Dahil sa hindi matatag na koneksyon sa internet, hindi namin nagawang magsagawa ng data restore. Subukang muli mamaya.",
+      "technicalError": "Dahil sa teknikal na error, hindi namin nagawang maisagawa ang pag-restore ng data. Subukang muli mamaya.",
+      "noBackupFile": "Walang backup na file"
     }
   },
   "AccountSelection": {
@@ -783,7 +787,7 @@
     "backup": "Backup",
     "size": "Size: ",
     "restore": "Ibalik",
-    "restoreInProgress": "Ibinabalik namin ang iyong data, mangyaring huwag isara ang application. Maaaring tumagal ito ng hanggang <X> minuto batay sa iyong data.",
+    "restoreInProgress": "Ibinabalik namin ang iyong data, mangyaring huwag isara ang application. Maaari mong ipagpatuloy ang paggamit ng application.",
     "restoreInfo": "Ibalik ang iyong data mula sa Google Drive",
     "driveSettings": "Mga Setting ng Google Drive",
     "successBanner": "Ang iyong backup ay matagumpay!",

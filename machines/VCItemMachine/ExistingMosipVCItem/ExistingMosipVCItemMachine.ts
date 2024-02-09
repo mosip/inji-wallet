@@ -843,7 +843,7 @@ export const ExistingMosipVCItemMachine =
 
         sendActivationFailedEndEvent: (context, event, meta) => {
           const [errorId, errorMessage] =
-            event.data.message === 'Could not store private key in keystore'
+            event.data?.message === 'Could not store private key in keystore'
               ? [
                   TelemetryConstants.ErrorId.updatePrivateKey,
                   TelemetryConstants.ErrorMessage.privateKeyUpdationFailed,

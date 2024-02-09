@@ -26,13 +26,30 @@ public class SharePage extends BasePage {
     private WebElement noShareableCards;
 
 	@AndroidFindBy(accessibility = "flipCameraIcon")
+    @iOSXCUITFindBy(accessibility = "Flip Camera")
 	private WebElement flipCamera;
 
 	@AndroidFindBy(accessibility = "holdPhoneSteadyMessage")
-	 private WebElement holdCameraSteady;
-	
+    @iOSXCUITFindBy(accessibility = "holdPhoneSteadyMessage")
+    private WebElement holdCameraSteady;
+
+    @iOSXCUITFindBy(accessibility = "enableBluetoothButton")
+    private WebElement enableBluetoothButton;
+
 	@AndroidFindBy(accessibility = "bluetoothIsTurnedOffMessage")
     private WebElement bluetoothIsTurnedOffMessage;
+
+    @iOSXCUITFindBy(iOSClassChain = "**/XCUIElementTypeStaticText[`name == \"“Inji” Would Like to Use Bluetooth\"`]")
+    private WebElement bluetoothPopUpIos;
+
+    @iOSXCUITFindBy(iOSClassChain = "**/XCUIElementTypeStaticText[`name == \"“Inji” Would Like to Access the Camera\"`]")
+    private WebElement cameraPopUpIos;
+
+    @iOSXCUITFindBy(accessibility = "OK")
+    private WebElement okButtonIos;
+
+    @iOSXCUITFindBy(accessibility = "Don’t Allow")
+    private WebElement dontAllowButtonIos;
 
     public SharePage(AppiumDriver driver) {
         super(driver);
@@ -44,10 +61,38 @@ public class SharePage extends BasePage {
         }
         return this;
     }
+
+    public SharePage acceptPermissionPopupBluetoothIos() {
+        if (isElementDisplayed(okButtonIos)) {
+            clickOnElement(okButtonIos);
+        }
+        return this;
+    }
+
+    public SharePage acceptPermissionPopupCameraIos() {
+        if (isElementDisplayed(okButtonIos)) {
+            clickOnElement(okButtonIos);
+        }
+        return this;
+    }
     
     public SharePage denyPermissionPopupBluetooth() {
         if (isElementDisplayed(denyButton)) {
             clickOnElement(denyButton);
+        }
+        return this;
+    }
+
+    public SharePage denyPermissionPopupBluetoothIos() {
+        if (isElementDisplayed(bluetoothPopUpIos)) {
+            clickOnElement(dontAllowButtonIos);
+        }
+        return this;
+    }
+
+    public SharePage denyPermissionPopupCameraIos() {
+        if (isElementDisplayed(cameraPopUpIos)) {
+            clickOnElement(dontAllowButtonIos);
         }
         return this;
     }
@@ -62,6 +107,10 @@ public class SharePage extends BasePage {
     
     public String isBluetoothIsTurnedOffMessageDisplayed() {
         return getTextFromLocator(bluetoothIsTurnedOffMessage);
+    }
+
+    public String isEnableBluetoothButtonButtonDisplayed() {
+        return getTextFromLocator(enableBluetoothButton);
     }
 
     public boolean isCameraPageLoaded() {

@@ -78,7 +78,6 @@ export interface Typegen0 {
     removedVc: 'STORE_RESPONSE';
     requestStoredContext: 'GET_VC_RESPONSE' | 'REFRESH';
     requestVcContext: 'DISMISS' | 'xstate.init';
-    resetWalletBindingSuccess: 'DISMISS';
     sendActivationFailedEndEvent:
       | 'DISMISS'
       | 'error.platform.vc-item-openid4vci.updatingPrivateKey:invocation[0]';
@@ -114,7 +113,6 @@ export interface Typegen0 {
     setWalletBindingId:
       | 'done.invoke.vc-item-openid4vci.addingWalletBindingId:invocation[0]'
       | 'done.invoke.vc-item-openid4vci.updatingPrivateKey:invocation[0]';
-    setWalletBindingSuccess: 'SHOW_BINDING_STATUS';
     storeContext:
       | 'PIN_CARD'
       | 'done.invoke.vc-item-openid4vci.addingWalletBindingId:invocation[0]'
