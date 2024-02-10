@@ -64,68 +64,54 @@ export const backupMachine = model.createMachine(
     id: 'backup',
     initial: 'init',
     on: {
-      DATA_BACKUP: [
-        {
-          cond: 'checkIfAutoBackup',
-          actions: ['setIsAutoBackup', 'loadVcs'],
-        },
-        {
-          target: 'backingUp',
-        },
-      ],
-      STORE_RESPONSE: [
-              {
-                cond: 'isVCFound',
-                target: 'backingUp',
-              },
-              {
-                target: 'init',
-              },
-            ],
-            LAST_BACKUP_DETAILS: {
-                    target: 'fetchLastBackupDetails',
-                  },
+      DATA_BACKUP: {
+        actions: ['setIsAutoBackup'],
+        target: 'backingUp',
+      },
+      LAST_BACKUP_DETAILS: {
+        target: 'fetchLastBackupDetails',
+      },
     },
     states: {
       init: {},
       fetchLastBackupDetails: {
-              initial: 'checkStore',
-              states: {
-                checkStore: {
-                  entry: 'getLastBackupDetailsFromStore',
-                  on: {
-                    STORE_RESPONSE: [
-                      {
-                        cond: 'isDataAvailableInStorage',
-                        actions: [
-                          'setLastBackupDetails',
-                          'unsetIsLoading',
-                          'storeLastBackupDetails',
-                        ],
-                        target: '#backup.init',
-                      },
-                      {target: 'checkCloud'},
-                    ],
-                    STORE_ERROR: {
-                      target: 'checkCloud',
-                    },
-                  },
+        initial: 'checkStore',
+        states: {
+          checkStore: {
+            entry: 'getLastBackupDetailsFromStore',
+            on: {
+              STORE_RESPONSE: [
+                {
+                  cond: 'isDataAvailableInStorage',
+                  actions: ['setLastBackupDetails', 'unsetIsLoading'],
+                  target: '#backup.init',
                 },
-                checkCloud: {
-                  invoke: {
-                    src: 'getLastBackupDetailsFromCloud',
-                    onDone: {
-                      actions: ['setLastBackupDetails', 'unsetIsLoading'],
-                      target: '#backup.init',
-                    },
-                    onError: {
-                      actions: 'unsetIsLoading',
-                      target: '#backup.init',
-                    },
-                  },
-                },
+                {target: 'checkCloud'},
+              ],
+              STORE_ERROR: {
+                target: 'checkCloud',
               },
             },
+          },
+          checkCloud: {
+            invoke: {
+              src: 'getLastBackupDetailsFromCloud',
+              onDone: {
+                actions: [
+                  'unsetIsLoading',
+                  'setLastBackupDetails',
+                  //'storeLastBackupDetails',
+                ],
+                target: '#backup.init',
+              },
+              onError: {
+                actions: 'unsetIsLoading',
+                target: '#backup.init',
+              },
+            },
+          },
+        },
+      },
       backingUp: {
         initial: 'checkDataAvailabilityForBackup',
         states: {
@@ -137,6 +123,11 @@ export const backupMachine = model.createMachine(
                 {
                   cond: 'isVCFound',
                   target: 'checkStorageAvailability',
+                },
+                {
+                  cond: 'checkIfAutoBackup',
+                  actions: 'setBackUpNotPossible',
+                  target: 'silentFailure',
                 },
                 {
                   actions: 'setBackUpNotPossible',
@@ -419,8 +410,8 @@ export const backupMachine = model.createMachine(
         console.log('is min reach ', Boolean(event.data));
         return Boolean(event.data);
       },
-      checkIfAutoBackup: (context, event) => {
-        return event.isAutoBackUp ?? context.isAutoBackUp;
+      checkIfAutoBackup: context => {
+        return context.isAutoBackUp;
       },
       isVCFound: (_context, event) => {
         return event.response && event.response.length > 0;
@@ -455,6 +446,9 @@ export function selectIsLoading(state: State) {
 }
 export function selectIsBackingUpSuccess(state: State) {
   return state.matches('backingUp.success');
+}
+export function selectIsFetchingLastBackupDetails(state: State) {
+  return state.matches('fetchLastBackupDetails');
 }
 export function selectIsBackingUpFailure(state: State) {
   return state.matches('backingUp.failure');

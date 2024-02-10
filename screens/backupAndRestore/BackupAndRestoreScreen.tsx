@@ -24,22 +24,28 @@ const BackupAndRestoreScreen: React.FC<BackupAndRestoreProps> = props => {
   const {t} = useTranslation('BackupAndRestore');
 
   useEffect(() => {
-    if (!props.isLoading) {
+    if (!props.isLoading && backupController.lastBackupDetails === null) {
       backupController.LAST_BACKUP_DETAILS();
     }
-  }, [props.isLoading]);
+    if (
+      !props.isLoading &&
+      !backupController.isLoading &&
+      props.shouldTriggerAutoBackup
+    ) {
+      backupController.DATA_BACKUP(true);
+    }
+  }, [
+    props.isLoading,
+    backupController.isLoading,
+    props.shouldTriggerAutoBackup,
+    backupController.lastBackupDetails,
+  ]);
 
   const Loading = (
     <Centered fill>
       <LoaderAnimation showLogo={false} />
     </Centered>
   );
-
-  useEffect(() => {
-    if (props.shouldTriggerAutoBackup === true) {
-      backupController.DATA_BACKUP(true);
-    }
-  }, [props.shouldTriggerAutoBackup]);
 
   function LastBackupDetails(): React.ReactNode {
     return (

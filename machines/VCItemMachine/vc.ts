@@ -11,8 +11,8 @@ import {Protocols} from '../../shared/openId4VCI/Utils';
 import {EsignetMosipVCItemEvents} from './EsignetMosipVCItem/EsignetMosipVCItemMachine';
 import {ActivityLogEvents} from '../activityLog';
 import {ActivityLog} from '../../components/ActivityLogEvent';
-import Cloud, {isSignedInResult} from '../shared/googleCloudUtils';
-import {BackupEvents} from './backupAndRestore/backup';
+import Cloud, {isSignedInResult} from '../../shared/googleCloudUtils';
+import {BackupEvents} from '../backupAndRestore/backup';
 
 const model = createModel(
   {

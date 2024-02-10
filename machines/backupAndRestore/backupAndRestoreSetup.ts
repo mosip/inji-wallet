@@ -56,7 +56,11 @@ export const backupAndRestoreSetupMachine = model.createMachine(
       init: {
         on: {
           HANDLE_BACKUP_AND_RESTORE: {
-            actions: ['sendDataBackupAndRestoreSetupStartEvent','setIsLoading', 'unsetShouldTriggerAutoBackup'],
+            actions: [
+              'sendDataBackupAndRestoreSetupStartEvent',
+              'setIsLoading',
+              'unsetShouldTriggerAutoBackup',
+            ],
             target: 'checkSignIn',
           },
         },
@@ -175,7 +179,6 @@ export const backupAndRestoreSetupMachine = model.createMachine(
       setNoInternet: model.assign({
         errorMessage: () => ErrorMessage.NO_INTERNET,
       }),
-<<<<<<< HEAD
       sendDataBackupAndRestoreSetupStartEvent: () => {
         sendStartEvent(
           getStartEventData(
