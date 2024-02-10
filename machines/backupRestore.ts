@@ -287,6 +287,9 @@ export function selectIsBackUpRestoring(state: State) {
 export function selectIsBackUpRestoreSuccess(state: State) {
   return state.matches('restoreBackup.success');
 }
+export function selectIsDownloadBackupFileFromCloud(state: State) {
+  return state.matches('restoreBackup.downloadBackupFileFromCloud');
+}
 export function selectIsBackUpRestoreFailure(state: State) {
   return state.matches('restoreBackup.failure');
 }
