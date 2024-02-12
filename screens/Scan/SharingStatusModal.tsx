@@ -73,8 +73,7 @@ export const SharingStatusModal: React.FC<SharingStatusModalProps> = props => {
         ) : null}
         {props.gradientButtonTitle && (
           <Column
-            align="space-evenly"
-            style={{marginBottom: Dimensions.get('screen').height * 0.02}}>
+            style={{marginBottom: Dimensions.get('screen').height * 0.012}}>
             <Button
               testID="failedVcSharedRetryButton"
               type="gradient"
@@ -88,7 +87,7 @@ export const SharingStatusModal: React.FC<SharingStatusModalProps> = props => {
             <Button
               testID="failedVcSharedHomeButton"
               type="clear"
-              styles={{marginTop: 12}}
+              styles={{marginBottom: 9}}
               title={props.clearButtonTitle}
               onPress={props.onClearButton}
             />
