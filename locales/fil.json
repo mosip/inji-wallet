@@ -256,8 +256,8 @@
     "requestingCredential": "Humihiling ng kredensyal...",
     "errors": {
       "input": {
-        "empty": "Pakilagay ang Valid ID",
-        "invalidFormat": "Pakilagay ang Valid {{idType}}"
+        "empty": "Pakilagay ang valid ID",
+        "invalidFormat": "Pakilagay ang valid {{idType}}"
       },
       "backend": {
         "invalidOtp": "Di-wasto ang OTP",
@@ -277,8 +277,8 @@
     "retrievingId": "Kinukuha ang ID",
     "errors": {
       "input": {
-        "empty": "Pakilagay ang Valid ID",
-        "invalidFormat": "Pakilagay ang Valid AID"
+        "empty": "Pakilagay ang valid ID",
+        "invalidFormat": "Pakilagay ang valid AID"
       },
       "backend": {
         "invalidOtp": "Di-wasto ang OTP",
