@@ -26,7 +26,7 @@ import {
 import getAllConfigurations, {
   DownloadProps,
 } from '../../../shared/commonprops/commonProps';
-import {VcEvents} from '../../vc';
+import {VcEvents} from '../vc';
 import i18n from '../../../i18n';
 import SecureKeystore from '@mosip/secure-keystore';
 import {VCMetadata} from '../../../shared/VCMetadata';
@@ -69,7 +69,6 @@ const model = createModel(
     walletBindingResponse: null as WalletBindingResponse,
     tempWalletBindingIdResponse: null as WalletBindingResponse,
     walletBindingError: '',
-    walletBindingSuccess: false,
     publicKey: '',
     privateKey: '',
     isMachineInKebabPopupState: false,
@@ -293,7 +292,6 @@ export const ExistingMosipVCItemMachine =
             },
             DISMISS: {
               target: 'checkingVc',
-              actions: 'resetWalletBindingSuccess',
             },
           },
         },
@@ -723,7 +721,7 @@ export const ExistingMosipVCItemMachine =
                 target: '#vc-item.kebabPopUp',
               },
               {
-                actions: 'setWalletBindingSuccess',
+                actions: 'sendWalletBindingSuccess',
                 target: 'idle',
               },
             ],
@@ -813,14 +811,6 @@ export const ExistingMosipVCItemMachine =
           bindingAuthFailedMessage: () => '',
         }),
 
-        setWalletBindingSuccess: assign({
-          walletBindingSuccess: true,
-        }),
-
-        resetWalletBindingSuccess: assign({
-          walletBindingSuccess: false,
-        }),
-
         sendWalletBindingSuccess: send(
           context => {
             return {
@@ -853,7 +843,7 @@ export const ExistingMosipVCItemMachine =
 
         sendActivationFailedEndEvent: (context, event, meta) => {
           const [errorId, errorMessage] =
-            event.data.message === 'Could not store private key in keystore'
+            event.data?.message === 'Could not store private key in keystore'
               ? [
                   TelemetryConstants.ErrorId.updatePrivateKey,
                   TelemetryConstants.ErrorMessage.privateKeyUpdationFailed,

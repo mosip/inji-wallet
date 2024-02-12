@@ -42,6 +42,10 @@ public class AddNewCardPage extends BasePage{
     @AndroidFindBy(className = "android.widget.EditText")
     @iOSXCUITFindBy(accessibility = "issuerSearchBar")
     private WebElement issuerSearchBar;
+
+    @AndroidFindBy(accessibility = "issuerHeading-Sunbird")
+    @iOSXCUITFindBy(accessibility = "issuerHeading-Sunbird")
+    private WebElement downloadViaSunbird;
     
     public AddNewCardPage(AppiumDriver driver) {
         super(driver);
@@ -136,4 +140,12 @@ public class AddNewCardPage extends BasePage{
     	clearTextBoxAndSendKeys(issuerSearchBar, text);
     }
 
+    public boolean isDownloadViaSunbirdDisplayed() {
+        return this.isElementDisplayed(downloadViaSunbird);
+    }
+    public SunbirdLoginPage clickOnDownloadViaSunbird(){
+        clickOnElement(downloadViaSunbird);
+        return new SunbirdLoginPage(driver);
+    }
 }
+

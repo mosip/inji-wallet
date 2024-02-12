@@ -3,6 +3,7 @@ import {View} from 'react-native';
 import React from 'react';
 import {Icon} from 'react-native-elements';
 import {SvgImage} from './ui/svg';
+import testIDProps from '../shared/commonUtil';
 
 export const ProfileIcon: React.FC<ProfileIconProps> = props => {
   return (

@@ -28,6 +28,7 @@ import FileStorage, {
 import {__AppId} from './GlobalVariables';
 import {getErrorEventData, sendErrorEvent} from './telemetry/TelemetryUtils';
 import {TelemetryConstants} from './telemetry/TelemetryConstants';
+import {BYTES_IN_MEGABYTE} from './commonUtil';
 
 export const MMKV = new MMKVLoader().initialize();
 
@@ -51,42 +52,56 @@ async function generateHmac(
 
 class Storage {
   static exportData = async (encryptionKey: string) => {
-    const completeBackupData = {};
-    const dataFromDB: Record<string, any> = {};
+    try {
+      const completeBackupData = {};
+      let dataFromDB: Record<string, any> = {};
 
-    const allKeysInDB = await MMKV.indexer.strings.getKeys();
-    const keysToBeExported = allKeysInDB.filter(key =>
-      key.includes('CACHE_FETCH_ISSUER_WELLKNOWN_CONFIG_'),
-    );
-    keysToBeExported.push(MY_VCS_STORE_KEY);
+      const allKeysInDB = await MMKV.indexer.strings.getKeys();
+      const keysToBeExported = allKeysInDB.filter(key =>
+        key.includes('CACHE_FETCH_ISSUER_WELLKNOWN_CONFIG_'),
+      );
+      keysToBeExported.push(MY_VCS_STORE_KEY);
 
-    const encryptedDataPromises = keysToBeExported.map(key =>
-      MMKV.getItem(key),
-    );
-
-    Promise.all(encryptedDataPromises).then(encryptedDataList => {
-      keysToBeExported.forEach(async (key, index) => {
+      const encryptedDataPromises = keysToBeExported.map(key =>
+        MMKV.getItem(key),
+      );
+      const encryptedDataList = await Promise.all(encryptedDataPromises);
+      for (let index = 0; index < keysToBeExported.length; index++) {
+        const key = keysToBeExported[index];
         let encryptedData = encryptedDataList[index];
         if (encryptedData != null) {
           const decryptedData = await decryptJson(encryptionKey, encryptedData);
           dataFromDB[key] = JSON.parse(decryptedData);
         }
+      }
+
+      dataFromDB[MY_VCS_STORE_KEY].map(myVcMetadata => {
+        myVcMetadata.isPinned = false;
       });
-    });
 
-    completeBackupData['dataFromDB'] = dataFromDB;
-    completeBackupData['VC_Records'] = {};
+      completeBackupData['dataFromDB'] = dataFromDB;
+      completeBackupData['VC_Records'] = {};
 
-    let vcKeys = allKeysInDB.filter(key => key.indexOf('VC_') === 0);
-    for (let ind in vcKeys) {
-      const key = vcKeys[ind];
-      const vc = await Storage.readVCFromFile(key);
-      const decryptedVCData = await decryptJson(encryptionKey, vc);
-      const deactivatedVC =
-        removeWalletBindingDataBeforeBackup(decryptedVCData);
-      completeBackupData['VC_Records'][key] = deactivatedVC;
+      let vcKeys = allKeysInDB.filter(key => key.indexOf('VC_') === 0);
+      for (let ind in vcKeys) {
+        const key = vcKeys[ind];
+        const vc = await Storage.readVCFromFile(key);
+        const decryptedVCData = await decryptJson(encryptionKey, vc);
+        const deactivatedVC =
+          removeWalletBindingDataBeforeBackup(decryptedVCData);
+        completeBackupData['VC_Records'][key] = deactivatedVC;
+      }
+      return completeBackupData;
+    } catch (error) {
+      sendErrorEvent(
+        getErrorEventData(
+          TelemetryConstants.FlowType.dataBackup,
+          error.message,
+          error.stack,
+        ),
+      );
+      console.error('exporting data is failed due to this error:', error);
     }
-    return completeBackupData;
   };
 
   static loadBackupData = async (data, encryptionKey) => {
@@ -207,13 +222,25 @@ class Storage {
   private static async loadVCs(completeBackupData: any, encryptionKey: any) {
     const allVCs = completeBackupData['VC_Records'];
     const allVCKeys = Object.keys(allVCs);
-    allVCKeys.forEach(async key => {
-      const vc = allVCs[key];
-      const encryptedVC = await encryptJson(encryptionKey, JSON.stringify(vc));
-      await this.setItem(key, encryptedVC, encryptionKey);
-    });
     const dataFromDB = completeBackupData['dataFromDB'];
 
+    allVCKeys.forEach(async key => {
+      let vc = allVCs[key];
+      const currentUnixTimeStamp = Date.now();
+      const prevUnixTimeStamp = vc.vcMetadata.timestamp;
+      vc.vcMetadata.timestamp = currentUnixTimeStamp;
+      dataFromDB.myVCs.forEach(myVcMetadata => {
+        if (
+          myVcMetadata.requestId === vc.vcMetadata.requestId &&
+          myVcMetadata.timestamp === prevUnixTimeStamp
+        ) {
+          myVcMetadata.timestamp = currentUnixTimeStamp;
+        }
+      });
+      const updatedVcKey = new VCMetadata(vc.vcMetadata).getVcKey();
+      const encryptedVC = await encryptJson(encryptionKey, JSON.stringify(vc));
+      await this.setItem(updatedVcKey, encryptedVC, encryptionKey);
+    });
     const dataFromMyVCKey = dataFromDB[MY_VCS_STORE_KEY];
     const encryptedMyVCKeyFromMMKV = await MMKV.getItem(MY_VCS_STORE_KEY);
     let newDataForMyVCKey;
@@ -331,7 +358,8 @@ class Storage {
     const configurations = await getAllConfigurations();
     if (!configurations[limitInMB]) return false;
 
-    const minimumStorageLimitInBytes = configurations[limitInMB] * 1000 * 1000;
+    const minimumStorageLimitInBytes =
+      configurations[limitInMB] * BYTES_IN_MEGABYTE;
 
     const freeDiskStorageInBytes =
       isAndroid() && androidVersion < 29
@@ -356,13 +384,18 @@ function removeWalletBindingDataBeforeBackup(data: string) {
 }
 
 export async function isMinimumLimitForBackupReached() {
-  const directorySize = await getDirectorySize(vcDirectoryPath);
-  const freeDiskStorageInBytes =
-    isAndroid() && androidVersion < 29
-      ? getFreeDiskStorageOldSync()
-      : getFreeDiskStorageSync();
+  try {
+    const directorySize = await getDirectorySize(vcDirectoryPath);
+    const freeDiskStorageInBytes =
+      isAndroid() && androidVersion < 29
+        ? getFreeDiskStorageOldSync()
+        : getFreeDiskStorageSync();
 
-  return freeDiskStorageInBytes <= 2 * directorySize;
+    return freeDiskStorageInBytes <= 2 * directorySize;
+  } catch (error) {
+    console.log('Error in isMinimumLimitForBackupReached:', error);
+    throw error;
+  }
 }
 
 export async function isMinimumLimitForBackupRestorationReached() {

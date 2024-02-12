@@ -1,11 +1,10 @@
 import React, {Fragment, useEffect} from 'react';
 import {useTranslation} from 'react-i18next';
 import {BackHandler, SafeAreaView, View} from 'react-native';
-import Spinner from 'react-native-spinkit';
 import {Button, Centered, Column, Row, Text} from '../../components/ui';
 import {Theme} from './styleUtils';
-import testIDProps from '../../shared/commonUtil';
-import {SvgImage} from './svg';
+import {LoaderAnimation} from './LoaderAnimation';
+import {Modal} from './Modal';
 
 export const Loader: React.FC<LoaderProps> = props => {
   const {t} = useTranslation('ScanScreen');
@@ -18,46 +17,14 @@ export const Loader: React.FC<LoaderProps> = props => {
     return () => backHandler.remove();
   }, []);
 
-  return (
-    <Fragment>
-      <Row style={{backgroundColor: Theme.Colors.whiteBackgroundColor}}>
-        <SafeAreaView style={Theme.ModalStyles.header}>
-          <Row
-            fill
-            align={'flex-start'}
-            style={Theme.LoaderStyles.titleContainer}>
-            <View style={Theme.LoaderStyles.heading}>
-              <Text
-                style={Theme.TextStyles.semiBoldHeader}
-                testID="loaderTitle">
-                {props.title}
-              </Text>
-              {props.subTitle && (
-                <Text
-                  style={Theme.TextStyles.subHeader}
-                  color={Theme.Colors.textLabel}
-                  testID="loaderSubTitle">
-                  {props.subTitle}
-                </Text>
-              )}
-            </View>
-          </Row>
-        </SafeAreaView>
-      </Row>
-      <View style={Theme.Styles.hrLineFill}></View>
+  function loaderContent() {
+    return (
       <Centered
         style={{backgroundColor: Theme.Colors.whiteBackgroundColor}}
         crossAlign="center"
         fill>
         <Column margin="24 0" align="space-around">
-          {SvgImage.ProgressIcon()}
-          <View {...testIDProps('threeDotsLoader')}>
-            <Spinner
-              type="ThreeBounce"
-              color={Theme.Colors.Loading}
-              style={{marginLeft: 6}}
-            />
-          </View>
+          <LoaderAnimation />
         </Column>
         {(props.isHintVisible || props.onCancel) && (
           <Column style={Theme.SelectVcOverlayStyles.timeoutHintContainer}>
@@ -95,13 +62,67 @@ export const Loader: React.FC<LoaderProps> = props => {
           </Column>
         )}
       </Centered>
+    );
+  }
+
+  return (
+    <Fragment>
+      {props.isModal ? (
+        <Modal
+          headerTitle={props.title}
+          isVisible={props.isModal}
+          headerElevation={3}
+          headerLeft={<Fragment></Fragment>}
+          showClose={false}>
+          <Centered
+            style={{backgroundColor: Theme.Colors.whiteBackgroundColor}}
+            crossAlign="center"
+            fill>
+            {loaderContent()}
+          </Centered>
+        </Modal>
+      ) : (
+        <Fragment>
+          <Row>
+            <SafeAreaView style={Theme.ModalStyles.header}>
+              <Row
+                fill
+                align={'flex-start'}
+                style={Theme.LoaderStyles.titleContainer}>
+                <View style={Theme.LoaderStyles.heading}>
+                  <Text
+                    style={Theme.TextStyles.semiBoldHeader}
+                    testID="loaderTitle">
+                    {props.title}
+                  </Text>
+                  {props.subTitle && (
+                    <Text
+                      style={Theme.TextStyles.subHeader}
+                      color={Theme.Colors.textLabel}
+                      testID="loaderSubTitle">
+                      {props.subTitle}
+                    </Text>
+                  )}
+                </View>
+              </Row>
+            </SafeAreaView>
+          </Row>
+          <View style={Theme.Styles.hrLineFill}></View>
+          {loaderContent()}
+        </Fragment>
+      )}
     </Fragment>
   );
+};
+
+Loader.defaultProps = {
+  isModal: false,
 };
 
 export interface LoaderProps {
   title: string;
   subTitle?: string;
+  isModal?: boolean;
   hint?: string;
   onStayInProgress?: () => void;
   isHintVisible?: boolean;

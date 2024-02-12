@@ -96,3 +96,14 @@ export const faceMatchConfig = (resp: string) => {
 export const getBackupFileName = () => {
   return `backup_${Date.now()}`;
 };
+
+export const BYTES_IN_MEGABYTE = 1000 * 1000;
+
+export const bytesToMB = (bytes: number): string => {
+  if (bytes <= 0) {
+    return '0';
+  }
+
+  const megabytes = bytes / BYTES_IN_MEGABYTE;
+  return Number(megabytes).toFixed(2);
+};

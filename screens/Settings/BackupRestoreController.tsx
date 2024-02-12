@@ -5,9 +5,10 @@ import {
   selectIsBackUpRestoring,
   selectIsBackUpRestoreFailure,
   selectIsBackUpRestoreSuccess,
+  selectErrorReason,
 } from '../../machines/backupRestore';
 import {GlobalContext} from '../../shared/GlobalContext';
-import {VcEvents} from '../../machines/vc';
+import {VcEvents} from '../../machines/VCItemMachine/vc';
 
 export function useBackupRestoreScreen() {
   const {appService} = useContext(GlobalContext);
@@ -19,6 +20,7 @@ export function useBackupRestoreScreen() {
       backupRestoreService,
       selectIsBackUpRestoring,
     ),
+    restoreErrorReason: useSelector(backupRestoreService, selectErrorReason),
     isBackUpRestoreSuccess: useSelector(
       backupRestoreService,
       selectIsBackUpRestoreSuccess,

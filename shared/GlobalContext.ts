@@ -7,9 +7,9 @@ import {requestMachine} from '../machines/bleShare/request/requestMachine';
 import {scanMachine} from '../machines/bleShare/scan/scanMachine';
 import {settingsMachine} from '../machines/settings';
 import {storeMachine} from '../machines/store';
-import {vcMachine} from '../machines/vc';
+import {vcMachine} from '../machines/VCItemMachine/vc';
 import {revokeVidsMachine} from '../machines/revoke';
-import {backupMachine} from '../machines/backup';
+import {backupMachine} from '../machines/backupAndRestore/backup';
 import {backupRestoreMachine} from '../machines/backupRestore';
 
 export const GlobalContext = createContext({} as GlobalServices);

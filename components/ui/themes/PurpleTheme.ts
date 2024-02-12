@@ -32,6 +32,7 @@ const Colors = {
   mediumDarkGrey: '#7B7B7B',
   White: '#FFFFFF',
   Red: '#EB5757',
+  LightRed: '#DB2E2E',
   Green: '#219653',
   Transparent: 'transparent',
   Warning: '#f0ad4e',
@@ -215,14 +216,6 @@ export const PurpleTheme = {
       height: Dimensions.get('window').height * 0.045,
       borderRadius: 6,
       backgroundColor: Colors.LightPurple,
-    },
-    downloadingVcPopUp: {
-      alignItems: 'center',
-      justifyContent: 'space-between',
-      backgroundColor: Colors.Green,
-      height: 39,
-      position: 'relative',
-      paddingHorizontal: 12,
     },
     homeScreenContainer: {
       alignItems: 'center',
@@ -673,6 +666,42 @@ export const PurpleTheme = {
       paddingVertical: 40,
       paddingHorizontal: 24,
     },
+    newLabel: {
+      backgroundColor: Colors.Orange,
+      paddingHorizontal: 5,
+      paddingVertical: 4,
+      borderRadius: 4,
+      fontSize: 10,
+      fontFamily: 'Inter_700Bold',
+      lineHeight: 12,
+    },
+  }),
+  BannerStyles: StyleSheet.create({
+    container: {
+      alignItems: 'flex-start',
+      justifyContent: 'space-between',
+      backgroundColor: '#DB2E2E',
+      width: '100%',
+      position: 'relative',
+      paddingHorizontal: 18,
+      paddingVertical: 12,
+      marginVertical: 1,
+      columnGap: 7,
+    },
+    text: {
+      textAlignVertical: 'center',
+      fontSize: 12,
+      lineHeight: 15,
+      padding: 1,
+      fontFamily: 'Inter_600SemiBold',
+    },
+    dismiss: {paddingLeft: 9},
+    success: {
+      backgroundColor: Colors.Green,
+    },
+    error: {
+      backgroundColor: Colors.LightRed,
+    },
   }),
   QrCodeStyles: StyleSheet.create({
     magnifierZoom: {
@@ -1067,6 +1096,42 @@ export const PurpleTheme = {
       height: Dimensions.get('screen').height,
     },
   }),
+  BackupAndRestoreStyles: StyleSheet.create({
+    backupProgressText: {
+      fontFamily: 'Inter_400Regular',
+      fontSize: 14,
+      color: Colors.Gray44,
+    },
+    actionOrLoaderContainer: {
+      marginLeft: 1,
+      marginRight: 1,
+    },
+    backupProcessInfo: {
+      fontWeight: 'bold',
+      paddingHorizontal: 20,
+      textAlign: 'center',
+      lineHeight: 22,
+      fontSize: 17,
+      fontFamily: 'Inter_600SemiBold',
+      marginHorizontal: 30,
+    },
+    cloudInfo: {
+      paddingHorizontal: 20,
+      textAlign: 'center',
+      paddingVertical: 15,
+    },
+    cloudLabel: {
+      fontWeight: '600',
+      paddingHorizontal: 10,
+      textAlign: 'center',
+      paddingTop: 15,
+      fontFamily: 'Inter_500Medium',
+      fontSize: 14,
+      letterSpacing: 0,
+      lineHeight: 17,
+      minHeight: 50,
+    },
+  }),
   TextEditOverlayStyles: StyleSheet.create({
     overlay: {
       elevation: 5,
@@ -1411,6 +1476,7 @@ export const PurpleTheme = {
       lineHeight: 21,
       paddingTop: 4,
       textAlign: 'center',
+      marginBottom: 10,
     },
     message: {
       textAlign: 'center',
@@ -1419,7 +1485,7 @@ export const PurpleTheme = {
       lineHeight: 20,
       marginTop: 6,
       marginBottom: 25,
-      marginHorizontal: 40,
+      marginHorizontal: 26,
       color: Colors.mediumDarkGrey,
     },
   }),

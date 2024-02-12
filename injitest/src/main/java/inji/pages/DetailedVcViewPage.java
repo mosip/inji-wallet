@@ -83,11 +83,11 @@ public class DetailedVcViewPage extends BasePage{
     private WebElement credentialRegistryValue;
 
     @AndroidFindBy(accessibility = "esignet-logo")
-    @iOSXCUITFindBy(xpath = "(//XCUIElementTypeImage)[3]")
+    @iOSXCUITFindBy(accessibility = "esignetLogo")
     private WebElement esignetLogo;
     
     @AndroidFindBy(accessibility = "arrowLeft")
-    @iOSXCUITFindBy(accessibility = "close")
+    @iOSXCUITFindBy(accessibility = "arrowLeft")
     public WebElement backArrow;
 
     public DetailedVcViewPage(AppiumDriver driver) {
@@ -168,7 +168,7 @@ public class DetailedVcViewPage extends BasePage{
     }
 
     public boolean isQrCodeDisplayed() {
-        return qrCodeHeader.isDisplayed();
+        return isElementDisplayed(qrCodeHeader);
     }
 
     public boolean isCredentialRegistryTextDisplayed() {
@@ -180,6 +180,6 @@ public class DetailedVcViewPage extends BasePage{
     }
 
     public boolean isEsignetLogoDisplayed() {
-        return esignetLogo.isDisplayed();
+        return isElementDisplayed(esignetLogo);
     }
 }

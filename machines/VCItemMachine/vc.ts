@@ -1,16 +1,16 @@
 import {EventFrom, send, sendParent, StateFrom} from 'xstate';
 import {createModel} from 'xstate/lib/model';
-import {StoreEvents} from './store';
-import {VC} from '../types/VC/ExistingMosipVC/vc';
-import {AppServices} from '../shared/GlobalContext';
+import {StoreEvents} from '../store';
+import {VC} from '../../types/VC/ExistingMosipVC/vc';
+import {AppServices} from '../../shared/GlobalContext';
 import {log, respond} from 'xstate/lib/actions';
-import {ExistingMosipVCItemEvents} from './VCItemMachine/ExistingMosipVCItem/ExistingMosipVCItemMachine';
-import {MY_VCS_STORE_KEY, RECEIVED_VCS_STORE_KEY} from '../shared/constants';
-import {parseMetadatas, VCMetadata} from '../shared/VCMetadata';
-import {Protocols} from '../shared/openId4VCI/Utils';
-import {EsignetMosipVCItemEvents} from './VCItemMachine/EsignetMosipVCItem/EsignetMosipVCItemMachine';
-import {ActivityLogEvents} from './activityLog';
-import {ActivityLog} from '../components/ActivityLogEvent';
+import {ExistingMosipVCItemEvents} from './ExistingMosipVCItem/ExistingMosipVCItemMachine';
+import {MY_VCS_STORE_KEY, RECEIVED_VCS_STORE_KEY} from '../../shared/constants';
+import {parseMetadatas, VCMetadata} from '../../shared/VCMetadata';
+import {Protocols} from '../../shared/openId4VCI/Utils';
+import {EsignetMosipVCItemEvents} from './EsignetMosipVCItem/EsignetMosipVCItemMachine';
+import {ActivityLogEvents} from '../activityLog';
+import {ActivityLog} from '../../components/ActivityLogEvent';
 
 const model = createModel(
   {
@@ -39,7 +39,6 @@ const model = createModel(
         vc,
         vcMetadata,
       }),
-      VC_UPDATE: (vc: VC) => ({vc}),
       REFRESH_MY_VCS: () => ({}),
       REFRESH_MY_VCS_TWO: (vc: VC) => ({vc}),
       REFRESH_RECEIVED_VCS: () => ({}),
@@ -185,9 +184,6 @@ export const vcMachine =
             VC_DOWNLOADED_FROM_OPENID4VCI: {
               actions: 'setDownloadedVCFromOpenId4VCI',
             },
-            VC_UPDATE: {
-              actions: 'setVcUpdate',
-            },
             RESET_WALLET_BINDING_SUCCESS: {
               actions: 'resetWalletBindingSuccess',
             },
@@ -246,7 +242,8 @@ export const vcMachine =
         })),
 
         getVcItemResponse: respond((context, event) => {
-          const vc = context.vcs[event.vcMetadata?.getVcKey()];
+          const vc =
+            context.vcs[VCMetadata.fromVC(event.vcMetadata)?.getVcKey()];
           if (event.protocol === Protocols.OpenId4VCI) {
             return EsignetMosipVCItemEvents.GET_VC_RESPONSE(vc);
           }
@@ -330,18 +327,6 @@ export const vcMachine =
           if (event.vc)
             context.vcs[VCMetadata.fromVC(event.vcMetadata).getVcKey()] =
               event.vc;
-        },
-
-        setVcUpdate: (context, event) => {
-          Object.keys(context.vcs).map(vcUniqueId => {
-            const eventVCMetadata = VCMetadata.fromVC(event.vc);
-
-            if (vcUniqueId === eventVCMetadata.getVcKey()) {
-              context.vcs[eventVCMetadata.getVcKey()] = context.vcs[vcUniqueId];
-              delete context.vcs[vcUniqueId];
-              return context.vcs[eventVCMetadata.getVcKey()];
-            }
-          });
         },
 
         setUpdatedVcMetadatas: send(

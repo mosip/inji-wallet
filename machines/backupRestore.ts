@@ -8,13 +8,25 @@ import fileStorage, {
 } from '../shared/fileStorage';
 import Storage from '../shared/storage';
 import {StoreEvents} from './store';
-import {ReadDirItem} from 'react-native-fs';
+import Cloud from '../shared/googleCloudUtils';
+import {TelemetryConstants} from '../shared/telemetry/TelemetryConstants';
+import {
+  sendStartEvent,
+  getStartEventData,
+  sendImpressionEvent,
+  getImpressionEventData,
+  sendEndEvent,
+  getEndEventData,
+} from '../shared/telemetry/TelemetryUtils';
+import {VcEvents} from './VCItemMachine/vc';
+import {NETWORK_REQUEST_FAILED, TECHNICAL_ERROR} from '../shared/constants';
 
 const model = createModel(
   {
     serviceRefs: {} as AppServices,
     fileName: '',
     dataFromBackupFile: {},
+    errorReason: '' as string,
   },
   {
     events: {
@@ -42,6 +54,13 @@ export const backupRestoreMachine = model.createMachine(
     },
     id: 'backupRestore',
     initial: 'init',
+    on: {
+      BACKUP_RESTORE: [
+        {
+          target: 'restoreBackup',
+        },
+      ],
+    },
     states: {
       init: {
         on: {
@@ -53,21 +72,36 @@ export const backupRestoreMachine = model.createMachine(
         },
       },
       restoreBackup: {
-        initial: 'idle',
+        initial: 'checkStorageAvailibility',
         states: {
           idle: {},
           checkStorageAvailibility: {
+            entry: ['sendDataRestoreStartEvent'],
             invoke: {
               src: 'checkStorageAvailability',
               onDone: [
                 {
                   cond: 'isMinimumStorageRequiredForBackupRestorationReached',
-                  target: 'failure',
+                  actions: 'setRestoreTechnicalError',
+                  target: ['failure'],
                 },
                 {
-                  target: 'unzipBackupFile',
+                  target: 'downloadBackupFileFromCloud',
                 },
               ],
+            },
+          },
+          downloadBackupFileFromCloud: {
+            invoke: {
+              src: 'downloadLatestBackup',
+              onDone: {
+                actions: 'setBackupFileName',
+                target: 'unzipBackupFile',
+              },
+              onError: {
+                actions: ['setRestoreErrorReason'],
+                target: 'failure',
+              },
             },
           },
           unzipBackupFile: {
@@ -77,6 +111,7 @@ export const backupRestoreMachine = model.createMachine(
                 target: 'readBackupFile',
               },
               onError: {
+                actions: ['setRestoreErrorReason'],
                 target: 'failure',
               },
             },
@@ -99,6 +134,7 @@ export const backupRestoreMachine = model.createMachine(
                 target: 'deleteBackupDir',
               },
               STORE_ERROR: {
+                actions: 'setRestoreTechnicalError',
                 target: 'failure',
               },
             },
@@ -107,12 +143,17 @@ export const backupRestoreMachine = model.createMachine(
             invoke: {
               src: 'deleteBkpDir',
               onDone: {
+                actions: 'refreshVCs',
                 target: 'success',
               },
             },
           },
-          success: {},
-          failure: {},
+          success: {
+            entry: 'sendDataRestoreSuccessEvent',
+          },
+          failure: {
+            entry: 'sendDataRestoreFailureEvent',
+          },
         },
         on: {
           OK: {
@@ -130,18 +171,68 @@ export const backupRestoreMachine = model.createMachine(
   },
   {
     actions: {
+      setRestoreTechnicalError: model.assign({
+        errorReason: 'technicalError',
+      }),
+      setBackupFileName: model.assign({
+        fileName: (_context, event) => event.data,
+      }),
+
+      setRestoreErrorReason: model.assign({
+        errorReason: (_context, event) => {
+          const reasons = {
+            'No backup file': 'noBackupFile',
+            [NETWORK_REQUEST_FAILED]: 'networkError',
+            [TECHNICAL_ERROR]: 'technicalError',
+          };
+          return reasons[event.data.error] || reasons[TECHNICAL_ERROR];
+        },
+      }),
+
       loadDataToMemory: send(
         context => {
           return StoreEvents.RESTORE_BACKUP(context.dataFromBackupFile);
         },
         {to: context => context.serviceRefs.store},
       ),
+      refreshVCs: send(VcEvents.REFRESH_MY_VCS, {
+        to: context => context.serviceRefs.vc,
+      }),
 
       setDataFromBackupFile: model.assign({
         dataFromBackupFile: (_context, event) => {
           return event.dataFromBackupFile;
         },
       }),
+      sendDataRestoreStartEvent: () => {
+        sendStartEvent(
+          getStartEventData(TelemetryConstants.FlowType.dataRestore),
+        );
+        sendImpressionEvent(
+          getImpressionEventData(
+            TelemetryConstants.FlowType.dataRestore,
+            TelemetryConstants.Screens.dataRestoreScreen,
+          ),
+        );
+      },
+
+      sendDataRestoreSuccessEvent: () => {
+        sendEndEvent(
+          getEndEventData(
+            TelemetryConstants.FlowType.dataRestore,
+            TelemetryConstants.EndEventStatus.success,
+          ),
+        );
+      },
+
+      sendDataRestoreFailureEvent: () => {
+        sendEndEvent(
+          getEndEventData(
+            TelemetryConstants.FlowType.dataRestore,
+            TelemetryConstants.EndEventStatus.failure,
+          ),
+        );
+      },
     },
 
     services: {
@@ -150,30 +241,23 @@ export const backupRestoreMachine = model.createMachine(
       },
       deleteBkpDir: () => async () =>
         fileStorage.removeItem(backupDirectoryPath),
-      unzipBackupFile: context => async () => {
-        let items: ReadDirItem[] = await fileStorage.getAllFilesInDirectory(
-          backupDirectoryPath,
-        );
-        let bkpZip: string;
-        if (
-          items.length === 1 &&
-          items[0].isFile() &&
-          items[0].name.endsWith('.zip')
-        ) {
-          bkpZip = items[0].name.substring(0, items[0].name.length - 4);
-        } else {
-          const ref = items.findIndex(i => i.name.endsWith('.zip'));
-          bkpZip = items[ref].name;
+
+      downloadLatestBackup: () => async () => {
+        const backupFileName = await Cloud.downloadLatestBackup();
+        if (backupFileName === null) {
+          return new Error('unable to download backup file');
         }
-        context.fileName = bkpZip;
-        const result = await unZipAndRemoveFile(bkpZip);
-        return result;
+        return backupFileName;
       },
-      readBackupFile: context => async callack => {
+
+      unzipBackupFile: context => async () => {
+        return await unZipAndRemoveFile(context.fileName);
+      },
+      readBackupFile: context => async callback => {
         const dataFromBackupFile = await fileStorage.readFile(
           getBackupFilePath(context.fileName),
         );
-        callack(model.events.DATA_FROM_FILE(dataFromBackupFile));
+        callback(model.events.DATA_FROM_FILE(dataFromBackupFile));
       },
     },
 
@@ -190,8 +274,15 @@ export function createBackupRestoreMachine(serviceRefs: AppServices) {
     serviceRefs,
   });
 }
+export function selectErrorReason(state: State) {
+  return state.context.errorReason;
+}
 export function selectIsBackUpRestoring(state: State) {
-  return state.matches('restoreBackup');
+  return (
+    state.matches('restoreBackup') &&
+    !state.matches('restoreBackup.success') &&
+    !state.matches('restoreBackup.failure')
+  );
 }
 export function selectIsBackUpRestoreSuccess(state: State) {
   return state.matches('restoreBackup.success');
