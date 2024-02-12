@@ -22,6 +22,9 @@ class Cloud {
     'https://www.googleapis.com/auth/drive.appdata',
     'https://www.googleapis.com/auth/drive.file',
   ];
+  private static readonly BACKUP_FILE_REG_EXP = /backup_[0-9]*.zip/g;
+  private static readonly UNSYNCED_BACKUP_FILE_REG_EXP =
+    /backup_[0-9]*.zip.icloud/g;
 
   private static configure() {
     GoogleSignin.configure({
@@ -136,6 +139,24 @@ class Cloud {
       };
     }
   }
+
+  static async downloadUnSyncedBackupFiles() {
+    if (isIOS()) {
+      console.log('downloading unSynced backup files');
+      const allFiles = await CloudStorage.readdir(
+        `/`,
+        CloudStorageScope.AppData,
+      );
+      const unSyncedFiles = allFiles.filter(file =>
+        file.match(this.UNSYNCED_BACKUP_FILE_REG_EXP),
+      );
+      console.log('unSynced backup files - ', unSyncedFiles);
+      if (unSyncedFiles.length > 0) {
+        await CloudStorage.downloadFile(`/${unSyncedFiles[0]}`);
+      }
+    }
+  }
+
   static async lastBackupDetails(
     cloudFileName?: string | undefined,
   ): Promise<BackupDetails> {
@@ -156,6 +177,7 @@ class Cloud {
       );
       cloudFileName = allFiles[0];
     }
+    this.downloadUnSyncedBackupFiles();
     const {birthtimeMs: creationTime, size} = await CloudStorage.stat(
       cloudFileName,
       CloudStorageScope.AppData,
@@ -266,16 +288,17 @@ class Cloud {
       await CloudStorage.isCloudAvailable();
       //todo: if not reject
     }
-    const allFiles = (
-      await CloudStorage.readdir('/', CloudStorageScope.AppData)
-    ).filter(file => file.match(/backup_[0-9]*.zip/g));
-    // TODO: do basic sanity about this .zip file
-    console.log('all files ', allFiles);
-    const fileName = `/${allFiles[0]}`;
-    const fileContent = await CloudStorage.readFile(
-      fileName,
-      CloudStorageScope.AppData,
-    );
+    await this.downloadUnSyncedBackupFiles();
+      const allFiles = (
+        await CloudStorage.readdir('/', CloudStorageScope.AppData)
+      ).filter(file => file.match(/backup_[0-9]*.zip/g));
+      // TODO: do basic sanity about this .zip file
+      console.log('all files ', allFiles);
+      const fileName = `/${allFiles[0]}`;
+      const fileContent = await CloudStorage.readFile(
+        fileName,
+        CloudStorageScope.AppData,
+      );
 
       if (fileContent.length === 0) return Promise.resolve(null);
       // write the file content in the backup directory path, create backup directory if not exists

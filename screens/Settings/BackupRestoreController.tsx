@@ -30,6 +30,10 @@ export function useBackupRestoreScreen() {
       backupRestoreService,
       selectIsBackUpRestoreFailure,
     ),
+    DOWNLOAD_UNSYNCED_BACKUP_FILES: () =>
+      backupRestoreService?.send(
+        BackupRestoreEvents.DOWNLOAD_UNSYNCED_BACKUP_FILES(),
+      ),
     isCheckStorageAvailibility: useSelector(
       backupRestoreService,
       selectIsCheckStorageAvailibility,
