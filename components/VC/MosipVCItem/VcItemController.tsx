@@ -18,13 +18,15 @@ import {
 } from '../../../machines/VCItemMachine/EsignetMosipVCItem/EsignetMosipVCItemMachine';
 import {useInterpret, useSelector} from '@xstate/react';
 import {EsignetMosipVCItemProps, ExistingMosipVCItemProps} from './MosipVCItem';
+import {VCMetadata} from '../../../shared/VCMetadata';
 
 export function useVcItemController(
   props: ExistingMosipVCItemProps | EsignetMosipVCItemProps,
 ) {
   const {appService} = useContext(GlobalContext);
+  const vcMetadata = VCMetadata.fromVC(props.vcMetadata);
   const machine = useRef(
-    !props.vcMetadata.isFromOpenId4VCI()
+    !vcMetadata.isFromOpenId4VCI()
       ? createExistingMosipVCItemMachine(
           appService.getSnapshot().context.serviceRefs,
           props.vcMetadata,
@@ -46,7 +48,7 @@ export function useVcItemController(
   const isSavingFailedInIdle = useSelector(service, selectIsSavingFailedInIdle);
   const storeErrorTranslationPath = 'errors.savingFailed';
   const generatedOn = useSelector(service, selectGeneratedOn);
-  if (props.vcMetadata.isFromOpenId4VCI()) {
+  if (vcMetadata.isFromOpenId4VCI()) {
     DISMISS = () => service.send(EsignetMosipVCItemEvents.DISMISS());
     KEBAB_POPUP = () => service.send(EsignetMosipVCItemEvents.KEBAB_POPUP());
   }

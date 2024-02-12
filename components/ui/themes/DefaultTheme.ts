@@ -477,6 +477,16 @@ export const DefaultTheme = {
       borderRadius: 5,
       marginTop: 10,
     },
+    openCardProfileIconContainer: {
+      alignSelf: 'center',
+      justifyContent: 'center',
+      width: 100,
+      height: 106,
+      borderRadius: 10,
+      borderWidth: 1,
+      borderColor: Colors.Mercury,
+      backgroundColor: Colors.White,
+    },
     versionContainer: {
       backgroundColor: Colors.Grey6,
       margin: 4,

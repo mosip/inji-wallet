@@ -238,7 +238,11 @@ export class SvgImage {
       </ImageBackground>
     ) : (
       <>
-        <ProfileIcon isPinned={props?.isPinned} />
+        <ProfileIcon
+          isPinned={props?.isPinned}
+          profileIconContainerStyles={Theme.Styles.ProfileIconContainer}
+          profileIconSize={30}
+        />
       </>
     );
   }

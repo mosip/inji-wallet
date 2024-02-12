@@ -26,6 +26,7 @@ import {Pressable} from 'react-native';
 import {KebabPopUp} from '../../components/KebabPopUp';
 import {useVcItemController} from '../../components/VC/MosipVCItem/VcItemController';
 import {SvgImage} from '../../components/ui/svg';
+import {VCMetadata} from '../../shared/VCMetadata';
 
 export const ViewVcModal: React.FC<ViewVcModalProps> = props => {
   const {t} = useTranslation('ViewVcModal');
@@ -86,7 +87,7 @@ export const ViewVcModal: React.FC<ViewVcModalProps> = props => {
           <KebabPopUp
             icon={SvgImage.kebabIcon()}
             iconColor={null}
-            vcMetadata={controller.vc.vcMetadata}
+            vcMetadata={VCMetadata.fromVC(controller.vc.vcMetadata)}
             iconName="dots-three-horizontal"
             iconType="entypo"
             isVisible={isKebabPopUp}

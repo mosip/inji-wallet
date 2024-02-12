@@ -69,7 +69,12 @@ const getProfileImage = (
       />
     );
   }
-  return <ProfileIcon />;
+  return (
+    <ProfileIcon
+      profileIconContainerStyles={Theme.Styles.openCardProfileIconContainer}
+      profileIconSize={40}
+    />
+  );
 };
 
 export const VCDetailView: React.FC<

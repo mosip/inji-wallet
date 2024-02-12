@@ -3,14 +3,13 @@ import {View} from 'react-native';
 import React from 'react';
 import {Icon} from 'react-native-elements';
 import {SvgImage} from './ui/svg';
-import testIDProps from '../shared/commonUtil';
 
 export const ProfileIcon: React.FC<ProfileIconProps> = props => {
   return (
     <>
       <View style={Theme.Styles.ProfileContainer}>
-        <View style={Theme.Styles.ProfileIconContainer}>
-          <Icon name="person" color="#A5A5A5" size={30} />
+        <View style={props.profileIconContainerStyles}>
+          <Icon name="person" color="#A5A5A5" size={props.profileIconSize} />
         </View>
         {props?.isPinned &&
           SvgImage.pinIcon(Theme.Styles.ProfileIconPinnedStyle)}
@@ -21,4 +20,6 @@ export const ProfileIcon: React.FC<ProfileIconProps> = props => {
 
 interface ProfileIconProps {
   isPinned?: boolean;
+  profileIconContainerStyles: object;
+  profileIconSize: number;
 }

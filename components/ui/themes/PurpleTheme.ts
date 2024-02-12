@@ -482,6 +482,16 @@ export const PurpleTheme = {
       borderRadius: 5,
       marginTop: 10,
     },
+    openCardProfileIconContainer: {
+      alignSelf: 'center',
+      justifyContent: 'center',
+      width: 100,
+      height: 106,
+      borderRadius: 5,
+      borderWidth: 1,
+      borderColor: Colors.Mercury,
+      backgroundColor: Colors.White,
+    },
     versionContainer: {
       backgroundColor: Colors.Grey6,
       margin: 4,
