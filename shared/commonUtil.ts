@@ -110,3 +110,7 @@ export const bytesToMB = (bytes: number): string => {
 
 export const getDriveName = () =>
   isAndroid() ? GOOGLE_DRIVE_NAME : ICLOUD_DRIVE_NAME;
+
+export function sleep(time = 1000) {
+  return new Promise(resolve => setTimeout(resolve, time));
+}

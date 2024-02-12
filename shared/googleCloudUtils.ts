@@ -6,7 +6,7 @@ import {CloudStorage, CloudStorageScope} from 'react-native-cloud-storage';
 import {GOOGLE_ANDROID_CLIENT_ID} from 'react-native-dotenv';
 import {readFile, writeFile} from 'react-native-fs';
 import {BackupDetails} from '../types/backup-and-restore/backup';
-import {bytesToMB} from './commonUtil';
+import {bytesToMB, sleep} from './commonUtil';
 import {isAndroid, isIOS, NETWORK_REQUEST_FAILED} from './constants';
 import fileStorage, {backupDirectoryPath, zipFilePath} from './fileStorage';
 import {request} from './request';
@@ -22,7 +22,7 @@ class Cloud {
     'https://www.googleapis.com/auth/drive.appdata',
     'https://www.googleapis.com/auth/drive.file',
   ];
-  private static readonly BACKUP_FILE_REG_EXP = /backup_[0-9]*.zip/g;
+  private static readonly BACKUP_FILE_REG_EXP = /backup_[0-9]*.zip$/g;
   private static readonly UNSYNCED_BACKUP_FILE_REG_EXP =
     /backup_[0-9]*.zip.icloud/g;
 
@@ -157,6 +157,27 @@ class Cloud {
     }
   }
 
+  private static async syncBackupFiles() {
+    if (isIOS()) {
+      //TODO: Move readDir to lambda fn
+      const allFiles = await CloudStorage.readdir(
+        `/`,
+        CloudStorageScope.AppData,
+      );
+      const unSyncedFiles = allFiles.filter(file =>
+        file.match(this.UNSYNCED_BACKUP_FILE_REG_EXP),
+      );
+      console.log('unSynced backup files - ', unSyncedFiles);
+      if (unSyncedFiles.length > 0) {
+        await CloudStorage.downloadFile(`/${unSyncedFiles[0]}`);
+      } else {
+        return;
+      }
+      sleep(5000);
+      this.syncBackupFiles();
+    }
+  }
+
   static async lastBackupDetails(
     cloudFileName?: string | undefined,
   ): Promise<BackupDetails> {
@@ -177,7 +198,7 @@ class Cloud {
       );
       cloudFileName = allFiles[0];
     }
-    this.downloadUnSyncedBackupFiles();
+    this.syncBackupFiles();
     const {birthtimeMs: creationTime, size} = await CloudStorage.stat(
       cloudFileName,
       CloudStorageScope.AppData,
@@ -192,7 +213,7 @@ class Cloud {
     const allFiles = await CloudStorage.readdir('/', CloudStorageScope.AppData);
     const toBeRemovedFiles = allFiles
       .filter(file => file !== fileName)
-      .filter(file => file.match(/backup_[0-9]*.zip/g));
+      .filter(file => file.match(this.BACKUP_FILE_REG_EXP));
     console.log(
       'removeOldDriveBackupFiles toBeRemovedFiles ',
       toBeRemovedFiles,
@@ -291,7 +312,7 @@ class Cloud {
     await this.downloadUnSyncedBackupFiles();
       const allFiles = (
         await CloudStorage.readdir('/', CloudStorageScope.AppData)
-      ).filter(file => file.match(/backup_[0-9]*.zip/g));
+      ).filter(file => file.match(this.BACKUP_FILE_REG_EXP));
       // TODO: do basic sanity about this .zip file
       console.log('all files ', allFiles);
       const fileName = `/${allFiles[0]}`;
