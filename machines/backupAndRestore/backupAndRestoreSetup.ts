@@ -144,7 +144,7 @@ export const backupAndRestoreSetupMachine = model.createMachine(
                 'unsetIsLoading',
                 'setErrorReasonAsAccountRequired',
               ],
-              target: 'backupAndRestore',
+              target: '.error',
             },
             {
               actions: [
@@ -332,7 +332,7 @@ export const backupAndRestoreSetupMachine = model.createMachine(
       },
       isNotSignedInIOSAndViaConfirmationFlow: (context, event) => {
         return (
-          !context.showConfirmation &&
+          context.showConfirmation &&
           !(event.data as isSignedInResult).isSignedIn &&
           isIOS()
         );
