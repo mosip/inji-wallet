@@ -18,7 +18,7 @@
     "@digitalcredentials/vc": "^1.1.2",
     "@expo-google-fonts/inter": "^0.2.3",
     "@expo/metro-config": "~0.10.0",
-    "@iriscan/biometric-sdk-react-native": "^0.2.6",
+    "@iriscan/biometric-sdk-react-native": "0.2.6",
     "@mosip/secure-keystore": "^0.1.6",
     "@mosip/tuvali": "^0.4.9",
     "@react-native-clipboard/clipboard": "^1.10.0",
