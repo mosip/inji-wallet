@@ -1,7 +1,7 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Button, Column, Row, Text} from '../../components/ui';
 import {Theme} from '../../components/ui/styleUtils';
-import {RefreshControl} from 'react-native';
+import {Pressable, RefreshControl} from 'react-native';
 import {useMyVcsTab} from './MyVcsTabController';
 import {HomeScreenTabProps} from './HomeScreen';
 import {AddVcModal} from './MyVcs/AddVcModal';
@@ -24,6 +24,8 @@ import {Error} from '../../components/ui/Error';
 import {useIsFocused} from '@react-navigation/native';
 import {getVCsOrderedByPinStatus} from '../../shared/Utils';
 import {SvgImage} from '../../components/ui/svg';
+import {SearchBar} from '../../components/ui/SearchBar';
+import {Icon} from 'react-native-elements';
 
 export const MyVcsTab: React.FC<HomeScreenTabProps> = props => {
   const {t} = useTranslation('MyVcsTab');
@@ -32,6 +34,9 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = props => {
   const vcMetadataOrderedByPinStatus = getVCsOrderedByPinStatus(
     controller.vcMetadatas,
   );
+  const [tapToSearch, setTapToSearch] = useState(false);
+  const [clearSearchIcon, setClearSearchIcon] = useState(false);
+  const [search, setSearch] = useState('');
 
   const getId = () => {
     controller.DISMISS();
@@ -40,6 +45,20 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = props => {
 
   const clearIndividualId = () => {
     GET_INDIVIDUAL_ID({id: '', idType: 'UIN'});
+  };
+
+  const onFocusSearch = () => {
+    setTapToSearch(true);
+  };
+
+  const clearSearchText = () => {
+    filterVcs('');
+    setClearSearchIcon(false);
+  };
+
+  const filterVcs = (searchText: string) => {
+    // Here you can apply the filtering item logice.
+    //For reference check search bar component and clear icon code in issuersScreen.tsx
   };
 
   useEffect(() => {
@@ -113,6 +132,34 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = props => {
         <Column fill pY={11} pX={8}>
           {vcMetadataOrderedByPinStatus.length > 0 && (
             <React.Fragment>
+              <Row
+                style={
+                  // tapToSearch
+                  //   ? Theme.SearchBarStyles.searchBarContainer
+                  //   : Theme.SearchBarStyles.idleSearchBarBottomLine
+                  {backgroundColor: Theme.Colors.whiteBackgroundColor}
+                }>
+                <SearchBar
+                  searchIconTestID="searchIssuerIcon"
+                  searchBarTestID="issuerSearchBar"
+                  search={search}
+                  placeholder={t('searchByName')}
+                  onFocus={onFocusSearch}
+                  onChangeText={filterVcs}
+                  onLayout={() => filterVcs('')}
+                />
+                {clearSearchIcon && (
+                  <Pressable onPress={clearSearchText}>
+                    <Icon
+                      testID="clearingIssuerSearchIcon"
+                      name="circle-with-cross"
+                      type="entypo"
+                      size={15}
+                      color={Theme.Colors.DetailsLabel}
+                    />
+                  </Pressable>
+                )}
+              </Row>
               <Column
                 scroll
                 margin="0 0 20 0"

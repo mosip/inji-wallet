@@ -121,6 +121,7 @@ export const DefaultTheme = {
     warningLogoBgColor: Colors.warningLogoBg,
     tooltipIcon: Colors.toolTip,
     toolTipPointerColor: Colors.toolTipPointer,
+    transparentColour: Colors.Transparent,
   },
   Styles: StyleSheet.create({
     title: {

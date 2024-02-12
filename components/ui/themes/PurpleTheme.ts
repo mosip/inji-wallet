@@ -124,6 +124,7 @@ export const PurpleTheme = {
     warningLogoBgColor: Colors.warningLogoBg,
     tooltipIcon: Colors.tooltip,
     toolTipPointerColor: Colors.toolTipPointer,
+    transparentColour: Colors.Transparent,
   },
   Styles: StyleSheet.create({
     title: {

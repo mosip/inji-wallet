@@ -286,6 +286,7 @@
     }
   },
   "MyVcsTab": {
+    "searchByName": "Buscar por nombre",
     "bringYourDigitalID": "Trae tu identidad digital",
     "generateVcDescription": "Toque \"Descargar tarjeta\" a continuación para descargar su tarjeta",
     "generateVcFABDescription": "Toque \" \" a continuación para descargar su tarjeta",

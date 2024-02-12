@@ -285,6 +285,7 @@
     }
   },
   "MyVcsTab": {
+    "searchByName": "البحث عن طريق الإسم",
     "bringYourDigitalID": "أحضر هويتك الرقمية",
     "generateVcDescription": "اضغط على \"إضافة بطاقة \" أدناه لتنزيل بطاقتك",
     "generateVcFABDescription": "اضغط على \"+\" أدناه لتنزيل بطاقتك",
