@@ -672,6 +672,24 @@ export const PurpleTheme = {
       fontFamily: 'Inter_700Bold',
       lineHeight: 12,
     },
+    scanLayoutHeaderContainer: {
+      flex: 1,
+      flexDirection: 'row',
+      marginLeft: I18nManager.isRTL ? 40 : 15,
+      marginTop: 15,
+    },
+    scanLayoutHeaderTitle: {
+      fontSize: 26,
+      fontFamily: 'Inter_600SemiBold',
+      paddingTop: 20,
+      paddingBottom: 10,
+    },
+    sendVcHeaderContainer: {
+      flex: 1,
+      flexDirection: 'row',
+      marginLeft: I18nManager.isRTL ? 50 : 0,
+      marginTop: 15,
+    },
   }),
   BannerStyles: StyleSheet.create({
     container: {

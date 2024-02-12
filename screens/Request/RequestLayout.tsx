@@ -45,9 +45,7 @@ export const RequestLayout: React.FC = () => {
             options={{
               title: t('incomingVc'),
               headerLeft: () =>
-                I18nManager.isRTL ? (
-                  <></>
-                ) : (
+                !I18nManager.isRTL && (
                   <HeaderBackButton
                     onPress={() => {
                       controller.RESET();
@@ -57,7 +55,7 @@ export const RequestLayout: React.FC = () => {
                   />
                 ),
               headerRight: () =>
-                I18nManager.isRTL ? (
+                I18nManager.isRTL && (
                   <HeaderBackButton
                     onPress={() => {
                       controller.RESET();
@@ -65,8 +63,6 @@ export const RequestLayout: React.FC = () => {
                     style={Theme.Styles.IconContainer}
                     tintColor={Theme.Colors.Icon}
                   />
-                ) : (
-                  <></>
                 ),
             }}
           />
@@ -76,10 +72,8 @@ export const RequestLayout: React.FC = () => {
           component={RequestScreen}
           options={{
             title: t('receiveCard').toUpperCase(),
-            headerLeft: () =>
-              I18nManager.isRTL ? (
-                <></>
-              ) : (
+            headerRight: () =>
+              I18nManager.isRTL && (
                 <HeaderBackButton
                   onPress={() => {
                     controller.GOTO_HOME();
@@ -88,8 +82,8 @@ export const RequestLayout: React.FC = () => {
                   tintColor={Theme.Colors.Icon}
                 />
               ),
-            headerRight: () =>
-              I18nManager.isRTL ? (
+            headerLeft: () =>
+              !I18nManager.isRTL && (
                 <HeaderBackButton
                   onPress={() => {
                     controller.GOTO_HOME();
@@ -97,8 +91,6 @@ export const RequestLayout: React.FC = () => {
                   style={Theme.Styles.IconContainer}
                   tintColor={Theme.Colors.Icon}
                 />
-              ) : (
-                <></>
               ),
           }}
         />
