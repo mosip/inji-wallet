@@ -51,33 +51,31 @@ export const ScanLayout: React.FC = () => {
             component={SendVcScreen}
             options={{
               title: t('sharingVc'),
-              headerBackVisible: false,
+              headerTitleAlign: 'center',
               headerTitle: props => (
-                <View
-                  style={{
-                    flex: 1,
-                    flexDirection: 'row',
-                    marginLeft: I18nManager.isRTL ? 40 : 15,
-                    marginTop: 15,
-                  }}>
-                  <Text
-                    style={{
-                      fontSize: 26,
-                      fontFamily: 'Inter_600SemiBold',
-                      paddingTop: 20,
-                      paddingBottom: 10,
-                    }}>
+                <View style={Theme.Styles.sendVcHeaderContainer}>
+                  <Text style={Theme.Styles.scanLayoutHeaderTitle}>
                     {props.children}
                   </Text>
                 </View>
               ),
-              headerRight: () => (
-                <Icon
-                  name="close"
-                  color={Theme.Colors.blackIcon}
-                  onPress={controller.CANCEL}
-                />
-              ),
+              headerBackVisible: false,
+              headerRight: () =>
+                !I18nManager.isRTL && (
+                  <Icon
+                    name="close"
+                    color={Theme.Colors.blackIcon}
+                    onPress={controller.CANCEL}
+                  />
+                ),
+              headerLeft: () =>
+                I18nManager.isRTL && (
+                  <Icon
+                    name="close"
+                    color={Theme.Colors.blackIcon}
+                    onPress={controller.CANCEL}
+                  />
+                ),
             }}
           />
         )}
@@ -87,20 +85,8 @@ export const ScanLayout: React.FC = () => {
           options={{
             title: t('MainLayout:share'),
             headerTitle: props => (
-              <View
-                style={{
-                  flex: 1,
-                  flexDirection: 'row',
-                  marginLeft: I18nManager.isRTL ? 40 : 15,
-                  marginTop: 15,
-                }}>
-                <Text
-                  style={{
-                    fontSize: 26,
-                    fontFamily: 'Inter_600SemiBold',
-                    paddingTop: 20,
-                    paddingBottom: 10,
-                  }}>
+              <View style={Theme.Styles.scanLayoutHeaderContainer}>
+                <Text style={Theme.Styles.scanLayoutHeaderTitle}>
                   {props.children}
                 </Text>
               </View>

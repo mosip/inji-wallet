@@ -47,15 +47,26 @@ export const RequestLayout: React.FC = () => {
             component={ReceiveVcScreen}
             options={{
               title: t('incomingVc'),
-              headerLeft: () => (
-                <HeaderBackButton
-                  onPress={() => {
-                    controller.RESET();
-                  }}
-                  style={Theme.Styles.IconContainer}
-                  tintColor={Theme.Colors.Icon}
-                />
-              ),
+              headerLeft: () =>
+                !I18nManager.isRTL && (
+                  <HeaderBackButton
+                    onPress={() => {
+                      controller.RESET();
+                    }}
+                    style={Theme.Styles.IconContainer}
+                    tintColor={Theme.Colors.Icon}
+                  />
+                ),
+              headerRight: () =>
+                I18nManager.isRTL && (
+                  <HeaderBackButton
+                    onPress={() => {
+                      controller.RESET();
+                    }}
+                    style={Theme.Styles.IconContainer}
+                    tintColor={Theme.Colors.Icon}
+                  />
+                ),
             }}
           />
         )}
@@ -64,15 +75,26 @@ export const RequestLayout: React.FC = () => {
           component={RequestScreen}
           options={{
             title: t('receiveCard').toUpperCase(),
-            headerLeft: () => (
-              <HeaderBackButton
-                onPress={() => {
-                  controller.RESET();
-                }}
-                style={Theme.Styles.IconContainer}
-                tintColor={Theme.Colors.Icon}
-              />
-            ),
+            headerRight: () =>
+              I18nManager.isRTL && (
+                <HeaderBackButton
+                  onPress={() => {
+                    controller.GOTO_HOME();
+                  }}
+                  style={Theme.Styles.IconContainer}
+                  tintColor={Theme.Colors.Icon}
+                />
+              ),
+            headerLeft: () =>
+              !I18nManager.isRTL && (
+                <HeaderBackButton
+                  onPress={() => {
+                    controller.GOTO_HOME();
+                  }}
+                  style={Theme.Styles.IconContainer}
+                  tintColor={Theme.Colors.Icon}
+                />
+              ),
           }}
         />
       </RequestStack.Navigator>
