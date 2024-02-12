@@ -967,7 +967,6 @@ export const PurpleTheme = {
       borderRadius: 9,
       width: Dimensions.get('window').width * 0.72,
       alignSelf: 'center',
-      margin: 3,
       height: 54,
     },
     float: {
