@@ -1,3 +1,15 @@
+diff --git a/node_modules/react-native-cloud-storage/lib/typescript/RNCloudStorage.d.ts b/node_modules/react-native-cloud-storage/lib/typescript/RNCloudStorage.d.ts
+index f99c3a6..d504551 100644
+--- a/node_modules/react-native-cloud-storage/lib/typescript/RNCloudStorage.d.ts
++++ b/node_modules/react-native-cloud-storage/lib/typescript/RNCloudStorage.d.ts
+@@ -5,6 +5,7 @@ declare const RNCloudStorage: {
+     getGoogleDriveAccessToken: () => string | null;
+     setGoogleDriveAccessToken: (accessToken: string | null) => string | null;
+     setThrowOnFilesWithSameName: (enable: boolean) => boolean;
++    setTimeout: (timeout: number) => null;
+     subscribeToFilesWithSameName: (subscriber: ({ path, fileIds }: {
+         path: string;
+         fileIds: string[];
 diff --git a/node_modules/react-native-cloud-storage/src/RNCloudStorage.ts b/node_modules/react-native-cloud-storage/src/RNCloudStorage.ts
 index 716fcb2..b9834ae 100644
 --- a/node_modules/react-native-cloud-storage/src/RNCloudStorage.ts

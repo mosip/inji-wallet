@@ -17,6 +17,7 @@ class Cloud {
     SUCCESS: 'SUCCESS',
     FAILURE: 'FAILURE',
   };
+  static timeout = 10000;
   private static readonly requiredScopes = [
     'https://www.googleapis.com/auth/drive.appdata',
     'https://www.googleapis.com/auth/drive.file',
@@ -129,6 +130,7 @@ class Cloud {
   static async lastBackupDetails(
     cloudFileName?: string | undefined,
   ): Promise<BackupDetails> {
+    CloudStorage.setTimeout(this.timeout);
     const tokenResult = await Cloud.getAccessToken();
     CloudStorage.setGoogleDriveAccessToken(tokenResult);
     if (!cloudFileName) {
@@ -181,6 +183,7 @@ class Cloud {
     let uploadError: string | undefined = undefined;
 
     try {
+      CloudStorage.setTimeout(this.timeout);
       const tokenResult = await Cloud.getAccessToken();
       CloudStorage.setGoogleDriveAccessToken(tokenResult);
 
@@ -230,6 +233,7 @@ class Cloud {
 
   static async downloadLatestBackup(): Promise<string | null> {
     try {
+      CloudStorage.setTimeout(this.timeout);
       const tokenResult = await Cloud.getAccessToken();
       CloudStorage.setGoogleDriveAccessToken(tokenResult);
       const allFiles = await CloudStorage.readdir(
