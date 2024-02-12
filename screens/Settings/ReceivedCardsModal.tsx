@@ -76,6 +76,7 @@ export const ReceivedCardsModal: React.FC<ReceivedCardsProps> = ({
             controller.REVOKE();
           }}
           activeTab={controller.activeTab}
+          flow="receivedVc"
         />
       )}
     </Modal>

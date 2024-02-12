@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import {Column} from '../../components/ui';
+import {Column, Row} from '../../components/ui';
 import {Modal} from '../../components/ui/Modal';
 import {MessageOverlay} from '../../components/MessageOverlay';
 import {ToastItem} from '../../components/ui/ToastItem';
@@ -18,11 +18,32 @@ import {
 } from '../../shared/telemetry/TelemetryUtils';
 import {TelemetryConstants} from '../../shared/telemetry/TelemetryConstants';
 import {BannerNotificationContainer} from '../../components/BannerNotificationContainer';
+import {Icon} from 'react-native-elements';
+import {Theme} from '../../components/ui/styleUtils';
+import testIDProps from '../../shared/commonUtil';
+import {HelpScreen} from '../../components/HelpScreen';
+import {Pressable} from 'react-native';
+import {KebabPopUp} from '../../components/KebabPopUp';
+import {useVcItemController} from '../../components/VC/MosipVCItem/VcItemController';
+import {SvgImage} from '../../components/ui/svg';
 
 export const ViewVcModal: React.FC<ViewVcModalProps> = props => {
   const {t} = useTranslation('ViewVcModal');
   const controller = useViewVcModal(props);
+  console.log('vc:::', controller.vc.vcMetadata);
+  let {
+    service,
+    context,
+    verifiableCredential,
+    emptyWalletBindingId,
+    isKebabPopUp,
+    isSavingFailedInIdle,
+    storeErrorTranslationPath,
+    generatedOn,
 
+    DISMISS,
+    KEBAB_POPUP,
+  } = useVcItemController(controller.vc);
   useEffect(() => {
     let error = controller.walletBindingError;
     if (error) {
@@ -45,11 +66,43 @@ export const ViewVcModal: React.FC<ViewVcModalProps> = props => {
     }
   }, [controller.walletBindingError]);
 
+  const headerRight = flow => {
+    return flow === 'downloadedVc' ? (
+      <Row align="space-between">
+        <HelpScreen
+          triggerComponent={
+            <Icon
+              {...testIDProps('help')}
+              accessible={true}
+              name="question"
+              type="font-awesome"
+              size={21}
+              style={Theme.Styles.IconContainer}
+              color={Theme.Colors.Icon}
+            />
+          }
+        />
+        <Pressable onPress={KEBAB_POPUP} accessible={false}>
+          <KebabPopUp
+            icon={SvgImage.kebabIcon()}
+            iconColor={null}
+            vcMetadata={controller.vc.vcMetadata}
+            iconName="dots-three-horizontal"
+            iconType="entypo"
+            isVisible={isKebabPopUp}
+            onDismiss={DISMISS}
+            service={service}
+          />
+        </Pressable>
+      </Row>
+    ) : undefined;
+  };
   return (
     <Modal
       isVisible={props.isVisible}
       testID="idDetailsHeader"
       arrowLeft={true}
+      headerRight={headerRight(props.flow)}
       headerTitle={t('title')}
       onDismiss={props.onDismiss}
       headerElevation={2}>

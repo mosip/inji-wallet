@@ -20,14 +20,18 @@ export const KebabPopUp: React.FC<KebabPopUpProps> = props => {
   const {t} = useTranslation('HomeScreenKebabPopUp');
   return (
     <Column>
-      <Icon
-        {...testIDProps('ellipsis')}
-        accessible={true}
-        name={props.iconName}
-        type={props.iconType}
-        {...(props.iconColor ? props.iconColor : Theme.Colors.helpText)}
-        size={Theme.ICON_SMALL_SIZE}
-      />
+      {props.icon ? (
+        props.icon
+      ) : (
+        <Icon
+          {...testIDProps('ellipsis')}
+          accessible={true}
+          name={props.iconName}
+          type={props.iconType}
+          {...(props.iconColor ? props.iconColor : Theme.Colors.helpText)}
+          size={Theme.ICON_SMALL_SIZE}
+        />
+      )}
       <Overlay
         isVisible={props.isVisible}
         onBackdropPress={props.onDismiss}
@@ -112,4 +116,5 @@ export interface KebabPopUpProps {
   onDismiss: () => void;
   service: ActorRefFrom<typeof ExistingMosipVCItemMachine>;
   iconColor?: any;
+  icon?: any;
 }

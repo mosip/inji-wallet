@@ -26,6 +26,7 @@ import NoInternetConnection from '../../assets/No_Internet_Connection.svg';
 import SomethingWentWrong from '../../assets/Something_Went_Wrong.svg';
 import MagnifierZoom from '../../assets/Magnifier_Zoom.svg';
 import GoogleDriveIcon from '../../assets/google-drive-28.svg';
+import KebabIcon from '../../assets/Detailed_view_kebab_icon.svg';
 import {displayType} from '../../machines/issuersMachine';
 import {IssuerProps} from '../openId4VCI/Issuer';
 import Backup from '../../assets/Backup.svg';
@@ -44,6 +45,10 @@ export class SvgImage {
   static MosipLogo(props: LogoProps) {
     const {width, height} = props;
     return <Logo width={width} height={height} />;
+  }
+
+  static kebabIcon() {
+    return <KebabIcon />;
   }
 
   static walletActivatedIcon() {

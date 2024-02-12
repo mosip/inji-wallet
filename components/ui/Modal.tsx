@@ -69,7 +69,7 @@ export const Modal: React.FC<ModalProps> = props => {
                 )}
               </Column>
             </Row>
-            {props.headerRight ||
+            {props.headerRight != null ||
               props.arrowLeft ||
               (props.showClose && (
                 <Icon
@@ -80,6 +80,7 @@ export const Modal: React.FC<ModalProps> = props => {
                   size={27}
                 />
               ))}
+            {props.headerRight && props.headerRight}
           </View>
         </Row>
         {props.children}
