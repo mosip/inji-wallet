@@ -6,7 +6,7 @@ import {
   selectIsBackUpRestoreFailure,
   selectIsBackUpRestoreSuccess,
   selectErrorReason,
-  selectIsDownloadBackupFileFromCloud,
+  selectIsCheckStorageAvailibility,
 } from '../../machines/backupRestore';
 import {GlobalContext} from '../../shared/GlobalContext';
 import {VcEvents} from '../../machines/VCItemMachine/vc';
@@ -30,9 +30,9 @@ export function useBackupRestoreScreen() {
       backupRestoreService,
       selectIsBackUpRestoreFailure,
     ),
-    isDownloadBackupFileFromCloud: useSelector(
+    isCheckStorageAvailibility: useSelector(
       backupRestoreService,
-      selectIsDownloadBackupFileFromCloud,
+      selectIsCheckStorageAvailibility,
     ),
     BACKUP_RESTORE: () => {
       backupRestoreService.send(BackupRestoreEvents.BACKUP_RESTORE());

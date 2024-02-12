@@ -415,8 +415,8 @@ export function selectIsLoading(state: State) {
 export function selectIsBackingUpSuccess(state: State) {
   return state.matches('backingUp.success');
 }
-export function selectIsFetchDataFromDB(state: State) {
-  return state.matches('backingUp.fetchDataFromDB');
+export function selectIsCheckingDataAvailabilityForBackup(state: State) {
+  return state.matches('backingUp.checkDataAvailabilityForBackup');
 }
 export function selectIsBackingUpFailure(state: State) {
   return state.matches('backingUp.failure');
