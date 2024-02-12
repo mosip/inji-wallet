@@ -667,7 +667,7 @@ export const PurpleTheme = {
       paddingHorizontal: 24,
     },
     newLabel: {
-      backgroundColor: Colors.Orange,
+      backgroundColor: Colors.Purple,
       paddingHorizontal: 5,
       paddingVertical: 4,
       borderRadius: 4,
