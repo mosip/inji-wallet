@@ -325,8 +325,10 @@ export const AddVcModalMachine =
         }),
 
         setIdErrorWrongFormat: model.assign({
-          idError: () =>
-            i18n.t('errors.input.invalidFormat', {ns: 'AddVcModal'}),
+          idError: context =>
+            i18n.t('AddVcModal:errors.input.invalidFormat', {
+              idType: context.idType,
+            }),
         }),
 
         setOtpError: assign({
@@ -405,7 +407,7 @@ export const AddVcModalMachine =
       },
 
       guards: {
-        isEmptyId: ({id}) => !id || !id.length,
+        isEmptyId: ({id}) => id.trim() === '',
 
         isWrongIdFormat: ({idType, id}) => {
           const validIdType =

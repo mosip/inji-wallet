@@ -253,8 +253,8 @@
     "requestingCredential": "நற்சான்றிதழைக் கோருகிறது...",
     "errors": {
       "input": {
-        "empty": "உள்ளீடு காலியாக இருக்க முடியாது",
-        "invalidFormat": "உள்ளீட்டு வடிவம் தவறானது"
+        "empty": "சரியான ஐடியை உள்ளிடவும்",
+        "invalidFormat": "செல்லுபடியாகும் என்பதை உள்ளிடவும் {{idType}}"
       },
       "backend": {
         "invalidOtp": "OTP தவறானது",
@@ -274,8 +274,8 @@
     "retrievingId": "ஐடியை மீட்டெடுக்கிறது",
     "errors": {
       "input": {
-        "empty": "உள்ளீடு காலியாக இருக்க முடியாது",
-        "invalidFormat": "உள்ளீட்டு வடிவம் தவறானது"
+        "empty": "சரியான ஐடியை உள்ளிடவும்",
+        "invalidFormat": "சரியான AID ஐ உள்ளிடவும்"
       },
       "backend": {
         "invalidOtp": "OTP தவறானது",

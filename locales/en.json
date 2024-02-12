@@ -258,8 +258,8 @@
     "requestingCredential": "Requesting credential...",
     "errors": {
       "input": {
-        "empty": "The input cannot be empty",
-        "invalidFormat": "The input format is incorrect"
+        "empty": "Please enter Valid ID",
+        "invalidFormat": "Please enter Valid {{idType}}"
       },
       "backend": {
         "invalidOtp": "OTP is invalid",
@@ -279,8 +279,8 @@
     "retrievingId": "Retrieving ID",
     "errors": {
       "input": {
-        "empty": "Input cannot be empty",
-        "invalidFormat": "The input format is incorrect"
+        "empty": "Please enter Valid ID",
+        "invalidFormat": "Please enter Valid AID"
       },
       "backend": {
         "invalidOtp": "Invalid OTP",
