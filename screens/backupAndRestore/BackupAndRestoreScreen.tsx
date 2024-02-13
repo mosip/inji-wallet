@@ -27,6 +27,9 @@ const BackupAndRestoreScreen: React.FC<BackupAndRestoreProps> = props => {
     if (!props.isLoading && backupController.lastBackupDetails === null) {
       backupController.LAST_BACKUP_DETAILS();
     }
+  }, [props.isLoading, backupController.lastBackupDetails]);
+
+  useEffect(() => {
     if (
       !props.isLoading &&
       !backupController.isLoading &&
@@ -38,7 +41,6 @@ const BackupAndRestoreScreen: React.FC<BackupAndRestoreProps> = props => {
     props.isLoading,
     backupController.isLoading,
     props.shouldTriggerAutoBackup,
-    backupController.lastBackupDetails,
   ]);
 
   const Loading = (
