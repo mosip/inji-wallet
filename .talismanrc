@@ -2,7 +2,7 @@ fileignoreconfig:
   - filename: package.json
     checksum: 4770aabfda162fbc0b9a8c53d7dee483ce29b82c6cd3e17e81e3e628d93dbadc
   - filename: package-lock.json
-    checksum: 4e96631f1fa326fe49fd48c1ab7ab3eae5808376bb28f477d82e7671d335fd0c
+    checksum: 8f9e6bdd4cc0fcbd979455d97d6313e60dda3da1771bef471e53d4efaac9f24d
   - filename: lib/jsonld-signatures/suites/ed255192018/ed25519.ts
     checksum: 493b6e31144116cb612c24d98b97d8adcad5609c0a52c865a6847ced0a0ddc3a
   - filename: components/PasscodeVerify.tsx
@@ -126,7 +126,7 @@ fileignoreconfig:
   - filename: machines/settings.typegen.ts
     checksum: e4ae05822f1b1c23f3f70d03dd46fd8f29ba6b52d40f2f24c121f536fbb5f2c4
   - filename: .env
-    checksum: 399e4dadae9dbd22612f48c8583fd64d6f07e9e1fcb0b57a1a8874b056da4b6c
+    checksum: 387e1fbafb92f58b152b751ec97e8e0e31a699c43e273c61bdedb67f8ee7e453
   - filename: .github/workflows/ui-automation.yml
     checksum: 0b26a5dcb7524ba15d6aaeaf04f2ef94be9d25ef702d9072d6628bcd58e50f36
   - filename: injitest/src/test/java/androidTestCases/PinVcTest.java
@@ -147,6 +147,8 @@ fileignoreconfig:
     checksum: 846117cf13554ffde8544200ca597ceb820363c87bfbe57cffaedadc168b49ce
   - filename: machines/backupAndRestore/backupAndRestore.typegen.ts
     checksum: 509b9660553990841883c54f8986971f21c7315e7450c455bba2766738c58bee
+  - filename: machines/backupAndRestore/backup.ts
+    checksum: 73f68c5f37a763d98fa8422229a262e049260187ea10590f1a5f538f54d17371
   - filename: machines/backupAndRestore/backup.typegen.ts
     checksum: 5d0ff5ea1361c4f1184699e5c96615940366a048c2edf5881ed9c86d824c722b
   - filename: components/BackupAndRestoreAllScreenBanner.tsx
@@ -181,7 +183,9 @@ fileignoreconfig:
   - filename: components/HelpScreen.tsx
     checksum: bbc69143bd37d065bba3800396301db5a0318e8b7ba51ecd49142dda68783a01  
   - filename: machines/backupRestore.ts
-    checksum: e84d409ad0968c8ad189f4fa8553996820f46056dd3b25ab5e60851c2d1f3e03
+    checksum: 8fa9d8b430e2c2c632dfed0d701d375ac3d436a198a9c7acde93ec6507764550
+  - filename: machines/backupAndRestore/backupAndRestoreSetup.ts
+    checksum: 75b07071aef4278f40f16861232b922e5ee8594efc9467984b072966fa7793b8
   - filename: machines/backupAndRestore/backupAndRestoreSetup.typegen.ts
     checksum: 76e81749435d83e4cd222ebb91245d1c6baaab7814d9e7899298ca8ca55c97fb
   - filename: machines/backupAndRestore/backup.ts

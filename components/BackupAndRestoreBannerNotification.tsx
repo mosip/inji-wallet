@@ -54,7 +54,9 @@ export const BackupAndRestoreBannerNotification: React.FC = () => {
         />
       )}
 
-      {backUpController.isBackingUpFailure && backupFailure()}
+      {backUpController.isBackingUpFailure &&
+        !backUpController.isCheckingDataForBackup &&
+        backupFailure()}
 
       {restoreController.isBackUpRestoreSuccess && (
         <BannerNotification
@@ -65,7 +67,9 @@ export const BackupAndRestoreBannerNotification: React.FC = () => {
           testId={'restoreBackupSuccess'}
         />
       )}
-      {restoreController.isBackUpRestoreFailure && restoreFailure()}
+      {restoreController.isBackUpRestoreFailure &&
+        !restoreController.isCheckStorageAvailibility &&
+        restoreFailure()}
     </>
   );
 };

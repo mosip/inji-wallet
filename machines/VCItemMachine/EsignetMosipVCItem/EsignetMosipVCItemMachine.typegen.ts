@@ -60,7 +60,6 @@ export interface Typegen0 {
     services: never;
   };
   eventsCausingActions: {
-    VcUpdated: 'STORE_RESPONSE';
     clearOtp:
       | 'DISMISS'
       | 'done.invoke.vc-item-openid4vci.requestingBindingOtp:invocation[0]';
@@ -85,7 +84,7 @@ export interface Typegen0 {
     sendActivationSuccessEvent:
       | 'done.invoke.vc-item-openid4vci.addingWalletBindingId:invocation[0]'
       | 'done.invoke.vc-item-openid4vci.updatingPrivateKey:invocation[0]';
-    sendVcUpdated: 'STORE_RESPONSE';
+    sendVcUpdated: 'PIN_CARD';
     sendWalletBindingSuccess: 'SHOW_BINDING_STATUS';
     setContext: 'GET_VC_RESPONSE' | 'STORE_RESPONSE';
     setGeneratedOn: 'GET_VC_RESPONSE';
@@ -114,7 +113,6 @@ export interface Typegen0 {
       | 'done.invoke.vc-item-openid4vci.addingWalletBindingId:invocation[0]'
       | 'done.invoke.vc-item-openid4vci.updatingPrivateKey:invocation[0]';
     storeContext:
-      | 'PIN_CARD'
       | 'done.invoke.vc-item-openid4vci.addingWalletBindingId:invocation[0]'
       | 'done.invoke.vc-item-openid4vci.updatingPrivateKey:invocation[0]';
     updatePrivateKey:

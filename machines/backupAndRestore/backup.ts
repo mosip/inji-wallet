@@ -472,6 +472,9 @@ export function selectIsBackingUpSuccess(state: State) {
 export function selectIsFetchingLastBackupDetails(state: State) {
   return state.matches('fetchLastBackupDetails');
 }
+export function selectIsCheckingDataAvailabilityForBackup(state: State) {
+  return state.matches('backingUp.checkDataAvailabilityForBackup');
+}
 export function selectIsBackingUpFailure(state: State) {
   return state.matches('backingUp.failure');
 }
