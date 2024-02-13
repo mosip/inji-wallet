@@ -66,7 +66,7 @@ export interface Typegen0 {
       | 'error.platform.backup.backingUp.checkStorageAvailability:invocation[0]'
       | 'error.platform.backup.backingUp.uploadBackupFile:invocation[0]'
       | 'error.platform.backup.backingUp.zipBackupFile:invocation[0]';
-    sendDataBackupStartEvent: 'FETCH_DATA' | 'STORE_RESPONSE';
+    sendDataBackupStartEvent: 'DATA_BACKUP';
     sendDataBackupSuccessEvent: 'STORE_RESPONSE';
     setBackUpNotPossible:
       | 'STORE_ERROR'

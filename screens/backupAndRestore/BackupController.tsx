@@ -9,6 +9,7 @@ import {
   selectBackupErrorReason,
   lastBackupDetails,
   selectIsLoading,
+  selectIsFetchingLastBackupDetails,
   selectIsCheckingDataAvailabilityForBackup,
 } from '../../machines/backupAndRestore/backup';
 import {GlobalContext} from '../../shared/GlobalContext';
@@ -22,16 +23,20 @@ export function useBackupScreen() {
     isLoading: useSelector(backupService, selectIsLoading),
     backupErrorReason: useSelector(backupService, selectBackupErrorReason),
     isBackingUp: useSelector(backupService, selectIsBackingUp),
+    isFetchingLastBackupDetails: useSelector(
+      backupService,
+      selectIsFetchingLastBackupDetails,
+    ),
     isBackingUpSuccess: useSelector(backupService, selectIsBackingUpSuccess),
     isBackingUpFailure: useSelector(backupService, selectIsBackingUpFailure),
     isBackupInProgress: useSelector(backupService, selectIsBackupInprogress),
+    DATA_BACKUP: (isAutoBackup: boolean) => {
+      backupService.send(BackupEvents.DATA_BACKUP(isAutoBackup));
+    },
     isCheckingDataForBackup: useSelector(
       backupService,
       selectIsCheckingDataAvailabilityForBackup,
     ),
-    DATA_BACKUP: () => {
-      backupService.send(BackupEvents.DATA_BACKUP());
-    },
     LAST_BACKUP_DETAILS: () => {
       backupService?.send(BackupEvents.LAST_BACKUP_DETAILS());
     },
