@@ -407,7 +407,7 @@ export const AddVcModalMachine =
       },
 
       guards: {
-        isEmptyId: ({id}) => id.trim() === '',
+        isEmptyId: ({id}) => id?.trim() === '',
 
         isWrongIdFormat: ({idType, id}) => {
           const validIdType =

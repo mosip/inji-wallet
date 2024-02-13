@@ -352,7 +352,7 @@ export const GetVcModalMachine =
       },
 
       guards: {
-        isEmptyId: ({id}) => id.trim() === '',
+        isEmptyId: ({id}) => id?.trim() === '',
 
         isWrongIdFormat: ({id}) => !/^\d{14,29}$/.test(id),
 
