@@ -16,6 +16,7 @@ export const BannerNotificationContainer: React.FC = () => {
       {WalletBindingSuccess && (
         <View style={{marginTop: 10, marginBottom: 10}}>
           <BannerNotification
+            type="success"
             message={t('MyVcsTab:activated')}
             onClosePress={WalletBindingController.DISMISS}
             key={'activatedVcPopup'}
