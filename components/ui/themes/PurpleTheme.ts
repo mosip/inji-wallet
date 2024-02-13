@@ -944,10 +944,21 @@ export const PurpleTheme = {
       borderBottomWidth: 1,
       borderBottomColor: Colors.Purple,
     },
+    idleVcSearchBarOutline: {
+      alignItems: 'center',
+      borderWidth: 1,
+      borderColor: Colors.Grey5,
+    },
+    vcSearchBarContainer: {
+      alignItems: 'center',
+      borderBottomWidth: 1,
+      borderBottomColor: Colors.Purple,
+    },
     searchIcon: {
       justifyContent: 'center',
       height: Dimensions.get('window').height * 0.055,
       width: Dimensions.get('window').width * 0.1,
+      paddingLeft: 15,
     },
     searchBar: {
       textAlign: I18nManager.isRTL ? 'right' : 'left',

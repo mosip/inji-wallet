@@ -178,8 +178,8 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = props => {
                 <Row
                   style={
                     tapToSearch
-                      ? Theme.SearchBarStyles.searchBarContainer
-                      : Theme.SearchBarStyles.idleSearchBarBottomLine
+                      ? Theme.SearchBarStyles.vcSearchBarContainer
+                      : Theme.SearchBarStyles.idleVcSearchBarOutline
                   }>
                   <SearchBar
                     searchIconTestID="searchIssuerIcon"
@@ -231,6 +231,7 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = props => {
                           isDownloading={controller.inProgressVcDownloads?.has(
                             vcKey,
                           )}
+                          isPinned={vcMetadata.isPinned}
                         />
                       );
                     })

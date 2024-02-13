@@ -940,10 +940,21 @@ export const DefaultTheme = {
       borderBottomWidth: 1,
       borderBottomColor: Colors.Orange,
     },
+    idleVcSearchBarOutline: {
+      alignItems: 'center',
+      borderWidth: 1,
+      borderColor: Colors.Grey5,
+    },
+    vcSearchBarContainer: {
+      alignItems: 'center',
+      borderWidth: 1,
+      borderColor: Colors.Orange,
+    },
     searchIcon: {
       justifyContent: 'center',
       height: Dimensions.get('window').height * 0.055,
       width: Dimensions.get('window').width * 0.1,
+      paddingLeft: 15,
     },
     searchBar: {
       textAlign: I18nManager.isRTL ? 'right' : 'left',

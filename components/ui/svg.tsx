@@ -31,6 +31,7 @@ import Backup from '../../assets/Backup.svg';
 import Restore from '../../assets/Restore.svg';
 import PermissionDenied from '../../assets/Permission_Denied.svg';
 import Info from '../../assets/Info.svg';
+import Search from '../../assets/Search.svg';
 import {
   EsignetMosipVCItemContentProps,
   ExistingMosipVCItemContentProps,
@@ -313,6 +314,9 @@ export class SvgImage {
         {...testIDProps('googleDriveIcon')}
       />
     );
+  }
+  static SearchIcon() {
+    return <Search {...testIDProps('searchIcon')} />;
   }
 }
 
