@@ -189,10 +189,6 @@ export const vcMachine =
             },
             VC_RECEIVED: [
               {
-                actions: 'moveExistingVcToTop',
-                cond: 'hasExistingReceivedVc',
-              },
-              {
                 actions: 'prependToReceivedVcs',
               },
             ],
@@ -400,17 +396,6 @@ export const vcMachine =
             event.vcMetadata,
             ...context.receivedVcs,
           ],
-        }),
-
-        moveExistingVcToTop: model.assign({
-          receivedVcs: (context, event) => {
-            return [
-              event.vcMetadata,
-              ...context.receivedVcs.filter(value =>
-                value.equals(event.vcMetadata),
-              ),
-            ];
-          },
         }),
       },
 
