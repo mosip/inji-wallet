@@ -110,11 +110,11 @@
     "yesConfirm": "نعم ، أؤكد",
     "no": "لا"
   },
-  "RemoveVcWarningOverlay": {
-    "alert": "يرجى تأكيد",
-    "removeWarning": "هل تريد حقًا إزالة البطاقة",
-    "confirm": "يتأكد",
-    "no": "لا"
+   "RemoveVcWarningOverlay": {
+    "alert": "هل تريد الإزالة من المحفظة؟",
+    "removeWarning": "ستقوم بإزالة البطاقة من المحفظة. بمجرد الإزالة، لا يمكن التراجع عن هذا الإجراء.",
+    "confirm": "نعم أؤكد",
+    "cancel": "يلغي"
   },
   "AuthScreen": {
     "header": "هل ترغب في استخدام المقاييس الحيوية لفتح التطبيق؟",

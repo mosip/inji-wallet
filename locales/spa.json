@@ -109,10 +109,10 @@
     "no": "No"
   },
   "RemoveVcWarningOverlay": {
-    "alert": "Por favor confirmar",
-    "removeWarning": "¿Quieres eliminar esta tarjeta?",
+    "alert": "¿Quitar de Wallet?",
+    "removeWarning": "Vas a sacar la tarjeta de la billetera. Una vez eliminada, esta acción no se puede deshacer.",
     "confirm": "Si, lo confirmo",
-    "no": "No"
+    "cancel": "Cancelar"
   },
   "AuthScreen": {
     "header": "Seleccione el método de desbloqueo de la aplicación",

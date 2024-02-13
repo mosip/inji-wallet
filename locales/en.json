@@ -111,10 +111,10 @@
     "no": "No"
   },
   "RemoveVcWarningOverlay": {
-    "alert": "Please Confirm",
-    "removeWarning": "Do you want to remove this card?",
+    "alert": "Remove from Wallet?",
+    "removeWarning": "You're going to remove the card from the wallet. Once removed, this action can not be undone.",
     "confirm": "Yes, I confirm",
-    "no": "No"
+    "cancel": "Cancel"
   },
   "AuthScreen": {
     "header": "Select App Unlock Method",

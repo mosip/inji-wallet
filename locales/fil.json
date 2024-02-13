@@ -110,10 +110,10 @@
     "no": "Hindi"
   },
   "RemoveVcWarningOverlay": {
-    "alert": "Alerto",
-    "removeWarning": "Gusto mo ba talagang tanggalin ang card?",
-    "confirm": "Kumpirmahin",
-    "no": "Hindi"
+    "alert": "Alisin sa Wallet?",
+    "removeWarning": "Aalisin mo ang card sa wallet. Kapag naalis na, hindi na mababawi ang pagkilos na ito.",
+    "confirm": "Oo, kinukumpirma ko",
+    "cancel": "Kanselahin"
   },
   "AuthScreen": {
     "header": "Gusto mo bang gumamit ng biometrics upang i-unlock ang aplikasyon?",

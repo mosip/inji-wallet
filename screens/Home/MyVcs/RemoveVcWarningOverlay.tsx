@@ -31,16 +31,23 @@ export const RemoveVcWarningOverlay: React.FC<
           </Text>
         </Row>
 
-        <Column crossAlign="center" margin="0 0 30 0">
-          <Text testID="alert" weight="semibold">
+        <Column
+          crossAlign="center"
+          margin="0 10 20 10"
+          style={{alignItems: 'center'}}>
+          <Text
+            testID="alert"
+            weight="semibold"
+            style={{marginBottom: 16}}
+            size="large">
             {t('alert')}
           </Text>
 
           <Text
             testID="warningMsg"
             align="center"
-            size="small"
-            weight="semibold"
+            size="regular"
+            weight="regular"
             color={Theme.Colors.GrayText}>
             {t('removeWarning')}
           </Text>
@@ -58,7 +65,7 @@ export const RemoveVcWarningOverlay: React.FC<
           testID="no"
           margin={'10 0 0 0'}
           type="clear"
-          title={t('no')}
+          title={t('cancel')}
           onPress={props.onCancel}
         />
       </Column>

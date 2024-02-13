@@ -207,12 +207,7 @@ export class SvgImage {
   }
 
   static WarningLogo() {
-    return (
-      <WarningLogo
-        color1={Theme.Colors.warningLogoBgColor}
-        color2={Theme.Colors.linearGradientEnd}
-      />
-    );
+    return <WarningLogo />;
   }
 
   static OtpVerificationIcon() {
