@@ -13,39 +13,57 @@ import com.facebook.react.bridge.ReadableMap;
 
 public class ODKIntentModule extends ReactContextBaseJavaModule {
 
-    @Override
-    public String getName() {
-        return "ODKIntentModule";
+  @Override
+  public String getName() {
+    return "ODKIntentModule";
+  }
+
+  ODKIntentModule(ReactApplicationContext context) {
+    super(context);
+  }
+
+  @ReactMethod
+  public void isRequestIntent(Promise promise) {
+    try {
+      Activity activity = getCurrentActivity();
+      Intent intent = activity.getIntent();
+      String action = intent.getAction();
+      if (activity == null || intent == null || action == null) {
+        promise.resolve(false);
+        return;
+      }
+
+      promise.resolve(action.equals("io.mosip.residentapp.odk.REQUEST"));
+
+    } catch (Exception e) {
+      promise.reject("E_UNKNOWN", e.getMessage());
     }
+  }
 
-    ODKIntentModule(ReactApplicationContext context) {
-        super(context);
+  @ReactMethod
+  public void sendBundleResult(ReadableMap vcData) {
+    try {
+      Activity activity = getCurrentActivity();
+      if (activity == null) {
+        throw new Exception("Activity does not exist");
+      }
+
+      Intent result = new Intent();
+      result.setPackage(activity.getPackageName());
+
+      Bundle vcBundle = new Bundle(Arguments.toBundle(vcData));
+      if (vcBundle == null) {
+        throw new Exception("Bundle could not be created");
+      }
+
+      for (String key : vcBundle.keySet()) {
+        result.putExtra(key, vcBundle.getString(key));
+      }
+
+      activity.setResult(Activity.RESULT_OK, result);
+      activity.finish();
+    } catch (Exception e) {
+      e.printStackTrace();
     }
-
-    @ReactMethod
-    public void isRequestIntent(Promise promise) {
-        Activity activity = getCurrentActivity();
-        Intent intent = activity.getIntent();
-
-        String action = intent.getAction();
-        if (action == "io.mosip.residentapp.odk.REQUEST") {
-            promise.resolve(true);
-        } else {
-            promise.resolve(false);
-        }
-    }
-
-    @ReactMethod
-    public void sendBundleResult(ReadableMap vcData) {
-        Activity activity = getCurrentActivity();
-
-        Intent result = new Intent();
-        Bundle vcBundle = new Bundle(Arguments.toBundle(vcData));
-        for (String key : vcBundle.keySet()) {
-            result.putExtra(key, vcBundle.getString(key));
-        }
-
-        activity.setResult(Activity.RESULT_OK, result);
-        activity.finish();
-    }
+  }
 }
