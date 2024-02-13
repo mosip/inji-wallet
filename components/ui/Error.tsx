@@ -65,7 +65,7 @@ export const Error: React.FC<ErrorProps> = props => {
         </View>
         {props.alignActionsOnEnd && (
           <Column fill crossAlign="center" align="flex-end" margin="0 0 30 0">
-            <Row style={{marginHorizontal: 30}}>
+            <Row style={{marginHorizontal: 30, marginBottom: 15}}>
               {props.primaryButtonText && (
                 <Button
                   fill

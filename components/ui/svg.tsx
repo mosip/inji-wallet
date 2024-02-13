@@ -241,8 +241,7 @@ export class SvgImage {
     return (
       <Backup
         {...testIDProps('dataBackupIcon')}
-        color1={Theme.Colors.linearGradientStart}
-        color2={Theme.Colors.linearGradientEnd}
+        color1={Theme.Colors.Icon}
         width={width}
         height={height}
       />
@@ -250,7 +249,9 @@ export class SvgImage {
   }
 
   static RestoreIcon() {
-    return <Restore {...testIDProps('restoreIcon')} />;
+    return (
+      <Restore color1={Theme.Colors.Icon} {...testIDProps('restoreIcon')} />
+    );
   }
 
   static SuccessLogo() {

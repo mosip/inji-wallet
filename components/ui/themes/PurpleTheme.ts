@@ -664,7 +664,7 @@ export const PurpleTheme = {
       paddingHorizontal: 24,
     },
     newLabel: {
-      backgroundColor: Colors.Orange,
+      backgroundColor: Colors.Purple,
       paddingHorizontal: 5,
       paddingVertical: 4,
       borderRadius: 4,
@@ -982,7 +982,6 @@ export const PurpleTheme = {
       borderRadius: 9,
       width: Dimensions.get('window').width * 0.72,
       alignSelf: 'center',
-      margin: 3,
       height: 54,
     },
     float: {
