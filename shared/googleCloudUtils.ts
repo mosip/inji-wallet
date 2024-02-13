@@ -3,7 +3,10 @@ import {
   statusCodes,
 } from '@react-native-google-signin/google-signin';
 import {CloudStorage, CloudStorageScope} from 'react-native-cloud-storage';
-import {GOOGLE_ANDROID_CLIENT_ID} from 'react-native-dotenv';
+import {
+  GOOGLE_ANDROID_CLIENT_ID,
+  BACKUP_AND_RESTORE,
+} from 'react-native-dotenv';
 import {readFile, writeFile} from 'react-native-fs';
 import {BackupDetails} from '../types/backup-and-restore/backup';
 import {bytesToMB} from './commonUtil';
@@ -93,6 +96,11 @@ class Cloud {
   }
   static async isSignedInAlready(): Promise<isSignedInResult> {
     try {
+      if (BACKUP_AND_RESTORE === 'false') {
+        return {
+          isSignedIn: false,
+        };
+      }
       this.configure();
       const isSignedIn = await GoogleSignin.isSignedIn();
       if (!isSignedIn) {
