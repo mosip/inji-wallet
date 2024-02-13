@@ -85,7 +85,10 @@ class Storage {
       let vcKeys = allKeysInDB.filter(key => key.indexOf('VC_') === 0);
       for (let ind in vcKeys) {
         const key = vcKeys[ind];
-        const vc = await Storage.readVCFromFile(key);
+        const vc = await this.getItem(key);
+        if (vc === null) {
+          continue;
+        }
         const decryptedVCData = await decryptJson(encryptionKey, vc);
         const deactivatedVC =
           removeWalletBindingDataBeforeBackup(decryptedVCData);
