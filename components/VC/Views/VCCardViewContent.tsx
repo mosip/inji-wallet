@@ -18,6 +18,7 @@ import {
 import VerifiedIcon from '../../VerifiedIcon';
 import {VCItemFieldValue} from '../common/VCItemField';
 import {useTranslation} from 'react-i18next';
+import {WalletBinding} from '../../../screens/Home/MyVcs/WalletBinding';
 
 export const VCCardViewContent: React.FC<
   ExistingMosipVCItemContentProps | EsignetMosipVCItemContentProps
@@ -105,6 +106,12 @@ export const VCCardViewContent: React.FC<
           <Column>{props.credential ? selectableOrCheck : null}</Column>
         </Row>
         <Row align={'space-between'} margin="0 8 5 8"></Row>
+        <WalletBinding
+          label={t('offlineAuthenticationDisabled!')}
+          content={t('offlineAuthDisabledMessage')}
+          service={props.service}
+          vcMetadata={props.vcMetadata}
+        />
       </Column>
     </ImageBackground>
   );

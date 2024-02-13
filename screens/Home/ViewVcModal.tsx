@@ -24,27 +24,15 @@ import testIDProps from '../../shared/commonUtil';
 import {HelpScreen} from '../../components/HelpScreen';
 import {Pressable} from 'react-native';
 import {KebabPopUp} from '../../components/KebabPopUp';
-import {useVcItemController} from '../../components/VC/MosipVCItem/VcItemController';
 import {SvgImage} from '../../components/ui/svg';
 import {VCMetadata} from '../../shared/VCMetadata';
+import {WalletBinding} from './MyVcs/WalletBinding';
+import {ExistingMosipVCItemEvents} from '../../machines/VCItemMachine/ExistingMosipVCItem/ExistingMosipVCItemMachine';
 
 export const ViewVcModal: React.FC<ViewVcModalProps> = props => {
   const {t} = useTranslation('ViewVcModal');
   const controller = useViewVcModal(props);
-  console.log('vc:::', controller.vc.vcMetadata);
-  let {
-    service,
-    context,
-    verifiableCredential,
-    emptyWalletBindingId,
-    isKebabPopUp,
-    isSavingFailedInIdle,
-    storeErrorTranslationPath,
-    generatedOn,
 
-    DISMISS,
-    KEBAB_POPUP,
-  } = useVcItemController(controller.vc);
   useEffect(() => {
     let error = controller.walletBindingError;
     if (error) {
@@ -83,16 +71,25 @@ export const ViewVcModal: React.FC<ViewVcModalProps> = props => {
             />
           }
         />
-        <Pressable onPress={KEBAB_POPUP} accessible={false}>
+        <Pressable
+          onPress={() =>
+            props.vcItemActor.send(ExistingMosipVCItemEvents.KEBAB_POPUP())
+          }
+          accessible={false}>
           <KebabPopUp
             icon={SvgImage.kebabIcon()}
             iconColor={null}
             vcMetadata={VCMetadata.fromVC(controller.vc.vcMetadata)}
             iconName="dots-three-horizontal"
             iconType="entypo"
-            isVisible={isKebabPopUp}
-            onDismiss={DISMISS}
-            service={service}
+            isVisible={
+              props.vcItemActor.getSnapshot()?.context
+                .isMachineInKebabPopupState
+            }
+            onDismiss={() =>
+              props.vcItemActor.send(ExistingMosipVCItemEvents.DISMISS())
+            }
+            service={props.vcItemActor}
           />
         </Pressable>
       </Row>
@@ -184,6 +181,13 @@ export const ViewVcModal: React.FC<ViewVcModalProps> = props => {
       )}
 
       {controller.toastVisible && <ToastItem message={controller.message} />}
+
+      <WalletBinding
+        label={t('offlineAuthenticationDisabled!')}
+        content={t('offlineAuthDisabledMessage')}
+        service={props.vcItemActor}
+        vcMetadata={controller.vc.vcMetadata}
+      />
     </Modal>
   );
 };

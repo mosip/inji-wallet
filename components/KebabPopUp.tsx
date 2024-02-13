@@ -2,8 +2,8 @@ import React from 'react';
 import {Icon, ListItem, Overlay} from 'react-native-elements';
 import {Theme} from '../components/ui/styleUtils';
 import {Column, Row, Text} from '../components/ui';
-import {WalletBinding} from '../screens/Home/MyVcs/WalletBinding';
-import {Pressable, View} from 'react-native';
+import {ActivationStatus} from '../screens/Home/MyVcs/WalletBinding';
+import {View} from 'react-native';
 import {useKebabPopUp} from './KebabPopUpController';
 import {ActorRefFrom} from 'xstate';
 import {ExistingMosipVCItemMachine} from '../machines/VCItemMachine/ExistingMosipVCItem/ExistingMosipVCItemMachine';
@@ -71,11 +71,11 @@ export const KebabPopUp: React.FC<KebabPopUpProps> = props => {
             label={t('shareWithSelfie')}
             service={props.service}
           />
-          <WalletBinding
-            label={t('offlineAuthenticationDisabled!')}
-            content={t('offlineAuthDisabledMessage')}
-            service={props.service}
-            vcMetadata={props.vcMetadata}
+
+          <ActivationStatus
+            vcMetadata={props?.vcMetadata}
+            emptyWalletBindingId={controller.emptyWalletBindingId}
+            ADD_WALLET_BINDING_ID={controller.ADD_WALLET_BINDING_ID}
           />
 
           <HistoryTab
@@ -112,7 +112,7 @@ export interface KebabPopUpProps {
   iconName: string;
   iconType?: string;
   vcMetadata: VCMetadata;
-  isVisible: boolean;
+  isVisible?: boolean;
   onDismiss: () => void;
   service: ActorRefFrom<typeof ExistingMosipVCItemMachine>;
   iconColor?: any;

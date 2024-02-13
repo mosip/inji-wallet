@@ -304,6 +304,7 @@ export const ExistingMosipVCItemMachine =
         },
         kebabPopUp: {
           entry: assign({isMachineInKebabPopupState: () => true}),
+          exit: assign({isMachineInKebabPopupState: () => false}),
           on: {
             DISMISS: {
               actions: assign({
@@ -316,23 +317,13 @@ export const ExistingMosipVCItemMachine =
             },
             PIN_CARD: {
               target: '#vc-item.pinCard',
-              actions: [
-                'setPinCard',
-                assign({
-                  isMachineInKebabPopupState: () => false,
-                }),
-              ],
+              actions: 'setPinCard',
             },
             SHOW_ACTIVITY: {
               target: '#vc-item.kebabPopUp.showActivities',
             },
             REMOVE: {
-              actions: [
-                'setVcKey',
-                assign({
-                  isMachineInKebabPopupState: () => false,
-                }),
-              ],
+              actions: 'setVcKey',
               target: '#vc-item.kebabPopUp.removeWallet',
             },
           },
@@ -341,7 +332,7 @@ export const ExistingMosipVCItemMachine =
             idle: {},
             showActivities: {
               on: {
-                DISMISS: '#vc-item.kebabPopUp',
+                DISMISS: '#vc-item',
               },
             },
             removeWallet: {
