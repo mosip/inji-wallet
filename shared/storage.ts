@@ -79,21 +79,28 @@ class Storage {
         myVcMetadata.isPinned = false;
       });
 
-      completeBackupData['dataFromDB'] = dataFromDB;
       completeBackupData['VC_Records'] = {};
 
       let vcKeys = allKeysInDB.filter(key => key.indexOf('VC_') === 0);
       for (let ind in vcKeys) {
         const key = vcKeys[ind];
-        const vc = await this.getItem(key);
-        if (vc === null) {
-          continue;
+        const vc = await this.getItem(key, encryptionKey);
+
+        if (vc) {
+          const decryptedVCData = await decryptJson(encryptionKey, vc);
+          const deactivatedVC =
+            removeWalletBindingDataBeforeBackup(decryptedVCData);
+          completeBackupData['VC_Records'][key] = deactivatedVC;
+        } else {
+          dataFromDB.myVCs = dataFromDB.myVCs.filter(vcMetaData => {
+            return (
+              VCMetadata.fromVcMetadataString(vcMetaData).getVcKey() !== key
+            );
+          });
         }
-        const decryptedVCData = await decryptJson(encryptionKey, vc);
-        const deactivatedVC =
-          removeWalletBindingDataBeforeBackup(decryptedVCData);
-        completeBackupData['VC_Records'][key] = deactivatedVC;
       }
+      completeBackupData['dataFromDB'] = dataFromDB;
+
       return completeBackupData;
     } catch (error) {
       sendErrorEvent(
@@ -104,6 +111,7 @@ class Storage {
         ),
       );
       console.error('exporting data is failed due to this error:', error);
+      throw error;
     }
   };
 
