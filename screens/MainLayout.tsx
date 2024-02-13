@@ -1,4 +1,4 @@
-import React, {useContext} from 'react';
+import React, {useContext, useEffect} from 'react';
 import {
   BottomTabNavigationOptions,
   createBottomTabNavigator,
@@ -14,6 +14,8 @@ import {SettingScreen} from './Settings/SettingScreen';
 import {HelpScreen} from '../components/HelpScreen';
 
 import {GlobalContext} from '../shared/GlobalContext';
+import {useSelector} from '@xstate/react';
+import {selectIsRequestIntent} from '../machines/app';
 import {ScanEvents} from '../machines/bleShare/scan/scanMachine';
 import testIDProps from '../shared/commonUtil';
 import {SvgImage} from '../components/ui/svg';
@@ -32,6 +34,13 @@ export const MainLayout: React.FC<
     tabBarActiveTintColor: Theme.Colors.IconBg,
     ...Theme.BottomTabBarStyle,
   };
+
+  const isRequestIntent = useSelector(appService, selectIsRequestIntent);
+  useEffect(() => {
+    if (isRequestIntent) {
+      props.navigation.navigate('Request');
+    }
+  }, [isRequestIntent]);
 
   return (
     <Navigator

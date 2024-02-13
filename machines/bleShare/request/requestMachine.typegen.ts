@@ -89,6 +89,7 @@ export interface Typegen0 {
     sendVCReceivingDisconnectedEvent: 'DISCONNECT';
     sendVCReceivingStartEvent: 'CONNECTED';
     sendVCReceivingTerminatedEvent: 'CANCEL';
+    sendVcDataIntent: 'STORE_RESPONSE';
     sendVcReceived: 'STORE_RESPONSE';
     setBleError: 'BLE_ERROR';
     setIncomingVc: 'VC_RECEIVED';
@@ -109,6 +110,7 @@ export interface Typegen0 {
   eventsCausingGuards: {
     hasExistingVc: 'VC_RESPONSE';
     isMinimumStorageLimitReached: 'done.invoke.request.checkStorage:invocation[0]';
+    isRequestIntent: 'STORE_RESPONSE';
   };
   eventsCausingServices: {
     advertiseDevice:
@@ -147,6 +149,7 @@ export interface Typegen0 {
     | 'nearByDevicesPermissionDenied'
     | 'reviewing'
     | 'reviewing.accepted'
+    | 'reviewing.acceptedIntentShare'
     | 'reviewing.accepting'
     | 'reviewing.accepting.mergingIncomingVc'
     | 'reviewing.accepting.prependingReceivedVc'
@@ -175,6 +178,7 @@ export interface Typegen0 {
         checkingBluetoothService?: 'checking' | 'enabled' | 'requesting';
         reviewing?:
           | 'accepted'
+          | 'acceptedIntentShare'
           | 'accepting'
           | 'displayingIncomingVC'
           | 'idle'
