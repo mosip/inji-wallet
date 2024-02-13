@@ -29,6 +29,7 @@ import {IssuerProps} from '../openId4VCI/Issuer';
 import Backup from '../../assets/Backup.svg';
 import Restore from '../../assets/Restore.svg';
 import PermissionDenied from '../../assets/Permission_Denied.svg';
+import Info from '../../assets/Info.svg';
 import {
   EsignetMosipVCItemContentProps,
   ExistingMosipVCItemContentProps,
@@ -277,6 +278,17 @@ export class SvgImage {
 
   static MagnifierZoom() {
     return <MagnifierZoom />;
+  }
+
+  static infoIcon() {
+    return (
+      <Info
+        color1={Theme.Colors.linearGradientStart}
+        color2={Theme.Colors.linearGradientEnd}
+        style={Theme.Styles.pinIcon}
+        {...testIDProps('infoIcon')}
+      />
+    );
   }
 
   static GoogleDriveIcon(width, height) {

@@ -163,6 +163,7 @@
     "title": "Magdagdag ng bagong card",
     "description": "Mangyaring piliin ang iyong gustong tagabigay mula sa mga opsyon sa ibaba upang magdagdag ng bagong card.",
     "searchByIssuersName": "Maghanap ayon sa pangalan ng Nag-isyu",
+    "help": "Tulong?",
     "loaders": {
       "loading": "Naglo-load...",
       "subTitle": {
