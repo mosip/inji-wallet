@@ -64,6 +64,7 @@ export interface Typegen0 {
       | 'DISMISS'
       | 'done.invoke.vc-item-openid4vci.requestingBindingOtp:invocation[0]';
     clearTransactionId: 'DISMISS';
+    closeViewVcModal: 'STORE_RESPONSE';
     logVCremoved: 'STORE_RESPONSE';
     logWalletBindingFailure:
       | 'error.platform.vc-item-openid4vci.addKeyPair:invocation[0]'

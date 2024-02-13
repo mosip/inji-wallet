@@ -41,6 +41,7 @@ import {
 import {TelemetryConstants} from '../../../shared/telemetry/TelemetryConstants';
 
 import {API_URLS} from '../../../shared/api';
+import {getHomeMachineService} from '../../../screens/Home/HomeScreenController';
 
 const model = createModel(
   {
@@ -357,7 +358,7 @@ export const ExistingMosipVCItemMachine =
               entry: 'removeVcItem',
               on: {
                 STORE_RESPONSE: {
-                  actions: ['refreshMyVcs', 'logVCremoved'],
+                  actions: ['closeViewVcModal', 'refreshMyVcs', 'logVCremoved'],
                   target: '#vc-item',
                 },
               },
@@ -1186,6 +1187,10 @@ export const ExistingMosipVCItemMachine =
           },
           {to: context => context.serviceRefs.store},
         ),
+
+        closeViewVcModal: send('DISMISS_MODAL', {
+          to: () => getHomeMachineService(),
+        }),
 
         removeTamperedVcItem: send(
           _context => {

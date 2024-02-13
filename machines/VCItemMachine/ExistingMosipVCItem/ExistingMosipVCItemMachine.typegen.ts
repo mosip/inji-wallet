@@ -157,6 +157,7 @@ export interface Typegen0 {
       | 'STORE_RESPONSE'
       | 'done.invoke.vc-item.verifyingCredential:invocation[0]'
       | 'error.platform.vc-item.verifyingCredential:invocation[0]';
+    closeViewVcModal: 'STORE_RESPONSE';
     incrementDownloadCounter:
       | 'POLL'
       | 'done.invoke.vc-item.checkingServerData.loadDownloadLimitConfig:invocation[0]';

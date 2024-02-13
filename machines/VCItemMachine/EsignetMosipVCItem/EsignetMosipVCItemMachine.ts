@@ -34,6 +34,7 @@ import {
 import {TelemetryConstants} from '../../../shared/telemetry/TelemetryConstants';
 
 import {API_URLS} from '../../../shared/api';
+import {getHomeMachineService} from '../../../screens/Home/HomeScreenController';
 
 const model = createModel(
   {
@@ -408,7 +409,7 @@ export const EsignetMosipVCItemMachine = model.createMachine(
             entry: 'removeVcItem',
             on: {
               STORE_RESPONSE: {
-                actions: ['removedVc', 'logVCremoved'],
+                actions: ['closeViewVcModal', 'removedVc', 'logVCremoved'],
                 target: '#vc-item-openid4vci',
               },
             },
@@ -704,6 +705,11 @@ export const EsignetMosipVCItemMachine = model.createMachine(
         },
         {to: context => context.serviceRefs.store},
       ),
+
+      closeViewVcModal: send('DISMISS_MODAL', {
+        to: () => getHomeMachineService(),
+      }),
+
       setVcKey: model.assign({
         vcMetadata: (_, event) => event.vcMetadata,
       }),
