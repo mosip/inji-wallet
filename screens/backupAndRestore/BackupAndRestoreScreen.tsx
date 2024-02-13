@@ -113,7 +113,7 @@ const BackupAndRestoreScreen: React.FC<BackupAndRestoreProps> = props => {
             testID="backup"
             type="gradient"
             title={t('backup')}
-            onPress={backupController.MANUAL_DATA_BACKUP}
+            onPress={() => backupController.DATA_BACKUP(false)}
             styles={{...Theme.MessageOverlayStyles.button, flex: 1}}
           />
         )}

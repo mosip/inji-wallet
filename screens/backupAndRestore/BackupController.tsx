@@ -29,9 +29,6 @@ export function useBackupScreen() {
     isBackingUpSuccess: useSelector(backupService, selectIsBackingUpSuccess),
     isBackingUpFailure: useSelector(backupService, selectIsBackingUpFailure),
     isBackupInProgress: useSelector(backupService, selectIsBackupInprogress),
-    MANUAL_DATA_BACKUP: () => {
-      backupService.send(BackupEvents.DATA_BACKUP(false));
-    },
     DATA_BACKUP: (isAutoBackup: boolean) => {
       backupService.send(BackupEvents.DATA_BACKUP(isAutoBackup));
     },

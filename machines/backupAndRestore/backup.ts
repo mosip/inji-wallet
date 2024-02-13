@@ -97,11 +97,7 @@ export const backupMachine = model.createMachine(
             invoke: {
               src: 'getLastBackupDetailsFromCloud',
               onDone: {
-                actions: [
-                  'unsetIsLoading',
-                  'setLastBackupDetails',
-                  //'storeLastBackupDetails',
-                ],
+                actions: ['unsetIsLoading', 'setLastBackupDetails'],
                 target: '#backup.init',
               },
               onError: {
