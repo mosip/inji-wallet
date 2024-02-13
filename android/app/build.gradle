@@ -95,6 +95,19 @@ android {
     ndkVersion rootProject.ext.ndkVersion
     compileSdkVersion rootProject.ext.compileSdkVersion
 
+    // Execution failed for task ':app:mergeResidentappDebugNativeLibs'
+    // Build fails in Windows due to duplicate library paths from these two packages:
+    //   - expo-modules-core
+    //   - react-native-mmkv-storage
+    if (System.properties['os.name'].toLowerCase().contains('windows')) {
+        packagingOptions {
+            pickFirst 'lib/arm64-v8a/liblog.so'
+            pickFirst 'lib/armeabi-v7a/liblog.so'
+            pickFirst 'lib/x86/liblog.so'
+            pickFirst 'lib/x86_64/liblog.so'
+        }
+    }
+
     ext {
         APP_NAME= "@string/app_name"
     }
