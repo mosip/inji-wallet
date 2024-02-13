@@ -26,6 +26,7 @@ import {getVCsOrderedByPinStatus} from '../../shared/Utils';
 import {SvgImage} from '../../components/ui/svg';
 import {SearchBar} from '../../components/ui/SearchBar';
 import {Icon} from 'react-native-elements';
+import {VCMetadata} from '../../shared/VCMetadata';
 
 export const MyVcsTab: React.FC<HomeScreenTabProps> = props => {
   const {t} = useTranslation('MyVcsTab');
@@ -34,9 +35,14 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = props => {
   const vcMetadataOrderedByPinStatus = getVCsOrderedByPinStatus(
     controller.vcMetadatas,
   );
+  const vcData = controller.vcData;
   const [tapToSearch, setTapToSearch] = useState(false);
   const [clearSearchIcon, setClearSearchIcon] = useState(false);
   const [search, setSearch] = useState('');
+  const [filteredSearchData, setFilteredSearchData] = useState<
+    Array<Record<string, VCMetadata>>
+  >([]);
+  const [showPinVc, setShowPinVc] = useState(true);
 
   const getId = () => {
     controller.DISMISS();
@@ -49,16 +55,48 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = props => {
 
   const onFocusSearch = () => {
     setTapToSearch(true);
+    setShowPinVc(false);
   };
 
   const clearSearchText = () => {
     filterVcs('');
     setClearSearchIcon(false);
+    setShowPinVc(true);
   };
 
   const filterVcs = (searchText: string) => {
-    // Here you can apply the filtering item logice.
-    //For reference check search bar component and clear icon code in issuersScreen.tsx
+    setSearch(searchText);
+    setFilteredSearchData([]);
+    const searchTextLower = searchText.toLowerCase();
+    const filteredData: Array<Record<string, VCMetadata>> = [];
+
+    for (const [key, value] of Object.entries(vcData)) {
+      const searchTextFound = searchNestedObject(searchTextLower, value);
+      if (searchTextFound) {
+        filteredData.push({[key]: value['vcMetadata']});
+      }
+    }
+    setFilteredSearchData(filteredData);
+
+    if (searchText !== '') {
+      setClearSearchIcon(true);
+      setShowPinVc(false);
+    } else {
+      setClearSearchIcon(false);
+    }
+  };
+
+  const searchNestedObject = (searchText: string, obj: any): boolean => {
+    for (const val of Object.values(obj)) {
+      if (typeof val === 'string' && val.toLowerCase().includes(searchText)) {
+        return true;
+      } else if (typeof val === 'object' && val !== null) {
+        if (searchNestedObject(searchText, val)) {
+          return true;
+        }
+      }
+    }
+    return false;
   };
 
   useEffect(() => {
@@ -134,10 +172,9 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = props => {
             <React.Fragment>
               <Row
                 style={
-                  // tapToSearch
-                  //   ? Theme.SearchBarStyles.searchBarContainer
-                  //   : Theme.SearchBarStyles.idleSearchBarBottomLine
-                  {backgroundColor: Theme.Colors.whiteBackgroundColor}
+                  tapToSearch
+                    ? Theme.SearchBarStyles.searchBarContainer
+                    : Theme.SearchBarStyles.idleSearchBarBottomLine
                 }>
                 <SearchBar
                   searchIconTestID="searchIssuerIcon"
@@ -171,20 +208,40 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = props => {
                     onRefresh={controller.REFRESH}
                   />
                 }>
-                {vcMetadataOrderedByPinStatus.map(vcMetadata => {
-                  return (
-                    <VcItemContainer
-                      key={vcMetadata.getVcKey()}
-                      vcMetadata={vcMetadata}
-                      margin="0 2 8 2"
-                      onPress={controller.VIEW_VC}
-                      isDownloading={controller.inProgressVcDownloads?.has(
-                        vcMetadata.getVcKey(),
-                      )}
-                      isPinned={vcMetadata.isPinned}
-                    />
-                  );
-                })}
+                {showPinVc &&
+                  vcMetadataOrderedByPinStatus.map(vcMetadata => {
+                    return (
+                      <VcItemContainer
+                        key={vcMetadata.getVcKey()}
+                        vcMetadata={vcMetadata}
+                        margin="0 2 8 2"
+                        onPress={controller.VIEW_VC}
+                        isDownloading={controller.inProgressVcDownloads?.has(
+                          vcMetadata.getVcKey(),
+                        )}
+                        isPinned={vcMetadata.isPinned}
+                      />
+                    );
+                  })}
+
+                {filteredSearchData.length > 0 &&
+                  !showPinVc &&
+                  filteredSearchData.map(vcMetadataObj => {
+                    const [vcKey, vcMetadata] =
+                      Object.entries(vcMetadataObj)[0];
+                    return (
+                      <VcItemContainer
+                        key={vcKey}
+                        vcMetadata={vcMetadata}
+                        margin="0 2 8 2"
+                        onPress={controller.VIEW_VC}
+                        isDownloading={controller.inProgressVcDownloads?.has(
+                          vcKey,
+                        )}
+                        isPinned={vcMetadata.isPinned}
+                      />
+                    );
+                  })}
               </Column>
             </React.Fragment>
           )}
