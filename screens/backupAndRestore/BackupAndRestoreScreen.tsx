@@ -24,10 +24,22 @@ const BackupAndRestoreScreen: React.FC<BackupAndRestoreProps> = props => {
   const {t} = useTranslation('BackupAndRestore');
 
   useEffect(() => {
-    if (!props.isLoading) {
+    if (!props.isLoading && backupController.lastBackupDetails === null) {
       backupController.LAST_BACKUP_DETAILS();
     }
-  }, [props.isLoading]);
+    if (
+      !props.isLoading &&
+      !backupController.isLoading &&
+      props.shouldTriggerAutoBackup
+    ) {
+      backupController.DATA_BACKUP(true);
+    }
+  }, [
+    props.isLoading,
+    backupController.isLoading,
+    props.shouldTriggerAutoBackup,
+    backupController.lastBackupDetails,
+  ]);
 
   const Loading = (
     <Centered fill>
@@ -101,7 +113,7 @@ const BackupAndRestoreScreen: React.FC<BackupAndRestoreProps> = props => {
             testID="backup"
             type="gradient"
             title={t('backup')}
-            onPress={backupController.DATA_BACKUP}
+            onPress={() => backupController.DATA_BACKUP(false)}
             styles={{...Theme.MessageOverlayStyles.button, flex: 1}}
           />
         )}
@@ -217,4 +229,5 @@ interface BackupAndRestoreProps {
   profileInfo: ProfileInfo | undefined;
   isLoading: boolean;
   onBackPress: () => void;
+  shouldTriggerAutoBackup: boolean;
 }

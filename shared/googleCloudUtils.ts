@@ -3,7 +3,10 @@ import {
   statusCodes,
 } from '@react-native-google-signin/google-signin';
 import {CloudStorage, CloudStorageScope} from 'react-native-cloud-storage';
-import {GOOGLE_ANDROID_CLIENT_ID} from 'react-native-dotenv';
+import {
+  GOOGLE_ANDROID_CLIENT_ID,
+  BACKUP_AND_RESTORE,
+} from 'react-native-dotenv';
 import {readFile, writeFile} from 'react-native-fs';
 import {BackupDetails} from '../types/backup-and-restore/backup';
 import {bytesToMB} from './commonUtil';
@@ -17,6 +20,7 @@ class Cloud {
     SUCCESS: 'SUCCESS',
     FAILURE: 'FAILURE',
   };
+  static timeout = 10000;
   private static readonly requiredScopes = [
     'https://www.googleapis.com/auth/drive.appdata',
     'https://www.googleapis.com/auth/drive.file',
@@ -92,6 +96,11 @@ class Cloud {
   }
   static async isSignedInAlready(): Promise<isSignedInResult> {
     try {
+      if (BACKUP_AND_RESTORE === 'false') {
+        return {
+          isSignedIn: false,
+        };
+      }
       this.configure();
       const isSignedIn = await GoogleSignin.isSignedIn();
       if (!isSignedIn) {
@@ -129,6 +138,7 @@ class Cloud {
   static async lastBackupDetails(
     cloudFileName?: string | undefined,
   ): Promise<BackupDetails> {
+    CloudStorage.setTimeout(this.timeout);
     const tokenResult = await Cloud.getAccessToken();
     CloudStorage.setGoogleDriveAccessToken(tokenResult);
     if (!cloudFileName) {
@@ -181,6 +191,7 @@ class Cloud {
     let uploadError: string | undefined = undefined;
 
     try {
+      CloudStorage.setTimeout(this.timeout);
       const tokenResult = await Cloud.getAccessToken();
       CloudStorage.setGoogleDriveAccessToken(tokenResult);
 
@@ -230,6 +241,7 @@ class Cloud {
 
   static async downloadLatestBackup(): Promise<string | null> {
     try {
+      CloudStorage.setTimeout(this.timeout);
       const tokenResult = await Cloud.getAccessToken();
       CloudStorage.setGoogleDriveAccessToken(tokenResult);
       const allFiles = await CloudStorage.readdir(
