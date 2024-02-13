@@ -218,24 +218,24 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = props => {
                     );
                   })}
 
-                {filteredSearchData.length > 0 &&
-                  !showPinVc &&
-                  filteredSearchData.map(vcMetadataObj => {
-                    const [vcKey, vcMetadata] =
-                      Object.entries(vcMetadataObj)[0];
-                    return (
-                      <VcItemContainer
-                        key={vcKey}
-                        vcMetadata={vcMetadata}
-                        margin="0 2 8 2"
-                        onPress={controller.VIEW_VC}
-                        isDownloading={controller.inProgressVcDownloads?.has(
-                          vcKey,
-                        )}
-                        isPinned={vcMetadata.isPinned}
-                      />
-                    );
-                  })}
+                {filteredSearchData.length > 0 && !showPinVc
+                  ? filteredSearchData.map(vcMetadataObj => {
+                      const [vcKey, vcMetadata] =
+                        Object.entries(vcMetadataObj)[0];
+                      return (
+                        <VcItemContainer
+                          key={vcKey}
+                          vcMetadata={vcMetadata}
+                          margin="0 2 8 2"
+                          onPress={controller.VIEW_VC}
+                          isDownloading={controller.inProgressVcDownloads?.has(
+                            vcKey,
+                          )}
+                        />
+                      );
+                    })
+                  : filteredSearchData.length === 0 &&
+                    !showPinVc && <Text>No vc found</Text>}
               </Column>
             </React.Fragment>
           )}

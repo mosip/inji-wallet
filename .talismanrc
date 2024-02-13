@@ -193,6 +193,6 @@ fileignoreconfig:
   - filename: machines/backupAndRestore/backupAndRestoreSetup.ts
     checksum: 397f2076504f851a981b0deff6eeac30041c775ee1c57b51e328fc09d52ef43e
   - filename: screens/Home/MyVcsTab.tsx
-    checksum: c96d1453c625b270adf67ee9bb6b70defe62e7d3851c17c6a681fbd4879c873a
+    checksum: 86d0b9b83af42641f7fdd5c7aebf4bc2b0b217dc8f83013d23f9c04eefac4395
     version: ""
 
