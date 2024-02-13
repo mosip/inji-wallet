@@ -24,7 +24,6 @@ export interface Typegen0 {
       | 'xstate.init';
     loadReceivedVcs: 'REFRESH_RECEIVED_VCS' | 'STORE_RESPONSE';
     logTamperedVCsremoved: 'REMOVE_TAMPERED_VCS';
-    moveExistingVcToTop: 'VC_RECEIVED';
     prependToMyVcs: 'VC_ADDED';
     prependToReceivedVcs: 'VC_RECEIVED';
     removeDownloadFailedVcsFromStorage: 'DELETE_VC';
@@ -48,9 +47,7 @@ export interface Typegen0 {
     updateMyVcs: 'VC_METADATA_UPDATED';
   };
   eventsCausingDelays: {};
-  eventsCausingGuards: {
-    hasExistingReceivedVc: 'VC_RECEIVED';
-  };
+  eventsCausingGuards: {};
   eventsCausingServices: {};
   matchesStates:
     | 'deletingFailedVcs'
