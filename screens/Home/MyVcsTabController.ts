@@ -10,6 +10,7 @@ import {
   selectInProgressVcDownloads,
   selectIsTampered,
   selectDownloadingFailedVcs,
+  selectMyVcs,
 } from '../../machines/VCItemMachine/vc';
 import {
   selectWalletBindingError,
@@ -63,6 +64,8 @@ export function useMyVcsTab(props: HomeScreenTabProps) {
     isTampered: useSelector(vcService, selectIsTampered),
 
     downloadFailedVcs: useSelector(vcService, selectDownloadingFailedVcs),
+
+    vcData: useSelector(vcService, selectMyVcs),
 
     SET_STORE_VC_ITEM_STATUS: () =>
       service.send(MyVcsTabEvents.SET_STORE_VC_ITEM_STATUS()),
