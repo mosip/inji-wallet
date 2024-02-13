@@ -506,7 +506,7 @@
         },
         "TUV_UNK_001":{
           "title": "¡Ocurrió un error!",
-          "message": "Debido a un error técnico, no pudimos compartir la tarjeta con la persona que confía. Inténtalo de nuevo."
+          "message": "Debido a un error técnico, no pudimos recibir la tarjeta. Inténtalo de nuevo."
         },
         "TVW_UNK_001":{
           "title": "¡La conexión falló!",
@@ -522,15 +522,15 @@
         },
         "TVV_UNK_001":{
           "title": "¡Ocurrió un error!",
-          "message": "Se produjo un error inesperado al procesar los datos recibidos. Verifique su conexión y solicite a la billetera que reenvíe la tarjeta."
+          "message": "Se produjo un error inesperado al procesar los datos recibidos. Verifique su conexión y solicite al remitente que reenvíe la tarjeta."
         },
         "TVV_UNK_002":{
           "title": "¡Ocurrió un error!",
-          "message": "Se produjo un error inesperado al procesar los datos recibidos. Verifique su conexión y solicite a la billetera que reenvíe la tarjeta."
+          "message": "Se produjo un error inesperado al procesar los datos recibidos. Verifique su conexión y solicite al remitente que reenvíe la tarjeta."
         },
         "TVV_UNK_003":{
           "title": "¡Ocurrió un error!",
-          "message": "Se produjo un error inesperado al procesar los datos recibidos. Verifique su conexión y solicite a la billetera que reenvíe la tarjeta."
+          "message": "Se produjo un error inesperado al procesar los datos recibidos. Verifique su conexión y solicite al remitente que reenvíe la tarjeta."
         }
       }
     },

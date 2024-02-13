@@ -540,7 +540,7 @@
         },
         "TUV_UNK_001":{
           "title": "An Error Occured!",
-          "message": "Due to technical error, we were unable to share the card with the relying party. Please try again."
+          "message": "Due to technical error, we were unable to receive the card. Please try again"
         },
         "TVW_UNK_001":{
           "title": "Connection Failed!",
@@ -556,15 +556,15 @@
         },
         "TVV_UNK_001":{
           "title": "An Error Occured!",
-          "message": "An unexpected error occurred while processing the received data. Please check your connection and ask the wallet to resend the card."
+          "message": "An unexpected error occurred while processing the received data. Please check your connection and request the sender to resend the card."
         },
         "TVV_UNK_002":{
           "title": "An Error Occured!",
-          "message": "An unexpected error occurred while processing the received data. Please check your connection and ask the wallet to resend the card."
+          "message": "An unexpected error occurred while processing the received data. Please check your connection and request the sender to resend the card."
         },
         "TVV_UNK_003":{
           "title": "An Error Occured!",
-          "message": "An unexpected error occurred while processing the received data. Please check your connection and ask the wallet to resend the card."
+          "message": "An unexpected error occurred while processing the received data. Please check your connection and request the sender to resend the card."
         }
       }
     },

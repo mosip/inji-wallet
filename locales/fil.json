@@ -539,7 +539,7 @@
         },
         "TUV_UNK_001":{
           "title": "May pagkakamaling naganap!",
-          "message": "Dahil sa teknikal na error, hindi namin naibahagi ang card sa umaasa na partido. Pakisubukang muli."
+          "message": "Dahil sa teknikal na error, hindi namin natanggap ang card. Pakisubukang muli."
         },
         "TVW_UNK_001":{
           "title": "Nabigo ang koneksyon!",
@@ -555,15 +555,15 @@
         },
         "TVV_UNK_001":{
           "title": "May pagkakamaling naganap!",
-          "message": "An unexpected error occurred while processing the received data. Please check your connection and ask the wallet to resend the card."
+          "message": "Isang hindi inaasahang error ang naganap habang pinoproseso ang natanggap na data. Pakisuri ang iyong koneksyon at hilingin sa nagpadala na muling ipadala ang card."
         },
         "TVV_UNK_002":{
           "title": "May pagkakamaling naganap!",
-          "message": "An unexpected error occurred while processing the received data. Please check your connection and ask the wallet to resend the card."
+          "message": "Isang hindi inaasahang error ang naganap habang pinoproseso ang natanggap na data. Pakisuri ang iyong koneksyon at hilingin sa nagpadala na muling ipadala ang card."
         },
         "TVV_UNK_003":{
           "title": "May pagkakamaling naganap!",
-          "message": "An unexpected error occurred while processing the received data. Please check your connection and ask the wallet to resend the card."
+          "message": "Isang hindi inaasahang error ang naganap habang pinoproseso ang natanggap na data. Pakisuri ang iyong koneksyon at hilingin sa nagpadala na muling ipadala ang card."
         }
       }
     },
