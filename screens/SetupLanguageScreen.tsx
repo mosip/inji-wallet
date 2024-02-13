@@ -18,10 +18,10 @@ export const SetupLanguageScreen: React.FC<RootRouteProps> = props => {
   const languages = Object.entries(SUPPORTED_LANGUAGES).map(
     ([value, label]) => ({label, value}),
   );
-  //
-  // useEffect(() => {
-  //   backupRestoreController.DOWNLOAD_UNSYNCED_BACKUP_FILES();
-  // }, []);
+
+  useEffect(() => {
+    backupRestoreController.DOWNLOAD_UNSYNCED_BACKUP_FILES();
+  }, []);
 
   return (
     <Column style={Theme.SetupLanguageScreenStyle.columnStyle}>
