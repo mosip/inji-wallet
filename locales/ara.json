@@ -257,8 +257,8 @@
     "requestingCredential": "جارٍ طلب بيانات الاعتماد...",
     "errors": {
       "input": {
-        "empty": "فارغًا",
-        "invalidFormat": "غير صحيح"
+        "empty": "الرجاء إدخال معرف صالح",
+        "invalidFormat": "الرجاء إدخال صالح {{idType}}"
       },
       "backend": {
         "invalidOtp": "OTP غير صالح",
@@ -278,8 +278,8 @@
     "retrievingId": "استرجاع الهوية",
     "errors": {
       "input": {
-        "empty": "لا يمكن أن يكون الإدخال فارغًا",
-        "invalidFormat": "تنسيق الإدخال غير صحيح"
+        "empty": "الرجاء إدخال معرف صالح",
+        "invalidFormat": "الرجاء إدخال معرف صالح"
       },
       "backend": {
         "invalidOtp": "OTP غير صالح",
