@@ -393,15 +393,9 @@ export const requestMachine =
                 mergingIncomingVc: {
                   entry: 'mergeIncomingVc',
                   on: {
-                    STORE_RESPONSE: [
-                      {
-                        cond: 'isRequestIntent',
-                        target: '#request.reviewing.acceptedIntentShare',
-                      },
-                      {
-                        target: '#request.reviewing.accepted',
-                      },
-                    ],
+                    STORE_RESPONSE: {
+                      target: '#request.reviewing.accepted',
+                    },
                   },
                 },
                 prependingReceivedVc: {
@@ -427,10 +421,6 @@ export const requestMachine =
                 },
               },
             },
-            acceptedIntentShare: {
-              entry: ['sendVcReceived', 'logReceived', 'sendVcDataIntent'],
-              always: 'navigatingToHome',
-            },
             accepted: {
               entry: [
                 'sendVcReceived',
@@ -445,9 +435,15 @@ export const requestMachine =
                 },
               },
               on: {
-                DISMISS: {
-                  target: 'displayingIncomingVC',
-                },
+                DISMISS: [
+                  {
+                    cond: 'isRequestIntent',
+                    actions: ['sendVcDataIntent'],
+                  },
+                  {
+                    target: 'displayingIncomingVC',
+                  },
+                ],
               },
             },
             rejected: {
@@ -820,8 +816,10 @@ export const requestMachine =
           const {verifiableCredential} = context.incomingVc;
           const {credentialSubject: subject} = verifiableCredential;
 
+          console.log('\n\nsubject', subject);
+
           ODKIntentModule.sendBundleResult({
-            biometrics: subject.biometrics,
+            // biometrics: subject.biometrics,
             date_of_birth: subject.dateOfBirth,
             email: subject.email,
             full_name: subject.fullName,
