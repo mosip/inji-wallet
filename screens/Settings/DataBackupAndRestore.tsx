@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import {useTranslation} from 'react-i18next';
 import {Pressable} from 'react-native';
 import {Icon, ListItem} from 'react-native-elements';

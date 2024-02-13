@@ -16,7 +16,6 @@ import {
 import {GlobalContext} from '../../shared/GlobalContext';
 import {selectIsBackUpAndRestoreExplored} from '../../machines/settings';
 import {SettingsEvents} from '../../machines/settings';
-import {logState} from '../../shared/commonUtil';
 
 export function useBackupAndRestoreSetup() {
   const {appService} = useContext(GlobalContext);
@@ -57,10 +56,10 @@ export function useBackupAndRestoreSetup() {
         );
       }
     },
-      shouldTriggerAutoBackup: useSelector(
-          service,
-          selectShouldTriggerAutoBackup,
-        ),
+    shouldTriggerAutoBackup: useSelector(
+      service,
+      selectShouldTriggerAutoBackup,
+    ),
     PROCEED_ACCOUNT_SELECTION: () =>
       service.send(BackupAndRestoreSetupEvents.PROCEED()),
     GO_BACK: () => service.send(BackupAndRestoreSetupEvents.GO_BACK()),

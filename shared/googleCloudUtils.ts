@@ -159,7 +159,6 @@ class Cloud {
       const unSyncedFiles = (await this.getBackupFilesList()).filter(file =>
         file.match(this.UNSYNCED_BACKUP_FILE_REG_EXP),
       );
-      console.log('unSynced backup files - ', unSyncedFiles);
       if (unSyncedFiles.length > 0) {
         await CloudStorage.downloadFile(`/${unSyncedFiles[0]}`);
         return false;
@@ -170,7 +169,7 @@ class Cloud {
   static async lastBackupDetails(
     cloudFileName?: string | undefined,
   ): Promise<BackupDetails> {
-      CloudStorage.setTimeout(this.timeout);
+    CloudStorage.setTimeout(this.timeout);
     if (isAndroid()) {
       const tokenResult = await Cloud.getAccessToken();
       CloudStorage.setGoogleDriveAccessToken(tokenResult);
@@ -205,12 +204,7 @@ class Cloud {
     const toBeRemovedFiles = (await this.getBackupFilesList())
       .filter(file => file !== fileName)
       .filter(file => file.match(this.BACKUP_FILE_REG_EXP));
-    console.log(
-      'removeOldDriveBackupFiles toBeRemovedFiles ',
-      toBeRemovedFiles,
-    );
     for (const oldFileName of toBeRemovedFiles) {
-      console.log('removing -> ', oldFileName);
       await CloudStorage.unlink(`/${oldFileName}`);
     }
   }
@@ -230,7 +224,7 @@ class Cloud {
     let uploadError: string | undefined = undefined;
 
     try {
-        CloudStorage.setTimeout(this.timeout);
+      CloudStorage.setTimeout(this.timeout);
       if (isAndroid()) {
         const tokenResult = await Cloud.getAccessToken();
         CloudStorage.setGoogleDriveAccessToken(tokenResult);
@@ -260,7 +254,6 @@ class Cloud {
 
       if (isFileUploaded) {
         const backupDetails = await this.lastBackupDetails(cloudFileName);
-        console.log('wrote to cloudFileName ', cloudFileName);
         await this.removeOldDriveBackupFiles(`${fileName}.zip`);
         return Promise.resolve({
           status: this.status.SUCCESS,
@@ -292,12 +285,12 @@ class Cloud {
   static async downloadLatestBackup(): Promise<string | null> {
     try {
       CloudStorage.setTimeout(this.timeout);
-    if (isAndroid()) {
-      const tokenResult = await Cloud.getAccessToken();
-      CloudStorage.setGoogleDriveAccessToken(tokenResult);
-    }
-    if (isIOS()) {
-      const isCloudAvailable = await CloudStorage.isCloudAvailable();
+      if (isAndroid()) {
+        const tokenResult = await Cloud.getAccessToken();
+        CloudStorage.setGoogleDriveAccessToken(tokenResult);
+      }
+      if (isIOS()) {
+        const isCloudAvailable = await CloudStorage.isCloudAvailable();
         if (!isCloudAvailable) {
           return Promise.reject({
             status: this.status.FAILURE,
@@ -310,7 +303,6 @@ class Cloud {
         file.match(this.BACKUP_FILE_REG_EXP),
       );
       // TODO: do basic sanity about this .zip file
-      console.log('all files ', allFiles);
       const fileName = `/${allFiles[0]}`;
       const fileContent = await CloudStorage.readFile(
         fileName,
@@ -328,7 +320,6 @@ class Cloud {
         fileContent,
         'base64',
       );
-      console.log('successfully written the cloud downloaded zip file');
       // return the path
       return Promise.resolve(fileName.split('.zip')[0]);
     } catch (error) {
