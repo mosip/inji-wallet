@@ -203,6 +203,7 @@ export const backupMachine = model.createMachine(
               onError: [
                 {
                   cond: 'checkIfAutoBackup',
+                  target: 'silentFailure',
                 },
                 {
                   target: 'failure',
