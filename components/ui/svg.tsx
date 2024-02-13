@@ -5,6 +5,7 @@ import {ImageBackground} from 'react-native';
 import Home from '../../assets/Home_tab_icon.svg';
 import History from '../../assets/History_tab_icon.svg';
 import Share from '../../assets/Scan_tab_icon.svg';
+import Settings from '../../assets/Settings.svg';
 import PinICon from '../../assets/Pin_Icon.svg';
 import InjiSmallLogo from '../../assets/Inji_Logo.svg';
 import LockIcon from '../../assets/Lock_Icon1.svg';
@@ -77,6 +78,19 @@ export class SvgImage {
     //NOTE: Here tab icons names should be same with key "name" in main.ts
     return (
       <History
+        color1={
+          focused ? Theme.Colors.linearGradientStart : Theme.Colors.GrayIcon
+        }
+        color2={
+          focused ? Theme.Colors.linearGradientEnd : Theme.Colors.GrayIcon
+        }
+      />
+    );
+  }
+  static settings(focused: boolean) {
+    //NOTE: Here tab icons names should be same with key "name" in main.ts
+    return (
+      <Settings
         color1={
           focused ? Theme.Colors.linearGradientStart : Theme.Colors.GrayIcon
         }

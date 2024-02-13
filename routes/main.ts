@@ -10,6 +10,7 @@ import i18n from '../i18n';
 import {BOTTOM_TAB_ROUTES} from './routesConstants';
 import {HomeScreenLayout} from '../screens/HomeScreenLayout';
 import {Theme} from '../components/ui/styleUtils';
+import {SettingScreen} from '../screens/Settings/SettingScreen';
 
 export const changeTabBarVisible = (visible: string) => {
   Theme.BottomTabBarStyle.tabBarStyle.display = visible;
@@ -48,15 +49,31 @@ const history: TabScreen = {
   },
 };
 
+const settings: TabScreen = {
+  name: BOTTOM_TAB_ROUTES.settings,
+  component: SettingScreen,
+  icon: 'settings',
+  options: {
+    headerTitleStyle: {
+      fontSize: 26,
+      fontFamily: 'Inter_600SemiBold',
+      marginTop: 15,
+    },
+    title: i18n.t('MainLayout:history'),
+  },
+};
+
 export const mainRoutes: TabScreen[] = [];
 mainRoutes.push(home);
 mainRoutes.push(share);
 mainRoutes.push(history);
+mainRoutes.push(settings);
 
 export type MainBottomTabParamList = {
   home: undefined;
   share: undefined;
   history: undefined;
+  settings: undefined;
 };
 
 export interface TabScreen {
