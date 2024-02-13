@@ -32,7 +32,7 @@ export function useBackupScreen() {
     isBackupInProgress: useSelector(backupService, selectIsBackupInprogress),
     DATA_BACKUP: (isAutoBackup: boolean) => {
       backupService.send(BackupEvents.DATA_BACKUP(isAutoBackup));
-
+    },
     isCheckingDataForBackup: useSelector(
       backupService,
       selectIsCheckingDataAvailabilityForBackup,
