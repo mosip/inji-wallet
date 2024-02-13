@@ -10,7 +10,7 @@ import {SvgImage} from '../../components/ui/svg';
 import {AccountSelectionConfirmation} from '../backupAndRestore/AccountSelectionConfirmation';
 import {useBackupAndRestoreSetup} from '../backupAndRestore/BackupAndRestoreSetupController';
 import BackupAndRestoreScreen from '../backupAndRestore/BackupAndRestoreScreen';
-import testIDProps from '../../shared/commonUtil';
+import testIDProps, {getDriveName} from '../../shared/commonUtil';
 import {useOverlayVisibleAfterTimeout} from '../../shared/hooks/useOverlayVisibleAfterTimeout';
 import {isAndroid} from '../../shared/constants';
 
@@ -20,17 +20,10 @@ export const DataBackupAndRestore: React.FC = ({} = () => {
   const accountSelectionModalVisible = useOverlayVisibleAfterTimeout(
     controller.showAccountSelectionConfirmation,
   );
-  const isLoaderVisible = useOverlayVisibleAfterTimeout(controller.isLoading);
-
-  useEffect(() => {
-    {
-      console.log(
-        'accountSelectionModalVisible ',
-        accountSelectionModalVisible,
-      );
-      console.log('isLoading ', controller.isLoading);
-    }
-  }, [accountSelectionModalVisible, controller.isLoading]);
+  const isLoaderVisible = useOverlayVisibleAfterTimeout(
+    controller.isLoading,
+    0,
+  );
 
   return (
     <React.Fragment>
@@ -38,13 +31,13 @@ export const DataBackupAndRestore: React.FC = ({} = () => {
         <ListItem topDivider bottomDivider>
           {SvgImage.DataBackupIcon(25, 25)}
           <ListItem.Content>
-            <ListItem.Title style={{paddingTop: 3}}>
+            <ListItem.Title>
               <Row>
                 <Text
                   testID="dataBackupAndRestore"
                   weight="semibold"
                   color={Theme.Colors.settingsLabel}
-                  style={{paddingRight: 10}}>
+                  style={{paddingRight: 10, paddingTop: 10}}>
                   {t('dataBackupAndRestore')}
                 </Text>
                 {!controller.isBackupAndRestoreExplored && (
@@ -75,13 +68,17 @@ export const DataBackupAndRestore: React.FC = ({} = () => {
           showClose={false}
           isVisible={controller.isSigningInFailed}
           title={t('errors.permissionDenied.title')}
-          message={t('errors.permissionDenied.message')}
+          message={t('errors.permissionDenied.message', {
+            driveName: getDriveName(),
+          })}
           helpText={t('errors.permissionDenied.helpText')}
           image={SvgImage.PermissionDenied()}
           primaryButtonText={
             'DataBackupScreen:errors.permissionDenied.actions.allowAccess'
           }
-          primaryButtonEvent={controller.TRY_AGAIN}
+          primaryButtonEvent={
+            isAndroid() ? controller.TRY_AGAIN : controller.OPEN_SETTINGS
+          }
           textButtonText={
             'DataBackupScreen:errors.permissionDenied.actions.notNow'
           }

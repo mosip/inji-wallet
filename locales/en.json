@@ -638,7 +638,7 @@
     "errors": {
       "permissionDenied": {
         "title": "Permissions required",
-        "message": "To continue with the data backup, allow access to your Google Drive. Tap \"Allow Access\" to finish setup, or tap \"Not Now\" to return to Settings.",
+        "message": "To continue with the data backup, allow access to your {{driveName}}. Tap \"Allow Access\" to finish setup, or tap \"Not Now\" to return to Settings.",
         "actions": {
           "allowAccess": "Allow Access",
           "notNow": "Not Now"

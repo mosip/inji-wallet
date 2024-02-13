@@ -69,9 +69,9 @@ export const backupAndRestoreSetupMachine = model.createMachine(
         on: {
           HANDLE_BACKUP_AND_RESTORE: {
             actions: [
-              'sendDataBackupAndRestoreSetupStartEvent',
               'setIsLoading',
               'unsetShouldTriggerAutoBackup',
+              'sendDataBackupAndRestoreSetupStartEvent',
             ],
             target: 'fetchShowConfirmationInfo',
           },
@@ -158,7 +158,19 @@ export const backupAndRestoreSetupMachine = model.createMachine(
           ],
         },
         states: {
-          error: {entry: 'unsetIsLoading'},
+          error: {
+            entry: 'unsetIsLoading',
+            on: {
+              GO_BACK: {
+                actions: 'sendBackupAndRestoreSetupCancelEvent',
+                target: '#backupAndRestore.init',
+              },
+              OPEN_SETTINGS: {
+                actions: 'openSettings',
+                target: '#backupAndRestore.init',
+              },
+            },
+          },
         },
       },
       checkInternet: {
@@ -312,7 +324,7 @@ export const backupAndRestoreSetupMachine = model.createMachine(
       unsetShouldTriggerAutoBackup: model.assign({
         shouldTriggerAutoBackup: false,
       }),
-      openSettings: () => Linking.openSettings(),
+      openSettings: () => Linking.openURL('App-Prefs:CASTLE'),
     },
 
     services: {

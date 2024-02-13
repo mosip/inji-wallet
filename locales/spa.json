@@ -604,7 +604,7 @@
     "errors": {
       "permissionDenied": {
         "title": "Permisos requeridos",
-        "message": "Para continuar con la copia de seguridad de los datos, permita el acceso a su Google Drive. Toque \"Permitir acceso\" para finalizar la configuración o toque \"Ahora no\" para regresar a Configuración.",
+        "message": "Para continuar con la copia de seguridad de los datos, permita el acceso a su {{driveName}}. Toque \"Permitir acceso\" para finalizar la configuración o toque \"Ahora no\" para regresar a Configuración.",
         "actions": {
           "allowAccess": "Permitir el acceso",
           "notNow": "Ahora no"

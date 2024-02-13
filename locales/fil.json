@@ -637,7 +637,7 @@
     "errors": {
       "permissionDenied": {
         "title": "Kinakailangan ang mga Pahintulot",
-        "message": "Upang magpatuloy sa pag-backup ng data, payagan ang pag-access sa iyong Google Drive. I-tap ang \"Allow Access\" para tapusin ang pag-setup, o i-tap ang \"Not Now\" para bumalik sa Settings.",
+        "message": "Upang magpatuloy sa pag-backup ng data, payagan ang pag-access sa iyong {{driveName}}. I-tap ang \"Allow Access\" para tapusin ang pag-setup, o i-tap ang \"Not Now\" para bumalik sa Settings.",
         "actions": {
           "allowAccess": "Payagan ang Access",
           "notNow": "Hindi ngayon"

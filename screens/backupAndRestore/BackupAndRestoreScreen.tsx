@@ -129,7 +129,7 @@ const BackupAndRestoreScreen: React.FC<BackupAndRestoreProps> = props => {
     <SectionLayout
       testId="AccountSection"
       headerText={t('driveSettings')}
-      headerIcon={SvgImage.GoogleDriveIcon(28, 25)}>
+      headerIcon={SvgImage.GoogleDriveIconSmall(28, 25)}>
       <View style={{marginBottom: 19}}>
         <Text
           testID="storageInfo"

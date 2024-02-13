@@ -187,12 +187,15 @@ class Cloud {
     }
 
     if (!cloudFileName) {
-      cloudFileName = (await this.getBackupFilesList())[0];
+      cloudFileName = (await this.getBackupFilesList()).filter(file =>
+        file.match(this.BACKUP_FILE_REG_EXP),
+      )[0];
     }
     const {birthtimeMs: creationTime, size} = await CloudStorage.stat(
       cloudFileName,
       CloudStorageScope.AppData,
     );
+
     return {
       backupCreationTime: creationTime,
       backupFileSize: bytesToMB(size),
