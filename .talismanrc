@@ -78,7 +78,7 @@ fileignoreconfig:
   - filename: assets/fingerprint_icon.svg
     checksum: b2d3a50ca1336f60123d96a8cc8ea663c3316ed2d8c31833bce7e393ca51695b
   - filename: machines/store.ts
-    checksum: 9970da0ea685018a90f7306fb88945d135dd019439099dd56b6109d915a8a24f
+    checksum: b4a74db48536aab62d36ab2c2398f112134af8f0e1fe1b54947a5a93c200ad77
   - filename: assets/Flip_Camera_Icon.svg
     checksum: 736b5a7ddb86bd4376229ce198dbf8a663e7ac89fc3311bd4f19afd4a2b36ffd
   - filename: assets/Finger_Print_Icon.svg
@@ -140,7 +140,7 @@ fileignoreconfig:
   - filename: ios/fastlane/Fastfile
     checksum: a4e3772dc67a07ecbcfc58be0d6d4f7fa799cec7ac25bd269ac29459c8669ca4
   - filename: shared/storage.ts
-    checksum: 5b503c02ccb57b7576fb2b038a3e9a59f425a67311d624169bb4bd69721542e4
+    checksum: c0e99e00d260c665dcf87d09b1ed75a4e73cb9eeb2036ccb021560d1d643489f
   - filename: injitest/src/test/java/iosTestCases/CredentialRegistryTest.java
     checksum: b0808e0c511412cde21fd169a9bbeaf3b77cb48f25418e12d341cc3ce1df5898
   - filename: machines/backupAndRestore/backupAndRestore.ts
@@ -148,9 +148,9 @@ fileignoreconfig:
   - filename: machines/backupAndRestore/backupAndRestore.typegen.ts
     checksum: 509b9660553990841883c54f8986971f21c7315e7450c455bba2766738c58bee
   - filename: machines/backupAndRestore/backup.ts
-    checksum: 73f68c5f37a763d98fa8422229a262e049260187ea10590f1a5f538f54d17371
+    checksum: a4063e22e80cb72ce087f8571f1f5fa19c399a585a0d8671e6f7eda3b98c1d02
   - filename: machines/backupAndRestore/backup.typegen.ts
-    checksum: 5d0ff5ea1361c4f1184699e5c96615940366a048c2edf5881ed9c86d824c722b
+    checksum: 297e29da97e8d2c94b20b1aa17e069e3ca41a299ed4a595c9ca8810ea8bcdf2d
   - filename: components/BackupAndRestoreAllScreenBanner.tsx
     checksum: 2c98e7e83959c9dac4dd12da32f81483c3d334bd05e279637cf465475fbf54b8
     checksum: f26489ce4ac607884437ad06c3117cc34d6cbcbcd3dd5719790fbe01a0853ee5
@@ -188,8 +188,6 @@ fileignoreconfig:
     checksum: 75b07071aef4278f40f16861232b922e5ee8594efc9467984b072966fa7793b8
   - filename: machines/backupAndRestore/backupAndRestoreSetup.typegen.ts
     checksum: 76e81749435d83e4cd222ebb91245d1c6baaab7814d9e7899298ca8ca55c97fb
-  - filename: machines/backupAndRestore/backup.ts
-    checksum: 6eb330e43afe02fe6ccfd89d6cc82863a3aa95431575ba420bdcd763c27b7892
   - filename: machines/backupAndRestore/backupAndRestoreSetup.ts
     checksum: 397f2076504f851a981b0deff6eeac30041c775ee1c57b51e328fc09d52ef43e
     version: ""
