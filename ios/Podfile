@@ -10,8 +10,7 @@ ENV['EX_DEV_CLIENT_NETWORK_INSPECTOR'] = '1' if podfile_properties['EX_DEV_CLIEN
 
 platform :ios, podfile_properties['ios.deploymentTarget'] || '13.0'
 install! 'cocoapods',
-  :deterministic_uuids => false,
-  :version => '1.15.2'
+  :deterministic_uuids => false
 
 prepare_react_native_project!
 
