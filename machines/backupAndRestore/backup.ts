@@ -141,15 +141,30 @@ export const backupMachine = model.createMachine(
               src: 'checkStorageAvailability',
               onDone: [
                 {
-                  cond: 'isMinimumStorageRequiredForBackupReached',
+                  cond: 'isMinimumStorageRequiredForBackupAvailable',
+                  target: 'fetchDataFromDB',
+                },
+                {
+                  cond: 'checkIfAutoBackup',
+                  actions: 'setErrorReasonAsStorageLimitReached',
+                  target: 'silentFailure',
+                },
+                {
                   actions: 'setErrorReasonAsStorageLimitReached',
                   target: 'failure',
                 },
+              ],
+              onError: [
                 {
-                  target: 'fetchDataFromDB',
+                  cond: 'checkIfAutoBackup',
+                  actions: ['setBackUpNotPossible'],
+                  target: 'silentFailure',
+                },
+                {
+                  actions: ['setBackUpNotPossible'],
+                  target: 'failure',
                 },
               ],
-              onError: {actions: ['setBackUpNotPossible'], target: 'failure'},
             },
           },
           fetchDataFromDB: {
@@ -159,10 +174,17 @@ export const backupMachine = model.createMachine(
                 actions: 'setDataFromStorage',
                 target: 'writeDataToFile',
               },
-              STORE_ERROR: {
-                actions: ['setBackUpNotPossible'],
-                target: 'failure',
-              },
+              STORE_ERROR: [
+                {
+                  cond: 'checkIfAutoBackup',
+                  actions: ['setBackUpNotPossible'],
+                  target: 'silentFailure',
+                },
+                {
+                  actions: ['setBackUpNotPossible'],
+                  target: 'failure',
+                },
+              ],
             },
           },
           writeDataToFile: {
@@ -182,9 +204,14 @@ export const backupMachine = model.createMachine(
               onDone: {
                 target: 'uploadBackupFile',
               },
-              onError: {
-                target: 'failure',
-              },
+              onError: [
+                {
+                  cond: 'checkIfAutoBackup',
+                },
+                {
+                  target: 'failure',
+                },
+              ],
             },
           },
           uploadBackupFile: {
@@ -406,9 +433,8 @@ export const backupMachine = model.createMachine(
     },
 
     guards: {
-      isMinimumStorageRequiredForBackupReached: (_context, event) => {
-        console.log('is min reach ', Boolean(event.data));
-        return Boolean(event.data);
+      isMinimumStorageRequiredForBackupAvailable: (_context, event) => {
+        return Boolean(!event.data);
       },
       checkIfAutoBackup: context => {
         return context.isAutoBackUp;
