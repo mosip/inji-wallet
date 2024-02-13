@@ -655,6 +655,7 @@
     "backupFailure": {
       "networkError": "Due to unstable internet connection, we were unable to perform data backup. Please try again later.",
       "technicalError": "Due to technical error, we were unable to perform data backup. Please try again later.",
+      "iCloudSignInError": "We're sorry that data backup couldn't be completed. Please ensure that you have logged into your Apple account and iCloud access is enabled for the app.",
       "noDataForBackup": "We're sorry, but there is no data available to back up at the moment.",
       "storageLimitReached": "We're unable to complete the backup process due to insufficient storage space on your device. Please free up space by deleting unnecessary files or apps, and try again."
     },

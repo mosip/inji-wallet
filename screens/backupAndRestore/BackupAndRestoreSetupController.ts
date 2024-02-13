@@ -65,6 +65,8 @@ export function useBackupAndRestoreSetup() {
       service.send(BackupAndRestoreSetupEvents.PROCEED()),
     GO_BACK: () => service.send(BackupAndRestoreSetupEvents.GO_BACK()),
     TRY_AGAIN: () => service.send(BackupAndRestoreSetupEvents.TRY_AGAIN()),
+    OPEN_SETTINGS: () =>
+      service.send(BackupAndRestoreSetupEvents.OPEN_SETTINGS()),
     DISMISS: () => service.send(BackupAndRestoreSetupEvents.DISMISS()),
   };
 }

@@ -7,7 +7,12 @@ import {GOOGLE_ANDROID_CLIENT_ID} from 'react-native-dotenv';
 import {readFile, writeFile} from 'react-native-fs';
 import {BackupDetails} from '../types/backup-and-restore/backup';
 import {bytesToMB, sleep} from './commonUtil';
-import {isAndroid, isIOS, NETWORK_REQUEST_FAILED} from './constants';
+import {
+  IOS_SIGNIN_FAILED,
+  isAndroid,
+  isIOS,
+  NETWORK_REQUEST_FAILED,
+} from './constants';
 import fileStorage, {backupDirectoryPath, zipFilePath} from './fileStorage';
 import {request} from './request';
 
@@ -25,6 +30,7 @@ class Cloud {
   private static readonly BACKUP_FILE_REG_EXP = /backup_[0-9]*.zip$/g;
   private static readonly UNSYNCED_BACKUP_FILE_REG_EXP =
     /backup_[0-9]*.zip.icloud/g;
+  private static readonly RETRY_SLEEP_TIME = 5000;
 
   private static configure() {
     GoogleSignin.configure({
@@ -50,6 +56,15 @@ class Cloud {
       throw error;
     }
   }
+  private static getBackupFilesList = async () =>
+    await CloudStorage.readdir(`/`, CloudStorageScope.AppData);
+  private static async syncBackupFiles() {
+    const isSyncDone = await this.downloadUnSyncedBackupFiles();
+    if (isSyncDone) return;
+    await sleep(this.RETRY_SLEEP_TIME);
+    await this.syncBackupFiles();
+  }
+
   static async getAccessToken() {
     try {
       const tokenResult = await GoogleSignin.getTokens();
@@ -139,45 +154,19 @@ class Cloud {
       };
     }
   }
-
-  static async downloadUnSyncedBackupFiles() {
+  static async downloadUnSyncedBackupFiles(): Promise<Boolean> {
     if (isIOS()) {
-      console.log('downloading unSynced backup files');
-      const allFiles = await CloudStorage.readdir(
-        `/`,
-        CloudStorageScope.AppData,
-      );
-      const unSyncedFiles = allFiles.filter(file =>
+      const unSyncedFiles = (await this.getBackupFilesList()).filter(file =>
         file.match(this.UNSYNCED_BACKUP_FILE_REG_EXP),
       );
       console.log('unSynced backup files - ', unSyncedFiles);
       if (unSyncedFiles.length > 0) {
         await CloudStorage.downloadFile(`/${unSyncedFiles[0]}`);
+        return false;
       }
     }
+    return true;
   }
-
-  private static async syncBackupFiles() {
-    if (isIOS()) {
-      //TODO: Move readDir to lambda fn
-      const allFiles = await CloudStorage.readdir(
-        `/`,
-        CloudStorageScope.AppData,
-      );
-      const unSyncedFiles = allFiles.filter(file =>
-        file.match(this.UNSYNCED_BACKUP_FILE_REG_EXP),
-      );
-      console.log('unSynced backup files - ', unSyncedFiles);
-      if (unSyncedFiles.length > 0) {
-        await CloudStorage.downloadFile(`/${unSyncedFiles[0]}`);
-      } else {
-        return;
-      }
-      sleep(5000);
-      this.syncBackupFiles();
-    }
-  }
-
   static async lastBackupDetails(
     cloudFileName?: string | undefined,
   ): Promise<BackupDetails> {
@@ -187,31 +176,30 @@ class Cloud {
       CloudStorage.setGoogleDriveAccessToken(tokenResult);
     }
     if (isIOS()) {
-      await CloudStorage.isCloudAvailable();
-      //todo: if not reject
+      const isCloudAvailable = await CloudStorage.isCloudAvailable();
+      if (!isCloudAvailable) {
+        return Promise.reject({
+          status: this.status.FAILURE,
+          error: IOS_SIGNIN_FAILED,
+        });
+      }
+      await this.syncBackupFiles();
     }
 
     if (!cloudFileName) {
-      const allFiles = await CloudStorage.readdir(
-        `/`,
-        CloudStorageScope.AppData,
-      );
-      cloudFileName = allFiles[0];
+      cloudFileName = (await this.getBackupFilesList())[0];
     }
-    this.syncBackupFiles();
     const {birthtimeMs: creationTime, size} = await CloudStorage.stat(
       cloudFileName,
       CloudStorageScope.AppData,
     );
-    const backupDetails = {
+    return {
       backupCreationTime: creationTime,
       backupFileSize: bytesToMB(size),
     };
-    return backupDetails;
   }
   static async removeOldDriveBackupFiles(fileName: string) {
-    const allFiles = await CloudStorage.readdir('/', CloudStorageScope.AppData);
-    const toBeRemovedFiles = allFiles
+    const toBeRemovedFiles = (await this.getBackupFilesList())
       .filter(file => file !== fileName)
       .filter(file => file.match(this.BACKUP_FILE_REG_EXP));
     console.log(
@@ -222,11 +210,6 @@ class Cloud {
       console.log('removing -> ', oldFileName);
       await CloudStorage.unlink(`/${oldFileName}`);
     }
-    const allFilesPost = await CloudStorage.readdir(
-      `/`,
-      CloudStorageScope.AppData,
-    );
-    console.log('removeOldDriveBackupFiles allFiles ', allFilesPost);
   }
   static async uploadBackupFileToDrive(
     fileName: string,
@@ -250,8 +233,13 @@ class Cloud {
         CloudStorage.setGoogleDriveAccessToken(tokenResult);
       }
       if (isIOS()) {
-        await CloudStorage.isCloudAvailable();
-        //todo: if not reject
+        const isCloudAvailable = await CloudStorage.isCloudAvailable();
+        if (!isCloudAvailable) {
+          return Promise.reject({
+            status: this.status.FAILURE,
+            error: IOS_SIGNIN_FAILED,
+          });
+        }
       }
 
       const filePath = zipFilePath(fileName);
@@ -306,13 +294,18 @@ class Cloud {
       CloudStorage.setGoogleDriveAccessToken(tokenResult);
     }
     if (isIOS()) {
-      await CloudStorage.isCloudAvailable();
-      //todo: if not reject
-    }
-    await this.downloadUnSyncedBackupFiles();
-      const allFiles = (
-        await CloudStorage.readdir('/', CloudStorageScope.AppData)
-      ).filter(file => file.match(this.BACKUP_FILE_REG_EXP));
+      const isCloudAvailable = await CloudStorage.isCloudAvailable();
+        if (!isCloudAvailable) {
+          return Promise.reject({
+            status: this.status.FAILURE,
+            error: IOS_SIGNIN_FAILED,
+          });
+        }
+        await this.syncBackupFiles();
+      }
+      const allFiles = (await this.getBackupFilesList()).filter(file =>
+        file.match(this.BACKUP_FILE_REG_EXP),
+      );
       // TODO: do basic sanity about this .zip file
       console.log('all files ', allFiles);
       const fileName = `/${allFiles[0]}`;

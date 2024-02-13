@@ -2,6 +2,7 @@ import {EventFrom, StateFrom, send} from 'xstate';
 import {createModel} from 'xstate/lib/model';
 import {AppServices} from '../../shared/GlobalContext';
 import {
+  IOS_SIGNIN_FAILED,
   LAST_BACKUP_DETAILS,
   MY_VCS_STORE_KEY,
   NETWORK_REQUEST_FAILED,
@@ -354,11 +355,13 @@ export const backupMachine = model.createMachine(
         },
       }),
 
+      ///Todo new key for IC
       setBackupErrorReason: model.assign({
         errorReason: (_context, event) => {
           const reasons = {
             [TECHNICAL_ERROR]: 'technicalError',
             [NETWORK_REQUEST_FAILED]: 'networkError',
+            [IOS_SIGNIN_FAILED]: 'iCloudSignInError',
           };
           return reasons[event.data.error] || reasons[TECHNICAL_ERROR];
         },

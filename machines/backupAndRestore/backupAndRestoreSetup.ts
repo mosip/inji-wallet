@@ -27,6 +27,7 @@ import {
 } from '../../shared/telemetry/TelemetryUtils';
 import {SettingsEvents} from '../settings';
 import {StoreEvents} from '../store';
+import {Linking} from 'react-native';
 
 const model = createModel(
   {
@@ -43,6 +44,7 @@ const model = createModel(
       PROCEED: () => ({}),
       GO_BACK: () => ({}),
       TRY_AGAIN: () => ({}),
+      OPEN_SETTINGS: () => ({}),
       DISMISS: () => ({}),
       STORE_RESPONSE: (response: unknown) => ({response}),
     },
@@ -310,6 +312,7 @@ export const backupAndRestoreSetupMachine = model.createMachine(
       unsetShouldTriggerAutoBackup: model.assign({
         shouldTriggerAutoBackup: false,
       }),
+      openSettings: () => Linking.openSettings(),
     },
 
     services: {
