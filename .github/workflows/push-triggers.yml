@@ -31,7 +31,7 @@ jobs:
       UPLOAD_TO_ACTIONS: 'false'
 
   build-ios:
-    uses: tw-mosip/kattu/.github/workflows/ios-build.yml@master
+    uses: mosip/kattu/.github/workflows/ios-build.yml@master
     with:
       NODE_VERSION: "18.x"
       SERVICE_LOCATION: '.'
