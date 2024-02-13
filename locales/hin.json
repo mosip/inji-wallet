@@ -330,6 +330,7 @@
     }
   },
   "MyVcsTab": {
+    "searchByName": "नाम से खोजें",
     "downloadCard": "डाउनलोड कार्ड",
     "bringYourDigitalID": "अपनी डिजिटल आईडी लाओ",
     "generateVcDescription": "अपना कार्ड डाउनलोड करने के लिए नीचे डाउनलोड कार्ड टैप करें",

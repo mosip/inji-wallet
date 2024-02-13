@@ -332,6 +332,7 @@
     }
   },
   "MyVcsTab": {
+    "searchByName": "Maghanap ayon sa pangalan",
     "bringYourDigitalID": "Dalhin ang Iyong Digital ID",
     "generateVcDescription": "Upang i-download ang iyong card i-tap ang I-download card sa ibaba",
     "generateVcFABDescription": "Upang i-download ang iyong card i-tap ang + sa ibaba",

@@ -334,6 +334,7 @@
     }
   },
   "MyVcsTab": {
+    "searchByName": "Search by name",
     "bringYourDigitalID": "Bring your digital identity",
     "generateVcDescription": "Tap on \"Download card\" below to download your card",
     "generateVcFABDescription": "Tap on  \"+\" below to download your card",
