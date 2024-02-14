@@ -16,25 +16,31 @@ public class EsignetLoginPage extends BasePage {
     private WebElement iosContinueButton;
 
     @AndroidFindBy(xpath = "//*[contains(@text,'Login with OTP')]")
-    @iOSXCUITFindBy(accessibility = "enterPasscode")
+    @iOSXCUITFindBy(accessibility = "Login with OTP")
     private WebElement esignetLoginButton;
 
     @AndroidFindBy(xpath = "//*[contains(@text,'Login with e-Signet')]")
+    @iOSXCUITFindBy(xpath = "//*[contains(@text,'Login with e-Signet')]")
     private WebElement esignetLoginHeader;
 
     @AndroidFindBy(xpath = "//*[contains(@text,'Enter Your VID')]")
+    @iOSXCUITFindBy(xpath = "//*[contains(@text,'Enter Your VID')]")
     private WebElement enterYourVidTextHeader;
 
-    @AndroidFindBy(uiAutomator = "UiSelector().className(\"android.widget.EditText\").instance(1)")
+    @AndroidFindBy(uiAutomator = "UiSelector().className(\"android.widget.EditText\")")
+    @iOSXCUITFindBy(accessibility = "Please fill in this field")
     private WebElement enterIdTextBox;
 
     @AndroidFindBy(uiAutomator = "new UiSelector().className(\"android.widget.Button\").instance(1)")
+    @iOSXCUITFindBy(accessibility = "Get OTP")
     private WebElement getOtpButton;
 
     @AndroidFindBy(uiAutomator = "new UiSelector().className(\"android.widget.Button\").instance(1)")
+    @iOSXCUITFindBy(accessibility = "Verify")
     private WebElement verifyButton;
 
     @AndroidFindBy(xpath = "//*[contains(@text,'OTP has been sent to your registered Mobile Number')]")
+    @iOSXCUITFindBy(xpath = "//*[contains(@text,'OTP has been sent to your registered Mobile Number')]")
     private WebElement otpSendMessage;
 
     @AndroidFindBy(className = "android.view.ViewGroup")
@@ -45,6 +51,9 @@ public class EsignetLoginPage extends BasePage {
 
     @AndroidFindBy(accessibility = "loaderTitle")
     private WebElement loadingPageHeader;
+
+    @iOSXCUITFindBy(accessibility = "Done")
+    private WebElement DoneButton;
 
     @AndroidFindBy(accessibility = "loaderSubTitle")
     private WebElement settingUpTextOrDownloadingCredentials;
@@ -101,6 +110,10 @@ public class EsignetLoginPage extends BasePage {
 
     public void clickOnVerifyButton() {
     	((HidesKeyboard) driver).hideKeyboard();
+        clickOnElement(verifyButton);
+    }
+
+    public void clickOnVerifyButtonIos() {
         clickOnElement(verifyButton);
     }
 

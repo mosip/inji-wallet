@@ -20,7 +20,7 @@ import {
   RECEIVED_VCS_STORE_KEY,
 } from '../../../shared/constants';
 import {ActivityLogEvents, ActivityLogType} from '../../activityLog';
-import {VcEvents} from '../../vc';
+import {VcEvents} from '../../VCItemMachine/vc';
 import {subscribe} from '../../../shared/openIdBLE/verifierEventHandler';
 import {log} from 'xstate/lib/actions';
 import {VerifierDataEvent} from '@mosip/tuvali/src/types/events';
@@ -625,6 +625,9 @@ export const requestMachine =
 
         prependReceivedVc: send(
           context => {
+            if (context.incomingVc) {
+              context.incomingVc.vcMetadata.timestamp = Date.now();
+            }
             return StoreEvents.PREPEND(
               RECEIVED_VCS_STORE_KEY,
               VCMetadata.fromVC(context.incomingVc?.vcMetadata),

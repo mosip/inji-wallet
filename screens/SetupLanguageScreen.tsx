@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import i18n, {SUPPORTED_LANGUAGES} from '../i18n';
 import {useTranslation} from 'react-i18next';
 import {SetupPicker} from '../components/ui/SetupPicker';
@@ -9,13 +9,19 @@ import {RootRouteProps} from '../routes';
 import {useWelcomeScreen} from './WelcomeScreenController';
 import {changeLanguage} from '../components/LanguageSelector';
 import {Dimensions} from 'react-native';
+import {useBackupRestoreScreen} from './Settings/BackupRestoreController';
 
 export const SetupLanguageScreen: React.FC<RootRouteProps> = props => {
   const {t} = useTranslation('SetupLanguage');
   const controller = useWelcomeScreen(props);
+  const backupRestoreController = useBackupRestoreScreen();
   const languages = Object.entries(SUPPORTED_LANGUAGES).map(
     ([value, label]) => ({label, value}),
   );
+
+  useEffect(() => {
+    backupRestoreController.DOWNLOAD_UNSYNCED_BACKUP_FILES();
+  }, []);
 
   return (
     <Column style={Theme.SetupLanguageScreenStyle.columnStyle}>

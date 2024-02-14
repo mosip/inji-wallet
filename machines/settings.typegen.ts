@@ -26,9 +26,12 @@ export interface Typegen0 {
   eventsCausingActions: {
     requestStoredContext: 'xstate.init';
     resetCredentialRegistryResponse: 'CANCEL' | 'UPDATE_HOST';
+    setBackupAndRestoreOptionExplored: 'SET_IS_BACKUP_AND_RESTORE_EXPLORED';
     setContext: 'STORE_RESPONSE';
     storeContext:
       | 'ACCEPT_HARDWARE_SUPPORT_NOT_EXISTS'
+      | 'SET_IS_BACKUP_AND_RESTORE_EXPLORED'
+      | 'SHOWN_ACCOUNT_SELECTION_CONFIRMATION'
       | 'STORE_RESPONSE'
       | 'TOGGLE_BIOMETRIC_UNLOCK'
       | 'UPDATE_HOST'
@@ -41,6 +44,7 @@ export interface Typegen0 {
     updateCredentialRegistrySuccess: 'done.invoke.settings.resetInjiProps:invocation[0]';
     updateDefaults: 'STORE_RESPONSE';
     updateEsignetHostUrl: 'UPDATE_HOST';
+    updateIsAccountSelectionConfirmationShown: 'SHOWN_ACCOUNT_SELECTION_CONFIRMATION';
     updateName: 'UPDATE_NAME';
     updatePartialDefaults: 'STORE_RESPONSE';
     updateUserShownWithHardwareKeystoreNotExists: 'ACCEPT_HARDWARE_SUPPORT_NOT_EXISTS';

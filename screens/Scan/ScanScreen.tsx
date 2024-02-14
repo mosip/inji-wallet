@@ -12,7 +12,7 @@ import {useNavigation, NavigationProp} from '@react-navigation/native';
 import {MainBottomTabParamList} from '../../routes/main';
 import {BOTTOM_TAB_ROUTES} from '../../routes/routesConstants';
 import {isIOS} from '../../shared/constants';
-import {BackupAndRestoreAllScreenBanner} from '../../components/BackupAndRestoreAllScreenBanner';
+import {BannerNotificationContainer} from '../../components/BannerNotificationContainer';
 
 export const ScanScreen: React.FC = () => {
   type ScanScreenNavigation = NavigationProp<MainBottomTabParamList>;
@@ -213,12 +213,10 @@ export const ScanScreen: React.FC = () => {
   }
 
   return (
-    <Column
-      fill
-      padding="24 0"
-      backgroundColor={Theme.Colors.whiteBackgroundColor}>
-      <BackupAndRestoreAllScreenBanner />
+    <Column fill backgroundColor={Theme.Colors.whiteBackgroundColor}>
+      <BannerNotificationContainer />
       <Centered
+        padding="24 0"
         align="space-evenly"
         backgroundColor={Theme.Colors.whiteBackgroundColor}>
         {loadQRScanner()}

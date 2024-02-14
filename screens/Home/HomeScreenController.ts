@@ -13,7 +13,7 @@ import {
   selectIssuersMachine,
   selectIsMinimumStorageLimitReached,
 } from './HomeScreenMachine';
-import {VcEvents} from '../../machines/vc';
+import {VcEvents} from '../../machines/VCItemMachine/vc';
 
 export function useHomeScreen(props: HomeRouteProps) {
   const {appService} = useContext(GlobalContext);

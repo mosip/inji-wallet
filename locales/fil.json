@@ -188,48 +188,76 @@
   },
   "HelpScreen": {
     "header": "Tulong",
-    "here": " dito. ",
-    "whatIsaDigitalCredential?": "Ano ang isang digital na kredensyal?",
-    "detail-1": "Ang digital na kredensyal ay ang digital na bersyon ng iyong pisikal na Identity card",
-    "whatCanWeDoWithDigitalCredential?": "Ano ang maaari nating gawin sa mga digital na kredensyal?",
-    "detail-2": "Maaari kang makakuha ng iba't ibang serbisyo ng Pamahalaan at pribadong gamit ang iyong mga digital na kredensyal.",
-    "howToAddCard?": "Paano magdagdag ng card?",
-    "detail-3": "Maaaring ma-download ang mga ID sa INJI Mobile Wallet bilang Mga Nabe-verify na Kredensyal. Para malaman kung paano mag-download ng mga VC na may iba't ibang ID mangyaring basahin ",
-    "howToRemoveACardFromTheWallet?": "Paano mag-alis ng card mula sa wallet?",
-    "detail-4a": "Maaari kang mag-click sa ...(meatballs menu) sa isang card sa Home page at piliin ang Remove from Wallet na opsyon para mag-alis ng card mula sa wallet. Upang malaman ang higit pa, mangyaring basahin", 
-    "detail-4b": "Pakitandaan na, maaaring i-download muli ang parehong card.",
-    "canIAddMultipleCards?": "Maaari ba akong magdagdag ng maraming card?",
-    "detail-5": "Oo, maaari kang magdagdag ng maraming card sa wallet sa pamamagitan ng pag-click sa '+' na button sa Home page.",
-    "howToShareACard?": "Paano magbahagi ng card?",
-    "detail-6": "Mag-click sa pindutang 'Ibahagi' at i-scan ang QR code mula sa humihiling na partido. Kapag naitatag na ang koneksyon, ibabahagi ang card.",
-    "howToActivateACardForOnlineLogin?": "Paano i-activate ang isang card para sa online na pag-login?",
-    "detail-7": "Matapos matagumpay na magdagdag ng card sa wallet, mag-click sa 'Activation pending for Online login' sa card. Sa pag-click sa 'I-activate', ang card ay handa nang gamitin para sa online na pag-login.",
-    "howToViewActivityLogs?": "Paano tingnan ang mga log ng aktibidad?",
-    "detail-8": "Sa Home page, mag-click sa 'Kasaysayan' upang tingnan ang mga detalye ng aktibidad ng user.",
-    "whatHappensWhenAndroidKeystoreBiometricIsChanged?": "Ano ang mangyayari kapag binago ang biometric ng Android keystore?",
-    "detail-9": "Ang Android keystore ay nagtataglay ng mahalagang impormasyon tulad ng mga pribadong key para sa mga patunay ng pagkakakilanlan. Kapag binago mo ang iyong biometrics, hindi na ligtas ang mga lumang key. Upang panatilihing secure ang mga bagay, inaalis namin ang mga patunay ng pagkakakilanlan na nilagdaan ng mga lumang key na iyon. Maaari mo lamang i-download muli ang iyong mga patunay ng pagkakakilanlan, at lalagdaan ang mga ito gamit ang pinakabago, mas ligtas na mga susi.",
-    "whatIsAnId?":"Ano ang ID?",
-    "detail-10":"Ang ID ay anumang dokumento na maaaring patunayan ang pagkakakilanlan ng isang tao. Sa konteksto ng MOSIP, ang mga identifier ay alphanumeric digital handle para sa mga pagkakakilanlan sa system. Habang ang pagkakakilanlan ng isang tao ay kinakatawan bilang isang koleksyon ng mga biographic at biometric na katangian na maaaring natatanging makilala ang tao, ang pagkakakilanlan ay tinutukoy gamit ang mga identifier.",
-    "whatAreTheDifferentTypesOfId?": "Ano ang iba't ibang uri ng ID?",
-    "detail-11":"Sa konteksto ng MOSIP, ang iba't ibang ID ay UIN, VID, at AID. Magbasa pa tungkol sa kanila",
-    "whereCanIFindTheseIds?":"Saan ko mahahanap ang mga ID na ito?",
-    "detail-12a": "Bilang bahagi ng proseso ng pagpapatala (pagpaparehistro), kapag matagumpay na nairehistro ang demograpikong impormasyon at biometrics ng residente, isang registration ID (AID) ang inilalaan sa residente. Ang isang acknowledgement slip na naglalaman ng mga nakuhang detalye at ang AID ay ibinibigay din (naka-print) sa residente bilang patunay ng pagpaparehistro.",
-    "detail-12b": "Sa matagumpay na pagproseso, ang isang Unique Identification Number (UIN) ay ilalaan sa residente at isang abiso ang ipapadala sa residente sa nakarehistrong numero ng telepono at/o email.",
-    "detail-12c": "Ang VID / Virtual ID ay isang alias identifier na na-configure para sa isang beses na paggamit at hindi nali-link. Dahil ginagamit ang mga ito para sa mga transaksyon sa pagpapatotoo, ang mga naturang identifier ay dapat malaman lamang ng user o bubuo sa kanilang paglahok.",
-    "whyDoesMyVcSayActivationIsPending?":"Bakit sinasabi ng aking VC na nakabinbin ang Activation?",
-    "detail-13": "Kapag na-download na ang VC sa iyong wallet, hindi pa ito nakatali sa pagkakakilanlan ng user kung kaya't sinasabi ng iyong VC na Nakabinbin ang Aktibidad. Ang pagbubuklod ng iyong VC sa iyong wallet (kasama ang iyong passcode o biometrics) ay napakahalaga upang matiyak ang pinakamataas na antas ng seguridad. Upang i-activate ang iyong VC, mangyaring sundin ang mga hakbang",
-    "whatDoYouMeanByActivatedForOnlineLogin?": "Ano ang ibig mong sabihin sa Activated for Online login?",
-    "detail-14a": "1. Kapag matagumpay na na-binded ang VC sa wallet, makikita mo na ito ay Activated for Online login which means itong VC ay magagamit na para sa QR login process. Upang malaman ang higit pa tungkol sa pag-login sa QR code, mangyaring basahin",
-    "detail-14b": "2. Ang Q&A ay dapat na nababasa at naiintindihan kahit na binago ng user ang wika sa INJI app.",
-    "whatIsAVerifiableCredential?": "Ano ang isang Napapatunayang Kredensyal?",
-    "detail-15": "Ang Nabe-verify na Kredensyal ay isang digitally sign na piraso ng impormasyon na kumakatawan sa isang pahayag na ginawa ng nagbigay tungkol sa isang paksa at kadalasang kinabibilangan ng mga detalye ng demograpiko. Ang mga VC ay ligtas at mapagkakatiwalaan sa iba't ibang online na pakikipag-ugnayan."
+    "here": "dito",
+    "questions": {
+      "inji": {
+        "one": "Ano ang ID?",
+        "two": "Ano ang iba't ibang uri ng ID?",
+        "three": "Saan ko mahahanap ang mga ID na ito?",
+        "four": "Ano ang isang digital na kredensyal?",
+        "five": "Ano ang maaari nating gawin sa mga digital na kredensyal?",
+        "six": "Ano ang isang Nabe-verify na Kredensyal?",
+        "seven": "Paano magdagdag ng card?",
+        "eight": "Maaari ba akong magdagdag ng maraming card?",
+        "nine": "Bakit sinasabi ng aking VC na nakabinbin ang Activation?",
+        "ten": "Ano ang ibig mong sabihin sa Activated for Online login?",
+        "eleven": "Paano i-activate ang isang card para sa online na pag-login?",
+        "twelve": "Paano magbahagi ng card?",
+        "thirteen": "Paano mag-alis ng card mula sa wallet?",
+        "fourteen": "Paano tingnan ang mga log ng aktibidad?",
+        "fifteen": "Ano ang mangyayari kapag binago ang biometric ng Android keystore?"
+      },
+      "backup": {
+        "one": "Ano ang data backup? ",
+        "two": "Bakit ako kukuha ng backup?",
+        "three": "Paano i-backup sa iyong google account?",
+        "four": "Paano mag-backup sa iyong iCloud?",
+        "five": "Dapat ko bang palaging ibigay ang parehong email ID?",
+        "six": "Paano ko maibabalik ang backup na kinuha ko?",
+        "seven": "Bakit ako nakakakuha ng error na \"no backup file found\"?",
+        "eight": "Ano ang mangyayari kapag I-clear ko ang Storage ng INJI app mula sa mga setting ng device?"
+      }
+    },
+    "answers": {
+      "inji": {
+        "one": "Ang ID ay anumang dokumento na maaaring patunayan ang pagkakakilanlan ng isang tao. ",
+        "two": "Sa konteksto ng MOSIP, ang iba't ibang ID ay UIN, VID, at AID. ",
+        "three-a": "Bilang bahagi ng proseso ng pagpapatala (pagpaparehistro), kapag matagumpay na nairehistro ang demograpikong impormasyon at biometrics ng residente, isang registration ID (AID) ang inilalaan sa residente. ",
+        "three-b": "Sa matagumpay na pagproseso, ang isang Unique Identification Number (UIN) ay ilalaan sa residente at isang abiso ang ipapadala sa residente sa nakarehistrong numero ng telepono at/o email.",
+        "three-c": "Ang VID / Virtual ID ay isang alias identifier na na-configure para sa isang beses na paggamit at hindi nali-link. ",
+        "four": "Ang digital na kredensyal ay ang digital na bersyon ng iyong pisikal na Identity card",
+        "five": "Maaari kang makakuha ng iba't ibang serbisyo ng Pamahalaan at pribadong gamit ang iyong mga digital na kredensyal.",
+        "six": "Ang Nabe-verify na Kredensyal ay isang digitally signed na piraso ng impormasyon na kumakatawan sa isang pahayag na ginawa ng issuer tungkol sa isang paksa at karaniwang may kasamang mga detalye ng demograpiko. ",
+        "seven": "Maaaring ma-download ang mga ID sa INJI Mobile Wallet bilang Mga Nabe-verify na Kredensyal. ",
+        "eight": "Oo, maaari kang magdagdag ng maramihang mga card sa wallet sa pamamagitan ng pag-click sa pindutang ' ' sa Home page.",
+        "nine": "Kapag na-download na ang VC sa iyong wallet, hindi pa ito nakatali sa pagkakakilanlan ng user kung kaya't sinasabi ng iyong VC na Nakabinbin ang Aktibidad. ",
+        "ten-a": "1. Kapag matagumpay na na-binded ang VC sa wallet, makikita mo na ito ay Activated for Online login which means itong VC ay magagamit na para sa QR login process. ",
+        "ten-b": "2. Ang Q",
+        "eleven": "Pagkatapos matagumpay na magdagdag ng card sa wallet, mag-click sa 'Activation pending for Online login' sa card. ",
+        "twelve": "Mag-click sa pindutang 'Ibahagi' at i-scan ang QR code mula sa humihiling na partido. ",
+        "thirteen-a": "Maaari kang mag-click sa ...(meatballs menu) sa isang card sa Home page at piliin ang Remove from Wallet na opsyon upang alisin ang isang card mula sa wallet. ",
+        "thirteen-b": " Pakitandaan na, maaaring i-download muli ang parehong card.",
+        "fourteen": "Sa Home page, mag-click sa 'Kasaysayan' upang tingnan ang mga detalye ng aktibidad ng user.",
+        "fifteen": "Ang Android keystore ay nagtataglay ng mahalagang impormasyon tulad ng mga pribadong key para sa mga patunay ng pagkakakilanlan. "
+      },
+      "backup": {
+        "one": "Kasama sa pag-backup ng data ang paggawa ng kopya ng iyong Mga Na-verify na Kredensyal na nasa iyong wallet sa iyong Google Drive/iCloud, na tinitiyak na sa kaganapan ng pagkawala ng data, maaari mong ibalik ang iyong mga file sa dati nilang estado.",
+        "two": "Ang pagkuha ng backup ay mahalaga para sa pagprotekta sa iyong data. ",
+        "three": " Una, tiyaking naka-activate ang isang Google Account sa iyong device. ",
+        "four": "Una, tiyaking nauugnay ang iyong iOS device sa isang apple account. ",
+        "five": "Para sa pagkakapare-pareho at seguridad, ipinapayong gamitin ang parehong email ID para sa mga backup. ",
+        "six": "Upang mag-restore ng backup, pumunta sa mga setting ng app, piliin ang opsyon sa pag-restore, at piliin ang backup na file. ",
+        "seven": "Maaaring mangyari ang error na ito kung walang mga backup na file na nauugnay sa ibinigay na email ID o kung ang mga backup na file ay nakaimbak sa ibang lokasyon. ",
+        "eight": "Pakitandaan na ang pagkilos na ito ay ginagawa nang maingat dahil nililimas nito ang data ng app na nangangahulugan na ang lahat ng iyong na-download na VC ay iki-clear. "
+      }
+    }
   },
   "AddVcModal": {
     "requestingCredential": "Humihiling ng kredensyal...",
     "errors": {
       "input": {
-        "empty": "Hindi maaaring walang laman ang input",
-        "invalidFormat": "Hindi tama ang format ng input"
+        "empty": "Pakilagay ang valid ID",
+        "invalidFormat": "Pakilagay ang valid {{idType}}"
       },
       "backend": {
         "invalidOtp": "Di-wasto ang OTP",
@@ -249,8 +277,8 @@
     "retrievingId": "Kinukuha ang ID",
     "errors": {
       "input": {
-        "empty": "Hindi maaaring walang laman ang input",
-        "invalidFormat": "Ang input format ay hindi tama"
+        "empty": "Pakilagay ang valid ID",
+        "invalidFormat": "Pakilagay ang valid AID"
       },
       "backend": {
         "invalidOtp": "Di-wasto ang OTP",
@@ -608,9 +636,12 @@
     "loadingSubtitle": "Naglo-load...",
     "errors": {
       "permissionDenied": {
-        "title": "Tinanggihan ang Pahintulot!",
-        "message": "Napansin namin na kinansela mo ang paggawa ng mga setting ng backup ng data. Lubos naming inirerekumenda na muling bisitahin ang mga setting ng pag-back up ng data upang matiyak ang availability ng iyong data.",
-        "helpText": "I-click ang \"I-configure ang Mga Setting\" upang i-set up ang pag-backup ng data ngayon, o \"Kanselahin\" upang bumalik sa screen ng mga setting."
+        "title": "Kinakailangan ang mga Pahintulot",
+        "message": "Upang magpatuloy sa pag-backup ng data, payagan ang pag-access sa iyong {{driveName}}. I-tap ang \"Allow Access\" para tapusin ang pag-setup, o i-tap ang \"Not Now\" para bumalik sa Settings.",
+        "actions": {
+          "allowAccess": "Payagan ang Access",
+          "notNow": "Hindi ngayon"
+        }
       },
       "noInternetConnection": {
         "title": "Pakisuri ang iyong koneksyon at subukang muli",
@@ -621,20 +652,22 @@
   "BackupAndRestoreBanner": {
     "backupSuccessful": "Ang iyong backup ay matagumpay!",
     "backupFailure": {
-      "networkError": "Dahil sa Hindi Matatag na Koneksyon, hindi namin nagawang isagawa ang pag-backup ng data. Pakisubukang muli sa ibang pagkakataon.",
+      "networkError": "Dahil sa hindi matatag na koneksyon sa internet, hindi kami nakapagsagawa ng pag-backup ng data. Subukang muli mamaya.",
       "technicalError": "Dahil sa Technical Error, hindi namin nagawang magsagawa ng pag-backup ng data. Subukang muli mamaya.",
+      "iCloudSignInError": "Ikinalulungkot namin na hindi makumpleto ang pag-backup ng data. ",
       "noDataForBackup": "Ikinalulungkot namin, ngunit walang data na magagamit upang i-back up sa ngayon.",
-      "storageLimitReached":"Hindi namin makumpleto ang proseso ng pag-backup dahil sa hindi sapat na espasyo sa storage sa iyong device. Mangyaring magbakante ng espasyo sa pamamagitan ng pagtanggal ng mga hindi kinakailangang file o app, at subukang muli."
+      "storageLimitReached": "Hindi namin makumpleto ang proseso ng pag-backup dahil sa hindi sapat na espasyo sa storage sa iyong device. Mangyaring magbakante ng espasyo sa pamamagitan ng pagtanggal ng mga hindi kinakailangang file o app, at subukang muli."
     },
-    "restoreSuccessful": "Ang iyong pag-restore ay matagumpay!",
+    "restoreSuccessful": "Matagumpay na naibalik ang iyong backup",
     "restoreFailure": {
-      "networkError": "Dahil sa Hindi Matatag na Koneksyon, hindi namin naibalik ang data. Subukang muli mamaya.",
-      "technicalError": "Dahil sa Technical Error, hindi namin naibalik ang data. Subukang muli mamaya."
+      "networkError": "Dahil sa hindi matatag na koneksyon sa internet, hindi namin nagawang magsagawa ng data restore. Subukang muli mamaya.",
+      "technicalError": "Dahil sa teknikal na error, hindi namin nagawang maisagawa ang pag-restore ng data. Subukang muli mamaya.",
+      "noBackupFile": "Walang backup na file"
     }
   },
   "AccountSelection": {
     "backupProcessInfo": "Ilang hakbang ka na lang mula sa pag-back up ng iyong data",
-    "cloudInfo": "Upang simulan ang pag-backup ng data, mangyaring mag-tap sa button na `Magpatuloy` upang i-link ang iyong Google Drive sa Inji.",
+    "cloudInfo": "Upang simulan ang pag-backup ng data, mangyaring mag-tap sa button na `Magpatuloy` upang i-link ang iyong {{driveName}} sa Inji.",
     "googleDriveTitle": "Google Drive",
     "loadingSubtitle": "Naglo-load...",
     "proceed": "Magpatuloy",
@@ -646,12 +679,12 @@
     "backupProgressState": "Isinasagawa ang pag-backup...",
     "lastBackupDetails": "Mga Detalye ng Huling Backup",
     "backupInProgress": "Maaari mo pa ring gamitin ang application habang isinasagawa ang pag-backup ng data. Ang pagsasara ng app ay magwawakas sa proseso ng pag-backup ng data.",
-    "noBackup": "I-backup ang iyong Data sa Google Drive. Maaari mong ibalik ang mga ito kapag na-install mong muli ang INJI.",
+    "noBackup": "I-backup ang iyong Data sa {{driveName}}. Maaari mong ibalik ang mga ito kapag na-install mong muli ang INJI.",
     "storage": "Ang backup ay maiimbak sa Google Drive na nauugnay sa iyong napiling gmail account.",
     "backup": "Backup",
     "size": "Size: ",
     "restore": "Ibalik",
-    "restoreInProgress": "Ibinabalik namin ang iyong data, mangyaring huwag isara ang application. Maaaring tumagal ito ng hanggang <X> minuto batay sa iyong data.",
+    "restoreInProgress": "Ibinabalik namin ang iyong data, mangyaring huwag isara ang application. Maaari mong ipagpatuloy ang paggamit ng application.",
     "restoreInfo": "Ibalik ang iyong data mula sa Google Drive",
     "driveSettings": "Mga Setting ng Google Drive",
     "successBanner": "Ang iyong backup ay matagumpay!",

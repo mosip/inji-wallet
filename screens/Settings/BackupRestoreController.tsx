@@ -6,9 +6,10 @@ import {
   selectIsBackUpRestoreFailure,
   selectIsBackUpRestoreSuccess,
   selectErrorReason,
+  selectIsCheckStorageAvailibility,
 } from '../../machines/backupRestore';
 import {GlobalContext} from '../../shared/GlobalContext';
-import {VcEvents} from '../../machines/vc';
+import {VcEvents} from '../../machines/VCItemMachine/vc';
 
 export function useBackupRestoreScreen() {
   const {appService} = useContext(GlobalContext);
@@ -28,6 +29,14 @@ export function useBackupRestoreScreen() {
     isBackUpRestoreFailure: useSelector(
       backupRestoreService,
       selectIsBackUpRestoreFailure,
+    ),
+    DOWNLOAD_UNSYNCED_BACKUP_FILES: () =>
+      backupRestoreService?.send(
+        BackupRestoreEvents.DOWNLOAD_UNSYNCED_BACKUP_FILES(),
+      ),
+    isCheckStorageAvailibility: useSelector(
+      backupRestoreService,
+      selectIsCheckStorageAvailibility,
     ),
     BACKUP_RESTORE: () => {
       backupRestoreService.send(BackupRestoreEvents.BACKUP_RESTORE());
