@@ -370,8 +370,8 @@ export const DefaultTheme = {
       height: 173.276,
     },
     logo: {
-      height: 40,
-      width: 40,
+      height: 65,
+      width: 65,
     },
     issuerLogo: {
       resizeMode: 'contain',
@@ -379,8 +379,8 @@ export const DefaultTheme = {
       height: 60,
     },
     vcDetailsLogo: {
-      height: 50,
-      width: 50,
+      height: 65,
+      width: 65,
     },
     homeCloseCardDetailsHeader: {
       flex: 1,

@@ -375,8 +375,8 @@ export const PurpleTheme = {
       height: 173.276,
     },
     logo: {
-      width: 40,
-      height: 40,
+      height: 65,
+      width: 65,
     },
     issuerLogo: {
       resizeMode: 'contain',
@@ -384,8 +384,8 @@ export const PurpleTheme = {
       height: 60,
     },
     vcDetailsLogo: {
-      width: 50,
-      height: 50,
+      height: 65,
+      width: 65,
     },
     homeCloseCardDetailsHeader: {
       flex: 1,
