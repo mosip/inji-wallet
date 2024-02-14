@@ -24,13 +24,27 @@ import {
 } from '../machines/VCItemMachine/EsignetMosipVCItem/EsignetMosipVCItemMachine';
 import {selectActivities} from '../machines/activityLog';
 import {GlobalContext} from '../shared/GlobalContext';
-import {useContext} from 'react';
+import {useContext, useState} from 'react';
 import {VCMetadata} from '../shared/VCMetadata';
+import {ScanEvents} from '../machines/bleShare/scan/scanMachine';
+import {
+  BOTTOM_TAB_ROUTES,
+  SCAN_ROUTES,
+  ScanStackParamList,
+} from '../routes/routesConstants';
+import {NavigationProp, useNavigation} from '@react-navigation/native';
+import {MainBottomTabParamList} from '../routes/main';
+import {selectIsScanning} from '../machines/bleShare/scan/selectors';
+
+type ScanLayoutNavigation = NavigationProp<
+  ScanStackParamList & MainBottomTabParamList
+>;
 
 export function useKebabPopUp(props) {
   const service = props.service as
     | ActorRefFrom<typeof ExistingMosipVCItemMachine>
     | ActorRefFrom<typeof EsignetMosipVCItemMachine>;
+  const navigation = useNavigation<ScanLayoutNavigation>();
   const vcEvents =
     props.vcKey !== undefined && props.vcMetadata.isFromOpenId4VCI()
       ? EsignetMosipVCItemEvents
@@ -71,6 +85,12 @@ export function useKebabPopUp(props) {
 
   const {appService} = useContext(GlobalContext);
   const activityLogService = appService.children.get('activityLog');
+  const scanService = appService.children.get('scan');
+  const isScanning = useSelector(scanService, selectIsScanning);
+
+  const GOTO_SCANSCREEN = () => {
+    navigation.navigate(BOTTOM_TAB_ROUTES.share);
+  };
 
   return {
     isPinned,
@@ -78,12 +98,21 @@ export function useKebabPopUp(props) {
     KEBAB_POPUP,
     ADD_WALLET_BINDING_ID,
     CONFIRM,
+    GOTO_SCANSCREEN,
     DISMISS,
     REMOVE,
     CANCEL,
     INPUT_OTP,
     RESEND_OTP,
     SHOW_ACTIVITY,
+    SELECT_VC_ITEM: (
+      vcRef: ActorRefFrom<typeof ExistingMosipVCItemMachine>,
+    ) => {
+      const {serviceRefs, ...vcData} = vcRef.getSnapshot().context;
+      console.log('VC Data', vcData.id);
+      scanService.send(ScanEvents.SELECT_VC(vcData));
+    },
+    isScanning,
     isBindingWarning,
     isAcceptingOtpInput,
     isWalletBindingError,

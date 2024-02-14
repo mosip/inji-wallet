@@ -214,6 +214,7 @@ export function useScanLayout() {
 
   useEffect(() => {
     if (isDone) {
+      //TODO: This is not getting used and has a invalid state
       changeTabBarVisible('flex');
       navigation.navigate(BOTTOM_TAB_ROUTES.home);
     } else if (isReviewing) {
@@ -230,6 +231,7 @@ export function useScanLayout() {
 
   return {
     isInvalid,
+    isReviewing,
     isDone,
     GOTO_HOME,
     GOTO_HISTORY,

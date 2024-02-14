@@ -51,7 +51,7 @@ export function getTelemetryConfigData() {
     batchsize: 5,
     host: OBSRV_HOST,
     endpoint: '/obsrv/v1/data/mosip-dataset',
-    telemetryDebugEnabled: true,
+    telemetryDebugEnabled: false,
     enableValidation: true,
     schemaBaseUrl: 'http://mosip.io/telemetry/',
   };

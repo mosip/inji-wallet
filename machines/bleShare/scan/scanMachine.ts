@@ -163,6 +163,10 @@ export const scanMachine =
         DISMISS: {
           target: '#scan.reviewing.disconnect',
         },
+        SELECT_VC: {
+          actions: 'setSelectedVc',
+          target: 'disconnectDevice',
+        },
       },
       states: {
         inactive: {

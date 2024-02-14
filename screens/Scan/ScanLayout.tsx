@@ -41,7 +41,7 @@ export const ScanLayout: React.FC = () => {
   return (
     <React.Fragment>
       <ScanStack.Navigator initialRouteName="ScanScreen">
-        {!controller.isDone && (
+        {controller.isReviewing && (
           <ScanStack.Screen
             name={SCAN_ROUTES.SendVcScreen}
             component={SendVcScreen}

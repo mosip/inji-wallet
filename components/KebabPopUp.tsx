@@ -34,7 +34,7 @@ export const KebabPopUp: React.FC<KebabPopUpProps> = props => {
         />
       )}
       <Overlay
-        isVisible={props.isVisible}
+        isVisible={props.isVisible && !controller.isScanning}
         onBackdropPress={props.onDismiss}
         overlayStyle={Theme.KebabPopUpStyles.kebabPopUp}>
         <Row style={Theme.KebabPopUpStyles.kebabHeaderStyle}>
