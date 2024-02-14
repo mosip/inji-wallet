@@ -3,7 +3,7 @@
 export interface Typegen0 {
   '@@xstate/typegen': true;
   internalEvents: {
-    'xstate.init': {type: 'xstate.init'};
+    'xstate.init': { type: 'xstate.init' };
   };
   invokeSrcNameMap: {};
   missingImplementations: {
@@ -17,11 +17,11 @@ export interface Typegen0 {
     getReceivedVcsResponse: 'GET_RECEIVED_VCS';
     getVcItemResponse: 'GET_VC_ITEM';
     loadMyVcs:
-      | 'DOWNLOAD_LIMIT_EXPIRED'
-      | 'REFRESH_MY_VCS'
-      | 'REMOVE_TAMPERED_VCS'
-      | 'STORE_RESPONSE'
-      | 'xstate.init';
+    | 'DOWNLOAD_LIMIT_EXPIRED'
+    | 'REFRESH_MY_VCS'
+    | 'REMOVE_TAMPERED_VCS'
+    | 'STORE_RESPONSE'
+    | 'xstate.init';
     loadReceivedVcs: 'REFRESH_RECEIVED_VCS' | 'STORE_RESPONSE';
     logTamperedVCsremoved: 'REMOVE_TAMPERED_VCS';
     prependToMyVcs: 'VC_ADDED';
@@ -30,8 +30,8 @@ export interface Typegen0 {
     removeDownloadingFailedVcsFromMyVcs: 'STORE_RESPONSE';
     removeTamperedVcs: 'REMOVE_TAMPERED_VCS';
     removeVcFromInProgressDownlods:
-      | 'DOWNLOAD_LIMIT_EXPIRED'
-      | 'REMOVE_VC_FROM_IN_PROGRESS_DOWNLOADS';
+    | 'DOWNLOAD_LIMIT_EXPIRED'
+    | 'REMOVE_VC_FROM_IN_PROGRESS_DOWNLOADS';
     removeVcFromMyVcs: 'REMOVE_VC_FROM_CONTEXT';
     resetAreAllVcsDownloaded: 'RESET_ARE_ALL_VCS_DOWNLOADED';
     resetDownloadFailedVcs: 'STORE_RESPONSE';
@@ -50,27 +50,27 @@ export interface Typegen0 {
   eventsCausingGuards: {};
   eventsCausingServices: {};
   matchesStates:
-    | 'deletingFailedVcs'
-    | 'init'
-    | 'init.myVcs'
-    | 'init.receivedVcs'
-    | 'ready'
-    | 'ready.myVcs'
-    | 'ready.myVcs.idle'
-    | 'ready.myVcs.refreshing'
-    | 'ready.receivedVcs'
-    | 'ready.receivedVcs.idle'
-    | 'ready.receivedVcs.refreshing'
-    | 'tamperedVCs'
+  | 'deletingFailedVcs'
+  | 'init'
+  | 'init.myVcs'
+  | 'init.receivedVcs'
+  | 'ready'
+  | 'ready.myVcs'
+  | 'ready.myVcs.idle'
+  | 'ready.myVcs.refreshing'
+  | 'ready.receivedVcs'
+  | 'ready.receivedVcs.idle'
+  | 'ready.receivedVcs.refreshing'
+  | 'tamperedVCs'
+  | {
+    init?: 'myVcs' | 'receivedVcs';
+    ready?:
+    | 'myVcs'
+    | 'receivedVcs'
     | {
-        init?: 'myVcs' | 'receivedVcs';
-        ready?:
-          | 'myVcs'
-          | 'receivedVcs'
-          | {
-              myVcs?: 'idle' | 'refreshing';
-              receivedVcs?: 'idle' | 'refreshing';
-            };
-      };
+      myVcs?: 'idle' | 'refreshing';
+      receivedVcs?: 'idle' | 'refreshing';
+    };
+  };
   tags: never;
 }
