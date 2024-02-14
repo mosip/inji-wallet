@@ -12,7 +12,7 @@ import Cloud, {
   ProfileInfo,
   SignInResult,
   isSignedInResult,
-} from '../../shared/googleCloudUtils';
+} from '../../shared/CloudBackupAndRestoreUtils';
 import {ErrorMessage} from '../../shared/openId4VCI/Utils';
 import {TelemetryConstants} from '../../shared/telemetry/TelemetryConstants';
 import {

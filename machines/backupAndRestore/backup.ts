@@ -13,7 +13,7 @@ import {
   compressAndRemoveFile,
   writeToBackupFile,
 } from '../../shared/fileStorage';
-import Cloud from '../../shared/googleCloudUtils';
+import Cloud from '../../shared/CloudBackupAndRestoreUtils';
 import {isMinimumLimitForBackupReached} from '../../shared/storage';
 import {TelemetryConstants} from '../../shared/telemetry/TelemetryConstants';
 import {

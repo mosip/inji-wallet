@@ -42,7 +42,9 @@ import {TelemetryConstants} from '../../../shared/telemetry/TelemetryConstants';
 
 import {API_URLS} from '../../../shared/api';
 import {BackupEvents} from '../../backupAndRestore/backup';
-import Cloud, {isSignedInResult} from '../../../shared/googleCloudUtils';
+import Cloud, {
+  isSignedInResult,
+} from '../../../shared/CloudBackupAndRestoreUtils';
 
 const model = createModel(
   {

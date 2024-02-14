@@ -8,7 +8,7 @@ import fileStorage, {
 } from '../shared/fileStorage';
 import Storage from '../shared/storage';
 import {StoreEvents} from './store';
-import Cloud from '../shared/googleCloudUtils';
+import Cloud from '../shared/CloudBackupAndRestoreUtils';
 import {TelemetryConstants} from '../shared/telemetry/TelemetryConstants';
 import {
   sendStartEvent,
