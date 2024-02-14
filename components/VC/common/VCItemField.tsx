@@ -2,7 +2,6 @@ import {Column, Text} from '../../ui';
 import {Theme} from '../../ui/styleUtils';
 import React from 'react';
 import {setTextColor} from './VCUtils';
-import {Tooltip} from 'react-native-elements';
 
 export const VCItemFieldName = ({fieldName, wellknown}) => {
   return (
@@ -10,10 +9,8 @@ export const VCItemFieldName = ({fieldName, wellknown}) => {
       {fieldName && (
         <Text
           testID={`${fieldName}Title`}
-          weight="regular"
-          size="smaller"
           {...setTextColor(wellknown)}
-          style={[Theme.Styles.subtitle]}>
+          style={[Theme.Styles.subtitle, {fontFamily: 'Inter_600SemiBold'}]}>
           {fieldName}
         </Text>
       )}
@@ -26,11 +23,11 @@ export const VCItemFieldValue = ({fieldName, fieldValue, wellknown}) => {
     <>
       <Text
         testID={`${fieldName}Value`}
-        weight="semibold"
         style={[
           Theme.Styles.subtitle,
           setTextColor(wellknown),
           {marginTop: 5},
+          {fontFamily: 'Inter_600SemiBold'},
         ]}>
         {fieldValue}
       </Text>

@@ -11,6 +11,7 @@ import {
   createExistingMosipVCItemMachine,
   ExistingMosipVCItemEvents,
   selectIsSavingFailedInIdle,
+  selectIsVcVerified,
 } from '../../../machines/VCItemMachine/ExistingMosipVCItem/ExistingMosipVCItemMachine';
 import {
   createEsignetMosipVCItemMachine,
@@ -46,6 +47,10 @@ export function useVcItemController(
   let DISMISS = () => service.send(ExistingMosipVCItemEvents.DISMISS());
   let KEBAB_POPUP = () => service.send(ExistingMosipVCItemEvents.KEBAB_POPUP());
   const isSavingFailedInIdle = useSelector(service, selectIsSavingFailedInIdle);
+  let isVerified: undefined | boolean;
+  if (!vcMetadata.isFromOpenId4VCI()) {
+    isVerified = useSelector(service, selectIsVcVerified);
+  }
   const storeErrorTranslationPath = 'errors.savingFailed';
   const generatedOn = useSelector(service, selectGeneratedOn);
   if (vcMetadata.isFromOpenId4VCI()) {
@@ -63,5 +68,6 @@ export function useVcItemController(
     isSavingFailedInIdle,
     storeErrorTranslationPath,
     generatedOn,
+    isVerified,
   };
 }

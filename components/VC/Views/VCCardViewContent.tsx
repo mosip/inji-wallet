@@ -15,10 +15,10 @@ import {
   setBackgroundColour,
   setTextColor,
 } from '../common/VCUtils';
-import VerifiedIcon from '../../VerifiedIcon';
 import {VCItemFieldValue} from '../common/VCItemField';
 import {useTranslation} from 'react-i18next';
 import {WalletBinding} from '../../../screens/Home/MyVcs/WalletBinding';
+import {VCVerification} from '../../VCVerification';
 
 export const VCCardViewContent: React.FC<
   ExistingMosipVCItemContentProps | EsignetMosipVCItemContentProps
@@ -62,17 +62,12 @@ export const VCCardViewContent: React.FC<
               )}
               wellknown={props.wellknown}
             />
-
-            <VCItemFieldValue
-              key={'status'}
-              fieldName={t('status')}
-              fieldValue={
-                !isVCLoaded(props.credential, props.fields) ? null : (
-                  <VerifiedIcon />
-                )
-              }
-              wellknown={props.wellknown}
-            />
+            <Row>
+              <VCVerification
+                wellknown={props.wellknown}
+                isVerified={props.isVerified}
+              />
+            </Row>
           </Column>
 
           {!isVCLoaded(props.credential, props.fields)
@@ -136,6 +131,7 @@ export interface ExistingMosipVCItemContentProps {
   DISMISS: () => {};
   isKebabPopUp: boolean;
   vcMetadata: VCMetadata;
+  isVerified?: boolean;
 }
 
 export interface EsignetMosipVCItemContentProps {
@@ -157,6 +153,7 @@ export interface EsignetMosipVCItemContentProps {
   DISMISS: () => {};
   isKebabPopUp: boolean;
   vcMetadata: VCMetadata;
+  isVerified?: boolean;
 }
 
 VCCardViewContent.defaultProps = {

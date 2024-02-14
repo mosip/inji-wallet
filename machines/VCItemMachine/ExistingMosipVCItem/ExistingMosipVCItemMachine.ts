@@ -1536,3 +1536,7 @@ export function selectRequestBindingOtp(state: State) {
 export function selectIsSavingFailedInIdle(state: State) {
   return state.matches('checkingServerData.savingFailed.idle');
 }
+
+export function selectIsVcVerified(state: State) {
+  return state.context.isVerified;
+}

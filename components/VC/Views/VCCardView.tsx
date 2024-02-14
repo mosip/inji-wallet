@@ -29,7 +29,7 @@ export const VCCardView: React.FC<
     isSavingFailedInIdle,
     storeErrorTranslationPath,
     generatedOn,
-
+    isVerified,
     DISMISS,
     KEBAB_POPUP,
   } = useVcItemController(props);
@@ -99,6 +99,9 @@ export const VCCardView: React.FC<
           isKebabPopUp={isKebabPopUp}
           DISMISS={DISMISS}
           KEBAB_POPUP={KEBAB_POPUP}
+          isVerified={
+            isVerified || VCMetadata.fromVC(props.vcMetadata).isFromOpenId4VCI()
+          }
         />
       </Pressable>
       <ErrorMessageOverlay

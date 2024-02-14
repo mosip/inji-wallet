@@ -13,6 +13,7 @@ import {SvgImage} from '../../ui/svg';
 import {CREDENTIAL_REGISTRY_EDIT} from 'react-native-dotenv';
 import {getIDType} from '../../../shared/openId4VCI/Utils';
 import {VCVerification} from '../../VCVerification';
+import {VCMetadata} from '../../../shared/VCMetadata';
 
 export const CARD_VIEW_DEFAULT_FIELDS = ['fullName'];
 export const DETAIL_VIEW_DEFAULT_FIELDS = [
@@ -48,7 +49,15 @@ export const getFieldValue = (
   }
   switch (field) {
     case 'status':
-      return <VCVerification wellknown={wellknown} />;
+      return (
+        <VCVerification
+          wellknown={wellknown}
+          isVerified={
+            props.vc?.isVerified ||
+            VCMetadata.fromVC(props.vc?.vcMetadata).isFromOpenId4VCI()
+          }
+        />
+      );
     case 'idType':
       return getIDType(verifiableCredential);
     case 'credentialRegistry':
