@@ -350,7 +350,7 @@
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 8;
 				DEVELOPMENT_TEAM = "";
-				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = LD7H4CQ5P9;
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = V2ABX7953Z;
 				ENABLE_BITCODE = NO;
 				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -392,7 +392,7 @@
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 8;
 				DEVELOPMENT_TEAM = "";
-				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = LD7H4CQ5P9;
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = V2ABX7953Z;
 				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
 				INFOPLIST_FILE = Inji/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
