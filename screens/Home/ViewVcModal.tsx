@@ -27,7 +27,6 @@ import {KebabPopUp} from '../../components/KebabPopUp';
 import {SvgImage} from '../../components/ui/svg';
 import {VCMetadata} from '../../shared/VCMetadata';
 import {WalletBinding} from './MyVcs/WalletBinding';
-import {ExistingMosipVCItemEvents} from '../../machines/VCItemMachine/ExistingMosipVCItem/ExistingMosipVCItemMachine';
 
 export const ViewVcModal: React.FC<ViewVcModalProps> = props => {
   const {t} = useTranslation('ViewVcModal');
@@ -72,9 +71,7 @@ export const ViewVcModal: React.FC<ViewVcModalProps> = props => {
           }
         />
         <Pressable
-          onPress={() =>
-            props.vcItemActor.send(ExistingMosipVCItemEvents.KEBAB_POPUP())
-          }
+          onPress={() => props.vcItemActor.send('KEBAB_POPUP')}
           accessible={false}>
           <KebabPopUp
             icon={SvgImage.kebabIcon()}
@@ -86,9 +83,7 @@ export const ViewVcModal: React.FC<ViewVcModalProps> = props => {
               props.vcItemActor.getSnapshot()?.context
                 .isMachineInKebabPopupState
             }
-            onDismiss={() =>
-              props.vcItemActor.send(ExistingMosipVCItemEvents.DISMISS())
-            }
+            onDismiss={() => props.vcItemActor.send('DISMISS')}
             service={props.vcItemActor}
           />
         </Pressable>

@@ -350,11 +350,8 @@ export const EsignetMosipVCItemMachine = model.createMachine(
         },
       },
       kebabPopUp: {
-        entry: assign({
-          isMachineInKebabPopupState: () => {
-            return true;
-          },
-        }),
+        entry: assign({isMachineInKebabPopupState: () => true}),
+        exit: assign({isMachineInKebabPopupState: () => false}),
         on: {
           DISMISS: {
             actions: assign({
@@ -367,23 +364,13 @@ export const EsignetMosipVCItemMachine = model.createMachine(
           },
           PIN_CARD: {
             target: '#vc-item-openid4vci.pinCard',
-            actions: [
-              'setPinCard',
-              assign({
-                isMachineInKebabPopupState: () => false,
-              }),
-            ],
+            actions: 'setPinCard',
           },
           SHOW_ACTIVITY: {
             target: '#vc-item-openid4vci.kebabPopUp.showActivities',
           },
           REMOVE: {
-            actions: [
-              'setVcKey',
-              assign({
-                isMachineInKebabPopupState: () => false,
-              }),
-            ],
+            actions: 'setVcKey',
             target: '#vc-item-openid4vci.kebabPopUp.removeWallet',
           },
         },
@@ -392,7 +379,7 @@ export const EsignetMosipVCItemMachine = model.createMachine(
           idle: {},
           showActivities: {
             on: {
-              DISMISS: '#vc-item-openid4vci.kebabPopUp',
+              DISMISS: '#vc-item-openid4vci',
             },
           },
           removeWallet: {
@@ -401,7 +388,7 @@ export const EsignetMosipVCItemMachine = model.createMachine(
                 target: 'removingVc',
               },
               CANCEL: {
-                target: 'idle',
+                target: '#vc-item-openid4vci',
               },
             },
           },

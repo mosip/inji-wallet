@@ -341,7 +341,7 @@ export const ExistingMosipVCItemMachine =
                   target: 'removingVc',
                 },
                 CANCEL: {
-                  target: 'idle',
+                  target: '#vc-item',
                 },
               },
             },
