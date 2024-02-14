@@ -3,10 +3,16 @@
 export interface Typegen0 {
   '@@xstate/typegen': true;
   internalEvents: {
+    'done.invoke.app.init.intent:invocation[0]': {
+      type: 'done.invoke.app.init.intent:invocation[0]';
+      data: unknown;
+      __tip: 'See the XState TS docs to learn how to strongly type this.';
+    };
     'xstate.init': {type: 'xstate.init'};
   };
   invokeSrcNameMap: {
     checkFocusState: 'done.invoke.app.ready.focus:invocation[0]';
+    checkIntent: 'done.invoke.app.init.intent:invocation[0]';
     checkNetworkState: 'done.invoke.app.ready.network:invocation[0]';
     getAppInfo: 'done.invoke.app.init.info:invocation[0]';
   };
@@ -23,20 +29,15 @@ export interface Typegen0 {
     loadEsignetHostFromConstants: 'STORE_RESPONSE';
     loadEsignetHostFromStorage: 'READY';
     logServiceEvents: 'READY';
-    logStoreEvents:
-      | 'KEY_INVALIDATE_ERROR'
-      | 'RESET_KEY_INVALIDATE_ERROR_DISMISS'
-      | 'xstate.init';
+    logStoreEvents: 'done.invoke.app.init.intent:invocation[0]';
     requestDeviceInfo: 'REQUEST_DEVICE_INFO';
     resetKeyInvalidateError: 'READY' | 'RESET_KEY_INVALIDATE_ERROR_DISMISS';
     setAppInfo: 'APP_INFO_RECEIVED';
+    setIntent: 'done.invoke.app.init.intent:invocation[0]';
     setIsDecryptError: 'DECRYPT_ERROR';
     setIsReadError: 'ERROR';
     spawnServiceActors: 'READY';
-    spawnStoreActor:
-      | 'KEY_INVALIDATE_ERROR'
-      | 'RESET_KEY_INVALIDATE_ERROR_DISMISS'
-      | 'xstate.init';
+    spawnStoreActor: 'done.invoke.app.init.intent:invocation[0]';
     unsetIsDecryptError: 'DECRYPT_ERROR_DISMISS' | 'READY';
     unsetIsReadError: 'READY';
     updateKeyInvalidateError: 'ERROR' | 'KEY_INVALIDATE_ERROR';
@@ -45,6 +46,10 @@ export interface Typegen0 {
   eventsCausingGuards: {};
   eventsCausingServices: {
     checkFocusState: 'APP_INFO_RECEIVED';
+    checkIntent:
+      | 'KEY_INVALIDATE_ERROR'
+      | 'RESET_KEY_INVALIDATE_ERROR_DISMISS'
+      | 'xstate.init';
     checkNetworkState: 'APP_INFO_RECEIVED';
     getAppInfo: 'STORE_RESPONSE';
   };
@@ -52,6 +57,7 @@ export interface Typegen0 {
     | 'init'
     | 'init.credentialRegistry'
     | 'init.info'
+    | 'init.intent'
     | 'init.services'
     | 'init.store'
     | 'ready'
@@ -65,7 +71,7 @@ export interface Typegen0 {
     | 'ready.network.online'
     | 'waiting'
     | {
-        init?: 'credentialRegistry' | 'info' | 'services' | 'store';
+        init?: 'credentialRegistry' | 'info' | 'intent' | 'services' | 'store';
         ready?:
           | 'focus'
           | 'network'

@@ -38,6 +38,7 @@ import {
   sendStartEvent,
 } from '../../../shared/telemetry/TelemetryUtils';
 import {TelemetryConstants} from '../../../shared/telemetry/TelemetryConstants';
+import ODKIntentModule from '../../../lib/react-native-odk-intent/ODKIntentModule';
 // import { verifyPresentation } from '../shared/vcjs/verifyPresentation';
 
 const {verifier, EventTypes, VerificationStatus} = tuvali;
@@ -53,6 +54,7 @@ const model = createModel(
     loggers: [] as EmitterSubscription[],
     receiveLogType: '' as ActivityLogType,
     readyForBluetoothStateCheck: false,
+    isRequestIntent: false,
   },
   {
     events: {
@@ -433,9 +435,15 @@ export const requestMachine =
                 },
               },
               on: {
-                DISMISS: {
-                  target: 'displayingIncomingVC',
-                },
+                DISMISS: [
+                  {
+                    cond: 'isRequestIntent',
+                    actions: ['sendVcDataIntent'],
+                  },
+                  {
+                    target: 'displayingIncomingVC',
+                  },
+                ],
               },
             },
             rejected: {
@@ -803,6 +811,22 @@ export const requestMachine =
             ),
           );
         },
+
+        sendVcDataIntent: context => {
+          const {verifiableCredential} = context.incomingVc;
+          const {credentialSubject: subject} = verifiableCredential;
+
+          ODKIntentModule.sendBundleResult({
+            // biometrics: subject.biometrics,
+            date_of_birth: subject.dateOfBirth,
+            email: subject.email,
+            full_name: subject.fullName,
+            issuance_date: verifiableCredential.issuanceDate,
+            issuer: verifiableCredential.issuer,
+            phone: subject.phone,
+            uin: subject.UIN,
+          });
+        },
       },
 
       services: {
@@ -964,6 +988,8 @@ export const requestMachine =
         },
 
         isMinimumStorageLimitReached: (_context, event) => Boolean(event.data),
+
+        isRequestIntent: context => context.isRequestIntent,
       },
 
       delays: {
@@ -975,10 +1001,14 @@ export const requestMachine =
 
 type State = StateFrom<typeof requestMachine>;
 
-export function createRequestMachine(serviceRefs: AppServices) {
+export function createRequestMachine(
+  serviceRefs: AppServices,
+  isRequestIntent = false,
+) {
   return requestMachine.withContext({
     ...requestMachine.context,
     serviceRefs,
+    isRequestIntent,
   });
 }
 
