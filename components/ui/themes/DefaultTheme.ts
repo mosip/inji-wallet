@@ -694,6 +694,9 @@ export const DefaultTheme = {
       fontFamily: 'Inter_600SemiBold',
     },
     dismiss: {paddingLeft: 9},
+    info: {
+      backgroundColor: Colors.Green,
+    },
     success: {
       backgroundColor: Colors.Green,
     },

@@ -759,6 +759,7 @@
     }
   },
   "BackupAndRestoreBanner": {
+    "backupInProgress": "Data backup is in progress. Please do not close the application.",
     "backupSuccessful": "Your backup was successful!",
     "backupFailure": {
       "networkError": "Due to unstable internet connection, we were unable to perform data backup. Please try again later.",

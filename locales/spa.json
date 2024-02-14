@@ -721,6 +721,7 @@
     }
   },
   "BackupAndRestoreBanner": {
+    "backupInProgress": "La copia de seguridad de datos está en progreso. Por favor no cierre la aplicación.",
     "backupSuccessful": "¡Su copia de seguridad fue exitosa!",
     "backupFailure": {
       "networkError": "Debido a una conexión a Internet inestable, no pudimos realizar una copia de seguridad de los datos. Por favor, inténtelo de nuevo más tarde.",

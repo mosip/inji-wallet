@@ -754,6 +754,7 @@
     }
   },
   "BackupAndRestoreBanner": {
+    "backupInProgress": "Kasalukuyang isinasagawa ang backup ng data. Mangyaring huwag isara ang application.",
     "backupSuccessful": "Ang iyong backup ay matagumpay!",
     "backupFailure": {
       "networkError": "Dahil sa hindi matatag na koneksyon sa internet, hindi kami nakapagsagawa ng pag-backup ng data. Subukang muli mamaya.",
