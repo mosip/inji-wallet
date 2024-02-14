@@ -20,6 +20,7 @@ import OtpVerificationIcon from '../../assets/Otp_Verification_Icon.svg';
 import FlipCameraIcon from '../../assets/Flip_Camera_Icon.svg';
 import CameraCaptureIcon from '../../assets/Camera_Capture_Icon.svg';
 import SuccessLogo from '../../assets/Success_Message_Icon1.svg';
+import ErrorLogo from '../../assets/Error_Message_Icon.svg';
 import NoInternetConnection from '../../assets/No_Internet_Connection.svg';
 import SomethingWentWrong from '../../assets/Something_Went_Wrong.svg';
 import MagnifierZoom from '../../assets/Magnifier_Zoom.svg';
@@ -255,6 +256,10 @@ export class SvgImage {
 
   static SuccessLogo() {
     return <SuccessLogo {...testIDProps('SuccessLogo')} />;
+  }
+
+  static ErrorLogo() {
+    return <ErrorLogo {...testIDProps('ErrorLogo')} />;
   }
 
   static PermissionDenied() {

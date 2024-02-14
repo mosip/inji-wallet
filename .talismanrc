@@ -188,7 +188,23 @@ fileignoreconfig:
     checksum: 75b07071aef4278f40f16861232b922e5ee8594efc9467984b072966fa7793b8
   - filename: machines/backupAndRestore/backupAndRestoreSetup.typegen.ts
     checksum: 76e81749435d83e4cd222ebb91245d1c6baaab7814d9e7899298ca8ca55c97fb
+  - filename: package-lock.json
+    checksum: c1e628b384b35598c9741401f4e2ad0f5cd3e9b3dff0bee23a389f0590681593
+  - filename: injitest/README.md
+    checksum: 82974a6b9363512472272245e9b433f92e63377e58ba306980876b745181a09c
+  - filename: machines/backupAndRestore/backup.ts
+    checksum: 71cba6237f203a4a8df931a1b02669351466657f64fb6690545248fbad62f8b8
+  - filename: machines/backupAndRestore/backup.typegen.ts
+    checksum: 8811354a68d23e6deb91b1d43347aa70b3ef4467d36276269bdf34e9be411dce
   - filename: machines/backupAndRestore/backupAndRestoreSetup.ts
     checksum: 397f2076504f851a981b0deff6eeac30041c775ee1c57b51e328fc09d52ef43e
-    version: ""
+  - filename: machines/backupAndRestore/backupAndRestoreSetup.typegen.ts
+    checksum: dd5dc9c42800328c268f3e6d6c96a16e9686dbfa59735e721250dae3ce37e009
+  - filename: ios/Podfile.lock
+    checksum: 235f31beadf3833ac763ed1b79e00f588e56990873806627b5abf8643992336a
+  - filename: machines/backupAndRestore/backup.typegen.ts
+    checksum: 8811354a68d23e6deb91b1d43347aa70b3ef4467d36276269bdf34e9be411dce
+  - filename: machines/backupAndRestore/backupAndRestoreSetup.typegen.ts
+    checksum: dd5dc9c42800328c268f3e6d6c96a16e9686dbfa59735e721250dae3ce37e009
+  version: ""
 

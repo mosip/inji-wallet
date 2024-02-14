@@ -51,10 +51,10 @@ export function useBackupAndRestoreSetup() {
         );
       }
     },
-      shouldTriggerAutoBackup: useSelector(
-          service,
-          selectShouldTriggerAutoBackup,
-        ),
+    shouldTriggerAutoBackup: useSelector(
+      service,
+      selectShouldTriggerAutoBackup,
+    ),
     PROCEED_ACCOUNT_SELECTION: () =>
       service.send(BackupAndRestoreSetupEvents.PROCEED()),
     GO_BACK: () => service.send(BackupAndRestoreSetupEvents.GO_BACK()),
