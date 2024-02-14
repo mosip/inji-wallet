@@ -18,18 +18,21 @@ import {selectIsBackUpAndRestoreExplored} from '../../machines/settings';
 import {SettingsEvents} from '../../machines/settings';
 
 export function useBackupAndRestoreSetup() {
+  const {appService} = useContext(GlobalContext);
+  const settingsService = appService.children.get('settings');
+  const storeService = appService.children.get('store');
   const machine = useRef(
     backupAndRestoreSetupMachine.withContext({
       ...backupAndRestoreSetupMachine.context,
+      serviceRefs: {settings: settingsService, store: storeService},
     }),
   );
   const service = useInterpret(machine.current);
-  const {appService} = useContext(GlobalContext);
-  const settingsService = appService.children.get('settings');
   const isBackupAndRestoreExplored = useSelector(
     settingsService,
     selectIsBackUpAndRestoreExplored,
   );
+
   return {
     isLoading: useSelector(service, selectIsLoading),
     profileInfo: useSelector(service, selectProfileInfo),
@@ -51,14 +54,16 @@ export function useBackupAndRestoreSetup() {
         );
       }
     },
-      shouldTriggerAutoBackup: useSelector(
-          service,
-          selectShouldTriggerAutoBackup,
-        ),
+    shouldTriggerAutoBackup: useSelector(
+      service,
+      selectShouldTriggerAutoBackup,
+    ),
     PROCEED_ACCOUNT_SELECTION: () =>
       service.send(BackupAndRestoreSetupEvents.PROCEED()),
     GO_BACK: () => service.send(BackupAndRestoreSetupEvents.GO_BACK()),
     TRY_AGAIN: () => service.send(BackupAndRestoreSetupEvents.TRY_AGAIN()),
+    OPEN_SETTINGS: () =>
+      service.send(BackupAndRestoreSetupEvents.OPEN_SETTINGS()),
     DISMISS: () => service.send(BackupAndRestoreSetupEvents.DISMISS()),
   };
 }

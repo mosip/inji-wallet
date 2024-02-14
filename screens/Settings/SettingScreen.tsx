@@ -1,5 +1,5 @@
 import React from 'react';
-import {Platform, Pressable, Image} from 'react-native';
+import {Platform, Pressable} from 'react-native';
 import {Icon, ListItem, Switch} from 'react-native-elements';
 import {Column, Row, Text} from '../../components/ui';
 import {Theme} from '../../components/ui/styleUtils';
@@ -17,7 +17,6 @@ import {ReceivedCards} from './ReceivedCards';
 import testIDProps from '../../shared/commonUtil';
 import {SvgImage} from '../../components/ui/svg';
 import {DataBackupAndRestore} from './DataBackupAndRestore';
-import {isAndroid} from '../../shared/constants';
 import {BannerNotificationContainer} from '../../components/BannerNotificationContainer';
 
 const LanguageSetting: React.FC = () => {
@@ -162,7 +161,7 @@ export const SettingScreen: React.FC<
 
             <AboutInji appId={controller.appId} />
 
-            {isAndroid() && <DataBackupAndRestore />}
+            <DataBackupAndRestore />
 
             {CREDENTIAL_REGISTRY_EDIT === 'true' && (
               <EditableListItem

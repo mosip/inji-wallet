@@ -8,7 +8,7 @@ import fileStorage, {
 } from '../shared/fileStorage';
 import Storage from '../shared/storage';
 import {StoreEvents} from './store';
-import Cloud from '../shared/googleCloudUtils';
+import Cloud from '../shared/CloudBackupAndRestoreUtils';
 import {TelemetryConstants} from '../shared/telemetry/TelemetryConstants';
 import {
   sendStartEvent,
@@ -31,6 +31,7 @@ const model = createModel(
   {
     events: {
       BACKUP_RESTORE: () => ({}),
+      DOWNLOAD_UNSYNCED_BACKUP_FILES: () => ({}),
       EXTRACT_DATA: () => ({}),
       DISMISS: () => ({}),
       STORE_RESPONSE: (response: unknown) => ({response}),
@@ -60,6 +61,9 @@ export const backupRestoreMachine = model.createMachine(
           target: 'restoreBackup',
         },
       ],
+      DOWNLOAD_UNSYNCED_BACKUP_FILES: {
+        actions: 'downloadUnsyncedBackupFiles',
+      },
     },
     states: {
       init: {
@@ -72,10 +76,10 @@ export const backupRestoreMachine = model.createMachine(
         },
       },
       restoreBackup: {
-        initial: 'checkStorageAvailibility',
+        initial: 'checkStorageAvailability',
         states: {
           idle: {},
-          checkStorageAvailibility: {
+          checkStorageAvailability: {
             entry: ['sendDataRestoreStartEvent'],
             invoke: {
               src: 'checkStorageAvailability',
@@ -163,7 +167,7 @@ export const backupRestoreMachine = model.createMachine(
             target: 'init',
           },
           EXTRACT_DATA: {
-            target: '.checkStorageAvailibility',
+            target: '.checkStorageAvailability',
           },
         },
       },
@@ -171,6 +175,7 @@ export const backupRestoreMachine = model.createMachine(
   },
   {
     actions: {
+      downloadUnsyncedBackupFiles: () => Cloud.downloadUnSyncedBackupFiles(),
       setRestoreTechnicalError: model.assign({
         errorReason: 'technicalError',
       }),
@@ -181,7 +186,7 @@ export const backupRestoreMachine = model.createMachine(
       setRestoreErrorReason: model.assign({
         errorReason: (_context, event) => {
           const reasons = {
-            'No backup file': 'noBackupFile',
+            [Cloud.NO_BACKUP_FILE]: 'noBackupFile',
             [NETWORK_REQUEST_FAILED]: 'networkError',
             [TECHNICAL_ERROR]: 'technicalError',
           };

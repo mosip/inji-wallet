@@ -663,6 +663,8 @@ export const DefaultTheme = {
       backgroundColor: Colors.Orange,
       paddingHorizontal: 5,
       paddingVertical: 4,
+      maxHeight: 20,
+      marginTop: 10,
       borderRadius: 4,
       fontSize: 10,
       fontFamily: 'Inter_700Bold',

@@ -1,7 +1,7 @@
 import argon2 from 'react-native-argon2';
 import {AnyState} from 'xstate';
 import {getDeviceNameSync} from 'react-native-device-info';
-import {isAndroid} from './constants';
+import {GOOGLE_DRIVE_NAME, ICLOUD_DRIVE_NAME, isAndroid} from './constants';
 import {generateSecureRandom} from 'react-native-securerandom';
 import forge from 'node-forge';
 
@@ -107,3 +107,10 @@ export const bytesToMB = (bytes: number): string => {
   const megabytes = bytes / BYTES_IN_MEGABYTE;
   return Number(megabytes).toFixed(2);
 };
+
+export const getDriveName = () =>
+  isAndroid() ? GOOGLE_DRIVE_NAME : ICLOUD_DRIVE_NAME;
+
+export function sleep(time = 1000) {
+  return new Promise(resolve => setTimeout(resolve, time));
+}
