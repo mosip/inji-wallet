@@ -816,8 +816,6 @@ export const requestMachine =
           const {verifiableCredential} = context.incomingVc;
           const {credentialSubject: subject} = verifiableCredential;
 
-          console.log('\n\nsubject', subject);
-
           ODKIntentModule.sendBundleResult({
             // biometrics: subject.biometrics,
             date_of_birth: subject.dateOfBirth,

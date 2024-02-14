@@ -13,8 +13,7 @@ export enum ODKIntentVcField {
   IssuanceDate = 'issuance_date',
 }
 
-export type ODKIntentVcData = Record<ODKIntentVcField, string>;
-
+export type ODKIntentVcData = Partial<Record<ODKIntentVcField, string>>;
 interface ODKIntentInterface {
   isRequestIntent: () => Promise<boolean>;
   sendBundleResult: (vcData: ODKIntentVcData) => void;
