@@ -436,7 +436,6 @@ export const PurpleTheme = {
       height: 36,
       borderRadius: 10,
       backgroundColor: Colors.LightPurple,
-      justifyContent: 'center',
     },
     cameraFlipIcon: {
       width: 42,
@@ -493,6 +492,10 @@ export const PurpleTheme = {
       paddingHorizontal: 18,
       paddingVertical: 9,
       justifyContent: 'space-between',
+    },
+    iconContainer: {
+      flexDirection: 'row',
+      alignItems: 'flex-end',
     },
     scannerContainer: {
       borderRadius: 24,
@@ -673,24 +676,6 @@ export const PurpleTheme = {
       fontSize: 10,
       fontFamily: 'Inter_700Bold',
       lineHeight: 12,
-    },
-    scanLayoutHeaderContainer: {
-      flex: 1,
-      flexDirection: 'row',
-      marginLeft: I18nManager.isRTL ? 40 : 15,
-      marginTop: 15,
-    },
-    scanLayoutHeaderTitle: {
-      fontSize: 26,
-      fontFamily: 'Inter_600SemiBold',
-      paddingTop: 20,
-      paddingBottom: 10,
-    },
-    sendVcHeaderContainer: {
-      flex: 1,
-      flexDirection: 'row',
-      marginLeft: I18nManager.isRTL ? 50 : 0,
-      marginTop: 15,
     },
   }),
   BannerStyles: StyleSheet.create({

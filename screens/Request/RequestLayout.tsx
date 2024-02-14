@@ -12,9 +12,6 @@ import {REQUEST_ROUTES} from '../../routes/routesConstants';
 import {SquircleIconPopUpModal} from '../../components/ui/SquircleIconPopUpModal';
 import {ProgressingModal} from '../../components/ProgressingModal';
 import {BannerNotificationContainer} from '../../components/BannerNotificationContainer';
-import {Theme} from '../../components/ui/styleUtils';
-import {I18nManager} from 'react-native';
-
 const RequestStack = createNativeStackNavigator();
 
 export const RequestLayout: React.FC = () => {
@@ -44,26 +41,13 @@ export const RequestLayout: React.FC = () => {
             component={ReceiveVcScreen}
             options={{
               title: t('incomingVc'),
-              headerLeft: () =>
-                !I18nManager.isRTL && (
-                  <HeaderBackButton
-                    onPress={() => {
-                      controller.RESET();
-                    }}
-                    style={Theme.Styles.IconContainer}
-                    tintColor={Theme.Colors.Icon}
-                  />
-                ),
-              headerRight: () =>
-                I18nManager.isRTL && (
-                  <HeaderBackButton
-                    onPress={() => {
-                      controller.RESET();
-                    }}
-                    style={Theme.Styles.IconContainer}
-                    tintColor={Theme.Colors.Icon}
-                  />
-                ),
+              headerLeft: () => (
+                <HeaderBackButton
+                  onPress={() => {
+                    controller.RESET();
+                  }}
+                />
+              ),
             }}
           />
         )}
@@ -72,26 +56,6 @@ export const RequestLayout: React.FC = () => {
           component={RequestScreen}
           options={{
             title: t('receiveCard').toUpperCase(),
-            headerRight: () =>
-              I18nManager.isRTL && (
-                <HeaderBackButton
-                  onPress={() => {
-                    controller.GOTO_HOME();
-                  }}
-                  style={Theme.Styles.IconContainer}
-                  tintColor={Theme.Colors.Icon}
-                />
-              ),
-            headerLeft: () =>
-              !I18nManager.isRTL && (
-                <HeaderBackButton
-                  onPress={() => {
-                    controller.GOTO_HOME();
-                  }}
-                  style={Theme.Styles.IconContainer}
-                  tintColor={Theme.Colors.Icon}
-                />
-              ),
           }}
         />
       </RequestStack.Navigator>

@@ -13,7 +13,6 @@ import {SettingScreen} from './Settings/SettingScreen';
 import testIDProps from '../shared/commonUtil';
 import {SvgImage} from '../components/ui/svg';
 import {HelpScreen} from '../components/HelpScreen';
-import {I18nManager} from 'react-native';
 
 export const HomeScreenLayout: React.FC<RootRouteProps> = props => {
   const {t} = useTranslation('IssuersScreen');
@@ -43,45 +42,45 @@ export const HomeScreenLayout: React.FC<RootRouteProps> = props => {
     }
   }, [props.navigation, props.route]);
 
-  const screenOptions = (
-    <Row align="space-between">
-      <HelpScreen
-        source={'Inji'}
-        triggerComponent={
-          <Icon
-            {...testIDProps('help')}
-            accessible={true}
-            name="question"
-            type="font-awesome"
-            size={21}
-            style={Theme.Styles.IconContainer}
-            color={Theme.Colors.Icon}
-          />
-        }
-      />
-
-      <SettingScreen
-        triggerComponent={
-          <Icon
-            {...testIDProps('settings')}
-            accessible={true}
-            name="settings"
-            type="simple-line-icon"
-            size={21}
-            style={Theme.Styles.IconContainer}
-            color={Theme.Colors.Icon}
-          />
-        }
-        navigation={props.navigation}
-        route={undefined}
-      />
-    </Row>
-  );
   const HomeScreenOptions = {
-    headerLeft: () => (I18nManager.isRTL ? screenOptions : SvgImage.InjiLogo()),
+    headerLeft: () => {
+      return SvgImage.InjiLogo();
+    },
     headerTitle: '',
-    headerRight: () =>
-      I18nManager.isRTL ? SvgImage.InjiLogo() : screenOptions,
+    headerRight: () => (
+      <Row align="space-between">
+        <HelpScreen
+          source={'Inji'}
+          triggerComponent={
+            <Icon
+              {...testIDProps('help')}
+              accessible={true}
+              name="question"
+              type="font-awesome"
+              size={21}
+              style={Theme.Styles.IconContainer}
+              color={Theme.Colors.Icon}
+            />
+          }
+        />
+
+        <SettingScreen
+          triggerComponent={
+            <Icon
+              {...testIDProps('settings')}
+              accessible={true}
+              name="settings"
+              type="simple-line-icon"
+              size={21}
+              style={Theme.Styles.IconContainer}
+              color={Theme.Colors.Icon}
+            />
+          }
+          navigation={props.navigation}
+          route={undefined}
+        />
+      </Row>
+    ),
   };
 
   return (
