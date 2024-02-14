@@ -20,10 +20,11 @@ export const DataBackupAndRestore: React.FC = ({} = () => {
   const accountSelectionModalVisible = useOverlayVisibleAfterTimeout(
     controller.showAccountSelectionConfirmation,
   );
-  const isLoaderVisible = useOverlayVisibleAfterTimeout(
-    controller.isLoading,
-    0,
+  const isLoaderVisible = useOverlayVisibleAfterTimeout(controller.isLoading);
+  const isSigningInSuccessful = useOverlayVisibleAfterTimeout(
+    controller.isSigningInSuccessful,
   );
+  const isSigningIn = useOverlayVisibleAfterTimeout(controller.isSigningIn);
 
   return (
     <React.Fragment>
@@ -108,7 +109,7 @@ export const DataBackupAndRestore: React.FC = ({} = () => {
         />
       )}
 
-      {(controller.isSigningIn || controller.isSigningInSuccessful) && (
+      {(isSigningIn || isSigningInSuccessful) && (
         <BackupAndRestoreScreen
           profileInfo={controller.profileInfo}
           onBackPress={controller.GO_BACK}
