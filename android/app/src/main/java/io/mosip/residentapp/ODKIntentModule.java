@@ -13,9 +13,16 @@ import com.facebook.react.bridge.ReadableMap;
 
 public class ODKIntentModule extends ReactContextBaseJavaModule {
 
+  private static final String MODULE_NAME = "ODKIntentModule";
+
+  /**
+   * The action to check for sending data to ODK Collect. Use this when configuring the ODK form.
+   */
+  private static final String ODK_REQUEST_ACTION = "io.mosip.residentapp.odk.REQUEST";
+
   @Override
   public String getName() {
-    return "ODKIntentModule";
+    return MODULE_NAME;
   }
 
   ODKIntentModule(ReactApplicationContext context) {
@@ -33,7 +40,7 @@ public class ODKIntentModule extends ReactContextBaseJavaModule {
         return;
       }
 
-      promise.resolve(action.equals("io.mosip.residentapp.odk.REQUEST"));
+      promise.resolve(action.equals(ODK_REQUEST_ACTION));
 
     } catch (Exception e) {
       promise.reject("E_UNKNOWN", e.getMessage());
