@@ -56,8 +56,11 @@ class Cloud {
       throw error;
     }
   }
-  private static getBackupFilesList = async () =>
-    await CloudStorage.readdir(`/`, CloudStorageScope.AppData);
+
+  private static getBackupFilesList = async () => {
+    return await CloudStorage.readdir(`/`, CloudStorageScope.AppData);
+  };
+
   private static async syncBackupFiles() {
     const isSyncDone = await this.downloadUnSyncedBackupFiles();
     if (isSyncDone) return;

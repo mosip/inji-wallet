@@ -95,7 +95,6 @@ export const backupAndRestoreSetupMachine = model.createMachine(
             },
           ],
         },
-        states: {},
       },
       selectCloudAccount: {
         on: {
@@ -110,7 +109,6 @@ export const backupAndRestoreSetupMachine = model.createMachine(
             },
           ],
         },
-        states: {},
       },
       checkSignIn: {
         invoke: {
@@ -118,41 +116,26 @@ export const backupAndRestoreSetupMachine = model.createMachine(
           onDone: [
             {
               cond: 'isSignedIn',
-              actions: [
-                () => console.log('isSignedIn'),
-                'setProfileInfo',
-                'unsetIsLoading',
-              ],
+              actions: ['setProfileInfo', 'unsetIsLoading'],
               target: 'backupAndRestore',
             },
             {
               cond: 'isNetworkError',
-              actions: [() => console.log('isNetworkError'), 'unsetIsLoading'],
+              actions: ['unsetIsLoading'],
               target: 'noInternet',
             },
             {
               cond: 'isNotSignedInIOSAndViaConfirmationFlow',
-              actions: [
-                () => console.log('isNotSignedInIOSAndViaConfirmationFlow'),
-                'unsetIsLoading',
-                'setErrorReasonAsAccountRequired',
-              ],
+              actions: ['unsetIsLoading', 'setErrorReasonAsAccountRequired'],
               target: '.error',
             },
             {
               cond: 'isNotSignedInIOS',
-              actions: [
-                () => console.log('isNotSignedInIOS'),
-                'unsetIsLoading',
-                'setErrorReasonAsAccountRequired',
-              ],
+              actions: ['unsetIsLoading', 'setErrorReasonAsAccountRequired'],
               target: '.error',
             },
             {
-              actions: [
-                () => console.log('isSignedInAndroid'),
-                'unsetIsLoading',
-              ],
+              actions: ['unsetIsLoading'],
               target: 'signIn',
             },
           ],
@@ -353,7 +336,6 @@ export const backupAndRestoreSetupMachine = model.createMachine(
         );
       },
       isConfirmationAlreadyShown: (_context, event) => {
-        console.log('isConfirmationAlreadyShown ', event.response as Object);
         return (
           (event.response as Object)['encryptedData'][
             'isAccountSelectionConfirmationShown'

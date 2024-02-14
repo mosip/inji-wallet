@@ -33,8 +33,6 @@ export function useBackupAndRestoreSetup() {
     selectIsBackUpAndRestoreExplored,
   );
 
-  // service.subscribe(logState);
-
   return {
     isLoading: useSelector(service, selectIsLoading),
     profileInfo: useSelector(service, selectProfileInfo),
