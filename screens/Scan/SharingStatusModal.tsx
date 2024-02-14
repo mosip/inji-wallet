@@ -41,7 +41,7 @@ export const SharingStatusModal: React.FC<SharingStatusModalProps> = props => {
           <Row
             align="space-evenly"
             style={{marginBottom: Dimensions.get('screen').height * 0.06}}>
-            <Pressable accessible={false} testID="successfulVcSharedHomeIcon">
+            <Pressable accessible={false} testID="successfullyVcSharedHomeIcon">
               <Icon
                 accessible={true}
                 name="home"
@@ -58,7 +58,7 @@ export const SharingStatusModal: React.FC<SharingStatusModalProps> = props => {
             </Pressable>
             <Pressable
               accessible={false}
-              testID="successfulVcSharedHistoryIcon">
+              testID="successfullyVcSharedHistoryIcon">
               <Icon
                 accessible={true}
                 name="history"
