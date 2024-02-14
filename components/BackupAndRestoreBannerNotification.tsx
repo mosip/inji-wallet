@@ -66,6 +66,16 @@ export const BackupAndRestoreBannerNotification: React.FC = () => {
 
       {backUpController.isBackingUpFailure && backupFailure()}
 
+      {restoreController.showRestoreInProgress && (
+        <BannerNotification
+          type="info"
+          message={t('restoreInProgress')}
+          onClosePress={restoreController.DISMISS_SHOW_RESTORE_IN_PROGRESS}
+          key={'restoreInProgress'}
+          testId={'restoreInProgress'}
+        />
+      )}
+
       {restoreController.isBackUpRestoreSuccess && (
         <BannerNotification
           type="success"
