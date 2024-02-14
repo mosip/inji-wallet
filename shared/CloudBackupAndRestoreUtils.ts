@@ -6,8 +6,13 @@ import {CloudStorage, CloudStorageScope} from 'react-native-cloud-storage';
 import {GOOGLE_ANDROID_CLIENT_ID} from 'react-native-dotenv';
 import {readFile, writeFile} from 'react-native-fs';
 import {BackupDetails} from '../types/backup-and-restore/backup';
-import {bytesToMB} from './commonUtil';
-import {NETWORK_REQUEST_FAILED} from './constants';
+import {bytesToMB, sleep} from './commonUtil';
+import {
+  IOS_SIGNIN_FAILED,
+  isAndroid,
+  isIOS,
+  NETWORK_REQUEST_FAILED,
+} from './constants';
 import fileStorage, {backupDirectoryPath, zipFilePath} from './fileStorage';
 import {request} from './request';
 
@@ -17,11 +22,17 @@ class Cloud {
     SUCCESS: 'SUCCESS',
     FAILURE: 'FAILURE',
   };
-  static timeout = 10000;
+  static readonly timeout = 10000;
   private static readonly requiredScopes = [
     'https://www.googleapis.com/auth/drive.appdata',
     'https://www.googleapis.com/auth/drive.file',
   ];
+  private static readonly BACKUP_FILE_REG_EXP = /backup_[0-9]*.zip$/g;
+  private static readonly UNSYNCED_BACKUP_FILE_REG_EXP =
+    /backup_[0-9]*.zip.icloud/g;
+  private static readonly RETRY_SLEEP_TIME = 5000;
+
+  static readonly NO_BACKUP_FILE = 'Backup files not available';
 
   private static configure() {
     GoogleSignin.configure({
@@ -29,6 +40,7 @@ class Cloud {
       androidClientId: GOOGLE_ANDROID_CLIENT_ID,
     });
   }
+
   private static async profileInfo(): Promise<ProfileInfo | undefined> {
     try {
       const accessToken = await this.getAccessToken();
@@ -47,6 +59,18 @@ class Cloud {
       throw error;
     }
   }
+
+  private static getBackupFilesList = async () => {
+    return await CloudStorage.readdir(`/`, CloudStorageScope.AppData);
+  };
+
+  private static async syncBackupFiles() {
+    const isSyncDone = await this.downloadUnSyncedBackupFiles();
+    if (isSyncDone) return;
+    await sleep(this.RETRY_SLEEP_TIME);
+    await this.syncBackupFiles();
+  }
+
   static async getAccessToken() {
     try {
       const tokenResult = await GoogleSignin.getTokens();
@@ -59,7 +83,11 @@ class Cloud {
       throw error;
     }
   }
-  static async signIn(): Promise<SignInResult> {
+
+  static async signIn(): Promise<SignInResult | IsIOSResult> {
+    if (isIOS()) {
+      return {isIOS: true};
+    }
     this.configure();
     try {
       const {scopes: userProvidedScopes} = await GoogleSignin.signIn();
@@ -91,8 +119,15 @@ class Cloud {
       };
     }
   }
+
   static async isSignedInAlready(): Promise<isSignedInResult> {
     try {
+      if (isIOS()) {
+        const isSignedIn = await CloudStorage.isCloudAvailable();
+        return {
+          isSignedIn,
+        };
+      }
       this.configure();
       const isSignedIn = await GoogleSignin.isSignedIn();
       if (!isSignedIn) {
@@ -127,46 +162,68 @@ class Cloud {
       };
     }
   }
+
+  static async downloadUnSyncedBackupFiles(): Promise<Boolean> {
+    if (isIOS()) {
+      const unSyncedFiles = (await this.getBackupFilesList()).filter(file =>
+        file.match(this.UNSYNCED_BACKUP_FILE_REG_EXP),
+      );
+      if (unSyncedFiles.length > 0) {
+        await CloudStorage.downloadFile(`/${unSyncedFiles[0]}`);
+        return false;
+      }
+    }
+    return true;
+  }
+
   static async lastBackupDetails(
     cloudFileName?: string | undefined,
   ): Promise<BackupDetails> {
     CloudStorage.setTimeout(this.timeout);
-    const tokenResult = await Cloud.getAccessToken();
-    CloudStorage.setGoogleDriveAccessToken(tokenResult);
+    if (isAndroid()) {
+      const tokenResult = await Cloud.getAccessToken();
+      CloudStorage.setGoogleDriveAccessToken(tokenResult);
+    }
+    if (isIOS()) {
+      const isCloudAvailable = await CloudStorage.isCloudAvailable();
+      if (!isCloudAvailable) {
+        return Promise.reject({
+          status: this.status.FAILURE,
+          error: IOS_SIGNIN_FAILED,
+        });
+      }
+      await this.syncBackupFiles();
+    }
+
     if (!cloudFileName) {
-      const allFiles = await CloudStorage.readdir(
-        `/`,
-        CloudStorageScope.AppData,
-      );
-      cloudFileName = allFiles[0];
+      const availableBackupFilesInCloud = (
+        await this.getBackupFilesList()
+      ).filter(file => file.match(this.BACKUP_FILE_REG_EXP));
+      if (availableBackupFilesInCloud.length === 0) {
+        throw new Error(this.NO_BACKUP_FILE);
+      }
+      cloudFileName = availableBackupFilesInCloud[0];
     }
     const {birthtimeMs: creationTime, size} = await CloudStorage.stat(
       cloudFileName,
       CloudStorageScope.AppData,
     );
-    const backupDetails = {
+
+    return {
       backupCreationTime: creationTime,
       backupFileSize: bytesToMB(size),
     };
-    return backupDetails;
   }
+
   static async removeOldDriveBackupFiles(fileName: string) {
-    const allFiles = await CloudStorage.readdir(`/`, CloudStorageScope.AppData);
-    const toBeRemovedFiles = allFiles.filter(file => file !== fileName);
-    console.log(
-      'removeOldDriveBackupFiles toBeRemovedFiles ',
-      toBeRemovedFiles,
-    );
+    const toBeRemovedFiles = (await this.getBackupFilesList())
+      .filter(file => file !== fileName)
+      .filter(file => file.match(this.BACKUP_FILE_REG_EXP));
     for (const oldFileName of toBeRemovedFiles) {
-      console.log('removing -> ', oldFileName);
       await CloudStorage.unlink(`/${oldFileName}`);
     }
-    const allFilesPost = await CloudStorage.readdir(
-      `/`,
-      CloudStorageScope.AppData,
-    );
-    console.log('removeOldDriveBackupFiles allFiles ', allFilesPost);
   }
+
   static async uploadBackupFileToDrive(
     fileName: string,
     retryCounter: number,
@@ -184,8 +241,19 @@ class Cloud {
 
     try {
       CloudStorage.setTimeout(this.timeout);
-      const tokenResult = await Cloud.getAccessToken();
-      CloudStorage.setGoogleDriveAccessToken(tokenResult);
+      if (isAndroid()) {
+        const tokenResult = await Cloud.getAccessToken();
+        CloudStorage.setGoogleDriveAccessToken(tokenResult);
+      }
+      if (isIOS()) {
+        const isCloudAvailable = await CloudStorage.isCloudAvailable();
+        if (!isCloudAvailable) {
+          return Promise.reject({
+            status: this.status.FAILURE,
+            error: IOS_SIGNIN_FAILED,
+          });
+        }
+      }
 
       const filePath = zipFilePath(fileName);
       const fileContent = await readFile(filePath, 'base64');
@@ -202,7 +270,6 @@ class Cloud {
 
       if (isFileUploaded) {
         const backupDetails = await this.lastBackupDetails(cloudFileName);
-        console.log('wrote to cloudFileName ', cloudFileName);
         await this.removeOldDriveBackupFiles(`${fileName}.zip`);
         return Promise.resolve({
           status: this.status.SUCCESS,
@@ -234,15 +301,29 @@ class Cloud {
   static async downloadLatestBackup(): Promise<string | null> {
     try {
       CloudStorage.setTimeout(this.timeout);
-      const tokenResult = await Cloud.getAccessToken();
-      CloudStorage.setGoogleDriveAccessToken(tokenResult);
-      const allFiles = await CloudStorage.readdir(
-        '/',
-        CloudStorageScope.AppData,
-      );
-      console.log('allFiles ', allFiles);
+      if (isAndroid()) {
+        const tokenResult = await Cloud.getAccessToken();
+        CloudStorage.setGoogleDriveAccessToken(tokenResult);
+      }
+      if (isIOS()) {
+        const isCloudAvailable = await CloudStorage.isCloudAvailable();
+        if (!isCloudAvailable) {
+          return Promise.reject({
+            status: this.status.FAILURE,
+            error: IOS_SIGNIN_FAILED,
+          });
+        }
+        await this.syncBackupFiles();
+      }
       // TODO: do basic sanity about this .zip file
-      const fileName = allFiles[0];
+      const availableBackupFilesInCloud = (
+        await this.getBackupFilesList()
+      ).filter(file => file.match(this.BACKUP_FILE_REG_EXP));
+      if (availableBackupFilesInCloud.length === 0) {
+        throw new Error(Cloud.NO_BACKUP_FILE);
+      }
+
+      const fileName = `/${availableBackupFilesInCloud[0]}`;
       const fileContent = await CloudStorage.readFile(
         fileName,
         CloudStorageScope.AppData,
@@ -259,7 +340,6 @@ class Cloud {
         fileContent,
         'base64',
       );
-      console.log('successfully written the cloud downloaded zip file');
       // return the path
       return Promise.resolve(fileName.split('.zip')[0]);
     } catch (error) {
@@ -267,8 +347,11 @@ class Cloud {
       let downloadError;
       if (error.toString() === 'Error: NetworkError') {
         downloadError = NETWORK_REQUEST_FAILED;
-      } else if (error.code?.toString() === 'ERR_DIRECTORY_NOT_FOUND') {
-        downloadError = 'No backup file';
+      } else if (
+        error.code?.toString() === 'ERR_DIRECTORY_NOT_FOUND' ||
+        error.toString().includes(this.NO_BACKUP_FILE)
+      ) {
+        downloadError = this.NO_BACKUP_FILE;
       } else {
         downloadError = error;
       }
@@ -288,6 +371,10 @@ export type SignInResult = {
   status: (typeof Cloud.status)[keyof typeof Cloud.status];
   profileInfo?: ProfileInfo;
   error?: string;
+};
+
+export type IsIOSResult = {
+  isIOS?: boolean;
 };
 
 export type isSignedInResult = {
