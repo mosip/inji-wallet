@@ -225,6 +225,7 @@ export const ExistingMosipVCItemMachine =
                 src: 'downloadCredential',
                 id: 'downloadCredential',
               },
+              initial: 'idle',
               on: {
                 POLL: [
                   {
@@ -256,6 +257,7 @@ export const ExistingMosipVCItemMachine =
                 },
               },
               states: {
+                idle: {},
                 triggerAutoBackupForVcDownload: {
                   invoke: {
                     src: 'isUserSignedAlready',
