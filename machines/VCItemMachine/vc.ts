@@ -11,6 +11,8 @@ import {Protocols} from '../../shared/openId4VCI/Utils';
 import {EsignetMosipVCItemEvents} from './EsignetMosipVCItem/EsignetMosipVCItemMachine';
 import {ActivityLogEvents} from '../activityLog';
 import {ActivityLog} from '../../components/ActivityLogEvent';
+import Cloud, {isSignedInResult} from '../../shared/googleCloudUtils';
+import {BackupEvents} from '../backupAndRestore/backup';
 
 const model = createModel(
   {
@@ -39,7 +41,6 @@ const model = createModel(
         vc,
         vcMetadata,
       }),
-      VC_UPDATE: (vc: VC) => ({vc}),
       REFRESH_MY_VCS: () => ({}),
       REFRESH_MY_VCS_TWO: (vc: VC) => ({vc}),
       REFRESH_RECEIVED_VCS: () => ({}),
@@ -185,17 +186,10 @@ export const vcMachine =
             VC_DOWNLOADED_FROM_OPENID4VCI: {
               actions: 'setDownloadedVCFromOpenId4VCI',
             },
-            VC_UPDATE: {
-              actions: 'setVcUpdate',
-            },
             RESET_WALLET_BINDING_SUCCESS: {
               actions: 'resetWalletBindingSuccess',
             },
             VC_RECEIVED: [
-              {
-                actions: 'moveExistingVcToTop',
-                cond: 'hasExistingReceivedVc',
-              },
               {
                 actions: 'prependToReceivedVcs',
               },
@@ -219,8 +213,29 @@ export const vcMachine =
         tamperedVCs: {
           on: {
             REMOVE_TAMPERED_VCS: {
-              actions: ['removeTamperedVcs', 'logTamperedVCsremoved'],
-              target: '#vc.ready.myVcs.refreshing',
+              target: '.triggerAutoBackupForTamperedVcDeletion',
+            },
+          },
+          states: {
+            triggerAutoBackupForTamperedVcDeletion: {
+              invoke: {
+                src: 'isUserSignedAlready',
+                onDone: [
+                  {
+                    cond: 'isSignedIn',
+                    actions: [
+                      'sendBackupEvent',
+                      'removeTamperedVcs',
+                      'logTamperedVCsremoved',
+                    ],
+                    target: '#vc.ready.myVcs.refreshing',
+                  },
+                  {
+                    actions: ['removeTamperedVcs', 'logTamperedVCsremoved'],
+                    target: '#vc.ready.myVcs.refreshing',
+                  },
+                ],
+              },
             },
           },
         },
@@ -240,6 +255,10 @@ export const vcMachine =
     },
     {
       actions: {
+        sendBackupEvent: send(BackupEvents.DATA_BACKUP(true), {
+          to: context => context.serviceRefs.backup,
+        }),
+
         getReceivedVcsResponse: respond(context => ({
           type: 'VC_RESPONSE',
           response: context.receivedVcs || [],
@@ -333,18 +352,6 @@ export const vcMachine =
               event.vc;
         },
 
-        setVcUpdate: (context, event) => {
-          Object.keys(context.vcs).map(vcUniqueId => {
-            const eventVCMetadata = VCMetadata.fromVC(event.vc);
-
-            if (vcUniqueId === eventVCMetadata.getVcKey()) {
-              context.vcs[eventVCMetadata.getVcKey()] = context.vcs[vcUniqueId];
-              delete context.vcs[vcUniqueId];
-              return context.vcs[eventVCMetadata.getVcKey()];
-            }
-          });
-        },
-
         setUpdatedVcMetadatas: send(
           _context => {
             return StoreEvents.SET(MY_VCS_STORE_KEY, _context.myVcs);
@@ -417,24 +424,21 @@ export const vcMachine =
             ...context.receivedVcs,
           ],
         }),
-
-        moveExistingVcToTop: model.assign({
-          receivedVcs: (context, event) => {
-            return [
-              event.vcMetadata,
-              ...context.receivedVcs.filter(value =>
-                value.equals(event.vcMetadata),
-              ),
-            ];
-          },
-        }),
       },
 
       guards: {
+        isSignedIn: (_context, event) =>
+          (event.data as isSignedInResult).isSignedIn,
         hasExistingReceivedVc: (context, event) =>
           context.receivedVcs.find(vcMetadata =>
             vcMetadata.equals(event.vcMetadata),
           ) != null,
+      },
+
+      services: {
+        isUserSignedAlready: () => async () => {
+          return await Cloud.isSignedInAlready();
+        },
       },
     },
   );

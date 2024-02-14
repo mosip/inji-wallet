@@ -254,8 +254,8 @@
     "requestingCredential": "क्रेडेंशियल का अनुरोध कर रहा है...",
     "errors": {
       "input": {
-        "empty": "इनपुट खाली नहीं हो सकता",
-        "invalidFormat": "इनपुट फॉर्मेट गलत है"
+        "empty": "कृपया वैध आईडी दर्ज करें",
+        "invalidFormat": "कृपया वैध दर्ज करें {{idType}}"
       },
       "backend": {
         "invalidOtp": "OTP  अमान्य है",
@@ -275,8 +275,8 @@
     "retrievingId": "आईडी पुनः प्राप्त की जा रही है",
     "errors": {
       "input": {
-        "empty": "इनपुट खाली नहीं हो सकता",
-        "invalidFormat": "इनपुट फॉर्मेट गलत"
+        "empty": "कृपया वैध आईडी दर्ज करें",
+        "invalidFormat": "कृपया वैध सहायता दर्ज करें"
       },
       "backend": {
         "invalidOtp": "ओटीपी अमान्य है",

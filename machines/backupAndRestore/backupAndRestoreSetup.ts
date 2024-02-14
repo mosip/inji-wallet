@@ -26,6 +26,7 @@ const model = createModel(
     isLoading: false as boolean,
     profileInfo: undefined as ProfileInfo | undefined,
     errorMessage: '' as string,
+    shouldTriggerAutoBackup: false as boolean,
   },
   {
     events: {
@@ -58,6 +59,7 @@ export const backupAndRestoreSetupMachine = model.createMachine(
             actions: [
               'sendDataBackupAndRestoreSetupStartEvent',
               'setIsLoading',
+              'unsetShouldTriggerAutoBackup',
             ],
             target: 'checkSignIn',
           },
@@ -134,7 +136,7 @@ export const backupAndRestoreSetupMachine = model.createMachine(
           onDone: [
             {
               cond: 'isSignInSuccessful',
-              actions: 'setProfileInfo',
+              actions: ['setProfileInfo', 'setShouldTriggerAutoBackup'],
               target: 'backupAndRestore',
             },
             {
@@ -219,6 +221,12 @@ export const backupAndRestoreSetupMachine = model.createMachine(
           ),
         );
       },
+      setShouldTriggerAutoBackup: model.assign({
+        shouldTriggerAutoBackup: true,
+      }),
+      unsetShouldTriggerAutoBackup: model.assign({
+        shouldTriggerAutoBackup: false,
+      }),
     },
 
     services: {
@@ -257,6 +265,10 @@ export function selectProfileInfo(state: State) {
 
 export function selectIsNetworkOff(state: State) {
   return state.matches('noInternet');
+}
+
+export function selectShouldTriggerAutoBackup(state: State) {
+  return state.context.shouldTriggerAutoBackup;
 }
 
 export function selectShowAccountSelectionConfirmation(state: State) {

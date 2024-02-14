@@ -463,7 +463,9 @@ export const storeMachine =
                 callback(model.events.BIOMETRIC_CANCELLED(event.requester));
                 sendUpdate();
               } else {
-                console.error(e);
+                console.error(
+                  `Error while performing the operation ${event.type} with storage - ${e}`,
+                );
                 callback(model.events.STORE_ERROR(e, event.requester));
               }
             }
@@ -609,9 +611,13 @@ export async function getItem(
       );
       throw new Error(tamperedErrorMessageString);
     } else {
+      console.debug(
+        `While getting item - ${key} from storage: data value is ${data} so returning the default value`,
+      );
       return defaultValue;
     }
   } catch (e) {
+    console.error(`Exception in getting item for ${key}: ${e}`);
     if (
       e.message.includes(tamperedErrorMessageString) ||
       e.message.includes(keyinvalidatedString) ||
@@ -635,7 +641,6 @@ export async function getItem(
         `Exception in getting item for ${key}: ${e}`,
       ),
     );
-    console.error(`Exception in getting item for ${key}: ${e}`);
     return defaultValue;
   }
 }
