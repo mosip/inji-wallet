@@ -19,6 +19,8 @@ import {
 } from '../../../shared/telemetry/TelemetryUtils';
 import {TelemetryConstants} from '../../../shared/telemetry/TelemetryConstants';
 import {isActivationNeeded} from '../../../shared/openId4VCI/Utils';
+import {KebabPopupListItemContainer} from '../../../components/KebabPopUp';
+import {SvgImage} from '../../../components/ui/svg';
 
 export const WalletVerified: React.FC = () => {
   return (
@@ -94,35 +96,22 @@ export const WalletBinding: React.FC<WalletBindingProps> = props => {
 
 export const ActivationStatus = props => {
   const {t} = useTranslation('HomeScreenKebabPopUp');
+  const activationNotCompleted =
+    props.emptyWalletBindingId && isActivationNeeded(props?.vcMetadata.issuer);
 
-  return props.emptyWalletBindingId &&
-    isActivationNeeded(props?.vcMetadata.issuer) ? (
-    <ListItem bottomDivider onPress={props.ADD_WALLET_BINDING_ID}>
-      <ListItem.Content>
-        <ListItem.Title {...testIDProps('pendingActivationOrActivated')}>
-          <Row crossAlign="center" style={{flex: 1}}>
-            <Text weight="bold" size="small">
-              {t('offlineAuthenticationDisabled!')}
-            </Text>
-          </Row>
-        </ListItem.Title>
-      </ListItem.Content>
-    </ListItem>
-  ) : (
-    <ListItem bottomDivider>
-      <ListItem.Content>
-        <ListItem.Title {...testIDProps('profileAuthenticated')}>
-          <Row crossAlign="center" style={{flex: 1}}>
-            <WalletVerified />
-            <Text weight="bold" size="small">
-              {isActivationNeeded(props?.vcMetadata.issuer)
-                ? t('profileAuthenticated')
-                : t('credentialActivated')}
-            </Text>
-          </Row>
-        </ListItem.Title>
-      </ListItem.Content>
-    </ListItem>
+  return (
+    <KebabPopupListItemContainer
+      label={
+        activationNotCompleted
+          ? t('offlineAuthenticationDisabled!')
+          : isActivationNeeded(props?.vcMetadata.issuer)
+          ? t('profileAuthenticated')
+          : t('credentialActivated')
+      }
+      listItemIcon={SvgImage.OutlinedShieldedIcon()}
+      onPress={activationNotCompleted ? props.ADD_WALLET_BINDING_ID : undefined}
+      testID="pinOrUnPinCard"
+    />
   );
 };
 

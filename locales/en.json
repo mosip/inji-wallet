@@ -713,6 +713,8 @@
     "save": "Save Preference"
   },
   "common": {
+    "card": "card",
+    "cards": "cards",
     "cancel": "Cancel",
     "accept": "Accept",
     "save": "Save",

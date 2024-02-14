@@ -89,7 +89,10 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = props => {
     controller.downloadFailedVcs.length >= 1 &&
     !controller.AddVcModalService &&
     !controller.GetVcModalService;
-
+  const numberOfCardsAvailable =
+    controller.vcMetadatas.length > 1
+      ? controller.vcMetadatas.length + ' ' + t('common:cards')
+      : controller.vcMetadatas.length + ' ' + t('common:card');
   return (
     <React.Fragment>
       <Column fill style={{display: props.isVisible ? 'flex' : 'none'}}>
@@ -118,6 +121,13 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = props => {
                     onRefresh={controller.REFRESH}
                   />
                 }>
+                <Row pY={11} pX={8}>
+                  {controller.vcMetadatas.length > 0 && (
+                    <Text style={{fontFamily: 'Inter_500Medium'}}>
+                      {numberOfCardsAvailable}
+                    </Text>
+                  )}
+                </Row>
                 {vcMetadataOrderedByPinStatus.map(vcMetadata => {
                   return (
                     <VcItemContainer

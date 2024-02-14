@@ -32,6 +32,12 @@ import {IssuerProps} from '../openId4VCI/Issuer';
 import Backup from '../../assets/Backup.svg';
 import Restore from '../../assets/Restore.svg';
 import PermissionDenied from '../../assets/Permission_Denied.svg';
+import OutlinedShieldedIcon from '../../assets/Outlined_Shielded_Icon.svg';
+import OutlinedPinIcon from '../../assets/Outlined_Pin_Icon.svg';
+import OutlinedDeleteIcon from '../../assets/Outlined_Delete_Icon.svg';
+import OutlinedScheduleIcon from '../../assets/Outlined_Schedule_Icon.svg';
+import OutlinedShareWithSelfieIcon from '../../assets/Outlined_Share_With_Selfie_Icon.svg';
+import OutlinedShareIcon from '../../assets/Outlined_Share_Icon.svg';
 import {
   EsignetMosipVCItemContentProps,
   ExistingMosipVCItemContentProps,
@@ -101,6 +107,69 @@ export class SvgImage {
     );
   }
 
+  static OutlinedShareIcon() {
+    return (
+      <OutlinedShareIcon
+        {...testIDProps('outlined-share-icon')}
+        style={{
+          marginLeft: 5,
+        }}
+      />
+    );
+  }
+
+  static OutlinedShareWithSelfieIcon() {
+    return (
+      <OutlinedShareWithSelfieIcon
+        {...testIDProps('outlined-share-with-selfie-icon')}
+        style={{
+          marginLeft: 5,
+        }}
+      />
+    );
+  }
+
+  static outlinedDeleteIcon() {
+    return (
+      <OutlinedDeleteIcon
+        {...testIDProps('outlined-delete-icon')}
+        style={{
+          marginLeft: 5,
+        }}
+      />
+    );
+  }
+  static OutlinedScheduleIcon() {
+    return (
+      <OutlinedScheduleIcon
+        {...testIDProps('outlined-schedule-icon')}
+        style={{
+          marginLeft: 5,
+        }}
+      />
+    );
+  }
+
+  static OutlinedShieldedIcon() {
+    return (
+      <OutlinedShieldedIcon
+        {...testIDProps('outlined-shielded-icon')}
+        style={{
+          marginLeft: 5,
+        }}
+      />
+    );
+  }
+
+  static OutlinedPinIcon() {
+    return (
+      <OutlinedPinIcon
+        style={[Theme.Styles.pinIcon]}
+        {...testIDProps('outlinedPinIcon')}
+      />
+    );
+  }
+
   static history(focused: boolean) {
     //NOTE: Here tab icons names should be same with key "name" in main.ts
     return (
@@ -115,7 +184,7 @@ export class SvgImage {
     );
   }
 
-  static pinIcon(customStyle: object) {
+  static pinIcon(customStyle?: object) {
     return (
       <PinICon
         color1={Theme.Colors.linearGradientStart}

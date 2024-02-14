@@ -666,6 +666,8 @@
     "save": "Guardar preferencia"
   },
   "common": {
+    "card": "tarjeta",
+    "cards": "tarjetas",
     "cancel": "Cancelar",
     "accept": "Aceptar",
     "save": "Ahorrar",

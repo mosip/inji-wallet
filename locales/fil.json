@@ -712,6 +712,8 @@
     "save": "I-save ang Kagustuhan"
   },
   "common": {
+    "card": "card",
+    "cards": "mga card",
     "cancel": "Kanselahin",
     "accept": "Tanggapin",
     "save": "I-save",

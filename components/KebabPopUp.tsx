@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {ReactNode} from 'react';
 import {Icon, ListItem, Overlay} from 'react-native-elements';
 import {Theme} from '../components/ui/styleUtils';
 import {Column, Row, Text} from '../components/ui';
@@ -14,6 +14,7 @@ import {ScrollView} from 'react-native-gesture-handler';
 import {VCMetadata} from '../shared/VCMetadata';
 import testIDProps from '../shared/commonUtil';
 import {ShareVc} from '../screens/Home/Kebab/ShareVc';
+import {SvgImage} from './ui/svg';
 
 export const KebabPopUp: React.FC<KebabPopUpProps> = props => {
   const controller = useKebabPopUp(props);
@@ -50,17 +51,12 @@ export const KebabPopUp: React.FC<KebabPopUpProps> = props => {
           />
         </Row>
         <ScrollView>
-          <ListItem bottomDivider>
-            <ListItem.Content>
-              <ListItem.Title
-                onPress={controller.PIN_CARD}
-                {...testIDProps('pinOrUnPinCard')}>
-                <Text size="small" weight="bold">
-                  {props.vcMetadata.isPinned ? t('unPinCard') : t('pinCard')}
-                </Text>
-              </ListItem.Title>
-            </ListItem.Content>
-          </ListItem>
+          <KebabPopupListItemContainer
+            label={props.vcMetadata.isPinned ? t('unPinCard') : t('pinCard')}
+            listItemIcon={SvgImage.OutlinedPinIcon()}
+            onPress={controller.PIN_CARD}
+            testID="pinOrUnPinCard"
+          />
           <ShareVc
             testID="shareVcFromKebab"
             label={t('share')}
@@ -71,32 +67,31 @@ export const KebabPopUp: React.FC<KebabPopUpProps> = props => {
             label={t('shareWithSelfie')}
             service={props.service}
           />
-
           <ActivationStatus
             vcMetadata={props?.vcMetadata}
             emptyWalletBindingId={controller.emptyWalletBindingId}
             ADD_WALLET_BINDING_ID={controller.ADD_WALLET_BINDING_ID}
           />
-
           <HistoryTab
             testID="viewActivityLog"
             service={props.service}
             label={t('viewActivityLog')}
             vcMetadata={props.vcMetadata}
           />
-
           <ListItem bottomDivider>
             <ListItem.Content>
               <ListItem.Title
                 onPress={() => controller.REMOVE(props.vcMetadata)}
                 {...testIDProps('removeFromWallet')}>
-                <Text size="small" weight="bold">
-                  {t('removeFromWallet')}
-                </Text>
+                <Row crossAlign="center" style={{flex: 1}}>
+                  {SvgImage.outlinedDeleteIcon()}
+                  <Text size="small" weight="bold" margin="0 0 0 10">
+                    {t('removeFromWallet')}
+                  </Text>
+                </Row>
               </ListItem.Title>
             </ListItem.Content>
           </ListItem>
-
           <RemoveVcWarningOverlay
             isVisible={controller.isRemoveWalletWarning}
             onConfirm={controller.CONFIRM}
@@ -108,6 +103,31 @@ export const KebabPopUp: React.FC<KebabPopUpProps> = props => {
   );
 };
 
+export const KebabPopupListItemContainer: React.FC<
+  KebabListItemContainerProps
+> = props => {
+  return (
+    <ListItem bottomDivider>
+      <ListItem.Content>
+        <ListItem.Title onPress={props.onPress} {...testIDProps(props.testID)}>
+          <Row crossAlign="center" style={{flex: 1}}>
+            {props.listItemIcon}
+            <Text size="small" weight="bold" margin="0 0 0 10">
+              {props.label}
+            </Text>
+          </Row>
+        </ListItem.Title>
+      </ListItem.Content>
+    </ListItem>
+  );
+};
+
+export interface KebabListItemContainerProps {
+  label: string;
+  listItemIcon: ReactNode;
+  onPress: () => void;
+  testID: string;
+}
 export interface KebabPopUpProps {
   iconName: string;
   iconType?: string;

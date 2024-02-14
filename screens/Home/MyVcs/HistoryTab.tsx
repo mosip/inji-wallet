@@ -7,26 +7,22 @@ import {ActivityLogText} from '../../../components/ActivityLogText';
 import {ActorRefFrom} from 'xstate';
 import {ExistingMosipVCItemMachine} from '../../../machines/VCItemMachine/ExistingMosipVCItem/ExistingMosipVCItemMachine';
 import {useKebabPopUp} from '../../../components/KebabPopUpController';
-import {Theme} from '../../../components/ui/styleUtils';
 import {VCMetadata} from '../../../shared/VCMetadata';
-import testIDProps from '../../../shared/commonUtil';
+import {SvgImage} from '../../../components/ui/svg';
+import {KebabPopupListItemContainer} from '../../../components/KebabPopUp';
 
 export const HistoryTab: React.FC<HistoryTabProps> = props => {
   const {t} = useTranslation('HistoryTab');
   const controller = useKebabPopUp(props);
 
   return (
-    <ListItem bottomDivider onPress={controller.SHOW_ACTIVITY}>
-      <ListItem.Content>
-        <ListItem.Title {...testIDProps(props.testID)}>
-          <Text
-            size="small"
-            weight="bold"
-            color={Theme.Colors.walletbindingLabel}>
-            {props.label}
-          </Text>
-        </ListItem.Title>
-      </ListItem.Content>
+    <>
+      <KebabPopupListItemContainer
+        label={props.label}
+        listItemIcon={SvgImage.OutlinedScheduleIcon()}
+        onPress={controller.SHOW_ACTIVITY}
+        testID={props.testID}
+      />
       <Modal
         headerLabel={props.vcMetadata.id}
         isVisible={controller.isShowActivities}
@@ -60,12 +56,12 @@ export const HistoryTab: React.FC<HistoryTabProps> = props => {
           )}
         </Column>
       </Modal>
-    </ListItem>
+    </>
   );
 };
 
 export interface HistoryTabProps {
-  testID?: string;
+  testID: string;
   label: string;
   vcMetadata: VCMetadata;
   service: ActorRefFrom<typeof ExistingMosipVCItemMachine>;
