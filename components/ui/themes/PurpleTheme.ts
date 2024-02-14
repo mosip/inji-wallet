@@ -681,7 +681,7 @@ export const PurpleTheme = {
     scanLayoutHeaderTitle: {
       fontSize: 26,
       fontFamily: 'Inter_600SemiBold',
-      paddingTop: 20,
+      paddingTop: isIOS() ? 10 : 20,
       paddingBottom: 10,
     },
     sendVcHeaderContainer: {
