@@ -1,6 +1,6 @@
 import {getFocusedRouteNameFromRoute} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {useTranslation} from 'react-i18next';
 import {Icon} from 'react-native-elements';
 import {Row} from '../components/ui';
@@ -77,12 +77,20 @@ export const HomeScreenLayout: React.FC<RootRouteProps> = props => {
       />
     </Row>
   );
-  const HomeScreenOptions = {
-    headerLeft: () => (I18nManager.isRTL ? screenOptions : SvgImage.InjiLogo()),
+
+  const [HomeScreenOptions, setHomeScreenOptions] = useState({
+    headerLeft: () => SvgImage.InjiLogo(),
     headerTitle: '',
-    headerRight: () =>
-      I18nManager.isRTL ? SvgImage.InjiLogo() : screenOptions,
-  };
+    headerRight: () => screenOptions,
+  });
+
+  useEffect(() => {
+    setHomeScreenOptions({
+      headerLeft: () => screenOptions,
+      headerTitle: '',
+      headerRight: () => SvgImage.InjiLogo(),
+    });
+  }, [I18nManager.isRTL]);
 
   return (
     <Navigator>
