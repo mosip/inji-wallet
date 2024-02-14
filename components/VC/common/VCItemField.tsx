@@ -23,21 +23,10 @@ export const VCItemFieldName = ({fieldName, wellknown}) => {
 
 export const VCItemFieldValue = ({fieldName, fieldValue, wellknown}) => {
   return (
-    <Tooltip
-      toggleOnPress={fieldValue.length > 20}
-      containerStyle={{
-        width: 200,
-        height: null,
-        overflow: 'hidden',
-      }}
-      skipAndroidStatusBar={true}
-      backgroundColor={Theme.Colors.Icon}
-      popover={<Text>{fieldValue}</Text>}>
+    <>
       <Text
         testID={`${fieldName}Value`}
         weight="semibold"
-        numLines={1}
-        ellipsizeMode={'tail'}
         style={[
           Theme.Styles.subtitle,
           setTextColor(wellknown),
@@ -45,7 +34,7 @@ export const VCItemFieldValue = ({fieldName, fieldValue, wellknown}) => {
         ]}>
         {fieldValue}
       </Text>
-    </Tooltip>
+    </>
   );
 };
 

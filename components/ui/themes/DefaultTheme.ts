@@ -132,6 +132,7 @@ export const DefaultTheme = {
     tooltipIcon: Colors.toolTip,
     toolTipPointerColor: Colors.toolTipPointer,
     urlLink: Colors.Orange,
+    warningText: Colors.Red,
   },
   Styles: StyleSheet.create({
     title: {

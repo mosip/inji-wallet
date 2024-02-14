@@ -78,20 +78,12 @@ export const KebabPopUp: React.FC<KebabPopUpProps> = props => {
             label={t('viewActivityLog')}
             vcMetadata={props.vcMetadata}
           />
-          <ListItem bottomDivider>
-            <ListItem.Content>
-              <ListItem.Title
-                onPress={() => controller.REMOVE(props.vcMetadata)}
-                {...testIDProps('removeFromWallet')}>
-                <Row crossAlign="center" style={{flex: 1}}>
-                  {SvgImage.outlinedDeleteIcon()}
-                  <Text size="small" weight="bold" margin="0 0 0 10">
-                    {t('removeFromWallet')}
-                  </Text>
-                </Row>
-              </ListItem.Title>
-            </ListItem.Content>
-          </ListItem>
+          <KebabPopupListItemContainer
+            label={t('removeFromWallet')}
+            listItemIcon={SvgImage.outlinedDeleteIcon()}
+            onPress={() => controller.REMOVE(props.vcMetadata)}
+            testID="removeFromWallet"
+          />
           <RemoveVcWarningOverlay
             isVisible={controller.isRemoveWalletWarning}
             onConfirm={controller.CONFIRM}
@@ -112,7 +104,14 @@ export const KebabPopupListItemContainer: React.FC<
         <ListItem.Title onPress={props.onPress} {...testIDProps(props.testID)}>
           <Row crossAlign="center" style={{flex: 1}}>
             {props.listItemIcon}
-            <Text size="small" weight="bold" margin="0 0 0 10">
+            <Text
+              style={{fontFamily: 'Inter_600SemiBold'}}
+              color={
+                props.testID === 'removeFromWallet'
+                  ? Theme.Colors.warningText
+                  : undefined
+              }
+              margin="0 0 0 10">
               {props.label}
             </Text>
           </Row>

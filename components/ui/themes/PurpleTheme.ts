@@ -135,6 +135,7 @@ export const PurpleTheme = {
     tooltipIcon: Colors.tooltip,
     toolTipPointerColor: Colors.toolTipPointer,
     urlLink: Colors.Purple,
+    warningText: Colors.Red,
   },
   Styles: StyleSheet.create({
     title: {
