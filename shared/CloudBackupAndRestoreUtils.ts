@@ -32,12 +32,15 @@ class Cloud {
     /backup_[0-9]*.zip.icloud/g;
   private static readonly RETRY_SLEEP_TIME = 5000;
 
+  static readonly NO_BACKUP_FILE = 'Backup files not available';
+
   private static configure() {
     GoogleSignin.configure({
       scopes: this.requiredScopes,
       androidClientId: GOOGLE_ANDROID_CLIENT_ID,
     });
   }
+
   private static async profileInfo(): Promise<ProfileInfo | undefined> {
     try {
       const accessToken = await this.getAccessToken();
@@ -80,6 +83,7 @@ class Cloud {
       throw error;
     }
   }
+
   static async signIn(): Promise<SignInResult | IsIOSResult> {
     if (isIOS()) {
       return {isIOS: true};
@@ -115,6 +119,7 @@ class Cloud {
       };
     }
   }
+
   static async isSignedInAlready(): Promise<isSignedInResult> {
     try {
       if (isIOS()) {
@@ -157,6 +162,7 @@ class Cloud {
       };
     }
   }
+
   static async downloadUnSyncedBackupFiles(): Promise<Boolean> {
     if (isIOS()) {
       const unSyncedFiles = (await this.getBackupFilesList()).filter(file =>
@@ -169,6 +175,7 @@ class Cloud {
     }
     return true;
   }
+
   static async lastBackupDetails(
     cloudFileName?: string | undefined,
   ): Promise<BackupDetails> {
@@ -189,9 +196,13 @@ class Cloud {
     }
 
     if (!cloudFileName) {
-      cloudFileName = (await this.getBackupFilesList()).filter(file =>
-        file.match(this.BACKUP_FILE_REG_EXP),
-      )[0];
+      const availableBackupFilesInCloud = (
+        await this.getBackupFilesList()
+      ).filter(file => file.match(this.BACKUP_FILE_REG_EXP));
+      if (availableBackupFilesInCloud.length === 0) {
+        throw new Error(this.NO_BACKUP_FILE);
+      }
+      cloudFileName = availableBackupFilesInCloud[0];
     }
     const {birthtimeMs: creationTime, size} = await CloudStorage.stat(
       cloudFileName,
@@ -203,6 +214,7 @@ class Cloud {
       backupFileSize: bytesToMB(size),
     };
   }
+
   static async removeOldDriveBackupFiles(fileName: string) {
     const toBeRemovedFiles = (await this.getBackupFilesList())
       .filter(file => file !== fileName)
@@ -211,6 +223,7 @@ class Cloud {
       await CloudStorage.unlink(`/${oldFileName}`);
     }
   }
+
   static async uploadBackupFileToDrive(
     fileName: string,
     retryCounter: number,
@@ -302,11 +315,15 @@ class Cloud {
         }
         await this.syncBackupFiles();
       }
-      const allFiles = (await this.getBackupFilesList()).filter(file =>
-        file.match(this.BACKUP_FILE_REG_EXP),
-      );
       // TODO: do basic sanity about this .zip file
-      const fileName = `/${allFiles[0]}`;
+      const availableBackupFilesInCloud = (
+        await this.getBackupFilesList()
+      ).filter(file => file.match(this.BACKUP_FILE_REG_EXP));
+      if (availableBackupFilesInCloud.length === 0) {
+        throw new Error(Cloud.NO_BACKUP_FILE);
+      }
+
+      const fileName = `/${availableBackupFilesInCloud[0]}`;
       const fileContent = await CloudStorage.readFile(
         fileName,
         CloudStorageScope.AppData,
@@ -330,8 +347,11 @@ class Cloud {
       let downloadError;
       if (error.toString() === 'Error: NetworkError') {
         downloadError = NETWORK_REQUEST_FAILED;
-      } else if (error.code?.toString() === 'ERR_DIRECTORY_NOT_FOUND') {
-        downloadError = 'No backup file';
+      } else if (
+        error.code?.toString() === 'ERR_DIRECTORY_NOT_FOUND' ||
+        error.toString().includes(this.NO_BACKUP_FILE)
+      ) {
+        downloadError = this.NO_BACKUP_FILE;
       } else {
         downloadError = error;
       }

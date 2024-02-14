@@ -186,7 +186,7 @@ export const backupRestoreMachine = model.createMachine(
       setRestoreErrorReason: model.assign({
         errorReason: (_context, event) => {
           const reasons = {
-            'No backup file': 'noBackupFile',
+            [Cloud.NO_BACKUP_FILE]: 'noBackupFile',
             [NETWORK_REQUEST_FAILED]: 'networkError',
             [TECHNICAL_ERROR]: 'technicalError',
           };

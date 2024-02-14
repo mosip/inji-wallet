@@ -40,7 +40,7 @@ fileignoreconfig:
   - filename: screens/Issuers/IssuersScreen.tsx
     checksum: 9c53e3770dbefe26e0de67ee4b7d5cc9c52d9823cbb136a1a5104dcb0a101071
   - filename: ios/Podfile.lock
-    checksum: c9bb3501f86e3ac35c7522ed1028b0fa726723c86d395bb159d5f96a21e50159
+    checksum: 0e4fce1a146e882a6cabbc3e78ae2c35fe58f1dee956c7d9d85902504135bc92
   - filename: shared/commonUtil.ts
     checksum: 4a53bb615f2ea0fbf687bd7027c4c246e819dd88bc273941ed611e763d9d2356
   - filename: screens/Home/MyVcs/GetIdInputModal.tsx
@@ -181,7 +181,7 @@ fileignoreconfig:
   - filename: components/HelpScreen.tsx
     checksum: bbc69143bd37d065bba3800396301db5a0318e8b7ba51ecd49142dda68783a01  
   - filename: machines/backupRestore.ts
-    checksum: 61c8503b7de62ad909301ecd22e169b093bcb7aa348ef00b17d49586f2a3ccb7
+    checksum: 94bbbe550c3e6ba77f66252fc62e9659236ce880bca44fc05f5bd8170e9c6388
   - filename: machines/backupAndRestore/backupAndRestoreSetup.typegen.ts
     checksum: ad12de520a68fbd43560474ded24edf25a02f6ec90b67c726d6c5dedb579eb83
   - filename: machines/backupAndRestore/backupAndRestoreSetup.ts
