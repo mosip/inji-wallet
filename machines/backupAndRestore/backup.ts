@@ -174,11 +174,11 @@ export const backupMachine = model.createMachine(
               STORE_ERROR: [
                 {
                   cond: 'checkIfAutoBackup',
-                  actions: ['setBackUpNotPossible'],
+                  actions: ['setBackupErrorReason'],
                   target: 'silentFailure',
                 },
                 {
-                  actions: ['setBackUpNotPossible'],
+                  actions: ['setBackupErrorReason'],
                   target: 'failure',
                 },
               ],
@@ -362,7 +362,7 @@ export const backupMachine = model.createMachine(
             [NETWORK_REQUEST_FAILED]: 'networkError',
             [IOS_SIGNIN_FAILED]: 'iCloudSignInError',
           };
-          return reasons[event.data.error] || reasons[TECHNICAL_ERROR];
+          return reasons[event.data?.error] || reasons[TECHNICAL_ERROR];
         },
       }),
 
@@ -439,7 +439,7 @@ export const backupMachine = model.createMachine(
         return context.isAutoBackUp;
       },
       isVCFound: (_context, event) => {
-        return event.response && event.response.length > 0;
+        return !!(event.response && (event.response as object[]).length > 0);
       },
       isDataAvailableInStorage: (_context, event) => {
         return event.response != null;
