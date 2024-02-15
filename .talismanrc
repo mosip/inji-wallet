@@ -190,5 +190,14 @@ fileignoreconfig:
     checksum: 397f2076504f851a981b0deff6eeac30041c775ee1c57b51e328fc09d52ef43e
   - filename: shared/VCMetadata.ts
     checksum: e93f988415bf91064e2cf5fbc09ff6c7226798baa5da721fa0715d5d0d6afddf
+  - filename: machines/backupAndRestore/backup.ts
+    checksum: 0127424d704e7dbefcb13e2d66d687e8fa94812728b4eb6bfa7768028425e9b3
+  - filename: machines/backupAndRestore/backup.typegen.ts
+    checksum: 7ddb7fa85112d52a0e486c06d066f7adcfb8445f7e9818eb9a2c8b0e70f5a8f9
+  - filename: machines/backupRestore.ts
+    checksum: 8f8725bb55dbc98083f819c74754a8eac258d15038e391a16ca1ab55a53d61f3
+  - filename: machines/backupRestore.typegen.ts
+    checksum: 85e92ddec56da8dcdd28b5a29dfabd88dd0435e619f822488bc4e19b83872289
+version: ""
     version: ""
 

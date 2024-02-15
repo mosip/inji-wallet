@@ -42,7 +42,7 @@ export class VCMetadata {
       id: vc.id,
       protocol: vc.protocol,
       issuer: vc.issuer,
-      timestamp: vc.timestamp,
+      timestamp: vc.vcMetadata ? vc.vcMetadata.timestamp : vc.timestamp,
     });
   }
 
