@@ -402,9 +402,6 @@ export const requestMachine =
                     STORE_RESPONSE: {
                       target: 'storingVc',
                     },
-                    STORE_ERROR: {
-                      target: '#request.reviewing.savingFailed',
-                    },
                   },
                 },
                 storingVc: {
