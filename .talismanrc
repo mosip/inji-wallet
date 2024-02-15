@@ -36,7 +36,7 @@ fileignoreconfig:
   - filename: shared/telemetry/TelemetryUtils.js
     checksum: ffe9aac2dcc590b98b0d588885c088eff189504ade653a77f74b67312bfd27ad
   - filename: shared/fileStorage.ts
-    checksum: 451e8873a635d955fe426d9a5fcf191f2d4fd74984a1a4518760e2d10e9e1817
+    checksum: 2ba2721d9722cd9420ae26762316230f7dab1a0be45820cbda4d0ecae0edf957
   - filename: screens/Issuers/IssuersScreen.tsx
     checksum: 9c53e3770dbefe26e0de67ee4b7d5cc9c52d9823cbb136a1a5104dcb0a101071
   - filename: ios/Podfile.lock
@@ -116,13 +116,13 @@ fileignoreconfig:
   - filename: .github/workflows/android-custom-build.yml
     checksum: 4d155c6e5468effb0b82e62f6878f2bd7ff7e7c9540e16bdd28cb81b80672ac3
   - filename: .github/workflows/push-triggers.yml
-    checksum: 4a031b46646aa982c8f40e4c7fe0bd3e05a76a6af1ff1c2de7350ba6ebf9a839 
+    checksum: 4a031b46646aa982c8f40e4c7fe0bd3e05a76a6af1ff1c2de7350ba6ebf9a839
   - filename: components/VC/Views/VCCardViewContent.tsx
     checksum: 02655ff3d7f8a8ea4f3664485f98c961802c598242ec44408594a2ddb721fa5e
   - filename: screens/Settings/BackupController.tsx
     checksum: 4a031b46646aa982c8f40e4c7fe0bd3e05a76a6af1ff1c2de7350ba6ebf9a839
   - filename: machines/backupRestore.typegen.ts
-    checksum: 67925a7ee485ab3ba4c6345340ad6598746717984c0506f1ced1716fb68b5aa4
+    checksum: ac9c154060c7c1adb3392ac8c78a42cae5ca3faea3b4b0166dd00d4ca38b290d
   - filename: machines/settings.typegen.ts
     checksum: e4ae05822f1b1c23f3f70d03dd46fd8f29ba6b52d40f2f24c121f536fbb5f2c4
   - filename: .env
@@ -140,7 +140,7 @@ fileignoreconfig:
   - filename: ios/fastlane/Fastfile
     checksum: a4e3772dc67a07ecbcfc58be0d6d4f7fa799cec7ac25bd269ac29459c8669ca4
   - filename: shared/storage.ts
-    checksum: c0e99e00d260c665dcf87d09b1ed75a4e73cb9eeb2036ccb021560d1d643489f
+    checksum: c83024929b59f76cce188dbe09eb3af1803d3a08f867feb7478137ddabc3bfdc
   - filename: injitest/src/test/java/iosTestCases/CredentialRegistryTest.java
     checksum: b0808e0c511412cde21fd169a9bbeaf3b77cb48f25418e12d341cc3ce1df5898
   - filename: machines/backupAndRestore/backupAndRestore.typegen.ts
@@ -167,7 +167,7 @@ fileignoreconfig:
   - filename: locales/fil.json
     checksum: 29193fd3b14b7332bf7a485f659197002f29a58af88ed0653cae262e7254c84d
   - filename: screens/Home/IntroSlidersScreen.tsx
-    checksum: af4a7e2d04b1141b7c32acfabeb3213a32eaca2a8e8f61e6958b6c97219dce57 
+    checksum: af4a7e2d04b1141b7c32acfabeb3213a32eaca2a8e8f61e6958b6c97219dce57
   - filename: screens/Home/MyVcs/GetIdInputModal.tsx
     checksum: 067664e19817d3aba98b0cfa68ef57a04958a982ee23b96b612e4bf466a73890
   - filename: screens/PasscodeScreen.tsx
@@ -175,16 +175,20 @@ fileignoreconfig:
   - filename: screens/Home/MyVcs/IdInputModal.tsx
     checksum: b735aedc84164d03c199fe89ccbf9df58f8997bfb4f60e7058a22bfe952fda3e
   - filename: .github/workflows/ui-automation.yml
-    checksum: 0b26a5dcb7524ba15d6aaeaf04f2ef94be9d25ef702d9072d6628bcd58e50f36 
+    checksum: 0b26a5dcb7524ba15d6aaeaf04f2ef94be9d25ef702d9072d6628bcd58e50f36
   - filename: components/BannerNotificationContainer.tsx
-    checksum: a98ff1a0dd96d3ead4b8191320be8b0c7a558cda6b0de39f1c62aaa8efef9fb8  
+    checksum: a98ff1a0dd96d3ead4b8191320be8b0c7a558cda6b0de39f1c62aaa8efef9fb8
   - filename: components/HelpScreen.tsx
-    checksum: bbc69143bd37d065bba3800396301db5a0318e8b7ba51ecd49142dda68783a01  
+    checksum: bbc69143bd37d065bba3800396301db5a0318e8b7ba51ecd49142dda68783a01
   - filename: machines/backupRestore.ts
-    checksum: 94bbbe550c3e6ba77f66252fc62e9659236ce880bca44fc05f5bd8170e9c6388
+    checksum: 433cecb9295c7052731600d16c601c1b6df9cc5a1b9f435423f81aae54d33d47
+  - filename: machines/backupAndRestore/backupAndRestoreSetup.ts
+    checksum: 75b07071aef4278f40f16861232b922e5ee8594efc9467984b072966fa7793b8
   - filename: machines/backupAndRestore/backupAndRestoreSetup.typegen.ts
     checksum: ad12de520a68fbd43560474ded24edf25a02f6ec90b67c726d6c5dedb579eb83
   - filename: machines/backupAndRestore/backupAndRestoreSetup.ts
-    checksum: 1822e1966c97649cf9ee8892fbca143128003234d59ca754e0527feaf769f162
+    checksum: 397f2076504f851a981b0deff6eeac30041c775ee1c57b51e328fc09d52ef43e
+  - filename: shared/VCMetadata.ts
+    checksum: e93f988415bf91064e2cf5fbc09ff6c7226798baa5da721fa0715d5d0d6afddf
     version: ""
 
