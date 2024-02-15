@@ -228,11 +228,17 @@ export const vcMachine =
                       'removeTamperedVcs',
                       'logTamperedVCsremoved',
                     ],
-                    target: '#vc.ready.myVcs.refreshing',
+                    target: [
+                      '#vc.ready.myVcs.refreshing',
+                      '#vc.ready.receivedVcs.refreshing',
+                    ],
                   },
                   {
                     actions: ['removeTamperedVcs', 'logTamperedVCsremoved'],
-                    target: '#vc.ready.myVcs.refreshing',
+                    target: [
+                      '#vc.ready.myVcs.refreshing',
+                      '#vc.ready.receivedVcs.refreshing',
+                    ],
                   },
                 ],
               },
@@ -391,8 +397,12 @@ export const vcMachine =
         ),
 
         removeTamperedVcs: model.assign({
-          myVcs: (context, event) =>
+          myVcs: context =>
             context.myVcs.filter(
+              value => !context.tamperedVcs.some(item => item?.equals(value)),
+            ),
+          receivedVcs: context =>
+            context.receivedVcs.filter(
               value => !context.tamperedVcs.some(item => item?.equals(value)),
             ),
         }),

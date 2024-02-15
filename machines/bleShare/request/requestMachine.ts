@@ -402,6 +402,9 @@ export const requestMachine =
                     STORE_RESPONSE: {
                       target: 'storingVc',
                     },
+                    STORE_ERROR: {
+                      target: '#request.reviewing.savingFailed',
+                    },
                   },
                 },
                 storingVc: {
@@ -409,6 +412,10 @@ export const requestMachine =
                   on: {
                     STORE_RESPONSE: {
                       target: '#request.reviewing.accepted',
+                    },
+                    STORE_ERROR: {
+                      actions: 'removeReceivedVcMetadataFromStorage',
+                      target: '#request.reviewing.savingFailed',
                     },
                   },
                 },
@@ -631,6 +638,16 @@ export const requestMachine =
             return StoreEvents.PREPEND(
               RECEIVED_VCS_STORE_KEY,
               VCMetadata.fromVC(context.incomingVc?.vcMetadata),
+            );
+          },
+          {to: context => context.serviceRefs.store},
+        ),
+
+        removeReceivedVcMetadataFromStorage: send(
+          context => {
+            return StoreEvents.REMOVE_VC_METADATA(
+              RECEIVED_VCS_STORE_KEY,
+              VCMetadata.fromVC(context.incomingVc?.vcMetadata).getVcKey(),
             );
           },
           {to: context => context.serviceRefs.store},
