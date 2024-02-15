@@ -46,7 +46,7 @@ def map_flavour_tosuffix()
   flavor = APP_FLAVOR
   case flavor
   when "residentapp"
-    return "mobileid"
+    return "wallet.mobileid"
   when "inji"
     return "wallet"
   end
