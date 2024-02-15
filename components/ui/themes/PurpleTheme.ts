@@ -25,6 +25,7 @@ const Colors = {
   DimGray: '#737373',
   platinumGrey: '#EDEDED',
   Orange: '#F2811D',
+  OrangeBrown: '#D9822B',
   Blue: '#0000FF',
   LightOrange: '#FDF1E6',
   LightGrey: '#FAF9FF',
@@ -699,7 +700,7 @@ export const PurpleTheme = {
     },
     dismiss: {paddingLeft: 9},
     info: {
-      backgroundColor: Colors.Green,
+      backgroundColor: Colors.OrangeBrown,
     },
     success: {
       backgroundColor: Colors.Green,
