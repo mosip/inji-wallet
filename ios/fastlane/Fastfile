@@ -57,7 +57,7 @@ def generate_app_name()
   flavor = APP_FLAVOR
   case flavor
   when "residentapp"
-    return "Inji"
+    return "MOSIP INJI APP"
   when "inji"
     return "Inji Wallet"
   when "collab"
@@ -169,8 +169,8 @@ platform :ios do
       plist_path: "Inji/Info.plist"
     )
     # replace bundle ID
-    s = "s/mobileid/#{map_flavour_tosuffix}/g"
-    sh("sed -i '' -e #{s} ../Inji.xcodeproj/project.pbxproj")
+    # s = "s/mobileid/#{map_flavour_tosuffix}/g"
+    # sh("sed -i '' -e #{s} ../Inji.xcodeproj/project.pbxproj")
 
     # replace Product name
     p = "s|PRODUCT_NAME = Inji|PRODUCT_NAME = \"#{generate_app_name}\"|"
