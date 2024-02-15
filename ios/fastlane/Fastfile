@@ -29,7 +29,7 @@ def generate_app_bundle_id()
   case flavor
   when "residentapp"
     # the old app flavor
-    return "io.mosip.inji.mobileid"
+    return "io.mosip.inji.wallet.mobileid"
   when "inji"
     # io.mosip.inji is not available in iOS
     return "io.mosip.inji.wallet"
@@ -46,7 +46,7 @@ def map_flavour_tosuffix()
   flavor = APP_FLAVOR
   case flavor
   when "residentapp"
-    return "mobileid"
+    return "wallet.mobileid"
   when "inji"
     return "wallet"
   end

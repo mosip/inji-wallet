@@ -116,7 +116,7 @@ fileignoreconfig:
   - filename: .github/workflows/android-custom-build.yml
     checksum: 4d155c6e5468effb0b82e62f6878f2bd7ff7e7c9540e16bdd28cb81b80672ac3
   - filename: .github/workflows/push-triggers.yml
-    checksum: 4a031b46646aa982c8f40e4c7fe0bd3e05a76a6af1ff1c2de7350ba6ebf9a839 
+    checksum: 4a031b46646aa982c8f40e4c7fe0bd3e05a76a6af1ff1c2de7350ba6ebf9a839
   - filename: components/VC/Views/VCCardViewContent.tsx
     checksum: 02655ff3d7f8a8ea4f3664485f98c961802c598242ec44408594a2ddb721fa5e
   - filename: screens/Settings/BackupController.tsx
@@ -167,7 +167,7 @@ fileignoreconfig:
   - filename: locales/fil.json
     checksum: 29193fd3b14b7332bf7a485f659197002f29a58af88ed0653cae262e7254c84d
   - filename: screens/Home/IntroSlidersScreen.tsx
-    checksum: af4a7e2d04b1141b7c32acfabeb3213a32eaca2a8e8f61e6958b6c97219dce57 
+    checksum: af4a7e2d04b1141b7c32acfabeb3213a32eaca2a8e8f61e6958b6c97219dce57
   - filename: screens/Home/MyVcs/GetIdInputModal.tsx
     checksum: 067664e19817d3aba98b0cfa68ef57a04958a982ee23b96b612e4bf466a73890
   - filename: screens/PasscodeScreen.tsx
@@ -175,11 +175,11 @@ fileignoreconfig:
   - filename: screens/Home/MyVcs/IdInputModal.tsx
     checksum: b735aedc84164d03c199fe89ccbf9df58f8997bfb4f60e7058a22bfe952fda3e
   - filename: .github/workflows/ui-automation.yml
-    checksum: 0b26a5dcb7524ba15d6aaeaf04f2ef94be9d25ef702d9072d6628bcd58e50f36 
+    checksum: 0b26a5dcb7524ba15d6aaeaf04f2ef94be9d25ef702d9072d6628bcd58e50f36
   - filename: components/BannerNotificationContainer.tsx
-    checksum: a98ff1a0dd96d3ead4b8191320be8b0c7a558cda6b0de39f1c62aaa8efef9fb8  
+    checksum: a98ff1a0dd96d3ead4b8191320be8b0c7a558cda6b0de39f1c62aaa8efef9fb8
   - filename: components/HelpScreen.tsx
-    checksum: bbc69143bd37d065bba3800396301db5a0318e8b7ba51ecd49142dda68783a01  
+    checksum: bbc69143bd37d065bba3800396301db5a0318e8b7ba51ecd49142dda68783a01
   - filename: machines/backupRestore.ts
     checksum: 433cecb9295c7052731600d16c601c1b6df9cc5a1b9f435423f81aae54d33d47
   - filename: machines/backupAndRestore/backupAndRestoreSetup.typegen.ts
