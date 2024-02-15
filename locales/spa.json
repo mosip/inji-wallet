@@ -652,7 +652,7 @@
     "size": "Tamaño: ",
     "restore": "Restaurar",
     "restoreInProgress": "Estamos restaurando sus datos, no cierre la aplicación. Puede continuar usando la aplicación.",
-    "restoreInfo": "Restaura tus datos desde Google Drive",
+    "restoreInfo": "Restaura tus datos desde {{driveName}}",
     "driveSettings": "Configuración de Google Drive",
     "successBanner": "¡Su copia de seguridad fue exitosa!",
     "backupFailed": "Copia de seguridad fallida",
