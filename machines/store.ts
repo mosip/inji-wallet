@@ -12,7 +12,12 @@ import {
 import {createModel} from 'xstate/lib/model';
 import {generateSecureRandom} from 'react-native-securerandom';
 import {log} from 'xstate/lib/actions';
-import {isIOS, MY_VCS_STORE_KEY, SETTINGS_STORE_KEY} from '../shared/constants';
+import {
+  isIOS,
+  MY_VCS_STORE_KEY,
+  RECEIVED_VCS_STORE_KEY,
+  SETTINGS_STORE_KEY,
+} from '../shared/constants';
 import SecureKeystore from '@mosip/secure-keystore';
 import {
   AUTH_TIMEOUT,
@@ -711,7 +716,10 @@ export async function removeItem(
   try {
     if (value === null && VCMetadata.isVCKey(key)) {
       await Storage.removeItem(key);
-      await removeVCMetaData(MY_VCS_STORE_KEY, key, encryptionKey);
+      const isMyVC = await Storage.getItem(MY_VCS_STORE_KEY, key);
+      isMyVC
+        ? await removeVCMetaData(MY_VCS_STORE_KEY, key, encryptionKey)
+        : await removeVCMetaData(RECEIVED_VCS_STORE_KEY, key, encryptionKey);
     } else if (key === MY_VCS_STORE_KEY) {
       const data = await Storage.getItem(key, encryptionKey);
       let list: Object[] = [];

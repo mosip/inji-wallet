@@ -56,6 +56,7 @@ const model = createModel(
       REMOVE_TAMPERED_VCS: () => ({}),
       DOWNLOAD_LIMIT_EXPIRED: (vcMetadata: VCMetadata) => ({vcMetadata}),
       DELETE_VC: () => ({}),
+      REFRESH_VCS_METADATA: () => ({}),
     },
   },
 );
@@ -223,24 +224,24 @@ export const vcMachine =
                 onDone: [
                   {
                     cond: 'isSignedIn',
-                    actions: [
-                      'sendBackupEvent',
-                      'removeTamperedVcs',
-                      'logTamperedVCsremoved',
-                    ],
-                    target: [
-                      '#vc.ready.myVcs.refreshing',
-                      '#vc.ready.receivedVcs.refreshing',
-                    ],
+                    actions: 'sendBackupEvent',
+                    target: 'refreshVcsMetadata',
                   },
                   {
-                    actions: ['removeTamperedVcs', 'logTamperedVCsremoved'],
-                    target: [
-                      '#vc.ready.myVcs.refreshing',
-                      '#vc.ready.receivedVcs.refreshing',
-                    ],
+                    target: 'refreshVcsMetadata',
                   },
                 ],
+              },
+            },
+            refreshVcsMetadata: {
+              entry: ['logTamperedVCsremoved', send('REFRESH_VCS_METADATA')],
+              on: {
+                REFRESH_VCS_METADATA: {
+                  target: [
+                    '#vc.ready.myVcs.refreshing',
+                    '#vc.ready.receivedVcs.refreshing',
+                  ],
+                },
               },
             },
           },
@@ -395,17 +396,6 @@ export const vcMachine =
             to: context => context.serviceRefs.store,
           },
         ),
-
-        removeTamperedVcs: model.assign({
-          myVcs: context =>
-            context.myVcs.filter(
-              value => !context.tamperedVcs.some(item => item?.equals(value)),
-            ),
-          receivedVcs: context =>
-            context.receivedVcs.filter(
-              value => !context.tamperedVcs.some(item => item?.equals(value)),
-            ),
-        }),
 
         logTamperedVCsremoved: send(
           context =>

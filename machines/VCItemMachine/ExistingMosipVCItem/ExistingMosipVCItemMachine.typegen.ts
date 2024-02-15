@@ -186,7 +186,6 @@ export interface Typegen0 {
       | 'done.invoke.vc-item.updatingPrivateKey:invocation[0]';
     markVcValid: 'done.invoke.vc-item.verifyingCredential:invocation[0]';
     refreshMyVcs: 'done.invoke.vc-item.kebabPopUp.removingVc.triggerAutoBackup:invocation[0]';
-    removeTamperedVcItem: 'TAMPERED_VC';
     removeVcFromInProgressDownloads: 'STORE_RESPONSE';
     removeVcItem: 'CONFIRM';
     removeVcMetaDataFromStorage: 'STORE_ERROR';

@@ -26,19 +26,18 @@ export interface Typegen0 {
     loadMyVcs:
       | 'DOWNLOAD_LIMIT_EXPIRED'
       | 'REFRESH_MY_VCS'
+      | 'REFRESH_VCS_METADATA'
       | 'STORE_RESPONSE'
-      | 'done.invoke.vc.tamperedVCs.triggerAutoBackupForTamperedVcDeletion:invocation[0]'
       | 'xstate.init';
     loadReceivedVcs:
       | 'REFRESH_RECEIVED_VCS'
-      | 'STORE_RESPONSE'
-      | 'done.invoke.vc.tamperedVCs.triggerAutoBackupForTamperedVcDeletion:invocation[0]';
+      | 'REFRESH_VCS_METADATA'
+      | 'STORE_RESPONSE';
     logTamperedVCsremoved: 'done.invoke.vc.tamperedVCs.triggerAutoBackupForTamperedVcDeletion:invocation[0]';
     prependToMyVcs: 'VC_ADDED';
     prependToReceivedVcs: 'VC_RECEIVED';
     removeDownloadFailedVcsFromStorage: 'DELETE_VC';
     removeDownloadingFailedVcsFromMyVcs: 'STORE_RESPONSE';
-    removeTamperedVcs: 'done.invoke.vc.tamperedVCs.triggerAutoBackupForTamperedVcDeletion:invocation[0]';
     removeVcFromInProgressDownlods:
       | 'DOWNLOAD_LIMIT_EXPIRED'
       | 'REMOVE_VC_FROM_IN_PROGRESS_DOWNLOADS';
@@ -77,6 +76,7 @@ export interface Typegen0 {
     | 'ready.receivedVcs.idle'
     | 'ready.receivedVcs.refreshing'
     | 'tamperedVCs'
+    | 'tamperedVCs.refreshVcsMetadata'
     | 'tamperedVCs.triggerAutoBackupForTamperedVcDeletion'
     | {
         init?: 'myVcs' | 'receivedVcs';
@@ -87,7 +87,9 @@ export interface Typegen0 {
               myVcs?: 'idle' | 'refreshing';
               receivedVcs?: 'idle' | 'refreshing';
             };
-        tamperedVCs?: 'triggerAutoBackupForTamperedVcDeletion';
+        tamperedVCs?:
+          | 'refreshVcsMetadata'
+          | 'triggerAutoBackupForTamperedVcDeletion';
       };
   tags: never;
 }
