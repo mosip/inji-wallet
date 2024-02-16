@@ -716,8 +716,14 @@ export async function removeItem(
   try {
     if (value === null && VCMetadata.isVCKey(key)) {
       await Storage.removeItem(key);
-      const isMyVC = await Storage.getItem(MY_VCS_STORE_KEY, key);
-      isMyVC
+      const myVcs: VCMetadata[] = (await Storage.getItem(
+        MY_VCS_STORE_KEY,
+        encryptionKey,
+      )) as VCMetadata[];
+      const tamperedVcinMyVC = myVcs.filter(
+        (vcMetadata: VCMetadata) => vcMetadata.getVcKey() === key,
+      );
+      tamperedVcinMyVC.length !== 0
         ? await removeVCMetaData(MY_VCS_STORE_KEY, key, encryptionKey)
         : await removeVCMetaData(RECEIVED_VCS_STORE_KEY, key, encryptionKey);
     } else if (key === MY_VCS_STORE_KEY) {
