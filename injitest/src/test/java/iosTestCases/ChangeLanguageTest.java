@@ -290,15 +290,15 @@ public class ChangeLanguageTest extends IosBaseTest {
         assertEquals(welcomePage.getWelcomeDescription(), "Panatilihin ang iyong digital na kredensyal sa iyo sa lahat ng oras. ");
         welcomePage.clickOnNextButton();
 
+        SecureSharingPage secureSharingPage = new SecureSharingPage(driver);
+        assertEquals(secureSharingPage.verifyLanguageforSecureSharingPageLoaded(), "Ligtas na Pagbabahagi");
+        assertEquals(secureSharingPage.getSecureSharingDescription(), "Ibahagi ang iyong mga card nang ligtas sa isang walang problemang paraan at mag-avail ng iba't ibang serbisyo.");
+        secureSharingPage.clickOnNextButton();
+
         TrustedDigitalWalletPage trustedDigitalWalletPage = new TrustedDigitalWalletPage(driver);
         assertEquals(trustedDigitalWalletPage.verifyLanguageforTrustedDigitalWalletPageLoaded(), "Pinagkakatiwalaang Digital Wallet");
         assertEquals(trustedDigitalWalletPage.getTrustedDigitalWalletDescription(), "Itabi at dalhin ang lahat ng iyong mahahalagang card sa isang pinagkakatiwalaang wallet.");
         trustedDigitalWalletPage.clickOnNextButton();
-
-        SecureSharingPage secureSharingPage = new SecureSharingPage(driver);
-        assertEquals(secureSharingPage.verifyLanguageforSecureSharingPageLoaded(), "Mabilis na pagpasok");
-        assertEquals(secureSharingPage.getSecureSharingDescription(), "Kapag nabuo na, ang card ay ligtas na iniimbak sa iyong mobile.");
-        secureSharingPage.clickOnNextButton();
 
         HassleFreeAuthenticationPage hassleFreeAuthenticationPage = new HassleFreeAuthenticationPage(driver);
         assertEquals(hassleFreeAuthenticationPage.verifyLanguageforHassleFreeAuthenticationPageLoaded(), "Mabilis na pagpasok");
