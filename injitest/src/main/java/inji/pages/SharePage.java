@@ -17,7 +17,10 @@ public class SharePage extends BasePage {
 
     @AndroidFindBy(uiAutomator = "new UiSelector().textContains(\"Allow\")")
     private WebElement allowButton;
-    
+
+    @AndroidFindBy(xpath = "//android.widget.Button[@resource-id=\"com.android.permissioncontroller:id/permission_allow_foreground_only_button\"]")
+    private WebElement cameraPopupAndroid;
+
     @AndroidFindBy(uiAutomator = "new UiSelector().textContains(\"Deny\")")
     private WebElement denyButton;
 
@@ -61,6 +64,13 @@ public class SharePage extends BasePage {
         }
         return this;
     }
+    public SharePage acceptPermissionPopupCamera() {
+        if (isElementDisplayed(cameraPopupAndroid)) {
+            clickOnElement(cameraPopupAndroid);
+        }
+        return this;
+    }
+
 
     public SharePage acceptPermissionPopupBluetoothIos() {
         if (isElementDisplayed(okButtonIos)) {
