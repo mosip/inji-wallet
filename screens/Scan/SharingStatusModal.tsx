@@ -5,7 +5,7 @@ import {Modal} from '../../components/ui/Modal';
 import {Pressable, Dimensions} from 'react-native';
 import {Button, Column, Row, Text} from '../../components/ui';
 import testIDProps from '../../shared/commonUtil';
-import {Icon} from 'react-native-elements';
+import {SvgImage} from '../../components/ui/svg';
 
 export const SharingStatusModal: React.FC<SharingStatusModalProps> = props => {
   const {t} = useTranslation('ScanScreen');
@@ -41,34 +41,20 @@ export const SharingStatusModal: React.FC<SharingStatusModalProps> = props => {
           <Row
             align="space-evenly"
             style={{marginBottom: Dimensions.get('screen').height * 0.06}}>
-            <Pressable accessible={false} testID="successfullyVcSharedHomeIcon">
-              <Icon
-                accessible={true}
-                name="home"
-                color={Theme.Colors.Icon}
-                size={33}
-                containerStyle={
-                  Theme.SelectVcOverlayStyles.sharedSuccessfullyIconStyle
-                }
-                onPress={props.goToHome}
-              />
+            <Pressable
+              accessible={false}
+              testID="successfullyVcSharedHomeIcon"
+              onPress={props.goToHome}>
+              {SvgImage.SuccessHomeIcon()}
               <Text align="center" weight="bold">
                 {t('status.accepted.home')}
               </Text>
             </Pressable>
             <Pressable
               accessible={false}
-              testID="successfullyVcSharedHistoryIcon">
-              <Icon
-                accessible={true}
-                name="history"
-                color={Theme.Colors.Icon}
-                size={33}
-                containerStyle={
-                  Theme.SelectVcOverlayStyles.sharedSuccessfullyIconStyle
-                }
-                onPress={props.goToHistory}
-              />
+              testID="successfullyVcSharedHistoryIcon"
+              onPress={props.goToHistory}>
+              {SvgImage.SuccessHistoryIcon()}
               <Text align="center" weight="bold">
                 {t('status.accepted.history')}
               </Text>
