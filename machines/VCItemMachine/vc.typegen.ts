@@ -35,7 +35,6 @@ export interface Typegen0 {
       | 'STORE_RESPONSE';
     logTamperedVCsremoved: 'done.invoke.vc.tamperedVCs.triggerAutoBackupForTamperedVcDeletion:invocation[0]';
     prependToMyVcs: 'VC_ADDED';
-    prependToReceivedVcs: 'VC_RECEIVED';
     removeDownloadFailedVcsFromStorage: 'DELETE_VC';
     removeDownloadingFailedVcsFromMyVcs: 'STORE_RESPONSE';
     removeVcFromInProgressDownlods:

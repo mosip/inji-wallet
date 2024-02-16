@@ -304,8 +304,8 @@ export const requestMachine =
               actions: ['sendVCReceivingDisconnectedEvent'],
             },
             VC_RECEIVED: {
-              target: 'reviewing.accepting',
               actions: 'setIncomingVc',
+              target: 'reviewing.accepting',
             },
           },
         },
@@ -364,43 +364,16 @@ export const requestMachine =
               },
             },
             accepting: {
-              initial: 'requestingReceivedVcs',
+              initial: 'prependingReceivedVcMetadata',
               states: {
-                requestingReceivedVcs: {
-                  entry: 'requestReceivedVcs',
-                  on: {
-                    VC_RESPONSE: [
-                      {
-                        target: 'requestingExistingVc',
-                        cond: 'hasExistingVc',
-                      },
-                      {
-                        target: 'prependingReceivedVc',
-                      },
-                    ],
-                  },
-                },
-                requestingExistingVc: {
-                  entry: 'requestExistingVc',
-                  on: {
-                    STORE_RESPONSE: {
-                      target: 'mergingIncomingVc',
-                    },
-                  },
-                },
-                mergingIncomingVc: {
-                  entry: 'mergeIncomingVc',
-                  on: {
-                    STORE_RESPONSE: {
-                      target: '#request.reviewing.accepted',
-                    },
-                  },
-                },
-                prependingReceivedVc: {
-                  entry: 'prependReceivedVc',
+                prependingReceivedVcMetadata: {
+                  entry: 'prependReceivedVcMetadata',
                   on: {
                     STORE_RESPONSE: {
                       target: 'storingVc',
+                    },
+                    STORE_ERROR: {
+                      target: '#request.reviewing.savingFailed',
                     },
                   },
                 },
@@ -415,11 +388,6 @@ export const requestMachine =
                       target: '#request.reviewing.savingFailed',
                     },
                   },
-                },
-              },
-              on: {
-                STORE_ERROR: {
-                  target: '#request.reviewing.savingFailed',
                 },
               },
             },
@@ -560,10 +528,6 @@ export const requestMachine =
           Linking.openSettings();
         },
 
-        requestReceivedVcs: send(VcEvents.GET_RECEIVED_VCS(), {
-          to: context => context.serviceRefs.vc,
-        }),
-
         setReadyForBluetoothStateCheck: model.assign({
           readyForBluetoothStateCheck: () => true,
         }),
@@ -627,7 +591,7 @@ export const requestMachine =
           },
         }),
 
-        prependReceivedVc: send(
+        prependReceivedVcMetadata: send(
           context => {
             if (context.incomingVc) {
               context.incomingVc.vcMetadata.timestamp = Date.now();
@@ -645,27 +609,6 @@ export const requestMachine =
             return StoreEvents.REMOVE_VC_METADATA(
               RECEIVED_VCS_STORE_KEY,
               VCMetadata.fromVC(context.incomingVc?.vcMetadata).getVcKey(),
-            );
-          },
-          {to: context => context.serviceRefs.store},
-        ),
-
-        requestExistingVc: send(
-          context =>
-            StoreEvents.GET(VCMetadata.fromVC(context.incomingVc).getVcKey()),
-          {to: context => context.serviceRefs.store},
-        ),
-
-        mergeIncomingVc: send(
-          (context, event) => {
-            const existing = event.response as VC;
-            const updated: VC = {
-              ...existing,
-              reason: existing.reason.concat(context.incomingVc.reason),
-            };
-            return StoreEvents.SET(
-              VCMetadata.fromVC(updated).getVcKey(),
-              updated,
             );
           },
           {to: context => context.serviceRefs.store},
@@ -713,14 +656,9 @@ export const requestMachine =
           {to: context => context.serviceRefs.activityLog},
         ),
 
-        sendVcReceived: send(
-          context => {
-            return VcEvents.VC_RECEIVED(
-              VCMetadata.fromVC(context.incomingVc?.vcMetadata),
-            );
-          },
-          {to: context => context.serviceRefs.vc},
-        ),
+        sendVcReceived: send(VcEvents.REFRESH_RECEIVED_VCS(), {
+          to: context => context.serviceRefs.vc,
+        }),
 
         clearShouldVerifyPresence: assign({
           incomingVc: context => ({
