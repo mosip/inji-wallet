@@ -746,7 +746,7 @@
     "errors": {
       "permissionDenied": {
         "title": "Permissions required",
-        "message": "To continue with the data backup, allow access to your Google Drive. Tap \"Allow Access\" to finish setup, or tap \"Not Now\" to return to Settings.",
+        "message": "To continue with the data backup, allow access to your {{driveName}}. Tap \"Allow Access\" to finish setup, or tap \"Not Now\" to return to Settings.",
         "actions": {
           "allowAccess": "Allow Access",
           "notNow": "Not Now"
@@ -763,6 +763,7 @@
     "backupFailure": {
       "networkError": "Due to unstable internet connection, we were unable to perform data backup. Please try again later.",
       "technicalError": "Due to technical error, we were unable to perform data backup. Please try again later.",
+      "iCloudSignInError": "We're sorry that data backup couldn't be completed. Please ensure that you have logged into your Apple account and iCloud access is enabled for the app.",
       "noDataForBackup": "We're sorry, but there is no data available to back up at the moment.",
       "storageLimitReached": "We're unable to complete the backup process due to insufficient storage space on your device. Please free up space by deleting unnecessary files or apps, and try again."
     },
@@ -775,7 +776,7 @@
   },
   "AccountSelection": {
     "backupProcessInfo": "You’re just a few steps away from backing up your data",
-    "cloudInfo": "To initiate the data backup, please tap on the “Proceed” button to link your Google Drive with Inji.",
+    "cloudInfo": "To initiate the data backup, please tap on the “Proceed” button to link your {{driveName}} with Inji.",
     "googleDriveTitle": "Google Drive",
     "loadingSubtitle": "Loading...",
     "proceed": "Proceed",
@@ -787,7 +788,7 @@
     "backupProgressState": "Backup in progress...",
     "lastBackupDetails": "Last Backup Details",
     "backupInProgress": "You can still use the application while data backup is in progress. Closing the app will terminate the data backup process.",
-    "noBackup": "Backup your Data to Google Drive. You can restore them when you reinstall INJI.",
+    "noBackup": "Backup your Data to {{driveName}}. You can restore them when you reinstall INJI.",
     "storage": "The backup will be stored in the Google Drive associated to your chosen gmail account.",
     "backup": "Backup",
     "size": "Size: ",

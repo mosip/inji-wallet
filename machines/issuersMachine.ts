@@ -46,7 +46,7 @@ import {CACHED_API} from '../shared/api';
 import {request} from '../shared/request';
 import {BiometricCancellationError} from '../shared/error/BiometricCancellationError';
 import {VCMetadata} from '../shared/VCMetadata';
-import Cloud, {isSignedInResult} from '../shared/googleCloudUtils';
+import Cloud, {isSignedInResult} from '../shared/CloudBackupAndRestoreUtils';
 
 const model = createModel(
   {

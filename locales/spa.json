@@ -708,7 +708,7 @@
     "errors": {
       "permissionDenied": {
         "title": "Permisos requeridos",
-        "message": "Para continuar con la copia de seguridad de los datos, permita el acceso a su Google Drive. Toque \"Permitir acceso\" para finalizar la configuración o toque \"Ahora no\" para regresar a Configuración.",
+        "message": "Para continuar con la copia de seguridad de los datos, permita el acceso a su {{driveName}}. Toque \"Permitir acceso\" para finalizar la configuración o toque \"Ahora no\" para regresar a Configuración.",
         "actions": {
           "allowAccess": "Permitir el acceso",
           "notNow": "Ahora no"
@@ -725,6 +725,7 @@
     "backupFailure": {
       "networkError": "Debido a una conexión a Internet inestable, no pudimos realizar una copia de seguridad de los datos. Por favor, inténtelo de nuevo más tarde.",
       "technicalError": "Debido a un error técnico, no pudimos realizar una copia de seguridad de los datos. Por favor, inténtelo de nuevo más tarde.",
+      "iCloudSignInError": "Lamentamos que no se haya podido completar la copia de seguridad de los datos. ",
       "noDataForBackup": "Lo sentimos, pero no hay datos disponibles para realizar una copia de seguridad en este momento.",
       "storageLimitReached": "No podemos completar el proceso de copia de seguridad debido a que no hay suficiente espacio de almacenamiento en su dispositivo. Libere espacio eliminando archivos o aplicaciones innecesarios y vuelva a intentarlo."
     },
@@ -737,7 +738,7 @@
   },
   "AccountSelection": {
     "backupProcessInfo": "Estás a solo unos pasos de hacer una copia de seguridad de tus datos",
-    "cloudInfo": "Para iniciar la copia de seguridad de los datos, toque el botón `Continuar` para vincular su Google Drive con Inji.",
+    "cloudInfo": "Para iniciar la copia de seguridad de los datos, toque el botón `Continuar` para vincular su {{driveName}} con Inji.",
     "googleDriveTitle": "Google Drive",
     "loadingSubtitle": "Cargando...",
     "proceed": "Proceder",
@@ -749,7 +750,7 @@
     "backupProgressState": "Copia de seguridad en progreso...",
     "lastBackupDetails": "Detalles de la última copia de seguridad",
     "backupInProgress": "Aún puedes usar la aplicación mientras se realiza la copia de seguridad de los datos. Cerrar la aplicación finalizará el proceso de copia de seguridad de los datos.",
-    "noBackup": "Haga una copia de seguridad de sus datos en Google Drive. Puede restaurarlos cuando reinstale INJI.",
+    "noBackup": "Haga una copia de seguridad de sus datos en {{driveName}}. Puede restaurarlos cuando reinstale INJI.",
     "storage": "La copia de seguridad se almacenará en Google Drive asociado a su cuenta de Gmail elegida.",
     "backup": "Copia de seguridad",
     "size": "Tamaño: ",

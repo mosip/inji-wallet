@@ -94,6 +94,5 @@ export function useRequestLayout() {
     isNavigatingToReceivedCards,
     DISMISS: () => requestService.send(RequestEvents.DISMISS()),
     RESET: () => requestService.send(RequestEvents.RESET()),
-    GOTO_HOME: () => navigation.navigate(BOTTOM_TAB_ROUTES.home),
   };
 }

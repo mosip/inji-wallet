@@ -47,26 +47,13 @@ export const RequestLayout: React.FC = () => {
             component={ReceiveVcScreen}
             options={{
               title: t('incomingVc'),
-              headerLeft: () =>
-                !I18nManager.isRTL && (
-                  <HeaderBackButton
-                    onPress={() => {
-                      controller.RESET();
-                    }}
-                    style={Theme.Styles.IconContainer}
-                    tintColor={Theme.Colors.Icon}
-                  />
-                ),
-              headerRight: () =>
-                I18nManager.isRTL && (
-                  <HeaderBackButton
-                    onPress={() => {
-                      controller.RESET();
-                    }}
-                    style={Theme.Styles.IconContainer}
-                    tintColor={Theme.Colors.Icon}
-                  />
-                ),
+              headerLeft: () => (
+                <HeaderBackButton
+                  onPress={() => {
+                    controller.RESET();
+                  }}
+                />
+              ),
             }}
           />
         )}
@@ -75,26 +62,6 @@ export const RequestLayout: React.FC = () => {
           component={RequestScreen}
           options={{
             title: t('receiveCard').toUpperCase(),
-            headerRight: () =>
-              I18nManager.isRTL && (
-                <HeaderBackButton
-                  onPress={() => {
-                    controller.GOTO_HOME();
-                  }}
-                  style={Theme.Styles.IconContainer}
-                  tintColor={Theme.Colors.Icon}
-                />
-              ),
-            headerLeft: () =>
-              !I18nManager.isRTL && (
-                <HeaderBackButton
-                  onPress={() => {
-                    controller.GOTO_HOME();
-                  }}
-                  style={Theme.Styles.IconContainer}
-                  tintColor={Theme.Colors.Icon}
-                />
-              ),
           }}
         />
       </RequestStack.Navigator>

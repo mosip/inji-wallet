@@ -741,7 +741,7 @@
     "errors": {
       "permissionDenied": {
         "title": "Kinakailangan ang mga Pahintulot",
-        "message": "Upang magpatuloy sa pag-backup ng data, payagan ang pag-access sa iyong Google Drive. I-tap ang \"Allow Access\" para tapusin ang pag-setup, o i-tap ang \"Not Now\" para bumalik sa Settings.",
+        "message": "Upang magpatuloy sa pag-backup ng data, payagan ang pag-access sa iyong {{driveName}}. I-tap ang \"Allow Access\" para tapusin ang pag-setup, o i-tap ang \"Not Now\" para bumalik sa Settings.",
         "actions": {
           "allowAccess": "Payagan ang Access",
           "notNow": "Hindi ngayon"
@@ -758,6 +758,7 @@
     "backupFailure": {
       "networkError": "Dahil sa hindi matatag na koneksyon sa internet, hindi kami nakapagsagawa ng pag-backup ng data. Subukang muli mamaya.",
       "technicalError": "Dahil sa Technical Error, hindi namin nagawang magsagawa ng pag-backup ng data. Subukang muli mamaya.",
+      "iCloudSignInError": "Ikinalulungkot namin na hindi makumpleto ang pag-backup ng data. ",
       "noDataForBackup": "Ikinalulungkot namin, ngunit walang data na magagamit upang i-back up sa ngayon.",
       "storageLimitReached": "Hindi namin makumpleto ang proseso ng pag-backup dahil sa hindi sapat na espasyo sa storage sa iyong device. Mangyaring magbakante ng espasyo sa pamamagitan ng pagtanggal ng mga hindi kinakailangang file o app, at subukang muli."
     },
@@ -770,7 +771,7 @@
   },
   "AccountSelection": {
     "backupProcessInfo": "Ilang hakbang ka na lang mula sa pag-back up ng iyong data",
-    "cloudInfo": "Upang simulan ang pag-backup ng data, mangyaring mag-tap sa button na `Magpatuloy` upang i-link ang iyong Google Drive sa Inji.",
+    "cloudInfo": "Upang simulan ang pag-backup ng data, mangyaring mag-tap sa button na `Magpatuloy` upang i-link ang iyong {{driveName}} sa Inji.",
     "googleDriveTitle": "Google Drive",
     "loadingSubtitle": "Naglo-load...",
     "proceed": "Magpatuloy",
@@ -782,7 +783,7 @@
     "backupProgressState": "Isinasagawa ang pag-backup...",
     "lastBackupDetails": "Mga Detalye ng Huling Backup",
     "backupInProgress": "Maaari mo pa ring gamitin ang application habang isinasagawa ang pag-backup ng data. Ang pagsasara ng app ay magwawakas sa proseso ng pag-backup ng data.",
-    "noBackup": "I-backup ang iyong Data sa Google Drive. Maaari mong ibalik ang mga ito kapag na-install mong muli ang INJI.",
+    "noBackup": "I-backup ang iyong Data sa {{driveName}}. Maaari mong ibalik ang mga ito kapag na-install mong muli ang INJI.",
     "storage": "Ang backup ay maiimbak sa Google Drive na nauugnay sa iyong napiling gmail account.",
     "backup": "Backup",
     "size": "Size: ",

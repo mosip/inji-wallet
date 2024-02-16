@@ -51,31 +51,14 @@ export const ScanLayout: React.FC = () => {
             component={SendVcScreen}
             options={{
               title: t('sharingVc'),
-              headerTitleAlign: 'center',
-              headerTitle: props => (
-                <View style={Theme.Styles.sendVcHeaderContainer}>
-                  <Text style={Theme.Styles.scanLayoutHeaderTitle}>
-                    {props.children}
-                  </Text>
-                </View>
-              ),
               headerBackVisible: false,
-              headerRight: () =>
-                !I18nManager.isRTL && (
-                  <Icon
-                    name="close"
-                    color={Theme.Colors.blackIcon}
-                    onPress={controller.CANCEL}
-                  />
-                ),
-              headerLeft: () =>
-                I18nManager.isRTL && (
-                  <Icon
-                    name="close"
-                    color={Theme.Colors.blackIcon}
-                    onPress={controller.CANCEL}
-                  />
-                ),
+              headerRight: () => (
+                <Icon
+                  name="close"
+                  color={Theme.Colors.blackIcon}
+                  onPress={controller.CANCEL}
+                />
+              ),
             }}
           />
         )}
@@ -83,14 +66,8 @@ export const ScanLayout: React.FC = () => {
           name={SCAN_ROUTES.ScanScreen}
           component={ScanScreen}
           options={{
+            headerTitleStyle: {fontSize: 30, fontFamily: 'Inter_600SemiBold'},
             title: t('MainLayout:share'),
-            headerTitle: props => (
-              <View style={Theme.Styles.scanLayoutHeaderContainer}>
-                <Text style={Theme.Styles.scanLayoutHeaderTitle}>
-                  {props.children}
-                </Text>
-              </View>
-            ),
           }}
         />
       </ScanStack.Navigator>
