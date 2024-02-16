@@ -24,7 +24,7 @@ fileignoreconfig:
   - filename: screens/BiometricScreenController.ts
     checksum: 4a424adbd2d2404c9d968c54607885af643a07e09acc4a2d37c6e7a7952c4945
   - filename: screens/Home/IntroSlidersScreen.tsx
-    checksum: af4a7e2d04b1141b7c32acfabeb3213a32eaca2a8e8f61e6958b6c97219dce57
+    checksum: 33cead03c9cf1bc5b984c7ecb81b5b5966527c712303e913c3e044fec6ee8188
   - filename: machines/issuersMachine.ts
     checksum: 742b8ff561dca61be08ab0b9aef3997ad5d043df298a84c17349dc0206ddcee6
   - filename: machines/issuersMachine.typegen.ts
@@ -166,8 +166,6 @@ fileignoreconfig:
     checksum: a03c5fa839d761f7bf5bbf0ea9bbd48da57116430a99e1d22f0e7184435d468c
   - filename: locales/fil.json
     checksum: 29193fd3b14b7332bf7a485f659197002f29a58af88ed0653cae262e7254c84d
-  - filename: screens/Home/IntroSlidersScreen.tsx
-    checksum: af4a7e2d04b1141b7c32acfabeb3213a32eaca2a8e8f61e6958b6c97219dce57
   - filename: screens/Home/MyVcs/GetIdInputModal.tsx
     checksum: 067664e19817d3aba98b0cfa68ef57a04958a982ee23b96b612e4bf466a73890
   - filename: screens/PasscodeScreen.tsx
@@ -198,6 +196,17 @@ fileignoreconfig:
     checksum: 8f8725bb55dbc98083f819c74754a8eac258d15038e391a16ca1ab55a53d61f3
   - filename: machines/backupRestore.typegen.ts
     checksum: 85e92ddec56da8dcdd28b5a29dfabd88dd0435e619f822488bc4e19b83872289
-version: ""
+  - filename: machines/backupAndRestore/backupAndRestoreSetup.typegen.ts
+    checksum: dd5dc9c42800328c268f3e6d6c96a16e9686dbfa59735e721250dae3ce37e009
+  - filename: ios/Podfile.lock
+    checksum: 235f31beadf3833ac763ed1b79e00f588e56990873806627b5abf8643992336a
+  - filename: machines/backupAndRestore/backup.typegen.ts
+    checksum: 8811354a68d23e6deb91b1d43347aa70b3ef4467d36276269bdf34e9be411dce
+  - filename: machines/backupAndRestore/backupAndRestoreSetup.typegen.ts
+    checksum: dd5dc9c42800328c268f3e6d6c96a16e9686dbfa59735e721250dae3ce37e009
+  - filename: screens/Home/MyVcsTab.tsx
+    checksum: 8133e2fefddfd0207eb7207b660d317f9a6acafbab6a65762d29ea86e33787cb
+  - filename: components/BackupAndRestoreBannerNotification.tsx
+    checksum: 7bb544ecd2f691f8cef916d0463106ec67645253107dd407236ce3a81f4e9ba7
     version: ""
 

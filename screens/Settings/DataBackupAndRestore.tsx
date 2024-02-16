@@ -37,14 +37,19 @@ export const DataBackupAndRestore: React.FC = ({} = () => {
 
   return (
     <React.Fragment>
-      <Pressable onPress={controller.BACKUP_AND_RESTORE}>
+      <Pressable
+        accessible={false}
+        {...testIDProps('dataBackupAndRestore')}
+        onPress={controller.BACKUP_AND_RESTORE}>
         <ListItem topDivider bottomDivider>
           {SvgImage.DataBackupIcon(25, 25)}
           <ListItem.Content>
-            <ListItem.Title>
+            <ListItem.Title
+              accessible={false}
+              {...testIDProps('dataBackupAndRestoreText')}>
               <Row>
                 <Text
-                  testID="dataBackupAndRestore"
+                  testID="dataBackupAndRestoreText"
                   weight="semibold"
                   color={Theme.Colors.settingsLabel}
                   style={{paddingRight: 10, paddingTop: 10}}>
@@ -64,7 +69,7 @@ export const DataBackupAndRestore: React.FC = ({} = () => {
           <Icon
             name="chevron-right"
             size={21}
-            {...testIDProps('rightArrowIcon')}
+            {...testIDProps('dataBackupAndRestoreChevronRight')}
             color={Theme.Colors.chevronRightColor}
             style={{marginRight: 15}}
           />
