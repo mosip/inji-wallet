@@ -1,5 +1,5 @@
 import React from 'react';
-import {Pressable} from 'react-native';
+import {Pressable, View} from 'react-native';
 import {Column, Row, Text} from './ui';
 import {Theme} from './ui/styleUtils';
 import {Icon} from 'react-native-elements';
@@ -7,26 +7,28 @@ import testIDProps from '../shared/commonUtil';
 
 export const BannerNotification: React.FC<BannerNotificationProps> = props => {
   return (
-    <Row
-      {...testIDProps(props.testId)}
-      style={[Theme.BannerStyles.container, Theme.BannerStyles[props.type]]}>
-      <Column fill>
-        <Text
-          color={Theme.Colors.whiteText}
-          weight="semibold"
-          style={Theme.BannerStyles.text}>
-          {props.message}
-        </Text>
-      </Column>
-      <Column>
-        <Pressable
-          style={Theme.BannerStyles.dismiss}
-          {...testIDProps('close')}
-          onPress={props.onClosePress}>
-          <Icon name="close" color={Theme.Colors.whiteText} size={19} />
-        </Pressable>
-      </Column>
-    </Row>
+    <View {...testIDProps(props.testId)}>
+      <Row
+        style={[Theme.BannerStyles.container, Theme.BannerStyles[props.type]]}>
+        <Column fill>
+          <Text
+            testID={`${props.testId}Text`}
+            color={Theme.Colors.whiteText}
+            weight="semibold"
+            style={Theme.BannerStyles.text}>
+            {props.message}
+          </Text>
+        </Column>
+        <Column>
+          <Pressable
+            style={Theme.BannerStyles.dismiss}
+            {...testIDProps('close')}
+            onPress={props.onClosePress}>
+            <Icon name="close" color={Theme.Colors.whiteText} size={19} />
+          </Pressable>
+        </Column>
+      </Row>
+    </View>
   );
 };
 
