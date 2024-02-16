@@ -5,7 +5,6 @@ import {Modal} from '../../components/ui/Modal';
 import {Pressable, Dimensions} from 'react-native';
 import {Column, Row, Text} from '../../components/ui';
 import {useScanLayout} from './ScanLayoutController';
-import {useSendVcScreen} from './SendVcScreenController';
 import testIDProps from '../../shared/commonUtil';
 import {SvgImage} from '../../components/ui/svg';
 import {Icon} from 'react-native-elements';
@@ -15,7 +14,6 @@ export const SharingSuccessModal: React.FC<
 > = props => {
   const {t} = useTranslation('ScanScreen');
   const scanLayoutController = useScanLayout();
-  const sendVcScreenController = useSendVcScreen();
 
   return (
     <React.Fragment>
