@@ -121,8 +121,6 @@ fileignoreconfig:
     checksum: 02655ff3d7f8a8ea4f3664485f98c961802c598242ec44408594a2ddb721fa5e
   - filename: screens/Settings/BackupController.tsx
     checksum: 4a031b46646aa982c8f40e4c7fe0bd3e05a76a6af1ff1c2de7350ba6ebf9a839
-  - filename: machines/backupRestore.typegen.ts
-    checksum: ac9c154060c7c1adb3392ac8c78a42cae5ca3faea3b4b0166dd00d4ca38b290d
   - filename: machines/settings.typegen.ts
     checksum: e4ae05822f1b1c23f3f70d03dd46fd8f29ba6b52d40f2f24c121f536fbb5f2c4
   - filename: .env
@@ -148,7 +146,7 @@ fileignoreconfig:
   - filename: machines/backupAndRestore/backup.ts
     checksum: d3453abfc10400e094b841e84283efc194a4fe0443c63ec880c5ddd6741f5293
   - filename: machines/backupAndRestore/backup.typegen.ts
-    checksum: 297e29da97e8d2c94b20b1aa17e069e3ca41a299ed4a595c9ca8810ea8bcdf2d
+    checksum: 235272c408875866c2844db3e06b0689135dab7617cac136072d9efdf2a7e37c
   - filename: components/BackupAndRestoreAllScreenBanner.tsx
     checksum: 2c98e7e83959c9dac4dd12da32f81483c3d334bd05e279637cf465475fbf54b8
     checksum: f26489ce4ac607884437ad06c3117cc34d6cbcbcd3dd5719790fbe01a0853ee5
@@ -180,15 +178,18 @@ fileignoreconfig:
     checksum: a98ff1a0dd96d3ead4b8191320be8b0c7a558cda6b0de39f1c62aaa8efef9fb8
   - filename: components/HelpScreen.tsx
     checksum: bbc69143bd37d065bba3800396301db5a0318e8b7ba51ecd49142dda68783a01
-  - filename: machines/backupRestore.ts
-    checksum: 433cecb9295c7052731600d16c601c1b6df9cc5a1b9f435423f81aae54d33d47
-  - filename: machines/backupAndRestore/backupAndRestoreSetup.ts
-    checksum: 75b07071aef4278f40f16861232b922e5ee8594efc9467984b072966fa7793b8
   - filename: machines/backupAndRestore/backupAndRestoreSetup.typegen.ts
-    checksum: ad12de520a68fbd43560474ded24edf25a02f6ec90b67c726d6c5dedb579eb83
+    checksum: 8203331f1628e01faa5e553e749372be278b477ca2d34a0cdafee1438248fb3c
   - filename: machines/backupAndRestore/backupAndRestoreSetup.ts
-    checksum: 397f2076504f851a981b0deff6eeac30041c775ee1c57b51e328fc09d52ef43e
+    checksum: 5eca5414d28f523bb920cffa1f51b484ec549a240667d37723773c224fc51792
   - filename: shared/VCMetadata.ts
     checksum: e93f988415bf91064e2cf5fbc09ff6c7226798baa5da721fa0715d5d0d6afddf
+  - filename: machines/backupAndRestore/backup.ts
+    checksum: 0127424d704e7dbefcb13e2d66d687e8fa94812728b4eb6bfa7768028425e9b3
+  - filename: machines/backupRestore.ts
+    checksum: 71415a5e8de490af506070f8add50f864d559a8077542fc0b3d8ed18f0b33063
+  - filename: machines/backupRestore.typegen.ts
+    checksum: cbd83f6aa1e0167b99449e9399a9daab17fe3979947bc6bc3c14eb6a61a2a238
+version: ""
     version: ""
 

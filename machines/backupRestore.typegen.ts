@@ -63,7 +63,6 @@ export interface Typegen0 {
       | 'error.platform.backupRestore.restoreBackup.unzipBackupFile:invocation[0]';
     sendDataRestoreStartEvent:
       | 'BACKUP_RESTORE'
-      | 'EXTRACT_DATA'
       | 'done.invoke.backupRestore.preload:invocation[0]';
     sendDataRestoreSuccessEvent: 'done.invoke.backupRestore.restoreBackup.deleteBackupDir:invocation[0]';
     setBackupFileName: 'done.invoke.backupRestore.restoreBackup.downloadBackupFileFromCloud:invocation[0]';
@@ -81,10 +80,9 @@ export interface Typegen0 {
     isMinimumStorageRequiredForBackupRestorationReached: 'done.invoke.backupRestore.restoreBackup.checkStorageAvailability:invocation[0]';
   };
   eventsCausingServices: {
-    bootstrap: 'xstate.init';
+    bootstrap: 'BACKUP_RESTORE' | 'xstate.init';
     checkStorageAvailability:
       | 'BACKUP_RESTORE'
-      | 'EXTRACT_DATA'
       | 'done.invoke.backupRestore.preload:invocation[0]';
     deleteBkpDir: 'STORE_RESPONSE';
     downloadLatestBackup: 'done.invoke.backupRestore.restoreBackup.checkStorageAvailability:invocation[0]';
