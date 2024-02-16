@@ -5,17 +5,26 @@ import {Icon, ListItem} from 'react-native-elements';
 import {Row, Text} from '../../components/ui';
 import {Error} from '../../components/ui/Error';
 import {Loader} from '../../components/ui/Loader';
-import {Modal} from '../../components/ui/Modal';
 import {Theme} from '../../components/ui/styleUtils';
 import {SvgImage} from '../../components/ui/svg';
 import {AccountSelectionConfirmation} from '../backupAndRestore/AccountSelectionConfirmation';
 import {useBackupAndRestoreSetup} from '../backupAndRestore/BackupAndRestoreSetupController';
 import BackupAndRestoreScreen from '../backupAndRestore/BackupAndRestoreScreen';
-import testIDProps from '../../shared/commonUtil';
+import testIDProps, {getDriveName} from '../../shared/commonUtil';
+import {useOverlayVisibleAfterTimeout} from '../../shared/hooks/useOverlayVisibleAfterTimeout';
+import {isAndroid} from '../../shared/constants';
 
 export const DataBackupAndRestore: React.FC = ({} = () => {
   const controller = useBackupAndRestoreSetup();
   const {t} = useTranslation('DataBackupScreen');
+  const accountSelectionModalVisible = useOverlayVisibleAfterTimeout(
+    controller.showAccountSelectionConfirmation,
+  );
+  const isLoaderVisible = useOverlayVisibleAfterTimeout(controller.isLoading);
+  const isSigningInSuccessful = useOverlayVisibleAfterTimeout(
+    controller.isSigningInSuccessful,
+  );
+  const isSigningIn = useOverlayVisibleAfterTimeout(controller.isSigningIn);
 
   return (
     <React.Fragment>
@@ -23,21 +32,23 @@ export const DataBackupAndRestore: React.FC = ({} = () => {
         <ListItem topDivider bottomDivider>
           {SvgImage.DataBackupIcon(25, 25)}
           <ListItem.Content>
-            <ListItem.Title style={{paddingTop: 3}}>
+            <ListItem.Title>
               <Row>
                 <Text
                   testID="dataBackupAndRestore"
                   weight="semibold"
                   color={Theme.Colors.settingsLabel}
-                  style={{paddingRight: 10}}>
+                  style={{paddingRight: 10, paddingTop: 10}}>
                   {t('dataBackupAndRestore')}
                 </Text>
-                <Text
-                  testID="newLabel"
-                  style={Theme.BackupStyles.newStyles}
-                  color={Theme.Colors.whiteText}>
-                  {t('new')}
-                </Text>
+                {!controller.isBackupAndRestoreExplored && (
+                  <Text
+                    testID="newLabel"
+                    style={Theme.Styles.newLabel}
+                    color={Theme.Colors.whiteText}>
+                    {t('new')}
+                  </Text>
+                )}
               </Row>
             </ListItem.Title>
           </ListItem.Content>
@@ -58,51 +69,61 @@ export const DataBackupAndRestore: React.FC = ({} = () => {
           showClose={false}
           isVisible={controller.isSigningInFailed}
           title={t('errors.permissionDenied.title')}
-          message={t('errors.permissionDenied.message')}
+          message={t('errors.permissionDenied.message', {
+            driveName: getDriveName(),
+          })}
           helpText={t('errors.permissionDenied.helpText')}
           image={SvgImage.PermissionDenied()}
-          goBack={controller.GO_BACK}
-          goBackButtonVisible
-          tryAgain={controller.TRY_AGAIN}
-          tryAgainButtonTranslationKey="configureSettings"
+          primaryButtonText={
+            'DataBackupScreen:errors.permissionDenied.actions.allowAccess'
+          }
+          primaryButtonEvent={
+            isAndroid() ? controller.TRY_AGAIN : controller.OPEN_SETTINGS
+          }
+          textButtonText={
+            'DataBackupScreen:errors.permissionDenied.actions.notNow'
+          }
+          textButtonEvent={controller.GO_BACK}
+          onDismiss={controller.GO_BACK}
+          primaryButtonTestID="allowAccess"
+          textButtonTestID="notNow"
+          customImageStyles={{paddingBottom: 0, marginBottom: -6}}
+          customStyles={{marginTop: '20%'}}
           testID="CloudBackupConsentDenied"
         />
       )}
 
       {controller.isNetworkOff && (
         <Error
-          testID={`networkOffError`}
+          testID="networkOffError"
+          primaryButtonTestID="tryAgain"
+          primaryButtonText="tryAgain"
+          primaryButtonEvent={controller.TRY_AGAIN}
           isVisible={controller.isNetworkOff}
           isModal={true}
           showClose
           title={t('errors.noInternetConnection.title')}
           message={t('errors.noInternetConnection.message')}
           onDismiss={controller.DISMISS}
-          tryAgain={controller.TRY_AGAIN}
           image={SvgImage.NoInternetConnection()}
         />
       )}
 
-      {(controller.isSigningIn || controller.isSigningInSuccessful) && (
+      {(isSigningIn || isSigningInSuccessful) && (
         <BackupAndRestoreScreen
           profileInfo={controller.profileInfo}
           onBackPress={controller.GO_BACK}
           isLoading={controller.isSigningIn}
+          shouldTriggerAutoBackup={controller.shouldTriggerAutoBackup}
         />
       )}
-      {controller.isLoading && (
-        <Modal isVisible showClose={false}>
-          <Loader title={t('loadingSubtitle')}></Loader>
-        </Modal>
-      )}
+      {isLoaderVisible && <Loader title={t('loadingSubtitle')} isModal />}
 
-      {controller.showAccountSelectionConfirmation && (
-        <AccountSelectionConfirmation
-          isVisible={controller.showAccountSelectionConfirmation}
-          onProceed={controller.PROCEED_ACCOUNT_SELECTION}
-          goBack={controller.GO_BACK}
-        />
-      )}
+      <AccountSelectionConfirmation
+        isVisible={accountSelectionModalVisible}
+        onProceed={controller.PROCEED_ACCOUNT_SELECTION}
+        goBack={controller.GO_BACK}
+      />
     </React.Fragment>
   );
 });

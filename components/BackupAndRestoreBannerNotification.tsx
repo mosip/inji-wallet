@@ -1,7 +1,6 @@
 import React from 'react';
 import {useBackupScreen} from '../screens/backupAndRestore/BackupController';
 import {BannerNotification} from './BannerNotification';
-import {Theme} from './ui/styleUtils';
 import {useTranslation} from 'react-i18next';
 import {useBackupRestoreScreen} from '../screens/Settings/BackupRestoreController';
 
@@ -18,11 +17,11 @@ export const BackupAndRestoreBannerNotification: React.FC = () => {
 
     return (
       <BannerNotification
+        type="error"
         message={translation}
         onClosePress={backUpController.DISMISS}
         key={`backupFailure-${backUpController.backupErrorReason}`}
         testId={`backupFailure-${backUpController.backupErrorReason}`}
-        customStyle={Theme.Styles.dataBackupFailure}
       />
     );
   }
@@ -34,11 +33,11 @@ export const BackupAndRestoreBannerNotification: React.FC = () => {
 
     return (
       <BannerNotification
+        type="error"
         key={`restoreFailure-${restoreController.restoreErrorReason}`}
         message={translation}
         onClosePress={restoreController.DISMISS}
         testId={`restoreFailure-${restoreController.restoreErrorReason}`}
-        customStyle={Theme.Styles.dataBackupFailure}
       />
     );
   }
@@ -47,26 +46,30 @@ export const BackupAndRestoreBannerNotification: React.FC = () => {
     <>
       {backUpController.isBackingUpSuccess && (
         <BannerNotification
+          type="success"
           message={t('backupSuccessful')}
           onClosePress={backUpController.DISMISS}
           key={'dataBackupSuccess'}
           testId={'dataBackupSuccess'}
-          customStyle={Theme.Styles.dataBackupSuccess}
         />
       )}
 
-      {backUpController.isBackingUpFailure && backupFailure()}
+      {backUpController.isBackingUpFailure &&
+        !backUpController.isCheckingDataForBackup &&
+        backupFailure()}
 
       {restoreController.isBackUpRestoreSuccess && (
         <BannerNotification
+          type="success"
           message={t('restoreSuccessful')}
           onClosePress={restoreController.DISMISS}
           key={'restoreBackupSuccess'}
           testId={'restoreBackupSuccess'}
-          customStyle={Theme.Styles.dataBackupSuccess}
         />
       )}
-      {restoreController.isBackUpRestoreFailure && restoreFailure()}
+      {restoreController.isBackUpRestoreFailure &&
+        !restoreController.isCheckStorageAvailibility &&
+        restoreFailure()}
     </>
   );
 };

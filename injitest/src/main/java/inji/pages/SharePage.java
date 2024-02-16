@@ -64,13 +64,13 @@ public class SharePage extends BasePage {
         }
         return this;
     }
+
     public SharePage acceptPermissionPopupCamera() {
         if (isElementDisplayed(cameraPopupAndroid)) {
             clickOnElement(cameraPopupAndroid);
         }
         return this;
     }
-
 
     public SharePage acceptPermissionPopupBluetoothIos() {
         if (isElementDisplayed(okButtonIos)) {

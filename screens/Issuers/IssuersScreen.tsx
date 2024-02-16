@@ -168,9 +168,12 @@ export const IssuersScreen: React.FC<
         isVisible={controller.errorMessageType !== ''}
         title={t(`errors.${controller.errorMessageType}.title`)}
         message={t(`errors.${controller.errorMessageType}.message`)}
-        goBack={goBack}
-        tryAgain={controller.TRY_AGAIN}
         image={getImage()}
+        showClose
+        primaryButtonTestID="tryAgain"
+        primaryButtonText="tryAgain"
+        primaryButtonEvent={controller.TRY_AGAIN}
+        onDismiss={goBack}
       />
     );
   }
