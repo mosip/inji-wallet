@@ -720,12 +720,14 @@ export async function removeItem(
         MY_VCS_STORE_KEY,
         encryptionKey,
       )) as VCMetadata[];
-      const tamperedVcinMyVC = myVcs.filter(
+      const isTamperedVcInMyVCs = !!myVcs?.filter(
         (vcMetadata: VCMetadata) => vcMetadata.getVcKey() === key,
-      );
-      tamperedVcinMyVC.length !== 0
-        ? await removeVCMetaData(MY_VCS_STORE_KEY, key, encryptionKey)
-        : await removeVCMetaData(RECEIVED_VCS_STORE_KEY, key, encryptionKey);
+      ).length;
+      if (isTamperedVcInMyVCs) {
+        await removeVCMetaData(MY_VCS_STORE_KEY, key, encryptionKey);
+      } else {
+        await removeVCMetaData(RECEIVED_VCS_STORE_KEY, key, encryptionKey);
+      }
     } else if (key === MY_VCS_STORE_KEY) {
       const data = await Storage.getItem(key, encryptionKey);
       let list: Object[] = [];

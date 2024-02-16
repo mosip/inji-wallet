@@ -78,7 +78,7 @@ fileignoreconfig:
   - filename: assets/fingerprint_icon.svg
     checksum: b2d3a50ca1336f60123d96a8cc8ea663c3316ed2d8c31833bce7e393ca51695b
   - filename: machines/store.ts
-    checksum: 846f12ef5577923a25f0ff725f09c55b9a58ab8c13a2b9ae41447b159f170d34
+    checksum: 5ec376c6314b5b91d10bbf770359d0227d9f991dc6306851ed1df6244e5674b8
   - filename: assets/Flip_Camera_Icon.svg
     checksum: 736b5a7ddb86bd4376229ce198dbf8a663e7ac89fc3311bd4f19afd4a2b36ffd
   - filename: assets/Finger_Print_Icon.svg
