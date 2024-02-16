@@ -685,7 +685,7 @@
     "size": "Size: ",
     "restore": "Ibalik",
     "restoreInProgress": "Ibinabalik namin ang iyong data, mangyaring huwag isara ang application. Maaari mong ipagpatuloy ang paggamit ng application.",
-    "restoreInfo": "Ibalik ang iyong data mula sa Google Drive",
+    "restoreInfo": "I-restore ang iyong data mula sa {{driveName}}",
     "driveSettings": "Mga Setting ng Google Drive",
     "successBanner": "Ang iyong backup ay matagumpay!",
     "backupFailed": "Nabigo ang pag-backup",

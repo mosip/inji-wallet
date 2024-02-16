@@ -33,12 +33,10 @@ const model = createModel(
     events: {
       BACKUP_RESTORE: () => ({}),
       DOWNLOAD_UNSYNCED_BACKUP_FILES: () => ({}),
-      EXTRACT_DATA: () => ({}),
       DISMISS: () => ({}),
       STORE_RESPONSE: (response: unknown) => ({response}),
       STORE_ERROR: (error: Error, requester?: string) => ({error, requester}),
       DATA_FROM_FILE: (dataFromBackupFile: {}) => ({dataFromBackupFile}),
-      OK: () => ({}),
     },
   },
 );
@@ -57,6 +55,16 @@ export const backupRestoreMachine = model.createMachine(
     },
     id: 'backupRestore',
     initial: 'preload',
+    on: {
+      BACKUP_RESTORE: [
+        {
+          target: 'restoreBackup',
+        },
+      ],
+      DOWNLOAD_UNSYNCED_BACKUP_FILES: {
+        actions: 'downloadUnsyncedBackupFiles',
+      },
+    },
     states: {
       preload: {
         description:
@@ -74,18 +82,7 @@ export const backupRestoreMachine = model.createMachine(
           ],
         },
       },
-      init: {
-        on: {
-          BACKUP_RESTORE: [
-            {
-              target: 'restoreBackup',
-            },
-          ],
-          DOWNLOAD_UNSYNCED_BACKUP_FILES: {
-            actions: 'downloadUnsyncedBackupFiles',
-          },
-        },
-      },
+      init: {},
       restoreBackup: {
         initial: 'checkStorageAvailability',
         states: {
@@ -171,14 +168,8 @@ export const backupRestoreMachine = model.createMachine(
           },
         },
         on: {
-          OK: {
-            target: '.idle',
-          },
           DISMISS: {
             target: 'init',
-          },
-          EXTRACT_DATA: {
-            target: '.checkStorageAvailability',
           },
         },
       },
@@ -349,9 +340,6 @@ export function selectIsBackUpRestoring(state: State) {
 }
 export function selectIsBackUpRestoreSuccess(state: State) {
   return state.matches('restoreBackup.success');
-}
-export function selectIsCheckStorageAvailibility(state: State) {
-  return state.matches('restoreBackup.checkStorageAvailibility');
 }
 export function selectIsBackUpRestoreFailure(state: State) {
   return state.matches('restoreBackup.failure');

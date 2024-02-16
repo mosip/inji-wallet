@@ -40,8 +40,6 @@ const model = createModel(
   {
     events: {
       DATA_BACKUP: (isAutoBackUp: boolean) => ({isAutoBackUp}),
-      OK: () => ({}),
-      FETCH_DATA: () => ({}),
       DISMISS: () => ({}),
       LAST_BACKUP_DETAILS: () => ({}),
       STORE_RESPONSE: (response: unknown) => ({response}),
@@ -262,12 +260,6 @@ export const backupMachine = model.createMachine(
           },
         },
         on: {
-          FETCH_DATA: {
-            target: '.checkStorageAvailability',
-          },
-          OK: {
-            target: '.idle',
-          },
           DISMISS: {
             target: 'init',
           },
@@ -277,9 +269,6 @@ export const backupMachine = model.createMachine(
   },
   {
     actions: {
-      setIsLoading: model.assign({
-        isLoading: true,
-      }),
       unsetIsLoading: model.assign({
         isLoading: false,
       }),
@@ -463,20 +452,11 @@ export function selectIsBackupInprogress(state: State) {
     !state.matches('backingUp.silentFailure')
   );
 }
-export function selectIsBackingUp(state: State) {
-  return state.matches('backingUp');
-}
 export function selectIsLoading(state: State) {
   return state.context.isLoading;
 }
 export function selectIsBackingUpSuccess(state: State) {
   return state.matches('backingUp.success');
-}
-export function selectIsFetchingLastBackupDetails(state: State) {
-  return state.matches('fetchLastBackupDetails');
-}
-export function selectIsCheckingDataAvailabilityForBackup(state: State) {
-  return state.matches('backingUp.checkDataAvailabilityForBackup');
 }
 export function selectIsBackingUpFailure(state: State) {
   return state.matches('backingUp.failure');

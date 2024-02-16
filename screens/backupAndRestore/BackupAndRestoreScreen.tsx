@@ -160,7 +160,7 @@ const BackupAndRestoreScreen: React.FC<BackupAndRestoreProps> = props => {
             }>
             {restoreController.isBackUpRestoring
               ? t('restoreInProgress')
-              : t('restoreInfo')}
+              : t('restoreInfo', {driveName: getDriveName()})}
           </Text>
         </View>
       </Row>

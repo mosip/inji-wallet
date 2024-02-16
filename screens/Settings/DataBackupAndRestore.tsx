@@ -16,15 +16,24 @@ import {isAndroid} from '../../shared/constants';
 
 export const DataBackupAndRestore: React.FC = ({} = () => {
   const controller = useBackupAndRestoreSetup();
+  const delay = isAndroid() ? 0 : 1000;
   const {t} = useTranslation('DataBackupScreen');
   const accountSelectionModalVisible = useOverlayVisibleAfterTimeout(
     controller.showAccountSelectionConfirmation,
+    delay,
   );
-  const isLoaderVisible = useOverlayVisibleAfterTimeout(controller.isLoading);
+  const isLoaderVisible = useOverlayVisibleAfterTimeout(
+    controller.isLoading,
+    delay,
+  );
   const isSigningInSuccessful = useOverlayVisibleAfterTimeout(
     controller.isSigningInSuccessful,
+    delay,
   );
-  const isSigningIn = useOverlayVisibleAfterTimeout(controller.isSigningIn);
+  const isSigningIn = useOverlayVisibleAfterTimeout(
+    controller.isSigningIn,
+    delay,
+  );
 
   return (
     <React.Fragment>
