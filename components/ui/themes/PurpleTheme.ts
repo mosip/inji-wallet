@@ -944,15 +944,8 @@ export const PurpleTheme = {
       borderBottomWidth: 1,
       borderBottomColor: Colors.Purple,
     },
-    idleVcSearchBarOutline: {
-      alignItems: 'center',
-      borderWidth: 1,
-      borderColor: Colors.Grey5,
-    },
     vcSearchBarContainer: {
       alignItems: 'center',
-      borderBottomWidth: 1,
-      borderBottomColor: Colors.Purple,
     },
     searchIcon: {
       justifyContent: 'center',

@@ -940,15 +940,8 @@ export const DefaultTheme = {
       borderBottomWidth: 1,
       borderBottomColor: Colors.Orange,
     },
-    idleVcSearchBarOutline: {
-      alignItems: 'center',
-      borderWidth: 1,
-      borderColor: Colors.Grey5,
-    },
     vcSearchBarContainer: {
       alignItems: 'center',
-      borderWidth: 1,
-      borderColor: Colors.Orange,
     },
     searchIcon: {
       justifyContent: 'center',

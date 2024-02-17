@@ -175,12 +175,7 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = props => {
                     onRefresh={controller.REFRESH}
                   />
                 }>
-                <Row
-                  style={
-                    tapToSearch
-                      ? Theme.SearchBarStyles.vcSearchBarContainer
-                      : Theme.SearchBarStyles.idleVcSearchBarOutline
-                  }>
+                <Row style={Theme.SearchBarStyles.vcSearchBarContainer}>
                   <SearchBar
                     searchIconTestID="searchIssuerIcon"
                     searchBarTestID="issuerSearchBar"
@@ -236,6 +231,7 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = props => {
                       );
                     })
                   : filteredSearchData.length === 0 &&
+                    search &&
                     !showPinVc && <Text>No vc found</Text>}
               </Column>
             </React.Fragment>
