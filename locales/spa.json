@@ -551,6 +551,11 @@
         "message": "Ocurrió un error al transferir la tarjeta. Por favor, inténtalo de nuevo.",
         "hint": "Error: {{code}}"
       }
+    },
+    "postFaceCapture": {
+      "captureSuccessMessage": "¡La verificación facial fue exitosa! Se inicia el intercambio de credenciales.",
+      "captureFailureTitle": "¡Falló la verificación facial!",
+      "captureFailureMessage": "Asegúrese de que su cara sea claramente visible e intente tomar nuevamente."
     }
   },
   "SelectVcOverlay": {

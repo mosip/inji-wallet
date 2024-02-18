@@ -20,6 +20,9 @@ import {
 import {TelemetryConstants} from '../../shared/telemetry/TelemetryConstants';
 import {getVCsOrderedByPinStatus} from '../../shared/Utils';
 import {Issuers} from '../../shared/openId4VCI/Utils';
+import {Error} from '../../components/ui/Error';
+import {SvgImage} from '../../components/ui/svg';
+import * as InjiConstants from '../../constants/InjiConstants';
 
 export const SendVcScreen: React.FC = () => {
   const {t} = useTranslation('SendVcScreen');
@@ -141,28 +144,24 @@ export const SendVcScreen: React.FC = () => {
         onFaceInvalid={controller.FACE_INVALID}
       />
 
-      <MessageOverlay
+      <Error
+        isModal
+        alignActionsOnEnd
+        showClose={false}
         isVisible={controller.isInvalidIdentity}
-        title={t('VerifyIdentityOverlay:errors.invalidIdentity.title')}
-        message={t('VerifyIdentityOverlay:errors.invalidIdentity.message')}
-        onBackdropPress={controller.DISMISS}>
-        <Row>
-          <Button
-            testID="cancel"
-            fill
-            type="clear"
-            title={t('common:cancel')}
-            onPress={controller.DISMISS}
-            margin={[0, 8, 0, 0]}
-          />
-          <Button
-            testID="tryAgain"
-            fill
-            title={t('common:tryAgain')}
-            onPress={controller.RETRY_VERIFICATION}
-          />
-        </Row>
-      </MessageOverlay>
+        title={t('ScanScreen:postFaceCapture.captureFailureTitle')}
+        message={t('ScanScreen:postFaceCapture.captureFailureMessage')}
+        image={SvgImage.PermissionDenied()}
+        primaryButtonTestID={InjiConstants.TEST_ID_FACE_VERIFICATION_SUCCESS}
+        primaryButtonText={t('ScanScreen:status.retry')}
+        primaryButtonEvent={controller.RETRY_VERIFICATION}
+        textButtonTestID={InjiConstants.TEST_ID_HOME}
+        textButtonText={t('ScanScreen:status.accepted.home')}
+        textButtonEvent={controller.GO_TO_HOME}
+        customImageStyles={{paddingBottom: 0, marginBottom: -6}}
+        customStyles={{marginTop: '20%'}}
+        testID={InjiConstants.TEST_ID_SHARE_WITH_SELFIE_ERROR}
+      />
     </React.Fragment>
   );
 };

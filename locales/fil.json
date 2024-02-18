@@ -585,6 +585,11 @@
         "message": "Nagkaproblema habang inililipat ang card. Pakisubukang muli.",
         "hint": "Error: {{code}}"
       }
+    },
+    "postFaceCapture": {
+      "captureSuccessMessage": "Matagumpay ang Face Verification! Sinisimulan ang pagbabahagi ng kredensyal.",
+      "captureFailureTitle": "Nabigo ang pag-verify ng mukha!",
+      "captureFailureMessage": "Pakitiyak na malinaw na nakikita ang iyong mukha at subukang kunin muli."
     }
   },
   "SelectVcOverlay": {

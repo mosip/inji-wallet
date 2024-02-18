@@ -43,6 +43,13 @@ export function selectIsSendingVc(state: State) {
   return state.matches('reviewing.sendingVc.inProgress');
 }
 
+export function selectIsFaceIdentityVerified(state: State) {
+  return (
+    state.matches('reviewing.sendingVc.inProgress') &&
+    state.context.showFaceCaptureSuccessBanner
+  );
+}
+
 export function selectIsSendingVcTimeout(state: State) {
   return state.matches('reviewing.sendingVc.timeout');
 }

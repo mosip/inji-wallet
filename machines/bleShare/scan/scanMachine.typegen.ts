@@ -89,6 +89,7 @@ export interface Typegen0 {
       | 'SCREEN_BLUR'
       | 'xstate.after(DESTROY_TIMEOUT)#scan.clearingConnection'
       | 'xstate.init';
+    resetFaceCaptureBannerStatus: 'CLOSE_BANNER';
     resetShouldVerifyPresence: 'CANCEL' | 'CONNECTED' | 'DISMISS' | 'RETRY';
     sendBLEConnectionErrorEvent: 'BLE_ERROR';
     sendScanData: 'SCAN';
@@ -114,6 +115,7 @@ export interface Typegen0 {
     storeLoginItem: 'done.invoke.QrLogin';
     storingActivityLog: 'STORE_RESPONSE';
     toggleShouldVerifyPresence: 'TOGGLE_USER_CONSENT';
+    updateFaceCaptureBannerStatus: 'ACCEPT_REQUEST' | 'FACE_VALID';
   };
   eventsCausingDelays: {
     CONNECTION_TIMEOUT: 'SCAN';

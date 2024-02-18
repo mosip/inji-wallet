@@ -10,6 +10,7 @@ import {SharingSuccessModal} from './SuccessfullySharedModal';
 import {Theme} from '../../components/ui/styleUtils';
 import {Icon} from 'react-native-elements';
 import {Loader} from '../../components/ui/Loader';
+import * as InjiConstants from '../../constants/InjiConstants';
 
 const ScanStack = createNativeStackNavigator();
 
@@ -34,6 +35,11 @@ export const ScanLayout: React.FC = () => {
           controller.isSendingVc
         }
         onRetry={controller.statusOverlay?.onRetry}
+        showBanner={controller.isFaceIdentityVerified}
+        bannerMessage={t('ScanScreen:postFaceCapture:captureSuccessMessage')}
+        onBannerClose={controller.CLOSE_BANNER}
+        bannerType={InjiConstants.BANNER_TYPE_SUCCESS}
+        bannerTestID={InjiConstants.TEST_ID_FACE_VERIFICATION_SUCCESS}
       />
     );
   }

@@ -78,17 +78,21 @@ const model = createModel(
     QrLoginRef: {} as ActorRefFrom<typeof qrLoginMachine>,
     linkCode: '',
     readyForBluetoothStateCheck: false,
+    showFaceCaptureSuccessBanner: false,
   },
   {
     events: {
       SELECT_VC: (vc: VC) => ({vc}),
       SCAN: (params: string) => ({params}),
-      ACCEPT_REQUEST: () => ({}),
+      ACCEPT_REQUEST: (isFaceIDVerificationFlow: boolean) => ({
+        isFaceIDVerificationFlow,
+      }),
       VERIFY_AND_ACCEPT_REQUEST: () => ({}),
       VC_ACCEPTED: () => ({}),
       VC_REJECTED: () => ({}),
       VC_SENT: () => ({}),
       CANCEL: () => ({}),
+      CLOSE_BANNER: () => ({}),
       STAY_IN_PROGRESS: () => ({}),
       RETRY: () => ({}),
       DISMISS: () => ({}),
@@ -113,7 +117,9 @@ const model = createModel(
       UPDATE_VC_NAME: (vcName: string) => ({vcName}),
       STORE_RESPONSE: (response: any) => ({response}),
       APP_ACTIVE: () => ({}),
-      FACE_VALID: () => ({}),
+      FACE_VALID: (isFaceIDVerificationFlow: boolean) => ({
+        isFaceIDVerificationFlow,
+      }),
       FACE_INVALID: () => ({}),
       RETRY_VERIFICATION: () => ({}),
       VP_CREATED: (vp: VerifiablePresentation) => ({vp}),
@@ -512,7 +518,10 @@ export const scanMachine =
                 },
                 ACCEPT_REQUEST: {
                   target: 'sendingVc',
-                  actions: 'setShareLogTypeUnverified',
+                  actions: [
+                    'setShareLogTypeUnverified',
+                    'updateFaceCaptureBannerStatus',
+                  ],
                 },
                 CANCEL: {
                   target: 'cancelling',
@@ -545,6 +554,9 @@ export const scanMachine =
                     CANCEL: {
                       target: '#scan.reviewing.cancelling',
                       actions: ['sendVCShareFlowCancelEndEvent'],
+                    },
+                    CLOSE_BANNER: {
+                      actions: ['resetFaceCaptureBannerStatus'],
                     },
                   },
                 },
@@ -616,7 +628,10 @@ export const scanMachine =
               on: {
                 FACE_VALID: {
                   target: 'sendingVc',
-                  actions: 'setShareLogTypeVerified',
+                  actions: [
+                    'setShareLogTypeVerified',
+                    'updateFaceCaptureBannerStatus',
+                  ],
                 },
                 FACE_INVALID: {
                   target: 'invalidIdentity',
@@ -854,6 +869,15 @@ export const scanMachine =
 
         setShareLogTypeVerified: model.assign({
           shareLogType: 'PRESENCE_VERIFIED_AND_VC_SHARED',
+        }),
+
+        updateFaceCaptureBannerStatus: model.assign({
+          showFaceCaptureSuccessBanner: (_context, event) =>
+            event.isFaceIDVerificationFlow,
+        }),
+
+        resetFaceCaptureBannerStatus: model.assign({
+          showFaceCaptureSuccessBanner: false,
         }),
 
         logShared: send(

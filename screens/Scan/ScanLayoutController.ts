@@ -17,6 +17,7 @@ import {
   selectIsSendingVcTimeout,
   selectIsSent,
   selectIsDone,
+  selectIsFaceIdentityVerified,
 } from '../../machines/bleShare/scan/selectors';
 import {
   selectIsAccepted,
@@ -60,6 +61,7 @@ export function useScanLayout() {
 
   const DISMISS = () => scanService.send(ScanEvents.DISMISS());
   const CANCEL = () => scanService.send(ScanEvents.CANCEL());
+  const CLOSE_BANNER = () => scanService.send(ScanEvents.CLOSE_BANNER());
   const onStayInProgress = () =>
     scanService.send(ScanEvents.STAY_IN_PROGRESS());
   const onRetry = () => scanService.send(ScanEvents.RETRY());
@@ -95,6 +97,10 @@ export function useScanLayout() {
   const isSendingVc = useSelector(scanService, selectIsSendingVc);
   const isSendingVcTimeout = useSelector(scanService, selectIsSendingVcTimeout);
   const isStayInProgress = isConnectingTimeout || isSendingVcTimeout;
+  let isFaceIdentityVerified = useSelector(
+    scanService,
+    selectIsFaceIdentityVerified,
+  );
 
   let statusOverlay: Pick<
     MessageOverlayProps,
@@ -242,5 +248,7 @@ export function useScanLayout() {
     onRetry,
     CANCEL,
     isSendingVc,
+    isFaceIdentityVerified,
+    CLOSE_BANNER,
   };
 }
