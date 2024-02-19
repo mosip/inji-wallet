@@ -11,6 +11,7 @@ import {Theme} from '../../components/ui/styleUtils';
 import {Icon} from 'react-native-elements';
 import {Loader} from '../../components/ui/Loader';
 import {FlowType} from '../../shared/Utils';
+import {VerifyIdentityOverlay} from '../VerifyIdentityOverlay';
 
 const ScanStack = createNativeStackNavigator();
 
@@ -41,6 +42,17 @@ export const ScanLayout: React.FC = () => {
 
   return (
     <React.Fragment>
+      <VerifyIdentityOverlay
+        isVisible={
+          controller.isVerifyingIdentity &&
+          controller.flowType === FlowType.MINI_VIEW_SHARE_WITH_SELFIE
+        }
+        vc={controller.selectedVc}
+        onCancel={controller.CANCEL}
+        onFaceValid={controller.FACE_VALID}
+        onFaceInvalid={controller.FACE_INVALID}
+      />
+
       <ScanStack.Navigator initialRouteName="ScanScreen">
         {controller.isReviewing &&
           controller.flowType === FlowType.SIMPLE_SHARE && (

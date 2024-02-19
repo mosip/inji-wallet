@@ -18,6 +18,7 @@ import {
   selectIsSent,
   selectIsDone,
   selectFlowType,
+  selectSelectedVc,
 } from '../../machines/bleShare/scan/selectors';
 import {
   selectIsAccepted,
@@ -28,6 +29,7 @@ import {
   selectIsOffline,
   selectIsRejected,
   selectIsReviewing,
+  selectIsVerifyingIdentity,
 } from '../../machines/bleShare/commonSelectors';
 import {ScanEvents} from '../../machines/bleShare/scan/scanMachine';
 import {BOTTOM_TAB_ROUTES, SCAN_ROUTES} from '../../routes/routesConstants';
@@ -50,6 +52,11 @@ export function useScanLayout() {
   const isLocationDenied = useSelector(scanService, selectIsLocationDenied);
   const isBleError = useSelector(scanService, selectIsHandlingBleError);
   const flowType = useSelector(scanService, selectFlowType);
+  const isVerifyingIdentity = useSelector(
+    scanService,
+    selectIsVerifyingIdentity,
+  );
+  const selectedVc = useSelector(scanService, selectSelectedVc);
 
   const locationError = {message: '', button: ''};
 
@@ -63,6 +70,8 @@ export function useScanLayout() {
 
   const DISMISS = () => scanService.send(ScanEvents.DISMISS());
   const CANCEL = () => scanService.send(ScanEvents.CANCEL());
+  const FACE_VALID = () => scanService.send(ScanEvents.FACE_VALID());
+  const FACE_INVALID = () => scanService.send(ScanEvents.FACE_INVALID());
   const onStayInProgress = () =>
     scanService.send(ScanEvents.STAY_IN_PROGRESS());
   const onRetry = () => scanService.send(ScanEvents.RETRY());
@@ -216,11 +225,16 @@ export function useScanLayout() {
   const isQrLoginDone = useSelector(scanService, selectIsQrLoginDone);
 
   useEffect(() => {
+    //console.log('___Flow Type____', flowType)
     if (isDone) {
       //TODO: This is not getting used and has a invalid state
       changeTabBarVisible('flex');
       navigation.navigate(BOTTOM_TAB_ROUTES.home);
-    } else if (isReviewing && flowType === FlowType.SIMPLE_SHARE) {
+    } else if (
+      isReviewing &&
+      flowType === FlowType.SIMPLE_SHARE &&
+      !isAccepted
+    ) {
       changeTabBarVisible('none');
       navigation.navigate(SCAN_ROUTES.SendVcScreen);
     } else if (isScanning) {
@@ -230,7 +244,15 @@ export function useScanLayout() {
       changeTabBarVisible('flex');
       navigation.navigate(BOTTOM_TAB_ROUTES.history);
     }
-  }, [isDone, isReviewing, isScanning, isQrLoginDone, isBleError]);
+  }, [
+    isDone,
+    isReviewing,
+    isScanning,
+    isQrLoginDone,
+    isBleError,
+    flowType,
+    isAccepted,
+  ]);
 
   return {
     isInvalid,
@@ -248,5 +270,9 @@ export function useScanLayout() {
     CANCEL,
     isSendingVc,
     flowType,
+    isVerifyingIdentity,
+    selectedVc,
+    FACE_INVALID,
+    FACE_VALID,
   };
 }

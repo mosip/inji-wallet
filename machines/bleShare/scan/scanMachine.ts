@@ -73,7 +73,7 @@ const model = createModel(
     reason: '',
     loggers: [] as EmitterSubscription[],
     vcName: '',
-    flowType: '',
+    flowType: FlowType.SIMPLE_SHARE,
     verificationImage: {} as CameraCapturedPicture,
     openId4VpUri: '',
     shareLogType: '' as ActivityLogType,
@@ -173,7 +173,7 @@ export const scanMachine =
       },
       states: {
         inactive: {
-          entry: 'removeLoggers',
+          entry: ['removeLoggers', 'resetFlowType'],
         },
         disconnectDevice: {
           invoke: {
@@ -842,6 +842,10 @@ export const scanMachine =
 
         setFlowType: assign({
           flowType: (_context, event) => event.flowType,
+        }),
+
+        resetFlowType: assign({
+          flowType: FlowType.SIMPLE_SHARE,
         }),
 
         setCreatedVp: assign({

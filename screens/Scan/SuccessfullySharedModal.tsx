@@ -15,7 +15,6 @@ export const SharingSuccessModal: React.FC<
 > = props => {
   const {t} = useTranslation('ScanScreen');
   const scanLayoutController = useScanLayout();
-  const sendVcScreenController = useSendVcScreen();
 
   return (
     <React.Fragment>
