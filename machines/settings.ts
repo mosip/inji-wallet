@@ -33,6 +33,7 @@ const model = createModel(
     appId: null,
     isBackupAndRestoreExplored: false as boolean,
     hasUserShownWithHardwareKeystoreNotExists: false,
+    isAccountSelectionConfirmationShown: false,
     credentialRegistryResponse: '' as string,
   },
   {
@@ -56,6 +57,7 @@ const model = createModel(
       CANCEL: () => ({}),
       ACCEPT_HARDWARE_SUPPORT_NOT_EXISTS: () => ({}),
       SET_IS_BACKUP_AND_RESTORE_EXPLORED: () => ({}),
+      SHOWN_ACCOUNT_SELECTION_CONFIRMATION: () => ({}),
     },
   },
 );
@@ -125,6 +127,13 @@ export const settingsMachine = model.createMachine(
           ACCEPT_HARDWARE_SUPPORT_NOT_EXISTS: {
             actions: [
               'updateUserShownWithHardwareKeystoreNotExists',
+              'storeContext',
+            ],
+            target: 'idle',
+          },
+          SHOWN_ACCOUNT_SELECTION_CONFIRMATION: {
+            actions: [
+              'updateIsAccountSelectionConfirmationShown',
               'storeContext',
             ],
             target: 'idle',
@@ -242,6 +251,10 @@ export const settingsMachine = model.createMachine(
         hasUserShownWithHardwareKeystoreNotExists: () => true,
       }),
 
+      updateIsAccountSelectionConfirmationShown: model.assign({
+        isAccountSelectionConfirmationShown: () => true,
+      }),
+
       toggleBiometricUnlock: model.assign({
         isBiometricUnlockEnabled: (_, event) => event.enable,
       }),
@@ -306,6 +319,10 @@ export function selectShowHardwareKeystoreNotExistsAlert(state: State) {
   const hasShown = state.context.hasUserShownWithHardwareKeystoreNotExists;
   const deviceSupports = deviceSupportsHardwareKeystore();
   return !hasShown && !deviceSupports;
+}
+
+export function selectShowAccountSelectionConfirmation(state: State) {
+  return !state.context.isAccountSelectionConfirmationShown;
 }
 
 export function selectVcLabel(state: State) {

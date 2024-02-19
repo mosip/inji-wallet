@@ -25,7 +25,9 @@ import SuccessLogo from '../../assets/Success_Message_Icon1.svg';
 import NoInternetConnection from '../../assets/No_Internet_Connection.svg';
 import SomethingWentWrong from '../../assets/Something_Went_Wrong.svg';
 import MagnifierZoom from '../../assets/Magnifier_Zoom.svg';
-import GoogleDriveIcon from '../../assets/google-drive-28.svg';
+import GoogleDriveIcon from '../../assets/Gdrive_Logo.svg';
+import GoogleDriveIconSmall from '../../assets/google-drive-28.svg';
+import ICloudLogo from '../../assets/Icloud-Logo.svg';
 import KebabIcon from '../../assets/Detailed_view_kebab_icon.svg';
 import {displayType} from '../../machines/issuersMachine';
 import {IssuerProps} from '../openId4VCI/Issuer';
@@ -337,8 +339,7 @@ export class SvgImage {
     return (
       <Backup
         {...testIDProps('dataBackupIcon')}
-        color1={Theme.Colors.linearGradientStart}
-        color2={Theme.Colors.linearGradientEnd}
+        color1={Theme.Colors.Icon}
         width={width}
         height={height}
       />
@@ -346,7 +347,9 @@ export class SvgImage {
   }
 
   static RestoreIcon() {
-    return <Restore {...testIDProps('restoreIcon')} />;
+    return (
+      <Restore color1={Theme.Colors.Icon} {...testIDProps('restoreIcon')} />
+    );
   }
 
   static SuccessLogo() {
@@ -381,6 +384,25 @@ export class SvgImage {
         width={width}
         height={height}
         {...testIDProps('googleDriveIcon')}
+      />
+    );
+  }
+
+  static GoogleDriveIconSmall(width, height) {
+    return (
+      <GoogleDriveIconSmall
+        width={width}
+        height={height}
+        {...testIDProps('googleDriveIconSmall')}
+      />
+    );
+  }
+  static ICloudIcon(width, height) {
+    return (
+      <ICloudLogo
+        width={width}
+        height={height}
+        {...testIDProps('iCloudIcon')}
       />
     );
   }

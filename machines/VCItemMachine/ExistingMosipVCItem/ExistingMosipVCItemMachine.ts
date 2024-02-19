@@ -42,6 +42,10 @@ import {TelemetryConstants} from '../../../shared/telemetry/TelemetryConstants';
 
 import {API_URLS} from '../../../shared/api';
 import {getHomeMachineService} from '../../../screens/Home/HomeScreenController';
+import {BackupEvents} from '../../backupAndRestore/backup';
+import Cloud, {
+  isSignedInResult,
+} from '../../../shared/CloudBackupAndRestoreUtils';
 
 const model = createModel(
   {
@@ -223,6 +227,7 @@ export const ExistingMosipVCItemMachine =
                 src: 'downloadCredential',
                 id: 'downloadCredential',
               },
+              initial: 'idle',
               on: {
                 POLL: [
                   {
@@ -247,10 +252,28 @@ export const ExistingMosipVCItemMachine =
                     'sendTelemetryEvents',
                     'removeVcFromInProgressDownloads',
                   ],
-                  target: '#vc-item.checkingVerificationStatus',
+                  target: '.triggerAutoBackupForVcDownload',
                 },
                 STORE_ERROR: {
                   target: '#vc-item.checkingServerData.savingFailed',
+                },
+              },
+              states: {
+                idle: {},
+                triggerAutoBackupForVcDownload: {
+                  invoke: {
+                    src: 'isUserSignedAlready',
+                    onDone: [
+                      {
+                        cond: 'isSignedIn',
+                        actions: ['sendBackupEvent'],
+                        target: '#vc-item.checkingVerificationStatus',
+                      },
+                      {
+                        target: '#vc-item.checkingVerificationStatus',
+                      },
+                    ],
+                  },
                 },
               },
             },
@@ -355,7 +378,29 @@ export const ExistingMosipVCItemMachine =
               on: {
                 STORE_RESPONSE: {
                   actions: ['closeViewVcModal', 'refreshMyVcs', 'logVCremoved'],
-                  target: '#vc-item',
+                  target: '.triggerAutoBackup',
+                },
+              },
+              states: {
+                triggerAutoBackup: {
+                  invoke: {
+                    src: 'isUserSignedAlready',
+                    onDone: [
+                      {
+                        cond: 'isSignedIn',
+                        actions: [
+                          'sendBackupEvent',
+                          'refreshMyVcs',
+                          'logVCremoved',
+                        ],
+                        target: '#vc-item',
+                      },
+                      {
+                        actions: ['refreshMyVcs', 'logVCremoved'],
+                        target: '#vc-item',
+                      },
+                    ],
+                  },
                 },
               },
             },
@@ -819,6 +864,10 @@ export const ExistingMosipVCItemMachine =
           },
         ),
 
+        sendBackupEvent: send(BackupEvents.DATA_BACKUP(true), {
+          to: context => context.serviceRefs.backup,
+        }),
+
         sendActivationStartEvent: context => {
           sendStartEvent(
             getStartEventData(
@@ -1214,6 +1263,10 @@ export const ExistingMosipVCItemMachine =
       },
 
       services: {
+        isUserSignedAlready: () => async () => {
+          return await Cloud.isSignedInAlready();
+        },
+
         loadDownloadLimitConfig: async context => {
           var resp = await getAllConfigurations();
           const maxLimit: number = resp.vcDownloadMaxRetry;
@@ -1460,6 +1513,8 @@ export const ExistingMosipVCItemMachine =
       },
 
       guards: {
+        isSignedIn: (_context, event) =>
+          (event.data as isSignedInResult).isSignedIn,
         hasCredential: (_, event) => {
           const vc =
             event.type === 'GET_VC_RESPONSE' ? event.vc : event.response;

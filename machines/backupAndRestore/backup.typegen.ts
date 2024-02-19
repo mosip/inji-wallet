@@ -66,22 +66,22 @@ export interface Typegen0 {
       | 'error.platform.backup.backingUp.checkStorageAvailability:invocation[0]'
       | 'error.platform.backup.backingUp.uploadBackupFile:invocation[0]'
       | 'error.platform.backup.backingUp.zipBackupFile:invocation[0]';
-    sendDataBackupStartEvent: 'FETCH_DATA' | 'STORE_RESPONSE';
+    sendDataBackupStartEvent: 'DATA_BACKUP';
     sendDataBackupSuccessEvent: 'STORE_RESPONSE';
     setBackUpNotPossible:
-      | 'STORE_ERROR'
       | 'STORE_RESPONSE'
       | 'error.platform.backup.backingUp.checkStorageAvailability:invocation[0]';
-    setBackupErrorReason: 'error.platform.backup.backingUp.uploadBackupFile:invocation[0]';
+    setBackupErrorReason:
+      | 'STORE_ERROR'
+      | 'error.platform.backup.backingUp.uploadBackupFile:invocation[0]';
     setDataFromStorage: 'STORE_RESPONSE';
     setErrorReasonAsStorageLimitReached: 'done.invoke.backup.backingUp.checkStorageAvailability:invocation[0]';
     setFileName: 'FILE_NAME';
+    setIsAutoBackup: 'DATA_BACKUP';
     setLastBackupDetails:
       | 'STORE_RESPONSE'
       | 'done.invoke.backup.fetchLastBackupDetails.checkCloud:invocation[0]';
-    storeLastBackupDetails:
-      | 'STORE_RESPONSE'
-      | 'done.invoke.backup.backingUp.uploadBackupFile:invocation[0]';
+    storeLastBackupDetails: 'done.invoke.backup.backingUp.uploadBackupFile:invocation[0]';
     unsetIsLoading:
       | 'STORE_RESPONSE'
       | 'done.invoke.backup.fetchLastBackupDetails.checkCloud:invocation[0]'
@@ -89,12 +89,19 @@ export interface Typegen0 {
   };
   eventsCausingDelays: {};
   eventsCausingGuards: {
+    checkIfAutoBackup:
+      | 'STORE_ERROR'
+      | 'STORE_RESPONSE'
+      | 'done.invoke.backup.backingUp.checkStorageAvailability:invocation[0]'
+      | 'error.platform.backup.backingUp.checkStorageAvailability:invocation[0]'
+      | 'error.platform.backup.backingUp.uploadBackupFile:invocation[0]'
+      | 'error.platform.backup.backingUp.zipBackupFile:invocation[0]';
     isDataAvailableInStorage: 'STORE_RESPONSE';
-    isMinimumStorageRequiredForBackupReached: 'done.invoke.backup.backingUp.checkStorageAvailability:invocation[0]';
+    isMinimumStorageRequiredForBackupAvailable: 'done.invoke.backup.backingUp.checkStorageAvailability:invocation[0]';
     isVCFound: 'STORE_RESPONSE';
   };
   eventsCausingServices: {
-    checkStorageAvailability: 'FETCH_DATA' | 'STORE_RESPONSE';
+    checkStorageAvailability: 'STORE_RESPONSE';
     getLastBackupDetailsFromCloud: 'STORE_ERROR' | 'STORE_RESPONSE';
     uploadBackupFile: 'done.invoke.backup.backingUp.zipBackupFile:invocation[0]';
     writeDataToFile: 'STORE_RESPONSE';
@@ -107,6 +114,8 @@ export interface Typegen0 {
     | 'backingUp.failure'
     | 'backingUp.fetchDataFromDB'
     | 'backingUp.idle'
+    | 'backingUp.silentFailure'
+    | 'backingUp.silentSuccess'
     | 'backingUp.success'
     | 'backingUp.uploadBackupFile'
     | 'backingUp.writeDataToFile'
@@ -122,6 +131,8 @@ export interface Typegen0 {
           | 'failure'
           | 'fetchDataFromDB'
           | 'idle'
+          | 'silentFailure'
+          | 'silentSuccess'
           | 'success'
           | 'uploadBackupFile'
           | 'writeDataToFile'

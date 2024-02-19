@@ -625,6 +625,9 @@ export const requestMachine =
 
         prependReceivedVc: send(
           context => {
+            if (context.incomingVc) {
+              context.incomingVc.vcMetadata.timestamp = Date.now();
+            }
             return StoreEvents.PREPEND(
               RECEIVED_VCS_STORE_KEY,
               VCMetadata.fromVC(context.incomingVc?.vcMetadata),

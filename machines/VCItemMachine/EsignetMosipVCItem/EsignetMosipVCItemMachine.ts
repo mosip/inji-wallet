@@ -35,6 +35,10 @@ import {TelemetryConstants} from '../../../shared/telemetry/TelemetryConstants';
 
 import {API_URLS} from '../../../shared/api';
 import {getHomeMachineService} from '../../../screens/Home/HomeScreenController';
+import {BackupEvents} from '../../backupAndRestore/backup';
+import Cloud, {
+  isSignedInResult,
+} from '../../../shared/CloudBackupAndRestoreUtils';
 
 const model = createModel(
   {
@@ -397,8 +401,24 @@ export const EsignetMosipVCItemMachine = model.createMachine(
             on: {
               STORE_RESPONSE: {
                 actions: ['closeViewVcModal', 'removedVc', 'logVCremoved'],
-                target: '#vc-item-openid4vci',
+                target: 'triggerAutoBackup',
               },
+            },
+          },
+          triggerAutoBackup: {
+            invoke: {
+              src: 'isUserSignedAlready',
+              onDone: [
+                {
+                  cond: 'isSignedIn',
+                  actions: ['sendBackupEvent', 'removedVc', 'logVCremoved'],
+                  target: '#vc-item-openid4vci',
+                },
+                {
+                  actions: ['removedVc', 'logVCremoved'],
+                  target: '#vc-item-openid4vci',
+                },
+              ],
             },
           },
         },
@@ -502,6 +522,10 @@ export const EsignetMosipVCItemMachine = model.createMachine(
             ...context.vcMetadata,
             isPinned: !context.vcMetadata.isPinned,
           }),
+      }),
+
+      sendBackupEvent: send(BackupEvents.DATA_BACKUP(true), {
+        to: context => context.serviceRefs.backup,
       }),
 
       sendVcUpdated: send(
@@ -716,6 +740,10 @@ export const EsignetMosipVCItemMachine = model.createMachine(
     },
 
     services: {
+      isUserSignedAlready: () => async () => {
+        return await Cloud.isSignedInAlready();
+      },
+
       updatePrivateKey: async context => {
         const hasSetPrivateKey: boolean = await savePrivateKey(
           context.tempWalletBindingIdResponse.walletBindingId,
@@ -801,6 +829,8 @@ export const EsignetMosipVCItemMachine = model.createMachine(
         const vc = event.vc;
         return vc != null;
       },
+      isSignedIn: (_context, event) =>
+        (event.data as isSignedInResult).isSignedIn,
 
       isCustomSecureKeystore: () => isHardwareKeystoreExists,
     },
