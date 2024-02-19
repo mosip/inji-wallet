@@ -146,7 +146,7 @@ fileignoreconfig:
   - filename: machines/backupAndRestore/backup.ts
     checksum: d3453abfc10400e094b841e84283efc194a4fe0443c63ec880c5ddd6741f5293
   - filename: machines/backupAndRestore/backup.typegen.ts
-    checksum: 235272c408875866c2844db3e06b0689135dab7617cac136072d9efdf2a7e37c
+    checksum: 483e237dc29256d7718d0c6137084da79a7d297d9eb86fa9689bc1170bb9f185
   - filename: components/BackupAndRestoreAllScreenBanner.tsx
     checksum: 2c98e7e83959c9dac4dd12da32f81483c3d334bd05e279637cf465475fbf54b8
     checksum: f26489ce4ac607884437ad06c3117cc34d6cbcbcd3dd5719790fbe01a0853ee5
@@ -180,6 +180,12 @@ fileignoreconfig:
     checksum: bbc69143bd37d065bba3800396301db5a0318e8b7ba51ecd49142dda68783a01
   - filename: machines/backupAndRestore/backupAndRestoreSetup.typegen.ts
     checksum: 8203331f1628e01faa5e553e749372be278b477ca2d34a0cdafee1438248fb3c
+  - filename: package-lock.json
+    checksum: c1e628b384b35598c9741401f4e2ad0f5cd3e9b3dff0bee23a389f0590681593
+  - filename: injitest/README.md
+    checksum: 82974a6b9363512472272245e9b433f92e63377e58ba306980876b745181a09c
+  - filename: machines/backupAndRestore/backup.ts
+    checksum: 71cba6237f203a4a8df931a1b02669351466657f64fb6690545248fbad62f8b8
   - filename: machines/backupAndRestore/backupAndRestoreSetup.ts
     checksum: 5eca5414d28f523bb920cffa1f51b484ec549a240667d37723773c224fc51792
   - filename: shared/VCMetadata.ts
@@ -189,7 +195,22 @@ fileignoreconfig:
   - filename: machines/backupRestore.ts
     checksum: 71415a5e8de490af506070f8add50f864d559a8077542fc0b3d8ed18f0b33063
   - filename: machines/backupRestore.typegen.ts
-    checksum: cbd83f6aa1e0167b99449e9399a9daab17fe3979947bc6bc3c14eb6a61a2a238
-version: ""
-    version: ""
+    checksum: 85e92ddec56da8dcdd28b5a29dfabd88dd0435e619f822488bc4e19b83872289
+  - filename: machines/backupAndRestore/backupAndRestoreSetup.typegen.ts
+    checksum: dd5dc9c42800328c268f3e6d6c96a16e9686dbfa59735e721250dae3ce37e009
+  - filename: ios/Podfile.lock
+    checksum: 235f31beadf3833ac763ed1b79e00f588e56990873806627b5abf8643992336a
+  - filename: machines/backupAndRestore/backupAndRestoreSetup.typegen.ts
+    checksum: dd5dc9c42800328c268f3e6d6c96a16e9686dbfa59735e721250dae3ce37e009
+  - filename: injitest/src/main/java/inji/pages/BackupAndRestorePage.java
+    checksum: 750d001f5fedb393901004933917c4a0ca73af19a2a84cf4863512c664ae0ccd
+  - filename: injitest/src/test/java/androidTestCases/VcDownloadAndVerifyUsingSunbirdTest.java
+    checksum: 39d270982ada73f036ab4c61811f31cf7fa9a92cccc4ef03b7862765ff9b11cd
+  - filename: injitest/src/test/java/iosTestCases/VcDownloadAndVerifyUsingEsignetTest.java
+    checksum: d7ef3eda605d4785716b8babde586d9fe3ecd43e090336783e64c1923b68e18e
+  - filename: injitest/src/test/java/iosTestCases/ChangeLanguageTest.java
+    checksum: 0ac8c4f3b00138c52d83d719fd8f16c5521290417561c7cf604ade88fa092bc8
+  - filename: injitest/src/test/java/androidTestCases/VcBackupAndRestoreTest.java
+    checksum: cbcbd4c4a185b5af1f23a93467e60cb2128faed718ce2499980e9658e43f19a6
+  version: ""
 

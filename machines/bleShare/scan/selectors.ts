@@ -72,5 +72,5 @@ export function selectIsQrLoginStoring(state: State) {
 }
 
 export function selectIsDone(state: State) {
-  return state.matches('reviewing.navigatingToHome');
+  return state.matches('reviewing.disconnect');
 }

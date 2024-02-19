@@ -91,6 +91,7 @@ const model = createModel(
       STAY_IN_PROGRESS: () => ({}),
       RETRY: () => ({}),
       DISMISS: () => ({}),
+      GOTO_HISTORY: () => ({}),
       CONNECTED: () => ({}),
       DISCONNECT: () => ({}),
       BLE_ERROR: (bleError: BLEError) => ({bleError}),
@@ -592,6 +593,9 @@ export const scanMachine =
                 DISMISS: {
                   target: 'disconnect',
                 },
+                GOTO_HISTORY: {
+                  target: 'navigateToHistory',
+                },
               },
             },
             rejected: {
@@ -607,6 +611,7 @@ export const scanMachine =
                 src: 'disconnect',
               },
             },
+            navigateToHistory: {},
             verifyingIdentity: {
               on: {
                 FACE_VALID: {
