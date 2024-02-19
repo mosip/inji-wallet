@@ -58,6 +58,7 @@ import {
 import {TelemetryConstants} from '../../../shared/telemetry/TelemetryConstants';
 
 import {logState} from '../../../shared/commonUtil';
+import {FlowType} from '../../../shared/Utils';
 
 const {wallet, EventTypes, VerificationStatus} = tuvali;
 
@@ -72,6 +73,7 @@ const model = createModel(
     reason: '',
     loggers: [] as EmitterSubscription[],
     vcName: '',
+    flowType: '',
     verificationImage: {} as CameraCapturedPicture,
     openId4VpUri: '',
     shareLogType: '' as ActivityLogType,
@@ -81,7 +83,7 @@ const model = createModel(
   },
   {
     events: {
-      SELECT_VC: (vc: VC) => ({vc}),
+      SELECT_VC: (vc: VC, flowType: string) => ({vc, flowType}),
       SCAN: (params: string) => ({params}),
       ACCEPT_REQUEST: () => ({}),
       VERIFY_AND_ACCEPT_REQUEST: () => ({}),
@@ -110,6 +112,7 @@ const model = createModel(
       LOCATION_ENABLED: () => ({}),
       LOCATION_DISABLED: () => ({}),
       LOCATION_REQUEST: () => ({}),
+      CHECK_FLOW_TYPE: () => ({}),
       UPDATE_VC_NAME: (vcName: string) => ({vcName}),
       STORE_RESPONSE: (response: any) => ({response}),
       APP_ACTIVE: () => ({}),
@@ -164,7 +167,7 @@ export const scanMachine =
           target: '#scan.reviewing.disconnect',
         },
         SELECT_VC: {
-          actions: 'setSelectedVc',
+          actions: ['setSelectedVc', 'setFlowType'],
           target: 'disconnectDevice',
         },
       },
@@ -496,10 +499,28 @@ export const scanMachine =
           },
         },
         reviewing: {
-          entry: ['resetShouldVerifyPresence'],
+          initial: 'idle',
+          entry: ['resetShouldVerifyPresence', send('CHECK_FLOW_TYPE')],
+          on: {
+            CHECK_FLOW_TYPE: [
+              {
+                cond: 'isFlowTypeSimpleShare',
+                target: '.selectingVc',
+              },
+              {
+                cond: 'isFlowTypeMiniViewShare',
+                target: '.sendingVc',
+                actions: 'setShareLogTypeUnverified',
+              },
+              {
+                cond: 'isFlowTypeMiniViewShareWithSelfie',
+                target: '.verifyingIdentity',
+              },
+            ],
+          },
           exit: ['clearReason', 'clearCreatedVp'],
-          initial: 'selectingVc',
           states: {
+            idle: {},
             selectingVc: {
               on: {
                 UPDATE_REASON: {
@@ -509,7 +530,7 @@ export const scanMachine =
                   target: '#scan.disconnected',
                 },
                 SELECT_VC: {
-                  actions: 'setSelectedVc',
+                  actions: ['setSelectedVc', 'setFlowType'],
                 },
                 VERIFY_AND_ACCEPT_REQUEST: {
                   target: 'verifyingIdentity',
@@ -817,6 +838,10 @@ export const scanMachine =
               shouldVerifyPresence: context.selectedVc.shouldVerifyPresence,
             };
           },
+        }),
+
+        setFlowType: assign({
+          flowType: (_context, event) => event.flowType,
         }),
 
         setCreatedVp: assign({
@@ -1220,6 +1245,15 @@ export const scanMachine =
 
         isMinimumStorageRequiredForAuditEntryReached: (_context, event) =>
           Boolean(event.data),
+
+        isFlowTypeMiniViewShareWithSelfie: context =>
+          context.flowType === FlowType.MINI_VIEW_SHARE_WITH_SELFIE,
+
+        isFlowTypeMiniViewShare: context =>
+          context.flowType === FlowType.MINI_VIEW_SHARE,
+
+        isFlowTypeSimpleShare: context =>
+          context.flowType === FlowType.SIMPLE_SHARE,
       },
 
       delays: {

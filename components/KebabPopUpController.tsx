@@ -107,10 +107,10 @@ export function useKebabPopUp(props) {
     SHOW_ACTIVITY,
     SELECT_VC_ITEM: (
       vcRef: ActorRefFrom<typeof ExistingMosipVCItemMachine>,
+      flowType: string,
     ) => {
       const {serviceRefs, ...vcData} = vcRef.getSnapshot().context;
-      console.log('VC Data', vcData.id);
-      scanService.send(ScanEvents.SELECT_VC(vcData));
+      scanService.send(ScanEvents.SELECT_VC(vcData, flowType));
     },
     isScanning,
     isBindingWarning,

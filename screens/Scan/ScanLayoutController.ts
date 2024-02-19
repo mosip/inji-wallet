@@ -17,6 +17,7 @@ import {
   selectIsSendingVcTimeout,
   selectIsSent,
   selectIsDone,
+  selectFlowType,
 } from '../../machines/bleShare/scan/selectors';
 import {
   selectIsAccepted,
@@ -31,6 +32,7 @@ import {
 import {ScanEvents} from '../../machines/bleShare/scan/scanMachine';
 import {BOTTOM_TAB_ROUTES, SCAN_ROUTES} from '../../routes/routesConstants';
 import {ScanStackParamList} from '../../routes/routesConstants';
+import {FlowType} from '../../shared/Utils';
 
 type ScanLayoutNavigation = NavigationProp<
   ScanStackParamList & MainBottomTabParamList
@@ -47,6 +49,7 @@ export function useScanLayout() {
   const isLocationDisabled = useSelector(scanService, selectIsLocationDisabled);
   const isLocationDenied = useSelector(scanService, selectIsLocationDenied);
   const isBleError = useSelector(scanService, selectIsHandlingBleError);
+  const flowType = useSelector(scanService, selectFlowType);
 
   const locationError = {message: '', button: ''};
 
@@ -217,7 +220,7 @@ export function useScanLayout() {
       //TODO: This is not getting used and has a invalid state
       changeTabBarVisible('flex');
       navigation.navigate(BOTTOM_TAB_ROUTES.home);
-    } else if (isReviewing) {
+    } else if (isReviewing && flowType === FlowType.SIMPLE_SHARE) {
       changeTabBarVisible('none');
       navigation.navigate(SCAN_ROUTES.SendVcScreen);
     } else if (isScanning) {
@@ -244,5 +247,6 @@ export function useScanLayout() {
     onRetry,
     CANCEL,
     isSendingVc,
+    flowType,
   };
 }

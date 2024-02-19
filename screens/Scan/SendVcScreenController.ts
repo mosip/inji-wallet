@@ -17,6 +17,7 @@ import {
   selectIsVerifyingIdentity,
 } from '../../machines/bleShare/commonSelectors';
 import {ScanEvents} from '../../machines/bleShare/scan/scanMachine';
+import {FlowType} from '../../shared/Utils';
 
 export function useSendVcScreen() {
   const {appService} = useContext(GlobalContext);
@@ -36,7 +37,7 @@ export function useSendVcScreen() {
       (vcRef: ActorRefFrom<typeof ExistingMosipVCItemMachine>) => {
         setSelectedIndex(index);
         const {serviceRefs, ...vcData} = vcRef.getSnapshot().context;
-        scanService.send(ScanEvents.SELECT_VC(vcData));
+        scanService.send(ScanEvents.SELECT_VC(vcData, FlowType.SIMPLE_SHARE));
       },
 
     receiverInfo: useSelector(scanService, selectReceiverInfo),

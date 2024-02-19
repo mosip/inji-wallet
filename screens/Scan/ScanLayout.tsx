@@ -10,6 +10,7 @@ import {SharingSuccessModal} from './SuccessfullySharedModal';
 import {Theme} from '../../components/ui/styleUtils';
 import {Icon} from 'react-native-elements';
 import {Loader} from '../../components/ui/Loader';
+import {FlowType} from '../../shared/Utils';
 
 const ScanStack = createNativeStackNavigator();
 
@@ -41,23 +42,24 @@ export const ScanLayout: React.FC = () => {
   return (
     <React.Fragment>
       <ScanStack.Navigator initialRouteName="ScanScreen">
-        {controller.isReviewing && (
-          <ScanStack.Screen
-            name={SCAN_ROUTES.SendVcScreen}
-            component={SendVcScreen}
-            options={{
-              title: t('sharingVc'),
-              headerBackVisible: false,
-              headerRight: () => (
-                <Icon
-                  name="close"
-                  color={Theme.Colors.blackIcon}
-                  onPress={controller.CANCEL}
-                />
-              ),
-            }}
-          />
-        )}
+        {controller.isReviewing &&
+          controller.flowType === FlowType.SIMPLE_SHARE && (
+            <ScanStack.Screen
+              name={SCAN_ROUTES.SendVcScreen}
+              component={SendVcScreen}
+              options={{
+                title: t('sharingVc'),
+                headerBackVisible: false,
+                headerRight: () => (
+                  <Icon
+                    name="close"
+                    color={Theme.Colors.blackIcon}
+                    onPress={controller.CANCEL}
+                  />
+                ),
+              }}
+            />
+          )}
         <ScanStack.Screen
           name={SCAN_ROUTES.ScanScreen}
           component={ScanScreen}

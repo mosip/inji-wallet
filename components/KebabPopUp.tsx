@@ -15,6 +15,7 @@ import {VCMetadata} from '../shared/VCMetadata';
 import testIDProps from '../shared/commonUtil';
 import {ShareVc} from '../screens/Home/Kebab/ShareVc';
 import {SvgImage} from './ui/svg';
+import {FlowType} from '../shared/Utils';
 
 export const KebabPopUp: React.FC<KebabPopUpProps> = props => {
   const controller = useKebabPopUp(props);
@@ -61,11 +62,13 @@ export const KebabPopUp: React.FC<KebabPopUpProps> = props => {
             testID="shareVcFromKebab"
             label={t('share')}
             service={props.service}
+            flowType={FlowType.MINI_VIEW_SHARE}
           />
           <ShareVc
             testID="shareVcWithSelfieFromKebab"
             label={t('shareWithSelfie')}
             service={props.service}
+            flowType={FlowType.MINI_VIEW_SHARE_WITH_SELFIE}
           />
           <ActivationStatus
             vcMetadata={props?.vcMetadata}

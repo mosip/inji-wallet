@@ -1,12 +1,10 @@
 import React from 'react';
-import {ListItem} from 'react-native-elements';
 import {useKebabPopUp} from '../../../components/KebabPopUpController';
-import testIDProps from '../../../shared/commonUtil';
-import {Text} from '../../../components/ui';
 import {ActorRefFrom} from 'xstate';
 import {ExistingMosipVCItemMachine} from '../../../machines/VCItemMachine/ExistingMosipVCItem/ExistingMosipVCItemMachine';
 import {SvgImage} from '../../../components/ui/svg';
 import {KebabPopupListItemContainer} from '../../../components/KebabPopUp';
+import {FlowType} from '../../../shared/Utils';
 
 export const ShareVc: React.FC<ShareVcProps> = props => {
   const controller = useKebabPopUp(props);
@@ -19,7 +17,10 @@ export const ShareVc: React.FC<ShareVcProps> = props => {
           ? SvgImage.OutlinedShareIcon()
           : SvgImage.OutlinedShareWithSelfieIcon()
       }
-      onPress={controller.PIN_CARD}
+      onPress={() => {
+        controller.SELECT_VC_ITEM(props.service, props.flowType),
+          controller.GOTO_SCANSCREEN();
+      }}
       testID={props.testID}
     />
   );
@@ -29,4 +30,5 @@ interface ShareVcProps {
   testID: string;
   label: string;
   service: ActorRefFrom<typeof ExistingMosipVCItemMachine>;
+  flowType: string;
 }
