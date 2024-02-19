@@ -12,6 +12,8 @@ import {Icon} from 'react-native-elements';
 import {Loader} from '../../components/ui/Loader';
 import {FlowType} from '../../shared/Utils';
 import {VerifyIdentityOverlay} from '../VerifyIdentityOverlay';
+import {MessageOverlay} from '../../components/MessageOverlay';
+import {Row, Button} from '../../components/ui';
 
 const ScanStack = createNativeStackNavigator();
 
@@ -52,6 +54,29 @@ export const ScanLayout: React.FC = () => {
         onFaceValid={controller.FACE_VALID}
         onFaceInvalid={controller.FACE_INVALID}
       />
+
+      <MessageOverlay
+        isVisible={controller.isInvalidIdentity}
+        title={t('VerifyIdentityOverlay:errors.invalidIdentity.title')}
+        message={t('VerifyIdentityOverlay:errors.invalidIdentity.message')}
+        onBackdropPress={controller.DISMISS}>
+        <Row>
+          <Button
+            testID="cancel"
+            fill
+            type="clear"
+            title={t('common:cancel')}
+            onPress={controller.DISMISS}
+            margin={[0, 8, 0, 0]}
+          />
+          <Button
+            testID="tryAgain"
+            fill
+            title={t('common:tryAgain')}
+            onPress={controller.RETRY_VERIFICATION}
+          />
+        </Row>
+      </MessageOverlay>
 
       <ScanStack.Navigator initialRouteName="ScanScreen">
         {controller.isReviewing &&

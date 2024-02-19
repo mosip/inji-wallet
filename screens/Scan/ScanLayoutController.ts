@@ -26,6 +26,7 @@ import {
   selectIsExchangingDeviceInfo,
   selectIsExchangingDeviceInfoTimeout,
   selectIsHandlingBleError,
+  selectIsInvalidIdentity,
   selectIsOffline,
   selectIsRejected,
   selectIsReviewing,
@@ -51,6 +52,7 @@ export function useScanLayout() {
   const isLocationDisabled = useSelector(scanService, selectIsLocationDisabled);
   const isLocationDenied = useSelector(scanService, selectIsLocationDenied);
   const isBleError = useSelector(scanService, selectIsHandlingBleError);
+  const isInvalidIdentity = useSelector(scanService, selectIsInvalidIdentity);
   const flowType = useSelector(scanService, selectFlowType);
   const isVerifyingIdentity = useSelector(
     scanService,
@@ -85,6 +87,8 @@ export function useScanLayout() {
     changeTabBarVisible('flex');
     navigation.navigate(BOTTOM_TAB_ROUTES.history);
   };
+  const RETRY_VERIFICATION = () =>
+    scanService.send(ScanEvents.RETRY_VERIFICATION());
 
   const isInvalid = useSelector(scanService, selectIsInvalid);
   const isConnecting = useSelector(scanService, selectIsConnecting);
@@ -271,8 +275,10 @@ export function useScanLayout() {
     isSendingVc,
     flowType,
     isVerifyingIdentity,
+    isInvalidIdentity,
     selectedVc,
     FACE_INVALID,
     FACE_VALID,
+    RETRY_VERIFICATION,
   };
 }
