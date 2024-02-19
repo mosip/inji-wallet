@@ -691,6 +691,11 @@ export const DefaultTheme = {
       marginLeft: I18nManager.isRTL ? 50 : 0,
       marginTop: 15,
     },
+    HistoryHeaderTitleStyle: {
+      fontSize: 26,
+      fontFamily: 'Inter_600SemiBold',
+      marginTop: isIOS() ? 5 : 15,
+    },
   }),
   BannerStyles: StyleSheet.create({
     container: {

@@ -10,7 +10,6 @@ import i18n from '../i18n';
 import {BOTTOM_TAB_ROUTES} from './routesConstants';
 import {HomeScreenLayout} from '../screens/HomeScreenLayout';
 import {Theme} from '../components/ui/styleUtils';
-import {isIOS} from '../shared/constants';
 
 export const changeTabBarVisible = (visible: string) => {
   Theme.BottomTabBarStyle.tabBarStyle.display = visible;
@@ -40,11 +39,7 @@ const history: TabScreen = {
   component: HistoryScreen,
   icon: 'history',
   options: {
-    headerTitleStyle: {
-      fontSize: 26,
-      fontFamily: 'Inter_600SemiBold',
-      marginTop: isIOS() ? 5 : 15,
-    },
+    headerTitleStyle: Theme.Styles.HistoryHeaderTitleStyle,
     title: i18n.t('MainLayout:history'),
     headerRight: null,
   },
