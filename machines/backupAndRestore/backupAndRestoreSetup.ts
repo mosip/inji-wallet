@@ -140,9 +140,7 @@ export const backupAndRestoreSetupMachine = model.createMachine(
             },
           ],
         },
-        initial: 'idle',
         states: {
-          idle: {},
           error: {
             entry: 'unsetIsLoading',
             on: {

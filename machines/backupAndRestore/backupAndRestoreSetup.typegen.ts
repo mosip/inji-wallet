@@ -80,7 +80,6 @@ export interface Typegen0 {
     | 'checkInternet'
     | 'checkSignIn'
     | 'checkSignIn.error'
-    | 'checkSignIn.idle'
     | 'fetchShowConfirmationInfo'
     | 'init'
     | 'noInternet'
@@ -88,6 +87,6 @@ export interface Typegen0 {
     | 'signIn'
     | 'signIn.error'
     | 'signIn.idle'
-    | {checkSignIn?: 'error' | 'idle'; signIn?: 'error' | 'idle'};
+    | {checkSignIn?: 'error'; signIn?: 'error' | 'idle'};
   tags: never;
 }
