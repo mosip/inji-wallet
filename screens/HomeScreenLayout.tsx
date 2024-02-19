@@ -1,6 +1,6 @@
 import {getFocusedRouteNameFromRoute} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import {useTranslation} from 'react-i18next';
 import {Icon} from 'react-native-elements';
 import {Row} from '../components/ui';
@@ -14,6 +14,7 @@ import testIDProps from '../shared/commonUtil';
 import {SvgImage} from '../components/ui/svg';
 import {HelpScreen} from '../components/HelpScreen';
 import {I18nManager} from 'react-native';
+import {isIOS} from '../shared/constants';
 
 export const HomeScreenLayout: React.FC<RootRouteProps> = props => {
   const {t} = useTranslation('IssuersScreen');
@@ -78,19 +79,19 @@ export const HomeScreenLayout: React.FC<RootRouteProps> = props => {
     </Row>
   );
 
-  const [HomeScreenOptions, setHomeScreenOptions] = useState({
-    headerLeft: () => SvgImage.InjiLogo(),
-    headerTitle: '',
-    headerRight: () => screenOptions,
-  });
+  const [isRTL] = useState(I18nManager.isRTL);
 
-  useEffect(() => {
-    setHomeScreenOptions({
-      headerLeft: () => screenOptions,
-      headerTitle: '',
-      headerRight: () => SvgImage.InjiLogo(),
-    });
-  }, [I18nManager.isRTL]);
+  var HomeScreenOptions = {
+    headerLeft: () =>
+      isIOS()
+        ? SvgImage.InjiLogo()
+        : isRTL
+        ? screenOptions
+        : SvgImage.InjiLogo(),
+    headerTitle: '',
+    headerRight: () =>
+      isIOS() ? screenOptions : isRTL ? SvgImage.InjiLogo() : screenOptions,
+  };
 
   return (
     <Navigator>
