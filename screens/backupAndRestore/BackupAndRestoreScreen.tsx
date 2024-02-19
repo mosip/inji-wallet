@@ -44,9 +44,9 @@ const BackupAndRestoreScreen: React.FC<BackupAndRestoreProps> = props => {
     props.shouldTriggerAutoBackup,
   ]);
 
-  const Loading = (
+  const Loading = testID => (
     <Centered fill>
-      <LoaderAnimation showLogo={false} />
+      <LoaderAnimation testID={testID} showLogo={false} />
     </Centered>
   );
 
@@ -110,7 +110,7 @@ const BackupAndRestoreScreen: React.FC<BackupAndRestoreProps> = props => {
       </Row>
       <Row style={Theme.BackupAndRestoreStyles.actionOrLoaderContainer}>
         {backupController.isBackupInProgress ? (
-          Loading
+          Loading('backup')
         ) : (
           <Button
             testID="backup"
@@ -166,7 +166,7 @@ const BackupAndRestoreScreen: React.FC<BackupAndRestoreProps> = props => {
       </Row>
       <Row style={Theme.BackupAndRestoreStyles.actionOrLoaderContainer}>
         {restoreController.isBackUpRestoring ? (
-          Loading
+          Loading('restore')
         ) : (
           <Button
             testID="restore"
@@ -212,7 +212,7 @@ const BackupAndRestoreScreen: React.FC<BackupAndRestoreProps> = props => {
         }}>
         {props.isLoading || backupController.isLoading ? (
           <Column fill align="center" crossAlign="center">
-            <LoaderAnimation />
+            <LoaderAnimation testID="backupAndRestoreScreen" />
           </Column>
         ) : (
           <ScrollView>
