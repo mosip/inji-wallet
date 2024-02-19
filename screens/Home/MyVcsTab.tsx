@@ -36,7 +36,6 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = props => {
     controller.vcMetadatas,
   );
   const vcData = controller.vcData;
-  const [tapToSearch, setTapToSearch] = useState(false);
   const [clearSearchIcon, setClearSearchIcon] = useState(false);
   const [search, setSearch] = useState('');
   const [filteredSearchData, setFilteredSearchData] = useState<
@@ -54,7 +53,6 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = props => {
   };
 
   const onFocusSearch = () => {
-    setTapToSearch(true);
     setShowPinVc(false);
   };
 
@@ -232,7 +230,35 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = props => {
                     })
                   : filteredSearchData.length === 0 &&
                     search &&
-                    !showPinVc && <Text>No vc found</Text>}
+                    !showPinVc && (
+                      <Column
+                        fill
+                        style={{
+                          justifyContent: 'center',
+                          alignItems: 'center',
+                          paddingTop: 170,
+                        }}>
+                        <Text
+                          style={{
+                            fontWeight: 'bold',
+                            textAlign: 'center',
+                            fontSize: 18,
+                            fontFamily: 'Inter_600SemiBold',
+                          }}>
+                          {t('noCardsTitle')}
+                        </Text>
+                        <Text
+                          style={{
+                            textAlign: 'center',
+                            lineHeight: 17,
+                            paddingTop: 10,
+                            fontSize: 14,
+                            fontFamily: 'Inter_400Regular',
+                          }}>
+                          {t('noCardsDescription')}
+                        </Text>
+                      </Column>
+                    )}
               </Column>
             </React.Fragment>
           )}

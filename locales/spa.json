@@ -310,6 +310,8 @@
     "downloadCard": "Descargar tarjeta",
     "downloadingYourCard": "Descargar su tarjeta, esto puede tardar hasta 5 minutos",
     "activated": "Las credenciales están habilitadas para la autenticación en línea.",
+    "noCardsTitle": "¡No se encontraron tarjetas!",
+    "noCardsDescription": "Lo sentimos, no pudimos encontrar ningún resultado. Intente ingresar otra palabra clave de búsqueda.",
     "errors": {
       "savingFailed": {
         "title": "No se pudo guardar la tarjeta",
