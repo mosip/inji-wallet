@@ -19,7 +19,8 @@ export const ShareVc: React.FC<ShareVcProps> = props => {
       }
       onPress={() => {
         controller.SELECT_VC_ITEM(props.service, props.flowType),
-          controller.GOTO_SCANSCREEN();
+          controller.GOTO_SCANSCREEN(),
+          props.service.send('CLOSE_VC_MODAL');
       }}
       testID={props.testID}
     />

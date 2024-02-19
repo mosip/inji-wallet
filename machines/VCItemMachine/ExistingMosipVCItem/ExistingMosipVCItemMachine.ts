@@ -100,6 +100,7 @@ const model = createModel(
       PIN_CARD: () => ({}),
       KEBAB_POPUP: () => ({}),
       SHOW_ACTIVITY: () => ({}),
+      CLOSE_VC_MODAL: () => ({}),
       REMOVE: (vcMetadata: VCMetadata) => ({vcMetadata}),
       UPDATE_VC_METADATA: (vcMetadata: VCMetadata) => ({vcMetadata}),
       TAMPERED_VC: (key: string) => ({key}),
@@ -325,6 +326,10 @@ export const ExistingMosipVCItemMachine =
             REMOVE: {
               actions: 'setVcKey',
               target: '#vc-item.kebabPopUp.removeWallet',
+            },
+            CLOSE_VC_MODAL: {
+              actions: ['closeViewVcModal'],
+              target: '#vc-item',
             },
           },
           initial: 'idle',
