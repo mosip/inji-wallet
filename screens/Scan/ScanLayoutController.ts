@@ -20,6 +20,7 @@ import {
   selectIsFaceIdentityVerified,
 } from '../../machines/bleShare/scan/selectors';
 import {
+  selectBleError,
   selectIsAccepted,
   selectIsDisconnected,
   selectIsExchangingDeviceInfo,
@@ -48,6 +49,7 @@ export function useScanLayout() {
   const isLocationDisabled = useSelector(scanService, selectIsLocationDisabled);
   const isLocationDenied = useSelector(scanService, selectIsLocationDenied);
   const isBleError = useSelector(scanService, selectIsHandlingBleError);
+  const bleError = useSelector(scanService, selectBleError);
 
   const locationError = {message: '', button: ''};
 
@@ -71,7 +73,7 @@ export function useScanLayout() {
     navigation.navigate(BOTTOM_TAB_ROUTES.home);
   };
   const GOTO_HISTORY = () => {
-    scanService.send(ScanEvents.DISMISS());
+    scanService.send(ScanEvents.GOTO_HISTORY());
     changeTabBarVisible('flex');
     navigation.navigate(BOTTOM_TAB_ROUTES.history);
   };
@@ -188,14 +190,6 @@ export function useScanLayout() {
       message: t('status.offline'),
       onBackdropPress: DISMISS,
     };
-  } else if (isBleError) {
-    statusOverlay = {
-      title: t('status.bleError.title'),
-      hint: t('status.bleError.message'),
-      onButtonPress: DISMISS,
-      onRetry,
-      progress: true,
-    };
   }
 
   useEffect(() => {
@@ -243,6 +237,7 @@ export function useScanLayout() {
     statusOverlay,
     isStayInProgress,
     isBleError,
+    bleError,
     DISMISS,
     isAccepted,
     onRetry,

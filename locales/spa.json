@@ -480,9 +480,58 @@
         "message": "Conéctese a Internet para habilitar el modo de compartir en línea"
       },
       "bleError": {
-        "title": "Error al transferir",
-        "message": "Ocurrió un error al transferir la tarjeta. Por favor, inténtalo de nuevo.",
-        "hint": "Error: {{code}}"
+        "TVW_CON_002":{
+          "title": "¡La conexión falló!",
+          "message": "La conexión fue interrumpida. Inténtalo de nuevo."
+        },
+        "TVW_CON_003":{
+          "title": "¡La conexión falló!",
+          "message": "La conexión fue interrumpida. Asegúrese de que los dispositivos Bluetooth estén en modo reconocible y vuelva a intentarlo."
+        },
+        "TVW_REP_001":{
+          "title": "¡Respuesta corrupta recibida!",
+          "message": "Los datos recibidos de la billetera están dañados y no se pueden procesar. Solicite al remitente que realice la transferencia nuevamente."
+        },
+        "TVV_CON_001":{
+          "title": "¡La conexión falló!",
+          "message": "Los datos recibidos de la billetera están dañados y no se pueden procesar. Solicite al remitente que realice la transfeNo se puede establecer una conexión óptima con el remitente. Inténtalo de nuevo.rencia nuevamente."
+        },
+        "TVV_TRA_001":{
+          "title": "¡Respuesta corrupta recibida!",
+          "message": "Los datos recibidos de la billetera están dañados y no se pueden procesar. Solicite al remitente que realice la transferencia nuevamente."
+        },
+        "TVV_TRA_002":{
+          "title": "¡Respuesta corrupta recibida!",
+          "message": "Los datos recibidos de la billetera están dañados y no se pueden procesar. Solicite al remitente que realice la transferencia nuevamente."
+        },
+        "TUV_UNK_001":{
+          "title": "¡Ocurrió un error!",
+          "message": "Debido a un error técnico, no pudimos recibir la tarjeta. Inténtalo de nuevo."
+        },
+        "TVW_UNK_001":{
+          "title": "¡La conexión falló!",
+          "message": "La conexión fue interrumpida. Inténtalo de nuevo."
+        },
+        "TVW_UNK_002":{
+          "title": "¡La conexión falló!",
+          "message": "La conexión fue interrumpida. Inténtalo de nuevo."
+        },
+        "TVW_UNK_003":{
+          "title": "¡La conexión falló!",
+          "message": "La conexión fue interrumpida. Inténtalo de nuevo."
+        },
+        "TVV_UNK_001":{
+          "title": "¡Ocurrió un error!",
+          "message": "Se produjo un error inesperado al procesar los datos recibidos. Verifique su conexión y solicite al remitente que reenvíe la tarjeta."
+        },
+        "TVV_UNK_002":{
+          "title": "¡Ocurrió un error!",
+          "message": "Se produjo un error inesperado al procesar los datos recibidos. Verifique su conexión y solicite al remitente que reenvíe la tarjeta."
+        },
+        "TVV_UNK_003":{
+          "title": "¡Ocurrió un error!",
+          "message": "Se produjo un error inesperado al procesar los datos recibidos. Verifique su conexión y solicite al remitente que reenvíe la tarjeta."
+        }
       }
     },
     "online": "En línea",
@@ -547,9 +596,64 @@
         "message": "Su tarjeta fue descartada por el Verificador"
       },
       "bleError": {
-        "title": "No se pudo transferir",
-        "message": "Ocurrió un error al transferir la tarjeta. Por favor, inténtalo de nuevo.",
-        "hint": "Error: {{code}}"
+        "retry": "Rever",
+        "home": "Hogar",
+        "TVW_CON_001":{
+          "title": "¡La conexión falló!",
+          "message": "Código QR no válido escaneado. Intente escanear nuevamente el código QR válido de la parte de confianza."
+        },
+        "TVW_CON_002":{
+          "title": "¡La conexión falló!",
+          "message": "Wallet no puede establecer una conexión óptima con el verificador. Inténtalo de nuevo."
+        },
+        "TVW_CON_003":{
+          "title": "¡Error en el descubrimiento del servicio!",
+          "message": "Lo sentimos, pero no pudimos descubrir una conexión bluetooth incluso después de varios intentos. Asegúrese de que los dispositivos Bluetooth estén en modo detectable y vuelva a intentarlo."
+        },
+        "TVW_REP_001":{
+          "title": "¡Ocurrió un error!",
+          "message": "Debido a un error técnico, no podemos transferir el archivo. Inténtalo de nuevo."
+        },
+        "TVV_CON_001":{
+          "title": "¡La conexión falló!",
+          "message": "Wallet no puede establecer una conexión óptima con el verificador. Inténtalo de nuevo."
+        },
+        "TVV_TRA_001":{
+          "title": "¡Ocurrió un error!",
+          "message": "Algo salió mal al transferir la tarjeta. Inténtalo de nuevo."
+        },
+        "TVV_TRA_002":{
+          "title": "¡Ocurrió un error!",
+          "message": "Algo salió mal al transferir la tarjeta. Inténtalo de nuevo."
+        },
+        "TUV_UNK_001":{
+          "title": "¡Ocurrió un error!",
+          "message": "Debido a un error técnico, no pudimos compartir la tarjeta con la persona que confía. Inténtalo de nuevo."
+        },
+        "TVW_UNK_001":{
+          "title": "¡Ocurrió un error!",
+          "message": "Debido a un error técnico, no pudimos compartir la tarjeta con la persona que confía. Inténtalo de nuevo."
+        },
+        "TVW_UNK_002":{
+          "title": "¡Ocurrió un error!",
+          "message": "Debido a un error técnico, no pudimos compartir la tarjeta con la persona que confía. Inténtalo de nuevo."
+        },
+        "TVW_UNK_003":{
+          "title": "¡Ocurrió un error!",
+          "message": "Debido a un error técnico, no pudimos compartir la tarjeta con la persona que confía. Inténtalo de nuevo."
+        },
+        "TVV_UNK_001":{
+          "title": "¡Ocurrió un error!",
+          "message": "Algo salió mal al transferir la tarjeta. Inténtalo de nuevo."
+        },
+        "TVV_UNK_002":{
+          "title": "¡Ocurrió un error!",
+          "message": "Algo salió mal al transferir la tarjeta. Inténtalo de nuevo."
+        },
+        "TVV_UNK_003":{
+          "title": "¡Ocurrió un error!",
+          "message": "Algo salió mal al transferir la tarjeta. Inténtalo de nuevo."
+        }
       }
     },
     "postFaceCapture": {
