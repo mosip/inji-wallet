@@ -42,7 +42,9 @@ import {TelemetryConstants} from '../../../shared/telemetry/TelemetryConstants';
 
 import {API_URLS} from '../../../shared/api';
 import {BackupEvents} from '../../backupAndRestore/backup';
-import Cloud, {isSignedInResult} from '../../../shared/googleCloudUtils';
+import Cloud, {
+  isSignedInResult,
+} from '../../../shared/CloudBackupAndRestoreUtils';
 
 const model = createModel(
   {
@@ -223,6 +225,7 @@ export const ExistingMosipVCItemMachine =
                 src: 'downloadCredential',
                 id: 'downloadCredential',
               },
+              initial: 'idle',
               on: {
                 POLL: [
                   {
@@ -254,6 +257,7 @@ export const ExistingMosipVCItemMachine =
                 },
               },
               states: {
+                idle: {},
                 triggerAutoBackupForVcDownload: {
                   invoke: {
                     src: 'isUserSignedAlready',

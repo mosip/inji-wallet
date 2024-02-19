@@ -53,6 +53,8 @@ export function useRequestLayout() {
 
   const isReviewing = useSelector(requestService, selectIsReviewing);
   const isDone = useSelector(requestService, selectIsDone);
+  const isBleError = useSelector(requestService, selectIsHandlingBleError);
+  const bleError = useSelector(requestService, selectBleError);
   const isWaitingForConnection = useSelector(
     requestService,
     selectIsWaitingForConnection,
@@ -81,8 +83,8 @@ export function useRequestLayout() {
     isAccepted: useSelector(requestService, selectIsAccepted),
     isRejected: useSelector(requestService, selectIsRejected),
     isDisconnected: useSelector(requestService, selectIsDisconnected),
-    isBleError: useSelector(requestService, selectIsHandlingBleError),
-    bleError: useSelector(requestService, selectBleError),
+    isBleError,
+    bleError,
     IsSavingFailedInViewingVc: useSelector(
       requestService,
       selectIsSavingFailedInViewingVc,
@@ -92,6 +94,5 @@ export function useRequestLayout() {
     isNavigatingToReceivedCards,
     DISMISS: () => requestService.send(RequestEvents.DISMISS()),
     RESET: () => requestService.send(RequestEvents.RESET()),
-    GOTO_HOME: () => navigation.navigate(BOTTOM_TAB_ROUTES.home),
   };
 }

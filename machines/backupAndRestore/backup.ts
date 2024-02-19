@@ -2,6 +2,7 @@ import {EventFrom, StateFrom, send} from 'xstate';
 import {createModel} from 'xstate/lib/model';
 import {AppServices} from '../../shared/GlobalContext';
 import {
+  IOS_SIGNIN_FAILED,
   LAST_BACKUP_DETAILS,
   MY_VCS_STORE_KEY,
   NETWORK_REQUEST_FAILED,
@@ -12,7 +13,7 @@ import {
   compressAndRemoveFile,
   writeToBackupFile,
 } from '../../shared/fileStorage';
-import Cloud from '../../shared/googleCloudUtils';
+import Cloud from '../../shared/CloudBackupAndRestoreUtils';
 import {isMinimumLimitForBackupReached} from '../../shared/storage';
 import {TelemetryConstants} from '../../shared/telemetry/TelemetryConstants';
 import {
@@ -39,8 +40,6 @@ const model = createModel(
   {
     events: {
       DATA_BACKUP: (isAutoBackUp: boolean) => ({isAutoBackUp}),
-      OK: () => ({}),
-      FETCH_DATA: () => ({}),
       DISMISS: () => ({}),
       LAST_BACKUP_DETAILS: () => ({}),
       STORE_RESPONSE: (response: unknown) => ({response}),
@@ -261,12 +260,6 @@ export const backupMachine = model.createMachine(
           },
         },
         on: {
-          FETCH_DATA: {
-            target: '.checkStorageAvailability',
-          },
-          OK: {
-            target: '.idle',
-          },
           DISMISS: {
             target: 'init',
           },
@@ -276,9 +269,6 @@ export const backupMachine = model.createMachine(
   },
   {
     actions: {
-      setIsLoading: model.assign({
-        isLoading: true,
-      }),
       unsetIsLoading: model.assign({
         isLoading: false,
       }),
@@ -359,6 +349,7 @@ export const backupMachine = model.createMachine(
           const reasons = {
             [TECHNICAL_ERROR]: 'technicalError',
             [NETWORK_REQUEST_FAILED]: 'networkError',
+            [IOS_SIGNIN_FAILED]: 'iCloudSignInError',
           };
           return reasons[event.data?.error] || reasons[TECHNICAL_ERROR];
         },
@@ -461,20 +452,11 @@ export function selectIsBackupInprogress(state: State) {
     !state.matches('backingUp.silentFailure')
   );
 }
-export function selectIsBackingUp(state: State) {
-  return state.matches('backingUp');
-}
 export function selectIsLoading(state: State) {
   return state.context.isLoading;
 }
 export function selectIsBackingUpSuccess(state: State) {
   return state.matches('backingUp.success');
-}
-export function selectIsFetchingLastBackupDetails(state: State) {
-  return state.matches('fetchLastBackupDetails');
-}
-export function selectIsCheckingDataAvailabilityForBackup(state: State) {
-  return state.matches('backingUp.checkDataAvailabilityForBackup');
 }
 export function selectIsBackingUpFailure(state: State) {
   return state.matches('backingUp.failure');

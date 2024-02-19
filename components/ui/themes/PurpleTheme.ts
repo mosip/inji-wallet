@@ -375,8 +375,8 @@ export const PurpleTheme = {
       height: 173.276,
     },
     logo: {
-      width: 40,
-      height: 40,
+      height: 65,
+      width: 65,
     },
     issuerLogo: {
       resizeMode: 'contain',
@@ -384,8 +384,8 @@ export const PurpleTheme = {
       height: 60,
     },
     vcDetailsLogo: {
-      width: 50,
-      height: 50,
+      height: 65,
+      width: 65,
     },
     homeCloseCardDetailsHeader: {
       flex: 1,
@@ -436,7 +436,6 @@ export const PurpleTheme = {
       height: 36,
       borderRadius: 10,
       backgroundColor: Colors.LightPurple,
-      justifyContent: 'center',
     },
     cameraFlipIcon: {
       width: 42,
@@ -493,6 +492,10 @@ export const PurpleTheme = {
       paddingHorizontal: 18,
       paddingVertical: 9,
       justifyContent: 'space-between',
+    },
+    iconContainer: {
+      flexDirection: 'row',
+      alignItems: 'flex-end',
     },
     scannerContainer: {
       borderRadius: 24,
@@ -667,6 +670,8 @@ export const PurpleTheme = {
       backgroundColor: Colors.Purple,
       paddingHorizontal: 5,
       paddingVertical: 4,
+      maxHeight: 20,
+      marginTop: 10,
       borderRadius: 4,
       fontSize: 10,
       fontFamily: 'Inter_700Bold',

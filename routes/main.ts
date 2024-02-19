@@ -46,6 +46,7 @@ const history: TabScreen = {
       marginTop: isIOS() ? 5 : 15,
     },
     title: i18n.t('MainLayout:history'),
+    headerRight: null,
   },
 };
 

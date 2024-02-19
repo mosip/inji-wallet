@@ -10,10 +10,12 @@ import {ReceivedCardsModal} from '../Settings/ReceivedCardsModal';
 import {useReceivedVcsTab} from '../Home/ReceivedVcsTabController';
 import {REQUEST_ROUTES} from '../../routes/routesConstants';
 import {SquircleIconPopUpModal} from '../../components/ui/SquircleIconPopUpModal';
-import {ProgressingModal} from '../../components/ProgressingModal';
 import {BannerNotificationContainer} from '../../components/BannerNotificationContainer';
 import {Theme} from '../../components/ui/styleUtils';
 import {I18nManager} from 'react-native';
+
+import {SharingStatusModal} from '../Scan/SharingStatusModal';
+import {SvgImage} from '../../components/ui/svg';
 
 const RequestStack = createNativeStackNavigator();
 
@@ -21,6 +23,7 @@ export const RequestLayout: React.FC = () => {
   const {t} = useTranslation('RequestScreen');
   const controller = useRequestLayout();
   const receivedCardsController = useReceivedVcsTab();
+  const bleErrorCode = controller.bleError.code;
 
   return (
     <React.Fragment>
@@ -44,26 +47,13 @@ export const RequestLayout: React.FC = () => {
             component={ReceiveVcScreen}
             options={{
               title: t('incomingVc'),
-              headerLeft: () =>
-                !I18nManager.isRTL && (
-                  <HeaderBackButton
-                    onPress={() => {
-                      controller.RESET();
-                    }}
-                    style={Theme.Styles.IconContainer}
-                    tintColor={Theme.Colors.Icon}
-                  />
-                ),
-              headerRight: () =>
-                I18nManager.isRTL && (
-                  <HeaderBackButton
-                    onPress={() => {
-                      controller.RESET();
-                    }}
-                    style={Theme.Styles.IconContainer}
-                    tintColor={Theme.Colors.Icon}
-                  />
-                ),
+              headerLeft: () => (
+                <HeaderBackButton
+                  onPress={() => {
+                    controller.RESET();
+                  }}
+                />
+              ),
             }}
           />
         )}
@@ -72,26 +62,6 @@ export const RequestLayout: React.FC = () => {
           component={RequestScreen}
           options={{
             title: t('receiveCard').toUpperCase(),
-            headerRight: () =>
-              I18nManager.isRTL && (
-                <HeaderBackButton
-                  onPress={() => {
-                    controller.GOTO_HOME();
-                  }}
-                  style={Theme.Styles.IconContainer}
-                  tintColor={Theme.Colors.Icon}
-                />
-              ),
-            headerLeft: () =>
-              !I18nManager.isRTL && (
-                <HeaderBackButton
-                  onPress={() => {
-                    controller.GOTO_HOME();
-                  }}
-                  style={Theme.Styles.IconContainer}
-                  tintColor={Theme.Colors.Icon}
-                />
-              ),
           }}
         />
       </RequestStack.Navigator>
@@ -117,24 +87,24 @@ export const RequestLayout: React.FC = () => {
         />
       )}
 
-      <ProgressingModal
-        title={t('status.disconnected.title')}
-        hint={t('status.disconnected.message')}
+      <SharingStatusModal
         isVisible={controller.isDisconnected}
-        isHintVisible={true}
-        progress={true}
-        onCancel={controller.DISMISS}
-        onRetry={controller.RESET}
+        testId={'sharingErrorModal'}
+        image={SvgImage.ErrorLogo()}
+        title={t('status.disconnected.title')}
+        message={t('status.disconnected.message')}
+        gradientButtonTitle={t('common:ok')}
+        onGradientButton={controller.RESET}
       />
 
-      <ProgressingModal
-        title={t('status.bleError.title')}
-        hint={t('status.bleError.message')}
+      <SharingStatusModal
         isVisible={controller.isBleError}
-        isHintVisible={true}
-        progress={true}
-        onCancel={controller.DISMISS}
-        onRetry={controller.RESET}
+        testId={'sharingErrorModal'}
+        image={SvgImage.ErrorLogo()}
+        title={t(`status.bleError.${bleErrorCode}.title`)}
+        message={t(`status.bleError.${bleErrorCode}.message`)}
+        gradientButtonTitle={t('common:ok')}
+        onGradientButton={controller.RESET}
       />
     </React.Fragment>
   );

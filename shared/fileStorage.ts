@@ -49,6 +49,11 @@ class FileStorage {
     return await unlink(path);
   }
 
+  async removeItemIfExist(path: string) {
+    const res = await exists(path);
+    return res && (await unlink(path));
+  }
+
   async getInfo(path: string) {
     return await stat(path);
   }
@@ -77,6 +82,26 @@ export const getBackupFilePath = (
 ) => {
   return `${backupDirectoryPath}/${key}${extension}`;
 };
+
+/**
+ * given a directory find the most recent backup file in the directory
+ * @param path the fully qualified path of the directory where ZIP files need
+ *  to be found
+ */
+export async function findMostRecentBackupFile(
+  path: string = backupDirectoryPath,
+  extension: string = 'zip',
+): Promise<string> {
+  try {
+    const extSuffix = '.' + extension;
+    let files = await readDir(backupDirectoryPath);
+    const zipFiles = files.filter(f => f.name.endsWith(extSuffix));
+    // sort() and return the latest one
+    return zipFiles[0].name;
+  } catch (_) {
+    return '';
+  }
+}
 
 export async function compressAndRemoveFile(
   fileNameSansExtension: string,

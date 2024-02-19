@@ -13,7 +13,6 @@ public class VerifyWelcomePagesTest extends IosBaseTest {
 
     @Test
     public void verifyWelcomePagesContent() {
-
         ChooseLanguagePage chooseLanguagePage = new ChooseLanguagePage(driver);
         assertTrue(chooseLanguagePage.isChooseLanguagePageLoaded(), "Verify if choose language page is displayed");
         WelcomePage welcomePage = chooseLanguagePage.clickOnSavePreference();
@@ -22,19 +21,24 @@ public class VerifyWelcomePagesTest extends IosBaseTest {
         assertEquals(welcomePage.getWelcomeDescription(), "Keep your digital credential with you at all times. Inji helps you manage and use them effectively. To get started, add cards to your profile.");
         welcomePage.clickOnNextButton();
 
-        TrustedDigitalWalletPage trustedDigitalWalletPage = new TrustedDigitalWalletPage(driver);
-        assertEquals(trustedDigitalWalletPage.verifyLanguageforTrustedDigitalWalletPageLoaded(), "Trusted Digital Wallet");
-        assertEquals(trustedDigitalWalletPage.getTrustedDigitalWalletDescription(), "Store and carry all your important cards in a single trusted wallet.");
-        trustedDigitalWalletPage.clickOnNextButton();
-
         SecureSharingPage secureSharingPage = new SecureSharingPage(driver);
         assertEquals(secureSharingPage.verifyLanguageforSecureSharingPageLoaded(), "Secure Sharing");
         assertEquals(secureSharingPage.getSecureSharingDescription(), "Share your cards securely in a hassle free way and avail various services.");
         secureSharingPage.clickOnNextButton();
 
+        TrustedDigitalWalletPage trustedDigitalWalletPage = new TrustedDigitalWalletPage(driver);
+        assertEquals(trustedDigitalWalletPage.verifyLanguageforTrustedDigitalWalletPageLoaded(), "Trusted Digital Wallet");
+        assertEquals(trustedDigitalWalletPage.getTrustedDigitalWalletDescription(), "Store and carry all your important cards in a single trusted wallet.");
+        trustedDigitalWalletPage.clickOnNextButton();
+
         HassleFreeAuthenticationPage hassleFreeAuthenticationPage = new HassleFreeAuthenticationPage(driver);
-        assertEquals(hassleFreeAuthenticationPage.verifyLanguageforHassleFreeAuthenticationPageLoaded(), "Hassle free authentication");
+        assertEquals(hassleFreeAuthenticationPage.verifyLanguageforHassleFreeAuthenticationPageLoaded(), "Quick Access");
         assertEquals(hassleFreeAuthenticationPage.getHassleFreeAuthenticationDescription(), "Authenticate yourself with ease using the stored digital credential.");
+        trustedDigitalWalletPage.clickOnNextButton();
+
+        BackupDataPage backupDataPage = new BackupDataPage(driver);
+        assertEquals(backupDataPage.verifyLanguageforBackupDataPageLoaded(), "Backup Data");
+        assertEquals(backupDataPage.getBackupDataPageDescription(), "Protect your data with ease using our Backup & Restore feature. Safely store your VCs against loss or accidents by creating regular backups and recover it effortlessly whenever needed for seamless continuity.");
     }
     @Test
     public void verifyWelcomePagesFromInjiTourGuide() {
@@ -65,19 +69,24 @@ public class VerifyWelcomePagesTest extends IosBaseTest {
         assertEquals(welcomePage.getWelcomeDescription(), "Keep your digital credential with you at all times. Inji helps you manage and use them effectively. To get started, add cards to your profile.");
         welcomePage.clickOnNextButton();
 
-        TrustedDigitalWalletPage trustedDigitalWalletPage = new TrustedDigitalWalletPage(driver);
-        assertEquals(trustedDigitalWalletPage.verifyLanguageforTrustedDigitalWalletPageLoaded(), "Trusted Digital Wallet");
-        assertEquals(trustedDigitalWalletPage.getTrustedDigitalWalletDescription(), "Store and carry all your important cards in a single trusted wallet.");
-        trustedDigitalWalletPage.clickOnNextButton();
-
         SecureSharingPage secureSharingPage = new SecureSharingPage(driver);
         assertEquals(secureSharingPage.verifyLanguageforSecureSharingPageLoaded(), "Secure Sharing");
         assertEquals(secureSharingPage.getSecureSharingDescription(), "Share your cards securely in a hassle free way and avail various services.");
         secureSharingPage.clickOnNextButton();
 
+        TrustedDigitalWalletPage trustedDigitalWalletPage = new TrustedDigitalWalletPage(driver);
+        assertEquals(trustedDigitalWalletPage.verifyLanguageforTrustedDigitalWalletPageLoaded(), "Trusted Digital Wallet");
+        assertEquals(trustedDigitalWalletPage.getTrustedDigitalWalletDescription(), "Store and carry all your important cards in a single trusted wallet.");
+        trustedDigitalWalletPage.clickOnNextButton();
+
         HassleFreeAuthenticationPage hassleFreeAuthenticationPage = new HassleFreeAuthenticationPage(driver);
-        assertEquals(hassleFreeAuthenticationPage.verifyLanguageforHassleFreeAuthenticationPageLoaded(), "Hassle free authentication");
+        assertEquals(hassleFreeAuthenticationPage.verifyLanguageforHassleFreeAuthenticationPageLoaded(), "Quick Access");
         assertEquals(hassleFreeAuthenticationPage.getHassleFreeAuthenticationDescription(), "Authenticate yourself with ease using the stored digital credential.");
+        trustedDigitalWalletPage.clickOnNextButton();
+
+        BackupDataPage backupDataPage = new BackupDataPage(driver);
+        assertEquals(backupDataPage.verifyLanguageforBackupDataPageLoaded(), "Backup Data");
+        assertEquals(backupDataPage.getBackupDataPageDescription(), "Protect your data with ease using our Backup & Restore feature. Safely store your VCs against loss or accidents by creating regular backups and recover it effortlessly whenever needed for seamless continuity.");
     }
     
     @Test
@@ -104,27 +113,30 @@ public class VerifyWelcomePagesTest extends IosBaseTest {
         
         assertTrue(settingsPage.isSettingPageLoaded(), "Verify if setting page is displayed");
         settingsPage.clickOnInjiTourGuide();
-        
+
         assertTrue(welcomePage.isWelcomePageLoaded(), "Verify if welcome page is loaded");
         assertEquals(welcomePage.getWelcomeDescription(), "Keep your digital credential with you at all times. Inji helps you manage and use them effectively. To get started, add cards to your profile.");
         welcomePage.clickOnNextButton();
 
-        TrustedDigitalWalletPage trustedDigitalWalletPage = new TrustedDigitalWalletPage(driver);
-        assertEquals(trustedDigitalWalletPage.verifyLanguageforTrustedDigitalWalletPageLoaded(), "Trusted Digital Wallet");
-        
-        assertEquals(trustedDigitalWalletPage.getTrustedDigitalWalletDescription(), "Store and carry all your important cards in a single trusted wallet.");
-        trustedDigitalWalletPage.clickOnNextButton();
-
         SecureSharingPage secureSharingPage = new SecureSharingPage(driver);
         assertEquals(secureSharingPage.verifyLanguageforSecureSharingPageLoaded(), "Secure Sharing");
-        
         assertEquals(secureSharingPage.getSecureSharingDescription(), "Share your cards securely in a hassle free way and avail various services.");
         secureSharingPage.clickOnNextButton();
 
+        TrustedDigitalWalletPage trustedDigitalWalletPage = new TrustedDigitalWalletPage(driver);
+        assertEquals(trustedDigitalWalletPage.verifyLanguageforTrustedDigitalWalletPageLoaded(), "Trusted Digital Wallet");
+        assertEquals(trustedDigitalWalletPage.getTrustedDigitalWalletDescription(), "Store and carry all your important cards in a single trusted wallet.");
+        trustedDigitalWalletPage.clickOnNextButton();
+
         HassleFreeAuthenticationPage hassleFreeAuthenticationPage = new HassleFreeAuthenticationPage(driver);
-        assertEquals(hassleFreeAuthenticationPage.verifyLanguageforHassleFreeAuthenticationPageLoaded(), "Hassle free authentication");
+        assertEquals(hassleFreeAuthenticationPage.verifyLanguageforHassleFreeAuthenticationPageLoaded(), "Quick Access");
         assertEquals(hassleFreeAuthenticationPage.getHassleFreeAuthenticationDescription(), "Authenticate yourself with ease using the stored digital credential.");
-        
+        trustedDigitalWalletPage.clickOnNextButton();
+
+        BackupDataPage backupDataPage = new BackupDataPage(driver);
+        assertEquals(backupDataPage.verifyLanguageforBackupDataPageLoaded(), "Backup Data");
+        assertEquals(backupDataPage.getBackupDataPageDescription(), "Protect your data with ease using our Backup & Restore feature. Safely store your VCs against loss or accidents by creating regular backups and recover it effortlessly whenever needed for seamless continuity.");
+
         hassleFreeAuthenticationPage.clickOnGoBack();
         assertEquals(homePage.verifyLanguageForNoVCDownloadedPageLoaded(), "Bring your digital identity");
     }

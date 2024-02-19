@@ -2,7 +2,7 @@ import React from 'react';
 import {Image} from 'react-native';
 import {Column, Row, Text} from './ui';
 import {Theme} from './ui/styleUtils';
-import {ProfileInfo} from '../shared/googleCloudUtils';
+import {ProfileInfo} from '../shared/CloudBackupAndRestoreUtils';
 import {useTranslation} from 'react-i18next';
 import testIDProps from '../shared/commonUtil';
 
