@@ -70,7 +70,7 @@ export const HomeScreenLayout: React.FC<RootRouteProps> = props => {
         key={'HomeScreen'}
         name={'HomeScreen'}
         component={HomeScreen}
-        options={HomeScreenOptions}
+        options={{...HomeScreenOptions, headerShadowVisible: false}}
       />
       <Screen
         key={'Issuers'}

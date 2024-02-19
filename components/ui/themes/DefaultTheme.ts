@@ -942,8 +942,10 @@ export const DefaultTheme = {
     vcSearchBarContainer: {
       alignItems: 'center',
       borderBottomWidth: 0.5,
-      borderBottomColor: Colors.DimGray,
+      borderTopWidth: 0.5,
+      borderColor: Colors.DimGray,
       width: Dimensions.get('window').width,
+      backgroundColor: Colors.White,
     },
     vcSearchIcon: {
       justifyContent: 'center',

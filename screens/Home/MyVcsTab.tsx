@@ -159,7 +159,7 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = props => {
             testId={'downloadingVcPopup'}
           />
         )}
-        <Column fill pY={11} pX={8}>
+        <Column fill pY={2} pX={8}>
           {vcMetadataOrderedByPinStatus.length > 0 && (
             <React.Fragment>
               <Column
