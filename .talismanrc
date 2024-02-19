@@ -184,6 +184,14 @@ fileignoreconfig:
     checksum: 433cecb9295c7052731600d16c601c1b6df9cc5a1b9f435423f81aae54d33d47
   - filename: machines/backupAndRestore/backupAndRestoreSetup.typegen.ts
     checksum: 8203331f1628e01faa5e553e749372be278b477ca2d34a0cdafee1438248fb3c
+  - filename: package-lock.json
+    checksum: c1e628b384b35598c9741401f4e2ad0f5cd3e9b3dff0bee23a389f0590681593
+  - filename: injitest/README.md
+    checksum: 82974a6b9363512472272245e9b433f92e63377e58ba306980876b745181a09c
+  - filename: machines/backupAndRestore/backup.ts
+    checksum: 71cba6237f203a4a8df931a1b02669351466657f64fb6690545248fbad62f8b8
+  - filename: machines/backupAndRestore/backup.typegen.ts
+    checksum: 8811354a68d23e6deb91b1d43347aa70b3ef4467d36276269bdf34e9be411dce
   - filename: machines/backupAndRestore/backupAndRestoreSetup.ts
     checksum: 5eca5414d28f523bb920cffa1f51b484ec549a240667d37723773c224fc51792
   - filename: shared/VCMetadata.ts
@@ -196,6 +204,13 @@ fileignoreconfig:
     checksum: 8f8725bb55dbc98083f819c74754a8eac258d15038e391a16ca1ab55a53d61f3
   - filename: machines/backupRestore.typegen.ts
     checksum: 85e92ddec56da8dcdd28b5a29dfabd88dd0435e619f822488bc4e19b83872289
-version: ""
-    version: ""
+  - filename: machines/backupAndRestore/backupAndRestoreSetup.typegen.ts
+    checksum: dd5dc9c42800328c268f3e6d6c96a16e9686dbfa59735e721250dae3ce37e009
+  - filename: ios/Podfile.lock
+    checksum: 235f31beadf3833ac763ed1b79e00f588e56990873806627b5abf8643992336a
+  - filename: machines/backupAndRestore/backup.typegen.ts
+    checksum: 8811354a68d23e6deb91b1d43347aa70b3ef4467d36276269bdf34e9be411dce
+  - filename: machines/backupAndRestore/backupAndRestoreSetup.typegen.ts
+    checksum: dd5dc9c42800328c268f3e6d6c96a16e9686dbfa59735e721250dae3ce37e009
+  version: ""
 
