@@ -150,9 +150,6 @@ export const vcMachine =
             },
           },
           on: {
-            GET_RECEIVED_VCS: {
-              actions: 'getReceivedVcsResponse',
-            },
             GET_VC_ITEM: {
               actions: 'getVcItemResponse',
             },

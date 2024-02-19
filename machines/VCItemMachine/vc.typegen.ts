@@ -21,7 +21,6 @@ export interface Typegen0 {
   };
   eventsCausingActions: {
     addVcToInProgressDownloads: 'ADD_VC_TO_IN_PROGRESS_DOWNLOADS';
-    getReceivedVcsResponse: 'GET_RECEIVED_VCS';
     getVcItemResponse: 'GET_VC_ITEM';
     loadMyVcs:
       | 'DOWNLOAD_LIMIT_EXPIRED'
