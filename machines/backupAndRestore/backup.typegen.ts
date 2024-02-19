@@ -94,7 +94,7 @@ export interface Typegen0 {
     isVCFound: 'STORE_RESPONSE';
   };
   eventsCausingServices: {
-    checkStorageAvailability: 'FETCH_DATA' | 'STORE_RESPONSE';
+    checkStorageAvailability: 'STORE_RESPONSE';
     getLastBackupDetailsFromCloud: 'STORE_ERROR' | 'STORE_RESPONSE';
     uploadBackupFile: 'done.invoke.backup.backingUp.zipBackupFile:invocation[0]';
     writeDataToFile: 'STORE_RESPONSE';

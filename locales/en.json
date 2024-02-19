@@ -794,7 +794,7 @@
     "size": "Size: ",
     "restore": "Restore",
     "restoreInProgress": "We're restoring your data, please do not close the application. You may continue using the application.",
-    "restoreInfo": "Restore your data from Google Drive",
+    "restoreInfo": "Restore your data from {{driveName}}",
     "driveSettings": "Google Drive Settings",
     "successBanner": "Your backup was successful!",
     "backupFailed": "Backup Failed",
