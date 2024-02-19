@@ -62,15 +62,6 @@ export interface Typegen0 {
       | 'SCREEN_BLUR'
       | 'SCREEN_FOCUS'
       | 'xstate.stop';
-    clearReason:
-      | ''
-      | 'BLE_ERROR'
-      | 'DISCONNECT'
-      | 'DISMISS'
-      | 'RESET'
-      | 'SCREEN_BLUR'
-      | 'SCREEN_FOCUS'
-      | 'xstate.stop';
     clearUri:
       | 'DISCONNECT'
       | 'DISMISS'
@@ -105,7 +96,6 @@ export interface Typegen0 {
     setCreatedVp: 'done.invoke.scan.reviewing.creatingVp:invocation[0]';
     setLinkCode: 'SCAN';
     setReadyForBluetoothStateCheck: 'BLUETOOTH_PERMISSION_ENABLED';
-    setReason: 'UPDATE_REASON';
     setReceiverInfo: 'CONNECTED';
     setSelectedVc: 'SELECT_VC';
     setSenderInfo: 'CONNECTED';

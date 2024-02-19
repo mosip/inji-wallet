@@ -35,7 +35,6 @@ const model = createModel(
       VC_ADDED: (vcMetadata: VCMetadata) => ({vcMetadata}),
       REMOVE_VC_FROM_CONTEXT: (vcMetadata: VCMetadata) => ({vcMetadata}),
       VC_METADATA_UPDATED: (vcMetadata: VCMetadata) => ({vcMetadata}),
-      VC_RECEIVED: (vcMetadata: VCMetadata) => ({vcMetadata}),
       VC_DOWNLOADED: (vc: VC) => ({vc}),
       VC_DOWNLOADED_FROM_OPENID4VCI: (vc: VC, vcMetadata: VCMetadata) => ({
         vc,
@@ -56,6 +55,7 @@ const model = createModel(
       REMOVE_TAMPERED_VCS: () => ({}),
       DOWNLOAD_LIMIT_EXPIRED: (vcMetadata: VCMetadata) => ({vcMetadata}),
       DELETE_VC: () => ({}),
+      REFRESH_VCS_METADATA: () => ({}),
     },
   },
 );
@@ -136,13 +136,7 @@ export const vcMachine =
             receivedVcs: {
               initial: 'idle',
               states: {
-                idle: {
-                  on: {
-                    REFRESH_RECEIVED_VCS: {
-                      target: 'refreshing',
-                    },
-                  },
-                },
+                idle: {},
                 refreshing: {
                   entry: 'loadReceivedVcs',
                   on: {
@@ -156,9 +150,6 @@ export const vcMachine =
             },
           },
           on: {
-            GET_RECEIVED_VCS: {
-              actions: 'getReceivedVcsResponse',
-            },
             GET_VC_ITEM: {
               actions: 'getVcItemResponse',
             },
@@ -189,11 +180,9 @@ export const vcMachine =
             RESET_WALLET_BINDING_SUCCESS: {
               actions: 'resetWalletBindingSuccess',
             },
-            VC_RECEIVED: [
-              {
-                actions: 'prependToReceivedVcs',
-              },
-            ],
+            REFRESH_RECEIVED_VCS: {
+              target: '#vc.ready.receivedVcs.refreshing',
+            },
             TAMPERED_VC: {
               actions: 'setTamperedVcs',
               target: 'tamperedVCs',
@@ -223,18 +212,24 @@ export const vcMachine =
                 onDone: [
                   {
                     cond: 'isSignedIn',
-                    actions: [
-                      'sendBackupEvent',
-                      'removeTamperedVcs',
-                      'logTamperedVCsremoved',
-                    ],
-                    target: '#vc.ready.myVcs.refreshing',
+                    actions: 'sendBackupEvent',
+                    target: 'refreshVcsMetadata',
                   },
                   {
-                    actions: ['removeTamperedVcs', 'logTamperedVCsremoved'],
-                    target: '#vc.ready.myVcs.refreshing',
+                    target: 'refreshVcsMetadata',
                   },
                 ],
+              },
+            },
+            refreshVcsMetadata: {
+              entry: ['logTamperedVCsremoved', send('REFRESH_VCS_METADATA')],
+              on: {
+                REFRESH_VCS_METADATA: {
+                  target: [
+                    '#vc.ready.myVcs.refreshing',
+                    '#vc.ready.receivedVcs.refreshing',
+                  ],
+                },
               },
             },
           },
@@ -390,13 +385,6 @@ export const vcMachine =
           },
         ),
 
-        removeTamperedVcs: model.assign({
-          myVcs: (context, event) =>
-            context.myVcs.filter(
-              value => !context.tamperedVcs.some(item => item?.equals(value)),
-            ),
-        }),
-
         logTamperedVCsremoved: send(
           context =>
             ActivityLogEvents.LOG_ACTIVITY(ActivityLog.logTamperedVCs()),
@@ -417,22 +405,11 @@ export const vcMachine =
         resetWalletBindingSuccess: model.assign({
           walletBindingSuccess: false,
         }),
-
-        prependToReceivedVcs: model.assign({
-          receivedVcs: (context, event) => [
-            event.vcMetadata,
-            ...context.receivedVcs,
-          ],
-        }),
       },
 
       guards: {
         isSignedIn: (_context, event) =>
           (event.data as isSignedInResult).isSignedIn,
-        hasExistingReceivedVc: (context, event) =>
-          context.receivedVcs.find(vcMetadata =>
-            vcMetadata.equals(event.vcMetadata),
-          ) != null,
       },
 
       services: {

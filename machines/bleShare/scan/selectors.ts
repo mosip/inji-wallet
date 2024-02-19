@@ -7,10 +7,6 @@ export function selectReceiverInfo(state: State) {
   return state.context.receiverInfo;
 }
 
-export function selectReason(state: State) {
-  return state.context.reason;
-}
-
 export function selectVcName(state: State) {
   return state.context.vcName;
 }
