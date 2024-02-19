@@ -13,6 +13,7 @@ import {SettingScreen} from './Settings/SettingScreen';
 import testIDProps from '../shared/commonUtil';
 import {SvgImage} from '../components/ui/svg';
 import {HelpScreen} from '../components/HelpScreen';
+import {I18nManager} from 'react-native';
 
 export const HomeScreenLayout: React.FC<RootRouteProps> = props => {
   const {t} = useTranslation('IssuersScreen');
@@ -42,27 +43,22 @@ export const HomeScreenLayout: React.FC<RootRouteProps> = props => {
     }
   }, [props.navigation, props.route]);
 
-  const HomeScreenOptions = {
-    headerLeft: () => {
-      return SvgImage.InjiLogo();
-    },
-    headerTitle: '',
-    headerRight: () => (
-      <Row align="space-between">
-        <HelpScreen
-          source={'Inji'}
-          triggerComponent={
-            <Icon
-              {...testIDProps('help')}
-              accessible={true}
-              name="question"
-              type="font-awesome"
-              size={21}
-              style={Theme.Styles.IconContainer}
-              color={Theme.Colors.Icon}
-            />
-          }
-        />
+  const screenOptions = (
+    <Row align="space-between">
+      <HelpScreen
+        source={'Inji'}
+        triggerComponent={
+          <Icon
+            {...testIDProps('help')}
+            accessible={true}
+            name="question"
+            type="font-awesome"
+            size={21}
+            style={Theme.Styles.IconContainer}
+            color={Theme.Colors.Icon}
+          />
+        }
+      />
 
       <SettingScreen
         triggerComponent={
