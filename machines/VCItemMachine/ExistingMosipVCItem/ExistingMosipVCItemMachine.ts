@@ -169,7 +169,7 @@ export const ExistingMosipVCItemMachine =
               },
             ],
             TAMPERED_VC: {
-              actions: ['sendTamperedVc', 'removeTamperedVcItem'],
+              actions: 'sendTamperedVc',
             },
           },
         },
@@ -1226,16 +1226,6 @@ export const ExistingMosipVCItemMachine =
         ),
 
         removeVcItem: send(
-          _context => {
-            return StoreEvents.REMOVE(
-              MY_VCS_STORE_KEY,
-              _context.vcMetadata.getVcKey(),
-            );
-          },
-          {to: context => context.serviceRefs.store},
-        ),
-
-        removeTamperedVcItem: send(
           _context => {
             return StoreEvents.REMOVE(
               MY_VCS_STORE_KEY,
