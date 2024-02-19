@@ -946,12 +946,20 @@ export const PurpleTheme = {
     },
     vcSearchBarContainer: {
       alignItems: 'center',
+      borderBottomWidth: 0.5,
+      borderBottomColor: Colors.DimGray,
+      width: Dimensions.get('window').width,
+    },
+    vcSearchIcon: {
+      justifyContent: 'center',
+      height: Dimensions.get('window').height * 0.055,
+      width: Dimensions.get('window').width * 0.1,
+      paddingLeft: 15,
     },
     searchIcon: {
       justifyContent: 'center',
       height: Dimensions.get('window').height * 0.055,
       width: Dimensions.get('window').width * 0.1,
-      paddingLeft: 15,
     },
     searchBar: {
       textAlign: I18nManager.isRTL ? 'right' : 'left',

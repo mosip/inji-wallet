@@ -175,6 +175,7 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = props => {
                 }>
                 <Row style={Theme.SearchBarStyles.vcSearchBarContainer}>
                   <SearchBar
+                    isVcSearch
                     searchIconTestID="searchIssuerIcon"
                     searchBarTestID="issuerSearchBar"
                     search={search}
