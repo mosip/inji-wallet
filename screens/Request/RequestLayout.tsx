@@ -61,7 +61,7 @@ export const RequestLayout: React.FC = () => {
           name={REQUEST_ROUTES.RequestScreen}
           component={RequestScreen}
           options={{
-            title: t('receiveCard').toUpperCase(),
+            title: t('receiveCard'),
           }}
         />
       </RequestStack.Navigator>
