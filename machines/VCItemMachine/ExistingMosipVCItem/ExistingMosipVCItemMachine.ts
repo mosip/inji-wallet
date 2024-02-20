@@ -58,7 +58,6 @@ const model = createModel(
     verifiableCredential: null as VerifiableCredential,
     storeVerifiableCredential: null as VerifiableCredential,
     requestId: '',
-    isVerified: false,
     lastVerifiedOn: null,
     locked: false,
     otp: '',
@@ -446,11 +445,6 @@ export const ExistingMosipVCItemMachine =
           description:
             'Check if VC verification is still valid. VCs stored on the device must be re-checked once every [N] time has passed.',
           always: [
-            {
-              //To-Do - Backup needs to be handled when the value is true
-              cond: 'isVcValid',
-              target: 'idle',
-            },
             {
               target: 'verifyingCredential',
             },
@@ -1445,7 +1439,6 @@ export const ExistingMosipVCItemMachine =
                   id: context.vcMetadata.id,
                   idType: context.vcMetadata.idType,
                   requestId: context.vcMetadata.requestId,
-                  isVerified: false,
                   lastVerifiedOn: null,
                   locked: context.locked,
                   walletBindingResponse: null,
@@ -1548,10 +1541,6 @@ export const ExistingMosipVCItemMachine =
 
         isDownloadAllowed: _context => {
           return _context.downloadCounter <= _context.maxDownloadCount;
-        },
-
-        isVcValid: context => {
-          return context.isVerified;
         },
 
         isCustomSecureKeystore: () => isHardwareKeystoreExists,
