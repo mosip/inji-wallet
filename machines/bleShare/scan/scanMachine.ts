@@ -84,8 +84,8 @@ const model = createModel(
     events: {
       SELECT_VC: (vc: VC) => ({vc}),
       SCAN: (params: string) => ({params}),
-      ACCEPT_REQUEST: (isFaceIDVerificationFlow: boolean) => ({
-        isFaceIDVerificationFlow,
+      ACCEPT_REQUEST: () => ({
+        isFaceIDVerificationFlow: false,
       }),
       VERIFY_AND_ACCEPT_REQUEST: () => ({}),
       VC_ACCEPTED: () => ({}),
@@ -117,8 +117,8 @@ const model = createModel(
       UPDATE_VC_NAME: (vcName: string) => ({vcName}),
       STORE_RESPONSE: (response: any) => ({response}),
       APP_ACTIVE: () => ({}),
-      FACE_VALID: (isFaceIDVerificationFlow: boolean) => ({
-        isFaceIDVerificationFlow,
+      FACE_VALID: () => ({
+        isFaceIDVerificationFlow: true,
       }),
       FACE_INVALID: () => ({}),
       RETRY_VERIFICATION: () => ({}),

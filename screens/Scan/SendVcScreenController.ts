@@ -56,7 +56,7 @@ export function useSendVcScreen() {
     isCancelling: useSelector(scanService, selectIsCancelling),
 
     CANCEL,
-    ACCEPT_REQUEST: () => scanService.send(ScanEvents.ACCEPT_REQUEST(false)),
+    ACCEPT_REQUEST: () => scanService.send(ScanEvents.ACCEPT_REQUEST()),
     VERIFY_AND_ACCEPT_REQUEST: () =>
       scanService.send(ScanEvents.VERIFY_AND_ACCEPT_REQUEST()),
     DISMISS: () => scanService.send(ScanEvents.DISMISS()),
@@ -64,7 +64,7 @@ export function useSendVcScreen() {
       scanService.send(ScanEvents.UPDATE_REASON(reason)),
     UPDATE_VC_NAME: (vcName: string) =>
       scanService.send(ScanEvents.UPDATE_VC_NAME(vcName)),
-    FACE_VALID: () => scanService.send(ScanEvents.FACE_VALID(true)),
+    FACE_VALID: () => scanService.send(ScanEvents.FACE_VALID()),
     FACE_INVALID: () => scanService.send(ScanEvents.FACE_INVALID()),
     RETRY_VERIFICATION: () => scanService.send(ScanEvents.RETRY_VERIFICATION()),
     GO_TO_HOME: () => {
