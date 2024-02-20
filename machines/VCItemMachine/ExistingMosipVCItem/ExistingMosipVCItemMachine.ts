@@ -108,8 +108,6 @@ const model = createModel(
       UPDATE_VC_METADATA: (vcMetadata: VCMetadata) => ({vcMetadata}),
       TAMPERED_VC: (key: string) => ({key}),
       SHOW_BINDING_STATUS: () => ({}),
-      VERIFY_SUCCESS: () => ({}),
-      VERIFY_ERROR: (errorMessage: string) => ({errorMessage}),
     },
   },
 );

@@ -678,6 +678,7 @@
     "editLabel": "Editar {{label}}",
     "tryAgain": "Intentar otra vez",
     "ignore": "Ignorar",
+    "goBack": "Regresa",
     "camera": {
       "errors": {
         "missingPermission": "Esta aplicación utiliza la cámara para escanear el código QR de otro dispositivo."
