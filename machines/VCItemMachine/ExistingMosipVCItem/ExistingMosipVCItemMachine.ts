@@ -447,6 +447,7 @@ export const ExistingMosipVCItemMachine =
             'Check if VC verification is still valid. VCs stored on the device must be re-checked once every [N] time has passed.',
           always: [
             {
+              //To-Do - Backup needs to be handled when the value is true
               cond: 'isVcValid',
               target: 'idle',
             },
