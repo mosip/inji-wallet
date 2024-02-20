@@ -26,7 +26,7 @@ export const Loader: React.FC<LoaderProps> = props => {
         crossAlign="center"
         fill>
         <Column margin="24 0" align="space-around">
-          <LoaderAnimation />
+          <LoaderAnimation testID={'loader'} />
         </Column>
         {(props.isHintVisible || props.onCancel) && (
           <Column style={Theme.SelectVcOverlayStyles.timeoutHintContainer}>

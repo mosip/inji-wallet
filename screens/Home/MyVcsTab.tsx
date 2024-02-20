@@ -102,6 +102,7 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = props => {
               controller.RESET_STORE_VC_ITEM_STATUS();
               clearIndividualId();
             }}
+            key={'downloadingVcPopup'}
             testId={'downloadingVcPopup'}
           />
         )}
