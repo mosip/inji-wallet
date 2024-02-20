@@ -26,7 +26,7 @@
     "Wallet": "Wallet"
   },
   "FaceScanner": {
-    "imageCaptureGuide": "Hold the phone steady and keep your face focused in the centre",
+    "imageCaptureGuide": "Hold the phone steady, keep your face focused in the centre and click on Capture.",
     "capture": "Capture",
     "flipCamera": "Flip Camera"
   },
@@ -207,7 +207,9 @@
         "twelve": "How to share a card?",
         "thirteen": "How to remove a card from the wallet?",
         "fourteen": "How to view activity logs?",
-        "fifteen": "What happens when Android keystore biometric is changed?"
+        "fifteen": "What happens when Android keystore biometric is changed?",
+        "sixteen": "What is Share?",
+        "seventeen": "What is Share with selfie?"
       },
       "backup": {
         "one": "What is data backup? ",
@@ -240,7 +242,9 @@
         "thirteen-a": "You can click on ...(meatballs menu) on a card in the Home page and choose Remove from Wallet option to remove a card from the wallet. To know more, please read",
         "thirteen-b": " Please note that, the same card can be downloaded again.",
         "fourteen": "On the Home page, click on 'History' to view the details of the user's activitie.",
-        "fifteen": "The Android keystore holds important information like private keys for identity proofs. When you change your biometrics, old keys are no longer safe. To keep things secure, we remove identity proofs signed by those old keys. You can simply download your identity proofs again, and they will be signed with the latest, safer keys."
+        "fifteen": "The Android keystore holds important information like private keys for identity proofs. When you change your biometrics, old keys are no longer safe. To keep things secure, we remove identity proofs signed by those old keys. You can simply download your identity proofs again, and they will be signed with the latest, safer keys.",
+        "sixteen": "Sharing a credential refers to the process of securely transferring a verifiable credential by the holder from the INJI wallet to the relying party. This enables individuals to prove their identity verification in a digital way, facilitating efficient and trusted interactions in various contexts.",
+        "seventeen": "Sharing a VC with selfie involves an additional layer of security in the credential-sharing process. In addition to transmitting the verifiable credential, the user is required to provide a selfie (a photograph of themselves) for facial verification. This enhances the security and integrity of the credential transfer by ensuring that the individual presenting the credential is the legitimate owner. It helps prevent impersonation and unauthorized use of the credential, thereby increasing trust and reliability in digital transactions."
       },
       "backup": {
         "one": "Data backup involves creating a copy of your Verifiable Credentials present in your wallet in your Google Drive/iCloud, ensuring that in the event of data loss, you can restore your files to their previous state.",
@@ -434,7 +438,7 @@
     "back": "Come back",
     "confirm": "Confirm",
     "verify": "Verify",
-    "faceAuth": "Face Authentication",
+    "faceAuth": "Face Verification",
     "consent": "Consent",
     "loading": "Loading...",
     "domainWarning": "Please confirm the domain of the website you are scanning the QR code from below",
@@ -726,7 +730,7 @@
     }
   },
   "VerifyIdentityOverlay": {
-    "faceAuth": "Face Authentication",
+    "faceAuth": "Face Verification",
     "status": {
       "verifyingIdentity": "Verifying identity..."
     },

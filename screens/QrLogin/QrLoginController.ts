@@ -23,6 +23,8 @@ import {
   selectVoluntaryClaims,
   selectIsSendingAuthenticate,
   selectEssentialClaims,
+  selectIsFaceVerificationConsent,
+  selectShowFaceAuthConsent,
 } from '../../machines/QrLoginMachine';
 import {selectBindedVcsMetadata} from '../../machines/VCItemMachine/vc';
 import {GlobalContext} from '../../shared/GlobalContext';
@@ -42,6 +44,7 @@ export function useQrLogin({service}: QrLoginProps) {
   };
 
   const isShare = useSelector(service, selectIsSharing);
+  
 
   return {
     SELECT_VC_ITEM:
@@ -56,6 +59,8 @@ export function useQrLogin({service}: QrLoginProps) {
         SELECT_VC(vcData);
       },
 
+    isFaceVerificationConsent: useSelector(service, selectIsFaceVerificationConsent),
+    showFaceAuthConsent: useSelector(service, selectShowFaceAuthConsent),
     shareableVcsMetadata: useSelector(vcService, selectBindedVcsMetadata),
     selectedVc: useSelector(service, selectSelectedVc),
     linkTransactionResponse: useSelector(
@@ -74,6 +79,7 @@ export function useQrLogin({service}: QrLoginProps) {
     selectedIndex,
     SELECT_VC,
     SELECT_CONSENT,
+    FACE_VERIFICATION_CONSENT: (showAgain: boolean) => service.send(QrLoginEvents.FACE_VERIFICATION_CONSENT(showAgain)),
     isWaitingForData: useSelector(service, selectIsWaitingForData),
     isShowingVcList: useSelector(service, selectIsShowingVcList),
     isLinkTransaction: useSelector(service, selectIsLinkTransaction),

@@ -8,7 +8,7 @@ import {
 } from 'xstate';
 import {createModel} from 'xstate/lib/model';
 import {AppServices} from '../shared/GlobalContext';
-import {ESIGNET_BASE_URL, MY_VCS_STORE_KEY} from '../shared/constants';
+import {ESIGNET_BASE_URL, MY_VCS_STORE_KEY, QRLOGIN_MACHINE_STORE_KEY} from '../shared/constants';
 import {StoreEvents} from './store';
 import {linkTransactionResponse, VC} from '../types/VC/ExistingMosipVC/vc';
 import {request} from '../shared/request';
@@ -52,6 +52,7 @@ const model = createModel(
     consentClaims: ['name', 'picture'],
     isSharing: {},
     linkedTransactionId: '',
+    showFaceAuthConsent: true,
   },
   {
     events: {
@@ -71,6 +72,7 @@ const model = createModel(
       FACE_VALID: () => ({}),
       FACE_INVALID: () => ({}),
       RETRY_VERIFICATION: () => ({}),
+      FACE_VERIFICATION_CONSENT: (showAgain: boolean) => ({showAgain}),
     },
   },
 );
@@ -148,12 +150,23 @@ export const qrLoginMachine =
               actions: 'setSelectedVc',
             },
             VERIFY: {
-              target: 'faceAuth',
+              target: 'faceVerificationConsent',
             },
             DISMISS: {
               actions: 'forwardToParent',
               target: 'waitingForData',
             },
+          },
+        },
+        faceVerificationConsent: {
+          on: {
+            FACE_VERIFICATION_CONSENT: {
+              actions: ['setShowAgainConsent', 'storeContext'],
+              target: 'faceAuth'
+            },
+            DISMISS: {
+              target: 'showvcList'
+            }
           },
         },
         faceAuth: {
@@ -262,6 +275,18 @@ export const qrLoginMachine =
     },
     {
       actions: {
+        setShowAgainConsent: model.assign({
+          showFaceAuthConsent: (_context, event) => event.showAgain,
+        }),
+
+        storeContext: send(
+          context => {
+            const {serviceRefs, ...data} = context;
+            return StoreEvents.SET(QRLOGIN_MACHINE_STORE_KEY, data);
+          },
+          {to: context => context.serviceRefs.store},
+        ),
+
         forwardToParent: sendParent('DISMISS'),
 
         setScanData: assign({
@@ -576,4 +601,12 @@ export function selectErrorMessage(state: State) {
 }
 export function selectIsSharing(state: State) {
   return state.context.isSharing;
+}
+
+export function selectIsFaceVerificationConsent(state: State) {
+  return state.matches('faceVerificationConsent');
+}
+
+export function selectShowFaceAuthConsent(state: State) {
+  return state.context.showFaceAuthConsent;
 }
