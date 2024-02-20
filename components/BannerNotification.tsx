@@ -36,5 +36,5 @@ export interface BannerNotificationProps {
   message: string;
   onClosePress: () => void;
   testId: string;
-  type: 'error' | 'success';
+  type: 'error' | 'success' | 'info';
 }

@@ -759,6 +759,7 @@
     }
   },
   "BackupAndRestoreBanner": {
+    "backupInProgress": "Data backup is in progress. Please do not close the application.",
     "backupSuccessful": "Your backup was successful!",
     "backupFailure": {
       "networkError": "Due to unstable internet connection, we were unable to perform data backup. Please try again later.",
@@ -767,6 +768,7 @@
       "noDataForBackup": "We're sorry, but there is no data available to back up at the moment.",
       "storageLimitReached": "We're unable to complete the backup process due to insufficient storage space on your device. Please free up space by deleting unnecessary files or apps, and try again."
     },
+    "restoreInProgress": "Data restore is in progress. Please do not close the application.",
     "restoreSuccessful": "Your backup has been restored successfully",
     "restoreFailure": {
       "networkError": "Due to unstable internet connection, we were unable to perform data restore. Please try again later.",
