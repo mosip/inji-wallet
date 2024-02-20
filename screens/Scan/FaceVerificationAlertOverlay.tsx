@@ -18,6 +18,7 @@ export const FaceVerificationAlertOverlay: React.FC<
   return (
     <Overlay
       isVisible={props.isVisible}
+      onBackdropPress={props.close}
       overlayStyle={Theme.BindingVcWarningOverlay.overlay}>
       <Column
         align="space-between"
@@ -37,7 +38,7 @@ export const FaceVerificationAlertOverlay: React.FC<
 
         <Column crossAlign="center" margin="10 0 30 0">
           <Text testID="alert" weight="semibold">
-            {t('shareWithSelfie')}
+            {t('Okay da bue')}
           </Text>
 
           <Text
@@ -85,4 +86,5 @@ export const FaceVerificationAlertOverlay: React.FC<
 interface FaceVerificationAlertProps {
   isVisible: boolean;
   onConfirm: (showAgain: boolean) => void; //return fasle
+  close: () => void;
 }

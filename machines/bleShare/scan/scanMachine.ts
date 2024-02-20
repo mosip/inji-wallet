@@ -628,6 +628,9 @@ export const scanMachine =
                   actions: ['setShowAgainConsent', 'storeContext'],
                   target: 'verifyingIdentity',
                 },
+                DISMISS: {
+                  target: '#scan.reviewing.selectingVc'
+                }
               },
             },
             verifyingIdentity: {
