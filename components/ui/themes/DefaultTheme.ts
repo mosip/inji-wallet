@@ -955,6 +955,11 @@ export const DefaultTheme = {
       backgroundColor: Colors.Transparent,
       borderColor: Colors.Orange,
     },
+    disabledOutlineButton: {
+      backgroundColor: Colors.Transparent,
+      color: Colors.Grey,
+      borderColor: Colors.Grey,
+    },
     container: {
       height: 45,
       flexDirection: 'row',
