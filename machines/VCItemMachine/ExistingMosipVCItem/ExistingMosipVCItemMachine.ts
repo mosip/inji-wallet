@@ -144,7 +144,7 @@ export const ExistingMosipVCItemMachine =
           on: {
             GET_VC_RESPONSE: [
               {
-                actions: 'setCredential',
+                actions: ['setCredential', 'setStoreVerifiableCredential'],
                 cond: 'hasCredential',
                 target: 'checkingVerificationStatus',
               },
@@ -160,7 +160,11 @@ export const ExistingMosipVCItemMachine =
           on: {
             STORE_RESPONSE: [
               {
-                actions: ['setCredential', 'updateVc'],
+                actions: [
+                  'setCredential',
+                  'setStoreVerifiableCredential',
+                  'updateVc',
+                ],
                 cond: 'hasCredential',
                 target: 'checkingVerificationStatus',
               },
@@ -800,11 +804,12 @@ export const ExistingMosipVCItemMachine =
         }),
 
         setStoreVerifiableCredential: model.assign((context, event) => {
+          const eventResponse = event?.response ? event.response : event?.vc;
           return {
             ...context,
-            ...event.vc,
+            ...eventResponse,
             storeVerifiableCredential: {
-              ...event.vc.verifiableCredential,
+              ...eventResponse.verifiableCredential,
             },
             verifiableCredential: null,
             vcMetadata: context.vcMetadata,
@@ -1453,11 +1458,13 @@ export const ExistingMosipVCItemMachine =
         },
 
         verifyCredential: async context => {
-          const verificationResult = await verifyCredential(
-            context.storeVerifiableCredential,
-          );
-          if (!verificationResult.isVerified) {
-            throw new Error(verificationResult.errorMessage);
+          if (context.storeVerifiableCredential) {
+            const verificationResult = await verifyCredential(
+              context.storeVerifiableCredential,
+            );
+            if (!verificationResult.isVerified) {
+              throw new Error(verificationResult.errorMessage);
+            }
           }
         },
 
