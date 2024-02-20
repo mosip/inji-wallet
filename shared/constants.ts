@@ -44,6 +44,8 @@ export const BANNER_TYPE_SUCCESS = 'success';
 
 export const BANNER_TYPE_ERROR = 'error';
 
+export const BANNER_TYPE_INFO = 'info';
+
 // Numbers and Upper case Alphabets without confusing characters like 0, 1, 2, I, O, Z
 // prettier-ignore
 export const APP_ID_DICTIONARY = [

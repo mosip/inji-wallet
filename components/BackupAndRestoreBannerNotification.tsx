@@ -3,7 +3,7 @@ import {useBackupScreen} from '../screens/backupAndRestore/BackupController';
 import {BannerNotification} from './BannerNotification';
 import {useTranslation} from 'react-i18next';
 import {useBackupRestoreScreen} from '../screens/Settings/BackupRestoreController';
-import {BANNER_TYPE_SUCCESS, BANNER_TYPE_ERROR} from '../shared/constants';
+import {BANNER_TYPE_SUCCESS, BANNER_TYPE_ERROR, BANNER_TYPE_INFO} from '../shared/constants';
 
 export const BackupAndRestoreBannerNotification: React.FC = () => {
   const backUpController = useBackupScreen();
@@ -47,7 +47,7 @@ export const BackupAndRestoreBannerNotification: React.FC = () => {
     <>
       {backUpController.showBackupInProgress && (
         <BannerNotification
-          type="info"
+          type={BANNER_TYPE_INFO}
           message={t('backupInProgress')}
           onClosePress={backUpController.DISMISS_SHOW_BACKUP_IN_PROGRESS}
           key={'dataBackupInProgress'}
@@ -69,7 +69,7 @@ export const BackupAndRestoreBannerNotification: React.FC = () => {
 
       {restoreController.showRestoreInProgress && (
         <BannerNotification
-          type="info"
+          type={BANNER_TYPE_INFO}
           message={t('restoreInProgress')}
           onClosePress={restoreController.DISMISS_SHOW_RESTORE_IN_PROGRESS}
           key={'restoreInProgress'}
