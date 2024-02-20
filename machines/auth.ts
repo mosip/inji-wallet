@@ -100,8 +100,7 @@ export const authMachine = model.createMachine(
             actions: ['setPasscode', 'setLanguage', 'storeContext'],
           },
           SETUP_BIOMETRICS: {
-            // Note! dont authorized yet we need to setup passcode too as discuss
-            // target: 'authorized',
+            target: 'authorized',
             actions: ['setBiometrics', 'setLanguage', 'storeContext'],
           },
         },
@@ -184,7 +183,7 @@ export const authMachine = model.createMachine(
         return context.passcode !== '';
       },
       hasBiometricSet: context => {
-        return context.biometrics !== '' && context.passcode !== '';
+        return context.biometrics !== '';
       },
       hasLanguageset: context => {
         return !context.selectLanguage;
