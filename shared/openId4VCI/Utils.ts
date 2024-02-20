@@ -23,6 +23,17 @@ export const Issuers = {
   ESignet: 'ESignet',
 };
 
+/**
+ * @param issuer the issuer of the VC as per the VC metadata in MMKV
+ * @returns the ID-type to be used for further translation
+ */
+export function getIdType(issuer: string | undefined): string {
+  if (issuer === '' || issuer === Issuers.ESignet) {
+    return 'NATIONAL_ID';
+  }
+  return 'INSURANCE_ID';
+}
+
 export const ID_TYPE = {
   MOSIPVerifiableCredential: i18n.t('VcDetails:nationalCard'),
   InsuranceCredential: i18n.t('VcDetails:insuranceCard'),

@@ -12,6 +12,7 @@ import {VcIdType} from '../types/VC/ExistingMosipVC/vc';
 import {MY_VCS_STORE_KEY} from '../shared/constants';
 import {VCMetadata} from '../shared/VCMetadata';
 import {API_URLS} from '../shared/api';
+import {getIdType} from '../shared/openId4VCI/Utils';
 
 const model = createModel(
   {
@@ -210,6 +211,8 @@ export const revokeVidsMachine =
             ActivityLogEvents.LOG_ACTIVITY(
               context.VIDsMetadata.map(metadata => ({
                 _vcKey: metadata.getVcKey(),
+                id: metadata.id,
+                idType: getIdType(metadata.issuer),
                 type: 'VC_REVOKED',
                 timestamp: Date.now(),
                 deviceName: '',
