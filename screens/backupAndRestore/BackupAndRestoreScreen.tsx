@@ -44,6 +44,14 @@ const BackupAndRestoreScreen: React.FC<BackupAndRestoreProps> = props => {
     props.shouldTriggerAutoBackup,
   ]);
 
+  function handleRestore() {
+    !backupController.isBackupInProgress && restoreController.BACKUP_RESTORE();
+  }
+
+  function handleBackup() {
+    !restoreController.isBackUpRestoring && backupController.DATA_BACKUP(false);
+  }
+
   const Loading = testID => (
     <Centered fill>
       <LoaderAnimation testID={testID} showLogo={false} />
@@ -116,8 +124,9 @@ const BackupAndRestoreScreen: React.FC<BackupAndRestoreProps> = props => {
             testID="backup"
             type="gradient"
             title={t('backup')}
-            onPress={() => backupController.DATA_BACKUP(false)}
-            styles={{...Theme.MessageOverlayStyles.button, flex: 1}}
+            disabled={restoreController.isBackUpRestoring}
+            onPress={handleBackup}
+            styles={{flex: 1}}
           />
         )}
       </Row>
@@ -172,7 +181,8 @@ const BackupAndRestoreScreen: React.FC<BackupAndRestoreProps> = props => {
             testID="restore"
             type="outline"
             title={t('restore')}
-            onPress={restoreController.BACKUP_RESTORE}
+            disabled={backupController.isBackupInProgress}
+            onPress={handleRestore}
             styles={{...Theme.MessageOverlayStyles.button, marginTop: 10}}
           />
         )}

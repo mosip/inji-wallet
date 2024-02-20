@@ -959,6 +959,11 @@ export const PurpleTheme = {
       backgroundColor: Colors.Transparent,
       borderColor: Colors.Purple,
     },
+    disabledOutlineButton: {
+      backgroundColor: Colors.Transparent,
+      color: Colors.Grey,
+      borderColor: Colors.Grey,
+    },
     container: {
       height: 45,
       flexDirection: 'row',
