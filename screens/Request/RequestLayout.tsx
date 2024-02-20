@@ -74,27 +74,7 @@ export const RequestLayout: React.FC = () => {
           name={REQUEST_ROUTES.RequestScreen}
           component={RequestScreen}
           options={{
-            title: t('receiveCard').toUpperCase(),
-            headerRight: () =>
-              I18nManager.isRTL && (
-                <HeaderBackButton
-                  onPress={() => {
-                    controller.GOTO_HOME();
-                  }}
-                  style={Theme.Styles.IconContainer}
-                  tintColor={Theme.Colors.Icon}
-                />
-              ),
-            headerLeft: () =>
-              !I18nManager.isRTL && (
-                <HeaderBackButton
-                  onPress={() => {
-                    controller.GOTO_HOME();
-                  }}
-                  style={Theme.Styles.IconContainer}
-                  tintColor={Theme.Colors.Icon}
-                />
-              ),
+            title: t('receiveCard'),
           }}
         />
       </RequestStack.Navigator>

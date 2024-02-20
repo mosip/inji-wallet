@@ -69,7 +69,6 @@ const model = createModel(
     selectedVc: {} as VC,
     bleError: {} as BLEError,
     createdVp: null as VC,
-    reason: '',
     loggers: [] as EmitterSubscription[],
     vcName: '',
     verificationImage: {} as CameraCapturedPicture,
@@ -107,7 +106,6 @@ const model = createModel(
       NEARBY_DISABLED: () => ({}),
       GOTO_SETTINGS: () => ({}),
       START_PERMISSION_CHECK: () => ({}),
-      UPDATE_REASON: (reason: string) => ({reason}),
       LOCATION_ENABLED: () => ({}),
       LOCATION_DISABLED: () => ({}),
       LOCATION_REQUEST: () => ({}),
@@ -494,14 +492,11 @@ export const scanMachine =
         },
         reviewing: {
           entry: ['resetShouldVerifyPresence'],
-          exit: ['clearReason', 'clearCreatedVp'],
+          exit: ['clearCreatedVp'],
           initial: 'selectingVc',
           states: {
             selectingVc: {
               on: {
-                UPDATE_REASON: {
-                  actions: 'setReason',
-                },
                 DISCONNECT: {
                   target: '#scan.disconnected',
                 },
@@ -804,12 +799,6 @@ export const scanMachine =
         setBleError: assign({
           bleError: (_context, event) => event.bleError,
         }),
-
-        setReason: model.assign({
-          reason: (_context, event) => event.reason,
-        }),
-
-        clearReason: assign({reason: ''}),
 
         setSelectedVc: assign({
           selectedVc: (context, event) => {
@@ -1140,11 +1129,6 @@ export const scanMachine =
             ...(vp != null ? vp : context.selectedVc),
           };
 
-          const reason = [];
-          if (context.reason.trim() !== '') {
-            reason.push({message: context.reason, timestamp: Date.now()});
-          }
-
           const statusCallback = (event: WalletDataEvent) => {
             if (event.type === EventTypes.onDataSent) {
               callback({type: 'VC_SENT'});
@@ -1160,7 +1144,6 @@ export const scanMachine =
           wallet.sendData(
             JSON.stringify({
               ...vc,
-              reason,
             }),
           );
           const subscription = subscribe(statusCallback);

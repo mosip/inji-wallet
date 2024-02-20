@@ -4,7 +4,6 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {SendVcScreen} from './SendVcScreen';
 import {useScanLayout} from './ScanLayoutController';
 import {ScanScreen} from './ScanScreen';
-import {ProgressingModal} from '../../components/ProgressingModal';
 import {SCAN_ROUTES} from '../../routes/routesConstants';
 import {SharingStatusModal} from './SharingStatusModal';
 import {Theme} from '../../components/ui/styleUtils';
