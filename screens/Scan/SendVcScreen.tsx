@@ -20,6 +20,7 @@ import {
 import {TelemetryConstants} from '../../shared/telemetry/TelemetryConstants';
 import {getVCsOrderedByPinStatus} from '../../shared/Utils';
 import {Issuers} from '../../shared/openId4VCI/Utils';
+import { FaceVerificationAlertOverlay } from './FaceVerificationAlertOverlay';
 
 export const SendVcScreen: React.FC = () => {
   const {t} = useTranslation('SendVcScreen');
@@ -139,6 +140,13 @@ export const SendVcScreen: React.FC = () => {
         onCancel={controller.CANCEL}
         onFaceValid={controller.FACE_VALID}
         onFaceInvalid={controller.FACE_INVALID}
+      />
+
+      <FaceVerificationAlertOverlay
+        isVisible={
+          controller.showFaceAuthConsent && controller.isFaceVerificationConsent
+        }
+        onConfirm={controller.FACE_VERIFICATION_CONSENT}
       />
 
       <MessageOverlay

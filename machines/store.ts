@@ -17,6 +17,7 @@ import {
   MY_VCS_STORE_KEY,
   RECEIVED_VCS_STORE_KEY,
   SETTINGS_STORE_KEY,
+  SCAN_MACHINE_STORE_KEY,
 } from '../shared/constants';
 import SecureKeystore from '@mosip/secure-keystore';
 import {

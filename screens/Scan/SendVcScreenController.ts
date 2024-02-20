@@ -15,7 +15,7 @@ import {
   selectIsInvalidIdentity,
   selectIsVerifyingIdentity,
 } from '../../machines/bleShare/commonSelectors';
-import {ScanEvents} from '../../machines/bleShare/scan/scanMachine';
+import {ScanEvents,selectIsFaceVerificationConsent,selectShowFaceAuthConsent} from '../../machines/bleShare/scan/scanMachine';
 
 export function useSendVcScreen() {
   const {appService} = useContext(GlobalContext);
@@ -47,9 +47,12 @@ export function useSendVcScreen() {
     isVerifyingIdentity: useSelector(scanService, selectIsVerifyingIdentity),
     isInvalidIdentity: useSelector(scanService, selectIsInvalidIdentity),
     isCancelling: useSelector(scanService, selectIsCancelling),
+    isFaceVerificationConsent: useSelector(scanService, selectIsFaceVerificationConsent),
+    showFaceAuthConsent: useSelector(scanService, selectShowFaceAuthConsent),
 
     CANCEL,
     ACCEPT_REQUEST: () => scanService.send(ScanEvents.ACCEPT_REQUEST()),
+    FACE_VERIFICATION_CONSENT: (showAgain: boolean) => scanService.send(ScanEvents.FACE_VERIFICATION_CONSENT(showAgain)),
     VERIFY_AND_ACCEPT_REQUEST: () =>
       scanService.send(ScanEvents.VERIFY_AND_ACCEPT_REQUEST()),
     DISMISS: () => scanService.send(ScanEvents.DISMISS()),

@@ -39,6 +39,8 @@ export const LAST_BACKUP_DETAILS = 'lastBackupDetails';
 
 export const APP_ID_LENGTH = 12;
 
+export const SCAN_MACHINE_STORE_KEY = 'scanScreen';
+
 // Numbers and Upper case Alphabets without confusing characters like 0, 1, 2, I, O, Z
 // prettier-ignore
 export const APP_ID_DICTIONARY = [

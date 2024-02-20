@@ -4,6 +4,9 @@ import {Theme} from './styleUtils';
 import {ImageBackground} from 'react-native';
 import Home from '../../assets/Home_tab_icon.svg';
 import History from '../../assets/History_tab_icon.svg';
+import ShareWithSelfie from '../../assets/Share_with_selfie.svg';
+import CheckedIcon from '../../assets/CheckedIcon.svg'
+import UnCheckedIcon from '../../assets/UnCheckedIcon.svg'
 import Share from '../../assets/Scan_tab_icon.svg';
 import PinICon from '../../assets/Pin_Icon.svg';
 import InjiSmallLogo from '../../assets/Inji_Logo.svg';
@@ -308,6 +311,18 @@ export class SvgImage {
 
   static MagnifierZoom() {
     return <MagnifierZoom />;
+  }
+
+  static ShareWithSelfie() {
+    return <ShareWithSelfie />;
+  }
+
+  static CheckedIcon() {
+    return <CheckedIcon />;
+  }
+
+  static UnCheckedIcon() {
+    return <UnCheckedIcon />;
   }
 
   static GoogleDriveIcon(width, height) {
