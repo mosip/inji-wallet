@@ -276,7 +276,6 @@ export interface Typegen0 {
     isSignedIn:
       | 'done.invoke.vc-item.kebabPopUp.removingVc.triggerAutoBackup:invocation[0]'
       | 'done.invoke.vc-item.verifyingCredential.triggerAutoBackupForVcDownload:invocation[0]';
-    isVcValid: '';
   };
   eventsCausingServices: {
     addWalletBindnigId: 'done.invoke.vc-item.addKeyPair:invocation[0]';
