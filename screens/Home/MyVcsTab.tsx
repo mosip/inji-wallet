@@ -236,7 +236,7 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = props => {
           alignActionsOnEnd
           title={t('errors.verificationFailed.title')}
           message={verificationErrorMessage}
-          image={SvgImage.ErrorOccurred()}
+          image={SvgImage.PermissionDenied()}
           showClose={false}
           primaryButtonText="goBack"
           primaryButtonEvent={controller.RESET_VERIFY_ERROR}

@@ -400,6 +400,7 @@ export const ExistingMosipVCItemMachine =
               },
             ],
           },
+          initial: 'idle',
           on: {
             STORE_RESPONSE: {
               actions: [
@@ -408,10 +409,28 @@ export const ExistingMosipVCItemMachine =
                 'sendTelemetryEvents',
                 'removeVcFromInProgressDownloads',
               ],
-              target: 'idle',
+              target: '.triggerAutoBackupForVcDownload',
             },
             STORE_ERROR: {
               target: '#vc-item.checkingServerData.savingFailed',
+            },
+          },
+          states: {
+            idle: {},
+            triggerAutoBackupForVcDownload: {
+              invoke: {
+                src: 'isUserSignedAlready',
+                onDone: [
+                  {
+                    cond: 'isSignedIn',
+                    actions: ['sendBackupEvent'],
+                    target: '#vc-item.idle',
+                  },
+                  {
+                    target: '#vc-item.idle',
+                  },
+                ],
+              },
             },
           },
         },

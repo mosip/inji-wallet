@@ -27,6 +27,7 @@ export interface Typegen0 {
       | 'REFRESH_MY_VCS'
       | 'REFRESH_VCS_METADATA'
       | 'STORE_RESPONSE'
+      | 'VERIFY_VC_FAILED'
       | 'xstate.init';
     loadReceivedVcs:
       | 'REFRESH_RECEIVED_VCS'
@@ -38,10 +39,12 @@ export interface Typegen0 {
     removeDownloadingFailedVcsFromMyVcs: 'STORE_RESPONSE';
     removeVcFromInProgressDownlods:
       | 'DOWNLOAD_LIMIT_EXPIRED'
-      | 'REMOVE_VC_FROM_IN_PROGRESS_DOWNLOADS';
+      | 'REMOVE_VC_FROM_IN_PROGRESS_DOWNLOADS'
+      | 'VERIFY_VC_FAILED';
     removeVcFromMyVcs: 'REMOVE_VC_FROM_CONTEXT';
     resetAreAllVcsDownloaded: 'RESET_ARE_ALL_VCS_DOWNLOADED';
     resetDownloadFailedVcs: 'STORE_RESPONSE';
+    resetVerificationErrorMessage: 'RESET_VERIFY_ERROR';
     resetWalletBindingSuccess: 'RESET_WALLET_BINDING_SUCCESS';
     sendBackupEvent: 'done.invoke.vc.tamperedVCs.triggerAutoBackupForTamperedVcDeletion:invocation[0]';
     setDownloadedVCFromOpenId4VCI: 'VC_DOWNLOADED_FROM_OPENID4VCI';
@@ -51,6 +54,7 @@ export interface Typegen0 {
     setReceivedVcs: 'STORE_RESPONSE';
     setTamperedVcs: 'TAMPERED_VC';
     setUpdatedVcMetadatas: 'VC_METADATA_UPDATED';
+    setVerificationErrorMessage: 'VERIFY_VC_FAILED';
     setWalletBindingSuccess: 'WALLET_BINDING_SUCCESS';
     updateMyVcs: 'VC_METADATA_UPDATED';
   };
