@@ -1,18 +1,14 @@
-import {formatDistanceToNow} from 'date-fns';
 import React, {useEffect, useState} from 'react';
-import * as DateFnsLocale from 'date-fns/locale';
 import {useTranslation} from 'react-i18next';
 import {Image, ImageBackground} from 'react-native';
 import {Icon} from 'react-native-elements';
 import {VC} from '../../../types/VC/ExistingMosipVC/vc';
 import {Button, Column, Row, Text} from '../../ui';
 import {Theme} from '../../ui/styleUtils';
-import {TextItem} from '../../ui/TextItem';
 import {QrCodeOverlay} from '../../QrCodeOverlay';
 import {VCMetadata} from '../../../shared/VCMetadata';
 import {
   VcIdType,
-  VCSharingReason,
   VerifiableCredential,
   VerifiablePresentation,
 } from '../../../types/VC/EsignetMosipVC/vc';
@@ -131,28 +127,6 @@ export const VCDetailView: React.FC<
         </Row>
       </ImageBackground>
 
-      {props.vc?.reason?.length > 0 && (
-        <Text
-          testID="reasonForSharingTitle"
-          margin="24 24 16 24"
-          weight="semibold">
-          {t('reasonForSharing')}
-        </Text>
-      )}
-
-      {props.vc?.reason?.map((reason, index) => (
-        <TextItem
-          testID="reason"
-          key={index}
-          divider
-          label={formatDistanceToNow(reason.timestamp, {
-            addSuffix: true,
-            locale: DateFnsLocale[i18n.language],
-          })}
-          text={reason.message}
-        />
-      ))}
-
       {props.activeTab !== 1 ? (
         props.isBindingPending &&
         isActivationNeeded(props.vc.vcMetadata.issuer) ? (
@@ -251,7 +225,6 @@ export interface EsignetVC {
   isVerified: boolean;
   lastVerifiedOn: number;
   locked: boolean;
-  reason?: VCSharingReason[];
   shouldVerifyPresence?: boolean;
   walletBindingResponse?: WalletBindingResponse;
   credentialRegistry: string;

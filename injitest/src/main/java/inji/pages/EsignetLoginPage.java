@@ -31,7 +31,7 @@ public class EsignetLoginPage extends BasePage {
     @iOSXCUITFindBy(accessibility = "Please fill in this field")
     private WebElement enterIdTextBox;
 
-    @AndroidFindBy(uiAutomator = "new UiSelector().className(\"android.widget.Button\").instance(1)")
+    @AndroidFindBy(xpath = "//android.widget.Button[@text=\"Get OTP\"]")
     @iOSXCUITFindBy(accessibility = "Get OTP")
     private WebElement getOtpButton;
 

@@ -171,7 +171,7 @@ export const ExistingMosipVCItemMachine =
               },
             ],
             TAMPERED_VC: {
-              actions: ['sendTamperedVc', 'removeTamperedVcItem'],
+              actions: 'sendTamperedVc',
             },
           },
         },

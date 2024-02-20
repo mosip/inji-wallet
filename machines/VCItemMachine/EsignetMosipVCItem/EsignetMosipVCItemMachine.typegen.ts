@@ -13,6 +13,11 @@ export interface Typegen0 {
       data: unknown;
       __tip: 'See the XState TS docs to learn how to strongly type this.';
     };
+    'done.invoke.vc-item-openid4vci.kebabPopUp.triggerAutoBackup:invocation[0]': {
+      type: 'done.invoke.vc-item-openid4vci.kebabPopUp.triggerAutoBackup:invocation[0]';
+      data: unknown;
+      __tip: 'See the XState TS docs to learn how to strongly type this.';
+    };
     'done.invoke.vc-item-openid4vci.requestingBindingOtp:invocation[0]': {
       type: 'done.invoke.vc-item-openid4vci.requestingBindingOtp:invocation[0]';
       data: unknown;
@@ -48,6 +53,7 @@ export interface Typegen0 {
   invokeSrcNameMap: {
     addWalletBindnigId: 'done.invoke.vc-item-openid4vci.addingWalletBindingId:invocation[0]';
     generateKeyPair: 'done.invoke.vc-item-openid4vci.addKeyPair:invocation[0]';
+    isUserSignedAlready: 'done.invoke.vc-item-openid4vci.kebabPopUp.triggerAutoBackup:invocation[0]';
     requestBindingOtp:
       | 'done.invoke.vc-item-openid4vci.acceptingBindingOtp.resendOTP:invocation[0]'
       | 'done.invoke.vc-item-openid4vci.requestingBindingOtp:invocation[0]';
@@ -64,8 +70,7 @@ export interface Typegen0 {
       | 'DISMISS'
       | 'done.invoke.vc-item-openid4vci.requestingBindingOtp:invocation[0]';
     clearTransactionId: 'DISMISS';
-    closeViewVcModal: 'STORE_RESPONSE';
-    logVCremoved: 'STORE_RESPONSE';
+    logVCremoved: 'done.invoke.vc-item-openid4vci.kebabPopUp.triggerAutoBackup:invocation[0]';
     logWalletBindingFailure:
       | 'error.platform.vc-item-openid4vci.addKeyPair:invocation[0]'
       | 'error.platform.vc-item-openid4vci.addingWalletBindingId:invocation[0]'
@@ -75,7 +80,7 @@ export interface Typegen0 {
       | 'done.invoke.vc-item-openid4vci.addingWalletBindingId:invocation[0]'
       | 'done.invoke.vc-item-openid4vci.updatingPrivateKey:invocation[0]';
     removeVcItem: 'CONFIRM';
-    removedVc: 'STORE_RESPONSE';
+    removedVc: 'done.invoke.vc-item-openid4vci.kebabPopUp.triggerAutoBackup:invocation[0]';
     requestStoredContext: 'GET_VC_RESPONSE' | 'REFRESH';
     requestVcContext: 'DISMISS' | 'xstate.init';
     sendActivationFailedEndEvent:
@@ -85,6 +90,7 @@ export interface Typegen0 {
     sendActivationSuccessEvent:
       | 'done.invoke.vc-item-openid4vci.addingWalletBindingId:invocation[0]'
       | 'done.invoke.vc-item-openid4vci.updatingPrivateKey:invocation[0]';
+    sendBackupEvent: 'done.invoke.vc-item-openid4vci.kebabPopUp.triggerAutoBackup:invocation[0]';
     sendVcUpdated: 'PIN_CARD';
     sendWalletBindingSuccess: 'SHOW_BINDING_STATUS';
     setContext: 'GET_VC_RESPONSE' | 'STORE_RESPONSE';
@@ -130,10 +136,12 @@ export interface Typegen0 {
     isCustomSecureKeystore:
       | 'done.invoke.vc-item-openid4vci.addKeyPair:invocation[0]'
       | 'done.invoke.vc-item-openid4vci.addingWalletBindingId:invocation[0]';
+    isSignedIn: 'done.invoke.vc-item-openid4vci.kebabPopUp.triggerAutoBackup:invocation[0]';
   };
   eventsCausingServices: {
     addWalletBindnigId: 'done.invoke.vc-item-openid4vci.addKeyPair:invocation[0]';
     generateKeyPair: 'INPUT_OTP';
+    isUserSignedAlready: 'STORE_RESPONSE';
     requestBindingOtp: 'CONFIRM' | 'RESEND_OTP';
     updatePrivateKey: 'done.invoke.vc-item-openid4vci.addingWalletBindingId:invocation[0]';
   };
@@ -151,6 +159,7 @@ export interface Typegen0 {
     | 'kebabPopUp.removeWallet'
     | 'kebabPopUp.removingVc'
     | 'kebabPopUp.showActivities'
+    | 'kebabPopUp.triggerAutoBackup'
     | 'pinCard'
     | 'requestingBindingOtp'
     | 'showBindingWarning'
@@ -159,7 +168,12 @@ export interface Typegen0 {
     | 'updatingPrivateKey'
     | {
         acceptingBindingOtp?: 'idle' | 'resendOTP';
-        kebabPopUp?: 'idle' | 'removeWallet' | 'removingVc' | 'showActivities';
+        kebabPopUp?:
+          | 'idle'
+          | 'removeWallet'
+          | 'removingVc'
+          | 'showActivities'
+          | 'triggerAutoBackup';
       };
   tags: never;
 }

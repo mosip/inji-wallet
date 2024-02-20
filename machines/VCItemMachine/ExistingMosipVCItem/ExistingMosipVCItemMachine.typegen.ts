@@ -24,6 +24,11 @@ export interface Typegen0 {
       data: unknown;
       __tip: 'See the XState TS docs to learn how to strongly type this.';
     };
+    'done.invoke.vc-item.checkingServerData.downloadingCredential.triggerAutoBackupForVcDownload:invocation[0]': {
+      type: 'done.invoke.vc-item.checkingServerData.downloadingCredential.triggerAutoBackupForVcDownload:invocation[0]';
+      data: unknown;
+      __tip: 'See the XState TS docs to learn how to strongly type this.';
+    };
     'done.invoke.vc-item.checkingServerData.loadDownloadLimitConfig:invocation[0]': {
       type: 'done.invoke.vc-item.checkingServerData.loadDownloadLimitConfig:invocation[0]';
       data: unknown;
@@ -31,6 +36,11 @@ export interface Typegen0 {
     };
     'done.invoke.vc-item.checkingServerData.verifyingDownloadLimitExpiry:invocation[0]': {
       type: 'done.invoke.vc-item.checkingServerData.verifyingDownloadLimitExpiry:invocation[0]';
+      data: unknown;
+      __tip: 'See the XState TS docs to learn how to strongly type this.';
+    };
+    'done.invoke.vc-item.kebabPopUp.removingVc.triggerAutoBackup:invocation[0]': {
+      type: 'done.invoke.vc-item.kebabPopUp.removingVc.triggerAutoBackup:invocation[0]';
       data: unknown;
       __tip: 'See the XState TS docs to learn how to strongly type this.';
     };
@@ -116,6 +126,9 @@ export interface Typegen0 {
     checkStatus: 'done.invoke.checkStatus';
     downloadCredential: 'done.invoke.downloadCredential';
     generateKeyPair: 'done.invoke.vc-item.addKeyPair:invocation[0]';
+    isUserSignedAlready:
+      | 'done.invoke.vc-item.checkingServerData.downloadingCredential.triggerAutoBackupForVcDownload:invocation[0]'
+      | 'done.invoke.vc-item.kebabPopUp.removingVc.triggerAutoBackup:invocation[0]';
     loadDownloadLimitConfig: 'done.invoke.vc-item.checkingServerData.loadDownloadLimitConfig:invocation[0]';
     requestBindingOtp:
       | 'done.invoke.vc-item.acceptingBindingOtp.resendOTP:invocation[0]'
@@ -163,7 +176,7 @@ export interface Typegen0 {
       | 'done.invoke.vc-item.checkingServerData.loadDownloadLimitConfig:invocation[0]';
     logDownloaded: 'STORE_RESPONSE';
     logRevoked: 'STORE_RESPONSE';
-    logVCremoved: 'STORE_RESPONSE';
+    logVCremoved: 'done.invoke.vc-item.kebabPopUp.removingVc.triggerAutoBackup:invocation[0]';
     logWalletBindingFailure:
       | 'error.platform.vc-item.addKeyPair:invocation[0]'
       | 'error.platform.vc-item.addingWalletBindingId:invocation[0]'
@@ -173,8 +186,7 @@ export interface Typegen0 {
       | 'done.invoke.vc-item.addingWalletBindingId:invocation[0]'
       | 'done.invoke.vc-item.updatingPrivateKey:invocation[0]';
     markVcValid: 'done.invoke.vc-item.verifyingCredential:invocation[0]';
-    refreshMyVcs: 'STORE_RESPONSE';
-    removeTamperedVcItem: 'TAMPERED_VC';
+    refreshMyVcs: 'done.invoke.vc-item.kebabPopUp.removingVc.triggerAutoBackup:invocation[0]';
     removeVcFromInProgressDownloads: 'STORE_RESPONSE';
     removeVcItem: 'CONFIRM';
     removeVcMetaDataFromStorage: 'STORE_ERROR';
@@ -189,6 +201,9 @@ export interface Typegen0 {
     sendActivationSuccessEvent:
       | 'done.invoke.vc-item.addingWalletBindingId:invocation[0]'
       | 'done.invoke.vc-item.updatingPrivateKey:invocation[0]';
+    sendBackupEvent:
+      | 'done.invoke.vc-item.checkingServerData.downloadingCredential.triggerAutoBackupForVcDownload:invocation[0]'
+      | 'done.invoke.vc-item.kebabPopUp.removingVc.triggerAutoBackup:invocation[0]';
     sendDownloadLimitExpire:
       | 'FAILED'
       | 'error.platform.vc-item.checkingServerData.verifyingDownloadLimitExpiry:invocation[0]';
@@ -257,6 +272,9 @@ export interface Typegen0 {
       | 'done.invoke.vc-item.addKeyPair:invocation[0]'
       | 'done.invoke.vc-item.addingWalletBindingId:invocation[0]';
     isDownloadAllowed: 'POLL';
+    isSignedIn:
+      | 'done.invoke.vc-item.checkingServerData.downloadingCredential.triggerAutoBackupForVcDownload:invocation[0]'
+      | 'done.invoke.vc-item.kebabPopUp.removingVc.triggerAutoBackup:invocation[0]';
     isVcValid: '';
   };
   eventsCausingServices: {
@@ -267,6 +285,7 @@ export interface Typegen0 {
     checkStatus: 'done.invoke.vc-item.checkingServerData.verifyingDownloadLimitExpiry:invocation[0]';
     downloadCredential: 'DOWNLOAD_READY';
     generateKeyPair: 'INPUT_OTP';
+    isUserSignedAlready: 'STORE_RESPONSE';
     loadDownloadLimitConfig: 'STORE_RESPONSE';
     requestBindingOtp: 'CONFIRM' | 'RESEND_OTP';
     requestLock: 'INPUT_OTP';
@@ -288,6 +307,8 @@ export interface Typegen0 {
     | 'checkingServerData'
     | 'checkingServerData.checkingStatus'
     | 'checkingServerData.downloadingCredential'
+    | 'checkingServerData.downloadingCredential.idle'
+    | 'checkingServerData.downloadingCredential.triggerAutoBackupForVcDownload'
     | 'checkingServerData.loadDownloadLimitConfig'
     | 'checkingServerData.savingFailed'
     | 'checkingServerData.savingFailed.idle'
@@ -304,6 +325,7 @@ export interface Typegen0 {
     | 'kebabPopUp.idle'
     | 'kebabPopUp.removeWallet'
     | 'kebabPopUp.removingVc'
+    | 'kebabPopUp.removingVc.triggerAutoBackup'
     | 'kebabPopUp.showActivities'
     | 'lockingVc'
     | 'loggingRevoke'
@@ -327,9 +349,17 @@ export interface Typegen0 {
           | 'loadDownloadLimitConfig'
           | 'savingFailed'
           | 'verifyingDownloadLimitExpiry'
-          | {savingFailed?: 'idle' | 'viewingVc'};
+          | {
+              downloadingCredential?: 'idle' | 'triggerAutoBackupForVcDownload';
+              savingFailed?: 'idle' | 'viewingVc';
+            };
         invalid?: 'backend' | 'otp';
-        kebabPopUp?: 'idle' | 'removeWallet' | 'removingVc' | 'showActivities';
+        kebabPopUp?:
+          | 'idle'
+          | 'removeWallet'
+          | 'removingVc'
+          | 'showActivities'
+          | {removingVc?: 'triggerAutoBackup'};
       };
   tags: never;
 }

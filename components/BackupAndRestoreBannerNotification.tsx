@@ -20,8 +20,8 @@ export const BackupAndRestoreBannerNotification: React.FC = () => {
         type="error"
         message={translation}
         onClosePress={backUpController.DISMISS}
-        key={`backupFailure-${backUpController.backupErrorReason}`}
-        testId={`backupFailure-${backUpController.backupErrorReason}`}
+        key={`backupFailure-${backUpController.backupErrorReason}Popup`}
+        testId={`backupFailure-${backUpController.backupErrorReason}Popup`}
       />
     );
   }
@@ -34,10 +34,10 @@ export const BackupAndRestoreBannerNotification: React.FC = () => {
     return (
       <BannerNotification
         type="error"
-        key={`restoreFailure-${restoreController.restoreErrorReason}`}
+        key={`restoreFailure-${restoreController.restoreErrorReason}Popup`}
         message={translation}
         onClosePress={restoreController.DISMISS}
-        testId={`restoreFailure-${restoreController.restoreErrorReason}`}
+        testId={`restoreFailure-${restoreController.restoreErrorReason}Popup`}
       />
     );
   }
@@ -49,8 +49,8 @@ export const BackupAndRestoreBannerNotification: React.FC = () => {
           type="success"
           message={t('backupSuccessful')}
           onClosePress={backUpController.DISMISS}
-          key={'dataBackupSuccess'}
-          testId={'dataBackupSuccess'}
+          key={'dataBackupSuccessPopup'}
+          testId={'dataBackupSuccessPopup'}
         />
       )}
 
@@ -61,8 +61,8 @@ export const BackupAndRestoreBannerNotification: React.FC = () => {
           type="success"
           message={t('restoreSuccessful')}
           onClosePress={restoreController.DISMISS}
-          key={'restoreBackupSuccess'}
-          testId={'restoreBackupSuccess'}
+          key={'restoreBackupSuccessPopup'}
+          testId={'restoreBackupSuccessPopup'}
         />
       )}
       {restoreController.isBackUpRestoreFailure && restoreFailure()}
