@@ -636,7 +636,9 @@ export const scanMachine =
                 src: 'disconnect',
               },
             },
-            navigateToHistory: {},
+            navigateToHistory: {
+              always: '#scan.disconnected',
+            },
             verifyingIdentity: {
               on: {
                 FACE_VALID: {
