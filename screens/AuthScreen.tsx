@@ -60,6 +60,14 @@ export const AuthScreen: React.FC<RootRouteProps> = props => {
             margin="6 0">
             {t('Description')}
           </Text>
+          <Text
+            align="center"
+            style={{paddingTop: 3}}
+            weight="semibold"
+            color={Theme.Colors.GrayText}
+            margin="6 0">
+            {t('PasswordTypeDescription')}
+          </Text>
         </Column>
       </Column>
 

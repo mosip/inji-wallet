@@ -150,20 +150,6 @@ fileignoreconfig:
   - filename: components/BackupAndRestoreAllScreenBanner.tsx
     checksum: 2c98e7e83959c9dac4dd12da32f81483c3d334bd05e279637cf465475fbf54b8
     checksum: f26489ce4ac607884437ad06c3117cc34d6cbcbcd3dd5719790fbe01a0853ee5
-  - filename: locales/en.json
-    checksum: 3bc37ce3bab898761fb14d6ae284e5922ff14fb55eee7c5b5ced4326dd35ced2
-  - filename: locales/hin.json
-    checksum: 69bffc48c583a985ed6853988ca9f4a559adbdf14f4763f197e982a3684f3bad
-  - filename: locales/kan.json
-    checksum: f62d0d6cfd1454b396583ea7d0f438bcabd200c6af68f1327a7dfc3f5177d6d5
-  - filename: locales/ara.json
-    checksum: 89e413bc5884783f0601f8a22855f3da0cdd0ac9e9f80a1edd4e6a5fb10d94d4
-  - filename: locales/tam.json
-    checksum: 1beed968fa5d67d57961dbbaaade3596caaf543adb90847b40a558d0b50397bd
-  - filename: locales/spa.json
-    checksum: a03c5fa839d761f7bf5bbf0ea9bbd48da57116430a99e1d22f0e7184435d468c
-  - filename: locales/fil.json
-    checksum: 29193fd3b14b7332bf7a485f659197002f29a58af88ed0653cae262e7254c84d
   - filename: screens/Home/MyVcs/GetIdInputModal.tsx
     checksum: 067664e19817d3aba98b0cfa68ef57a04958a982ee23b96b612e4bf466a73890
   - filename: screens/PasscodeScreen.tsx
@@ -214,5 +200,19 @@ fileignoreconfig:
     checksum: 8133e2fefddfd0207eb7207b660d317f9a6acafbab6a65762d29ea86e33787cb
   - filename: components/BackupAndRestoreBannerNotification.tsx
     checksum: e465a9947727687d784d0cb9d8db1e28f765b0659bf4a3aa6d75643aa7b14102
+  - filename: locales/tam.json
+    checksum: 2e0a94e8436879df88f4db4d01d762b1876d9ad0a185b636b08604c14fabd276
+  - filename: locales/en.json
+    checksum: 3a2310bd317f648c62b086eb0e052169b4a7d0c7704e850f30af31b134b61eb8
+  - filename: locales/hin.json
+    checksum: 9bcb35aa80477dee2693782dcc754ecf4bb8263c661f606e4b2dd94b92770237
+  - filename: locales/fil.json
+    checksum: 38470cdc131dbe08367d172364f25eb8fc4b6c21f439c2386d1465c2c0458b17
+  - filename: locales/kan.json
+    checksum: 5d58cd2e78791d172c4fa1fbeae43e2fb0442b7636df1b66dcc44e359bf64ebd
+  - filename: locales/spa.json
+    checksum: f1e2fb6b775766ebdd6242d827c682b03976feacfe1c631684babefe547bac30
+  - filename: locales/ara.json
+    checksum: 2307491e5add44a4de6b9d292487e90e7093e97b0a8bf363c2e999a4b67baa24
   version: ""
 

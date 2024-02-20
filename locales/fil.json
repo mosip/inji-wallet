@@ -115,9 +115,10 @@
   },
   "AuthScreen": {
     "header": "Gusto mo bang gumamit ng biometrics upang i-unlock ang aplikasyon?",
-    "Description": "Gusto mo bang gumamit ng biometrics upang i-unlock ang application?",
+    "Description": "Para secure na i-unlock ang app, maaari mong i-set up ang alinman sa biometric authentication, gaya ng fingerprint o facial recognition o mag-opt para sa 6-digit na Passcode para sa mabilis na pag-access.",
+    "PasswordTypeDescription": "Piliin ang ‘Gumamit ng Biometrics’ para i-enable ang biometric authentication o ‘I’ll Do Later’ para mag-set up ng 6-digit na passcode.",
     "useBiometrics": "Gamitin ang biometrics",
-    "usePasscode": "Gumamit na lang ng passcode",
+    "usePasscode": "Gagawin Ko Mamaya",
     "errors": {
       "unavailable": "Hindi sinusuportahan ng device ang Biometrics",
       "unenrolled": "Upang magamit ang Biometrics, mangyaring i-enroll ang iyong fingerprint sa mga setting ng iyong device",
