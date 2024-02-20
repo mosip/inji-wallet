@@ -3,6 +3,7 @@ import {useBackupScreen} from '../screens/backupAndRestore/BackupController';
 import {BannerNotification} from './BannerNotification';
 import {useTranslation} from 'react-i18next';
 import {useBackupRestoreScreen} from '../screens/Settings/BackupRestoreController';
+import {BANNER_TYPE_SUCCESS, BANNER_TYPE_ERROR} from '../shared/constants';
 
 export const BackupAndRestoreBannerNotification: React.FC = () => {
   const backUpController = useBackupScreen();
@@ -17,7 +18,7 @@ export const BackupAndRestoreBannerNotification: React.FC = () => {
 
     return (
       <BannerNotification
-        type="error"
+        type={BANNER_TYPE_ERROR}
         message={translation}
         onClosePress={backUpController.DISMISS}
         key={`backupFailure-${backUpController.backupErrorReason}`}
@@ -33,7 +34,7 @@ export const BackupAndRestoreBannerNotification: React.FC = () => {
 
     return (
       <BannerNotification
-        type="error"
+        type={BANNER_TYPE_ERROR}
         key={`restoreFailure-${restoreController.restoreErrorReason}`}
         message={translation}
         onClosePress={restoreController.DISMISS}
@@ -46,7 +47,7 @@ export const BackupAndRestoreBannerNotification: React.FC = () => {
     <>
       {backUpController.isBackingUpSuccess && (
         <BannerNotification
-          type="success"
+          type={BANNER_TYPE_SUCCESS}
           message={t('backupSuccessful')}
           onClosePress={backUpController.DISMISS}
           key={'dataBackupSuccess'}
@@ -58,7 +59,7 @@ export const BackupAndRestoreBannerNotification: React.FC = () => {
 
       {restoreController.isBackUpRestoreSuccess && (
         <BannerNotification
-          type="success"
+          type={BANNER_TYPE_SUCCESS}
           message={t('restoreSuccessful')}
           onClosePress={restoreController.DISMISS}
           key={'restoreBackupSuccess'}

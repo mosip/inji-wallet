@@ -19,7 +19,6 @@ import {
 import {ScanEvents} from '../../machines/bleShare/scan/scanMachine';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
 import {RootRouteProps} from '../../routes';
-import * as InjiConstants from '../../constants/InjiConstants';
 
 type MyVcsTabNavigation = NavigationProp<RootRouteProps>;
 
@@ -71,7 +70,7 @@ export function useSendVcScreen() {
     GO_TO_HOME: () => {
       navigation.reset({
         index: 0,
-        routes: [{name: InjiConstants.ROUTE_MAIN}],
+        routes: [{name: 'Main'}],
       });
     },
   };
