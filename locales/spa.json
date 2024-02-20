@@ -337,7 +337,7 @@
       "verificationFailed": {
         "title" : "¡Ocurrió un error!",
         "goBackButton": "Regresa",
-        "technicalError": "Debido a un <Error técnico>, no pudimos descargar la tarjeta.",
+        "technicalError": "Debido a un Error técnico, no pudimos descargar la tarjeta.",
         "networkError": "Debido a una conexión a Internet inestable, no pudimos descargar la tarjeta. Por favor revise su conexion a internet."
       }
     }
