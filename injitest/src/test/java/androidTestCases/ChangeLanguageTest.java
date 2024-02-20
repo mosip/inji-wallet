@@ -285,23 +285,28 @@ public class ChangeLanguageTest extends AndroidBaseTest {
         
         settingsPage.clickOnInjiTourGuide();
 
-        assertEquals(welcomePage.verifyLanguageforWelcomePageLoaded(), "Ligtas na Pagbabahagi!");
-        assertEquals(welcomePage.getWelcomeDescription(), "Ibahagi at tumanggap ng card nang mabilis gamit ang camera ng iyong telepono upang mag-scan ng mga QR code");
+        assertEquals(welcomePage.verifyLanguageforWelcomePageLoaded(), "Maligayang pagdating!");
+        assertEquals(welcomePage.getWelcomeDescription(), "Panatilihin ang iyong digital na kredensyal sa iyo sa lahat ng oras. ");
         welcomePage.clickOnNextButton();
+
+        SecureSharingPage secureSharingPage = new SecureSharingPage(driver);
+        assertEquals(secureSharingPage.verifyLanguageforSecureSharingPageLoaded(), "Ligtas na Pagbabahagi");
+        assertEquals(secureSharingPage.getSecureSharingDescription(), "Ibahagi ang iyong mga card nang ligtas sa isang walang problemang paraan at mag-avail ng iba't ibang serbisyo.");
+        secureSharingPage.clickOnNextButton();
 
         TrustedDigitalWalletPage trustedDigitalWalletPage = new TrustedDigitalWalletPage(driver);
         assertEquals(trustedDigitalWalletPage.verifyLanguageforTrustedDigitalWalletPageLoaded(), "Pinagkakatiwalaang Digital Wallet");
-        assertEquals(trustedDigitalWalletPage.getTrustedDigitalWalletDescription(), "Panatilihin ang iyong digital na kredensyal sa iyo sa lahat ng oras");
+        assertEquals(trustedDigitalWalletPage.getTrustedDigitalWalletDescription(), "Itabi at dalhin ang lahat ng iyong mahahalagang card sa isang pinagkakatiwalaang wallet.");
         trustedDigitalWalletPage.clickOnNextButton();
 
-        SecureSharingPage secureSharingPage = new SecureSharingPage(driver);
-        assertEquals(secureSharingPage.verifyLanguageforSecureSharingPageLoaded(), "Mabilis na pagpasok");
-        assertEquals(secureSharingPage.getSecureSharingDescription(), "Kapag nabuo na, ang card ay ligtas na iniimbak sa iyong mobile.");
-        secureSharingPage.clickOnNextButton();
-
         HassleFreeAuthenticationPage hassleFreeAuthenticationPage = new HassleFreeAuthenticationPage(driver);
-        assertEquals(hassleFreeAuthenticationPage.verifyLanguageforHassleFreeAuthenticationPageLoaded(), "Walang problema sa pagpapatotoo");
+        assertEquals(hassleFreeAuthenticationPage.verifyLanguageforHassleFreeAuthenticationPageLoaded(), "Mabilis na pagpasok");
         assertEquals(hassleFreeAuthenticationPage.getHassleFreeAuthenticationDescription(), "I-authenticate ang iyong sarili nang madali gamit ang nakaimbak na digital na kredensyal.");
+        trustedDigitalWalletPage.clickOnNextButton();
+
+        BackupDataPage backupDataPage = new BackupDataPage(driver);
+        assertEquals(backupDataPage.verifyLanguageforBackupDataPageLoaded(), "Backup na Data");
+        assertEquals(backupDataPage.getBackupDataPageDescription(), "Protektahan ang iyong data nang madali gamit ang aming Backup");
         hassleFreeAuthenticationPage.clickOnGoBack();
         assertEquals(homePage.getShareButton(), "Ibahagi");
     }
@@ -335,23 +340,28 @@ public class ChangeLanguageTest extends AndroidBaseTest {
         
         settingsPage.clickOnInjiTourGuide();
 
-        assertEquals(welcomePage.verifyLanguageforWelcomePageLoaded(), "सुरक्षित साझाकरण!");
-        assertEquals(welcomePage.getWelcomeDescription(), "अपना डिजिटल क्रेडेंशियल हर समय अपने पास रखें। इंजी आपको उन्हें प्रभावी ढंग से प्रबंधित करने और उपयोग करने में मदद करता है। आरंभ करने के लिए, अपनी प्रोफ़ाइल में कार्ड जोड़ें।");
+        assertEquals(welcomePage.verifyLanguageforWelcomePageLoaded(), "स्वागत!");
+        assertEquals(welcomePage.getWelcomeDescription(), "अपना डिजिटल क्रेडेंशियल हर समय अपने पास रखें। ");
         welcomePage.clickOnNextButton();
-
-        TrustedDigitalWalletPage trustedDigitalWalletPage = new TrustedDigitalWalletPage(driver);
-        assertEquals(trustedDigitalWalletPage.verifyLanguageforTrustedDigitalWalletPageLoaded(), "विश्वसनीय डिजिटल वॉलेट");
-        assertEquals(trustedDigitalWalletPage.getTrustedDigitalWalletDescription(), "अपने सभी महत्वपूर्ण कार्डों को एक ही विश्वसनीय वॉलेट में रखें और रखें।");
-        trustedDigitalWalletPage.clickOnNextButton();
 
         SecureSharingPage secureSharingPage = new SecureSharingPage(driver);
         assertEquals(secureSharingPage.verifyLanguageforSecureSharingPageLoaded(), "सुरक्षित साझाकरण");
         assertEquals(secureSharingPage.getSecureSharingDescription(), "परेशानी मुक्त तरीके से अपने कार्ड सुरक्षित रूप से साझा करें और विभिन्न सेवाओं का लाभ उठाएं।");
         secureSharingPage.clickOnNextButton();
 
+        TrustedDigitalWalletPage trustedDigitalWalletPage = new TrustedDigitalWalletPage(driver);
+        assertEquals(trustedDigitalWalletPage.verifyLanguageforTrustedDigitalWalletPageLoaded(), "विश्वसनीय डिजिटल वॉलेट");
+        assertEquals(trustedDigitalWalletPage.getTrustedDigitalWalletDescription(), "अपने सभी महत्वपूर्ण कार्डों को एक ही विश्वसनीय वॉलेट में रखें और रखें।");
+        trustedDigitalWalletPage.clickOnNextButton();
+
         HassleFreeAuthenticationPage hassleFreeAuthenticationPage = new HassleFreeAuthenticationPage(driver);
-        assertEquals(hassleFreeAuthenticationPage.verifyLanguageforHassleFreeAuthenticationPageLoaded(), "परेशानी मुक्त प्रमाणीकरण");
+        assertEquals(hassleFreeAuthenticationPage.verifyLanguageforHassleFreeAuthenticationPageLoaded(), "त्वरित ऐक्सेस");
         assertEquals(hassleFreeAuthenticationPage.getHassleFreeAuthenticationDescription(), "संग्रहीत डिजिटल क्रेडेंशियल का उपयोग करके आसानी से स्वयं को प्रमाणित करें।");
+        trustedDigitalWalletPage.clickOnNextButton();
+
+        BackupDataPage backupDataPage = new BackupDataPage(driver);
+        assertEquals(backupDataPage.verifyLanguageforBackupDataPageLoaded(), "बैकअप डेटा");
+        assertEquals(backupDataPage.getBackupDataPageDescription(), "हमारे बैकअप का उपयोग करके आसानी से अपने डेटा को सुरक्षित रखें");
         hassleFreeAuthenticationPage.clickOnGoBack();
         assertEquals(homePage.getShareButton(), "शेयर करना");
     }
@@ -385,23 +395,29 @@ public class ChangeLanguageTest extends AndroidBaseTest {
         
         settingsPage.clickOnInjiTourGuide();
 
-        assertEquals(welcomePage.verifyLanguageforWelcomePageLoaded(), "பாதுகாப்பான பகிர்வு!");
-        assertEquals(welcomePage.getWelcomeDescription(), "உங்கள் டிஜிட்டல் நற்சான்றிதழை எப்போதும் உங்களுடன் வைத்திருக்கவும். அவற்றை திறம்பட நிர்வகிக்கவும் பயன்படுத்தவும் இன்ஜி உதவுகிறது. தொடங்குவதற்கு, உங்கள் சுயவிவரத்தில் கார்டுகளைச் சேர்க்கவும்.");
+        assertEquals(welcomePage.verifyLanguageforWelcomePageLoaded(), "வரவேற்பு!");
+        assertEquals(welcomePage.getWelcomeDescription(), "உங்கள் டிஜிட்டல் நற்சான்றிதழை எப்போதும் உங்களுடன் வைத்திருக்கவும். ");
         welcomePage.clickOnNextButton();
-
-        TrustedDigitalWalletPage trustedDigitalWalletPage = new TrustedDigitalWalletPage(driver);
-        assertEquals(trustedDigitalWalletPage.verifyLanguageforTrustedDigitalWalletPageLoaded(), "நம்பகமான டிஜிட்டல் வாலட்");
-        assertEquals(trustedDigitalWalletPage.getTrustedDigitalWalletDescription(), "உங்கள் முக்கியமான கார்டுகளை ஒரே நம்பகமான பணப்பையில் சேமித்து எடுத்துச் செல்லுங்கள்.");
-        trustedDigitalWalletPage.clickOnNextButton();
 
         SecureSharingPage secureSharingPage = new SecureSharingPage(driver);
         assertEquals(secureSharingPage.verifyLanguageforSecureSharingPageLoaded(), "பாதுகாப்பான பகிர்வு");
         assertEquals(secureSharingPage.getSecureSharingDescription(), "தொந்தரவு இல்லாத வகையில் உங்கள் கார்டுகளைப் பாதுகாப்பாகப் பகிர்ந்து, பல்வேறு சேவைகளைப் பெறுங்கள்.");
         secureSharingPage.clickOnNextButton();
 
+        TrustedDigitalWalletPage trustedDigitalWalletPage = new TrustedDigitalWalletPage(driver);
+        assertEquals(trustedDigitalWalletPage.verifyLanguageforTrustedDigitalWalletPageLoaded(), "நம்பகமான டிஜிட்டல் வாலட்");
+        assertEquals(trustedDigitalWalletPage.getTrustedDigitalWalletDescription(), "உங்கள் முக்கியமான கார்டுகளை ஒரே நம்பகமான பணப்பையில் சேமித்து எடுத்துச் செல்லுங்கள்.");
+        trustedDigitalWalletPage.clickOnNextButton();
+
         HassleFreeAuthenticationPage hassleFreeAuthenticationPage = new HassleFreeAuthenticationPage(driver);
-        assertEquals(hassleFreeAuthenticationPage.verifyLanguageforHassleFreeAuthenticationPageLoaded(), "தொந்தரவு இல்லாத அங்கீகாரம்");
+        assertEquals(hassleFreeAuthenticationPage.verifyLanguageforHassleFreeAuthenticationPageLoaded(), "விரைவான அணுகல்");
         assertEquals(hassleFreeAuthenticationPage.getHassleFreeAuthenticationDescription(), "சேமிக்கப்பட்ட டிஜிட்டல் நற்சான்றிதழைப் பயன்படுத்தி உங்களை எளிதாக அங்கீகரிக்கவும்.");
+        trustedDigitalWalletPage.clickOnNextButton();
+
+        BackupDataPage backupDataPage = new BackupDataPage(driver);
+        assertEquals(backupDataPage.verifyLanguageforBackupDataPageLoaded(), "காப்பு தரவு");
+        assertEquals(backupDataPage.getBackupDataPageDescription(), "எங்கள் காப்புப்பிரதியைப் பயன்படுத்தி உங்கள் தரவை எளிதாகப் பாதுகாக்கவும்");
+
         hassleFreeAuthenticationPage.clickOnGoBack(); 
         assertEquals(homePage.getShareButton(), "பகிர்");
     }
@@ -435,23 +451,28 @@ public class ChangeLanguageTest extends AndroidBaseTest {
         
         settingsPage.clickOnInjiTourGuide();
 
-        assertEquals(welcomePage.verifyLanguageforWelcomePageLoaded(), "ಸುರಕ್ಷಿತ ಹಂಚಿಕೆ!");
-        assertEquals(welcomePage.getWelcomeDescription(), "ನಿಮ್ಮ ಡಿಜಿಟಲ್ ರುಜುವಾತುಗಳನ್ನು ಯಾವಾಗಲೂ ನಿಮ್ಮೊಂದಿಗೆ ಇರಿಸಿಕೊಳ್ಳಿ. ಅವುಗಳನ್ನು ಪರಿಣಾಮಕಾರಿಯಾಗಿ ನಿರ್ವಹಿಸಲು ಮತ್ತು ಬಳಸಲು ಇಂಜಿ ನಿಮಗೆ ಸಹಾಯ ಮಾಡುತ್ತದೆ. ಪ್ರಾರಂಭಿಸಲು, ನಿಮ್ಮ ಪ್ರೊಫೈಲ್‌ಗೆ ಕಾರ್ಡ್‌ಗಳನ್ನು ಸೇರಿಸಿ.");
+        assertEquals(welcomePage.verifyLanguageforWelcomePageLoaded(), "ಸ್ವಾಗತ!");
+        assertEquals(welcomePage.getWelcomeDescription(), "ನಿಮ್ಮ ಡಿಜಿಟಲ್ ರುಜುವಾತುಗಳನ್ನು ಯಾವಾಗಲೂ ನಿಮ್ಮೊಂದಿಗೆ ಇರಿಸಿಕೊಳ್ಳಿ. ");
         welcomePage.clickOnNextButton();
-
-        TrustedDigitalWalletPage trustedDigitalWalletPage = new TrustedDigitalWalletPage(driver);
-        assertEquals(trustedDigitalWalletPage.verifyLanguageforTrustedDigitalWalletPageLoaded(), "ವಿಶ್ವಾಸಾರ್ಹ ಡಿಜಿಟಲ್ ವಾಲೆಟ್");
-        assertEquals(trustedDigitalWalletPage.getTrustedDigitalWalletDescription(), "ನಿಮ್ಮ ಎಲ್ಲಾ ಪ್ರಮುಖ ಕಾರ್ಡ್‌ಗಳನ್ನು ಒಂದೇ ವಿಶ್ವಾಸಾರ್ಹ ವ್ಯಾಲೆಟ್‌ನಲ್ಲಿ ಸಂಗ್ರಹಿಸಿ ಮತ್ತು ಒಯ್ಯಿರಿ.");
-        trustedDigitalWalletPage.clickOnNextButton();
 
         SecureSharingPage secureSharingPage = new SecureSharingPage(driver);
         assertEquals(secureSharingPage.verifyLanguageforSecureSharingPageLoaded(), "ಸುರಕ್ಷಿತ ಹಂಚಿಕೆ");
         assertEquals(secureSharingPage.getSecureSharingDescription(), "ನಿಮ್ಮ ಕಾರ್ಡ್‌ಗಳನ್ನು ಜಗಳ ಮುಕ್ತ ರೀತಿಯಲ್ಲಿ ಸುರಕ್ಷಿತವಾಗಿ ಹಂಚಿಕೊಳ್ಳಿ ಮತ್ತು ವಿವಿಧ ಸೇವೆಗಳನ್ನು ಪಡೆದುಕೊಳ್ಳಿ.");
         secureSharingPage.clickOnNextButton();
 
+        TrustedDigitalWalletPage trustedDigitalWalletPage = new TrustedDigitalWalletPage(driver);
+        assertEquals(trustedDigitalWalletPage.verifyLanguageforTrustedDigitalWalletPageLoaded(), "ವಿಶ್ವಾಸಾರ್ಹ ಡಿಜಿಟಲ್ ವಾಲೆಟ್");
+        assertEquals(trustedDigitalWalletPage.getTrustedDigitalWalletDescription(), "ನಿಮ್ಮ ಎಲ್ಲಾ ಪ್ರಮುಖ ಕಾರ್ಡ್‌ಗಳನ್ನು ಒಂದೇ ವಿಶ್ವಾಸಾರ್ಹ ವ್ಯಾಲೆಟ್‌ನಲ್ಲಿ ಸಂಗ್ರಹಿಸಿ ಮತ್ತು ಒಯ್ಯಿರಿ.");
+        trustedDigitalWalletPage.clickOnNextButton();
+
         HassleFreeAuthenticationPage hassleFreeAuthenticationPage = new HassleFreeAuthenticationPage(driver);
-        assertEquals(hassleFreeAuthenticationPage.verifyLanguageforHassleFreeAuthenticationPageLoaded(), "ಜಗಳ ಮುಕ್ತ ದೃಢೀಕರಣ");
+        assertEquals(hassleFreeAuthenticationPage.verifyLanguageforHassleFreeAuthenticationPageLoaded(), "ತ್ವರಿತ ಪ್ರವೇಶ");
         assertEquals(hassleFreeAuthenticationPage.getHassleFreeAuthenticationDescription(), "ಸಂಗ್ರಹಿಸಿದ ಡಿಜಿಟಲ್ ರುಜುವಾತುಗಳನ್ನು ಬಳಸಿಕೊಂಡು ಸುಲಭವಾಗಿ ನಿಮ್ಮನ್ನು ದೃಢೀಕರಿಸಿ.");
+        trustedDigitalWalletPage.clickOnNextButton();
+
+        BackupDataPage backupDataPage = new BackupDataPage(driver);
+        assertEquals(backupDataPage.verifyLanguageforBackupDataPageLoaded(), "ಬ್ಯಾಕಪ್ ಡೇಟಾ");
+        assertEquals(backupDataPage.getBackupDataPageDescription(), "ನಮ್ಮ ಬ್ಯಾಕಪ್ ಅನ್ನು ಬಳಸಿಕೊಂಡು ನಿಮ್ಮ ಡೇಟಾವನ್ನು ಸುಲಭವಾಗಿ ರಕ್ಷಿಸಿ");
         hassleFreeAuthenticationPage.clickOnGoBack();
         assertEquals(homePage.getShareButton(), "ಹಂಚಿಕೊಳ್ಳಿ");
     }

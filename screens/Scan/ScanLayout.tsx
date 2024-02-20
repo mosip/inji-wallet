@@ -6,16 +6,20 @@ import {useScanLayout} from './ScanLayoutController';
 import {ScanScreen} from './ScanScreen';
 import {ProgressingModal} from '../../components/ProgressingModal';
 import {SCAN_ROUTES} from '../../routes/routesConstants';
-import {SharingSuccessModal} from './SuccessfullySharedModal';
+import {SharingStatusModal} from './SharingStatusModal';
 import {Theme} from '../../components/ui/styleUtils';
 import {Icon} from 'react-native-elements';
 import {Loader} from '../../components/ui/Loader';
+import {Text} from '../../components/ui';
+import {I18nManager, View} from 'react-native';
+import {SvgImage} from '../../components/ui/svg';
 
 const ScanStack = createNativeStackNavigator();
 
 export const ScanLayout: React.FC = () => {
   const {t} = useTranslation('ScanScreen');
   const controller = useScanLayout();
+  const bleErrorCode = controller.bleError.code;
 
   if (
     controller.statusOverlay != null &&
@@ -68,19 +72,39 @@ export const ScanLayout: React.FC = () => {
         />
       </ScanStack.Navigator>
 
-      <SharingSuccessModal
+      <SharingStatusModal
         isVisible={controller.isAccepted}
         testId={'sharingSuccessModal'}
+        buttonStatus={'homeAndHistoryIcons'}
+        title={t('status.accepted.title')}
+        message={t('status.accepted.message')}
+        image={SvgImage.SuccessLogo()}
+        goToHome={controller.GOTO_HOME}
+        goToHistory={controller.GOTO_HISTORY}
       />
 
-      <ProgressingModal
+      <SharingStatusModal
         isVisible={controller.isDisconnected}
-        title={t('RequestScreen:status.disconnected.title')}
-        isHintVisible={true}
-        hint={t('RequestScreen:status.disconnected.message')}
-        onCancel={controller.DISMISS}
-        onRetry={controller.onRetry}
-        progress
+        testId={'walletSideSharingErrorModal'}
+        image={SvgImage.ErrorLogo()}
+        title={t('status.disconnected.title')}
+        message={t('status.disconnected.message')}
+        gradientButtonTitle={t('status.bleError.retry')}
+        clearButtonTitle={t('status.bleError.home')}
+        onGradientButton={controller.onRetry}
+        onClearButton={controller.GOTO_HOME}
+      />
+
+      <SharingStatusModal
+        isVisible={controller.isBleError}
+        testId={'walletSideSharingErrorModal'}
+        image={SvgImage.ErrorLogo()}
+        title={t(`status.bleError.${bleErrorCode}.title`)}
+        message={t(`status.bleError.${bleErrorCode}.message`)}
+        gradientButtonTitle={t('status.bleError.retry')}
+        clearButtonTitle={t('status.bleError.home')}
+        onGradientButton={controller.onRetry}
+        onClearButton={controller.GOTO_HOME}
       />
     </React.Fragment>
   );

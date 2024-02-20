@@ -1,16 +1,18 @@
 import {EventFrom, send, sendParent, StateFrom} from 'xstate';
 import {createModel} from 'xstate/lib/model';
-import {StoreEvents} from './store';
-import {VC} from '../types/VC/ExistingMosipVC/vc';
-import {AppServices} from '../shared/GlobalContext';
+import {StoreEvents} from '../store';
+import {VC} from '../../types/VC/ExistingMosipVC/vc';
+import {AppServices} from '../../shared/GlobalContext';
 import {log, respond} from 'xstate/lib/actions';
-import {ExistingMosipVCItemEvents} from './VCItemMachine/ExistingMosipVCItem/ExistingMosipVCItemMachine';
-import {MY_VCS_STORE_KEY, RECEIVED_VCS_STORE_KEY} from '../shared/constants';
-import {parseMetadatas, VCMetadata} from '../shared/VCMetadata';
-import {Protocols} from '../shared/openId4VCI/Utils';
-import {EsignetMosipVCItemEvents} from './VCItemMachine/EsignetMosipVCItem/EsignetMosipVCItemMachine';
-import {ActivityLogEvents} from './activityLog';
-import {ActivityLog} from '../components/ActivityLogEvent';
+import {ExistingMosipVCItemEvents} from './ExistingMosipVCItem/ExistingMosipVCItemMachine';
+import {MY_VCS_STORE_KEY, RECEIVED_VCS_STORE_KEY} from '../../shared/constants';
+import {parseMetadatas, VCMetadata} from '../../shared/VCMetadata';
+import {Protocols} from '../../shared/openId4VCI/Utils';
+import {EsignetMosipVCItemEvents} from './EsignetMosipVCItem/EsignetMosipVCItemMachine';
+import {ActivityLogEvents} from '../activityLog';
+import {ActivityLog} from '../../components/ActivityLogEvent';
+import Cloud, {isSignedInResult} from '../../shared/CloudBackupAndRestoreUtils';
+import {BackupEvents} from '../backupAndRestore/backup';
 
 const model = createModel(
   {
@@ -34,13 +36,11 @@ const model = createModel(
       VC_ADDED: (vcMetadata: VCMetadata) => ({vcMetadata}),
       REMOVE_VC_FROM_CONTEXT: (vcMetadata: VCMetadata) => ({vcMetadata}),
       VC_METADATA_UPDATED: (vcMetadata: VCMetadata) => ({vcMetadata}),
-      VC_RECEIVED: (vcMetadata: VCMetadata) => ({vcMetadata}),
       VC_DOWNLOADED: (vc: VC) => ({vc}),
       VC_DOWNLOADED_FROM_OPENID4VCI: (vc: VC, vcMetadata: VCMetadata) => ({
         vc,
         vcMetadata,
       }),
-      VC_UPDATE: (vc: VC) => ({vc}),
       REFRESH_MY_VCS: () => ({}),
       REFRESH_MY_VCS_TWO: (vc: VC) => ({vc}),
       REFRESH_RECEIVED_VCS: () => ({}),
@@ -61,6 +61,7 @@ const model = createModel(
         vcMetadata,
       }),
       RESET_VERIFY_ERROR: () => ({}),
+      REFRESH_VCS_METADATA: () => ({}),
     },
   },
 );
@@ -141,13 +142,7 @@ export const vcMachine =
             receivedVcs: {
               initial: 'idle',
               states: {
-                idle: {
-                  on: {
-                    REFRESH_RECEIVED_VCS: {
-                      target: 'refreshing',
-                    },
-                  },
-                },
+                idle: {},
                 refreshing: {
                   entry: 'loadReceivedVcs',
                   on: {
@@ -161,9 +156,6 @@ export const vcMachine =
             },
           },
           on: {
-            GET_RECEIVED_VCS: {
-              actions: 'getReceivedVcsResponse',
-            },
             GET_VC_ITEM: {
               actions: 'getVcItemResponse',
             },
@@ -191,21 +183,12 @@ export const vcMachine =
             VC_DOWNLOADED_FROM_OPENID4VCI: {
               actions: 'setDownloadedVCFromOpenId4VCI',
             },
-            VC_UPDATE: {
-              actions: 'setVcUpdate',
-            },
             RESET_WALLET_BINDING_SUCCESS: {
               actions: 'resetWalletBindingSuccess',
             },
-            VC_RECEIVED: [
-              {
-                actions: 'moveExistingVcToTop',
-                cond: 'hasExistingReceivedVc',
-              },
-              {
-                actions: 'prependToReceivedVcs',
-              },
-            ],
+            REFRESH_RECEIVED_VCS: {
+              target: '#vc.ready.receivedVcs.refreshing',
+            },
             TAMPERED_VC: {
               actions: 'setTamperedVcs',
               target: 'tamperedVCs',
@@ -235,8 +218,35 @@ export const vcMachine =
         tamperedVCs: {
           on: {
             REMOVE_TAMPERED_VCS: {
-              actions: ['removeTamperedVcs', 'logTamperedVCsremoved'],
-              target: '#vc.ready.myVcs.refreshing',
+              target: '.triggerAutoBackupForTamperedVcDeletion',
+            },
+          },
+          states: {
+            triggerAutoBackupForTamperedVcDeletion: {
+              invoke: {
+                src: 'isUserSignedAlready',
+                onDone: [
+                  {
+                    cond: 'isSignedIn',
+                    actions: 'sendBackupEvent',
+                    target: 'refreshVcsMetadata',
+                  },
+                  {
+                    target: 'refreshVcsMetadata',
+                  },
+                ],
+              },
+            },
+            refreshVcsMetadata: {
+              entry: ['logTamperedVCsremoved', send('REFRESH_VCS_METADATA')],
+              on: {
+                REFRESH_VCS_METADATA: {
+                  target: [
+                    '#vc.ready.myVcs.refreshing',
+                    '#vc.ready.receivedVcs.refreshing',
+                  ],
+                },
+              },
             },
           },
         },
@@ -256,13 +266,18 @@ export const vcMachine =
     },
     {
       actions: {
+        sendBackupEvent: send(BackupEvents.DATA_BACKUP(true), {
+          to: context => context.serviceRefs.backup,
+        }),
+
         getReceivedVcsResponse: respond(context => ({
           type: 'VC_RESPONSE',
           response: context.receivedVcs || [],
         })),
 
         getVcItemResponse: respond((context, event) => {
-          const vc = context.vcs[event.vcMetadata?.getVcKey()];
+          const vc =
+            context.vcs[VCMetadata.fromVC(event.vcMetadata)?.getVcKey()];
           if (event.protocol === Protocols.OpenId4VCI) {
             return EsignetMosipVCItemEvents.GET_VC_RESPONSE(vc);
           }
@@ -357,18 +372,6 @@ export const vcMachine =
               event.vc;
         },
 
-        setVcUpdate: (context, event) => {
-          Object.keys(context.vcs).map(vcUniqueId => {
-            const eventVCMetadata = VCMetadata.fromVC(event.vc);
-
-            if (vcUniqueId === eventVCMetadata.getVcKey()) {
-              context.vcs[eventVCMetadata.getVcKey()] = context.vcs[vcUniqueId];
-              delete context.vcs[vcUniqueId];
-              return context.vcs[eventVCMetadata.getVcKey()];
-            }
-          });
-        },
-
         setUpdatedVcMetadatas: send(
           _context => {
             return StoreEvents.SET(MY_VCS_STORE_KEY, _context.myVcs);
@@ -407,13 +410,6 @@ export const vcMachine =
           },
         ),
 
-        removeTamperedVcs: model.assign({
-          myVcs: (context, event) =>
-            context.myVcs.filter(
-              value => !context.tamperedVcs.some(item => item?.equals(value)),
-            ),
-        }),
-
         logTamperedVCsremoved: send(
           context =>
             ActivityLogEvents.LOG_ACTIVITY(ActivityLog.logTamperedVCs()),
@@ -434,31 +430,17 @@ export const vcMachine =
         resetWalletBindingSuccess: model.assign({
           walletBindingSuccess: false,
         }),
-
-        prependToReceivedVcs: model.assign({
-          receivedVcs: (context, event) => [
-            event.vcMetadata,
-            ...context.receivedVcs,
-          ],
-        }),
-
-        moveExistingVcToTop: model.assign({
-          receivedVcs: (context, event) => {
-            return [
-              event.vcMetadata,
-              ...context.receivedVcs.filter(value =>
-                value.equals(event.vcMetadata),
-              ),
-            ];
-          },
-        }),
       },
 
       guards: {
-        hasExistingReceivedVc: (context, event) =>
-          context.receivedVcs.find(vcMetadata =>
-            vcMetadata.equals(event.vcMetadata),
-          ) != null,
+        isSignedIn: (_context, event) =>
+          (event.data as isSignedInResult).isSignedIn,
+      },
+
+      services: {
+        isUserSignedAlready: () => async () => {
+          return await Cloud.isSignedInAlready();
+        },
       },
     },
   );

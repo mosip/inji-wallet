@@ -7,6 +7,7 @@ import {
   REQUEST_TIMEOUT,
 } from '../shared/constants';
 import {StoreEvents} from './store';
+import {BackupEvents} from './backupAndRestore/backup';
 import {AppServices} from '../shared/GlobalContext';
 import NetInfo from '@react-native-community/netinfo';
 import {
@@ -45,6 +46,7 @@ import {CACHED_API} from '../shared/api';
 import {request} from '../shared/request';
 import {BiometricCancellationError} from '../shared/error/BiometricCancellationError';
 import {VCMetadata} from '../shared/VCMetadata';
+import Cloud, {isSignedInResult} from '../shared/CloudBackupAndRestoreUtils';
 
 const model = createModel(
   {
@@ -384,6 +386,13 @@ export const IssuersMachine = model.createMachine(
           'storeVcMetaContext',
           'logDownloaded',
         ],
+        invoke: {
+          src: 'isUserSignedAlready',
+          onDone: {
+            cond: 'isSignedIn',
+            actions: ['sendBackupEvent'],
+          },
+        },
       },
       idle: {
         on: {
@@ -452,6 +461,9 @@ export const IssuersMachine = model.createMachine(
       getKeyPairFromStore: send(StoreEvents.GET(Issuers_Key_Ref), {
         to: context => context.serviceRefs.store,
       }),
+      sendBackupEvent: send(BackupEvents.DATA_BACKUP(true), {
+        to: context => context.serviceRefs.backup,
+      }),
       storeKeyPair: send(
         context => {
           return StoreEvents.SET(Issuers_Key_Ref, {
@@ -473,10 +485,10 @@ export const IssuersMachine = model.createMachine(
 
       storeVerifiableCredentialData: send(
         context =>
-          StoreEvents.SET(
-            getVCMetadata(context).getVcKey(),
-            context.credentialWrapper,
-          ),
+          StoreEvents.SET(getVCMetadata(context).getVcKey(), {
+            ...context.credentialWrapper,
+            vcMetadata: getVCMetadata(context),
+          }),
         {
           to: context => context.serviceRefs.store,
         },
@@ -597,6 +609,9 @@ export const IssuersMachine = model.createMachine(
       }),
     },
     services: {
+      isUserSignedAlready: () => async () => {
+        return await Cloud.isSignedInAlready();
+      },
       downloadIssuersList: async () => {
         return await CACHED_API.fetchIssuers();
       },
@@ -673,6 +688,8 @@ export const IssuersMachine = model.createMachine(
       },
     },
     guards: {
+      isSignedIn: (_context, event) =>
+        (event.data as isSignedInResult).isSignedIn,
       hasKeyPair: context => !!context.publicKey,
       isInternetConnected: (_, event) => !!event.data.isConnected,
       isOIDCflowCancelled: (_, event) => {

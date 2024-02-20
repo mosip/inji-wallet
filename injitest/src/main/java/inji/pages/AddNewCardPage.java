@@ -27,6 +27,9 @@ public class AddNewCardPage extends BasePage{
     @iOSXCUITFindBy(accessibility = "Continue")
     private WebElement continueButton;
 
+    @iOSXCUITFindBy(accessibility = "Cancel")
+    private WebElement cancelButton;
+
     @AndroidFindBy(accessibility = "issuersScreenDescription")
     @iOSXCUITFindBy(accessibility = "issuersScreenDescription")
     private WebElement addNewCardGuideMessage;
@@ -42,6 +45,10 @@ public class AddNewCardPage extends BasePage{
     @AndroidFindBy(className = "android.widget.EditText")
     @iOSXCUITFindBy(accessibility = "issuerSearchBar")
     private WebElement issuerSearchBar;
+
+    @AndroidFindBy(accessibility = "issuerHeading-Sunbird")
+    @iOSXCUITFindBy(accessibility = "issuerHeading-Sunbird")
+    private WebElement downloadViaSunbird;
     
     public AddNewCardPage(AppiumDriver driver) {
         super(driver);
@@ -100,6 +107,10 @@ public class AddNewCardPage extends BasePage{
     public void clickOnContinueButtonInSigninPopupIos(){
         clickOnElement(continueButton);
     }
+
+    public void clickOnCancelButtonInSigninPopupIos(){
+        clickOnElement(cancelButton);
+    }
     
     public void isBackButtonDisplayed() {
         backButton.isDisplayed();
@@ -136,4 +147,12 @@ public class AddNewCardPage extends BasePage{
     	clearTextBoxAndSendKeys(issuerSearchBar, text);
     }
 
+    public boolean isDownloadViaSunbirdDisplayed() {
+        return this.isElementDisplayed(downloadViaSunbird);
+    }
+    public SunbirdLoginPage clickOnDownloadViaSunbird(){
+        clickOnElement(downloadViaSunbird);
+        return new SunbirdLoginPage(driver);
+    }
 }
+

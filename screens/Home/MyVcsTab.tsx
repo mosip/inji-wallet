@@ -102,19 +102,13 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = props => {
       <Column fill style={{display: props.isVisible ? 'flex' : 'none'}}>
         {controller.isRequestSuccessful && (
           <BannerNotification
+            type="success"
             message={t('downloadingYourCard')}
             onClosePress={() => {
               controller.RESET_STORE_VC_ITEM_STATUS();
               clearIndividualId();
             }}
             testId={'downloadingVcPopup'}
-          />
-        )}
-        {controller.isBindingSuccess && (
-          <BannerNotification
-            message={t('activated')}
-            onClosePress={controller.DISMISS_WALLET_BINDING_NOTIFICATION_BANNER}
-            testId={'activatedVcPopup'}
           />
         )}
         <Column fill pY={11} pX={8}>
@@ -241,7 +235,6 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = props => {
           alignActionsOnEnd
           title={t('errors.verificationFailed.title')}
           message={verificationErrorMessage}
-          textButtonEvent={controller.RESET_VERIFY_ERROR}
           image={SvgImage.ErrorOccurred()}
           showClose={false}
           primaryButtonText="goBack"
@@ -255,12 +248,12 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = props => {
         <Error
           testID="networkOffError"
           isVisible={controller.isNetworkOff}
-          isModal={true}
+          isModal
           title={t('errors.noInternetConnection.title')}
           message={t('errors.noInternetConnection.message')}
           onDismiss={controller.DISMISS}
           image={SvgImage.NoInternetConnection()}
-          showClose={true}
+          showClose
           primaryButtonText="tryAgain"
           primaryButtonEvent={controller.TRY_AGAIN}
           primaryButtonTestID="tryAgain"

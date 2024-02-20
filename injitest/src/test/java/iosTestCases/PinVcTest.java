@@ -96,11 +96,13 @@ public class PinVcTest extends IosBaseTest {
         moreOptionsPage.clickOnPinOrUnPinCard();
 
         assertTrue(homePage.isPinIconDisplayed(), "Verify if pin icon on vc is displayed");
-
         SharePage scanPage=homePage.clickOnShareButton();
+        scanPage.acceptPermissionPopupBluetoothIos();
+        scanPage.acceptPermissionPopupCameraIos();
         
         assertTrue(scanPage.isCameraPageLoaded(), "Verify camera page is displayed");
         assertTrue(scanPage.isFlipCameraClickable(),"Verify if flip camera is enabled");
+        assertTrue(scanPage.isCameraOpen(),"Verify if camera is displayed");
     }
     
     @Test
@@ -128,20 +130,16 @@ public class PinVcTest extends IosBaseTest {
         assertTrue(addNewCardPage.isAddNewCardPageLoaded(), "Verify if add new card page is displayed");
         EsignetLoginPage esignetLoginPage =  addNewCardPage.clickOnDownloadViaEsignet();
 
-        assertTrue(esignetLoginPage.isEsignetLoginPageDisplayed(), "Verify if esignet login page displayed");
+        addNewCardPage.clickOnContinueButtonInSigninPopupIos();
+
         esignetLoginPage.clickOnEsignetLoginWithOtpButton();
-        
-        assertTrue(esignetLoginPage.isEnterYourVidTextDisplayed(), "Verify if enter your vid text is displayed");
         OtpVerificationPage otpVerification= esignetLoginPage.setEnterIdTextBox(TestDataReader.readData("uin"));
-        
         esignetLoginPage.clickOnGetOtpButton();
-        assertTrue(esignetLoginPage.isOtpHasSendMessageDisplayed(),"verify if otp page is displayed");
         
         otpVerification.enterOtpForEsignet(TestDataReader.readData("otp"), Target.IOS);
-        esignetLoginPage.clickOnVerifyButton();
+        esignetLoginPage.clickOnVerifyButtonIos();
         
         assertTrue(homePage.isNameDisplayed(TestDataReader.readData("fullName")), "Verify if full name is displayed");
-        
         MoreOptionsPage moreOptionsPage = homePage.clickOnMoreOptionsButton();
 
         assertTrue(moreOptionsPage.isMoreOptionsPageLoaded(), "Verify if more options page is displayed");
@@ -150,29 +148,20 @@ public class PinVcTest extends IosBaseTest {
         assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
          homePage.downloadCard();
 
-        assertTrue(addNewCardPage.isAddNewCardPageLoaded(), "Verify if add new card page is displayed");
-         addNewCardPage.clickOnDownloadViaEsignet();
+        RetrieveIdPage retrieveIdPage = addNewCardPage.clickOnDownloadViaUin();
+        assertTrue(retrieveIdPage.isRetrieveIdPageLoaded(), "Verify if retrieve id page is displayed");
+        retrieveIdPage.setEnterIdTextBox(TestDataReader.readData("uin2")).clickOnGenerateCardButton();
 
-        assertTrue(esignetLoginPage.isEsignetLoginPageDisplayed(), "Verify if esignet login page displayed");
-        esignetLoginPage.clickOnEsignetLoginWithOtpButton();
-        
-        assertTrue(esignetLoginPage.isEnterYourVidTextDisplayed(), "Verify if enter your vid text is displayed");
-        esignetLoginPage.setEnterIdTextBox(TestDataReader.readData("uin"));
-        
-        esignetLoginPage.clickOnGetOtpButton();
-        assertTrue(esignetLoginPage.isOtpHasSendMessageDisplayed(),"verify if otp page is displayed");
-        
-        otpVerification.enterOtpForEsignet(TestDataReader.readData("otp"), Target.IOS);
-        esignetLoginPage.clickOnVerifyButton();
+        assertTrue(otpVerification.isOtpVerificationPageLoaded(), "Verify if otp verification page is displayed");
+        otpVerification.enterOtp(BaseTestCase.getOtp(), Target.IOS);
 
-        assertTrue(homePage.isPinIconDisplayed(), "Verify if pin icon on vc is displayed");
         assertTrue(homePage.isSecondNameDisplayed(TestDataReader.readData("fullName")), "Verify if second card name is displayed");
-         homePage.clickOnMoreOptionsButton();
+        homePage.clickOnMoreOptionsButton();
 
         assertTrue(moreOptionsPage.isMoreOptionsPageLoaded(), "Verify if more options page is displayed");
         moreOptionsPage.clickOnPinOrUnPinCard();
-        
     }
+
     
     @Test
     public void verifyMessageAfterDenyBluetoothPopup() throws InterruptedException {
@@ -213,11 +202,8 @@ public class PinVcTest extends IosBaseTest {
 
         assertTrue(homePage.isPinIconDisplayed(), "Verify if pin icon on vc is displayed");
         SharePage scanPage=homePage.clickOnShareButton();
-        AndroidUtil.disableBluetooth();
-        
-        scanPage.denyPermissionPopupBluetooth();
-        assertEquals(scanPage.isBluetoothIsTurnedOffMessageDisplayed(),"bluetooth is turned off, please turn it on from quick settings menu");
+        scanPage.denyPermissionPopupBluetoothIos();
+        assertEquals(scanPage.isEnableBluetoothButtonButtonDisplayed(),"Allow bluetooth permissions");
         
     }
-    
 }

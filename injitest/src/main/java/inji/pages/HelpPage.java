@@ -22,8 +22,8 @@ public class HelpPage extends BasePage {
     @AndroidFindBy(uiAutomator = "new UiSelector().textContains(\"The Android keystore holds important information like private keys \")")
     private WebElement biometricIsChangeTextDescription;
 
-    @AndroidFindBy(uiAutomator = "new UiSelector().textContains(\"How to add a card?\")")
-    @iOSXCUITFindBy(accessibility = "How to add a card?")
+    @AndroidFindBy(uiAutomator = "new UiSelector().textContains(\"What is an ID?\")")
+    @iOSXCUITFindBy(accessibility = "What is an ID?")
     public WebElement helpPageContent;
 
     public HelpPage(AppiumDriver driver) {

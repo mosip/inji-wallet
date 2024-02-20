@@ -26,7 +26,7 @@ import {
 import getAllConfigurations, {
   DownloadProps,
 } from '../../../shared/commonprops/commonProps';
-import {VcEvents} from '../../vc';
+import {VcEvents} from '../vc';
 import i18n from '../../../i18n';
 import SecureKeystore from '@mosip/secure-keystore';
 import {VCMetadata} from '../../../shared/VCMetadata';
@@ -41,6 +41,10 @@ import {
 import {TelemetryConstants} from '../../../shared/telemetry/TelemetryConstants';
 
 import {API_URLS} from '../../../shared/api';
+import {BackupEvents} from '../../backupAndRestore/backup';
+import Cloud, {
+  isSignedInResult,
+} from '../../../shared/CloudBackupAndRestoreUtils';
 
 const model = createModel(
   {
@@ -69,7 +73,6 @@ const model = createModel(
     walletBindingResponse: null as WalletBindingResponse,
     tempWalletBindingIdResponse: null as WalletBindingResponse,
     walletBindingError: '',
-    walletBindingSuccess: false,
     publicKey: '',
     privateKey: '',
     isMachineInKebabPopupState: false,
@@ -167,7 +170,7 @@ export const ExistingMosipVCItemMachine =
               },
             ],
             TAMPERED_VC: {
-              actions: ['sendTamperedVc', 'removeTamperedVcItem'],
+              actions: 'sendTamperedVc',
             },
           },
         },
@@ -282,7 +285,6 @@ export const ExistingMosipVCItemMachine =
             },
             DISMISS: {
               target: 'checkingVc',
-              actions: 'resetWalletBindingSuccess',
             },
           },
         },
@@ -348,8 +350,29 @@ export const ExistingMosipVCItemMachine =
               entry: 'removeVcItem',
               on: {
                 STORE_RESPONSE: {
-                  actions: ['refreshMyVcs', 'logVCremoved'],
-                  target: '#vc-item',
+                  target: '.triggerAutoBackup',
+                },
+              },
+              states: {
+                triggerAutoBackup: {
+                  invoke: {
+                    src: 'isUserSignedAlready',
+                    onDone: [
+                      {
+                        cond: 'isSignedIn',
+                        actions: [
+                          'sendBackupEvent',
+                          'refreshMyVcs',
+                          'logVCremoved',
+                        ],
+                        target: '#vc-item',
+                      },
+                      {
+                        actions: ['refreshMyVcs', 'logVCremoved'],
+                        target: '#vc-item',
+                      },
+                    ],
+                  },
                 },
               },
             },
@@ -371,6 +394,7 @@ export const ExistingMosipVCItemMachine =
               },
             ],
           },
+          initial: 'idle',
           on: {
             STORE_RESPONSE: {
               actions: [
@@ -379,10 +403,28 @@ export const ExistingMosipVCItemMachine =
                 'sendTelemetryEvents',
                 'removeVcFromInProgressDownloads',
               ],
-              target: 'idle',
+              target: '.triggerAutoBackupForVcDownload',
             },
             STORE_ERROR: {
               target: '#vc-item.checkingServerData.savingFailed',
+            },
+          },
+          states: {
+            idle: {},
+            triggerAutoBackupForVcDownload: {
+              invoke: {
+                src: 'isUserSignedAlready',
+                onDone: [
+                  {
+                    cond: 'isSignedIn',
+                    actions: ['sendBackupEvent'],
+                    target: '#vc-item.idle',
+                  },
+                  {
+                    target: '#vc-item.idle',
+                  },
+                ],
+              },
             },
           },
         },
@@ -736,7 +778,7 @@ export const ExistingMosipVCItemMachine =
                 target: '#vc-item.kebabPopUp',
               },
               {
-                actions: 'setWalletBindingSuccess',
+                actions: 'sendWalletBindingSuccess',
                 target: 'idle',
               },
             ],
@@ -844,14 +886,6 @@ export const ExistingMosipVCItemMachine =
           bindingAuthFailedMessage: () => '',
         }),
 
-        setWalletBindingSuccess: assign({
-          walletBindingSuccess: true,
-        }),
-
-        resetWalletBindingSuccess: assign({
-          walletBindingSuccess: false,
-        }),
-
         sendWalletBindingSuccess: send(
           context => {
             return {
@@ -862,6 +896,10 @@ export const ExistingMosipVCItemMachine =
             to: context => context.serviceRefs.vc,
           },
         ),
+
+        sendBackupEvent: send(BackupEvents.DATA_BACKUP(true), {
+          to: context => context.serviceRefs.backup,
+        }),
 
         sendActivationStartEvent: context => {
           sendStartEvent(
@@ -884,7 +922,7 @@ export const ExistingMosipVCItemMachine =
 
         sendActivationFailedEndEvent: (context, event, meta) => {
           const [errorId, errorMessage] =
-            event.data.message === 'Could not store private key in keystore'
+            event.data?.message === 'Could not store private key in keystore'
               ? [
                   TelemetryConstants.ErrorId.updatePrivateKey,
                   TelemetryConstants.ErrorMessage.privateKeyUpdationFailed,
@@ -1220,16 +1258,6 @@ export const ExistingMosipVCItemMachine =
           {to: context => context.serviceRefs.store},
         ),
 
-        removeTamperedVcItem: send(
-          _context => {
-            return StoreEvents.REMOVE(
-              MY_VCS_STORE_KEY,
-              _context.vcMetadata.getVcKey(),
-            );
-          },
-          {to: context => context.serviceRefs.store},
-        ),
-
         logVCremoved: send(
           (context, _) =>
             ActivityLogEvents.LOG_ACTIVITY({
@@ -1246,6 +1274,10 @@ export const ExistingMosipVCItemMachine =
       },
 
       services: {
+        isUserSignedAlready: () => async () => {
+          return await Cloud.isSignedInAlready();
+        },
+
         loadDownloadLimitConfig: async context => {
           var resp = await getAllConfigurations();
           const maxLimit: number = resp.vcDownloadMaxRetry;
@@ -1497,6 +1529,8 @@ export const ExistingMosipVCItemMachine =
       },
 
       guards: {
+        isSignedIn: (_context, event) =>
+          (event.data as isSignedInResult).isSignedIn,
         hasCredential: (_, event) => {
           const vc =
             event.type === 'GET_VC_RESPONSE' ? event.vc : event.response;

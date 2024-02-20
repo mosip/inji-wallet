@@ -1,19 +1,15 @@
 import React from 'react';
-import {Platform, Pressable, Image} from 'react-native';
+import {Platform, Pressable} from 'react-native';
 import {Icon, ListItem, Switch} from 'react-native-elements';
 import {Column, Row, Text} from '../../components/ui';
 import {Theme} from '../../components/ui/styleUtils';
 import {MessageOverlay} from '../../components/MessageOverlay';
-
 import {useSettingsScreen} from './SettingScreenController';
 import {useTranslation} from 'react-i18next';
 import {LanguageSelector} from '../../components/LanguageSelector';
 import {ScrollView} from 'react-native-gesture-handler';
 import {Modal} from '../../components/ui/Modal';
-import {
-  CREDENTIAL_REGISTRY_EDIT,
-  BACKUP_AND_RESTORE,
-} from 'react-native-dotenv';
+import {CREDENTIAL_REGISTRY_EDIT} from 'react-native-dotenv';
 import {AboutInji} from './AboutInji';
 import {EditableListItem} from '../../components/EditableListItem';
 import {RequestRouteProps, RootRouteProps} from '../../routes';
@@ -21,8 +17,7 @@ import {ReceivedCards} from './ReceivedCards';
 import testIDProps from '../../shared/commonUtil';
 import {SvgImage} from '../../components/ui/svg';
 import {DataBackupAndRestore} from './DataBackupAndRestore';
-import {isAndroid} from '../../shared/constants';
-import {BackupAndRestoreAllScreenBanner} from '../../components/BackupAndRestoreAllScreenBanner';
+import {BannerNotificationContainer} from '../../components/BannerNotificationContainer';
 
 const LanguageSetting: React.FC = () => {
   const {t} = useTranslation('SettingScreen');
@@ -81,7 +76,7 @@ export const SettingScreen: React.FC<
         headerTitle={t('header')}
         headerElevation={2}
         onDismiss={controller.TOGGLE_SETTINGS}>
-        <BackupAndRestoreAllScreenBanner />
+        <BannerNotificationContainer />
         <ScrollView>
           <Column
             style={{display: Platform.OS !== 'ios' ? 'flex' : 'none'}}
@@ -166,9 +161,7 @@ export const SettingScreen: React.FC<
 
             <AboutInji appId={controller.appId} />
 
-            {BACKUP_AND_RESTORE === 'true' && isAndroid() && (
-              <DataBackupAndRestore />
-            )}
+            <DataBackupAndRestore />
 
             {CREDENTIAL_REGISTRY_EDIT === 'true' && (
               <EditableListItem

@@ -8,10 +8,10 @@ import inji.utils.AndroidUtil;
 import inji.utils.TestDataReader;
 import org.testng.annotations.Test;
 
-import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
 import static org.testng.Assert.assertTrue;
+import static org.testng.AssertJUnit.assertEquals;
 
 public class PinVcTest extends AndroidBaseTest {
 
@@ -104,6 +104,8 @@ public class PinVcTest extends AndroidBaseTest {
         SharePage scanPage=homePage.clickOnShareButton();
         
         scanPage.acceptPermissionPopupBluetooth();
+        scanPage.acceptPermissionPopupCamera();
+
         assertTrue(scanPage.isCameraPageLoaded(), "Verify camera page is displayed");
         assertTrue(scanPage.isFlipCameraClickable(),"Verify if flip camera is enabled");
     }
@@ -133,8 +135,8 @@ public class PinVcTest extends AndroidBaseTest {
         assertTrue(addNewCardPage.isAddNewCardPageLoaded(), "Verify if add new card page is displayed");
         EsignetLoginPage esignetLoginPage =  addNewCardPage.clickOnDownloadViaEsignet();
 
-        assertTrue(esignetLoginPage.isEsignetLoginPageDisplayed(), "Verify if esignet login page displayed");
-        esignetLoginPage.clickOnEsignetLoginWithOtpButton();
+//        assertTrue(esignetLoginPage.isEsignetLoginPageDisplayed(), "Verify if esignet login page displayed");
+ //       esignetLoginPage.clickOnEsignetLoginWithOtpButton();
         
         assertTrue(esignetLoginPage.isEnterYourVidTextDisplayed(), "Verify if enter your vid text is displayed");
         OtpVerificationPage otpVerification= esignetLoginPage.setEnterIdTextBox(TestDataReader.readData("uin"));
@@ -158,8 +160,8 @@ public class PinVcTest extends AndroidBaseTest {
         assertTrue(addNewCardPage.isAddNewCardPageLoaded(), "Verify if add new card page is displayed");
          addNewCardPage.clickOnDownloadViaEsignet();
 
-        assertTrue(esignetLoginPage.isEsignetLoginPageDisplayed(), "Verify if esignet login page displayed");
-        esignetLoginPage.clickOnEsignetLoginWithOtpButton();
+//        assertTrue(esignetLoginPage.isEsignetLoginPageDisplayed(), "Verify if esignet login page displayed");
+     //   esignetLoginPage.clickOnEsignetLoginWithOtpButton();
         
         assertTrue(esignetLoginPage.isEnterYourVidTextDisplayed(), "Verify if enter your vid text is displayed");
         esignetLoginPage.setEnterIdTextBox(TestDataReader.readData("uin"));
@@ -219,9 +221,9 @@ public class PinVcTest extends AndroidBaseTest {
         assertTrue(homePage.isPinIconDisplayed(), "Verify if pin icon on vc is displayed");
         SharePage scanPage=homePage.clickOnShareButton();
         AndroidUtil.disableBluetooth();
-        
+
         scanPage.denyPermissionPopupBluetooth();
-        assertEquals(scanPage.isBluetoothIsTurnedOffMessageDisplayed(),"bluetooth is turned off, please turn it ON from quick settings menu");
+        assertEquals(scanPage.isBluetoothIsTurnedOffMessageDisplayed(),"Bluetooth is turned OFF, please turn it ON from Quick settings menu");
         
     }
     

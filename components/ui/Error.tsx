@@ -1,13 +1,13 @@
 import {useFocusEffect} from '@react-navigation/native';
 import React, {Fragment} from 'react';
 import {useTranslation} from 'react-i18next';
-import {BackHandler, Dimensions, View, StyleSheet} from 'react-native';
+import {BackHandler, Dimensions, View} from 'react-native';
+import {ButtonProps as RNEButtonProps} from 'react-native-elements';
 import {Button, Column, Row, Text} from '.';
 import {Header} from './Header';
 import {Theme} from './styleUtils';
 import testIDProps from '../../shared/commonUtil';
 import {Modal} from './Modal';
-import {ButtonProps as RNEButtonProps} from 'react-native-elements';
 
 export const Error: React.FC<ErrorProps> = props => {
   const {t} = useTranslation('common');
@@ -16,7 +16,9 @@ export const Error: React.FC<ErrorProps> = props => {
       <Fragment>
         <View style={[{alignItems: 'center'}, props.customStyles]}>
           <View>
-            <Row align="center" style={Theme.ErrorStyles.image}>
+            <Row
+              align="center"
+              style={[Theme.ErrorStyles.image, props.customImageStyles]}>
               {props.image}
             </Row>
             <Text
@@ -29,13 +31,6 @@ export const Error: React.FC<ErrorProps> = props => {
               testID={`${props.testID}Message`}>
               {props.message}
             </Text>
-            {props.helpText && (
-              <Text
-                style={Theme.ErrorStyles.message}
-                testID={`${props.testID}HelpText`}>
-                {props.helpText}
-              </Text>
-            )}
           </View>
           {!props.alignActionsOnEnd && (
             <Fragment>
@@ -69,11 +64,11 @@ export const Error: React.FC<ErrorProps> = props => {
           )}
         </View>
         {props.alignActionsOnEnd && (
-          <Column fill crossAlign="center" align="flex-end" margin="0 0 16">
-            <Row style={{marginHorizontal: 30}}>
+          <Column fill crossAlign="center" align="flex-end" margin="0 0 30 0">
+            <Row style={{marginHorizontal: 30, marginBottom: 15}}>
               {props.primaryButtonText && (
                 <Button
-                  styles={{borderRadius: 9}}
+                  fill
                   onPress={props.primaryButtonEvent}
                   title={t(props.primaryButtonText)}
                   type="gradient"
@@ -100,7 +95,7 @@ export const Error: React.FC<ErrorProps> = props => {
   useFocusEffect(
     React.useCallback(() => {
       const onBackPress = () => {
-        props.textButtonEvent;
+        props.onDismiss && props.onDismiss();
         return true;
       };
 
@@ -118,11 +113,6 @@ export const Error: React.FC<ErrorProps> = props => {
       isVisible={props.isVisible}
       showClose={props.showClose}
       onDismiss={props.onDismiss}
-      style={{
-        ...Theme.ModalStyles.modal,
-        backgroundColor: Theme.Colors.whiteBackgroundColor,
-      }}
-      showClose={props.showClose}
       {...testIDProps(props.testID)}>
       <Column
         fill
@@ -158,6 +148,7 @@ Error.defaultProps = {
 export interface ErrorProps {
   testID: string;
   customStyles?: {};
+  customImageStyles?: {};
   goBackType?: RNEButtonProps['type'] | 'gradient';
   isModal?: boolean;
   isVisible: boolean;

@@ -82,6 +82,18 @@ public class HomePage extends BasePage {
     @iOSXCUITFindBy(accessibility = "Downloading your card, this can take upto 5 minutes")
     private WebElement downloadingVcPopup;
 
+    @iOSXCUITFindBy(accessibility = "fullNameTitle")
+    private WebElement fullNameTitle;
+
+    @AndroidFindBy(accessibility = "fullNameValue")
+    @iOSXCUITFindBy(accessibility = "fullNameValue")
+    private WebElement fullNameValue;
+
+    @AndroidFindBy(accessibility = "activationPending")
+    @iOSXCUITFindBy(accessibility = "activationPending")
+    private WebElement activationPending;
+
+
     public HomePage(AppiumDriver driver) {
         super(driver);
     }
@@ -210,6 +222,20 @@ public class HomePage extends BasePage {
     
     public boolean isDownloadingVcPopupDisplayed() {
         return this.isElementDisplayed(downloadingVcPopup);
+    }
+
+    public String getfullNameTitleText() {
+        return this.getTextFromLocator(fullNameTitle);
+    }
+    public String  getFullNameValue(){
+        return getTextFromLocator(fullNameValue);
+    }
+    public String GetIdTypeText() {
+        return this.getTextFromLocator(idTypeValue);
+    }
+
+    public String GetActivationPendingText() {
+        return this.getTextFromLocator(activationPending);
     }
 
 }

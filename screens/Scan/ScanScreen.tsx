@@ -12,7 +12,9 @@ import {useNavigation, NavigationProp} from '@react-navigation/native';
 import {MainBottomTabParamList} from '../../routes/main';
 import {BOTTOM_TAB_ROUTES} from '../../routes/routesConstants';
 import {isIOS} from '../../shared/constants';
-import {BackupAndRestoreAllScreenBanner} from '../../components/BackupAndRestoreAllScreenBanner';
+import {BannerNotificationContainer} from '../../components/BannerNotificationContainer';
+import {SharingStatusModal} from './SharingStatusModal';
+import {SvgImage} from '../../components/ui/svg';
 
 export const ScanScreen: React.FC = () => {
   type ScanScreenNavigation = NavigationProp<MainBottomTabParamList>;
@@ -185,40 +187,26 @@ export const ScanScreen: React.FC = () => {
   function displayInvalidQRpopup(): React.ReactNode {
     return (
       !controller.isEmpty && (
-        <MessageOverlay
-          testID="invalidQrPopup"
+        <SharingStatusModal
           isVisible={controller.selectIsInvalid}
-          minHeight={'auto'}
-          title={t('invalidQR')}
-          onBackdropPress={controller.DISMISS}>
-          <Row>
-            <Button
-              testID="cancel"
-              fill
-              type="clear"
-              title={t('common:cancel')}
-              onPress={() => navigation.navigate(BOTTOM_TAB_ROUTES.home)}
-              margin={[0, 8, 0, 0]}
-            />
-            <Button
-              testID="tryAgain"
-              fill
-              title={t('common:tryAgain')}
-              onPress={controller.DISMISS}
-            />
-          </Row>
-        </MessageOverlay>
+          testId={'invalidQrPopup'}
+          image={SvgImage.ErrorLogo()}
+          title={t(`status.bleError.TVW_CON_001.title`)}
+          message={t(`status.bleError.TVW_CON_001.message`)}
+          gradientButtonTitle={t('status.bleError.retry')}
+          clearButtonTitle={t('status.bleError.home')}
+          onGradientButton={controller.DISMISS}
+          onClearButton={controller.GOTO_HOME}
+        />
       )
     );
   }
 
   return (
-    <Column
-      fill
-      padding="24 0"
-      backgroundColor={Theme.Colors.whiteBackgroundColor}>
-      <BackupAndRestoreAllScreenBanner />
+    <Column fill backgroundColor={Theme.Colors.whiteBackgroundColor}>
+      <BannerNotificationContainer />
       <Centered
+        padding="24 0"
         align="space-evenly"
         backgroundColor={Theme.Colors.whiteBackgroundColor}>
         {loadQRScanner()}

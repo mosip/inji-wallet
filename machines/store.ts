@@ -12,7 +12,12 @@ import {
 import {createModel} from 'xstate/lib/model';
 import {generateSecureRandom} from 'react-native-securerandom';
 import {log} from 'xstate/lib/actions';
-import {isIOS, MY_VCS_STORE_KEY, SETTINGS_STORE_KEY} from '../shared/constants';
+import {
+  isIOS,
+  MY_VCS_STORE_KEY,
+  RECEIVED_VCS_STORE_KEY,
+  SETTINGS_STORE_KEY,
+} from '../shared/constants';
 import SecureKeystore from '@mosip/secure-keystore';
 import {
   AUTH_TIMEOUT,
@@ -463,7 +468,9 @@ export const storeMachine =
                 callback(model.events.BIOMETRIC_CANCELLED(event.requester));
                 sendUpdate();
               } else {
-                console.error(e);
+                console.error(
+                  `Error while performing the operation ${event.type} with storage - ${e}`,
+                );
                 callback(model.events.STORE_ERROR(e, event.requester));
               }
             }
@@ -609,9 +616,13 @@ export async function getItem(
       );
       throw new Error(tamperedErrorMessageString);
     } else {
+      console.debug(
+        `While getting item - ${key} from storage: data value is ${data} so returning the default value`,
+      );
       return defaultValue;
     }
   } catch (e) {
+    console.error(`Exception in getting item for ${key}: ${e}`);
     if (
       e.message.includes(tamperedErrorMessageString) ||
       e.message.includes(keyinvalidatedString) ||
@@ -635,7 +646,6 @@ export async function getItem(
         `Exception in getting item for ${key}: ${e}`,
       ),
     );
-    console.error(`Exception in getting item for ${key}: ${e}`);
     return defaultValue;
   }
 }
@@ -706,7 +716,18 @@ export async function removeItem(
   try {
     if (value === null && VCMetadata.isVCKey(key)) {
       await Storage.removeItem(key);
-      await removeVCMetaData(MY_VCS_STORE_KEY, key, encryptionKey);
+      const myVcs: VCMetadata[] = (await Storage.getItem(
+        MY_VCS_STORE_KEY,
+        encryptionKey,
+      )) as VCMetadata[];
+      const isTamperedVcInMyVCs = !!myVcs?.filter(
+        (vcMetadata: VCMetadata) => vcMetadata.getVcKey() === key,
+      ).length;
+      if (isTamperedVcInMyVCs) {
+        await removeVCMetaData(MY_VCS_STORE_KEY, key, encryptionKey);
+      } else {
+        await removeVCMetaData(RECEIVED_VCS_STORE_KEY, key, encryptionKey);
+      }
     } else if (key === MY_VCS_STORE_KEY) {
       const data = await Storage.getItem(key, encryptionKey);
       let list: Object[] = [];

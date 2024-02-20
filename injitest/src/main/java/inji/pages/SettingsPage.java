@@ -25,6 +25,9 @@ public class SettingsPage extends BasePage {
     @iOSXCUITFindBy(accessibility = "languageTitle")
     private WebElement languageButton;
 
+    @iOSXCUITFindBy(accessibility = "لغة")
+    private WebElement languageButtonInArabic;
+
     @AndroidFindBy(accessibility = "fil")
     @iOSXCUITFindBy(iOSClassChain = "**/XCUIElementTypeStaticText[`label == \"Filipino\"`]")
     private WebElement filipinoLanguageButton;
@@ -84,6 +87,15 @@ public class SettingsPage extends BasePage {
     @iOSXCUITFindBy(accessibility = "arrowLeft")
     private WebElement backButton;
 
+    @AndroidFindBy(accessibility = "dataBackupAndRestore")
+    @iOSXCUITFindBy(accessibility = "dataBackupAndRestore")
+    private WebElement dataBackupAndRestore;
+
+    @AndroidFindBy(accessibility = "newLabel")
+    @iOSXCUITFindBy(accessibility = "newLabel")
+    private WebElement newlable;
+
+
     public SettingsPage(AppiumDriver driver) {
         super(driver);
     }
@@ -105,6 +117,8 @@ public class SettingsPage extends BasePage {
         clickOnElement(languageButton);
         return this;
     }
+
+
 
     public void clickOnFilipinoLanguage() {
         clickOnElement(filipinoLanguageButton);
@@ -188,9 +202,31 @@ public class SettingsPage extends BasePage {
         clickOnElement(backButton);
         return this;
     }
+    public UnlockApplicationPage clickOnlanguageButtonInArabic() {
+        clickOnElement(languageButtonInArabic);
+        return new UnlockApplicationPage(driver);
+    }
+
     
     public UnlockApplicationPage clickOnArabicLanguageButton() {
         clickOnElement(arabicLanguageButton);
         return new UnlockApplicationPage(driver);
     }
+
+    public boolean isdataBackupAndRestoreDisplayed() {
+        return this.isElementDisplayed(dataBackupAndRestore);
+    }
+
+    public BackupAndRestorePage clickOnDataBackupAndRestoreButton() {
+        clickOnElement(dataBackupAndRestore);
+        return new BackupAndRestorePage(driver);
+    }
+
+    public boolean isNewlableDisplayed() {
+        return this.isElementDisplayed(newlable);
+    }
+    public String  getDataBackupAndRestoreText(){
+        return getTextFromLocator(dataBackupAndRestore);
+    }
+
 }

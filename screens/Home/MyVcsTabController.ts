@@ -11,7 +11,7 @@ import {
   selectIsTampered,
   selectDownloadingFailedVcs,
   selectVerificationErrorMessage,
-} from '../../machines/vc';
+} from '../../machines/VCItemMachine/vc';
 import {
   selectWalletBindingError,
   selectShowWalletBindingError,
