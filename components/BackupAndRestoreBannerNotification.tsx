@@ -45,6 +45,16 @@ export const BackupAndRestoreBannerNotification: React.FC = () => {
 
   return (
     <>
+      {backUpController.showBackupInProgress && (
+        <BannerNotification
+          type="info"
+          message={t('backupInProgress')}
+          onClosePress={backUpController.DISMISS_SHOW_BACKUP_IN_PROGRESS}
+          key={'dataBackupInProgress'}
+          testId={'dataBackupInProgress'}
+        />
+      )}
+
       {backUpController.isBackingUpSuccess && (
         <BannerNotification
           type={BANNER_TYPE_SUCCESS}
@@ -56,6 +66,16 @@ export const BackupAndRestoreBannerNotification: React.FC = () => {
       )}
 
       {backUpController.isBackingUpFailure && backupFailure()}
+
+      {restoreController.showRestoreInProgress && (
+        <BannerNotification
+          type="info"
+          message={t('restoreInProgress')}
+          onClosePress={restoreController.DISMISS_SHOW_RESTORE_IN_PROGRESS}
+          key={'restoreInProgress'}
+          testId={'restoreInProgress'}
+        />
+      )}
 
       {restoreController.isBackUpRestoreSuccess && (
         <BannerNotification
