@@ -555,7 +555,7 @@
     "postFaceCapture": {
       "captureSuccessMessage": "¡La verificación facial fue exitosa! Se inicia el intercambio de credenciales.",
       "captureFailureTitle": "¡Falló la verificación facial!",
-      "captureFailureMessage": "Asegúrese de que su cara sea claramente visible e intente tomar nuevamente."
+      "captureFailureMessage": "Asegúrese de que su cara sea claramente visible e intente tomarse una selfie nuevamente."
     }
   },
   "SelectVcOverlay": {

@@ -590,7 +590,7 @@
     "postFaceCapture": {
       "captureSuccessMessage": "Face Verification is successful! Credential sharing is initiated.",
       "captureFailureTitle": "Face verification failed!",
-      "captureFailureMessage": "Please ensure that your face is clearly visible and try taking again."
+      "captureFailureMessage": "Please ensure that your face is clearly visible and try taking selfie again."
     }
   },
   "SelectVcOverlay": {
