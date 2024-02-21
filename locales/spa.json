@@ -15,9 +15,7 @@
     "WALLET_BINDING_SUCCESSFULL": "La activación del {{idType}} {{id}} se ha realizado correctamente.",
     "WALLET_BINDING_FAILURE": "La activación del {{idType}} {{id}} ha fallado.",
     "VC_REMOVED": "Se ha eliminado el {{idType}} {{id}} de la cartera.",
-    "TAMPERED_VC_REMOVED": "Se ha eliminado el {{idType}} {{id}} de la cartera debido a manipulación.",
-    "NATIONAL_ID": "Identificación nacional",
-    "INSURANCE_ID": "Tarjeta de seguro"
+    "TAMPERED_VC_REMOVED": "Se ha eliminado el {{idType}} {{id}} de la cartera debido a manipulación."
   },
   "DeviceInfoList": {
     "requestedBy": "Solicitado por",

@@ -17,8 +17,6 @@ export type ActivityLogType =
   | 'VC_REMOVED'
   | 'TAMPERED_VC_REMOVED';
 
-export type ID_TYPE_KEY = 'NATIONAL_ID' | 'INSURANCE_ID';
-
 export class ActivityLog {
   id: string;
   idType: string;
@@ -59,7 +57,7 @@ export class ActivityLog {
 
 export function getActionText(activity: ActivityLog, t) {
   if (activity.idType && activity.idType !== '') {
-    let cardType = t(activity.idType);
+    let cardType = t(`VcDetails:${activity.idType}`);
     return `${t(activity.type, {idType: cardType, id: activity.id})}`;
   }
   return `${t(activity.type, {idType: '', id: activity.id})}`;

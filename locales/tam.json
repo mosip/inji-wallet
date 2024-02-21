@@ -15,9 +15,7 @@
     "WALLET_BINDING_SUCCESSFULL": "{{idType}} {{id}}  செயல்படுத்தல் வெற்றிகரமானது.",
     "WALLET_BINDING_FAILURE": "{{idType}} {{id}} செயல்படுத்தல் தோல்வியடைந்தது.",
     "VC_REMOVED": "{{idType}} {{id}} பணப்பையிலிருந்து நீக்கப்பட்டது.",
-    "TAMPERED_VC_REMOVED": "{{idType}} {{id}}  த篡றுத்தல் காரணமாக  பணப்பையிலிருந்து நீக்கப்பட்டது.",
-    "NATIONAL_ID": "தேசிய ஐடி",
-    "INSURANCE_ID": "காப்பீட்டு அட்டை"
+    "TAMPERED_VC_REMOVED": "{{idType}} {{id}}  த篡றுத்தல் காரணமாக  பணப்பையிலிருந்து நீக்கப்பட்டது."
   },
   "DeviceInfoList": {
     "requestedBy": "கோரியவர்",

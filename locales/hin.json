@@ -15,9 +15,7 @@
     "WALLET_BINDING_SUCCESSFULL": "{{idType}} {{id}} का सक्रियण सफल रहा।",
     "WALLET_BINDING_FAILURE": "{{idType}} {{id}} का सक्रियण विफल हो गया।",
     "VC_REMOVED": "{{idType}} {{id}} को वॉलेट से हटा दिया गया।",
-    "TAMPERED_VC_REMOVED": "{{idType}} {{id}} को छेड़छाड़ के कारण वॉलेट से हटा दिया गया।",
-    "NATIONAL_ID": "राष्ट्रीय पहचान पत्र",
-    "INSURANCE_ID": "बीमा कार्ड"
+    "TAMPERED_VC_REMOVED": "{{idType}} {{id}} को छेड़छाड़ के कारण वॉलेट से हटा दिया गया।"
   },
   "DeviceInfoList": {
     "requestedBy": "द्वारा अनुरोध किया गया",

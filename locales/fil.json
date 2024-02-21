@@ -15,9 +15,7 @@
     "WALLET_BINDING_SUCCESSFULL": "Ang pag-activate ng {{idType}} {{id}} ay matagumpay.",
     "WALLET_BINDING_FAILURE": "Nabigo ang pag-activate ng {{idType}} {{id}}.",
     "VC_REMOVED": "Ang {{idType}} {{id}} ay inalis sa wallet.",
-    "TAMPERED_VC_REMOVED": "Ang {{idType}} {{id}} ay inalis mula sa wallet dahil sa pakikialam.",
-    "NATIONAL_ID": "Pambansang ID",
-    "INSURANCE_ID": "Insurance Card"
+    "TAMPERED_VC_REMOVED": "Ang {{idType}} {{id}} ay inalis mula sa wallet dahil sa pakikialam."
   },
   "DeviceInfoList": {
     "requestedBy": "Hiniling ni",

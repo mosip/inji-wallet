@@ -11,13 +11,11 @@
     "VC_RECEIVED_BUT_PRESENCE_VERIFICATION_FAILED": "{{idType}} {{id}} ಸ್ವೀಕರಿಸಲಾಗಿದೆ ಆದರೆ ಹಾಜರಿ ಪರಿಶೀಲನೆ ವಿಫಲವಾಗಿದೆ.",
     "PRESENCE_VERIFIED_AND_VC_SHARED": "ಮುಖ ಪರಿಶೀಲನೆ ಯಶಸ್ವಿಯಾಗಿದೆ ಮತ್ತು {{idType}} {{id}} ಹಂಚಲಾಗಿದೆ.",
     "PRESENCE_VERIFICATION_FAILED": "{{idType}} {{id}} ಹಂಚಿಕೊಳ್ಳಲು ಪ್ರಯತ್ನಿಸುವಾಗ ಮುಖ ಪರಿಶೀಲನೆ ವಿಫಲವಾಗಿದೆ.",
-    "QRLOGIN_SUCCESFULL": "{{idType}} {{id}} ಬಳಸಿ QRLogin ಯಶಸ್ವಿಯಾಗಿದೆ.",
+    "QRLOGIN_SUCCESFULL": "{{idType}} {{id}} ಬಳಸಿ QRಲಾಗಿನ್ ಯಶಸ್ವಿಯಾಗಿದೆ.",
     "WALLET_BINDING_SUCCESSFULL": "{{idType}} {{id}} ಸಕ್ರಿಯಗೊಳಿಸುವಿಕೆ ಯಶಸ್ವಿಯಾಗಿದೆ.",
     "WALLET_BINDING_FAILURE": "{{idType}} {{id}} ಸಕ್ರಿಯಗೊಳಿಸುವಿಕೆ ವಿಫಲವಾಗಿದೆ.",
     "VC_REMOVED": "{{idType}} {{id}} ವಾಲೆಟ್‌ನಿಂದ ತೆಗೆದುಹಾಕಲಾಗಿದೆ.",
-    "TAMPERED_VC_REMOVED": "ತಿದ್ದುವಿಕೆಯಿಂದಾಗಿ {{idType}} {{id}} ಅನ್ನು ವ್ಯಾಲೆಟ್‌ನಿಂದ ತೆಗೆದುಹಾಕಲಾಗಿದೆ.",
-    "NATIONAL_ID": "ರಾಷ್ಟ್ರೀಯ ID",
-    "INSURANCE_ID": "ವಿಮಾ ಕಾರ್ಡ್"
+    "TAMPERED_VC_REMOVED": "ತಿದ್ದುವಿಕೆಯಿಂದಾಗಿ {{idType}} {{id}} ಅನ್ನು ವ್ಯಾಲೆಟ್‌ನಿಂದ ತೆಗೆದುಹಾಕಲಾಗಿದೆ."
   },
   "DeviceInfoList": {
     "requestedBy": "ವಿನಂತಿಸಿದವರು",

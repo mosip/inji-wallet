@@ -24,14 +24,16 @@ export const Issuers = {
 };
 
 /**
- * @param issuer the issuer of the VC as per the VC metadata in MMKV
+ * @param issuer of the VC as per the VC metadata in MMKV
  * @returns the ID-type to be used for further translation
+ *
+ * NOTE: This might be replaced by a more standards compliant way later.
  */
 export function getIdType(issuer: string | undefined): string {
   if (issuer === '' || issuer === Issuers.ESignet) {
-    return 'NATIONAL_ID';
+    return 'nationalCard';
   }
-  return 'INSURANCE_ID';
+  return 'insuranceCard';
 }
 
 export const ID_TYPE = {

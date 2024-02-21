@@ -15,9 +15,7 @@
     "WALLET_BINDING_SUCCESSFULL": "تم تفعيل {{idType}} {{id}} بنجاح.",
     "WALLET_BINDING_FAILURE": "فشل تفعيل {{idType}} {{id}}.",
     "VC_REMOVED": "تم إزالة {{idType}} {{id}} من المحفظة.",
-    "TAMPERED_VC_REMOVED": "تم إزالة {{idType}} {{id}} من المحفظة بسبب العبث.",
-    "NATIONAL_ID": "الهوية الوطنية",
-    "INSURANCE_ID": "بطاقة التأمين"
+    "TAMPERED_VC_REMOVED": "تم إزالة {{idType}} {{id}} من المحفظة بسبب العبث."
   },
   "DeviceInfoList": {
     "requestedBy": "مطلوب بواسطة",

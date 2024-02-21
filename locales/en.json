@@ -16,8 +16,6 @@
     "WALLET_BINDING_FAILURE": "Activation of {{idType}} {{id}} has failed.",
     "VC_REMOVED": "{{idType}} {{id}} is removed from wallet.",
     "TAMPERED_VC_REMOVED": "{{idType}} {{id}} is removed from from wallet due to tampering.",
-    "NATIONAL_ID": "National ID",
-    "INSURANCE_ID": "Insurance Card"
   },
 
   "DeviceInfoList": {
