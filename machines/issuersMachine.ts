@@ -59,7 +59,7 @@ const model = createModel(
     verifiableCredential: null as VerifiableCredential | null,
     credentialWrapper: {} as CredentialWrapper,
     serviceRefs: {} as AppServices,
-
+    verificationErrorMessage: '',
     publicKey: ``,
     privateKey: ``,
   },
@@ -75,6 +75,7 @@ const model = createModel(
       CANCEL: () => ({}),
       STORE_RESPONSE: (response?: unknown) => ({response}),
       STORE_ERROR: (error: Error, requester?: string) => ({error, requester}),
+      RESET_VERIFY_ERROR: () => ({}),
     },
   },
 );
@@ -361,15 +362,26 @@ export const IssuersMachine = model.createMachine(
           onError: [
             {
               actions: [
-                log((_, event) => (event.data as Error).message),
+                log('Verification Error.'),
+                'resetLoadingReason',
+                'updateVerificationErrorMessage',
                 'sendErrorEndEvent',
               ],
               //TODO: Move to state according to the required flow when verification of VC fails
-              target: 'idle',
+              target: 'handleVCVerificationFailure',
             },
           ],
         },
       },
+
+      handleVCVerificationFailure: {
+        on: {
+          RESET_VERIFY_ERROR: {
+            actions: ['resetVerificationErrorMessage'],
+          },
+        },
+      },
+
       storing: {
         description: 'all the verified credential is stored.',
         entry: [
@@ -583,6 +595,15 @@ export const IssuersMachine = model.createMachine(
           ),
         );
       },
+
+      updateVerificationErrorMessage: assign({
+        verificationErrorMessage: (context, event) =>
+          (event.data as Error).message,
+      }),
+
+      resetVerificationErrorMessage: model.assign({
+        verificationErrorMessage: (_context, event) => '',
+      }),
     },
     services: {
       isUserSignedAlready: () => async () => {
@@ -655,7 +676,12 @@ export const IssuersMachine = model.createMachine(
         ) {
           return true;
         }
-        return verifyCredential(context.verifiableCredential?.credential);
+        const verificationResult = await verifyCredential(
+          context.verifiableCredential?.credential,
+        );
+        if (!verificationResult.isVerified) {
+          throw new Error(verificationResult.errorMessage);
+        }
       },
     },
     guards: {
@@ -734,6 +760,10 @@ export function selectIsIdle(state: State) {
 
 export function selectStoring(state: State) {
   return state.matches('storing');
+}
+
+export function selectVerificationErrorMessage(state: State) {
+  return state.context.verificationErrorMessage;
 }
 
 export interface logoType {
