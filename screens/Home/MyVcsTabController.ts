@@ -113,10 +113,6 @@ export function useMyVcsTab(props: HomeScreenTabProps) {
     DELETE_VC: () => vcService?.send(VcEvents.DELETE_VC()),
     RESET_VERIFY_ERROR: () => {
       vcService?.send(VcEvents.RESET_VERIFY_ERROR());
-      navigation.reset({
-        index: 0,
-        routes: [{name: 'Main'}],
-      });
     },
   };
 }
