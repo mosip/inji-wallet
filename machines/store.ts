@@ -709,26 +709,6 @@ export async function updateItem(
   }
 }
 
-export async function removeItemMetaData(key: string, encryptionKey: string) {
-  try {
-    const myVcs: VCMetadata[] = (await Storage.getItem(
-      MY_VCS_STORE_KEY,
-      encryptionKey,
-    )) as VCMetadata[];
-    const isTamperedVcInMyVCs = !!myVcs?.filter(
-      (vcMetadata: VCMetadata) => vcMetadata.getVcKey() === key,
-    ).length;
-    if (isTamperedVcInMyVCs) {
-      await removeVCMetaData(MY_VCS_STORE_KEY, key, encryptionKey);
-    } else {
-      await removeVCMetaData(RECEIVED_VCS_STORE_KEY, key, encryptionKey);
-    }
-  } catch (e) {
-    console.error('error remove Item metadata:', e);
-    throw e;
-  }
-}
-
 export async function removeItem(
   key: string,
   value: string,
@@ -791,17 +771,22 @@ export async function removeTamperedVcMetaData(
   encryptionKey: string,
 ) {
   try {
-    const myVcs = await Storage.getItem(MY_VCS_STORE_KEY, encryptionKey);
-    let list: Object[] = [];
+    const myVcsMetadata = await Storage.getItem(
+      MY_VCS_STORE_KEY,
+      encryptionKey,
+    );
+    let myVcsDecryptedMetadata: Object[] = [];
 
-    if (myVcs != null) {
-      const decryptedData = await decryptJson(encryptionKey, myVcs);
-      list = JSON.parse(decryptedData) as Object[];
+    if (myVcsMetadata != null) {
+      const decryptedData = await decryptJson(encryptionKey, myVcsMetadata);
+      myVcsDecryptedMetadata = JSON.parse(decryptedData) as Object[];
     }
 
-    const isTamperedVcInMyVCs = list.filter((vcMetadataObject: Object) => {
-      return new VCMetadata(vcMetadataObject).getVcKey() !== key;
-    });
+    const isTamperedVcInMyVCs = myVcsDecryptedMetadata.filter(
+      (vcMetadataObject: Object) => {
+        return new VCMetadata(vcMetadataObject).getVcKey() === key;
+      },
+    );
     if (isTamperedVcInMyVCs) {
       await removeVCMetaData(MY_VCS_STORE_KEY, key, encryptionKey);
     } else {
