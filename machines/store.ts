@@ -630,7 +630,6 @@ export async function getItem(
       e instanceof BiometricCancellationError ||
       e.message.includes('Key not found') // this error happens when previous get Item calls failed due to key invalidation and data and keys are deleted
     ) {
-      removeTamperedVcMetaData(key, encryptionKey);
       sendErrorEvent(
         getErrorEventData(
           TelemetryConstants.FlowType.fetchData,
