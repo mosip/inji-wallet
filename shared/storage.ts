@@ -257,17 +257,14 @@ class Storage {
     const file: ReadDirItem[] = await fileStorage.getAllFilesInDirectory(
       `${DocumentDirectoryPath}/inji/VC/`,
     );
-    const isGreaterThan = function (fName: string, ts: number): boolean {
+    const isGreaterThanEq = function (fName: string, ts: number): boolean {
       fName = fName.split('.')[0];
       const curr = fName.split('_')[1];
-      console.log(
-        `>> curr timestamp for ${fName}: ${parseInt(curr) > cutOffTimestamp}`,
-      );
-      return parseInt(curr) > cutOffTimestamp;
+      return parseInt(curr) >= ts;
     };
     for (let i = 0; i < file.length; i++) {
       const f = file[i];
-      if (isGreaterThan(f.name, cutOffTimestamp)) {
+      if (isGreaterThanEq(f.name, cutOffTimestamp)) {
         await fileStorage.removeItem(f.path);
       }
     }
