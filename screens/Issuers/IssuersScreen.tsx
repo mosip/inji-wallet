@@ -41,6 +41,12 @@ export const IssuersScreen: React.FC<
   const [tapToSearch, setTapToSearch] = useState(false);
   const [clearSearchIcon, setClearSearchIcon] = useState(false);
 
+  const isVerificationFailed = controller.verificationErrorMessage !== '';
+
+  const verificationErrorMessage = t(
+    `MyVcsTab:errors.verificationFailed.${controller.verificationErrorMessage}`,
+  );
+
   useLayoutEffect(() => {
     if (controller.loadingReason || controller.errorMessageType) {
       props.navigation.setOptions({
@@ -133,6 +139,25 @@ export const IssuersScreen: React.FC<
       setClearSearchIcon(false);
     }
   };
+
+  if (isVerificationFailed) {
+    return (
+      <Error
+        testID="verificationError"
+        isVisible={isVerificationFailed}
+        isModal={true}
+        alignActionsOnEnd
+        title={t('MyVcsTab:errors.verificationFailed.title')}
+        message={verificationErrorMessage}
+        image={SvgImage.PermissionDenied()}
+        showClose={false}
+        primaryButtonText="goBack"
+        primaryButtonEvent={controller.RESET_VERIFY_ERROR}
+        primaryButtonTestID="goBack"
+        customStyles={{marginTop: '30%'}}
+      />
+    );
+  }
 
   if (controller.isBiometricsCancelled) {
     return (

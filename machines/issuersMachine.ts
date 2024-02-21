@@ -75,6 +75,7 @@ const model = createModel(
       CANCEL: () => ({}),
       STORE_RESPONSE: (response?: unknown) => ({response}),
       STORE_ERROR: (error: Error, requester?: string) => ({error, requester}),
+      RESET_VERIFY_ERROR: () => ({}),
     },
   },
 );
@@ -374,7 +375,11 @@ export const IssuersMachine = model.createMachine(
       },
 
       handleVCVerificationFailure: {
-        entry: 'sendVerificationError',
+        on: {
+          RESET_VERIFY_ERROR: {
+            actions: ['resetVerificationErrorMessage'],
+          },
+        },
       },
 
       storing: {
@@ -590,22 +595,14 @@ export const IssuersMachine = model.createMachine(
           ),
         );
       },
-      sendVerificationError: send(
-        (context, event) => {
-          return {
-            type: 'VERIFY_VC_FAILED',
-            errorMessage: context.verificationErrorMessage,
-            vcMetadata: getVCMetadata(context),
-          };
-        },
-        {
-          to: context => context.serviceRefs.vc,
-        },
-      ),
 
       updateVerificationErrorMessage: assign({
         verificationErrorMessage: (context, event) =>
-          'Due to <Technical Error>, we were unable to download the card.',
+          (event.data as Error).message,
+      }),
+
+      resetVerificationErrorMessage: model.assign({
+        verificationErrorMessage: (_context, event) => '',
       }),
     },
     services: {
@@ -763,6 +760,10 @@ export function selectIsIdle(state: State) {
 
 export function selectStoring(state: State) {
   return state.matches('storing');
+}
+
+export function selectVerificationErrorMessage(state: State) {
+  return state.context.verificationErrorMessage;
 }
 
 export interface logoType {
