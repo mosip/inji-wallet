@@ -787,11 +787,12 @@ export const ExistingMosipVCItemMachine =
         }),
 
         setStoreVerifiableCredential: model.assign((context, event) => {
+          const eventResponse = event?.response ? event.response : event?.vc;
           return {
             ...context,
-            ...event.vc,
+            ...eventResponse,
             storeVerifiableCredential: {
-              ...event.vc.verifiableCredential,
+              ...eventResponse.verifiableCredential,
             },
             verifiableCredential: null,
             vcMetadata: context.vcMetadata,
