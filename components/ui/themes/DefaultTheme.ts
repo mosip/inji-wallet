@@ -26,7 +26,7 @@ const Colors = {
   platinumGrey: '#EDEDED',
   Orange: '#F2811D',
   Blue: '#0000FF',
-  LightGrey: '#F7F7F7',
+  LightGrey: '#F8F8F8',
   ShadeOfGrey: '#6F6F6F',
   mediumDarkGrey: '#7B7B7B',
   White: '#FFFFFF',

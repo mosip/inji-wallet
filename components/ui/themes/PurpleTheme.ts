@@ -27,7 +27,7 @@ const Colors = {
   Orange: '#F2811D',
   Blue: '#0000FF',
   LightOrange: '#FDF1E6',
-  LightGrey: '#FAF9FF',
+  LightGrey: '#F8F8F8',
   ShadeOfGrey: '#6F6F6F',
   mediumDarkGrey: '#7B7B7B',
   White: '#FFFFFF',
