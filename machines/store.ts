@@ -630,6 +630,7 @@ export async function getItem(
       e instanceof BiometricCancellationError ||
       e.message.includes('Key not found') // this error happens when previous get Item calls failed due to key invalidation and data and keys are deleted
     ) {
+      removeTamperedVcMetaData(key, encryptionKey);
       sendErrorEvent(
         getErrorEventData(
           TelemetryConstants.FlowType.fetchData,
@@ -708,6 +709,26 @@ export async function updateItem(
   }
 }
 
+export async function removeItemMetaData(key: string, encryptionKey: string) {
+  try {
+    const myVcs: VCMetadata[] = (await Storage.getItem(
+      MY_VCS_STORE_KEY,
+      encryptionKey,
+    )) as VCMetadata[];
+    const isTamperedVcInMyVCs = !!myVcs?.filter(
+      (vcMetadata: VCMetadata) => vcMetadata.getVcKey() === key,
+    ).length;
+    if (isTamperedVcInMyVCs) {
+      await removeVCMetaData(MY_VCS_STORE_KEY, key, encryptionKey);
+    } else {
+      await removeVCMetaData(RECEIVED_VCS_STORE_KEY, key, encryptionKey);
+    }
+  } catch (e) {
+    console.error('error remove Item metadata:', e);
+    throw e;
+  }
+}
+
 export async function removeItem(
   key: string,
   value: string,
@@ -716,18 +737,7 @@ export async function removeItem(
   try {
     if (value === null && VCMetadata.isVCKey(key)) {
       await Storage.removeItem(key);
-      const myVcs: VCMetadata[] = (await Storage.getItem(
-        MY_VCS_STORE_KEY,
-        encryptionKey,
-      )) as VCMetadata[];
-      const isTamperedVcInMyVCs = !!myVcs?.filter(
-        (vcMetadata: VCMetadata) => vcMetadata.getVcKey() === key,
-      ).length;
-      if (isTamperedVcInMyVCs) {
-        await removeVCMetaData(MY_VCS_STORE_KEY, key, encryptionKey);
-      } else {
-        await removeVCMetaData(RECEIVED_VCS_STORE_KEY, key, encryptionKey);
-      }
+      removeTamperedVcMetaData(key, encryptionKey);
     } else if (key === MY_VCS_STORE_KEY) {
       const data = await Storage.getItem(key, encryptionKey);
       let list: Object[] = [];
@@ -772,6 +782,33 @@ export async function removeVCMetaData(
     await setItem(key, newList, encryptionKey);
   } catch (e) {
     console.error('error remove VC metadata:', e);
+    throw e;
+  }
+}
+
+export async function removeTamperedVcMetaData(
+  key: string,
+  encryptionKey: string,
+) {
+  try {
+    const myVcs = await Storage.getItem(MY_VCS_STORE_KEY, encryptionKey);
+    let list: Object[] = [];
+
+    if (myVcs != null) {
+      const decryptedData = await decryptJson(encryptionKey, myVcs);
+      list = JSON.parse(decryptedData) as Object[];
+    }
+
+    const isTamperedVcInMyVCs = list.filter((vcMetadataObject: Object) => {
+      return new VCMetadata(vcMetadataObject).getVcKey() !== key;
+    });
+    if (isTamperedVcInMyVCs) {
+      await removeVCMetaData(MY_VCS_STORE_KEY, key, encryptionKey);
+    } else {
+      await removeVCMetaData(RECEIVED_VCS_STORE_KEY, key, encryptionKey);
+    }
+  } catch (e) {
+    console.error('error while removing VC item metadata:', e);
     throw e;
   }
 }
