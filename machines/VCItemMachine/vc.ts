@@ -241,10 +241,7 @@ export const vcMachine =
               entry: ['logTamperedVCsremoved', send('REFRESH_VCS_METADATA')],
               on: {
                 REFRESH_VCS_METADATA: {
-                  target: [
-                    '#vc.ready.myVcs.refreshing',
-                    '#vc.ready.receivedVcs.refreshing',
-                  ],
+                  target: '#vc.init',
                 },
               },
             },
