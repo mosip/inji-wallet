@@ -787,11 +787,14 @@ export const ExistingMosipVCItemMachine =
         }),
 
         setStoreVerifiableCredential: model.assign((context, event) => {
+          // the VC can be set in response key iff STORE_RESPONSE event comes
+          //  and in vc iff CREDENTIAL_DOWNLOADED event
+          const eventResponse = event?.response ? event.response : event?.vc;
           return {
             ...context,
-            ...event.vc,
+            ...eventResponse,
             storeVerifiableCredential: {
-              ...event.vc.verifiableCredential,
+              ...eventResponse.verifiableCredential,
             },
             verifiableCredential: null,
             vcMetadata: context.vcMetadata,
