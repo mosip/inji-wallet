@@ -5,6 +5,8 @@ import {
   AuthEvents,
   selectBiometrics,
   selectCanUseBiometrics,
+  selectPasscode,
+  selectSettingUp,
 } from '../../machines/auth';
 import {
   selectBiometricUnlockEnabled,
@@ -42,6 +44,9 @@ export function useSettingsScreen(props: RootRouteProps & RequestRouteProps) {
   const authBiometrics = useSelector(authService, selectBiometrics);
   const [biometricState, biometricSend, bioService] =
     useMachine(biometricsMachine);
+  const passcode = useSelector(authService, selectPasscode);
+  const isPasscodeSet = () => !!passcode;
+  const isSettingUp = useSelector(authService, selectSettingUp);
 
   const isSuccessBio: boolean = useSelector(bioService, selectIsSuccess);
   const errorMsgBio: string = useSelector(bioService, selectError);
@@ -80,12 +85,8 @@ export function useSettingsScreen(props: RootRouteProps & RequestRouteProps) {
       if (authBiometrics) {
         authService.send(AuthEvents.SETUP_BIOMETRICS('true'));
         settingsService.send(SettingsEvents.TOGGLE_BIOMETRIC_UNLOCK(true));
-
-        // but if device does not have any enrolled biometrics
       } else if (biometricState.matches({failure: 'unenrolled'})) {
         biometricSend({type: 'RETRY_AUTHENTICATE'});
-
-        // otherwise lets do a biometric auth
       } else {
         biometricSend({type: 'AUTHENTICATE'});
       }
@@ -103,6 +104,8 @@ export function useSettingsScreen(props: RootRouteProps & RequestRouteProps) {
     isVisible,
     alertMsg,
     hideAlert,
+    isPasscodeSet,
+    isSettingUp,
     appId: useSelector(settingsService, selectAppId),
     name: useSelector(settingsService, selectName),
     vcLabel: useSelector(settingsService, selectVcLabel),
@@ -147,6 +150,13 @@ export function useSettingsScreen(props: RootRouteProps & RequestRouteProps) {
     RECEIVE_CARD: () => {
       props.navigation.navigate(REQUEST_ROUTES.Request);
       setIsVisible(false);
+    },
+
+    CHANGE_UNLOCK_METHOD: (val: boolean) => {
+      authService.send(AuthEvents.CHANGE_METHOD());
+      settingsService.send(SettingsEvents.TOGGLE_BIOMETRIC_UNLOCK(val));
+      // {setup: true}); should be isSettingUp
+      props.navigation.navigate('Passcode', {setup: true});
     },
 
     INJI_TOUR_GUIDE: () => {

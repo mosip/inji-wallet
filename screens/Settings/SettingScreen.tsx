@@ -64,6 +64,19 @@ export const SettingScreen: React.FC<
     controller.UPDATE_CREDENTIAL_REGISTRY(items[0].value, items[1].value);
   };
 
+  const handleBiometricToggle = (val: boolean) => {
+    console.log('>>>>>>>>>>>> biometric unlock val ', val);
+
+    if (controller.isBiometricUnlockEnabled && !controller.isPasscodeSet()) {
+      console.log('>>>>>>>>>> 2', val);
+      controller.CHANGE_UNLOCK_METHOD(val);
+    }
+    if (!controller.isBiometricUnlockEnabled && controller.isPasscodeSet()) {
+      console.log('>>>>>>>>>> 3', val);
+      controller.useBiometrics(val);
+    }
+  };
+
   return (
     <React.Fragment>
       <Pressable accessible={false} onPress={controller.TOGGLE_SETTINGS}>
@@ -147,7 +160,7 @@ export const SettingScreen: React.FC<
               </ListItem.Content>
               <Switch
                 value={controller.isBiometricUnlockEnabled}
-                onValueChange={controller.useBiometrics}
+                onValueChange={handleBiometricToggle}
                 trackColor={{
                   false: Theme.Colors.switchTrackFalse,
                   true:

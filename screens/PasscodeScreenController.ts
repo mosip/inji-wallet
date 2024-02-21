@@ -20,7 +20,7 @@ export function usePasscodeScreen(props: PasscodeRouteProps) {
   const authService = appService.children.get('auth');
 
   const isAuthorized = useSelector(authService, selectAuthorized);
-
+  const isPasscodeSet = () => !!passcode;
   const [passcode, setPasscode] = useState('');
   const [error, setError] = useState('');
 
@@ -40,6 +40,7 @@ export function usePasscodeScreen(props: PasscodeRouteProps) {
   }, [isAuthorized]);
 
   return {
+    isPasscodeSet,
     passcode,
     setPasscode,
     error,

@@ -149,7 +149,6 @@ fileignoreconfig:
     checksum: 4a477f92aabf0a974382df45ef12ff5207dc73c270595cd810406983a65d9ce6
   - filename: components/BackupAndRestoreAllScreenBanner.tsx
     checksum: 2c98e7e83959c9dac4dd12da32f81483c3d334bd05e279637cf465475fbf54b8
-    checksum: f26489ce4ac607884437ad06c3117cc34d6cbcbcd3dd5719790fbe01a0853ee5
   - filename: screens/Home/MyVcs/GetIdInputModal.tsx
     checksum: 067664e19817d3aba98b0cfa68ef57a04958a982ee23b96b612e4bf466a73890
   - filename: screens/PasscodeScreen.tsx
@@ -214,5 +213,8 @@ fileignoreconfig:
     checksum: f1e2fb6b775766ebdd6242d827c682b03976feacfe1c631684babefe547bac30
   - filename: locales/ara.json
     checksum: 2307491e5add44a4de6b9d292487e90e7093e97b0a8bf363c2e999a4b67baa24
+  - filename: screens/PasscodeScreenController.ts
+    checksum: 9611bd9ab00e5114752a728e168187f2fc33651b2f55770bbeaec1011df3a9c4
+  - filename: screens/Settings/SettingScreenController.ts
+    checksum: cf5cc745e372052f683a254fdfb294627fd8a44848236cad7eed75064db26997
   version: ""
-

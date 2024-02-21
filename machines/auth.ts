@@ -21,6 +21,7 @@ const model = createModel(
     events: {
       SETUP_PASSCODE: (passcode: string) => ({passcode}),
       SETUP_BIOMETRICS: (biometrics: string) => ({biometrics}),
+      CHANGE_METHOD: () => ({}),
       LOGOUT: () => ({}),
       LOGIN: () => ({}),
       STORE_RESPONSE: (response?: unknown) => ({response}),
@@ -122,6 +123,7 @@ export const authMachine = model.createMachine(
           SETUP_BIOMETRICS: {
             actions: ['setBiometrics', 'storeContext'],
           },
+          CHANGE_METHOD: 'settingUp',
         },
       },
     },
