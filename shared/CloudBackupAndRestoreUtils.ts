@@ -28,6 +28,7 @@ class Cloud {
     'https://www.googleapis.com/auth/drive.file',
   ];
   private static readonly BACKUP_FILE_REG_EXP = /backup_[0-9]*.zip$/g;
+  private static readonly ALL_BACKUP_FILE_REG_EXP = /backup_[0-9]*.zip/g;
   private static readonly UNSYNCED_BACKUP_FILE_REG_EXP =
     /backup_[0-9]*.zip.icloud/g;
   private static readonly RETRY_SLEEP_TIME = 5000;
@@ -62,6 +63,15 @@ class Cloud {
 
   private static getBackupFilesList = async () => {
     return await CloudStorage.readdir(`/`, CloudStorageScope.AppData);
+  };
+
+  private static getLatestFileName = (allFiles: string[]): string => {
+    const sortedFiles = allFiles.sort((a, b) => {
+      const dateA = new Date(Number(a.split('.')[0].split('_')[1]));
+      const dateB = new Date(Number(b.split('.')[0].split('_')[1]));
+      return dateB > dateA ? 1 : dateB < dateA ? -1 : 0;
+    });
+    return sortedFiles[0];
   };
 
   private static async syncBackupFiles() {
@@ -202,7 +212,7 @@ class Cloud {
       if (availableBackupFilesInCloud.length === 0) {
         throw new Error(this.NO_BACKUP_FILE);
       }
-      cloudFileName = availableBackupFilesInCloud[0];
+      cloudFileName = this.getLatestFileName(availableBackupFilesInCloud);
     }
     const {birthtimeMs: creationTime, size} = await CloudStorage.stat(
       cloudFileName,
@@ -218,7 +228,7 @@ class Cloud {
   static async removeOldDriveBackupFiles(fileName: string) {
     const toBeRemovedFiles = (await this.getBackupFilesList())
       .filter(file => file !== fileName)
-      .filter(file => file.match(this.BACKUP_FILE_REG_EXP));
+      .filter(file => file.match(this.ALL_BACKUP_FILE_REG_EXP));
     for (const oldFileName of toBeRemovedFiles) {
       await CloudStorage.unlink(`/${oldFileName}`);
     }
@@ -323,7 +333,9 @@ class Cloud {
         throw new Error(Cloud.NO_BACKUP_FILE);
       }
 
-      const fileName = `/${availableBackupFilesInCloud[0]}`;
+      const fileName = `/${this.getLatestFileName(
+        availableBackupFilesInCloud,
+      )}`;
       const fileContent = await CloudStorage.readFile(
         fileName,
         CloudStorageScope.AppData,
