@@ -13,7 +13,7 @@ import {
   isHardwareKeystoreExists,
 } from './cryptoutil/cryptoUtil';
 import {VCMetadata} from './VCMetadata';
-import {ENOENT} from '../machines/store';
+import {ENOENT, removeTamperedVcMetaData} from '../machines/store';
 import {
   androidVersion,
   isAndroid,
@@ -223,6 +223,7 @@ class Storage {
         );
 
         if (isDownloaded && error.message.includes(ENOENT)) {
+          removeTamperedVcMetaData(key, encryptionKey);
           sendErrorEvent(
             getErrorEventData(
               TelemetryConstants.FlowType.fetchData,
