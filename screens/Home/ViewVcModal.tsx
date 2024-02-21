@@ -178,8 +178,6 @@ export const ViewVcModal: React.FC<ViewVcModalProps> = props => {
       {controller.toastVisible && <ToastItem message={controller.message} />}
 
       <WalletBinding
-        label={t('offlineAuthenticationDisabled!')}
-        content={t('offlineAuthDisabledMessage')}
         service={props.vcItemActor}
         vcMetadata={controller.vc.vcMetadata}
       />

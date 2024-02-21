@@ -95,7 +95,7 @@ export const WalletBinding: React.FC<WalletBindingProps> = props => {
 };
 
 export const ActivationStatus = props => {
-  const {t} = useTranslation('HomeScreenKebabPopUp');
+  const {t} = useTranslation('WalletBinding');
   const activationNotCompleted =
     props.emptyWalletBindingId && isActivationNeeded(props?.vcMetadata.issuer);
 
@@ -117,8 +117,6 @@ export const ActivationStatus = props => {
 
 interface WalletBindingProps {
   testID?: string;
-  label: string;
-  content?: string;
   service: ActorRefFrom<typeof ExistingMosipVCItemMachine>;
   vcMetadata: VCMetadata;
 }

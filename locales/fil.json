@@ -91,7 +91,6 @@
     "pinCard": "Pin",
     "share": "Ibahagi",
     "shareWithSelfie": "Ibahagi sa Selfie",
-    "offlineAuthenticationDisabled!": "I-activate para sa online na pag-login",
     "offlineAuthDisabledMessage": "Mag-click dito upang paganahin ang mga kredensyal na ito na magamit para sa online na pagpapatotoo.",
     "viewActivityLog": "Tingnan ang log ng aktibidad",
     "removeFromWallet": "Alisin sa wallet",
@@ -99,6 +98,7 @@
     "revokeMessage": "Bawiin ang virtual ID para sa profile na ito"
   },
   "WalletBinding": {
+    "offlineAuthenticationDisabled!": "I-activate para sa online na pag-login",
     "inProgress": "Isinasagawa",
     "credentialActivated": "Na-activate",
     "profileAuthenticated": "Pag-login sa QR Code"

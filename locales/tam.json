@@ -88,7 +88,6 @@
     "pinCard": "பின்",
     "share": "பகிர்",
     "shareWithSelfie": "செல்ஃபியுடன் பகிரவும்",
-    "offlineAuthenticationDisabled!": "ஆன்லைன் உள்நுழைவுக்கு செயல்படுத்தவும்",
     "offlineAuthDisabledMessage": "இந்த நற்சான்றிதழ்களை ஆன்லைன் அங்கீகாரத்திற்காகப் பயன்படுத்த இங்கே கிளிக் செய்யவும்.",
     "viewActivityLog": "செயல்பாட்டு பதிவைக் காண்க",
     "removeFromWallet": "பணப்பையிலிருந்து அகற்று",
@@ -96,6 +95,7 @@
     "revokeMessage": "இந்தச் சுயவிவரத்திற்கான விர்ச்சுவல் ஐடியைத் திரும்பப் பெறவும்"
   },
   "WalletBinding": {
+    "offlineAuthenticationDisabled!": "ஆன்லைன் உள்நுழைவுக்கு செயல்படுத்தவும்",
     "inProgress": "செயல்பாட்டில் உள்ளது",
     "credentialActivated": "செயல்படுத்தப்பட்டது",
     "profileAuthenticated": "QR குறியீடு உள்நுழைவு"

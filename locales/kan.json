@@ -88,7 +88,6 @@
     "pinCard": "ಪಿನ್",
     "share": "ಹಂಚಿಕೊಳ್ಳಿ",
     "shareWithSelfie": "ಸೆಲ್ಫಿಯೊಂದಿಗೆ ಹಂಚಿಕೊಳ್ಳಿ",
-    "offlineAuthenticationDisabled!": "ಆನ್‌ಲೈನ್ ಲಾಗಿನ್‌ಗಾಗಿ ಸಕ್ರಿಯಗೊಳಿಸಿ",
     "offlineAuthDisabledMessage": "ಆನ್‌ಲೈನ್ ದೃಢೀಕರಣಕ್ಕಾಗಿ ಬಳಸಲು ಈ ರುಜುವಾತುಗಳನ್ನು ಸಕ್ರಿಯಗೊಳಿಸಲು ಇಲ್ಲಿ ಕ್ಲಿಕ್ ಮಾಡಿ.",
     "viewActivityLog": "ಚಟುವಟಿಕೆ ಲಾಗ್ ಅನ್ನು ವೀಕ್ಷಿಸಿ",
     "removeFromWallet": "ಕೈಚೀಲದಿಂದ ತೆಗೆದುಹಾಕಿ",
@@ -96,6 +95,7 @@
     "revokeMessage": "ಈ ಪ್ರೊಫೈಲ್‌ಗಾಗಿ ವರ್ಚುವಲ್ ಐಡಿಯನ್ನು ಹಿಂತೆಗೆದುಕೊಳ್ಳಿ"
   },
   "WalletBinding": {
+    "offlineAuthenticationDisabled!": "ಆನ್‌ಲೈನ್ ಲಾಗಿನ್‌ಗಾಗಿ ಸಕ್ರಿಯಗೊಳಿಸಿ",
     "inProgress": "ಪ್ರಗತಿಯಲ್ಲಿದೆ",
     "credentialActivated": "ಸಕ್ರಿಯಗೊಳಿಸಲಾಗಿದೆ",
     "profileAuthenticated": "QR ಕೋಡ್ ಲಾಗಿನ್"

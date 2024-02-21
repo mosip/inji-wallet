@@ -92,7 +92,6 @@
     "pinCard": "Pin",
     "share": "Share",
     "shareWithSelfie": "Share with Selfie",
-    "offlineAuthenticationDisabled!": "Activate for online login",
     "offlineAuthDisabledMessage": "Click here to enable this credentials to be used for online authentication.",
     "viewActivityLog": "View Activity Log",
     "removeFromWallet": "Remove from Wallet",
@@ -100,6 +99,7 @@
     "revokeMessage": "Revoke the virtual ID for this profile"
   },
   "WalletBinding": {
+    "offlineAuthenticationDisabled!": "Activate for online login",
     "inProgress": "In progress",
     "credentialActivated": "Activated",
     "profileAuthenticated": "QR Code Login"

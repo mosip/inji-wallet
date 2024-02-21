@@ -89,7 +89,6 @@
     "pinCard": "पिन",
     "share": "शेयर करना",
     "shareWithSelfie": "सेल्फी के साथ साझा करें",
-    "offlineAuthenticationDisabled!": "ऑनलाइन लॉगिन के लिए सक्रिय करें",
     "offlineAuthDisabledMessage": "ऑनलाइन प्रमाणीकरण के लिए इस क्रेडेंशियल का उपयोग सक्षम करने के लिए यहां क्लिक करें।",
     "viewActivityLog": "गतिविधि लॉग देखें",
     "removeFromWallet": "वॉलेट से हटाए",
@@ -97,6 +96,7 @@
     "revokeMessage": "इस प्रोफ़ाइल के लिए वर्चुअल आईडी निरस्त करें"
   },
   "WalletBinding": {
+    "offlineAuthenticationDisabled!": "ऑनलाइन लॉगिन के लिए सक्रिय करें",
     "inProgress": "चालू",
     "credentialActivated": "सक्रिय",
     "profileAuthenticated": "QR कोड लॉगिन"

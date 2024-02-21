@@ -92,7 +92,6 @@
     "pinCard": "دبوس",
     "share": "يشارك",
     "shareWithSelfie": "شارك مع سيلفي",
-    "offlineAuthenticationDisabled!": "تفعيل لتسجيل الدخول عبر الإنترنت",
     "offlineAuthDisabledMessage": "انقر هنا لتمكين استخدام بيانات الاعتماد هذه للمصادقة عبر الإنترنت.",
     "viewActivityLog": "عرض سجل النشاط",
     "removeFromWallet": "إزالة من المحفظة",
@@ -100,6 +99,7 @@
     "revokeMessage": "إبطال المعرف الظاهري لملف التعريف هذا"
   },
   "WalletBinding": {
+    "offlineAuthenticationDisabled!": "تفعيل لتسجيل الدخول عبر الإنترنت",
     "inProgress": "في تَقَدم",
     "credentialActivated": "مفعل",
     "profileAuthenticated": "رمز الاستجابة السريعة تسجيل الدخول",

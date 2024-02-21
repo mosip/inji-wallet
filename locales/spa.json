@@ -90,7 +90,6 @@
     "pinCard": "PIN",
     "share": "Compartir",
     "shareWithSelfie": "Compartir con selfie",
-    "offlineAuthenticationDisabled!": "Activar para iniciar sesión en línea",
     "offlineAuthDisabledMessage": "Haga clic aquí para permitir que estas credenciales se utilicen para la autenticación en línea.",
     "viewActivityLog": "Ver registro de actividad",
     "removeFromWallet": "Quitar de Wallet",
@@ -98,6 +97,7 @@
     "revokeMessage": "Revocar la identificación virtual de este perfil"
   },
   "WalletBinding": {
+    "offlineAuthenticationDisabled!": "Activar para iniciar sesión en línea",
     "inProgress": "En curso",
     "credentialActivated": "Activada",
     "profileAuthenticated": "inicio de sesión con código QR"
