@@ -28,10 +28,7 @@ export interface Typegen0 {
       | 'REFRESH_VCS_METADATA'
       | 'STORE_RESPONSE'
       | 'xstate.init';
-    loadReceivedVcs:
-      | 'REFRESH_RECEIVED_VCS'
-      | 'REFRESH_VCS_METADATA'
-      | 'STORE_RESPONSE';
+    loadReceivedVcs: 'REFRESH_RECEIVED_VCS' | 'STORE_RESPONSE';
     logTamperedVCsremoved: 'done.invoke.vc.tamperedVCs.triggerAutoBackupForTamperedVcDeletion:invocation[0]';
     prependToMyVcs: 'VC_ADDED';
     removeDownloadFailedVcsFromStorage: 'DELETE_VC';
