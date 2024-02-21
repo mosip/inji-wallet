@@ -781,11 +781,11 @@ export async function removeTamperedVcMetaData(
       myVcsDecryptedMetadata = JSON.parse(decryptedData) as Object[];
     }
 
-    const isTamperedVcInMyVCs = myVcsDecryptedMetadata.filter(
+    const isTamperedVcInMyVCs = myVcsDecryptedMetadata?.filter(
       (vcMetadataObject: Object) => {
         return new VCMetadata(vcMetadataObject).getVcKey() === key;
       },
-    );
+    ).length;
     if (isTamperedVcInMyVCs) {
       await removeVCMetaData(MY_VCS_STORE_KEY, key, encryptionKey);
     } else {
