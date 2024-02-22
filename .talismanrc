@@ -24,7 +24,7 @@ fileignoreconfig:
   - filename: screens/BiometricScreenController.ts
     checksum: 4a424adbd2d2404c9d968c54607885af643a07e09acc4a2d37c6e7a7952c4945
   - filename: screens/Home/IntroSlidersScreen.tsx
-    checksum: af4a7e2d04b1141b7c32acfabeb3213a32eaca2a8e8f61e6958b6c97219dce57
+    checksum: 33cead03c9cf1bc5b984c7ecb81b5b5966527c712303e913c3e044fec6ee8188
   - filename: machines/issuersMachine.ts
     checksum: 742b8ff561dca61be08ab0b9aef3997ad5d043df298a84c17349dc0206ddcee6
   - filename: machines/issuersMachine.typegen.ts
@@ -78,7 +78,7 @@ fileignoreconfig:
   - filename: assets/fingerprint_icon.svg
     checksum: b2d3a50ca1336f60123d96a8cc8ea663c3316ed2d8c31833bce7e393ca51695b
   - filename: machines/store.ts
-    checksum: 5ec376c6314b5b91d10bbf770359d0227d9f991dc6306851ed1df6244e5674b8
+    checksum: 7d0b9c3ed111cd299145a963dc8751f54802cdd7afd4b4e645412ad639594889
   - filename: assets/Flip_Camera_Icon.svg
     checksum: 736b5a7ddb86bd4376229ce198dbf8a663e7ac89fc3311bd4f19afd4a2b36ffd
   - filename: assets/Finger_Print_Icon.svg
@@ -146,7 +146,7 @@ fileignoreconfig:
   - filename: machines/backupAndRestore/backup.ts
     checksum: d3453abfc10400e094b841e84283efc194a4fe0443c63ec880c5ddd6741f5293
   - filename: machines/backupAndRestore/backup.typegen.ts
-    checksum: 483e237dc29256d7718d0c6137084da79a7d297d9eb86fa9689bc1170bb9f185
+    checksum: 4a477f92aabf0a974382df45ef12ff5207dc73c270595cd810406983a65d9ce6
   - filename: components/BackupAndRestoreAllScreenBanner.tsx
     checksum: 2c98e7e83959c9dac4dd12da32f81483c3d334bd05e279637cf465475fbf54b8
     checksum: f26489ce4ac607884437ad06c3117cc34d6cbcbcd3dd5719790fbe01a0853ee5
@@ -164,8 +164,6 @@ fileignoreconfig:
     checksum: a03c5fa839d761f7bf5bbf0ea9bbd48da57116430a99e1d22f0e7184435d468c
   - filename: locales/fil.json
     checksum: 29193fd3b14b7332bf7a485f659197002f29a58af88ed0653cae262e7254c84d
-  - filename: screens/Home/IntroSlidersScreen.tsx
-    checksum: af4a7e2d04b1141b7c32acfabeb3213a32eaca2a8e8f61e6958b6c97219dce57
   - filename: screens/Home/MyVcs/GetIdInputModal.tsx
     checksum: 067664e19817d3aba98b0cfa68ef57a04958a982ee23b96b612e4bf466a73890
   - filename: screens/PasscodeScreen.tsx
@@ -212,5 +210,9 @@ fileignoreconfig:
     checksum: 0ac8c4f3b00138c52d83d719fd8f16c5521290417561c7cf604ade88fa092bc8
   - filename: injitest/src/test/java/androidTestCases/VcBackupAndRestoreTest.java
     checksum: cbcbd4c4a185b5af1f23a93467e60cb2128faed718ce2499980e9658e43f19a6
+  - filename: screens/Home/MyVcsTab.tsx
+    checksum: 8133e2fefddfd0207eb7207b660d317f9a6acafbab6a65762d29ea86e33787cb
+  - filename: components/BackupAndRestoreBannerNotification.tsx
+    checksum: e465a9947727687d784d0cb9d8db1e28f765b0659bf4a3aa6d75643aa7b14102
   version: ""
 

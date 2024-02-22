@@ -760,6 +760,7 @@
     }
   },
   "BackupAndRestoreBanner": {
+    "backupInProgress": "Kasalukuyang isinasagawa ang backup ng data. Mangyaring huwag isara ang application.",
     "backupSuccessful": "Ang iyong backup ay matagumpay!",
     "backupFailure": {
       "networkError": "Dahil sa hindi matatag na koneksyon sa internet, hindi kami nakapagsagawa ng pag-backup ng data. Subukang muli mamaya.",
@@ -768,6 +769,7 @@
       "noDataForBackup": "Ikinalulungkot namin, ngunit walang data na magagamit upang i-back up sa ngayon.",
       "storageLimitReached": "Hindi namin makumpleto ang proseso ng pag-backup dahil sa hindi sapat na espasyo sa storage sa iyong device. Mangyaring magbakante ng espasyo sa pamamagitan ng pagtanggal ng mga hindi kinakailangang file o app, at subukang muli."
     },
+    "restoreInProgress": "Kasalukuyang isinasagawa ang pagpapanumbalik ng data. Mangyaring huwag isara ang application.",
     "restoreSuccessful": "Matagumpay na naibalik ang iyong backup",
     "restoreFailure": {
       "networkError": "Dahil sa hindi matatag na koneksyon sa internet, hindi namin nagawang magsagawa ng data restore. Subukang muli mamaya.",

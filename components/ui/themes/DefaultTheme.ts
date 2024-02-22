@@ -25,6 +25,7 @@ const Colors = {
   DimGray: '#737373',
   platinumGrey: '#EDEDED',
   Orange: '#F2811D',
+  OrangeBrown: '#D9822B',
   Blue: '#0000FF',
   LightGrey: '#F7F7F7',
   ShadeOfGrey: '#6F6F6F',
@@ -694,6 +695,9 @@ export const DefaultTheme = {
       fontFamily: 'Inter_600SemiBold',
     },
     dismiss: {paddingLeft: 9},
+    info: {
+      backgroundColor: Colors.OrangeBrown,
+    },
     success: {
       backgroundColor: Colors.Green,
     },
@@ -950,6 +954,11 @@ export const DefaultTheme = {
     outline: {
       backgroundColor: Colors.Transparent,
       borderColor: Colors.Orange,
+    },
+    disabledOutlineButton: {
+      backgroundColor: Colors.Transparent,
+      color: Colors.Grey,
+      borderColor: Colors.Grey,
     },
     container: {
       height: 45,

@@ -73,6 +73,16 @@ export interface Typegen0 {
     setRestoreTechnicalError:
       | 'STORE_ERROR'
       | 'done.invoke.backupRestore.restoreBackup.checkStorageAvailability:invocation[0]';
+    setShowRestoreInProgress:
+      | 'BACKUP_RESTORE'
+      | 'done.invoke.backupRestore.preload:invocation[0]';
+    unsetShowRestoreInProgress:
+      | 'DISMISS_SHOW_RESTORE_IN_PROGRESS'
+      | 'STORE_ERROR'
+      | 'done.invoke.backupRestore.restoreBackup.checkStorageAvailability:invocation[0]'
+      | 'done.invoke.backupRestore.restoreBackup.deleteBackupDir:invocation[0]'
+      | 'error.platform.backupRestore.restoreBackup.downloadBackupFileFromCloud:invocation[0]'
+      | 'error.platform.backupRestore.restoreBackup.unzipBackupFile:invocation[0]';
   };
   eventsCausingDelays: {};
   eventsCausingGuards: {

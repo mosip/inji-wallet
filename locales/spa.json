@@ -727,6 +727,7 @@
     }
   },
   "BackupAndRestoreBanner": {
+    "backupInProgress": "La copia de seguridad de datos está en progreso. Por favor no cierre la aplicación.",
     "backupSuccessful": "¡Su copia de seguridad fue exitosa!",
     "backupFailure": {
       "networkError": "Debido a una conexión a Internet inestable, no pudimos realizar una copia de seguridad de los datos. Por favor, inténtelo de nuevo más tarde.",
@@ -735,6 +736,7 @@
       "noDataForBackup": "Lo sentimos, pero no hay datos disponibles para realizar una copia de seguridad en este momento.",
       "storageLimitReached": "No podemos completar el proceso de copia de seguridad debido a que no hay suficiente espacio de almacenamiento en su dispositivo. Libere espacio eliminando archivos o aplicaciones innecesarios y vuelva a intentarlo."
     },
+    "restoreInProgress": "La restauración de datos está en curso. Por favor no cierre la aplicación.",
     "restoreSuccessful": "Su copia de seguridad ha sido restaurada exitosamente",
     "restoreFailure": {
       "networkError": "Debido a una conexión a Internet inestable, no pudimos realizar la restauración de datos. Por favor, inténtelo de nuevo más tarde.",

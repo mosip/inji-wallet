@@ -104,7 +104,7 @@ export class SvgImage {
   }
 
   static InjiSmallLogo() {
-    return <InjiSmallLogo />;
+    return <InjiSmallLogo {...testIDProps('injiSmallLogo')} />;
   }
 
   static ProgressIcon() {
