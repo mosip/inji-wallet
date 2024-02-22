@@ -72,7 +72,7 @@ function handleResponse(result: any) {
   var errorMessage = VerificationErrorType.NO_ERROR;
   var isVerifiedFlag = true;
 
-  if (result != null && !result.verified) {
+  if (!result?.verified) {
     if (result['results'][0].error.name == 'jsonld.InvalidUrl') {
       errorMessage = VerificationErrorType.NETWORK_ERROR;
     } else {
