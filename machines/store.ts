@@ -567,8 +567,8 @@ export async function setItem(
       };
       encryptedData = JSON.stringify(settings);
     } else if (key === FACE_AUTH_CONSENT) {
-      const faceAuthConsent = value.showFaceAuthConsent;
-      await Storage.setItem(key, faceAuthConsent, encryptionKey);
+      await Storage.setItem(key, JSON.stringify(value), encryptionKey);
+      return;
     } else {
       encryptedData = await encryptJson(encryptionKey, JSON.stringify(value));
     }
@@ -606,9 +606,8 @@ export async function getItem(
           parsedData.encryptedData = JSON.parse(decryptedData);
         }
         return parsedData;
-      }
-      else if( key === FACE_AUTH_CONSENT){
-        return 
+      } else if (key === FACE_AUTH_CONSENT) {
+        return Boolean(data);
       }
       decryptedData = await decryptJson(encryptionKey, data);
       return JSON.parse(decryptedData);

@@ -796,7 +796,6 @@ export const scanMachine =
 
         setShowFaceAuthConsent: model.assign({
           showFaceAuthConsent: (_, event) => {
-            console.log('Event----', event);
             return event.isConsentGiven ?? !!event.response;
           },
         }),
