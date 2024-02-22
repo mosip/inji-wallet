@@ -200,21 +200,25 @@ fileignoreconfig:
   - filename: components/BackupAndRestoreBannerNotification.tsx
     checksum: e465a9947727687d784d0cb9d8db1e28f765b0659bf4a3aa6d75643aa7b14102
   - filename: locales/tam.json
-    checksum: 2e0a94e8436879df88f4db4d01d762b1876d9ad0a185b636b08604c14fabd276
+    checksum: 9da9beccd260612ddadc3aad1f6db09bf3efdd436a5e4940b8f049949a02ec88
   - filename: locales/en.json
-    checksum: 3a2310bd317f648c62b086eb0e052169b4a7d0c7704e850f30af31b134b61eb8
+    checksum: bbb157531eb7261d9501bc472afb994a49ddd6d039de91b4e527e6711cb559a6
   - filename: locales/hin.json
-    checksum: 9bcb35aa80477dee2693782dcc754ecf4bb8263c661f606e4b2dd94b92770237
+    checksum: c3b657b79e226bf0d0f1485dd723b52d221448be4e70edec840ec227895bedc9
   - filename: locales/fil.json
-    checksum: 38470cdc131dbe08367d172364f25eb8fc4b6c21f439c2386d1465c2c0458b17
+    checksum: b9fde4a6c2fc1be8f3a0ed116ee99982fa4f149c285c1cfe9306b5df6a867447
   - filename: locales/kan.json
-    checksum: 5d58cd2e78791d172c4fa1fbeae43e2fb0442b7636df1b66dcc44e359bf64ebd
+    checksum: e2ef0717e2132cb8f52fae8cc55626b7c76a8bee6c6fc02a09e91c3ff2837abc
   - filename: locales/spa.json
-    checksum: f1e2fb6b775766ebdd6242d827c682b03976feacfe1c631684babefe547bac30
+    checksum: 2d2c27a1e41f4970d54d1bb8391cf429bb5fd1445c1af381ccec8d8686dc5872
   - filename: locales/ara.json
-    checksum: 2307491e5add44a4de6b9d292487e90e7093e97b0a8bf363c2e999a4b67baa24
+    checksum: 3c533c011d6049775f2f766c3910404143cf9c199db86cbe18d229da580546d5
   - filename: screens/PasscodeScreenController.ts
     checksum: 9611bd9ab00e5114752a728e168187f2fc33651b2f55770bbeaec1011df3a9c4
   - filename: screens/Settings/SettingScreenController.ts
     checksum: cf5cc745e372052f683a254fdfb294627fd8a44848236cad7eed75064db26997
+  - filename: machines/settings.ts
+    checksum: 6bc7556e85fcc80e8387a3a32813cf14080fd1d4e3faed552c854d5401659615
+  - filename: components/BannerNotificationController.tsx
+    checksum: c1831e3d1ec6d539fcf0533ab546f520107f99ec1d8d7fb8b24dafc6e76c4fd3
   version: ""

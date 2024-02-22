@@ -35,12 +35,16 @@ const model = createModel(
     hasUserShownWithHardwareKeystoreNotExists: false,
     isAccountSelectionConfirmationShown: false,
     credentialRegistryResponse: '' as string,
+    isAlternateUnlock: false,
   },
   {
     events: {
       UPDATE_NAME: (name: string) => ({name}),
       UPDATE_VC_LABEL: (label: string) => ({label}),
-      TOGGLE_BIOMETRIC_UNLOCK: (enable: boolean) => ({enable}),
+      TOGGLE_BIOMETRIC_UNLOCK: (enable: boolean, isAlternate: boolean) => ({
+        enable,
+        isAlternate,
+      }),
       STORE_RESPONSE: (response: unknown) => ({response}),
       CHANGE_LANGUAGE: (language: string) => ({language}),
       UPDATE_HOST: (credentialRegistry: string, esignetHostUrl: string) => ({
@@ -58,6 +62,7 @@ const model = createModel(
       ACCEPT_HARDWARE_SUPPORT_NOT_EXISTS: () => ({}),
       SET_IS_BACKUP_AND_RESTORE_EXPLORED: () => ({}),
       SHOWN_ACCOUNT_SELECTION_CONFIRMATION: () => ({}),
+      DISMISS: () => ({}),
     },
   },
 );
@@ -85,7 +90,11 @@ export const settingsMachine = model.createMachine(
               target: 'idle',
               actions: ['setContext', 'updatePartialDefaults', 'storeContext'],
             },
-            {cond: 'hasData', target: 'idle', actions: ['setContext']},
+            {
+              cond: 'hasData',
+              target: 'idle',
+              actions: ['resetAlternateUnlock', 'setContext'],
+            },
             {target: 'storingDefaults'},
           ],
         },
@@ -99,7 +108,11 @@ export const settingsMachine = model.createMachine(
       idle: {
         on: {
           TOGGLE_BIOMETRIC_UNLOCK: {
-            actions: ['toggleBiometricUnlock', 'storeContext'],
+            actions: [
+              'toggleBiometricUnlock',
+              'setAlternateStatus',
+              'storeContext',
+            ],
           },
           UPDATE_NAME: {
             actions: ['updateName', 'storeContext'],
@@ -136,6 +149,10 @@ export const settingsMachine = model.createMachine(
               'updateIsAccountSelectionConfirmationShown',
               'storeContext',
             ],
+            target: 'idle',
+          },
+          DISMISS: {
+            actions: 'resetAlternateUnlock',
             target: 'idle',
           },
         },
@@ -176,6 +193,14 @@ export const settingsMachine = model.createMachine(
     actions: {
       requestStoredContext: send(StoreEvents.GET(SETTINGS_STORE_KEY), {
         to: context => context.serviceRefs.store,
+      }),
+
+      setAlternateStatus: model.assign({
+        isAlternateUnlock: (_context, event) => event.isAlternate,
+      }),
+
+      resetAlternateUnlock: model.assign({
+        isAlternateUnlock: (_context, event) => !_context.isAlternateUnlock,
       }),
 
       updateDefaults: model.assign({
@@ -351,4 +376,16 @@ export function selectIsResetInjiProps(state: State) {
 
 export function selectIsBackUpAndRestoreExplored(state: State) {
   return state.context.isBackupAndRestoreExplored;
+}
+
+export function selectIsPasswordUnlock(state: State) {
+  return (
+    state.context.isAlternateUnlock && state.context.isBiometricUnlockEnabled
+  );
+}
+
+export function selectIsBiometricUnlock(state: State) {
+  return (
+    state.context.isAlternateUnlock && !state.context.isBiometricUnlockEnabled
+  );
 }

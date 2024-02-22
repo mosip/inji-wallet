@@ -4,10 +4,12 @@ import {BannerNotification} from './BannerNotification';
 import {UseWalletBindingSuccess} from './WalletBindingSuccessController';
 import {BackupAndRestoreBannerNotification} from './BackupAndRestoreBannerNotification';
 import {t} from 'i18next';
+import {UseBannerNotification} from './BannerNotificationController';
 
 export const BannerNotificationContainer: React.FC = () => {
   const WalletBindingController = UseWalletBindingSuccess();
   const WalletBindingSuccess = WalletBindingController.isBindingSuccess;
+  const bannerNotificationController = UseBannerNotification();
 
   return (
     <>
@@ -23,6 +25,26 @@ export const BannerNotificationContainer: React.FC = () => {
             testId={'activatedVcPopup'}
           />
         </View>
+      )}
+
+      {bannerNotificationController.isPasscodeUnlock && (
+        <BannerNotification
+          type="success"
+          message="Success! You can now use passcode to unlock Inji app."
+          onClosePress={bannerNotificationController.DISMISS}
+          testId={'dataBackupSuccessPopup'}
+          key={'updatePassword'}
+        />
+      )}
+
+      {bannerNotificationController.isBiometricUnlock && (
+        <BannerNotification
+          type="success"
+          message="Success! You can now use biometrics to unlock Inji app."
+          onClosePress={bannerNotificationController.DISMISS}
+          testId={'dataBackupSuccessPopup'}
+          key={'updateBio'}
+        />
       )}
     </>
   );

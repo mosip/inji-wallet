@@ -16,6 +16,7 @@ const model = createModel(
     biometrics: '',
     canUseBiometrics: false,
     selectLanguage: false,
+    lastEvent: '',
   },
   {
     events: {
@@ -123,7 +124,10 @@ export const authMachine = model.createMachine(
           SETUP_BIOMETRICS: {
             actions: ['setBiometrics', 'storeContext'],
           },
-          CHANGE_METHOD: 'settingUp',
+          CHANGE_METHOD: {
+            actions: ['setLastEvent'],
+            target: 'settingUp',
+          },
         },
       },
     },
@@ -132,6 +136,10 @@ export const authMachine = model.createMachine(
     actions: {
       requestStoredContext: send(StoreEvents.GET('auth'), {
         to: context => context.serviceRefs.store,
+      }),
+
+      setLastEvent: assign({
+        lastEvent: (_, event) => event.type,
       }),
 
       storeContext: send(
@@ -236,4 +244,13 @@ export function selectLanguagesetup(state: State) {
 }
 export function selectIntroSlider(state: State) {
   return state.matches('introSlider');
+}
+
+export function selectIsReachedSettingUpViaChangeMethod(state: State) {
+  if (state.matches('settingUp')) {
+    const lastEvent = state.context.lastEvent;
+    const reachedViaChangeMethod = lastEvent === 'CHANGE_METHOD';
+    return reachedViaChangeMethod;
+  }
+  return false;
 }

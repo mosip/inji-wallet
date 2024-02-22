@@ -94,7 +94,9 @@ export const PasscodeScreen: React.FC<PasscodeRouteProps> = props => {
           }}
           weight="semibold"
           color={Theme.Colors.GrayText}>
-          {t('enterNewPassword')}
+          {controller.changeLock
+            ? t('enterAlternateNewPassword')
+            : t('enterNewPassword')}
         </Text>
         <PinInput
           testID="setPasscodePin"
@@ -120,7 +122,9 @@ export const PasscodeScreen: React.FC<PasscodeRouteProps> = props => {
           }}
           weight="semibold"
           color={Theme.Colors.GrayText}>
-          {t('reEnterPassword')}
+          {controller.changeLock
+            ? t('reEnterAlternatePassword')
+            : t('reEnterPassword')}
         </Text>
         <PasscodeVerify
           testID="confirmPasscodePin"

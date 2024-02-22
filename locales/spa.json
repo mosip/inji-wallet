@@ -390,6 +390,8 @@
     "header": "Código de acceso establecido",
     "enterNewPassword": "Ingrese una nueva contraseña",
     "reEnterPassword": "Vuelva a ingresar la nueva contraseña",
+    "enterAlternateNewPassword": "Su contraseña es su clave para acceder a la aplicación de forma segura. Elija una contraseña de 6 dígitos que sea única y memorable, garantizando la seguridad de sus datos y la privacidad dentro de la aplicación.",
+    "reEnterAlternatePassword": "Confirma tu contraseña ingresándola nuevamente. Una vez confirmada, tu contraseña se configurará de forma segura para acceder a la aplicación.",
     "confirmPasscode": "Confirmar contraseña",
     "enterPasscode": "Introduzca su código de acceso"
   },

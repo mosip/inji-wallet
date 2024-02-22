@@ -65,15 +65,15 @@ export const SettingScreen: React.FC<
   };
 
   const handleBiometricToggle = (val: boolean) => {
-    console.log('>>>>>>>>>>>> biometric unlock val ', val);
-
     if (controller.isBiometricUnlockEnabled && !controller.isPasscodeSet()) {
-      console.log('>>>>>>>>>> 2', val);
       controller.CHANGE_UNLOCK_METHOD(val);
-    }
-    if (!controller.isBiometricUnlockEnabled && controller.isPasscodeSet()) {
-      console.log('>>>>>>>>>> 3', val);
+    } else if (
+      !controller.isBiometricUnlockEnabled &&
+      controller.isPasscodeSet()
+    ) {
       controller.useBiometrics(val);
+    } else {
+      controller.TOGGLE_BIOMETRIC(val);
     }
   };
 

@@ -419,6 +419,8 @@
     "header": "Itakda ang Passcode",
     "enterNewPassword": "Maglagay ng bagong passcode",
     "reEnterPassword": "Ipasok muli ang bagong passcode",
+    "enterAlternateNewPassword": "Ang iyong passcode ay ang iyong susi upang ma-access ang app nang ligtas. Pumili ng isang 6 na digit na passcode na natatangi at hindi malilimutan, na tinitiyak ang kaligtasan ng iyong data at privacy sa loob ng app.",
+    "reEnterAlternatePassword": "Kumpirmahin ang iyong passcode sa pamamagitan ng muling pagpasok nito. Kapag nakumpirma na, ang iyong passcode ay ligtas na itatakda para sa pag-access sa app.",
     "confirmPasscode": "Kumpirmahin ang passcode",
     "enterPasscode": "Ilagay ang iyong passcode"
   },

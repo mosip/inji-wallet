@@ -61,14 +61,16 @@ export function useSettingsScreen(props: RootRouteProps & RequestRouteProps) {
       const hasEnrolledBiometrics = await LocalAuthentication.isEnrolledAsync();
       if (!hasEnrolledBiometrics) {
         authService.send(AuthEvents.SETUP_BIOMETRICS(''));
-        settingsService.send(SettingsEvents.TOGGLE_BIOMETRIC_UNLOCK(false));
+        settingsService.send(
+          SettingsEvents.TOGGLE_BIOMETRIC_UNLOCK(false, false),
+        );
       }
     }, 0);
 
     // if biometic state is success then lets send auth service BIOMETRICS
     if (isSuccessBio) {
       authService.send(AuthEvents.SETUP_BIOMETRICS('true'));
-      settingsService.send(SettingsEvents.TOGGLE_BIOMETRIC_UNLOCK(true));
+      settingsService.send(SettingsEvents.TOGGLE_BIOMETRIC_UNLOCK(true, true));
 
       // handle biometric failure unknown error
     } else {
@@ -84,7 +86,9 @@ export function useSettingsScreen(props: RootRouteProps & RequestRouteProps) {
       // But check if we already enrolled biometrics
       if (authBiometrics) {
         authService.send(AuthEvents.SETUP_BIOMETRICS('true'));
-        settingsService.send(SettingsEvents.TOGGLE_BIOMETRIC_UNLOCK(true));
+        settingsService.send(
+          SettingsEvents.TOGGLE_BIOMETRIC_UNLOCK(true, true),
+        );
       } else if (biometricState.matches({failure: 'unenrolled'})) {
         biometricSend({type: 'RETRY_AUTHENTICATE'});
       } else {
@@ -92,7 +96,7 @@ export function useSettingsScreen(props: RootRouteProps & RequestRouteProps) {
       }
     } else {
       authService.send(AuthEvents.SETUP_BIOMETRICS(''));
-      settingsService.send(SettingsEvents.TOGGLE_BIOMETRIC_UNLOCK(false));
+      settingsService.send(SettingsEvents.TOGGLE_BIOMETRIC_UNLOCK(false, true));
     }
   };
 
@@ -154,8 +158,7 @@ export function useSettingsScreen(props: RootRouteProps & RequestRouteProps) {
 
     CHANGE_UNLOCK_METHOD: (val: boolean) => {
       authService.send(AuthEvents.CHANGE_METHOD());
-      settingsService.send(SettingsEvents.TOGGLE_BIOMETRIC_UNLOCK(val));
-      // {setup: true}); should be isSettingUp
+      settingsService.send(SettingsEvents.TOGGLE_BIOMETRIC_UNLOCK(val, true));
       props.navigation.navigate('Passcode', {setup: true});
     },
 
@@ -165,8 +168,11 @@ export function useSettingsScreen(props: RootRouteProps & RequestRouteProps) {
         setIsVisible(false);
     },
 
-    TOGGLE_BIOMETRIC: (enable: boolean) =>
-      settingsService.send(SettingsEvents.TOGGLE_BIOMETRIC_UNLOCK(enable)),
+    TOGGLE_BIOMETRIC: (enable: boolean) => {
+      settingsService.send(
+        SettingsEvents.TOGGLE_BIOMETRIC_UNLOCK(enable, true),
+      );
+    },
 
     LOGOUT: () => {
       setIsVisible(false);

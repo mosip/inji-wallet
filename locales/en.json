@@ -421,6 +421,8 @@
     "header": "Set Passcode",
     "enterNewPassword": "Enter a new passcode",
     "reEnterPassword": "Re-enter the new passcode",
+    "enterAlternateNewPassword": "Your passcode is your key to access the app securely. Choose a 6-digit passcode which is unique and memorable, ensuring the safety of your data and privacy within the app.",
+    "reEnterAlternatePassword": "Confirm your passcode by entering it again. Once confirmed, your passcode will be securely set for accessing the app.",
     "confirmPasscode": "Confirm passcode",
     "enterPasscode": "Enter your passcode"
   },
