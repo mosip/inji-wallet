@@ -120,7 +120,9 @@ const model = createModel(
       VP_CREATED: (vp: VerifiablePresentation) => ({vp}),
       TOGGLE_USER_CONSENT: () => ({}),
       RESET: () => ({}),
-      FACE_VERIFICATION_CONSENT: (isConsentGiven: boolean) => ({isConsentGiven}),
+      FACE_VERIFICATION_CONSENT: (isConsentGiven: boolean) => ({
+        isConsentGiven,
+      }),
     },
   },
 );
@@ -184,10 +186,10 @@ export const scanMachine =
           entry: 'getFaceAuthConsent',
           on: {
             STORE_RESPONSE: {
-                actions: ['setShowFaceAuthConsent','logValue'],
-                target: 'checkStorage'
-            }
-          }
+              actions: 'setShowFaceAuthConsent',
+              target: 'checkStorage',
+            },
+          },
         },
         checkStorage: {
           invoke: {
@@ -517,7 +519,7 @@ export const scanMachine =
                 },
                 VERIFY_AND_ACCEPT_REQUEST: [
                   {
-                    cond: 'isConsentGiven',
+                    cond: 'showFaceAuthConsentScreen',
                     target: 'faceVerificationConsent',
                     actions: 'logValue',
                   },
@@ -634,12 +636,15 @@ export const scanMachine =
             faceVerificationConsent: {
               on: {
                 FACE_VERIFICATION_CONSENT: {
-                  actions: ['storeIsConsentGiven','setShowFaceAuthConsent'],
+                  actions: [
+                    'setShowFaceAuthConsent',
+                    'storeShowFaceAuthConsent',
+                  ],
                   target: 'verifyingIdentity',
                 },
                 DISMISS: {
-                  target: '#scan.reviewing.selectingVc'
-                }
+                  target: '#scan.reviewing.selectingVc',
+                },
               },
             },
             verifyingIdentity: {
@@ -790,22 +795,23 @@ export const scanMachine =
         }),
 
         setShowFaceAuthConsent: model.assign({
-          showFaceAuthConsent: (_,event) => {
-            console.log("Event----", event);
-            return event.isConsentGiven? event.isConsentGiven:!!event.response;
-          }
+          showFaceAuthConsent: (_, event) => {
+            console.log('Event----', event);
+            return event.isConsentGiven ?? !!event.response;
+          },
         }),
 
         getFaceAuthConsent: send(StoreEvents.GET(FACE_AUTH_CONSENT), {
           to: context => context.serviceRefs.store,
-          }),
+        }),
 
-        storeIsConsentGiven: (context,event) => {
-          console.log("consent::",event.isConsentGiven)
-          send(
-           StoreEvents.SET(FACE_AUTH_CONSENT,event.isConsentGiven), {
-            to: () => context.serviceRefs.store,
-          })},
+        storeShowFaceAuthConsent: send(
+          context =>
+            StoreEvents.SET(FACE_AUTH_CONSENT, context.showFaceAuthConsent),
+          {
+            to: context => context.serviceRefs.store,
+          },
+        ),
 
         logValue: context => {
           console.log(
@@ -1240,7 +1246,7 @@ export const scanMachine =
       },
 
       guards: {
-        isConsentGiven: context => {
+        showFaceAuthConsentScreen: context => {
           return !context.showFaceAuthConsent;
         },
 

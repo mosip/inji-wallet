@@ -11,7 +11,7 @@ import {QrConsent} from './QrConsent';
 import {QrLoginRef} from '../../machines/QrLoginMachine';
 import {Icon} from 'react-native-elements';
 import {View} from 'react-native';
-import { FaceVerificationAlertOverlay } from '../Scan/FaceVerificationAlertOverlay';
+import {FaceVerificationAlertOverlay} from '../Scan/FaceVerificationAlertOverlay';
 
 export const QrLogin: React.FC<QrLoginProps> = props => {
   const controller = useQrLogin(props);
@@ -45,7 +45,7 @@ export const QrLogin: React.FC<QrLoginProps> = props => {
           isVisible={controller.isShowingError}
           title={controller.error}
           onButtonPress={controller.DISMISS}
-          testID='qrLoginError'
+          testID="qrLoginError"
         />
 
         <VerifyIdentityOverlay
@@ -57,9 +57,10 @@ export const QrLogin: React.FC<QrLoginProps> = props => {
         />
 
         <FaceVerificationAlertOverlay
-        isVisible={controller.isFaceVerificationConsent && controller.showFaceAuthConsent}
-        onConfirm={controller.FACE_VERIFICATION_CONSENT}
-        close={controller.DISMISS}/>
+          isVisible={controller.isFaceVerificationConsent}
+          onConfirm={controller.FACE_VERIFICATION_CONSENT}
+          close={controller.DISMISS}
+        />
 
         <MessageOverlay
           isVisible={controller.isInvalidIdentity}
@@ -75,7 +76,7 @@ export const QrLogin: React.FC<QrLoginProps> = props => {
               margin={[0, 8, 0, 0]}
             />
             <Button
-              testID='tryAgain'
+              testID="tryAgain"
               fill
               title={t('common:tryAgain')}
               onPress={controller.RETRY_VERIFICATION}

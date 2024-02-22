@@ -1,20 +1,20 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import {useTranslation} from 'react-i18next';
 import {Dimensions, View} from 'react-native';
 import {Overlay, CheckBox} from 'react-native-elements';
 import {Button, Column, Text, Row} from '../../components/ui';
 import {Theme} from '../../components/ui/styleUtils';
 import {SvgImage} from '../../components/ui/svg';
-import { Svg } from 'react-native-svg';
+import {Svg} from 'react-native-svg';
 // import CheckBox from 'expo-checkbox';
 
 export const FaceVerificationAlertOverlay: React.FC<
   FaceVerificationAlertProps
 > = props => {
   const {t} = useTranslation('FaceVerificationAlertOverlay');
-  
-  const [music, setMusic] = useState(false);
-  
+
+  const [isConsentGiven, setIsConsentGiven] = useState(false);
+
   return (
     <Overlay
       isVisible={props.isVisible}
@@ -48,9 +48,10 @@ export const FaceVerificationAlertOverlay: React.FC<
             weight="semibold"
             margin="20 0 0 0"
             color={Theme.Colors.GrayText}>
-            {t('To share your  Credentials, well securely verify your identity using face authentication. By continuing, you consent to INJI using your camera for this purpose. Your facial data will only be used for authentication and will not be shared with any third parties.'
-           )}
-         </Text>
+            {t(
+              'To share your  Credentials, well securely verify your identity using face authentication. By continuing, you consent to INJI using your camera for this purpose. Your facial data will only be used for authentication and will not be shared with any third parties.',
+            )}
+          </Text>
         </Column>
 
         <Button
@@ -58,25 +59,22 @@ export const FaceVerificationAlertOverlay: React.FC<
           margin={'30 0 0 0'}
           type="gradient"
           title={t('I understand')}
-          onPress={() => props.onConfirm(music)}
+          onPress={() => props.onConfirm(isConsentGiven)}
         />
 
         <View>
-        <Row style={{justifyContent: 'center'}}>
-          <CheckBox
-            checked={music}
-            checkedIcon={
-              SvgImage.CheckedIcon()
-            }
-            uncheckedIcon={
-              SvgImage.UnCheckedIcon()
-            }
-            onPress={()=>setMusic(!music)}
-          />
-          <Text style={{color: '#9B9B9B', alignSelf: 'center', marginLeft: -15}}>
-            Don't ask me again
-          </Text>
-        </Row>
+          <Row style={{justifyContent: 'center'}}>
+            <CheckBox
+              checked={isConsentGiven}
+              checkedIcon={SvgImage.CheckedIcon()}
+              uncheckedIcon={SvgImage.UnCheckedIcon()}
+              onPress={() => setIsConsentGiven(!isConsentGiven)}
+            />
+            <Text
+              style={{color: '#9B9B9B', alignSelf: 'center', marginLeft: -15}}>
+              Don't ask me again
+            </Text>
+          </Row>
         </View>
       </Column>
     </Overlay>
@@ -85,6 +83,6 @@ export const FaceVerificationAlertOverlay: React.FC<
 
 interface FaceVerificationAlertProps {
   isVisible: boolean;
-  onConfirm: (isConsentGiven: boolean) => void; //return fasle
+  onConfirm: (isConsentGiven: boolean) => void;
   close: () => void;
 }
