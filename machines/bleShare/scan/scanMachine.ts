@@ -83,9 +83,7 @@ const model = createModel(
     events: {
       SELECT_VC: (vc: VC) => ({vc}),
       SCAN: (params: string) => ({params}),
-      ACCEPT_REQUEST: () => ({
-        isFaceIDVerificationFlow: false,
-      }),
+      ACCEPT_REQUEST: () => ({}),
       VERIFY_AND_ACCEPT_REQUEST: () => ({}),
       VC_ACCEPTED: () => ({}),
       VC_REJECTED: () => ({}),
@@ -116,9 +114,7 @@ const model = createModel(
       UPDATE_VC_NAME: (vcName: string) => ({vcName}),
       STORE_RESPONSE: (response: any) => ({response}),
       APP_ACTIVE: () => ({}),
-      FACE_VALID: () => ({
-        isFaceIDVerificationFlow: true,
-      }),
+      FACE_VALID: () => ({}),
       FACE_INVALID: () => ({}),
       RETRY_VERIFICATION: () => ({}),
       VP_CREATED: (vp: VerifiablePresentation) => ({vp}),
@@ -516,7 +512,7 @@ export const scanMachine =
                   target: 'sendingVc',
                   actions: [
                     'setShareLogTypeUnverified',
-                    'updateFaceCaptureBannerStatus',
+                    'resetFaceCaptureBannerStatus',
                   ],
                 },
                 CANCEL: {
@@ -866,8 +862,7 @@ export const scanMachine =
         }),
 
         updateFaceCaptureBannerStatus: model.assign({
-          showFaceCaptureSuccessBanner: (_context, event) =>
-            event.isFaceIDVerificationFlow,
+          showFaceCaptureSuccessBanner: true,
         }),
 
         resetFaceCaptureBannerStatus: model.assign({
