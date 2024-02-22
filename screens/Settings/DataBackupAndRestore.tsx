@@ -10,25 +10,49 @@ import {SvgImage} from '../../components/ui/svg';
 import {AccountSelectionConfirmation} from '../backupAndRestore/AccountSelectionConfirmation';
 import {useBackupAndRestoreSetup} from '../backupAndRestore/BackupAndRestoreSetupController';
 import BackupAndRestoreScreen from '../backupAndRestore/BackupAndRestoreScreen';
-import testIDProps from '../../shared/commonUtil';
+import testIDProps, {getDriveName} from '../../shared/commonUtil';
+import {useOverlayVisibleAfterTimeout} from '../../shared/hooks/useOverlayVisibleAfterTimeout';
+import {isAndroid} from '../../shared/constants';
 
 export const DataBackupAndRestore: React.FC = ({} = () => {
   const controller = useBackupAndRestoreSetup();
+  const delay = isAndroid() ? 0 : 1000;
   const {t} = useTranslation('DataBackupScreen');
+  const accountSelectionModalVisible = useOverlayVisibleAfterTimeout(
+    controller.showAccountSelectionConfirmation,
+    delay,
+  );
+  const isLoaderVisible = useOverlayVisibleAfterTimeout(
+    controller.isLoading,
+    delay,
+  );
+  const isSigningInSuccessful = useOverlayVisibleAfterTimeout(
+    controller.isSigningInSuccessful,
+    delay,
+  );
+  const isSigningIn = useOverlayVisibleAfterTimeout(
+    controller.isSigningIn,
+    delay,
+  );
 
   return (
     <React.Fragment>
-      <Pressable onPress={controller.BACKUP_AND_RESTORE}>
+      <Pressable
+        accessible={false}
+        {...testIDProps('dataBackupAndRestore')}
+        onPress={controller.BACKUP_AND_RESTORE}>
         <ListItem topDivider bottomDivider>
           {SvgImage.DataBackupIcon(25, 25)}
           <ListItem.Content>
-            <ListItem.Title style={{paddingTop: 3}}>
+            <ListItem.Title
+              accessible={false}
+              {...testIDProps('dataBackupAndRestoreText')}>
               <Row>
                 <Text
-                  testID="dataBackupAndRestore"
+                  testID="dataBackupAndRestoreText"
                   weight="semibold"
                   color={Theme.Colors.settingsLabel}
-                  style={{paddingRight: 10}}>
+                  style={{paddingRight: 10, paddingTop: 10}}>
                   {t('dataBackupAndRestore')}
                 </Text>
                 {!controller.isBackupAndRestoreExplored && (
@@ -45,7 +69,7 @@ export const DataBackupAndRestore: React.FC = ({} = () => {
           <Icon
             name="chevron-right"
             size={21}
-            {...testIDProps('rightArrowIcon')}
+            {...testIDProps('dataBackupAndRestoreChevronRight')}
             color={Theme.Colors.chevronRightColor}
             style={{marginRight: 15}}
           />
@@ -59,13 +83,17 @@ export const DataBackupAndRestore: React.FC = ({} = () => {
           showClose={false}
           isVisible={controller.isSigningInFailed}
           title={t('errors.permissionDenied.title')}
-          message={t('errors.permissionDenied.message')}
+          message={t('errors.permissionDenied.message', {
+            driveName: getDriveName(),
+          })}
           helpText={t('errors.permissionDenied.helpText')}
           image={SvgImage.PermissionDenied()}
           primaryButtonText={
             'DataBackupScreen:errors.permissionDenied.actions.allowAccess'
           }
-          primaryButtonEvent={controller.TRY_AGAIN}
+          primaryButtonEvent={
+            isAndroid() ? controller.TRY_AGAIN : controller.OPEN_SETTINGS
+          }
           textButtonText={
             'DataBackupScreen:errors.permissionDenied.actions.notNow'
           }
@@ -95,24 +123,21 @@ export const DataBackupAndRestore: React.FC = ({} = () => {
         />
       )}
 
-      {(controller.isSigningIn || controller.isSigningInSuccessful) && (
+      {(isSigningIn || isSigningInSuccessful) && (
         <BackupAndRestoreScreen
           profileInfo={controller.profileInfo}
           onBackPress={controller.GO_BACK}
           isLoading={controller.isSigningIn}
+          shouldTriggerAutoBackup={controller.shouldTriggerAutoBackup}
         />
       )}
-      {controller.isLoading && (
-        <Loader title={t('loadingSubtitle')} isModal></Loader>
-      )}
+      {isLoaderVisible && <Loader title={t('loadingSubtitle')} isModal />}
 
-      {controller.showAccountSelectionConfirmation && (
-        <AccountSelectionConfirmation
-          isVisible={controller.showAccountSelectionConfirmation}
-          onProceed={controller.PROCEED_ACCOUNT_SELECTION}
-          goBack={controller.GO_BACK}
-        />
-      )}
+      <AccountSelectionConfirmation
+        isVisible={accountSelectionModalVisible}
+        onProceed={controller.PROCEED_ACCOUNT_SELECTION}
+        goBack={controller.GO_BACK}
+      />
     </React.Fragment>
   );
 });

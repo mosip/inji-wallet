@@ -7,6 +7,7 @@ import {
   REQUEST_TIMEOUT,
 } from '../shared/constants';
 import {StoreEvents} from './store';
+import {BackupEvents} from './backupAndRestore/backup';
 import {AppServices} from '../shared/GlobalContext';
 import NetInfo from '@react-native-community/netinfo';
 import {
@@ -45,6 +46,7 @@ import {CACHED_API} from '../shared/api';
 import {request} from '../shared/request';
 import {BiometricCancellationError} from '../shared/error/BiometricCancellationError';
 import {VCMetadata} from '../shared/VCMetadata';
+import Cloud, {isSignedInResult} from '../shared/CloudBackupAndRestoreUtils';
 
 const model = createModel(
   {
@@ -57,7 +59,7 @@ const model = createModel(
     verifiableCredential: null as VerifiableCredential | null,
     credentialWrapper: {} as CredentialWrapper,
     serviceRefs: {} as AppServices,
-
+    verificationErrorMessage: '',
     publicKey: ``,
     privateKey: ``,
   },
@@ -73,6 +75,7 @@ const model = createModel(
       CANCEL: () => ({}),
       STORE_RESPONSE: (response?: unknown) => ({response}),
       STORE_ERROR: (error: Error, requester?: string) => ({error, requester}),
+      RESET_VERIFY_ERROR: () => ({}),
     },
   },
 );
@@ -359,15 +362,26 @@ export const IssuersMachine = model.createMachine(
           onError: [
             {
               actions: [
-                log((_, event) => (event.data as Error).message),
+                log('Verification Error.'),
+                'resetLoadingReason',
+                'updateVerificationErrorMessage',
                 'sendErrorEndEvent',
               ],
               //TODO: Move to state according to the required flow when verification of VC fails
-              target: 'idle',
+              target: 'handleVCVerificationFailure',
             },
           ],
         },
       },
+
+      handleVCVerificationFailure: {
+        on: {
+          RESET_VERIFY_ERROR: {
+            actions: ['resetVerificationErrorMessage'],
+          },
+        },
+      },
+
       storing: {
         description: 'all the verified credential is stored.',
         entry: [
@@ -377,6 +391,13 @@ export const IssuersMachine = model.createMachine(
           'storeVcMetaContext',
           'logDownloaded',
         ],
+        invoke: {
+          src: 'isUserSignedAlready',
+          onDone: {
+            cond: 'isSignedIn',
+            actions: ['sendBackupEvent'],
+          },
+        },
       },
       idle: {
         on: {
@@ -444,6 +465,9 @@ export const IssuersMachine = model.createMachine(
       }),
       getKeyPairFromStore: send(StoreEvents.GET(Issuers_Key_Ref), {
         to: context => context.serviceRefs.store,
+      }),
+      sendBackupEvent: send(BackupEvents.DATA_BACKUP(true), {
+        to: context => context.serviceRefs.backup,
       }),
       storeKeyPair: send(
         context => {
@@ -571,8 +595,20 @@ export const IssuersMachine = model.createMachine(
           ),
         );
       },
+
+      updateVerificationErrorMessage: assign({
+        verificationErrorMessage: (context, event) =>
+          (event.data as Error).message,
+      }),
+
+      resetVerificationErrorMessage: model.assign({
+        verificationErrorMessage: (_context, event) => '',
+      }),
     },
     services: {
+      isUserSignedAlready: () => async () => {
+        return await Cloud.isSignedInAlready();
+      },
       downloadIssuersList: async () => {
         return await CACHED_API.fetchIssuers();
       },
@@ -640,10 +676,17 @@ export const IssuersMachine = model.createMachine(
         ) {
           return true;
         }
-        return verifyCredential(context.verifiableCredential?.credential);
+        const verificationResult = await verifyCredential(
+          context.verifiableCredential?.credential,
+        );
+        if (!verificationResult.isVerified) {
+          throw new Error(verificationResult.errorMessage);
+        }
       },
     },
     guards: {
+      isSignedIn: (_context, event) =>
+        (event.data as isSignedInResult).isSignedIn,
       hasKeyPair: context => !!context.publicKey,
       isInternetConnected: (_, event) => !!event.data.isConnected,
       isOIDCflowCancelled: (_, event) => {
@@ -717,6 +760,10 @@ export function selectIsIdle(state: State) {
 
 export function selectStoring(state: State) {
   return state.matches('storing');
+}
+
+export function selectVerificationErrorMessage(state: State) {
+  return state.context.verificationErrorMessage;
 }
 
 export interface logoType {

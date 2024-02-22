@@ -25,6 +25,7 @@ const Colors = {
   DimGray: '#737373',
   platinumGrey: '#EDEDED',
   Orange: '#F2811D',
+  OrangeBrown: '#D9822B',
   Blue: '#0000FF',
   LightGrey: '#F7F7F7',
   ShadeOfGrey: '#6F6F6F',
@@ -370,8 +371,8 @@ export const DefaultTheme = {
       height: 173.276,
     },
     logo: {
-      height: 40,
-      width: 40,
+      height: 65,
+      width: 65,
     },
     issuerLogo: {
       resizeMode: 'contain',
@@ -379,8 +380,8 @@ export const DefaultTheme = {
       height: 60,
     },
     vcDetailsLogo: {
-      height: 50,
-      width: 50,
+      height: 65,
+      width: 65,
     },
     homeCloseCardDetailsHeader: {
       flex: 1,
@@ -666,6 +667,8 @@ export const DefaultTheme = {
       backgroundColor: Colors.Orange,
       paddingHorizontal: 5,
       paddingVertical: 4,
+      maxHeight: 20,
+      marginTop: 10,
       borderRadius: 4,
       fontSize: 10,
       fontFamily: 'Inter_700Bold',
@@ -692,6 +695,9 @@ export const DefaultTheme = {
       fontFamily: 'Inter_600SemiBold',
     },
     dismiss: {paddingLeft: 9},
+    info: {
+      backgroundColor: Colors.OrangeBrown,
+    },
     success: {
       backgroundColor: Colors.Green,
     },
@@ -948,6 +954,11 @@ export const DefaultTheme = {
     outline: {
       backgroundColor: Colors.Transparent,
       borderColor: Colors.Orange,
+    },
+    disabledOutlineButton: {
+      backgroundColor: Colors.Transparent,
+      color: Colors.Grey,
+      borderColor: Colors.Grey,
     },
     container: {
       height: 45,

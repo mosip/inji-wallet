@@ -203,7 +203,7 @@ public class PinVcTest extends IosBaseTest {
         assertTrue(homePage.isPinIconDisplayed(), "Verify if pin icon on vc is displayed");
         SharePage scanPage=homePage.clickOnShareButton();
         scanPage.denyPermissionPopupBluetoothIos();
-        assertEquals(scanPage.isBluetoothIsTurnedOffMessageDisplayed(),"bluetooth is turned off, please turn it on from quick settings menu");
+        assertEquals(scanPage.isEnableBluetoothButtonButtonDisplayed(),"Allow bluetooth permissions");
         
     }
 }

@@ -1,0 +1,75 @@
+diff --git a/node_modules/react-native-cloud-storage/lib/typescript/RNCloudStorage.d.ts b/node_modules/react-native-cloud-storage/lib/typescript/RNCloudStorage.d.ts
+index f99c3a6..d504551 100644
+--- a/node_modules/react-native-cloud-storage/lib/typescript/RNCloudStorage.d.ts
++++ b/node_modules/react-native-cloud-storage/lib/typescript/RNCloudStorage.d.ts
+@@ -5,6 +5,7 @@ declare const RNCloudStorage: {
+     getGoogleDriveAccessToken: () => string | null;
+     setGoogleDriveAccessToken: (accessToken: string | null) => string | null;
+     setThrowOnFilesWithSameName: (enable: boolean) => boolean;
++    setTimeout: (timeout: number) => null;
+     subscribeToFilesWithSameName: (subscriber: ({ path, fileIds }: {
+         path: string;
+         fileIds: string[];
+diff --git a/node_modules/react-native-cloud-storage/src/RNCloudStorage.ts b/node_modules/react-native-cloud-storage/src/RNCloudStorage.ts
+index 716fcb2..b9834ae 100644
+--- a/node_modules/react-native-cloud-storage/src/RNCloudStorage.ts
++++ b/node_modules/react-native-cloud-storage/src/RNCloudStorage.ts
+@@ -13,6 +13,7 @@ const RNCloudStorage = {
+   getGoogleDriveAccessToken: () => GoogleDrive.accessToken,
+   setGoogleDriveAccessToken: (accessToken: string | null) => (GoogleDrive.accessToken = accessToken),
+   setThrowOnFilesWithSameName: (enable: boolean) => (GoogleDrive.throwOnFilesWithSameName = enable),
++  setTimeout: (timeout: number) => (GoogleDrive.timeout = timeout),
+   /* eslint-disable @typescript-eslint/no-unused-vars */
+   subscribeToFilesWithSameName:
+     Platform.OS === 'ios'
+diff --git a/node_modules/react-native-cloud-storage/src/google-drive/client.ts b/node_modules/react-native-cloud-storage/src/google-drive/client.ts
+index f055e04..69e52a6 100644
+--- a/node_modules/react-native-cloud-storage/src/google-drive/client.ts
++++ b/node_modules/react-native-cloud-storage/src/google-drive/client.ts
+@@ -25,9 +25,12 @@ export class GoogleDriveHttpError extends Error {
+ // TODO: properly handle errors
+ export default class GoogleDriveApiClient {
+   public accessToken: string;
++  public timeout: number;
++  private _fetchTimeout: any;
+ 
+   constructor(accessToken: string = '') {
+     this.accessToken = accessToken;
++    this.timeout = 3000;
+   }
+ 
+   private buildQueryString(query: object): string {
+@@ -53,12 +56,18 @@ export default class GoogleDriveApiClient {
+     if (queryParameters) {
+       path += this.buildQueryString(queryParameters);
+     }
++    clearTimeout(this._fetchTimeout);
++    const abortController: AbortController = new AbortController();
++    this._fetchTimeout = setTimeout(() => {
++      abortController.abort();
++    }, this.timeout);
+     const response = await fetch(path, {
+       ...options,
+       headers: {
+         ...options.headers,
+         Authorization: `Bearer ${this.accessToken}`,
+       },
++      signal: abortController.signal,
+     });
+ 
+     if (!response.ok) {
+diff --git a/node_modules/react-native-cloud-storage/src/google-drive/index.ts b/node_modules/react-native-cloud-storage/src/google-drive/index.ts
+index f299b23..bf910cf 100644
+--- a/node_modules/react-native-cloud-storage/src/google-drive/index.ts
++++ b/node_modules/react-native-cloud-storage/src/google-drive/index.ts
+@@ -47,6 +47,10 @@ export default class GoogleDrive implements NativeRNCloudStorage {
+     });
+   }
+ 
++  public static set timeout(timeout: number) {
++    GoogleDrive.drive.timeout = timeout;
++  }
++  
+   public static get accessToken(): string | null {
+     return GoogleDrive.drive.accessToken.length ? GoogleDrive.drive.accessToken : null;
+   }

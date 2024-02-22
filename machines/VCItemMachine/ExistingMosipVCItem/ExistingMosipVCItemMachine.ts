@@ -41,6 +41,10 @@ import {
 import {TelemetryConstants} from '../../../shared/telemetry/TelemetryConstants';
 
 import {API_URLS} from '../../../shared/api';
+import {BackupEvents} from '../../backupAndRestore/backup';
+import Cloud, {
+  isSignedInResult,
+} from '../../../shared/CloudBackupAndRestoreUtils';
 
 const model = createModel(
   {
@@ -54,7 +58,6 @@ const model = createModel(
     verifiableCredential: null as VerifiableCredential,
     storeVerifiableCredential: null as VerifiableCredential,
     requestId: '',
-    isVerified: false,
     lastVerifiedOn: null,
     locked: false,
     otp: '',
@@ -73,6 +76,7 @@ const model = createModel(
     privateKey: '',
     isMachineInKebabPopupState: false,
     bindingAuthFailedMessage: '' as string,
+    verificationErrorMessage: '',
   },
   {
     events: {
@@ -139,7 +143,7 @@ export const ExistingMosipVCItemMachine =
           on: {
             GET_VC_RESPONSE: [
               {
-                actions: 'setCredential',
+                actions: ['setCredential', 'setStoreVerifiableCredential'],
                 cond: 'hasCredential',
                 target: 'checkingVerificationStatus',
               },
@@ -155,7 +159,11 @@ export const ExistingMosipVCItemMachine =
           on: {
             STORE_RESPONSE: [
               {
-                actions: ['setCredential', 'updateVc'],
+                actions: [
+                  'setCredential',
+                  'setStoreVerifiableCredential',
+                  'updateVc',
+                ],
                 cond: 'hasCredential',
                 target: 'checkingVerificationStatus',
               },
@@ -165,7 +173,7 @@ export const ExistingMosipVCItemMachine =
               },
             ],
             TAMPERED_VC: {
-              actions: ['sendTamperedVc', 'removeTamperedVcItem'],
+              actions: 'sendTamperedVc',
             },
           },
         },
@@ -235,20 +243,8 @@ export const ExistingMosipVCItemMachine =
                   },
                 ],
                 CREDENTIAL_DOWNLOADED: {
-                  actions: ['setStoreVerifiableCredential', 'storeContext'],
-                },
-                STORE_RESPONSE: {
-                  actions: [
-                    'setVerifiableCredential',
-                    'updateVc',
-                    'logDownloaded',
-                    'sendTelemetryEvents',
-                    'removeVcFromInProgressDownloads',
-                  ],
+                  actions: ['setStoreVerifiableCredential'],
                   target: '#vc-item.checkingVerificationStatus',
-                },
-                STORE_ERROR: {
-                  target: '#vc-item.checkingServerData.savingFailed',
                 },
               },
             },
@@ -357,8 +353,29 @@ export const ExistingMosipVCItemMachine =
               entry: 'removeVcItem',
               on: {
                 STORE_RESPONSE: {
-                  actions: ['refreshMyVcs', 'logVCremoved'],
-                  target: '#vc-item',
+                  target: '.triggerAutoBackup',
+                },
+              },
+              states: {
+                triggerAutoBackup: {
+                  invoke: {
+                    src: 'isUserSignedAlready',
+                    onDone: [
+                      {
+                        cond: 'isSignedIn',
+                        actions: [
+                          'sendBackupEvent',
+                          'refreshMyVcs',
+                          'logVCremoved',
+                        ],
+                        target: '#vc-item',
+                      },
+                      {
+                        actions: ['refreshMyVcs', 'logVCremoved'],
+                        target: '#vc-item',
+                      },
+                    ],
+                  },
                 },
               },
             },
@@ -369,26 +386,65 @@ export const ExistingMosipVCItemMachine =
             src: 'verifyCredential',
             onDone: [
               {
-                actions: ['markVcValid', 'storeContext', 'updateVc'],
-                target: 'idle',
+                actions: ['setVerifiableCredential', 'storeContext'],
               },
             ],
             onError: [
               {
-                actions: log((_, event) => (event.data as Error).message),
-                target: 'idle',
+                //To-Do Handle Error Scenarios
+                actions: ['updateVerificationErrorMessage'],
+                target: 'handleVCVerificationFailure',
               },
             ],
           },
+          initial: 'idle',
+          on: {
+            STORE_RESPONSE: {
+              actions: [
+                'updateVc',
+                'logDownloaded',
+                'sendTelemetryEvents',
+                'removeVcFromInProgressDownloads',
+              ],
+              target: '.triggerAutoBackupForVcDownload',
+            },
+            STORE_ERROR: {
+              target: '#vc-item.checkingServerData.savingFailed',
+            },
+          },
+          states: {
+            idle: {},
+            triggerAutoBackupForVcDownload: {
+              invoke: {
+                src: 'isUserSignedAlready',
+                onDone: [
+                  {
+                    cond: 'isSignedIn',
+                    actions: ['sendBackupEvent'],
+                    target: '#vc-item.idle',
+                  },
+                  {
+                    target: '#vc-item.idle',
+                  },
+                ],
+              },
+            },
+          },
         },
+
+        handleVCVerificationFailure: {
+          entry: ['removeVcMetaDataFromStorage'],
+          on: {
+            STORE_RESPONSE: {
+              actions: ['sendVerificationError'],
+            },
+          },
+        },
+
         checkingVerificationStatus: {
           description:
             'Check if VC verification is still valid. VCs stored on the device must be re-checked once every [N] time has passed.',
           always: [
-            {
-              cond: 'isVcValid',
-              target: 'idle',
-            },
             {
               target: 'verifyingCredential',
             },
@@ -743,11 +799,14 @@ export const ExistingMosipVCItemMachine =
         }),
 
         setStoreVerifiableCredential: model.assign((context, event) => {
+          // the VC can be set in response key iff STORE_RESPONSE event comes
+          //  and in vc iff CREDENTIAL_DOWNLOADED event
+          const eventResponse = event?.response ? event.response : event?.vc;
           return {
             ...context,
-            ...event.vc,
+            ...eventResponse,
             storeVerifiableCredential: {
-              ...event.vc.verifiableCredential,
+              ...eventResponse.verifiableCredential,
             },
             verifiableCredential: null,
             vcMetadata: context.vcMetadata,
@@ -790,6 +849,24 @@ export const ExistingMosipVCItemMachine =
           },
         ),
 
+        sendVerificationError: send(
+          (context, event) => {
+            return {
+              type: 'VERIFY_VC_FAILED',
+              errorMessage: context.verificationErrorMessage,
+              vcMetadata: context.vcMetadata,
+            };
+          },
+          {
+            to: context => context.serviceRefs.vc,
+          },
+        ),
+
+        updateVerificationErrorMessage: assign({
+          verificationErrorMessage: (context, event) =>
+            (event.data as Error).message,
+        }),
+
         setWalletBindingError: assign({
           walletBindingError: () => {
             const errorMessage = i18n.t(`errors.genericError`, {
@@ -821,6 +898,10 @@ export const ExistingMosipVCItemMachine =
             to: context => context.serviceRefs.vc,
           },
         ),
+
+        sendBackupEvent: send(BackupEvents.DATA_BACKUP(true), {
+          to: context => context.serviceRefs.backup,
+        }),
 
         sendActivationStartEvent: context => {
           sendStartEvent(
@@ -943,10 +1024,10 @@ export const ExistingMosipVCItemMachine =
         ),
 
         removeVcFromInProgressDownloads: send(
-          (_context, event) => {
+          context => {
             return {
               type: 'REMOVE_VC_FROM_IN_PROGRESS_DOWNLOADS',
-              requestId: event.response.requestId,
+              vcMetadata: context.vcMetadata,
             };
           },
           {
@@ -1132,14 +1213,6 @@ export const ExistingMosipVCItemMachine =
           },
         ),
 
-        markVcValid: assign(context => {
-          return {
-            ...context,
-            isVerified: true,
-            lastVerifiedOn: Date.now(),
-          };
-        }),
-
         setTransactionId: assign({
           transactionId: () => String(new Date().valueOf()).substring(3, 13),
         }),
@@ -1187,16 +1260,6 @@ export const ExistingMosipVCItemMachine =
           {to: context => context.serviceRefs.store},
         ),
 
-        removeTamperedVcItem: send(
-          _context => {
-            return StoreEvents.REMOVE(
-              MY_VCS_STORE_KEY,
-              _context.vcMetadata.getVcKey(),
-            );
-          },
-          {to: context => context.serviceRefs.store},
-        ),
-
         logVCremoved: send(
           (context, _) =>
             ActivityLogEvents.LOG_ACTIVITY({
@@ -1213,6 +1276,10 @@ export const ExistingMosipVCItemMachine =
       },
 
       services: {
+        isUserSignedAlready: () => async () => {
+          return await Cloud.isSignedInAlready();
+        },
+
         loadDownloadLimitConfig: async context => {
           var resp = await getAllConfigurations();
           const maxLimit: number = resp.vcDownloadMaxRetry;
@@ -1374,7 +1441,6 @@ export const ExistingMosipVCItemMachine =
                   id: context.vcMetadata.id,
                   idType: context.vcMetadata.idType,
                   requestId: context.vcMetadata.requestId,
-                  isVerified: false,
                   lastVerifiedOn: null,
                   locked: context.locked,
                   walletBindingResponse: null,
@@ -1388,7 +1454,14 @@ export const ExistingMosipVCItemMachine =
         },
 
         verifyCredential: async context => {
-          return verifyCredential(context.verifiableCredential);
+          if (context.storeVerifiableCredential) {
+            const verificationResult = await verifyCredential(
+              context.storeVerifiableCredential,
+            );
+            if (!verificationResult.isVerified) {
+              throw new Error(verificationResult.errorMessage);
+            }
+          }
         },
 
         requestOtp: async context => {
@@ -1459,6 +1532,8 @@ export const ExistingMosipVCItemMachine =
       },
 
       guards: {
+        isSignedIn: (_context, event) =>
+          (event.data as isSignedInResult).isSignedIn,
         hasCredential: (_, event) => {
           const vc =
             event.type === 'GET_VC_RESPONSE' ? event.vc : event.response;
@@ -1468,10 +1543,6 @@ export const ExistingMosipVCItemMachine =
 
         isDownloadAllowed: _context => {
           return _context.downloadCounter <= _context.maxDownloadCount;
-        },
-
-        isVcValid: context => {
-          return context.isVerified;
         },
 
         isCustomSecureKeystore: () => isHardwareKeystoreExists,

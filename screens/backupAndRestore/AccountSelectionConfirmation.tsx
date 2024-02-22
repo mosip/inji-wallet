@@ -8,9 +8,11 @@ import {
   Row,
   Text,
 } from '../../components/ui';
-import {Modal} from '../../components/ui/Modal';
 import {Theme} from '../../components/ui/styleUtils';
 import {SvgImage} from '../../components/ui/svg';
+import {DRIVE_NAME_MATCHER, isAndroid} from '../../shared/constants';
+import {getDriveName} from '../../shared/commonUtil';
+import {Modal} from '../../components/ui/Modal';
 
 export const AccountSelectionConfirmation: React.FC<
   AccountSelectionConfirmationProps
@@ -39,7 +41,7 @@ export const AccountSelectionConfirmation: React.FC<
             color={Theme.Colors.GrayText}
             testID="cloudInfo"
             style={Theme.BackupAndRestoreStyles.cloudInfo}>
-            {t('cloudInfo')}
+            {t('cloudInfo', {driveName: getDriveName()})}
           </Text>
         </Column>
 
@@ -48,12 +50,9 @@ export const AccountSelectionConfirmation: React.FC<
           crossAlign="center"
           style={{paddingHorizontal: 120, paddingTop: 50}}>
           <Row>
-            {SvgImage.GoogleDriveIcon(45, 45)}
-            <Text
-              style={Theme.BackupAndRestoreStyles.cloudLabel}
-              testID="googleDriveTitle">
-              {t('googleDriveTitle')}
-            </Text>
+            {isAndroid()
+              ? SvgImage.GoogleDriveIcon(207, 45)
+              : SvgImage.ICloudIcon(210, 45)}
           </Row>
         </HorizontallyCentered>
 

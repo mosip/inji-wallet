@@ -27,6 +27,9 @@ public class AddNewCardPage extends BasePage{
     @iOSXCUITFindBy(accessibility = "Continue")
     private WebElement continueButton;
 
+    @iOSXCUITFindBy(accessibility = "Cancel")
+    private WebElement cancelButton;
+
     @AndroidFindBy(accessibility = "issuersScreenDescription")
     @iOSXCUITFindBy(accessibility = "issuersScreenDescription")
     private WebElement addNewCardGuideMessage;
@@ -103,6 +106,10 @@ public class AddNewCardPage extends BasePage{
 
     public void clickOnContinueButtonInSigninPopupIos(){
         clickOnElement(continueButton);
+    }
+
+    public void clickOnCancelButtonInSigninPopupIos(){
+        clickOnElement(cancelButton);
     }
     
     public void isBackButtonDisplayed() {
