@@ -52,7 +52,7 @@ export function useSendVcScreen() {
 
     CANCEL,
     ACCEPT_REQUEST: () => scanService.send(ScanEvents.ACCEPT_REQUEST()),
-    FACE_VERIFICATION_CONSENT: (showAgain: boolean) => scanService.send(ScanEvents.FACE_VERIFICATION_CONSENT(showAgain)),
+    FACE_VERIFICATION_CONSENT: (isConsentGiven:boolean) => scanService.send(ScanEvents.FACE_VERIFICATION_CONSENT({isConsentGiven})),
     VERIFY_AND_ACCEPT_REQUEST: () =>
       scanService.send(ScanEvents.VERIFY_AND_ACCEPT_REQUEST()),
     DISMISS: () => scanService.send(ScanEvents.DISMISS()),

@@ -58,7 +58,7 @@ export const FaceVerificationAlertOverlay: React.FC<
           margin={'30 0 0 0'}
           type="gradient"
           title={t('I understand')}
-          onPress={() => props.onConfirm(!music)}
+          onPress={() => props.onConfirm(music)}
         />
 
         <View>
@@ -85,6 +85,6 @@ export const FaceVerificationAlertOverlay: React.FC<
 
 interface FaceVerificationAlertProps {
   isVisible: boolean;
-  onConfirm: (showAgain: boolean) => void; //return fasle
+  onConfirm: (isConsentGiven: boolean) => void; //return fasle
   close: () => void;
 }

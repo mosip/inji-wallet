@@ -39,9 +39,7 @@ export const LAST_BACKUP_DETAILS = 'lastBackupDetails';
 
 export const APP_ID_LENGTH = 12;
 
-export const SCAN_MACHINE_STORE_KEY = 'scanScreen';
-
-export const QRLOGIN_MACHINE_STORE_KEY = 'QRLoginScreen';
+export const FACE_AUTH_CONSENT = 'faceAuthConsent';
 
 // Numbers and Upper case Alphabets without confusing characters like 0, 1, 2, I, O, Z
 // prettier-ignore

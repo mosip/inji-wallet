@@ -143,7 +143,7 @@ export const SendVcScreen: React.FC = () => {
       />
 
       <FaceVerificationAlertOverlay
-        isVisible={controller.showFaceAuthConsent && controller.isFaceVerificationConsent}
+        isVisible={controller.isFaceVerificationConsent}
         onConfirm={controller.FACE_VERIFICATION_CONSENT}
         close={controller.DISMISS}
       />

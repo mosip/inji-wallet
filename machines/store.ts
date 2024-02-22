@@ -18,6 +18,7 @@ import {
   RECEIVED_VCS_STORE_KEY,
   SETTINGS_STORE_KEY,
   SCAN_MACHINE_STORE_KEY,
+  FACE_AUTH_CONSENT,
 } from '../shared/constants';
 import SecureKeystore from '@mosip/secure-keystore';
 import {
@@ -565,6 +566,9 @@ export async function setItem(
         appId,
       };
       encryptedData = JSON.stringify(settings);
+    } else if (key === FACE_AUTH_CONSENT) {
+      const faceAuthConsent = value.showFaceAuthConsent;
+      await Storage.setItem(key, faceAuthConsent, encryptionKey);
     } else {
       encryptedData = await encryptJson(encryptionKey, JSON.stringify(value));
     }
@@ -602,6 +606,9 @@ export async function getItem(
           parsedData.encryptedData = JSON.parse(decryptedData);
         }
         return parsedData;
+      }
+      else if( key === FACE_AUTH_CONSENT){
+        return 
       }
       decryptedData = await decryptJson(encryptionKey, data);
       return JSON.parse(decryptedData);

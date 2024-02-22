@@ -22,7 +22,7 @@ import {
   isAndroid,
   isIOS,
   MY_LOGIN_STORE_KEY,
-  SCAN_MACHINE_STORE_KEY,
+  FACE_AUTH_CONSENT,
 } from '../../../shared/constants';
 import {subscribe} from '../../../shared/openIdBLE/walletEventHandler';
 import {
@@ -77,7 +77,7 @@ const model = createModel(
     shareLogType: '' as ActivityLogType,
     QrLoginRef: {} as ActorRefFrom<typeof qrLoginMachine>,
     linkCode: '',
-    showFaceAuthConsent: true,
+    showFaceAuthConsent: false as boolean,
     readyForBluetoothStateCheck: false,
   },
   {
@@ -120,7 +120,7 @@ const model = createModel(
       VP_CREATED: (vp: VerifiablePresentation) => ({vp}),
       TOGGLE_USER_CONSENT: () => ({}),
       RESET: () => ({}),
-      FACE_VERIFICATION_CONSENT: (showAgain: boolean) => ({showAgain}),
+      FACE_VERIFICATION_CONSENT: (isConsentGiven: boolean) => ({isConsentGiven}),
     },
   },
 );
@@ -153,7 +153,7 @@ export const scanMachine =
           target: '#scan.disconnectDevice',
         },
         SCREEN_FOCUS: {
-          target: '.checkStorage',
+          target: 'checkFaceAuthConsent',
         },
         BLE_ERROR: {
           target: '.handlingBleError',
@@ -179,6 +179,15 @@ export const scanMachine =
               target: '#scan.inactive',
             },
           },
+        },
+        checkFaceAuthConsent: {
+          entry: 'getFaceAuthConsent',
+          on: {
+            STORE_RESPONSE: {
+                actions: ['setShowFaceAuthConsent','logValue'],
+                target: 'checkStorage'
+            }
+          }
         },
         checkStorage: {
           invoke: {
@@ -625,7 +634,7 @@ export const scanMachine =
             faceVerificationConsent: {
               on: {
                 FACE_VERIFICATION_CONSENT: {
-                  actions: ['setShowAgainConsent', 'storeContext'],
+                  actions: ['storeIsConsentGiven','setShowFaceAuthConsent'],
                   target: 'verifyingIdentity',
                 },
                 DISMISS: {
@@ -780,17 +789,23 @@ export const scanMachine =
           },
         }),
 
-        setShowAgainConsent: model.assign({
-          showFaceAuthConsent: (_context, event) => event.showAgain,
+        setShowFaceAuthConsent: model.assign({
+          showFaceAuthConsent: (_,event) => {
+            console.log("Event----", event);
+            return event.isConsentGiven? event.isConsentGiven:!!event.response;
+          }
         }),
 
-        storeContext: send(
-          context => {
-            const {serviceRefs, ...data} = context;
-            return StoreEvents.SET(SCAN_MACHINE_STORE_KEY, data);
-          },
-          {to: context => context.serviceRefs.store},
-        ),
+        getFaceAuthConsent: send(StoreEvents.GET(FACE_AUTH_CONSENT), {
+          to: context => context.serviceRefs.store,
+          }),
+
+        storeIsConsentGiven: (context,event) => {
+          console.log("consent::",event.isConsentGiven)
+          send(
+           StoreEvents.SET(FACE_AUTH_CONSENT,event.isConsentGiven), {
+            to: () => context.serviceRefs.store,
+          })},
 
         logValue: context => {
           console.log(
@@ -1226,7 +1241,7 @@ export const scanMachine =
 
       guards: {
         isConsentGiven: context => {
-          return context.showFaceAuthConsent;
+          return !context.showFaceAuthConsent;
         },
 
         // sample: 'OPENID4VP://connect:?name=OVPMOSIP&key=69dc92a2cc91f02258aa8094d6e2b62877f5b6498924fbaedaaa46af30abb364'

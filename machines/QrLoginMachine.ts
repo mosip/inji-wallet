@@ -8,7 +8,7 @@ import {
 } from 'xstate';
 import {createModel} from 'xstate/lib/model';
 import {AppServices} from '../shared/GlobalContext';
-import {ESIGNET_BASE_URL, MY_VCS_STORE_KEY, QRLOGIN_MACHINE_STORE_KEY} from '../shared/constants';
+import {ESIGNET_BASE_URL, FACE_AUTH_CONSENT, MY_VCS_STORE_KEY} from '../shared/constants';
 import {StoreEvents} from './store';
 import {linkTransactionResponse, VC} from '../types/VC/ExistingMosipVC/vc';
 import {request} from '../shared/request';
@@ -150,7 +150,9 @@ export const qrLoginMachine =
               actions: 'setSelectedVc',
             },
             VERIFY: {
+              cond: 'isConsentGiven',
               target: 'faceVerificationConsent',
+              actions: 'logValue',
             },
             DISMISS: {
               actions: 'forwardToParent',
@@ -279,10 +281,17 @@ export const qrLoginMachine =
           showFaceAuthConsent: (_context, event) => event.showAgain,
         }),
 
+        logValue: context => {
+          console.log(
+            'showFaceAuthConsent ----->>',
+            context.showFaceAuthConsent,
+          );
+        },
+
         storeContext: send(
           context => {
             const {serviceRefs, ...data} = context;
-            return StoreEvents.SET(QRLOGIN_MACHINE_STORE_KEY, data);
+            return StoreEvents.SET(FACE_AUTH_CONSENT, data);
           },
           {to: context => context.serviceRefs.store},
         ),
@@ -508,6 +517,10 @@ export const qrLoginMachine =
         },
       },
       guards: {
+        isConsentGiven: context => {
+          return context.showFaceAuthConsent;
+        },
+
         isConsentAlreadyCaptured: (_, event) =>
           event.data?.consentAction === 'NOCAPTURE',
       },
