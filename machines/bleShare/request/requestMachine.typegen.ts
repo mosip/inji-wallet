@@ -61,9 +61,13 @@ export interface Typegen0 {
       | 'SCREEN_FOCUS'
       | 'xstate.stop';
     logReceived: 'CANCEL' | 'REJECT' | 'STORE_ERROR' | 'STORE_RESPONSE';
-    mergeIncomingVc: 'STORE_RESPONSE';
     openAppPermission: 'GOTO_SETTINGS';
-    prependReceivedVc: 'VC_RESPONSE';
+    prependReceivedVcMetadata:
+      | 'ACCEPT'
+      | 'DISMISS'
+      | 'FACE_VALID'
+      | 'VC_RECEIVED'
+      | 'done.invoke.request.reviewing.verifyingVp:invocation[0]';
     registerLoggers:
       | 'DISCONNECT'
       | 'RESET'
@@ -74,13 +78,7 @@ export interface Typegen0 {
       | 'SCREEN_BLUR'
       | 'xstate.after(DESTROY_TIMEOUT)#request.clearingConnection'
       | 'xstate.init';
-    requestExistingVc: 'VC_RESPONSE';
-    requestReceivedVcs:
-      | 'ACCEPT'
-      | 'DISMISS'
-      | 'FACE_VALID'
-      | 'VC_RECEIVED'
-      | 'done.invoke.request.reviewing.verifyingVp:invocation[0]';
+    removeReceivedVcMetadataFromStorage: 'STORE_ERROR';
     sendBLEConnectionErrorEvent: 'BLE_ERROR';
     sendVCReceiveFailedEvent: 'FACE_INVALID';
     sendVCReceiveFlowTimeoutEndEvent: 'CANCEL';
@@ -108,7 +106,6 @@ export interface Typegen0 {
     SHARING_TIMEOUT: 'CONNECTED';
   };
   eventsCausingGuards: {
-    hasExistingVc: 'VC_RESPONSE';
     isMinimumStorageLimitReached: 'done.invoke.request.checkStorage:invocation[0]';
     isRequestIntent: 'DISMISS';
   };
@@ -150,10 +147,7 @@ export interface Typegen0 {
     | 'reviewing'
     | 'reviewing.accepted'
     | 'reviewing.accepting'
-    | 'reviewing.accepting.mergingIncomingVc'
-    | 'reviewing.accepting.prependingReceivedVc'
-    | 'reviewing.accepting.requestingExistingVc'
-    | 'reviewing.accepting.requestingReceivedVcs'
+    | 'reviewing.accepting.prependingReceivedVcMetadata'
     | 'reviewing.accepting.storingVc'
     | 'reviewing.displayingIncomingVC'
     | 'reviewing.idle'
@@ -189,12 +183,7 @@ export interface Typegen0 {
           | 'verifyingIdentity'
           | 'verifyingVp'
           | {
-              accepting?:
-                | 'mergingIncomingVc'
-                | 'prependingReceivedVc'
-                | 'requestingExistingVc'
-                | 'requestingReceivedVcs'
-                | 'storingVc';
+              accepting?: 'prependingReceivedVcMetadata' | 'storingVc';
               savingFailed?: 'idle' | 'viewingVc';
             };
         waitingForVc?: 'inProgress' | 'timeout';

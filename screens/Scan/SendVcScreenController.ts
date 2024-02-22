@@ -1,12 +1,11 @@
 import {useSelector} from '@xstate/react';
 import {useContext, useState} from 'react';
 import {ActorRefFrom} from 'xstate';
-import {selectShareableVcsMetadata} from '../../machines/vc';
+import {selectShareableVcsMetadata} from '../../machines/VCItemMachine/vc';
 import {ExistingMosipVCItemMachine} from '../../machines/VCItemMachine/ExistingMosipVCItem/ExistingMosipVCItemMachine';
 import {GlobalContext} from '../../shared/GlobalContext';
 import {
   selectIsSelectingVc,
-  selectReason,
   selectReceiverInfo,
   selectSelectedVc,
   selectVcName,
@@ -40,7 +39,6 @@ export function useSendVcScreen() {
       },
 
     receiverInfo: useSelector(scanService, selectReceiverInfo),
-    reason: useSelector(scanService, selectReason),
     vcName: useSelector(scanService, selectVcName),
     shareableVcsMetadata: useSelector(vcService, selectShareableVcsMetadata),
     selectedVc: useSelector(scanService, selectSelectedVc),
@@ -55,8 +53,6 @@ export function useSendVcScreen() {
     VERIFY_AND_ACCEPT_REQUEST: () =>
       scanService.send(ScanEvents.VERIFY_AND_ACCEPT_REQUEST()),
     DISMISS: () => scanService.send(ScanEvents.DISMISS()),
-    UPDATE_REASON: (reason: string) =>
-      scanService.send(ScanEvents.UPDATE_REASON(reason)),
     UPDATE_VC_NAME: (vcName: string) =>
       scanService.send(ScanEvents.UPDATE_VC_NAME(vcName)),
     FACE_VALID: () => scanService.send(ScanEvents.FACE_VALID()),

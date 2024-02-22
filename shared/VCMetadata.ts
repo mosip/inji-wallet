@@ -12,6 +12,7 @@ export class VCMetadata {
 
   issuer?: string = '';
   protocol?: string = '';
+  timestamp?: string = '';
   static vcKeyRegExp = new RegExp(VC_ITEM_STORE_KEY_REGEX);
 
   constructor({
@@ -21,6 +22,7 @@ export class VCMetadata {
     id = '',
     issuer = '',
     protocol = '',
+    timestamp = '',
   } = {}) {
     this.idType = idType;
     this.requestId = requestId;
@@ -28,6 +30,7 @@ export class VCMetadata {
     this.id = id;
     this.protocol = protocol;
     this.issuer = issuer;
+    this.timestamp = timestamp;
   }
 
   //TODO: Remove any typing and use appropriate typing
@@ -39,6 +42,7 @@ export class VCMetadata {
       id: vc.id,
       protocol: vc.protocol,
       issuer: vc.issuer,
+      timestamp: vc.vcMetadata ? vc.vcMetadata.timestamp : vc.timestamp,
     });
   }
 
@@ -64,7 +68,9 @@ export class VCMetadata {
   // Used for mmkv storage purposes and as a key for components and vc maps
   // Update VC_ITEM_STORE_KEY_REGEX in case of changes in vckey
   getVcKey(): string {
-    return `${VC_KEY_PREFIX}_${this.requestId}`;
+    return this.timestamp !== ''
+      ? `${VC_KEY_PREFIX}_${this.timestamp}_${this.requestId}`
+      : `${VC_KEY_PREFIX}_${this.requestId}`;
   }
 
   equals(other: VCMetadata): boolean {

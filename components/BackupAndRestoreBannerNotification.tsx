@@ -1,11 +1,10 @@
 import React from 'react';
 import {useBackupScreen} from '../screens/backupAndRestore/BackupController';
 import {BannerNotification} from './BannerNotification';
-import {Theme} from './ui/styleUtils';
 import {useTranslation} from 'react-i18next';
 import {useBackupRestoreScreen} from '../screens/Settings/BackupRestoreController';
 
-export const BackupAndRestoreAllScreenBanner: React.FC = () => {
+export const BackupAndRestoreBannerNotification: React.FC = () => {
   const backUpController = useBackupScreen();
   const restoreController = useBackupRestoreScreen();
 
@@ -18,11 +17,11 @@ export const BackupAndRestoreAllScreenBanner: React.FC = () => {
 
     return (
       <BannerNotification
+        type="error"
         message={translation}
         onClosePress={backUpController.DISMISS}
-        key={`backupFailure-${backUpController.backupErrorReason}`}
-        testId={`backupFailure-${backUpController.backupErrorReason}`}
-        customStyle={Theme.Styles.dataBackupFailure}
+        key={`backupFailure-${backUpController.backupErrorReason}Popup`}
+        testId={`backupFailure-${backUpController.backupErrorReason}Popup`}
       />
     );
   }
@@ -34,11 +33,11 @@ export const BackupAndRestoreAllScreenBanner: React.FC = () => {
 
     return (
       <BannerNotification
-        key={`restoreFailure-${restoreController.restoreErrorReason}`}
+        type="error"
+        key={`restoreFailure-${restoreController.restoreErrorReason}Popup`}
         message={translation}
         onClosePress={restoreController.DISMISS}
-        testId={`restoreFailure-${restoreController.restoreErrorReason}`}
-        customStyle={Theme.Styles.dataBackupFailure}
+        testId={`restoreFailure-${restoreController.restoreErrorReason}Popup`}
       />
     );
   }
@@ -47,11 +46,11 @@ export const BackupAndRestoreAllScreenBanner: React.FC = () => {
     <>
       {backUpController.isBackingUpSuccess && (
         <BannerNotification
+          type="success"
           message={t('backupSuccessful')}
           onClosePress={backUpController.DISMISS}
-          key={'dataBackupSuccess'}
-          testId={'dataBackupSuccess'}
-          customStyle={Theme.Styles.dataBackupSuccess}
+          key={'dataBackupSuccessPopup'}
+          testId={'dataBackupSuccessPopup'}
         />
       )}
 
@@ -59,11 +58,11 @@ export const BackupAndRestoreAllScreenBanner: React.FC = () => {
 
       {restoreController.isBackUpRestoreSuccess && (
         <BannerNotification
+          type="success"
           message={t('restoreSuccessful')}
           onClosePress={restoreController.DISMISS}
-          key={'restoreBackupSuccess'}
-          testId={'restoreBackupSuccess'}
-          customStyle={Theme.Styles.dataBackupSuccess}
+          key={'restoreBackupSuccessPopup'}
+          testId={'restoreBackupSuccessPopup'}
         />
       )}
       {restoreController.isBackUpRestoreFailure && restoreFailure()}

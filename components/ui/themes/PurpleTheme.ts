@@ -32,6 +32,7 @@ const Colors = {
   mediumDarkGrey: '#7B7B7B',
   White: '#FFFFFF',
   Red: '#EB5757',
+  LightRed: '#DB2E2E',
   Green: '#219653',
   Transparent: 'transparent',
   Warning: '#f0ad4e',
@@ -217,35 +218,6 @@ export const PurpleTheme = {
       borderRadius: 6,
       backgroundColor: Colors.LightPurple,
     },
-    downloadingVcPopUp: {
-      alignItems: 'center',
-      justifyContent: 'space-between',
-      backgroundColor: Colors.Green,
-      height: 39,
-      position: 'relative',
-      paddingHorizontal: 12,
-    },
-    backupRestoreBanner: {
-      alignItems: 'center',
-      justifyContent: 'space-between',
-      height: 39,
-      position: 'relative',
-      paddingHorizontal: 12,
-    },
-    dataBackupFailure: {
-      justifyContent: 'space-between',
-      backgroundColor: Colors.Red,
-      height: 39,
-      position: 'relative',
-      paddingHorizontal: 12,
-    },
-    dataBackupSuccess: {
-      justifyContent: 'space-between',
-      backgroundColor: Colors.Green,
-      height: 39,
-      position: 'relative',
-      paddingHorizontal: 12,
-    },
     homeScreenContainer: {
       alignItems: 'center',
       justifyContent: 'center',
@@ -403,8 +375,8 @@ export const PurpleTheme = {
       height: 173.276,
     },
     logo: {
-      width: 40,
-      height: 40,
+      height: 65,
+      width: 65,
     },
     issuerLogo: {
       resizeMode: 'contain',
@@ -412,8 +384,8 @@ export const PurpleTheme = {
       height: 60,
     },
     vcDetailsLogo: {
-      width: 50,
-      height: 50,
+      height: 65,
+      width: 65,
     },
     homeCloseCardDetailsHeader: {
       flex: 1,
@@ -694,6 +666,44 @@ export const PurpleTheme = {
       paddingVertical: 40,
       paddingHorizontal: 24,
     },
+    newLabel: {
+      backgroundColor: Colors.Purple,
+      paddingHorizontal: 5,
+      paddingVertical: 4,
+      maxHeight: 20,
+      marginTop: 10,
+      borderRadius: 4,
+      fontSize: 10,
+      fontFamily: 'Inter_700Bold',
+      lineHeight: 12,
+    },
+  }),
+  BannerStyles: StyleSheet.create({
+    container: {
+      alignItems: 'flex-start',
+      justifyContent: 'space-between',
+      backgroundColor: '#DB2E2E',
+      width: '100%',
+      position: 'relative',
+      paddingHorizontal: 18,
+      paddingVertical: 12,
+      marginVertical: 1,
+      columnGap: 7,
+    },
+    text: {
+      textAlignVertical: 'center',
+      fontSize: 12,
+      lineHeight: 15,
+      padding: 1,
+      fontFamily: 'Inter_600SemiBold',
+    },
+    dismiss: {paddingLeft: 9},
+    success: {
+      backgroundColor: Colors.Green,
+    },
+    error: {
+      backgroundColor: Colors.LightRed,
+    },
   }),
   QrCodeStyles: StyleSheet.create({
     magnifierZoom: {
@@ -945,6 +955,11 @@ export const PurpleTheme = {
       backgroundColor: Colors.Transparent,
       borderColor: Colors.Purple,
     },
+    disabledOutlineButton: {
+      backgroundColor: Colors.Transparent,
+      color: Colors.Grey,
+      borderColor: Colors.Grey,
+    },
     container: {
       height: 45,
       flexDirection: 'row',
@@ -959,7 +974,6 @@ export const PurpleTheme = {
       borderRadius: 9,
       width: Dimensions.get('window').width * 0.72,
       alignSelf: 'center',
-      margin: 3,
       height: 54,
     },
     float: {
@@ -1082,13 +1096,6 @@ export const PurpleTheme = {
       marginVertical: 6,
     },
   }),
-  BackupStyles: StyleSheet.create({
-    newStyles: {
-      backgroundColor: Colors.Orange,
-      paddingHorizontal: 10,
-      borderRadius: 3,
-    },
-  }),
   UpdateModalStyles: StyleSheet.create({
     modal: {
       width: Dimensions.get('screen').width,
@@ -1101,10 +1108,18 @@ export const PurpleTheme = {
       fontSize: 14,
       color: Colors.Gray44,
     },
+    actionOrLoaderContainer: {
+      marginLeft: 1,
+      marginRight: 1,
+    },
     backupProcessInfo: {
       fontWeight: 'bold',
       paddingHorizontal: 20,
       textAlign: 'center',
+      lineHeight: 22,
+      fontSize: 17,
+      fontFamily: 'Inter_600SemiBold',
+      marginHorizontal: 30,
     },
     cloudInfo: {
       paddingHorizontal: 20,
@@ -1467,6 +1482,7 @@ export const PurpleTheme = {
       lineHeight: 21,
       paddingTop: 4,
       textAlign: 'center',
+      marginBottom: 10,
     },
     message: {
       textAlign: 'center',
@@ -1475,7 +1491,7 @@ export const PurpleTheme = {
       lineHeight: 20,
       marginTop: 6,
       marginBottom: 25,
-      marginHorizontal: 40,
+      marginHorizontal: 26,
       color: Colors.mediumDarkGrey,
     },
   }),

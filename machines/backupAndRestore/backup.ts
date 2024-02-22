@@ -2,6 +2,7 @@ import {EventFrom, StateFrom, send} from 'xstate';
 import {createModel} from 'xstate/lib/model';
 import {AppServices} from '../../shared/GlobalContext';
 import {
+  IOS_SIGNIN_FAILED,
   LAST_BACKUP_DETAILS,
   MY_VCS_STORE_KEY,
   NETWORK_REQUEST_FAILED,
@@ -12,7 +13,7 @@ import {
   compressAndRemoveFile,
   writeToBackupFile,
 } from '../../shared/fileStorage';
-import Cloud from '../../shared/googleCloudUtils';
+import Cloud from '../../shared/CloudBackupAndRestoreUtils';
 import {isMinimumLimitForBackupReached} from '../../shared/storage';
 import {TelemetryConstants} from '../../shared/telemetry/TelemetryConstants';
 import {
@@ -33,13 +34,14 @@ const model = createModel(
     fileName: '',
     lastBackupDetails: null as null | BackupDetails,
     errorReason: '' as string,
+    isAutoBackUp: true as boolean,
+    isLoading: true as boolean,
   },
   {
     events: {
-      DATA_BACKUP: () => ({}),
-      OK: () => ({}),
-      FETCH_DATA: () => ({}),
+      DATA_BACKUP: (isAutoBackUp: boolean) => ({isAutoBackUp}),
       DISMISS: () => ({}),
+      LAST_BACKUP_DETAILS: () => ({}),
       STORE_RESPONSE: (response: unknown) => ({response}),
       STORE_ERROR: (error: Error, requester?: string) => ({error, requester}),
       FILE_NAME: (filename: string) => ({filename}),
@@ -60,25 +62,49 @@ export const backupMachine = model.createMachine(
     },
     id: 'backup',
     initial: 'init',
-    entry: 'getLastBackupDetails',
     on: {
-      DATA_BACKUP: [
-        {
-          target: 'backingUp',
-        },
-      ],
-      STORE_RESPONSE: {
-        actions: 'setLastBackupDetails',
+      DATA_BACKUP: {
+        actions: ['setIsAutoBackup'],
+        target: 'backingUp',
+      },
+      LAST_BACKUP_DETAILS: {
+        target: 'fetchLastBackupDetails',
       },
     },
     states: {
-      init: {
-        on: {
-          DATA_BACKUP: [
-            {
-              target: 'backingUp',
+      init: {},
+      fetchLastBackupDetails: {
+        initial: 'checkStore',
+        states: {
+          checkStore: {
+            entry: 'getLastBackupDetailsFromStore',
+            on: {
+              STORE_RESPONSE: [
+                {
+                  cond: 'isDataAvailableInStorage',
+                  actions: ['setLastBackupDetails', 'unsetIsLoading'],
+                  target: '#backup.init',
+                },
+                {target: 'checkCloud'},
+              ],
+              STORE_ERROR: {
+                target: 'checkCloud',
+              },
             },
-          ],
+          },
+          checkCloud: {
+            invoke: {
+              src: 'getLastBackupDetailsFromCloud',
+              onDone: {
+                actions: ['unsetIsLoading', 'setLastBackupDetails'],
+                target: '#backup.init',
+              },
+              onError: {
+                actions: 'unsetIsLoading',
+                target: '#backup.init',
+              },
+            },
+          },
         },
       },
       backingUp: {
@@ -86,12 +112,17 @@ export const backupMachine = model.createMachine(
         states: {
           idle: {},
           checkDataAvailabilityForBackup: {
-            entry: 'loadVcs',
+            entry: ['sendDataBackupStartEvent', 'loadVcs'],
             on: {
               STORE_RESPONSE: [
                 {
                   cond: 'isVCFound',
                   target: 'checkStorageAvailability',
+                },
+                {
+                  cond: 'checkIfAutoBackup',
+                  actions: 'setBackUpNotPossible',
+                  target: 'silentFailure',
                 },
                 {
                   actions: 'setBackUpNotPossible',
@@ -101,20 +132,34 @@ export const backupMachine = model.createMachine(
             },
           },
           checkStorageAvailability: {
-            entry: ['sendDataBackupStartEvent'],
             invoke: {
               src: 'checkStorageAvailability',
               onDone: [
                 {
-                  cond: 'isMinimumStorageRequiredForBackupReached',
+                  cond: 'isMinimumStorageRequiredForBackupAvailable',
+                  target: 'fetchDataFromDB',
+                },
+                {
+                  cond: 'checkIfAutoBackup',
+                  actions: 'setErrorReasonAsStorageLimitReached',
+                  target: 'silentFailure',
+                },
+                {
                   actions: 'setErrorReasonAsStorageLimitReached',
                   target: 'failure',
                 },
+              ],
+              onError: [
                 {
-                  target: 'fetchDataFromDB',
+                  cond: 'checkIfAutoBackup',
+                  actions: ['setBackUpNotPossible'],
+                  target: 'silentFailure',
+                },
+                {
+                  actions: ['setBackUpNotPossible'],
+                  target: 'failure',
                 },
               ],
-              onError: {actions: ['setBackUpNotPossible'], target: 'failure'},
             },
           },
           fetchDataFromDB: {
@@ -124,10 +169,17 @@ export const backupMachine = model.createMachine(
                 actions: 'setDataFromStorage',
                 target: 'writeDataToFile',
               },
-              STORE_ERROR: {
-                actions: ['setBackUpNotPossible'],
-                target: 'failure',
-              },
+              STORE_ERROR: [
+                {
+                  cond: 'checkIfAutoBackup',
+                  actions: ['setBackupErrorReason'],
+                  target: 'silentFailure',
+                },
+                {
+                  actions: ['setBackupErrorReason'],
+                  target: 'failure',
+                },
+              ],
             },
           },
           writeDataToFile: {
@@ -147,9 +199,15 @@ export const backupMachine = model.createMachine(
               onDone: {
                 target: 'uploadBackupFile',
               },
-              onError: {
-                target: 'failure',
-              },
+              onError: [
+                {
+                  cond: 'checkIfAutoBackup',
+                  target: 'silentFailure',
+                },
+                {
+                  target: 'failure',
+                },
+              ],
             },
           },
           uploadBackupFile: {
@@ -158,18 +216,34 @@ export const backupMachine = model.createMachine(
               onDone: {
                 actions: ['extractLastBackupDetails', 'storeLastBackupDetails'],
               },
-              onError: {
-                actions: ['setBackupErrorReason'],
-                target: 'failure',
-              },
+              onError: [
+                {
+                  cond: 'checkIfAutoBackup',
+                  actions: ['setBackupErrorReason'],
+                  target: 'silentFailure',
+                },
+                {
+                  actions: ['setBackupErrorReason'],
+                  target: 'failure',
+                },
+              ],
             },
             on: {
-              STORE_RESPONSE: {
-                target: 'success',
-              },
+              STORE_RESPONSE: [
+                {
+                  cond: 'checkIfAutoBackup',
+                  target: 'silentSuccess',
+                },
+                {
+                  target: 'success',
+                },
+              ],
             },
           },
           success: {
+            entry: 'sendDataBackupSuccessEvent',
+          },
+          silentSuccess: {
             entry: 'sendDataBackupSuccessEvent',
           },
           failure: {
@@ -178,14 +252,14 @@ export const backupMachine = model.createMachine(
               (ctx, event) => console.log('failure state ', event),
             ],
           },
+          silentFailure: {
+            entry: [
+              'sendDataBackupFailureEvent',
+              (ctx, event) => console.log('failure state ', event),
+            ],
+          },
         },
         on: {
-          FETCH_DATA: {
-            target: '.checkStorageAvailability',
-          },
-          OK: {
-            target: '.idle',
-          },
           DISMISS: {
             target: 'init',
           },
@@ -195,9 +269,18 @@ export const backupMachine = model.createMachine(
   },
   {
     actions: {
+      unsetIsLoading: model.assign({
+        isLoading: false,
+      }),
       setDataFromStorage: model.assign({
         dataFromStorage: (_context, event) => {
           return event.response;
+        },
+      }),
+
+      setIsAutoBackup: model.assign({
+        isAutoBackUp: (_context, event) => {
+          return event.isAutoBackUp;
         },
       }),
 
@@ -228,9 +311,11 @@ export const backupMachine = model.createMachine(
       }),
 
       setLastBackupDetails: model.assign((context, event) => {
+        const lastBackupDetails =
+          event.type === 'STORE_RESPONSE' ? event.response : event.data;
         return {
           ...context,
-          lastBackupDetails: event.response,
+          lastBackupDetails: lastBackupDetails,
         };
       }),
 
@@ -244,11 +329,14 @@ export const backupMachine = model.createMachine(
         },
       ),
 
-      getLastBackupDetails: send(StoreEvents.GET(LAST_BACKUP_DETAILS), {
-        to: context => {
-          return context.serviceRefs.store;
+      getLastBackupDetailsFromStore: send(
+        StoreEvents.GET(LAST_BACKUP_DETAILS),
+        {
+          to: context => {
+            return context.serviceRefs.store;
+          },
         },
-      }),
+      ),
 
       fetchAllDataFromDB: send(StoreEvents.EXPORT(), {
         to: context => {
@@ -261,8 +349,9 @@ export const backupMachine = model.createMachine(
           const reasons = {
             [TECHNICAL_ERROR]: 'technicalError',
             [NETWORK_REQUEST_FAILED]: 'networkError',
+            [IOS_SIGNIN_FAILED]: 'iCloudSignInError',
           };
-          return reasons[event.data.error] || reasons[TECHNICAL_ERROR];
+          return reasons[event.data?.error] || reasons[TECHNICAL_ERROR];
         },
       }),
 
@@ -298,6 +387,9 @@ export const backupMachine = model.createMachine(
     },
 
     services: {
+      getLastBackupDetailsFromCloud: () => async () =>
+        await Cloud.lastBackupDetails(),
+
       checkStorageAvailability: () => async () => {
         try {
           console.log('Checking storage availability...');
@@ -329,12 +421,17 @@ export const backupMachine = model.createMachine(
     },
 
     guards: {
-      isMinimumStorageRequiredForBackupReached: (_context, event) => {
-        console.log('is min reach ', Boolean(event.data));
-        return Boolean(event.data);
+      isMinimumStorageRequiredForBackupAvailable: (_context, event) => {
+        return Boolean(!event.data);
+      },
+      checkIfAutoBackup: context => {
+        return context.isAutoBackUp;
       },
       isVCFound: (_context, event) => {
-        return event.response && event.response.length > 0;
+        return !!(event.response && (event.response as object[]).length > 0);
+      },
+      isDataAvailableInStorage: (_context, event) => {
+        return event.response != null;
       },
     },
   },
@@ -350,11 +447,13 @@ export function selectIsBackupInprogress(state: State) {
   return (
     state.matches('backingUp') &&
     !state.matches('backingUp.success') &&
-    !state.matches('backingUp.failure')
+    !state.matches('backingUp.silentSuccess') &&
+    !state.matches('backingUp.failure') &&
+    !state.matches('backingUp.silentFailure')
   );
 }
-export function selectIsBackingUp(state: State) {
-  return state.matches('backingUp');
+export function selectIsLoading(state: State) {
+  return state.context.isLoading;
 }
 export function selectIsBackingUpSuccess(state: State) {
   return state.matches('backingUp.success');

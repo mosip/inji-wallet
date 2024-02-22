@@ -4,7 +4,7 @@ import {FlatList, Linking, Pressable, SafeAreaView, View} from 'react-native';
 import {Modal} from './ui/Modal';
 import {Column, Text} from './ui';
 import {Theme} from './ui/styleUtils';
-import {BackupAndRestoreAllScreenBanner} from './BackupAndRestoreAllScreenBanner';
+import {BannerNotificationContainer} from './BannerNotificationContainer';
 import getAllConfigurations from '../shared/commonprops/commonProps';
 
 export const HelpScreen: React.FC<HelpScreenProps> = props => {
@@ -25,9 +25,10 @@ export const HelpScreen: React.FC<HelpScreenProps> = props => {
         if (listingRef?.current != null) {
           listingRef.current.scrollToIndex({
             index: 15,
+            animated: true,
           });
         }
-      }, 3000);
+      }, 2000);
     }
   }, [showHelpPage]);
 
@@ -275,7 +276,7 @@ export const HelpScreen: React.FC<HelpScreenProps> = props => {
         onDismiss={() => {
           setShowHelpPage(!showHelpPage);
         }}>
-        <BackupAndRestoreAllScreenBanner />
+        <BannerNotificationContainer />
         <SafeAreaView style={{flex: 1}}>
           <Column fill padding="10" align="space-between">
             <FlatList
@@ -288,6 +289,15 @@ export const HelpScreen: React.FC<HelpScreenProps> = props => {
                 </View>
               )}
               data={[...InjiFaqMap, ...BackupFaqMap]}
+              onScrollToIndexFailed={info => {
+                const wait = new Promise(resolve => setTimeout(resolve, 500));
+                wait.then(() => {
+                  listingRef.current?.scrollToIndex({
+                    index: info.index,
+                    animated: true,
+                  });
+                });
+              }}
             />
           </Column>
         </SafeAreaView>
