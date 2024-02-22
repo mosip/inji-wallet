@@ -368,6 +368,12 @@
       "downloadLimitExpires": {
         "title": "Download Error",
         "message": "There was an issue downloading following cards. Please try again"
+      },
+      "verificationFailed": {
+        "title" : "An Error Occurred!",
+        "goBackButton": "Go Back",
+        "technicalError": "Due to Technical Error, we were unable to download the card.",
+        "networkError": "Due to unstable internet connection, we were unable to download the card. Please check your internet connection."
       }
     }
   },

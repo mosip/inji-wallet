@@ -333,6 +333,12 @@
       "downloadLimitExpires": {
         "title": "Error de descarga",
         "message": "Hubo un problema al descargar las siguientes tarjetas. "
+      },
+      "verificationFailed": {
+        "title" : "¡Ocurrió un error!",
+        "goBackButton": "Regresa",
+        "technicalError": "Debido a un Error técnico, no pudimos descargar la tarjeta.",
+        "networkError": "Debido a una conexión a Internet inestable, no pudimos descargar la tarjeta. Por favor revise su conexion a internet."
       }
     }
   },
@@ -778,6 +784,7 @@
     "editLabel": "Editar {{label}}",
     "tryAgain": "Intentar otra vez",
     "ignore": "Ignorar",
+    "goBack": "Regresa",
     "camera": {
       "errors": {
         "missingPermission": "Esta aplicación utiliza la cámara para escanear el código QR de otro dispositivo."
