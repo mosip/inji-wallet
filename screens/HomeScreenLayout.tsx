@@ -63,38 +63,21 @@ export const HomeScreenLayout: React.FC<RootRouteProps> = props => {
     },
     headerTitle: '',
     headerRight: () => (
-      <Row align="space-between">
-        <HelpScreen
-          source={'Inji'}
-          triggerComponent={
-            <Icon
-              {...testIDProps('help')}
-              accessible={true}
-              name="question"
-              type="font-awesome"
-              size={21}
-              style={Theme.Styles.IconContainer}
-              color={Theme.Colors.Icon}
-            />
-          }
-        />
-
-        <SettingScreen
-          triggerComponent={
-            <Icon
-              {...testIDProps('settings')}
-              accessible={true}
-              name="settings"
-              type="simple-line-icon"
-              size={21}
-              style={Theme.Styles.IconContainer}
-              color={Theme.Colors.Icon}
-            />
-          }
-          navigation={props.navigation}
-          route={undefined}
-        />
-      </Row>
+      <HelpScreen
+        source={'Inji'}
+        triggerComponent={
+          <View testID="help" style={Theme.HelpScreenStyle.viewStyle}>
+            <Row crossAlign="center" style={Theme.HelpScreenStyle.rowStyle}>
+              <View testID="helpIcon" style={Theme.HelpScreenStyle.iconStyle}>
+                {SvgImage.infoIcon()}
+              </View>
+              <Text testID="help" style={Theme.HelpScreenStyle.labelStyle}>
+                {t('help')}
+              </Text>
+            </Row>
+          </View>
+        }
+      />
     ),
   };
 
