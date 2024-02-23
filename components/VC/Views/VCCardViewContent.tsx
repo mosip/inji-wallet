@@ -19,6 +19,7 @@ import {VCItemFieldValue} from '../common/VCItemField';
 import {useTranslation} from 'react-i18next';
 import {WalletBinding} from '../../../screens/Home/MyVcs/WalletBinding';
 import {VCVerification} from '../../VCVerification';
+import {Issuers} from '../../../shared/openId4VCI/Utils';
 
 export const VCCardViewContent: React.FC<
   ExistingMosipVCItemContentProps | EsignetMosipVCItemContentProps
@@ -79,9 +80,10 @@ export const VCCardViewContent: React.FC<
 
           {props.flow === 'Qr Login' || props.flow === 'Vc Share' ? null : (
             <>
-              {props.emptyWalletBindingId
-                ? SvgImage.walletUnActivatedIcon()
-                : SvgImage.walletActivatedIcon()}
+              {props.vcMetadata.issuer === Issuers.Sunbird ||
+              !props.emptyWalletBindingId
+                ? SvgImage.walletActivatedIcon()
+                : SvgImage.walletUnActivatedIcon()}
               <Pressable
                 onPress={props.KEBAB_POPUP}
                 accessible={false}
