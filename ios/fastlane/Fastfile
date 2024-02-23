@@ -57,7 +57,7 @@ def generate_app_name()
   flavor = APP_FLAVOR
   case flavor
   when "residentapp"
-    return "MOSIP INJI AP"
+    return "MOSIP INJI APP"
   when "inji"
     return "Inji Wallet"
   when "collab"
@@ -123,7 +123,7 @@ platform :ios do
       workspace: "Inji.xcworkspace",
       scheme: "Inji",
       export_method: "app-store",
-      
+
       export_options: {
         provisioningProfiles: {
           "#{generate_app_bundle_id}" => "match AppStore #{generate_app_bundle_id}"
@@ -132,9 +132,9 @@ platform :ios do
     )
 
     delete_temp_keychain(keychain_name)
-  
+
   end
-  
+
   lane :beta do
     keychain_name = TEMP_KEYCHAIN_USER
     keychain_password = TEMP_KEYCHAIN_PASSWORD
@@ -203,7 +203,7 @@ platform :ios do
       workspace: "Inji.xcworkspace",
       scheme: "Inji",
       export_method: "app-store",
-      
+
       export_options: {
         provisioningProfiles: {
           "#{generate_app_bundle_id}" => "match AppStore #{generate_app_bundle_id}"
@@ -226,7 +226,7 @@ platform :ios do
       },
        skip_waiting_for_build_processing: false,
        distribute_external: true,
-       submit_beta_review: false,  
+       submit_beta_review: false,
        groups: ["#{TESTFLIGHT_INTERNAL_TESTERS_GROUP}"],
     )
 
@@ -245,14 +245,14 @@ platform :ios do
     sh("cp -R '#{app_path}' '#{output_directory}'")
 
     slack(
-      message: "#{generate_app_name} #{version} (#{current_build_number}) is uploaded to testflight.", 
+      message: "#{generate_app_name} #{version} (#{current_build_number}) is uploaded to testflight.",
       success: true,
       slack_url: "#{SLACK_URL}",
       default_payloads: [:git_branch, :last_git_commit]
     )
 
   end
-  
+
   lane :ios_app_build do
 
     archive_path = gym(
