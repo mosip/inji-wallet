@@ -5,7 +5,7 @@ import {
   selectAuthorized,
   selectPasscode,
   selectPasscodeSalt,
-  selectIsReachedSettingUpViaChangeMethod,
+  selectIsBiometricToggleFromSettings,
 } from '../machines/auth';
 import {PasscodeRouteProps} from '../routes';
 import {GlobalContext} from '../shared/GlobalContext';
@@ -48,10 +48,7 @@ export function usePasscodeScreen(props: PasscodeRouteProps) {
     setError,
 
     storedPasscode: useSelector(authService, selectPasscode),
-    changeLock: useSelector(
-      authService,
-      selectIsReachedSettingUpViaChangeMethod,
-    ),
+    toggleUnlock: useSelector(authService, selectIsBiometricToggleFromSettings),
 
     LOGIN: () => {
       authService.send(AuthEvents.LOGIN());

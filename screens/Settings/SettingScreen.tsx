@@ -64,16 +64,16 @@ export const SettingScreen: React.FC<
     controller.UPDATE_CREDENTIAL_REGISTRY(items[0].value, items[1].value);
   };
 
-  const handleBiometricToggle = (val: boolean) => {
+  const handleBiometricToggle = (biometricToggleState: boolean) => {
     if (controller.isBiometricUnlockEnabled && !controller.isPasscodeSet()) {
-      controller.CHANGE_UNLOCK_METHOD(val);
+      controller.CHANGE_UNLOCK_METHOD(biometricToggleState);
     } else if (
       !controller.isBiometricUnlockEnabled &&
       controller.isPasscodeSet()
     ) {
-      controller.useBiometrics(val);
+      controller.useBiometrics(biometricToggleState);
     } else {
-      controller.TOGGLE_BIOMETRIC(val);
+      controller.TOGGLE_BIOMETRIC(biometricToggleState);
     }
   };
 

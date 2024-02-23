@@ -248,7 +248,7 @@ export function selectIntroSlider(state: State) {
   return state.matches('introSlider');
 }
 
-export function selectIsReachedSettingUpViaChangeMethod(state: State) {
+export function selectIsBiometricToggleFromSettings(state: State) {
   if (state.matches('settingUp')) {
     return state.context.toggleFromSettings;
   }

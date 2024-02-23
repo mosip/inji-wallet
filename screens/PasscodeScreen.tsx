@@ -94,7 +94,7 @@ export const PasscodeScreen: React.FC<PasscodeRouteProps> = props => {
           }}
           weight="semibold"
           color={Theme.Colors.GrayText}>
-          {controller.changeLock
+          {controller.toggleUnlock
             ? t('enterAlternateNewPassword')
             : t('enterNewPassword')}
         </Text>
@@ -122,7 +122,7 @@ export const PasscodeScreen: React.FC<PasscodeRouteProps> = props => {
           }}
           weight="semibold"
           color={Theme.Colors.GrayText}>
-          {controller.changeLock
+          {controller.toggleUnlock
             ? t('reEnterAlternatePassword')
             : t('reEnterPassword')}
         </Text>
