@@ -145,9 +145,12 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = props => {
     !controller.AddVcModalService &&
     !controller.GetVcModalService;
   const numberOfCardsAvailable =
-    controller.vcMetadatas.length > 1
-      ? controller.vcMetadatas.length + ' ' + t('common:cards')
-      : controller.vcMetadatas.length + ' ' + t('common:card');
+    filteredSearchData.length ?? controller.vcMetadatas.length;
+
+  const cardsAvailableText =
+    numberOfCardsAvailable > 1
+      ? numberOfCardsAvailable + ' ' + t('common:cards')
+      : numberOfCardsAvailable + ' ' + t('common:card');
   return (
     <React.Fragment>
       <Column fill style={{display: props.isVisible ? 'flex' : 'none'}}>
@@ -201,9 +204,9 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = props => {
                   )}
                 </Row>
                 <Row pY={11} pX={8}>
-                  {controller.vcMetadatas.length > 0 && (
+                  {numberOfCardsAvailable > 0 && (
                     <Text style={{fontFamily: 'Inter_500Medium'}}>
-                      {numberOfCardsAvailable}
+                      {cardsAvailableText}
                     </Text>
                   )}
                 </Row>

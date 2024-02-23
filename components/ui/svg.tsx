@@ -464,7 +464,7 @@ export class SvgImage {
   }
   static SearchIcon() {
     return <Search {...testIDProps('searchIcon')} />;
-  
+  }
 }
 
 function getIssuerLogo(props: displayType) {
