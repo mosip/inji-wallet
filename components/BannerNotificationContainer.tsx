@@ -3,13 +3,14 @@ import {View} from 'react-native';
 import {BannerNotification} from './BannerNotification';
 import {UseWalletBindingSuccess} from './WalletBindingSuccessController';
 import {BackupAndRestoreBannerNotification} from './BackupAndRestoreBannerNotification';
-import {t} from 'i18next';
 import {UseBannerNotification} from './BannerNotificationController';
+import {useTranslation} from 'react-i18next';
 
 export const BannerNotificationContainer: React.FC = () => {
   const WalletBindingController = UseWalletBindingSuccess();
   const WalletBindingSuccess = WalletBindingController.isBindingSuccess;
   const bannerNotificationController = UseBannerNotification();
+  const {t} = useTranslation('BannerNotification');
 
   return (
     <>
@@ -19,7 +20,7 @@ export const BannerNotificationContainer: React.FC = () => {
         <View style={{marginTop: 10, marginBottom: 10}}>
           <BannerNotification
             type="success"
-            message={t('MyVcsTab:activated')}
+            message={t('activated')}
             onClosePress={WalletBindingController.DISMISS}
             key={'activatedVcPopup'}
             testId={'activatedVcPopup'}
@@ -30,7 +31,7 @@ export const BannerNotificationContainer: React.FC = () => {
       {bannerNotificationController.isPasscodeUnlock && (
         <BannerNotification
           type="success"
-          message="Success! You can now use passcode to unlock Inji app."
+          message={t('alternateBiometricSuccess')}
           onClosePress={bannerNotificationController.DISMISS}
           testId={'dataBackupSuccessPopup'}
           key={'updatePassword'}
@@ -40,7 +41,7 @@ export const BannerNotificationContainer: React.FC = () => {
       {bannerNotificationController.isBiometricUnlock && (
         <BannerNotification
           type="success"
-          message="Success! You can now use biometrics to unlock Inji app."
+          message={t('alternatePasswordSuccess')}
           onClosePress={bannerNotificationController.DISMISS}
           testId={'dataBackupSuccessPopup'}
           key={'updateBio'}

@@ -151,6 +151,11 @@
     "logout": "تسجيل خروج",
     "resetInjiProps": "إعادة تعيين دعائم إنجي ..."
   },
+  "BannerNotification": {
+    "alternatePasswordSuccess": "تم النجاح! يمكنك الآن استخدام رمز المرور لفتح تطبيق Inji.",
+    "alternateBiometricSuccess": "تم النجاح! يمكنك الآن استخدام القياسات الحيوية لفتح تطبيق Inji.",
+    "activated": "تم تمكين بيانات الاعتماد للمصادقة عبر الإنترنت."
+  },
   "AboutInji": {
     "aboutInji": "حول إنجي",
     "header": "حول إنجي",

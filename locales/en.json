@@ -152,6 +152,11 @@
     "logout": "Logout",
     "resetInjiProps": "Resetting Inji Props..."
   },
+  "BannerNotification": {
+    "alternatePasswordSuccess": "Success! You can now use passcode to unlock Inji app.",
+    "alternateBiometricSuccess": "Success! You can now use biometrics to unlock Inji app.",
+    "activated": "Credentials are enabled for online authentication."
+  },
   "AboutInji": {
     "aboutInji": "About Inji",
     "header": "ABOUT INJI",

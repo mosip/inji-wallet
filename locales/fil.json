@@ -150,6 +150,11 @@
     "logout": "Mag-logout",
     "resetInjiProps": "Nire-reset ang Inji Props..."
   },
+  "BannerNotification": {
+    "alternatePasswordSuccess": "Tagumpay! Magagamit mo na ngayon ang passcode upang i-unlock ang Inji app.",
+    "alternateBiometricSuccess": "Tagumpay! Maaari ka na ngayong gumamit ng biometrics upang i-unlock ang Inji app.",
+    "activated": "Ang mga kredensyal ay pinagana para sa online na pagpapatunay."
+  },
   "AboutInji": {
     "aboutInji": "Tungkol kay Inji",
     "header": "TUNGKOL KAY INJI",

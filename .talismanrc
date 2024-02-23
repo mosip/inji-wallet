@@ -200,19 +200,19 @@ fileignoreconfig:
   - filename: components/BackupAndRestoreBannerNotification.tsx
     checksum: e465a9947727687d784d0cb9d8db1e28f765b0659bf4a3aa6d75643aa7b14102
   - filename: locales/tam.json
-    checksum: 9da9beccd260612ddadc3aad1f6db09bf3efdd436a5e4940b8f049949a02ec88
+    checksum: 88622de41408e90ea16407a204819fe7ad46dcedb274793425e7cf728c10da25
   - filename: locales/en.json
-    checksum: bbb157531eb7261d9501bc472afb994a49ddd6d039de91b4e527e6711cb559a6
+    checksum: a111194dd5cc1758f6ef20d4b61c2badcd86df75df5e65fa900ddb655feaa6ad
   - filename: locales/hin.json
-    checksum: c3b657b79e226bf0d0f1485dd723b52d221448be4e70edec840ec227895bedc9
+    checksum: ce555fcaf8a3a50d5d08ea48615bdd124151d4d06a1326570a7e8f99abaa0875
   - filename: locales/fil.json
-    checksum: b9fde4a6c2fc1be8f3a0ed116ee99982fa4f149c285c1cfe9306b5df6a867447
+    checksum: be1dff1d84a4c2b34d02ca2dfcc6637a6817b7f6e2f52d4621061e817eb4e841
   - filename: locales/kan.json
-    checksum: e2ef0717e2132cb8f52fae8cc55626b7c76a8bee6c6fc02a09e91c3ff2837abc
+    checksum: ee37c3a4493109cc21bcc032834764d30b5ef580f1e7fd08cafb77478c8ff64f
   - filename: locales/spa.json
-    checksum: 2d2c27a1e41f4970d54d1bb8391cf429bb5fd1445c1af381ccec8d8686dc5872
+    checksum: 9690a623c93ae49027d0bf16278d09a35242c0fe9c793c97ab4462b695fce846
   - filename: locales/ara.json
-    checksum: 3c533c011d6049775f2f766c3910404143cf9c199db86cbe18d229da580546d5
+    checksum: e833570ceb00c90e3c9ec4a6a009580170b10865264bb47bed8c984ba8174c4b
   - filename: screens/PasscodeScreenController.ts
     checksum: 9611bd9ab00e5114752a728e168187f2fc33651b2f55770bbeaec1011df3a9c4
   - filename: screens/Settings/SettingScreenController.ts
