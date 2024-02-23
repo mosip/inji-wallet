@@ -21,10 +21,16 @@ import OtpVerificationIcon from '../../assets/Otp_Verification_Icon.svg';
 import FlipCameraIcon from '../../assets/Flip_Camera_Icon.svg';
 import CameraCaptureIcon from '../../assets/Camera_Capture_Icon.svg';
 import SuccessLogo from '../../assets/Success_Message_Icon1.svg';
+import ErrorLogo from '../../assets/Error_Message_Icon.svg';
+import SuccessHomeIcon from '../../assets/Success_home_iocn.svg';
+import SuccessHistoryIcon from '../../assets/Success_history_iocn.svg';
 import NoInternetConnection from '../../assets/No_Internet_Connection.svg';
 import SomethingWentWrong from '../../assets/Something_Went_Wrong.svg';
+import ErrorOccurred from '../../assets/Error_Occurred.svg';
 import MagnifierZoom from '../../assets/Magnifier_Zoom.svg';
-import GoogleDriveIcon from '../../assets/google-drive-28.svg';
+import GoogleDriveIcon from '../../assets/Gdrive_Logo.svg';
+import GoogleDriveIconSmall from '../../assets/google-drive-28.svg';
+import ICloudLogo from '../../assets/Icloud-Logo.svg';
 import {displayType} from '../../machines/issuersMachine';
 import {IssuerProps} from '../openId4VCI/Issuer';
 import Backup from '../../assets/Backup.svg';
@@ -114,7 +120,7 @@ export class SvgImage {
   }
 
   static InjiSmallLogo() {
-    return <InjiSmallLogo />;
+    return <InjiSmallLogo {...testIDProps('injiSmallLogo')} />;
   }
 
   static ProgressIcon() {
@@ -273,6 +279,32 @@ export class SvgImage {
     return <SuccessLogo {...testIDProps('SuccessLogo')} />;
   }
 
+  static SuccessHomeIcon() {
+    return (
+      <SuccessHomeIcon
+        {...testIDProps('SuccessHomeIcon')}
+        color1={Theme.Colors.linearGradientStart}
+        color2={Theme.Colors.linearGradientEnd}
+        stroke={Theme.Colors.IconBg}
+      />
+    );
+  }
+
+  static SuccessHistoryIcon() {
+    return (
+      <SuccessHistoryIcon
+        {...testIDProps('SuccessHistoryIcon')}
+        color1={Theme.Colors.linearGradientStart}
+        color2={Theme.Colors.linearGradientEnd}
+        stroke={Theme.Colors.IconBg}
+      />
+    );
+  }
+
+  static ErrorLogo() {
+    return <ErrorLogo {...testIDProps('ErrorLogo')} />;
+  }
+
   static PermissionDenied() {
     return <PermissionDenied {...testIDProps('permissionDeniedImage')} />;
   }
@@ -289,6 +321,10 @@ export class SvgImage {
 
   static SomethingWentWrong() {
     return <SomethingWentWrong {...testIDProps('somethingWentWrongImage')} />;
+  }
+
+  static ErrorOccurred() {
+    return <ErrorOccurred {...testIDProps('errorOccurredImage')} />;
   }
 
   static MagnifierZoom() {
@@ -317,6 +353,25 @@ export class SvgImage {
   }
   static SearchIcon() {
     return <Search {...testIDProps('searchIcon')} />;
+}
+
+  static GoogleDriveIconSmall(width, height) {
+    return (
+      <GoogleDriveIconSmall
+        width={width}
+        height={height}
+        {...testIDProps('googleDriveIconSmall')}
+      />
+    );
+  }
+  static ICloudIcon(width, height) {
+    return (
+      <ICloudLogo
+        width={width}
+        height={height}
+        {...testIDProps('iCloudIcon')}
+      />
+    );
   }
 }
 

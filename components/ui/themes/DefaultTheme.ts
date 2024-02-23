@@ -25,6 +25,7 @@ const Colors = {
   DimGray: '#737373',
   platinumGrey: '#EDEDED',
   Orange: '#F2811D',
+  OrangeBrown: '#D9822B',
   Blue: '#0000FF',
   LightGrey: '#F8F8F8',
   ShadeOfGrey: '#6F6F6F',
@@ -370,8 +371,8 @@ export const DefaultTheme = {
       height: 173.276,
     },
     logo: {
-      height: 40,
-      width: 40,
+      height: 65,
+      width: 65,
     },
     issuerLogo: {
       resizeMode: 'contain',
@@ -379,8 +380,8 @@ export const DefaultTheme = {
       height: 60,
     },
     vcDetailsLogo: {
-      height: 50,
-      width: 50,
+      height: 65,
+      width: 65,
     },
     homeCloseCardDetailsHeader: {
       flex: 1,
@@ -431,7 +432,6 @@ export const DefaultTheme = {
       height: 36,
       borderRadius: 10,
       backgroundColor: Colors.LightOrange,
-      justifyContent: 'center',
     },
     cameraFlipIcon: {
       height: 42,
@@ -489,6 +489,10 @@ export const DefaultTheme = {
       paddingHorizontal: 18,
       paddingVertical: 9,
       justifyContent: 'space-between',
+    },
+    iconContainer: {
+      flexDirection: 'row',
+      alignItems: 'flex-end',
     },
     scannerContainer: {
       borderRadius: 24,
@@ -663,28 +667,12 @@ export const DefaultTheme = {
       backgroundColor: Colors.Orange,
       paddingHorizontal: 5,
       paddingVertical: 4,
+      maxHeight: 20,
+      marginTop: 10,
       borderRadius: 4,
       fontSize: 10,
       fontFamily: 'Inter_700Bold',
       lineHeight: 12,
-    },
-    scanLayoutHeaderContainer: {
-      flex: 1,
-      flexDirection: 'row',
-      marginLeft: I18nManager.isRTL ? 40 : 15,
-      marginTop: 15,
-    },
-    scanLayoutHeaderTitle: {
-      fontSize: 26,
-      fontFamily: 'Inter_600SemiBold',
-      paddingTop: 20,
-      paddingBottom: 10,
-    },
-    sendVcHeaderContainer: {
-      flex: 1,
-      flexDirection: 'row',
-      marginLeft: I18nManager.isRTL ? 50 : 0,
-      marginTop: 15,
     },
   }),
   BannerStyles: StyleSheet.create({
@@ -707,6 +695,9 @@ export const DefaultTheme = {
       fontFamily: 'Inter_600SemiBold',
     },
     dismiss: {paddingLeft: 9},
+    info: {
+      backgroundColor: Colors.OrangeBrown,
+    },
     success: {
       backgroundColor: Colors.Green,
     },
@@ -977,6 +968,11 @@ export const DefaultTheme = {
     outline: {
       backgroundColor: Colors.Transparent,
       borderColor: Colors.Orange,
+    },
+    disabledOutlineButton: {
+      backgroundColor: Colors.Transparent,
+      color: Colors.Grey,
+      borderColor: Colors.Grey,
     },
     container: {
       height: 45,

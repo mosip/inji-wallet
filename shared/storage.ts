@@ -13,7 +13,7 @@ import {
   isHardwareKeystoreExists,
 } from './cryptoutil/cryptoUtil';
 import {VCMetadata} from './VCMetadata';
-import {ENOENT} from '../machines/store';
+import {ENOENT, removeTamperedVcMetaData} from '../machines/store';
 import {
   androidVersion,
   isAndroid,
@@ -24,11 +24,14 @@ import FileStorage, {
   getFilePath,
   getDirectorySize,
   vcDirectoryPath,
+  backupDirectoryPath,
 } from './fileStorage';
 import {__AppId} from './GlobalVariables';
 import {getErrorEventData, sendErrorEvent} from './telemetry/TelemetryUtils';
 import {TelemetryConstants} from './telemetry/TelemetryConstants';
 import {BYTES_IN_MEGABYTE} from './commonUtil';
+import fileStorage from './fileStorage';
+import {DocumentDirectoryPath, ReadDirItem} from 'react-native-fs';
 
 export const MMKV = new MMKVLoader().initialize();
 
@@ -60,7 +63,7 @@ class Storage {
       const keysToBeExported = allKeysInDB.filter(key =>
         key.includes('CACHE_FETCH_ISSUER_WELLKNOWN_CONFIG_'),
       );
-      keysToBeExported.push(MY_VCS_STORE_KEY);
+      keysToBeExported?.push(MY_VCS_STORE_KEY);
 
       const encryptedDataPromises = keysToBeExported.map(key =>
         MMKV.getItem(key),
@@ -79,18 +82,28 @@ class Storage {
         myVcMetadata.isPinned = false;
       });
 
-      completeBackupData['dataFromDB'] = dataFromDB;
       completeBackupData['VC_Records'] = {};
 
       let vcKeys = allKeysInDB.filter(key => key.indexOf('VC_') === 0);
       for (let ind in vcKeys) {
         const key = vcKeys[ind];
-        const vc = await Storage.readVCFromFile(key);
-        const decryptedVCData = await decryptJson(encryptionKey, vc);
-        const deactivatedVC =
-          removeWalletBindingDataBeforeBackup(decryptedVCData);
-        completeBackupData['VC_Records'][key] = deactivatedVC;
+        const vc = await this.getItem(key, encryptionKey);
+
+        if (vc) {
+          const decryptedVCData = await decryptJson(encryptionKey, vc);
+          const deactivatedVC =
+            removeWalletBindingDataBeforeBackup(decryptedVCData);
+          completeBackupData['VC_Records'][key] = deactivatedVC;
+        } else {
+          dataFromDB.myVCs = dataFromDB.myVCs.filter(vcMetaData => {
+            return (
+              VCMetadata.fromVcMetadataString(vcMetaData).getVcKey() !== key
+            );
+          });
+        }
       }
+      completeBackupData['dataFromDB'] = dataFromDB;
+
       return completeBackupData;
     } catch (error) {
       sendErrorEvent(
@@ -101,14 +114,28 @@ class Storage {
         ),
       );
       console.error('exporting data is failed due to this error:', error);
+      throw error;
     }
   };
 
   static loadBackupData = async (data, encryptionKey) => {
     try {
+      // 0. check for previous backup states
+      const prevBkpState = `${DocumentDirectoryPath}/.prev`;
+      const previousBackupExists = await fileStorage.exists(prevBkpState);
+      let previousRestoreTimestamp: string = '';
+      if (previousBackupExists) {
+        // 0. Remove partial restored files
+        previousRestoreTimestamp = await fileStorage.readFile(prevBkpState);
+        previousRestoreTimestamp = previousRestoreTimestamp.trim();
+        this.unloadVCs(encryptionKey, parseInt(previousRestoreTimestamp));
+      }
       // 1. opening the file
       const completeBackupData = JSON.parse(data);
       // 2. Load and store VC_records & MMKV things
+      const backupStartState = Date.now().toString();
+      // record the state to help with cleanup activities post partial backup
+      await fileStorage.writeFile(prevBkpState, backupStartState);
       const dataFromDB = await Storage.loadVCs(
         completeBackupData,
         encryptionKey,
@@ -196,6 +223,7 @@ class Storage {
         );
 
         if (isDownloaded && error.message.includes(ENOENT)) {
+          removeTamperedVcMetaData(key, encryptionKey);
           sendErrorEvent(
             getErrorEventData(
               TelemetryConstants.FlowType.fetchData,
@@ -219,31 +247,76 @@ class Storage {
     }
   };
 
-  private static async loadVCs(completeBackupData: any, encryptionKey: any) {
+  /**
+   * unloadVCs will remove a set of VCs against a particular time range
+   *
+   * @param cutOffTimestamp the timestamp of the VC backup start time to current time
+   */
+  private static async unloadVCs(encryptionKey: any, cutOffTimestamp: number) {
+    // 1. Find the VCs in the inji directory which have the said timestamp
+    const file: ReadDirItem[] = await fileStorage.getAllFilesInDirectory(
+      `${DocumentDirectoryPath}/inji/VC/`,
+    );
+    const isGreaterThanEq = function (fName: string, ts: number): boolean {
+      fName = fName.split('.')[0];
+      const curr = fName.split('_')[1];
+      return parseInt(curr) >= ts;
+    };
+    for (let i = 0; i < file.length; i++) {
+      const f = file[i];
+      if (isGreaterThanEq(f.name, cutOffTimestamp)) {
+        await fileStorage.removeItem(f.path);
+      }
+    }
+    // TODO: should this be done via the Store state machine to avoid popups?
+    // 3. Remove the keys from MMKV which have the same timestamp
+    let myVCsEnc = await MMKV.getItem(MY_VCS_STORE_KEY, encryptionKey);
+    if (myVCsEnc !== null) {
+      let mmkvVCs = await decryptJson(encryptionKey, myVCsEnc);
+      let vcList: VCMetadata[] = JSON.parse(mmkvVCs);
+      let newVCList: VCMetadata[] = [];
+      vcList.forEach(d => {
+        if (d.timestamp && parseInt(d.timestamp) < cutOffTimestamp) {
+          newVCList.push(d);
+        }
+      });
+      const finalVC = await encryptJson(
+        encryptionKey,
+        JSON.stringify(newVCList),
+      );
+      await MMKV.setItem(MY_VCS_STORE_KEY, finalVC);
+    }
+  }
+
+  private static async loadVCs(completeBackupData: {}, encryptionKey: any) {
     const allVCs = completeBackupData['VC_Records'];
     const allVCKeys = Object.keys(allVCs);
     const dataFromDB = completeBackupData['dataFromDB'];
-
+    // 0. Check for VC presense in the store
+    // 1. store the VCs and the HMAC
     allVCKeys.forEach(async key => {
       let vc = allVCs[key];
-      const currentUnixTimeStamp = Date.now();
+      const ts = Date.now();
       const prevUnixTimeStamp = vc.vcMetadata.timestamp;
-      vc.vcMetadata.timestamp = currentUnixTimeStamp;
+      vc.vcMetadata.timestamp = ts;
       dataFromDB.myVCs.forEach(myVcMetadata => {
         if (
           myVcMetadata.requestId === vc.vcMetadata.requestId &&
           myVcMetadata.timestamp === prevUnixTimeStamp
         ) {
-          myVcMetadata.timestamp = currentUnixTimeStamp;
+          myVcMetadata.timestamp = ts;
         }
       });
       const updatedVcKey = new VCMetadata(vc.vcMetadata).getVcKey();
       const encryptedVC = await encryptJson(encryptionKey, JSON.stringify(vc));
+      const tmp = VCMetadata.fromVC(key);
+      // Save the VC to disk
       await this.setItem(updatedVcKey, encryptedVC, encryptionKey);
     });
+    // 2. Update myVCsKey
     const dataFromMyVCKey = dataFromDB[MY_VCS_STORE_KEY];
     const encryptedMyVCKeyFromMMKV = await MMKV.getItem(MY_VCS_STORE_KEY);
-    let newDataForMyVCKey;
+    let newDataForMyVCKey: VCMetadata[] = [];
     if (encryptedMyVCKeyFromMMKV != null) {
       const myVCKeyFromMMKV = await decryptJson(
         encryptionKey,
@@ -262,6 +335,7 @@ class Storage {
       encryptedDataForMyVCKey,
       encryptionKey,
     );
+    await fileStorage.removeItemIfExist(`${DocumentDirectoryPath}/.prev`);
     return dataFromDB;
   }
 

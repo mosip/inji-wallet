@@ -25,9 +25,10 @@ export const HelpScreen: React.FC<HelpScreenProps> = props => {
         if (listingRef?.current != null) {
           listingRef.current.scrollToIndex({
             index: 15,
+            animated: true,
           });
         }
-      }, 3000);
+      }, 2000);
     }
   }, [showHelpPage]);
 
@@ -288,6 +289,15 @@ export const HelpScreen: React.FC<HelpScreenProps> = props => {
                 </View>
               )}
               data={[...InjiFaqMap, ...BackupFaqMap]}
+              onScrollToIndexFailed={info => {
+                const wait = new Promise(resolve => setTimeout(resolve, 500));
+                wait.then(() => {
+                  listingRef.current?.scrollToIndex({
+                    index: info.index,
+                    animated: true,
+                  });
+                });
+              }}
             />
           </Column>
         </SafeAreaView>

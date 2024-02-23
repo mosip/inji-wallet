@@ -3,9 +3,16 @@
 export interface Typegen0 {
   '@@xstate/typegen': true;
   internalEvents: {
+    'done.invoke.vc.tamperedVCs.triggerAutoBackupForTamperedVcDeletion:invocation[0]': {
+      type: 'done.invoke.vc.tamperedVCs.triggerAutoBackupForTamperedVcDeletion:invocation[0]';
+      data: unknown;
+      __tip: 'See the XState TS docs to learn how to strongly type this.';
+    };
     'xstate.init': {type: 'xstate.init'};
   };
-  invokeSrcNameMap: {};
+  invokeSrcNameMap: {
+    isUserSignedAlready: 'done.invoke.vc.tamperedVCs.triggerAutoBackupForTamperedVcDeletion:invocation[0]';
+  };
   missingImplementations: {
     actions: never;
     delays: never;
@@ -14,29 +21,29 @@ export interface Typegen0 {
   };
   eventsCausingActions: {
     addVcToInProgressDownloads: 'ADD_VC_TO_IN_PROGRESS_DOWNLOADS';
-    getReceivedVcsResponse: 'GET_RECEIVED_VCS';
     getVcItemResponse: 'GET_VC_ITEM';
     loadMyVcs:
       | 'DOWNLOAD_LIMIT_EXPIRED'
       | 'REFRESH_MY_VCS'
-      | 'REMOVE_TAMPERED_VCS'
+      | 'REFRESH_VCS_METADATA'
       | 'STORE_RESPONSE'
+      | 'VERIFY_VC_FAILED'
       | 'xstate.init';
     loadReceivedVcs: 'REFRESH_RECEIVED_VCS' | 'STORE_RESPONSE';
-    logTamperedVCsremoved: 'REMOVE_TAMPERED_VCS';
-    moveExistingVcToTop: 'VC_RECEIVED';
+    logTamperedVCsremoved: 'done.invoke.vc.tamperedVCs.triggerAutoBackupForTamperedVcDeletion:invocation[0]';
     prependToMyVcs: 'VC_ADDED';
-    prependToReceivedVcs: 'VC_RECEIVED';
     removeDownloadFailedVcsFromStorage: 'DELETE_VC';
     removeDownloadingFailedVcsFromMyVcs: 'STORE_RESPONSE';
-    removeTamperedVcs: 'REMOVE_TAMPERED_VCS';
     removeVcFromInProgressDownlods:
       | 'DOWNLOAD_LIMIT_EXPIRED'
-      | 'REMOVE_VC_FROM_IN_PROGRESS_DOWNLOADS';
+      | 'REMOVE_VC_FROM_IN_PROGRESS_DOWNLOADS'
+      | 'VERIFY_VC_FAILED';
     removeVcFromMyVcs: 'REMOVE_VC_FROM_CONTEXT';
     resetAreAllVcsDownloaded: 'RESET_ARE_ALL_VCS_DOWNLOADED';
     resetDownloadFailedVcs: 'STORE_RESPONSE';
+    resetVerificationErrorMessage: 'RESET_VERIFY_ERROR';
     resetWalletBindingSuccess: 'RESET_WALLET_BINDING_SUCCESS';
+    sendBackupEvent: 'done.invoke.vc.tamperedVCs.triggerAutoBackupForTamperedVcDeletion:invocation[0]';
     setDownloadedVCFromOpenId4VCI: 'VC_DOWNLOADED_FROM_OPENID4VCI';
     setDownloadedVc: 'VC_DOWNLOADED';
     setDownloadingFailedVcs: 'DOWNLOAD_LIMIT_EXPIRED';
@@ -44,14 +51,17 @@ export interface Typegen0 {
     setReceivedVcs: 'STORE_RESPONSE';
     setTamperedVcs: 'TAMPERED_VC';
     setUpdatedVcMetadatas: 'VC_METADATA_UPDATED';
+    setVerificationErrorMessage: 'VERIFY_VC_FAILED';
     setWalletBindingSuccess: 'WALLET_BINDING_SUCCESS';
     updateMyVcs: 'VC_METADATA_UPDATED';
   };
   eventsCausingDelays: {};
   eventsCausingGuards: {
-    hasExistingReceivedVc: 'VC_RECEIVED';
+    isSignedIn: 'done.invoke.vc.tamperedVCs.triggerAutoBackupForTamperedVcDeletion:invocation[0]';
   };
-  eventsCausingServices: {};
+  eventsCausingServices: {
+    isUserSignedAlready: 'REMOVE_TAMPERED_VCS';
+  };
   matchesStates:
     | 'deletingFailedVcs'
     | 'init'
@@ -65,6 +75,8 @@ export interface Typegen0 {
     | 'ready.receivedVcs.idle'
     | 'ready.receivedVcs.refreshing'
     | 'tamperedVCs'
+    | 'tamperedVCs.refreshVcsMetadata'
+    | 'tamperedVCs.triggerAutoBackupForTamperedVcDeletion'
     | {
         init?: 'myVcs' | 'receivedVcs';
         ready?:
@@ -74,6 +86,9 @@ export interface Typegen0 {
               myVcs?: 'idle' | 'refreshing';
               receivedVcs?: 'idle' | 'refreshing';
             };
+        tamperedVCs?:
+          | 'refreshVcsMetadata'
+          | 'triggerAutoBackupForTamperedVcDeletion';
       };
   tags: never;
 }

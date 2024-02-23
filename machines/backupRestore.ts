@@ -3,12 +3,13 @@ import {createModel} from 'xstate/lib/model';
 import {AppServices} from '../shared/GlobalContext';
 import fileStorage, {
   backupDirectoryPath,
+  findMostRecentBackupFile,
   getBackupFilePath,
   unZipAndRemoveFile,
 } from '../shared/fileStorage';
 import Storage from '../shared/storage';
 import {StoreEvents} from './store';
-import Cloud from '../shared/googleCloudUtils';
+import Cloud from '../shared/CloudBackupAndRestoreUtils';
 import {TelemetryConstants} from '../shared/telemetry/TelemetryConstants';
 import {
   sendStartEvent,
@@ -27,16 +28,17 @@ const model = createModel(
     fileName: '',
     dataFromBackupFile: {},
     errorReason: '' as string,
+    showRestoreInProgress: false as boolean,
   },
   {
     events: {
       BACKUP_RESTORE: () => ({}),
-      EXTRACT_DATA: () => ({}),
+      DOWNLOAD_UNSYNCED_BACKUP_FILES: () => ({}),
       DISMISS: () => ({}),
+      DISMISS_SHOW_RESTORE_IN_PROGRESS: () => ({}),
       STORE_RESPONSE: (response: unknown) => ({response}),
       STORE_ERROR: (error: Error, requester?: string) => ({error, requester}),
       DATA_FROM_FILE: (dataFromBackupFile: {}) => ({dataFromBackupFile}),
-      OK: () => ({}),
     },
   },
 );
@@ -45,6 +47,7 @@ export const BackupRestoreEvents = model.events;
 
 export const backupRestoreMachine = model.createMachine(
   {
+    /** @xstate-layout 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 */
     predictableActionArguments: true,
     preserveActionOrder: true,
     tsTypes: {} as import('./backupRestore.typegen').Typegen0,
@@ -53,29 +56,41 @@ export const backupRestoreMachine = model.createMachine(
       events: {} as EventFrom<typeof model>,
     },
     id: 'backupRestore',
-    initial: 'init',
+    initial: 'preload',
     on: {
       BACKUP_RESTORE: [
         {
           target: 'restoreBackup',
         },
       ],
+      DOWNLOAD_UNSYNCED_BACKUP_FILES: {
+        actions: 'downloadUnsyncedBackupFiles',
+      },
     },
     states: {
-      init: {
-        on: {
-          BACKUP_RESTORE: [
+      preload: {
+        description:
+          'runs all pending restore migrations based on the state of the filestorage',
+        invoke: {
+          src: 'bootstrap',
+          onDone: [
             {
-              target: 'restoreBackup',
+              cond: 'isBackupFile',
+              target: 'restoreBackup.readBackupFile',
+            },
+            {
+              target: 'init',
             },
           ],
         },
       },
+      init: {},
       restoreBackup: {
-        initial: 'checkStorageAvailibility',
+        initial: 'checkStorageAvailability',
+        entry: 'setShowRestoreInProgress',
         states: {
           idle: {},
-          checkStorageAvailibility: {
+          checkStorageAvailability: {
             entry: ['sendDataRestoreStartEvent'],
             invoke: {
               src: 'checkStorageAvailability',
@@ -149,21 +164,24 @@ export const backupRestoreMachine = model.createMachine(
             },
           },
           success: {
-            entry: 'sendDataRestoreSuccessEvent',
+            entry: [
+              'unsetShowRestoreInProgress',
+              'sendDataRestoreSuccessEvent',
+            ],
           },
           failure: {
-            entry: 'sendDataRestoreFailureEvent',
+            entry: [
+              'unsetShowRestoreInProgress',
+              'sendDataRestoreFailureEvent',
+            ],
           },
         },
         on: {
-          OK: {
-            target: '.idle',
-          },
           DISMISS: {
             target: 'init',
           },
-          EXTRACT_DATA: {
-            target: '.checkStorageAvailibility',
+          DISMISS_SHOW_RESTORE_IN_PROGRESS: {
+            actions: 'unsetShowRestoreInProgress',
           },
         },
       },
@@ -171,6 +189,16 @@ export const backupRestoreMachine = model.createMachine(
   },
   {
     actions: {
+      downloadUnsyncedBackupFiles: () => Cloud.downloadUnSyncedBackupFiles(),
+
+      setShowRestoreInProgress: model.assign({
+        showRestoreInProgress: true,
+      }),
+
+      unsetShowRestoreInProgress: model.assign({
+        showRestoreInProgress: false,
+      }),
+
       setRestoreTechnicalError: model.assign({
         errorReason: 'technicalError',
       }),
@@ -181,7 +209,7 @@ export const backupRestoreMachine = model.createMachine(
       setRestoreErrorReason: model.assign({
         errorReason: (_context, event) => {
           const reasons = {
-            'No backup file': 'noBackupFile',
+            [Cloud.NO_BACKUP_FILE]: 'noBackupFile',
             [NETWORK_REQUEST_FAILED]: 'networkError',
             [TECHNICAL_ERROR]: 'technicalError',
           };
@@ -236,11 +264,53 @@ export const backupRestoreMachine = model.createMachine(
     },
 
     services: {
+      bootstrap: context => async () => {
+        const bkpDIR = await fileStorage.exists(backupDirectoryPath);
+        // 1. Does anything even exists?
+        if (!bkpDIR) {
+          // noop: nothing exists, quit
+          return '';
+        }
+        // 2. Check for .injibackup file
+        const bkpFile = await findMostRecentBackupFile(
+          backupDirectoryPath,
+          'injibackup',
+        );
+        if (bkpFile !== '') {
+          context.fileName = bkpFile;
+          return context.fileName;
+        }
+        // 3. Check for .zip files
+        const ZIPfile = await findMostRecentBackupFile();
+        if (ZIPfile === '') {
+          return '';
+        }
+        // go to loadBackupFile
+        // 4. Check for corrupted ZIP
+        let filePath = '';
+        try {
+          (filePath = await unZipAndRemoveFile(ZIPfile.split('.zip')[0])),
+            (context.fileName = filePath.split('/inji/backup/')[1]);
+          return getFileNameFromZIPfile(context.fileName);
+        } catch (_) {
+          console.log('got error during unzip deleting the zip');
+          await fileStorage.removeItem(backupDirectoryPath);
+          /*
+          Android Errors:
+            - Couldn’t open file...
+            - Failed to extract file...
+          iOS Errors:
+            - unzip_error...
+          */
+          return '';
+        }
+      },
       checkStorageAvailability: () => async () => {
         return await Storage.isMinimumLimitReached('minStorageRequired');
       },
       deleteBkpDir: () => async () =>
-        fileStorage.removeItem(backupDirectoryPath),
+        (await fileStorage.exists(backupDirectoryPath)) &&
+        (await fileStorage.removeItem(backupDirectoryPath)),
 
       downloadLatestBackup: () => async () => {
         const backupFileName = await Cloud.downloadLatestBackup();
@@ -254,6 +324,10 @@ export const backupRestoreMachine = model.createMachine(
         return await unZipAndRemoveFile(context.fileName);
       },
       readBackupFile: context => async callback => {
+        // trim extension
+        context.fileName = context.fileName.endsWith('.injibackup')
+          ? context.fileName.split('.injibackup')[0]
+          : context.fileName;
         const dataFromBackupFile = await fileStorage.readFile(
           getBackupFilePath(context.fileName),
         );
@@ -262,6 +336,7 @@ export const backupRestoreMachine = model.createMachine(
     },
 
     guards: {
+      isBackupFile: (_, event) => event.data.endsWith('.injibackup'),
       isMinimumStorageRequiredForBackupRestorationReached: (_context, event) =>
         Boolean(event.data),
     },
@@ -287,10 +362,17 @@ export function selectIsBackUpRestoring(state: State) {
 export function selectIsBackUpRestoreSuccess(state: State) {
   return state.matches('restoreBackup.success');
 }
-export function selectIsCheckStorageAvailibility(state: State) {
-  return state.matches('restoreBackup.checkStorageAvailibility');
-}
 export function selectIsBackUpRestoreFailure(state: State) {
   return state.matches('restoreBackup.failure');
 }
+export function selectShowRestoreInProgress(state: State) {
+  return state.context.showRestoreInProgress;
+}
 type State = StateFrom<typeof backupRestoreMachine>;
+
+function getFileNameFromZIPfile(fileName: string): string {
+  if (fileName.endsWith('.zip')) {
+    return fileName.split('.zip')[0] + '.injibackup';
+  }
+  return fileName + '.injiBackup';
+}

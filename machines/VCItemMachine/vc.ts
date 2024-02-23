@@ -11,7 +11,7 @@ import {Protocols} from '../../shared/openId4VCI/Utils';
 import {EsignetMosipVCItemEvents} from './EsignetMosipVCItem/EsignetMosipVCItemMachine';
 import {ActivityLogEvents} from '../activityLog';
 import {ActivityLog} from '../../components/ActivityLogEvent';
-import Cloud, {isSignedInResult} from '../../shared/googleCloudUtils';
+import Cloud, {isSignedInResult} from '../../shared/CloudBackupAndRestoreUtils';
 import {BackupEvents} from '../backupAndRestore/backup';
 
 const model = createModel(
@@ -25,6 +25,7 @@ const model = createModel(
     walletBindingSuccess: false,
     tamperedVcs: [] as VCMetadata[],
     downloadingFailedVcs: [] as VCMetadata[],
+    verificationErrorMessage: '' as string,
   },
   {
     events: {
@@ -35,7 +36,6 @@ const model = createModel(
       VC_ADDED: (vcMetadata: VCMetadata) => ({vcMetadata}),
       REMOVE_VC_FROM_CONTEXT: (vcMetadata: VCMetadata) => ({vcMetadata}),
       VC_METADATA_UPDATED: (vcMetadata: VCMetadata) => ({vcMetadata}),
-      VC_RECEIVED: (vcMetadata: VCMetadata) => ({vcMetadata}),
       VC_DOWNLOADED: (vc: VC) => ({vc}),
       VC_DOWNLOADED_FROM_OPENID4VCI: (vc: VC, vcMetadata: VCMetadata) => ({
         vc,
@@ -48,14 +48,20 @@ const model = createModel(
       WALLET_BINDING_SUCCESS: () => ({}),
       RESET_WALLET_BINDING_SUCCESS: () => ({}),
       ADD_VC_TO_IN_PROGRESS_DOWNLOADS: (requestId: string) => ({requestId}),
-      REMOVE_VC_FROM_IN_PROGRESS_DOWNLOADS: (requestId: string) => ({
-        requestId,
+      REMOVE_VC_FROM_IN_PROGRESS_DOWNLOADS: (vcMetadata: VCMetadata) => ({
+        vcMetadata,
       }),
       RESET_ARE_ALL_VCS_DOWNLOADED: () => ({}),
       TAMPERED_VC: (VC: VCMetadata) => ({VC}),
       REMOVE_TAMPERED_VCS: () => ({}),
       DOWNLOAD_LIMIT_EXPIRED: (vcMetadata: VCMetadata) => ({vcMetadata}),
       DELETE_VC: () => ({}),
+      VERIFY_VC_FAILED: (errorMessage: string, vcMetadata?: VCMetadata) => ({
+        errorMessage,
+        vcMetadata,
+      }),
+      RESET_VERIFY_ERROR: () => ({}),
+      REFRESH_VCS_METADATA: () => ({}),
     },
   },
 );
@@ -136,13 +142,7 @@ export const vcMachine =
             receivedVcs: {
               initial: 'idle',
               states: {
-                idle: {
-                  on: {
-                    REFRESH_RECEIVED_VCS: {
-                      target: 'refreshing',
-                    },
-                  },
-                },
+                idle: {},
                 refreshing: {
                   entry: 'loadReceivedVcs',
                   on: {
@@ -156,9 +156,6 @@ export const vcMachine =
             },
           },
           on: {
-            GET_RECEIVED_VCS: {
-              actions: 'getReceivedVcsResponse',
-            },
             GET_VC_ITEM: {
               actions: 'getVcItemResponse',
             },
@@ -189,15 +186,9 @@ export const vcMachine =
             RESET_WALLET_BINDING_SUCCESS: {
               actions: 'resetWalletBindingSuccess',
             },
-            VC_RECEIVED: [
-              {
-                actions: 'moveExistingVcToTop',
-                cond: 'hasExistingReceivedVc',
-              },
-              {
-                actions: 'prependToReceivedVcs',
-              },
-            ],
+            REFRESH_RECEIVED_VCS: {
+              target: '#vc.ready.receivedVcs.refreshing',
+            },
             TAMPERED_VC: {
               actions: 'setTamperedVcs',
               target: 'tamperedVCs',
@@ -211,6 +202,16 @@ export const vcMachine =
             },
             DELETE_VC: {
               target: 'deletingFailedVcs',
+            },
+            VERIFY_VC_FAILED: {
+              actions: [
+                'removeVcFromInProgressDownlods',
+                'setVerificationErrorMessage',
+              ],
+              target: '#vc.ready.myVcs.refreshing',
+            },
+            RESET_VERIFY_ERROR: {
+              actions: 'resetVerificationErrorMessage',
             },
           },
         },
@@ -227,18 +228,21 @@ export const vcMachine =
                 onDone: [
                   {
                     cond: 'isSignedIn',
-                    actions: [
-                      'sendBackupEvent',
-                      'removeTamperedVcs',
-                      'logTamperedVCsremoved',
-                    ],
-                    target: '#vc.ready.myVcs.refreshing',
+                    actions: 'sendBackupEvent',
+                    target: 'refreshVcsMetadata',
                   },
                   {
-                    actions: ['removeTamperedVcs', 'logTamperedVCsremoved'],
-                    target: '#vc.ready.myVcs.refreshing',
+                    target: 'refreshVcsMetadata',
                   },
                 ],
+              },
+            },
+            refreshVcsMetadata: {
+              entry: ['logTamperedVCsremoved', send('REFRESH_VCS_METADATA')],
+              on: {
+                REFRESH_VCS_METADATA: {
+                  target: '#vc.init',
+                },
               },
             },
           },
@@ -308,6 +312,14 @@ export const vcMachine =
           ],
         }),
 
+        setVerificationErrorMessage: model.assign({
+          verificationErrorMessage: (context, event) => event.errorMessage,
+        }),
+
+        resetVerificationErrorMessage: model.assign({
+          verificationErrorMessage: (_context, event) => '',
+        }),
+
         resetDownloadFailedVcs: model.assign({
           downloadingFailedVcs: (context, event) => [],
         }),
@@ -329,14 +341,15 @@ export const vcMachine =
 
         removeVcFromInProgressDownlods: model.assign({
           inProgressVcDownloads: (context, event) => {
-            let paresedInProgressList: Set<string> =
+            let updatedInProgressList: Set<string> =
               context.inProgressVcDownloads;
-            const removeVcRequestID =
-              event.type === 'REMOVE_VC_FROM_IN_PROGRESS_DOWNLOADS'
-                ? event.requestId
-                : event.vcMetadata.requestId;
-            paresedInProgressList.delete(removeVcRequestID);
-            return paresedInProgressList;
+            if (!event.vcMetadata) {
+              return updatedInProgressList;
+            }
+            const removeVcRequestID = event.vcMetadata.requestId;
+            updatedInProgressList.delete(removeVcRequestID);
+
+            return updatedInProgressList;
           },
           areAllVcsDownloaded: context => {
             if (context.inProgressVcDownloads.size == 0) {
@@ -394,13 +407,6 @@ export const vcMachine =
           },
         ),
 
-        removeTamperedVcs: model.assign({
-          myVcs: (context, event) =>
-            context.myVcs.filter(
-              value => !context.tamperedVcs.some(item => item?.equals(value)),
-            ),
-        }),
-
         logTamperedVCsremoved: send(
           context =>
             ActivityLogEvents.LOG_ACTIVITY(ActivityLog.logTamperedVCs()),
@@ -421,33 +427,11 @@ export const vcMachine =
         resetWalletBindingSuccess: model.assign({
           walletBindingSuccess: false,
         }),
-
-        prependToReceivedVcs: model.assign({
-          receivedVcs: (context, event) => [
-            event.vcMetadata,
-            ...context.receivedVcs,
-          ],
-        }),
-
-        moveExistingVcToTop: model.assign({
-          receivedVcs: (context, event) => {
-            return [
-              event.vcMetadata,
-              ...context.receivedVcs.filter(value =>
-                value.equals(event.vcMetadata),
-              ),
-            ];
-          },
-        }),
       },
 
       guards: {
         isSignedIn: (_context, event) =>
           (event.data as isSignedInResult).isSignedIn,
-        hasExistingReceivedVc: (context, event) =>
-          context.receivedVcs.find(vcMetadata =>
-            vcMetadata.equals(event.vcMetadata),
-          ) != null,
       },
 
       services: {
@@ -545,7 +529,10 @@ export function selectIsTampered(state: State) {
 export function selectDownloadingFailedVcs(state: State) {
   return state.context.downloadingFailedVcs;
 }
-
 export function selectMyVcs(state: State) {
   return state.context.vcs;
+}
+
+export function selectVerificationErrorMessage(state: State) {
+  return state.context.verificationErrorMessage;
 }

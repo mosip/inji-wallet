@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="137.755" height="33.337" viewBox="0 0 137.755 33.337">
+  <defs>
+    <linearGradient id="linear-gradient" y1="0.5" x2="1" y2="0.5" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#95dcf6"/>
+      <stop offset="1" stop-color="#507eff"/>
+    </linearGradient>
+    <radialGradient id="radial-gradient" cx="0.514" cy="0.984" r="0.638" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#009ada"/>
+      <stop offset="1" stop-color="#1e88e5" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="linear-gradient-2" x1="0.047" y1="0.026" x2="0.953" y2="-0.396" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#fff" stop-opacity="0.059"/>
+      <stop offset="1" stop-color="#fff" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="linear-gradient-3" x1="0.86" y1="0.143" x2="0.134" y2="-0.349" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#fff" stop-opacity="0"/>
+      <stop offset="1" stop-color="#fff" stop-opacity="0.059"/>
+    </linearGradient>
+    <linearGradient id="linear-gradient-4" x1="0.5" y1="1.23" x2="0.5" y2="0.23" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#00accd" stop-opacity="0.2"/>
+      <stop offset="0.127" stop-color="#1ab4d2" stop-opacity="0.173"/>
+      <stop offset="0.4" stop-color="#5ccadf" stop-opacity="0.122"/>
+      <stop offset="0.793" stop-color="#c5ecf4" stop-opacity="0.043"/>
+      <stop offset="1" stop-color="#fff" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="linear-gradient-5" x1="0.102" y1="0.71" x2="0.962" y2="0.108" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#fff" stop-opacity="0.102"/>
+      <stop offset="1" stop-color="#fff" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+  <g id="Group_58211" data-name="Group 58211" transform="translate(-120 -449.681)">
+    <g id="iconfinder_logo_brand_brands_logos_icloud_2993684" transform="translate(64 326.981)">
+      <path id="Path_155715" data-name="Path 155715" d="M98.7,136.613v-.375a13.536,13.536,0,0,0-25.375-6.562,7.784,7.784,0,0,0-11.038,6.412,10.391,10.391,0,0,0,4.125,19.938H96.1a9.877,9.877,0,0,0,2.6-19.412Z" transform="translate(0)" fill="url(#linear-gradient)"/>
+      <path id="Path_155716" data-name="Path 155716" d="M98.7,136.613v-.375a13.536,13.536,0,0,0-25.375-6.562,7.784,7.784,0,0,0-11.038,6.412,10.391,10.391,0,0,0,4.125,19.938H96.1a9.877,9.877,0,0,0,2.6-19.412Z" transform="translate(0)" fill="url(#radial-gradient)"/>
+      <circle id="Ellipse_1234" data-name="Ellipse 1234" cx="9.9" cy="9.9" r="9.9" transform="translate(86.2 136.238)" fill="url(#linear-gradient-2)"/>
+      <circle id="Ellipse_1235" data-name="Ellipse 1235" cx="10.413" cy="10.413" r="10.413" transform="translate(56 135.2)" fill="url(#linear-gradient-3)"/>
+      <circle id="Ellipse_1236" data-name="Ellipse 1236" cx="8" cy="8" r="8" transform="translate(62 129.019)" fill="#56c7da" opacity="0.2"/>
+      <circle id="Ellipse_1237" data-name="Ellipse 1237" cx="13.538" cy="13.538" r="13.538" transform="translate(71.625 122.7)" fill="url(#linear-gradient-4)"/>
+      <path id="Path_155717" data-name="Path 155717" d="M98.7,136.613v-.375a13.536,13.536,0,0,0-25.375-6.562,7.784,7.784,0,0,0-11.038,6.412,10.391,10.391,0,0,0,4.125,19.938H96.1a9.877,9.877,0,0,0,2.6-19.412Z" transform="translate(0)" fill="url(#linear-gradient-5)"/>
+    </g>
+    <path id="Path_155719" fill="#000" data-name="Path 155719" d="M2-16.136h2.77V0H2Zm0-6.1h2.77v3.088H2Zm16.62-.605a9.112,9.112,0,0,1,6.554,2.225,7.858,7.858,0,0,1,2.588,5.056H24.824a6.111,6.111,0,0,0-1.99-3.406,6.309,6.309,0,0,0-4.185-1.256,6.711,6.711,0,0,0-5.305,2.308q-2.021,2.308-2.021,7.076A10.278,10.278,0,0,0,13.146-4.5a6.373,6.373,0,0,0,5.442,2.429,5.749,5.749,0,0,0,5.071-2.558,9.729,9.729,0,0,0,1.377-3.542h2.937a10.034,10.034,0,0,1-2.6,5.888A9.264,9.264,0,0,1,18.225.575a9.43,9.43,0,0,1-6.509-2.346Q8.25-4.874,8.25-11.353a12.24,12.24,0,0,1,2.6-8.068A9.51,9.51,0,0,1,18.618-22.841Zm12.73.605h2.725V0H31.348ZM44.593-1.756a3.758,3.758,0,0,0,3.716-2.051,10.218,10.218,0,0,0,1.007-4.564,8.126,8.126,0,0,0-.727-3.693,4.087,4.087,0,0,0-3.966-2.24A3.911,3.911,0,0,0,40.99-12.4a8.84,8.84,0,0,0-1.135,4.6A7.69,7.69,0,0,0,40.99-3.481,4,4,0,0,0,44.593-1.756ZM44.7-16.681A7.341,7.341,0,0,1,50-14.592q2.165,2.089,2.165,6.146a10.544,10.544,0,0,1-1.907,6.479Q48.347.59,44.335.59a6.682,6.682,0,0,1-5.313-2.263A8.938,8.938,0,0,1,37.055-7.75a9.67,9.67,0,0,1,2.074-6.509A6.96,6.96,0,0,1,44.7-16.681Zm13.426.469V-5.449a4.538,4.538,0,0,0,.394,2.028,2.746,2.746,0,0,0,2.709,1.453A3.83,3.83,0,0,0,65.1-4.511a10.089,10.089,0,0,0,.56-3.739v-7.962h2.725V0H65.814l.03-2.392A5.5,5.5,0,0,1,64.528-.833,5.8,5.8,0,0,1,60.744.439q-3.466,0-4.723-2.316a6.9,6.9,0,0,1-.681-3.315v-11.02ZM74.367-7.917a8.036,8.036,0,0,0,1.1,4.359A3.872,3.872,0,0,0,79.014-1.8a3.731,3.731,0,0,0,3.111-1.627A7.685,7.685,0,0,0,83.343-8.1a6.905,6.905,0,0,0-1.256-4.549,3.919,3.919,0,0,0-3.1-1.476,4.1,4.1,0,0,0-3.338,1.574A7.21,7.21,0,0,0,74.367-7.917Zm4.1-8.583a5.768,5.768,0,0,1,3.118.787,7.324,7.324,0,0,1,1.65,1.589v-8.189h2.619V0H83.4V-2.255A5.9,5.9,0,0,1,81.148-.091a6.456,6.456,0,0,1-2.982.666A6.039,6.039,0,0,1,73.474-1.7a8.907,8.907,0,0,1-1.983-6.062A10.465,10.465,0,0,1,73.3-13.9,5.922,5.922,0,0,1,78.469-16.5Z" transform="translate(171.399 479)"/>
+  </g>
+</svg>

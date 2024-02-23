@@ -25,6 +25,7 @@ const Colors = {
   DimGray: '#737373',
   platinumGrey: '#EDEDED',
   Orange: '#F2811D',
+  OrangeBrown: '#D9822B',
   Blue: '#0000FF',
   LightOrange: '#FDF1E6',
   LightGrey: '#F8F8F8',
@@ -375,8 +376,8 @@ export const PurpleTheme = {
       height: 173.276,
     },
     logo: {
-      width: 40,
-      height: 40,
+      height: 65,
+      width: 65,
     },
     issuerLogo: {
       resizeMode: 'contain',
@@ -384,8 +385,8 @@ export const PurpleTheme = {
       height: 60,
     },
     vcDetailsLogo: {
-      width: 50,
-      height: 50,
+      height: 65,
+      width: 65,
     },
     homeCloseCardDetailsHeader: {
       flex: 1,
@@ -436,7 +437,6 @@ export const PurpleTheme = {
       height: 36,
       borderRadius: 10,
       backgroundColor: Colors.LightPurple,
-      justifyContent: 'center',
     },
     cameraFlipIcon: {
       width: 42,
@@ -493,6 +493,10 @@ export const PurpleTheme = {
       paddingHorizontal: 18,
       paddingVertical: 9,
       justifyContent: 'space-between',
+    },
+    iconContainer: {
+      flexDirection: 'row',
+      alignItems: 'flex-end',
     },
     scannerContainer: {
       borderRadius: 24,
@@ -667,28 +671,12 @@ export const PurpleTheme = {
       backgroundColor: Colors.Purple,
       paddingHorizontal: 5,
       paddingVertical: 4,
+      maxHeight: 20,
+      marginTop: 10,
       borderRadius: 4,
       fontSize: 10,
       fontFamily: 'Inter_700Bold',
       lineHeight: 12,
-    },
-    scanLayoutHeaderContainer: {
-      flex: 1,
-      flexDirection: 'row',
-      marginLeft: I18nManager.isRTL ? 40 : 15,
-      marginTop: 15,
-    },
-    scanLayoutHeaderTitle: {
-      fontSize: 26,
-      fontFamily: 'Inter_600SemiBold',
-      paddingTop: 20,
-      paddingBottom: 10,
-    },
-    sendVcHeaderContainer: {
-      flex: 1,
-      flexDirection: 'row',
-      marginLeft: I18nManager.isRTL ? 50 : 0,
-      marginTop: 15,
     },
   }),
   BannerStyles: StyleSheet.create({
@@ -711,6 +699,9 @@ export const PurpleTheme = {
       fontFamily: 'Inter_600SemiBold',
     },
     dismiss: {paddingLeft: 9},
+    info: {
+      backgroundColor: Colors.OrangeBrown,
+    },
     success: {
       backgroundColor: Colors.Green,
     },
@@ -981,6 +972,11 @@ export const PurpleTheme = {
     outline: {
       backgroundColor: Colors.Transparent,
       borderColor: Colors.Purple,
+    },
+    disabledOutlineButton: {
+      backgroundColor: Colors.Transparent,
+      color: Colors.Grey,
+      borderColor: Colors.Grey,
     },
     container: {
       height: 45,

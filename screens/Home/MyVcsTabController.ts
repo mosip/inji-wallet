@@ -11,6 +11,7 @@ import {
   selectIsTampered,
   selectDownloadingFailedVcs,
   selectMyVcs,
+  selectVerificationErrorMessage,
 } from '../../machines/VCItemMachine/vc';
 import {
   selectWalletBindingError,
@@ -33,12 +34,19 @@ import {
   SettingsEvents,
 } from '../../machines/settings';
 import {EsignetMosipVCItemMachine} from '../../machines/VCItemMachine/EsignetMosipVCItem/EsignetMosipVCItemMachine';
+import {NavigationProp, useNavigation} from '@react-navigation/native';
+import {BOTTOM_TAB_ROUTES} from '../../routes/routesConstants';
+import {HomeRouteProps, MainBottomTabParamList} from '../../routes/main';
+import {RootRouteProps} from '../../routes';
+
+type MyVcsTabNavigation = NavigationProp<RootRouteProps>;
 
 export function useMyVcsTab(props: HomeScreenTabProps) {
   const service = props.service as ActorRefFrom<typeof MyVcsTabMachine>;
   const {appService} = useContext(GlobalContext);
   const vcService = appService.children.get('vc');
   const settingsService = appService.children.get('settings');
+  const navigation = useNavigation<MyVcsTabNavigation>();
 
   return {
     service,
@@ -64,6 +72,10 @@ export function useMyVcsTab(props: HomeScreenTabProps) {
     isTampered: useSelector(vcService, selectIsTampered),
 
     downloadFailedVcs: useSelector(vcService, selectDownloadingFailedVcs),
+    verificationErrorMessage: useSelector(
+      vcService,
+      selectVerificationErrorMessage,
+    ),
 
     vcData: useSelector(vcService, selectMyVcs),
 
@@ -102,5 +114,8 @@ export function useMyVcsTab(props: HomeScreenTabProps) {
 
     REMOVE_TAMPERED_VCS: () => vcService?.send(VcEvents.REMOVE_TAMPERED_VCS()),
     DELETE_VC: () => vcService?.send(VcEvents.DELETE_VC()),
+    RESET_VERIFY_ERROR: () => {
+      vcService?.send(VcEvents.RESET_VERIFY_ERROR());
+    },
   };
 }
