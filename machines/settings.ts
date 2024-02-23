@@ -96,7 +96,7 @@ export const settingsMachine = model.createMachine(
             {
               cond: 'hasData',
               target: 'idle',
-              actions: ['resetAlternateUnlock', 'setContext'],
+              actions: ['setContext'],
             },
             {target: 'storingDefaults'},
           ],
@@ -381,13 +381,13 @@ export function selectIsBackUpAndRestoreExplored(state: State) {
   return state.context.isBackupAndRestoreExplored;
 }
 
-export function selectIsPasswordUnlock(state: State) {
+export function selectIsBiometricUnlock(state: State) {
   return (
     state.context.isBiometricToggled && state.context.isBiometricUnlockEnabled
   );
 }
 
-export function selectIsBiometricUnlock(state: State) {
+export function selectIsPasscodeUnlock(state: State) {
   return (
     state.context.isBiometricToggled && !state.context.isBiometricUnlockEnabled
   );

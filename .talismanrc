@@ -199,26 +199,26 @@ fileignoreconfig:
     checksum: 8133e2fefddfd0207eb7207b660d317f9a6acafbab6a65762d29ea86e33787cb
   - filename: components/BackupAndRestoreBannerNotification.tsx
     checksum: e465a9947727687d784d0cb9d8db1e28f765b0659bf4a3aa6d75643aa7b14102
-  - filename: locales/tam.json
-    checksum: 88622de41408e90ea16407a204819fe7ad46dcedb274793425e7cf728c10da25
-  - filename: locales/en.json
-    checksum: a111194dd5cc1758f6ef20d4b61c2badcd86df75df5e65fa900ddb655feaa6ad
-  - filename: locales/hin.json
-    checksum: ce555fcaf8a3a50d5d08ea48615bdd124151d4d06a1326570a7e8f99abaa0875
-  - filename: locales/fil.json
-    checksum: be1dff1d84a4c2b34d02ca2dfcc6637a6817b7f6e2f52d4621061e817eb4e841
-  - filename: locales/kan.json
-    checksum: ee37c3a4493109cc21bcc032834764d30b5ef580f1e7fd08cafb77478c8ff64f
-  - filename: locales/spa.json
-    checksum: 9690a623c93ae49027d0bf16278d09a35242c0fe9c793c97ab4462b695fce846
   - filename: locales/ara.json
-    checksum: e833570ceb00c90e3c9ec4a6a009580170b10865264bb47bed8c984ba8174c4b
+    checksum: e437a033a9408e3de070eed59349ed8cbffb65c9532abfa241011857790a783f
+  - filename: locales/en.json
+    checksum: 3761e57ad8975db13ecbd1ef85b75a59c3ac833d34bf0a56062b2216e47dff72
+  - filename: locales/tam.json
+    checksum: c3832b494aeff331728668e15fd953edb4be2afb09be5cfaf22338e3c3ea2af3
+  - filename: locales/kan.json
+    checksum: 00c77da93864065f958382944fc83fa444b962dd9f96f7f5e83759b9470417c8
+  - filename: locales/spa.json
+    checksum: 2c83add2f76af2f2c713cabcef8676f04138d40f722cd28c60fd6c46dddd0bdc
+  - filename: locales/hin.json
+    checksum: ca71c07af498e53d626003c19742bf8259fadab7c873e091e40c65098c2d0740
+  - filename: locales/fil.json
+    checksum: ca79bd1aedf2e0b353e9f61e75c244049219f909e57d7734d69149e7abd8496a
+  - filename: components/BannerNotificationController.tsx
+    checksum: c227400ef7d4add621cee0ec4cf0d19193e39e0885c59112c3a75e45b29e7079
+  - filename: machines/settings.ts
+    checksum: 03a1d20946dcf6fb5553e0881f40451f4b1474246516d128e53660a515cccbe2
   - filename: screens/PasscodeScreenController.ts
     checksum: 9611bd9ab00e5114752a728e168187f2fc33651b2f55770bbeaec1011df3a9c4
   - filename: screens/Settings/SettingScreenController.ts
     checksum: cf5cc745e372052f683a254fdfb294627fd8a44848236cad7eed75064db26997
-  - filename: machines/settings.ts
-    checksum: 6bc7556e85fcc80e8387a3a32813cf14080fd1d4e3faed552c854d5401659615
-  - filename: components/BannerNotificationController.tsx
-    checksum: c1831e3d1ec6d539fcf0533ab546f520107f99ec1d8d7fb8b24dafc6e76c4fd3
   version: ""

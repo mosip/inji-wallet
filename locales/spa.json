@@ -150,7 +150,7 @@
     "resetInjiProps": "Restableciendo accesorios Inji..."
   },
   "BannerNotification": {
-    "alternatePasswordSuccess": "¡Éxito! Ahora puedes usar el código de acceso para desbloquear la aplicación Inji.",
+    "alternatePasscodeSuccess": "¡Éxito! Ahora puedes usar el código de acceso para desbloquear la aplicación Inji.",
     "alternateBiometricSuccess": "¡Éxito! Ahora puedes usar datos biométricos para desbloquear la aplicación Inji.",
     "activated": "Las credenciales están habilitadas para la autenticación en línea."
   },

@@ -1,6 +1,6 @@
 import {useSelector} from '@xstate/react';
 import {
-  selectIsPasswordUnlock,
+  selectIsPasscodeUnlock,
   selectIsBiometricUnlock,
   SettingsEvents,
 } from '../machines/settings';
@@ -12,7 +12,7 @@ export const UseBannerNotification = () => {
   const settingsService = appService.children.get('settings');
 
   return {
-    isPasscodeUnlock: useSelector(settingsService, selectIsPasswordUnlock),
+    isPasscodeUnlock: useSelector(settingsService, selectIsPasscodeUnlock),
 
     isBiometricUnlock: useSelector(settingsService, selectIsBiometricUnlock),
 
