@@ -21,6 +21,7 @@ import {TelemetryConstants} from '../../../shared/telemetry/TelemetryConstants';
 import {isActivationNeeded} from '../../../shared/openId4VCI/Utils';
 import {KebabPopupListItemContainer} from '../../../components/KebabPopUp';
 import {SvgImage} from '../../../components/ui/svg';
+import {FlowType} from '../../../shared/Utils';
 
 export const WalletVerified: React.FC = () => {
   return (
@@ -95,9 +96,16 @@ export const WalletBinding: React.FC<WalletBindingProps> = props => {
 };
 
 export const ActivationStatus = props => {
+  const controller = useKebabPopUp(props);
   const {t} = useTranslation('WalletBinding');
   const activationNotCompleted =
     props.emptyWalletBindingId && isActivationNeeded(props?.vcMetadata.issuer);
+
+  function loadScanScreen() {
+    controller.SELECT_VC_ITEM(props.service, FlowType.MINI_VIEW_QR_LOGIN),
+      controller.GOTO_SCANSCREEN(),
+      props.service.send('CLOSE_VC_MODAL');
+  }
 
   return (
     <KebabPopupListItemContainer
@@ -109,7 +117,9 @@ export const ActivationStatus = props => {
           : t('credentialActivated')
       }
       listItemIcon={SvgImage.OutlinedShieldedIcon()}
-      onPress={activationNotCompleted ? props.ADD_WALLET_BINDING_ID : undefined}
+      onPress={
+        activationNotCompleted ? props.ADD_WALLET_BINDING_ID : loadScanScreen
+      }
       testID="pinOrUnPinCard"
     />
   );

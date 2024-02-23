@@ -72,6 +72,7 @@ export const KebabPopUp: React.FC<KebabPopUpProps> = props => {
           />
           <ActivationStatus
             vcMetadata={props?.vcMetadata}
+            service={props.service}
             emptyWalletBindingId={controller.emptyWalletBindingId}
             ADD_WALLET_BINDING_ID={controller.ADD_WALLET_BINDING_ID}
           />

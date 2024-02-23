@@ -172,7 +172,7 @@ export const scanMachine =
       },
       states: {
         inactive: {
-          entry: ['removeLoggers', 'resetFlowType'],
+          entry: ['removeLoggers', 'resetFlowType', 'resetSelectedVc'],
         },
         disconnectDevice: {
           invoke: {
@@ -417,7 +417,12 @@ export const scanMachine =
               },
               {
                 target: 'showQrLogin',
-                cond: 'isQrLogin',
+                cond: 'isQrLoginViaSimpleShare',
+                actions: ['sendVcSharingStartEvent', 'setLinkCode'],
+              },
+              {
+                target: 'showQrLogin',
+                cond: 'isQrLoginViaMiniView',
                 actions: ['sendVcSharingStartEvent', 'setLinkCode'],
               },
               {
@@ -789,7 +794,9 @@ export const scanMachine =
         sendScanData: context =>
           context.QrLoginRef.send({
             type: 'GET',
-            value: context.linkCode,
+            linkCode: context.linkCode,
+            flowType: context.flowType,
+            selectedVc: context.selectedVc,
           }),
         openBluetoothSettings: () => {
           isAndroid()
@@ -834,6 +841,10 @@ export const scanMachine =
               shouldVerifyPresence: context.selectedVc.shouldVerifyPresence,
             };
           },
+        }),
+
+        resetSelectedVc: assign({
+          selectedVc: {},
         }),
 
         setFlowType: assign({
@@ -1223,11 +1234,28 @@ export const scanMachine =
         // sample: 'OPENID4VP://connect:?name=OVPMOSIP&key=69dc92a2cc91f02258aa8094d6e2b62877f5b6498924fbaedaaa46af30abb364'
         isOpenIdQr: (_context, event) =>
           event.params.startsWith('OPENID4VP://'),
-        isQrLogin: (_context, event) => {
+
+        isQrLoginViaSimpleShare: (context, event) => {
           try {
             let linkCode = new URL(event.params);
             // sample: 'inji://landing-page-name?linkCode=sTjp0XVH3t3dGCU&linkExpireDateTime=2023-11-09T06:56:18.482Z'
-            return linkCode.searchParams.get('linkCode') !== null;
+            return (
+              linkCode.searchParams.get('linkCode') !== null &&
+              context.flowType === FlowType.SIMPLE_SHARE
+            );
+          } catch (e) {
+            return false;
+          }
+        },
+
+        isQrLoginViaMiniView: (context, event) => {
+          try {
+            let linkCode = new URL(event.params);
+            // sample: 'inji://landing-page-name?linkCode=sTjp0XVH3t3dGCU&linkExpireDateTime=2023-11-09T06:56:18.482Z'
+            return (
+              linkCode.searchParams.get('linkCode') !== null &&
+              context.flowType === FlowType.MINI_VIEW_QR_LOGIN
+            );
           } catch (e) {
             return false;
           }

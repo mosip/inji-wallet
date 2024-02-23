@@ -29,12 +29,14 @@ import {
 import {TelemetryConstants} from '../shared/telemetry/TelemetryConstants';
 import {API_URLS} from '../shared/api';
 import getAllConfigurations from '../shared/commonprops/commonProps';
+import {FlowType} from '../shared/Utils';
 
 const model = createModel(
   {
     serviceRefs: {} as AppServices,
     selectedVc: {} as VC,
     linkCode: '',
+    flowType: FlowType.SIMPLE_SHARE,
     myVcs: [] as VCMetadata[],
     thumbprint: '',
     linkTransactionResponse: {} as linkTransactionResponse,
@@ -65,7 +67,11 @@ const model = createModel(
       }),
       DISMISS: () => ({}),
       CONFIRM: () => ({}),
-      GET: (value: string) => ({value}),
+      GET: (linkCode: string, flowType: string, selectedVc: VC) => ({
+        linkCode,
+        flowType,
+        selectedVc,
+      }),
       VERIFY: () => ({}),
       CANCEL: () => ({}),
       FACE_VALID: () => ({}),
@@ -91,6 +97,7 @@ export const qrLoginMachine =
       },
       id: 'QrLogin',
       initial: 'waitingForData',
+      entry: ['resetSelectedVc', 'resetFlowType'],
       states: {
         waitingForData: {
           on: {
@@ -109,12 +116,21 @@ export const qrLoginMachine =
             src: 'linkTransaction',
             onDone: [
               {
+                cond: 'isSimpleShareFlow',
                 actions: [
                   'setlinkTransactionResponse',
                   'expandLinkTransResp',
                   'setClaims',
                 ],
                 target: 'loadMyVcs',
+              },
+              {
+                actions: [
+                  'setlinkTransactionResponse',
+                  'expandLinkTransResp',
+                  'setClaims',
+                ],
+                target: 'faceAuth',
               },
             ],
             onError: [
@@ -164,9 +180,16 @@ export const qrLoginMachine =
             FACE_INVALID: {
               target: 'invalidIdentity',
             },
-            CANCEL: {
-              target: 'showvcList',
-            },
+            CANCEL: [
+              {
+                cond: 'isSimpleShareFlow',
+                target: 'showvcList',
+              },
+              {
+                actions: 'forwardToParent',
+                target: 'waitingForData',
+              },
+            ],
           },
         },
         invalidIdentity: {
@@ -264,8 +287,16 @@ export const qrLoginMachine =
       actions: {
         forwardToParent: sendParent('DISMISS'),
 
-        setScanData: assign({
-          linkCode: (context, event) => event.value,
+        setScanData: model.assign((context, event) => {
+          const linkCode = event.linkCode;
+          const flowType = event.flowType;
+          const selectedVc = event.selectedVc;
+          return {
+            ...context,
+            linkCode: linkCode,
+            flowType: flowType,
+            selectedVc: selectedVc,
+          };
         }),
 
         // TODO: loaded VCMetadatas are not used anywhere. remove?
@@ -304,6 +335,14 @@ export const qrLoginMachine =
           selectedVc: (context, event) => {
             return {...event.vc};
           },
+        }),
+
+        resetSelectedVc: assign({
+          selectedVc: {} as VC,
+        }),
+
+        resetFlowType: assign({
+          flowType: FlowType.SIMPLE_SHARE,
         }),
 
         setlinkTransactionResponse: assign({
@@ -485,6 +524,9 @@ export const qrLoginMachine =
       guards: {
         isConsentAlreadyCaptured: (_, event) =>
           event.data?.consentAction === 'NOCAPTURE',
+
+        isSimpleShareFlow: (context, _event) =>
+          context.flowType === FlowType.SIMPLE_SHARE,
       },
     },
   );
