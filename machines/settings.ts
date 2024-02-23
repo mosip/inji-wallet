@@ -200,7 +200,7 @@ export const settingsMachine = model.createMachine(
       }),
 
       resetAlternateUnlock: model.assign({
-        isAlternateUnlock: (_context, event) => !_context.isAlternateUnlock,
+        isAlternateUnlock: () => false,
       }),
 
       updateDefaults: model.assign({
@@ -224,7 +224,7 @@ export const settingsMachine = model.createMachine(
 
       storeContext: send(
         context => {
-          const {serviceRefs, ...data} = context;
+          const {serviceRefs, isAlternateUnlock, ...data} = context;
           return StoreEvents.SET(SETTINGS_STORE_KEY, data);
         },
         {to: context => context.serviceRefs.store},
