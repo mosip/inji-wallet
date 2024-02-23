@@ -165,6 +165,7 @@
     "title": "Agregar nueva tarjeta",
     "description": "Elija su emisor preferido entre las opciones siguientes para agregar una nueva tarjeta.",
     "searchByIssuersName": "Buscar por nombre del emisor",
+    "help": "¿Ayuda?",
     "loaders": {
       "loading": "Cargando...",
       "subTitle": {
@@ -305,12 +306,15 @@
     }
   },
   "MyVcsTab": {
+    "searchByName": "Buscar por nombre",
     "bringYourDigitalID": "Trae tu identidad digital",
     "generateVcDescription": "Toque \"Descargar tarjeta\" a continuación para descargar su tarjeta",
     "generateVcFABDescription": "Toque \" \" a continuación para descargar su tarjeta",
     "downloadCard": "Descargar tarjeta",
     "downloadingYourCard": "Descargar su tarjeta, esto puede tardar hasta 5 minutos",
     "activated": "Las credenciales están habilitadas para la autenticación en línea.",
+    "noCardsTitle": "¡No se encontraron tarjetas!",
+    "noCardsDescription": "Lo sentimos, no pudimos encontrar ningún resultado. Intente ingresar otra palabra clave de búsqueda.",
     "errors": {
       "savingFailed": {
         "title": "No se pudo guardar la tarjeta",

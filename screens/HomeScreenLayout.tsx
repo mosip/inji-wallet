@@ -2,17 +2,15 @@ import {getFocusedRouteNameFromRoute} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import React from 'react';
 import {useTranslation} from 'react-i18next';
-import {Icon} from 'react-native-elements';
-import {Row} from '../components/ui';
+import {Row, Text} from '../components/ui';
 import {Header} from '../components/ui/Header';
 import {Theme} from '../components/ui/styleUtils';
 import {RootRouteProps} from '../routes';
 import {HomeScreen} from './Home/HomeScreen';
 import {IssuersScreen} from './Issuers/IssuersScreen';
-import {SettingScreen} from './Settings/SettingScreen';
-import testIDProps from '../shared/commonUtil';
 import {SvgImage} from '../components/ui/svg';
 import {HelpScreen} from '../components/HelpScreen';
+import {I18nManager, View} from 'react-native';
 
 export const HomeScreenLayout: React.FC<RootRouteProps> = props => {
   const {t} = useTranslation('IssuersScreen');
@@ -42,45 +40,28 @@ export const HomeScreenLayout: React.FC<RootRouteProps> = props => {
     }
   }, [props.navigation, props.route]);
 
+  const screenOptions = (
+    <HelpScreen
+      source={'Inji'}
+      triggerComponent={
+        <View testID="helop" style={Theme.HelpScreenStyle.viewStyle}>
+          <Row crossAlign="center" style={Theme.HelpScreenStyle.rowStyle}>
+            <View testID="helpIcon" style={Theme.HelpScreenStyle.iconStyle}>
+              {SvgImage.infoIcon()}
+            </View>
+            <Text testID="help" style={Theme.HelpScreenStyle.labelStyle}>
+              {t('help')}
+            </Text>
+          </Row>
+        </View>
+      }
+    />
+  );
   const HomeScreenOptions = {
-    headerLeft: () => {
-      return SvgImage.InjiLogo();
-    },
+    headerLeft: () => (I18nManager.isRTL ? screenOptions : SvgImage.InjiLogo()),
     headerTitle: '',
-    headerRight: () => (
-      <Row align="space-between">
-        <HelpScreen
-          source={'Inji'}
-          triggerComponent={
-            <Icon
-              {...testIDProps('help')}
-              accessible={true}
-              name="question"
-              type="font-awesome"
-              size={21}
-              style={Theme.Styles.IconContainer}
-              color={Theme.Colors.Icon}
-            />
-          }
-        />
-
-        <SettingScreen
-          triggerComponent={
-            <Icon
-              {...testIDProps('settings')}
-              accessible={true}
-              name="settings"
-              type="simple-line-icon"
-              size={21}
-              style={Theme.Styles.IconContainer}
-              color={Theme.Colors.Icon}
-            />
-          }
-          navigation={props.navigation}
-          route={undefined}
-        />
-      </Row>
-    ),
+    headerRight: () =>
+      I18nManager.isRTL ? SvgImage.InjiLogo() : screenOptions,
   };
 
   return (
@@ -89,7 +70,7 @@ export const HomeScreenLayout: React.FC<RootRouteProps> = props => {
         key={'HomeScreen'}
         name={'HomeScreen'}
         component={HomeScreen}
-        options={HomeScreenOptions}
+        options={{...HomeScreenOptions, headerShadowVisible: false}}
       />
       <Screen
         key={'Issuers'}

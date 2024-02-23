@@ -166,6 +166,7 @@
     "title": "أضف بطاقة جديدة",
     "description": "يرجى اختيار جهة الإصدار المفضلة لديك من الخيارات أدناه لإضافة بطاقة جديدة.",
     "searchByIssuersName": "البحث حسب اسم المصدر",
+    "help": "يساعد؟",
     "loaders": {
       "loading": "جار التحميل...",
       "subTitle": {
@@ -334,12 +335,15 @@
     }
   },
   "MyVcsTab": {
+    "searchByName": "البحث عن طريق الإسم",
     "bringYourDigitalID": "أحضر هويتك الرقمية",
     "generateVcDescription": "اضغط على \"إضافة بطاقة \" أدناه لتنزيل بطاقتك",
     "generateVcFABDescription": "اضغط على \"+\" أدناه لتنزيل بطاقتك",
     "downloadCard": "تحميل البطاقة",
     "downloadingYourCard": "تنزيل بطاقتك ، قد يستغرق هذا ما يصل إلى 5 دقائق",
     "activated": "يتم تمكين بيانات الاعتماد للمصادقة عبر الإنترنت.",
+    "noCardsTitle": "لم يتم العثور على بطاقات!",
+    "noCardsDescription": "عذرا، لم نتمكن من العثور على أي نتائج. الرجاء محاولة إدخال كلمة بحث أخرى",
     "errors": {
       "savingFailed": {
         "title": "فشل حفظ بطاقة",

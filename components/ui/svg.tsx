@@ -5,6 +5,7 @@ import {ImageBackground} from 'react-native';
 import Home from '../../assets/Home_tab_icon.svg';
 import History from '../../assets/History_tab_icon.svg';
 import Share from '../../assets/Scan_tab_icon.svg';
+import Settings from '../../assets/Settings.svg';
 import PinICon from '../../assets/Pin_Icon.svg';
 import WalletActivatedIcon from '../../assets/Wallet_Activated_Icon.svg';
 import WalletUnActivatedIcon from '../../assets/Wallet_UnActivated_Icon.svg';
@@ -43,6 +44,8 @@ import OutlinedDeleteIcon from '../../assets/Outlined_Delete_Icon.svg';
 import OutlinedScheduleIcon from '../../assets/Outlined_Schedule_Icon.svg';
 import OutlinedShareWithSelfieIcon from '../../assets/Outlined_Share_With_Selfie_Icon.svg';
 import OutlinedShareIcon from '../../assets/Outlined_Share_Icon.svg';
+import Info from '../../assets/Info.svg';
+import Search from '../../assets/Search.svg';
 import {
   EsignetMosipVCItemContentProps,
   ExistingMosipVCItemContentProps,
@@ -179,6 +182,19 @@ export class SvgImage {
     //NOTE: Here tab icons names should be same with key "name" in main.ts
     return (
       <History
+        color1={
+          focused ? Theme.Colors.linearGradientStart : Theme.Colors.GrayIcon
+        }
+        color2={
+          focused ? Theme.Colors.linearGradientEnd : Theme.Colors.GrayIcon
+        }
+      />
+    );
+  }
+  static settings(focused: boolean) {
+    //NOTE: Here tab icons names should be same with key "name" in main.ts
+    return (
+      <Settings
         color1={
           focused ? Theme.Colors.linearGradientStart : Theme.Colors.GrayIcon
         }
@@ -407,6 +423,17 @@ export class SvgImage {
     return <MagnifierZoom />;
   }
 
+  static infoIcon() {
+    return (
+      <Info
+        color1={Theme.Colors.linearGradientStart}
+        color2={Theme.Colors.linearGradientEnd}
+        style={Theme.Styles.pinIcon}
+        {...testIDProps('infoIcon')}
+      />
+    );
+  }
+
   static GoogleDriveIcon(width, height) {
     return (
       <GoogleDriveIcon
@@ -435,6 +462,9 @@ export class SvgImage {
       />
     );
   }
+  static SearchIcon() {
+    return <Search {...testIDProps('searchIcon')} />;
+  
 }
 
 function getIssuerLogo(props: displayType) {

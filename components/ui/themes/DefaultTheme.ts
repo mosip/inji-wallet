@@ -26,7 +26,7 @@ const Colors = {
   platinumGrey: '#EDEDED',
   Orange: '#F2811D',
   Blue: '#0000FF',
-  LightGrey: '#F7F7F7',
+  LightGrey: '#F8F8F8',
   ShadeOfGrey: '#6F6F6F',
   mediumDarkGrey: '#7B7B7B',
   White: '#FFFFFF',
@@ -936,6 +936,20 @@ export const DefaultTheme = {
       borderBottomWidth: 1,
       borderBottomColor: Colors.Orange,
     },
+    vcSearchBarContainer: {
+      alignItems: 'center',
+      borderBottomWidth: 0.5,
+      borderTopWidth: 0.5,
+      borderColor: Colors.DimGray,
+      width: Dimensions.get('window').width,
+      backgroundColor: Colors.White,
+    },
+    vcSearchIcon: {
+      justifyContent: 'center',
+      height: Dimensions.get('window').height * 0.055,
+      width: Dimensions.get('window').width * 0.1,
+      paddingLeft: 15,
+    },
     searchIcon: {
       justifyContent: 'center',
       height: Dimensions.get('window').height * 0.055,
@@ -1497,6 +1511,29 @@ export const DefaultTheme = {
       justifyContent: 'space-around',
       backgroundColor: Colors.White,
       maxHeight: Dimensions.get('window').height,
+    },
+  }),
+  HelpScreenStyle: StyleSheet.create({
+    viewStyle: {
+      width: 100,
+      padding: 7,
+      borderRadius: 8,
+      backgroundColor: Colors.LightOrange,
+    },
+    rowStyle: {
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      width: 45,
+      display: 'flex',
+    },
+    iconStyle: {
+      paddingTop: 7,
+      paddingLeft: 20,
+      paddingRight: 5,
+    },
+    labelStyle: {
+      width: 70,
+      fontWeight: 'bold',
     },
   }),
   BottomTabBarStyle: StyleSheet.create({

@@ -507,3 +507,7 @@ export function selectIsTampered(state: State) {
 export function selectDownloadingFailedVcs(state: State) {
   return state.context.downloadingFailedVcs;
 }
+
+export function selectMyVcs(state: State) {
+  return state.context.vcs;
+}

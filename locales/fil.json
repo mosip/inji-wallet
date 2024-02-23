@@ -165,6 +165,7 @@
     "title": "Magdagdag ng bagong card",
     "description": "Mangyaring piliin ang iyong gustong tagabigay mula sa mga opsyon sa ibaba upang magdagdag ng bagong card.",
     "searchByIssuersName": "Maghanap ayon sa pangalan ng Nag-isyu",
+    "help": "Tulong?",
     "loaders": {
       "loading": "Naglo-load...",
       "subTitle": {
@@ -333,12 +334,15 @@
     }
   },
   "MyVcsTab": {
+    "searchByName": "Maghanap ayon sa pangalan",
     "bringYourDigitalID": "Dalhin ang Iyong Digital ID",
     "generateVcDescription": "Upang i-download ang iyong card i-tap ang I-download card sa ibaba",
     "generateVcFABDescription": "Upang i-download ang iyong card i-tap ang + sa ibaba",
     "downloadCard": "I-download ang Card",
     "downloadingYourCard": "Ang pagda-download ng iyong card, maaari itong tumagal nang hanggang 5 minuto",
     "activated": "Ang mga kredensyal ay pinagana para sa online na pagpapatotoo.",
+    "noCardsTitle": "Walang Nahanap na Mga Card!",
+    "noCardsDescription": "Paumanhin, wala kaming mahanap na anumang resulta. Pakisubukang maglagay ng ibang keyword sa paghahanap.",
     "errors": {
       "savingFailed": {
         "title": "Nabigong i-save ang Card",

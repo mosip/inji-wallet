@@ -208,4 +208,7 @@ fileignoreconfig:
     checksum: 8133e2fefddfd0207eb7207b660d317f9a6acafbab6a65762d29ea86e33787cb
   - filename: components/BackupAndRestoreBannerNotification.tsx
     checksum: 7bb544ecd2f691f8cef916d0463106ec67645253107dd407236ce3a81f4e9ba7
+    checksum: 397f2076504f851a981b0deff6eeac30041c775ee1c57b51e328fc09d52ef43e
+  - filename: screens/Home/MyVcsTab.tsx
+    checksum: 86d0b9b83af42641f7fdd5c7aebf4bc2b0b217dc8f83013d23f9c04eefac4395
     version: ""
