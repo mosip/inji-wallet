@@ -16,13 +16,15 @@ const model = createModel(
     biometrics: '',
     canUseBiometrics: false,
     selectLanguage: false,
-    lastEvent: '',
+    toggleFromSettings: false,
   },
   {
     events: {
       SETUP_PASSCODE: (passcode: string) => ({passcode}),
       SETUP_BIOMETRICS: (biometrics: string) => ({biometrics}),
-      CHANGE_METHOD: () => ({}),
+      CHANGE_METHOD: (isToggleFromSettings: boolean) => ({
+        isToggleFromSettings,
+      }),
       LOGOUT: () => ({}),
       LOGIN: () => ({}),
       STORE_RESPONSE: (response?: unknown) => ({response}),
@@ -125,7 +127,7 @@ export const authMachine = model.createMachine(
             actions: ['setBiometrics', 'storeContext'],
           },
           CHANGE_METHOD: {
-            actions: ['setLastEvent'],
+            actions: ['setIsToggleFromSettings'],
             target: 'settingUp',
           },
         },
@@ -138,13 +140,13 @@ export const authMachine = model.createMachine(
         to: context => context.serviceRefs.store,
       }),
 
-      setLastEvent: assign({
-        lastEvent: (_, event) => event.type,
+      setIsToggleFromSettings: assign({
+        toggleFromSettings: (_, event) => event.isToggleFromSettings,
       }),
 
       storeContext: send(
         context => {
-          const {serviceRefs, ...data} = context;
+          const {serviceRefs, toggleFromSettings, ...data} = context;
           return StoreEvents.SET('auth', data);
         },
         {to: context => context.serviceRefs.store},
@@ -248,9 +250,7 @@ export function selectIntroSlider(state: State) {
 
 export function selectIsReachedSettingUpViaChangeMethod(state: State) {
   if (state.matches('settingUp')) {
-    const lastEvent = state.context.lastEvent;
-    const reachedViaChangeMethod = lastEvent === 'CHANGE_METHOD';
-    return reachedViaChangeMethod;
+    return state.context.toggleFromSettings;
   }
   return false;
 }
