@@ -35,15 +35,18 @@ const model = createModel(
     hasUserShownWithHardwareKeystoreNotExists: false,
     isAccountSelectionConfirmationShown: false,
     credentialRegistryResponse: '' as string,
-    isAlternateUnlock: false,
+    isBiometricToggled: false,
   },
   {
     events: {
       UPDATE_NAME: (name: string) => ({name}),
       UPDATE_VC_LABEL: (label: string) => ({label}),
-      TOGGLE_BIOMETRIC_UNLOCK: (enable: boolean, isAlternate: boolean) => ({
+      TOGGLE_BIOMETRIC_UNLOCK: (
+        enable: boolean,
+        isToggledFromSettings: boolean,
+      ) => ({
         enable,
-        isAlternate,
+        isToggledFromSettings,
       }),
       STORE_RESPONSE: (response: unknown) => ({response}),
       CHANGE_LANGUAGE: (language: string) => ({language}),
@@ -110,7 +113,7 @@ export const settingsMachine = model.createMachine(
           TOGGLE_BIOMETRIC_UNLOCK: {
             actions: [
               'toggleBiometricUnlock',
-              'setAlternateStatus',
+              'setIsBiometricToggled',
               'storeContext',
             ],
           },
@@ -152,7 +155,7 @@ export const settingsMachine = model.createMachine(
             target: 'idle',
           },
           DISMISS: {
-            actions: 'resetAlternateUnlock',
+            actions: 'resetIsBiometricToggled',
             target: 'idle',
           },
         },
@@ -195,12 +198,12 @@ export const settingsMachine = model.createMachine(
         to: context => context.serviceRefs.store,
       }),
 
-      setAlternateStatus: model.assign({
-        isAlternateUnlock: (_context, event) => event.isAlternate,
+      setIsBiometricToggled: model.assign({
+        isBiometricToggled: (_context, event) => event.isToggledFromSettings,
       }),
 
-      resetAlternateUnlock: model.assign({
-        isAlternateUnlock: () => false,
+      resetIsBiometricToggled: model.assign({
+        isBiometricToggled: () => false,
       }),
 
       updateDefaults: model.assign({
@@ -224,7 +227,7 @@ export const settingsMachine = model.createMachine(
 
       storeContext: send(
         context => {
-          const {serviceRefs, isAlternateUnlock, ...data} = context;
+          const {serviceRefs, isBiometricToggled, ...data} = context;
           return StoreEvents.SET(SETTINGS_STORE_KEY, data);
         },
         {to: context => context.serviceRefs.store},
@@ -380,12 +383,12 @@ export function selectIsBackUpAndRestoreExplored(state: State) {
 
 export function selectIsPasswordUnlock(state: State) {
   return (
-    state.context.isAlternateUnlock && state.context.isBiometricUnlockEnabled
+    state.context.isBiometricToggled && state.context.isBiometricUnlockEnabled
   );
 }
 
 export function selectIsBiometricUnlock(state: State) {
   return (
-    state.context.isAlternateUnlock && !state.context.isBiometricUnlockEnabled
+    state.context.isBiometricToggled && !state.context.isBiometricUnlockEnabled
   );
 }
