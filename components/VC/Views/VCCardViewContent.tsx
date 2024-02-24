@@ -8,7 +8,7 @@ import {VerifiableCredential} from '../../../types/VC/ExistingMosipVC/vc';
 import {Column, Row} from '../../ui';
 import {Theme} from '../../ui/styleUtils';
 import {CheckBox, Icon} from 'react-native-elements';
-import {SvgImage} from '../../ui/svg';
+import {SvgImage, faceImageSource} from '../../ui/svg';
 import {
   getIssuerLogo,
   isVCLoaded,
@@ -53,7 +53,7 @@ export const VCCardViewContent: React.FC<
       ]}>
       <Column>
         <Row crossAlign="center">
-          {SvgImage.VcItemContainerProfileImage(props, props.credential)}
+          {SvgImage.VcItemContainerProfileImage(props)}
           <Column fill align={'space-around'} margin="0 10 0 10">
             <VCItemFieldValue
               key={'fullName'}
@@ -96,6 +96,7 @@ export const VCCardViewContent: React.FC<
                   isVisible={props.isKebabPopUp}
                   onDismiss={props.DISMISS}
                   service={props.service}
+                  vcHasImage={faceImageSource(props) !== undefined}
                 />
               </Pressable>
             </>

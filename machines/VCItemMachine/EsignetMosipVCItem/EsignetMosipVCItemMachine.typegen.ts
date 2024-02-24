@@ -70,7 +70,10 @@ export interface Typegen0 {
       | 'DISMISS'
       | 'done.invoke.vc-item-openid4vci.requestingBindingOtp:invocation[0]';
     clearTransactionId: 'DISMISS';
-    logVCremoved: 'done.invoke.vc-item-openid4vci.kebabPopUp.triggerAutoBackup:invocation[0]';
+    closeViewVcModal: 'STORE_RESPONSE';
+    logVCremoved:
+      | 'STORE_RESPONSE'
+      | 'done.invoke.vc-item-openid4vci.kebabPopUp.triggerAutoBackup:invocation[0]';
     logWalletBindingFailure:
       | 'error.platform.vc-item-openid4vci.addKeyPair:invocation[0]'
       | 'error.platform.vc-item-openid4vci.addingWalletBindingId:invocation[0]'
@@ -80,7 +83,9 @@ export interface Typegen0 {
       | 'done.invoke.vc-item-openid4vci.addingWalletBindingId:invocation[0]'
       | 'done.invoke.vc-item-openid4vci.updatingPrivateKey:invocation[0]';
     removeVcItem: 'CONFIRM';
-    removedVc: 'done.invoke.vc-item-openid4vci.kebabPopUp.triggerAutoBackup:invocation[0]';
+    removedVc:
+      | 'STORE_RESPONSE'
+      | 'done.invoke.vc-item-openid4vci.kebabPopUp.triggerAutoBackup:invocation[0]';
     requestStoredContext: 'GET_VC_RESPONSE' | 'REFRESH';
     requestVcContext: 'DISMISS' | 'xstate.init';
     sendActivationFailedEndEvent:

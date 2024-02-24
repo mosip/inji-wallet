@@ -311,9 +311,8 @@ export class SvgImage {
 
   static VcItemContainerProfileImage(
     props: ExistingMosipVCItemContentProps | EsignetMosipVCItemContentProps,
-    verifiableCredential: VerifiableCredential,
   ) {
-    const imageUri = faceImageSource(props, verifiableCredential);
+    const imageUri = faceImageSource(props);
     return imageUri ? (
       <ImageBackground
         imageStyle={Theme.Styles.faceImage}
@@ -471,12 +470,9 @@ function getIssuerLogo(props: displayType) {
   return {uri: props.logo.url};
 }
 
-function faceImageSource(
-  props: faceImageSourceProps,
-  verifiableCredential: VerifiableCredential,
-) {
+export function faceImageSource(props) {
   return props?.vcMetadata?.isFromOpenId4VCI()
-    ? verifiableCredential?.credentialSubject?.face
+    ? props?.credential?.credentialSubject?.face
     : props?.context?.credential?.biometrics?.face;
 }
 
@@ -487,6 +483,6 @@ interface LogoProps {
 
 interface faceImageSourceProps {
   vcMetadata: VCMetadata;
-  verifiableCredential: VerifiableCredential;
+  credential: VerifiableCredential;
   context: any;
 }

@@ -64,18 +64,24 @@ export const KebabPopUp: React.FC<KebabPopUpProps> = props => {
             service={props.service}
             flowType={FlowType.MINI_VIEW_SHARE}
           />
-          <ShareVc
-            testID="shareVcWithSelfieFromKebab"
-            label={t('shareWithSelfie')}
-            service={props.service}
-            flowType={FlowType.MINI_VIEW_SHARE_WITH_SELFIE}
-          />
-          <ActivationStatus
-            vcMetadata={props?.vcMetadata}
-            service={props.service}
-            emptyWalletBindingId={controller.emptyWalletBindingId}
-            ADD_WALLET_BINDING_ID={controller.ADD_WALLET_BINDING_ID}
-          />
+          {props.vcHasImage ? (
+            <>
+              <ShareVc
+                testID="shareVcWithSelfieFromKebab"
+                label={t('shareWithSelfie')}
+                service={props.service}
+                flowType={FlowType.MINI_VIEW_SHARE_WITH_SELFIE}
+              />
+              <ActivationStatus
+                vcMetadata={props?.vcMetadata}
+                service={props.service}
+                emptyWalletBindingId={controller.emptyWalletBindingId}
+                ADD_WALLET_BINDING_ID={controller.ADD_WALLET_BINDING_ID}
+              />
+            </>
+          ) : (
+            <React.Fragment />
+          )}
           <HistoryTab
             testID="viewActivityLog"
             service={props.service}
@@ -140,4 +146,5 @@ export interface KebabPopUpProps {
   service: ActorRefFrom<typeof ExistingMosipVCItemMachine>;
   iconColor?: any;
   icon?: any;
+  vcHasImage: boolean;
 }

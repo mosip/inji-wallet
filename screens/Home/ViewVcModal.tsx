@@ -24,7 +24,7 @@ import testIDProps from '../../shared/commonUtil';
 import {HelpScreen} from '../../components/HelpScreen';
 import {Pressable} from 'react-native';
 import {KebabPopUp} from '../../components/KebabPopUp';
-import {SvgImage} from '../../components/ui/svg';
+import {SvgImage, faceImageSource} from '../../components/ui/svg';
 import {VCMetadata} from '../../shared/VCMetadata';
 import {WalletBinding} from './MyVcs/WalletBinding';
 
@@ -53,6 +53,20 @@ export const ViewVcModal: React.FC<ViewVcModalProps> = props => {
       );
     }
   }, [controller.walletBindingError]);
+
+  let selectedVcContext = props.vcItemActor.getSnapshot()?.context;
+
+  const credential = new VCMetadata(
+    selectedVcContext?.vcMetadata,
+  ).isFromOpenId4VCI()
+    ? selectedVcContext?.verifiableCredential?.credential
+    : selectedVcContext?.verifiableCredential;
+
+  const getVcProfileImage = faceImageSource({
+    vcMetadata: new VCMetadata(selectedVcContext?.vcMetadata),
+    context: props.vcItemActor.getSnapshot()?.context,
+    credential: credential,
+  });
 
   const headerRight = flow => {
     return flow === 'downloadedVc' ? (
@@ -85,6 +99,7 @@ export const ViewVcModal: React.FC<ViewVcModalProps> = props => {
             }
             onDismiss={() => props.vcItemActor.send('DISMISS')}
             service={props.vcItemActor}
+            vcHasImage={getVcProfileImage !== undefined}
           />
         </Pressable>
       </Row>
