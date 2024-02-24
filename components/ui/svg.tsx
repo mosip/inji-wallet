@@ -319,11 +319,20 @@ export class SvgImage {
   }
 
   static ShareWithSelfie() {
-    return <ShareWithSelfie />;
+    return (
+      <ShareWithSelfie
+        color1={Theme.Colors.linearGradientStart}
+        color2={Theme.Colors.linearGradientEnd}
+      />
+    );
   }
 
   static CheckedIcon() {
-    return <CheckedIcon />;
+    return (
+      <CheckedIcon
+        color1={Theme.Colors.Icon}
+      />
+    );
   }
 
   static UnCheckedIcon() {

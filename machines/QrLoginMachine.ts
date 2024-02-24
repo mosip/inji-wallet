@@ -52,7 +52,7 @@ const model = createModel(
     consentClaims: ['name', 'picture'],
     isSharing: {},
     linkedTransactionId: '',
-    showFaceAuthConsent: true,
+    showFaceAuthConsent: false as boolean,
   },
   {
     events: {
@@ -67,12 +67,13 @@ const model = createModel(
       DISMISS: () => ({}),
       CONFIRM: () => ({}),
       GET: (value: string) => ({value}),
+      SET: (value: boolean) => ({value}),
       VERIFY: () => ({}),
       CANCEL: () => ({}),
       FACE_VALID: () => ({}),
       FACE_INVALID: () => ({}),
       RETRY_VERIFICATION: () => ({}),
-      FACE_VERIFICATION_CONSENT: (showAgain: boolean) => ({showAgain}),
+      FACE_VERIFICATION_CONSENT: (isConsentGiven: boolean) => ({isConsentGiven}),
     },
   },
 );
@@ -101,9 +102,13 @@ export const qrLoginMachine =
                 'setScanData',
                 'resetLinkTransactionId',
                 'resetSelectedVoluntaryClaims',
+                
               ],
               target: 'linkTransaction',
             },
+            SET: {
+              actions: 'setFaceAuthConsent',
+            }
           },
         },
         linkTransaction: {
@@ -149,11 +154,15 @@ export const qrLoginMachine =
             SELECT_VC: {
               actions: 'setSelectedVc',
             },
-            VERIFY: {
-              cond: 'isConsentGiven',
-              target: 'faceVerificationConsent',
-              actions: 'logValue',
-            },
+            VERIFY: [
+              {
+                cond: 'isConsentGiven',
+                target: 'faceVerificationConsent',
+              },
+              {
+                target: 'faceAuth',
+              },
+            ],
             DISMISS: {
               actions: 'forwardToParent',
               target: 'waitingForData',
@@ -163,12 +172,12 @@ export const qrLoginMachine =
         faceVerificationConsent: {
           on: {
             FACE_VERIFICATION_CONSENT: {
-              actions: ['setShowAgainConsent', 'storeContext'],
-              target: 'faceAuth'
+              actions: ['storeShowFaceAuthConsent', 'setShowFaceAuthConsent'],
+              target: 'faceAuth',
             },
             DISMISS: {
-              target: 'showvcList'
-            }
+              target: 'showvcList',
+            },
           },
         },
         faceAuth: {
@@ -277,29 +286,28 @@ export const qrLoginMachine =
     },
     {
       actions: {
-        setShowAgainConsent: model.assign({
-          showFaceAuthConsent: (_context, event) => event.showAgain,
+        setShowFaceAuthConsent: model.assign({
+          showFaceAuthConsent: (_, event) => {
+            return event.isConsentGiven;
+          },
         }),
 
-        logValue: context => {
-          console.log(
-            'showFaceAuthConsent ----->>',
-            context.showFaceAuthConsent,
-          );
-        },
-
-        storeContext: send(
-          context => {
-            const {serviceRefs, ...data} = context;
-            return StoreEvents.SET(FACE_AUTH_CONSENT, data);
+        storeShowFaceAuthConsent: send(
+          context =>
+            StoreEvents.SET(FACE_AUTH_CONSENT, context.showFaceAuthConsent),
+          {
+            to: context => context.serviceRefs.store,
           },
-          {to: context => context.serviceRefs.store},
         ),
 
         forwardToParent: sendParent('DISMISS'),
 
         setScanData: assign({
           linkCode: (context, event) => event.value,
+        }),
+
+        setFaceAuthConsent: assign({
+          showFaceAuthConsent: (context) => context.showFaceAuthConsent,
         }),
 
         // TODO: loaded VCMetadatas are not used anywhere. remove?
@@ -518,7 +526,8 @@ export const qrLoginMachine =
       },
       guards: {
         isConsentGiven: context => {
-          return context.showFaceAuthConsent;
+          console.log('isConsentGiven value', context.showFaceAuthConsent);
+          return !context.showFaceAuthConsent;
         },
 
         isConsentAlreadyCaptured: (_, event) =>
@@ -618,8 +627,4 @@ export function selectIsSharing(state: State) {
 
 export function selectIsFaceVerificationConsent(state: State) {
   return state.matches('faceVerificationConsent');
-}
-
-export function selectShowFaceAuthConsent(state: State) {
-  return state.context.showFaceAuthConsent;
 }

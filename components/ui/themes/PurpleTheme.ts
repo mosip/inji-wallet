@@ -862,6 +862,10 @@ export const PurpleTheme = {
       fontSize: 13,
       lineHeight: 21,
     },
+    mediumSmall: {
+      fontSize: 15,
+      lineHeight: 18,
+    },
     extraSmall: {
       fontSize: 12,
     },

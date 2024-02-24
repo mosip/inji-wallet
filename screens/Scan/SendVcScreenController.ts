@@ -18,7 +18,6 @@ import {
 import {
   ScanEvents,
   selectIsFaceVerificationConsent,
-  selectShowFaceAuthConsent,
 } from '../../machines/bleShare/scan/scanMachine';
 
 export function useSendVcScreen() {

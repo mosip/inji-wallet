@@ -457,7 +457,7 @@ export const scanMachine =
             navigatingToHistory: {},
           },
           entry: [
-            'sendScanData',
+            'sendScanData','sendShowFaceAuthConsentData',
             () =>
               sendStartEvent(
                 getStartEventData(TelemetryConstants.FlowType.qrLogin),
@@ -521,7 +521,6 @@ export const scanMachine =
                   {
                     cond: 'showFaceAuthConsentScreen',
                     target: 'faceVerificationConsent',
-                    actions: 'logValue',
                   },
                   {
                     target: 'verifyingIdentity',
@@ -812,18 +811,18 @@ export const scanMachine =
           },
         ),
 
-        logValue: context => {
-          console.log(
-            'showFaceAuthConsent ----->>',
-            context.showFaceAuthConsent,
-          );
-        },
 
         sendScanData: context =>
           context.QrLoginRef.send({
             type: 'GET',
             value: context.linkCode,
           }),
+
+        sendShowFaceAuthConsentData: context =>
+        context.QrLoginRef.send({
+          type: 'SET',
+          value: context.showFaceAuthConsent,
+        }),
         openBluetoothSettings: () => {
           isAndroid()
             ? BluetoothStateManager.openSettings().catch()
@@ -1295,8 +1294,4 @@ export function selectIsMinimumStorageRequiredForAuditEntryLimitReached(
 
 export function selectIsFaceVerificationConsent(state: State) {
   return state.matches('reviewing.faceVerificationConsent');
-}
-
-export function selectShowFaceAuthConsent(state: State) {
-  return state.context.showFaceAuthConsent;
 }

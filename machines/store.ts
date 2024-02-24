@@ -607,10 +607,14 @@ export async function getItem(
         }
         return parsedData;
       } else if (key === FACE_AUTH_CONSENT) {
-        return Boolean(data);
+        console.log("Inside data not null --->", JSON.parse(data));
+        return Boolean(JSON.parse(data));
       }
       decryptedData = await decryptJson(encryptionKey, data);
       return JSON.parse(decryptedData);
+    } 
+    if (data === null && key === FACE_AUTH_CONSENT) {
+      return null;
     }
     if (data === null && VCMetadata.isVCKey(key)) {
       await removeItem(key, data, encryptionKey);

@@ -865,6 +865,10 @@ export const DefaultTheme = {
       fontSize: 11,
       lineHeight: 18,
     },
+    mediumSmall: {
+      fontSize: 15,
+      lineHeight: 18,
+    },
     large: {
       fontSize: 18,
     },

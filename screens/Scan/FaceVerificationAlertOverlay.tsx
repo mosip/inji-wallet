@@ -5,13 +5,12 @@ import {Overlay, CheckBox} from 'react-native-elements';
 import {Button, Column, Text, Row} from '../../components/ui';
 import {Theme} from '../../components/ui/styleUtils';
 import {SvgImage} from '../../components/ui/svg';
-import {Svg} from 'react-native-svg';
 // import CheckBox from 'expo-checkbox';
 
 export const FaceVerificationAlertOverlay: React.FC<
   FaceVerificationAlertProps
 > = props => {
-  const {t} = useTranslation('FaceVerificationAlertOverlay');
+  const {t} = useTranslation('ScanScreen');
 
   const [isConsentGiven, setIsConsentGiven] = useState(false);
 
@@ -36,21 +35,19 @@ export const FaceVerificationAlertOverlay: React.FC<
           </Text>
         </Row>
 
-        <Column crossAlign="center" margin="10 0 30 0">
-          <Text testID="alert" weight="semibold">
-            {t('Okay da bue')}
+        <Column crossAlign="center" margin="10 0 15 0">
+          <Text testID="alert" weight="bold" size="large" color="#000000">
+            {t('shareWithSelfie')}
           </Text>
 
           <Text
             testID="warningMsg"
             align="center"
-            size="small"
-            weight="semibold"
+            size="mediumSmall"
+            weight="regular"
             margin="20 0 0 0"
-            color={Theme.Colors.GrayText}>
-            {t(
-              'To share your  Credentials, well securely verify your identity using face authentication. By continuing, you consent to INJI using your camera for this purpose. Your facial data will only be used for authentication and will not be shared with any third parties.',
-            )}
+            color="#5D5D5D">
+            {t('shareWithSelfieMessage')}
           </Text>
         </Column>
 
@@ -58,24 +55,29 @@ export const FaceVerificationAlertOverlay: React.FC<
           testID="yesConfirm"
           margin={'30 0 0 0'}
           type="gradient"
-          title={t('I understand')}
+          title={t('ConfirmButton')}
           onPress={() => props.onConfirm(isConsentGiven)}
         />
 
-        <View>
-          <Row style={{justifyContent: 'center'}}>
-            <CheckBox
-              checked={isConsentGiven}
-              checkedIcon={SvgImage.CheckedIcon()}
-              uncheckedIcon={SvgImage.UnCheckedIcon()}
-              onPress={() => setIsConsentGiven(!isConsentGiven)}
-            />
-            <Text
-              style={{color: '#9B9B9B', alignSelf: 'center', marginLeft: -15}}>
-              Don't ask me again
-            </Text>
-          </Row>
-        </View>
+        <Row
+          style={{
+            justifyContent: 'center',
+            alignItems: 'center',
+            marginLeft: -25,
+          }}>
+          <CheckBox
+            checked={isConsentGiven}
+            checkedIcon={SvgImage.CheckedIcon()}
+            uncheckedIcon={SvgImage.UnCheckedIcon()}
+            onPress={() => setIsConsentGiven(!isConsentGiven)}
+          />
+          <Text
+            size="small"
+            weight="semibold"
+            style={{color: '#9B9B9B', alignSelf: 'center', marginLeft: -15}}>
+            {t('doNotAskMessage')}
+          </Text>
+        </Row>
       </Column>
     </Overlay>
   );
