@@ -84,6 +84,7 @@ const model = createModel(
       PIN_CARD: () => ({}),
       KEBAB_POPUP: () => ({}),
       SHOW_ACTIVITY: () => ({}),
+      CLOSE_VC_MODAL: () => ({}),
       REMOVE: (vcMetadata: VCMetadata) => ({vcMetadata}),
       UPDATE_VC_METADATA: (vcMetadata: VCMetadata) => ({vcMetadata}),
       SHOW_BINDING_STATUS: () => ({}),
@@ -376,6 +377,10 @@ export const EsignetMosipVCItemMachine = model.createMachine(
           REMOVE: {
             actions: 'setVcKey',
             target: '#vc-item-openid4vci.kebabPopUp.removeWallet',
+          },
+          CLOSE_VC_MODAL: {
+            actions: ['closeViewVcModal'],
+            target: '#vc-item-openid4vci',
           },
         },
         initial: 'idle',
