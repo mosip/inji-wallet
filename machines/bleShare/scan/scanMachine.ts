@@ -155,7 +155,7 @@ export const scanMachine =
           target: '#scan.disconnectDevice',
         },
         SCREEN_FOCUS: {
-          target: 'checkFaceAuthConsent',
+          target: 'checkStorage',
         },
         BLE_ERROR: {
           target: '.handlingBleError',
@@ -179,15 +179,6 @@ export const scanMachine =
           on: {
             DISCONNECT: {
               target: '#scan.inactive',
-            },
-          },
-        },
-        checkFaceAuthConsent: {
-          entry: 'getFaceAuthConsent',
-          on: {
-            STORE_RESPONSE: {
-              actions: 'setShowFaceAuthConsent',
-              target: 'checkStorage',
             },
           },
         },
@@ -395,16 +386,25 @@ export const scanMachine =
           },
           on: {
             DISCONNECT: {
-              target: '#scan.findingConnection',
+              target: '#scan.checkFaceAuthConsent',
               actions: [],
               internal: false,
             },
           },
           after: {
             DESTROY_TIMEOUT: {
-              target: '#scan.findingConnection',
+              target: '#scan.checkFaceAuthConsent',
               actions: [],
               internal: false,
+            },
+          },
+        },
+        checkFaceAuthConsent: {
+          entry: 'getFaceAuthConsent',
+          on: {
+            STORE_RESPONSE: {
+              actions: 'setShowFaceAuthConsent',
+              target: '#scan.findingConnection',
             },
           },
         },
@@ -437,13 +437,12 @@ export const scanMachine =
           invoke: {
             id: 'QrLogin',
             src: qrLoginMachine,
-            data: { showFaceAuthConsent: (context) => context.showFaceAuthConsent },
             onDone: {
               target: '.storing',
           },
           },
           on: {
-            DISMISS: 'findingConnection',
+            DISMISS: '#scan.checkFaceAuthConsent',
           },
           initial: 'idle',
           states: {

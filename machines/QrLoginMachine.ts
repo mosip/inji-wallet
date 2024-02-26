@@ -289,8 +289,8 @@ export const qrLoginMachine =
         }),
 
         storeShowFaceAuthConsent: send(
-          context =>
-            StoreEvents.SET(FACE_AUTH_CONSENT, context.showFaceAuthConsent),
+          (context, event) =>
+            StoreEvents.SET(FACE_AUTH_CONSENT, event.isConsentGiven),
           {
             to: context => context.serviceRefs.store,
           },

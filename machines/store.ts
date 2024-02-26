@@ -567,8 +567,7 @@ export async function setItem(
       };
       encryptedData = JSON.stringify(settings);
     } else if (key === FACE_AUTH_CONSENT) {
-      await Storage.setItem(key, JSON.stringify(value), encryptionKey);
-      return;
+      encryptedData = JSON.stringify(value);
     } else {
       encryptedData = await encryptJson(encryptionKey, JSON.stringify(value));
     }
@@ -607,8 +606,7 @@ export async function getItem(
         }
         return parsedData;
       } else if (key === FACE_AUTH_CONSENT) {
-        console.log("Inside data not null --->", JSON.parse(data));
-        return Boolean(JSON.parse(data));
+        return JSON.parse(data);
       }
       decryptedData = await decryptJson(encryptionKey, data);
       return JSON.parse(decryptedData);
