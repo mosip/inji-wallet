@@ -170,12 +170,7 @@ export class SvgImage {
   }
 
   static OutlinedPinIcon() {
-    return (
-      <OutlinedPinIcon
-        style={[Theme.Styles.pinIcon]}
-        {...testIDProps('outlinedPinIcon')}
-      />
-    );
+    return <OutlinedPinIcon {...testIDProps('outlinedPinIcon')} />;
   }
 
   static history(focused: boolean) {
