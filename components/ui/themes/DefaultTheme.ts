@@ -22,6 +22,7 @@ const Colors = {
   Gray50: '#999999',
   Gray9: '#171717',
   Gray89: '#E3E3E3',
+  Gray97: '#F7F7F7',
   DimGray: '#737373',
   platinumGrey: '#EDEDED',
   Orange: '#F2811D',
@@ -64,6 +65,7 @@ export type ElevationLevel = 0 | 1 | 2 | 3 | 4 | 5 | 6;
 
 export const DefaultTheme = {
   Colors: {
+    DetailedViewBackground: Colors.Gray97,
     TabItemText: Colors.Orange,
     Details: Colors.Black,
     DetailsLabel: Colors.Gray40,
@@ -148,6 +150,17 @@ export const DefaultTheme = {
     subtitle: {
       backgroundColor: Colors.Transparent,
       fontSize: 12,
+    },
+    fieldItemTitle: {
+      backgroundColor: Colors.Transparent,
+      fontSize: 11,
+      fontFamily: 'Inter_400Regular',
+    },
+    fieldItemValue: {
+      backgroundColor: Colors.Transparent,
+      fontSize: 12,
+      fontFamily: 'Inter_600SemiBold',
+      marginTop: 3,
     },
     loadingSubtitle: {
       backgroundColor: Colors.Grey,
@@ -335,6 +348,16 @@ export const DefaultTheme = {
     openCardBgContainer: {
       borderRadius: 10,
       margin: 8,
+      backgroundColor: '#fff',
+      shadowColor: '#000',
+      shadowOffset: {width: -1, height: 1},
+      shadowOpacity: 0.4,
+      shadowRadius: 3,
+      elevation: 4,
+    },
+    detailedViewActivationPopupContainer: {
+      borderTopLeftRadius: 10,
+      borderTopRightRadius: 10,
       backgroundColor: '#fff',
       shadowColor: '#000',
       shadowOffset: {width: -1, height: 1},

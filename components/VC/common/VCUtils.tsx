@@ -21,8 +21,6 @@ export const DETAIL_VIEW_DEFAULT_FIELDS = [
   'gender',
   'phone',
   'dateOfBirth',
-  'email',
-  'address',
 ];
 
 //todo UIN & VID to be removed once we get the fields in the wellknown endpoint
@@ -33,6 +31,8 @@ export const DETAIL_VIEW_ADD_ON_FIELDS = [
   'status',
   'credentialRegistry',
   'idType',
+  'email',
+  'address',
 ];
 
 export const getFieldValue = (
@@ -107,7 +107,7 @@ export const setTextColor = (wellknown: any) => {
     return {
       color: wellknown.credentials_supported[0]?.display[0]?.text_color
         ? wellknown.credentials_supported[0].display[0].text_color
-        : Theme.Colors.textValue,
+        : Theme.Colors.DetailsLabel,
     };
   }
 };
@@ -165,7 +165,7 @@ export const fieldItemIterator = (
         key={field}
         style={{flexDirection: 'row', flex: 1}}
         align="space-between"
-        margin="0 8 5 0">
+        margin="0 8 15 0">
         <VCItemField
           key={field}
           fieldName={fieldName}

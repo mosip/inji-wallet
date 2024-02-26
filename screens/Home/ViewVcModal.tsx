@@ -115,16 +115,12 @@ export const ViewVcModal: React.FC<ViewVcModalProps> = props => {
       onDismiss={props.onDismiss}
       headerElevation={2}>
       <BannerNotificationContainer />
-      <Column scroll>
-        <Column fill>
-          <VcDetailsContainer
-            vc={controller.vc}
-            onBinding={controller.addtoWallet}
-            isBindingPending={controller.isWalletBindingPending}
-            activeTab={props.activeTab}
-          />
-        </Column>
-      </Column>
+      <VcDetailsContainer
+        vc={controller.vc}
+        onBinding={controller.addtoWallet}
+        isBindingPending={controller.isWalletBindingPending}
+        activeTab={props.activeTab}
+      />
 
       {controller.isAcceptingRevokeInput && (
         <OIDcAuthenticationModal

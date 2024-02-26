@@ -10,7 +10,7 @@ export const VCItemFieldName = ({fieldName, wellknown}) => {
         <Text
           testID={`${fieldName}Title`}
           {...setTextColor(wellknown)}
-          style={[Theme.Styles.subtitle, {fontFamily: 'Inter_600SemiBold'}]}>
+          style={Theme.Styles.fieldItemTitle}>
           {fieldName}
         </Text>
       )}
@@ -23,12 +23,8 @@ export const VCItemFieldValue = ({fieldName, fieldValue, wellknown}) => {
     <>
       <Text
         testID={`${fieldName}Value`}
-        style={[
-          Theme.Styles.subtitle,
-          setTextColor(wellknown),
-          {marginTop: 5},
-          {fontFamily: 'Inter_600SemiBold'},
-        ]}>
+        {...setTextColor(wellknown)}
+        style={Theme.Styles.fieldItemValue}>
         {fieldValue}
       </Text>
     </>
@@ -37,7 +33,7 @@ export const VCItemFieldValue = ({fieldName, fieldValue, wellknown}) => {
 
 export const VCItemField = props => {
   return (
-    <Column margin="9 0 0 0">
+    <Column>
       <VCItemFieldName {...props} />
       <VCItemFieldValue {...props} />
     </Column>
