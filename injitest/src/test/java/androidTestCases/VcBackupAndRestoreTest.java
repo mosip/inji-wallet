@@ -32,11 +32,11 @@ public class VcBackupAndRestoreTest extends AndroidBaseTest {
         assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
         AddNewCardPage addNewCardPage = homePage.downloadCard();
         RetrieveIdPage retrieveIdPage = addNewCardPage.clickOnDownloadViaUin();
-
+        
         OtpVerificationPage otpVerification = retrieveIdPage.setEnterIdTextBox(TestDataReader.readData("uin")).clickOnGenerateCardButton();
 
         otpVerification.enterOtp(BaseTestCase.getOtp(), Target.ANDROID);
-
+        
         assertTrue(homePage.isNameDisplayed(TestDataReader.readData("fullName")), "Verify if full name is displayed");
 
         assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");

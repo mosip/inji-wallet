@@ -44,9 +44,17 @@ const BackupAndRestoreScreen: React.FC<BackupAndRestoreProps> = props => {
     props.shouldTriggerAutoBackup,
   ]);
 
-  const Loading = (
+  function handleRestore() {
+    !backupController.isBackupInProgress && restoreController.BACKUP_RESTORE();
+  }
+
+  function handleBackup() {
+    !restoreController.isBackUpRestoring && backupController.DATA_BACKUP(false);
+  }
+
+  const Loading = testID => (
     <Centered fill>
-      <LoaderAnimation showLogo={false} />
+      <LoaderAnimation testID={testID} showLogo={false} />
     </Centered>
   );
 
@@ -110,14 +118,15 @@ const BackupAndRestoreScreen: React.FC<BackupAndRestoreProps> = props => {
       </Row>
       <Row style={Theme.BackupAndRestoreStyles.actionOrLoaderContainer}>
         {backupController.isBackupInProgress ? (
-          Loading
+          Loading('backup')
         ) : (
           <Button
             testID="backup"
             type="gradient"
             title={t('backup')}
-            onPress={() => backupController.DATA_BACKUP(false)}
-            styles={{...Theme.MessageOverlayStyles.button, flex: 1}}
+            disabled={restoreController.isBackUpRestoring}
+            onPress={handleBackup}
+            styles={{flex: 1}}
           />
         )}
       </Row>
@@ -166,13 +175,14 @@ const BackupAndRestoreScreen: React.FC<BackupAndRestoreProps> = props => {
       </Row>
       <Row style={Theme.BackupAndRestoreStyles.actionOrLoaderContainer}>
         {restoreController.isBackUpRestoring ? (
-          Loading
+          Loading('restore')
         ) : (
           <Button
             testID="restore"
             type="outline"
             title={t('restore')}
-            onPress={restoreController.BACKUP_RESTORE}
+            disabled={backupController.isBackupInProgress}
+            onPress={handleRestore}
             styles={{...Theme.MessageOverlayStyles.button, marginTop: 10}}
           />
         )}
@@ -212,7 +222,7 @@ const BackupAndRestoreScreen: React.FC<BackupAndRestoreProps> = props => {
         }}>
         {props.isLoading || backupController.isLoading ? (
           <Column fill align="center" crossAlign="center">
-            <LoaderAnimation />
+            <LoaderAnimation testID="backupAndRestoreScreen" />
           </Column>
         ) : (
           <ScrollView>

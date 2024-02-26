@@ -9,6 +9,7 @@ import {SvgImage} from '../ui/svg';
 export const Issuer: React.FC<IssuerProps> = (props: IssuerProps) => {
   return (
     <Pressable
+      accessible={false}
       {...testIDProps(`issuer-${props.testID}`)}
       onPress={props.onPress}
       style={({pressed}) =>

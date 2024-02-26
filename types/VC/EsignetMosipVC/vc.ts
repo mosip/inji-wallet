@@ -10,17 +10,11 @@ export interface VC {
   requestId?: string;
   isVerified?: boolean;
   lastVerifiedOn: number;
-  reason?: VCSharingReason[];
   shouldVerifyPresence?: boolean;
   walletBindingResponse?: WalletBindingResponse;
   credentialRegistry?: string;
   isPinned?: boolean;
   hashedId?: string;
-}
-
-export interface VCSharingReason {
-  timestamp: number;
-  message: string;
 }
 
 export type VcIdType = 'UIN' | 'VID';

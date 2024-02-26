@@ -7,10 +7,6 @@ export function selectReceiverInfo(state: State) {
   return state.context.receiverInfo;
 }
 
-export function selectReason(state: State) {
-  return state.context.reason;
-}
-
 export function selectVcName(state: State) {
   return state.context.vcName;
 }
@@ -76,5 +72,5 @@ export function selectIsQrLoginStoring(state: State) {
 }
 
 export function selectIsDone(state: State) {
-  return state.matches('reviewing.navigatingToHome');
+  return state.matches('reviewing.disconnect');
 }
