@@ -45,20 +45,30 @@ public class AboutInjiPage extends BasePage {
     public boolean isCopyTextDisplayed() {
         return this.isElementDisplayed(copy);
     }
-    
-    public boolean isMosipUrlIsDisplayedInChrome() throws InterruptedException {
-    	Thread.sleep(5000);
-    	Set<String> contexts = ((AndroidDriver) driver).getContextHandles();
-    	String actualUrl=null;
-    	for (String context : contexts) {
-    		if (context.contains("WEBVIEW"))
-    		{
-    			((AndroidDriver) driver).context(context);
-    			actualUrl= driver.getCurrentUrl();
-    		}
-    	}
-    	boolean result = (actualUrl.equalsIgnoreCase("https://docs.mosip.io/inji")  == true) ? true : false;
-    	return result;
+
+//    public boolean isMosipUrlIsDisplayedInChrome() throws InterruptedException {
+//    	Thread.sleep(5000);
+//    	Set<String> contexts = ((AndroidDriver) driver).getContextHandles();
+//    	String actualUrl=null;
+//    	for (String context : contexts) {
+//    		if (context.contains("WEBVIEW"))
+//    		{
+//    			((AndroidDriver) driver).context(context);
+//    			actualUrl= driver.getCurrentUrl();
+//    		}
+//    	}
+//    	boolean result = (actualUrl.equalsIgnoreCase("https://docs.mosip.io/inji")  == true) ? true : false;
+//    	return result;
+//    }
+
+    public boolean  isMosipUrlIsDisplayedInChrome() throws InterruptedException {
+        Thread.sleep(5000);
+        String context= driver.getPageSource();
+        if( context.contains("What does Inji mean?")) {
+            return true;
+        }
+        return false;
+
     }
 
     public void clickOnCopyText() {

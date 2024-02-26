@@ -20,38 +20,38 @@ public class SunbirdLoginPage extends BasePage {
 
     @AndroidFindBy(xpath = "//*[contains(@text,'Login with KBA')]")
     private WebElement loginWithKBA;
-    
-    @AndroidFindBy(uiAutomator = "UiSelector().className(\"android.widget.EditText\").instance(0)")
+
+    @AndroidFindBy(xpath = "//android.widget.EditText[@resource-id=\"_form_policyNumber\"]")
     @iOSXCUITFindBy(iOSClassChain = "**/XCUIElementTypeTextField[`name == \"Please fill in this field\"`][1]")
     private WebElement enterPolicyTextBox;
-    
-    @AndroidFindBy(uiAutomator = "UiSelector().className(\"android.widget.EditText\").instance(1)")
+
+    @AndroidFindBy(xpath = "//android.widget.EditText[@resource-id=\"_form_fullName\"]")
     @iOSXCUITFindBy(iOSClassChain = "**/XCUIElementTypeTextField[`name == \"Please fill in this field\"`][2]")
     private WebElement enterFullnameTextBox;
-    
-    @AndroidFindBy(uiAutomator = "UiSelector().className(\"android.widget.Spinner\")")
+
+    @AndroidFindBy(xpath = "//android.widget.Spinner[@resource-id=\"_form_dob\"]")
     @iOSXCUITFindBy(iOSClassChain = "**/XCUIElementTypeOther[`name == \"Please fill in this field\"`]")
     private WebElement enterDateOfBirthTextBox;
-    
-    @AndroidFindBy(uiAutomator = "UiSelector().className(\"android.widget.Button\").instance(2)")
+
+    @AndroidFindBy(xpath = "//android.widget.Button[@resource-id=\"android:id/button1\"]")
     @iOSXCUITFindBy(accessibility = "Done")
     private WebElement clickOnSetButton;
-    
+
     @AndroidFindBy(xpath = "//android.view.View[@content-desc='01 January 2024']")
     @iOSXCUITFindBy(iOSClassChain = "**/XCUIElementTypeButton[`name == \"Monday, 1 January\"`]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther")
     private WebElement DateOfBirth;
-    @AndroidFindBy(uiAutomator = "UiSelector().className(\"android.widget.Button\").instance(1)")
+    @AndroidFindBy(xpath = "//android.widget.Button[@resource-id=\"verify_form\"]")
     @iOSXCUITFindBy(iOSClassChain = "**/XCUIElementTypeButton[`name == \"Login\"`]")
     private WebElement loginButton;
 
     @AndroidFindBy(xpath = "//android.widget.ImageButton[@content-desc=\"Previous month\"]")
     @iOSXCUITFindBy(accessibility = "Previous Month")
     private WebElement previousMonth;
-    
+
     @AndroidFindBy(accessibility = "activated")
     @iOSXCUITFindBy(accessibility = "Activated")
     private WebElement activatedStatus;
-    
+
     @AndroidFindBy(accessibility = "a square logo of a Sunbird")
     @iOSXCUITFindBy(accessibility = "a square logo of a Sunbird")
     private WebElement sunbirdLogo;
@@ -71,6 +71,42 @@ public class SunbirdLoginPage extends BasePage {
     @iOSXCUITFindBy(accessibility = "Continue")
     private WebElement continueButton;
 
+    @AndroidFindBy(accessibility = "valid")
+    @iOSXCUITFindBy(accessibility = "valid")
+    private WebElement status;
+
+    @AndroidFindBy(accessibility = "Email IdValue")
+    @iOSXCUITFindBy(accessibility = "Email IdValue")
+    private WebElement EmailIdValue;
+
+    @AndroidFindBy(accessibility = "GenderValue")
+    @iOSXCUITFindBy(accessibility = "GenderValue")
+    private WebElement gender;
+
+    @AndroidFindBy(accessibility = "Date of BirthValue")
+    @iOSXCUITFindBy(accessibility = "Date of BirthValue")
+    private WebElement dateofBirthValue;
+
+    @AndroidFindBy(accessibility = "Phone NumberValue")
+    @iOSXCUITFindBy(accessibility = "Phone NumberValue")
+    private WebElement phoneNumber;
+
+    @AndroidFindBy(accessibility = "Policy NumberValue")
+    @iOSXCUITFindBy(accessibility = "Policy NumberValue")
+    private WebElement policyNumber;
+
+    @AndroidFindBy(accessibility = "ExpiryValue")
+    @iOSXCUITFindBy(accessibility = "ExpiryValue")
+    private WebElement expiryValue;
+
+    @AndroidFindBy(accessibility = "profileAuthenticated")
+    @iOSXCUITFindBy(accessibility = "profileAuthenticated")
+    private WebElement ActiveStatus;
+
+    @AndroidFindBy(accessibility = "qrCodeHeader")
+    @iOSXCUITFindBy(accessibility = "qrCodeHeader")
+    private WebElement qrCodeHeader;
+
     public SunbirdLoginPage(AppiumDriver driver) {
         super(driver);
     }
@@ -78,8 +114,8 @@ public class SunbirdLoginPage extends BasePage {
     public void clickOnloginWithKbaButton() {
         clickOnElement(loginWithKBA);
     }
-    
-    
+
+
     public void enterPolicyNumberTextBox(String PolicyNo) {
         try {
             Thread.sleep(1000);
@@ -88,7 +124,7 @@ public class SunbirdLoginPage extends BasePage {
         }
         sendKeysToTextBox(enterPolicyTextBox, PolicyNo);
     }
-    
+
     public void enterFullNameTextBox(String fullname) {
         try {
             Thread.sleep(1000);
@@ -97,38 +133,40 @@ public class SunbirdLoginPage extends BasePage {
         }
         sendKeysToTextBox(enterFullnameTextBox, fullname);
     }
-    
-    public void enterDateOfBirthTextBox() {
-    	clickOnElement(enterDateOfBirthTextBox);
-    	int MAX_ATTEMPTS = 12;
-    	if (!isElementDisplayed(DateOfBirth, 5)) {
-    	    for (int i = 0; i < MAX_ATTEMPTS; i++) {
-    	        try {
-    	            clickOnElement(previousMonth);
-    	         if(isElementDisplayed(DateOfBirth,3)) {
-    	            break;  
-    	         }
-    	        } catch (TimeoutException e) {
-    	        } catch (NoSuchElementException e) {
-    	            break;  
-    	        }
-    	    }
-    	}
 
-    	if (isElementDisplayed(DateOfBirth)) {  
-    	    clickOnElement(DateOfBirth);
-    	    clickOnElement(clickOnSetButton);
-    	} 
+    public void enterDateOfBirthTextBox() {
+        clickOnElement(enterDateOfBirthTextBox);
+        int MAX_ATTEMPTS = 12;
+        if (!isElementDisplayed(DateOfBirth, 5)) {
+            for (int i = 0; i < MAX_ATTEMPTS; i++) {
+                try {
+                    clickOnElement(previousMonth);
+                    if(isElementDisplayed(DateOfBirth,3)) {
+                        break;
+                    }
+                } catch (TimeoutException e) {
+                } catch (NoSuchElementException e) {
+                    break;
+                }
+            }
+        }
+
+        if (isElementDisplayed(DateOfBirth)) {
+            clickOnElement(DateOfBirth);
+            clickOnElement(clickOnSetButton);
+        }
     }
     public void clickOnloginButton() {
         clickOnElement(loginButton);
     }
-    
+
     public boolean isSunbirdCardIsActive() {
+        basePage.retrieToGetElement(activatedStatus);
         return this.isElementDisplayed(activatedStatus);
     }
-    
+
     public boolean isSunbirdCardLogoIsDisplayed() {
+        basePage.retrieToGetElement(sunbirdLogo);
         return this.isElementDisplayed(sunbirdLogo);
     }
     public String getFullNameForSunbirdCard() {
@@ -140,12 +178,47 @@ public class SunbirdLoginPage extends BasePage {
         return this.getTextFromLocator(policyName);
     }
 
-    public String getIdTypeForSunbirdCard() {
+    public String getPolicyNumberForSunbirdCard() {
+        basePage.retrieToGetElement(policyNumber);
+        return this.getTextFromLocator(policyNumber);
+    }
+
+    public String getPhoneNumberForSunbirdCard() {
+        basePage.retrieToGetElement(phoneNumber);
+        return this.getTextFromLocator(phoneNumber);
+    }
+
+    public String getDateofBirthValueForSunbirdCard() {
+        basePage.retrieToGetElement(dateofBirthValue);
+        return this.getTextFromLocator(dateofBirthValue);
+    }
+
+    public String getGenderValueForSunbirdCard() {
+        basePage.retrieToGetElement(gender);
+        return this.getTextFromLocator(gender);
+    }
+
+    public String getEmailIdValueForSunbirdCard() {
+        basePage.retrieToGetElement(EmailIdValue);
+        return this.getTextFromLocator(EmailIdValue);
+    }
+
+    public String getStatusValueForSunbirdCard() {
+        basePage.retrieToGetElement(status);
+        return this.getTextFromLocator(status);
+    }
+
+    public String getIdTypeValueForSunbirdCard() {
         basePage.retrieToGetElement(idType);
         return this.getTextFromLocator(idType);
     }
+
     public void clickOnContinueButtonInSigninPopupIos(){
         clickOnElement(continueButton);
     }
 
+    public void openDetailedSunbirdVcView() {
+        basePage.retrieToGetElement(fullName);
+        clickOnElement(fullName);
+    }
 }

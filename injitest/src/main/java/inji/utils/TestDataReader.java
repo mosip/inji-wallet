@@ -24,13 +24,15 @@ public class TestDataReader {
             case "invalidOtp":
                 return "666666";
             case "newuin":
-                return "2176493605";
+                return "8671546927";
             case "revokevid":
                 return "6205860394830280";
             case "vid":
                 return "8349769368792139";
             case "newaid":
-                return "10007100470009820240117074603";
+                return "10001112180007620240217011225";
+            case "invalidaid":
+                return "10001100050003220231220202335";
             case "invalidpasscode":
                 return "123456";
             case "invaliduin":
@@ -60,11 +62,29 @@ public class TestDataReader {
             case "uin2FullName":
                 return "TEST_FULLNAMEeng";
             case "newEnv":
-                return "https://api.dev.mosip.net";
+                return "https://api.qa-upgrade-f1.mosip.net";
             case "injiEnv":
                 return "https://api.qa-inji1.mosip.net";
             case "invalidenv":
                 return "https://api.dev3.mosip";
+            case "fullNameSunbird":
+                return "Aswin";
+            case "policyNameSunbird":
+                return "Talapathy Rasigar Mandram";
+            case "policyNumberSunbird":
+                return "1234567890";
+            case "idTypeSunbird":
+                return "Insurance Card";
+            case "phoneNumberSunbird":
+                return "8220255752";
+            case "dateOfBirthSunbird":
+                return "2024-01-01";
+            case "genderValueSunbird":
+                return "Female";
+            case "emailIdValueSunbird":
+                return "santhosdss14@gmail.com";
+            case "statusValueSunbird":
+                return "Valid";
             case "isDeviceFarmRun":
                 return "true";
             default:
