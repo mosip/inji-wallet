@@ -66,7 +66,7 @@ const model = createModel(
       }),
       DISMISS: () => ({}),
       CONFIRM: () => ({}),
-      GET: (value: string ) => ({value}),
+      GET: (value: string, faceAuthConsentGiven: boolean) => ({ value, faceAuthConsentGiven }),
       VERIFY: () => ({}),
       CANCEL: () => ({}),
       FACE_VALID: () => ({}),
@@ -95,11 +95,11 @@ export const qrLoginMachine =
       initial: 'waitingForData',
       states: {
         waitingForData: {
-          entry:'setFaceAuthConsent',
           on: {
             GET: {
               actions: [
                 'setScanData',
+                'setFaceAuthConsent',
                 'resetLinkTransactionId',
                 'resetSelectedVoluntaryClaims',
               ],
@@ -282,10 +282,6 @@ export const qrLoginMachine =
     },
     {
       actions: {
-        logVal: () => {
-          console.log('I am invoked in qrlogin machine');
-        },
-
         setShowFaceAuthConsent: model.assign({
           showFaceAuthConsent: (_, event) => {
             return event.isConsentGiven;
@@ -307,9 +303,8 @@ export const qrLoginMachine =
         }),
 
         setFaceAuthConsent: assign({
-          showFaceAuthConsent: (context) => {
-            console.log('Setting showFaceAuthConsent to:', context.showFaceAuthConsent);
-            return context.showFaceAuthConsent;
+          showFaceAuthConsent: (context, event) => {
+            return event.faceAuthConsentGiven;
           },
         }),
 

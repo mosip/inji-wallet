@@ -798,8 +798,7 @@ export const scanMachine =
 
         setShowFaceAuthConsent: model.assign({
           showFaceAuthConsent: (_, event) => {
-            return false;
-            // return event.isConsentGiven ?? !!event.response;
+            return event.isConsentGiven ?? !!event.response;
           },
         }),
 
@@ -820,6 +819,7 @@ export const scanMachine =
           context.QrLoginRef.send({
             type: 'GET',
             value: context.linkCode,
+            faceAuthConsentGiven: context.showFaceAuthConsent,
           }),
 
         openBluetoothSettings: () => {
