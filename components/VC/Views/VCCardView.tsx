@@ -45,7 +45,7 @@ export const VCCardView: React.FC<
 
   const credential = props.isDownloading
     ? null
-    : props.vcMetadata.isFromOpenId4VCI()
+    : new VCMetadata(props.vcMetadata).isFromOpenId4VCI()
     ? verifiableCredential?.credential
     : verifiableCredential;
 

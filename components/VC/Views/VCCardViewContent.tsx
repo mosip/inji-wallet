@@ -74,7 +74,7 @@ export const VCCardViewContent: React.FC<
           {!isVCLoaded(props.credential, props.fields)
             ? null
             : getIssuerLogo(
-                props.vcMetadata.isFromOpenId4VCI(),
+                new VCMetadata(props.vcMetadata).isFromOpenId4VCI(),
                 props.verifiableCredential?.issuerLogo,
               )}
 
