@@ -466,7 +466,7 @@ function getIssuerLogo(props: displayType) {
 }
 
 export function faceImageSource(props) {
-  return props?.vcMetadata?.isFromOpenId4VCI()
+  return new VCMetadata(props?.vcMetadata)?.isFromOpenId4VCI()
     ? props?.credential?.credentialSubject?.face
     : props?.context?.credential?.biometrics?.face;
 }
