@@ -30,12 +30,12 @@ export const FaceVerificationAlertOverlay: React.FC<
         </Row>
 
         <Column crossAlign="center" margin="10 0 15 0" padding='0'>
-          <Text testID="alert" weight="bold" size="large" color="#000000" style={{padding:3}}>
+          <Text testID="shareWithSelfieAlert" weight="bold" size="large" color="#000000" style={{padding:3}}>
             {t('shareWithSelfie')}
           </Text>
 
           <Text
-            testID="warningMsg"
+            testID="shareWithSelfieConsentMsg"
             align="center"
             size="mediumSmall"
             weight="regular"
@@ -46,7 +46,7 @@ export const FaceVerificationAlertOverlay: React.FC<
         </Column>
 
         <Button
-          testID="yesConfirm"
+          testID="iUnderstand"
           margin={'20 0 0 0'}
           type="gradient"
           title={t('ConfirmButton')}
@@ -67,6 +67,7 @@ export const FaceVerificationAlertOverlay: React.FC<
             onPress={() => setIsConsentGiven(!isConsentGiven)}
           />
           <Text
+            testID="doNotAskMsg"
             size="small"
             weight="semibold"
             style={{color: '#9B9B9B', alignSelf: 'center', marginLeft: -15}}>

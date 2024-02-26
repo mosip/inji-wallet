@@ -323,20 +323,19 @@ export class SvgImage {
       <ShareWithSelfie
         color1={Theme.Colors.linearGradientStart}
         color2={Theme.Colors.linearGradientEnd}
+        {...testIDProps('shareWithSelfieIcon')}
       />
     );
   }
 
   static CheckedIcon() {
     return (
-      <CheckedIcon
-        color1={Theme.Colors.Icon}
-      />
+      <CheckedIcon color1={Theme.Colors.Icon} {...testIDProps('checkedIcon')} />
     );
   }
 
   static UnCheckedIcon() {
-    return <UnCheckedIcon />;
+    return <UnCheckedIcon {...testIDProps('unCheckedIcon')} />;
   }
 
   static GoogleDriveIcon(width, height) {
