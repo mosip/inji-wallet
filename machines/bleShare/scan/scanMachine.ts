@@ -550,6 +550,7 @@ export const scanMachine =
               },
             },
             cancelling: {
+              entry: ['resetFlowType', 'resetSelectedVc'],
               always: {
                 target: '#scan.clearingConnection',
               },
@@ -637,11 +638,13 @@ export const scanMachine =
             },
             disconnect: {
               //Renamed this to disconnect from navigateToHome as we are disconnecting the devices.
+              entry: ['resetFlowType', 'resetSelectedVc'],
               invoke: {
                 src: 'disconnect',
               },
             },
             navigateToHistory: {
+              entry: ['resetFlowType', 'resetSelectedVc'],
               always: '#scan.disconnected',
             },
             verifyingIdentity: {
