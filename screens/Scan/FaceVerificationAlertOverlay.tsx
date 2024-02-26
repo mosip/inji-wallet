@@ -25,18 +25,12 @@ export const FaceVerificationAlertOverlay: React.FC<
         padding={'10'}
         width={Dimensions.get('screen').width * 0.8}
         height={Dimensions.get('screen').height * 0}>
-        <Row align="center" crossAlign="center" margin={'30 40 20 0'}>
+        <Row align="center" crossAlign="center" margin={'30 0 20 0'}>
           {SvgImage.ShareWithSelfie()}
-          <Text
-            margin={'0 0 0 -80'}
-            color={Theme.Colors.whiteText}
-            weight="bold">
-            !
-          </Text>
         </Row>
 
-        <Column crossAlign="center" margin="10 0 15 0">
-          <Text testID="alert" weight="bold" size="large" color="#000000">
+        <Column crossAlign="center" margin="10 0 15 0" padding='0'>
+          <Text testID="alert" weight="bold" size="large" color="#000000" style={{padding:3}}>
             {t('shareWithSelfie')}
           </Text>
 
@@ -45,7 +39,7 @@ export const FaceVerificationAlertOverlay: React.FC<
             align="center"
             size="mediumSmall"
             weight="regular"
-            margin="20 0 0 0"
+            margin="10 0 0 0"
             color="#5D5D5D">
             {t('shareWithSelfieMessage')}
           </Text>
@@ -53,7 +47,7 @@ export const FaceVerificationAlertOverlay: React.FC<
 
         <Button
           testID="yesConfirm"
-          margin={'30 0 0 0'}
+          margin={'20 0 0 0'}
           type="gradient"
           title={t('ConfirmButton')}
           onPress={() => props.onConfirm(isConsentGiven)}
@@ -64,6 +58,7 @@ export const FaceVerificationAlertOverlay: React.FC<
             justifyContent: 'center',
             alignItems: 'center',
             marginLeft: -25,
+            marginTop: 5,
           }}>
           <CheckBox
             checked={isConsentGiven}

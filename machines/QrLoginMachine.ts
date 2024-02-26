@@ -66,8 +66,7 @@ const model = createModel(
       }),
       DISMISS: () => ({}),
       CONFIRM: () => ({}),
-      GET: (value: string) => ({value}),
-      SET: (value: boolean) => ({value}),
+      GET: (value: string ) => ({value}),
       VERIFY: () => ({}),
       CANCEL: () => ({}),
       FACE_VALID: () => ({}),
@@ -96,19 +95,16 @@ export const qrLoginMachine =
       initial: 'waitingForData',
       states: {
         waitingForData: {
+          entry:'setFaceAuthConsent',
           on: {
             GET: {
               actions: [
                 'setScanData',
                 'resetLinkTransactionId',
                 'resetSelectedVoluntaryClaims',
-                
               ],
               target: 'linkTransaction',
             },
-            SET: {
-              actions: 'setFaceAuthConsent',
-            }
           },
         },
         linkTransaction: {
@@ -286,6 +282,10 @@ export const qrLoginMachine =
     },
     {
       actions: {
+        logVal: () => {
+          console.log('I am invoked in qrlogin machine');
+        },
+
         setShowFaceAuthConsent: model.assign({
           showFaceAuthConsent: (_, event) => {
             return event.isConsentGiven;
@@ -307,7 +307,10 @@ export const qrLoginMachine =
         }),
 
         setFaceAuthConsent: assign({
-          showFaceAuthConsent: (context) => context.showFaceAuthConsent,
+          showFaceAuthConsent: (context) => {
+            console.log('Setting showFaceAuthConsent to:', context.showFaceAuthConsent);
+            return context.showFaceAuthConsent;
+          },
         }),
 
         // TODO: loaded VCMetadatas are not used anywhere. remove?

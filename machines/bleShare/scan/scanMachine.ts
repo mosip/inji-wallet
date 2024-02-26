@@ -437,7 +437,10 @@ export const scanMachine =
           invoke: {
             id: 'QrLogin',
             src: qrLoginMachine,
-            onDone: '.storing',
+            data: { showFaceAuthConsent: (context) => context.showFaceAuthConsent },
+            onDone: {
+              target: '.storing',
+          },
           },
           on: {
             DISMISS: 'findingConnection',
@@ -457,7 +460,7 @@ export const scanMachine =
             navigatingToHistory: {},
           },
           entry: [
-            'sendScanData','sendShowFaceAuthConsentData',
+            'sendScanData',
             () =>
               sendStartEvent(
                 getStartEventData(TelemetryConstants.FlowType.qrLogin),
@@ -795,7 +798,8 @@ export const scanMachine =
 
         setShowFaceAuthConsent: model.assign({
           showFaceAuthConsent: (_, event) => {
-            return event.isConsentGiven ?? !!event.response;
+            return false;
+            // return event.isConsentGiven ?? !!event.response;
           },
         }),
 
@@ -818,11 +822,6 @@ export const scanMachine =
             value: context.linkCode,
           }),
 
-        sendShowFaceAuthConsentData: context =>
-        context.QrLoginRef.send({
-          type: 'SET',
-          value: context.showFaceAuthConsent,
-        }),
         openBluetoothSettings: () => {
           isAndroid()
             ? BluetoothStateManager.openSettings().catch()
