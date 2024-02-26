@@ -8,6 +8,7 @@ import Share from '../../assets/Scan_tab_icon.svg';
 import Settings from '../../assets/Settings.svg';
 import PinICon from '../../assets/Pin_Icon.svg';
 import WalletActivatedIcon from '../../assets/Wallet_Activated_Icon.svg';
+import WalletActivatedLargeIcon from '../../assets/Wallet_Activated_Large_Icon.svg';
 import WalletUnActivatedIcon from '../../assets/Wallet_UnActivated_Icon.svg';
 import WalletUnActivatedLargeIcon from '../../assets/Wallet_UnActivated_Large_Icon.svg';
 import InjiSmallLogo from '../../assets/Inji_Logo.svg';
@@ -93,6 +94,14 @@ export class SvgImage {
     return (
       <WalletUnActivatedLargeIcon
         {...testIDProps('wallet-unactivated-large-icon')}
+      />
+    );
+  }
+
+  static WalletActivatedLargeIcon() {
+    return (
+      <WalletActivatedLargeIcon
+        {...testIDProps('wallet-activated-large-icon')}
       />
     );
   }

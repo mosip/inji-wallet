@@ -189,7 +189,7 @@ export const VCDetailView: React.FC<
                   </Text>
                 </Column>
               </Row>
-              
+
               <Button
                 testID="enableVerification"
                 title={t('enableVerification')}
@@ -203,11 +203,7 @@ export const VCDetailView: React.FC<
               padding="10">
               <Row>
                 <Column crossAlign="flex-start" margin={'2 0 0 10'}>
-                  <Icon
-                    name="verified-user"
-                    color={Theme.Colors.VerifiedIcon}
-                    size={28}
-                  />
+                  {SvgImage.WalletActivatedLargeIcon()}
                 </Column>
                 <Column crossAlign="flex-start" margin={'5 18 13 8'}>
                   <Text
