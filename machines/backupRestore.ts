@@ -28,12 +28,14 @@ const model = createModel(
     fileName: '',
     dataFromBackupFile: {},
     errorReason: '' as string,
+    showRestoreInProgress: false as boolean,
   },
   {
     events: {
       BACKUP_RESTORE: () => ({}),
       DOWNLOAD_UNSYNCED_BACKUP_FILES: () => ({}),
       DISMISS: () => ({}),
+      DISMISS_SHOW_RESTORE_IN_PROGRESS: () => ({}),
       STORE_RESPONSE: (response: unknown) => ({response}),
       STORE_ERROR: (error: Error, requester?: string) => ({error, requester}),
       DATA_FROM_FILE: (dataFromBackupFile: {}) => ({dataFromBackupFile}),
@@ -85,6 +87,7 @@ export const backupRestoreMachine = model.createMachine(
       init: {},
       restoreBackup: {
         initial: 'checkStorageAvailability',
+        entry: 'setShowRestoreInProgress',
         states: {
           idle: {},
           checkStorageAvailability: {
@@ -161,15 +164,24 @@ export const backupRestoreMachine = model.createMachine(
             },
           },
           success: {
-            entry: 'sendDataRestoreSuccessEvent',
+            entry: [
+              'unsetShowRestoreInProgress',
+              'sendDataRestoreSuccessEvent',
+            ],
           },
           failure: {
-            entry: 'sendDataRestoreFailureEvent',
+            entry: [
+              'unsetShowRestoreInProgress',
+              'sendDataRestoreFailureEvent',
+            ],
           },
         },
         on: {
           DISMISS: {
             target: 'init',
+          },
+          DISMISS_SHOW_RESTORE_IN_PROGRESS: {
+            actions: 'unsetShowRestoreInProgress',
           },
         },
       },
@@ -178,6 +190,15 @@ export const backupRestoreMachine = model.createMachine(
   {
     actions: {
       downloadUnsyncedBackupFiles: () => Cloud.downloadUnSyncedBackupFiles(),
+
+      setShowRestoreInProgress: model.assign({
+        showRestoreInProgress: true,
+      }),
+
+      unsetShowRestoreInProgress: model.assign({
+        showRestoreInProgress: false,
+      }),
+
       setRestoreTechnicalError: model.assign({
         errorReason: 'technicalError',
       }),
@@ -343,6 +364,9 @@ export function selectIsBackUpRestoreSuccess(state: State) {
 }
 export function selectIsBackUpRestoreFailure(state: State) {
   return state.matches('restoreBackup.failure');
+}
+export function selectShowRestoreInProgress(state: State) {
+  return state.context.showRestoreInProgress;
 }
 type State = StateFrom<typeof backupRestoreMachine>;
 

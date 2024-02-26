@@ -4,7 +4,6 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {SendVcScreen} from './SendVcScreen';
 import {useScanLayout} from './ScanLayoutController';
 import {ScanScreen} from './ScanScreen';
-import {ProgressingModal} from '../../components/ProgressingModal';
 import {SCAN_ROUTES} from '../../routes/routesConstants';
 import {SharingStatusModal} from './SharingStatusModal';
 import {Theme} from '../../components/ui/styleUtils';
@@ -81,32 +80,54 @@ export const ScanLayout: React.FC = () => {
           />
         </Row>
       </MessageOverlay>
-
       <ScanStack.Navigator initialRouteName="ScanScreen">
         {controller.isReviewing &&
           controller.flowType === FlowType.SIMPLE_SHARE && (
-            <ScanStack.Screen
-              name={SCAN_ROUTES.SendVcScreen}
-              component={SendVcScreen}
-              options={{
-                title: t('sharingVc'),
-                headerBackVisible: false,
-                headerRight: () => (
+          <ScanStack.Screen
+            name={SCAN_ROUTES.SendVcScreen}
+            component={SendVcScreen}
+            options={{
+              title: t('sharingVc'),
+              headerTitleAlign: 'center',
+              headerTitle: props => (
+                <View style={Theme.Styles.sendVcHeaderContainer}>
+                  <Text style={Theme.Styles.scanLayoutHeaderTitle}>
+                    {props.children}
+                  </Text>
+                </View>
+              ),
+              headerBackVisible: false,
+              headerRight: () =>
+                !I18nManager.isRTL && (
                   <Icon
                     name="close"
                     color={Theme.Colors.blackIcon}
                     onPress={controller.CANCEL}
                   />
                 ),
-              }}
+              headerLeft: () =>
+                I18nManager.isRTL && (
+                  <Icon
+                    name="close"
+                    color={Theme.Colors.blackIcon}
+                    onPress={controller.CANCEL}
+                  />
+                ),
+            }}
             />
           )}
         <ScanStack.Screen
           name={SCAN_ROUTES.ScanScreen}
           component={ScanScreen}
           options={{
-            headerTitleStyle: {fontSize: 30, fontFamily: 'Inter_600SemiBold'},
             title: t('MainLayout:share'),
+            headerTitle: props => (
+              <View style={Theme.Styles.scanLayoutHeaderContainer}>
+                <Text style={Theme.Styles.scanLayoutHeaderTitle}>
+                  {props.children}
+                </Text>
+              </View>
+            ),
           }}
         />
       </ScanStack.Navigator>

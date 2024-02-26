@@ -40,8 +40,8 @@ const history: TabScreen = {
   component: HistoryScreen,
   icon: 'history',
   options: {
+    headerTitleStyle: Theme.Styles.HistoryHeaderTitleStyle,
     title: i18n.t('MainLayout:history'),
-    headerRight: null,
   },
 };
 

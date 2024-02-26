@@ -60,8 +60,23 @@ export const HomeScreenLayout: React.FC<RootRouteProps> = props => {
   const HomeScreenOptions = {
     headerLeft: () => (I18nManager.isRTL ? screenOptions : SvgImage.InjiLogo()),
     headerTitle: '',
-    headerRight: () =>
-      I18nManager.isRTL ? SvgImage.InjiLogo() : screenOptions,
+    headerRight: () => (
+      <HelpScreen
+        source={'Inji'}
+        triggerComponent={
+          <View testID="help" style={Theme.HelpScreenStyle.viewStyle}>
+            <Row crossAlign="center" style={Theme.HelpScreenStyle.rowStyle}>
+              <View testID="helpIcon" style={Theme.HelpScreenStyle.iconStyle}>
+                {SvgImage.infoIcon()}
+              </View>
+              <Text testID="help" style={Theme.HelpScreenStyle.labelStyle}>
+                {t('help')}
+              </Text>
+            </Row>
+          </View>
+        }
+      />
+    ),
   };
 
   return (

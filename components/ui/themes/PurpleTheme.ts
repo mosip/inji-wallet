@@ -25,6 +25,7 @@ const Colors = {
   DimGray: '#737373',
   platinumGrey: '#EDEDED',
   Orange: '#F2811D',
+  OrangeBrown: '#D9822B',
   Blue: '#0000FF',
   LightOrange: '#FDF1E6',
   LightGrey: '#F8F8F8',
@@ -688,6 +689,29 @@ export const PurpleTheme = {
       fontFamily: 'Inter_700Bold',
       lineHeight: 12,
     },
+    scanLayoutHeaderContainer: {
+      flex: 1,
+      flexDirection: 'row',
+      marginLeft: I18nManager.isRTL ? 40 : 15,
+      marginTop: 15,
+    },
+    scanLayoutHeaderTitle: {
+      fontSize: 26,
+      fontFamily: 'Inter_600SemiBold',
+      paddingTop: isIOS() ? 10 : 20,
+      paddingBottom: 10,
+    },
+    sendVcHeaderContainer: {
+      flex: 1,
+      flexDirection: 'row',
+      marginLeft: I18nManager.isRTL ? 50 : 0,
+      marginTop: 15,
+    },
+    HistoryHeaderTitleStyle: {
+      fontSize: 26,
+      fontFamily: 'Inter_600SemiBold',
+      marginTop: isIOS() ? 5 : 15,
+    },
   }),
   BannerStyles: StyleSheet.create({
     container: {
@@ -709,6 +733,9 @@ export const PurpleTheme = {
       fontFamily: 'Inter_600SemiBold',
     },
     dismiss: {paddingLeft: 9},
+    info: {
+      backgroundColor: Colors.OrangeBrown,
+    },
     success: {
       backgroundColor: Colors.Green,
     },
@@ -979,6 +1006,11 @@ export const PurpleTheme = {
     outline: {
       backgroundColor: Colors.Transparent,
       borderColor: Colors.Purple,
+    },
+    disabledOutlineButton: {
+      backgroundColor: Colors.Transparent,
+      color: Colors.Grey,
+      borderColor: Colors.Grey,
     },
     container: {
       height: 45,

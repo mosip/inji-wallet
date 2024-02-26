@@ -28,6 +28,7 @@ import SuccessHomeIcon from '../../assets/Success_home_iocn.svg';
 import SuccessHistoryIcon from '../../assets/Success_history_iocn.svg';
 import NoInternetConnection from '../../assets/No_Internet_Connection.svg';
 import SomethingWentWrong from '../../assets/Something_Went_Wrong.svg';
+import ErrorOccurred from '../../assets/Error_Occurred.svg';
 import MagnifierZoom from '../../assets/Magnifier_Zoom.svg';
 import GoogleDriveIcon from '../../assets/Gdrive_Logo.svg';
 import GoogleDriveIconSmall from '../../assets/google-drive-28.svg';
@@ -411,6 +412,10 @@ export class SvgImage {
 
   static SomethingWentWrong() {
     return <SomethingWentWrong {...testIDProps('somethingWentWrongImage')} />;
+  }
+
+  static ErrorOccurred() {
+    return <ErrorOccurred {...testIDProps('errorOccurredImage')} />;
   }
 
   static MagnifierZoom() {
