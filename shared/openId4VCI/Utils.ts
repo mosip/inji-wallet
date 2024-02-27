@@ -131,6 +131,18 @@ export const getDisplayObjectForCurrentLanguage = (
 export const getVCMetadata = context => {
   const [issuer, protocol, requestId] =
     context.credentialWrapper?.identifier.split(':');
+  // TODO(temp-solution): This is a temporary solution and will not work for every issuer
+  // This should be re-written in a more standards compliant way later.
+  if (issuer === Issuers.Sunbird) {
+    return VCMetadata.fromVC({
+      requestId: requestId ? requestId : null,
+      issuer: issuer,
+      protocol: protocol,
+      id: context.verifiableCredential?.credential.credentialSubject
+        .policyNumber,
+      timestamp: context.timestamp ?? '',
+    });
+  }
   return VCMetadata.fromVC({
     requestId: requestId ? requestId : null,
     issuer: issuer,
