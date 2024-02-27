@@ -13,12 +13,12 @@ import {EsignetMosipVCItemMachine} from '../../../machines/VCItemMachine/Esignet
 
 import {VCCardSkeleton} from '../common/VCCardSkeleton';
 import {VCCardViewContent} from './VCCardViewContent';
-import {useVcItemController} from '../MosipVCItem/VcItemController';
+import {useVcItemController} from '../VcItemController';
 import {getCredentialIssuersWellKnownConfig} from '../../../shared/openId4VCI/Utils';
 import {CARD_VIEW_DEFAULT_FIELDS, isVCLoaded} from '../common/VCUtils';
 
 export const VCCardView: React.FC<
-  ExistingMosipVCItemProps | EsignetMosipVCItemProps
+  ExistingVCItemProps | EsignetVCItemProps
 > = props => {
   let {
     service,
@@ -114,7 +114,7 @@ export const VCCardView: React.FC<
   );
 };
 
-export interface ExistingMosipVCItemProps {
+export interface ExistingVCItemProps {
   vcMetadata: VCMetadata;
   margin?: string;
   selectable?: boolean;
@@ -126,7 +126,7 @@ export interface ExistingMosipVCItemProps {
   flow?: string;
 }
 
-export interface EsignetMosipVCItemProps {
+export interface EsignetVCItemProps {
   vcMetadata: VCMetadata;
   margin?: string;
   selectable?: boolean;

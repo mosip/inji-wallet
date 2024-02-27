@@ -223,9 +223,7 @@ export function useScanLayout() {
   const isQrLoginDone = useSelector(scanService, selectIsQrLoginDone);
 
   useEffect(() => {
-    //console.log('___Flow Type____', flowType)
     if (isDone) {
-      //TODO: This is not getting used and has a invalid state
       changeTabBarVisible('flex');
       navigation.navigate(BOTTOM_TAB_ROUTES.home);
     } else if (

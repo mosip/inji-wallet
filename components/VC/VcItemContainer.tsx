@@ -1,14 +1,12 @@
 import React from 'react';
 import {
-  EsignetMosipVCItemProps,
-  ExistingMosipVCItemProps,
-  MosipVCItem,
-} from './MosipVCItem/MosipVCItem';
-import {VCCardView} from './Views/VCCardView';
-import {Issuers} from '../../shared/openId4VCI/Utils';
+  VCCardView,
+  EsignetVCItemProps,
+  ExistingVCItemProps,
+} from './Views/VCCardView';
 
 export const VcItemContainer: React.FC<
-  ExistingMosipVCItemProps | EsignetMosipVCItemProps
+  ExistingVCItemProps | EsignetVCItemProps
 > = props => {
   return <VCCardView {...props} />;
 };

@@ -44,7 +44,7 @@ const getIssuerLogo = (isOpenId4VCI: boolean, issuerLogo: logoType) => {
 };
 
 const getProfileImage = (
-  props: ExistingMosipVCItemDetailsProps | EsignetMosipVCItemDetailsProps,
+  props: ExistingVCItemDetailsProps | EsignetVCItemDetailsProps,
   verifiableCredential,
   isOpenId4VCI,
 ) => {
@@ -74,7 +74,7 @@ const getProfileImage = (
 };
 
 export const VCDetailView: React.FC<
-  ExistingMosipVCItemDetailsProps | EsignetMosipVCItemDetailsProps
+  ExistingVCItemDetailsProps | EsignetVCItemDetailsProps
 > = props => {
   const {t, i18n} = useTranslation('VcDetails');
 
@@ -230,14 +230,14 @@ export const VCDetailView: React.FC<
   );
 };
 
-export interface ExistingMosipVCItemDetailsProps {
+export interface ExistingVCItemDetailsProps {
   vc: VC;
   isBindingPending: boolean;
   onBinding?: () => void;
   activeTab?: Number;
 }
 
-export interface EsignetMosipVCItemDetailsProps {
+export interface EsignetVCItemDetailsProps {
   vc: EsignetVC;
   isBindingPending: boolean;
   onBinding?: () => void;

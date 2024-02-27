@@ -1,28 +1,28 @@
 import {useContext, useRef} from 'react';
-import {GlobalContext} from '../../../shared/GlobalContext';
+import {GlobalContext} from '../../shared/GlobalContext';
 import {
   selectContext,
   selectEmptyWalletBindingId,
   selectGeneratedOn,
   selectKebabPopUp,
   selectVerifiableCredential,
-} from '../../../machines/VCItemMachine/commonSelectors';
+} from '../../machines/VCItemMachine/commonSelectors';
 import {
   createExistingMosipVCItemMachine,
   ExistingMosipVCItemEvents,
   selectIsSavingFailedInIdle,
   selectIsVcVerified,
-} from '../../../machines/VCItemMachine/ExistingMosipVCItem/ExistingMosipVCItemMachine';
+} from '../../machines/VCItemMachine/ExistingMosipVCItem/ExistingMosipVCItemMachine';
 import {
   createEsignetMosipVCItemMachine,
   EsignetMosipVCItemEvents,
-} from '../../../machines/VCItemMachine/EsignetMosipVCItem/EsignetMosipVCItemMachine';
+} from '../../machines/VCItemMachine/EsignetMosipVCItem/EsignetMosipVCItemMachine';
 import {useInterpret, useSelector} from '@xstate/react';
-import {EsignetMosipVCItemProps, ExistingMosipVCItemProps} from './MosipVCItem';
-import {VCMetadata} from '../../../shared/VCMetadata';
+import {EsignetVCItemProps, ExistingVCItemProps} from './Views/VCCardView';
+import {VCMetadata} from '../../shared/VCMetadata';
 
 export function useVcItemController(
-  props: ExistingMosipVCItemProps | EsignetMosipVCItemProps,
+  props: ExistingVCItemProps | EsignetVCItemProps,
 ) {
   const {appService} = useContext(GlobalContext);
   const vcMetadata = VCMetadata.fromVC(props.vcMetadata);
