@@ -28,7 +28,7 @@
     "passcodeMismatchError": "Hindi tumugma ang passcode."
   },
   "FaceScanner": {
-    "imageCaptureGuide": "Hawakan nang matatag ang telepono at panatilihing nakatutok ang iyong mukha sa gitna",
+    "imageCaptureGuide": "Hawakan nang matatag ang telepono, panatilihing nakatutok ang iyong mukha sa gitna at mag-click sa Capture.",
     "capture": "Kunin",
     "flipCamera": "I-flip ang Camera"
   },
@@ -205,7 +205,9 @@
         "twelve": "Paano magbahagi ng card?",
         "thirteen": "Paano mag-alis ng card mula sa wallet?",
         "fourteen": "Paano tingnan ang mga log ng aktibidad?",
-        "fifteen": "Ano ang mangyayari kapag binago ang biometric ng Android keystore?"
+        "fifteen": "Ano ang mangyayari kapag binago ang biometric ng Android keystore?",
+        "sixteen": "Ano ang Share?",
+        "seventeen": "Ano ang Share with selfie?"
       },
       "backup": {
         "one": "Ano ang data backup? ",
@@ -238,7 +240,9 @@
         "thirteen-a": "Maaari kang mag-click sa ...(meatballs menu) sa isang card sa Home page at piliin ang Remove from Wallet na opsyon upang alisin ang isang card mula sa wallet. ",
         "thirteen-b": " Pakitandaan na, maaaring i-download muli ang parehong card.",
         "fourteen": "Sa Home page, mag-click sa 'Kasaysayan' upang tingnan ang mga detalye ng aktibidad ng user.",
-        "fifteen": "Ang Android keystore ay nagtataglay ng mahalagang impormasyon tulad ng mga pribadong key para sa mga patunay ng pagkakakilanlan. "
+        "fifteen": "Ang Android keystore ay nagtataglay ng mahalagang impormasyon tulad ng mga pribadong key para sa mga patunay ng pagkakakilanlan. ",
+        "sixteen": "Ang pagbabahagi ng kredensyal ay tumutukoy sa proseso ng ligtas na paglilipat ng isang nabe-verify na kredensyal ng may hawak mula sa INJI wallet patungo sa umaasa na partido. Nagbibigay-daan ito sa mga indibidwal na patunayan ang kanilang pag-verify ng pagkakakilanlan sa digital na paraan, na pinapadali ang mahusay at pinagkakatiwalaang mga pakikipag-ugnayan sa iba't ibang konteksto.",
+        "seventeen": "Ang pagbabahagi ng VC na may selfie ay nagsasangkot ng karagdagang layer ng seguridad sa proseso ng pagbabahagi ng kredensyal. Bilang karagdagan sa pagpapadala ng nabe-verify na kredensyal, ang user ay kinakailangang magbigay ng selfie (isang larawan ng kanilang sarili) para sa facial verification. Pinapahusay nito ang seguridad at integridad ng paglilipat ng kredensyal sa pamamagitan ng pagtiyak na ang indibidwal na nagpapakita ng kredensyal ay ang lehitimong may-ari. Nakakatulong itong maiwasan ang pagpapanggap at hindi awtorisadong paggamit ng kredensyal, at sa gayon ay madaragdagan ang tiwala at pagiging maaasahan sa mga digital na transaksyon."
       },
       "backup": {
         "one": "Kasama sa pag-backup ng data ang paggawa ng kopya ng iyong Mga Na-verify na Kredensyal na nasa iyong wallet sa iyong Google Drive/iCloud, na tinitiyak na sa kaganapan ng pagkawala ng data, maaari mong ibalik ang iyong mga file sa dati nilang estado.",
@@ -438,7 +442,7 @@
     "back": "Bumalik ka",
     "confirm": "Kumpirmahin",
     "verify": "I-verify",
-    "faceAuth": "Face Authentication",
+    "faceAuth": "Pagpapatunay ng Mukha",
     "consent": "Pagpayag",
     "loading": "Naglo-load...",
     "domainWarning": "Pakikumpirma ang domain ng website kung saan mo ini-scan ang QR code mula sa ibaba",
@@ -731,7 +735,7 @@
     }
   },
   "VerifyIdentityOverlay": {
-    "faceAuth": "Face Authentication",
+    "faceAuth": "Pagpapatunay ng Mukha",
     "status": {
       "verifyingIdentity": "Bine-verify ang pagkakakilanlan..."
     },
