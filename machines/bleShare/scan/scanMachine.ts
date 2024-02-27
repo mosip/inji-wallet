@@ -56,8 +56,8 @@ import {
   sendStartEvent,
 } from '../../../shared/telemetry/TelemetryUtils';
 import {TelemetryConstants} from '../../../shared/telemetry/TelemetryConstants';
-
 import {logState} from '../../../shared/commonUtil';
+import {getIdType} from '../../../shared/openId4VCI/Utils';
 
 const {wallet, EventTypes, VerificationStatus} = tuvali;
 
@@ -858,6 +858,8 @@ export const scanMachine =
               type: context.selectedVc.shouldVerifyPresence
                 ? 'VC_SHARED_WITH_VERIFICATION_CONSENT'
                 : context.shareLogType,
+              id: vcMetadata.id,
+              idType: getIdType(vcMetadata.issuer),
               timestamp: Date.now(),
               deviceName:
                 context.receiverInfo.name || context.receiverInfo.deviceName,
@@ -873,6 +875,8 @@ export const scanMachine =
               _vcKey: VCMetadata.fromVC(context.selectedVc).getVcKey(),
               type: 'PRESENCE_VERIFICATION_FAILED',
               timestamp: Date.now(),
+              idType: getIdType(context.selectedVc.issuer),
+              id: context.selectedVc.id,
               deviceName:
                 context.receiverInfo.name || context.receiverInfo.deviceName,
               vcLabel: context.selectedVc.id,
@@ -913,6 +917,8 @@ export const scanMachine =
           (_, event) =>
             ActivityLogEvents.LOG_ACTIVITY({
               _vcKey: '',
+              id: event.response.selectedVc.vcMetadata.id,
+              idType: getIdType(event.response.selectedVc.vcMetadata.issuer),
               type: 'QRLOGIN_SUCCESFULL',
               timestamp: Date.now(),
               deviceName: '',
