@@ -246,7 +246,7 @@ export const ExistingMosipVCItemMachine =
                 ],
                 CREDENTIAL_DOWNLOADED: {
                   actions: ['setStoreVerifiableCredential'],
-                  target: '#vc-item.checkingVerificationStatus',
+                  target: '#vc-item.checkingVerificationStatusForVCDownlaod',
                 },
               },
             },
@@ -380,6 +380,23 @@ export const ExistingMosipVCItemMachine =
           },
         },
         verifyingCredential: {
+          invoke: {
+            src: 'verifyCredential',
+            onDone: [
+              {
+                actions: ['setVerifiableCredential'],
+              },
+            ],
+            onError: [
+              {
+                //To-Do Handle Error Scenarios
+                actions: ['updateVerificationErrorMessage'],
+                target: 'handleVCVerificationFailure',
+              },
+            ],
+          },
+        },
+        checkingVerificationStatusForVCDownlaod: {
           invoke: {
             src: 'verifyCredential',
             onDone: [
