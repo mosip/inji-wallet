@@ -146,7 +146,11 @@ export const VCDetailView: React.FC<
                   )}
                 </Column>
               </Row>
-              <View style={[Theme.Styles.hrLine]}></View>
+              <View
+                style={[
+                  Theme.Styles.hrLine,
+                  {borderBottomColor: setTextColor(wellknown)?.color},
+                ]}></View>
               <Column padding="14">
                 {fieldItemIterator(
                   fields.slice(fields.length - 2, fields.length),
