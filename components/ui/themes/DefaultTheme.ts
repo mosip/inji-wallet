@@ -1069,6 +1069,9 @@ export const DefaultTheme = {
       borderRadius: 10,
       backgroundColor: Colors.Orange,
     },
+    Large: {
+      width: Dimensions.get('window').width * 0.9,
+    },
   }),
   OIDCAuthStyles: StyleSheet.create({
     viewContainer: {

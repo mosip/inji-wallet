@@ -204,6 +204,7 @@ export const VCDetailView: React.FC<
                   title={t('enableVerification')}
                   onPress={props.onBinding}
                   type="gradient"
+                  size="Large"
                 />
               </Column>
             ) : (
