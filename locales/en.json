@@ -701,6 +701,11 @@
           "message": "Something went wrong while transferring the card. Please try again."
         }
       }
+    },
+    "postFaceCapture": {
+      "captureSuccessMessage": "Face Verification is successful! Credential sharing is initiated.",
+      "captureFailureTitle": "Face verification failed!",
+      "captureFailureMessage": "Please ensure that your face is clearly visible and try taking selfie again."
     }
   },
   "SelectVcOverlay": {
