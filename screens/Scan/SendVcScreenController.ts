@@ -19,11 +19,18 @@ import {
   ScanEvents,
   selectIsFaceVerificationConsent,
 } from '../../machines/bleShare/scan/scanMachine';
+import {ScanEvents} from '../../machines/bleShare/scan/scanMachine';
+import {NavigationProp, useNavigation} from '@react-navigation/native';
+import {RootRouteProps} from '../../routes';
+import {BOTTOM_TAB_ROUTES} from '../../routes/routesConstants';
+
+type MyVcsTabNavigation = NavigationProp<RootRouteProps>;
 
 export function useSendVcScreen() {
   const {appService} = useContext(GlobalContext);
   const scanService = appService.children.get('scan');
   const vcService = appService.children.get('vc');
+  const navigation = useNavigation<MyVcsTabNavigation>();
 
   const CANCEL = () => scanService.send(ScanEvents.CANCEL());
 
@@ -67,5 +74,8 @@ export function useSendVcScreen() {
     FACE_VALID: () => scanService.send(ScanEvents.FACE_VALID()),
     FACE_INVALID: () => scanService.send(ScanEvents.FACE_INVALID()),
     RETRY_VERIFICATION: () => scanService.send(ScanEvents.RETRY_VERIFICATION()),
+    GO_TO_HOME: () => {
+      navigation.navigate(BOTTOM_TAB_ROUTES.home, {screen: 'HomeScreen'});
+    },
   };
 }

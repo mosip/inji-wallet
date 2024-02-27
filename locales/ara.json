@@ -700,6 +700,11 @@
           "message": "حدث خطأ ما أثناء نقل البطاقة. حاول مرة اخرى."
         }
       }
+    },
+    "postFaceCapture": {
+      "captureSuccessMessage": "تم التحقق من الوجه بنجاح! يتم بدء مشاركة بيانات الاعتماد.",
+      "captureFailureTitle": "فشل التحقق من الوجه!",
+      "captureFailureMessage": "يرجى التأكد من أن وجهك مرئي بوضوح وحاول التقاط صورة شخصية مرة أخرى."
     }
   },
   "SelectVcOverlay": {
