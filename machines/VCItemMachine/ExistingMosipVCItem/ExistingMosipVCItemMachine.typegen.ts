@@ -167,8 +167,7 @@ export interface Typegen0 {
       | 'DISMISS'
       | 'SHOW_BINDING_STATUS'
       | 'STORE_RESPONSE'
-      | 'done.invoke.vc-item.verifyingCredential:invocation[0]'
-      | 'error.platform.vc-item.verifyingCredential:invocation[0]';
+      | 'done.invoke.vc-item.verifyingCredential.triggerAutoBackupForVcDownload:invocation[0]';
     closeViewVcModal: 'CLOSE_VC_MODAL' | 'STORE_RESPONSE';
     incrementDownloadCounter:
       | 'POLL'
@@ -186,7 +185,6 @@ export interface Typegen0 {
     logWalletBindingSuccess:
       | 'done.invoke.vc-item.addingWalletBindingId:invocation[0]'
       | 'done.invoke.vc-item.updatingPrivateKey:invocation[0]';
-    markVcValid: 'done.invoke.vc-item.verifyingCredential:invocation[0]';
     refreshMyVcs:
       | 'STORE_RESPONSE'
       | 'done.invoke.vc-item.kebabPopUp.removingVc.triggerAutoBackup:invocation[0]';

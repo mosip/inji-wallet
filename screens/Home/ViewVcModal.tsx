@@ -120,6 +120,7 @@ export const ViewVcModal: React.FC<ViewVcModalProps> = props => {
         onBinding={controller.addtoWallet}
         isBindingPending={controller.isWalletBindingPending}
         activeTab={props.activeTab}
+        vcHasImage={getVcProfileImage !== undefined}
       />
 
       {controller.isAcceptingRevokeInput && (

@@ -25,9 +25,11 @@ import {
   fieldItemIterator,
   isVCLoaded,
   setBackgroundColour,
+  setTextColor,
 } from '../common/VCUtils';
 import {ActivityIndicator} from '../../ui/ActivityIndicator';
 import {ProfileIcon} from '../../ProfileIcon';
+import {color} from 'react-native-elements/dist/helpers';
 
 const getIssuerLogo = (isOpenId4VCI: boolean, issuerLogo: logoType) => {
   if (isOpenId4VCI) {
@@ -138,7 +140,7 @@ export const VCDetailView: React.FC<
                   )}
                 </Column>
               </Row>
-              <View style={Theme.Styles.hrLine}></View>
+              <View style={[Theme.Styles.hrLine]}></View>
               <Column padding="14">
                 {fieldItemIterator(
                   fields.slice(fields.length - 2, fields.length),
@@ -151,81 +153,85 @@ export const VCDetailView: React.FC<
           </Column>
         </Column>
       </Column>
-      <View
-        style={{
-          position: 'relative',
-          backgroundColor: Theme.Colors.DetailedViewBackground,
-        }}>
-        {props.activeTab !== 1 ? (
-          props.isBindingPending &&
-          isActivationNeeded(props.vc.vcMetadata.issuer) ? (
-            <Column
-              padding="10"
-              style={Theme.Styles.detailedViewActivationPopupContainer}>
-              <Row>
-                <Column crossAlign="flex-start" margin={'2 0 0 10'}>
-                  {SvgImage.WalletUnActivatedLargeIcon()}
-                </Column>
-                <Column crossAlign="flex-start" margin={'5 18 13 8'}>
-                  <Text
-                    testID="offlineAuthDisabledHeader"
-                    style={{
-                      fontFamily: 'Inter_600SemiBold',
-                      fontSize: 14,
-                    }}
-                    color={Theme.Colors.statusLabel}
-                    margin={'0 18 0 0'}>
-                    {t('offlineAuthDisabledHeader')}
-                  </Text>
-                  <Text
-                    testID="offlineAuthDisabledMessage"
-                    style={{
-                      fontFamily: 'Inter_400Regular',
-                      fontSize: 12,
-                    }}
-                    color={Theme.Colors.statusMessage}
-                    margin={'0 18 0 0'}>
-                    {t('offlineAuthDisabledMessage')}
-                  </Text>
-                </Column>
-              </Row>
+      {props.vcHasImage ? (
+        <View
+          style={{
+            position: 'relative',
+            backgroundColor: Theme.Colors.DetailedViewBackground,
+          }}>
+          {props.activeTab !== 1 ? (
+            props.isBindingPending &&
+            isActivationNeeded(props.vc.vcMetadata.issuer) ? (
+              <Column
+                padding="10"
+                style={Theme.Styles.detailedViewActivationPopupContainer}>
+                <Row>
+                  <Column crossAlign="flex-start" margin={'2 0 0 10'}>
+                    {SvgImage.WalletUnActivatedLargeIcon()}
+                  </Column>
+                  <Column crossAlign="flex-start" margin={'5 18 13 8'}>
+                    <Text
+                      testID="offlineAuthDisabledHeader"
+                      style={{
+                        fontFamily: 'Inter_600SemiBold',
+                        fontSize: 14,
+                      }}
+                      color={Theme.Colors.statusLabel}
+                      margin={'0 18 0 0'}>
+                      {t('offlineAuthDisabledHeader')}
+                    </Text>
+                    <Text
+                      testID="offlineAuthDisabledMessage"
+                      style={{
+                        fontFamily: 'Inter_400Regular',
+                        fontSize: 12,
+                      }}
+                      color={Theme.Colors.statusMessage}
+                      margin={'0 18 0 0'}>
+                      {t('offlineAuthDisabledMessage')}
+                    </Text>
+                  </Column>
+                </Row>
 
-              <Button
-                testID="enableVerification"
-                title={t('enableVerification')}
-                onPress={props.onBinding}
-                type="gradient"
-              />
-            </Column>
+                <Button
+                  testID="enableVerification"
+                  title={t('enableVerification')}
+                  onPress={props.onBinding}
+                  type="gradient"
+                />
+              </Column>
+            ) : (
+              <Column
+                style={Theme.Styles.detailedViewActivationPopupContainer}
+                padding="10">
+                <Row>
+                  <Column crossAlign="flex-start" margin={'2 0 0 10'}>
+                    {SvgImage.WalletActivatedLargeIcon()}
+                  </Column>
+                  <Column crossAlign="flex-start" margin={'5 18 13 8'}>
+                    <Text
+                      testID="profileAuthenticated"
+                      color={Theme.Colors.statusLabel}
+                      style={{
+                        fontFamily: 'Inter_600SemiBold',
+                        fontSize: 14,
+                      }}
+                      margin={'0 18 0 0'}>
+                      {isActivationNeeded(props.vc.vcMetadata.issuer)
+                        ? t('profileAuthenticated')
+                        : t('credentialActivated')}
+                    </Text>
+                  </Column>
+                </Row>
+              </Column>
+            )
           ) : (
-            <Column
-              style={Theme.Styles.detailedViewActivationPopupContainer}
-              padding="10">
-              <Row>
-                <Column crossAlign="flex-start" margin={'2 0 0 10'}>
-                  {SvgImage.WalletActivatedLargeIcon()}
-                </Column>
-                <Column crossAlign="flex-start" margin={'5 18 13 8'}>
-                  <Text
-                    testID="profileAuthenticated"
-                    color={Theme.Colors.statusLabel}
-                    style={{
-                      fontFamily: 'Inter_600SemiBold',
-                      fontSize: 14,
-                    }}
-                    margin={'0 18 0 0'}>
-                    {isActivationNeeded(props.vc.vcMetadata.issuer)
-                      ? t('profileAuthenticated')
-                      : t('credentialActivated')}
-                  </Text>
-                </Column>
-              </Row>
-            </Column>
-          )
-        ) : (
-          <></>
-        )}
-      </View>
+            <></>
+          )}
+        </View>
+      ) : (
+        <></>
+      )}
     </>
   );
 };
@@ -235,6 +241,7 @@ export interface ExistingVCItemDetailsProps {
   isBindingPending: boolean;
   onBinding?: () => void;
   activeTab?: Number;
+  vcHasImage: boolean;
 }
 
 export interface EsignetVCItemDetailsProps {
@@ -242,6 +249,7 @@ export interface EsignetVCItemDetailsProps {
   isBindingPending: boolean;
   onBinding?: () => void;
   activeTab?: number;
+  vcHasImage: boolean;
 }
 
 export interface EsignetVC {
