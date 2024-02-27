@@ -27,13 +27,14 @@ public class EsignetLoginPage extends BasePage {
     @iOSXCUITFindBy(xpath = "//*[contains(@text,'Enter Your VID')]")
     private WebElement enterYourVidTextHeader;
 
-    @AndroidFindBy(uiAutomator = "UiSelector().className(\"android.widget.EditText\")")
+    @AndroidFindBy(uiAutomator = "UiSelector().className(\"android.widget.EditText\").instance(1)")
     @iOSXCUITFindBy(accessibility = "Please fill in this field")
     private WebElement enterIdTextBox;
 
     @AndroidFindBy(xpath = "//android.widget.Button[@text=\"Get OTP\"]")
     @iOSXCUITFindBy(accessibility = "Get OTP")
     private WebElement getOtpButton;
+
 
     @AndroidFindBy(uiAutomator = "new UiSelector().className(\"android.widget.Button\").instance(1)")
     @iOSXCUITFindBy(accessibility = "Verify")
@@ -83,7 +84,9 @@ public class EsignetLoginPage extends BasePage {
     }
 
     public void clickOnEsignetLoginWithOtpButton() {
-        clickOnElement(esignetLoginButton);
+        if(isElementDisplayed(esignetLoginButton)) {
+            clickOnElement(esignetLoginButton);
+        }
     }
 
     public OtpVerificationPage setEnterIdTextBox(String uinOrVid) {
