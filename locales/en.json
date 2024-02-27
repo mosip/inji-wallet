@@ -585,7 +585,7 @@
   "ScanScreen": {
     "shareWithSelfie": "Share with Selfie",
     "shareWithSelfieMessage": "To share your  Credentials, well securely verify your identity using face authentication. By continuing, you consent to INJI using your camera for this purpose. Your facial data will only be used for authentication and will not be shared with any third parties.",
-    "ConfirmButton": "I understand",
+    "ConfirmButton": "I Understand",
     "doNotAskMessage": "Don't ask me again",
     "noShareableVcs": "No shareable cards are available.",
     "sharingVc": "Sharing card",
