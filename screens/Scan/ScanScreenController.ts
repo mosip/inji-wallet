@@ -23,6 +23,9 @@ import {
   ScanEvents,
   selectIsMinimumStorageRequiredForAuditEntryLimitReached,
 } from '../../machines/bleShare/scan/scanMachine';
+import {BOTTOM_TAB_ROUTES} from '../../routes/routesConstants';
+import {MainBottomTabParamList} from '../../routes/main';
+import {useNavigation, NavigationProp} from '@react-navigation/native';
 
 export function useScanScreen() {
   const {t} = useTranslation('ScanScreen');
@@ -67,7 +70,9 @@ export function useScanScreen() {
     locationError.message = t('errors.locationDenied.message');
     locationError.button = t('errors.locationDenied.button');
   }
-
+  type ScanScreenNavigation = NavigationProp<MainBottomTabParamList>;
+  const navigation = useNavigation<ScanScreenNavigation>();
+  const GOTO_HOME = () => navigation.navigate(BOTTOM_TAB_ROUTES.home);
   return {
     locationError,
     isEmpty: !shareableVcsMetadata.length,
@@ -90,5 +95,6 @@ export function useScanScreen() {
     START_PERMISSION_CHECK: () =>
       scanService.send(ScanEvents.START_PERMISSION_CHECK()),
     SCAN: (qrCode: string) => scanService.send(ScanEvents.SCAN(qrCode)),
+    GOTO_HOME,
   };
 }
