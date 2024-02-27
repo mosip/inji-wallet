@@ -12,6 +12,7 @@ import {CACHED_API} from '../api';
 import i18n from '../../i18n';
 import {VerifiableCredential} from '../../types/VC/ExistingMosipVC/vc';
 import {CredentialWrapper} from '../../types/VC/EsignetMosipVC/vc';
+import {getAddressFields} from '../../components/VC/common/VCUtils';
 
 export const Protocols = {
   OpenId4VCI: 'OpenId4VCI',
@@ -190,6 +191,12 @@ export const getCredentialIssuersWellKnownConfig = async (
       console.log('fields => ', fields);
     }
   }
+
+  const addressFields = getAddressFields();
+  fields = fields.filter(
+    field => !addressFields.includes(field) && field !== 'email',
+  );
+
   return {
     wellknown: response,
     fields: fields,

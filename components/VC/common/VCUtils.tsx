@@ -112,23 +112,27 @@ export const setTextColor = (wellknown: any) => {
   }
 };
 
-function getFullAddress(credential: CredentialSubject) {
-  if (!credential) {
-    return '';
-  }
-
-  const fields = [
+export function getAddressFields() {
+  return [
     'addressLine1',
     'addressLine2',
     'addressLine3',
     'city',
     'province',
     'region',
+    'postalCode',
   ];
+}
+
+function getFullAddress(credential: CredentialSubject) {
+  if (!credential) {
+    return '';
+  }
+
+  const fields = getAddressFields();
 
   return fields
     .map(field => getLocalizedField(credential[field]))
-    .concat(credential.postalCode)
     .filter(Boolean)
     .join(', ');
 }
