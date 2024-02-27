@@ -4,7 +4,12 @@ import {PinInput} from '../../../components/PinInput';
 import {Button, Column, Text} from '../../../components/ui';
 import {Modal} from '../../../components/ui/Modal';
 import {Theme} from '../../../components/ui/styleUtils';
-import {KeyboardAvoidingView, TouchableOpacity} from 'react-native';
+import {
+  Dimensions,
+  KeyboardAvoidingView,
+  Keyboard,
+  TouchableOpacity,
+} from 'react-native';
 import {
   getImpressionEventData,
   incrementRetryCount,
@@ -74,38 +79,69 @@ export const OtpVerificationModal: React.FC<
     controller.CANCEL();
   };
 
+  const {height} = Dimensions.get('window');
+  const isSmallScreen = height < 600; // Adjust the threshold as needed
+
+  const [keyboardHeight, setKeyboardHeight] = useState(0);
+
+  useEffect(() => {
+    const keyboardDidShowListener = Keyboard.addListener(
+      'keyboardDidShow',
+      event => {
+        const keyboardHeight = event.endCoordinates.height;
+        setKeyboardHeight(keyboardHeight + 150);
+      },
+    );
+    return () => {
+      keyboardDidShowListener.remove();
+    };
+  }, []);
+
+  const screenHeight = Math.floor(height - keyboardHeight);
+
   return (
     <Modal
       isVisible={props.isVisible}
       onDismiss={props.onDismiss}
       onShow={() => setTimer(180)}>
       <KeyboardAvoidingView
-        style={Theme.Styles.keyboardAvoidStyle}
+        style={
+          isSmallScreen
+            ? {flex: 1, paddingHorizontal: 10}
+            : Theme.Styles.keyboardAvoidStyle
+        }
         behavior={isIOS() ? 'padding' : 'height'}>
-        <Column crossAlign="center">
+        <Column
+          crossAlign="center"
+          style={
+            isSmallScreen
+              ? null
+              : {
+                  maxHeight: screenHeight,
+                  flex: 1,
+                  justifyContent: 'space-between',
+                  marginBottom: 20,
+                }
+          }>
           {SvgImage.OtpVerificationIcon()}
           <Text
             testID="otpVerificationHeader"
-            margin="24 0 6 0"
             weight="bold"
             style={Theme.TextStyles.header}>
             {t('title')}
           </Text>
           <Text
             testID="otpVerificationDescription"
-            margin="0 24 15 24"
             color={Theme.Colors.RetrieveIdLabel}
             weight="semibold"
             size="small"
             align="center">
-            {t('otpSentMessage')}
+            {t('otpSentMessage', {phone: props.phone, email: props.email})}
           </Text>
-
           <Text
             testID="otpVerificationError"
             align="center"
-            color={Theme.Colors.errorMessage}
-            margin="16 0 30 0">
+            color={Theme.Colors.errorMessage}>
             {props.error}
           </Text>
           <PinInput
@@ -113,38 +149,37 @@ export const OtpVerificationModal: React.FC<
             length={6}
             onDone={handleEnteredOtp}
           />
-        </Column>
-
-        <Column crossAlign="center" padding="0 0 10 0">
-          <Text
-            testID="otpVerificationTimer"
-            margin="0 0 20 0"
-            color={Theme.Colors.resendCodeTimer}
-            weight="regular">
-            {timer > 0 ? `${t('resendTheCode')} : ${formatTime(timer)}` : ''}
-          </Text>
-
-          <TouchableOpacity
-            testID="resendCodeView"
-            disabled={timer > 0}
-            activeOpacity={1}
-            onPress={
-              timer > 0
-                ? null
-                : () => {
-                    handleOtpResend();
-                    setTimer(180);
-                  }
-            }>
+          <Column crossAlign="center">
             <Text
-              testID="resendCode"
-              color={
-                timer > 0 ? Theme.Colors.GrayText : Theme.Colors.AddIdBtnBg
-              }
-              weight="semibold">
-              {t('resendCode')}
+              testID="otpVerificationTimer"
+              color={Theme.Colors.resendCodeTimer}
+              weight="regular">
+              {timer > 0 ? `${t('resendTheCode')} : ${formatTime(timer)}` : ''}
             </Text>
-          </TouchableOpacity>
+
+            <TouchableOpacity
+              testID="resendCodeView"
+              disabled={timer > 0}
+              activeOpacity={1}
+              onPress={
+                timer > 0
+                  ? null
+                  : () => {
+                      handleOtpResend();
+                      setTimer(180);
+                    }
+              }>
+              <Text
+                testID="resendCode"
+                color={
+                  timer > 0 ? Theme.Colors.GrayText : Theme.Colors.AddIdBtnBg
+                }
+                margin="5 0 0 0"
+                weight="semibold">
+                {t('resendOtp')}
+              </Text>
+            </TouchableOpacity>
+          </Column>
         </Column>
       </KeyboardAvoidingView>
 
