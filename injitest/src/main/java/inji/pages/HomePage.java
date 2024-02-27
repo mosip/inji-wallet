@@ -91,10 +91,10 @@ public class HomePage extends BasePage {
     private WebElement activationPending;
 
     @AndroidFindBy(xpath = "(//android.view.ViewGroup[@content-desc=\"ellipsis\"])[1]")
-    private WebElement MoreOptionsforFirstVc;
+    private WebElement moreOptionsforFirstVc;
 
     @AndroidFindBy(xpath = "(//android.view.ViewGroup[@content-desc=\"ellipsis\"])[2]")
-    private WebElement MoreOptionsforSecondVc;
+    private WebElement moreOptionsforSecondVc;
 
     @AndroidFindBy(accessibility = "close")
     @iOSXCUITFindBy(accessibility = "close")
@@ -256,11 +256,11 @@ public class HomePage extends BasePage {
     }
 
     public void clickOnFirstVcsEllipsisButton() {
-        clickOnElement(MoreOptionsforFirstVc);
+        clickOnElement(moreOptionsforFirstVc);
     }
 
     public void clickOnSecondVcsEllipsisButton() {
-        clickOnElement(MoreOptionsforSecondVc);
+        clickOnElement(moreOptionsforSecondVc);
     }
 
     public boolean isActivatedVcPopupTextDisplayed() {

@@ -39,7 +39,7 @@ public class SunbirdLoginPage extends BasePage {
 
     @AndroidFindBy(xpath = "//android.view.View[@content-desc='01 January 2024']")
     @iOSXCUITFindBy(iOSClassChain = "**/XCUIElementTypeButton[`name == \"Monday, 1 January\"`]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther")
-    private WebElement DateOfBirth;
+    private WebElement dateOfBirth;
     @AndroidFindBy(xpath = "//android.widget.Button[@resource-id=\"verify_form\"]")
     @iOSXCUITFindBy(iOSClassChain = "**/XCUIElementTypeButton[`name == \"Login\"`]")
     private WebElement loginButton;
@@ -77,7 +77,7 @@ public class SunbirdLoginPage extends BasePage {
 
     @AndroidFindBy(accessibility = "Email IdValue")
     @iOSXCUITFindBy(accessibility = "Email IdValue")
-    private WebElement EmailIdValue;
+    private WebElement emailIdValue;
 
     @AndroidFindBy(accessibility = "GenderValue")
     @iOSXCUITFindBy(accessibility = "GenderValue")
@@ -101,7 +101,7 @@ public class SunbirdLoginPage extends BasePage {
 
     @AndroidFindBy(accessibility = "profileAuthenticated")
     @iOSXCUITFindBy(accessibility = "profileAuthenticated")
-    private WebElement ActiveStatus;
+    private WebElement activeStatus;
 
     @AndroidFindBy(accessibility = "qrCodeHeader")
     @iOSXCUITFindBy(accessibility = "qrCodeHeader")
@@ -137,11 +137,11 @@ public class SunbirdLoginPage extends BasePage {
     public void enterDateOfBirthTextBox() {
         clickOnElement(enterDateOfBirthTextBox);
         int MAX_ATTEMPTS = 12;
-        if (!isElementDisplayed(DateOfBirth, 5)) {
+        if (!isElementDisplayed(dateOfBirth, 5)) {
             for (int i = 0; i < MAX_ATTEMPTS; i++) {
                 try {
                     clickOnElement(previousMonth);
-                    if(isElementDisplayed(DateOfBirth,3)) {
+                    if(isElementDisplayed(dateOfBirth,3)) {
                         break;
                     }
                 } catch (TimeoutException e) {
@@ -151,8 +151,8 @@ public class SunbirdLoginPage extends BasePage {
             }
         }
 
-        if (isElementDisplayed(DateOfBirth)) {
-            clickOnElement(DateOfBirth);
+        if (isElementDisplayed(dateOfBirth)) {
+            clickOnElement(dateOfBirth);
             clickOnElement(clickOnSetButton);
         }
     }
@@ -199,8 +199,8 @@ public class SunbirdLoginPage extends BasePage {
     }
 
     public String getEmailIdValueForSunbirdCard() {
-        basePage.retrieToGetElement(EmailIdValue);
-        return this.getTextFromLocator(EmailIdValue);
+        basePage.retrieToGetElement(emailIdValue);
+        return this.getTextFromLocator(emailIdValue);
     }
 
     public String getStatusValueForSunbirdCard() {

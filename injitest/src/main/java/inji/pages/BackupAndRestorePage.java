@@ -188,25 +188,6 @@ public class BackupAndRestorePage extends BasePage {
         sendKeysToTextBox(enterPassword, fullname);
     }
 
-//    public BackupAndRestorePage enterPasswordTextBox(String fullname) {
-//		int maxRetries = 3;
-//		 {
-//			for (int i = 0; i < maxRetries; i++) {
-//				try {
-//					sendKeysToTextBox(enterPassword,fullname);
-//					return this;
-//				} catch (StaleElementReferenceException e) {
-//					if (i == maxRetries - 1) {
-//						throw e;
-//					}
-//				}
-//			}
-//
-//		}
-//		return this;
-//
-//    }
-
     public void clickOnAgreeButton() {
         clickOnElement(agreeButton);
     }
