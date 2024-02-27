@@ -7,11 +7,11 @@ import org.openqa.selenium.WebElement;
 
 public class SecureSharingPage extends BasePage {
 
-    @AndroidFindBy(accessibility = "introTitle")
+    @AndroidFindBy(accessibility = "introTitle-two")
     @iOSXCUITFindBy(xpath = "(//XCUIElementTypeStaticText[@name=\"introTitle\"])[3]")
     private WebElement secureSharingText;
 
-    @AndroidFindBy(accessibility = "introText")
+    @AndroidFindBy(accessibility = "introText-two")
     @iOSXCUITFindBy(xpath = "(//XCUIElementTypeStaticText[@name=\"introText\"])[3]")
     private WebElement secureSharingDescription;
 
@@ -23,15 +23,15 @@ public class SecureSharingPage extends BasePage {
         super(driver);
     }
     BasePage basePage = new BasePage(driver);
-    
+
     public String  verifyLanguageforSecureSharingPageLoaded(){
-    	basePage.retrieToGetElement(secureSharingText);
-    	return getTextFromLocator(secureSharingText);
+        basePage.retrieToGetElement(secureSharingText);
+        return getTextFromLocator(secureSharingText);
 
     }
 
     public String getSecureSharingDescription() {
-    	basePage.retrieToGetElement(secureSharingDescription);
+        basePage.retrieToGetElement(secureSharingDescription);
         return this.getTextFromLocator(secureSharingDescription);
     }
 
