@@ -47,7 +47,7 @@ export const FaceVerificationAlertOverlay: React.FC<
 
         <Button
           testID="iUnderstand"
-          margin={'20 0 0 0'}
+          margin={'10 0 0 0'}
           type="gradient"
           title={t('ConfirmButton')}
           onPress={() => props.onConfirm(isConsentGiven)}
