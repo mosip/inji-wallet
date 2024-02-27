@@ -26,6 +26,14 @@ export function selectWalletBindingSuccess(state: State) {
   return state.context.walletBindingSuccess;
 }
 
+export function selectIsPhoneNumber(state: State) {
+  return state.context.phoneNumber;
+}
+
+export function selectIsEmail(state: State) {
+  return state.context.email;
+}
+
 export function selectEmptyWalletBindingId(state: State) {
   var val = state.context.walletBindingResponse
     ? state.context.walletBindingResponse.walletBindingId

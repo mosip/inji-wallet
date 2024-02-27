@@ -58,6 +58,8 @@ const model = createModel(
     walletBindingError: '',
     isMachineInKebabPopupState: false,
     bindingAuthFailedMessage: '' as string,
+    phoneNumber: '' as string,
+    email: '' as string,
   },
   {
     events: {
@@ -166,6 +168,7 @@ export const EsignetMosipVCItemMachine = model.createMachine(
           onDone: [
             {
               target: 'acceptingBindingOtp',
+              actions: ['setPhoneNumber', 'setEmail'],
             },
           ],
           onError: [
@@ -229,6 +232,7 @@ export const EsignetMosipVCItemMachine = model.createMachine(
               src: 'requestBindingOtp',
               onDone: {
                 target: 'idle',
+                actions: ['setPhoneNumber', 'setEmail'],
               },
               onError: {
                 actions: 'setWalletBindingError',
@@ -717,6 +721,14 @@ export const EsignetMosipVCItemMachine = model.createMachine(
           (event as ErrorPlatformEvent).data.message,
       }),
 
+      setPhoneNumber: assign({
+        phoneNumber: (_context, event) => event.data.response.maskedMobile,
+      }),
+
+      setEmail: model.assign({
+        email: (_context, event) => event.data.response.maskedEmail,
+      }),
+
       clearOtp: assign({otp: ''}),
       removeVcItem: send(
         _context => {
@@ -827,6 +839,7 @@ export const EsignetMosipVCItemMachine = model.createMachine(
         if (response.response == null) {
           throw new Error('Could not process request');
         }
+        return response;
       },
     },
 

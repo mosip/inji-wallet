@@ -15,6 +15,8 @@ import {
   selectAcceptingBindingOtp,
   selectWalletBindingInProgress,
   selectBindingWarning,
+  selectIsPhoneNumber,
+  selectIsEmail,
 } from '../../machines/VCItemMachine/commonSelectors';
 import {
   selectIsAcceptingOtpInput,
@@ -143,6 +145,8 @@ export function useViewVcModal({
     isBindingError: useSelector(vcItemActor, selectShowWalletBindingError),
     isBindingSuccess: useSelector(vcItemActor, selectWalletBindingSuccess),
     isBindingWarning: useSelector(vcItemActor, selectBindingWarning),
+    isPhoneNumber: useSelector(vcItemActor, selectIsPhoneNumber),
+    isEmail: useSelector(vcItemActor, selectIsEmail),
 
     CONFIRM_REVOKE_VC: () => {
       setRevoking(true);

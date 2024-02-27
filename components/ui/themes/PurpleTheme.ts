@@ -554,7 +554,6 @@ export const PurpleTheme = {
       fontFamily: 'Inter_700Bold',
     },
     idInputContainer: {
-      marginTop: 20,
       width: Dimensions.get('window').width * 0.86,
     },
     idInputPicker: {
@@ -656,10 +655,7 @@ export const PurpleTheme = {
     },
     keyboardAvoidStyle: {
       flex: 1,
-      paddingVertical: 40,
-      paddingHorizontal: 24,
       alignItems: 'center',
-      justifyContent: 'space-between',
     },
     passwordKeyboardAvoidStyle: {
       flex: 1,

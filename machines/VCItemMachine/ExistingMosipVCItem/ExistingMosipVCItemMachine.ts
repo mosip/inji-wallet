@@ -77,6 +77,8 @@ const model = createModel(
     isMachineInKebabPopupState: false,
     bindingAuthFailedMessage: '' as string,
     verificationErrorMessage: '',
+    phoneNumber: '' as string,
+    email: '' as string,
   },
   {
     events: {
@@ -621,6 +623,7 @@ export const ExistingMosipVCItemMachine =
             onDone: [
               {
                 target: 'acceptingBindingOtp',
+                actions: ['setPhoneNumber', 'setEmail'],
               },
             ],
             onError: [
@@ -684,6 +687,7 @@ export const ExistingMosipVCItemMachine =
                 src: 'requestBindingOtp',
                 onDone: {
                   target: 'idle',
+                  actions: ['setPhoneNumber', 'setEmail'],
                 },
                 onError: {
                   actions: 'setWalletBindingError',
@@ -1232,6 +1236,14 @@ export const ExistingMosipVCItemMachine =
             (event as ErrorPlatformEvent).data.message,
         }),
 
+        setPhoneNumber: assign({
+          phoneNumber: (_context, event) => event.data.response.maskedMobile,
+        }),
+
+        setEmail: model.assign({
+          email: (_context, event) => event.data.response.maskedEmail,
+        }),
+
         clearOtp: assign({otp: ''}),
 
         setLock: assign({
@@ -1376,6 +1388,7 @@ export const ExistingMosipVCItemMachine =
           if (response.response == null) {
             throw new Error('Could not process request');
           }
+          return response;
         },
 
         checkStatus: context => (callback, onReceive) => {

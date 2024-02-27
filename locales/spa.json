@@ -268,32 +268,32 @@
     "backButton": "De vuelta a casa"
   },
   "GetIdInputModal": {
-    "header": "Retrieve your UIN/VID",
-    "applicationIdLabel": "Please enter your Application ID",
-    "enterApplicationId": "Enter Application ID",
-    "requestingOTP": "Requesting OTP...",
-    "toolTipTitle": "What is AID?",
-    "toolTipDescription": "The Application ID (AID) refers to the unique identifier given to a resident during any ID lifecycle event, such as ID Issuance, ID Update, or Lost ID retrieval, at the registration center. It serves as a distinguishing factor for each specific event and can later be utilized by the resident to check the progress or status of the event.",
-    "getUIN": "Get UIN/VID"
+    "header": "Obtenga su UIN/VID",
+    "applicationIdLabel": "Por favor ingrese su ID de aplicación",
+    "enterApplicationId": "Ingrese el ID de la aplicación",
+    "requestingOTP": "Solicitando OTP...",
+    "toolTipTitle": "¿Lo que dije?",
+    "toolTipDescription": "La ID de la aplicación (AID) se refiere al identificador único que se le otorga a un residente durante cualquier evento del ciclo de vida de la ID, como la emisión de una ID, la actualización de una ID o la recuperación de una ID perdida, en el centro de registro. ",
+    "getUIN": "Obtener UIN/VID"
   },
   "IdInputModal": {
-    "header": "Download your ID",
-    "guideLabel": "Select ID type and enter the MOSIP provided UIN or VID you wish to download. In the next step, you will be asked to enter OTP.",
-    "generateVc": "Generate Card",
-    "downloadID": "Download ID",
-    "enterId": "Enter {{idType}}",
-    "noUIN/VID": "Don’t have UIN/VID?",
-    "getItHere": "Get it now using your AID.",
-    "requestingOTP": "Requesting OTP...",
-    "toolTipTitle": "What is {{idType}}?",
-    "toolTipUINDescription": "Unique Identification Number (UIN), as the name suggests, is a unique number assigned to a resident. UIN never changes and is non-revocable.",
-    "toolTipVIDDescription": "The VID / Virtual ID is an alias identifier that can be used for authentication transactions. VID is known to the user only and is privacy friendly in a way such that it can be revoked, configured for one time usage and is not linkable."
+    "header": "Descarga tu DNI",
+    "guideLabel": "Seleccione el tipo de ID e ingrese el UIN o VID proporcionado por MOSIP que desea descargar. ",
+    "generateVc": "Generar tarjeta",
+    "downloadID": "Descargar ID",
+    "enterId": "Ingresar {{idType}}",
+    "noUIN/VID": "¿No tienes UIN/VID?",
+    "getItHere": "Consíguelo ahora usando tu AID.",
+    "requestingOTP": "Solicitando OTP...",
+    "toolTipTitle": "Qué es {{idType}}?",
+    "toolTipUINDescription": "El Número de Identificación Único (UIN), como su nombre indica, es un número único asignado a un residente. ",
+    "toolTipVIDDescription": "El VID/ID virtual es un identificador de alias que se puede utilizar para transacciones de autenticación. "
   },
   "OtpVerificationModal": {
     "title": "Verificación OTP",
-    "otpSentMessage": "¡Hemos enviado el código de 6 dígitos a su número de móvil registrado!",
-    "resendTheCode": "Puedes reenviar el código en ",
-    "resendCode": "Reenviar codigo",
+    "otpSentMessage": "Hemos enviado una OTP de 6 dígitos a su número de móvil registrado: {{phone}} y dirección de correo electrónico: {{email}}",
+    "resendTheCode": "Puede reenviar la OTP en ",
+    "resendOtp": "Reenviar OTP",
     "confirmationDialog": {
       "title": "¿Quieres cancelar la descarga?",
       "message": "Una vez cancelada, su tarjeta no se descargará y deberá reiniciar la descarga.",
@@ -486,55 +486,55 @@
         "message": "Conéctese a Internet para habilitar el modo de compartir en línea"
       },
       "bleError": {
-        "TVW_CON_002":{
+        "TVW_CON_002": {
           "title": "¡La conexión falló!",
           "message": "La conexión fue interrumpida. Inténtalo de nuevo."
         },
-        "TVW_CON_003":{
+        "TVW_CON_003": {
           "title": "¡La conexión falló!",
           "message": "La conexión fue interrumpida. Asegúrese de que los dispositivos Bluetooth estén en modo reconocible y vuelva a intentarlo."
         },
-        "TVW_REP_001":{
+        "TVW_REP_001": {
           "title": "¡Respuesta corrupta recibida!",
           "message": "Los datos recibidos de la billetera están dañados y no se pueden procesar. Solicite al remitente que realice la transferencia nuevamente."
         },
-        "TVV_CON_001":{
+        "TVV_CON_001": {
           "title": "¡La conexión falló!",
           "message": "Los datos recibidos de la billetera están dañados y no se pueden procesar. Solicite al remitente que realice la transfeNo se puede establecer una conexión óptima con el remitente. Inténtalo de nuevo.rencia nuevamente."
         },
-        "TVV_TRA_001":{
+        "TVV_TRA_001": {
           "title": "¡Respuesta corrupta recibida!",
           "message": "Los datos recibidos de la billetera están dañados y no se pueden procesar. Solicite al remitente que realice la transferencia nuevamente."
         },
-        "TVV_TRA_002":{
+        "TVV_TRA_002": {
           "title": "¡Respuesta corrupta recibida!",
           "message": "Los datos recibidos de la billetera están dañados y no se pueden procesar. Solicite al remitente que realice la transferencia nuevamente."
         },
-        "TUV_UNK_001":{
+        "TUV_UNK_001": {
           "title": "¡Ocurrió un error!",
           "message": "Debido a un error técnico, no pudimos recibir la tarjeta. Inténtalo de nuevo."
         },
-        "TVW_UNK_001":{
+        "TVW_UNK_001": {
           "title": "¡La conexión falló!",
           "message": "La conexión fue interrumpida. Inténtalo de nuevo."
         },
-        "TVW_UNK_002":{
+        "TVW_UNK_002": {
           "title": "¡La conexión falló!",
           "message": "La conexión fue interrumpida. Inténtalo de nuevo."
         },
-        "TVW_UNK_003":{
+        "TVW_UNK_003": {
           "title": "¡La conexión falló!",
           "message": "La conexión fue interrumpida. Inténtalo de nuevo."
         },
-        "TVV_UNK_001":{
+        "TVV_UNK_001": {
           "title": "¡Ocurrió un error!",
           "message": "Se produjo un error inesperado al procesar los datos recibidos. Verifique su conexión y solicite al remitente que reenvíe la tarjeta."
         },
-        "TVV_UNK_002":{
+        "TVV_UNK_002": {
           "title": "¡Ocurrió un error!",
           "message": "Se produjo un error inesperado al procesar los datos recibidos. Verifique su conexión y solicite al remitente que reenvíe la tarjeta."
         },
-        "TVV_UNK_003":{
+        "TVV_UNK_003": {
           "title": "¡Ocurrió un error!",
           "message": "Se produjo un error inesperado al procesar los datos recibidos. Verifique su conexión y solicite al remitente que reenvíe la tarjeta."
         }
@@ -604,59 +604,59 @@
       "bleError": {
         "retry": "Rever",
         "home": "Hogar",
-        "TVW_CON_001":{
+        "TVW_CON_001": {
           "title": "¡La conexión falló!",
           "message": "Código QR no válido escaneado. Intente escanear nuevamente el código QR válido de la parte de confianza."
         },
-        "TVW_CON_002":{
+        "TVW_CON_002": {
           "title": "¡La conexión falló!",
           "message": "Wallet no puede establecer una conexión óptima con el verificador. Inténtalo de nuevo."
         },
-        "TVW_CON_003":{
+        "TVW_CON_003": {
           "title": "¡Error en el descubrimiento del servicio!",
           "message": "Lo sentimos, pero no pudimos descubrir una conexión bluetooth incluso después de varios intentos. Asegúrese de que los dispositivos Bluetooth estén en modo detectable y vuelva a intentarlo."
         },
-        "TVW_REP_001":{
+        "TVW_REP_001": {
           "title": "¡Ocurrió un error!",
           "message": "Debido a un error técnico, no podemos transferir el archivo. Inténtalo de nuevo."
         },
-        "TVV_CON_001":{
+        "TVV_CON_001": {
           "title": "¡La conexión falló!",
           "message": "Wallet no puede establecer una conexión óptima con el verificador. Inténtalo de nuevo."
         },
-        "TVV_TRA_001":{
+        "TVV_TRA_001": {
           "title": "¡Ocurrió un error!",
           "message": "Algo salió mal al transferir la tarjeta. Inténtalo de nuevo."
         },
-        "TVV_TRA_002":{
+        "TVV_TRA_002": {
           "title": "¡Ocurrió un error!",
           "message": "Algo salió mal al transferir la tarjeta. Inténtalo de nuevo."
         },
-        "TUV_UNK_001":{
+        "TUV_UNK_001": {
           "title": "¡Ocurrió un error!",
           "message": "Debido a un error técnico, no pudimos compartir la tarjeta con la persona que confía. Inténtalo de nuevo."
         },
-        "TVW_UNK_001":{
+        "TVW_UNK_001": {
           "title": "¡Ocurrió un error!",
           "message": "Debido a un error técnico, no pudimos compartir la tarjeta con la persona que confía. Inténtalo de nuevo."
         },
-        "TVW_UNK_002":{
+        "TVW_UNK_002": {
           "title": "¡Ocurrió un error!",
           "message": "Debido a un error técnico, no pudimos compartir la tarjeta con la persona que confía. Inténtalo de nuevo."
         },
-        "TVW_UNK_003":{
+        "TVW_UNK_003": {
           "title": "¡Ocurrió un error!",
           "message": "Debido a un error técnico, no pudimos compartir la tarjeta con la persona que confía. Inténtalo de nuevo."
         },
-        "TVV_UNK_001":{
+        "TVV_UNK_001": {
           "title": "¡Ocurrió un error!",
           "message": "Algo salió mal al transferir la tarjeta. Inténtalo de nuevo."
         },
-        "TVV_UNK_002":{
+        "TVV_UNK_002": {
           "title": "¡Ocurrió un error!",
           "message": "Algo salió mal al transferir la tarjeta. Inténtalo de nuevo."
         },
-        "TVV_UNK_003":{
+        "TVV_UNK_003": {
           "title": "¡Ocurrió un error!",
           "message": "Algo salió mal al transferir la tarjeta. Inténtalo de nuevo."
         }

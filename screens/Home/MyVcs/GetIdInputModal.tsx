@@ -1,5 +1,10 @@
-import React from 'react';
-import {I18nManager, KeyboardAvoidingView, Dimensions} from 'react-native';
+import React, {useState, useEffect} from 'react';
+import {
+  I18nManager,
+  KeyboardAvoidingView,
+  Keyboard,
+  Dimensions,
+} from 'react-native';
 import {Icon, Input} from 'react-native-elements';
 import {Button, Column, Row, Text} from '../../../components/ui';
 import {Modal} from '../../../components/ui/Modal';
@@ -20,70 +25,105 @@ export const GetIdInputModal: React.FC<GetIdInputModalProps> = props => {
 
   const inputLabel = t('enterApplicationId');
 
+  const {height} = Dimensions.get('window');
+  const isSmallScreen = height < 600;
+
+  const [keyboardHeight, setKeyboardHeight] = useState(0);
+
+  useEffect(() => {
+    const keyboardDidShowListener = Keyboard.addListener(
+      'keyboardDidShow',
+      event => {
+        const keyboardHeight = event.endCoordinates.height;
+        setKeyboardHeight(keyboardHeight + 150);
+      },
+    );
+
+    return () => {
+      keyboardDidShowListener.remove();
+    };
+  }, []);
+
+  const screenHeight = Math.floor(height - keyboardHeight);
+
   return (
     <Modal
       testID="getIdHeader"
       onDismiss={props.onDismiss}
       isVisible={props.isVisible}
       headerTitle={t('header')}
+      arrowLeft={props.arrowLeft}
       headerElevation={2}>
       <KeyboardAvoidingView
-        style={Theme.Styles.keyboardAvoidStyle}
+        style={
+          isSmallScreen
+            ? {flex: 1, paddingHorizontal: 10}
+            : Theme.Styles.keyboardAvoidStyle
+        }
         behavior={isIOS() ? 'padding' : 'height'}>
-        <Column>
-          <Text
-            testID="getIdDescription"
-            margin="10"
-            style={{color: Theme.Colors.GrayText}}
-            weight="regular">
-            {t('applicationIdLabel')}
-          </Text>
-          <Row crossAlign="flex-end">
-            <Input
-              {...testIDProps('getIdInputModalIndividualId')}
-              placeholder={!controller.id ? inputLabel : ''}
-              labelStyle={{
-                color: controller.isInvalid
-                  ? Theme.Colors.errorMessage
-                  : Theme.Colors.textValue,
-                textAlign: 'left',
-              }}
-              inputStyle={{
-                textAlign: I18nManager.isRTL ? 'right' : 'left',
-              }}
-              selectionColor={Theme.Colors.Cursor}
-              style={Theme.Styles.placeholder}
-              value={controller.id}
-              keyboardType="number-pad"
-              rightIcon={
-                <CustomTooltip
-                  testID="GetIdInputToolTip"
-                  title={t('toolTipTitle')}
-                  description={t(`toolTipDescription`)}
-                  width={Dimensions.get('screen').width * 0.87}
-                  height={Dimensions.get('screen').height * 0.25}
-                  triggerComponent={
-                    <Icon
-                      {...testIDProps('GetIdToolTipInfo')}
-                      name="infocirlceo"
-                      type="antdesign"
-                      color={Theme.Colors.tooltipIcon}
-                    />
-                  }
-                />
-              }
-              errorStyle={{color: Theme.Colors.errorMessage}}
-              errorMessage={controller.idError}
-              onChangeText={controller.INPUT_ID}
-              ref={node => !controller.idInputRef && controller.READY(node)}
-            />
-          </Row>
-        </Column>
-        <Column>
+        <Column
+          style={
+            isSmallScreen
+              ? null
+              : {
+                  maxHeight: screenHeight,
+                  flex: 1,
+                  justifyContent: 'space-between',
+                }
+          }>
+          <Column>
+            <Text
+              testID="getIdDescription"
+              margin="10"
+              style={{color: Theme.Colors.GrayText}}
+              weight="regular">
+              {t('applicationIdLabel')}
+            </Text>
+            <Row crossAlign="flex-end">
+              <Input
+                {...testIDProps('getIdInputModalIndividualId')}
+                placeholder={!controller.id ? inputLabel : ''}
+                labelStyle={{
+                  color: controller.isInvalid
+                    ? Theme.Colors.errorMessage
+                    : Theme.Colors.textValue,
+                  textAlign: 'left',
+                }}
+                inputStyle={{
+                  textAlign: I18nManager.isRTL ? 'right' : 'left',
+                }}
+                selectionColor={Theme.Colors.Cursor}
+                style={Theme.Styles.placeholder}
+                value={controller.id}
+                keyboardType="number-pad"
+                rightIcon={
+                  <CustomTooltip
+                    testID="GetIdInputToolTip"
+                    title={t('toolTipTitle')}
+                    description={t(`toolTipDescription`)}
+                    width={Dimensions.get('screen').width * 0.87}
+                    height={Dimensions.get('screen').height * 0.25}
+                    triggerComponent={
+                      <Icon
+                        {...testIDProps('GetIdToolTipInfo')}
+                        name="infocirlceo"
+                        type="antdesign"
+                        color={Theme.Colors.tooltipIcon}
+                      />
+                    }
+                  />
+                }
+                errorStyle={{color: Theme.Colors.errorMessage}}
+                errorMessage={controller.idError}
+                onChangeText={controller.INPUT_ID}
+                ref={node => !controller.idInputRef && controller.READY(node)}
+              />
+            </Row>
+          </Column>
           <Button
             testID="getIdButton"
             title={t('getUIN')}
-            margin="24 0 0 0"
+            margin="0 0 10 0"
             type="gradient"
             disabled={!controller.id}
             onPress={controller.VALIDATE_INPUT}

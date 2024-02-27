@@ -214,5 +214,11 @@ fileignoreconfig:
     checksum: 8133e2fefddfd0207eb7207b660d317f9a6acafbab6a65762d29ea86e33787cb
   - filename: components/BackupAndRestoreBannerNotification.tsx
     checksum: e465a9947727687d784d0cb9d8db1e28f765b0659bf4a3aa6d75643aa7b14102
+  - filename: screens/Home/MyVcs/IdInputModal.tsx
+    checksum: c18e8bbcf1c8de3327c0920fddcf1b6df54b74d894e3f04677f498712c680fe9  
+  - filename: screens/Home/MyVcs/OtpVerificationModal.tsx
+    checksum: e1209eeda11c5c669b04b7a68674593dc4280945274b1598d5d0f9345ba33930  
+  - filename: screens/Home/MyVcs/GetIdInputModal.tsx
+    checksum: 52bdb70fe99eb2fcde949980c100953f5b26a5a98b5d9825db425331b9a5311c  
   version: ""
 

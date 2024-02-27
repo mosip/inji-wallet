@@ -7,6 +7,8 @@ import {
   selectIsRequestingCredential,
   selectOtpError,
   selectIsAcceptingIdInput,
+  selectIsPhoneNumber,
+  selectIsEmail,
 } from './GetVcModalMachine';
 
 export function useGetVcModal({service}: GetVcModalProps) {
@@ -14,7 +16,8 @@ export function useGetVcModal({service}: GetVcModalProps) {
     isRequestingCredential: useSelector(service, selectIsRequestingCredential),
 
     otpError: useSelector(service, selectOtpError),
-
+    phoneNumber: useSelector(service, selectIsPhoneNumber),
+    email: useSelector(service, selectIsEmail),
     isAcceptingUinInput: useSelector(service, selectIsAcceptingIdInput),
     isAcceptingOtpInput: useSelector(service, selectIsAcceptingOtpInput),
 

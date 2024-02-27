@@ -42,6 +42,8 @@ export const AddVcModal: React.FC<AddVcModalProps> = props => {
           onInputDone={controller.INPUT_OTP}
           error={controller.otpError}
           resend={controller.RESEND_OTP}
+          phone={controller.isPhoneNumber}
+          email={controller.isEmail}
           flow={TelemetryConstants.FlowType.vcDownload}
         />
       )}

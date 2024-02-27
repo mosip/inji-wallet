@@ -33,6 +33,8 @@ const model = createModel(
     otpError: '',
     transactionId: '',
     requestId: '',
+    phoneNumber: '' as string,
+    email: '' as string,
     isPinned: false,
   },
   {
@@ -167,6 +169,7 @@ export const AddVcModalMachine =
                 onDone: [
                   {
                     target: '#AddVcModal.acceptingOtpInput',
+                    actions: ['setPhoneNumber', 'setEmail'],
                   },
                 ],
                 onError: [
@@ -207,6 +210,7 @@ export const AddVcModalMachine =
                 onDone: [
                   {
                     target: 'idle',
+                    actions: ['setPhoneNumber', 'setEmail'],
                   },
                 ],
                 onError: [
@@ -280,6 +284,14 @@ export const AddVcModalMachine =
         setRequestId: assign({
           requestId: (_context, event) =>
             (event as DoneInvokeEvent<string>).data,
+        }),
+
+        setPhoneNumber: assign({
+          phoneNumber: (_context, event) => event.data.response.maskedMobile,
+        }),
+
+        setEmail: model.assign({
+          email: (_context, event) => event.data.response.maskedEmail,
         }),
 
         setIdBackendError: assign({
@@ -443,6 +455,14 @@ export function selectIdError(state: State) {
 
 export function selectOtpError(state: State) {
   return state.context.otpError;
+}
+
+export function selectIsPhoneNumber(state: State) {
+  return state.context.phoneNumber;
+}
+
+export function selectIsEmail(state: State) {
+  return state.context.email;
 }
 
 export function selectIsAcceptingIdInput(state: State) {

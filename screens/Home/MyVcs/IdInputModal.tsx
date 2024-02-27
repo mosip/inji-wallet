@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import {Icon, Input} from 'react-native-elements';
 import {Picker} from '@react-native-picker/picker';
 import {Button, Column, Row, Text} from '../../../components/ui';
@@ -12,6 +12,7 @@ import {
   TextInput,
   TouchableOpacity,
   Dimensions,
+  Keyboard,
 } from 'react-native';
 import {
   individualId,
@@ -40,6 +41,27 @@ export const IdInputModal: React.FC<IdInputModalProps> = props => {
   const setIdInputRef = (node: TextInput) =>
     !controller.idInputRef && controller.READY(node);
 
+  const {height} = Dimensions.get('window');
+  const isSmallScreen = height < 600; // Adjust the threshold as needed
+
+  const [keyboardHeight, setKeyboardHeight] = useState(0);
+
+  useEffect(() => {
+    const keyboardDidShowListener = Keyboard.addListener(
+      'keyboardDidShow',
+      event => {
+        const keyboardHeight = event.endCoordinates.height;
+        setKeyboardHeight(keyboardHeight + 150);
+      },
+    );
+
+    return () => {
+      keyboardDidShowListener.remove();
+    };
+  }, []);
+
+  const screenHeight = Math.floor(height - keyboardHeight);
+
   return (
     <Modal
       onDismiss={dismissInput}
@@ -49,12 +71,27 @@ export const IdInputModal: React.FC<IdInputModalProps> = props => {
       headerTitle={t('header')}
       headerElevation={2}>
       <KeyboardAvoidingView
-        style={Theme.Styles.keyboardAvoidStyle}
+        style={
+          isSmallScreen
+            ? {flex: 1, paddingHorizontal: 10}
+            : Theme.Styles.keyboardAvoidStyle
+        }
         behavior={isIOS() ? 'padding' : 'height'}>
-        <Column>
+        <Column
+          crossAlign="center"
+          style={
+            isSmallScreen
+              ? null
+              : {
+                  maxHeight: screenHeight,
+                  flex: 1,
+                  justifyContent: 'space-between',
+                }
+          }>
           <Text
             align="left"
             size="regular"
+            margin="5 0 0 0"
             style={Theme.TextStyles.retrieveIdLabel}>
             {t('guideLabel')}
           </Text>
@@ -113,37 +150,37 @@ export const IdInputModal: React.FC<IdInputModalProps> = props => {
               />
             </Column>
           </Row>
-        </Column>
-        <Column>
-          <Button
-            testID="generateVc"
-            type="gradient"
-            title={t('generateVc')}
-            disabled={!controller.id}
-            margin="24 0 6 0"
-            onPress={controller.VALIDATE_INPUT}
-            loading={controller.isRequestingOtp}
-          />
-          {!controller.id && (
-            <Row style={Theme.Styles.getId}>
-              <Text
-                color={Theme.Colors.getVidColor}
-                weight="semibold"
-                size="small">
-                {t('noUIN/VID')}
-              </Text>
-              <TouchableOpacity activeOpacity={1} onPress={props.onPress}>
+          <Column>
+            <Button
+              testID="generateVc"
+              type="gradient"
+              margin="0 0 10 0"
+              title={t('generateVc')}
+              disabled={!controller.id}
+              onPress={controller.VALIDATE_INPUT}
+              loading={controller.isRequestingOtp}
+            />
+            {!controller.id && (
+              <Row style={Theme.Styles.getId}>
                 <Text
-                  testID="getItNow"
-                  color={Theme.Colors.AddIdBtnBg}
-                  weight="bold"
-                  size="small"
-                  margin="0 0 0 5">
-                  {t('getItHere')}
+                  color={Theme.Colors.getVidColor}
+                  weight="semibold"
+                  size="small">
+                  {t('noUIN/VID')}
                 </Text>
-              </TouchableOpacity>
-            </Row>
-          )}
+                <TouchableOpacity activeOpacity={1} onPress={props.onPress}>
+                  <Text
+                    testID="getItNow"
+                    color={Theme.Colors.AddIdBtnBg}
+                    weight="bold"
+                    size="small"
+                    margin="0 0 0 5">
+                    {t('getItHere')}
+                  </Text>
+                </TouchableOpacity>
+              </Row>
+            )}
+          </Column>
         </Column>
 
         <MessageOverlay
