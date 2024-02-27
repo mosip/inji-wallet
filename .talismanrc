@@ -214,5 +214,7 @@ fileignoreconfig:
     checksum: 8133e2fefddfd0207eb7207b660d317f9a6acafbab6a65762d29ea86e33787cb
   - filename: components/BackupAndRestoreBannerNotification.tsx
     checksum: e465a9947727687d784d0cb9d8db1e28f765b0659bf4a3aa6d75643aa7b14102
-  version: ""
+  - filename: components/ActivityLogEvent.ts
+    checksum: e7c8617cd9c510d5b6a053bc5c6164f02c48e85125aa925e0c4cf55cd1f29d22
+    version: ""
 

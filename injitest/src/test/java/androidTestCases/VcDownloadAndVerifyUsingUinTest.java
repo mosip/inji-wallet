@@ -248,7 +248,7 @@ public class VcDownloadAndVerifyUsingUinTest extends AndroidBaseTest {
         assertTrue(retrieveIdPage.isRetrieveIdPageLoaded(), "Verify if retrieve id page is displayed");
         retrieveIdPage.setEnterIdTextBox("00").clickOnGenerateCardButton();
 
-        assertTrue(retrieveIdPage.isIncorrectInputFormatErrorMessageDisplayed());
+        assertTrue(retrieveIdPage.isIncorrectInputFormatErrorUinMessageDisplayed(),"Verify if correct error message displayed");
     }
     
     @Test
