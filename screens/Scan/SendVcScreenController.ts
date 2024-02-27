@@ -18,6 +18,7 @@ import {
 import {ScanEvents} from '../../machines/bleShare/scan/scanMachine';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
 import {RootRouteProps} from '../../routes';
+import {BOTTOM_TAB_ROUTES} from '../../routes/routesConstants';
 
 type MyVcsTabNavigation = NavigationProp<RootRouteProps>;
 
@@ -64,10 +65,7 @@ export function useSendVcScreen() {
     FACE_INVALID: () => scanService.send(ScanEvents.FACE_INVALID()),
     RETRY_VERIFICATION: () => scanService.send(ScanEvents.RETRY_VERIFICATION()),
     GO_TO_HOME: () => {
-      navigation.reset({
-        index: 0,
-        routes: [{name: 'Main'}],
-      });
+      navigation.navigate(BOTTOM_TAB_ROUTES.home, {screen: 'HomeScreen'});
     },
   };
 }
