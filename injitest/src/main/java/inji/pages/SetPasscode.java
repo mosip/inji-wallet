@@ -82,8 +82,8 @@ public class SetPasscode extends BasePage {
         }
     }
     private void enterOtpAndroidForEsignet(char[] arr) {
-        for (int i = 2; i <= 8; i++) {
-            int index = i - 2;
+        for (int i = 3; i <= 8; i++) {
+            int index = i - 3;
             if (index < arr.length) {
                 String locator = "(//*[@class='android.widget.EditText'])[" + i + "]";
                 driver.findElement(By.xpath(locator)).sendKeys(String.valueOf(arr[index]));

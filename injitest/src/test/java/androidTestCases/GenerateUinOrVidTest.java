@@ -95,5 +95,7 @@ public class GenerateUinOrVidTest extends AndroidBaseTest {
         assertTrue(generateUinOrVidPage.isGenerateUinOrVidPageLoaded(), "Verify if generate uin or vid page page is displayed");
 
     }
+
+
     
 }
