@@ -19,7 +19,6 @@ import {
   ScanEvents,
   selectIsFaceVerificationConsent,
 } from '../../machines/bleShare/scan/scanMachine';
-import {ScanEvents} from '../../machines/bleShare/scan/scanMachine';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
 import {RootRouteProps} from '../../routes';
 import {BOTTOM_TAB_ROUTES} from '../../routes/routesConstants';
