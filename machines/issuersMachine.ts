@@ -23,6 +23,7 @@ import {
   constructAuthorizationConfiguration,
   ErrorMessage,
   getBody,
+  getIdType,
   getVCMetadata,
   Issuers,
   Issuers_Key_Ref,
@@ -561,6 +562,8 @@ export const IssuersMachine = model.createMachine(
           return ActivityLogEvents.LOG_ACTIVITY({
             _vcKey: getVCMetadata(context).getVcKey(),
             type: 'VC_DOWNLOADED',
+            id: getVCMetadata(context).id,
+            idType: getIdType(getVCMetadata(context).issuer),
             timestamp: Date.now(),
             deviceName: '',
             vcLabel: getVCMetadata(context).id,

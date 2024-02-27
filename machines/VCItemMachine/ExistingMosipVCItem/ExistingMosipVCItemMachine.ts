@@ -45,6 +45,7 @@ import {BackupEvents} from '../../backupAndRestore/backup';
 import Cloud, {
   isSignedInResult,
 } from '../../../shared/CloudBackupAndRestoreUtils';
+import {getIdType} from '../../../shared/openId4VCI/Utils';
 
 const model = createModel(
   {
@@ -1143,6 +1144,8 @@ export const ExistingMosipVCItemMachine =
             return ActivityLogEvents.LOG_ACTIVITY({
               _vcKey: context.vcMetadata.getVcKey(),
               type: 'VC_DOWNLOADED',
+              id: context.vcMetadata.id,
+              idType: getIdType(context.vcMetadata.issuer),
               timestamp: Date.now(),
               deviceName: '',
               vcLabel: data.id,
@@ -1164,6 +1167,8 @@ export const ExistingMosipVCItemMachine =
             ActivityLogEvents.LOG_ACTIVITY({
               _vcKey: context.vcMetadata.getVcKey(),
               type: 'WALLET_BINDING_SUCCESSFULL',
+              idType: getIdType(context.vcMetadata.issuer),
+              id: context.vcMetadata.id,
               timestamp: Date.now(),
               deviceName: '',
               vcLabel: context.vcMetadata.id,
@@ -1180,6 +1185,8 @@ export const ExistingMosipVCItemMachine =
               type: 'WALLET_BINDING_FAILURE',
               timestamp: Date.now(),
               deviceName: '',
+              id: context.vcMetadata.id,
+              idType: getIdType(context.vcMetadata.issuer),
               vcLabel: context.vcMetadata.id,
             }),
           {
@@ -1195,6 +1202,8 @@ export const ExistingMosipVCItemMachine =
               timestamp: Date.now(),
               deviceName: '',
               vcLabel: context.vcMetadata.id,
+              id: context.vcMetadata.id,
+              idType: getIdType(context.vcMetadata.issuer),
             }),
           {
             to: context => context.serviceRefs.activityLog,
@@ -1268,6 +1277,8 @@ export const ExistingMosipVCItemMachine =
               timestamp: Date.now(),
               deviceName: '',
               vcLabel: context.vcMetadata.id,
+              id: context.vcMetadata.id,
+              idType: getIdType(context.vcMetadata.issuer),
             }),
           {
             to: context => context.serviceRefs.activityLog,
