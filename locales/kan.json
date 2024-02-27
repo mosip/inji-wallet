@@ -1,21 +1,21 @@
 {
   "ActivityLogText": {
-    "VC_SHARED": "ಹಂಚಿಕೊಂಡಿದ್ದಾರೆ",
-    "VC_RECEIVED": "ಸ್ವೀಕರಿಸಿದರು",
-    "VC_RECEIVED_NOT_SAVED": "ಸ್ವೀಕರಿಸಿದ ಉಳಿಸಲಾಗಿಲ್ಲ",
-    "VC_DELETED": "ಅಳಿಸಲಾಗಿದೆ",
-    "VC_DOWNLOADED": "ಡೌನ್‌ಲೋಡ್ ಮಾಡಲಾಗಿದೆ",
-    "VC_REVOKED": "ಹಿಂಪಡೆಯಲಾಗಿದೆ",
-    "VC_SHARED_WITH_VERIFICATION_CONSENT": "ಹಂಚಿಕೊಂಡಿದ್ದಾರೆ. ಉಪಸ್ಥಿತಿ ಪರಿಶೀಲನೆಗೆ ಒಪ್ಪಿಗೆ ನೀಡಲಾಗಿದೆ",
-    "VC_RECEIVED_WITH_PRESENCE_VERIFIED": "ಸ್ವೀಕರಿಸಿದರು. ಉಪಸ್ಥಿತಿಯನ್ನು ಪರಿಶೀಲಿಸಲಾಗಿದೆ",
-    "VC_RECEIVED_BUT_PRESENCE_VERIFICATION_FAILED": "ಸ್ವೀಕರಿಸಿದರು. ಉಪಸ್ಥಿತಿ ಪರಿಶೀಲನೆ ವಿಫಲವಾಗಿದೆ",
-    "PRESENCE_VERIFIED_AND_VC_SHARED": "ಪರಿಶೀಲಿಸಲಾಗಿದೆ ಮತ್ತು ಹಂಚಿಕೊಳ್ಳಲಾಗಿದೆ",
-    "PRESENCE_VERIFICATION_FAILED": "ಪರಿಶೀಲನೆ ವಿಫಲವಾಗಿದೆ",
-    "QRLOGIN_SUCCESFULL": "QRಲಾಗಿನ್ ಯಶಸ್ವಿಯಾಗಿದೆ",
-    "WALLET_BINDING_SUCCESSFULL": "ಸಕ್ರಿಯಗೊಳಿಸುವಿಕೆ ಯಶಸ್ವಿಯಾಗಿದೆ",
-    "WALLET_BINDING_FAILURE": "ಸಕ್ರಿಯಗೊಳಿಸುವಿಕೆ ವಿಫಲವಾಗಿದೆ",
-    "VC_REMOVED": "ಕೈಚೀಲದಿಂದ ತೆಗೆದುಹಾಕಲಾಗಿದೆ",
-    "TAMPERED_VC_REMOVED": "ದುರುದ್ದೇಶಪೂರಿತ ಚಟುವಟಿಕೆಯಿಂದಾಗಿ ಕೆಲವು ಕಾರ್ಡ್‌ಗಳನ್ನು ತೆಗೆದುಹಾಕಲಾಗಿದೆ"
+    "VC_SHARED": "{{idType}} {{id}} ಅನ್ನು ಯಶಸ್ವಿಯಾಗಿ ಹಂಚಿಕೊಳ್ಳಲಾಗಿದೆ.",
+    "VC_RECEIVED": "{{idType}} {{id}} ಸ್ವೀಕರಿಸಲಾಗಿದೆ.",
+    "VC_RECEIVED_NOT_SAVED": "{{idType}} {{id}} ಉಳಿಸಲು ಸಾಧ್ಯವಾಗಲಿಲ್ಲ.",
+    "VC_DELETED": "{{idType}} {{id}} ಯಶಸ್ವಿಯಾಗಿ ಅಳಿಸಲಾಗಿದೆ.",
+    "VC_DOWNLOADED": "{{idType}} {{id}} ಡೌನ್‌ಲೋಡ್ ಮಾಡಲಾಗಿದೆ.",
+    "VC_REVOKED": "{{idType}} {{id}} ನೀಡುಗರಿಂದ ರದ್ದುಗೊಳಿಸಲಾಗಿದೆ.",
+    "VC_SHARED_WITH_VERIFICATION_CONSENT": "ಹಾಜರಿ ಪರಿಶೀಲನೆಗಾಗಿ {{idType}} {{id}} ಅನುಮತಿಯೊಂದಿಗೆ ಹಂಚಲಾಗಿದೆ.",
+    "VC_RECEIVED_WITH_PRESENCE_VERIFIED": "{{idType}} {{id}} ಸ್ವೀಕರಿಸಲಾಗಿದೆ ಮತ್ತು ಹಾಜರಿ ಪರಿಶೀಲನೆ ಯಶಸ್ವಿಯಾಗಿದೆ.",
+    "VC_RECEIVED_BUT_PRESENCE_VERIFICATION_FAILED": "{{idType}} {{id}} ಸ್ವೀಕರಿಸಲಾಗಿದೆ ಆದರೆ ಹಾಜರಿ ಪರಿಶೀಲನೆ ವಿಫಲವಾಗಿದೆ.",
+    "PRESENCE_VERIFIED_AND_VC_SHARED": "ಮುಖ ಪರಿಶೀಲನೆ ಯಶಸ್ವಿಯಾಗಿದೆ ಮತ್ತು {{idType}} {{id}} ಹಂಚಲಾಗಿದೆ.",
+    "PRESENCE_VERIFICATION_FAILED": "{{idType}} {{id}} ಹಂಚಿಕೊಳ್ಳಲು ಪ್ರಯತ್ನಿಸುವಾಗ ಮುಖ ಪರಿಶೀಲನೆ ವಿಫಲವಾಗಿದೆ.",
+    "QRLOGIN_SUCCESFULL": "{{idType}} {{id}} ಬಳಸಿ QRಲಾಗಿನ್ ಯಶಸ್ವಿಯಾಗಿದೆ.",
+    "WALLET_BINDING_SUCCESSFULL": "{{idType}} {{id}} ಸಕ್ರಿಯಗೊಳಿಸುವಿಕೆ ಯಶಸ್ವಿಯಾಗಿದೆ.",
+    "WALLET_BINDING_FAILURE": "{{idType}} {{id}} ಸಕ್ರಿಯಗೊಳಿಸುವಿಕೆ ವಿಫಲವಾಗಿದೆ.",
+    "VC_REMOVED": "{{idType}} {{id}} ವಾಲೆಟ್‌ನಿಂದ ತೆಗೆದುಹಾಕಲಾಗಿದೆ.",
+    "TAMPERED_VC_REMOVED": "ತಿದ್ದುವಿಕೆಯಿಂದಾಗಿ {{idType}} {{id}} ಅನ್ನು ವ್ಯಾಲೆಟ್‌ನಿಂದ ತೆಗೆದುಹಾಕಲಾಗಿದೆ."
   },
   "DeviceInfoList": {
     "requestedBy": "ವಿನಂತಿಸಿದವರು",
@@ -684,6 +684,11 @@
           "message": "ಕಾರ್ಡ್ ಅನ್ನು ವರ್ಗಾಯಿಸುವಾಗ ಏನೋ ತಪ್ಪಾಗಿದೆ. ದಯವಿಟ್ಟು ಪುನಃ ಪ್ರಯತ್ನಿಸಿ."
         }
       }
+    },
+    "postFaceCapture": {
+      "captureSuccessMessage": "ಮುಖ ಪರಿಶೀಲನೆ ಯಶಸ್ವಿಯಾಗಿದೆ! ರುಜುವಾತು ಹಂಚಿಕೆಯನ್ನು ಪ್ರಾರಂಭಿಸಲಾಗಿದೆ.",
+      "captureFailureTitle": "ಮುಖ ಪರಿಶೀಲನೆ ವಿಫಲವಾಗಿದೆ!",
+      "captureFailureMessage": "ನಿಮ್ಮ ಮುಖವು ಸ್ಪಷ್ಟವಾಗಿ ಗೋಚರಿಸುತ್ತಿದೆಯೇ ಎಂಬುದನ್ನು ಖಚಿತಪಡಿಸಿಕೊಳ್ಳಿ ಮತ್ತು ಮತ್ತೊಮ್ಮೆ ಸೆಲ್ಫಿ ತೆಗೆದುಕೊಳ್ಳಲು ಪ್ರಯತ್ನಿಸಿ."
     }
   },
   "SelectVcOverlay": {

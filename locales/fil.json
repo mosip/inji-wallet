@@ -1,20 +1,21 @@
 {
   "ActivityLogText": {
-    "VC_SHARED": "ibinahagi",
-    "VC_RECEIVED": "natanggap",
-    "VC_RECEIVED_NOT_SAVED": "natanggap ngunit hindi na-save",
-    "VC_DELETED": "tinanggal",
-    "VC_DOWNLOADED": "na-download",
-    "VC_REVOKED": "binawi",
-    "VC_SHARED_WITH_VERIFICATION_CONSENT": "ibinahagi. Ibinibigay ang pahintulot para sa pag-verify ng presensya",
-    "VC_RECEIVED_WITH_PRESENCE_VERIFIED": "natanggap. Na-verify ang presensya",
-    "VC_RECEIVED_BUT_PRESENCE_VERIFICATION_FAILED": "natanggap. Nabigo ang pag-verify ng presensya",
-    "PRESENCE_VERIFIED_AND_VC_SHARED": "na-verify at ibinahagi",
-    "PRESENCE_VERIFICATION_FAILED": "nabigo ang pag-verify",
-    "QRLOGIN_SUCCESFULL": "Matagumpay ang QRLogin",
-    "WALLET_BINDING_SUCCESSFULL": "Matagumpay ang pag-activate",
-    "WALLET_BINDING_FAILURE": "Nabigo ang pag-activate",
-    "VC_REMOVED": "Inalis sa wallet"
+    "VC_SHARED": "Matagumpay na naibahagi ang {{idType}} {{id}}.",
+    "VC_RECEIVED": "Natanggap ang {{idType}} {{id}}.",
+    "VC_RECEIVED_NOT_SAVED": "Hindi ma-save ang {{idType}} {{id}}.",
+    "VC_DELETED": "Matagumpay na natanggal ang {{idType}} {{id}}.",
+    "VC_DOWNLOADED": "Na-download ang {{idType}} {{id}}.",
+    "VC_REVOKED": "Ang {{idType}} {{id}} ay binawi ng nagbigay.",
+    "VC_SHARED_WITH_VERIFICATION_CONSENT": "Ibinahagi ang {{idType}} {{id}} na may pahintulot para sa pag-verify ng presensya.",
+    "VC_RECEIVED_WITH_PRESENCE_VERIFIED": "Natanggap ang {{idType}} {{id}} at matagumpay ang pag-verify ng presensya.",
+    "VC_RECEIVED_BUT_PRESENCE_VERIFICATION_FAILED": "Natanggap ang {{idType}} {{id}} at nabigo ang pag-verify ng presensya.",
+    "PRESENCE_VERIFIED_AND_VC_SHARED": "Ang pag-verify ng mukha ay matagumpay at {{idType}} {{id}} at ibinahagi.",
+    "PRESENCE_VERIFICATION_FAILED": "Nabigo ang pag-verify ng mukha habang sinusubukang ibahagi ang {{idType}} {{id}}.",
+    "QRLOGIN_SUCCESFULL": "Ang QRlogin gamit ang {{idType}} {{id}} ay matagumpay.",
+    "WALLET_BINDING_SUCCESSFULL": "Ang pag-activate ng {{idType}} {{id}} ay matagumpay.",
+    "WALLET_BINDING_FAILURE": "Nabigo ang pag-activate ng {{idType}} {{id}}.",
+    "VC_REMOVED": "Ang {{idType}} {{id}} ay inalis sa wallet.",
+    "TAMPERED_VC_REMOVED": "Ang {{idType}} {{id}} ay inalis mula sa wallet dahil sa pakikialam."
   },
   "DeviceInfoList": {
     "requestedBy": "Hiniling ni",
@@ -627,7 +628,7 @@
       },
       "accepted": {
         "title": "Matagumpay na naibahagi ang ID!",
-        "message": "Ang iyong ID ay matagumpay na naibahagi.",
+        "message": "Ang iyong ID ay matagumpay na naibahagi",
         "home": "Bahay",
         "history": "Kasaysayan"
       },
@@ -695,6 +696,11 @@
           "message": "Nagkaproblema habang inililipat ang card. Pakisubukang muli."
         }
       }
+    },
+    "postFaceCapture": {
+      "captureSuccessMessage": "Matagumpay ang Face Verification! Sinisimulan ang pagbabahagi ng kredensyal.",
+      "captureFailureTitle": "Nabigo ang pag-verify ng mukha!",
+      "captureFailureMessage": "Pakitiyak na malinaw na nakikita ang iyong mukha at subukang mag-selfie muli."
     }
   },
   "SelectVcOverlay": {
