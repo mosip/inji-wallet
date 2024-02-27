@@ -47,7 +47,7 @@ public class VcDownloadAndVerifyUsingEsignetTest extends AndroidBaseTest {
 //      assertTrue(esignetLoginPage.isLoadingPageTextLoaded(), "Verify if loading page displayed");
 //      assertTrue(esignetLoginPage.isSettingUpTextDisplayed(), "Verify if loading page displayed");
   //      assertTrue(esignetLoginPage.isEsignetLoginPageDisplayed(), "Verify if esignet login page displayed");
- //       esignetLoginPage.clickOnEsignetLoginWithOtpButton();
+        esignetLoginPage.clickOnEsignetLoginWithOtpButton();
         
         assertTrue(esignetLoginPage.isEnterYourVidTextDisplayed(), "Verify if enter your vid text is displayed");
         OtpVerificationPage otpVerification= esignetLoginPage.setEnterIdTextBox(TestDataReader.readData("uin"));
@@ -116,7 +116,7 @@ public class VcDownloadAndVerifyUsingEsignetTest extends AndroidBaseTest {
         EsignetLoginPage esignetLoginPage =  addNewCardPage.clickOnDownloadViaEsignet();
 
 //        assertTrue(esignetLoginPage.isEsignetLoginPageDisplayed(), "Verify if esignet login page displayed");
- //       esignetLoginPage.clickOnEsignetLoginWithOtpButton();
+        esignetLoginPage.clickOnEsignetLoginWithOtpButton();
         
         assertTrue(esignetLoginPage.isEnterYourVidTextDisplayed(), "Verify if enter your vid text is displayed");
         OtpVerificationPage otpVerification= esignetLoginPage.setEnterIdTextBox(TestDataReader.readData("vid"));
