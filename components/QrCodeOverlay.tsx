@@ -16,25 +16,24 @@ export const QrCodeOverlay: React.FC<QrCodeOverlayProps> = props => {
   const toggleQrOverlay = () => setIsQrOverlayVisible(!isQrOverlayVisible);
   return (
     <React.Fragment>
-      <Pressable {...testIDProps('qrCodePressable')} onPress={toggleQrOverlay}>
-        <View style={Theme.QrCodeStyles.QrView}>
-          <Row>
-            <QRCode
-              {...testIDProps('qrCode')}
-              size={90}
-              value={props.qrCodeDetails}
-              backgroundColor={Theme.Colors.QRCodeBackgroundColor}
-            />
-          </Row>
-        </View>
-        <Row
-          testID="magnifierZoom"
-          align="flex-end"
-          margin="-35 0 0 67"
-          style={Theme.QrCodeStyles.magnifierZoom}>
-          {SvgImage.MagnifierZoom()}
-        </Row>
-      </Pressable>
+      <View style={Theme.QrCodeStyles.QrView}>
+        <Pressable
+          {...testIDProps('qrCodePressable')}
+          onPress={toggleQrOverlay}>
+          <QRCode
+            {...testIDProps('qrCode')}
+            size={72}
+            value={props.qrCodeDetails}
+            backgroundColor={Theme.Colors.QRCodeBackgroundColor}
+          />
+          <View
+            testID="magnifierZoom"
+            style={[Theme.QrCodeStyles.magnifierZoom]}>
+            {SvgImage.MagnifierZoom()}
+          </View>
+        </Pressable>
+      </View>
+
       <Overlay
         isVisible={isQrOverlayVisible}
         onBackdropPress={toggleQrOverlay}

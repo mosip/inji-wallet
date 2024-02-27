@@ -501,8 +501,8 @@ export const PurpleTheme = {
       height: 53,
       borderRadius: 100,
     },
-    openCardImage: {
-      width: 100,
+    detialedViewImage: {
+      width: 80,
       height: 106,
       borderRadius: 5,
       marginTop: 10,
@@ -769,11 +769,15 @@ export const PurpleTheme = {
   QrCodeStyles: StyleSheet.create({
     magnifierZoom: {
       backgroundColor: Colors.White,
-      width: 30,
-      height: 30,
-      alignItems: 'center',
+      width: 27,
+      height: 27,
       padding: 5,
       borderTopLeftRadius: 11,
+      position: 'absolute',
+      bottom: 0,
+      right: 0,
+      alignItems: 'center',
+      justifyContent: 'center',
     },
     expandedQrCode: {
       backgroundColor: Colors.White,
@@ -796,15 +800,19 @@ export const PurpleTheme = {
       fontSize: 18,
     },
     QrView: {
-      padding: 6,
-      backgroundColor: 'white',
-      marginTop: 20,
-      borderRadius: 10,
+      width: 80,
+      height: 80,
+      padding: 8,
+      backgroundColor: Colors.White,
+      alignItems: 'center',
+      justifyContent: 'center',
+      borderRadius: 5,
       elevation: 6,
       shadowColor: '#000',
       shadowOffset: {width: -1, height: 1},
       shadowOpacity: 0.4,
       shadowRadius: 3,
+      marginTop: 14,
     },
   }),
   PinInputStyle: StyleSheet.create({

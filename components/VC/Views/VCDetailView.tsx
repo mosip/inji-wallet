@@ -55,7 +55,7 @@ const getProfileImage = (
       return (
         <Image
           source={{uri: verifiableCredential?.credentialSubject.face}}
-          style={Theme.Styles.openCardImage}
+          style={Theme.Styles.detialedViewImage}
         />
       );
     }
@@ -63,7 +63,7 @@ const getProfileImage = (
     return (
       <Image
         source={{uri: props?.vc?.credential.biometrics.face}}
-        style={Theme.Styles.openCardImage}
+        style={Theme.Styles.detialedViewImage}
       />
     );
   }
@@ -126,7 +126,13 @@ export const VCDetailView: React.FC<
                 <Column crossAlign="center">
                   {getProfileImage(props, verifiableCredential, isOpenId4VCI)}
                   <QrCodeOverlay qrCodeDetails={String(verifiableCredential)} />
-                  <Column margin="20 0 0 0">{issuerLogo}</Column>
+                  <Column
+                    width={80}
+                    height={59}
+                    crossAlign="center"
+                    margin="12 0 0 0">
+                    {issuerLogo}
+                  </Column>
                 </Column>
                 <Column
                   align="space-evenly"
