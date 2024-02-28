@@ -20,6 +20,7 @@ import {useTranslation} from 'react-i18next';
 import {WalletBinding} from '../../../screens/Home/MyVcs/WalletBinding';
 import {VCVerification} from '../../VCVerification';
 import {Issuers} from '../../../shared/openId4VCI/Utils';
+import {VCItemContainerFlowType} from '../../../shared/Utils';
 
 export const VCCardViewContent: React.FC<
   ExistingMosipVCItemContentProps | EsignetMosipVCItemContentProps
@@ -78,7 +79,8 @@ export const VCCardViewContent: React.FC<
                 props.verifiableCredential?.issuerLogo,
               )}
 
-          {props.flow === 'Qr Login' || props.flow === 'Vc Share' ? null : (
+          {props.flow !== undefined &&
+          props.flow in VCItemContainerFlowType ? null : (
             <>
               {props.vcMetadata.issuer === Issuers.Sunbird ||
               !props.emptyWalletBindingId
