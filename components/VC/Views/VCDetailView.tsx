@@ -30,7 +30,6 @@ import {
 } from '../common/VCUtils';
 import {ActivityIndicator} from '../../ui/ActivityIndicator';
 import {ProfileIcon} from '../../ProfileIcon';
-import {color} from 'react-native-elements/dist/helpers';
 
 const getIssuerLogo = (isOpenId4VCI: boolean, issuerLogo: logoType) => {
   if (isOpenId4VCI) {
@@ -108,7 +107,11 @@ export const VCDetailView: React.FC<
     const availableFieldNames = Object.keys(
       verifiableCredential?.credentialSubject,
     );
-    const bottomSectionFields = [...getAddressFields(), 'email'];
+    const bottomSectionFields = [
+      ...getAddressFields(),
+      'email',
+      'credentialRegistry',
+    ];
 
     for (const fieldName of availableFieldNames) {
       if (bottomSectionFields.includes(fieldName)) {
@@ -156,7 +159,7 @@ export const VCDetailView: React.FC<
                   margin={'0 0 0 24'}
                   style={{flex: 1}}>
                   {fieldItemIterator(
-                    fields.slice(0, fields.length - 2),
+                    fields.slice(0, fields.length - 3),
                     verifiableCredential,
                     wellknown,
                     props,
@@ -172,7 +175,7 @@ export const VCDetailView: React.FC<
                     ]}></View>
                   <Column padding="14">
                     {fieldItemIterator(
-                      fields.slice(fields.length - 2, fields.length),
+                      fields.slice(fields.length - 3, fields.length),
                       verifiableCredential,
                       wellknown,
                       props,

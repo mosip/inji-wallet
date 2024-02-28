@@ -29,10 +29,10 @@ export const DETAIL_VIEW_ADD_ON_FIELDS = [
   'UIN',
   'VID',
   'status',
-  'credentialRegistry',
   'idType',
   'email',
   'address',
+  'credentialRegistry',
 ];
 
 export const getFieldValue = (
