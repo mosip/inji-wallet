@@ -39,6 +39,7 @@ import {
 } from '../../../shared/telemetry/TelemetryUtils';
 import {TelemetryConstants} from '../../../shared/telemetry/TelemetryConstants';
 import ODKIntentModule from '../../../lib/react-native-odk-intent/ODKIntentModule';
+import {getLocalizedField} from '../../../i18n';
 // import { verifyPresentation } from '../shared/vcjs/verifyPresentation';
 
 const {verifier, EventTypes, VerificationStatus} = tuvali;
@@ -773,13 +774,20 @@ export const requestMachine =
 
           ODKIntentModule.sendBundleResult({
             // biometrics: subject.biometrics,
+            uin: subject.UIN,
+            vc_version: subject.vcVer,
+            credential_id: subject.id,
+            full_name: getLocalizedField(subject.fullName),
             date_of_birth: subject.dateOfBirth,
             email: subject.email,
-            full_name: subject.fullName,
-            issuance_date: verifiableCredential.issuanceDate,
-            issuer: verifiableCredential.issuer,
             phone: subject.phone,
-            uin: subject.UIN,
+            gender: getLocalizedField(subject.gender),
+            region: getLocalizedField(subject.region),
+            province: getLocalizedField(subject.province),
+            city: getLocalizedField(subject.city),
+            postal_code: subject.postalCode,
+            issuer: verifiableCredential.issuer,
+            issuance_date: verifiableCredential.issuanceDate,
           });
         },
       },
