@@ -53,7 +53,7 @@ export const VCCardViewContent: React.FC<
         setBackgroundColour(props.wellknown),
       ]}>
       <Column>
-        <Row crossAlign="center">
+        <Row crossAlign="center" padding="3 0 0 3">
           {SvgImage.VcItemContainerProfileImage(props)}
           <Column fill align={'space-around'} margin="0 10 0 10">
             <VCItemFieldValue

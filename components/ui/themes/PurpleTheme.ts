@@ -24,6 +24,7 @@ const Colors = {
   Gray89: '#E3E3E3',
   Gray97: '#F7F7F7',
   DimGray: '#737373',
+  DarkGray: '#A5A5A5',
   platinumGrey: '#EDEDED',
   Orange: '#F2811D',
   OrangeBrown: '#D9822B',
@@ -68,6 +69,7 @@ export type ElevationLevel = 0 | 1 | 2 | 3 | 4 | 5 | 6;
 
 export const PurpleTheme = {
   Colors: {
+    ProfileIconColor: Colors.DarkGray,
     DetailedViewBackground: Colors.Gray97,
     TabItemText: Colors.Purple,
     Details: Colors.Black,
@@ -486,6 +488,12 @@ export const PurpleTheme = {
       elevation: 1,
     },
     pinIcon: {
+      height: 39,
+      width: 39,
+      marginLeft: -20,
+      marginTop: -15,
+    },
+    infoIcon: {
       height: 39,
       width: 39,
       marginLeft: -13,

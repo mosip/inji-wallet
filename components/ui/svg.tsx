@@ -445,7 +445,7 @@ export class SvgImage {
       <Info
         color1={Theme.Colors.linearGradientStart}
         color2={Theme.Colors.linearGradientEnd}
-        style={Theme.Styles.pinIcon}
+        style={Theme.Styles.infoIcon}
         {...testIDProps('infoIcon')}
       />
     );
