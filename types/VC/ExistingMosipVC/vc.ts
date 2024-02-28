@@ -40,7 +40,7 @@ export interface CredentialSubject {
   city: LocalizedField[] | string;
   dateOfBirth: string;
   email: string;
-  fullName: string;
+  fullName: LocalizedField[] | string;
   gender: LocalizedField[] | string;
   id: string;
   phone: string;

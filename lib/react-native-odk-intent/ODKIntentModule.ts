@@ -4,13 +4,20 @@ const {ODKIntentModule} = NativeModules;
 
 export enum ODKIntentVcField {
   UIN = 'uin',
+  CredentialId = 'credential_id',
+  VcVersion = 'vc_version',
   FullName = 'full_name',
   DateOfBirth = 'date_of_birth',
   Email = 'email',
   Phone = 'phone',
-  Biometrics = 'biometrics',
   Issuer = 'issuer',
   IssuanceDate = 'issuance_date',
+  Gender = 'gender',
+  Region = 'region',
+  Province = 'province',
+  City = 'city',
+  PostalCode = 'postal_code',
+  Biometrics = 'biometrics',
 }
 
 export type ODKIntentVcData = Partial<Record<ODKIntentVcField, string>>;
