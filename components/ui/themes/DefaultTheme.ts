@@ -674,6 +674,29 @@ export const DefaultTheme = {
       fontFamily: 'Inter_700Bold',
       lineHeight: 12,
     },
+    scanLayoutHeaderContainer: {
+      flex: 1,
+      flexDirection: 'row',
+      marginLeft: I18nManager.isRTL ? 40 : 15,
+      marginTop: 15,
+    },
+    scanLayoutHeaderTitle: {
+      fontSize: 26,
+      fontFamily: 'Inter_600SemiBold',
+      paddingTop: isIOS() ? 10 : 20,
+      paddingBottom: 10,
+    },
+    sendVcHeaderContainer: {
+      flex: 1,
+      flexDirection: 'row',
+      marginLeft: I18nManager.isRTL ? 50 : 0,
+      marginTop: 15,
+    },
+    HistoryHeaderTitleStyle: {
+      fontSize: 26,
+      fontFamily: 'Inter_600SemiBold',
+      marginTop: isIOS() ? 5 : 15,
+    },
   }),
   BannerStyles: StyleSheet.create({
     container: {
@@ -954,6 +977,11 @@ export const DefaultTheme = {
     outline: {
       backgroundColor: Colors.Transparent,
       borderColor: Colors.Orange,
+    },
+    disabledOutlineButton: {
+      backgroundColor: Colors.Transparent,
+      color: Colors.Grey,
+      borderColor: Colors.Grey,
     },
     container: {
       height: 45,

@@ -47,13 +47,26 @@ export const RequestLayout: React.FC = () => {
             component={ReceiveVcScreen}
             options={{
               title: t('incomingVc'),
-              headerLeft: () => (
-                <HeaderBackButton
-                  onPress={() => {
-                    controller.RESET();
-                  }}
-                />
-              ),
+              headerLeft: () =>
+                !I18nManager.isRTL && (
+                  <HeaderBackButton
+                    onPress={() => {
+                      controller.RESET();
+                    }}
+                    style={Theme.Styles.IconContainer}
+                    tintColor={Theme.Colors.Icon}
+                  />
+                ),
+              headerRight: () =>
+                I18nManager.isRTL && (
+                  <HeaderBackButton
+                    onPress={() => {
+                      controller.RESET();
+                    }}
+                    style={Theme.Styles.IconContainer}
+                    tintColor={Theme.Colors.Icon}
+                  />
+                ),
             }}
           />
         )}

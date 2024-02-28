@@ -78,7 +78,7 @@ fileignoreconfig:
   - filename: assets/fingerprint_icon.svg
     checksum: b2d3a50ca1336f60123d96a8cc8ea663c3316ed2d8c31833bce7e393ca51695b
   - filename: machines/store.ts
-    checksum: 5ec376c6314b5b91d10bbf770359d0227d9f991dc6306851ed1df6244e5674b8
+    checksum: 7d0b9c3ed111cd299145a963dc8751f54802cdd7afd4b4e645412ad639594889
   - filename: assets/Flip_Camera_Icon.svg
     checksum: 736b5a7ddb86bd4376229ce198dbf8a663e7ac89fc3311bd4f19afd4a2b36ffd
   - filename: assets/Finger_Print_Icon.svg
@@ -221,4 +221,6 @@ fileignoreconfig:
     checksum: 9611bd9ab00e5114752a728e168187f2fc33651b2f55770bbeaec1011df3a9c4
   - filename: screens/Settings/SettingScreenController.ts
     checksum: cf5cc745e372052f683a254fdfb294627fd8a44848236cad7eed75064db26997
-  version: ""
+  - filename: components/ActivityLogEvent.ts
+    checksum: e7c8617cd9c510d5b6a053bc5c6164f02c48e85125aa925e0c4cf55cd1f29d22
+    version: ""

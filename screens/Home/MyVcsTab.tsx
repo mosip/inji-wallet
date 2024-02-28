@@ -24,6 +24,7 @@ import {Error} from '../../components/ui/Error';
 import {useIsFocused} from '@react-navigation/native';
 import {getVCsOrderedByPinStatus} from '../../shared/Utils';
 import {SvgImage} from '../../components/ui/svg';
+import {BANNER_TYPE_SUCCESS} from '../../shared/constants';
 
 export const MyVcsTab: React.FC<HomeScreenTabProps> = props => {
   const {t} = useTranslation('MyVcsTab');
@@ -80,6 +81,13 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = props => {
   controller.downloadFailedVcs.forEach(vc => {
     failedVCsList.push(`\n${vc.idType}:${vc.id}`);
   });
+
+  const isVerificationFailed = controller.verificationErrorMessage !== '';
+
+  const verificationErrorMessage = t(
+    `errors.verificationFailed.${controller.verificationErrorMessage}`,
+  );
+
   const downloadFailedVcsErrorMessage = `${t(
     'errors.downloadLimitExpires.message',
   )}${failedVCsList}`;
@@ -95,7 +103,7 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = props => {
       <Column fill style={{display: props.isVisible ? 'flex' : 'none'}}>
         {controller.isRequestSuccessful && (
           <BannerNotification
-            type="success"
+            type={BANNER_TYPE_SUCCESS}
             message={t('downloadingYourCard')}
             onClosePress={() => {
               controller.RESET_STORE_VC_ITEM_STATUS();
@@ -220,6 +228,23 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = props => {
         buttonText={t('common:ok')}
         minHeight={'auto'}
       />
+
+      {isVerificationFailed && (
+        <Error
+          testID="verificationError"
+          isVisible={isVerificationFailed}
+          isModal={true}
+          alignActionsOnEnd
+          title={t('errors.verificationFailed.title')}
+          message={verificationErrorMessage}
+          image={SvgImage.PermissionDenied()}
+          showClose={false}
+          primaryButtonText="goBack"
+          primaryButtonEvent={controller.RESET_VERIFY_ERROR}
+          primaryButtonTestID="goBack"
+          customStyles={{marginTop: '30%'}}
+        />
+      )}
 
       {controller.isNetworkOff && (
         <Error

@@ -25,6 +25,7 @@ const model = createModel(
     walletBindingSuccess: false,
     tamperedVcs: [] as VCMetadata[],
     downloadingFailedVcs: [] as VCMetadata[],
+    verificationErrorMessage: '' as string,
   },
   {
     events: {
@@ -47,14 +48,19 @@ const model = createModel(
       WALLET_BINDING_SUCCESS: () => ({}),
       RESET_WALLET_BINDING_SUCCESS: () => ({}),
       ADD_VC_TO_IN_PROGRESS_DOWNLOADS: (requestId: string) => ({requestId}),
-      REMOVE_VC_FROM_IN_PROGRESS_DOWNLOADS: (requestId: string) => ({
-        requestId,
+      REMOVE_VC_FROM_IN_PROGRESS_DOWNLOADS: (vcMetadata: VCMetadata) => ({
+        vcMetadata,
       }),
       RESET_ARE_ALL_VCS_DOWNLOADED: () => ({}),
       TAMPERED_VC: (VC: VCMetadata) => ({VC}),
       REMOVE_TAMPERED_VCS: () => ({}),
       DOWNLOAD_LIMIT_EXPIRED: (vcMetadata: VCMetadata) => ({vcMetadata}),
       DELETE_VC: () => ({}),
+      VERIFY_VC_FAILED: (errorMessage: string, vcMetadata?: VCMetadata) => ({
+        errorMessage,
+        vcMetadata,
+      }),
+      RESET_VERIFY_ERROR: () => ({}),
       REFRESH_VCS_METADATA: () => ({}),
     },
   },
@@ -197,6 +203,16 @@ export const vcMachine =
             DELETE_VC: {
               target: 'deletingFailedVcs',
             },
+            VERIFY_VC_FAILED: {
+              actions: [
+                'removeVcFromInProgressDownlods',
+                'setVerificationErrorMessage',
+              ],
+              target: '#vc.ready.myVcs.refreshing',
+            },
+            RESET_VERIFY_ERROR: {
+              actions: 'resetVerificationErrorMessage',
+            },
           },
         },
         tamperedVCs: {
@@ -225,10 +241,7 @@ export const vcMachine =
               entry: ['logTamperedVCsremoved', send('REFRESH_VCS_METADATA')],
               on: {
                 REFRESH_VCS_METADATA: {
-                  target: [
-                    '#vc.ready.myVcs.refreshing',
-                    '#vc.ready.receivedVcs.refreshing',
-                  ],
+                  target: '#vc.init',
                 },
               },
             },
@@ -299,6 +312,14 @@ export const vcMachine =
           ],
         }),
 
+        setVerificationErrorMessage: model.assign({
+          verificationErrorMessage: (context, event) => event.errorMessage,
+        }),
+
+        resetVerificationErrorMessage: model.assign({
+          verificationErrorMessage: (_context, event) => '',
+        }),
+
         resetDownloadFailedVcs: model.assign({
           downloadingFailedVcs: (context, event) => [],
         }),
@@ -320,14 +341,15 @@ export const vcMachine =
 
         removeVcFromInProgressDownlods: model.assign({
           inProgressVcDownloads: (context, event) => {
-            let paresedInProgressList: Set<string> =
+            let updatedInProgressList: Set<string> =
               context.inProgressVcDownloads;
-            const removeVcRequestID =
-              event.type === 'REMOVE_VC_FROM_IN_PROGRESS_DOWNLOADS'
-                ? event.requestId
-                : event.vcMetadata.requestId;
-            paresedInProgressList.delete(removeVcRequestID);
-            return paresedInProgressList;
+            if (!event.vcMetadata) {
+              return updatedInProgressList;
+            }
+            const removeVcRequestID = event.vcMetadata.requestId;
+            updatedInProgressList.delete(removeVcRequestID);
+
+            return updatedInProgressList;
           },
           areAllVcsDownloaded: context => {
             if (context.inProgressVcDownloads.size == 0) {
@@ -506,4 +528,8 @@ export function selectIsTampered(state: State) {
 
 export function selectDownloadingFailedVcs(state: State) {
   return state.context.downloadingFailedVcs;
+}
+
+export function selectVerificationErrorMessage(state: State) {
+  return state.context.verificationErrorMessage;
 }

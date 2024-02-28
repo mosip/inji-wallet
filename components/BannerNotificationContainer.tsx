@@ -5,6 +5,7 @@ import {UseWalletBindingSuccess} from './WalletBindingSuccessController';
 import {BackupAndRestoreBannerNotification} from './BackupAndRestoreBannerNotification';
 import {UseBannerNotification} from './BannerNotificationController';
 import {useTranslation} from 'react-i18next';
+import {BANNER_TYPE_SUCCESS} from '../shared/constants';
 
 export const BannerNotificationContainer: React.FC = () => {
   const WalletBindingController = UseWalletBindingSuccess();
@@ -19,7 +20,7 @@ export const BannerNotificationContainer: React.FC = () => {
       {WalletBindingSuccess && (
         <View style={{marginTop: 10, marginBottom: 10}}>
           <BannerNotification
-            type="success"
+            type={BANNER_TYPE_SUCCESS}
             message={t('activated')}
             onClosePress={WalletBindingController.DISMISS}
             key={'activatedVcPopup'}
