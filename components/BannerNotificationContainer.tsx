@@ -34,7 +34,7 @@ export const BannerNotificationContainer: React.FC = () => {
           type="success"
           message={t('alternatePasscodeSuccess')}
           onClosePress={bannerNotificationController.DISMISS}
-          testId={'dataBackupSuccessPopup'}
+          testId={'alternatePasscodeSuccess'}
           key={'updatePassword'}
         />
       )}
@@ -44,8 +44,8 @@ export const BannerNotificationContainer: React.FC = () => {
           type="success"
           message={t('alternateBiometricSuccess')}
           onClosePress={bannerNotificationController.DISMISS}
-          testId={'dataBackupSuccessPopup'}
-          key={'updateBio'}
+          testId={'alternateBiometricSuccess'}
+          key={'updateBiometric'}
         />
       )}
     </>

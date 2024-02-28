@@ -159,6 +159,7 @@ export const SettingScreen: React.FC<
                 </ListItem.Title>
               </ListItem.Content>
               <Switch
+                {...testIDProps('biometricToggle')}
                 value={controller.isBiometricUnlockEnabled}
                 onValueChange={handleBiometricToggle}
                 trackColor={{

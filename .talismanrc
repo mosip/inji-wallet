@@ -158,7 +158,7 @@ fileignoreconfig:
   - filename: .github/workflows/ui-automation.yml
     checksum: 0b26a5dcb7524ba15d6aaeaf04f2ef94be9d25ef702d9072d6628bcd58e50f36
   - filename: components/BannerNotificationContainer.tsx
-    checksum: a98ff1a0dd96d3ead4b8191320be8b0c7a558cda6b0de39f1c62aaa8efef9fb8
+    checksum: f5bb92350cc1e5e954821a9b380dc36d5abeb1d6fcc353da3edd6b89d9b602aa
   - filename: components/HelpScreen.tsx
     checksum: bbc69143bd37d065bba3800396301db5a0318e8b7ba51ecd49142dda68783a01
   - filename: machines/backupAndRestore/backupAndRestoreSetup.typegen.ts
