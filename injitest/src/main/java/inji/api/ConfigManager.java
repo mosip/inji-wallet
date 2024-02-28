@@ -1,8 +1,8 @@
 package inji.api;
 
 
-import inji.driver.TestRunner;
-import inji.utils.TestDataReader;
+import inji.utils.UinGenerationUtil;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -179,7 +179,7 @@ public class ConfigManager {
 	public static void init() {
 		// Loading Kernel property
 		//LOGGER.info("file location"+TestRunner.getResourcePath() + "/config/));
-		propsKernel = getproperty(TestRunner.getResourcePath() + "/config/"+TestRunner.GetKernalFilename());
+		propsKernel = getproperty(UinGenerationUtil.getResourcePath() + "/config/"+ UinGenerationUtil.GetKernalFilename());
 
 		idrepo_client_secret = getValueForKey(MOSIP_IDREPO_CLIENT_SECRET);
 		idrepo_client_id = getValueForKey(MOSIP_IDREPO_CLIENT_ID);
@@ -343,7 +343,7 @@ public class ConfigManager {
 	}
 
 	public static Properties init(String abc) {
-		propsKernel = getproperty(TestRunner.getResourcePath() + "/" + "/config/Kernel.properties");
+		propsKernel = getproperty(UinGenerationUtil.getResourcePath() + "/" + "/config/Kernel.properties");
 
 		return propsKernel;
 	}
@@ -570,7 +570,7 @@ public class ConfigManager {
 	}
 
 	public static String getRolesForUser(String userId) {
-		propsKernel = getproperty(TestRunner.getResourcePath() + "/" + "/config/Kernel.properties");
+		propsKernel = getproperty(UinGenerationUtil.getResourcePath() + "/" + "/config/Kernel.properties");
 		return propsKernel.getProperty("roles." + userId);
 	}
 

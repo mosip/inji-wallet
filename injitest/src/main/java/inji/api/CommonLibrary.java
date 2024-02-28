@@ -1,6 +1,6 @@
 package inji.api;
 
-import inji.driver.TestRunner;
+import inji.utils.UinGenerationUtil;
 import io.restassured.http.Cookie;
 import io.restassured.response.Response;
 import org.json.simple.JSONObject;
@@ -20,24 +20,24 @@ public class CommonLibrary extends BaseTestCase {
 
 
 	public String getResourcePath() {
-		if(TestRunner.checkRunType().equals("JAR")) {
-			return TestRunner.getResourcePath();
-		}else if(TestRunner.checkRunType().equals("IDE")) {
-			return TestRunner.getResourcePath();
+		if(UinGenerationUtil.checkRunType().equals("JAR")) {
+			return UinGenerationUtil.getResourcePath();
+		}else if(UinGenerationUtil.checkRunType().equals("IDE")) {
+			return UinGenerationUtil.getResourcePath();
 		}
 		return null;
 	}
 
 	public String getResourcePathForKernel() {
 		String kernelpath=null;
-		if(TestRunner.checkRunType().equals("JAR")) {
-			logger.info("file location for kernal"+TestRunner.getResourcePath() + "/" + "config/"+TestRunner.GetKernalFilename());
+		if(UinGenerationUtil.checkRunType().equals("JAR")) {
+			logger.info("file location for kernal"+ UinGenerationUtil.getResourcePath() + "/" + "config/"+ UinGenerationUtil.GetKernalFilename());
 
-			kernelpath = TestRunner.getResourcePath() + "/" + "config/"+TestRunner.GetKernalFilename().toString();
-		}else if(TestRunner.checkRunType().equals("IDE")){
-			logger.info("file location for kernal"+TestRunner.getResourcePath() + "/config/"+TestRunner.GetKernalFilename());
+			kernelpath = UinGenerationUtil.getResourcePath() + "/" + "config/"+ UinGenerationUtil.GetKernalFilename().toString();
+		}else if(UinGenerationUtil.checkRunType().equals("IDE")){
+			logger.info("file location for kernal"+ UinGenerationUtil.getResourcePath() + "/config/"+ UinGenerationUtil.GetKernalFilename());
 
-			kernelpath = TestRunner.getResourcePath() + "/config/"+TestRunner.GetKernalFilename().toString();
+			kernelpath = UinGenerationUtil.getResourcePath() + "/config/"+ UinGenerationUtil.GetKernalFilename().toString();
 		}
 		return kernelpath;
 	}
