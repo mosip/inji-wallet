@@ -10,6 +10,7 @@ import {
   UPLOAD_MAX_RETRY,
 } from '../../shared/constants';
 import {
+  cleanupLocalBackups,
   compressAndRemoveFile,
   writeToBackupFile,
 } from '../../shared/fileStorage';
@@ -74,36 +75,16 @@ export const backupMachine = model.createMachine(
     states: {
       init: {},
       fetchLastBackupDetails: {
-        initial: 'checkStore',
-        states: {
-          checkStore: {
-            entry: 'getLastBackupDetailsFromStore',
-            on: {
-              STORE_RESPONSE: [
-                {
-                  cond: 'isDataAvailableInStorage',
-                  actions: ['setLastBackupDetails', 'unsetIsLoading'],
-                  target: '#backup.init',
-                },
-                {target: 'checkCloud'},
-              ],
-              STORE_ERROR: {
-                target: 'checkCloud',
-              },
-            },
+        entry: 'unsetLastBackupDetails',
+        invoke: {
+          src: 'getLastBackupDetailsFromCloud',
+          onDone: {
+            actions: ['setLastBackupDetails', 'unsetIsLoading'],
+            target: '#backup.init',
           },
-          checkCloud: {
-            invoke: {
-              src: 'getLastBackupDetailsFromCloud',
-              onDone: {
-                actions: ['unsetIsLoading', 'setLastBackupDetails'],
-                target: '#backup.init',
-              },
-              onError: {
-                actions: 'unsetIsLoading',
-                target: '#backup.init',
-              },
-            },
+          onError: {
+            actions: 'unsetIsLoading',
+            target: '#backup.init',
           },
         },
       },
@@ -241,22 +222,24 @@ export const backupMachine = model.createMachine(
             },
           },
           success: {
-            entry: 'sendDataBackupSuccessEvent',
+            entry: [
+              'unsetShowBackupInProgress',
+              'sendDataBackupSuccessEvent',
+              'cleanupFiles',
+            ],
           },
           silentSuccess: {
-            entry: 'sendDataBackupSuccessEvent',
+            entry: ['sendDataBackupSuccessEvent', 'cleanupFiles'],
           },
           failure: {
             entry: [
+              'unsetShowBackupInProgress',
               'sendDataBackupFailureEvent',
-              (ctx, event) => console.log('failure state ', event),
+              'cleanupFiles',
             ],
           },
           silentFailure: {
-            entry: [
-              'sendDataBackupFailureEvent',
-              (ctx, event) => console.log('failure state ', event),
-            ],
+            entry: ['sendDataBackupFailureEvent', 'cleanupFiles'],
           },
         },
         on: {
@@ -318,6 +301,12 @@ export const backupMachine = model.createMachine(
           lastBackupDetails: lastBackupDetails,
         };
       }),
+      unsetLastBackupDetails: model.assign((context, event) => {
+        return {
+          ...context,
+          lastBackupDetails: null,
+        };
+      }),
 
       storeLastBackupDetails: send(
         context => {
@@ -375,6 +364,9 @@ export const backupMachine = model.createMachine(
           ),
         );
       },
+      cleanupFiles: () => {
+        cleanupLocalBackups();
+      },
 
       sendDataBackupFailureEvent: () => {
         sendEndEvent(
@@ -429,9 +421,6 @@ export const backupMachine = model.createMachine(
       },
       isVCFound: (_context, event) => {
         return !!(event.response && (event.response as object[]).length > 0);
-      },
-      isDataAvailableInStorage: (_context, event) => {
-        return event.response != null;
       },
     },
   },
