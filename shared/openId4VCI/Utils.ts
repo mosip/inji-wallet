@@ -199,7 +199,6 @@ export const getCredentialIssuersWellKnownConfig = async (
           );
         }
       });
-      console.log('fields => ', fields);
     }
   }
 

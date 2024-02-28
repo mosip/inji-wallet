@@ -109,16 +109,14 @@ export const VCDetailView: React.FC<
       verifiableCredential?.credentialSubject,
     );
     const bottomSectionFields = [...getAddressFields(), 'email'];
-    let showHrLine: boolean = false;
 
     for (const fieldName of availableFieldNames) {
       if (bottomSectionFields.includes(fieldName)) {
-        showHrLine = true;
-        break;
+        return true;
       }
     }
 
-    return showHrLine;
+    return false;
   };
 
   if (!isVCLoaded(verifiableCredential, fields)) {
@@ -165,7 +163,7 @@ export const VCDetailView: React.FC<
                   )}
                 </Column>
               </Row>
-              {shouldShowHrLine(verifiableCredential) ? (
+              {shouldShowHrLine(verifiableCredential) && (
                 <>
                   <View
                     style={[
@@ -181,8 +179,6 @@ export const VCDetailView: React.FC<
                     )}
                   </Column>
                 </>
-              ) : (
-                <></>
               )}
             </ImageBackground>
           </Column>
