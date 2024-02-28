@@ -23,6 +23,7 @@ import {
   DETAIL_VIEW_ADD_ON_FIELDS,
   DETAIL_VIEW_DEFAULT_FIELDS,
   fieldItemIterator,
+  getAddressFields,
   isVCLoaded,
   setBackgroundColour,
   setTextColor,
@@ -103,6 +104,23 @@ export const VCDetailView: React.FC<
     });
   }, [props.verifiableCredential?.wellKnown]);
 
+  const shouldShowHrLine = verifiableCredential => {
+    const availableFieldNames = Object.keys(
+      verifiableCredential?.credentialSubject,
+    );
+    const bottomSectionFields = [...getAddressFields(), 'email'];
+    let showHrLine: boolean = false;
+
+    for (const fieldName of availableFieldNames) {
+      if (bottomSectionFields.includes(fieldName)) {
+        showHrLine = true;
+        break;
+      }
+    }
+
+    return showHrLine;
+  };
+
   if (!isVCLoaded(verifiableCredential, fields)) {
     return <ActivityIndicator />;
   }
@@ -147,19 +165,25 @@ export const VCDetailView: React.FC<
                   )}
                 </Column>
               </Row>
-              <View
-                style={[
-                  Theme.Styles.hrLine,
-                  {borderBottomColor: setTextColor(wellknown)?.color},
-                ]}></View>
-              <Column padding="14">
-                {fieldItemIterator(
-                  fields.slice(fields.length - 2, fields.length),
-                  verifiableCredential,
-                  wellknown,
-                  props,
-                )}
-              </Column>
+              {shouldShowHrLine(verifiableCredential) ? (
+                <>
+                  <View
+                    style={[
+                      Theme.Styles.hrLine,
+                      {borderBottomColor: setTextColor(wellknown)?.color},
+                    ]}></View>
+                  <Column padding="14">
+                    {fieldItemIterator(
+                      fields.slice(fields.length - 2, fields.length),
+                      verifiableCredential,
+                      wellknown,
+                      props,
+                    )}
+                  </Column>
+                </>
+              ) : (
+                <></>
+              )}
             </ImageBackground>
           </Column>
         </Column>
