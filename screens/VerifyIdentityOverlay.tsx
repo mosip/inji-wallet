@@ -1,14 +1,13 @@
 import React from 'react';
-import {Icon, Overlay} from 'react-native-elements';
 
 import {FaceScanner} from '../components/FaceScanner';
-import {Column, Row} from '../components/ui';
+import {Column, Row, Button} from '../components/ui';
 import {Theme} from '../components/ui/styleUtils';
 import {VC} from '../types/VC/ExistingMosipVC/vc';
 import {Modal} from '../components/ui/Modal';
-import {t} from 'i18next';
 import {useTranslation} from 'react-i18next';
 import {VCMetadata} from '../shared/VCMetadata';
+import {MessageOverlay} from '../components/MessageOverlay';
 
 export const VerifyIdentityOverlay: React.FC<
   VerifyIdentityOverlayProps
@@ -23,32 +22,56 @@ export const VerifyIdentityOverlay: React.FC<
   const vcImage = isOpenId4VCI
     ? props.vc?.verifiableCredential.credential.credentialSubject.face
     : props.vc?.credential?.biometrics.face;
+
   return (
-    <Modal
-      isVisible={props.isVisible}
-      arrowLeft={true}
-      headerTitle={t('faceAuth')}
-      onDismiss={props.onCancel}>
-      <Column
-        fill
-        style={Theme.VerifyIdentityOverlayStyles.content}
-        align="center">
-        {credential != null && (
-          <FaceScanner
-            vcImage={vcImage}
-            onValid={props.onFaceValid}
-            onInvalid={props.onFaceInvalid}
+    <>
+      <Modal
+        isVisible={props.controller.isVerifyingIdentity}
+        arrowLeft={true}
+        headerTitle={t('faceAuth')}
+        onDismiss={props.controller.onCancel}>
+        <Column
+          fill
+          style={Theme.VerifyIdentityOverlayStyles.content}
+          align="center">
+          {credential != null && (
+            <FaceScanner
+              vcImage={vcImage}
+              onValid={props.controller.onFaceValid}
+              onInvalid={props.controller.onFaceInvalid}
+            />
+          )}
+        </Column>
+      </Modal>
+
+      <MessageOverlay
+        isVisible={props.controller.isInvalidIdentity}
+        title={t('VerifyIdentityOverlay:errors.invalidIdentity.title')}
+        message={t('VerifyIdentityOverlay:errors.invalidIdentity.message')}
+        minHeight={'auto'}
+        onBackdropPress={props.controller.DISMISS}>
+        <Row>
+          <Button
+            testID="cancel"
+            fill
+            type="clear"
+            title={t('common:cancel')}
+            onPress={props.controller.DISMISS}
+            margin={[0, 8, 0, 0]}
           />
-        )}
-      </Column>
-    </Modal>
+          <Button
+            testID="tryAgain"
+            fill
+            title={t('common:tryAgain')}
+            onPress={props.controller.RETRY_VERIFICATION}
+          />
+        </Row>
+      </MessageOverlay>
+    </>
   );
 };
 
 export interface VerifyIdentityOverlayProps {
-  isVisible: boolean;
   vc?: VC;
-  onCancel: () => void;
-  onFaceValid: () => void;
-  onFaceInvalid: () => void;
+  controller: any;
 }

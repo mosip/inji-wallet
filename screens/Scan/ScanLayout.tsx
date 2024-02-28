@@ -48,38 +48,10 @@ export const ScanLayout: React.FC = () => {
   return (
     <React.Fragment>
       <VerifyIdentityOverlay
-        isVisible={
-          controller.isVerifyingIdentity &&
-          controller.flowType === VCShareFlowType.MINI_VIEW_SHARE_WITH_SELFIE
-        }
         vc={controller.selectedVc}
-        onCancel={controller.CANCEL}
-        onFaceValid={controller.FACE_VALID}
-        onFaceInvalid={controller.FACE_INVALID}
+        controller={controller}
       />
 
-      <MessageOverlay
-        isVisible={controller.isInvalidIdentity}
-        title={t('VerifyIdentityOverlay:errors.invalidIdentity.title')}
-        message={t('VerifyIdentityOverlay:errors.invalidIdentity.message')}
-        onBackdropPress={controller.DISMISS}>
-        <Row>
-          <Button
-            testID="cancel"
-            fill
-            type="clear"
-            title={t('common:cancel')}
-            onPress={controller.DISMISS}
-            margin={[0, 8, 0, 0]}
-          />
-          <Button
-            testID="tryAgain"
-            fill
-            title={t('common:tryAgain')}
-            onPress={controller.RETRY_VERIFICATION}
-          />
-        </Row>
-      </MessageOverlay>
       <ScanStack.Navigator initialRouteName="ScanScreen">
         {controller.isReviewing &&
           controller.flowType === VCShareFlowType.SIMPLE_SHARE && (
