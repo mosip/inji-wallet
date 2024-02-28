@@ -1262,16 +1262,6 @@ export const ExistingMosipVCItemMachine =
           to: () => getHomeMachineService(),
         }),
 
-        removeTamperedVcItem: send(
-          _context => {
-            return StoreEvents.REMOVE(
-              MY_VCS_STORE_KEY,
-              _context.vcMetadata.getVcKey(),
-            );
-          },
-          {to: context => context.serviceRefs.store},
-        ),
-
         logVCremoved: send(
           (context, _) =>
             ActivityLogEvents.LOG_ACTIVITY({
