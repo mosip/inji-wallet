@@ -16,10 +16,10 @@ public class TestRunner {
     static TestListenerAdapter tla = new TestListenerAdapter();
 
 
-    public static void main(String[] args) throws Exception {
-        //BaseTestCase.intiateUINGenration();
-        startTestRunner();
-    }
+//    public static void main(String[] args) throws Exception {
+//        //BaseTestCase.intiateUINGenration();
+//        startTestRunner();
+//    }
 
     public static String getResourcePath() {
         if (checkRunType().equalsIgnoreCase("JAR"))
@@ -39,18 +39,18 @@ public class TestRunner {
         return "IDE";
     }
 
-    public static void startTestRunner() {
-        File homeDir = null;
-        TestNG runner = new TestNG();
-        List<String> suitefiles = new ArrayList<>();
-        String os = System.getProperty("os.name");
-        homeDir = new File(System.getProperty("user.dir") + "/testng.xml");
-        suitefiles.add(homeDir.getAbsolutePath());
-        runner.setTestSuites(suitefiles);
-        System.getProperties().setProperty("testng.outpur.dir", "testng-report");
-        runner.setOutputDirectory("testng-report");
-        runner.run();
-    }
+//    public static void startTestRunner() {
+//        File homeDir = null;
+//        TestNG runner = new TestNG();
+//        List<String> suitefiles = new ArrayList<>();
+//        String os = System.getProperty("os.name");
+//        homeDir = new File(System.getProperty("user.dir") + "/androidRegression.xml");
+//        suitefiles.add(homeDir.getAbsolutePath());
+//        runner.setTestSuites(suitefiles);
+//        System.getProperties().setProperty("testng.outpur.dir", "testng-report");
+//        runner.setOutputDirectory("testng-report");
+//        runner.run();
+//    }
 
     public static String GetKernalFilename() {
         String path ="Kernel.properties" ;
