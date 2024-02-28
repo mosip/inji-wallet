@@ -52,7 +52,7 @@ const model = createModel(
     consentClaims: ['name', 'picture'],
     isSharing: {},
     linkedTransactionId: '',
-    showFaceAuthConsent: false as boolean,
+    showFaceAuthConsent: true as boolean,
   },
   {
     events: {
@@ -152,7 +152,7 @@ export const qrLoginMachine =
             },
             VERIFY: [
               {
-                cond: 'isConsentGiven',
+                cond: 'showFaceAuthConsentScreen',
                 target: 'faceVerificationConsent',
               },
               {
@@ -168,7 +168,7 @@ export const qrLoginMachine =
         faceVerificationConsent: {
           on: {
             FACE_VERIFICATION_CONSENT: {
-              actions: ['storeShowFaceAuthConsent', 'setShowFaceAuthConsent'],
+              actions: ['storeShowFaceAuthConsent','setShowFaceAuthConsent'],
               target: 'faceAuth',
             },
             DISMISS: {
@@ -284,13 +284,13 @@ export const qrLoginMachine =
       actions: {
         setShowFaceAuthConsent: model.assign({
           showFaceAuthConsent: (_, event) => {
-            return event.isConsentGiven;
+            return !event.isConsentGiven;
           },
         }),
 
         storeShowFaceAuthConsent: send(
           (context, event) =>
-            StoreEvents.SET(FACE_AUTH_CONSENT, event.isConsentGiven),
+            StoreEvents.SET(FACE_AUTH_CONSENT, !event.isConsentGiven),
           {
             to: context => context.serviceRefs.store,
           },
@@ -523,9 +523,8 @@ export const qrLoginMachine =
         },
       },
       guards: {
-        isConsentGiven: context => {
-          console.log('isConsentGiven value', context.showFaceAuthConsent);
-          return !context.showFaceAuthConsent;
+        showFaceAuthConsentScreen: context => {
+          return context.showFaceAuthConsent;
         },
 
         isConsentAlreadyCaptured: (_, event) =>

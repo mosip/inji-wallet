@@ -77,7 +77,7 @@ const model = createModel(
     shareLogType: '' as ActivityLogType,
     QrLoginRef: {} as ActorRefFrom<typeof qrLoginMachine>,
     linkCode: '',
-    showFaceAuthConsent: false as boolean,
+    showFaceAuthConsent: true as boolean,
     readyForBluetoothStateCheck: false,
     showFaceCaptureSuccessBanner: false,
   },
@@ -405,7 +405,7 @@ export const scanMachine =
           entry: 'getFaceAuthConsent',
           on: {
             STORE_RESPONSE: {
-              actions: 'setShowFaceAuthConsent',
+              actions: 'updateShowFaceAuthConsent',
               target: '#scan.findingConnection',
             },
           },
@@ -441,7 +441,7 @@ export const scanMachine =
             src: qrLoginMachine,
             onDone: {
               target: '.storing',
-          },
+            },
           },
           on: {
             DISMISS: '#scan.checkFaceAuthConsent',
@@ -806,9 +806,15 @@ export const scanMachine =
           },
         }),
 
+        updateShowFaceAuthConsent: model.assign({
+          showFaceAuthConsent: (_, event) => {
+            return event.response || event.response === null;
+          },
+        }),
+
         setShowFaceAuthConsent: model.assign({
           showFaceAuthConsent: (_, event) => {
-            return event.isConsentGiven ?? !!event.response;
+            return !event.isConsentGiven;
           },
         }),
 
@@ -817,13 +823,12 @@ export const scanMachine =
         }),
 
         storeShowFaceAuthConsent: send(
-          context =>
-            StoreEvents.SET(FACE_AUTH_CONSENT, context.showFaceAuthConsent),
+          (context, event) =>
+            StoreEvents.SET(FACE_AUTH_CONSENT, !event.isConsentGiven),
           {
             to: context => context.serviceRefs.store,
           },
         ),
-
 
         sendScanData: context =>
           context.QrLoginRef.send({
@@ -1268,7 +1273,7 @@ export const scanMachine =
 
       guards: {
         showFaceAuthConsentScreen: context => {
-          return !context.showFaceAuthConsent;
+          return context.showFaceAuthConsent;
         },
 
         // sample: 'OPENID4VP://connect:?name=OVPMOSIP&key=69dc92a2cc91f02258aa8094d6e2b62877f5b6498924fbaedaaa46af30abb364'
