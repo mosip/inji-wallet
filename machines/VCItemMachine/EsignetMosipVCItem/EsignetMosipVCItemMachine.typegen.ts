@@ -70,7 +70,7 @@ export interface Typegen0 {
       | 'DISMISS'
       | 'done.invoke.vc-item-openid4vci.requestingBindingOtp:invocation[0]';
     clearTransactionId: 'DISMISS';
-    closeViewVcModal: 'STORE_RESPONSE';
+    closeViewVcModal: 'CLOSE_VC_MODAL' | 'STORE_RESPONSE';
     logVCremoved:
       | 'STORE_RESPONSE'
       | 'done.invoke.vc-item-openid4vci.kebabPopUp.triggerAutoBackup:invocation[0]';

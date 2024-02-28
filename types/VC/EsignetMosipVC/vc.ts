@@ -67,6 +67,7 @@ export interface VerifiableCredential {
   format: string;
   credential: Credential;
   wellKnown: string;
+  credentialTypes: Object[];
 }
 
 export interface CredentialWrapper {

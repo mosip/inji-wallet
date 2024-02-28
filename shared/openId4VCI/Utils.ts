@@ -98,6 +98,8 @@ export const updateCredentialInformation = (context, credential) => {
   credentialWrapper.generatedOn = new Date();
   credentialWrapper.verifiableCredential.wellKnown =
     context.selectedIssuer['.well-known'];
+  credentialWrapper.verifiableCredential.credentialTypes =
+    context.selectedIssuer['credential_type'];
   // credentialWrapper.verifiableCredential.wellKnown =
   //   'https://esignet.collab.mosip.net/.well-known/openid-credential-issuer';
   credentialWrapper.verifiableCredential.issuerLogo =
@@ -173,6 +175,7 @@ export const getJWK = async publicKey => {
 export const getCredentialIssuersWellKnownConfig = async (
   issuer: string,
   wellknown: string,
+  credentialTypes: Object[],
   defaultFields: string[],
 ) => {
   let fields: string[] = defaultFields;
@@ -184,10 +187,18 @@ export const getCredentialIssuersWellKnownConfig = async (
     } else if (response?.credentials_supported[0].order) {
       fields = response?.credentials_supported[0].order;
     } else {
-      fields = Object.keys(
-        response?.credentials_supported[0].credential_definition
-          .credentialSubject,
+      const supportedCredentialTypes = credentialTypes.filter(
+        type => type !== 'VerifiableCredential',
       );
+      const selectedCredentialType = supportedCredentialTypes[0];
+
+      response?.credentials_supported.filter(credential => {
+        if (credential.id === selectedCredentialType) {
+          fields = Object.keys(
+            credential.credential_definition.credentialSubject,
+          );
+        }
+      });
       console.log('fields => ', fields);
     }
   }

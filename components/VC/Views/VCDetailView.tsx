@@ -95,6 +95,7 @@ export const VCDetailView: React.FC<
     getCredentialIssuersWellKnownConfig(
       VCMetadata.fromVC(props.vc.vcMetadata).issuer,
       props.vc?.verifiableCredential?.wellKnown,
+      props.vc?.verifiableCredential?.credentialTypes,
       DETAIL_VIEW_DEFAULT_FIELDS,
     ).then(response => {
       setWellknown(response.wellknown);
