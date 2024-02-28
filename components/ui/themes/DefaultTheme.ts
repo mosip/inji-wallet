@@ -496,7 +496,7 @@ export const DefaultTheme = {
       height: 53,
       borderRadius: 100,
     },
-    detialedViewImage: {
+    detailedViewImage: {
       width: 80,
       height: 106,
       borderRadius: 5,

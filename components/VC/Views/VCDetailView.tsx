@@ -56,7 +56,7 @@ const getProfileImage = (
       return (
         <Image
           source={{uri: verifiableCredential?.credentialSubject.face}}
-          style={Theme.Styles.detialedViewImage}
+          style={Theme.Styles.detailedViewImage}
         />
       );
     }
@@ -64,7 +64,7 @@ const getProfileImage = (
     return (
       <Image
         source={{uri: props?.vc?.credential.biometrics.face}}
-        style={Theme.Styles.detialedViewImage}
+        style={Theme.Styles.detailedViewImage}
       />
     );
   }
