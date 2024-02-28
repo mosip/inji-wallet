@@ -1,8 +1,8 @@
 fileignoreconfig:
   - filename: package.json
-    checksum: 4770aabfda162fbc0b9a8c53d7dee483ce29b82c6cd3e17e81e3e628d93dbadc
+    checksum: 730263252adbe53cde58fb0b6988e519e766fe0f89a7b8cd261a1e5e5e598328
   - filename: package-lock.json
-    checksum: 8f9e6bdd4cc0fcbd979455d97d6313e60dda3da1771bef471e53d4efaac9f24d
+    checksum: 4e09116d21aa8def35ffe234dabec6abc668f15183e172764df2216adb0d2ca1
   - filename: lib/jsonld-signatures/suites/ed255192018/ed25519.ts
     checksum: 493b6e31144116cb612c24d98b97d8adcad5609c0a52c865a6847ced0a0ddc3a
   - filename: components/PasscodeVerify.tsx
@@ -40,7 +40,7 @@ fileignoreconfig:
   - filename: screens/Issuers/IssuersScreen.tsx
     checksum: 9c53e3770dbefe26e0de67ee4b7d5cc9c52d9823cbb136a1a5104dcb0a101071
   - filename: ios/Podfile.lock
-    checksum: 0e4fce1a146e882a6cabbc3e78ae2c35fe58f1dee956c7d9d85902504135bc92
+    checksum: 3d5c2bd7979bbe75af3b321967257ccc8310027391fd815daa3beae4e122face
   - filename: shared/commonUtil.ts
     checksum: 4a53bb615f2ea0fbf687bd7027c4c246e819dd88bc273941ed611e763d9d2356
   - filename: screens/Home/MyVcs/GetIdInputModal.tsx
@@ -178,8 +178,6 @@ fileignoreconfig:
     checksum: bbc69143bd37d065bba3800396301db5a0318e8b7ba51ecd49142dda68783a01
   - filename: machines/backupAndRestore/backupAndRestoreSetup.typegen.ts
     checksum: 8203331f1628e01faa5e553e749372be278b477ca2d34a0cdafee1438248fb3c
-  - filename: package-lock.json
-    checksum: c1e628b384b35598c9741401f4e2ad0f5cd3e9b3dff0bee23a389f0590681593
   - filename: injitest/README.md
     checksum: 82974a6b9363512472272245e9b433f92e63377e58ba306980876b745181a09c
   - filename: machines/backupAndRestore/backup.ts
@@ -196,8 +194,6 @@ fileignoreconfig:
     checksum: 85e92ddec56da8dcdd28b5a29dfabd88dd0435e619f822488bc4e19b83872289
   - filename: machines/backupAndRestore/backupAndRestoreSetup.typegen.ts
     checksum: dd5dc9c42800328c268f3e6d6c96a16e9686dbfa59735e721250dae3ce37e009
-  - filename: ios/Podfile.lock
-    checksum: 235f31beadf3833ac763ed1b79e00f588e56990873806627b5abf8643992336a
   - filename: machines/backupAndRestore/backupAndRestoreSetup.typegen.ts
     checksum: dd5dc9c42800328c268f3e6d6c96a16e9686dbfa59735e721250dae3ce37e009
   - filename: injitest/src/main/java/inji/pages/BackupAndRestorePage.java

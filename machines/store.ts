@@ -36,6 +36,7 @@ import {
   getErrorEventData,
 } from '../shared/telemetry/TelemetryUtils';
 import RNSecureKeyStore from 'react-native-secure-key-store';
+import {Buffer} from 'buffer';
 
 export const keyinvalidatedString =
   'Key Invalidated due to biometric enrollment';
@@ -298,9 +299,11 @@ export const storeMachine =
           const hasSetCredentials = SecureKeystore.hasAlias(ENCRYPTION_ID);
           if (hasSetCredentials) {
             try {
+              const base64EncodedString =
+                Buffer.from('Dummy').toString('base64');
               await SecureKeystore.encryptData(
                 DUMMY_KEY_FOR_BIOMETRIC_ALIAS,
-                'Dummy',
+                base64EncodedString,
               );
             } catch (e) {
               sendErrorEvent(getErrorEventData('ENCRYPTION', '', e));
