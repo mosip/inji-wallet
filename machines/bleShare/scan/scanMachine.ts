@@ -58,7 +58,7 @@ import {
 import {TelemetryConstants} from '../../../shared/telemetry/TelemetryConstants';
 
 import {logState} from '../../../shared/commonUtil';
-import {FlowType} from '../../../shared/Utils';
+import {VCShareFlowType} from '../../../shared/Utils';
 
 const {wallet, EventTypes, VerificationStatus} = tuvali;
 
@@ -72,7 +72,7 @@ const model = createModel(
     createdVp: null as VC,
     loggers: [] as EmitterSubscription[],
     vcName: '',
-    flowType: FlowType.SIMPLE_SHARE,
+    flowType: VCShareFlowType.SIMPLE_SHARE,
     verificationImage: {} as CameraCapturedPicture,
     openId4VpUri: '',
     shareLogType: '' as ActivityLogType,
@@ -867,7 +867,7 @@ export const scanMachine =
         }),
 
         resetFlowType: assign({
-          flowType: FlowType.SIMPLE_SHARE,
+          flowType: VCShareFlowType.SIMPLE_SHARE,
         }),
 
         setCreatedVp: assign({
@@ -1256,7 +1256,7 @@ export const scanMachine =
             // sample: 'inji://landing-page-name?linkCode=sTjp0XVH3t3dGCU&linkExpireDateTime=2023-11-09T06:56:18.482Z'
             return (
               linkCode.searchParams.get('linkCode') !== null &&
-              context.flowType === FlowType.SIMPLE_SHARE
+              context.flowType === VCShareFlowType.SIMPLE_SHARE
             );
           } catch (e) {
             return false;
@@ -1269,7 +1269,7 @@ export const scanMachine =
             // sample: 'inji://landing-page-name?linkCode=sTjp0XVH3t3dGCU&linkExpireDateTime=2023-11-09T06:56:18.482Z'
             return (
               linkCode.searchParams.get('linkCode') !== null &&
-              context.flowType === FlowType.MINI_VIEW_QR_LOGIN
+              context.flowType === VCShareFlowType.MINI_VIEW_QR_LOGIN
             );
           } catch (e) {
             return false;
@@ -1284,13 +1284,13 @@ export const scanMachine =
           Boolean(event.data),
 
         isFlowTypeMiniViewShareWithSelfie: context =>
-          context.flowType === FlowType.MINI_VIEW_SHARE_WITH_SELFIE,
+          context.flowType === VCShareFlowType.MINI_VIEW_SHARE_WITH_SELFIE,
 
         isFlowTypeMiniViewShare: context =>
-          context.flowType === FlowType.MINI_VIEW_SHARE,
+          context.flowType === VCShareFlowType.MINI_VIEW_SHARE,
 
         isFlowTypeSimpleShare: context =>
-          context.flowType === FlowType.SIMPLE_SHARE,
+          context.flowType === VCShareFlowType.SIMPLE_SHARE,
       },
 
       delays: {

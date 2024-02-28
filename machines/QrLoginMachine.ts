@@ -29,14 +29,14 @@ import {
 import {TelemetryConstants} from '../shared/telemetry/TelemetryConstants';
 import {API_URLS} from '../shared/api';
 import getAllConfigurations from '../shared/commonprops/commonProps';
-import {FlowType} from '../shared/Utils';
+import {VCShareFlowType} from '../shared/Utils';
 
 const model = createModel(
   {
     serviceRefs: {} as AppServices,
     selectedVc: {} as VC,
     linkCode: '',
-    flowType: FlowType.SIMPLE_SHARE,
+    flowType: VCShareFlowType.SIMPLE_SHARE,
     myVcs: [] as VCMetadata[],
     thumbprint: '',
     linkTransactionResponse: {} as linkTransactionResponse,
@@ -342,7 +342,7 @@ export const qrLoginMachine =
         }),
 
         resetFlowType: assign({
-          flowType: FlowType.SIMPLE_SHARE,
+          flowType: VCShareFlowType.SIMPLE_SHARE,
         }),
 
         setlinkTransactionResponse: assign({
@@ -526,7 +526,7 @@ export const qrLoginMachine =
           event.data?.consentAction === 'NOCAPTURE',
 
         isSimpleShareFlow: (context, _event) =>
-          context.flowType === FlowType.SIMPLE_SHARE,
+          context.flowType === VCShareFlowType.SIMPLE_SHARE,
       },
     },
   );

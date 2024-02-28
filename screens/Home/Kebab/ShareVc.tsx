@@ -4,7 +4,7 @@ import {ActorRefFrom} from 'xstate';
 import {ExistingMosipVCItemMachine} from '../../../machines/VCItemMachine/ExistingMosipVCItem/ExistingMosipVCItemMachine';
 import {SvgImage} from '../../../components/ui/svg';
 import {KebabPopupListItemContainer} from '../../../components/KebabPopUp';
-import {FlowType} from '../../../shared/Utils';
+import {VCShareFlowType} from '../../../shared/Utils';
 
 export const ShareVc: React.FC<ShareVcProps> = props => {
   const controller = useKebabPopUp(props);
@@ -13,7 +13,7 @@ export const ShareVc: React.FC<ShareVcProps> = props => {
     <KebabPopupListItemContainer
       label={props.label}
       listItemIcon={
-        props.testID === 'shareVcFromKebab'
+        props.flowType === VCShareFlowType.MINI_VIEW_SHARE
           ? SvgImage.OutlinedShareIcon()
           : SvgImage.OutlinedShareWithSelfieIcon()
       }

@@ -21,7 +21,7 @@ import {TelemetryConstants} from '../../../shared/telemetry/TelemetryConstants';
 import {isActivationNeeded} from '../../../shared/openId4VCI/Utils';
 import {KebabPopupListItemContainer} from '../../../components/KebabPopUp';
 import {SvgImage} from '../../../components/ui/svg';
-import {FlowType} from '../../../shared/Utils';
+import {VCShareFlowType} from '../../../shared/Utils';
 
 export const WalletVerified: React.FC = () => {
   return (
@@ -102,7 +102,10 @@ export const ActivationStatus = props => {
     props.emptyWalletBindingId && isActivationNeeded(props?.vcMetadata.issuer);
 
   function loadScanScreen() {
-    controller.SELECT_VC_ITEM(props.service, FlowType.MINI_VIEW_QR_LOGIN),
+    controller.SELECT_VC_ITEM(
+      props.service,
+      VCShareFlowType.MINI_VIEW_QR_LOGIN,
+    ),
       controller.GOTO_SCANSCREEN(),
       props.service.send('CLOSE_VC_MODAL');
   }

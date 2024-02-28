@@ -36,7 +36,7 @@ import {
 import {ScanEvents} from '../../machines/bleShare/scan/scanMachine';
 import {BOTTOM_TAB_ROUTES, SCAN_ROUTES} from '../../routes/routesConstants';
 import {ScanStackParamList} from '../../routes/routesConstants';
-import {FlowType} from '../../shared/Utils';
+import {VCShareFlowType} from '../../shared/Utils';
 
 type ScanLayoutNavigation = NavigationProp<
   ScanStackParamList & MainBottomTabParamList
@@ -228,7 +228,7 @@ export function useScanLayout() {
       navigation.navigate(BOTTOM_TAB_ROUTES.home);
     } else if (
       isReviewing &&
-      flowType === FlowType.SIMPLE_SHARE &&
+      flowType === VCShareFlowType.SIMPLE_SHARE &&
       !isAccepted
     ) {
       changeTabBarVisible('none');

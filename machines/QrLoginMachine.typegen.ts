@@ -44,10 +44,12 @@ export interface Typegen0 {
       | 'error.platform.QrLogin.sendingAuthenticate:invocation[0]'
       | 'error.platform.QrLogin.sendingConsent:invocation[0]';
     expandLinkTransResp: 'done.invoke.QrLogin.linkTransaction:invocation[0]';
-    forwardToParent: 'DISMISS';
+    forwardToParent: 'CANCEL' | 'DISMISS';
     loadMyVcs: 'done.invoke.QrLogin.linkTransaction:invocation[0]';
     loadThumbprint: 'FACE_VALID';
+    resetFlowType: 'xstate.init';
     resetLinkTransactionId: 'GET';
+    resetSelectedVc: 'xstate.init';
     resetSelectedVoluntaryClaims: 'GET';
     setClaims: 'done.invoke.QrLogin.linkTransaction:invocation[0]';
     setConsentClaims: 'TOGGLE_CONSENT_CLAIM';
@@ -61,6 +63,9 @@ export interface Typegen0 {
   eventsCausingDelays: {};
   eventsCausingGuards: {
     isConsentAlreadyCaptured: 'done.invoke.QrLogin.sendingAuthenticate:invocation[0]';
+    isSimpleShareFlow:
+      | 'CANCEL'
+      | 'done.invoke.QrLogin.linkTransaction:invocation[0]';
   };
   eventsCausingServices: {
     linkTransaction: 'GET';

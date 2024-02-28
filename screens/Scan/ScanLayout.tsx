@@ -9,7 +9,7 @@ import {SharingStatusModal} from './SharingStatusModal';
 import {Theme} from '../../components/ui/styleUtils';
 import {Icon} from 'react-native-elements';
 import {Loader} from '../../components/ui/Loader';
-import {FlowType} from '../../shared/Utils';
+import {VCShareFlowType} from '../../shared/Utils';
 import {VerifyIdentityOverlay} from '../VerifyIdentityOverlay';
 import {MessageOverlay} from '../../components/MessageOverlay';
 import {Row, Button} from '../../components/ui';
@@ -50,7 +50,7 @@ export const ScanLayout: React.FC = () => {
       <VerifyIdentityOverlay
         isVisible={
           controller.isVerifyingIdentity &&
-          controller.flowType === FlowType.MINI_VIEW_SHARE_WITH_SELFIE
+          controller.flowType === VCShareFlowType.MINI_VIEW_SHARE_WITH_SELFIE
         }
         vc={controller.selectedVc}
         onCancel={controller.CANCEL}
@@ -82,38 +82,38 @@ export const ScanLayout: React.FC = () => {
       </MessageOverlay>
       <ScanStack.Navigator initialRouteName="ScanScreen">
         {controller.isReviewing &&
-          controller.flowType === FlowType.SIMPLE_SHARE && (
-          <ScanStack.Screen
-            name={SCAN_ROUTES.SendVcScreen}
-            component={SendVcScreen}
-            options={{
-              title: t('sharingVc'),
-              headerTitleAlign: 'center',
-              headerTitle: props => (
-                <View style={Theme.Styles.sendVcHeaderContainer}>
-                  <Text style={Theme.Styles.scanLayoutHeaderTitle}>
-                    {props.children}
-                  </Text>
-                </View>
-              ),
-              headerBackVisible: false,
-              headerRight: () =>
-                !I18nManager.isRTL && (
-                  <Icon
-                    name="close"
-                    color={Theme.Colors.blackIcon}
-                    onPress={controller.CANCEL}
-                  />
+          controller.flowType === VCShareFlowType.SIMPLE_SHARE && (
+            <ScanStack.Screen
+              name={SCAN_ROUTES.SendVcScreen}
+              component={SendVcScreen}
+              options={{
+                title: t('sharingVc'),
+                headerTitleAlign: 'center',
+                headerTitle: props => (
+                  <View style={Theme.Styles.sendVcHeaderContainer}>
+                    <Text style={Theme.Styles.scanLayoutHeaderTitle}>
+                      {props.children}
+                    </Text>
+                  </View>
                 ),
-              headerLeft: () =>
-                I18nManager.isRTL && (
-                  <Icon
-                    name="close"
-                    color={Theme.Colors.blackIcon}
-                    onPress={controller.CANCEL}
-                  />
-                ),
-            }}
+                headerBackVisible: false,
+                headerRight: () =>
+                  !I18nManager.isRTL && (
+                    <Icon
+                      name="close"
+                      color={Theme.Colors.blackIcon}
+                      onPress={controller.CANCEL}
+                    />
+                  ),
+                headerLeft: () =>
+                  I18nManager.isRTL && (
+                    <Icon
+                      name="close"
+                      color={Theme.Colors.blackIcon}
+                      onPress={controller.CANCEL}
+                    />
+                  ),
+              }}
             />
           )}
         <ScanStack.Screen
