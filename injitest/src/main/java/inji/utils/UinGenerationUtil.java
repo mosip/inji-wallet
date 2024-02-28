@@ -1,25 +1,15 @@
-package inji.driver;
+package inji.utils;
 
 
-import inji.api.BaseTestCase;
 import org.testng.TestListenerAdapter;
-import org.testng.TestNG;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
 
 
-public class TestRunner {
-    public static String jarUrl = TestRunner.class.getProtectionDomain().getCodeSource().getLocation().getPath();
+public class UinGenerationUtil {
+    public static String jarUrl = UinGenerationUtil.class.getProtectionDomain().getCodeSource().getLocation().getPath();
 
     static TestListenerAdapter tla = new TestListenerAdapter();
-
-
-//    public static void main(String[] args) throws Exception {
-//        //BaseTestCase.intiateUINGenration();
-//        startTestRunner();
-//    }
 
     public static String getResourcePath() {
         if (checkRunType().equalsIgnoreCase("JAR"))
@@ -34,24 +24,10 @@ public class TestRunner {
     }
 
     public static String checkRunType() {
-        if (TestRunner.class.getResource("TestRunner.class").getPath().toString().contains(".jar"))
+        if (UinGenerationUtil.class.getResource("TestRunner.class").getPath().toString().contains(".jar"))
             return "JAR";
         return "IDE";
     }
-
-//    public static void startTestRunner() {
-//        File homeDir = null;
-//        TestNG runner = new TestNG();
-//        List<String> suitefiles = new ArrayList<>();
-//        String os = System.getProperty("os.name");
-//        homeDir = new File(System.getProperty("user.dir") + "/androidRegression.xml");
-//        suitefiles.add(homeDir.getAbsolutePath());
-//        runner.setTestSuites(suitefiles);
-//        System.getProperties().setProperty("testng.outpur.dir", "testng-report");
-//        runner.setOutputDirectory("testng-report");
-//        runner.run();
-//    }
-
     public static String GetKernalFilename() {
         String path ="Kernel.properties" ;
         String kernalpath = null;
