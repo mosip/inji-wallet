@@ -62,7 +62,7 @@ export const backupAndRestoreSetupMachine = model.createMachine(
       context: model.initialContext,
       events: {} as EventFrom<typeof model>,
     },
-    id: 'backupAndRestore',
+    id: 'backupAndRestoreSetup',
     initial: 'init',
     states: {
       init: {
@@ -124,6 +124,7 @@ export const backupAndRestoreSetupMachine = model.createMachine(
               actions: ['unsetIsLoading'],
               target: 'noInternet',
             },
+            //todo: Check flow
             {
               cond: 'isNotSignedInIOSAndViaConfirmationFlow',
               actions: ['unsetIsLoading', 'setErrorReasonAsAccountRequired'],
@@ -148,11 +149,11 @@ export const backupAndRestoreSetupMachine = model.createMachine(
             on: {
               GO_BACK: {
                 actions: 'sendBackupAndRestoreSetupCancelEvent',
-                target: '#backupAndRestore.init',
+                target: '#backupAndRestoreSetup.init',
               },
               OPEN_SETTINGS: {
                 actions: 'openSettings',
-                target: '#backupAndRestore.init',
+                target: '#backupAndRestoreSetup.init',
               },
             },
           },
@@ -199,10 +200,12 @@ export const backupAndRestoreSetupMachine = model.createMachine(
               actions: ['setProfileInfo', 'setShouldTriggerAutoBackup'],
               target: 'backupAndRestore',
             },
+            // isIOS not required as we dont reach sign in state itself
             {
               cond: 'isIOS',
               target: 'backupAndRestore',
             },
+            // What if sign in fails due to n/w error?
             {
               actions: 'sendBackupAndRestoreSetupErrorEvent',
               target: '.error',
@@ -216,9 +219,9 @@ export const backupAndRestoreSetupMachine = model.createMachine(
             on: {
               GO_BACK: {
                 actions: 'sendBackupAndRestoreSetupCancelEvent',
-                target: '#backupAndRestore.init',
+                target: '#backupAndRestoreSetup.init',
               },
-              TRY_AGAIN: '#backupAndRestore.signIn',
+              TRY_AGAIN: '#backupAndRestoreSetup.signIn',
             },
           },
         },

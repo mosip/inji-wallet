@@ -3,13 +3,13 @@
 export interface Typegen0 {
   '@@xstate/typegen': true;
   internalEvents: {
-    'done.invoke.backupAndRestore.checkInternet:invocation[0]': {
-      type: 'done.invoke.backupAndRestore.checkInternet:invocation[0]';
+    'done.invoke.backupAndRestoreSetup.checkInternet:invocation[0]': {
+      type: 'done.invoke.backupAndRestoreSetup.checkInternet:invocation[0]';
       data: unknown;
       __tip: 'See the XState TS docs to learn how to strongly type this.';
     };
-    'done.invoke.backupAndRestore.checkSignIn:invocation[0]': {
-      type: 'done.invoke.backupAndRestore.checkSignIn:invocation[0]';
+    'done.invoke.backupAndRestoreSetup.checkSignIn:invocation[0]': {
+      type: 'done.invoke.backupAndRestoreSetup.checkSignIn:invocation[0]';
       data: unknown;
       __tip: 'See the XState TS docs to learn how to strongly type this.';
     };
@@ -21,8 +21,8 @@ export interface Typegen0 {
     'xstate.init': {type: 'xstate.init'};
   };
   invokeSrcNameMap: {
-    checkInternet: 'done.invoke.backupAndRestore.checkInternet:invocation[0]';
-    isUserSignedAlready: 'done.invoke.backupAndRestore.checkSignIn:invocation[0]';
+    checkInternet: 'done.invoke.backupAndRestoreSetup.checkInternet:invocation[0]';
+    isUserSignedAlready: 'done.invoke.backupAndRestoreSetup.checkSignIn:invocation[0]';
     signIn: 'done.invoke.signIn:invocation[0]';
   };
   missingImplementations: {
@@ -37,43 +37,43 @@ export interface Typegen0 {
     sendBackupAndRestoreSetupCancelEvent: 'DISMISS' | 'GO_BACK';
     sendBackupAndRestoreSetupErrorEvent: 'done.invoke.signIn:invocation[0]';
     sendBackupAndRestoreSetupSuccessEvent:
-      | 'done.invoke.backupAndRestore.checkSignIn:invocation[0]'
+      | 'done.invoke.backupAndRestoreSetup.checkSignIn:invocation[0]'
       | 'done.invoke.signIn:invocation[0]';
     sendDataBackupAndRestoreSetupStartEvent: 'HANDLE_BACKUP_AND_RESTORE';
     setAccountSelectionConfirmationShown:
-      | 'done.invoke.backupAndRestore.checkSignIn:invocation[0]'
+      | 'done.invoke.backupAndRestoreSetup.checkSignIn:invocation[0]'
       | 'done.invoke.signIn:invocation[0]';
-    setErrorReasonAsAccountRequired: 'done.invoke.backupAndRestore.checkSignIn:invocation[0]';
+    setErrorReasonAsAccountRequired: 'done.invoke.backupAndRestoreSetup.checkSignIn:invocation[0]';
     setIsLoading: 'HANDLE_BACKUP_AND_RESTORE' | 'PROCEED';
-    setNoInternet: 'done.invoke.backupAndRestore.checkInternet:invocation[0]';
+    setNoInternet: 'done.invoke.backupAndRestoreSetup.checkInternet:invocation[0]';
     setProfileInfo:
-      | 'done.invoke.backupAndRestore.checkSignIn:invocation[0]'
+      | 'done.invoke.backupAndRestoreSetup.checkSignIn:invocation[0]'
       | 'done.invoke.signIn:invocation[0]';
     setShouldTriggerAutoBackup: 'done.invoke.signIn:invocation[0]';
     setShowConfirmation: 'STORE_RESPONSE';
     unsetIsLoading:
       | 'DISMISS'
       | 'STORE_RESPONSE'
-      | 'done.invoke.backupAndRestore.checkSignIn:invocation[0]';
+      | 'done.invoke.backupAndRestoreSetup.checkSignIn:invocation[0]';
     unsetShouldTriggerAutoBackup: 'HANDLE_BACKUP_AND_RESTORE';
   };
   eventsCausingDelays: {};
   eventsCausingGuards: {
     isConfirmationAlreadyShown: 'STORE_RESPONSE';
     isIOS: 'done.invoke.signIn:invocation[0]';
-    isInternetConnected: 'done.invoke.backupAndRestore.checkInternet:invocation[0]';
-    isNetworkError: 'done.invoke.backupAndRestore.checkSignIn:invocation[0]';
-    isNotSignedInIOS: 'done.invoke.backupAndRestore.checkSignIn:invocation[0]';
-    isNotSignedInIOSAndViaConfirmationFlow: 'done.invoke.backupAndRestore.checkSignIn:invocation[0]';
+    isInternetConnected: 'done.invoke.backupAndRestoreSetup.checkInternet:invocation[0]';
+    isNetworkError: 'done.invoke.backupAndRestoreSetup.checkSignIn:invocation[0]';
+    isNotSignedInIOS: 'done.invoke.backupAndRestoreSetup.checkSignIn:invocation[0]';
+    isNotSignedInIOSAndViaConfirmationFlow: 'done.invoke.backupAndRestoreSetup.checkSignIn:invocation[0]';
     isSignInSuccessful: 'done.invoke.signIn:invocation[0]';
-    isSignedIn: 'done.invoke.backupAndRestore.checkSignIn:invocation[0]';
+    isSignedIn: 'done.invoke.backupAndRestoreSetup.checkSignIn:invocation[0]';
   };
   eventsCausingServices: {
     checkInternet: 'TRY_AGAIN';
     isUserSignedAlready: 'PROCEED' | 'STORE_RESPONSE';
     signIn:
-      | 'done.invoke.backupAndRestore.checkInternet:invocation[0]'
-      | 'done.invoke.backupAndRestore.checkSignIn:invocation[0]';
+      | 'done.invoke.backupAndRestoreSetup.checkInternet:invocation[0]'
+      | 'done.invoke.backupAndRestoreSetup.checkSignIn:invocation[0]';
   };
   matchesStates:
     | 'backupAndRestore'

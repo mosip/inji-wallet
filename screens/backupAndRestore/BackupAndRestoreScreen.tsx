@@ -25,10 +25,10 @@ const BackupAndRestoreScreen: React.FC<BackupAndRestoreProps> = props => {
   const {t} = useTranslation('BackupAndRestore');
 
   useEffect(() => {
-    if (!props.isLoading && backupController.lastBackupDetails === null) {
+    if (!props.isLoading) {
       backupController.LAST_BACKUP_DETAILS();
     }
-  }, [props.isLoading, backupController.lastBackupDetails]);
+  }, [props.isLoading]);
 
   useEffect(() => {
     if (
