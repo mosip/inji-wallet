@@ -8,6 +8,7 @@ import {
   NETWORK_REQUEST_FAILED,
   TECHNICAL_ERROR,
   UPLOAD_MAX_RETRY,
+  isIOS,
 } from '../../shared/constants';
 import {
   cleanupLocalBackups,
@@ -68,23 +69,48 @@ export const backupMachine = model.createMachine(
         actions: ['setIsAutoBackup'],
         target: 'backingUp',
       },
-      LAST_BACKUP_DETAILS: {
-        target: 'fetchLastBackupDetails',
-      },
+      LAST_BACKUP_DETAILS: [
+        {
+          cond: 'isIOS',
+          target: 'fetchLastBackupDetails.checkCloud',
+        },
+        {target: 'fetchLastBackupDetails.checkStore'},
+      ],
     },
     states: {
       init: {},
       fetchLastBackupDetails: {
         entry: ['unsetLastBackupDetails', 'setIsLoading'],
-        invoke: {
-          src: 'getLastBackupDetailsFromCloud',
-          onDone: {
-            actions: ['setLastBackupDetails', 'unsetIsLoading'],
-            target: '#backup.init',
+        initial: 'checkStore',
+        states: {
+          checkStore: {
+            entry: 'getLastBackupDetailsFromStore',
+            on: {
+              STORE_RESPONSE: [
+                {
+                  cond: 'isDataAvailableInStorage',
+                  actions: ['setLastBackupDetails', 'unsetIsLoading'],
+                  target: '#backup.init',
+                },
+                {target: 'checkCloud'},
+              ],
+              STORE_ERROR: {
+                target: 'checkCloud',
+              },
+            },
           },
-          onError: {
-            actions: 'unsetIsLoading',
-            target: '#backup.init',
+          checkCloud: {
+            invoke: {
+              src: 'getLastBackupDetailsFromCloud',
+              onDone: {
+                actions: ['unsetIsLoading', 'setLastBackupDetails'],
+                target: '#backup.init',
+              },
+              onError: {
+                actions: 'unsetIsLoading',
+                target: '#backup.init',
+              },
+            },
           },
         },
       },
@@ -424,6 +450,10 @@ export const backupMachine = model.createMachine(
       },
       isVCFound: (_context, event) => {
         return !!(event.response && (event.response as object[]).length > 0);
+      },
+      isIOS: () => isIOS() || false,
+      isDataAvailableInStorage: (_context, event) => {
+        return event.response != null;
       },
     },
   },
