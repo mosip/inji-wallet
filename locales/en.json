@@ -60,6 +60,8 @@
     "qrCodeHeader": "QR Code",
     "nationalCard": "National Card",
     "insuranceCard": "Insurance Card",
+    "beneficiaryCard": "Beneficiary Card",
+    "socialRegistryCard": "Social Registry Card",
     "uin": "UIN",
     "vid": "VID",
     "enableVerification": "Activate",

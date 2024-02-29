@@ -10,7 +10,10 @@ import {Issuers} from '../../shared/openId4VCI/Utils';
 export const VcDetailsContainer: React.FC<
   ExistingMosipVCItemDetailsProps | EsignetMosipVCItemDetailsProps
 > = props => {
-  if (props.vc.vcMetadata.issuer === Issuers.Sunbird)
-    return <VCDetailView {...props} />;
-  return <MosipVCItemDetails {...props} />;
+  if (
+    props.vc.vcMetadata.issuer === Issuers.Mosip ||
+    props.vc.vcMetadata.issuer === Issuers.ESignet
+  )
+    return <MosipVCItemDetails {...props} />;
+  return <VCDetailView {...props} />;
 };
