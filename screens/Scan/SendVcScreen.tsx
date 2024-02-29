@@ -105,8 +105,10 @@ export const SendVcScreen: React.FC = () => {
           backgroundColor={Theme.Colors.whiteBackgroundColor}>
           {!controller.selectedVc.shouldVerifyPresence &&
             controller.selectedVc?.vcMetadata &&
-            VCMetadata.fromVcMetadataString(controller.selectedVc.vcMetadata)
-              .issuer != Issuers.Sunbird && (
+            [Issuers.Mosip, Issuers.ESignet].indexOf(
+              VCMetadata.fromVcMetadataString(controller.selectedVc.vcMetadata)
+                .issuer,
+            ) !== -1 && (
               <Button
                 type="gradient"
                 title={t('acceptRequestAndVerify')}

@@ -56,7 +56,6 @@ const model = createModel(
     generatedOn: new Date() as Date,
     credential: null as DecodedCredential,
     verifiableCredential: null as VerifiableCredential,
-    storeVerifiableCredential: null as VerifiableCredential,
     requestId: '',
     lastVerifiedOn: null,
     locked: false,
@@ -143,7 +142,7 @@ export const ExistingMosipVCItemMachine =
           on: {
             GET_VC_RESPONSE: [
               {
-                actions: ['setCredential', 'setStoreVerifiableCredential'],
+                actions: 'setCredential',
                 cond: 'hasCredential',
                 target: 'checkingVerificationStatus',
               },
@@ -159,11 +158,7 @@ export const ExistingMosipVCItemMachine =
           on: {
             STORE_RESPONSE: [
               {
-                actions: [
-                  'setCredential',
-                  'setStoreVerifiableCredential',
-                  'updateVc',
-                ],
+                actions: ['setCredential', 'updateVc'],
                 cond: 'hasCredential',
                 target: 'checkingVerificationStatus',
               },
@@ -243,7 +238,7 @@ export const ExistingMosipVCItemMachine =
                   },
                 ],
                 CREDENTIAL_DOWNLOADED: {
-                  actions: ['setStoreVerifiableCredential'],
+                  actions: 'setCredential',
                   target: '#vc-item.checkingVerificationStatus',
                 },
               },
@@ -386,7 +381,7 @@ export const ExistingMosipVCItemMachine =
             src: 'verifyCredential',
             onDone: [
               {
-                actions: ['setVerifiableCredential', 'storeContext'],
+                actions: ['storeContext'],
               },
             ],
             onError: [
@@ -787,32 +782,6 @@ export const ExistingMosipVCItemMachine =
     },
     {
       actions: {
-        setVerifiableCredential: assign(context => {
-          return {
-            ...context,
-            verifiableCredential: {
-              ...context.storeVerifiableCredential,
-            },
-            storeVerifiableCredential: null,
-            vcMetadata: context.vcMetadata,
-          };
-        }),
-
-        setStoreVerifiableCredential: model.assign((context, event) => {
-          // the VC can be set in response key iff STORE_RESPONSE event comes
-          //  and in vc iff CREDENTIAL_DOWNLOADED event
-          const eventResponse = event?.response ? event.response : event?.vc;
-          return {
-            ...context,
-            ...eventResponse,
-            storeVerifiableCredential: {
-              ...eventResponse.verifiableCredential,
-            },
-            verifiableCredential: null,
-            vcMetadata: context.vcMetadata,
-          };
-        }),
-
         removeVcMetaDataFromStorage: send(
           context => {
             return StoreEvents.REMOVE_VC_METADATA(
@@ -1132,7 +1101,6 @@ export const ExistingMosipVCItemMachine =
               return {
                 ...context,
                 ...event.vc,
-                vcMetadata: context.vcMetadata,
               };
           }
         }),
@@ -1454,9 +1422,9 @@ export const ExistingMosipVCItemMachine =
         },
 
         verifyCredential: async context => {
-          if (context.storeVerifiableCredential) {
+          if (context.verifiableCredential) {
             const verificationResult = await verifyCredential(
-              context.storeVerifiableCredential,
+              context.verifiableCredential,
             );
             if (!verificationResult.isVerified) {
               throw new Error(verificationResult.errorMessage);
