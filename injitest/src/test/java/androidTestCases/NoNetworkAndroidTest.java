@@ -11,8 +11,6 @@ import org.testng.annotations.Test;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
-import static org.testng.Assert.assertTrue;
-
 public class NoNetworkAndroidTest extends AndroidBaseTest {
 
     @Test
@@ -540,7 +538,7 @@ public class NoNetworkAndroidTest extends AndroidBaseTest {
     public void downloadVcInOtherLanguageViaEsignetWithoutInternet() throws InterruptedException {
     	AndroidUtil.enableAirplaneMode();
     	UnlockApplicationPage unlockApplicationPage = new UnlockApplicationPage(driver);
-		if (unlockApplicationPage.isUnlockApplicationDisplayed() == false) {
+		if (!unlockApplicationPage.isUnlockApplicationDisplayed()) {
 			ChooseLanguagePage chooseLanguagePage = new ChooseLanguagePage(driver);
 			assertTrue(chooseLanguagePage.isChooseLanguagePageLoaded(), "Verify if choose language page is displayed");
 

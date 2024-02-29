@@ -1,12 +1,8 @@
 package inji.pages;
 
 import io.appium.java_client.AppiumDriver;
-import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.pagefactory.AndroidFindBy;
 import io.appium.java_client.pagefactory.iOSXCUITFindBy;
-
-import java.util.Set;
-
 import org.openqa.selenium.WebElement;
 
 public class AboutInjiPage extends BasePage {
@@ -49,10 +45,7 @@ public class AboutInjiPage extends BasePage {
     public boolean  isMosipUrlIsDisplayedInChrome() throws InterruptedException {
         Thread.sleep(5000);
         String context= driver.getPageSource();
-        if( context.contains("What does Inji mean?")) {
-            return true;
-        }
-        return false;
+        return context.contains("What does Inji mean?");
 
     }
 

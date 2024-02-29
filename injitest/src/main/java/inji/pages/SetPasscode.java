@@ -11,11 +11,11 @@ public class SetPasscode extends BasePage {
 
     @iOSXCUITFindBy(accessibility = "setPasscodeHeader")
     @AndroidFindBy(xpath = "//*[contains(@text,'Set Passcode')]")
-    private WebElement setPasscode;
+    private WebElement setPasscodeHeader;
 
 
     @iOSXCUITFindBy(accessibility = "Done")
-    private WebElement DoneButton;
+    private WebElement doneButton;
 
 
     public SetPasscode(AppiumDriver driver) {
@@ -23,7 +23,7 @@ public class SetPasscode extends BasePage {
     }
 
     public boolean isSetPassCodePageLoaded() {
-        return this.isElementDisplayed(setPasscode);
+        return this.isElementDisplayed(setPasscodeHeader);
     }
 
     public ConfirmPasscode enterPasscode(String passcode, Target os) {
@@ -77,8 +77,8 @@ public class SetPasscode extends BasePage {
     }
 
     private void clickOnDoneButton() {
-        if(isElementDisplayed(DoneButton,3)) {
-            clickOnElement(DoneButton);
+        if(isElementDisplayed(doneButton,3)) {
+            clickOnElement(doneButton);
         }
     }
     private void enterOtpAndroidForEsignet(char[] arr) {

@@ -10,8 +10,6 @@ import org.testng.annotations.Test;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
-import static org.testng.Assert.assertTrue;
-
 public class GenerateUinOrVidTest extends AndroidBaseTest {
 
     @Test

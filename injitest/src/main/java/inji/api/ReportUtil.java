@@ -16,11 +16,10 @@ public class ReportUtil {
 		String formattedHeader = "No headers";
 		if (headers != null && !headers.isEmpty())
 			formattedHeader = headers;
-		StringBuilder sb = new StringBuilder();
-		sb.append("<div> <textarea style='border:solid 1px gray; background-color: lightgray;' name='headers' rows='4' cols='160' readonly='true'>");
-		sb.append(formattedHeader);
-		sb.append("</textarea> </div>");
-		return sb.toString();
+        String sb = "<div> <textarea style='border:solid 1px gray; background-color: lightgray;' name='headers' rows='4' cols='160' readonly='true'>" +
+                formattedHeader +
+                "</textarea> </div>";
+		return sb;
 	}
 
 	/**

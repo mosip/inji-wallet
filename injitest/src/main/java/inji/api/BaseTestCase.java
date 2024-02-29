@@ -1,7 +1,6 @@
 package inji.api;
 
-import inji.driver.TestRunner;
-import inji.utils.TestDataReader;
+import inji.utils.UinGenerationUtil;
 import io.restassured.response.Response;
 import org.apache.log4j.PropertyConfigurator;
 import org.json.simple.JSONObject;
@@ -15,7 +14,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Properties;
 
-//import org.apache.log4j.Logger;
 
 public class BaseTestCase {
 	private static final org.slf4j.Logger logger= org.slf4j.LoggerFactory.getLogger(BaseTestCase.class);
@@ -26,13 +24,13 @@ public class BaseTestCase {
 	public static String testLevel;
 	protected static MockSMTPListener mockSMTPListener = null;
 	public static Properties props = getproperty(
-			TestRunner.getResourcePath() + "/config/application.properties");
+			UinGenerationUtil.getResourcePath() + "/config/application.properties");
 	public static Properties propsKernel = getproperty(
-			TestRunner.getResourcePath() + "/config/"+TestRunner.GetKernalFilename());
+			UinGenerationUtil.getResourcePath() + "/config/"+ UinGenerationUtil.getKernalFilename());
 	public static Properties propsMap = getproperty(
-			TestRunner.getResourcePath() + "/config/valueMapping.properties");
+			UinGenerationUtil.getResourcePath() + "/config/valueMapping.properties");
 	public static Properties propsBio = getproperty(
-			TestRunner.getResourcePath() + "/config/bioValue.properties");
+			UinGenerationUtil.getResourcePath() + "/config/bioValue.properties");
 	public static String SEPRATOR = "";
 	public static String currentModule = "residentui1";
 	public final static String COOKIENAME = "Authorization";

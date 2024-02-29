@@ -6,7 +6,7 @@ import javax.ws.rs.core.MediaType;
 
 public class ApplicationLibrary extends BaseTestCase {
 
-	private static CommonLibrary commonLibrary = new CommonLibrary();
+	private static final CommonLibrary commonLibrary = new CommonLibrary();
 
 
 	// get requests

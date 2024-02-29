@@ -80,7 +80,7 @@ export const OtpVerificationModal: React.FC<
   };
 
   const {height} = Dimensions.get('window');
-  const isSmallScreen = height < 600; // Adjust the threshold as needed
+  const isSmallScreen = height < 600;
 
   const [keyboardHeight, setKeyboardHeight] = useState(0);
 
