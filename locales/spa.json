@@ -433,8 +433,8 @@
     "saving": "La tarjeta se está guardando",
     "errors": {
       "savingFailed": {
-        "title": "No se pudo guardar la tarjeta",
-        "message": "Algo salió mal al guardar la tarjeta en la tienda."
+        "title": "¡No se pudo guardar la tarjeta!",
+        "message": "Debido a un error técnico, no pudimos guardar la tarjeta. Solicite al remitente que realice la transferencia nuevamente."
       }
     }
   },
@@ -598,8 +598,8 @@
         "history": "Historia"
       },
       "rejected": {
-        "title": "Aviso",
-        "message": "Su tarjeta fue descartada por el Verificador"
+        "title": "¡Ocurrió un error!",
+        "message": "Debido a un error técnico, no pudimos compartir la tarjeta con la persona que confía. Por favor comparte de nuevo."
       },
       "bleError": {
         "retry": "Rever",

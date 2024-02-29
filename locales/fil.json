@@ -463,8 +463,8 @@
     "saving": "Sine-save ang card",
     "errors": {
       "savingFailed": {
-        "title": "Failed to save card",
-        "message": "Nagkaproblema habang sine-save ang card sa tindahan."
+        "title": "Nabigong i-save ang card!",
+        "message": "Dahil sa teknikal na error, hindi namin na-save ang card. Mangyaring hilingin ang nagpadala na maglipat muli."
       },
       "diskFullError": {
         "title": "Nabigong i-save ang cards",
@@ -633,8 +633,8 @@
         "history": "Kasaysayan"
       },
       "rejected": {
-        "title": "Pansinin",
-        "message": "Ang iyong card ay itinapon ng verifier"
+        "title": "May pagkakamaling naganap!",
+        "message": "Dahil sa teknikal na error, hindi namin naibahagi ang card sa umaasa na partido. Mangyaring ibahagi muli."
       },
       "bleError": {
         "retry": "Subukan muli",

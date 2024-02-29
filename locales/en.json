@@ -468,8 +468,8 @@
     "saving": "Card is being saved",
     "errors": {
       "savingFailed": {
-        "title": "Failed to save the card",
-        "message": "Something went wrong while saving card to the store."
+        "title": "Failed to save the card!",
+        "message": "Due to technical error, we were unable to save the card. Please request the sender to transfer again."
       }
     }
   },
@@ -634,8 +634,8 @@
         "history": "History"
       },
       "rejected": {
-        "title": "Notice",
-        "message": "Your Card was discarded by Verifier"
+        "title": "An error occurred!",
+        "message": "Due to technical error, we were unable to share the card with the relying party. Please share again."
       },
       "disconnected": {
         "title": "Bluetooth connection lost!",
