@@ -19,6 +19,7 @@ export const Protocols = {
 };
 
 export const Issuers = {
+  Mosip: 'Mosip',
   Sunbird: 'Sunbird',
   ESignet: 'ESignet',
 };
@@ -26,6 +27,8 @@ export const Issuers = {
 export const ID_TYPE = {
   MOSIPVerifiableCredential: i18n.t('VcDetails:nationalCard'),
   InsuranceCredential: i18n.t('VcDetails:insuranceCard'),
+  OpenG2PBeneficiaryVerifiableCredential: i18n.t('VcDetails:beneficiaryCard'),
+  OpenG2PRegistryVerifiableCredential: i18n.t('VcDetails:socialRegistryCard'),
 };
 
 export const getIDType = (verifiableCredential: VerifiableCredential) => {
