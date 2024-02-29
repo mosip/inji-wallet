@@ -11,6 +11,8 @@ import {
 } from '../../components/MessageOverlay';
 import {useOverlayVisibleAfterTimeout} from '../../shared/hooks/useOverlayVisibleAfterTimeout';
 import {VcDetailsContainer} from '../../components/VC/VcDetailsContainer';
+import {SharingStatusModal} from '../Scan/SharingStatusModal';
+import {SvgImage} from '../../components/ui/svg';
 
 export const ReceiveVcScreen: React.FC = () => {
   const {t} = useTranslation('ReceiveVcScreen');
@@ -83,11 +85,15 @@ export const ReceiveVcScreen: React.FC = () => {
         message={t('saving')}
         progress={true}
       />
-      <ErrorMessageOverlay
-        isVisible={controller.IsSavingFailedInIdle}
-        error={storeErrorTranslationPath}
-        translationPath={'ReceiveVcScreen'}
-        onDismiss={controller.DISMISS}
+
+      <SharingStatusModal
+        isVisible={controller.isSavingFailedInIdle}
+        testId={'savingFailedError'}
+        image={SvgImage.ErrorLogo()}
+        title={t('errors.savingFailed.title')}
+        message={t('errors.savingFailed.message')}
+        gradientButtonTitle={t('common:ok')}
+        onGradientButton={controller.RESET}
       />
     </React.Fragment>
   );

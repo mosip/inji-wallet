@@ -32,7 +32,7 @@ export const RequestLayout: React.FC = () => {
         initialRouteName="RequestScreen"
         screenListeners={{
           state: () => {
-            if (controller.IsSavingFailedInViewingVc || controller.isAccepted) {
+            if (controller.isAccepted) {
               controller.RESET();
             }
           },
@@ -100,25 +100,17 @@ export const RequestLayout: React.FC = () => {
         />
       )}
 
-      <SharingStatusModal
-        isVisible={controller.isDisconnected}
-        testId={'sharingErrorModal'}
-        image={SvgImage.ErrorLogo()}
-        title={t('status.disconnected.title')}
-        message={t('status.disconnected.message')}
-        gradientButtonTitle={t('common:ok')}
-        onGradientButton={controller.RESET}
-      />
-
-      <SharingStatusModal
-        isVisible={controller.isBleError}
-        testId={'sharingErrorModal'}
-        image={SvgImage.ErrorLogo()}
-        title={t(`status.bleError.${bleErrorCode}.title`)}
-        message={t(`status.bleError.${bleErrorCode}.message`)}
-        gradientButtonTitle={t('common:ok')}
-        onGradientButton={controller.RESET}
-      />
+      {controller.errorStatusOverlay && (
+        <SharingStatusModal
+          isVisible={controller.errorStatusOverlay !== null}
+          testId={'sharingErrorModal'}
+          image={SvgImage.ErrorLogo()}
+          title={controller.errorStatusOverlay.title}
+          message={controller.errorStatusOverlay.message}
+          gradientButtonTitle={t('common:ok')}
+          onGradientButton={controller.RESET}
+        />
+      )}
     </React.Fragment>
   );
 };

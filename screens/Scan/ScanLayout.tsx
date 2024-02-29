@@ -19,7 +19,6 @@ const ScanStack = createNativeStackNavigator();
 export const ScanLayout: React.FC = () => {
   const {t} = useTranslation('ScanScreen');
   const controller = useScanLayout();
-  const bleErrorCode = controller.bleError.code;
 
   if (
     controller.statusOverlay != null &&
@@ -111,29 +110,19 @@ export const ScanLayout: React.FC = () => {
         goToHistory={controller.GOTO_HISTORY}
       />
 
-      <SharingStatusModal
-        isVisible={controller.isDisconnected}
-        testId={'walletSideSharingErrorModal'}
-        image={SvgImage.ErrorLogo()}
-        title={t('status.disconnected.title')}
-        message={t('status.disconnected.message')}
-        gradientButtonTitle={t('status.bleError.retry')}
-        clearButtonTitle={t('status.bleError.home')}
-        onGradientButton={controller.onRetry}
-        onClearButton={controller.GOTO_HOME}
-      />
-
-      <SharingStatusModal
-        isVisible={controller.isBleError}
-        testId={'walletSideSharingErrorModal'}
-        image={SvgImage.ErrorLogo()}
-        title={t(`status.bleError.${bleErrorCode}.title`)}
-        message={t(`status.bleError.${bleErrorCode}.message`)}
-        gradientButtonTitle={t('status.bleError.retry')}
-        clearButtonTitle={t('status.bleError.home')}
-        onGradientButton={controller.onRetry}
-        onClearButton={controller.GOTO_HOME}
-      />
+      {controller.errorStatusOverlay && (
+        <SharingStatusModal
+          isVisible={controller.errorStatusOverlay !== null}
+          testId={'walletSideSharingErrorModal'}
+          image={SvgImage.ErrorLogo()}
+          title={controller.errorStatusOverlay.title}
+          message={controller.errorStatusOverlay.message}
+          gradientButtonTitle={t('status.bleError.retry')}
+          clearButtonTitle={t('status.bleError.home')}
+          onGradientButton={controller.onRetry}
+          onClearButton={controller.GOTO_HOME}
+        />
+      )}
     </React.Fragment>
   );
 };
