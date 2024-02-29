@@ -59,6 +59,8 @@
     "qrCodeHeader": "QR Code",
     "nationalCard": "Pambansang Kard",
     "insuranceCard": "Insurance Card",
+    "beneficiaryCard": "Benepisyaryo Card",
+    "socialRegistryCard": "Social Registry Card",
     "uin": "UIN",
     "vid": "VID",
     "enableVerification": "I-activate",
