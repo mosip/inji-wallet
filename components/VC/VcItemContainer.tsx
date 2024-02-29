@@ -11,7 +11,7 @@ export const VcItemContainer: React.FC<
   ExistingMosipVCItemProps | EsignetMosipVCItemProps
 > = props => {
   if (
-    props.vcMetadata.issuer === '' ||
+    props.vcMetadata.issuer === Issuers.Mosip ||
     props.vcMetadata.issuer === Issuers.ESignet
   )
     return <MosipVCItem {...props} />;
