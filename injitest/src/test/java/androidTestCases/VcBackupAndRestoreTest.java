@@ -1,11 +1,11 @@
 package androidTestCases;
-import org.testng.annotations.Test;
 
 import BaseTest.AndroidBaseTest;
 import inji.api.BaseTestCase;
 import inji.constants.Target;
 import inji.pages.*;
 import inji.utils.TestDataReader;
+import org.testng.annotations.Test;
 
 import static org.testng.Assert.*;
 

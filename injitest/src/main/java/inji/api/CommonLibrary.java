@@ -8,6 +8,7 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.util.Map;
 import java.util.Properties;
 import java.util.stream.Collectors;
@@ -16,7 +17,7 @@ import static io.restassured.RestAssured.given;
 
 public class CommonLibrary extends BaseTestCase {
 	private static final org.slf4j.Logger logger= org.slf4j.LoggerFactory.getLogger(CommonLibrary.class);
-	private ApplicationLibrary applicationLibrary = new ApplicationLibrary();
+	private final ApplicationLibrary applicationLibrary = new ApplicationLibrary();
 
 
 	public String getResourcePath() {
@@ -31,13 +32,13 @@ public class CommonLibrary extends BaseTestCase {
 	public String getResourcePathForKernel() {
 		String kernelpath=null;
 		if(UinGenerationUtil.checkRunType().equals("JAR")) {
-			logger.info("file location for kernal"+ UinGenerationUtil.getResourcePath() + "/" + "config/"+ UinGenerationUtil.GetKernalFilename());
+			logger.info("file location for kernal"+ UinGenerationUtil.getResourcePath() + "/" + "config/"+ UinGenerationUtil.getKernalFilename());
 
-			kernelpath = UinGenerationUtil.getResourcePath() + "/" + "config/"+ UinGenerationUtil.GetKernalFilename().toString();
+			kernelpath = UinGenerationUtil.getResourcePath() + "/" + "config/"+ UinGenerationUtil.getKernalFilename();
 		}else if(UinGenerationUtil.checkRunType().equals("IDE")){
-			logger.info("file location for kernal"+ UinGenerationUtil.getResourcePath() + "/config/"+ UinGenerationUtil.GetKernalFilename());
+			logger.info("file location for kernal"+ UinGenerationUtil.getResourcePath() + "/config/"+ UinGenerationUtil.getKernalFilename());
 
-			kernelpath = UinGenerationUtil.getResourcePath() + "/config/"+ UinGenerationUtil.GetKernalFilename().toString();
+			kernelpath = UinGenerationUtil.getResourcePath() + "/config/"+ UinGenerationUtil.getKernalFilename();
 		}
 		return kernelpath;
 	}
@@ -135,7 +136,7 @@ public class CommonLibrary extends BaseTestCase {
 		}
 		JSONObject jsonData = null;
 		try {
-			jsonData = (JSONObject) new JSONParser().parse(new InputStreamReader(isOfFile, "UTF-8"));
+			jsonData = (JSONObject) new JSONParser().parse(new InputStreamReader(isOfFile, StandardCharsets.UTF_8));
 		} catch (IOException | ParseException | NullPointerException e) {
 			logger.info(e.getMessage());
 		}

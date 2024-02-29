@@ -71,7 +71,7 @@ public class AdminTestUtil extends BaseTestCase {
 		JSONObject schemaData = (JSONObject) schemaresponseJson.get("response");
 		Double schemaVersion = (Double) schemaData.get("idVersion");
 		String schemaJsonData = schemaData.getString("schemaJson");
-		String schemaFile = schemaJsonData.toString();
+		String schemaFile = schemaJsonData;
 
 		JSONObject schemaFileJson = new JSONObject(schemaFile); // jObj
 		JSONObject schemaPropsJson = schemaFileJson.getJSONObject("properties"); // objIDJson4
@@ -208,7 +208,7 @@ public class AdminTestUtil extends BaseTestCase {
 
 
 		// Make Add Identity API Call and activate the UIN
-		if (AdminTestUtil.activateUIN(requestjson, tokenRoleIdRepo) == false) {
+		if (!AdminTestUtil.activateUIN(requestjson, tokenRoleIdRepo)) {
 			// UIN activation failed
 			return "";
 		}		
@@ -250,7 +250,7 @@ public class AdminTestUtil extends BaseTestCase {
 		return "";
 	}
 	public static void initialize() {
-		if (initialized == false) {
+		if (!initialized) {
 			ConfigManager.init();
 			BaseTestCase.initialize();
 

@@ -14,7 +14,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Properties;
 
-//import org.apache.log4j.Logger;
 
 public class BaseTestCase {
 	private static final org.slf4j.Logger logger= org.slf4j.LoggerFactory.getLogger(BaseTestCase.class);
@@ -27,7 +26,7 @@ public class BaseTestCase {
 	public static Properties props = getproperty(
 			UinGenerationUtil.getResourcePath() + "/config/application.properties");
 	public static Properties propsKernel = getproperty(
-			UinGenerationUtil.getResourcePath() + "/config/"+ UinGenerationUtil.GetKernalFilename());
+			UinGenerationUtil.getResourcePath() + "/config/"+ UinGenerationUtil.getKernalFilename());
 	public static Properties propsMap = getproperty(
 			UinGenerationUtil.getResourcePath() + "/config/valueMapping.properties");
 	public static Properties propsBio = getproperty(

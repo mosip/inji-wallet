@@ -5,23 +5,11 @@ import inji.api.BaseTestCase;
 import inji.constants.Target;
 import inji.pages.*;
 import inji.utils.AndroidUtil;
-import inji.utils.IosUtil;
 import inji.utils.TestDataReader;
+import org.testng.annotations.Test;
 
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
-import org.openqa.selenium.By;
-import org.openqa.selenium.Dimension;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.WebElement;
-import org.testng.annotations.Test;
-
-import com.google.common.collect.ImmutableMap;
 
 
 public class VcDownloadAndVerifyUsingUinTest extends AndroidBaseTest {
@@ -414,7 +402,7 @@ public class VcDownloadAndVerifyUsingUinTest extends AndroidBaseTest {
         assertTrue(homePage.isDownloadingVcPopupDisplayed(),"verify downloading vc popup displayed");
         assertTrue(homePage.isSecondNameDisplayed(TestDataReader.readData("fullName")), "Verify if full name is displayed");
         
-        AndroidUtil.ForceStopeApp();
+        AndroidUtil.forceStopApp();
         Thread.sleep(4000);
         AndroidUtil.invokeAppFromBackGroundAndroid();
         Thread.sleep(4000);

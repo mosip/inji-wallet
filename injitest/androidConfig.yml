@@ -23,7 +23,7 @@ buildIdentifier: '#${BUILD_NUMBER}' # Supports strings along with either/both ${
 # =======================================
 # App
 # =======================================
-# Set `app` to use the appliction under test for Appium sessions.
+# Set `app` to use the application under test for Appium sessions.
 # Available options:
 # app: '/path/to/local/app.apk'
 # OR

@@ -3,11 +3,7 @@ package inji.pages;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.pagefactory.AndroidFindBy;
 import io.appium.java_client.pagefactory.iOSXCUITFindBy;
-
-import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebElement;
-
-import inji.constants.Target;
 
 public class BackupAndRestorePage extends BasePage {
 
@@ -44,9 +40,6 @@ public class BackupAndRestorePage extends BasePage {
 
     @AndroidFindBy(xpath = "//android.widget.TextView[@resource-id=\"com.google.android.gms:id/main_title\"]")
     private WebElement chooseAccountHeader;
-
-//	 @AndroidFindBy(uiAutomator = "new UiSelector().className(\"android.widget.EditText\").instance(3)")
-//	 private WebElement enterEmail;
 
     @AndroidFindBy(xpath = "//android.widget.EditText[@resource-id=\"identifierId\"]")
     private WebElement enterEmail;
@@ -312,10 +305,7 @@ public class BackupAndRestorePage extends BasePage {
     public boolean  isBackupFQADisplayed() throws InterruptedException {
         Thread.sleep(5000);
         String context= driver.getPageSource();
-        if( context.contains("Why should I take a backup?")&&context.contains("What is data backup? ")&&context.contains("How to backup to your google account?")) {
-            return true;
-        }
-        return false;
+        return context.contains("Why should I take a backup?") && context.contains("What is data backup? ") && context.contains("How to backup to your google account?");
 
     }
 

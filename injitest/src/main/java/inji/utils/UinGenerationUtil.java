@@ -1,34 +1,26 @@
 package inji.utils;
 
 
-import org.testng.TestListenerAdapter;
-
-import java.io.File;
-
-
 public class UinGenerationUtil {
-    public static String jarUrl = UinGenerationUtil.class.getProtectionDomain().getCodeSource().getLocation().getPath();
-
-    static TestListenerAdapter tla = new TestListenerAdapter();
 
     public static String getResourcePath() {
-        if (checkRunType().equalsIgnoreCase("JAR"))
-            return (new File(jarUrl)).getParentFile().getAbsolutePath().toString() + "/resources/";
-        if (checkRunType().equalsIgnoreCase("IDE")) {
-            String path = System.getProperty("user.dir") + "/src/main/resources";
-            if (path.contains("test-classes"))
-                path = path.replace("test-classes", "classes");
-            return path;
-        }
-        return "Global Resource File Path Not Found";
+//        if (checkRunType().equalsIgnoreCase("JAR"))
+//            return (new File(jarUrl)).getParentFile().getAbsolutePath() + "/resources/";
+//        if (checkRunType().equalsIgnoreCase("IDE")) {
+//            String path = System.getProperty("user.dir") + "/src/main/resources";
+//            if (path.contains("test-classes"))
+//                path = path.replace("test-classes", "classes");
+//            return path;
+//        }
+        return System.getProperty("user.dir") + "/src/main/resources";
     }
 
     public static String checkRunType() {
-        if (UinGenerationUtil.class.getResource("TestRunner.class").getPath().toString().contains(".jar"))
-            return "JAR";
+//        if (UinGenerationUtil.class.getResource("TestRunner.class").getPath().contains(".jar"))
+//            return "JAR";
         return "IDE";
     }
-    public static String GetKernalFilename() {
+    public static String getKernalFilename() {
         String path ="Kernel.properties" ;
         String kernalpath = null;
         if (System.getProperty("env.user") == null) {
