@@ -1,6 +1,6 @@
 import {DoneInvokeEvent, EventFrom, StateFrom, send} from 'xstate';
 import {createModel} from 'xstate/lib/model';
-import {AppServices} from '../shared/GlobalContext';
+import {AppServices} from '../../shared/GlobalContext';
 import {
   BACKUP_ENC_KEY,
   BACKUP_ENC_KEY_TYPE,
@@ -8,11 +8,11 @@ import {
   BACKUP_ENC_TYPE_VAL_PHONE,
   argon2iConfigForPasswordAndPhoneNumber,
   argon2iSalt,
-} from '../shared/constants';
-import {hashData} from '../shared/commonUtil';
-import {StoreEvents} from './store';
-import Storage from '../shared/storage';
-import {compressData} from '../shared/cryptoutil/cryptoUtil';
+} from '../../shared/constants';
+import {hashData} from '../../shared/commonUtil';
+import {StoreEvents} from '../store';
+import Storage from '../../shared/storage';
+import {compressData} from '../../shared/cryptoutil/cryptoUtil';
 
 const model = createModel(
   {

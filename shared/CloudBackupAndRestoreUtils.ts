@@ -15,6 +15,7 @@ import {
 } from './constants';
 import fileStorage, {backupDirectoryPath, zipFilePath} from './fileStorage';
 import {request} from './request';
+import {API} from './api';
 
 class Cloud {
   static status = {
@@ -45,11 +46,8 @@ class Cloud {
   private static async profileInfo(): Promise<ProfileInfo | undefined> {
     try {
       const accessToken = await this.getAccessToken();
-      const profileResponse = await request(
-        'GET',
-        `https://www.googleapis.com/oauth2/v1/userinfo?alt=json&access_token=${accessToken}`,
-        undefined,
-        '',
+      const profileResponse = await API.getGoogleAccountProfileInfo(
+        accessToken,
       );
       return {
         email: profileResponse.email,
@@ -81,16 +79,44 @@ class Cloud {
     await this.syncBackupFiles();
   }
 
+  /**
+   * TODO: Remove the test call(get profile info) to reduce extra api calls
+   */
   static async getAccessToken() {
     try {
       const tokenResult = await GoogleSignin.getTokens();
+
+      try {
+        request(
+          'GET',
+          `https://www.googleapis.com/oauth2/v1/userinfo?alt=json&access_token=${tokenResult.accessToken}`,
+          undefined,
+          '',
+        );
+        return tokenResult.accessToken;
+      } catch (error) {
+        console.error('Error while using the current token ', error);
+        if (
+          error.toString().includes('401') ||
+          error.toString().includes('Unauthorized')
+        ) {
+          return await refreshToken(tokenResult);
+        }
+        throw error;
+      }
+    } catch (error) {
+      console.error('Error while getting access token ', error);
+      throw error;
+    }
+
+    async function refreshToken(tokenResult: {
+      idToken: string;
+      accessToken: string;
+    }) {
       await GoogleSignin.clearCachedAccessToken(tokenResult.accessToken);
       await GoogleSignin.signInSilently();
       const {accessToken} = await GoogleSignin.getTokens();
       return accessToken;
-    } catch (error) {
-      console.error('Error while getting access token ', error);
-      throw error;
     }
   }
 
