@@ -8,8 +8,6 @@ import org.testng.annotations.Test;
 
 import static org.testng.Assert.assertTrue;
 
-import static org.testng.Assert.assertTrue;
-
 public class ReceiveCardTest extends AndroidBaseTest {
 	
 	 @Test

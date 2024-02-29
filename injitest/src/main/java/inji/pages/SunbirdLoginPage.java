@@ -1,25 +1,15 @@
 package inji.pages;
 
 import io.appium.java_client.AppiumDriver;
-import io.appium.java_client.HidesKeyboard;
 import io.appium.java_client.pagefactory.AndroidFindBy;
 import io.appium.java_client.pagefactory.iOSXCUITFindBy;
-
-import java.util.List;
-import java.util.concurrent.TimeUnit;
-
-import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.WebDriverWait;
-
-import inji.constants.Target;
 
 public class SunbirdLoginPage extends BasePage {
 
-    @AndroidFindBy(xpath = "//*[contains(@text,'Login with KBA')]")
-    private WebElement loginWithKBA;
+
 
     @AndroidFindBy(xpath = "//android.widget.EditText[@resource-id=\"_form_policyNumber\"]")
     @iOSXCUITFindBy(iOSClassChain = "**/XCUIElementTypeTextField[`name == \"Please fill in this field\"`][1]")
@@ -111,9 +101,7 @@ public class SunbirdLoginPage extends BasePage {
         super(driver);
     }
     BasePage basePage = new BasePage(driver);
-    public void clickOnloginWithKbaButton() {
-        clickOnElement(loginWithKBA);
-    }
+
 
 
     public void enterPolicyNumberTextBox(String PolicyNo) {

@@ -1,6 +1,4 @@
 package androidTestCases;
-import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.assertTrue;
 
 import BaseTest.AndroidBaseTest;
 import inji.api.BaseTestCase;
@@ -9,6 +7,7 @@ import inji.pages.*;
 import inji.utils.TestDataReader;
 import org.testng.annotations.Test;
 
+import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
 public class CredentialRegistryTest extends AndroidBaseTest {
