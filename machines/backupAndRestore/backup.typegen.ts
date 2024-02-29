@@ -84,6 +84,7 @@ export interface Typegen0 {
     setErrorReasonAsStorageLimitReached: 'done.invoke.backup.backingUp.checkStorageAvailability:invocation[0]';
     setFileName: 'FILE_NAME';
     setIsAutoBackup: 'DATA_BACKUP';
+    setIsLoading: 'LAST_BACKUP_DETAILS';
     setLastBackupDetails: 'done.invoke.backup.fetchLastBackupDetails:invocation[0]';
     storeLastBackupDetails: 'done.invoke.backup.backingUp.uploadBackupFile:invocation[0]';
     unsetIsLoading:

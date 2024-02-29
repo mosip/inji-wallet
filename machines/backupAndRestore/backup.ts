@@ -75,7 +75,7 @@ export const backupMachine = model.createMachine(
     states: {
       init: {},
       fetchLastBackupDetails: {
-        entry: 'unsetLastBackupDetails',
+        entry: ['unsetLastBackupDetails', 'setIsLoading'],
         invoke: {
           src: 'getLastBackupDetailsFromCloud',
           onDone: {
@@ -254,6 +254,9 @@ export const backupMachine = model.createMachine(
     actions: {
       unsetIsLoading: model.assign({
         isLoading: false,
+      }),
+      setIsLoading: model.assign({
+        isLoading: true,
       }),
       setDataFromStorage: model.assign({
         dataFromStorage: (_context, event) => {
