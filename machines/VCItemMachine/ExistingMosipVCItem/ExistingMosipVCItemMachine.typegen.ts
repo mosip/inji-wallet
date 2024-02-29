@@ -209,7 +209,10 @@ export interface Typegen0 {
     sendVcUpdated: 'PIN_CARD';
     sendVerificationError: 'STORE_RESPONSE';
     sendWalletBindingSuccess: 'SHOW_BINDING_STATUS';
-    setCredential: 'GET_VC_RESPONSE' | 'STORE_RESPONSE';
+    setCredential:
+      | 'CREDENTIAL_DOWNLOADED'
+      | 'GET_VC_RESPONSE'
+      | 'STORE_RESPONSE';
     setDownloadInterval: 'done.invoke.vc-item.checkingServerData.loadDownloadLimitConfig:invocation[0]';
     setLock: 'done.invoke.vc-item.requestingLock:invocation[0]';
     setMaxDownloadCount: 'done.invoke.vc-item.checkingServerData.loadDownloadLimitConfig:invocation[0]';
@@ -221,10 +224,6 @@ export interface Typegen0 {
     setPrivateKey: 'done.invoke.vc-item.addKeyPair:invocation[0]';
     setPublicKey: 'done.invoke.vc-item.addKeyPair:invocation[0]';
     setRevoke: 'done.invoke.vc-item.requestingRevoke:invocation[0]';
-    setStoreVerifiableCredential:
-      | 'CREDENTIAL_DOWNLOADED'
-      | 'GET_VC_RESPONSE'
-      | 'STORE_RESPONSE';
     setTempWalletBindingResponse: 'done.invoke.vc-item.addingWalletBindingId:invocation[0]';
     setThumbprintForWalletBindingId:
       | 'done.invoke.vc-item.addingWalletBindingId:invocation[0]'
@@ -237,7 +236,6 @@ export interface Typegen0 {
       | 'error.platform.vc-item.requestingRevoke:invocation[0]';
     setVcKey: 'REMOVE';
     setVcMetadata: 'UPDATE_VC_METADATA';
-    setVerifiableCredential: 'done.invoke.vc-item.verifyingCredential:invocation[0]';
     setWalletBindingError:
       | 'error.platform.vc-item.acceptingBindingOtp.resendOTP:invocation[0]'
       | 'error.platform.vc-item.addKeyPair:invocation[0]'
