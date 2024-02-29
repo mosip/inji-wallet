@@ -15,6 +15,7 @@ import {
 } from './constants';
 import fileStorage, {backupDirectoryPath, zipFilePath} from './fileStorage';
 import {request} from './request';
+import {API} from './api';
 
 class Cloud {
   static status = {
@@ -45,11 +46,8 @@ class Cloud {
   private static async profileInfo(): Promise<ProfileInfo | undefined> {
     try {
       const accessToken = await this.getAccessToken();
-      const profileResponse = await request(
-        'GET',
-        `https://www.googleapis.com/oauth2/v1/userinfo?alt=json&access_token=${accessToken}`,
-        undefined,
-        '',
+      const profileResponse = await API.getGoogleAccountProfileInfo(
+        accessToken,
       );
       return {
         email: profileResponse.email,

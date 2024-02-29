@@ -93,11 +93,9 @@ export async function compressAndRemoveFile(
 
 export async function cleanupLocalBackups() {
   const isDirectoryExists = await new FileStorage().exists(backupDirectoryPath);
-  console.log('patel', isDirectoryExists);
   if (isDirectoryExists) {
     const availableBackupDirFiles =
       await new FileStorage().getAllFilesInDirectory(backupDirectoryPath);
-    console.log('patel', availableBackupDirFiles);
     for (const availableBackupDirFile of availableBackupDirFiles) {
       await removeFile(availableBackupDirFile.name, '');
     }
