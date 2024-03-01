@@ -16,7 +16,7 @@ public class BackupDataTourPage extends BasePage {
     private WebElement backupDataDescription;
 
     @AndroidFindBy(accessibility = "goBack")
-    @iOSXCUITFindBy(iOSClassChain = "**/XCUIElementTypeButton[`label == \"Back\"`][4]")
+    @iOSXCUITFindBy(accessibility = "goBack")
     public WebElement goBackButton;
 
     public BackupDataTourPage(AppiumDriver driver) {
