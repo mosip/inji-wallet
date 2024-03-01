@@ -29,7 +29,7 @@ export const VerifyIdentityOverlay: React.FC<
         isVisible={props.controller.isVerifyingIdentity}
         arrowLeft={true}
         headerTitle={t('faceAuth')}
-        onDismiss={props.controller.onCancel}>
+        onDismiss={props.controller.CANCEL}>
         <Column
           fill
           style={Theme.VerifyIdentityOverlayStyles.content}
@@ -37,8 +37,8 @@ export const VerifyIdentityOverlay: React.FC<
           {credential != null && (
             <FaceScanner
               vcImage={vcImage}
-              onValid={props.controller.onFaceValid}
-              onInvalid={props.controller.onFaceInvalid}
+              onValid={props.controller.FACE_VALID}
+              onInvalid={props.controller.FACE_INVALID}
             />
           )}
         </Column>

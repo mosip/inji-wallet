@@ -11,8 +11,6 @@ import {Icon} from 'react-native-elements';
 import {Loader} from '../../components/ui/Loader';
 import {VCShareFlowType} from '../../shared/Utils';
 import {VerifyIdentityOverlay} from '../VerifyIdentityOverlay';
-import {MessageOverlay} from '../../components/MessageOverlay';
-import {Row, Button} from '../../components/ui';
 import {Text} from '../../components/ui';
 import {I18nManager, View} from 'react-native';
 import {SvgImage} from '../../components/ui/svg';
