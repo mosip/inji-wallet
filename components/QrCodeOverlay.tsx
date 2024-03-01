@@ -16,9 +16,10 @@ export const QrCodeOverlay: React.FC<QrCodeOverlayProps> = props => {
   const toggleQrOverlay = () => setIsQrOverlayVisible(!isQrOverlayVisible);
   return (
     <React.Fragment>
-      <View style={Theme.QrCodeStyles.QrView}>
+      <View testID="qrCodeView" style={Theme.QrCodeStyles.QrView}>
         <Pressable
           {...testIDProps('qrCodePressable')}
+          accessible={false}
           onPress={toggleQrOverlay}>
           <QRCode
             {...testIDProps('qrCode')}
