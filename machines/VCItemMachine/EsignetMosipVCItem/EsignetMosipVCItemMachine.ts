@@ -70,7 +70,6 @@ const model = createModel(
       POLL: () => ({}),
       DOWNLOAD_READY: () => ({}),
       GET_VC_RESPONSE: (vc: VC) => ({vc}),
-      VERIFY: () => ({}),
       LOCK_VC: () => ({}),
       RESEND_OTP: () => ({}),
       INPUT_OTP: (otp: string) => ({otp}),
