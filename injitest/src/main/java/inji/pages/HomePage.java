@@ -242,19 +242,6 @@ public class HomePage extends BasePage {
         return this.retrieIsElementVisible(downloadingVcPopup);
     }
 
-//    public boolean isDownloadingVcPopupDisplayed() {
-//        int maxRetries = 3;
-//        for (int i = 0; i < maxRetries; i++) {
-//            try {
-//                isElementDisplayed(downloadingVcPopup);
-//                return true;
-//            } catch (StaleElementReferenceException e) {
-//            }
-//        }
-//        return false;
-//    }
-
-
     public String getfullNameTitleText() {
         return this.getTextFromLocator(fullNameTitle);
     }
