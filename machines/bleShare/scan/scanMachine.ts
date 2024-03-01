@@ -421,12 +421,7 @@ export const scanMachine =
               },
               {
                 target: 'showQrLogin',
-                cond: 'isQrLoginViaSimpleShare',
-                actions: ['sendVcSharingStartEvent', 'setLinkCode'],
-              },
-              {
-                target: 'showQrLogin',
-                cond: 'isQrLoginViaMiniView',
+                cond: 'isQrLogin',
                 actions: ['sendVcSharingStartEvent', 'setLinkCode'],
               },
               {
@@ -717,6 +712,7 @@ export const scanMachine =
           },
         },
         disconnected: {
+          entry: ['resetSelectedVc', 'resetFlowType'],
           on: {
             RETRY: {
               target: '#scan.reviewing.cancelling',
@@ -1277,27 +1273,11 @@ export const scanMachine =
         isOpenIdQr: (_context, event) =>
           event.params.startsWith('OPENID4VP://'),
 
-        isQrLoginViaSimpleShare: (context, event) => {
+        isQrLogin: (context, event) => {
           try {
             let linkCode = new URL(event.params);
             // sample: 'inji://landing-page-name?linkCode=sTjp0XVH3t3dGCU&linkExpireDateTime=2023-11-09T06:56:18.482Z'
-            return (
-              linkCode.searchParams.get('linkCode') !== null &&
-              context.flowType === VCShareFlowType.SIMPLE_SHARE
-            );
-          } catch (e) {
-            return false;
-          }
-        },
-
-        isQrLoginViaMiniView: (context, event) => {
-          try {
-            let linkCode = new URL(event.params);
-            // sample: 'inji://landing-page-name?linkCode=sTjp0XVH3t3dGCU&linkExpireDateTime=2023-11-09T06:56:18.482Z'
-            return (
-              linkCode.searchParams.get('linkCode') !== null &&
-              context.flowType === VCShareFlowType.MINI_VIEW_QR_LOGIN
-            );
+            return linkCode.searchParams.get('linkCode') !== null;
           } catch (e) {
             return false;
           }
