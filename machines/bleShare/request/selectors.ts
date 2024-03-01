@@ -47,6 +47,10 @@ export function selectIsAccepting(state: State) {
   return state.matches('reviewing.accepting');
 }
 
+export function selectIsDisplayingIncomingVC(state: State) {
+  return state.matches('reviewing.displayingIncomingVC');
+}
+
 export function selectIsSavingFailedInIdle(state: State) {
   return state.matches('reviewing.savingFailed.idle');
 }

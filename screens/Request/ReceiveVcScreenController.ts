@@ -4,6 +4,7 @@ import {GlobalContext} from '../../shared/GlobalContext';
 import {
   selectIncomingVc,
   selectIsAccepting,
+  selectIsDisplayingIncomingVC,
   selectIsIncomingVp,
   selectIsReviewingInIdle,
   selectIsSavingFailedInIdle,
@@ -26,6 +27,10 @@ export function useReceiveVcScreen() {
     isIncomingVp: useSelector(requestService, selectIsIncomingVp),
     isReviewingInIdle: useSelector(requestService, selectIsReviewingInIdle),
     isAccepting: useSelector(requestService, selectIsAccepting),
+    isDisplayingIncomingVC: useSelector(
+      requestService,
+      selectIsDisplayingIncomingVC,
+    ),
     isSavingFailedInIdle: useSelector(
       requestService,
       selectIsSavingFailedInIdle,
