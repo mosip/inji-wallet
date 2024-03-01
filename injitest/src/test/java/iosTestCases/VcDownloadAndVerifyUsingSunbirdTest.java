@@ -56,7 +56,7 @@ public class VcDownloadAndVerifyUsingSunbirdTest extends AndroidBaseTest {
 //        assertTrue(sunbirdLoginPage.isSunbirdCardLogoIsDisplayed(), "Verify if download sunbird logo displayed");
         assertEquals(sunbirdLoginPage.getFullNameForSunbirdCard(),TestDataReader.readData("fullNameSunbird"));
         assertEquals(sunbirdLoginPage.getPolicyNameForSunbirdCard(),TestDataReader.readData("policyNameSunbird"));
-        assertEquals(sunbirdLoginPage.getIdTypeForSunbirdCard(),TestDataReader.readData("idTypeSunbird"));
+        assertEquals(sunbirdLoginPage.getIdTypeValueForSunbirdCard(),TestDataReader.readData("idTypeSunbird"));
     }
     
    }

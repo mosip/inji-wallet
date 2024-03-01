@@ -8,9 +8,8 @@ import inji.utils.AndroidUtil;
 import inji.utils.TestDataReader;
 import org.testng.annotations.Test;
 
+import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
-
-import static org.testng.Assert.*;
 
 public class VcDownloadAndVerifyUsingVidTest extends AndroidBaseTest {
     @Test
@@ -135,7 +134,7 @@ public class VcDownloadAndVerifyUsingVidTest extends AndroidBaseTest {
         assertTrue(retrieveIdPage.isRetrieveIdPageLoaded(), "Verify if retrieve id page is displayed");
         OtpVerificationPage otpVerification = retrieveIdPage.clickOnVid(Target.ANDROID).setEnterIdTextBox("00").clickOnGenerateCardButton();
 
-        assertTrue(retrieveIdPage.isIncorrectInputFormatErrorMessageDisplayed());
+        assertTrue(retrieveIdPage.isIncorrectInputFormatErrorVidMessageDisplayed());
     }
     
     @Test
@@ -304,7 +303,7 @@ public class VcDownloadAndVerifyUsingVidTest extends AndroidBaseTest {
 
         assertTrue(homePage.isNameDisplayed(TestDataReader.readData("fullName")), "Verify if full name is displayed");
         
-        AndroidUtil.ForceStopeApp();
+        AndroidUtil.forceStopApp();
         Thread.sleep(4000);
         AndroidUtil.invokeAppFromBackGroundAndroid();
         Thread.sleep(4000);

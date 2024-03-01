@@ -23,6 +23,8 @@ import {
   getVCsOrderedByPinStatus,
 } from '../../shared/Utils';
 import {Issuers} from '../../shared/openId4VCI/Utils';
+import {Error} from '../../components/ui/Error';
+import {SvgImage} from '../../components/ui/svg';
 
 export const SendVcScreen: React.FC = () => {
   const {t} = useTranslation('SendVcScreen');
@@ -139,6 +141,25 @@ export const SendVcScreen: React.FC = () => {
       <VerifyIdentityOverlay
         vc={controller.selectedVc}
         controller={controller}
+      />
+
+      <Error
+        isModal
+        alignActionsOnEnd
+        showClose={false}
+        isVisible={controller.isInvalidIdentity}
+        title={t('ScanScreen:postFaceCapture.captureFailureTitle')}
+        message={t('ScanScreen:postFaceCapture.captureFailureMessage')}
+        image={SvgImage.PermissionDenied()}
+        primaryButtonTestID={'retry'}
+        primaryButtonText={t('ScanScreen:status.retry')}
+        primaryButtonEvent={controller.RETRY_VERIFICATION}
+        textButtonTestID={'home'}
+        textButtonText={t('ScanScreen:status.accepted.home')}
+        textButtonEvent={controller.GO_TO_HOME}
+        customImageStyles={{paddingBottom: 0, marginBottom: -6}}
+        customStyles={{marginTop: '20%'}}
+        testID={'shareWithSelfieError'}
       />
     </React.Fragment>
   );

@@ -82,6 +82,7 @@ export interface Typegen0 {
       | 'SELECT_VC'
       | 'xstate.after(DESTROY_TIMEOUT)#scan.clearingConnection'
       | 'xstate.init';
+    resetFaceCaptureBannerStatus: 'ACCEPT_REQUEST' | 'CLOSE_BANNER';
     resetFlowType:
       | 'CANCEL'
       | 'DISCONNECT'
@@ -125,6 +126,7 @@ export interface Typegen0 {
     storeLoginItem: 'done.invoke.QrLogin';
     storingActivityLog: 'STORE_RESPONSE';
     toggleShouldVerifyPresence: 'TOGGLE_USER_CONSENT';
+    updateFaceCaptureBannerStatus: 'FACE_VALID';
   };
   eventsCausingDelays: {
     CONNECTION_TIMEOUT: 'SCAN';

@@ -5,8 +5,6 @@ import io.appium.java_client.pagefactory.AndroidFindBy;
 import io.appium.java_client.pagefactory.iOSXCUITFindBy;
 import org.openqa.selenium.WebElement;
 
-import inji.utils.IosUtil;
-
 public class SharePage extends BasePage {
 
     @AndroidFindBy(accessibility = "camera")

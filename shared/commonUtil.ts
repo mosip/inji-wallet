@@ -87,7 +87,7 @@ export const faceMatchConfig = (resp: string) => {
         },
       },
       matcher: {
-        threshold: 0.8,
+        threshold: 1,
       },
     },
   };

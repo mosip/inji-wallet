@@ -4,8 +4,6 @@ import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.pagefactory.AndroidFindBy;
 import org.openqa.selenium.WebElement;
 
-import inji.utils.IosUtil;
-
 public class ReceiveCardPage extends BasePage {
 	@AndroidFindBy(uiAutomator = "new UiSelector().textContains(\"Allow\")")
 	private WebElement allowButton;
@@ -30,7 +28,7 @@ public class ReceiveCardPage extends BasePage {
     }
 
     public void clickOnAllowButton() {
-        if (isElementDisplayed(bluetoothPopUp)) {
+        if (isElementDisplayed(allowButton)) {
             clickOnElement(allowButton);
         }
     }

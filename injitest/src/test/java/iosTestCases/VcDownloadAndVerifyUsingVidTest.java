@@ -133,7 +133,7 @@ public class VcDownloadAndVerifyUsingVidTest extends IosBaseTest {
         assertTrue(retrieveIdPage.isRetrieveIdPageLoaded(), "Verify if retrieve id page is displayed");
         OtpVerificationPage otpVerification = retrieveIdPage.clickOnVid(Target.IOS).setEnterIdTextBox("00").clickOnGenerateCardButton();
 
-        assertTrue(retrieveIdPage.isIncorrectInputFormatErrorMessageDisplayed());
+        assertTrue(retrieveIdPage.isIncorrectInputFormatErrorVidMessageDisplayed());
     }
     
     @Test

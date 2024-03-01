@@ -11,8 +11,6 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import static java.time.Duration.ofSeconds;
 
-import java.time.Duration;
-
 public class BasePage {
     protected AppiumDriver driver;
 

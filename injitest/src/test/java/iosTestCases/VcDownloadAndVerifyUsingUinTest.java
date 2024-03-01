@@ -234,7 +234,7 @@ public class VcDownloadAndVerifyUsingUinTest extends IosBaseTest {
         assertTrue(retrieveIdPage.isRetrieveIdPageLoaded(), "Verify if retrieve id page is displayed");
         retrieveIdPage.setEnterIdTextBox("00").clickOnGenerateCardButton();
 
-        assertTrue(retrieveIdPage.isIncorrectInputFormatErrorMessageDisplayed());
+        assertTrue(retrieveIdPage.isIncorrectInputFormatErrorUinMessageDisplayed());
     }
     
     @Test
