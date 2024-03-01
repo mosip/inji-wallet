@@ -6,7 +6,7 @@ import {
   selectIsBackUpRestoreFailure,
   selectIsBackUpRestoreSuccess,
   selectErrorReason,
-} from '../../machines/backupRestore';
+} from '../../machines/backupAndRestore/backupRestore';
 import {GlobalContext} from '../../shared/GlobalContext';
 
 export function useBackupRestoreScreen() {

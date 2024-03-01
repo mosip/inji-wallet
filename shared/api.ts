@@ -82,6 +82,11 @@ export const API_URLS: ApiUrls = {
     method: 'POST',
     buildURL: (): `/${string}` => '/v1/esignet/linked-authorization/v2/consent',
   },
+  googleAccountProfileInfo: {
+    method: 'GET',
+    buildURL: (accessToken: string): `${string}` =>
+      `https://www.googleapis.com/oauth2/v1/userinfo?alt=json&access_token=${accessToken}`,
+  },
 };
 
 export const API = {
@@ -114,6 +119,13 @@ export const API = {
     );
     return response.response;
   },
+  getGoogleAccountProfileInfo: async accessToken =>
+    await request(
+      API_URLS.googleAccountProfileInfo.method,
+      API_URLS.googleAccountProfileInfo.buildURL(accessToken),
+      undefined,
+      '',
+    ),
 };
 
 export const CACHED_API = {
@@ -273,4 +285,5 @@ type ApiUrls = {
   linkTransaction: Api_Params;
   authenticate: Api_Params;
   sendConsent: Api_Params;
+  googleAccountProfileInfo: Api_Params;
 };
