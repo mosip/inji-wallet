@@ -16,7 +16,6 @@ import {
   setTextColor,
 } from '../common/VCUtils';
 import {VCItemFieldValue} from '../common/VCItemField';
-import {useTranslation} from 'react-i18next';
 import {WalletBinding} from '../../../screens/Home/MyVcs/WalletBinding';
 import {VCVerification} from '../../VCVerification';
 import {Issuers} from '../../../shared/openId4VCI/Utils';
@@ -25,8 +24,7 @@ import {VCItemContainerFlowType} from '../../../shared/Utils';
 export const VCCardViewContent: React.FC<
   ExistingMosipVCItemContentProps | EsignetMosipVCItemContentProps
 > = props => {
-  const {t} = useTranslation('VcDetails');
-  const selectableOrCheck = props.selectable ? (
+  const selectableOrCheck = props.selectable && (
     <CheckBox
       checked={props.selected}
       checkedIcon={
@@ -40,7 +38,7 @@ export const VCCardViewContent: React.FC<
       }
       onPress={() => props.onPress()}
     />
-  ) : null;
+  );
 
   return (
     <ImageBackground
@@ -78,9 +76,7 @@ export const VCCardViewContent: React.FC<
                 new VCMetadata(props.vcMetadata).isFromOpenId4VCI(),
                 props.verifiableCredential?.issuerLogo,
               )}
-
-          {props.flow !== undefined &&
-          props.flow in VCItemContainerFlowType ? null : (
+          {!Object.values(VCItemContainerFlowType).includes(props.flow) && (
             <>
               {props.vcMetadata.issuer === Issuers.Sunbird ||
               !props.emptyWalletBindingId
@@ -103,9 +99,8 @@ export const VCCardViewContent: React.FC<
               </Pressable>
             </>
           )}
-          <Column>{props.credential ? selectableOrCheck : null}</Column>
+          {props.credential && selectableOrCheck}
         </Row>
-        <Row align={'space-between'} margin="0 8 5 8"></Row>
         <WalletBinding service={props.service} vcMetadata={props.vcMetadata} />
       </Column>
     </ImageBackground>
