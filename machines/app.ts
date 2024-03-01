@@ -29,7 +29,7 @@ import {backupMachine, createBackupMachine} from './backupAndRestore/backup';
 import {
   backupRestoreMachine,
   createBackupRestoreMachine,
-} from './backupRestore';
+} from './backupAndRestore/backupRestore';
 
 import ODKIntentModule from '../lib/react-native-odk-intent/ODKIntentModule';
 
