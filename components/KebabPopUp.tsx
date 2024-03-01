@@ -109,9 +109,9 @@ export const KebabPopupListItemContainer: React.FC<
   KebabListItemContainerProps
 > = props => {
   return (
-    <ListItem bottomDivider>
+    <ListItem bottomDivider onPress={props.onPress}>
       <ListItem.Content>
-        <ListItem.Title onPress={props.onPress} {...testIDProps(props.testID)}>
+        <ListItem.Title {...testIDProps(props.testID)}>
           <Row crossAlign="center" style={{flex: 1}}>
             {props.listItemIcon}
             <Text
