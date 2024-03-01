@@ -8,11 +8,11 @@ import org.openqa.selenium.WebElement;
 public class BackupDataTourPage extends BasePage {
 
     @AndroidFindBy(accessibility = "introTitle-five")
-    @iOSXCUITFindBy(xpath = "(//XCUIElementTypeStaticText[@name=\"introTitle\"])[4]")
+    @iOSXCUITFindBy(accessibility = "introTitle-five")
     private WebElement backupDataText;
 
     @AndroidFindBy(accessibility = "introText-five")
-    @iOSXCUITFindBy(xpath = "(//XCUIElementTypeStaticText[@name=\"introText\"])[4]")
+    @iOSXCUITFindBy(accessibility = "introText-five")
     private WebElement backupDataDescription;
 
     @AndroidFindBy(accessibility = "goBack")

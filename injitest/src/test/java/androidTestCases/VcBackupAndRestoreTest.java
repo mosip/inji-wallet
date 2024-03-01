@@ -32,8 +32,8 @@ public class VcBackupAndRestoreTest extends AndroidBaseTest {
         assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
         AddNewCardPage addNewCardPage = homePage.downloadCard();
         RetrieveIdPage retrieveIdPage = addNewCardPage.clickOnDownloadViaUin();
-        
-        OtpVerificationPage otpVerification = retrieveIdPage.setEnterIdTextBox(TestDataReader.readData("uin")).clickOnGenerateCardButton();
+        String uin=TestDataReader.readData("uin");
+        OtpVerificationPage otpVerification = retrieveIdPage.setEnterIdTextBox(uin).clickOnGenerateCardButton();
 
         otpVerification.enterOtp(BaseTestCase.getOtp(), Target.ANDROID);
         
@@ -51,7 +51,8 @@ public class VcBackupAndRestoreTest extends AndroidBaseTest {
         backupAndRestorePage.clickOnProceedButton();
 
        //backupAndRestorePage.clickOnAddAnotherAccount();
-        backupAndRestorePage.enterEmailTextBox("anoopnehe98@gmail.com");
+        String email = TestDataReader.readData("emailsForBackupAndRestore");
+        backupAndRestorePage.enterEmailTextBox(email);
         backupAndRestorePage.clickOnNextButton();
         backupAndRestorePage.enterPasswordTextBox("Hello@98");
         backupAndRestorePage.clickOnNextButton();
@@ -120,8 +121,8 @@ public class VcBackupAndRestoreTest extends AndroidBaseTest {
         assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
         AddNewCardPage addNewCardPage = homePage.downloadCard();
         RetrieveIdPage retrieveIdPage = addNewCardPage.clickOnDownloadViaUin();
-
-        OtpVerificationPage otpVerification = retrieveIdPage.setEnterIdTextBox(TestDataReader.readData("uin")).clickOnGenerateCardButton();
+        String uin=TestDataReader.readData("uin");
+        OtpVerificationPage otpVerification = retrieveIdPage.setEnterIdTextBox(uin).clickOnGenerateCardButton();
 
         otpVerification.enterOtp(BaseTestCase.getOtp(), Target.ANDROID);
 
@@ -191,7 +192,8 @@ public class VcBackupAndRestoreTest extends AndroidBaseTest {
         backupAndRestorePage.clickOnProceedButton();
 
 //        backupAndRestorePage.clickOnAddAnotherAccount();
-        backupAndRestorePage.enterEmailTextBox("anoopnehe98@gmail.com");
+        String email = TestDataReader.readData("emailsForBackupAndRestore");
+        backupAndRestorePage.enterEmailTextBox("email");
         backupAndRestorePage.clickOnNextButton();
         backupAndRestorePage.enterPasswordTextBox("Hello@98");
         backupAndRestorePage.clickOnNextButton();
@@ -282,8 +284,8 @@ public class VcBackupAndRestoreTest extends AndroidBaseTest {
         assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
         AddNewCardPage addNewCardPage = homePage.downloadCard();
         RetrieveIdPage retrieveIdPage = addNewCardPage.clickOnDownloadViaUin();
-
-        OtpVerificationPage otpVerification = retrieveIdPage.setEnterIdTextBox(TestDataReader.readData("uin")).clickOnGenerateCardButton();
+        String uin=TestDataReader.readData("uin");
+        OtpVerificationPage otpVerification = retrieveIdPage.setEnterIdTextBox(uin).clickOnGenerateCardButton();
 
         otpVerification.enterOtp(BaseTestCase.getOtp(), Target.ANDROID);
 
@@ -301,7 +303,8 @@ public class VcBackupAndRestoreTest extends AndroidBaseTest {
         backupAndRestorePage.clickOnProceedButton();
 
 //        backupAndRestorePage.clickOnAddAnotherAccount();
-        backupAndRestorePage.enterEmailTextBox("anoopnehe98@gmail.com");
+        String email = TestDataReader.readData("emailsForBackupAndRestore");
+        backupAndRestorePage.enterEmailTextBox("email");
         backupAndRestorePage.clickOnNextButton();
         backupAndRestorePage.enterPasswordTextBox("Hello@98");
         backupAndRestorePage.clickOnNextButton();
@@ -459,8 +462,8 @@ public class VcBackupAndRestoreTest extends AndroidBaseTest {
         assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
         AddNewCardPage addNewCardPage = homePage.downloadCard();
         RetrieveIdPage retrieveIdPage = addNewCardPage.clickOnDownloadViaUin();
-
-        OtpVerificationPage otpVerification = retrieveIdPage.setEnterIdTextBox(TestDataReader.readData("uin")).clickOnGenerateCardButton();
+        String uin=TestDataReader.readData("uin");
+        OtpVerificationPage otpVerification = retrieveIdPage.setEnterIdTextBox(uin).clickOnGenerateCardButton();
 
         otpVerification.enterOtp(BaseTestCase.getOtp(), Target.ANDROID);
 
@@ -478,7 +481,8 @@ public class VcBackupAndRestoreTest extends AndroidBaseTest {
         backupAndRestorePage.clickOnProceedButton();
 
 //        backupAndRestorePage.clickOnAddAnotherAccount();
-        backupAndRestorePage.enterEmailTextBox("anoopnehe98@gmail.com");
+        String email = TestDataReader.readData("emailsForBackupAndRestore");
+        backupAndRestorePage.enterEmailTextBox("email");
         backupAndRestorePage.clickOnNextButton();
         backupAndRestorePage.enterPasswordTextBox("Hello@98");
         backupAndRestorePage.clickOnNextButton();
@@ -542,7 +546,8 @@ public class VcBackupAndRestoreTest extends AndroidBaseTest {
         backupAndRestorePage.clickOnProceedButton();
 
 //        backupAndRestorePage.clickOnAddAnotherAccount();
-        backupAndRestorePage.enterEmailTextBox("anoopnehe98@gmail.com");
+        String email = TestDataReader.readData("emailsForBackupAndRestore");
+        backupAndRestorePage.enterEmailTextBox("email");
         backupAndRestorePage.clickOnNextButton();
         backupAndRestorePage.enterPasswordTextBox("Hello@98");
         backupAndRestorePage.clickOnNextButton();
@@ -578,8 +583,8 @@ public class VcBackupAndRestoreTest extends AndroidBaseTest {
         assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
         AddNewCardPage addNewCardPage = homePage.downloadCard();
         RetrieveIdPage retrieveIdPage = addNewCardPage.clickOnDownloadViaUin();
-
-        OtpVerificationPage otpVerification = retrieveIdPage.setEnterIdTextBox(TestDataReader.readData("uin")).clickOnGenerateCardButton();
+        String uin=TestDataReader.readData("uin");
+        OtpVerificationPage otpVerification = retrieveIdPage.setEnterIdTextBox(uin).clickOnGenerateCardButton();
 
         otpVerification.enterOtp(BaseTestCase.getOtp(), Target.ANDROID);
 
@@ -597,7 +602,8 @@ public class VcBackupAndRestoreTest extends AndroidBaseTest {
         backupAndRestorePage.clickOnProceedButton();
 
 //        backupAndRestorePage.clickOnAddAnotherAccount();
-        backupAndRestorePage.enterEmailTextBox("anoopnehe98@gmail.com");
+        String email = TestDataReader.readData("emailsForBackupAndRestore");
+        backupAndRestorePage.enterEmailTextBox("email");
         backupAndRestorePage.clickOnNextButton();
         backupAndRestorePage.enterPasswordTextBox("Hello@98");
         backupAndRestorePage.clickOnNextButton();
@@ -677,8 +683,8 @@ public class VcBackupAndRestoreTest extends AndroidBaseTest {
         assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
         AddNewCardPage addNewCardPage = homePage.downloadCard();
         RetrieveIdPage retrieveIdPage = addNewCardPage.clickOnDownloadViaUin();
-
-        OtpVerificationPage otpVerification = retrieveIdPage.setEnterIdTextBox(TestDataReader.readData("uin")).clickOnGenerateCardButton();
+        String uin=TestDataReader.readData("uin");
+        OtpVerificationPage otpVerification = retrieveIdPage.setEnterIdTextBox(uin).clickOnGenerateCardButton();
 
         otpVerification.enterOtp(BaseTestCase.getOtp(), Target.ANDROID);
 
@@ -696,7 +702,8 @@ public class VcBackupAndRestoreTest extends AndroidBaseTest {
         backupAndRestorePage.clickOnProceedButton();
 
 //        backupAndRestorePage.clickOnAddAnotherAccount();
-        backupAndRestorePage.enterEmailTextBox("anoopnehe98@gmail.com");
+        String email = TestDataReader.readData("emailsForBackupAndRestore");
+        backupAndRestorePage.enterEmailTextBox("email");
         backupAndRestorePage.clickOnNextButton();
         backupAndRestorePage.enterPasswordTextBox("Hello@98");
         backupAndRestorePage.clickOnNextButton();
@@ -776,8 +783,8 @@ public class VcBackupAndRestoreTest extends AndroidBaseTest {
         assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
         AddNewCardPage addNewCardPage = homePage.downloadCard();
         RetrieveIdPage retrieveIdPage = addNewCardPage.clickOnDownloadViaUin();
-
-        OtpVerificationPage otpVerification = retrieveIdPage.setEnterIdTextBox(TestDataReader.readData("uin")).clickOnGenerateCardButton();
+        String uin=TestDataReader.readData("uin");
+        OtpVerificationPage otpVerification = retrieveIdPage.setEnterIdTextBox(uin).clickOnGenerateCardButton();
 
         otpVerification.enterOtp(BaseTestCase.getOtp(), Target.ANDROID);
 
@@ -795,7 +802,8 @@ public class VcBackupAndRestoreTest extends AndroidBaseTest {
         backupAndRestorePage.clickOnProceedButton();
 
 //        backupAndRestorePage.clickOnAddAnotherAccount();
-        backupAndRestorePage.enterEmailTextBox("anoopnehe98@gmail.com");
+        String email = TestDataReader.readData("emailsForBackupAndRestore");
+        backupAndRestorePage.enterEmailTextBox("email");
         backupAndRestorePage.clickOnNextButton();
         backupAndRestorePage.enterPasswordTextBox("Hello@98");
         backupAndRestorePage.clickOnNextButton();
@@ -870,8 +878,8 @@ public class VcBackupAndRestoreTest extends AndroidBaseTest {
         assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
         AddNewCardPage addNewCardPage = homePage.downloadCard();
         RetrieveIdPage retrieveIdPage = addNewCardPage.clickOnDownloadViaUin();
-
-        OtpVerificationPage otpVerification = retrieveIdPage.setEnterIdTextBox(TestDataReader.readData("uin")).clickOnGenerateCardButton();
+        String uin=TestDataReader.readData("uin");
+        OtpVerificationPage otpVerification = retrieveIdPage.setEnterIdTextBox(uin).clickOnGenerateCardButton();
 
         otpVerification.enterOtp(BaseTestCase.getOtp(), Target.ANDROID);
 
@@ -889,7 +897,8 @@ public class VcBackupAndRestoreTest extends AndroidBaseTest {
         backupAndRestorePage.clickOnProceedButton();
 
 //        backupAndRestorePage.clickOnAddAnotherAccount();
-        backupAndRestorePage.enterEmailTextBox("anoopnehe98@gmail.com");
+        String email = TestDataReader.readData("emailsForBackupAndRestore");
+        backupAndRestorePage.enterEmailTextBox("email");
         backupAndRestorePage.clickOnNextButton();
         backupAndRestorePage.enterPasswordTextBox("Hello@98");
         backupAndRestorePage.clickOnNextButton();

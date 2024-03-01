@@ -45,7 +45,8 @@ public class VcDownloadAndVerifyUsingEsignetTest extends IosBaseTest {
         addNewCardPage.clickOnContinueButtonInSigninPopupIos();
 
         esignetLoginPage.clickOnEsignetLoginWithOtpButton();
-        OtpVerificationPage otpVerification= esignetLoginPage.setEnterIdTextBox(TestDataReader.readData("uin"));
+        String uin = TestDataReader.readData("uin");
+        OtpVerificationPage otpVerification= esignetLoginPage.setEnterIdTextBox(uin);
         esignetLoginPage.clickOnGetOtpButton();
 
         otpVerification.enterOtpForEsignet(TestDataReader.readData("otp"), Target.IOS);
@@ -67,7 +68,7 @@ public class VcDownloadAndVerifyUsingEsignetTest extends IosBaseTest {
         assertEquals(detailedVcViewPage.getGenderInDetailedVcView(), TestDataReader.readData("gender"), "Verify if gender is displayed");
         assertEquals(detailedVcViewPage.getIdTypeValueInDetailedVcView(), TestDataReader.readData("idType"), "Verify if id type is displayed");
         assertEquals(detailedVcViewPage.getStatusInDetailedVcView(), TestDataReader.readData("status"), "Verify if status is displayed");
-        assertEquals(detailedVcViewPage.getUinInDetailedVcView(), TestDataReader.readData("uin"), "Verify if uin is displayed");
+        assertEquals(detailedVcViewPage.getUinInDetailedVcView(), uin, "Verify if uin is displayed");
         assertEquals(detailedVcViewPage.getPhoneInDetailedVcView(), TestDataReader.readData("phoneNumber"), "Verify if phone number is displayed");
         assertEquals(detailedVcViewPage.getEmailInDetailedVcView(), TestDataReader.readData("externalemail"), "Verify if email is displayed");
         assertTrue(detailedVcViewPage.isActivateButtonDisplayed(), "Verify if activate vc button displayed");
@@ -118,7 +119,8 @@ public class VcDownloadAndVerifyUsingEsignetTest extends IosBaseTest {
         esignetLoginPage.clickOnEsignetLoginWithOtpButton();
         
      //   assertTrue(esignetLoginPage.isEnterYourVidTextDisplayed(), "Verify if enter your vid text is displayed");
-        OtpVerificationPage otpVerification= esignetLoginPage.setEnterIdTextBox(TestDataReader.readData("vid"));
+        String vid = TestDataReader.readData("vid");
+        OtpVerificationPage otpVerification= esignetLoginPage.setEnterIdTextBox(vid);
         esignetLoginPage.clickOnGetOtpButton();
 
         otpVerification.enterOtpForEsignet(TestDataReader.readData("otp"), Target.IOS);
