@@ -2,7 +2,7 @@ import React from 'react';
 import {useTranslation} from 'react-i18next';
 import {Theme} from '../../components/ui/styleUtils';
 import {Modal} from '../../components/ui/Modal';
-import {Pressable, Dimensions} from 'react-native';
+import {Pressable, Dimensions, View} from 'react-native';
 import {Button, Column, Row, Text} from '../../components/ui';
 import testIDProps from '../../shared/commonUtil';
 import {SvgImage} from '../../components/ui/svg';
@@ -41,24 +41,29 @@ export const SharingStatusModal: React.FC<SharingStatusModalProps> = props => {
           <Row
             align="space-evenly"
             style={{marginBottom: Dimensions.get('screen').height * 0.06}}>
-            <Pressable
-              accessible={false}
-              testID="successfullyVcSharedHomeIcon"
-              onPress={props.goToHome}>
-              {SvgImage.SuccessHomeIcon()}
+            <Column style={{height: 75, justifyContent: 'space-between'}}>
+              <Pressable
+                accessible={false}
+                testID="successfullyVcSharedHomeIcon"
+                onPress={props.goToHome}>
+                {SvgImage.SuccessHomeIcon()}
+              </Pressable>
               <Text align="center" weight="bold">
                 {t('status.accepted.home')}
               </Text>
-            </Pressable>
-            <Pressable
-              accessible={false}
-              testID="successfullyVcSharedHistoryIcon"
-              onPress={props.goToHistory}>
-              {SvgImage.SuccessHistoryIcon()}
+            </Column>
+
+            <Column style={{height: 75, justifyContent: 'space-between'}}>
+              <Pressable
+                accessible={false}
+                testID="successfullyVcSharedHistoryIcon"
+                onPress={props.goToHistory}>
+                {SvgImage.SuccessHistoryIcon()}
+              </Pressable>
               <Text align="center" weight="bold">
                 {t('status.accepted.history')}
               </Text>
-            </Pressable>
+            </Column>
           </Row>
         ) : null}
         {props.gradientButtonTitle && (
