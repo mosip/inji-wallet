@@ -16,7 +16,7 @@ import {useBackupRestoreScreen} from '../Settings/BackupRestoreController';
 import {Icon} from 'react-native-elements';
 import testIDProps, {getDriveName} from '../../shared/commonUtil';
 import {HelpScreen} from '../../components/HelpScreen';
-import {isAndroid} from '../../shared/constants';
+import {isAndroid, isIOS} from '../../shared/constants';
 
 const BackupAndRestoreScreen: React.FC<BackupAndRestoreProps> = props => {
   const backupController = useBackupScreen();
@@ -25,7 +25,10 @@ const BackupAndRestoreScreen: React.FC<BackupAndRestoreProps> = props => {
   const {t} = useTranslation('BackupAndRestore');
 
   useEffect(() => {
-    if (!props.isLoading && backupController.lastBackupDetails === null) {
+    const shouldFetchlastBackupDetails = isIOS()
+      ? !props.isLoading
+      : !props.isLoading && backupController.lastBackupDetails === null;
+    if (shouldFetchlastBackupDetails) {
       backupController.LAST_BACKUP_DETAILS();
     }
   }, [props.isLoading, backupController.lastBackupDetails]);

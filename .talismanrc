@@ -143,10 +143,6 @@ fileignoreconfig:
     checksum: b0808e0c511412cde21fd169a9bbeaf3b77cb48f25418e12d341cc3ce1df5898
   - filename: machines/backupAndRestore/backupAndRestore.typegen.ts
     checksum: 509b9660553990841883c54f8986971f21c7315e7450c455bba2766738c58bee
-  - filename: machines/backupAndRestore/backup.ts
-    checksum: d3453abfc10400e094b841e84283efc194a4fe0443c63ec880c5ddd6741f5293
-  - filename: machines/backupAndRestore/backup.typegen.ts
-    checksum: 297e29da97e8d2c94b20b1aa17e069e3ca41a299ed4a595c9ca8810ea8bcdf2d
   - filename: components/BackupAndRestoreAllScreenBanner.tsx
     checksum: 2c98e7e83959c9dac4dd12da32f81483c3d334bd05e279637cf465475fbf54b8
     checksum: f26489ce4ac607884437ad06c3117cc34d6cbcbcd3dd5719790fbe01a0853ee5
@@ -178,37 +174,27 @@ fileignoreconfig:
     checksum: bbc69143bd37d065bba3800396301db5a0318e8b7ba51ecd49142dda68783a01  
   - filename: machines/backupRestore.ts
     checksum: bbc69143bd37d065bba3800396301db5a0318e8b7ba51ecd49142dda68783a01
-  - filename: machines/backupAndRestore/backupAndRestoreSetup.typegen.ts
-    checksum: 8203331f1628e01faa5e553e749372be278b477ca2d34a0cdafee1438248fb3c
   - filename: injitest/README.md
     checksum: 82974a6b9363512472272245e9b433f92e63377e58ba306980876b745181a09c
-  - filename: machines/backupAndRestore/backup.ts
-    checksum: 71cba6237f203a4a8df931a1b02669351466657f64fb6690545248fbad62f8b8
-  - filename: machines/backupAndRestore/backupAndRestoreSetup.ts
-    checksum: 75b07071aef4278f40f16861232b922e5ee8594efc9467984b072966fa7793b8
-  - filename: machines/backupAndRestore/backupAndRestoreSetup.typegen.ts
-    checksum: ad12de520a68fbd43560474ded24edf25a02f6ec90b67c726d6c5dedb579eb83
-  - filename: machines/backupAndRestore/backupAndRestoreSetup.ts
-    checksum: 397f2076504f851a981b0deff6eeac30041c775ee1c57b51e328fc09d52ef43e
   - filename: shared/VCMetadata.ts
     checksum: e93f988415bf91064e2cf5fbc09ff6c7226798baa5da721fa0715d5d0d6afddf
-  - filename: machines/backupAndRestore/backup.ts
-    checksum: 0127424d704e7dbefcb13e2d66d687e8fa94812728b4eb6bfa7768028425e9b3
-  - filename: machines/backupAndRestore/backup.typegen.ts
-    checksum: 7ddb7fa85112d52a0e486c06d066f7adcfb8445f7e9818eb9a2c8b0e70f5a8f9
   - filename: machines/backupRestore.ts
     checksum: 8f8725bb55dbc98083f819c74754a8eac258d15038e391a16ca1ab55a53d61f3
   - filename: machines/backupRestore.typegen.ts
     checksum: 85e92ddec56da8dcdd28b5a29dfabd88dd0435e619f822488bc4e19b83872289
-  - filename: machines/backupAndRestore/backupAndRestoreSetup.typegen.ts
-    checksum: dd5dc9c42800328c268f3e6d6c96a16e9686dbfa59735e721250dae3ce37e009
   - filename: ios/Podfile.lock
     checksum: 369fecac06b3c087b272e7920aa5ffe6734f261ae0af0c376a92ebf5c11415d4
-  - filename: machines/backupAndRestore/backupAndRestoreSetup.typegen.ts
-    checksum: dd5dc9c42800328c268f3e6d6c96a16e9686dbfa59735e721250dae3ce37e009
   - filename: screens/Home/MyVcsTab.tsx
     checksum: 8133e2fefddfd0207eb7207b660d317f9a6acafbab6a65762d29ea86e33787cb
   - filename: components/BackupAndRestoreBannerNotification.tsx
     checksum: 7bb544ecd2f691f8cef916d0463106ec67645253107dd407236ce3a81f4e9ba7
+  - filename: machines/backupAndRestore/backup.ts
+    checksum: a0c667ee882689056a8867f7a6d2d510546c4dcb792024112b28db24e21cc884
+  - filename: machines/backupAndRestore/backup.typegen.ts
+    checksum: acf45ed52679db29a23fa7d9e8307df5f4caa404eee49b742b6a5136ff647ffa
+  - filename: machines/backupAndRestore/backupAndRestoreSetup.ts
+    checksum: c21559a531b6c62013dc0d932e0e2666cf9bd1ea62e7681240e4983406c96732
+  - filename: machines/backupAndRestore/backupAndRestoreSetup.typegen.ts
+    checksum: 3d8b4183f386c73092a271db77434370260dbe1c91fc4193cb21a81f3b548cda
     version: ""
 
