@@ -1,16 +1,15 @@
 import {EventFrom, StateFrom, send} from 'xstate';
 import {createModel} from 'xstate/lib/model';
-import {AppServices} from '../shared/GlobalContext';
+import {AppServices} from '../../shared/GlobalContext';
 import fileStorage, {
-  backupDirectoryPath,
-  findMostRecentBackupFile,
+  cleanupLocalBackups,
   getBackupFilePath,
   unZipAndRemoveFile,
-} from '../shared/fileStorage';
-import Storage from '../shared/storage';
-import {StoreEvents} from './store';
-import Cloud from '../shared/CloudBackupAndRestoreUtils';
-import {TelemetryConstants} from '../shared/telemetry/TelemetryConstants';
+} from '../../shared/fileStorage';
+import Storage from '../../shared/storage';
+import {StoreEvents} from '../store';
+import Cloud from '../../shared/CloudBackupAndRestoreUtils';
+import {TelemetryConstants} from '../../shared/telemetry/TelemetryConstants';
 import {
   sendStartEvent,
   getStartEventData,
@@ -18,9 +17,9 @@ import {
   getImpressionEventData,
   sendEndEvent,
   getEndEventData,
-} from '../shared/telemetry/TelemetryUtils';
-import {VcEvents} from './VCItemMachine/vc';
-import {NETWORK_REQUEST_FAILED, TECHNICAL_ERROR} from '../shared/constants';
+} from '../../shared/telemetry/TelemetryUtils';
+import {VcEvents} from '../VCItemMachine/vc';
+import {NETWORK_REQUEST_FAILED, TECHNICAL_ERROR} from '../../shared/constants';
 
 const model = createModel(
   {
@@ -54,7 +53,7 @@ export const backupRestoreMachine = model.createMachine(
       events: {} as EventFrom<typeof model>,
     },
     id: 'backupRestore',
-    initial: 'preload',
+    initial: 'init',
     on: {
       BACKUP_RESTORE: [
         {
@@ -66,22 +65,6 @@ export const backupRestoreMachine = model.createMachine(
       },
     },
     states: {
-      preload: {
-        description:
-          'runs all pending restore migrations based on the state of the filestorage',
-        invoke: {
-          src: 'bootstrap',
-          onDone: [
-            {
-              cond: 'isBackupFile',
-              target: 'restoreBackup.readBackupFile',
-            },
-            {
-              target: 'init',
-            },
-          ],
-        },
-      },
       init: {},
       restoreBackup: {
         initial: 'checkStorageAvailability',
@@ -143,7 +126,8 @@ export const backupRestoreMachine = model.createMachine(
             entry: 'loadDataToMemory',
             on: {
               STORE_RESPONSE: {
-                target: 'deleteBackupDir',
+                actions: 'refreshVCs',
+                target: 'success',
               },
               STORE_ERROR: {
                 actions: 'setRestoreTechnicalError',
@@ -151,20 +135,19 @@ export const backupRestoreMachine = model.createMachine(
               },
             },
           },
-          deleteBackupDir: {
-            invoke: {
-              src: 'deleteBkpDir',
-              onDone: {
-                actions: 'refreshVCs',
-                target: 'success',
-              },
-            },
-          },
           success: {
-            entry: 'sendDataRestoreSuccessEvent',
+            entry: [
+              'unsetShowRestoreInProgress',
+              'sendDataRestoreSuccessEvent',
+              'cleanupFiles',
+            ],
           },
           failure: {
-            entry: 'sendDataRestoreFailureEvent',
+            entry: [
+              'unsetShowRestoreInProgress',
+              'sendDataRestoreFailureEvent',
+              'cleanupFiles',
+            ],
           },
         },
         on: {
@@ -211,6 +194,8 @@ export const backupRestoreMachine = model.createMachine(
           return event.dataFromBackupFile;
         },
       }),
+      cleanupFiles: () => cleanupLocalBackups(),
+
       sendDataRestoreStartEvent: () => {
         sendStartEvent(
           getStartEventData(TelemetryConstants.FlowType.dataRestore),
@@ -243,53 +228,9 @@ export const backupRestoreMachine = model.createMachine(
     },
 
     services: {
-      bootstrap: context => async () => {
-        const bkpDIR = await fileStorage.exists(backupDirectoryPath);
-        // 1. Does anything even exists?
-        if (!bkpDIR) {
-          // noop: nothing exists, quit
-          return '';
-        }
-        // 2. Check for .injibackup file
-        const bkpFile = await findMostRecentBackupFile(
-          backupDirectoryPath,
-          'injibackup',
-        );
-        if (bkpFile !== '') {
-          context.fileName = bkpFile;
-          return context.fileName;
-        }
-        // 3. Check for .zip files
-        const ZIPfile = await findMostRecentBackupFile();
-        if (ZIPfile === '') {
-          return '';
-        }
-        // go to loadBackupFile
-        // 4. Check for corrupted ZIP
-        let filePath = '';
-        try {
-          (filePath = await unZipAndRemoveFile(ZIPfile.split('.zip')[0])),
-            (context.fileName = filePath.split('/inji/backup/')[1]);
-          return getFileNameFromZIPfile(context.fileName);
-        } catch (_) {
-          console.log('got error during unzip deleting the zip');
-          await fileStorage.removeItem(backupDirectoryPath);
-          /*
-          Android Errors:
-            - Couldn’t open file...
-            - Failed to extract file...
-          iOS Errors:
-            - unzip_error...
-          */
-          return '';
-        }
-      },
       checkStorageAvailability: () => async () => {
         return await Storage.isMinimumLimitReached('minStorageRequired');
       },
-      deleteBkpDir: () => async () =>
-        (await fileStorage.exists(backupDirectoryPath)) &&
-        (await fileStorage.removeItem(backupDirectoryPath)),
 
       downloadLatestBackup: () => async () => {
         const backupFileName = await Cloud.downloadLatestBackup();
@@ -315,7 +256,6 @@ export const backupRestoreMachine = model.createMachine(
     },
 
     guards: {
-      isBackupFile: (_, event) => event.data.endsWith('.injibackup'),
       isMinimumStorageRequiredForBackupRestorationReached: (_context, event) =>
         Boolean(event.data),
     },
