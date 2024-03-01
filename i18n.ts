@@ -80,7 +80,7 @@ export function getValueForCurrentLanguage(
 }
 
 export function getClientNameForCurrentLanguage(
-    localizedData: LocalizedField[] | Object,
+    localizedData: Object,
     defaultLanguage = '@none',
 ) {
   const currentLanguage = i18next.language;
