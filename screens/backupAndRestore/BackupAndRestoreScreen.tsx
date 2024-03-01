@@ -31,7 +31,7 @@ const BackupAndRestoreScreen: React.FC<BackupAndRestoreProps> = props => {
     if (shouldFetchlastBackupDetails) {
       backupController.LAST_BACKUP_DETAILS();
     }
-  }, [props.isLoading, backupController.lastBackupDetails]);
+  }, [props.isLoading]);
 
   useEffect(() => {
     if (
