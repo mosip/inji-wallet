@@ -1,6 +1,5 @@
 import {request} from './request';
-import {API_CACHED_STORAGE_KEYS} from './storage';
-import {COMMON_PROPS_KEY} from './constants';
+import {API_CACHED_STORAGE_KEYS, COMMON_PROPS_KEY} from './constants';
 import {INITIAL_CONFIG} from './InitialConfig';
 import Keychain from 'react-native-keychain';
 import {getItem, setItem} from '../machines/store';

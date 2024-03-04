@@ -35,14 +35,6 @@ import {DocumentDirectoryPath, ReadDirItem} from 'react-native-fs';
 
 export const MMKV = new MMKVLoader().initialize();
 
-export const API_CACHED_STORAGE_KEYS = {
-  fetchIssuers: 'CACHE_FETCH_ISSUERS',
-  fetchIssuerConfig: (issuerId: string) =>
-    `CACHE_FETCH_ISSUER_CONFIG_${issuerId}`,
-  fetchIssuerWellknownConfig: (issuerId: string) =>
-    `CACHE_FETCH_ISSUER_WELLKNOWN_CONFIG_${issuerId}`,
-};
-
 async function generateHmac(
   encryptionKey: string,
   data: string,

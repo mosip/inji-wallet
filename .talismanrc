@@ -102,7 +102,7 @@ fileignoreconfig:
   - filename: shared/commonUtil.ts
     checksum: d2a355356bcaf8f7ef3b53ba93710cec15fefd0fdf31efd779eebd2bfab61c19
   - filename: shared/api.ts
-    checksum: 96a87e2128c30d16526cb1cb91b7da58f266d8c32d830adff11ca4d04e8c459f
+    checksum: 1c5d43058e8733a403e02d0b3fa5f56e11519efa4564e48c92b4491f4bd60508
   - filename: machines/backupWithEncryption.ts
     checksum: 038c12d30b2312fcbd9230a1c6ddb494d2e561fe0d09741335fa80ab67e2c550
   - filename: machines/backupWithEncryption.typegen.ts

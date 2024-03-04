@@ -57,6 +57,14 @@ export const APP_ID_DICTIONARY = [
     'M', 'N', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y',
 ];
 
+export const API_CACHED_STORAGE_KEYS = {
+  fetchIssuers: 'CACHE_FETCH_ISSUERS',
+  fetchIssuerConfig: (issuerId: string) =>
+    `CACHE_FETCH_ISSUER_CONFIG_${issuerId}`,
+  fetchIssuerWellknownConfig: (issuerId: string) =>
+    `CACHE_FETCH_ISSUER_WELLKNOWN_CONFIG_${issuerId}`,
+};
+
 export function isIOS(): boolean {
   return Platform.OS === 'ios';
 }
