@@ -61,15 +61,7 @@ export const getFieldValue = (
   }
   switch (field) {
     case 'status':
-      return (
-        <VCVerification
-          wellknown={wellknown}
-          isVerified={
-            props.vc ||
-            VCMetadata.fromVC(props.vc?.vcMetadata).isFromOpenId4VCI()
-          }
-        />
-      );
+      return <VCVerification wellknown={wellknown} isVerified={props.vc} />;
     case 'idType':
       return getIDType(verifiableCredential);
     case 'credentialRegistry':

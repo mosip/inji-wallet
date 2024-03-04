@@ -29,7 +29,6 @@ export const VCCardView: React.FC<
     isSavingFailedInIdle,
     storeErrorTranslationPath,
     generatedOn,
-    isVerified,
     DISMISS,
     KEBAB_POPUP,
   } = useVcItemController(props);
