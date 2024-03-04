@@ -10,9 +10,6 @@ import {
 } from '../telemetry/TelemetryUtils';
 import {TelemetryConstants} from '../telemetry/TelemetryConstants';
 
-export const COMMON_PROPS_KEY: string =
-  'CommonPropsKey-' + '6964d04a-9268-11ed-a1eb-0242ac120002';
-
 export default async function getAllConfigurations(
   host = undefined,
   isCachePreferred = true,

@@ -11,9 +11,8 @@ import {
 } from '../shared/constants';
 import {VCLabel} from '../types/VC/ExistingMosipVC/vc';
 import {StoreEvents} from './store';
-import getAllConfigurations, {
-  COMMON_PROPS_KEY,
-} from '../shared/commonprops/commonProps';
+import getAllConfigurations from '../shared/commonprops/commonProps';
+import {COMMON_PROPS_KEY} from '../shared/constants';
 import Storage from '../shared/storage';
 import ShortUniqueId from 'short-unique-id';
 import {__AppId} from '../shared/GlobalVariables';

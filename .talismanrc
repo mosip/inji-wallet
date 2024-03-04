@@ -99,8 +99,6 @@ fileignoreconfig:
     checksum: 054665c377b4a8e246ae1bfb419ab86d0cb1c120ae92cdc27ceed9cf1f39679b
   - filename: screens/Settings/BackupViaPassword.tsx
     checksum: 5fb2f98fb8a4efeb6b691b8a29e62eba64a99e9b2129bc0af1d11bc56bdfb374
-  - filename: shared/constants.ts
-    checksum: ae922a7acafab9c42746bd54e194c44532af81122837594c397713cef6922ca0
   - filename: shared/commonUtil.ts
     checksum: d2a355356bcaf8f7ef3b53ba93710cec15fefd0fdf31efd779eebd2bfab61c19
   - filename: shared/api.ts
@@ -212,5 +210,7 @@ fileignoreconfig:
     checksum: e7c8617cd9c510d5b6a053bc5c6164f02c48e85125aa925e0c4cf55cd1f29d22
   - filename: shared/storage.ts
     checksum: 357f6b6b41cb80e2df749ba6ea020404ff70d3991f56e19f6ce5e1be47ad6115
+  - filename: shared/constants.ts
+    checksum: 69aa79ed25fee2162de7c8e065930e18168551377420a520092bdf6a86c7712d
     version: ""
 

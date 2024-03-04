@@ -10,6 +10,9 @@ export let DEBUG_MODE_ENABLED = DEBUG_MODE === 'true';
 export const changeCrendetialRegistry = host => (MIMOTO_BASE_URL = host);
 export const changeEsignetUrl = host => (ESIGNET_BASE_URL = host);
 
+export const COMMON_PROPS_KEY: string =
+  'CommonPropsKey-' + '6964d04a-9268-11ed-a1eb-0242ac120002';
+
 export const MY_VCS_STORE_KEY = 'myVCs';
 
 export const RECEIVED_VCS_STORE_KEY = 'receivedVCs';
