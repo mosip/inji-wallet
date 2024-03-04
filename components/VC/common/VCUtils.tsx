@@ -41,6 +41,12 @@ export const DETAIL_VIEW_BOTTOM_SECTION_FIELDS = [
   'credentialRegistry',
 ];
 
+export const BOTTOM_SECTION_FIELDS_WITH_DETAILED_ADDRESS_FIELDS = [
+  ...getAddressFields(),
+  'email',
+  'credentialRegistry',
+];
+
 export const getFieldValue = (
   verifiableCredential: VerifiableCredential,
   field: string,

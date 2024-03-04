@@ -13,8 +13,8 @@ import i18n from '../../i18n';
 import {VerifiableCredential} from '../../types/VC/ExistingMosipVC/vc';
 import {CredentialWrapper} from '../../types/VC/EsignetMosipVC/vc';
 import {
+  BOTTOM_SECTION_FIELDS_WITH_DETAILED_ADDRESS_FIELDS,
   DETAIL_VIEW_ADD_ON_FIELDS,
-  getAddressFields,
 } from '../../components/VC/common/VCUtils';
 
 export const Protocols = {
@@ -259,14 +259,11 @@ export const getDetailedViewFields = async (
 };
 
 export const removeBottomSectionFields = fields => {
-  const bottomSectionFields = [
-    ...getAddressFields(),
-    'email',
-    'credentialRegistry',
-    'address',
-  ];
-
-  return fields.filter(fieldName => !bottomSectionFields.includes(fieldName));
+  return fields.filter(
+    fieldName =>
+      !BOTTOM_SECTION_FIELDS_WITH_DETAILED_ADDRESS_FIELDS.includes(fieldName) ||
+      fieldName !== 'address',
+  );
 };
 
 export const vcDownloadTimeout = async (): Promise<number> => {

@@ -20,10 +20,10 @@ import {
   isActivationNeeded,
 } from '../../../shared/openId4VCI/Utils';
 import {
+  BOTTOM_SECTION_FIELDS_WITH_DETAILED_ADDRESS_FIELDS,
   DETAIL_VIEW_BOTTOM_SECTION_FIELDS,
   DETAIL_VIEW_DEFAULT_FIELDS,
   fieldItemIterator,
-  getAddressFields,
   isVCLoaded,
   setBackgroundColour,
   setTextColor,
@@ -107,14 +107,11 @@ export const VCDetailView: React.FC<
     const availableFieldNames = Object.keys(
       verifiableCredential?.credentialSubject,
     );
-    const bottomSectionFields = [
-      ...getAddressFields(),
-      'email',
-      'credentialRegistry',
-    ];
 
     for (const fieldName of availableFieldNames) {
-      if (bottomSectionFields.includes(fieldName)) {
+      if (
+        BOTTOM_SECTION_FIELDS_WITH_DETAILED_ADDRESS_FIELDS.includes(fieldName)
+      ) {
         return true;
       }
     }

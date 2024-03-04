@@ -64,7 +64,7 @@ export const KebabPopUp: React.FC<KebabPopUpProps> = props => {
             service={props.service}
             flowType={VCShareFlowType.MINI_VIEW_SHARE}
           />
-          {props.vcHasImage ? (
+          {props.vcHasImage && (
             <>
               <ShareVc
                 testID="shareVcWithSelfieFromKebab"
@@ -79,8 +79,6 @@ export const KebabPopUp: React.FC<KebabPopUpProps> = props => {
                 ADD_WALLET_BINDING_ID={controller.ADD_WALLET_BINDING_ID}
               />
             </>
-          ) : (
-            <React.Fragment />
           )}
           <HistoryTab
             testID="viewActivityLog"
