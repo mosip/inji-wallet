@@ -16,11 +16,11 @@ import {WalletBindingResponse} from '../../../shared/cryptoutil/cryptoUtil';
 import {logoType} from '../../../machines/issuersMachine';
 import {SvgImage} from '../../ui/svg';
 import {
-  getCredentialIssuersWellKnownConfig,
+  getDetailedViewFields,
   isActivationNeeded,
 } from '../../../shared/openId4VCI/Utils';
 import {
-  DETAIL_VIEW_ADD_ON_FIELDS,
+  DETAIL_VIEW_BOTTOM_SECTION_FIELDS,
   DETAIL_VIEW_DEFAULT_FIELDS,
   fieldItemIterator,
   getAddressFields,
@@ -92,14 +92,14 @@ export const VCDetailView: React.FC<
   let [fields, setFields] = useState([]);
   const [wellknown, setWellknown] = useState(null);
   useEffect(() => {
-    getCredentialIssuersWellKnownConfig(
+    getDetailedViewFields(
       VCMetadata.fromVC(props.vc.vcMetadata).issuer,
       props.vc?.verifiableCredential?.wellKnown,
       props.vc?.verifiableCredential?.credentialTypes,
       DETAIL_VIEW_DEFAULT_FIELDS,
     ).then(response => {
       setWellknown(response.wellknown);
-      setFields(response.fields.concat(DETAIL_VIEW_ADD_ON_FIELDS));
+      setFields(response.fields);
     });
   }, [props.verifiableCredential?.wellKnown]);
 
@@ -159,7 +159,7 @@ export const VCDetailView: React.FC<
                   margin={'0 0 0 24'}
                   style={{flex: 1}}>
                   {fieldItemIterator(
-                    fields.slice(0, fields.length - 3),
+                    fields,
                     verifiableCredential,
                     wellknown,
                     props,
@@ -175,7 +175,7 @@ export const VCDetailView: React.FC<
                     ]}></View>
                   <Column padding="14">
                     {fieldItemIterator(
-                      fields.slice(fields.length - 3, fields.length),
+                      DETAIL_VIEW_BOTTOM_SECTION_FIELDS,
                       verifiableCredential,
                       wellknown,
                       props,

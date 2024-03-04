@@ -21,6 +21,8 @@ export const DETAIL_VIEW_DEFAULT_FIELDS = [
   'gender',
   'phone',
   'dateOfBirth',
+  'email',
+  'address',
 ];
 
 //todo UIN & VID to be removed once we get the fields in the wellknown endpoint
@@ -29,7 +31,11 @@ export const DETAIL_VIEW_ADD_ON_FIELDS = [
   'UIN',
   'VID',
   'status',
+  'credentialRegistry',
   'idType',
+];
+
+export const DETAIL_VIEW_BOTTOM_SECTION_FIELDS = [
   'email',
   'address',
   'credentialRegistry',

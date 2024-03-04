@@ -12,7 +12,10 @@ import {CACHED_API} from '../api';
 import i18n from '../../i18n';
 import {VerifiableCredential} from '../../types/VC/ExistingMosipVC/vc';
 import {CredentialWrapper} from '../../types/VC/EsignetMosipVC/vc';
-import {getAddressFields} from '../../components/VC/common/VCUtils';
+import {
+  DETAIL_VIEW_ADD_ON_FIELDS,
+  getAddressFields,
+} from '../../components/VC/common/VCUtils';
 
 export const Protocols = {
   OpenId4VCI: 'OpenId4VCI',
@@ -226,16 +229,44 @@ export const getCredentialIssuersWellKnownConfig = async (
       });
     }
   }
-
-  const addressFields = getAddressFields();
-  fields = fields.filter(
-    field => !addressFields.includes(field) && field !== 'email',
-  );
-
   return {
     wellknown: response,
     fields: fields,
   };
+};
+
+export const getDetailedViewFields = async (
+  issuer: string,
+  wellknown: string,
+  credentialTypes: Object[],
+  defaultFields: string[],
+) => {
+  let response = await getCredentialIssuersWellKnownConfig(
+    issuer,
+    wellknown,
+    credentialTypes,
+    defaultFields,
+  );
+
+  let updatedFieldsList = response.fields.concat(DETAIL_VIEW_ADD_ON_FIELDS);
+
+  updatedFieldsList = removeBottomSectionFields(updatedFieldsList);
+
+  return {
+    wellknown: response.wellknown,
+    fields: updatedFieldsList,
+  };
+};
+
+export const removeBottomSectionFields = fields => {
+  const bottomSectionFields = [
+    ...getAddressFields(),
+    'email',
+    'credentialRegistry',
+    'address',
+  ];
+
+  return fields.filter(fieldName => !bottomSectionFields.includes(fieldName));
 };
 
 export const vcDownloadTimeout = async (): Promise<number> => {
