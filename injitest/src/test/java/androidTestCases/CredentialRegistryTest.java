@@ -298,7 +298,8 @@ public class CredentialRegistryTest extends AndroidBaseTest {
          addNewCardPage.clickOnDownloadViaUin();
 
         assertTrue(retrieveIdPage.isRetrieveIdPageLoaded(), "Verify if retrieve id page is displayed");
-         retrieveIdPage.setEnterIdTextBox(TestDataReader.readData("uin")).clickOnGenerateCardButton();
+         String uin = TestDataReader.readData("uin");
+         retrieveIdPage.setEnterIdTextBox(uin).clickOnGenerateCardButton();
 
         assertTrue(otpVerification.isOtpVerificationPageLoaded(), "Verify if otp verification page is displayed");
         otpVerification.enterOtp(BaseTestCase.getOtp(), Target.ANDROID);
@@ -582,7 +583,8 @@ public class CredentialRegistryTest extends AndroidBaseTest {
         addNewCardPage.clickOnDownloadViaUin();
 
         assertTrue(retrieveIdPage.isRetrieveIdPageLoaded(), "Verify if retrieve id page is displayed");
-        retrieveIdPage.setEnterIdTextBox(TestDataReader.readData("uin")).clickOnGenerateCardButton();
+        String uin=TestDataReader.readData("uin");
+        retrieveIdPage.setEnterIdTextBox(uin).clickOnGenerateCardButton();
 
         assertTrue(otpVerification.isOtpVerificationPageLoaded(), "Verify if otp verification page is displayed");
         otpVerification.enterOtp(TestDataReader.readData("otp"), Target.ANDROID);

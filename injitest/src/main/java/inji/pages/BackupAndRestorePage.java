@@ -71,8 +71,8 @@ public class BackupAndRestorePage extends BasePage {
     @iOSXCUITFindBy(accessibility = "lastBackupTime")
     private WebElement lastBackupTime;
 
-    @AndroidFindBy(accessibility = "dataBackupSuccessPopupText")
-    @iOSXCUITFindBy(accessibility = "dataBackupSuccessPopupText")
+    @AndroidFindBy(accessibility = "dataBackupSuccessPopup")
+    @iOSXCUITFindBy(accessibility = "dataBackupSuccessPopup")
     private WebElement dataBackupSuccessPopup;
 
     @AndroidFindBy(accessibility = "close")
@@ -87,8 +87,8 @@ public class BackupAndRestorePage extends BasePage {
     @iOSXCUITFindBy(accessibility = "associatedAccountEmail")
     private WebElement associatedAccountEmail;
 
-    @AndroidFindBy(accessibility = "restoreBackupSuccessPopupText")
-    @iOSXCUITFindBy(accessibility = "restoreBackupSuccessPopupText")
+    @AndroidFindBy(accessibility = "restoreBackupSuccessPopup")
+    @iOSXCUITFindBy(accessibility = "restoreBackupSuccessPopup")
     private WebElement restoreBackupSuccessPopUp;
 
 
@@ -129,8 +129,8 @@ public class BackupAndRestorePage extends BasePage {
     @iOSXCUITFindBy(accessibility = "restoreSectionHeader")
     private WebElement restoreSectionHeader;
 
-    @AndroidFindBy(accessibility = "restoreFailure-noBackupFilePopupText")
-    @iOSXCUITFindBy(accessibility = "restoreFailure-noBackupFilePopupText")
+    @AndroidFindBy(accessibility = "restoreFailure-noBackupFilePopup")
+    @iOSXCUITFindBy(accessibility = "restoreFailure-noBackupFilePopup")
     private WebElement restoreFailurePopup;
 
     @AndroidFindBy(accessibility = "restoreInfo")

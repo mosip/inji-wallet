@@ -5,6 +5,8 @@ import io.appium.java_client.pagefactory.AndroidFindBy;
 import io.appium.java_client.pagefactory.iOSXCUITFindBy;
 import org.openqa.selenium.WebElement;
 
+import inji.utils.IosUtil;
+
 public class SharePage extends BasePage {
 
     @AndroidFindBy(accessibility = "camera")
@@ -122,11 +124,11 @@ public class SharePage extends BasePage {
     }
 
     public boolean isCameraPageLoaded() {
-        return this.isElementEnabled(holdCameraSteady);
+        return this.isElementEnabled(holdCameraSteady,30);
     }
 
     public boolean isFlipCameraClickable() {
-        return this.isElementEnabled(flipCamera);
+        return this.isElementEnabled(flipCamera,30);
     }
 
 }
