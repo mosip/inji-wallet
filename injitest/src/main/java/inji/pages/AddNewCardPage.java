@@ -12,7 +12,7 @@ public class AddNewCardPage extends BasePage{
     private WebElement addNewCardHeader;
 
     @AndroidFindBy(accessibility = "issuerHeading-Mosip")
-    @iOSXCUITFindBy(accessibility = "issuer-Mosip")
+    @iOSXCUITFindBy(accessibility = "issuerHeading-Mosip")
     private WebElement downloadViaUin;
     
     @AndroidFindBy(accessibility = "goBack")

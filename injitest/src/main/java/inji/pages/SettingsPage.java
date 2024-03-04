@@ -5,6 +5,7 @@ import io.appium.java_client.pagefactory.AndroidFindBy;
 import io.appium.java_client.pagefactory.iOSXCUITFindBy;
 import org.openqa.selenium.WebElement;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
@@ -28,19 +29,19 @@ public class SettingsPage extends BasePage {
     private WebElement languageButtonInArabic;
 
     @AndroidFindBy(accessibility = "fil")
-    @iOSXCUITFindBy(iOSClassChain = "**/XCUIElementTypeStaticText[`label == \"Filipino\"`]")
+    @iOSXCUITFindBy(accessibility = "fil")
     private WebElement filipinoLanguageButton;
     
     @AndroidFindBy(accessibility = "hi")
-    @iOSXCUITFindBy(accessibility = "हिंदी")
+    @iOSXCUITFindBy(accessibility = "hi")
     private WebElement hindiLanguageButton;
     
     @AndroidFindBy(accessibility = "ta")
-    @iOSXCUITFindBy(iOSClassChain = "**/XCUIElementTypeStaticText[`label == \"தமிழ்\"`]")
+    @iOSXCUITFindBy(accessibility = "ta")
     private WebElement tamilLanguageButton;
     
     @AndroidFindBy(accessibility = "kn")
-    @iOSXCUITFindBy(iOSClassChain = "**/XCUIElementTypeStaticText[`label == \"தமிழ்\"`]")
+    @iOSXCUITFindBy(accessibility = "kn")
     private WebElement kannadaLanguageButton;
 
 
@@ -79,7 +80,7 @@ public class SettingsPage extends BasePage {
     public WebElement receiveCardInfilipinoLanguageText;
 
     @AndroidFindBy(accessibility = "ar")
-    @iOSXCUITFindBy(accessibility = "عربى")
+    @iOSXCUITFindBy(accessibility = "ar")
     private WebElement arabicLanguageButton;
     
     @AndroidFindBy(accessibility = "arrowLeft")
