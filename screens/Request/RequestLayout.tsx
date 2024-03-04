@@ -11,9 +11,6 @@ import {useReceivedVcsTab} from '../Home/ReceivedVcsTabController';
 import {REQUEST_ROUTES} from '../../routes/routesConstants';
 import {SquircleIconPopUpModal} from '../../components/ui/SquircleIconPopUpModal';
 import {BannerNotificationContainer} from '../../components/BannerNotificationContainer';
-import {Theme} from '../../components/ui/styleUtils';
-import {I18nManager} from 'react-native';
-
 import {SharingStatusModal} from '../Scan/SharingStatusModal';
 import {SvgImage} from '../../components/ui/svg';
 
@@ -47,26 +44,13 @@ export const RequestLayout: React.FC = () => {
             component={ReceiveVcScreen}
             options={{
               title: t('incomingVc'),
-              headerLeft: () =>
-                !I18nManager.isRTL && (
-                  <HeaderBackButton
-                    onPress={() => {
-                      controller.RESET();
-                    }}
-                    style={Theme.Styles.IconContainer}
-                    tintColor={Theme.Colors.Icon}
-                  />
-                ),
-              headerRight: () =>
-                I18nManager.isRTL && (
-                  <HeaderBackButton
-                    onPress={() => {
-                      controller.RESET();
-                    }}
-                    style={Theme.Styles.IconContainer}
-                    tintColor={Theme.Colors.Icon}
-                  />
-                ),
+              headerLeft: () => (
+                <HeaderBackButton
+                  onPress={() => {
+                    controller.RESET();
+                  }}
+                />
+              ),
             }}
           />
         )}

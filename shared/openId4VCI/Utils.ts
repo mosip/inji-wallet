@@ -19,6 +19,7 @@ export const Protocols = {
 };
 
 export const Issuers = {
+  Mosip: '',
   Sunbird: 'Sunbird',
   ESignet: 'ESignet',
 };
@@ -39,16 +40,18 @@ export function getIdType(issuer: string | undefined): string {
 export const ID_TYPE = {
   MOSIPVerifiableCredential: i18n.t('VcDetails:nationalCard'),
   InsuranceCredential: i18n.t('VcDetails:insuranceCard'),
+  OpenG2PBeneficiaryVerifiableCredential: i18n.t('VcDetails:beneficiaryCard'),
+  OpenG2PRegistryVerifiableCredential: i18n.t('VcDetails:socialRegistryCard'),
 };
 
 export const getIDType = (verifiableCredential: VerifiableCredential) => {
   return ID_TYPE[verifiableCredential.type[1]];
 };
 
-export const ACTIVATION_NOT_NEEDED = [Issuers.Sunbird];
+export const ACTIVATION_NEEDED = [Issuers.ESignet, Issuers.Mosip];
 
 export const isActivationNeeded = (issuer: string) => {
-  return ACTIVATION_NOT_NEEDED.indexOf(issuer) === -1;
+  return ACTIVATION_NEEDED.indexOf(issuer) !== -1;
 };
 
 export const Issuers_Key_Ref = 'OpenId4VCI_KeyPair';
