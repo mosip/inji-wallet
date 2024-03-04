@@ -51,7 +51,15 @@ public class TestDataReader {
             case "dateOfBirthForVidEsignet":
                 return "04/15/1992";
             case "aid":
-                return UinGenerationUtil.getRandomAids();
+                return UinGenerationUtil.getRandomAidData();
+            case "emailPassword":
+                return "Hello@98";
+            case "denyEmailPassword":
+                return "Hello@988";
+            case "denyEmailId":
+                return "mosiptest988@gmail.com";
+            case "noBackupMail":
+                return "mosiptest99@gmail.com";
             case "setExcludedGroups":
                 return "AVT,PVT";
             case "uin":

@@ -45,7 +45,7 @@ public class OtpVerificationPage extends BasePage {
     @iOSXCUITFindBy(iOSClassChain = "**/XCUIElementTypeStaticText[`label == \"VID not available in database\"`]")
     private WebElement vidNotAvailableMessage;
 
-    @AndroidFindBy(xpath = "//android.view.ViewGroup[@resource-id=\"resendCodeView\"]") //as parent component has correct property
+    @AndroidFindBy(xpath = "//android.view.ViewGroup[@resource-id=\"resendCodeView\"]") //Not using accessibility id as parent component has correct element property
     @iOSXCUITFindBy(accessibility = "resendCode")
     private WebElement resendCodeButton;
 
@@ -114,11 +114,8 @@ public class OtpVerificationPage extends BasePage {
     
     public void clickOnResendButton() {
         ((HidesKeyboard) driver).hideKeyboard();
-        if(isElementDisplayed(waitPopupButton)) {
-            clickOnElement(waitPopupButton);
-        }
-            retrieClickOnElemet(resendCodeButton);
-
+        clickIfVisible(waitPopupButton);
+        retrieClickOnElemet(resendCodeButton);
     }
 
     public boolean confirmPopupHeaderDisplayed() {

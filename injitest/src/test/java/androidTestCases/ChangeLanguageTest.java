@@ -579,7 +579,7 @@ public class ChangeLanguageTest extends AndroidBaseTest {
         assertEquals(addNewCardPage.verifyLanguageForAddNewCardGuideMessage(),"يرجى اختيار جهة الإصدار المفضلة لديك من الخيارات أدناه لإضافة بطاقة جديدة.");
         RetrieveIdPage retrieveIdPage = addNewCardPage.clickOnDownloadViaUin();
         String uin= TestDataReader.readData("uin");
-        OtpVerificationPage otpVerification = retrieveIdPage.setEnterIdTextBox(TestDataReader.readData("uin")).clickOnGenerateCardButton();
+        OtpVerificationPage otpVerification = retrieveIdPage.setEnterIdTextBox(uin).clickOnGenerateCardButton();
 
         assertTrue(otpVerification.isOtpVerificationPageLoaded(), "Verify if otp verification page is displayed");
         otpVerification.enterOtp(BaseTestCase.getOtp(), Target.ANDROID);

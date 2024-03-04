@@ -135,12 +135,11 @@ public class PinVcTest extends AndroidBaseTest {
         assertTrue(addNewCardPage.isAddNewCardPageLoaded(), "Verify if add new card page is displayed");
         EsignetLoginPage esignetLoginPage =  addNewCardPage.clickOnDownloadViaEsignet();
 
-//        assertTrue(esignetLoginPage.isEsignetLoginPageDisplayed(), "Verify if esignet login page displayed");
         esignetLoginPage.clickOnEsignetLoginWithOtpButton();
         
         assertTrue(esignetLoginPage.isEnterYourVidTextDisplayed(), "Verify if enter your vid text is displayed");
         String uin=TestDataReader.readData("uin");
-        OtpVerificationPage otpVerification= esignetLoginPage.setEnterIdTextBox(TestDataReader.readData("uin"));
+        OtpVerificationPage otpVerification= esignetLoginPage.setEnterIdTextBox(uin);
         
         esignetLoginPage.clickOnGetOtpButton();
         assertTrue(esignetLoginPage.isOtpHasSendMessageDisplayed(),"verify if otp page is displayed");

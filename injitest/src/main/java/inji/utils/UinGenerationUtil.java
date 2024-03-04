@@ -38,45 +38,17 @@ public class UinGenerationUtil {
     }
 
         public static String getRandomUin () {
-            ObjectMapper mapper = new ObjectMapper();
-            ArrayNode arrayNode = null;
-            try {
-                arrayNode = (ArrayNode) mapper.readTree(new File(System.getProperty("user.dir") + "/src/main/resources/Uins.json"));
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-            Random random = new Random();
-            int randomIndex = random.nextInt(arrayNode.size());
-            String randomNumber = arrayNode.get(randomIndex).toString();
-            return randomNumber;
+
+            return getRandomUinOrVidOrAid("Uins.json");
         }
 
         public static String getRandomVid () {
-            ObjectMapper mapper = new ObjectMapper();
-            ArrayNode arrayNode = null;
-            try {
-                arrayNode = (ArrayNode) mapper.readTree(new File(System.getProperty("user.dir") + "/src/main/resources/Vids.json"));
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-            Random random = new Random();
-            int randomIndex = random.nextInt(arrayNode.size());
-            String randomNumber = arrayNode.get(randomIndex).toString();
-            return randomNumber;
+            return getRandomUinOrVidOrAid("Vids.json");
         }
 
-        public static String getRandomAids () {
-            ObjectMapper mapper = new ObjectMapper();
-            ArrayNode arrayNode = null;
-            try {
-                arrayNode = (ArrayNode) mapper.readTree(new File(System.getProperty("user.dir") + "/src/main/resources/Aids.json"));
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-            Random random = new Random();
-            int randomIndex = random.nextInt(arrayNode.size());
-            String randomNumber = arrayNode.get(randomIndex).toString();
-            return randomNumber;
+        public static String getRandomAidData () {
+
+            return getRandomUinOrVidOrAid("AidData.json");
         }
 
     public static String getRandomEmails () {
@@ -92,5 +64,19 @@ public class UinGenerationUtil {
         String email = arrayNode.get(randomIndex).asText();
         String emailValue=email.stripLeading().stripTrailing();
         return emailValue;
+    }
+
+    public static String getRandomUinOrVidOrAid (String jsonFileName) {
+        ObjectMapper mapper = new ObjectMapper();
+        ArrayNode arrayNode = null;
+        try {
+            arrayNode = (ArrayNode) mapper.readTree(new File(System.getProperty("user.dir") + "/src/main/resources/" + jsonFileName));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        Random random = new Random();
+        int randomIndex = random.nextInt(arrayNode.size());
+        String randomNumber = arrayNode.get(randomIndex).toString();
+        return randomNumber;
     }
     }

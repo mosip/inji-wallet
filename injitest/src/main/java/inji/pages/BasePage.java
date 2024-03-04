@@ -155,25 +155,19 @@ public class BasePage {
         return false;
     }
 
-
-
-    public boolean retrieClickOnElemet(WebElement element) {
+    public void retrieClickOnElemet(WebElement element) {
         int maxRetries = 3;
         for (int i = 0; i < maxRetries; i++) {
             try {
                 clickOnElement(element);
-                return true;
             } catch (StaleElementReferenceException e) {
             }
         }
-        return false;
     }
-    public void scrollIfRequiredAndClick( WebElement element){
-        if (!isElementDisplayed(element)){
-            IosUtil.scrollToElement(driver,58,712,160,129);
-        }
-        clickOnElement(element);
 
-    }
-    
+   public void  clickIfVisible(WebElement element){
+       if(isElementDisplayed(element)) {
+           clickOnElement(element);
+       }
+   }
 }

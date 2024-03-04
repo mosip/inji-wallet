@@ -14,16 +14,12 @@ public class SetPasscode extends BasePage {
     @AndroidFindBy(xpath = "//*[contains(@text,'Set Passcode')]")
     private WebElement setPasscodeHeader;
 
-
     @iOSXCUITFindBy(accessibility = "Done")
     private WebElement doneButton;
 
     @AndroidFindBy(xpath = "//android.view.View[contains(@resource-id, \"otp_verify_input\")]//android.widget.EditText[1]")
     @iOSXCUITFindBy(xpath = "//XCUIElementTypeOther[@name=\"e-Signet\"]/XCUIElementTypeOther[7]/XCUIElementTypeTextField[1]")
     private WebElement inputOtp;
-
-    //XCUIElementTypeOther[@name="e-Signet"]/XCUIElementTypeOther[6]/XCUIElementTypeTextField[1]
-
 
     public SetPasscode(AppiumDriver driver) {
         super(driver);

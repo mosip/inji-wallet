@@ -4,6 +4,7 @@ import BaseTest.AndroidBaseTest;
 import inji.api.BaseTestCase;
 import inji.constants.Target;
 import inji.pages.*;
+import inji.utils.IosUtil;
 import inji.utils.TestDataReader;
 import org.testng.annotations.Test;
 
@@ -54,7 +55,7 @@ public class VcBackupAndRestoreTest extends AndroidBaseTest {
         String email = TestDataReader.readData("emailsForBackupAndRestore");
         backupAndRestorePage.enterEmailTextBox(email);
         backupAndRestorePage.clickOnNextButton();
-        backupAndRestorePage.enterPasswordTextBox("Hello@98");
+        backupAndRestorePage.enterPasswordTextBox(TestDataReader.readData("emailPassword"));
         backupAndRestorePage.clickOnNextButton();
         backupAndRestorePage.clickOnAgreeButton();
 
@@ -144,9 +145,10 @@ public class VcBackupAndRestoreTest extends AndroidBaseTest {
         backupAndRestorePage.clickOnProceedButton();
 
      //   backupAndRestorePage.clickOnAddAnotherAccount();
-        backupAndRestorePage.enterEmailTextBox("mosiptest988@gmail.com");
+        String denyMail= TestDataReader.readData("denyEmailId");
+        backupAndRestorePage.enterEmailTextBox(denyMail);
         backupAndRestorePage.clickOnNextButton();
-        backupAndRestorePage.enterPasswordTextBox("Hello@988");
+        backupAndRestorePage.enterPasswordTextBox(TestDataReader.readData("denyEmailPassword"));
         backupAndRestorePage.clickOnNextButton();
 
         backupAndRestorePage.clickOnAgreeButton();
@@ -203,7 +205,7 @@ public class VcBackupAndRestoreTest extends AndroidBaseTest {
         String email = TestDataReader.readData("emailsForBackupAndRestore");
         backupAndRestorePage.enterEmailTextBox(email);
         backupAndRestorePage.clickOnNextButton();
-        backupAndRestorePage.enterPasswordTextBox("Hello@98");
+        backupAndRestorePage.enterPasswordTextBox(TestDataReader.readData("emailPassword"));
         backupAndRestorePage.clickOnNextButton();
         backupAndRestorePage.clickOnAgreeButton();
 
@@ -260,9 +262,10 @@ public class VcBackupAndRestoreTest extends AndroidBaseTest {
         backupAndRestorePage.clickOnProceedButton();
 
 //        backupAndRestorePage.clickOnAddAnotherAccount();
-        backupAndRestorePage.enterEmailTextBox("mosiptest99@gmail.com");
+        String mailWithNoBackup= TestDataReader.readData("noBackupMail");
+        backupAndRestorePage.enterEmailTextBox(mailWithNoBackup);
         backupAndRestorePage.clickOnNextButton();
-        backupAndRestorePage.enterPasswordTextBox("Hello@98");
+        backupAndRestorePage.enterPasswordTextBox(TestDataReader.readData("emailPassword"));
         backupAndRestorePage.clickOnNextButton();
         backupAndRestorePage.clickOnAgreeButton();
 
@@ -315,7 +318,7 @@ public class VcBackupAndRestoreTest extends AndroidBaseTest {
         String email = TestDataReader.readData("emailsForBackupAndRestore");
         backupAndRestorePage.enterEmailTextBox(email);
         backupAndRestorePage.clickOnNextButton();
-        backupAndRestorePage.enterPasswordTextBox("Hello@98");
+        backupAndRestorePage.enterPasswordTextBox(TestDataReader.readData("emailPassword"));
         backupAndRestorePage.clickOnNextButton();
         backupAndRestorePage.clickOnAgreeButton();
         Thread.sleep(3000);
@@ -493,7 +496,7 @@ public class VcBackupAndRestoreTest extends AndroidBaseTest {
         String email = TestDataReader.readData("emailsForBackupAndRestore");
         backupAndRestorePage.enterEmailTextBox(email);
         backupAndRestorePage.clickOnNextButton();
-        backupAndRestorePage.enterPasswordTextBox("Hello@98");
+        backupAndRestorePage.enterPasswordTextBox(TestDataReader.readData("emailPassword"));
         backupAndRestorePage.clickOnNextButton();
         backupAndRestorePage.clickOnAgreeButton();
 
@@ -558,7 +561,7 @@ public class VcBackupAndRestoreTest extends AndroidBaseTest {
         String email = TestDataReader.readData("emailsForBackupAndRestore");
         backupAndRestorePage.enterEmailTextBox(email);
         backupAndRestorePage.clickOnNextButton();
-        backupAndRestorePage.enterPasswordTextBox("Hello@98");
+        backupAndRestorePage.enterPasswordTextBox(TestDataReader.readData("emailPassword"));
         backupAndRestorePage.clickOnNextButton();
         backupAndRestorePage.clickOnAgreeButton();
 
@@ -614,7 +617,7 @@ public class VcBackupAndRestoreTest extends AndroidBaseTest {
         String email = TestDataReader.readData("emailsForBackupAndRestore");
         backupAndRestorePage.enterEmailTextBox(email);
         backupAndRestorePage.clickOnNextButton();
-        backupAndRestorePage.enterPasswordTextBox("Hello@98");
+        backupAndRestorePage.enterPasswordTextBox(TestDataReader.readData("emailPassword"));
         backupAndRestorePage.clickOnNextButton();
         backupAndRestorePage.clickOnAgreeButton();
 
@@ -714,7 +717,7 @@ public class VcBackupAndRestoreTest extends AndroidBaseTest {
         String email = TestDataReader.readData("emailsForBackupAndRestore");
         backupAndRestorePage.enterEmailTextBox(email);
         backupAndRestorePage.clickOnNextButton();
-        backupAndRestorePage.enterPasswordTextBox("Hello@98");
+        backupAndRestorePage.enterPasswordTextBox(TestDataReader.readData("emailPassword"));
         backupAndRestorePage.clickOnNextButton();
         backupAndRestorePage.clickOnAgreeButton();
 
@@ -814,7 +817,7 @@ public class VcBackupAndRestoreTest extends AndroidBaseTest {
         String email = TestDataReader.readData("emailsForBackupAndRestore");
         backupAndRestorePage.enterEmailTextBox(email);
         backupAndRestorePage.clickOnNextButton();
-        backupAndRestorePage.enterPasswordTextBox("Hello@98");
+        backupAndRestorePage.enterPasswordTextBox(TestDataReader.readData("emailPassword"));
         backupAndRestorePage.clickOnNextButton();
         backupAndRestorePage.clickOnAgreeButton();
 
@@ -909,7 +912,7 @@ public class VcBackupAndRestoreTest extends AndroidBaseTest {
         String email = TestDataReader.readData("emailsForBackupAndRestore");
         backupAndRestorePage.enterEmailTextBox(email);
         backupAndRestorePage.clickOnNextButton();
-        backupAndRestorePage.enterPasswordTextBox("Hello@98");
+        backupAndRestorePage.enterPasswordTextBox(TestDataReader.readData("emailPassword"));
         backupAndRestorePage.clickOnNextButton();
         backupAndRestorePage.clickOnAgreeButton();
 
