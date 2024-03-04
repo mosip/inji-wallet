@@ -155,6 +155,8 @@ public class BasePage {
         return false;
     }
 
+
+
     public boolean retrieClickOnElemet(WebElement element) {
         int maxRetries = 3;
         for (int i = 0; i < maxRetries; i++) {

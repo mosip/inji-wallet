@@ -38,8 +38,14 @@ public class SunbirdLoginPage extends BasePage {
     private WebElement clickOnSetButton;
 
     @AndroidFindBy(xpath = "//android.view.View[@content-desc='01 January 2024']")
-    @iOSXCUITFindBy(iOSClassChain = "**/XCUIElementTypeButton[`name == \"Monday, 1 January\"`]")
+    @iOSXCUITFindBy(xpath = "//XCUIElementTypeButton[@name=\"Monday, January 1\"]")
     private WebElement dateOfBirth;
+
+    @iOSXCUITFindBy(xpath = "//XCUIElementTypeCollectionView//XCUIElementTypeButton[@name=\"Monday, 1 January\"]")
+    private WebElement dateOfBirthSecond;
+    @iOSXCUITFindBy(xpath = "//XCUIElementTypeStaticText[@name=\"January 2024\"]")
+    private WebElement January2024;
+
     @AndroidFindBy(xpath = "//android.widget.Button[@resource-id=\"verify_form\"]")
     @iOSXCUITFindBy(iOSClassChain = "**/XCUIElementTypeButton[`name == \"Login\"`]")
     private WebElement loginButton;
@@ -137,13 +143,16 @@ public class SunbirdLoginPage extends BasePage {
     public void enterDateOfBirthTextBox() {
         clickOnElement(enterDateOfBirthTextBox);
         int MAX_ATTEMPTS = 12;
-        if (!isElementDisplayed(dateOfBirth, 5)) {
+        if (!isElementDisplayed(dateOfBirth, 10)) {
             for (int i = 0; i < MAX_ATTEMPTS; i++) {
                 try {
                     clickOnElement(previousMonth);
-                    if(isElementDisplayed(dateOfBirth,3)) {
+                    if(isElementDisplayed(dateOfBirth,5)) {
+                        break;
+                    } else if (isElementDisplayed(dateOfBirthSecond,5)) {
                         break;
                     }
+
                 } catch (TimeoutException e) {
                 } catch (NoSuchElementException e) {
                     break;
@@ -151,8 +160,11 @@ public class SunbirdLoginPage extends BasePage {
             }
         }
 
-        if (isElementDisplayed(dateOfBirth)) {
+        if (isElementDisplayed(dateOfBirth,5)) {
             clickOnElement(dateOfBirth);
+            clickOnElement(clickOnSetButton);
+        } else if (isElementDisplayed(dateOfBirthSecond)) {
+            clickOnElement(dateOfBirthSecond);
             clickOnElement(clickOnSetButton);
         }
     }

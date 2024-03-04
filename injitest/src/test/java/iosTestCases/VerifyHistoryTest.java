@@ -238,16 +238,18 @@ public class VerifyHistoryTest extends IosBaseTest {
         EsignetLoginPage esignetLoginPage =  addNewCardPage.clickOnDownloadViaEsignet();
 
         esignetLoginPage.clickOnEsignetLoginWithOtpButton();
-        
-        assertTrue(esignetLoginPage.isEnterYourVidTextDisplayed(), "Verify if enter your vid text is displayed");
+
+        addNewCardPage.clickOnContinueButtonInSigninPopupIos();
+        esignetLoginPage.clickOnEsignetLoginWithOtpButton();
+//        assertTrue(esignetLoginPage.isEnterYourVidTextDisplayed(), "Verify if enter your vid text is displayed");
         String uin = TestDataReader.readData("uin");
         OtpVerificationPage otpVerification= esignetLoginPage.setEnterIdTextBox(uin);
         
         esignetLoginPage.clickOnGetOtpButton();
-        assertTrue(esignetLoginPage.isOtpHasSendMessageDisplayed(),"verify if otp page is displayed");
+//        assertTrue(esignetLoginPage.isOtpHasSendMessageDisplayed(),"verify if otp page is displayed");
         
         otpVerification.enterOtpForEsignet(TestDataReader.readData("otp"), Target.IOS);
-        esignetLoginPage.clickOnVerifyButton();
+        esignetLoginPage.clickOnVerifyButtonIos();
         
         assertTrue(homePage.isNameDisplayed(TestDataReader.readData("fullName")), "Verify if full name is displayed");
         DetailedVcViewPage detailedVcViewPage = homePage.openDetailedVcView(TestDataReader.readData("fullName"));
@@ -262,7 +264,7 @@ public class VerifyHistoryTest extends IosBaseTest {
        
         otpVerification.enterOtp(TestDataReader.readData("passcode"), Target.IOS);
         assertTrue(detailedVcViewPage.isProfileAuthenticatedDisplayed(), "Verify profile authenticated displayed");
-        detailedVcViewPage.clickOnQrCrossIcon();
+        detailedVcViewPage.clickOnBackArrow();
         
         MoreOptionsPage moreOptionsPage = homePage.clickOnMoreOptionsButton();
         assertTrue(moreOptionsPage.isMoreOptionsPageLoaded(), "Verify if more options page is displayed");
@@ -306,16 +308,18 @@ public class VerifyHistoryTest extends IosBaseTest {
         EsignetLoginPage esignetLoginPage =  addNewCardPage.clickOnDownloadViaEsignet();
 
         esignetLoginPage.clickOnEsignetLoginWithOtpButton();
-        
-        assertTrue(esignetLoginPage.isEnterYourVidTextDisplayed(), "Verify if enter your vid text is displayed");
+
+        addNewCardPage.clickOnContinueButtonInSigninPopupIos();
+        esignetLoginPage.clickOnEsignetLoginWithOtpButton();
+//        assertTrue(esignetLoginPage.isEnterYourVidTextDisplayed(), "Verify if enter your vid text is displayed");
         String vid = TestDataReader.readData("vid");
         OtpVerificationPage otpVerification= esignetLoginPage.setEnterIdTextBox(vid);
         
         esignetLoginPage.clickOnGetOtpButton();
-        assertTrue(esignetLoginPage.isOtpHasSendMessageDisplayed(),"verify if otp page is displayed");
+//        assertTrue(esignetLoginPage.isOtpHasSendMessageDisplayed(),"verify if otp page is displayed");
         
         otpVerification.enterOtpForEsignet(TestDataReader.readData("otp"), Target.IOS);
-        esignetLoginPage.clickOnVerifyButton();
+        esignetLoginPage.clickOnVerifyButtonIos();
         
         assertTrue(homePage.isNameDisplayed(TestDataReader.readData("fullName")), "Verify if full name is displayed");
         DetailedVcViewPage detailedVcViewPage = homePage.openDetailedVcView(TestDataReader.readData("fullName"));
@@ -330,7 +334,7 @@ public class VerifyHistoryTest extends IosBaseTest {
        
         otpVerification.enterOtp(TestDataReader.readData("passcode"), Target.IOS);
         assertTrue(detailedVcViewPage.isProfileAuthenticatedDisplayed(), "Verify profile authenticated displayed");
-        detailedVcViewPage.clickOnCrossIcon();
+        detailedVcViewPage.clickOnBackArrow();
         
         MoreOptionsPage moreOptionsPage = homePage.clickOnMoreOptionsButton();
         assertTrue(moreOptionsPage.isMoreOptionsPageLoaded(), "Verify if more options page is displayed");

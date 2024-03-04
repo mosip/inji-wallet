@@ -89,7 +89,8 @@ public class UinGenerationUtil {
         }
         Random random = new Random();
         int randomIndex = random.nextInt(arrayNode.size());
-        String randomNumber = arrayNode.get(randomIndex).toString();
-        return randomNumber;
+        String email = arrayNode.get(randomIndex).asText();
+        String emailValue=email.stripLeading().stripTrailing();
+        return emailValue;
     }
     }
