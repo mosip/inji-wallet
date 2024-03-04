@@ -3,9 +3,8 @@ import {Row, Text} from './ui';
 import {Theme} from './ui/styleUtils';
 import React from 'react';
 import {useTranslation} from 'react-i18next';
-import {setTextColor} from './VC/common/VCUtils';
 
-export const VCVerification: React.FC = ({wellknown}: any) => {
+export const VCVerification: React.FC = ({textColor}: any) => {
   const {t} = useTranslation('VcDetails');
   return (
     <Row
@@ -21,7 +20,7 @@ export const VCVerification: React.FC = ({wellknown}: any) => {
         color={Theme.Colors.Details}
         weight="semibold"
         size="smaller"
-        style={[Theme.Styles.detailsValue, setTextColor(wellknown)]}>
+        style={[Theme.Styles.detailsValue, textColor]}>
         {t('valid')}
       </Text>
     </Row>

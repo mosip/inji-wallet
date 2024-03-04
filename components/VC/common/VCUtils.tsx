@@ -48,7 +48,7 @@ export const getFieldValue = (
   }
   switch (field) {
     case 'status':
-      return <VCVerification wellknown={wellknown} />;
+      return <VCVerification textColor={setTextColor(wellknown)} />;
     case 'idType':
       return getIDType(verifiableCredential);
     case 'credentialRegistry':
