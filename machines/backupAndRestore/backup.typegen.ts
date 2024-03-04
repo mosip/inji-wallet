@@ -28,7 +28,8 @@
           services: never;
         };
         eventsCausingActions: {
-          "extractLastBackupDetails": "done.invoke.backup.backingUp.uploadBackupFile:invocation[0]";
+          "cleanupFiles": "STORE_ERROR" | "STORE_RESPONSE" | "done.invoke.backup.backingUp.checkStorageAvailability:invocation[0]" | "error.platform.backup.backingUp.checkStorageAvailability:invocation[0]" | "error.platform.backup.backingUp.uploadBackupFile:invocation[0]" | "error.platform.backup.backingUp.zipBackupFile:invocation[0]";
+"extractLastBackupDetails": "done.invoke.backup.backingUp.uploadBackupFile:invocation[0]";
 "fetchAllDataFromDB": "done.invoke.backup.backingUp.checkStorageAvailability:invocation[0]";
 "getLastBackupDetailsFromStore": "LAST_BACKUP_DETAILS";
 "loadVcs": "DATA_BACKUP";
@@ -41,10 +42,12 @@
 "setErrorReasonAsStorageLimitReached": "done.invoke.backup.backingUp.checkStorageAvailability:invocation[0]";
 "setFileName": "FILE_NAME";
 "setIsAutoBackup": "DATA_BACKUP";
+"setIsLoading": "LAST_BACKUP_DETAILS";
 "setLastBackupDetails": "STORE_RESPONSE" | "done.invoke.backup.fetchLastBackupDetails.checkCloud:invocation[0]";
 "setShowBackupInProgress": "DATA_BACKUP";
 "storeLastBackupDetails": "done.invoke.backup.backingUp.uploadBackupFile:invocation[0]";
 "unsetIsLoading": "STORE_RESPONSE" | "done.invoke.backup.fetchLastBackupDetails.checkCloud:invocation[0]" | "error.platform.backup.fetchLastBackupDetails.checkCloud:invocation[0]";
+"unsetLastBackupDetails": "LAST_BACKUP_DETAILS";
 "unsetShowBackupInProgress": "DISMISS_SHOW_BACKUP_IN_PROGRESS" | "STORE_ERROR" | "STORE_RESPONSE" | "done.invoke.backup.backingUp.checkStorageAvailability:invocation[0]" | "error.platform.backup.backingUp.checkStorageAvailability:invocation[0]" | "error.platform.backup.backingUp.uploadBackupFile:invocation[0]" | "error.platform.backup.backingUp.zipBackupFile:invocation[0]";
         };
         eventsCausingDelays: {
@@ -53,12 +56,13 @@
         eventsCausingGuards: {
           "checkIfAutoBackup": "STORE_ERROR" | "STORE_RESPONSE" | "done.invoke.backup.backingUp.checkStorageAvailability:invocation[0]" | "error.platform.backup.backingUp.checkStorageAvailability:invocation[0]" | "error.platform.backup.backingUp.uploadBackupFile:invocation[0]" | "error.platform.backup.backingUp.zipBackupFile:invocation[0]";
 "isDataAvailableInStorage": "STORE_RESPONSE";
+"isIOS": "LAST_BACKUP_DETAILS";
 "isMinimumStorageRequiredForBackupAvailable": "done.invoke.backup.backingUp.checkStorageAvailability:invocation[0]";
 "isVCFound": "STORE_RESPONSE";
         };
         eventsCausingServices: {
           "checkStorageAvailability": "STORE_RESPONSE";
-"getLastBackupDetailsFromCloud": "STORE_ERROR" | "STORE_RESPONSE";
+"getLastBackupDetailsFromCloud": "LAST_BACKUP_DETAILS" | "STORE_ERROR" | "STORE_RESPONSE";
 "uploadBackupFile": "done.invoke.backup.backingUp.zipBackupFile:invocation[0]";
 "writeDataToFile": "STORE_RESPONSE";
 "zipBackupFile": "FILE_NAME";
