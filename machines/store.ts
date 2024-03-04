@@ -739,6 +739,13 @@ export async function removeItem(
     }
   } catch (e) {
     console.error('error removeItem:', e);
+    sendErrorEvent(
+      getErrorEventData(
+        TelemetryConstants.FlowType.remove,
+        TelemetryConstants.ErrorId.failure,
+        e.message,
+      ),
+    );
     throw e;
   }
 }
@@ -764,6 +771,13 @@ export async function removeVCMetaData(
     await setItem(key, newList, encryptionKey);
   } catch (e) {
     console.error('error remove VC metadata:', e);
+    sendErrorEvent(
+      getErrorEventData(
+        TelemetryConstants.FlowType.removeVcMetadata,
+        TelemetryConstants.ErrorId.failure,
+        e.message,
+      ),
+    );
     throw e;
   }
 }
@@ -796,6 +810,13 @@ export async function removeTamperedVcMetaData(
     }
   } catch (e) {
     console.error('error while removing VC item metadata:', e);
+    sendErrorEvent(
+      getErrorEventData(
+        TelemetryConstants.FlowType.remove,
+        TelemetryConstants.ErrorId.tampered,
+        e.message,
+      ),
+    );
     throw e;
   }
 }
@@ -834,6 +855,13 @@ export async function removeItems(
     await setItem(key, newList, encryptionKey);
   } catch (e) {
     console.error('error removeItems:', e);
+    sendErrorEvent(
+      getErrorEventData(
+        TelemetryConstants.FlowType.remove,
+        TelemetryConstants.ErrorId.failure,
+        e.message,
+      ),
+    );
     throw e;
   }
 }

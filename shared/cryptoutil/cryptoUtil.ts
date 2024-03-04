@@ -4,8 +4,6 @@ import {BIOMETRIC_CANCELLED, DEBUG_MODE_ENABLED, isIOS} from '../constants';
 import SecureKeystore from '@mosip/secure-keystore';
 import {BiometricCancellationError} from '../error/BiometricCancellationError';
 import {EncryptedOutput} from './encryptedOutput';
-import {getErrorEventData, sendErrorEvent} from '../telemetry/TelemetryUtils';
-import {TelemetryConstants} from '../telemetry/TelemetryConstants';
 import {Buffer} from 'buffer';
 
 // 5min
@@ -146,13 +144,6 @@ export async function decryptJson(
 
     return await SecureKeystore.decryptData(ENCRYPTION_ID, encryptedData);
   } catch (e) {
-    sendErrorEvent(
-      getErrorEventData(
-        TelemetryConstants.FlowType.decryption,
-        e.message,
-        e.stack,
-      ),
-    );
     console.error('error decryptJson:', e);
 
     if (e.toString().includes(BIOMETRIC_CANCELLED)) {

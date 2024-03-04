@@ -253,98 +253,133 @@ class Storage {
    * @param cutOffTimestamp the timestamp of the VC backup start time to current time
    */
   private static async unloadVCs(encryptionKey: any, cutOffTimestamp: number) {
-    // 1. Find the VCs in the inji directory which have the said timestamp
-    const file: ReadDirItem[] = await fileStorage.getAllFilesInDirectory(
-      `${DocumentDirectoryPath}/inji/VC/`,
-    );
-    const isGreaterThanEq = function (fName: string, ts: number): boolean {
-      fName = fName.split('.')[0];
-      const curr = fName.split('_')[1];
-      return parseInt(curr) >= ts;
-    };
-    for (let i = 0; i < file.length; i++) {
-      const f = file[i];
-      if (isGreaterThanEq(f.name, cutOffTimestamp)) {
-        await fileStorage.removeItem(f.path);
-      }
-    }
-    // TODO: should this be done via the Store state machine to avoid popups?
-    // 3. Remove the keys from MMKV which have the same timestamp
-    let myVCsEnc = await MMKV.getItem(MY_VCS_STORE_KEY, encryptionKey);
-    if (myVCsEnc !== null) {
-      let mmkvVCs = await decryptJson(encryptionKey, myVCsEnc);
-      let vcList: VCMetadata[] = JSON.parse(mmkvVCs);
-      let newVCList: VCMetadata[] = [];
-      vcList.forEach(d => {
-        if (d.timestamp && parseInt(d.timestamp) < cutOffTimestamp) {
-          newVCList.push(d);
-        }
-      });
-      const finalVC = await encryptJson(
-        encryptionKey,
-        JSON.stringify(newVCList),
+    try {
+      // 1. Find the VCs in the inji directory which have the said timestamp
+      const file: ReadDirItem[] = await fileStorage.getAllFilesInDirectory(
+        `${DocumentDirectoryPath}/inji/VC/`,
       );
-      await MMKV.setItem(MY_VCS_STORE_KEY, finalVC);
+      const isGreaterThanEq = function (fName: string, ts: number): boolean {
+        fName = fName.split('.')[0];
+        const curr = fName.split('_')[1];
+        return parseInt(curr) >= ts;
+      };
+      for (let i = 0; i < file.length; i++) {
+        const f = file[i];
+        if (isGreaterThanEq(f.name, cutOffTimestamp)) {
+          await fileStorage.removeItem(f.path);
+        }
+      }
+      // TODO: should this be done via the Store state machine to avoid popups?
+      // 3. Remove the keys from MMKV which have the same timestamp
+      let myVCsEnc = await MMKV.getItem(MY_VCS_STORE_KEY, encryptionKey);
+      if (myVCsEnc !== null) {
+        let mmkvVCs = await decryptJson(encryptionKey, myVCsEnc);
+        let vcList: VCMetadata[] = JSON.parse(mmkvVCs);
+        let newVCList: VCMetadata[] = [];
+        vcList.forEach(d => {
+          if (d.timestamp && parseInt(d.timestamp) < cutOffTimestamp) {
+            newVCList.push(d);
+          }
+        });
+        const finalVC = await encryptJson(
+          encryptionKey,
+          JSON.stringify(newVCList),
+        );
+        await MMKV.setItem(MY_VCS_STORE_KEY, finalVC);
+      }
+    } catch (e) {
+      console.error('error while unloadVcs:', e);
+      sendErrorEvent(
+        getErrorEventData(
+          TelemetryConstants.FlowType.dataRestore,
+          TelemetryConstants.ErrorId.failure,
+          e.message,
+        ),
+      );
     }
   }
 
   private static async loadVCs(completeBackupData: {}, encryptionKey: any) {
-    const allVCs = completeBackupData['VC_Records'];
-    const allVCKeys = Object.keys(allVCs);
-    const dataFromDB = completeBackupData['dataFromDB'];
-    // 0. Check for VC presense in the store
-    // 1. store the VCs and the HMAC
-    allVCKeys.forEach(async key => {
-      let vc = allVCs[key];
-      const ts = Date.now();
-      const prevUnixTimeStamp = vc.vcMetadata.timestamp;
-      vc.vcMetadata.timestamp = ts;
-      dataFromDB.myVCs.forEach(myVcMetadata => {
-        if (
-          myVcMetadata.requestId === vc.vcMetadata.requestId &&
-          myVcMetadata.timestamp === prevUnixTimeStamp
-        ) {
-          myVcMetadata.timestamp = ts;
-        }
+    try {
+      const allVCs = completeBackupData['VC_Records'];
+      const allVCKeys = Object.keys(allVCs);
+      const dataFromDB = completeBackupData['dataFromDB'];
+      // 0. Check for VC presense in the store
+      // 1. store the VCs and the HMAC
+      allVCKeys.forEach(async key => {
+        let vc = allVCs[key];
+        const ts = Date.now();
+        const prevUnixTimeStamp = vc.vcMetadata.timestamp;
+        vc.vcMetadata.timestamp = ts;
+        dataFromDB.myVCs.forEach(myVcMetadata => {
+          if (
+            myVcMetadata.requestId === vc.vcMetadata.requestId &&
+            myVcMetadata.timestamp === prevUnixTimeStamp
+          ) {
+            myVcMetadata.timestamp = ts;
+          }
+        });
+        const updatedVcKey = new VCMetadata(vc.vcMetadata).getVcKey();
+        const encryptedVC = await encryptJson(
+          encryptionKey,
+          JSON.stringify(vc),
+        );
+        const tmp = VCMetadata.fromVC(key);
+        // Save the VC to disk
+        await this.setItem(updatedVcKey, encryptedVC, encryptionKey);
       });
-      const updatedVcKey = new VCMetadata(vc.vcMetadata).getVcKey();
-      const encryptedVC = await encryptJson(encryptionKey, JSON.stringify(vc));
-      const tmp = VCMetadata.fromVC(key);
-      // Save the VC to disk
-      await this.setItem(updatedVcKey, encryptedVC, encryptionKey);
-    });
-    // 2. Update myVCsKey
-    const dataFromMyVCKey = dataFromDB[MY_VCS_STORE_KEY];
-    const encryptedMyVCKeyFromMMKV = await MMKV.getItem(MY_VCS_STORE_KEY);
-    let newDataForMyVCKey: VCMetadata[] = [];
-    if (encryptedMyVCKeyFromMMKV != null) {
-      const myVCKeyFromMMKV = await decryptJson(
+      // 2. Update myVCsKey
+      const dataFromMyVCKey = dataFromDB[MY_VCS_STORE_KEY];
+      const encryptedMyVCKeyFromMMKV = await MMKV.getItem(MY_VCS_STORE_KEY);
+      let newDataForMyVCKey: VCMetadata[] = [];
+      if (encryptedMyVCKeyFromMMKV != null) {
+        const myVCKeyFromMMKV = await decryptJson(
+          encryptionKey,
+          encryptedMyVCKeyFromMMKV,
+        );
+        newDataForMyVCKey = [
+          ...JSON.parse(myVCKeyFromMMKV),
+          ...dataFromMyVCKey,
+        ];
+      } else {
+        newDataForMyVCKey = dataFromMyVCKey;
+      }
+      const encryptedDataForMyVCKey = await encryptJson(
         encryptionKey,
-        encryptedMyVCKeyFromMMKV,
+        JSON.stringify(newDataForMyVCKey),
       );
-      newDataForMyVCKey = [...JSON.parse(myVCKeyFromMMKV), ...dataFromMyVCKey];
-    } else {
-      newDataForMyVCKey = dataFromMyVCKey;
+      await this.setItem(
+        MY_VCS_STORE_KEY,
+        encryptedDataForMyVCKey,
+        encryptionKey,
+      );
+      await fileStorage.removeItemIfExist(`${DocumentDirectoryPath}/.prev`);
+      return dataFromDB;
+    } catch (e) {
+      console.error('error while loading Vcs:', e);
+      sendErrorEvent(
+        getErrorEventData(
+          TelemetryConstants.FlowType.dataBackup,
+          TelemetryConstants.ErrorId.failure,
+          e.message,
+        ),
+      );
     }
-    const encryptedDataForMyVCKey = await encryptJson(
-      encryptionKey,
-      JSON.stringify(newDataForMyVCKey),
-    );
-    await this.setItem(
-      MY_VCS_STORE_KEY,
-      encryptedDataForMyVCKey,
-      encryptionKey,
-    );
-    await fileStorage.removeItemIfExist(`${DocumentDirectoryPath}/.prev`);
-    return dataFromDB;
   }
 
   private static async isVCAlreadyDownloaded(
     key: string,
     encryptionKey: string,
   ) {
-    const storedHMACofCurrentVC = await this.readHmacForVC(key, encryptionKey);
-    return storedHMACofCurrentVC !== null;
+    try {
+      const storedHMACofCurrentVC = await this.readHmacForVC(
+        key,
+        encryptionKey,
+      );
+      return storedHMACofCurrentVC !== null;
+    } catch (e) {
+      throw e;
+    }
   }
 
   private static async isCorruptedVC(
@@ -353,31 +388,44 @@ class Storage {
     data: string,
   ) {
     // TODO: INJI-612 refactor
-    const storedHMACofCurrentVC = await this.readHmacForDataCorruptionCheck(
-      key,
-      encryptionKey,
-    );
-    const HMACofVC = await generateHmac(encryptionKey, data);
-    return HMACofVC !== storedHMACofCurrentVC;
+    try {
+      const storedHMACofCurrentVC = await this.readHmacForDataCorruptionCheck(
+        key,
+        encryptionKey,
+      );
+      const HMACofVC = await generateHmac(encryptionKey, data);
+      return HMACofVC !== storedHMACofCurrentVC;
+    } catch (e) {
+      throw e;
+    }
   }
 
   private static async readHmacForVC(key: string, encryptionKey: string) {
-    const encryptedHMACofCurrentVC = await MMKV.getItem(key);
-    if (encryptedHMACofCurrentVC) {
-      return decryptJson(encryptionKey, encryptedHMACofCurrentVC);
+    try {
+      const encryptedHMACofCurrentVC = await MMKV.getItem(key);
+      if (encryptedHMACofCurrentVC) {
+        return decryptJson(encryptionKey, encryptedHMACofCurrentVC);
+      }
+      return null;
+    } catch (e) {
+      console.log('error while reading Hmac for VC ', e);
+      throw e;
     }
-    return null;
   }
 
   private static async readHmacForDataCorruptionCheck(
     key: string,
     encryptionKey: string,
   ) {
-    const encryptedHMACofCurrentVC = await MMKV.getItem(key);
-    if (encryptedHMACofCurrentVC) {
-      return decryptJson(encryptionKey, encryptedHMACofCurrentVC);
+    try {
+      const encryptedHMACofCurrentVC = await MMKV.getItem(key);
+      if (encryptedHMACofCurrentVC) {
+        return decryptJson(encryptionKey, encryptedHMACofCurrentVC);
+      }
+      return null;
+    } catch (e) {
+      throw e;
     }
-    return null;
   }
 
   private static async readVCFromFile(key: string) {

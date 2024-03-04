@@ -216,6 +216,7 @@ export const vcMachine =
           },
         },
         tamperedVCs: {
+          initial: 'triggerAutoBackupForTamperedVcDeletion',
           on: {
             REMOVE_TAMPERED_VCS: {
               target: '.triggerAutoBackupForTamperedVcDeletion',
