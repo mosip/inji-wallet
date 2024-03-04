@@ -140,7 +140,13 @@ export const SendVcScreen: React.FC = () => {
 
       <VerifyIdentityOverlay
         vc={controller.selectedVc}
-        controller={controller}
+        isVerifyingIdentity={controller.isVerifyingIdentity}
+        onCancel={controller.CANCEL}
+        onFaceValid={controller.FACE_VALID}
+        onFaceInvalid={controller.FACE_INVALID}
+        isInvalidIdentity={controller.isInvalidIdentity}
+        onDismiss={controller.DISMISS}
+        onRetryVerification={controller.RETRY_VERIFICATION}
       />
 
       <Error

@@ -49,7 +49,13 @@ export const QrLogin: React.FC<QrLoginProps> = props => {
 
         <VerifyIdentityOverlay
           vc={controller.selectedVc}
-          controller={controller}
+          isVerifyingIdentity={controller.isVerifyingIdentity}
+          onCancel={controller.CANCEL}
+          onFaceValid={controller.FACE_VALID}
+          onFaceInvalid={controller.FACE_INVALID}
+          isInvalidIdentity={true}
+          onDismiss={controller.DISMISS}
+          onRetryVerification={controller.RETRY_VERIFICATION}
         />
 
         <QrConsent

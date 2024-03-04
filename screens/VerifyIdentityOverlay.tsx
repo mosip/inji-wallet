@@ -26,10 +26,10 @@ export const VerifyIdentityOverlay: React.FC<
   return (
     <>
       <Modal
-        isVisible={props.controller.isVerifyingIdentity}
+        isVisible={props.isVerifyingIdentity}
         arrowLeft={true}
         headerTitle={t('faceAuth')}
-        onDismiss={props.controller.CANCEL}>
+        onDismiss={props.onCancel}>
         <Column
           fill
           style={Theme.VerifyIdentityOverlayStyles.content}
@@ -37,33 +37,33 @@ export const VerifyIdentityOverlay: React.FC<
           {credential != null && (
             <FaceScanner
               vcImage={vcImage}
-              onValid={props.controller.FACE_VALID}
-              onInvalid={props.controller.FACE_INVALID}
+              onValid={props.onFaceValid}
+              onInvalid={props.onFaceInvalid}
             />
           )}
         </Column>
       </Modal>
 
       <MessageOverlay
-        isVisible={props.controller.isInvalidIdentity}
+        isVisible={props.isInvalidIdentity}
         title={t('VerifyIdentityOverlay:errors.invalidIdentity.title')}
         message={t('VerifyIdentityOverlay:errors.invalidIdentity.message')}
         minHeight={'auto'}
-        onBackdropPress={props.controller.DISMISS}>
+        onBackdropPress={props.onDismiss}>
         <Row>
           <Button
             testID="cancel"
             fill
             type="clear"
             title={t('common:cancel')}
-            onPress={props.controller.DISMISS}
+            onPress={props.onDismiss}
             margin={[0, 8, 0, 0]}
           />
           <Button
             testID="tryAgain"
             fill
             title={t('common:tryAgain')}
-            onPress={props.controller.RETRY_VERIFICATION}
+            onPress={props.onRetryVerification}
           />
         </Row>
       </MessageOverlay>
@@ -73,5 +73,11 @@ export const VerifyIdentityOverlay: React.FC<
 
 export interface VerifyIdentityOverlayProps {
   vc?: VC;
-  controller: any;
+  isVerifyingIdentity: boolean;
+  onCancel: () => void;
+  onFaceValid: () => void;
+  onFaceInvalid: () => void;
+  isInvalidIdentity: boolean;
+  onDismiss: () => void;
+  onRetryVerification: () => void;
 }
