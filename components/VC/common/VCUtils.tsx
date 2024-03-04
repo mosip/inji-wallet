@@ -48,7 +48,7 @@ export const getFieldValue = (
   }
   switch (field) {
     case 'status':
-      return <VCVerification textColor={setTextColor(wellknown)} />;
+      return <VCVerification wellknown={wellknown} />;
     case 'idType':
       return getIDType(verifiableCredential);
     case 'credentialRegistry':
@@ -88,16 +88,6 @@ export const setBackgroundColour = (wellknown: any) => {
       backgroundColor: wellknown.credentials_supported[0].display[0]
         ?.background_color
         ? wellknown.credentials_supported[0].display[0].background_color
-        : Theme.Colors.textValue,
-    };
-  }
-};
-
-export const setTextColor = (wellknown: any) => {
-  if (wellknown && wellknown?.credentials_supported[0]?.display) {
-    return {
-      color: wellknown.credentials_supported[0]?.display[0]?.text_color
-        ? wellknown.credentials_supported[0].display[0].text_color
         : Theme.Colors.textValue,
     };
   }

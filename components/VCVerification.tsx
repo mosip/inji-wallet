@@ -1,10 +1,11 @@
+import {setTextColor} from './VC/common/VCItemField';
 import VerifiedIcon from './VerifiedIcon';
 import {Row, Text} from './ui';
 import {Theme} from './ui/styleUtils';
 import React from 'react';
 import {useTranslation} from 'react-i18next';
 
-export const VCVerification: React.FC = ({textColor}: any) => {
+export const VCVerification: React.FC = ({wellknown}: any) => {
   const {t} = useTranslation('VcDetails');
   return (
     <Row
@@ -20,7 +21,7 @@ export const VCVerification: React.FC = ({textColor}: any) => {
         color={Theme.Colors.Details}
         weight="semibold"
         size="smaller"
-        style={[Theme.Styles.detailsValue, textColor]}>
+        style={[Theme.Styles.detailsValue, setTextColor(wellknown)]}>
         {t('valid')}
       </Text>
     </Row>
