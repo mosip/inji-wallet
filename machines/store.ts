@@ -17,6 +17,7 @@ import {
   MY_VCS_STORE_KEY,
   RECEIVED_VCS_STORE_KEY,
   SETTINGS_STORE_KEY,
+  ENOENT,
 } from '../shared/constants';
 import SecureKeystore from '@mosip/secure-keystore';
 import {
@@ -41,7 +42,6 @@ import {Buffer} from 'buffer';
 export const keyinvalidatedString =
   'Key Invalidated due to biometric enrollment';
 export const tamperedErrorMessageString = 'Data is tampered';
-export const ENOENT = 'No such file or directory';
 
 const model = createModel(
   {
@@ -626,10 +626,12 @@ export async function getItem(
     }
   } catch (e) {
     console.error(`Exception in getting item for ${key}: ${e}`);
+    if (e.message === ENOENT) {
+      removeTamperedVcMetaData(key, encryptionKey);
+    }
     if (
       e.message.includes(tamperedErrorMessageString) ||
       e.message.includes(keyinvalidatedString) ||
-      e.message === ENOENT ||
       e instanceof BiometricCancellationError ||
       e.message.includes('Key not found') // this error happens when previous get Item calls failed due to key invalidation and data and keys are deleted
     ) {

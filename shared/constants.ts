@@ -73,6 +73,8 @@ export function isAndroid(): boolean {
   return Platform.OS === 'android';
 }
 
+export const ENOENT = 'No such file or directory';
+
 export const androidVersion: number = Number(Platform.Version);
 
 // Configuration for argon2i hashing algorithm
