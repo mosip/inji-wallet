@@ -60,6 +60,8 @@
     "qrCodeHeader": "رمز الاستجابة السريعة",
     "nationalCard": "البطاقة الوطنية",
     "insuranceCard": "بطاقة التأمين",
+    "beneficiaryCard": "بطاقة المستفيد",
+    "socialRegistryCard": "بطاقة السجل الاجتماعي",
     "uin": "UIN",
     "vid": "VID",
     "enableVerification": "تفعيل",

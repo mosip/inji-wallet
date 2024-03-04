@@ -207,6 +207,11 @@ export const backupAndRestoreSetupMachine = model.createMachine(
             },
             // What if sign in fails due to n/w error?
             {
+              cond: 'isIOS',
+              target: 'backupAndRestore',
+            },
+            // What if sign in fails due to n/w error?
+            {
               actions: 'sendBackupAndRestoreSetupErrorEvent',
               target: '.error',
             },
