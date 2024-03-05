@@ -10,6 +10,8 @@ public class TestDataReader {
         switch (key) {
             case "externalemail":
                 return "Resident_AddIdentity_ValidParam_smoke_Pos@mosip.net";
+            case "emailsForBackupAndRestore":
+                return UinGenerationUtil.getRandomEmails();
             case "passcode":
                 return "111111";
             case "otp":
@@ -21,7 +23,7 @@ public class TestDataReader {
             case "revokevid":
                 return "6205860394830280";
             case "vid":
-                return "8349769368792139";
+                return UinGenerationUtil.getRandomVid();
             case "newaid":
                 return "10001112180007620240217011225";
             case "invalidaid":
@@ -36,6 +38,8 @@ public class TestDataReader {
                 return "National Card";
             case "gender":
                 return "MLEeng";
+            case "genderVidEsignet":
+                return "MLE";
             case "status":
                 return "Valid";
             case "phoneNumber":
@@ -44,12 +48,22 @@ public class TestDataReader {
                 return "13/12/2023";
             case "dateOfBirth":
                 return "01/01/1996";
+            case "dateOfBirthForVidEsignet":
+                return "04/15/1992";
             case "aid":
-                return "10001100050003220231220202338";
+                return UinGenerationUtil.getRandomAidData();
+            case "emailPassword":
+                return "Hello@98";
+            case "denyEmailPassword":
+                return "Hello@988";
+            case "denyEmailId":
+                return "mosiptest988@gmail.com";
+            case "noBackupMail":
+                return "mosiptest99@gmail.com";
             case "setExcludedGroups":
                 return "AVT,PVT";
             case "uin":
-                return "9685190798";
+                return UinGenerationUtil.getRandomUin();
             case "uin2":
                 return "2073912798";
             case "uin2FullName":

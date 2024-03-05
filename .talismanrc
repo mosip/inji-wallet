@@ -8,7 +8,7 @@ fileignoreconfig:
   - filename: components/PasscodeVerify.tsx
     checksum: 14654c0f038979fcd0d260170a45894a072f81e0767ca9a0e66935d33b5cc703
   - filename: i18n.ts
-    checksum: 75dd5536038ba198aa7b12eb6d2c2e7042c9ce292e5a0d5c90883ae5b2312b1e
+    checksum: 4af6370d4557b780f9a29590db91c3e5544a432e272afee6d21a0cabc2faaff0
   - filename: components/Passcode.tsx
     checksum: db4a18001be8c63bf7ffb389359861401fa1d22261b10ad729a76fd431c019a7
   - filename: components/PasscodeVerify.tsx
@@ -28,7 +28,7 @@ fileignoreconfig:
   - filename: machines/issuersMachine.ts
     checksum: 742b8ff561dca61be08ab0b9aef3997ad5d043df298a84c17349dc0206ddcee6
   - filename: machines/issuersMachine.typegen.ts
-    checksum: b17d8cc03347af59098fa4fc439d40cc436998b0d148a2ac922acc2e0288e09c
+    checksum: 55c5f7cf6dab7cd299ae44c5fc749178747fc893715dcaf12f97d86be7fe3ff4
   - filename: screens/Home/MyVcs/IdInputModal.tsx
     checksum: 6f21b2caf20ee1821b69e178a69e755e0b1094275e4a9f9cb4ae5ab515ce5d23
   - filename: screens/WelcomeScreenController.ts
@@ -39,8 +39,6 @@ fileignoreconfig:
     checksum: 2ba2721d9722cd9420ae26762316230f7dab1a0be45820cbda4d0ecae0edf957
   - filename: screens/Issuers/IssuersScreen.tsx
     checksum: 9c53e3770dbefe26e0de67ee4b7d5cc9c52d9823cbb136a1a5104dcb0a101071
-  - filename: ios/Podfile.lock
-    checksum: 3d5c2bd7979bbe75af3b321967257ccc8310027391fd815daa3beae4e122face
   - filename: shared/commonUtil.ts
     checksum: 4a53bb615f2ea0fbf687bd7027c4c246e819dd88bc273941ed611e763d9d2356
   - filename: screens/Home/MyVcs/GetIdInputModal.tsx
@@ -119,6 +117,8 @@ fileignoreconfig:
     checksum: 02655ff3d7f8a8ea4f3664485f98c961802c598242ec44408594a2ddb721fa5e
   - filename: screens/Settings/BackupController.tsx
     checksum: 4a031b46646aa982c8f40e4c7fe0bd3e05a76a6af1ff1c2de7350ba6ebf9a839
+  - filename: machines/backupRestore.typegen.ts
+    checksum: ac9c154060c7c1adb3392ac8c78a42cae5ca3faea3b4b0166dd00d4ca38b290d
   - filename: machines/settings.typegen.ts
     checksum: e4ae05822f1b1c23f3f70d03dd46fd8f29ba6b52d40f2f24c121f536fbb5f2c4
   - filename: .env
@@ -126,7 +126,7 @@ fileignoreconfig:
   - filename: .github/workflows/ui-automation.yml
     checksum: 0b26a5dcb7524ba15d6aaeaf04f2ef94be9d25ef702d9072d6628bcd58e50f36
   - filename: injitest/src/test/java/androidTestCases/PinVcTest.java
-    checksum: cf9ddace5e416970eec6f078567e7fe16c12f357e667ebd8f1018089b117d61f
+    checksum: 6ec2787bee662ff158cbd7489d09ab131ab74484e42d7c5eba342e54898c891d
   - filename: injitest/src/test/java/androidTestCases/NoNetworkAndroidTest.java
     checksum: c300122d39af06f68ecd0b6dc287daa0370fc6b744072944ddcc7fe4ded79fb3
   - filename: injitest/src/test/java/androidTestCases/CredentialRegistryTest.java
@@ -139,10 +139,6 @@ fileignoreconfig:
     checksum: b0808e0c511412cde21fd169a9bbeaf3b77cb48f25418e12d341cc3ce1df5898
   - filename: machines/backupAndRestore/backupAndRestore.typegen.ts
     checksum: 509b9660553990841883c54f8986971f21c7315e7450c455bba2766738c58bee
-  - filename: machines/backupAndRestore/backup.ts
-    checksum: d3453abfc10400e094b841e84283efc194a4fe0443c63ec880c5ddd6741f5293
-  - filename: machines/backupAndRestore/backup.typegen.ts
-    checksum: 4a477f92aabf0a974382df45ef12ff5207dc73c270595cd810406983a65d9ce6
   - filename: components/BackupAndRestoreAllScreenBanner.tsx
     checksum: 2c98e7e83959c9dac4dd12da32f81483c3d334bd05e279637cf465475fbf54b8
     checksum: f26489ce4ac607884437ad06c3117cc34d6cbcbcd3dd5719790fbe01a0853ee5
@@ -171,37 +167,19 @@ fileignoreconfig:
   - filename: components/BannerNotificationContainer.tsx
     checksum: a98ff1a0dd96d3ead4b8191320be8b0c7a558cda6b0de39f1c62aaa8efef9fb8
   - filename: components/HelpScreen.tsx
+    checksum: bbc69143bd37d065bba3800396301db5a0318e8b7ba51ecd49142dda68783a01  
+  - filename: machines/backupRestore.ts
     checksum: bbc69143bd37d065bba3800396301db5a0318e8b7ba51ecd49142dda68783a01
-  - filename: machines/backupAndRestore/backupAndRestoreSetup.typegen.ts
-    checksum: 8203331f1628e01faa5e553e749372be278b477ca2d34a0cdafee1438248fb3c
   - filename: injitest/README.md
     checksum: 82974a6b9363512472272245e9b433f92e63377e58ba306980876b745181a09c
-  - filename: machines/backupAndRestore/backup.ts
-    checksum: 71cba6237f203a4a8df931a1b02669351466657f64fb6690545248fbad62f8b8
-  - filename: machines/backupAndRestore/backupAndRestoreSetup.ts
-    checksum: 5eca5414d28f523bb920cffa1f51b484ec549a240667d37723773c224fc51792
   - filename: shared/VCMetadata.ts
     checksum: e93f988415bf91064e2cf5fbc09ff6c7226798baa5da721fa0715d5d0d6afddf
-  - filename: machines/backupAndRestore/backup.ts
-    checksum: 0127424d704e7dbefcb13e2d66d687e8fa94812728b4eb6bfa7768028425e9b3
   - filename: machines/backupRestore.ts
-    checksum: 71415a5e8de490af506070f8add50f864d559a8077542fc0b3d8ed18f0b33063
+    checksum: 8f8725bb55dbc98083f819c74754a8eac258d15038e391a16ca1ab55a53d61f3
   - filename: machines/backupRestore.typegen.ts
     checksum: 85e92ddec56da8dcdd28b5a29dfabd88dd0435e619f822488bc4e19b83872289
-  - filename: machines/backupAndRestore/backupAndRestoreSetup.typegen.ts
-    checksum: dd5dc9c42800328c268f3e6d6c96a16e9686dbfa59735e721250dae3ce37e009
-  - filename: machines/backupAndRestore/backupAndRestoreSetup.typegen.ts
-    checksum: dd5dc9c42800328c268f3e6d6c96a16e9686dbfa59735e721250dae3ce37e009
-  - filename: injitest/src/main/java/inji/pages/BackupAndRestorePage.java
-    checksum: 750d001f5fedb393901004933917c4a0ca73af19a2a84cf4863512c664ae0ccd
-  - filename: injitest/src/test/java/androidTestCases/VcDownloadAndVerifyUsingSunbirdTest.java
-    checksum: 39d270982ada73f036ab4c61811f31cf7fa9a92cccc4ef03b7862765ff9b11cd
-  - filename: injitest/src/test/java/iosTestCases/VcDownloadAndVerifyUsingEsignetTest.java
-    checksum: d7ef3eda605d4785716b8babde586d9fe3ecd43e090336783e64c1923b68e18e
-  - filename: injitest/src/test/java/iosTestCases/ChangeLanguageTest.java
-    checksum: 0ac8c4f3b00138c52d83d719fd8f16c5521290417561c7cf604ade88fa092bc8
-  - filename: injitest/src/test/java/androidTestCases/VcBackupAndRestoreTest.java
-    checksum: cbcbd4c4a185b5af1f23a93467e60cb2128faed718ce2499980e9658e43f19a6
+  - filename: ios/Podfile.lock
+    checksum: 369fecac06b3c087b272e7920aa5ffe6734f261ae0af0c376a92ebf5c11415d4
   - filename: screens/Home/MyVcsTab.tsx
     checksum: 8133e2fefddfd0207eb7207b660d317f9a6acafbab6a65762d29ea86e33787cb
   - filename: components/BackupAndRestoreBannerNotification.tsx
@@ -212,5 +190,28 @@ fileignoreconfig:
     checksum: 357f6b6b41cb80e2df749ba6ea020404ff70d3991f56e19f6ce5e1be47ad6115
   - filename: shared/constants.ts
     checksum: 69aa79ed25fee2162de7c8e065930e18168551377420a520092bdf6a86c7712d
+    checksum: 7bb544ecd2f691f8cef916d0463106ec67645253107dd407236ce3a81f4e9ba7
+  - filename: machines/backupAndRestore/backup.ts
+    checksum: ac9431cd98585d5e0cbcb2404296a473872503edb683692e0d07e61a7aff2dad
+  - filename: machines/backupAndRestore/backup.typegen.ts
+    checksum: c8539385e320c36c948f44784b8d051dbaae8386c07fc839e767aa9e7976ee95
+  - filename: machines/backupAndRestore/backupAndRestoreSetup.ts
+    checksum: c2d50279ca5676822d59ddd3823bc9a2c80317fc69a7e03271a726a3a19ace4b
+  - filename: machines/backupAndRestore/backupAndRestoreSetup.typegen.ts
+    checksum: 9fc6f457ed5fc6312cfc46e984ade3c2c2df9247b3690f3925dd0a8d171f4695
+  - filename: injitest/src/main/resources/AidData.json
+    checksum: 1bd07afe80d6d9cb1b8bea6e5cb77314964c803ff88c0756e40c47bc7564d20f
+  - filename: injitest/src/main/java/inji/api/KernelAuthentication.java
+    checksum: cbdacb99aead44d1f26432f862dbfe175b0d54a42ac774f8f4da5bf2afb97e29
+  - filename: injitest/src/main/java/inji/api/ConfigManager.java
+    checksum: 880e066743f5979929cbfa90ef3a28bf4eb7147c9dba425b2abb035025d21aa7
+  - filename: injitest/src/test/java/androidTestCases/VcDownloadAndVerifyUsingEsignetTest.java
+    checksum: 27ed9b9c785cb9f6fd9be727696f7f3dff1e26cec262ba5582ee6734402f6a9e
+  - filename: injitest/src/test/java/androidTestCases/ChangeLanguageTest.java
+    checksum: c0234ddd85035f6c2cd62ba96a8a2b85da71f0752e9888130b9675bb6194bebe
+  - filename: ios/Inji/Inji.entitlements
+    checksum: 86afecb1f8eb02b4446f94a092eca7f6e65310cc4ec5ccf89cd01ccb13a0749e
+  - filename: injitest/src/test/java/iosTestCases/ChangeLanguageTest.java
+    checksum: d94cbf47726c3650b4b623e6aa76e113edf553616319450d01f05294163572e9
     version: ""
 

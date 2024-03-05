@@ -473,11 +473,10 @@ export const requestMachine =
               },
               states: {
                 idle: {},
-                viewingVc: {},
               },
               on: {
-                DISMISS: {
-                  target: '.viewingVc',
+                RESET: {
+                  target: '#request.waitingForConnection',
                 },
                 GO_TO_RECEIVED_VC_TAB: {
                   target: 'navigatingToHistory',

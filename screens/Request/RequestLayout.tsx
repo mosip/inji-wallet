@@ -11,9 +11,6 @@ import {useReceivedVcsTab} from '../Home/ReceivedVcsTabController';
 import {REQUEST_ROUTES} from '../../routes/routesConstants';
 import {SquircleIconPopUpModal} from '../../components/ui/SquircleIconPopUpModal';
 import {BannerNotificationContainer} from '../../components/BannerNotificationContainer';
-import {Theme} from '../../components/ui/styleUtils';
-import {I18nManager} from 'react-native';
-
 import {SharingStatusModal} from '../Scan/SharingStatusModal';
 import {SvgImage} from '../../components/ui/svg';
 
@@ -32,7 +29,7 @@ export const RequestLayout: React.FC = () => {
         initialRouteName="RequestScreen"
         screenListeners={{
           state: () => {
-            if (controller.IsSavingFailedInViewingVc || controller.isAccepted) {
+            if (controller.isAccepted) {
               controller.RESET();
             }
           },
@@ -47,26 +44,13 @@ export const RequestLayout: React.FC = () => {
             component={ReceiveVcScreen}
             options={{
               title: t('incomingVc'),
-              headerLeft: () =>
-                !I18nManager.isRTL && (
-                  <HeaderBackButton
-                    onPress={() => {
-                      controller.RESET();
-                    }}
-                    style={Theme.Styles.IconContainer}
-                    tintColor={Theme.Colors.Icon}
-                  />
-                ),
-              headerRight: () =>
-                I18nManager.isRTL && (
-                  <HeaderBackButton
-                    onPress={() => {
-                      controller.RESET();
-                    }}
-                    style={Theme.Styles.IconContainer}
-                    tintColor={Theme.Colors.Icon}
-                  />
-                ),
+              headerLeft: () => (
+                <HeaderBackButton
+                  onPress={() => {
+                    controller.RESET();
+                  }}
+                />
+              ),
             }}
           />
         )}
@@ -100,25 +84,17 @@ export const RequestLayout: React.FC = () => {
         />
       )}
 
-      <SharingStatusModal
-        isVisible={controller.isDisconnected}
-        testId={'sharingErrorModal'}
-        image={SvgImage.ErrorLogo()}
-        title={t('status.disconnected.title')}
-        message={t('status.disconnected.message')}
-        gradientButtonTitle={t('common:ok')}
-        onGradientButton={controller.RESET}
-      />
-
-      <SharingStatusModal
-        isVisible={controller.isBleError}
-        testId={'sharingErrorModal'}
-        image={SvgImage.ErrorLogo()}
-        title={t(`status.bleError.${bleErrorCode}.title`)}
-        message={t(`status.bleError.${bleErrorCode}.message`)}
-        gradientButtonTitle={t('common:ok')}
-        onGradientButton={controller.RESET}
-      />
+      {controller.errorStatusOverlay && (
+        <SharingStatusModal
+          isVisible={controller.errorStatusOverlay !== null}
+          testId={'sharingErrorModal'}
+          image={SvgImage.ErrorLogo()}
+          title={controller.errorStatusOverlay.title}
+          message={controller.errorStatusOverlay.message}
+          gradientButtonTitle={t('common:ok')}
+          onGradientButton={controller.RESET}
+        />
+      )}
     </React.Fragment>
   );
 };

@@ -4,7 +4,12 @@ import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.pagefactory.AndroidFindBy;
 import io.appium.java_client.pagefactory.iOSXCUITFindBy;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.remote.RemoteWebElement;
+
+import com.google.common.collect.ImmutableMap;
 
 public class HomePage extends BasePage {
     @AndroidFindBy(accessibility = "plusIcon")
@@ -177,13 +182,13 @@ public class HomePage extends BasePage {
 
     	switch (language) {
     	case "English":
-    		boolean isEnglishMatch  = actualText.equalsIgnoreCase("No internet connection");
+    		boolean isEnglishMatch  = (actualText.equalsIgnoreCase("No internet connection")==true) ? true : false;
     		return isEnglishMatch ;
     	case "Tamil":
-    		boolean isTamilMatch  = actualText.equalsIgnoreCase("இணைய இணைப்பு இல்லை");
+    		boolean isTamilMatch  = (actualText.equalsIgnoreCase("இணைய இணைப்பு இல்லை")==true) ? true : false;
     		return isTamilMatch ;
     	case "Filipino":
-    		boolean isFilipinoMatch  = actualText.equalsIgnoreCase("Pakisuri ang iyong koneksyon at subukang muli");
+    		boolean isFilipinoMatch  = (actualText.equalsIgnoreCase("Pakisuri ang iyong koneksyon at subukang muli")==true) ? true : false;
     		return isFilipinoMatch ;
 
     	}
@@ -208,13 +213,13 @@ public class HomePage extends BasePage {
 
     	switch (language) {
     	case "English":
-    		boolean isEnglishMatch  = actualText.equalsIgnoreCase("Try again");
+    		boolean isEnglishMatch  = (actualText.equalsIgnoreCase("Try again")==true) ? true : false;
     		return isEnglishMatch ;
     	case "Tamil":
-    		boolean isTamilMatch  = actualText.equalsIgnoreCase("மீண்டும் முயற்சி செய்");
+    		boolean isTamilMatch  = (actualText.equalsIgnoreCase("மீண்டும் முயற்சி செய்")==true) ? true : false;
     		return isTamilMatch ;
     	case "Filipino":
-    		boolean isFilipinoMatch  = actualText.equalsIgnoreCase("Subukan muli");
+    		boolean isFilipinoMatch  = (actualText.equalsIgnoreCase("Subukan muli")==true) ? true : false;
     		return isFilipinoMatch ;
 
     	}
@@ -234,7 +239,7 @@ public class HomePage extends BasePage {
     }
     
     public boolean isDownloadingVcPopupDisplayed() {
-        return this.isElementDisplayed(downloadingVcPopup,20);
+        return this.retrieIsElementVisible(downloadingVcPopup);
     }
 
     public String getfullNameTitleText() {

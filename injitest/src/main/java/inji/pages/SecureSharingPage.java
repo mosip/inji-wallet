@@ -8,15 +8,15 @@ import org.openqa.selenium.WebElement;
 public class SecureSharingPage extends BasePage {
 
     @AndroidFindBy(accessibility = "introTitle-two")
-    @iOSXCUITFindBy(xpath = "(//XCUIElementTypeStaticText[@name=\"introTitle\"])[3]")
+    @iOSXCUITFindBy(accessibility = "introTitle-two")
     private WebElement secureSharingText;
 
     @AndroidFindBy(accessibility = "introText-two")
-    @iOSXCUITFindBy(xpath = "(//XCUIElementTypeStaticText[@name=\"introText\"])[3]")
+    @iOSXCUITFindBy(accessibility = "introText-two")
     private WebElement secureSharingDescription;
 
     @AndroidFindBy(accessibility = "next")
-    @iOSXCUITFindBy(xpath = "(//XCUIElementTypeOther[@name=\"Susunod\" or @name=\"next\" or @name=\"अगला\" or @name=\"ಮುಂದೆ\" or @name=\"அடுத்தது\"])[4]\n")
+    @iOSXCUITFindBy(accessibility = "next")
     private WebElement nextButton;
 
     public SecureSharingPage(AppiumDriver driver) {
