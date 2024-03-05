@@ -1,15 +1,8 @@
 // This file was automatically generated. Edits will be overwritten
 
-// This file was automatically generated. Edits will be overwritten
-
 export interface Typegen0 {
   '@@xstate/typegen': true;
   internalEvents: {
-    'done.invoke.backup.backingUp.checkInternet:invocation[0]': {
-      type: 'done.invoke.backup.backingUp.checkInternet:invocation[0]';
-      data: unknown;
-      __tip: 'See the XState TS docs to learn how to strongly type this.';
-    };
     'done.invoke.backup.backingUp.checkStorageAvailability:invocation[0]': {
       type: 'done.invoke.backup.backingUp.checkStorageAvailability:invocation[0]';
       data: unknown;
@@ -29,10 +22,6 @@ export interface Typegen0 {
       type: 'done.invoke.backup.fetchLastBackupDetails.checkCloud:invocation[0]';
       data: unknown;
       __tip: 'See the XState TS docs to learn how to strongly type this.';
-    };
-    'error.platform.backup.backingUp.checkInternet:invocation[0]': {
-      type: 'error.platform.backup.backingUp.checkInternet:invocation[0]';
-      data: unknown;
     };
     'error.platform.backup.backingUp.checkStorageAvailability:invocation[0]': {
       type: 'error.platform.backup.backingUp.checkStorageAvailability:invocation[0]';

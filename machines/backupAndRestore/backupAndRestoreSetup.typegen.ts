@@ -3,13 +3,13 @@
 export interface Typegen0 {
   '@@xstate/typegen': true;
   internalEvents: {
-    'done.invoke.backupAndRestoreSetup.checkSignIn:invocation[0]': {
-      type: 'done.invoke.backupAndRestoreSetup.checkSignIn:invocation[0]';
+    'done.invoke.backupAndRestoreSetup.checkInternet:invocation[0]': {
+      type: 'done.invoke.backupAndRestoreSetup.checkInternet:invocation[0]';
       data: unknown;
       __tip: 'See the XState TS docs to learn how to strongly type this.';
     };
-    'done.invoke.backupAndRestoreSetup.init.checkInternet:invocation[0]': {
-      type: 'done.invoke.backupAndRestoreSetup.init.checkInternet:invocation[0]';
+    'done.invoke.backupAndRestoreSetup.checkSignIn:invocation[0]': {
+      type: 'done.invoke.backupAndRestoreSetup.checkSignIn:invocation[0]';
       data: unknown;
       __tip: 'See the XState TS docs to learn how to strongly type this.';
     };
