@@ -1,12 +1,5 @@
 package inji.utils;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import inji.driver.TestRunner;
-
-import java.io.File;
-import java.io.IOException;
-
 public class TestDataReader {
     public static String readData(String key) {
         return getValueForKey(key);
@@ -17,6 +10,8 @@ public class TestDataReader {
         switch (key) {
             case "externalemail":
                 return "Resident_AddIdentity_ValidParam_smoke_Pos@mosip.net";
+            case "emailsForBackupAndRestore":
+                return UinGenerationUtil.getRandomEmails();
             case "passcode":
                 return "111111";
             case "otp":
@@ -24,13 +19,15 @@ public class TestDataReader {
             case "invalidOtp":
                 return "666666";
             case "newuin":
-                return "2176493605";
+                return "8671546927";
             case "revokevid":
                 return "6205860394830280";
             case "vid":
-                return "8349769368792139";
+                return UinGenerationUtil.getRandomVid();
             case "newaid":
-                return "10007100470009820240117074603";
+                return "10001112180007620240217011225";
+            case "invalidaid":
+                return "10001100050003220231220202335";
             case "invalidpasscode":
                 return "123456";
             case "invaliduin":
@@ -41,6 +38,8 @@ public class TestDataReader {
                 return "National Card";
             case "gender":
                 return "MLEeng";
+            case "genderVidEsignet":
+                return "MLE";
             case "status":
                 return "Valid";
             case "phoneNumber":
@@ -49,22 +48,50 @@ public class TestDataReader {
                 return "13/12/2023";
             case "dateOfBirth":
                 return "01/01/1996";
+            case "dateOfBirthForVidEsignet":
+                return "04/15/1992";
             case "aid":
-                return "10001100050003220231220202338";
+                return UinGenerationUtil.getRandomAidData();
+            case "emailPassword":
+                return "Hello@98";
+            case "denyEmailPassword":
+                return "Hello@988";
+            case "denyEmailId":
+                return "mosiptest988@gmail.com";
+            case "noBackupMail":
+                return "mosiptest99@gmail.com";
             case "setExcludedGroups":
                 return "AVT,PVT";
             case "uin":
-                return "9685190798";
+                return UinGenerationUtil.getRandomUin();
             case "uin2":
                 return "2073912798";
             case "uin2FullName":
                 return "TEST_FULLNAMEeng";
             case "newEnv":
-                return "https://api.dev.mosip.net";
+                return "https://api.qa-upgrade-f1.mosip.net";
             case "injiEnv":
                 return "https://api.qa-inji1.mosip.net";
             case "invalidenv":
                 return "https://api.dev3.mosip";
+            case "fullNameSunbird":
+                return "Aswin";
+            case "policyNameSunbird":
+                return "Talapathy Rasigar Mandram";
+            case "policyNumberSunbird":
+                return "1234567890";
+            case "idTypeSunbird":
+                return "Insurance Card";
+            case "phoneNumberSunbird":
+                return "8220255752";
+            case "dateOfBirthSunbird":
+                return "2024-01-01";
+            case "genderValueSunbird":
+                return "Female";
+            case "emailIdValueSunbird":
+                return "santhosdss14@gmail.com";
+            case "statusValueSunbird":
+                return "Valid";
             case "isDeviceFarmRun":
                 return "true";
             default:

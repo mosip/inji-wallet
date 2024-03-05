@@ -7,31 +7,31 @@ import org.openqa.selenium.WebElement;
 
 public class SecureSharingPage extends BasePage {
 
-    @AndroidFindBy(accessibility = "introTitle")
-    @iOSXCUITFindBy(xpath = "(//XCUIElementTypeStaticText[@name=\"introTitle\"])[3]")
+    @AndroidFindBy(accessibility = "introTitle-two")
+    @iOSXCUITFindBy(accessibility = "introTitle-two")
     private WebElement secureSharingText;
 
-    @AndroidFindBy(accessibility = "introText")
-    @iOSXCUITFindBy(xpath = "(//XCUIElementTypeStaticText[@name=\"introText\"])[3]")
+    @AndroidFindBy(accessibility = "introText-two")
+    @iOSXCUITFindBy(accessibility = "introText-two")
     private WebElement secureSharingDescription;
 
     @AndroidFindBy(accessibility = "next")
-    @iOSXCUITFindBy(xpath = "(//XCUIElementTypeOther[@name=\"Susunod\" or @name=\"next\" or @name=\"अगला\" or @name=\"ಮುಂದೆ\" or @name=\"அடுத்தது\"])[4]\n")
+    @iOSXCUITFindBy(accessibility = "next")
     private WebElement nextButton;
 
     public SecureSharingPage(AppiumDriver driver) {
         super(driver);
     }
     BasePage basePage = new BasePage(driver);
-    
+
     public String  verifyLanguageforSecureSharingPageLoaded(){
-    	basePage.retrieToGetElement(secureSharingText);
-    	return getTextFromLocator(secureSharingText);
+        basePage.retrieToGetElement(secureSharingText);
+        return getTextFromLocator(secureSharingText);
 
     }
 
     public String getSecureSharingDescription() {
-    	basePage.retrieToGetElement(secureSharingDescription);
+        basePage.retrieToGetElement(secureSharingDescription);
         return this.getTextFromLocator(secureSharingDescription);
     }
 

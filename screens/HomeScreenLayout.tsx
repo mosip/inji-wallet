@@ -1,6 +1,6 @@
 import {getFocusedRouteNameFromRoute} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import React from 'react';
+import React, {useState} from 'react';
 import {useTranslation} from 'react-i18next';
 import {Icon} from 'react-native-elements';
 import {Row} from '../components/ui';
@@ -13,6 +13,8 @@ import {SettingScreen} from './Settings/SettingScreen';
 import testIDProps from '../shared/commonUtil';
 import {SvgImage} from '../components/ui/svg';
 import {HelpScreen} from '../components/HelpScreen';
+import {I18nManager} from 'react-native';
+import {isIOS} from '../shared/constants';
 
 export const HomeScreenLayout: React.FC<RootRouteProps> = props => {
   const {t} = useTranslation('IssuersScreen');
@@ -42,45 +44,53 @@ export const HomeScreenLayout: React.FC<RootRouteProps> = props => {
     }
   }, [props.navigation, props.route]);
 
-  const HomeScreenOptions = {
-    headerLeft: () => {
-      return SvgImage.InjiLogo();
-    },
-    headerTitle: '',
-    headerRight: () => (
-      <Row align="space-between">
-        <HelpScreen
-          source={'Inji'}
-          triggerComponent={
-            <Icon
-              {...testIDProps('help')}
-              accessible={true}
-              name="question"
-              type="font-awesome"
-              size={21}
-              style={Theme.Styles.IconContainer}
-              color={Theme.Colors.Icon}
-            />
-          }
-        />
+  const screenOptions = (
+    <Row align="space-between">
+      <HelpScreen
+        source={'Inji'}
+        triggerComponent={
+          <Icon
+            {...testIDProps('help')}
+            accessible={true}
+            name="question"
+            type="font-awesome"
+            size={21}
+            style={Theme.Styles.IconContainer}
+            color={Theme.Colors.Icon}
+          />
+        }
+      />
 
-        <SettingScreen
-          triggerComponent={
-            <Icon
-              {...testIDProps('settings')}
-              accessible={true}
-              name="settings"
-              type="simple-line-icon"
-              size={21}
-              style={Theme.Styles.IconContainer}
-              color={Theme.Colors.Icon}
-            />
-          }
-          navigation={props.navigation}
-          route={undefined}
-        />
-      </Row>
-    ),
+      <SettingScreen
+        triggerComponent={
+          <Icon
+            {...testIDProps('settings')}
+            accessible={true}
+            name="settings"
+            type="simple-line-icon"
+            size={21}
+            style={Theme.Styles.IconContainer}
+            color={Theme.Colors.Icon}
+          />
+        }
+        navigation={props.navigation}
+        route={undefined}
+      />
+    </Row>
+  );
+
+  const [isRTL] = useState(I18nManager.isRTL);
+
+  var HomeScreenOptions = {
+    headerLeft: () =>
+      isIOS()
+        ? SvgImage.InjiLogo()
+        : isRTL
+        ? screenOptions
+        : SvgImage.InjiLogo(),
+    headerTitle: '',
+    headerRight: () =>
+      isIOS() ? screenOptions : isRTL ? SvgImage.InjiLogo() : screenOptions,
   };
 
   return (

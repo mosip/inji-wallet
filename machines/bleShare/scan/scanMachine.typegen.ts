@@ -57,17 +57,8 @@ export interface Typegen0 {
       | ''
       | 'BLE_ERROR'
       | 'DISCONNECT'
-      | 'DISMISS'
       | 'RESET'
-      | 'SCREEN_BLUR'
-      | 'SCREEN_FOCUS'
-      | 'xstate.stop';
-    clearReason:
-      | ''
-      | 'BLE_ERROR'
-      | 'DISCONNECT'
-      | 'DISMISS'
-      | 'RESET'
+      | 'RETRY'
       | 'SCREEN_BLUR'
       | 'SCREEN_FOCUS'
       | 'xstate.stop';
@@ -89,6 +80,7 @@ export interface Typegen0 {
       | 'SCREEN_BLUR'
       | 'xstate.after(DESTROY_TIMEOUT)#scan.clearingConnection'
       | 'xstate.init';
+    resetFaceCaptureBannerStatus: 'ACCEPT_REQUEST' | 'CLOSE_BANNER';
     resetShouldVerifyPresence: 'CANCEL' | 'CONNECTED' | 'DISMISS' | 'RETRY';
     sendBLEConnectionErrorEvent: 'BLE_ERROR';
     sendScanData: 'SCAN';
@@ -104,7 +96,6 @@ export interface Typegen0 {
     setCreatedVp: 'done.invoke.scan.reviewing.creatingVp:invocation[0]';
     setLinkCode: 'SCAN';
     setReadyForBluetoothStateCheck: 'BLUETOOTH_PERMISSION_ENABLED';
-    setReason: 'UPDATE_REASON';
     setReceiverInfo: 'CONNECTED';
     setSelectedVc: 'SELECT_VC';
     setSenderInfo: 'CONNECTED';
@@ -114,10 +105,11 @@ export interface Typegen0 {
     storeLoginItem: 'done.invoke.QrLogin';
     storingActivityLog: 'STORE_RESPONSE';
     toggleShouldVerifyPresence: 'TOGGLE_USER_CONSENT';
+    updateFaceCaptureBannerStatus: 'FACE_VALID';
   };
   eventsCausingDelays: {
     CONNECTION_TIMEOUT: 'SCAN';
-    DESTROY_TIMEOUT: '' | 'DISMISS' | 'LOCATION_ENABLED';
+    DESTROY_TIMEOUT: '' | 'DISMISS' | 'LOCATION_ENABLED' | 'RETRY';
     SHARING_TIMEOUT:
       | 'ACCEPT_REQUEST'
       | 'FACE_VALID'
@@ -143,7 +135,7 @@ export interface Typegen0 {
     checkNearByDevicesPermission: 'APP_ACTIVE' | 'START_PERMISSION_CHECK';
     checkStorageAvailability: 'RESET' | 'SCREEN_FOCUS';
     createVp: never;
-    disconnect: '' | 'DISMISS' | 'LOCATION_ENABLED' | 'SCREEN_BLUR';
+    disconnect: '' | 'DISMISS' | 'LOCATION_ENABLED' | 'RETRY' | 'SCREEN_BLUR';
     monitorConnection: 'DISMISS' | 'SCREEN_BLUR' | 'xstate.init';
     requestBluetooth: 'BLUETOOTH_STATE_DISABLED';
     requestNearByDevicesPermission: 'NEARBY_DISABLED';
@@ -196,6 +188,7 @@ export interface Typegen0 {
     | 'reviewing.creatingVp'
     | 'reviewing.disconnect'
     | 'reviewing.invalidIdentity'
+    | 'reviewing.navigateToHistory'
     | 'reviewing.rejected'
     | 'reviewing.selectingVc'
     | 'reviewing.sendingVc'
@@ -226,6 +219,7 @@ export interface Typegen0 {
           | 'creatingVp'
           | 'disconnect'
           | 'invalidIdentity'
+          | 'navigateToHistory'
           | 'rejected'
           | 'selectingVc'
           | 'sendingVc'

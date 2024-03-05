@@ -6,7 +6,6 @@ import {ExistingMosipVCItemMachine} from '../../machines/VCItemMachine/ExistingM
 import {GlobalContext} from '../../shared/GlobalContext';
 import {
   selectIsSelectingVc,
-  selectReason,
   selectReceiverInfo,
   selectSelectedVc,
   selectVcName,
@@ -17,11 +16,17 @@ import {
   selectIsVerifyingIdentity,
 } from '../../machines/bleShare/commonSelectors';
 import {ScanEvents} from '../../machines/bleShare/scan/scanMachine';
+import {NavigationProp, useNavigation} from '@react-navigation/native';
+import {RootRouteProps} from '../../routes';
+import {BOTTOM_TAB_ROUTES} from '../../routes/routesConstants';
+
+type MyVcsTabNavigation = NavigationProp<RootRouteProps>;
 
 export function useSendVcScreen() {
   const {appService} = useContext(GlobalContext);
   const scanService = appService.children.get('scan');
   const vcService = appService.children.get('vc');
+  const navigation = useNavigation<MyVcsTabNavigation>();
 
   const CANCEL = () => scanService.send(ScanEvents.CANCEL());
 
@@ -40,7 +45,6 @@ export function useSendVcScreen() {
       },
 
     receiverInfo: useSelector(scanService, selectReceiverInfo),
-    reason: useSelector(scanService, selectReason),
     vcName: useSelector(scanService, selectVcName),
     shareableVcsMetadata: useSelector(vcService, selectShareableVcsMetadata),
     selectedVc: useSelector(scanService, selectSelectedVc),
@@ -55,12 +59,13 @@ export function useSendVcScreen() {
     VERIFY_AND_ACCEPT_REQUEST: () =>
       scanService.send(ScanEvents.VERIFY_AND_ACCEPT_REQUEST()),
     DISMISS: () => scanService.send(ScanEvents.DISMISS()),
-    UPDATE_REASON: (reason: string) =>
-      scanService.send(ScanEvents.UPDATE_REASON(reason)),
     UPDATE_VC_NAME: (vcName: string) =>
       scanService.send(ScanEvents.UPDATE_VC_NAME(vcName)),
     FACE_VALID: () => scanService.send(ScanEvents.FACE_VALID()),
     FACE_INVALID: () => scanService.send(ScanEvents.FACE_INVALID()),
     RETRY_VERIFICATION: () => scanService.send(ScanEvents.RETRY_VERIFICATION()),
+    GO_TO_HOME: () => {
+      navigation.navigate(BOTTOM_TAB_ROUTES.home, {screen: 'HomeScreen'});
+    },
   };
 }

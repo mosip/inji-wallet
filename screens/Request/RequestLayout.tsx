@@ -13,7 +13,6 @@ import {SquircleIconPopUpModal} from '../../components/ui/SquircleIconPopUpModal
 import {BannerNotificationContainer} from '../../components/BannerNotificationContainer';
 import {Theme} from '../../components/ui/styleUtils';
 import {I18nManager} from 'react-native';
-
 import {SharingStatusModal} from '../Scan/SharingStatusModal';
 import {SvgImage} from '../../components/ui/svg';
 
@@ -32,7 +31,7 @@ export const RequestLayout: React.FC = () => {
         initialRouteName="RequestScreen"
         screenListeners={{
           state: () => {
-            if (controller.IsSavingFailedInViewingVc || controller.isAccepted) {
+            if (controller.isAccepted) {
               controller.RESET();
             }
           },
@@ -61,7 +60,7 @@ export const RequestLayout: React.FC = () => {
           name={REQUEST_ROUTES.RequestScreen}
           component={RequestScreen}
           options={{
-            title: t('receiveCard').toUpperCase(),
+            title: t('receiveCard'),
           }}
         />
       </RequestStack.Navigator>

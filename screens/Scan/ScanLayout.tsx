@@ -4,7 +4,6 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {SendVcScreen} from './SendVcScreen';
 import {useScanLayout} from './ScanLayoutController';
 import {ScanScreen} from './ScanScreen';
-import {ProgressingModal} from '../../components/ProgressingModal';
 import {SCAN_ROUTES} from '../../routes/routesConstants';
 import {SharingStatusModal} from './SharingStatusModal';
 import {Theme} from '../../components/ui/styleUtils';
@@ -13,6 +12,7 @@ import {Loader} from '../../components/ui/Loader';
 import {Text} from '../../components/ui';
 import {I18nManager, View} from 'react-native';
 import {SvgImage} from '../../components/ui/svg';
+import {BANNER_TYPE_SUCCESS} from '../../shared/constants';
 
 const ScanStack = createNativeStackNavigator();
 
@@ -38,6 +38,11 @@ export const ScanLayout: React.FC = () => {
           controller.isSendingVc
         }
         onRetry={controller.statusOverlay?.onRetry}
+        showBanner={controller.isFaceIdentityVerified}
+        bannerMessage={t('ScanScreen:postFaceCapture:captureSuccessMessage')}
+        onBannerClose={controller.CLOSE_BANNER}
+        bannerType={BANNER_TYPE_SUCCESS}
+        bannerTestID={'faceVerificationSuccess'}
       />
     );
   }
@@ -106,6 +111,7 @@ export const ScanLayout: React.FC = () => {
         onGradientButton={controller.onRetry}
         onClearButton={controller.GOTO_HOME}
       />
+
     </React.Fragment>
   );
 };

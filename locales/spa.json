@@ -1,21 +1,21 @@
 {
   "ActivityLogText": {
-    "VC_SHARED": "compartido",
-    "VC_RECEIVED": "recibió",
-    "VC_RECEIVED_NOT_SAVED": "recibido no fue guardado",
-    "VC_DELETED": "eliminado",
-    "VC_DOWNLOADED": "descargado",
-    "VC_REVOKED": "revocado",
-    "VC_SHARED_WITH_VERIFICATION_CONSENT": "compartido. ",
-    "VC_RECEIVED_WITH_PRESENCE_VERIFIED": "recibió. ",
-    "VC_RECEIVED_BUT_PRESENCE_VERIFICATION_FAILED": "recibió. ",
-    "PRESENCE_VERIFIED_AND_VC_SHARED": "verificado y compartido",
-    "PRESENCE_VERIFICATION_FAILED": "Fallo en la verificación",
-    "QRLOGIN_SUCCESFULL": "QRInicio de sesión exitoso",
-    "WALLET_BINDING_SUCCESSFULL": "Activación exitosa",
-    "WALLET_BINDING_FAILURE": "Activación fallida",
-    "VC_REMOVED": "Eliminado de la billetera",
-    "TAMPERED_VC_REMOVED": "Algunas tarjetas eliminadas debido a actividad maliciosa"
+    "VC_SHARED": "{{idType}} {{id}} se ha compartido correctamente.",
+    "VC_RECEIVED": "Se ha recibido el {{idType}} {{id}}.",
+    "VC_RECEIVED_NOT_SAVED": "No se ha podido guardar el {{idType}} {{id}}.",
+    "VC_DELETED": "Se ha eliminado el {{idType}} {{id}} correctamente.",
+    "VC_DOWNLOADED": "Se ha descargado el {{idType}} {{id}}.",
+    "VC_REVOKED": "El emisor ha revocado el {{idType}} {{id}}.",
+    "VC_SHARED_WITH_VERIFICATION_CONSENT": "Se ha compartido el {{idType}} {{id}} con consentimiento para la verificación de presencia.",
+    "VC_RECEIVED_WITH_PRESENCE_VERIFIED": "Se ha recibido el {{idType}} {{id}} y la verificación de presencia se ha realizado correctamente.",
+    "VC_RECEIVED_BUT_PRESENCE_VERIFICATION_FAILED": "Se ha recibido el {{idType}} {{id}} pero la verificación de presencia ha fallado.",
+    "PRESENCE_VERIFIED_AND_VC_SHARED": "La verificación facial se ha realizado correctamente y se ha compartido el {{idType}} {{id}}.",
+    "PRESENCE_VERIFICATION_FAILED": "La verificación facial ha fallado al intentar compartir el {{idType}} {{id}}.",
+    "QRLOGIN_SUCCESFULL": "El inicio de sesión mediante QR con el {{idType}} {{id}} se ha realizado correctamente.",
+    "WALLET_BINDING_SUCCESSFULL": "La activación del {{idType}} {{id}} se ha realizado correctamente.",
+    "WALLET_BINDING_FAILURE": "La activación del {{idType}} {{id}} ha fallado.",
+    "VC_REMOVED": "Se ha eliminado el {{idType}} {{id}} de la cartera.",
+    "TAMPERED_VC_REMOVED": "Se ha eliminado el {{idType}} {{id}} de la cartera debido a manipulación."
   },
   "DeviceInfoList": {
     "requestedBy": "Solicitado por",
@@ -333,6 +333,12 @@
       "downloadLimitExpires": {
         "title": "Error de descarga",
         "message": "Hubo un problema al descargar las siguientes tarjetas. "
+      },
+      "verificationFailed": {
+        "title" : "¡Ocurrió un error!",
+        "goBackButton": "Regresa",
+        "technicalError": "Debido a un Error técnico, no pudimos descargar la tarjeta.",
+        "networkError": "Debido a una conexión a Internet inestable, no pudimos descargar la tarjeta. Por favor revise su conexion a internet."
       }
     }
   },
@@ -427,8 +433,8 @@
     "saving": "La tarjeta se está guardando",
     "errors": {
       "savingFailed": {
-        "title": "No se pudo guardar la tarjeta",
-        "message": "Algo salió mal al guardar la tarjeta en la tienda."
+        "title": "¡No se pudo guardar la tarjeta!",
+        "message": "Debido a un error técnico, no pudimos guardar la tarjeta. Solicite al remitente que realice la transferencia nuevamente."
       }
     }
   },
@@ -592,8 +598,8 @@
         "history": "Historia"
       },
       "rejected": {
-        "title": "Aviso",
-        "message": "Su tarjeta fue descartada por el Verificador"
+        "title": "¡Ocurrió un error!",
+        "message": "Debido a un error técnico, no pudimos compartir la tarjeta con la persona que confía. Por favor comparte de nuevo."
       },
       "bleError": {
         "retry": "Rever",
@@ -655,6 +661,11 @@
           "message": "Algo salió mal al transferir la tarjeta. Inténtalo de nuevo."
         }
       }
+    },
+    "postFaceCapture": {
+      "captureSuccessMessage": "¡La verificación facial fue exitosa! Se inicia el intercambio de credenciales.",
+      "captureFailureTitle": "¡Falló la verificación facial!",
+      "captureFailureMessage": "Asegúrese de que su cara sea claramente visible e intente tomarse una selfie nuevamente."
     }
   },
   "SelectVcOverlay": {
@@ -721,6 +732,7 @@
     }
   },
   "BackupAndRestoreBanner": {
+    "backupInProgress": "La copia de seguridad de datos está en progreso. Por favor no cierre la aplicación.",
     "backupSuccessful": "¡Su copia de seguridad fue exitosa!",
     "backupFailure": {
       "networkError": "Debido a una conexión a Internet inestable, no pudimos realizar una copia de seguridad de los datos. Por favor, inténtelo de nuevo más tarde.",
@@ -729,6 +741,7 @@
       "noDataForBackup": "Lo sentimos, pero no hay datos disponibles para realizar una copia de seguridad en este momento.",
       "storageLimitReached": "No podemos completar el proceso de copia de seguridad debido a que no hay suficiente espacio de almacenamiento en su dispositivo. Libere espacio eliminando archivos o aplicaciones innecesarios y vuelva a intentarlo."
     },
+    "restoreInProgress": "La restauración de datos está en curso. Por favor no cierre la aplicación.",
     "restoreSuccessful": "Su copia de seguridad ha sido restaurada exitosamente",
     "restoreFailure": {
       "networkError": "Debido a una conexión a Internet inestable, no pudimos realizar la restauración de datos. Por favor, inténtelo de nuevo más tarde.",
@@ -776,6 +789,7 @@
     "editLabel": "Editar {{label}}",
     "tryAgain": "Intentar otra vez",
     "ignore": "Ignorar",
+    "goBack": "Regresa",
     "camera": {
       "errors": {
         "missingPermission": "Esta aplicación utiliza la cámara para escanear el código QR de otro dispositivo."

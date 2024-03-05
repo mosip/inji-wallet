@@ -8,6 +8,7 @@ import {RootRouteProps} from '../../routes';
 import {useWelcomeScreen} from '../WelcomeScreenController';
 import LinearGradient from 'react-native-linear-gradient';
 import {SvgImage} from '../../components/ui/svg';
+import testIDProps from '../../shared/commonUtil';
 
 export const IntroSlidersScreen: React.FC<RootRouteProps> = props => {
   const slider = useRef<AppIntroSlider>();
@@ -61,7 +62,11 @@ export const IntroSlidersScreen: React.FC<RootRouteProps> = props => {
 
             {item.key !== 'five' && (
               <Button
-                testID={isPasscodeSet ? 'back' : 'skip'}
+                testID={
+                  isPasscodeSet
+                    ? `backButton-${item.key}`
+                    : `skipButton-${item.key}`
+                }
                 type="plain"
                 title={isPasscodeSet ? t('back') : t('skip')}
                 onPress={isPasscodeSet ? controller.BACK : controller.NEXT}
@@ -70,25 +75,26 @@ export const IntroSlidersScreen: React.FC<RootRouteProps> = props => {
             )}
           </Row>
           <Image
+            {...testIDProps(`introImage-${item.key}`)}
             source={item.image}
             resizeMode="contain"
             style={{height: Dimensions.get('screen').height * 0.6}}
           />
           <Column
-            testID="introSlide"
+            testID={`introSlide-${item.key}`}
             style={Theme.OnboardingOverlayStyles.bottomContainer}
             crossAlign="center"
             backgroundColor={Theme.Colors.whiteText}
             width={Dimensions.get('screen').width}>
             <Text
-              testID="introTitle"
+              testID={`introTitle-${item.key}`}
               style={{paddingTop: 3}}
               weight="semibold"
               margin="0 0 18 0">
               {item.title}
             </Text>
             <Text
-              testID="introText"
+              testID={`introText-${item.key}`}
               style={{paddingTop: 7}}
               margin="0 0 150 0"
               size="large"
@@ -103,7 +109,7 @@ export const IntroSlidersScreen: React.FC<RootRouteProps> = props => {
 
   const renderNextButton = () => {
     return (
-      <View>
+      <View {...testIDProps('nextButton')}>
         <LinearGradient
           colors={Theme.Colors.gradientBtn}
           style={Theme.Styles.introSliderButton}>
@@ -127,7 +133,7 @@ export const IntroSlidersScreen: React.FC<RootRouteProps> = props => {
           colors={Theme.Colors.gradientBtn}
           style={Theme.Styles.introSliderButton}>
           <Text
-            testID="getStarted"
+            testID={controller.isPasscodeSet() ? 'goBack' : 'getStarted'}
             style={{paddingTop: 3}}
             weight="semibold"
             align="center"

@@ -19,7 +19,7 @@ import java.util.regex.Pattern;
 
 
 public class MockSMTPListener{
-	private static Logger logger = Logger.getLogger(MockSMTPListener.class);
+	private static final Logger logger = Logger.getLogger(MockSMTPListener.class);
 
 	public static Map<Object, Object> emailNotificationMapS = Collections
 			.synchronizedMap(new HashMap<Object, Object>());
@@ -51,9 +51,8 @@ public class MockSMTPListener{
 		Root root = new Root();
 
 		public WebSocketClient() {
-			return;
 
-		}
+        }
 
 		@Override
 		public void onOpen(WebSocket webSocket) {

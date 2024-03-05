@@ -2,7 +2,10 @@ import {NavigationProp, useNavigation} from '@react-navigation/native';
 import {useSelector} from '@xstate/react';
 import {useContext, useEffect} from 'react';
 import {useTranslation} from 'react-i18next';
-import {MessageOverlayProps} from '../../components/MessageOverlay';
+import {
+  MessageOverlayProps,
+  VCSharingErrorStatusProps,
+} from '../../components/MessageOverlay';
 import {MainBottomTabParamList, changeTabBarVisible} from '../../routes/main';
 import {GlobalContext} from '../../shared/GlobalContext';
 import {
@@ -17,6 +20,7 @@ import {
   selectIsSendingVcTimeout,
   selectIsSent,
   selectIsDone,
+  selectIsFaceIdentityVerified,
 } from '../../machines/bleShare/scan/selectors';
 import {
   selectBleError,
@@ -62,6 +66,7 @@ export function useScanLayout() {
 
   const DISMISS = () => scanService.send(ScanEvents.DISMISS());
   const CANCEL = () => scanService.send(ScanEvents.CANCEL());
+  const CLOSE_BANNER = () => scanService.send(ScanEvents.CLOSE_BANNER());
   const onStayInProgress = () =>
     scanService.send(ScanEvents.STAY_IN_PROGRESS());
   const onRetry = () => scanService.send(ScanEvents.RETRY());
@@ -96,7 +101,12 @@ export function useScanLayout() {
   const isOffline = useSelector(scanService, selectIsOffline);
   const isSendingVc = useSelector(scanService, selectIsSendingVc);
   const isSendingVcTimeout = useSelector(scanService, selectIsSendingVcTimeout);
+  const isDisconnected = useSelector(scanService, selectIsDisconnected);
   const isStayInProgress = isConnectingTimeout || isSendingVcTimeout;
+  let isFaceIdentityVerified = useSelector(
+    scanService,
+    selectIsFaceIdentityVerified,
+  );
 
   let statusOverlay: Pick<
     MessageOverlayProps,
@@ -168,12 +178,6 @@ export function useScanLayout() {
       message: t('status.accepted.message'),
       onButtonPress: DISMISS,
     };
-  } else if (isRejected) {
-    statusOverlay = {
-      title: t('status.rejected.title'),
-      message: t('status.rejected.message'),
-      onBackdropPress: DISMISS,
-    };
   } else if (isInvalid) {
     statusOverlay = {
       message: t('status.invalid'),
@@ -227,15 +231,19 @@ export function useScanLayout() {
     isDone,
     GOTO_HOME,
     GOTO_HISTORY,
-    isDisconnected: useSelector(scanService, selectIsDisconnected),
+    isDisconnected,
     statusOverlay,
+    errorStatusOverlay,
     isStayInProgress,
     isBleError,
     bleError,
     DISMISS,
     isAccepted,
+    isRejected,
     onRetry,
     CANCEL,
     isSendingVc,
+    isFaceIdentityVerified,
+    CLOSE_BANNER,
   };
 }

@@ -123,3 +123,8 @@ export interface MessageOverlayProps {
   onShow?: () => void;
   minHeight?: number | string | undefined;
 }
+
+export interface VCSharingErrorStatusProps {
+  title: string;
+  message: string;
+}

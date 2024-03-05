@@ -8,8 +8,10 @@ import {
   NETWORK_REQUEST_FAILED,
   TECHNICAL_ERROR,
   UPLOAD_MAX_RETRY,
+  isIOS,
 } from '../../shared/constants';
 import {
+  cleanupLocalBackups,
   compressAndRemoveFile,
   writeToBackupFile,
 } from '../../shared/fileStorage';
@@ -36,11 +38,13 @@ const model = createModel(
     errorReason: '' as string,
     isAutoBackUp: true as boolean,
     isLoading: true as boolean,
+    showBackupInProgress: false as boolean,
   },
   {
     events: {
       DATA_BACKUP: (isAutoBackUp: boolean) => ({isAutoBackUp}),
       DISMISS: () => ({}),
+      DISMISS_SHOW_BACKUP_IN_PROGRESS: () => ({}),
       LAST_BACKUP_DETAILS: () => ({}),
       STORE_RESPONSE: (response: unknown) => ({response}),
       STORE_ERROR: (error: Error, requester?: string) => ({error, requester}),
@@ -67,13 +71,18 @@ export const backupMachine = model.createMachine(
         actions: ['setIsAutoBackup'],
         target: 'backingUp',
       },
-      LAST_BACKUP_DETAILS: {
-        target: 'fetchLastBackupDetails',
-      },
+      LAST_BACKUP_DETAILS: [
+        {
+          cond: 'isIOS',
+          target: 'fetchLastBackupDetails.checkCloud',
+        },
+        {target: 'fetchLastBackupDetails.checkStore'},
+      ],
     },
     states: {
       init: {},
       fetchLastBackupDetails: {
+        entry: ['unsetLastBackupDetails', 'setIsLoading'],
         initial: 'checkStore',
         states: {
           checkStore: {
@@ -108,6 +117,7 @@ export const backupMachine = model.createMachine(
         },
       },
       backingUp: {
+        entry: 'setShowBackupInProgress',
         initial: 'checkDataAvailabilityForBackup',
         states: {
           idle: {},
@@ -241,27 +251,32 @@ export const backupMachine = model.createMachine(
             },
           },
           success: {
-            entry: 'sendDataBackupSuccessEvent',
+            entry: [
+              'unsetShowBackupInProgress',
+              'sendDataBackupSuccessEvent',
+              'cleanupFiles',
+            ],
           },
           silentSuccess: {
-            entry: 'sendDataBackupSuccessEvent',
+            entry: ['sendDataBackupSuccessEvent', 'cleanupFiles'],
           },
           failure: {
             entry: [
+              'unsetShowBackupInProgress',
               'sendDataBackupFailureEvent',
-              (ctx, event) => console.log('failure state ', event),
+              'cleanupFiles',
             ],
           },
           silentFailure: {
-            entry: [
-              'sendDataBackupFailureEvent',
-              (ctx, event) => console.log('failure state ', event),
-            ],
+            entry: ['sendDataBackupFailureEvent', 'cleanupFiles'],
           },
         },
         on: {
           DISMISS: {
             target: 'init',
+          },
+          DISMISS_SHOW_BACKUP_IN_PROGRESS: {
+            actions: 'unsetShowBackupInProgress',
           },
         },
       },
@@ -271,6 +286,9 @@ export const backupMachine = model.createMachine(
     actions: {
       unsetIsLoading: model.assign({
         isLoading: false,
+      }),
+      setIsLoading: model.assign({
+        isLoading: true,
       }),
       setDataFromStorage: model.assign({
         dataFromStorage: (_context, event) => {
@@ -282,6 +300,16 @@ export const backupMachine = model.createMachine(
         isAutoBackUp: (_context, event) => {
           return event.isAutoBackUp;
         },
+      }),
+
+      setShowBackupInProgress: model.assign({
+        showBackupInProgress: (context, _event) => {
+          return !context.isAutoBackUp;
+        },
+      }),
+
+      unsetShowBackupInProgress: model.assign({
+        showBackupInProgress: false,
       }),
 
       setFileName: model.assign({
@@ -316,6 +344,12 @@ export const backupMachine = model.createMachine(
         return {
           ...context,
           lastBackupDetails: lastBackupDetails,
+        };
+      }),
+      unsetLastBackupDetails: model.assign((context, event) => {
+        return {
+          ...context,
+          lastBackupDetails: null,
         };
       }),
 
@@ -375,6 +409,9 @@ export const backupMachine = model.createMachine(
           ),
         );
       },
+      cleanupFiles: () => {
+        cleanupLocalBackups();
+      },
 
       sendDataBackupFailureEvent: () => {
         sendEndEvent(
@@ -430,6 +467,7 @@ export const backupMachine = model.createMachine(
       isVCFound: (_context, event) => {
         return !!(event.response && (event.response as object[]).length > 0);
       },
+      isIOS: () => isIOS() || false,
       isDataAvailableInStorage: (_context, event) => {
         return event.response != null;
       },
@@ -466,5 +504,8 @@ export function lastBackupDetails(state: State) {
 }
 export function selectBackupErrorReason(state: State) {
   return state.context.errorReason;
+}
+export function selectShowBackupInProgress(state: State) {
+  return state.context.showBackupInProgress;
 }
 type State = StateFrom<typeof backupMachine>;

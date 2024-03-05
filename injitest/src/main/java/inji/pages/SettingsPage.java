@@ -25,20 +25,23 @@ public class SettingsPage extends BasePage {
     @iOSXCUITFindBy(accessibility = "languageTitle")
     private WebElement languageButton;
 
+    @iOSXCUITFindBy(accessibility = "لغة")
+    private WebElement languageButtonInArabic;
+
     @AndroidFindBy(accessibility = "fil")
-    @iOSXCUITFindBy(iOSClassChain = "**/XCUIElementTypeStaticText[`label == \"Filipino\"`]")
+    @iOSXCUITFindBy(accessibility = "fil")
     private WebElement filipinoLanguageButton;
     
     @AndroidFindBy(accessibility = "hi")
-    @iOSXCUITFindBy(accessibility = "हिंदी")
+    @iOSXCUITFindBy(accessibility = "hi")
     private WebElement hindiLanguageButton;
     
     @AndroidFindBy(accessibility = "ta")
-    @iOSXCUITFindBy(iOSClassChain = "**/XCUIElementTypeStaticText[`label == \"தமிழ்\"`]")
+    @iOSXCUITFindBy(accessibility = "ta")
     private WebElement tamilLanguageButton;
     
     @AndroidFindBy(accessibility = "kn")
-    @iOSXCUITFindBy(iOSClassChain = "**/XCUIElementTypeStaticText[`label == \"தமிழ்\"`]")
+    @iOSXCUITFindBy(accessibility = "kn")
     private WebElement kannadaLanguageButton;
 
 
@@ -77,12 +80,21 @@ public class SettingsPage extends BasePage {
     public WebElement receiveCardInfilipinoLanguageText;
 
     @AndroidFindBy(accessibility = "ar")
-    @iOSXCUITFindBy(accessibility = "عربى")
+    @iOSXCUITFindBy(accessibility = "ar")
     private WebElement arabicLanguageButton;
     
     @AndroidFindBy(accessibility = "arrowLeft")
     @iOSXCUITFindBy(accessibility = "arrowLeft")
     private WebElement backButton;
+
+    @AndroidFindBy(accessibility = "dataBackupAndRestore")
+    @iOSXCUITFindBy(accessibility = "dataBackupAndRestore")
+    private WebElement dataBackupAndRestore;
+
+    @AndroidFindBy(accessibility = "newLabel")
+    @iOSXCUITFindBy(accessibility = "newLabel")
+    private WebElement newlable;
+
 
     public SettingsPage(AppiumDriver driver) {
         super(driver);
@@ -105,6 +117,8 @@ public class SettingsPage extends BasePage {
         clickOnElement(languageButton);
         return this;
     }
+
+
 
     public void clickOnFilipinoLanguage() {
         clickOnElement(filipinoLanguageButton);
@@ -188,9 +202,31 @@ public class SettingsPage extends BasePage {
         clickOnElement(backButton);
         return this;
     }
+    public UnlockApplicationPage clickOnlanguageButtonInArabic() {
+        clickOnElement(languageButtonInArabic);
+        return new UnlockApplicationPage(driver);
+    }
+
     
     public UnlockApplicationPage clickOnArabicLanguageButton() {
         clickOnElement(arabicLanguageButton);
         return new UnlockApplicationPage(driver);
     }
+
+    public boolean isdataBackupAndRestoreDisplayed() {
+        return this.isElementDisplayed(dataBackupAndRestore);
+    }
+
+    public BackupAndRestorePage clickOnDataBackupAndRestoreButton() {
+        clickOnElement(dataBackupAndRestore);
+        return new BackupAndRestorePage(driver);
+    }
+
+    public boolean isNewlableDisplayed() {
+        return this.isElementDisplayed(newlable);
+    }
+    public String  getDataBackupAndRestoreText(){
+        return getTextFromLocator(dataBackupAndRestore);
+    }
+
 }
