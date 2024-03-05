@@ -636,7 +636,7 @@ export const scanMachine =
             },
             rejected: {
               on: {
-                DISMISS: {
+                RETRY: {
                   target: '#scan.clearingConnection',
                 },
               },

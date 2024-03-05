@@ -91,7 +91,6 @@ const model = createModel(
       DOWNLOAD_READY: () => ({}),
       FAILED: () => ({}),
       GET_VC_RESPONSE: (vc: VC) => ({vc}),
-      VERIFY: () => ({}),
       LOCK_VC: () => ({}),
       INPUT_OTP: (otp: string) => ({otp}),
       RESEND_OTP: () => ({}),
@@ -147,7 +146,7 @@ export const ExistingMosipVCItemMachine =
               {
                 actions: 'setCredential',
                 cond: 'hasCredential',
-                target: 'checkingVerificationStatus',
+                target: '#vc-item.idle',
               },
               {
                 target: 'checkingStore',
@@ -163,7 +162,7 @@ export const ExistingMosipVCItemMachine =
               {
                 actions: ['setCredential', 'updateVc'],
                 cond: 'hasCredential',
-                target: 'checkingVerificationStatus',
+                target: '#vc-item.idle',
               },
               {
                 actions: 'addVcToInProgressDownloads',
@@ -242,7 +241,7 @@ export const ExistingMosipVCItemMachine =
                 ],
                 CREDENTIAL_DOWNLOADED: {
                   actions: 'setCredential',
-                  target: '#vc-item.checkingVerificationStatus',
+                  target: '#vc-item.verifyingCredential',
                 },
               },
             },
@@ -265,9 +264,6 @@ export const ExistingMosipVCItemMachine =
         idle: {
           entry: ['clearTransactionId', 'clearOtp'],
           on: {
-            VERIFY: {
-              target: 'verifyingCredential',
-            },
             LOCK_VC: {
               target: 'requestingOtp',
             },
@@ -433,16 +429,6 @@ export const ExistingMosipVCItemMachine =
               actions: ['sendVerificationError'],
             },
           },
-        },
-
-        checkingVerificationStatus: {
-          description:
-            'Check if VC verification is still valid. VCs stored on the device must be re-checked once every [N] time has passed.',
-          always: [
-            {
-              target: 'verifyingCredential',
-            },
-          ],
         },
         invalid: {
           states: {
@@ -719,9 +705,9 @@ export const ExistingMosipVCItemMachine =
               },
               {
                 target: 'updatingPrivateKey',
-                /*The walletBindingResponse is used for conditional rendering in wallet binding. 
-                However, it wrongly considers activation as successful even when there's an error 
-                in updatingPrivateKey state. So created a temporary context variable to store the binding 
+                /*The walletBindingResponse is used for conditional rendering in wallet binding.
+                However, it wrongly considers activation as successful even when there's an error
+                in updatingPrivateKey state. So created a temporary context variable to store the binding
                 response and use it in updatingPrivateKey state*/
                 actions: 'setTempWalletBindingResponse',
               },

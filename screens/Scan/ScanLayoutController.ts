@@ -2,7 +2,10 @@ import {NavigationProp, useNavigation} from '@react-navigation/native';
 import {useSelector} from '@xstate/react';
 import {useContext, useEffect} from 'react';
 import {useTranslation} from 'react-i18next';
-import {MessageOverlayProps} from '../../components/MessageOverlay';
+import {
+  MessageOverlayProps,
+  VCSharingErrorStatusProps,
+} from '../../components/MessageOverlay';
 import {MainBottomTabParamList, changeTabBarVisible} from '../../routes/main';
 import {GlobalContext} from '../../shared/GlobalContext';
 import {
@@ -114,6 +117,7 @@ export function useScanLayout() {
   const isOffline = useSelector(scanService, selectIsOffline);
   const isSendingVc = useSelector(scanService, selectIsSendingVc);
   const isSendingVcTimeout = useSelector(scanService, selectIsSendingVcTimeout);
+  const isDisconnected = useSelector(scanService, selectIsDisconnected);
   const isStayInProgress = isConnectingTimeout || isSendingVcTimeout;
   let isFaceIdentityVerified = useSelector(
     scanService,
@@ -190,12 +194,6 @@ export function useScanLayout() {
       message: t('status.accepted.message'),
       onButtonPress: DISMISS,
     };
-  } else if (isRejected) {
-    statusOverlay = {
-      title: t('status.rejected.title'),
-      message: t('status.rejected.message'),
-      onBackdropPress: DISMISS,
-    };
   } else if (isInvalid) {
     statusOverlay = {
       message: t('status.invalid'),
@@ -205,6 +203,28 @@ export function useScanLayout() {
     statusOverlay = {
       message: t('status.offline'),
       onBackdropPress: DISMISS,
+    };
+  }
+
+  let errorStatusOverlay: Pick<
+    VCSharingErrorStatusProps,
+    'title' | 'message'
+  > | null = null;
+
+  if (isRejected) {
+    errorStatusOverlay = {
+      title: t('status.rejected.title'),
+      message: t('status.rejected.message'),
+    };
+  } else if (isDisconnected) {
+    errorStatusOverlay = {
+      title: t('status.disconnected.title'),
+      message: t('status.disconnected.message'),
+    };
+  } else if (isBleError) {
+    errorStatusOverlay = {
+      title: t(`status.bleError.${bleError.code}.title`),
+      message: t(`status.bleError.${bleError.code}.message`),
     };
   }
 
@@ -262,13 +282,15 @@ export function useScanLayout() {
     isDone,
     GOTO_HOME,
     GOTO_HISTORY,
-    isDisconnected: useSelector(scanService, selectIsDisconnected),
+    isDisconnected,
     statusOverlay,
+    errorStatusOverlay,
     isStayInProgress,
     isBleError,
     bleError,
     DISMISS,
     isAccepted,
+    isRejected,
     onRetry,
     CANCEL,
     isSendingVc,

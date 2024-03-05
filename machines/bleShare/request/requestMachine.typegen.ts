@@ -156,7 +156,6 @@ export interface Typegen0 {
     | 'reviewing.rejected'
     | 'reviewing.savingFailed'
     | 'reviewing.savingFailed.idle'
-    | 'reviewing.savingFailed.viewingVc'
     | 'reviewing.verifyingIdentity'
     | 'reviewing.verifyingVp'
     | 'storageLimitReached'
@@ -182,7 +181,7 @@ export interface Typegen0 {
           | 'verifyingVp'
           | {
               accepting?: 'prependingReceivedVcMetadata' | 'storingVc';
-              savingFailed?: 'idle' | 'viewingVc';
+              savingFailed?: 'idle';
             };
         waitingForVc?: 'inProgress' | 'timeout';
       };

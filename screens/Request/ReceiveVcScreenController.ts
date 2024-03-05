@@ -1,9 +1,10 @@
-import { useSelector } from '@xstate/react';
-import { useContext } from 'react';
-import { GlobalContext } from '../../shared/GlobalContext';
+import {useSelector} from '@xstate/react';
+import {useContext} from 'react';
+import {GlobalContext} from '../../shared/GlobalContext';
 import {
   selectIncomingVc,
   selectIsAccepting,
+  selectIsDisplayingIncomingVC,
   selectIsIncomingVp,
   selectIsReviewingInIdle,
   selectIsSavingFailedInIdle,
@@ -13,10 +14,10 @@ import {
   selectIsInvalidIdentity,
   selectIsVerifyingIdentity,
 } from '../../machines/bleShare/commonSelectors';
-import { RequestEvents } from '../../machines/bleShare/request/requestMachine';
+import {RequestEvents} from '../../machines/bleShare/request/requestMachine';
 
 export function useReceiveVcScreen() {
-  const { appService } = useContext(GlobalContext);
+  const {appService} = useContext(GlobalContext);
   const requestService = appService.children.get('request');
 
   return {
@@ -26,9 +27,13 @@ export function useReceiveVcScreen() {
     isIncomingVp: useSelector(requestService, selectIsIncomingVp),
     isReviewingInIdle: useSelector(requestService, selectIsReviewingInIdle),
     isAccepting: useSelector(requestService, selectIsAccepting),
-    IsSavingFailedInIdle: useSelector(
+    isDisplayingIncomingVC: useSelector(
       requestService,
-      selectIsSavingFailedInIdle
+      selectIsDisplayingIncomingVC,
+    ),
+    isSavingFailedInIdle: useSelector(
+      requestService,
+      selectIsSavingFailedInIdle,
     ),
     isVerifyingIdentity: useSelector(requestService, selectIsVerifyingIdentity),
     isInvalidIdentity: useSelector(requestService, selectIsInvalidIdentity),
@@ -45,5 +50,6 @@ export function useReceiveVcScreen() {
     DISMISS: () => requestService.send(RequestEvents.DISMISS()),
     FACE_VALID: () => requestService.send(RequestEvents.FACE_VALID()),
     FACE_INVALID: () => requestService.send(RequestEvents.FACE_INVALID()),
+    RESET: () => requestService.send(RequestEvents.RESET()),
   };
 }

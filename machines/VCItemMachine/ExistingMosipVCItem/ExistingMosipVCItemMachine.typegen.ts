@@ -1,3 +1,5 @@
+// This file was automatically generated. Edits will be overwritten
+
 export interface Typegen0 {
   '@@xstate/typegen': true;
   internalEvents: {
@@ -151,6 +153,7 @@ export interface Typegen0 {
       | ''
       | 'CANCEL'
       | 'DISMISS'
+      | 'GET_VC_RESPONSE'
       | 'REVOKE_VC'
       | 'SHOW_BINDING_STATUS'
       | 'STORE_RESPONSE'
@@ -163,18 +166,16 @@ export interface Typegen0 {
       | ''
       | 'CANCEL'
       | 'DISMISS'
+      | 'GET_VC_RESPONSE'
       | 'SHOW_BINDING_STATUS'
       | 'STORE_RESPONSE'
       | 'done.invoke.vc-item.verifyingCredential.triggerAutoBackupForVcDownload:invocation[0]';
-    closeViewVcModal: 'CLOSE_VC_MODAL' | 'STORE_RESPONSE';
     incrementDownloadCounter:
       | 'POLL'
       | 'done.invoke.vc-item.checkingServerData.loadDownloadLimitConfig:invocation[0]';
     logDownloaded: 'STORE_RESPONSE';
     logRevoked: 'STORE_RESPONSE';
-    logVCremoved:
-      | 'STORE_RESPONSE'
-      | 'done.invoke.vc-item.kebabPopUp.removingVc.triggerAutoBackup:invocation[0]';
+    logVCremoved: 'done.invoke.vc-item.kebabPopUp.removingVc.triggerAutoBackup:invocation[0]';
     logWalletBindingFailure:
       | 'error.platform.vc-item.addKeyPair:invocation[0]'
       | 'error.platform.vc-item.addingWalletBindingId:invocation[0]'
@@ -183,9 +184,7 @@ export interface Typegen0 {
     logWalletBindingSuccess:
       | 'done.invoke.vc-item.addingWalletBindingId:invocation[0]'
       | 'done.invoke.vc-item.updatingPrivateKey:invocation[0]';
-    refreshMyVcs:
-      | 'STORE_RESPONSE'
-      | 'done.invoke.vc-item.kebabPopUp.removingVc.triggerAutoBackup:invocation[0]';
+    refreshMyVcs: 'done.invoke.vc-item.kebabPopUp.removingVc.triggerAutoBackup:invocation[0]';
     removeVcFromInProgressDownloads: 'STORE_RESPONSE';
     removeVcItem: 'CONFIRM';
     removeVcMetaDataFromStorage:
@@ -293,7 +292,7 @@ export interface Typegen0 {
     requestOtp: 'LOCK_VC' | 'RESEND_OTP';
     requestRevoke: 'INPUT_OTP';
     updatePrivateKey: 'done.invoke.vc-item.addingWalletBindingId:invocation[0]';
-    verifyCredential: '' | 'VERIFY';
+    verifyCredential: 'CREDENTIAL_DOWNLOADED';
   };
   matchesStates:
     | 'acceptingBindingOtp'
@@ -315,7 +314,6 @@ export interface Typegen0 {
     | 'checkingServerData.verifyingDownloadLimitExpiry'
     | 'checkingStore'
     | 'checkingVc'
-    | 'checkingVerificationStatus'
     | 'handleVCVerificationFailure'
     | 'idle'
     | 'invalid'
