@@ -119,8 +119,6 @@ fileignoreconfig:
     checksum: 02655ff3d7f8a8ea4f3664485f98c961802c598242ec44408594a2ddb721fa5e
   - filename: screens/Settings/BackupController.tsx
     checksum: 4a031b46646aa982c8f40e4c7fe0bd3e05a76a6af1ff1c2de7350ba6ebf9a839
-  - filename: machines/backupRestore.typegen.ts
-    checksum: ac9c154060c7c1adb3392ac8c78a42cae5ca3faea3b4b0166dd00d4ca38b290d
   - filename: machines/settings.typegen.ts
     checksum: e4ae05822f1b1c23f3f70d03dd46fd8f29ba6b52d40f2f24c121f536fbb5f2c4
   - filename: .env
@@ -180,8 +178,8 @@ fileignoreconfig:
     checksum: e93f988415bf91064e2cf5fbc09ff6c7226798baa5da721fa0715d5d0d6afddf
   - filename: machines/backupRestore.ts
     checksum: 8f8725bb55dbc98083f819c74754a8eac258d15038e391a16ca1ab55a53d61f3
-  - filename: machines/backupRestore.typegen.ts
-    checksum: 85e92ddec56da8dcdd28b5a29dfabd88dd0435e619f822488bc4e19b83872289
+  - filename: machines/backupAndRestore/backupRestore.typegen.ts
+    checksum: e1009d3531d9672170a25ead9efad6d3157fbcba10aa47265e99f485da76d646
   - filename: ios/Podfile.lock
     checksum: 369fecac06b3c087b272e7920aa5ffe6734f261ae0af0c376a92ebf5c11415d4
   - filename: screens/Home/MyVcsTab.tsx
@@ -189,12 +187,14 @@ fileignoreconfig:
   - filename: components/BackupAndRestoreBannerNotification.tsx
     checksum: 7bb544ecd2f691f8cef916d0463106ec67645253107dd407236ce3a81f4e9ba7
   - filename: machines/backupAndRestore/backup.ts
-    checksum: a0c667ee882689056a8867f7a6d2d510546c4dcb792024112b28db24e21cc884
+    checksum: 460cf8b1b8b6e0320d9cf3ad2965eb4471714c49fbbf12058045b2d32b150440
   - filename: machines/backupAndRestore/backup.typegen.ts
-    checksum: acf45ed52679db29a23fa7d9e8307df5f4caa404eee49b742b6a5136ff647ffa
+    checksum: ac77e377766a1efa47a2f901edc04bd1bac3ed0b0d212557485621ae073b6ccb
   - filename: machines/backupAndRestore/backupAndRestoreSetup.ts
     checksum: c21559a531b6c62013dc0d932e0e2666cf9bd1ea62e7681240e4983406c96732
   - filename: machines/backupAndRestore/backupAndRestoreSetup.typegen.ts
-    checksum: 3d8b4183f386c73092a271db77434370260dbe1c91fc4193cb21a81f3b548cda
+    checksum: 9fc6f457ed5fc6312cfc46e984ade3c2c2df9247b3690f3925dd0a8d171f4695
+  - filename: ios/Inji/Inji.entitlements
+    checksum: 86afecb1f8eb02b4446f94a092eca7f6e65310cc4ec5ccf89cd01ccb13a0749e
     version: ""
 

@@ -66,7 +66,6 @@ export interface Typegen0 {
       | 'error.platform.backup.backingUp.zipBackupFile:invocation[0]';
     extractLastBackupDetails: 'done.invoke.backup.backingUp.uploadBackupFile:invocation[0]';
     fetchAllDataFromDB: 'done.invoke.backup.backingUp.checkStorageAvailability:invocation[0]';
-    getLastBackupDetailsFromStore: 'LAST_BACKUP_DETAILS';
     loadVcs: 'DATA_BACKUP';
     sendDataBackupFailureEvent:
       | 'STORE_ERROR'
@@ -87,17 +86,17 @@ export interface Typegen0 {
     setErrorReasonAsStorageLimitReached: 'done.invoke.backup.backingUp.checkStorageAvailability:invocation[0]';
     setFileName: 'FILE_NAME';
     setIsAutoBackup: 'DATA_BACKUP';
-    setIsLoading: 'LAST_BACKUP_DETAILS';
+    setIsLoadingBackupDetails: 'LAST_BACKUP_DETAILS' | 'xstate.init';
     setLastBackupDetails:
       | 'STORE_RESPONSE'
       | 'done.invoke.backup.fetchLastBackupDetails.checkCloud:invocation[0]';
     setShowBackupInProgress: 'DATA_BACKUP';
     storeLastBackupDetails: 'done.invoke.backup.backingUp.uploadBackupFile:invocation[0]';
-    unsetIsLoading:
+    unsetIsLoadingBackupDetails:
       | 'STORE_RESPONSE'
       | 'done.invoke.backup.fetchLastBackupDetails.checkCloud:invocation[0]'
       | 'error.platform.backup.fetchLastBackupDetails.checkCloud:invocation[0]';
-    unsetLastBackupDetails: 'LAST_BACKUP_DETAILS';
+    unsetLastBackupDetails: 'xstate.init';
     unsetShowBackupInProgress:
       | 'DISMISS_SHOW_BACKUP_IN_PROGRESS'
       | 'STORE_ERROR'
@@ -117,7 +116,6 @@ export interface Typegen0 {
       | 'error.platform.backup.backingUp.uploadBackupFile:invocation[0]'
       | 'error.platform.backup.backingUp.zipBackupFile:invocation[0]';
     isDataAvailableInStorage: 'STORE_RESPONSE';
-    isIOS: 'LAST_BACKUP_DETAILS';
     isMinimumStorageRequiredForBackupAvailable: 'done.invoke.backup.backingUp.checkStorageAvailability:invocation[0]';
     isVCFound: 'STORE_RESPONSE';
   };
@@ -147,7 +145,7 @@ export interface Typegen0 {
     | 'fetchLastBackupDetails'
     | 'fetchLastBackupDetails.checkCloud'
     | 'fetchLastBackupDetails.checkStore'
-    | 'init'
+    | 'fetchLastBackupDetails.idle'
     | {
         backingUp?:
           | 'checkDataAvailabilityForBackup'
@@ -161,7 +159,7 @@ export interface Typegen0 {
           | 'uploadBackupFile'
           | 'writeDataToFile'
           | 'zipBackupFile';
-        fetchLastBackupDetails?: 'checkCloud' | 'checkStore';
+        fetchLastBackupDetails?: 'checkCloud' | 'checkStore' | 'idle';
       };
   tags: never;
 }

@@ -127,7 +127,7 @@ export const DataBackupAndRestore: React.FC = ({} = () => {
         <BackupAndRestoreScreen
           profileInfo={controller.profileInfo}
           onBackPress={controller.GO_BACK}
-          isLoading={controller.isSigningIn}
+          isSigningIn={controller.isSigningIn}
           shouldTriggerAutoBackup={controller.shouldTriggerAutoBackup}
         />
       )}
