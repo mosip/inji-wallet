@@ -11,7 +11,7 @@ import {Modal} from '../../components/ui/Modal';
 import {Column, Row, Text} from '../../components/ui';
 import {Theme} from '../../components/ui/styleUtils';
 import {Icon, ListItem} from 'react-native-elements';
-import getAllConfigurations from '../../shared/commonprops/commonProps';
+import getAllConfigurations from '../../shared/api';
 import {CopyButton} from '../../components/CopyButton';
 import testIDProps from '../../shared/commonUtil';
 import {__InjiVersion, __TuvaliVersion} from '../../shared/GlobalVariables';

@@ -3,7 +3,7 @@ import jose from 'node-jose';
 import {isIOS} from '../constants';
 import pem2jwk from 'simple-pem2jwk';
 import {displayType, issuerType} from '../../machines/issuersMachine';
-import getAllConfigurations from '../commonprops/commonProps';
+import getAllConfigurations from '../api';
 
 import i18next from 'i18next';
 import {getJWT} from '../cryptoutil/cryptoUtil';

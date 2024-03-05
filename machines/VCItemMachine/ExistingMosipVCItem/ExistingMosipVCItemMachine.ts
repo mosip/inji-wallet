@@ -23,9 +23,7 @@ import {
   getBindingCertificateConstant,
   savePrivateKey,
 } from '../../../shared/keystore/SecureKeystore';
-import getAllConfigurations, {
-  DownloadProps,
-} from '../../../shared/commonprops/commonProps';
+import getAllConfigurations, {DownloadProps} from '../../../shared/api';
 import {VcEvents} from '../vc';
 import i18n from '../../../i18n';
 import SecureKeystore from '@mosip/secure-keystore';
