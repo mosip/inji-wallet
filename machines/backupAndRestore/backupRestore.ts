@@ -243,7 +243,6 @@ export const backupRestoreMachine = model.createMachine(
     },
 
     services: {
-      
       checkStorageAvailability: () => async () => {
         return await Storage.isMinimumLimitReached('minStorageRequired');
       },
