@@ -40,8 +40,7 @@ export const QrConsent: React.FC<QrConsentProps> = props => {
             style={Theme.TextStyles.small}
             weight="bold"
             margin={'10 0 0 0'}>
-            {getClientNameForCurrentLanguage(controller.clientName)}{' '}
-            {t('access')}
+            {getClientNameForCurrentLanguage(controller.clientName)} {t('access')}
           </Text>
         </Column>
         <ScrollView>
