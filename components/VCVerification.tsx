@@ -13,6 +13,7 @@ export const VCVerification: React.FC = ({wellknown, isVerified}: any) => {
         justifyContent: 'space-between',
         alignItems: 'center',
       }}>
+      {/* TODO - Handle VC Verification pending status as part of 695 */}
       {isVerified && (
         <React.Fragment>
           <VerifiedIcon />
