@@ -92,7 +92,9 @@ export const DataBackupAndRestore: React.FC = ({} = () => {
             'DataBackupScreen:errors.permissionDenied.actions.allowAccess'
           }
           primaryButtonEvent={
-            isAndroid() ? controller.TRY_AGAIN : controller.OPEN_SETTINGS
+            isAndroid()
+              ? controller.RECONFIGURE_ACCOUNT
+              : controller.OPEN_SETTINGS
           }
           textButtonText={
             'DataBackupScreen:errors.permissionDenied.actions.notNow'

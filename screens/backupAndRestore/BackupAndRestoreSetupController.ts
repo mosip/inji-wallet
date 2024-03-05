@@ -16,10 +16,15 @@ import {
 import {GlobalContext} from '../../shared/GlobalContext';
 import {selectIsBackUpAndRestoreExplored} from '../../machines/settings';
 import {SettingsEvents} from '../../machines/settings';
+import {
+  BackupEvents,
+  selectIsNetworkError,
+} from '../../machines/backupAndRestore/backup';
 
 export function useBackupAndRestoreSetup() {
   const {appService} = useContext(GlobalContext);
   const settingsService = appService.children.get('settings');
+  const backupService = appService.children.get('backup');
   const storeService = appService.children.get('store');
   const machine = useRef(
     backupAndRestoreSetupMachine.withContext({
@@ -33,10 +38,29 @@ export function useBackupAndRestoreSetup() {
     selectIsBackUpAndRestoreExplored,
   );
 
+  const isNetworkErrorDuringAccountSetup = useSelector(
+    service,
+    selectIsNetworkOff,
+  );
+  const isNetworkErrorWhileFetchingLastBackupDetails = useSelector(
+    backupService!!,
+    selectIsNetworkError,
+  );
+
+  const tryAgain = () => {
+    if (isNetworkErrorDuringAccountSetup)
+      return service.send(BackupAndRestoreSetupEvents.TRY_AGAIN());
+    else {
+      return backupService?.send(BackupEvents.TRY_AGAIN());
+    }
+  };
+
   return {
     isLoading: useSelector(service, selectIsLoading),
     profileInfo: useSelector(service, selectProfileInfo),
-    isNetworkOff: useSelector(service, selectIsNetworkOff),
+    isNetworkOff:
+      isNetworkErrorDuringAccountSetup ||
+      isNetworkErrorWhileFetchingLastBackupDetails,
 
     showAccountSelectionConfirmation: useSelector(
       service,
@@ -49,7 +73,7 @@ export function useBackupAndRestoreSetup() {
     BACKUP_AND_RESTORE: () => {
       service.send(BackupAndRestoreSetupEvents.HANDLE_BACKUP_AND_RESTORE());
       if (!isBackupAndRestoreExplored) {
-        settingsService.send(
+        settingsService?.send(
           SettingsEvents.SET_IS_BACKUP_AND_RESTORE_EXPLORED(),
         );
       }
@@ -61,9 +85,15 @@ export function useBackupAndRestoreSetup() {
     PROCEED_ACCOUNT_SELECTION: () =>
       service.send(BackupAndRestoreSetupEvents.PROCEED()),
     GO_BACK: () => service.send(BackupAndRestoreSetupEvents.GO_BACK()),
-    TRY_AGAIN: () => service.send(BackupAndRestoreSetupEvents.TRY_AGAIN()),
+    RECONFIGURE_ACCOUNT: () =>
+      service.send(BackupAndRestoreSetupEvents.RECONFIGURE_ACCOUNT()),
+    TRY_AGAIN: tryAgain,
     OPEN_SETTINGS: () =>
       service.send(BackupAndRestoreSetupEvents.OPEN_SETTINGS()),
-    DISMISS: () => service.send(BackupAndRestoreSetupEvents.DISMISS()),
+    DISMISS: () => {
+      if (isNetworkErrorWhileFetchingLastBackupDetails)
+        backupService?.send(BackupAndRestoreSetupEvents.DISMISS());
+      return service.send(BackupAndRestoreSetupEvents.DISMISS());
+    },
   };
 }

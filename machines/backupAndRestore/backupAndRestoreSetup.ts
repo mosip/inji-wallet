@@ -44,6 +44,7 @@ const model = createModel(
       PROCEED: () => ({}),
       GO_BACK: () => ({}),
       TRY_AGAIN: () => ({}),
+      RECONFIGURE_ACCOUNT: () => ({}),
       OPEN_SETTINGS: () => ({}),
       DISMISS: () => ({}),
       STORE_RESPONSE: (response: unknown) => ({response}),
@@ -121,8 +122,7 @@ export const backupAndRestoreSetupMachine = model.createMachine(
             },
             {
               cond: 'isNetworkError',
-              actions: ['unsetIsLoading'],
-              target: 'noInternet',
+              target: '.noInternet',
             },
             //todo: Check flow
             {
@@ -157,36 +157,19 @@ export const backupAndRestoreSetupMachine = model.createMachine(
               },
             },
           },
-        },
-      },
-      checkInternet: {
-        invoke: {
-          src: 'checkInternet',
-          onDone: [
-            {
-              cond: 'isInternetConnected',
-              target: 'signIn',
+          noInternet: {
+            on: {
+              TRY_AGAIN: {
+                target: '#backupAndRestoreSetup.checkSignIn',
+              },
+              DISMISS: {
+                actions: [
+                  'unsetIsLoading',
+                  'sendBackupAndRestoreSetupCancelEvent',
+                ],
+                target: '#backupAndRestoreSetup.init',
+              },
             },
-            {
-              actions: ['setNoInternet'],
-              target: 'noInternet',
-            },
-          ],
-          onError: {
-            actions: () =>
-              console.log('Error Occurred while checking Internet'),
-            target: 'noInternet',
-          },
-        },
-      },
-      noInternet: {
-        on: {
-          TRY_AGAIN: {
-            target: 'checkInternet',
-          },
-          DISMISS: {
-            actions: ['unsetIsLoading', 'sendBackupAndRestoreSetupCancelEvent'],
-            target: 'init',
           },
         },
       },
@@ -204,6 +187,11 @@ export const backupAndRestoreSetupMachine = model.createMachine(
             {
               cond: 'isIOS',
               target: 'backupAndRestore',
+            },
+            {
+              cond: 'isNetworkError',
+              actions: 'sendBackupAndRestoreSetupErrorEvent',
+              target: '.noInternet',
             },
             // What if sign in fails due to n/w error?
             {
@@ -226,17 +214,31 @@ export const backupAndRestoreSetupMachine = model.createMachine(
                 actions: 'sendBackupAndRestoreSetupCancelEvent',
                 target: '#backupAndRestoreSetup.init',
               },
-              TRY_AGAIN: '#backupAndRestoreSetup.signIn',
+              RECONFIGURE_ACCOUNT: '#backupAndRestoreSetup.signIn',
+            },
+          },
+          noInternet: {
+            on: {
+              TRY_AGAIN: {
+                target: '#backupAndRestoreSetup.signIn',
+              },
+              DISMISS: {
+                actions: ['sendBackupAndRestoreSetupCancelEvent'],
+                target: '#backupAndRestoreSetup.init',
+              },
             },
           },
         },
       },
       backupAndRestore: {
-        entry: [
-          'sendBackupAndRestoreSetupSuccessEvent',
-          'setAccountSelectionConfirmationShown',
-        ],
-        on: {GO_BACK: 'init'},
+        entry: ['setAccountSelectionConfirmationShown'],
+        on: {
+          GO_BACK: 'init',
+          DISMISS: {
+            actions: 'sendBackupAndRestoreSetupCancelEvent',
+            target: 'init',
+          },
+        },
       },
     },
   },
@@ -268,21 +270,11 @@ export const backupAndRestoreSetupMachine = model.createMachine(
         );
       },
 
-      sendBackupAndRestoreSetupSuccessEvent: () => {
-        sendEndEvent(
-          getEndEventData(
-            TelemetryConstants.FlowType.dataBackupAndRestoreSetup,
-            TelemetryConstants.EndEventStatus.success,
-          ),
-        );
-      },
-
       sendBackupAndRestoreSetupCancelEvent: () => {
         sendEndEvent(
           getEndEventData(
             TelemetryConstants.FlowType.dataBackupAndRestoreSetup,
             TelemetryConstants.EndEventStatus.cancel,
-            {comment: 'User cancelled backup and restore setup'},
           ),
         );
       },
@@ -321,7 +313,6 @@ export const backupAndRestoreSetupMachine = model.createMachine(
     },
 
     services: {
-      checkInternet: async () => await NetInfo.fetch(),
       isUserSignedAlready: () => async () => {
         return await Cloud.isSignedInAlready();
       },
@@ -331,7 +322,6 @@ export const backupAndRestoreSetupMachine = model.createMachine(
     },
 
     guards: {
-      isInternetConnected: (_, event) => event.data.isConnected,
       isNetworkError: (_, event) => event.data.error === NETWORK_REQUEST_FAILED,
       isSignedIn: (_context, event) =>
         (event.data as isSignedInResult).isSignedIn,
@@ -374,7 +364,10 @@ export function selectProfileInfo(state: State) {
 }
 
 export function selectIsNetworkOff(state: State) {
-  return state.matches('noInternet');
+  return (
+    state.matches('checkSignIn.noInternet') ||
+    state.matches('signIn.noInternet')
+  );
 }
 
 export function selectShouldTriggerAutoBackup(state: State) {

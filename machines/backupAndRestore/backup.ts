@@ -20,9 +20,11 @@ import {isMinimumLimitForBackupReached} from '../../shared/storage';
 import {TelemetryConstants} from '../../shared/telemetry/TelemetryConstants';
 import {
   getEndEventData,
+  getErrorEventData,
   getImpressionEventData,
   getStartEventData,
   sendEndEvent,
+  sendErrorEvent,
   sendImpressionEvent,
   sendStartEvent,
 } from '../../shared/telemetry/TelemetryUtils';
@@ -44,6 +46,7 @@ const model = createModel(
     events: {
       DATA_BACKUP: (isAutoBackUp: boolean) => ({isAutoBackUp}),
       DISMISS: () => ({}),
+      TRY_AGAIN: () => ({}),
       DISMISS_SHOW_BACKUP_IN_PROGRESS: () => ({}),
       LAST_BACKUP_DETAILS: () => ({}),
       STORE_RESPONSE: (response: unknown) => ({response}),
@@ -71,33 +74,13 @@ export const backupMachine = model.createMachine(
       fetchLastBackupDetails: {
         on: {
           LAST_BACKUP_DETAILS: {
-            actions: 'setIsLoadingBackupDetails',
+            actions: ['unsetLastBackupDetails', 'setIsLoadingBackupDetails'],
             target: '.checkCloud',
           },
         },
-        entry: ['unsetLastBackupDetails', 'setIsLoadingBackupDetails'],
         initial: 'idle',
         states: {
           idle: {},
-          checkStore: {
-            entry: 'getLastBackupDetailsFromStore',
-            on: {
-              STORE_RESPONSE: [
-                {
-                  cond: 'isDataAvailableInStorage',
-                  actions: [
-                    'setLastBackupDetails',
-                    'unsetIsLoadingBackupDetails',
-                  ],
-                  target: '#backup.fetchLastBackupDetails',
-                },
-                {target: 'checkCloud'},
-              ],
-              STORE_ERROR: {
-                target: 'checkCloud',
-              },
-            },
-          },
           checkCloud: {
             invoke: {
               src: 'getLastBackupDetailsFromCloud',
@@ -105,11 +88,39 @@ export const backupMachine = model.createMachine(
                 actions: [
                   'unsetIsLoadingBackupDetails',
                   'setLastBackupDetails',
+                  'sendBackupAndRestoreSetupSuccessEvent',
                 ],
                 target: '#backup.fetchLastBackupDetails.idle',
               },
-              onError: {
-                actions: 'unsetIsLoadingBackupDetails',
+              onError: [
+                {
+                  cond: 'isNetworkError',
+                  target: 'noInternet',
+                },
+                {
+                  actions: [
+                    'unsetIsLoadingBackupDetails',
+                    'sendBackupAndRestoreSetupErrorEvent',
+                  ],
+                  target: '#backup.fetchLastBackupDetails.idle',
+                },
+              ],
+            },
+          },
+          noInternet: {
+            on: {
+              TRY_AGAIN: {
+                actions: [
+                  'unsetLastBackupDetails',
+                  'setIsLoadingBackupDetails',
+                ],
+                target: '#backup.fetchLastBackupDetails.checkCloud',
+              },
+              DISMISS: {
+                actions: [
+                  'unsetIsLoadingBackupDetails',
+                  'sendBackupAndRestoreSetupCancelEvent',
+                ],
                 target: '#backup.fetchLastBackupDetails.idle',
               },
             },
@@ -392,6 +403,34 @@ export const backupMachine = model.createMachine(
         },
       }),
 
+      sendBackupAndRestoreSetupSuccessEvent: () => {
+        sendEndEvent(
+          getEndEventData(
+            TelemetryConstants.FlowType.dataBackupAndRestoreSetup,
+            TelemetryConstants.EndEventStatus.success,
+          ),
+        );
+      },
+
+      sendBackupAndRestoreSetupErrorEvent: (_context, event) => {
+        sendErrorEvent(
+          getErrorEventData(
+            TelemetryConstants.FlowType.dataBackupAndRestoreSetup,
+            TelemetryConstants.ErrorId.userCancel,
+            JSON.stringify(event.data),
+          ),
+        );
+      },
+
+      sendBackupAndRestoreSetupCancelEvent: (_context, event) => {
+        sendEndEvent(
+          getEndEventData(
+            TelemetryConstants.FlowType.dataBackupAndRestoreSetup,
+            TelemetryConstants.EndEventStatus.cancel,
+          ),
+        );
+      },
+
       sendDataBackupStartEvent: () => {
         sendStartEvent(
           getStartEventData(TelemetryConstants.FlowType.dataBackup),
@@ -470,8 +509,8 @@ export const backupMachine = model.createMachine(
       isVCFound: (_context, event) => {
         return !!(event.response && (event.response as object[]).length > 0);
       },
-      isDataAvailableInStorage: (_context, event) => {
-        return event.response != null;
+      isNetworkError: (_context, event) => {
+        return !!event.data?.toString()?.includes('Network request failed');
       },
     },
   },
@@ -501,6 +540,9 @@ export function selectIsBackingUpSuccess(state: State) {
 }
 export function selectIsBackingUpFailure(state: State) {
   return state.matches('backingUp.failure');
+}
+export function selectIsNetworkError(state: State) {
+  return state.matches('fetchLastBackupDetails.noInternet');
 }
 export function lastBackupDetails(state: State) {
   return state.context.lastBackupDetails;
