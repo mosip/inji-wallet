@@ -2,7 +2,7 @@ import {NavigationProp, useNavigation} from '@react-navigation/native';
 import {useSelector} from '@xstate/react';
 import {useContext, useEffect} from 'react';
 
-import {MainBottomTabParamList} from '../../routes/main';
+import {MainBottomTabParamList} from '../../routes/types';
 import {GlobalContext} from '../../shared/GlobalContext';
 import {
   selectIsSavingFailedInViewingVc,

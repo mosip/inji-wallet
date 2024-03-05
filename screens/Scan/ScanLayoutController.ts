@@ -3,7 +3,7 @@ import {useSelector} from '@xstate/react';
 import {useContext, useEffect} from 'react';
 import {useTranslation} from 'react-i18next';
 import {MessageOverlayProps} from '../../components/MessageOverlay';
-import {MainBottomTabParamList, changeTabBarVisible} from '../../routes/main';
+import {MainBottomTabParamList} from '../../routes/types';
 import {GlobalContext} from '../../shared/GlobalContext';
 import {
   selectIsConnecting,
@@ -33,10 +33,15 @@ import {
 import {ScanEvents} from '../../machines/bleShare/scan/scanMachine';
 import {BOTTOM_TAB_ROUTES, SCAN_ROUTES} from '../../routes/routesConstants';
 import {ScanStackParamList} from '../../routes/routesConstants';
+import {Theme} from '../../components/ui/styleUtils';
 
 type ScanLayoutNavigation = NavigationProp<
   ScanStackParamList & MainBottomTabParamList
 >;
+
+const changeTabBarVisible = (visible: string) => {
+  Theme.BottomTabBarStyle.tabBarStyle.display = visible;
+};
 
 // TODO: refactor
 // eslint-disable-next-line sonarjs/cognitive-complexity

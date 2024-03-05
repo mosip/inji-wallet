@@ -7,7 +7,7 @@ import {Header} from '../../components/ui/Header';
 import {Button, Column, Row, Text} from '../../components/ui';
 import {Theme} from '../../components/ui/styleUtils';
 import {RootRouteProps} from '../../routes';
-import {HomeRouteProps} from '../../routes/main';
+import {HomeRouteProps} from '../../routes/types';
 import {useIssuerScreenController} from './IssuerScreenController';
 import {Loader} from '../../components/ui/Loader';
 import {removeWhiteSpace} from '../../shared/commonUtil';
