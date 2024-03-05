@@ -8,14 +8,20 @@ import {QrLogin} from '../QrLogin/QrLogin';
 import {useScanScreen} from './ScanScreenController';
 import BluetoothStateManager from 'react-native-bluetooth-state-manager';
 import {Linking} from 'react-native';
+import {useNavigation, NavigationProp} from '@react-navigation/native';
+import {MainBottomTabParamList} from '../../routes/main';
+import {BOTTOM_TAB_ROUTES} from '../../routes/routesConstants';
 import {isIOS} from '../../shared/constants';
 import {BannerNotificationContainer} from '../../components/BannerNotificationContainer';
 import {SharingStatusModal} from './SharingStatusModal';
 import {SvgImage} from '../../components/ui/svg';
 
 export const ScanScreen: React.FC = () => {
+  type ScanScreenNavigation = NavigationProp<MainBottomTabParamList>;
+
   const {t} = useTranslation('ScanScreen');
   const controller = useScanScreen();
+  const navigation = useNavigation<ScanScreenNavigation>();
   const [isBluetoothOn, setIsBluetoothOn] = useState(false);
 
   useEffect(() => {
@@ -80,8 +86,7 @@ export const ScanScreen: React.FC = () => {
         <Button
           testID="enableBluetoothButton"
           title={t('enableBluetoothButtonText')}
-          onPress={openSettings}
-        />
+          onPress={openSettings}></Button>
       </Column>
     );
   }
@@ -101,8 +106,7 @@ export const ScanScreen: React.FC = () => {
         <Button
           testID="allowNearbyDevicesPermissionButton"
           title={t('errors.nearbyDevicesPermissionDenied.button')}
-          onPress={openSettings}
-        />
+          onPress={openSettings}></Button>
       </Column>
     );
   }
@@ -174,7 +178,7 @@ export const ScanScreen: React.FC = () => {
           }
           translationPath={'ScanScreen'}
           error="errors.storageLimitReached"
-          onBackdropPress={controller.GOTO_HOME}
+          onBackdropPress={() => navigation.navigate(BOTTOM_TAB_ROUTES.home)}
         />
       )
     );

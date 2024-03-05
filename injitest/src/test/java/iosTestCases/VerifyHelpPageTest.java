@@ -6,7 +6,7 @@ import inji.pages.*;
 import inji.utils.TestDataReader;
 import org.testng.annotations.Test;
 
-import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 
 public class VerifyHelpPageTest extends IosBaseTest {
@@ -33,8 +33,8 @@ public class VerifyHelpPageTest extends IosBaseTest {
 
         assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
         HelpPage helpPage = homePage.clickOnHelpIcon();
-        
-        assertEquals(helpPage.isHelpPageContentEmpty(),false,"verifying if help page is not empty");
+
+        assertFalse(helpPage.isHelpPageContentEmpty(), "verifying if help page is not empty");
 
         helpPage.exitHelpPage();
 

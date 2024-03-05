@@ -28,7 +28,7 @@ public class EsignetLoginPage extends BasePage {
     private WebElement enterYourVidTextHeader;
 
     @AndroidFindBy(uiAutomator = "UiSelector().className(\"android.widget.EditText\").instance(1)")
-    @iOSXCUITFindBy(accessibility = "Please fill in this field")
+    @iOSXCUITFindBy(accessibility = "tooltips.vid_tooltip")
     private WebElement enterIdTextBox;
 
     @AndroidFindBy(xpath = "//android.widget.Button[@text=\"Get OTP\"]")

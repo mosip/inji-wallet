@@ -13,84 +13,84 @@ public class ConfigManager {
 
 	private static final org.slf4j.Logger LOGGER= org.slf4j.LoggerFactory.getLogger(ConfigManager.class);
 
-	private static String USEPRECONFIGOTP = "usePreConfiguredOtp";
-	private static String PRECONFIGOTP = "preconfiguredOtp";
+	private static final String USEPRECONFIGOTP = "usePreConfiguredOtp";
+	private static final String PRECONFIGOTP = "preconfiguredOtp";
 
-	private static String MOSIP_IDREPO_CLIENT_SECRET = "mosip_idrepo_client_secret";
-	private static String MOSIP_IDREPO_CLIENT_ID = "mosip_idrepo_client_id";
-	private static String MOSIP_IDREPO_APP_ID = "mosip_idrepo_app_id";
+	private static final String MOSIP_IDREPO_CLIENT_SECRET = "mosip_idrepo_client_secret";
+	private static final String MOSIP_IDREPO_CLIENT_ID = "mosip_idrepo_client_id";
+	private static final String MOSIP_IDREPO_APP_ID = "mosip_idrepo_app_id";
 
-	private static String MOSIP_ADMIN_CLIENT_SECRET = "mosip_admin_client_secret";
-	private static String MOSIP_ADMIN_CLIENT_ID = "mosip_admin_client_id";
-	private static String MOSIP_ADMIN_APP_ID = "mosip_admin_app_id";
+	private static final String MOSIP_ADMIN_CLIENT_SECRET = "mosip_admin_client_secret";
+	private static final String MOSIP_ADMIN_CLIENT_ID = "mosip_admin_client_id";
+	private static final String MOSIP_ADMIN_APP_ID = "mosip_admin_app_id";
 
-	private static String MOSIP_REG_CLIENT_SECRET = "mosip_reg_client_secret";
-	private static String MOSIP_REG_CLIENT_ID = "mosip_reg_client_id";
-	private static String MOSIP_REGCLIENT_APP_ID = "mosip_regclient_app_id";
+	private static final String MOSIP_REG_CLIENT_SECRET = "mosip_reg_client_secret";
+	private static final String MOSIP_REG_CLIENT_ID = "mosip_reg_client_id";
+	private static final String MOSIP_REGCLIENT_APP_ID = "mosip_regclient_app_id";
 
 
 
-	private static String MOSIP_AUTOMATION_CLIENT_SECRET = "mosip_testrig_client_secret";
-	private static String MOSIP_AUTOMATION_CLIENT_ID = "mosip_testrig_client_id";
-	private static String MOSIP_AUTOMATION_APP_ID = "mosip_automation_app_id";
+	private static final String MOSIP_AUTOMATION_CLIENT_SECRET = "mosip_testrig_client_secret";
+	private static final String MOSIP_AUTOMATION_CLIENT_ID = "mosip_testrig_client_id";
+	private static final String MOSIP_AUTOMATION_APP_ID = "mosip_automation_app_id";
 
-	private static String S3_HOST = "s3-host";
+	private static final String S3_HOST = "s3-host";
 	private static String usePreConfiguredOtp;
-	private static String S3_REGION = "s3-region";
-	private static String S3_USER_KEY = "s3-user-key";
-	private static String S3_SECRET_KEY = "s3-user-secret";
-	private static String S3_ACCOUNT = "s3-account";
-	private static String PUSH_TO_S3 = "push-reports-to-s3";
-	private static String ENABLE_DEBUG = "enableDebug";
-	private static String THREAD_COUNT = "threadCount";
-	private static String LANG_SELECT = "langselect";
+	private static final String S3_REGION = "s3-region";
+	private static final String S3_USER_KEY = "s3-user-key";
+	private static final String S3_SECRET_KEY = "s3-user-secret";
+	private static final String S3_ACCOUNT = "s3-account";
+	private static final String PUSH_TO_S3 = "push-reports-to-s3";
+	private static final String ENABLE_DEBUG = "enableDebug";
+	private static final String THREAD_COUNT = "threadCount";
+	private static final String LANG_SELECT = "langselect";
 	private static String preconfiguredOtp;
 
-	private static String DB_PORT = "db-port";
-	private static String DB_DOMAIN = "db-server";
-	private static String HIBERNATE_CONNECTION_DRIVER_CLASS = "hibernate.connection.driver_class";
-	private static String HIBERNATE_CONNECTION_POOL_SIZE = "hibernate.connection.pool_size";
-	private static String HIBERNATE_DIALECT = "hibernate.dialect";
-	private static String HIBERNATE_SHOW_SQL = "hibernate.show_sql";
-	private static String HIBERNATE_CONTEXT_CLASS = "hibernate.current_session_context_class";
+	private static final String DB_PORT = "db-port";
+	private static final String DB_DOMAIN = "db-server";
+	private static final String HIBERNATE_CONNECTION_DRIVER_CLASS = "hibernate.connection.driver_class";
+	private static final String HIBERNATE_CONNECTION_POOL_SIZE = "hibernate.connection.pool_size";
+	private static final String HIBERNATE_DIALECT = "hibernate.dialect";
+	private static final String HIBERNATE_SHOW_SQL = "hibernate.show_sql";
+	private static final String HIBERNATE_CONTEXT_CLASS = "hibernate.current_session_context_class";
 
-	private static String AUDIT_DB_USER = "db-su-user";
-	private static String AUDIT_DB_PASS = "postgresql-password";
-	private static String AUDIT_DB_SCHEMA = "audit_db_schema";
+	private static final String AUDIT_DB_USER = "db-su-user";
+	private static final String AUDIT_DB_PASS = "postgresql-password";
+	private static final String AUDIT_DB_SCHEMA = "audit_db_schema";
 
-	private static String IDA_DB_USER = "db-su-user";
-	private static String IDA_DB_PASS = "postgresql-password";
-	private static String IDA_DB_SCHEMA = "ida_db_schema";
+	private static final String IDA_DB_USER = "db-su-user";
+	private static final String IDA_DB_PASS = "postgresql-password";
+	private static final String IDA_DB_SCHEMA = "ida_db_schema";
 
-	private static String PMS_DB_USER = "db-su-user";
-	private static String PMS_DB_PASS = "postgresql-password";
-	private static String PMS_DB_SCHEMA = "pms_db_schema";
+	private static final String PMS_DB_USER = "db-su-user";
+	private static final String PMS_DB_PASS = "postgresql-password";
+	private static final String PMS_DB_SCHEMA = "pms_db_schema";
 
-	private static String KM_DB_USER = "db-su-user";
-	private static String KM_DB_PASS = "postgresql-password";
-	private static String KM_DB_SCHEMA = "km_db_schema";
+	private static final String KM_DB_USER = "db-su-user";
+	private static final String KM_DB_PASS = "postgresql-password";
+	private static final String KM_DB_SCHEMA = "km_db_schema";
 
-	private static String MASTER_DB_USER = "db-su-user";
-	private static String MASTER_DB_PASS = "postgresql-password";
-	private static String MASTER_DB_SCHEMA = "master_db_schema";
+	private static final String MASTER_DB_USER = "db-su-user";
+	private static final String MASTER_DB_PASS = "postgresql-password";
+	private static final String MASTER_DB_SCHEMA = "master_db_schema";
 
-	private static String IAM_EXTERNAL_URL = "keycloak-external-url";
-	private static String IAM_ADMINPORTAL_PATH = "adminPortalPath";
-	private static String IAM_APIENVUSER = "apiEnvUser";
-	private static String IAM_APIINTERNALENDPOINT = "apiInternalEndPoint";
-	private static String IAM_REALM_ID = "keycloak-realm-id";
-	private static String IAM_USERS_TO_CREATE = "iam-users-to-create";
-	private static String IAM_USERS_PASSWORD = "iam-users-password";
+	private static final String IAM_EXTERNAL_URL = "keycloak-external-url";
+	private static final String IAM_ADMINPORTAL_PATH = "adminPortalPath";
+	private static final String IAM_APIENVUSER = "apiEnvUser";
+	private static final String IAM_APIINTERNALENDPOINT = "apiInternalEndPoint";
+	private static final String IAM_REALM_ID = "keycloak-realm-id";
+	private static final String IAM_USERS_TO_CREATE = "iam-users-to-create";
+	private static final String IAM_USERS_PASSWORD = "iam-users-password";
 
-	private static String AUTH_DEMO_SERVICE_PORT = "authDemoServicePort";
-	private static String AUTH_DEMO_SERVICE_BASE_URL = "authDemoServiceBaseURL";
-	private static String MOUNT_PATH = "mountPath";
-	private static String AUTHCERTS_PATH = "authCertsPath";
-	private static String MOUNT_PATH_FOR_SCENARIO = "mountPathForScenario";
+	private static final String AUTH_DEMO_SERVICE_PORT = "authDemoServicePort";
+	private static final String AUTH_DEMO_SERVICE_BASE_URL = "authDemoServiceBaseURL";
+	private static final String MOUNT_PATH = "mountPath";
+	private static final String AUTHCERTS_PATH = "authCertsPath";
+	private static final String MOUNT_PATH_FOR_SCENARIO = "mountPathForScenario";
 
-	private static String PACKET_UTILITY_BASE_URL = "packetUtilityBaseUrl";
+	private static final String PACKET_UTILITY_BASE_URL = "packetUtilityBaseUrl";
 
-	private static String REPORT_EXPIRATION_IN_DAYS = "reportExpirationInDays";
+	private static final String REPORT_EXPIRATION_IN_DAYS = "reportExpirationInDays";
 
 	private static String idrepo_client_secret;
 	private static String idrepo_client_id;
@@ -179,7 +179,7 @@ public class ConfigManager {
 	public static void init() {
 		// Loading Kernel property
 		//LOGGER.info("file location"+TestRunner.getResourcePath() + "/config/));
-		propsKernel = getproperty(UinGenerationUtil.getResourcePath() + "/config/"+ UinGenerationUtil.GetKernalFilename());
+		propsKernel = getproperty(UinGenerationUtil.getResourcePath() + "/config/"+ UinGenerationUtil.getKernalFilename());
 
 		idrepo_client_secret = getValueForKey(MOSIP_IDREPO_CLIENT_SECRET);
 		idrepo_client_id = getValueForKey(MOSIP_IDREPO_CLIENT_ID);

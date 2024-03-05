@@ -25,7 +25,7 @@ public class KeycloakUserManager {
 
 	private static final org.slf4j.Logger logger= org.slf4j.LoggerFactory.getLogger(KeycloakUserManager.class);
 
-	public static Properties propsKernel = getproperty(UinGenerationUtil.getResourcePath() + "/config/"+ UinGenerationUtil.GetKernalFilename());
+	public static Properties propsKernel = getproperty(UinGenerationUtil.getResourcePath() + "/config/"+ UinGenerationUtil.getKernalFilename());
 
 	private static Keycloak getKeycloakInstance() {
 		Keycloak key=null;

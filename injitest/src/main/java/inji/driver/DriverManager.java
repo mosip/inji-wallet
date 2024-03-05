@@ -10,7 +10,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 public class DriverManager {
-    private static ThreadLocal<AppiumDriver> appiumDriver = new ThreadLocal<>();
+    private static final ThreadLocal<AppiumDriver> appiumDriver = new ThreadLocal<>();
 
     public static AppiumDriver getAndroidDriver() {
         DesiredCapabilities desiredCapabilities = CapabilitiesReader.getDesiredCapabilities("androidDevice", "src/main/resources/DesiredCapabilities.json");

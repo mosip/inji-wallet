@@ -1,5 +1,6 @@
 package inji.pages;
 
+import inji.utils.IosUtil;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.pagefactory.AndroidFindBy;
 import io.appium.java_client.pagefactory.iOSXCUITFindBy;
@@ -139,11 +140,13 @@ public class DetailedVcViewPage extends BasePage{
     }
 
     public PleaseConfirmPopupPage clickOnActivateButtonAndroid(){
+        IosUtil.scrollToElement(driver,58,712,160,129);
         clickOnElement(activateButton);
         return new PleaseConfirmPopupPage(driver);
     }
     
     public PleaseConfirmPopupPage clickOnActivateButtonIos(){  //Scroll for ios need to be done
+        IosUtil.scrollToElement(driver,58,712,160,129);
         clickOnElement(activeButtonIos);
         return new PleaseConfirmPopupPage(driver);
     }
@@ -159,6 +162,11 @@ public class DetailedVcViewPage extends BasePage{
 
     public HomePage clickOnQrCrossIcon() {
         clickOnElement(qrCloseIcon);
+        return new HomePage(driver);
+    }
+
+    public HomePage clickOnCrossIcon() {
+        clickOnElement(crossIcon);
         return new HomePage(driver);
     }
 

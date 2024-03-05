@@ -1,3 +1,4 @@
+// This file was automatically generated. Edits will be overwritten
 
 export interface Typegen0 {
   '@@xstate/typegen': true;
@@ -152,6 +153,7 @@ export interface Typegen0 {
       | ''
       | 'CANCEL'
       | 'DISMISS'
+      | 'GET_VC_RESPONSE'
       | 'REVOKE_VC'
       | 'SHOW_BINDING_STATUS'
       | 'STORE_RESPONSE'
@@ -164,6 +166,7 @@ export interface Typegen0 {
       | ''
       | 'CANCEL'
       | 'DISMISS'
+      | 'GET_VC_RESPONSE'
       | 'SHOW_BINDING_STATUS'
       | 'STORE_RESPONSE'
       | 'done.invoke.vc-item.verifyingCredential.triggerAutoBackupForVcDownload:invocation[0]';
@@ -289,7 +292,7 @@ export interface Typegen0 {
     requestOtp: 'LOCK_VC' | 'RESEND_OTP';
     requestRevoke: 'INPUT_OTP';
     updatePrivateKey: 'done.invoke.vc-item.addingWalletBindingId:invocation[0]';
-    verifyCredential: '' | 'VERIFY';
+    verifyCredential: 'CREDENTIAL_DOWNLOADED';
   };
   matchesStates:
     | 'acceptingBindingOtp'
@@ -311,7 +314,6 @@ export interface Typegen0 {
     | 'checkingServerData.verifyingDownloadLimitExpiry'
     | 'checkingStore'
     | 'checkingVc'
-    | 'checkingVerificationStatus'
     | 'handleVCVerificationFailure'
     | 'idle'
     | 'invalid'
