@@ -5,6 +5,8 @@ import {Button, Centered, Column, Row, Text} from '../../components/ui';
 import {Theme} from './styleUtils';
 import {LoaderAnimation} from './LoaderAnimation';
 import {Modal} from './Modal';
+import {BannerNotification} from '../../components/BannerNotification';
+import {BANNER_TYPE_SUCCESS, BANNER_TYPE_ERROR} from '../../shared/constants';
 
 export const Loader: React.FC<LoaderProps> = props => {
   const {t} = useTranslation('ScanScreen');
@@ -108,6 +110,15 @@ export const Loader: React.FC<LoaderProps> = props => {
             </SafeAreaView>
           </Row>
           <View style={Theme.Styles.hrLineFill}></View>
+          {props.showBanner && (
+            <BannerNotification
+              type={props.bannerType ? props.bannerType : BANNER_TYPE_SUCCESS}
+              message={props.bannerMessage as string}
+              onClosePress={props.onBannerClose as () => void}
+              testId={props.bannerTestID as string}
+            />
+          )}
+
           {loaderContent()}
         </Fragment>
       )}
@@ -128,4 +139,9 @@ export interface LoaderProps {
   isHintVisible?: boolean;
   onCancel?: () => void;
   onRetry?: () => void;
+  showBanner?: boolean;
+  bannerMessage?: string;
+  onBannerClose?: () => void;
+  bannerType?: typeof BANNER_TYPE_SUCCESS | typeof BANNER_TYPE_ERROR;
+  bannerTestID?: string;
 }

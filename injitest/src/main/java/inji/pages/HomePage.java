@@ -5,6 +5,7 @@ import io.appium.java_client.pagefactory.AndroidFindBy;
 import io.appium.java_client.pagefactory.iOSXCUITFindBy;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.RemoteWebElement;
 
@@ -78,12 +79,9 @@ public class HomePage extends BasePage {
     @AndroidFindBy(uiAutomator = "new UiSelector().textContains(\"Subukan muli\")")
     private WebElement tryAgainButtonInFillpino;
     
-    @AndroidFindBy(accessibility = "downloadingVcPopup")
+    @AndroidFindBy(accessibility = "downloadingVcPopupText")
     @iOSXCUITFindBy(accessibility = "Downloading your card, this can take upto 5 minutes")
     private WebElement downloadingVcPopup;
-
-    @iOSXCUITFindBy(accessibility = "fullNameTitle")
-    private WebElement fullNameTitle;
 
     @AndroidFindBy(accessibility = "fullNameValue")
     @iOSXCUITFindBy(accessibility = "fullNameValue")
@@ -93,11 +91,31 @@ public class HomePage extends BasePage {
     @iOSXCUITFindBy(accessibility = "activationPending")
     private WebElement activationPending;
 
+    @AndroidFindBy(xpath = "(//android.view.ViewGroup[@content-desc=\"ellipsis\"])[1]")
+    private WebElement moreOptionsforFirstVc;
+
+    @AndroidFindBy(xpath = "(//android.view.ViewGroup[@content-desc=\"ellipsis\"])[2]")
+    private WebElement moreOptionsforSecondVc;
+
+    @AndroidFindBy(accessibility = "close")
+    @iOSXCUITFindBy(accessibility = "close")
+    private WebElement popupCloseButton;
+
+    @AndroidFindBy(accessibility = "activatedVcPopupText")
+    @iOSXCUITFindBy(accessibility = "activatedVcPopupText")
+    private WebElement activatedVcPopupText;
+
+    @AndroidFindBy(accessibility = "fullNameTitle")
+    @iOSXCUITFindBy(accessibility = "fullNameTitle")
+    private WebElement fullNameTitle;
+
+
 
     public HomePage(AppiumDriver driver) {
         super(driver);
     }
 
+    BasePage basePage = new BasePage(driver);
     public boolean isHomePageLoaded() {
         /*if (isElementDisplayed(secureKeyStoragePopup, "secure key storage popup")) {
             clickOnElement(riskItButton);
@@ -126,7 +144,7 @@ public class HomePage extends BasePage {
 
     public DetailedVcViewPage openDetailedVcView(String name) {
         By fullName = By.xpath("//*[contains(@value,'" + name + "') or contains(@text,'" + name + "')]");
-        clickOnElement(fullName);
+        clickOnElement(fullNameTitle);
         return new DetailedVcViewPage(driver);
     }
 
@@ -221,7 +239,7 @@ public class HomePage extends BasePage {
     }
     
     public boolean isDownloadingVcPopupDisplayed() {
-        return this.isElementDisplayed(downloadingVcPopup);
+        return this.retrieIsElementVisible(downloadingVcPopup);
     }
 
     public String getfullNameTitleText() {
@@ -236,6 +254,22 @@ public class HomePage extends BasePage {
 
     public String GetActivationPendingText() {
         return this.getTextFromLocator(activationPending);
+    }
+
+    public void clickOnFirstVcsEllipsisButton() {
+        clickOnElement(moreOptionsforFirstVc);
+    }
+
+    public void clickOnSecondVcsEllipsisButton() {
+        clickOnElement(moreOptionsforSecondVc);
+    }
+
+    public boolean isActivatedVcPopupTextDisplayed() {
+        return this.isElementDisplayed(activatedVcPopupText);
+    }
+
+    public void clickPopupCloseButtonButton() {
+        clickOnElement(popupCloseButton);
     }
 
 }

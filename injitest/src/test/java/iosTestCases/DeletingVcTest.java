@@ -36,7 +36,8 @@ public class DeletingVcTest extends IosBaseTest {
         RetrieveIdPage retrieveIdPage = addNewCardPage.clickOnDownloadViaUin();
 
         assertTrue(retrieveIdPage.isRetrieveIdPageLoaded(), "Verify if retrieve id page is displayed");
-        OtpVerificationPage otpVerification = retrieveIdPage.setEnterIdTextBox(TestDataReader.readData("uin")).clickOnGenerateCardButton();
+        String uin = TestDataReader.readData("uin");
+        OtpVerificationPage otpVerification = retrieveIdPage.setEnterIdTextBox(uin).clickOnGenerateCardButton();
 
         assertTrue(otpVerification.isOtpVerificationPageLoaded(), "Verify if otp verification page is displayed");
         otpVerification.enterOtp(BaseTestCase.getOtp(), Target.IOS);
@@ -54,8 +55,8 @@ public class DeletingVcTest extends IosBaseTest {
 
         HistoryPage historyPage = homePage.clickOnHistoryButton();
         assertTrue(historyPage.isHistoryPageLoaded(), "Verify if history page is displayed");
-        historyPage.verifyHistory(TestDataReader.readData("uin") + " Removed from wallet", Target.IOS);
-        assertTrue(historyPage.verifyDeleteHistory(TestDataReader.readData("uin"), Target.IOS), "Verify if deleted history is displayed");
+        historyPage.verifyHistory(uin + " Removed from wallet", Target.IOS);
+        assertTrue(historyPage.verifyDeleteHistory(uin, Target.IOS), "Verify if deleted history is displayed");
 
     }
 
@@ -85,7 +86,8 @@ public class DeletingVcTest extends IosBaseTest {
         RetrieveIdPage retrieveIdPage = addNewCardPage.clickOnDownloadViaUin();
 
         assertTrue(retrieveIdPage.isRetrieveIdPageLoaded(), "Verify if retrieve id page is displayed");
-        OtpVerificationPage otpVerification = retrieveIdPage.setEnterIdTextBox(TestDataReader.readData("uin")).clickOnGenerateCardButton();
+        String uin = TestDataReader.readData("uin");
+        OtpVerificationPage otpVerification = retrieveIdPage.setEnterIdTextBox(uin).clickOnGenerateCardButton();
 
         assertTrue(otpVerification.isOtpVerificationPageLoaded(), "Verify if otp verification page is displayed");
         otpVerification.enterOtp(BaseTestCase.getOtp(), Target.IOS);
@@ -131,7 +133,8 @@ public class DeletingVcTest extends IosBaseTest {
         RetrieveIdPage retrieveIdPage = addNewCardPage.clickOnDownloadViaUin();
 
         assertTrue(retrieveIdPage.isRetrieveIdPageLoaded(), "Verify if retrieve id page is displayed");
-        OtpVerificationPage otpVerification = retrieveIdPage.setEnterIdTextBox(TestDataReader.readData("uin")).clickOnGenerateCardButton();
+        String uin = TestDataReader.readData("uin");
+        OtpVerificationPage otpVerification = retrieveIdPage.setEnterIdTextBox(uin).clickOnGenerateCardButton();
 
         assertTrue(otpVerification.isOtpVerificationPageLoaded(), "Verify if otp verification page is displayed");
         otpVerification.enterOtp(BaseTestCase.getOtp(), Target.IOS);
@@ -153,7 +156,7 @@ public class DeletingVcTest extends IosBaseTest {
         addNewCardPage.clickOnDownloadViaUin();
 
         assertTrue(retrieveIdPage.isRetrieveIdPageLoaded(), "Verify if retrieve id page is displayed");
-        retrieveIdPage.setEnterIdTextBox(TestDataReader.readData("uin")).clickOnGenerateCardButton();
+        retrieveIdPage.setEnterIdTextBox(uin).clickOnGenerateCardButton();
 
         assertTrue(otpVerification.isOtpVerificationPageLoaded(), "Verify if otp verification page is displayed");
         otpVerification.enterOtp(BaseTestCase.getOtp(), Target.IOS);
@@ -163,9 +166,9 @@ public class DeletingVcTest extends IosBaseTest {
         HistoryPage historyPage = homePage.clickOnHistoryButton();
         assertTrue(historyPage.isHistoryPageLoaded(), "Verify if history page is displayed");
 
-        assertTrue(historyPage.verifyHistory(TestDataReader.readData("uin"), Target.IOS));
+        assertTrue(historyPage.verifyHistory(uin, Target.IOS));
 
-        assertEquals(historyPage.getNumberOfRecordsInHistory(TestDataReader.readData("uin"), Target.IOS), 2,"Verify two download records in history page");
-        assertTrue(historyPage.verifyDeleteHistory(TestDataReader.readData("uin"), Target.IOS), "Verify if deleted history is displayed");
+        assertEquals(historyPage.getNumberOfRecordsInHistory(uin, Target.IOS), 2,"Verify two download records in history page");
+        assertTrue(historyPage.verifyDeleteHistory(uin, Target.IOS), "Verify if deleted history is displayed");
     }
 }

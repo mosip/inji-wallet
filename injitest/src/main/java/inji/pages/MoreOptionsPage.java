@@ -39,6 +39,10 @@ public class MoreOptionsPage extends BasePage {
     @iOSXCUITFindBy(accessibility = "walletBindingErrorTitle")
     public WebElement somethingIsWrongPopup;
 
+    @AndroidFindBy(accessibility = "activated")
+    @iOSXCUITFindBy(accessibility = "activated")
+    private WebElement activated;
+
     public MoreOptionsPage(AppiumDriver driver) {
         super(driver);
     }
@@ -77,5 +81,9 @@ public class MoreOptionsPage extends BasePage {
 
     public boolean isSomethingIsWrongPopupVisible() {
         return this.isElementDisplayed(somethingIsWrongPopup);
+    }
+
+    public boolean isVcActivatedDisplayed() {
+        return this.isElementDisplayed(activated);
     }
 }

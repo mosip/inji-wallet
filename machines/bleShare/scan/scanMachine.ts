@@ -56,8 +56,8 @@ import {
   sendStartEvent,
 } from '../../../shared/telemetry/TelemetryUtils';
 import {TelemetryConstants} from '../../../shared/telemetry/TelemetryConstants';
-
 import {logState} from '../../../shared/commonUtil';
+import {getIdType} from '../../../shared/openId4VCI/Utils';
 
 const {wallet, EventTypes, VerificationStatus} = tuvali;
 
@@ -77,6 +77,7 @@ const model = createModel(
     QrLoginRef: {} as ActorRefFrom<typeof qrLoginMachine>,
     linkCode: '',
     readyForBluetoothStateCheck: false,
+    showFaceCaptureSuccessBanner: false,
   },
   {
     events: {
@@ -88,6 +89,7 @@ const model = createModel(
       VC_REJECTED: () => ({}),
       VC_SENT: () => ({}),
       CANCEL: () => ({}),
+      CLOSE_BANNER: () => ({}),
       STAY_IN_PROGRESS: () => ({}),
       RETRY: () => ({}),
       DISMISS: () => ({}),
@@ -508,7 +510,10 @@ export const scanMachine =
                 },
                 ACCEPT_REQUEST: {
                   target: 'sendingVc',
-                  actions: 'setShareLogTypeUnverified',
+                  actions: [
+                    'setShareLogTypeUnverified',
+                    'resetFaceCaptureBannerStatus',
+                  ],
                 },
                 CANCEL: {
                   target: 'cancelling',
@@ -541,6 +546,9 @@ export const scanMachine =
                     CANCEL: {
                       target: '#scan.reviewing.cancelling',
                       actions: ['sendVCShareFlowCancelEndEvent'],
+                    },
+                    CLOSE_BANNER: {
+                      actions: ['resetFaceCaptureBannerStatus'],
                     },
                   },
                 },
@@ -616,7 +624,10 @@ export const scanMachine =
               on: {
                 FACE_VALID: {
                   target: 'sendingVc',
-                  actions: 'setShareLogTypeVerified',
+                  actions: [
+                    'setShareLogTypeVerified',
+                    'updateFaceCaptureBannerStatus',
+                  ],
                 },
                 FACE_INVALID: {
                   target: 'invalidIdentity',
@@ -850,6 +861,14 @@ export const scanMachine =
           shareLogType: 'PRESENCE_VERIFIED_AND_VC_SHARED',
         }),
 
+        updateFaceCaptureBannerStatus: model.assign({
+          showFaceCaptureSuccessBanner: true,
+        }),
+
+        resetFaceCaptureBannerStatus: model.assign({
+          showFaceCaptureSuccessBanner: false,
+        }),
+
         logShared: send(
           context => {
             const vcMetadata = context.selectedVc?.vcMetadata;
@@ -858,6 +877,8 @@ export const scanMachine =
               type: context.selectedVc.shouldVerifyPresence
                 ? 'VC_SHARED_WITH_VERIFICATION_CONSENT'
                 : context.shareLogType,
+              id: vcMetadata.id,
+              idType: getIdType(vcMetadata.issuer),
               timestamp: Date.now(),
               deviceName:
                 context.receiverInfo.name || context.receiverInfo.deviceName,
@@ -873,6 +894,8 @@ export const scanMachine =
               _vcKey: VCMetadata.fromVC(context.selectedVc).getVcKey(),
               type: 'PRESENCE_VERIFICATION_FAILED',
               timestamp: Date.now(),
+              idType: getIdType(context.selectedVc.issuer),
+              id: context.selectedVc.id,
               deviceName:
                 context.receiverInfo.name || context.receiverInfo.deviceName,
               vcLabel: context.selectedVc.id,
@@ -913,6 +936,8 @@ export const scanMachine =
           (_, event) =>
             ActivityLogEvents.LOG_ACTIVITY({
               _vcKey: '',
+              id: event.response.selectedVc.vcMetadata.id,
+              idType: getIdType(event.response.selectedVc.vcMetadata.issuer),
               type: 'QRLOGIN_SUCCESFULL',
               timestamp: Date.now(),
               deviceName: '',

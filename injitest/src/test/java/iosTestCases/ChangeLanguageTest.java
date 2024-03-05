@@ -300,15 +300,15 @@ public class ChangeLanguageTest extends IosBaseTest {
         assertEquals(trustedDigitalWalletPage.getTrustedDigitalWalletDescription(), "Itabi at dalhin ang lahat ng iyong mahahalagang card sa isang pinagkakatiwalaang wallet.");
         trustedDigitalWalletPage.clickOnNextButton();
 
-        HassleFreeAuthenticationPage hassleFreeAuthenticationPage = new HassleFreeAuthenticationPage(driver);
-        assertEquals(hassleFreeAuthenticationPage.verifyLanguageforHassleFreeAuthenticationPageLoaded(), "Mabilis na pagpasok");
-        assertEquals(hassleFreeAuthenticationPage.getHassleFreeAuthenticationDescription(), "I-authenticate ang iyong sarili nang madali gamit ang nakaimbak na digital na kredensyal.");
-        trustedDigitalWalletPage.clickOnNextButton();
+        QuickAccessPage quickAccessPage = new QuickAccessPage(driver);
+        assertEquals(quickAccessPage.verifyLanguageforQuickAccessTextPageLoaded(), "Mabilis na pagpasok");
+        assertEquals(quickAccessPage.getQuickAccessDescription(), "I-authenticate ang iyong sarili nang madali gamit ang nakaimbak na digital na kredensyal.");
+        quickAccessPage.clickOnNextButton();
 
-        BackupDataPage backupDataPage = new BackupDataPage(driver);
+        BackupDataTourPage backupDataPage = new BackupDataTourPage(driver);
         assertEquals(backupDataPage.verifyLanguageforBackupDataPageLoaded(), "Backup na Data");
         assertEquals(backupDataPage.getBackupDataPageDescription(), "Protektahan ang iyong data nang madali gamit ang aming Backup");
-        hassleFreeAuthenticationPage.clickOnGoBack();
+        backupDataPage.clickOnGoBack();
         assertEquals(homePage.getShareButton(), "Ibahagi");
     }
     
@@ -355,15 +355,15 @@ public class ChangeLanguageTest extends IosBaseTest {
         assertEquals(trustedDigitalWalletPage.getTrustedDigitalWalletDescription(), "अपने सभी महत्वपूर्ण कार्डों को एक ही विश्वसनीय वॉलेट में रखें और रखें।");
         trustedDigitalWalletPage.clickOnNextButton();
 
-        HassleFreeAuthenticationPage hassleFreeAuthenticationPage = new HassleFreeAuthenticationPage(driver);
-        assertEquals(hassleFreeAuthenticationPage.verifyLanguageforHassleFreeAuthenticationPageLoaded(), "त्वरित ऐक्सेस");
-        assertEquals(hassleFreeAuthenticationPage.getHassleFreeAuthenticationDescription(), "संग्रहीत डिजिटल क्रेडेंशियल का उपयोग करके आसानी से स्वयं को प्रमाणित करें।");
-        trustedDigitalWalletPage.clickOnNextButton();
+        QuickAccessPage quickAccessPage = new QuickAccessPage(driver);
+        assertEquals(quickAccessPage.verifyLanguageforQuickAccessTextPageLoaded(), "त्वरित ऐक्सेस");
+        assertEquals(quickAccessPage.getQuickAccessDescription(), "संग्रहीत डिजिटल क्रेडेंशियल का उपयोग करके आसानी से स्वयं को प्रमाणित करें।");
+        quickAccessPage.clickOnNextButton();
 
-        BackupDataPage backupDataPage = new BackupDataPage(driver);
+        BackupDataTourPage backupDataPage = new BackupDataTourPage(driver);
         assertEquals(backupDataPage.verifyLanguageforBackupDataPageLoaded(), "बैकअप डेटा");
         assertEquals(backupDataPage.getBackupDataPageDescription(), "हमारे बैकअप का उपयोग करके आसानी से अपने डेटा को सुरक्षित रखें");
-        hassleFreeAuthenticationPage.clickOnGoBack();
+        backupDataPage.clickOnGoBack();
         assertEquals(homePage.getShareButton(), "शेयर करना");
     }
     
@@ -410,16 +410,16 @@ public class ChangeLanguageTest extends IosBaseTest {
         assertEquals(trustedDigitalWalletPage.getTrustedDigitalWalletDescription(), "உங்கள் முக்கியமான கார்டுகளை ஒரே நம்பகமான பணப்பையில் சேமித்து எடுத்துச் செல்லுங்கள்.");
         trustedDigitalWalletPage.clickOnNextButton();
 
-        HassleFreeAuthenticationPage hassleFreeAuthenticationPage = new HassleFreeAuthenticationPage(driver);
-        assertEquals(hassleFreeAuthenticationPage.verifyLanguageforHassleFreeAuthenticationPageLoaded(), "விரைவான அணுகல்");
-        assertEquals(hassleFreeAuthenticationPage.getHassleFreeAuthenticationDescription(), "சேமிக்கப்பட்ட டிஜிட்டல் நற்சான்றிதழைப் பயன்படுத்தி உங்களை எளிதாக அங்கீகரிக்கவும்.");
-        trustedDigitalWalletPage.clickOnNextButton();
+        QuickAccessPage quickAccessPage = new QuickAccessPage(driver);
+        assertEquals(quickAccessPage.verifyLanguageforQuickAccessTextPageLoaded(), "விரைவான அணுகல்");
+        assertEquals(quickAccessPage.getQuickAccessDescription(), "சேமிக்கப்பட்ட டிஜிட்டல் நற்சான்றிதழைப் பயன்படுத்தி உங்களை எளிதாக அங்கீகரிக்கவும்.");
+        quickAccessPage.clickOnNextButton();
 
-        BackupDataPage backupDataPage = new BackupDataPage(driver);
+        BackupDataTourPage backupDataPage = new BackupDataTourPage(driver);
         assertEquals(backupDataPage.verifyLanguageforBackupDataPageLoaded(), "காப்பு தரவு");
         assertEquals(backupDataPage.getBackupDataPageDescription(), "எங்கள் காப்புப்பிரதியைப் பயன்படுத்தி உங்கள் தரவை எளிதாகப் பாதுகாக்கவும்");
 
-        hassleFreeAuthenticationPage.clickOnGoBack();
+        backupDataPage.clickOnGoBack();
         assertEquals(homePage.getShareButton(), "பகிர்");
 
     }
@@ -467,15 +467,15 @@ public class ChangeLanguageTest extends IosBaseTest {
         assertEquals(trustedDigitalWalletPage.getTrustedDigitalWalletDescription(), "ನಿಮ್ಮ ಎಲ್ಲಾ ಪ್ರಮುಖ ಕಾರ್ಡ್‌ಗಳನ್ನು ಒಂದೇ ವಿಶ್ವಾಸಾರ್ಹ ವ್ಯಾಲೆಟ್‌ನಲ್ಲಿ ಸಂಗ್ರಹಿಸಿ ಮತ್ತು ಒಯ್ಯಿರಿ.");
         trustedDigitalWalletPage.clickOnNextButton();
 
-        HassleFreeAuthenticationPage hassleFreeAuthenticationPage = new HassleFreeAuthenticationPage(driver);
-        assertEquals(hassleFreeAuthenticationPage.verifyLanguageforHassleFreeAuthenticationPageLoaded(), "ತ್ವರಿತ ಪ್ರವೇಶ");
-        assertEquals(hassleFreeAuthenticationPage.getHassleFreeAuthenticationDescription(), "ಸಂಗ್ರಹಿಸಿದ ಡಿಜಿಟಲ್ ರುಜುವಾತುಗಳನ್ನು ಬಳಸಿಕೊಂಡು ಸುಲಭವಾಗಿ ನಿಮ್ಮನ್ನು ದೃಢೀಕರಿಸಿ.");
-        trustedDigitalWalletPage.clickOnNextButton();
+        QuickAccessPage quickAccessPage = new QuickAccessPage(driver);
+        assertEquals(quickAccessPage.verifyLanguageforQuickAccessTextPageLoaded(), "ತ್ವರಿತ ಪ್ರವೇಶ");
+        assertEquals(quickAccessPage.getQuickAccessDescription(), "ಸಂಗ್ರಹಿಸಿದ ಡಿಜಿಟಲ್ ರುಜುವಾತುಗಳನ್ನು ಬಳಸಿಕೊಂಡು ಸುಲಭವಾಗಿ ನಿಮ್ಮನ್ನು ದೃಢೀಕರಿಸಿ.");
+        quickAccessPage.clickOnNextButton();
 
-        BackupDataPage backupDataPage = new BackupDataPage(driver);
+        BackupDataTourPage backupDataPage = new BackupDataTourPage(driver);
         assertEquals(backupDataPage.verifyLanguageforBackupDataPageLoaded(), "ಬ್ಯಾಕಪ್ ಡೇಟಾ");
         assertEquals(backupDataPage.getBackupDataPageDescription(), "ನಮ್ಮ ಬ್ಯಾಕಪ್ ಅನ್ನು ಬಳಸಿಕೊಂಡು ನಿಮ್ಮ ಡೇಟಾವನ್ನು ಸುಲಭವಾಗಿ ರಕ್ಷಿಸಿ");
-        hassleFreeAuthenticationPage.clickOnGoBack();
+        backupDataPage.clickOnGoBack();
         assertEquals(homePage.getShareButton(), "ಹಂಚಿಕೊಳ್ಳಿ");
     }
     @Test
@@ -561,8 +561,8 @@ public class ChangeLanguageTest extends IosBaseTest {
 
         assertEquals(addNewCardPage.verifyLanguageForAddNewCardGuideMessage(),"يرجى اختيار جهة الإصدار المفضلة لديك من الخيارات أدناه لإضافة بطاقة جديدة.");
         RetrieveIdPage retrieveIdPage = addNewCardPage.clickOnDownloadViaUin();
-
-        OtpVerificationPage otpVerification = retrieveIdPage.setEnterIdTextBox(TestDataReader.readData("uin")).clickOnGenerateCardButton();
+        String uin = TestDataReader.readData("uin");
+        OtpVerificationPage otpVerification = retrieveIdPage.setEnterIdTextBox(uin).clickOnGenerateCardButton();
 
         assertTrue(otpVerification.isOtpVerificationPageLoaded(), "Verify if otp verification page is displayed");
         otpVerification.enterOtp(BaseTestCase.getOtp(), Target.IOS);
@@ -571,5 +571,62 @@ public class ChangeLanguageTest extends IosBaseTest {
         assertEquals(homePage.GetIdTypeText(), "البطاقة الوطنية");
         assertEquals(homePage.GetActivationPendingText(), "التنشيط معلق لتسجيل الدخول عبر الإنترنت!");
     }
-    
+    @Test
+    public void downloadVcAndChnageLangaugeVerifyVcViaSunbird() throws InterruptedException {
+        ChooseLanguagePage chooseLanguagePage = new ChooseLanguagePage(driver);
+
+        assertTrue(chooseLanguagePage.isChooseLanguagePageLoaded(), "Verify if choose language page is displayed");
+        WelcomePage welcomePage = chooseLanguagePage.clickOnSavePreference();
+
+        assertTrue(welcomePage.isWelcomePageLoaded(), "Verify if welcome page is loaded");
+        AppUnlockMethodPage appUnlockMethodPage = welcomePage.clickOnSkipButton();
+
+        assertTrue(appUnlockMethodPage.isAppUnlockMethodPageLoaded(), "Verify if app unlocked page is displayed");
+        SetPasscode setPasscode = appUnlockMethodPage.clickOnUsePasscode();
+
+        assertTrue(setPasscode.isSetPassCodePageLoaded(), "Verify if set passcode page is displayed");
+        ConfirmPasscode confirmPasscode = setPasscode.enterPasscode(TestDataReader.readData("passcode"), Target.IOS);
+
+        assertTrue(confirmPasscode.isConfirmPassCodePageLoaded(), "Verify if confirm passcode page is displayed");
+        HomePage homePage = confirmPasscode.enterPasscodeInConfirmPasscodePage(TestDataReader.readData("passcode"), Target.IOS);
+
+        assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
+        AddNewCardPage addNewCardPage = homePage.downloadCard();
+
+
+        assertTrue(addNewCardPage.isDownloadViaSunbirdDisplayed(), "Verify if download sunbird displayed");
+        SunbirdLoginPage sunbirdLoginPage =  addNewCardPage.clickOnDownloadViaSunbird();
+        addNewCardPage.clickOnContinueButtonInSigninPopupIos();
+        // sunbirdLoginPage.clickOnloginWithKbaButton();
+        sunbirdLoginPage.enterPolicyNumberTextBox(TestDataReader.readData("policyNumberSunbird"));
+        sunbirdLoginPage.enterFullNameTextBox(TestDataReader.readData("fullNameSunbird"));
+        sunbirdLoginPage.enterDateOfBirthTextBox();
+        sunbirdLoginPage.clickOnloginButton();
+
+        assertTrue(sunbirdLoginPage.isSunbirdCardIsActive(), "Verify if download sunbird displayed active");
+        SettingsPage settingsPage= homePage.clickOnSettingIcon();
+
+        assertTrue(settingsPage.isSettingPageLoaded(), "Verify if setting page is displayed");
+        settingsPage.clickOnLanguage().clickOnHindiLanguage();
+
+        assertTrue(settingsPage.verifyHindiLanguage(), "Verify if language is changed to hindi");
+        settingsPage.clickOnBackArrow();
+
+
+        assertTrue(sunbirdLoginPage.isSunbirdCardLogoIsDisplayed(), "Verify if download sunbird logo displayed");
+        assertEquals(sunbirdLoginPage.getFullNameForSunbirdCard(),TestDataReader.readData("fullNameSunbird"));
+        assertEquals(sunbirdLoginPage.getPolicyNameForSunbirdCard(),TestDataReader.readData("policyNameSunbird"));
+        assertEquals(sunbirdLoginPage.getIdTypeValueForSunbirdCard(),TestDataReader.readData("idTypeSunbird"));
+
+        sunbirdLoginPage.openDetailedSunbirdVcView();
+
+        assertEquals(sunbirdLoginPage.getFullNameForSunbirdCard(),TestDataReader.readData("fullNameSunbird"));
+        assertEquals(sunbirdLoginPage.getPolicyNameForSunbirdCard(),TestDataReader.readData("policyNameSunbird"));
+        assertEquals(sunbirdLoginPage.getPhoneNumberForSunbirdCard(),TestDataReader.readData("phoneNumberSunbird"));
+        assertEquals(sunbirdLoginPage.getDateofBirthValueForSunbirdCard(),TestDataReader.readData("dateOfBirthSunbird"));
+        assertEquals(sunbirdLoginPage.getGenderValueForSunbirdCard(),TestDataReader.readData("genderValueSunbird"));
+        assertEquals(sunbirdLoginPage.getEmailIdValueForSunbirdCard(),TestDataReader.readData("emailIdValueSunbird"));
+        assertEquals(sunbirdLoginPage.getStatusValueForSunbirdCard(),TestDataReader.readData("statusValueSunbird"));
+        assertEquals(sunbirdLoginPage.getIdTypeValueForSunbirdCard(),TestDataReader.readData("idTypeSunbird"));
+    }
 }

@@ -6,7 +6,8 @@ import {
   selectIsBackUpRestoreFailure,
   selectIsBackUpRestoreSuccess,
   selectErrorReason,
-} from '../../machines/backupRestore';
+  selectShowRestoreInProgress,
+} from '../../machines/backupAndRestore/backupRestore';
 import {GlobalContext} from '../../shared/GlobalContext';
 
 export function useBackupRestoreScreen() {
@@ -31,11 +32,20 @@ export function useBackupRestoreScreen() {
       backupRestoreService?.send(
         BackupRestoreEvents.DOWNLOAD_UNSYNCED_BACKUP_FILES(),
       ),
+    showRestoreInProgress: useSelector(
+      backupRestoreService!,
+      selectShowRestoreInProgress,
+    ),
     BACKUP_RESTORE: () => {
       backupRestoreService.send(BackupRestoreEvents.BACKUP_RESTORE());
     },
     DISMISS: () => {
       backupRestoreService.send(BackupRestoreEvents.DISMISS());
+    },
+    DISMISS_SHOW_RESTORE_IN_PROGRESS: () => {
+      backupRestoreService?.send(
+        BackupRestoreEvents.DISMISS_SHOW_RESTORE_IN_PROGRESS(),
+      );
     },
   };
 }

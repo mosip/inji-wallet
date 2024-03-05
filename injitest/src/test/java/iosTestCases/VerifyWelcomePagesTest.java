@@ -31,12 +31,12 @@ public class VerifyWelcomePagesTest extends IosBaseTest {
         assertEquals(trustedDigitalWalletPage.getTrustedDigitalWalletDescription(), "Store and carry all your important cards in a single trusted wallet.");
         trustedDigitalWalletPage.clickOnNextButton();
 
-        HassleFreeAuthenticationPage hassleFreeAuthenticationPage = new HassleFreeAuthenticationPage(driver);
-        assertEquals(hassleFreeAuthenticationPage.verifyLanguageforHassleFreeAuthenticationPageLoaded(), "Quick Access");
-        assertEquals(hassleFreeAuthenticationPage.getHassleFreeAuthenticationDescription(), "Authenticate yourself with ease using the stored digital credential.");
-        trustedDigitalWalletPage.clickOnNextButton();
+        QuickAccessPage quickAccessPage = new QuickAccessPage(driver);
+        assertEquals(quickAccessPage.verifyLanguageforQuickAccessTextPageLoaded(), "Quick Access");
+        assertEquals(quickAccessPage.getQuickAccessDescription(), "Authenticate yourself with ease using the stored digital credential.");
+        quickAccessPage.clickOnNextButton();
 
-        BackupDataPage backupDataPage = new BackupDataPage(driver);
+        BackupDataTourPage backupDataPage = new BackupDataTourPage(driver);
         assertEquals(backupDataPage.verifyLanguageforBackupDataPageLoaded(), "Backup Data");
         assertEquals(backupDataPage.getBackupDataPageDescription(), "Protect your data with ease using our Backup & Restore feature. Safely store your VCs against loss or accidents by creating regular backups and recover it effortlessly whenever needed for seamless continuity.");
     }
@@ -79,12 +79,12 @@ public class VerifyWelcomePagesTest extends IosBaseTest {
         assertEquals(trustedDigitalWalletPage.getTrustedDigitalWalletDescription(), "Store and carry all your important cards in a single trusted wallet.");
         trustedDigitalWalletPage.clickOnNextButton();
 
-        HassleFreeAuthenticationPage hassleFreeAuthenticationPage = new HassleFreeAuthenticationPage(driver);
-        assertEquals(hassleFreeAuthenticationPage.verifyLanguageforHassleFreeAuthenticationPageLoaded(), "Quick Access");
-        assertEquals(hassleFreeAuthenticationPage.getHassleFreeAuthenticationDescription(), "Authenticate yourself with ease using the stored digital credential.");
-        trustedDigitalWalletPage.clickOnNextButton();
+        QuickAccessPage quickAccessPage = new QuickAccessPage(driver);
+        assertEquals(quickAccessPage.verifyLanguageforQuickAccessTextPageLoaded(), "Quick Access");
+        assertEquals(quickAccessPage.getQuickAccessDescription(), "Authenticate yourself with ease using the stored digital credential.");
+        quickAccessPage.clickOnNextButton();
 
-        BackupDataPage backupDataPage = new BackupDataPage(driver);
+        BackupDataTourPage backupDataPage = new BackupDataTourPage(driver);
         assertEquals(backupDataPage.verifyLanguageforBackupDataPageLoaded(), "Backup Data");
         assertEquals(backupDataPage.getBackupDataPageDescription(), "Protect your data with ease using our Backup & Restore feature. Safely store your VCs against loss or accidents by creating regular backups and recover it effortlessly whenever needed for seamless continuity.");
     }
@@ -128,16 +128,16 @@ public class VerifyWelcomePagesTest extends IosBaseTest {
         assertEquals(trustedDigitalWalletPage.getTrustedDigitalWalletDescription(), "Store and carry all your important cards in a single trusted wallet.");
         trustedDigitalWalletPage.clickOnNextButton();
 
-        HassleFreeAuthenticationPage hassleFreeAuthenticationPage = new HassleFreeAuthenticationPage(driver);
-        assertEquals(hassleFreeAuthenticationPage.verifyLanguageforHassleFreeAuthenticationPageLoaded(), "Quick Access");
-        assertEquals(hassleFreeAuthenticationPage.getHassleFreeAuthenticationDescription(), "Authenticate yourself with ease using the stored digital credential.");
-        trustedDigitalWalletPage.clickOnNextButton();
+        QuickAccessPage quickAccessPage = new QuickAccessPage(driver);
+        assertEquals(quickAccessPage.verifyLanguageforQuickAccessTextPageLoaded(), "Quick Access");
+        assertEquals(quickAccessPage.getQuickAccessDescription(), "Authenticate yourself with ease using the stored digital credential.");
+        quickAccessPage.clickOnNextButton();
 
-        BackupDataPage backupDataPage = new BackupDataPage(driver);
+        BackupDataTourPage backupDataPage = new BackupDataTourPage(driver);
         assertEquals(backupDataPage.verifyLanguageforBackupDataPageLoaded(), "Backup Data");
         assertEquals(backupDataPage.getBackupDataPageDescription(), "Protect your data with ease using our Backup & Restore feature. Safely store your VCs against loss or accidents by creating regular backups and recover it effortlessly whenever needed for seamless continuity.");
 
-        hassleFreeAuthenticationPage.clickOnGoBack();
+        backupDataPage.clickOnGoBack();
         assertEquals(homePage.verifyLanguageForNoVCDownloadedPageLoaded(), "Bring your digital identity");
     }
     

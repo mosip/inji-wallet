@@ -13,7 +13,7 @@ import {
   isHardwareKeystoreExists,
 } from './cryptoutil/cryptoUtil';
 import {VCMetadata} from './VCMetadata';
-import {ENOENT} from '../machines/store';
+import {ENOENT, removeTamperedVcMetaData} from '../machines/store';
 import {
   androidVersion,
   isAndroid,
@@ -139,7 +139,6 @@ class Storage {
       const dataFromDB = await Storage.loadVCs(
         completeBackupData,
         encryptionKey,
-        backupStartState,
       );
       // 3. Update the Well Known configs of the VCs
       const allKeysFromDB = Object.keys(dataFromDB);
@@ -224,6 +223,7 @@ class Storage {
         );
 
         if (isDownloaded && error.message.includes(ENOENT)) {
+          removeTamperedVcMetaData(key, encryptionKey);
           sendErrorEvent(
             getErrorEventData(
               TelemetryConstants.FlowType.fetchData,
@@ -248,18 +248,23 @@ class Storage {
   };
 
   /**
-   * unloadVCs will remove a set of VCs against a particular timestamp
+   * unloadVCs will remove a set of VCs against a particular time range
    *
-   * @param timestamp the timestamp of the VCs
+   * @param cutOffTimestamp the timestamp of the VC backup start time to current time
    */
-  private static async unloadVCs(encryptionKey: any, timestamp: number) {
+  private static async unloadVCs(encryptionKey: any, cutOffTimestamp: number) {
     // 1. Find the VCs in the inji directory which have the said timestamp
     const file: ReadDirItem[] = await fileStorage.getAllFilesInDirectory(
       `${DocumentDirectoryPath}/inji/VC/`,
     );
+    const isGreaterThanEq = function (fName: string, ts: number): boolean {
+      fName = fName.split('.')[0];
+      const curr = fName.split('_')[1];
+      return parseInt(curr) >= ts;
+    };
     for (let i = 0; i < file.length; i++) {
       const f = file[i];
-      if (f.name.includes(timestamp.toString())) {
+      if (isGreaterThanEq(f.name, cutOffTimestamp)) {
         await fileStorage.removeItem(f.path);
       }
     }
@@ -271,7 +276,7 @@ class Storage {
       let vcList: VCMetadata[] = JSON.parse(mmkvVCs);
       let newVCList: VCMetadata[] = [];
       vcList.forEach(d => {
-        if (d.timestamp && parseInt(d.timestamp) !== timestamp) {
+        if (d.timestamp && parseInt(d.timestamp) < cutOffTimestamp) {
           newVCList.push(d);
         }
       });
@@ -283,11 +288,7 @@ class Storage {
     }
   }
 
-  private static async loadVCs(
-    completeBackupData: {},
-    encryptionKey: any,
-    timestamp: string,
-  ) {
+  private static async loadVCs(completeBackupData: {}, encryptionKey: any) {
     const allVCs = completeBackupData['VC_Records'];
     const allVCKeys = Object.keys(allVCs);
     const dataFromDB = completeBackupData['dataFromDB'];
@@ -295,7 +296,7 @@ class Storage {
     // 1. store the VCs and the HMAC
     allVCKeys.forEach(async key => {
       let vc = allVCs[key];
-      const ts = parseInt(timestamp);
+      const ts = Date.now();
       const prevUnixTimeStamp = vc.vcMetadata.timestamp;
       vc.vcMetadata.timestamp = ts;
       dataFromDB.myVCs.forEach(myVcMetadata => {

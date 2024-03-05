@@ -11,9 +11,6 @@ import {useReceivedVcsTab} from '../Home/ReceivedVcsTabController';
 import {REQUEST_ROUTES} from '../../routes/routesConstants';
 import {SquircleIconPopUpModal} from '../../components/ui/SquircleIconPopUpModal';
 import {BannerNotificationContainer} from '../../components/BannerNotificationContainer';
-import {Theme} from '../../components/ui/styleUtils';
-import {I18nManager} from 'react-native';
-
 import {SharingStatusModal} from '../Scan/SharingStatusModal';
 import {SvgImage} from '../../components/ui/svg';
 

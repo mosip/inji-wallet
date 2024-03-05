@@ -30,7 +30,7 @@ public class ReceiveCardPage extends BasePage {
     }
 
     public void clickOnAllowButton() {
-        if (isElementDisplayed(bluetoothPopUp)) {
+        if (isElementDisplayed(allowButton)) {
             clickOnElement(allowButton);
         }
     }
@@ -47,7 +47,7 @@ public class ReceiveCardPage extends BasePage {
     }
 
     public boolean isQrCodeEnabled() {
-        return this.isElementEnabled(qrCode);
+        return this.isElementEnabled(qrCode,30);
     }
 
 }

@@ -4,7 +4,6 @@ import inji.constants.Target;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.pagefactory.AndroidFindBy;
 import io.appium.java_client.pagefactory.iOSXCUITFindBy;
-
 import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebElement;
 
@@ -38,9 +37,13 @@ public class RetrieveIdPage extends BasePage {
 	@AndroidFindBy(xpath = "//*[contains(@text,'UIN invalid')]")
 	private WebElement invalidUin;
 
-	@AndroidFindBy(xpath = "//*[contains(@text,'The input format is incorrect')]")
+	@AndroidFindBy(xpath = "//*[contains(@text,'Please enter valid UIN')]")
 	@iOSXCUITFindBy(accessibility = "idInputModalIndividualId")
-	private WebElement inputFormatErrorMessage;
+	private WebElement inputFormatErrorMessageUin;
+
+	@AndroidFindBy(xpath = "//*[contains(@text,'Please enter valid VID')]")
+	@iOSXCUITFindBy(accessibility = "idInputModalIndividualId")
+	private WebElement inputFormatErrorMessageVid;
 
 	@AndroidFindBy(xpath = "//*[contains(@text,'AID is not ready yet')]")
 	@iOSXCUITFindBy(accessibility = "AID is not ready yet")
@@ -132,8 +135,11 @@ public class RetrieveIdPage extends BasePage {
 		return this;
 	}
 
-	public boolean isIncorrectInputFormatErrorMessageDisplayed() {
-		return isElementDisplayed(inputFormatErrorMessage);
+	public boolean isIncorrectInputFormatErrorUinMessageDisplayed() {
+		return isElementDisplayed(inputFormatErrorMessageUin);
 	}
 
+	public boolean isIncorrectInputFormatErrorVidMessageDisplayed() {
+		return isElementDisplayed(inputFormatErrorMessageVid);
+	}
 }
