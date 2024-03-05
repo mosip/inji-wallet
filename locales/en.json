@@ -102,7 +102,7 @@
     "revokeMessage": "Revoke the virtual ID for this profile"
   },
   "WalletBinding": {
-    "offlineAuthenticationDisabled!": "Activate for online login",
+    "offlineAuthenticationDisabled": "Activate for online login",
     "inProgress": "In progress",
     "credentialActivated": "Activated",
     "profileAuthenticated": "QR Code Login"

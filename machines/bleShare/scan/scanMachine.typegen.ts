@@ -81,6 +81,26 @@ export interface Typegen0 {
       | 'xstate.after(DESTROY_TIMEOUT)#scan.clearingConnection'
       | 'xstate.init';
     resetFaceCaptureBannerStatus: 'ACCEPT_REQUEST' | 'CLOSE_BANNER';
+    resetFlowType:
+      | ''
+      | 'CANCEL'
+      | 'DISCONNECT'
+      | 'DISMISS'
+      | 'GOTO_HISTORY'
+      | 'RETRY'
+      | 'SCREEN_BLUR'
+      | 'SELECT_VC'
+      | 'xstate.init';
+    resetSelectedVc:
+      | ''
+      | 'CANCEL'
+      | 'DISCONNECT'
+      | 'DISMISS'
+      | 'GOTO_HISTORY'
+      | 'RETRY'
+      | 'SCREEN_BLUR'
+      | 'SELECT_VC'
+      | 'xstate.init';
     resetShouldVerifyPresence: 'CANCEL' | 'CONNECTED' | 'DISMISS' | 'RETRY';
     sendBLEConnectionErrorEvent: 'BLE_ERROR';
     sendScanData: 'SCAN';

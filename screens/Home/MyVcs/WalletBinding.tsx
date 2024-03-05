@@ -1,6 +1,5 @@
 import React, {useEffect} from 'react';
-import {Icon, ListItem} from 'react-native-elements';
-import {Row, Text} from '../../../components/ui';
+import {Icon} from 'react-native-elements';
 import {Theme} from '../../../components/ui/styleUtils';
 import {useTranslation} from 'react-i18next';
 import {BindingVcWarningOverlay} from './BindingVcWarningOverlay';
@@ -9,7 +8,6 @@ import {MessageOverlay} from '../../../components/MessageOverlay';
 import {useKebabPopUp} from '../../../components/KebabPopUpController';
 import {ActorRefFrom} from 'xstate';
 import {ExistingMosipVCItemMachine} from '../../../machines/VCItemMachine/ExistingMosipVCItem/ExistingMosipVCItemMachine';
-import testIDProps from '../../../shared/commonUtil';
 import {VCMetadata} from '../../../shared/VCMetadata';
 import {
   getEndEventData,
@@ -18,10 +16,6 @@ import {
   sendErrorEvent,
 } from '../../../shared/telemetry/TelemetryUtils';
 import {TelemetryConstants} from '../../../shared/telemetry/TelemetryConstants';
-import {isActivationNeeded} from '../../../shared/openId4VCI/Utils';
-import {KebabPopupListItemContainer} from '../../../components/KebabPopUp';
-import {SvgImage} from '../../../components/ui/svg';
-import {VCShareFlowType} from '../../../shared/Utils';
 
 export const WalletVerified: React.FC = () => {
   return (
@@ -92,39 +86,6 @@ export const WalletBinding: React.FC<WalletBindingProps> = props => {
         progress
       />
     </>
-  );
-};
-
-export const ActivationStatus = props => {
-  const controller = useKebabPopUp(props);
-  const {t} = useTranslation('WalletBinding');
-  const activationNotCompleted =
-    props.emptyWalletBindingId && isActivationNeeded(props?.vcMetadata.issuer);
-
-  function loadScanScreen() {
-    controller.SELECT_VC_ITEM(
-      props.service,
-      VCShareFlowType.MINI_VIEW_QR_LOGIN,
-    ),
-      controller.GOTO_SCANSCREEN(),
-      props.service.send('CLOSE_VC_MODAL');
-  }
-
-  return (
-    <KebabPopupListItemContainer
-      label={
-        activationNotCompleted
-          ? t('offlineAuthenticationDisabled!')
-          : isActivationNeeded(props?.vcMetadata.issuer)
-          ? t('profileAuthenticated')
-          : t('credentialActivated')
-      }
-      listItemIcon={SvgImage.OutlinedShieldedIcon()}
-      onPress={
-        activationNotCompleted ? props.ADD_WALLET_BINDING_ID : loadScanScreen
-      }
-      testID="pinOrUnPinCard"
-    />
   );
 };
 

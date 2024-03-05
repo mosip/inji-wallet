@@ -101,7 +101,7 @@
     "revokeMessage": "Bawiin ang virtual ID para sa profile na ito"
   },
   "WalletBinding": {
-    "offlineAuthenticationDisabled!": "I-activate para sa online na pag-login",
+    "offlineAuthenticationDisabled": "I-activate para sa online na pag-login",
     "inProgress": "Isinasagawa",
     "credentialActivated": "Na-activate",
     "profileAuthenticated": "Pag-login sa QR Code"

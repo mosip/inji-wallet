@@ -1266,7 +1266,6 @@ export const DefaultTheme = {
     kebabHeaderStyle: {
       justifyContent: 'space-between',
       fontFamily: 'Inter_700Bold',
-      paddingTop: 15,
     },
   }),
   MessageOverlayStyles: StyleSheet.create({

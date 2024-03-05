@@ -101,7 +101,7 @@
     "revokeMessage": "إبطال المعرف الظاهري لملف التعريف هذا"
   },
   "WalletBinding": {
-    "offlineAuthenticationDisabled!": "تفعيل لتسجيل الدخول عبر الإنترنت",
+    "offlineAuthenticationDisabled": "تفعيل لتسجيل الدخول عبر الإنترنت",
     "inProgress": "في تَقَدم",
     "credentialActivated": "مفعل",
     "profileAuthenticated": "رمز الاستجابة السريعة تسجيل الدخول",

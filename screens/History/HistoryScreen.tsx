@@ -9,9 +9,15 @@ import {MainRouteProps} from '../../routes/main';
 import {Theme} from '../../components/ui/styleUtils';
 import {BannerNotificationContainer} from '../../components/BannerNotificationContainer';
 
-export const HistoryScreen: React.FC<MainRouteProps> = () => {
+export const HistoryScreen: React.FC<MainRouteProps> = props => {
   const {t} = useTranslation('HistoryScreen');
   const controller = useHistoryTab();
+
+  const activities = props.route.params?.vcKey
+    ? controller.activities.filter(
+        activity => activity._vcKey === props.route.params?.vcKey,
+      )
+    : controller.activities;
 
   return (
     <Column fill backgroundColor={Theme.Colors.whiteBackgroundColor}>
@@ -25,13 +31,13 @@ export const HistoryScreen: React.FC<MainRouteProps> = () => {
           />
         }>
         <BannerNotificationContainer />
-        {controller.activities.map(activity => (
+        {activities.map(activity => (
           <ActivityLogText
             key={`${activity.timestamp}-${activity._vcKey}`}
             activity={activity}
           />
         ))}
-        {controller.activities.length === 0 && (
+        {activities.length === 0 && (
           <Centered fill>
             <Icon
               style={{marginBottom: 20}}

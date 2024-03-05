@@ -1,19 +1,24 @@
 import React from 'react';
 import {useTranslation} from 'react-i18next';
-import {Dimensions, Image} from 'react-native';
+import {Dimensions} from 'react-native';
 import {Overlay} from 'react-native-elements';
 import {Button, Column, Text, Row} from '../../../components/ui';
 import {Theme} from '../../../components/ui/styleUtils';
 import {SvgImage} from '../../../components/ui/svg';
+import {useKebabPopUp} from '../../../components/KebabPopUpController';
+import {VCMetadata} from '../../../shared/VCMetadata';
+import {ActorRefFrom} from 'xstate';
+import {ExistingMosipVCItemEvents} from '../../../machines/VCItemMachine/ExistingMosipVCItem/ExistingMosipVCItemMachine';
 
 export const RemoveVcWarningOverlay: React.FC<
   RemoveVcWarningOverlayProps
 > = props => {
+  const controller = useKebabPopUp(props);
   const {t} = useTranslation('RemoveVcWarningOverlay');
 
   return (
     <Overlay
-      isVisible={props.isVisible}
+      isVisible={controller.isRemoveWalletWarning}
       overlayStyle={Theme.BindingVcWarningOverlay.overlay}>
       <Column
         align="space-between"
@@ -58,7 +63,7 @@ export const RemoveVcWarningOverlay: React.FC<
           margin={'30 0 0 0'}
           type="gradient"
           title={t('confirm')}
-          onPress={props.onConfirm}
+          onPress={controller.CONFIRM}
         />
 
         <Button
@@ -66,7 +71,7 @@ export const RemoveVcWarningOverlay: React.FC<
           margin={'10 0 0 0'}
           type="clear"
           title={t('cancel')}
-          onPress={props.onCancel}
+          onPress={controller.CANCEL}
         />
       </Column>
     </Overlay>
@@ -74,7 +79,7 @@ export const RemoveVcWarningOverlay: React.FC<
 };
 
 interface RemoveVcWarningOverlayProps {
-  isVisible: boolean;
-  onConfirm: () => void;
-  onCancel: () => void;
+  testID: string;
+  service: ActorRefFrom<typeof ExistingMosipVCItemEvents>;
+  vcMetadata: VCMetadata;
 }

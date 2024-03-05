@@ -20,6 +20,7 @@ import {WalletBinding} from '../../../screens/Home/MyVcs/WalletBinding';
 import {VCVerification} from '../../VCVerification';
 import {Issuers} from '../../../shared/openId4VCI/Utils';
 import {VCItemContainerFlowType} from '../../../shared/Utils';
+import {RemoveVcWarningOverlay} from '../../../screens/Home/MyVcs/RemoveVcWarningOverlay';
 
 export const VCCardViewContent: React.FC<
   ExistingMosipVCItemContentProps | EsignetMosipVCItemContentProps
@@ -101,7 +102,14 @@ export const VCCardViewContent: React.FC<
           )}
           {props.credential && selectableOrCheck}
         </Row>
+
         <WalletBinding service={props.service} vcMetadata={props.vcMetadata} />
+
+        <RemoveVcWarningOverlay
+          testID="removeVcWarningOverlay"
+          service={props.service}
+          vcMetadata={props.vcMetadata}
+        />
       </Column>
     </ImageBackground>
   );

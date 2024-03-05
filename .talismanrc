@@ -208,5 +208,9 @@ fileignoreconfig:
     checksum: 880e066743f5979929cbfa90ef3a28bf4eb7147c9dba425b2abb035025d21aa7
   - filename: injitest/src/test/java/androidTestCases/ChangeLanguageTest.java
     checksum: d37cbd121e92a1e9f508f69ba17b4fa87eb90bdb1c06bfa487a984eba6e3f02c
+  - filename: screens/History/HistoryScreen.tsx
+    checksum: 599edc3ad8bb2d977636ca39f21e7bdfc53d1b33810f6d3eba3048945f17e76c
+  - filename: components/kebabMenuUtils.ts
+    checksum: c30a4b0d5b7d9ab50de5cea1f876809221311d96ac6d5b965329b1d080b9d4df
     version: ""
 
