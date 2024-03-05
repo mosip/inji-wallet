@@ -1,10 +1,5 @@
-import React, {useState, useEffect} from 'react';
-import {
-  I18nManager,
-  KeyboardAvoidingView,
-  Keyboard,
-  Dimensions,
-} from 'react-native';
+import React from 'react';
+import {I18nManager, KeyboardAvoidingView, Dimensions} from 'react-native';
 import {Icon, Input} from 'react-native-elements';
 import {Button, Column, Row, Text} from '../../../components/ui';
 import {Modal} from '../../../components/ui/Modal';
@@ -16,7 +11,7 @@ import {
 import {useTranslation} from 'react-i18next';
 import {MessageOverlay} from '../../../components/MessageOverlay';
 import {isIOS} from '../../../shared/constants';
-import testIDProps from '../../../shared/commonUtil';
+import testIDProps, {getScreenHeight} from '../../../shared/commonUtil';
 import {CustomTooltip} from '../../../components/ui/ToolTip';
 
 export const GetIdInputModal: React.FC<GetIdInputModalProps> = props => {
@@ -25,26 +20,7 @@ export const GetIdInputModal: React.FC<GetIdInputModalProps> = props => {
 
   const inputLabel = t('enterApplicationId');
 
-  const {height} = Dimensions.get('window');
-  const isSmallScreen = height < 600;
-
-  const [keyboardHeight, setKeyboardHeight] = useState(0);
-
-  useEffect(() => {
-    const keyboardDidShowListener = Keyboard.addListener(
-      'keyboardDidShow',
-      event => {
-        const keyboardHeight = event.endCoordinates.height;
-        setKeyboardHeight(keyboardHeight + 150);
-      },
-    );
-
-    return () => {
-      keyboardDidShowListener.remove();
-    };
-  }, []);
-
-  const screenHeight = Math.floor(height - keyboardHeight);
+  const {isSmallScreen, screenHeight} = getScreenHeight();
 
   return (
     <Modal

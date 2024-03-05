@@ -4,12 +4,7 @@ import {PinInput} from '../../../components/PinInput';
 import {Button, Column, Text} from '../../../components/ui';
 import {Modal} from '../../../components/ui/Modal';
 import {Theme} from '../../../components/ui/styleUtils';
-import {
-  Dimensions,
-  KeyboardAvoidingView,
-  Keyboard,
-  TouchableOpacity,
-} from 'react-native';
+import {KeyboardAvoidingView, TouchableOpacity} from 'react-native';
 import {
   getImpressionEventData,
   incrementRetryCount,
@@ -24,6 +19,7 @@ import {
 } from './OtpVerificationModalController';
 import {GET_INDIVIDUAL_ID, isIOS} from '../../../shared/constants';
 import {SvgImage} from '../../../components/ui/svg';
+import {getScreenHeight} from '../../../shared/commonUtil';
 
 export const OtpVerificationModal: React.FC<
   OtpVerificationModalProps
@@ -79,25 +75,7 @@ export const OtpVerificationModal: React.FC<
     controller.CANCEL();
   };
 
-  const {height} = Dimensions.get('window');
-  const isSmallScreen = height < 600; // Adjust the threshold as needed
-
-  const [keyboardHeight, setKeyboardHeight] = useState(0);
-
-  useEffect(() => {
-    const keyboardDidShowListener = Keyboard.addListener(
-      'keyboardDidShow',
-      event => {
-        const keyboardHeight = event.endCoordinates.height;
-        setKeyboardHeight(keyboardHeight + 150);
-      },
-    );
-    return () => {
-      keyboardDidShowListener.remove();
-    };
-  }, []);
-
-  const screenHeight = Math.floor(height - keyboardHeight);
+  const {isSmallScreen, screenHeight} = getScreenHeight();
 
   return (
     <Modal
