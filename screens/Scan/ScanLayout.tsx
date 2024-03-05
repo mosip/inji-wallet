@@ -11,6 +11,8 @@ import {Icon} from 'react-native-elements';
 import {Loader} from '../../components/ui/Loader';
 import {SvgImage} from '../../components/ui/svg';
 import {BANNER_TYPE_SUCCESS} from '../../shared/constants';
+import {View, I18nManager} from 'react-native';
+import {Text} from './../../components/ui';
 
 const ScanStack = createNativeStackNavigator();
 
