@@ -22,6 +22,7 @@ interface Cache {
   [key: string]: CacheData;
 }
 
+//static try
 class FileStorage {
   cache: Cache = {};
 
@@ -108,12 +109,25 @@ export async function compressAndRemoveFile(
 ): Promise<StatResult> {
   const compressedFilePath = await compressFile(fileNameSansExtension);
   await removeFile(fileNameSansExtension);
-  const backupFileMeta = await new FileStorage().getInfo(compressedFilePath);
-  return backupFileMeta;
+  return await new FileStorage().getInfo(compressedFilePath);
+}
+
+export async function cleanupLocalBackups() {
+  const isDirectoryExists = await new FileStorage().exists(backupDirectoryPath);
+  if (isDirectoryExists) {
+    const availableBackupDirFiles =
+      await new FileStorage().getAllFilesInDirectory(backupDirectoryPath);
+    for (const availableBackupDirFile of availableBackupDirFiles) {
+      await removeFile(availableBackupDirFile.name, '');
+    }
+  }
 }
 
 export async function unZipAndRemoveFile(fileName: string): Promise<string> {
-  const result = await unzipFile(fileName);
+  const result = await RNZipArchive.unzip(
+    zipFilePath(fileName),
+    backupDirectoryPath,
+  );
   await removeFile(fileName, '.zip');
   return result;
 }
@@ -122,17 +136,13 @@ async function compressFile(fileName: string): Promise<string> {
   return await RNZipArchive.zip(backupDirectoryPath, zipFilePath(fileName));
 }
 
-async function unzipFile(fileName: string): Promise<string> {
-  return await RNZipArchive.unzip(zipFilePath(fileName), backupDirectoryPath);
-}
-
 async function removeFile(fileName: string, extension: string = '.injibackup') {
   const file = getBackupFilePath(fileName, extension);
   await new FileStorage().removeItem(file);
 }
 
 export async function getDirectorySize(path: string) {
-  const directorySize = await new FileStorage()
+  return await new FileStorage()
     .getAllFilesInDirectory(path)
     .then((result: ReadDirItem[]) => {
       let folderEntriesSizeInBytes = 0;
@@ -141,10 +151,9 @@ export async function getDirectorySize(path: string) {
       });
       return folderEntriesSizeInBytes;
     });
-  return directorySize;
 }
 
-export async function writeToBackupFile(data): Promise<string> {
+export async function writeToBackupFile(data: any): Promise<string> {
   const fileName = getBackupFileName();
   const isDirectoryExists = await exists(backupDirectoryPath);
   if (isDirectoryExists) {

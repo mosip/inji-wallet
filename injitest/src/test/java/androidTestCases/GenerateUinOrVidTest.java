@@ -42,7 +42,8 @@ public class GenerateUinOrVidTest extends AndroidBaseTest {
         GenerateUinOrVidPage generateUinOrVidPage = retrieveIdPage.clickOnGetItNowText();
 
         assertTrue(generateUinOrVidPage.isGenerateUinOrVidPageLoaded(), "Verify if generate uin or vid page page is displayed");
-        OtpVerificationPage otpVerification = generateUinOrVidPage.enterApplicationID(TestDataReader.readData("aid")).clickOnGetUinOrVidButton();
+        String aid=TestDataReader.readData("aid");
+        OtpVerificationPage otpVerification = generateUinOrVidPage.enterApplicationID(aid).clickOnGetUinOrVidButton();
 
         assertTrue(otpVerification.isOtpVerificationPageLoaded(), "Verify if otp verification page is displayed");
         otpVerification.enterOtp(BaseTestCase.getOtp(), Target.ANDROID);
@@ -86,7 +87,8 @@ public class GenerateUinOrVidTest extends AndroidBaseTest {
         GenerateUinOrVidPage generateUinOrVidPage = retrieveIdPage.clickOnGetItNowText();
 
         assertTrue(generateUinOrVidPage.isGenerateUinOrVidPageLoaded(), "Verify if generate uin or vid page page is displayed");
-        OtpVerificationPage otpVerification = generateUinOrVidPage.enterApplicationID(TestDataReader.readData("aid")).clickOnGetUinOrVidButton();
+        String aid=TestDataReader.readData("aid");
+        OtpVerificationPage otpVerification = generateUinOrVidPage.enterApplicationID(aid).clickOnGetUinOrVidButton();
 
         assertTrue(otpVerification.isOtpVerificationPageLoaded(), "Verify if otp verification page is displayed");
         otpVerification.clickOnCrossIcon();

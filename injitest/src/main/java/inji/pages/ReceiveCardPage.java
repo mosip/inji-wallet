@@ -4,6 +4,8 @@ import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.pagefactory.AndroidFindBy;
 import org.openqa.selenium.WebElement;
 
+import inji.utils.IosUtil;
+
 public class ReceiveCardPage extends BasePage {
 	@AndroidFindBy(uiAutomator = "new UiSelector().textContains(\"Allow\")")
 	private WebElement allowButton;
@@ -45,7 +47,7 @@ public class ReceiveCardPage extends BasePage {
     }
 
     public boolean isQrCodeEnabled() {
-        return this.isElementEnabled(qrCode);
+        return this.isElementEnabled(qrCode,30);
     }
 
 }

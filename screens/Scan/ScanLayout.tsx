@@ -9,8 +9,6 @@ import {SharingStatusModal} from './SharingStatusModal';
 import {Theme} from '../../components/ui/styleUtils';
 import {Icon} from 'react-native-elements';
 import {Loader} from '../../components/ui/Loader';
-import {Text} from '../../components/ui';
-import {I18nManager, View} from 'react-native';
 import {SvgImage} from '../../components/ui/svg';
 import {BANNER_TYPE_SUCCESS} from '../../shared/constants';
 
@@ -19,7 +17,6 @@ const ScanStack = createNativeStackNavigator();
 export const ScanLayout: React.FC = () => {
   const {t} = useTranslation('ScanScreen');
   const controller = useScanLayout();
-  const bleErrorCode = controller.bleError.code;
 
   if (
     controller.statusOverlay != null &&
@@ -56,31 +53,14 @@ export const ScanLayout: React.FC = () => {
             component={SendVcScreen}
             options={{
               title: t('sharingVc'),
-              headerTitleAlign: 'center',
-              headerTitle: props => (
-                <View style={Theme.Styles.sendVcHeaderContainer}>
-                  <Text style={Theme.Styles.scanLayoutHeaderTitle}>
-                    {props.children}
-                  </Text>
-                </View>
-              ),
               headerBackVisible: false,
-              headerRight: () =>
-                !I18nManager.isRTL && (
-                  <Icon
-                    name="close"
-                    color={Theme.Colors.blackIcon}
-                    onPress={controller.CANCEL}
-                  />
-                ),
-              headerLeft: () =>
-                I18nManager.isRTL && (
-                  <Icon
-                    name="close"
-                    color={Theme.Colors.blackIcon}
-                    onPress={controller.CANCEL}
-                  />
-                ),
+              headerRight: () => (
+                <Icon
+                  name="close"
+                  color={Theme.Colors.blackIcon}
+                  onPress={controller.CANCEL}
+                />
+              ),
             }}
           />
         )}
@@ -88,14 +68,8 @@ export const ScanLayout: React.FC = () => {
           name={SCAN_ROUTES.ScanScreen}
           component={ScanScreen}
           options={{
+            headerTitleStyle: {fontSize: 30, fontFamily: 'Inter_600SemiBold'},
             title: t('MainLayout:share'),
-            headerTitle: props => (
-              <View style={Theme.Styles.scanLayoutHeaderContainer}>
-                <Text style={Theme.Styles.scanLayoutHeaderTitle}>
-                  {props.children}
-                </Text>
-              </View>
-            ),
           }}
         />
       </ScanStack.Navigator>
@@ -111,29 +85,19 @@ export const ScanLayout: React.FC = () => {
         goToHistory={controller.GOTO_HISTORY}
       />
 
-      <SharingStatusModal
-        isVisible={controller.isDisconnected}
-        testId={'walletSideSharingErrorModal'}
-        image={SvgImage.ErrorLogo()}
-        title={t('status.disconnected.title')}
-        message={t('status.disconnected.message')}
-        gradientButtonTitle={t('status.bleError.retry')}
-        clearButtonTitle={t('status.bleError.home')}
-        onGradientButton={controller.onRetry}
-        onClearButton={controller.GOTO_HOME}
-      />
-
-      <SharingStatusModal
-        isVisible={controller.isBleError}
-        testId={'walletSideSharingErrorModal'}
-        image={SvgImage.ErrorLogo()}
-        title={t(`status.bleError.${bleErrorCode}.title`)}
-        message={t(`status.bleError.${bleErrorCode}.message`)}
-        gradientButtonTitle={t('status.bleError.retry')}
-        clearButtonTitle={t('status.bleError.home')}
-        onGradientButton={controller.onRetry}
-        onClearButton={controller.GOTO_HOME}
-      />
+      {controller.errorStatusOverlay && (
+        <SharingStatusModal
+          isVisible={controller.errorStatusOverlay !== null}
+          testId={'walletSideSharingErrorModal'}
+          image={SvgImage.ErrorLogo()}
+          title={controller.errorStatusOverlay.title}
+          message={controller.errorStatusOverlay.message}
+          gradientButtonTitle={t('status.bleError.retry')}
+          clearButtonTitle={t('status.bleError.home')}
+          onGradientButton={controller.onRetry}
+          onClearButton={controller.GOTO_HOME}
+        />
+      )}
     </React.Fragment>
   );
 };

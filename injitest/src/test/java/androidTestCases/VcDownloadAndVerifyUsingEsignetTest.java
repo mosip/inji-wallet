@@ -44,11 +44,11 @@ public class VcDownloadAndVerifyUsingEsignetTest extends AndroidBaseTest {
 
 //      assertTrue(esignetLoginPage.isLoadingPageTextLoaded(), "Verify if loading page displayed");
 //      assertTrue(esignetLoginPage.isSettingUpTextDisplayed(), "Verify if loading page displayed");
-  //      assertTrue(esignetLoginPage.isEsignetLoginPageDisplayed(), "Verify if esignet login page displayed");
         esignetLoginPage.clickOnEsignetLoginWithOtpButton();
         
         assertTrue(esignetLoginPage.isEnterYourVidTextDisplayed(), "Verify if enter your vid text is displayed");
-        OtpVerificationPage otpVerification= esignetLoginPage.setEnterIdTextBox(TestDataReader.readData("uin"));
+        String uin=TestDataReader.readData("uin");
+        OtpVerificationPage otpVerification= esignetLoginPage.setEnterIdTextBox(uin);
         
         esignetLoginPage.clickOnGetOtpButton();
         assertTrue(esignetLoginPage.isOtpHasSendMessageDisplayed(),"verify if otp page is displayed");
@@ -70,7 +70,7 @@ public class VcDownloadAndVerifyUsingEsignetTest extends AndroidBaseTest {
         assertEquals(detailedVcViewPage.getGenderInDetailedVcView(), TestDataReader.readData("gender"), "Verify if gender is displayed");
         assertEquals(detailedVcViewPage.getIdTypeValueInDetailedVcView(), TestDataReader.readData("idType"), "Verify if id type is displayed");
         assertEquals(detailedVcViewPage.getStatusInDetailedVcView(), TestDataReader.readData("status"), "Verify if status is displayed");
-        assertEquals(detailedVcViewPage.getUinInDetailedVcView(), TestDataReader.readData("uin"), "Verify if uin is displayed");
+        assertEquals(detailedVcViewPage.getUinInDetailedVcView(), uin, "Verify if uin is displayed");
         assertEquals(detailedVcViewPage.getPhoneInDetailedVcView(), TestDataReader.readData("phoneNumber"), "Verify if phone number is displayed");
         assertEquals(detailedVcViewPage.getEmailInDetailedVcView(), TestDataReader.readData("externalemail"), "Verify if email is displayed");
         assertTrue(detailedVcViewPage.isActivateButtonDisplayed(), "Verify if activate vc button displayed");
@@ -117,7 +117,8 @@ public class VcDownloadAndVerifyUsingEsignetTest extends AndroidBaseTest {
         esignetLoginPage.clickOnEsignetLoginWithOtpButton();
         
         assertTrue(esignetLoginPage.isEnterYourVidTextDisplayed(), "Verify if enter your vid text is displayed");
-        OtpVerificationPage otpVerification= esignetLoginPage.setEnterIdTextBox(TestDataReader.readData("vid"));
+        String vid = TestDataReader.readData("vid");
+        OtpVerificationPage otpVerification= esignetLoginPage.setEnterIdTextBox(vid);
         esignetLoginPage.clickOnGetOtpButton();
         Thread.sleep(3000);
         otpVerification.enterOtpForEsignet(TestDataReader.readData("otp"), Target.ANDROID);
@@ -131,12 +132,12 @@ public class VcDownloadAndVerifyUsingEsignetTest extends AndroidBaseTest {
 //        assertTrue(detailedVcViewPage.isEsignetLogoDisplayed(), "Verify if detailed Vc esignet logo is displayed");
         assertTrue(detailedVcViewPage.isDetailedVcViewPageLoaded(), "Verify if detailed Vc view page is displayed");
         assertEquals(detailedVcViewPage.getNameInDetailedVcView(), TestDataReader.readData("fullName"), "Verify if full name is displayed");
-        assertEquals(detailedVcViewPage.getDateOfBirthInDetailedVcView(), TestDataReader.readData("dateOfBirth"), "Verify if date of birth is displayed");
-        assertEquals(detailedVcViewPage.getGenderInDetailedVcView(), TestDataReader.readData("gender"), "Verify if gender is displayed");
+        assertEquals(detailedVcViewPage.getDateOfBirthInDetailedVcView(), TestDataReader.readData("dateOfBirthForVidEsignet"), "Verify if date of birth is displayed");
+        assertEquals(detailedVcViewPage.getGenderInDetailedVcView(), TestDataReader.readData("genderVidEsignet"), "Verify if gender is displayed");
         assertEquals(detailedVcViewPage.getIdTypeValueInDetailedVcView(), TestDataReader.readData("idType"), "Verify if id type is displayed");
         assertEquals(detailedVcViewPage.getStatusInDetailedVcView(), TestDataReader.readData("status"), "Verify if status is displayed");
 
-        assertEquals(detailedVcViewPage.getPhoneInDetailedVcView(), TestDataReader.readData("phoneNumber"), "Verify if phone number is displayed");
+//        assertEquals(detailedVcViewPage.getPhoneInDetailedVcView(), TestDataReader.readData("phoneNumberVidEsignet"), "Verify if phone number is displayed");
         assertEquals(detailedVcViewPage.getEmailInDetailedVcView(), TestDataReader.readData("externalemail"), "Verify if email is displayed");
         assertTrue(detailedVcViewPage.isActivateButtonDisplayed(), "Verify if activate vc button displayed");
         

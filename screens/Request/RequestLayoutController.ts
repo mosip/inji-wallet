@@ -5,7 +5,6 @@ import {useContext, useEffect} from 'react';
 import {MainBottomTabParamList} from '../../routes/main';
 import {GlobalContext} from '../../shared/GlobalContext';
 import {
-  selectIsSavingFailedInViewingVc,
   selectIsWaitingForConnection,
   selectSenderInfo,
   selectIsDone,
@@ -26,12 +25,15 @@ import {
   REQUEST_ROUTES,
   RequestStackParamList,
 } from '../../routes/routesConstants';
+import {VCSharingErrorStatusProps} from '../../components/MessageOverlay';
+import {useTranslation} from 'react-i18next';
 
 type RequestLayoutNavigation = NavigationProp<
   RequestStackParamList & MainBottomTabParamList
 >;
 
 export function useRequestLayout() {
+  const {t} = useTranslation('RequestScreen');
   const {appService} = useContext(GlobalContext);
   const requestService = appService.children.get('request');
   const navigation = useNavigation<RequestLayoutNavigation>();
@@ -55,6 +57,7 @@ export function useRequestLayout() {
   const isDone = useSelector(requestService, selectIsDone);
   const isBleError = useSelector(requestService, selectIsHandlingBleError);
   const bleError = useSelector(requestService, selectBleError);
+  const isDisconnected = useSelector(requestService, selectIsDisconnected);
   const isWaitingForConnection = useSelector(
     requestService,
     selectIsWaitingForConnection,
@@ -67,6 +70,23 @@ export function useRequestLayout() {
     requestService,
     selectIsNavigatingToHome,
   );
+
+  let errorStatusOverlay: Pick<
+    VCSharingErrorStatusProps,
+    'title' | 'message'
+  > | null = null;
+  if (isDisconnected) {
+    errorStatusOverlay = {
+      title: t('status.disconnected.title'),
+      message: t('status.disconnected.message'),
+    };
+  } else if (isBleError) {
+    errorStatusOverlay = {
+      title: t(`status.bleError.${bleError.code}.title`),
+      message: t(`status.bleError.${bleError.code}.message`),
+    };
+  }
+
   useEffect(() => {
     if (isNavigationToHome) {
       navigation.navigate(BOTTOM_TAB_ROUTES.home);
@@ -82,13 +102,10 @@ export function useRequestLayout() {
 
     isAccepted: useSelector(requestService, selectIsAccepted),
     isRejected: useSelector(requestService, selectIsRejected),
-    isDisconnected: useSelector(requestService, selectIsDisconnected),
+    isDisconnected,
     isBleError,
     bleError,
-    IsSavingFailedInViewingVc: useSelector(
-      requestService,
-      selectIsSavingFailedInViewingVc,
-    ),
+    errorStatusOverlay,
     isReviewing,
     isDone,
     isNavigatingToReceivedCards,

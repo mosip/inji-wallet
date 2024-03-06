@@ -3,11 +3,16 @@ import {
   BottomTabNavigationOptions,
   createBottomTabNavigator,
 } from '@react-navigation/bottom-tabs';
+import {Icon} from 'react-native-elements';
 import {RequestRouteProps, RootRouteProps} from '../routes';
 import {mainRoutes, share} from '../routes/main';
 import {Theme} from '../components/ui/styleUtils';
 import {useTranslation} from 'react-i18next';
-import {Column} from '../components/ui';
+import {Column, Row} from '../components/ui';
+import {Image} from 'react-native';
+import {SettingScreen} from './Settings/SettingScreen';
+import {HelpScreen} from '../components/HelpScreen';
+
 import {GlobalContext} from '../shared/GlobalContext';
 import {ScanEvents} from '../machines/bleShare/scan/scanMachine';
 import testIDProps from '../shared/commonUtil';
