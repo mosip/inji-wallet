@@ -23,9 +23,6 @@ import {
   ScanEvents,
   selectIsMinimumStorageRequiredForAuditEntryLimitReached,
 } from '../../machines/bleShare/scan/scanMachine';
-import {BOTTOM_TAB_ROUTES} from '../../routes/routesConstants';
-import {MainBottomTabParamList} from '../../routes/types';
-import {useNavigation, NavigationProp} from '@react-navigation/native';
 
 export function useScanScreen() {
   const {t} = useTranslation('ScanScreen');

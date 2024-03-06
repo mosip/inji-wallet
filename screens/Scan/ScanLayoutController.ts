@@ -6,7 +6,7 @@ import {
   MessageOverlayProps,
   VCSharingErrorStatusProps,
 } from '../../components/MessageOverlay';
-import {MainBottomTabParamList} from '../../routes/types';
+import {MainBottomTabParamList} from '../../routes/routeTypes';
 import {GlobalContext} from '../../shared/GlobalContext';
 import {
   selectIsConnecting,
