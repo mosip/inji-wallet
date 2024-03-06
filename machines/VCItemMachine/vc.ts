@@ -213,13 +213,14 @@ export const vcMachine =
           },
         },
         tamperedVCs: {
-          initial: 'triggerAutoBackupForTamperedVcDeletion',
+          initial: 'idle',
           on: {
             REMOVE_TAMPERED_VCS: {
               target: '.triggerAutoBackupForTamperedVcDeletion',
             },
           },
           states: {
+            idle: {},
             triggerAutoBackupForTamperedVcDeletion: {
               invoke: {
                 src: 'isUserSignedAlready',
