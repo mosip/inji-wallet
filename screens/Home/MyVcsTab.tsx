@@ -69,10 +69,15 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = props => {
     const searchTextLower = searchText.toLowerCase();
     const filteredData: Array<Record<string, VCMetadata>> = [];
 
-    for (const [key, value] of Object.entries(vcData)) {
-      const searchTextFound = searchNestedObject(searchTextLower, value);
-      if (searchTextFound) {
-        filteredData.push({[key]: value['vcMetadata']});
+    for (const [vcKey, vc] of Object.entries(vcData)) {
+      let isSearchTextFound = false;
+      for (const [vcField, vcFieldValue] of Object.entries(vc)) {
+        if (vcField === 'credential') {
+          isSearchTextFound = searchNestedObject(searchTextLower, vcFieldValue);
+        }
+      }
+      if (isSearchTextFound) {
+        filteredData.push({[vcKey]: vc['vcMetadata']});
       }
     }
     setFilteredSearchData(filteredData);
@@ -85,13 +90,26 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = props => {
     }
   };
 
-  const searchNestedObject = (searchText: string, obj: any): boolean => {
-    for (const val of Object.values(obj)) {
-      if (typeof val === 'string' && val.toLowerCase().includes(searchText)) {
-        return true;
-      } else if (typeof val === 'object' && val !== null) {
-        if (searchNestedObject(searchText, val)) {
+  const searchNestedObject = (
+    searchText: string,
+    credentialData: any,
+  ): boolean => {
+    for (const [credentialKey, credentialValue] of Object.entries(
+      credentialData,
+    )) {
+      if (credentialKey !== 'biometrics') {
+        if (
+          typeof credentialValue === 'string' &&
+          credentialValue.toLowerCase().includes(searchText)
+        ) {
           return true;
+        } else if (
+          typeof credentialValue === 'object' &&
+          credentialValue !== null
+        ) {
+          if (searchNestedObject(searchText, credentialValue)) {
+            return true;
+          }
         }
       }
     }

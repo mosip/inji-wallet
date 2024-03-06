@@ -190,8 +190,6 @@ fileignoreconfig:
     checksum: 0ac8c4f3b00138c52d83d719fd8f16c5521290417561c7cf604ade88fa092bc8
   - filename: injitest/src/test/java/androidTestCases/VcBackupAndRestoreTest.java
     checksum: 4c154a180ac4fcd113bf3354b77e89cf17720d85e058662b8a9b173157d08c27
-  - filename: screens/Home/MyVcsTab.tsx
-    checksum: 8133e2fefddfd0207eb7207b660d317f9a6acafbab6a65762d29ea86e33787cb
   - filename: components/BackupAndRestoreBannerNotification.tsx
     checksum: e465a9947727687d784d0cb9d8db1e28f765b0659bf4a3aa6d75643aa7b14102
   - filename: components/ActivityLogEvent.ts
@@ -212,5 +210,7 @@ fileignoreconfig:
     checksum: 599edc3ad8bb2d977636ca39f21e7bdfc53d1b33810f6d3eba3048945f17e76c
   - filename: components/kebabMenuUtils.ts
     checksum: c30a4b0d5b7d9ab50de5cea1f876809221311d96ac6d5b965329b1d080b9d4df
+  - filename: screens/Home/MyVcsTab.tsx
+    checksum: 2fa45089d6c106a051213abaa9f493ca9e8b107aa1a93b78701aa6b48bc12422
     version: ""
 
