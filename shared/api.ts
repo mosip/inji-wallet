@@ -56,18 +56,6 @@ export const API_URLS: ApiUrls = {
     method: 'POST',
     buildURL: (): `/${string}` => '/residentmobileapp/credentialshare/download',
   },
-  authLock: {
-    method: 'POST',
-    buildURL: (): `/${string}` => '/residentmobileapp/req/auth/lock',
-  },
-  authUnLock: {
-    method: 'POST',
-    buildURL: (): `/${string}` => '/residentmobileapp/req/auth/unlock',
-  },
-  requestRevoke: {
-    method: 'PATCH',
-    buildURL: (id: string): `/${string}` => `/residentmobileapp/vid/${id}`,
-  },
   linkTransaction: {
     method: 'POST',
     buildURL: (): `/${string}` =>
@@ -279,9 +267,6 @@ type ApiUrls = {
   credentialRequest: Api_Params;
   credentialStatus: Api_Params;
   credentialDownload: Api_Params;
-  authLock: Api_Params;
-  authUnLock: Api_Params;
-  requestRevoke: Api_Params;
   linkTransaction: Api_Params;
   authenticate: Api_Params;
   sendConsent: Api_Params;

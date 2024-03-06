@@ -5,7 +5,6 @@
     "VC_RECEIVED_NOT_SAVED": "Hindi ma-save ang {{idType}} {{id}}.",
     "VC_DELETED": "Matagumpay na natanggal ang {{idType}} {{id}}.",
     "VC_DOWNLOADED": "Na-download ang {{idType}} {{id}}.",
-    "VC_REVOKED": "Ang {{idType}} {{id}} ay binawi ng nagbigay.",
     "VC_SHARED_WITH_VERIFICATION_CONSENT": "Ibinahagi ang {{idType}} {{id}} na may pahintulot para sa pag-verify ng presensya.",
     "VC_RECEIVED_WITH_PRESENCE_VERIFIED": "Natanggap ang {{idType}} {{id}} at matagumpay ang pag-verify ng presensya.",
     "VC_RECEIVED_BUT_PRESENCE_VERIFICATION_FAILED": "Natanggap ang {{idType}} {{id}} at nabigo ang pag-verify ng presensya.",
@@ -95,9 +94,7 @@
     "offlineAuthenticationDisabled!": "Nakabinbin ang pag-activate para sa online na pag-login",
     "offlineAuthDisabledMessage": "Mag-click dito upang paganahin ang mga kredensyal na ito na magamit para sa online na pagpapatotoo.",
     "viewActivityLog": "Tingnan ang log ng aktibidad",
-    "removeFromWallet": "Alisin sa wallet",
-    "revokeId": "Bawiin ang ID",
-    "revokeMessage": "Bawiin ang virtual ID para sa profile na ito"
+    "removeFromWallet": "Alisin sa wallet"
   },
   "WalletBinding": {
     "inProgress": "Isinasagawa",
@@ -399,22 +396,7 @@
   },
   "ViewVcModal": {
     "title": "Mga Detalye ng ID",
-    "inProgress": "Isinasagawa",
-    "cancel": "Kanselahin",
-    "lock": "Lock",
-    "unlock": "I-unlock",
-    "rename": "Palitan ang pangalan",
-    "delete": "Tanggalin",
-    "revoke": "Bawiin",
-    "revoking": "Ang iyong wallet ay naglalaman ng kredensyal na may VID {{vid}}. Ang pagbawi nito ay awtomatikong mag-aalis ng pareho sa wallet. Sigurado ka bang gusto mong magpatuloy?",
-    "requestingOtp": "Humihiling ng OTP...",
-    "activated": "Ang mga kredensyal ay pinagana para sa online na pagpapatotoo.",
-    "redirecting": "Nire-redirect...",
-    "success": {
-      "unlocked": "Matagumpay na na-unlock ang card.",
-      "locked": "Matagumpay na na-lock ang card.",
-      "revoked": "Ang VID {{vid}} ay binawi. Awtomatikong aalisin sa wallet ang anumang kredensyal na naglalaman ng pareho"
-    }
+    "inProgress": "Isinasagawa"
   },
   "MainLayout": {
     "home": "Bahay",
