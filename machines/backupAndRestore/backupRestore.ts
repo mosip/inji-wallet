@@ -20,6 +20,7 @@ import {
 } from '../../shared/telemetry/TelemetryUtils';
 import {VcEvents} from '../VCItemMachine/vc';
 import {NETWORK_REQUEST_FAILED, TECHNICAL_ERROR} from '../../shared/constants';
+import NetInfo, {NetInfoState} from '@react-native-community/netinfo';
 
 const model = createModel(
   {
@@ -69,10 +70,31 @@ export const backupRestoreMachine = model.createMachine(
     states: {
       init: {},
       restoreBackup: {
-        initial: 'checkStorageAvailability',
+        initial: 'checkInternet',
         entry: 'setShowRestoreInProgress',
         states: {
           idle: {},
+          checkInternet: {
+            invoke: {
+              src: 'checkInternet',
+              onDone: [
+                {
+                  cond: 'isInternetConnected',
+                  target: 'checkStorageAvailability',
+                },
+                {
+                  actions: 'setRestoreErrorReasonAsNetworkError',
+                  target: 'failure',
+                },
+              ],
+              onError: [
+                {
+                  actions: 'setRestoreErrorReasonAsNetworkError',
+                  target: 'failure',
+                },
+              ],
+            },
+          },
           checkStorageAvailability: {
             entry: ['sendDataRestoreStartEvent'],
             invoke: {
@@ -194,6 +216,10 @@ export const backupRestoreMachine = model.createMachine(
         },
       }),
 
+      setRestoreErrorReasonAsNetworkError: model.assign({
+        errorReason: 'networkError',
+      }),
+
       loadDataToMemory: send(
         context => {
           return StoreEvents.RESTORE_BACKUP(context.dataFromBackupFile);
@@ -242,7 +268,9 @@ export const backupRestoreMachine = model.createMachine(
       },
     },
 
-    services: {      
+    services: {
+      checkInternet: async () => await NetInfo.fetch(),
+
       checkStorageAvailability: () => async () => {
         return await Storage.isMinimumLimitReached('minStorageRequired');
       },
@@ -271,6 +299,8 @@ export const backupRestoreMachine = model.createMachine(
     },
 
     guards: {
+      isInternetConnected: (_, event) =>
+        !!(event.data as NetInfoState).isConnected,
       isMinimumStorageRequiredForBackupRestorationReached: (_context, event) =>
         Boolean(event.data),
     },

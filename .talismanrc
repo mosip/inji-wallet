@@ -139,8 +139,6 @@ fileignoreconfig:
     checksum: c83024929b59f76cce188dbe09eb3af1803d3a08f867feb7478137ddabc3bfdc
   - filename: injitest/src/test/java/iosTestCases/CredentialRegistryTest.java
     checksum: b0808e0c511412cde21fd169a9bbeaf3b77cb48f25418e12d341cc3ce1df5898
-  - filename: machines/backupAndRestore/backupAndRestore.typegen.ts
-    checksum: 509b9660553990841883c54f8986971f21c7315e7450c455bba2766738c58bee
   - filename: components/BackupAndRestoreAllScreenBanner.tsx
     checksum: 2c98e7e83959c9dac4dd12da32f81483c3d334bd05e279637cf465475fbf54b8
     checksum: f26489ce4ac607884437ad06c3117cc34d6cbcbcd3dd5719790fbe01a0853ee5
@@ -170,16 +168,14 @@ fileignoreconfig:
     checksum: a98ff1a0dd96d3ead4b8191320be8b0c7a558cda6b0de39f1c62aaa8efef9fb8
   - filename: components/HelpScreen.tsx
     checksum: bbc69143bd37d065bba3800396301db5a0318e8b7ba51ecd49142dda68783a01  
-  - filename: machines/backupRestore.ts
-    checksum: bbc69143bd37d065bba3800396301db5a0318e8b7ba51ecd49142dda68783a01
   - filename: injitest/README.md
     checksum: 82974a6b9363512472272245e9b433f92e63377e58ba306980876b745181a09c
   - filename: shared/VCMetadata.ts
     checksum: e93f988415bf91064e2cf5fbc09ff6c7226798baa5da721fa0715d5d0d6afddf
-  - filename: machines/backupRestore.ts
-    checksum: 8f8725bb55dbc98083f819c74754a8eac258d15038e391a16ca1ab55a53d61f3
+  - filename: machines/backupAndRestore/backupRestore.ts
+    checksum: fceb8294d5ef8e2d6151b761bf69ab62d48a5542fc9d191f94ff5a63eeaa6244
   - filename: machines/backupAndRestore/backupRestore.typegen.ts
-    checksum: e1009d3531d9672170a25ead9efad6d3157fbcba10aa47265e99f485da76d646
+    checksum: 78d2429afe4dffdf2a49adfdbff415cf8c764d0f2b270762d821693e51f38d27
   - filename: ios/Podfile.lock
     checksum: 369fecac06b3c087b272e7920aa5ffe6734f261ae0af0c376a92ebf5c11415d4
   - filename: screens/Home/MyVcsTab.tsx
