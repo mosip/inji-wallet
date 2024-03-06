@@ -41,28 +41,30 @@ export const SharingStatusModal: React.FC<SharingStatusModalProps> = props => {
           <Row
             align="space-evenly"
             style={{marginBottom: Dimensions.get('screen').height * 0.06}}>
-            <Column style={{height: 75, justifyContent: 'space-between'}}>
+            <Column>
               <Pressable
                 accessible={false}
                 testID="successfullyVcSharedHomeIcon"
+                style={{height: 75, justifyContent: 'space-between'}}
                 onPress={props.goToHome}>
                 {SvgImage.SuccessHomeIcon()}
+                <Text align="center" weight="bold">
+                  {t('status.accepted.home')}
+                </Text>
               </Pressable>
-              <Text align="center" weight="bold">
-                {t('status.accepted.home')}
-              </Text>
             </Column>
 
-            <Column style={{height: 75, justifyContent: 'space-between'}}>
+            <Column>
               <Pressable
                 accessible={false}
                 testID="successfullyVcSharedHistoryIcon"
+                style={{height: 75, justifyContent: 'space-between'}}
                 onPress={props.goToHistory}>
                 {SvgImage.SuccessHistoryIcon()}
+                <Text align="center" weight="bold">
+                  {t('status.accepted.history')}
+                </Text>
               </Pressable>
-              <Text align="center" weight="bold">
-                {t('status.accepted.history')}
-              </Text>
             </Column>
           </Row>
         ) : null}
