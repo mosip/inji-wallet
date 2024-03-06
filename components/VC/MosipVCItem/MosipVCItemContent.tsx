@@ -10,7 +10,7 @@ import {CheckBox, Icon} from 'react-native-elements';
 import testIDProps, {getMaskedText} from '../../../shared/commonUtil';
 import {logoType} from '../../../machines/issuersMachine';
 import {SvgImage} from '../../ui/svg';
-import {VcItemContainerProfileImage} from '../../ProfileIcon';
+import {VcItemContainerProfileImage} from '../../VcItemContainerProfileImage';
 
 const getDetails = (arg1, arg2, verifiableCredential) => {
   if (arg1 === 'Status') {
