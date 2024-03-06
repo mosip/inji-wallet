@@ -229,11 +229,11 @@ class Storage {
         getErrorEventData(
           TelemetryConstants.FlowType.fetchData,
           TelemetryConstants.ErrorId.dataRetrieval,
-          'Error Occurred while retriving from Storage',
+          'Error Occurred while retrieving from Storage',
         ),
       );
 
-      console.log('Error Occurred while retriving from Storage.', error);
+      console.log('Error Occurred while retrieving from Storage.', error);
       throw error;
     }
   };

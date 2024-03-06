@@ -628,6 +628,14 @@ export async function getItem(
     console.error(`Exception in getting item for ${key}: ${e}`);
     if (e.message === ENOENT) {
       removeTamperedVcMetaData(key, encryptionKey);
+      sendErrorEvent(
+        getErrorEventData(
+          TelemetryConstants.FlowType.fetchData,
+          TelemetryConstants.ErrorId.tampered,
+          e.message,
+        ),
+      );
+      throw e;
     }
     if (
       e.message.includes(tamperedErrorMessageString) ||
