@@ -82,15 +82,10 @@ export const HomeScreenLayout: React.FC<RootRouteProps> = props => {
   const [isRTL] = useState(I18nManager.isRTL);
 
   var HomeScreenOptions = {
-    headerLeft: () =>
-      isIOS()
-        ? SvgImage.InjiLogo()
-        : isRTL
-        ? screenOptions
-        : SvgImage.InjiLogo(),
+    headerLeft: () => (isIOS() || !isRTL ? SvgImage.InjiLogo() : screenOptions),
     headerTitle: '',
     headerRight: () =>
-      isIOS() ? screenOptions : isRTL ? SvgImage.InjiLogo() : screenOptions,
+      isIOS() || !isRTL ? screenOptions : SvgImage.InjiLogo(),
   };
 
   return (
