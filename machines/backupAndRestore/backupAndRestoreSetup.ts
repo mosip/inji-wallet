@@ -183,17 +183,11 @@ export const backupAndRestoreSetupMachine = model.createMachine(
               actions: ['setProfileInfo', 'setShouldTriggerAutoBackup'],
               target: 'backupAndRestore',
             },
-            // isIOS not required as we dont reach sign in state itself
-            {
-              cond: 'isIOS',
-              target: 'backupAndRestore',
-            },
             {
               cond: 'isNetworkError',
               actions: 'sendBackupAndRestoreSetupErrorEvent',
               target: '.noInternet',
             },
-            // What if sign in fails due to n/w error?
             {
               cond: 'isIOS',
               target: 'backupAndRestore',
@@ -252,9 +246,6 @@ export const backupAndRestoreSetupMachine = model.createMachine(
       }),
       setProfileInfo: model.assign({
         profileInfo: (_context, event) => event.data?.profileInfo,
-      }),
-      setNoInternet: model.assign({
-        errorMessage: () => ErrorMessage.NO_INTERNET,
       }),
       sendDataBackupAndRestoreSetupStartEvent: () => {
         sendStartEvent(

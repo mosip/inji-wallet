@@ -69,7 +69,7 @@ class Cloud {
       const dateB = new Date(Number(b.split('.')[0].split('_')[1]));
       return dateB > dateA ? 1 : dateB < dateA ? -1 : 0;
     });
-    return sortedFiles[0];
+    return `/${sortedFiles[0]}`;
   };
 
   private static async syncBackupFiles() {

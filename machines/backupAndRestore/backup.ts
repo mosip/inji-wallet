@@ -377,15 +377,6 @@ export const backupMachine = model.createMachine(
         },
       ),
 
-      getLastBackupDetailsFromStore: send(
-        StoreEvents.GET(LAST_BACKUP_DETAILS),
-        {
-          to: context => {
-            return context.serviceRefs.store;
-          },
-        },
-      ),
-
       fetchAllDataFromDB: send(StoreEvents.EXPORT(), {
         to: context => {
           return context.serviceRefs.store;
