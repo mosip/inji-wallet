@@ -1,4 +1,4 @@
-import NetInfo from '@react-native-community/netinfo';
+import NetInfo, {NetInfoState} from '@react-native-community/netinfo';
 import {EventFrom, StateFrom, send} from 'xstate';
 import {createModel} from 'xstate/lib/model';
 import {AppServices} from '../../shared/GlobalContext';
@@ -13,7 +13,6 @@ import Cloud, {
   SignInResult,
   isSignedInResult,
 } from '../../shared/CloudBackupAndRestoreUtils';
-import {ErrorMessage} from '../../shared/openId4VCI/Utils';
 import {TelemetryConstants} from '../../shared/telemetry/TelemetryConstants';
 import {
   getEndEventData,
@@ -74,7 +73,42 @@ export const backupAndRestoreSetupMachine = model.createMachine(
               'unsetShouldTriggerAutoBackup',
               'sendDataBackupAndRestoreSetupStartEvent',
             ],
-            target: 'fetchShowConfirmationInfo',
+            target: '.checkInternet',
+          },
+        },
+        initial: 'idle',
+        states: {
+          idle: {},
+          checkInternet: {
+            invoke: {
+              src: 'checkInternet',
+              onDone: [
+                {
+                  cond: 'isInternetConnected',
+                  target: '#backupAndRestoreSetup.fetchShowConfirmationInfo',
+                },
+                {
+                  actions: 'unsetIsLoading',
+                  target: 'noInternet',
+                },
+              ],
+              onError: {
+                actions: 'unsetIsLoading',
+                target: 'noInternet',
+              },
+            },
+          },
+          noInternet: {
+            on: {
+              TRY_AGAIN: {
+                actions: 'setIsLoading',
+                target: 'checkInternet',
+              },
+              DISMISS: {
+                actions: ['unsetIsLoading'],
+                target: '#backupAndRestoreSetup.init',
+              },
+            },
           },
         },
       },
@@ -310,9 +344,12 @@ export const backupAndRestoreSetupMachine = model.createMachine(
       signIn: () => async () => {
         return await Cloud.signIn();
       },
+      checkInternet: async () => await NetInfo.fetch(),
     },
 
     guards: {
+      isInternetConnected: (_, event) =>
+        !!(event.data as NetInfoState).isConnected,
       isNetworkError: (_, event) => event.data.error === NETWORK_REQUEST_FAILED,
       isSignedIn: (_context, event) =>
         (event.data as isSignedInResult).isSignedIn,
@@ -356,6 +393,7 @@ export function selectProfileInfo(state: State) {
 
 export function selectIsNetworkOff(state: State) {
   return (
+    state.matches('init.noInternet') ||
     state.matches('checkSignIn.noInternet') ||
     state.matches('signIn.noInternet')
   );

@@ -8,14 +8,24 @@ export interface Typegen0 {
       data: unknown;
       __tip: 'See the XState TS docs to learn how to strongly type this.';
     };
+    'done.invoke.backupAndRestoreSetup.init.checkInternet:invocation[0]': {
+      type: 'done.invoke.backupAndRestoreSetup.init.checkInternet:invocation[0]';
+      data: unknown;
+      __tip: 'See the XState TS docs to learn how to strongly type this.';
+    };
     'done.invoke.signIn:invocation[0]': {
       type: 'done.invoke.signIn:invocation[0]';
       data: unknown;
       __tip: 'See the XState TS docs to learn how to strongly type this.';
     };
+    'error.platform.backupAndRestoreSetup.init.checkInternet:invocation[0]': {
+      type: 'error.platform.backupAndRestoreSetup.init.checkInternet:invocation[0]';
+      data: unknown;
+    };
     'xstate.init': {type: 'xstate.init'};
   };
   invokeSrcNameMap: {
+    checkInternet: 'done.invoke.backupAndRestoreSetup.init.checkInternet:invocation[0]';
     isUserSignedAlready: 'done.invoke.backupAndRestoreSetup.checkSignIn:invocation[0]';
     signIn: 'done.invoke.signIn:invocation[0]';
   };
@@ -26,7 +36,7 @@ export interface Typegen0 {
     services: never;
   };
   eventsCausingActions: {
-    fetchShowConfirmationInfo: 'HANDLE_BACKUP_AND_RESTORE';
+    fetchShowConfirmationInfo: 'done.invoke.backupAndRestoreSetup.init.checkInternet:invocation[0]';
     openSettings: 'OPEN_SETTINGS';
     sendBackupAndRestoreSetupCancelEvent: 'DISMISS' | 'GO_BACK';
     sendBackupAndRestoreSetupErrorEvent: 'done.invoke.signIn:invocation[0]';
@@ -35,7 +45,7 @@ export interface Typegen0 {
       | 'done.invoke.backupAndRestoreSetup.checkSignIn:invocation[0]'
       | 'done.invoke.signIn:invocation[0]';
     setErrorReasonAsAccountRequired: 'done.invoke.backupAndRestoreSetup.checkSignIn:invocation[0]';
-    setIsLoading: 'HANDLE_BACKUP_AND_RESTORE' | 'PROCEED';
+    setIsLoading: 'HANDLE_BACKUP_AND_RESTORE' | 'PROCEED' | 'TRY_AGAIN';
     setProfileInfo:
       | 'done.invoke.backupAndRestoreSetup.checkSignIn:invocation[0]'
       | 'done.invoke.signIn:invocation[0]';
@@ -44,12 +54,15 @@ export interface Typegen0 {
     unsetIsLoading:
       | 'DISMISS'
       | 'STORE_RESPONSE'
-      | 'done.invoke.backupAndRestoreSetup.checkSignIn:invocation[0]';
+      | 'done.invoke.backupAndRestoreSetup.checkSignIn:invocation[0]'
+      | 'done.invoke.backupAndRestoreSetup.init.checkInternet:invocation[0]'
+      | 'error.platform.backupAndRestoreSetup.init.checkInternet:invocation[0]';
     unsetShouldTriggerAutoBackup: 'HANDLE_BACKUP_AND_RESTORE';
   };
   eventsCausingDelays: {};
   eventsCausingGuards: {
     isConfirmationAlreadyShown: 'STORE_RESPONSE';
+    isInternetConnected: 'done.invoke.backupAndRestoreSetup.init.checkInternet:invocation[0]';
     isNetworkError:
       | 'done.invoke.backupAndRestoreSetup.checkSignIn:invocation[0]'
       | 'done.invoke.signIn:invocation[0]';
@@ -59,6 +72,7 @@ export interface Typegen0 {
     isSignedIn: 'done.invoke.backupAndRestoreSetup.checkSignIn:invocation[0]';
   };
   eventsCausingServices: {
+    checkInternet: 'HANDLE_BACKUP_AND_RESTORE' | 'TRY_AGAIN';
     isUserSignedAlready: 'PROCEED' | 'STORE_RESPONSE';
     signIn: 'done.invoke.backupAndRestoreSetup.checkSignIn:invocation[0]';
   };
@@ -70,6 +84,9 @@ export interface Typegen0 {
     | 'checkSignIn.noInternet'
     | 'fetchShowConfirmationInfo'
     | 'init'
+    | 'init.checkInternet'
+    | 'init.idle'
+    | 'init.noInternet'
     | 'selectCloudAccount'
     | 'signIn'
     | 'signIn.error'
@@ -77,6 +94,7 @@ export interface Typegen0 {
     | 'signIn.noInternet'
     | {
         checkSignIn?: 'error' | 'idle' | 'noInternet';
+        init?: 'checkInternet' | 'idle' | 'noInternet';
         signIn?: 'error' | 'idle' | 'noInternet';
       };
   tags: never;

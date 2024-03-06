@@ -5,6 +5,11 @@
 export interface Typegen0 {
   '@@xstate/typegen': true;
   internalEvents: {
+    'done.invoke.backup.backingUp.checkInternet:invocation[0]': {
+      type: 'done.invoke.backup.backingUp.checkInternet:invocation[0]';
+      data: unknown;
+      __tip: 'See the XState TS docs to learn how to strongly type this.';
+    };
     'done.invoke.backup.backingUp.checkStorageAvailability:invocation[0]': {
       type: 'done.invoke.backup.backingUp.checkStorageAvailability:invocation[0]';
       data: unknown;
@@ -25,6 +30,10 @@ export interface Typegen0 {
       data: unknown;
       __tip: 'See the XState TS docs to learn how to strongly type this.';
     };
+    'error.platform.backup.backingUp.checkInternet:invocation[0]': {
+      type: 'error.platform.backup.backingUp.checkInternet:invocation[0]';
+      data: unknown;
+    };
     'error.platform.backup.backingUp.checkStorageAvailability:invocation[0]': {
       type: 'error.platform.backup.backingUp.checkStorageAvailability:invocation[0]';
       data: unknown;
@@ -44,6 +53,7 @@ export interface Typegen0 {
     'xstate.init': {type: 'xstate.init'};
   };
   invokeSrcNameMap: {
+    checkInternet: 'done.invoke.backup.backingUp.checkInternet:invocation[0]';
     checkStorageAvailability: 'done.invoke.backup.backingUp.checkStorageAvailability:invocation[0]';
     getLastBackupDetailsFromCloud: 'done.invoke.backup.fetchLastBackupDetails.checkCloud:invocation[0]';
     uploadBackupFile: 'done.invoke.backup.backingUp.uploadBackupFile:invocation[0]';
@@ -60,24 +70,28 @@ export interface Typegen0 {
     cleanupFiles:
       | 'STORE_ERROR'
       | 'STORE_RESPONSE'
+      | 'done.invoke.backup.backingUp.checkInternet:invocation[0]'
       | 'done.invoke.backup.backingUp.checkStorageAvailability:invocation[0]'
+      | 'error.platform.backup.backingUp.checkInternet:invocation[0]'
       | 'error.platform.backup.backingUp.checkStorageAvailability:invocation[0]'
       | 'error.platform.backup.backingUp.uploadBackupFile:invocation[0]'
       | 'error.platform.backup.backingUp.zipBackupFile:invocation[0]';
     extractLastBackupDetails: 'done.invoke.backup.backingUp.uploadBackupFile:invocation[0]';
     fetchAllDataFromDB: 'done.invoke.backup.backingUp.checkStorageAvailability:invocation[0]';
-    loadVcs: 'DATA_BACKUP';
+    loadVcs: 'done.invoke.backup.backingUp.checkInternet:invocation[0]';
     sendBackupAndRestoreSetupCancelEvent: 'DISMISS';
     sendBackupAndRestoreSetupErrorEvent: 'error.platform.backup.fetchLastBackupDetails.checkCloud:invocation[0]';
     sendBackupAndRestoreSetupSuccessEvent: 'done.invoke.backup.fetchLastBackupDetails.checkCloud:invocation[0]';
     sendDataBackupFailureEvent:
       | 'STORE_ERROR'
       | 'STORE_RESPONSE'
+      | 'done.invoke.backup.backingUp.checkInternet:invocation[0]'
       | 'done.invoke.backup.backingUp.checkStorageAvailability:invocation[0]'
+      | 'error.platform.backup.backingUp.checkInternet:invocation[0]'
       | 'error.platform.backup.backingUp.checkStorageAvailability:invocation[0]'
       | 'error.platform.backup.backingUp.uploadBackupFile:invocation[0]'
       | 'error.platform.backup.backingUp.zipBackupFile:invocation[0]';
-    sendDataBackupStartEvent: 'DATA_BACKUP';
+    sendDataBackupStartEvent: 'done.invoke.backup.backingUp.checkInternet:invocation[0]';
     sendDataBackupSuccessEvent: 'STORE_RESPONSE';
     setBackUpNotPossible:
       | 'STORE_RESPONSE'
@@ -85,6 +99,9 @@ export interface Typegen0 {
     setBackupErrorReason:
       | 'STORE_ERROR'
       | 'error.platform.backup.backingUp.uploadBackupFile:invocation[0]';
+    setBackupErrorReasonAsNoInternet:
+      | 'done.invoke.backup.backingUp.checkInternet:invocation[0]'
+      | 'error.platform.backup.backingUp.checkInternet:invocation[0]';
     setDataFromStorage: 'STORE_RESPONSE';
     setErrorReasonAsStorageLimitReached: 'done.invoke.backup.backingUp.checkStorageAvailability:invocation[0]';
     setFileName: 'FILE_NAME';
@@ -102,7 +119,9 @@ export interface Typegen0 {
       | 'DISMISS_SHOW_BACKUP_IN_PROGRESS'
       | 'STORE_ERROR'
       | 'STORE_RESPONSE'
+      | 'done.invoke.backup.backingUp.checkInternet:invocation[0]'
       | 'done.invoke.backup.backingUp.checkStorageAvailability:invocation[0]'
+      | 'error.platform.backup.backingUp.checkInternet:invocation[0]'
       | 'error.platform.backup.backingUp.checkStorageAvailability:invocation[0]'
       | 'error.platform.backup.backingUp.uploadBackupFile:invocation[0]'
       | 'error.platform.backup.backingUp.zipBackupFile:invocation[0]';
@@ -112,15 +131,19 @@ export interface Typegen0 {
     checkIfAutoBackup:
       | 'STORE_ERROR'
       | 'STORE_RESPONSE'
+      | 'done.invoke.backup.backingUp.checkInternet:invocation[0]'
       | 'done.invoke.backup.backingUp.checkStorageAvailability:invocation[0]'
+      | 'error.platform.backup.backingUp.checkInternet:invocation[0]'
       | 'error.platform.backup.backingUp.checkStorageAvailability:invocation[0]'
       | 'error.platform.backup.backingUp.uploadBackupFile:invocation[0]'
       | 'error.platform.backup.backingUp.zipBackupFile:invocation[0]';
+    isInternetConnected: 'done.invoke.backup.backingUp.checkInternet:invocation[0]';
     isMinimumStorageRequiredForBackupAvailable: 'done.invoke.backup.backingUp.checkStorageAvailability:invocation[0]';
     isNetworkError: 'error.platform.backup.fetchLastBackupDetails.checkCloud:invocation[0]';
     isVCFound: 'STORE_RESPONSE';
   };
   eventsCausingServices: {
+    checkInternet: 'DATA_BACKUP';
     checkStorageAvailability: 'STORE_RESPONSE';
     getLastBackupDetailsFromCloud: 'LAST_BACKUP_DETAILS' | 'TRY_AGAIN';
     uploadBackupFile: 'done.invoke.backup.backingUp.zipBackupFile:invocation[0]';
@@ -130,6 +153,7 @@ export interface Typegen0 {
   matchesStates:
     | 'backingUp'
     | 'backingUp.checkDataAvailabilityForBackup'
+    | 'backingUp.checkInternet'
     | 'backingUp.checkStorageAvailability'
     | 'backingUp.failure'
     | 'backingUp.fetchDataFromDB'
@@ -147,6 +171,7 @@ export interface Typegen0 {
     | {
         backingUp?:
           | 'checkDataAvailabilityForBackup'
+          | 'checkInternet'
           | 'checkStorageAvailability'
           | 'failure'
           | 'fetchDataFromDB'

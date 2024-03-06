@@ -30,6 +30,7 @@ import {
 } from '../../shared/telemetry/TelemetryUtils';
 import {BackupDetails} from '../../types/backup-and-restore/backup';
 import {StoreEvents} from '../store';
+import NetInfo, {NetInfoState} from '@react-native-community/netinfo';
 
 const model = createModel(
   {
@@ -132,7 +133,7 @@ export const backupMachine = model.createMachine(
         on: {
           DATA_BACKUP: {
             actions: ['setIsAutoBackup', 'setShowBackupInProgress'],
-            target: '.checkDataAvailabilityForBackup',
+            target: '.checkInternet',
           },
           DISMISS: {
             target: '.idle',
@@ -143,6 +144,37 @@ export const backupMachine = model.createMachine(
         },
         states: {
           idle: {},
+          checkInternet: {
+            invoke: {
+              src: 'checkInternet',
+              onDone: [
+                {
+                  cond: 'isInternetConnected',
+                  target: 'checkDataAvailabilityForBackup',
+                },
+                {
+                  cond: 'checkIfAutoBackup',
+                  actions: 'setBackupErrorReasonAsNoInternet',
+                  target: 'silentFailure',
+                },
+                {
+                  actions: 'setBackupErrorReasonAsNoInternet',
+                  target: 'failure',
+                },
+              ],
+              onError: [
+                {
+                  cond: 'checkIfAutoBackup',
+                  actions: 'setBackupErrorReasonAsNoInternet',
+                  target: 'silentFailure',
+                },
+                {
+                  actions: 'setBackupErrorReasonAsNoInternet',
+                  target: 'failure',
+                },
+              ],
+            },
+          },
           checkDataAvailabilityForBackup: {
             entry: ['sendDataBackupStartEvent', 'loadVcs'],
             on: {
@@ -383,6 +415,10 @@ export const backupMachine = model.createMachine(
         },
       }),
 
+      setBackupErrorReasonAsNoInternet: model.assign({
+        errorReason: () => 'networkError',
+      }),
+
       setBackupErrorReason: model.assign({
         errorReason: (_context, event) => {
           const reasons = {
@@ -457,6 +493,8 @@ export const backupMachine = model.createMachine(
     },
 
     services: {
+      checkInternet: async () => await NetInfo.fetch(),
+
       getLastBackupDetailsFromCloud: () => async () =>
         await Cloud.lastBackupDetails(),
 
@@ -491,6 +529,8 @@ export const backupMachine = model.createMachine(
     },
 
     guards: {
+      isInternetConnected: (_, event) =>
+        !!(event.data as NetInfoState).isConnected,
       isMinimumStorageRequiredForBackupAvailable: (_context, event) => {
         return Boolean(!event.data);
       },
