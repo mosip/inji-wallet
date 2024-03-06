@@ -73,7 +73,6 @@ export const backupRestoreMachine = model.createMachine(
         initial: 'checkInternet',
         entry: 'setShowRestoreInProgress',
         states: {
-          idle: {},
           checkInternet: {
             invoke: {
               src: 'checkInternet',

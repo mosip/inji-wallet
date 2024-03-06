@@ -16,7 +16,7 @@ import {useBackupRestoreScreen} from '../Settings/BackupRestoreController';
 import {Icon} from 'react-native-elements';
 import testIDProps, {getDriveName} from '../../shared/commonUtil';
 import {HelpScreen} from '../../components/HelpScreen';
-import {isAndroid, isIOS} from '../../shared/constants';
+import {isAndroid} from '../../shared/constants';
 
 const BackupAndRestoreScreen: React.FC<BackupAndRestoreProps> = props => {
   const backupController = useBackupScreen();
@@ -36,7 +36,7 @@ const BackupAndRestoreScreen: React.FC<BackupAndRestoreProps> = props => {
       !backupController.isLoadingBackupDetails &&
       props.shouldTriggerAutoBackup
     ) {
-      backupController.DATA_BACKUP(true);
+      backupController.DATA_BACKUP(props.shouldTriggerAutoBackup);
     }
   }, [
     props.isSigningIn,

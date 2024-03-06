@@ -50,9 +50,7 @@ export function useBackupAndRestoreSetup() {
   const tryAgain = () => {
     if (isNetworkErrorDuringAccountSetup)
       return service.send(BackupAndRestoreSetupEvents.TRY_AGAIN());
-    else {
-      return backupService?.send(BackupEvents.TRY_AGAIN());
-    }
+    return backupService?.send(BackupEvents.TRY_AGAIN());
   };
 
   return {

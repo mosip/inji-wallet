@@ -8,7 +8,6 @@ import {
   NETWORK_REQUEST_FAILED,
   TECHNICAL_ERROR,
   UPLOAD_MAX_RETRY,
-  isIOS,
 } from '../../shared/constants';
 import {
   cleanupLocalBackups,
