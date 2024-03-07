@@ -93,16 +93,6 @@ export const setBackgroundColour = (wellknown: any) => {
   }
 };
 
-export const setTextColor = (wellknown: any) => {
-  if (wellknown && wellknown?.credentials_supported[0]?.display) {
-    return {
-      color: wellknown.credentials_supported[0]?.display[0]?.text_color
-        ? wellknown.credentials_supported[0].display[0].text_color
-        : Theme.Colors.textValue,
-    };
-  }
-};
-
 function getFullAddress(credential: CredentialSubject) {
   if (!credential) {
     return '';

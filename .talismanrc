@@ -76,7 +76,7 @@ fileignoreconfig:
   - filename: assets/fingerprint_icon.svg
     checksum: b2d3a50ca1336f60123d96a8cc8ea663c3316ed2d8c31833bce7e393ca51695b
   - filename: machines/store.ts
-    checksum: 7d0b9c3ed111cd299145a963dc8751f54802cdd7afd4b4e645412ad639594889
+    checksum: aa2026ff278e489814ac308b49b08db4a14b08388c380230eb1e39c7adc01293
   - filename: assets/Flip_Camera_Icon.svg
     checksum: 736b5a7ddb86bd4376229ce198dbf8a663e7ac89fc3311bd4f19afd4a2b36ffd
   - filename: assets/Finger_Print_Icon.svg
@@ -97,12 +97,10 @@ fileignoreconfig:
     checksum: 054665c377b4a8e246ae1bfb419ab86d0cb1c120ae92cdc27ceed9cf1f39679b
   - filename: screens/Settings/BackupViaPassword.tsx
     checksum: 5fb2f98fb8a4efeb6b691b8a29e62eba64a99e9b2129bc0af1d11bc56bdfb374
-  - filename: shared/constants.ts
-    checksum: ae922a7acafab9c42746bd54e194c44532af81122837594c397713cef6922ca0
   - filename: shared/commonUtil.ts
     checksum: d2a355356bcaf8f7ef3b53ba93710cec15fefd0fdf31efd779eebd2bfab61c19
   - filename: shared/api.ts
-    checksum: 96a87e2128c30d16526cb1cb91b7da58f266d8c32d830adff11ca4d04e8c459f
+    checksum: 1c5d43058e8733a403e02d0b3fa5f56e11519efa4564e48c92b4491f4bd60508
   - filename: machines/backupWithEncryption.ts
     checksum: 038c12d30b2312fcbd9230a1c6ddb494d2e561fe0d09741335fa80ab67e2c550
   - filename: machines/backupWithEncryption.typegen.ts
@@ -135,8 +133,6 @@ fileignoreconfig:
     checksum: 698b2fed274f17a6daa76b0558bb0a733825fa224144f42aecb4affb8e3897a8
   - filename: ios/fastlane/Fastfile
     checksum: a4e3772dc67a07ecbcfc58be0d6d4f7fa799cec7ac25bd269ac29459c8669ca4
-  - filename: shared/storage.ts
-    checksum: c83024929b59f76cce188dbe09eb3af1803d3a08f867feb7478137ddabc3bfdc
   - filename: injitest/src/test/java/iosTestCases/CredentialRegistryTest.java
     checksum: b0808e0c511412cde21fd169a9bbeaf3b77cb48f25418e12d341cc3ce1df5898
   - filename: components/BackupAndRestoreAllScreenBanner.tsx
@@ -181,6 +177,13 @@ fileignoreconfig:
   - filename: screens/Home/MyVcsTab.tsx
     checksum: 8133e2fefddfd0207eb7207b660d317f9a6acafbab6a65762d29ea86e33787cb
   - filename: components/BackupAndRestoreBannerNotification.tsx
+    checksum: e465a9947727687d784d0cb9d8db1e28f765b0659bf4a3aa6d75643aa7b14102
+  - filename: components/ActivityLogEvent.ts
+    checksum: e7c8617cd9c510d5b6a053bc5c6164f02c48e85125aa925e0c4cf55cd1f29d22
+  - filename: shared/storage.ts
+    checksum: 357f6b6b41cb80e2df749ba6ea020404ff70d3991f56e19f6ce5e1be47ad6115
+  - filename: shared/constants.ts
+    checksum: 69aa79ed25fee2162de7c8e065930e18168551377420a520092bdf6a86c7712d
     checksum: 7bb544ecd2f691f8cef916d0463106ec67645253107dd407236ce3a81f4e9ba7
   - filename: machines/backupAndRestore/backup.ts
     checksum: ac9431cd98585d5e0cbcb2404296a473872503edb683692e0d07e61a7aff2dad
