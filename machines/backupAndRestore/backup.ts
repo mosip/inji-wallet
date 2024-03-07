@@ -3,12 +3,10 @@ import {createModel} from 'xstate/lib/model';
 import {AppServices} from '../../shared/GlobalContext';
 import {
   IOS_SIGNIN_FAILED,
-  LAST_BACKUP_DETAILS,
   MY_VCS_STORE_KEY,
   NETWORK_REQUEST_FAILED,
   TECHNICAL_ERROR,
   UPLOAD_MAX_RETRY,
-  isIOS,
 } from '../../shared/constants';
 import {
   cleanupLocalBackups,
@@ -277,9 +275,17 @@ export const backupMachine = model.createMachine(
           uploadBackupFile: {
             invoke: {
               src: 'uploadBackupFile',
-              onDone: {
-                actions: ['extractLastBackupDetails', 'storeLastBackupDetails'],
-              },
+              onDone: [
+                {
+                  cond: 'checkIfAutoBackup',
+                  actions: 'extractLastBackupDetails',
+                  target: 'silentSuccess',
+                },
+                {
+                  actions: 'extractLastBackupDetails',
+                  target: 'success',
+                },
+              ],
               onError: [
                 {
                   cond: 'checkIfAutoBackup',
@@ -289,17 +295,6 @@ export const backupMachine = model.createMachine(
                 {
                   actions: ['setBackupErrorReason'],
                   target: 'failure',
-                },
-              ],
-            },
-            on: {
-              STORE_RESPONSE: [
-                {
-                  cond: 'checkIfAutoBackup',
-                  target: 'silentSuccess',
-                },
-                {
-                  target: 'success',
                 },
               ],
             },
@@ -398,16 +393,6 @@ export const backupMachine = model.createMachine(
           lastBackupDetails: null,
         };
       }),
-
-      storeLastBackupDetails: send(
-        context => {
-          const {lastBackupDetails} = context;
-          return StoreEvents.SET(LAST_BACKUP_DETAILS, lastBackupDetails);
-        },
-        {
-          to: context => context.serviceRefs.store,
-        },
-      ),
 
       fetchAllDataFromDB: send(StoreEvents.EXPORT(), {
         to: context => {

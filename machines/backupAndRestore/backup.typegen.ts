@@ -70,6 +70,7 @@ export interface Typegen0 {
       | 'STORE_RESPONSE'
       | 'done.invoke.backup.backingUp.checkInternet:invocation[0]'
       | 'done.invoke.backup.backingUp.checkStorageAvailability:invocation[0]'
+      | 'done.invoke.backup.backingUp.uploadBackupFile:invocation[0]'
       | 'error.platform.backup.backingUp.checkInternet:invocation[0]'
       | 'error.platform.backup.backingUp.checkStorageAvailability:invocation[0]'
       | 'error.platform.backup.backingUp.uploadBackupFile:invocation[0]'
@@ -90,7 +91,7 @@ export interface Typegen0 {
       | 'error.platform.backup.backingUp.uploadBackupFile:invocation[0]'
       | 'error.platform.backup.backingUp.zipBackupFile:invocation[0]';
     sendDataBackupStartEvent: 'done.invoke.backup.backingUp.checkInternet:invocation[0]';
-    sendDataBackupSuccessEvent: 'STORE_RESPONSE';
+    sendDataBackupSuccessEvent: 'done.invoke.backup.backingUp.uploadBackupFile:invocation[0]';
     setBackUpNotPossible:
       | 'STORE_RESPONSE'
       | 'error.platform.backup.backingUp.checkStorageAvailability:invocation[0]';
@@ -107,7 +108,6 @@ export interface Typegen0 {
     setIsLoadingBackupDetails: 'LAST_BACKUP_DETAILS' | 'TRY_AGAIN';
     setLastBackupDetails: 'done.invoke.backup.fetchLastBackupDetails.checkCloud:invocation[0]';
     setShowBackupInProgress: 'DATA_BACKUP';
-    storeLastBackupDetails: 'done.invoke.backup.backingUp.uploadBackupFile:invocation[0]';
     unsetIsLoadingBackupDetails:
       | 'DISMISS'
       | 'done.invoke.backup.fetchLastBackupDetails.checkCloud:invocation[0]'
@@ -119,6 +119,7 @@ export interface Typegen0 {
       | 'STORE_RESPONSE'
       | 'done.invoke.backup.backingUp.checkInternet:invocation[0]'
       | 'done.invoke.backup.backingUp.checkStorageAvailability:invocation[0]'
+      | 'done.invoke.backup.backingUp.uploadBackupFile:invocation[0]'
       | 'error.platform.backup.backingUp.checkInternet:invocation[0]'
       | 'error.platform.backup.backingUp.checkStorageAvailability:invocation[0]'
       | 'error.platform.backup.backingUp.uploadBackupFile:invocation[0]'
@@ -131,6 +132,7 @@ export interface Typegen0 {
       | 'STORE_RESPONSE'
       | 'done.invoke.backup.backingUp.checkInternet:invocation[0]'
       | 'done.invoke.backup.backingUp.checkStorageAvailability:invocation[0]'
+      | 'done.invoke.backup.backingUp.uploadBackupFile:invocation[0]'
       | 'error.platform.backup.backingUp.checkInternet:invocation[0]'
       | 'error.platform.backup.backingUp.checkStorageAvailability:invocation[0]'
       | 'error.platform.backup.backingUp.uploadBackupFile:invocation[0]'
