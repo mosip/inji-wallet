@@ -3,13 +3,13 @@
 export interface Typegen0 {
   '@@xstate/typegen': true;
   internalEvents: {
-    'done.invoke.backupAndRestoreSetup.checkInternet:invocation[0]': {
-      type: 'done.invoke.backupAndRestoreSetup.checkInternet:invocation[0]';
+    'done.invoke.backupAndRestoreSetup.checkSignIn:invocation[0]': {
+      type: 'done.invoke.backupAndRestoreSetup.checkSignIn:invocation[0]';
       data: unknown;
       __tip: 'See the XState TS docs to learn how to strongly type this.';
     };
-    'done.invoke.backupAndRestoreSetup.checkSignIn:invocation[0]': {
-      type: 'done.invoke.backupAndRestoreSetup.checkSignIn:invocation[0]';
+    'done.invoke.backupAndRestoreSetup.init.checkInternet:invocation[0]': {
+      type: 'done.invoke.backupAndRestoreSetup.init.checkInternet:invocation[0]';
       data: unknown;
       __tip: 'See the XState TS docs to learn how to strongly type this.';
     };
@@ -62,7 +62,6 @@ export interface Typegen0 {
   eventsCausingDelays: {};
   eventsCausingGuards: {
     isConfirmationAlreadyShown: 'STORE_RESPONSE';
-    isIOS: 'done.invoke.signIn:invocation[0]';
     isInternetConnected: 'done.invoke.backupAndRestoreSetup.init.checkInternet:invocation[0]';
     isNetworkError:
       | 'done.invoke.backupAndRestoreSetup.checkSignIn:invocation[0]'

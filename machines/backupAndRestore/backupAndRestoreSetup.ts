@@ -217,11 +217,6 @@ export const backupAndRestoreSetupMachine = model.createMachine(
               target: '.noInternet',
             },
             {
-              cond: 'isIOS',
-              target: 'backupAndRestore',
-            },
-            // What if sign in fails due to n/w error?
-            {
               actions: 'sendBackupAndRestoreSetupErrorEvent',
               target: '.error',
             },
