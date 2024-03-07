@@ -32,7 +32,7 @@ export interface Typegen0 {
   missingImplementations: {
     actions: never;
     delays: never;
-    guards: never;
+    guards: 'isIOS';
     services: never;
   };
   eventsCausingActions: {
@@ -62,6 +62,7 @@ export interface Typegen0 {
   eventsCausingDelays: {};
   eventsCausingGuards: {
     isConfirmationAlreadyShown: 'STORE_RESPONSE';
+    isIOS: 'done.invoke.signIn:invocation[0]';
     isInternetConnected: 'done.invoke.backupAndRestoreSetup.init.checkInternet:invocation[0]';
     isNetworkError:
       | 'done.invoke.backupAndRestoreSetup.checkSignIn:invocation[0]'

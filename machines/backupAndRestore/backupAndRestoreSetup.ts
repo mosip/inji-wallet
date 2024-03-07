@@ -211,6 +211,12 @@ export const backupAndRestoreSetupMachine = model.createMachine(
               actions: ['setProfileInfo', 'setShouldTriggerAutoBackup'],
               target: 'backupAndRestore',
             },
+            // isIOS not required as we dont reach sign in state itself
+            {
+              cond: 'isIOS',
+              target: 'backupAndRestore',
+            },
+            // What if sign in fails due to n/w error?
             {
               cond: 'isNetworkError',
               actions: 'sendBackupAndRestoreSetupErrorEvent',

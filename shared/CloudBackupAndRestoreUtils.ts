@@ -14,7 +14,6 @@ import {
   NETWORK_REQUEST_FAILED,
 } from './constants';
 import fileStorage, {backupDirectoryPath, zipFilePath} from './fileStorage';
-import {request} from './request';
 import {API} from './api';
 
 class Cloud {
