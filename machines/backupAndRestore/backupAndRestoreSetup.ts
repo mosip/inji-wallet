@@ -158,12 +158,6 @@ export const backupAndRestoreSetupMachine = model.createMachine(
               cond: 'isNetworkError',
               target: '.noInternet',
             },
-            //todo: Check flow
-            {
-              cond: 'isNotSignedInIOSAndViaConfirmationFlow',
-              actions: ['unsetIsLoading', 'setErrorReasonAsAccountRequired'],
-              target: '.error',
-            },
             {
               cond: 'isNotSignedInIOS',
               actions: ['unsetIsLoading', 'setErrorReasonAsAccountRequired'],
@@ -356,13 +350,6 @@ export const backupAndRestoreSetupMachine = model.createMachine(
       isNotSignedInIOS: (_context, event) => {
         return !(event.data as isSignedInResult).isSignedIn && isIOS();
       },
-      isNotSignedInIOSAndViaConfirmationFlow: (context, event) => {
-        return (
-          context.showConfirmation &&
-          !(event.data as isSignedInResult).isSignedIn &&
-          isIOS()
-        );
-      },
       isConfirmationAlreadyShown: (_context, event) => {
         return (
           (event.response as Object)['encryptedData'][
@@ -372,7 +359,6 @@ export const backupAndRestoreSetupMachine = model.createMachine(
       },
       isSignInSuccessful: (_context, event) =>
         (event.data as SignInResult).status === Cloud.status.SUCCESS,
-      isIOS: (_context, event) => (event.data as IsIOSResult).isIOS || false,
     },
   },
 );

@@ -68,7 +68,6 @@ export interface Typegen0 {
       | 'done.invoke.backupAndRestoreSetup.checkSignIn:invocation[0]'
       | 'done.invoke.signIn:invocation[0]';
     isNotSignedInIOS: 'done.invoke.backupAndRestoreSetup.checkSignIn:invocation[0]';
-    isNotSignedInIOSAndViaConfirmationFlow: 'done.invoke.backupAndRestoreSetup.checkSignIn:invocation[0]';
     isSignInSuccessful: 'done.invoke.signIn:invocation[0]';
     isSignedIn: 'done.invoke.backupAndRestoreSetup.checkSignIn:invocation[0]';
   };
