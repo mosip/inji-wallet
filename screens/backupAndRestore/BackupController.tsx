@@ -14,7 +14,7 @@ import {GlobalContext} from '../../shared/GlobalContext';
 
 export function useBackupScreen() {
   const {appService} = useContext(GlobalContext);
-  const backupService = appService.children.get('backup');
+  const backupService = appService.children.get('backup')!!;
 
   return {
     lastBackupDetails: useSelector(backupService, lastBackupDetails),
@@ -35,13 +35,13 @@ export function useBackupScreen() {
     },
 
     LAST_BACKUP_DETAILS: () => {
-      backupService?.send(BackupEvents.LAST_BACKUP_DETAILS());
+      backupService.send(BackupEvents.LAST_BACKUP_DETAILS());
     },
     DISMISS: () => {
       backupService.send(BackupEvents.DISMISS());
     },
     DISMISS_SHOW_BACKUP_IN_PROGRESS: () => {
-      backupService?.send(BackupEvents.DISMISS_SHOW_BACKUP_IN_PROGRESS());
+      backupService.send(BackupEvents.DISMISS_SHOW_BACKUP_IN_PROGRESS());
     },
   };
 }

@@ -171,9 +171,9 @@ fileignoreconfig:
   - filename: shared/VCMetadata.ts
     checksum: e93f988415bf91064e2cf5fbc09ff6c7226798baa5da721fa0715d5d0d6afddf
   - filename: machines/backupAndRestore/backupRestore.ts
-    checksum: fceb8294d5ef8e2d6151b761bf69ab62d48a5542fc9d191f94ff5a63eeaa6244
+    checksum: d1062b30fab8c3dcd5cdcb47c65b5f52234ebccd31c9a44e757855ca76d6f92f
   - filename: machines/backupAndRestore/backupRestore.typegen.ts
-    checksum: 78d2429afe4dffdf2a49adfdbff415cf8c764d0f2b270762d821693e51f38d27
+    checksum: 64a8e42712083e0cbf0d6ce6b1139c62b59a14af17e4132d14f903d4d3bbe6b2
   - filename: ios/Podfile.lock
     checksum: 369fecac06b3c087b272e7920aa5ffe6734f261ae0af0c376a92ebf5c11415d4
   - filename: screens/Home/MyVcsTab.tsx
@@ -188,13 +188,13 @@ fileignoreconfig:
     checksum: 69aa79ed25fee2162de7c8e065930e18168551377420a520092bdf6a86c7712d
     checksum: 7bb544ecd2f691f8cef916d0463106ec67645253107dd407236ce3a81f4e9ba7
   - filename: machines/backupAndRestore/backup.ts
-    checksum: 4d74dd149da4ef37c2ec4048b3384eddd4ac90c3c9a76aafc8c3f858eab0b1b8
+    checksum: 9810de8d626df3a2cf8266e4be0c1b50aa3bce3c6e3b082afaa3e3ecab66af17
   - filename: machines/backupAndRestore/backup.typegen.ts
-    checksum: e721b0ed5425edea84a3d026f3f60f22d41d44a6aeaf6bfd5dc0a8f72a17800c
+    checksum: 65e671fb5a64611f00a8ca4ea0811fa0be145e8c7cc8b4fcfabbd8d882c29a96
   - filename: machines/backupAndRestore/backupAndRestoreSetup.ts
-    checksum: c2d50279ca5676822d59ddd3823bc9a2c80317fc69a7e03271a726a3a19ace4b
+    checksum: 5fc57c926cf1b97bf3226ef30149d59ab3c5b437aad3315306b505dc6207d37d
   - filename: machines/backupAndRestore/backupAndRestoreSetup.typegen.ts
-    checksum: d87f5158605089d9bf99b255969f8825bc6ef9305f75c26c05d197bd533aac8d
+    checksum: 9a5c3dab3e681297081ce0da5ec3189b2d47616d0f74937160548d63919961ab
   - filename: injitest/src/main/resources/AidData.json
     checksum: 1bd07afe80d6d9cb1b8bea6e5cb77314964c803ff88c0756e40c47bc7564d20f
   - filename: injitest/src/main/java/inji/api/KernelAuthentication.java

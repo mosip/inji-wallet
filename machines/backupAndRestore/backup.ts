@@ -81,25 +81,27 @@ export const backupMachine = model.createMachine(
         states: {
           idle: {},
           checkCloud: {
+            entry: 'sendFetchLastBackupDetailsStartEvent',
             invoke: {
               src: 'getLastBackupDetailsFromCloud',
               onDone: {
                 actions: [
                   'unsetIsLoadingBackupDetails',
                   'setLastBackupDetails',
-                  'sendBackupAndRestoreSetupSuccessEvent',
+                  'sendFetchLastBackupDetailsSuccessEvent',
                 ],
                 target: '#backup.fetchLastBackupDetails.idle',
               },
               onError: [
                 {
                   cond: 'isNetworkError',
+                  actions: 'sendFetchLastBackupDetailsErrorEvent',
                   target: 'noInternet',
                 },
                 {
                   actions: [
                     'unsetIsLoadingBackupDetails',
-                    'sendBackupAndRestoreSetupErrorEvent',
+                    'sendFetchLastBackupDetailsFailureEvent',
                   ],
                   target: '#backup.fetchLastBackupDetails.idle',
                 },
@@ -118,7 +120,7 @@ export const backupMachine = model.createMachine(
               DISMISS: {
                 actions: [
                   'unsetIsLoadingBackupDetails',
-                  'sendBackupAndRestoreSetupCancelEvent',
+                  'sendFetchLastBackupDetailsCancelEvent',
                 ],
                 target: '#backup.fetchLastBackupDetails.idle',
               },
@@ -130,7 +132,11 @@ export const backupMachine = model.createMachine(
         initial: 'idle',
         on: {
           DATA_BACKUP: {
-            actions: ['setIsAutoBackup', 'setShowBackupInProgress'],
+            actions: [
+              'setIsAutoBackup',
+              'setShowBackupInProgress',
+              'sendDataBackupStartEvent',
+            ],
             target: '.checkInternet',
           },
           DISMISS: {
@@ -174,7 +180,7 @@ export const backupMachine = model.createMachine(
             },
           },
           checkDataAvailabilityForBackup: {
-            entry: ['sendDataBackupStartEvent', 'loadVcs'],
+            entry: ['loadVcs'],
             on: {
               STORE_RESPONSE: [
                 {
@@ -415,29 +421,51 @@ export const backupMachine = model.createMachine(
         },
       }),
 
-      sendBackupAndRestoreSetupSuccessEvent: () => {
-        sendEndEvent(
-          getEndEventData(
-            TelemetryConstants.FlowType.dataBackupAndRestoreSetup,
-            TelemetryConstants.EndEventStatus.success,
+      sendFetchLastBackupDetailsStartEvent: () => {
+        sendStartEvent(
+          getStartEventData(TelemetryConstants.FlowType.dataBackup),
+        );
+        sendImpressionEvent(
+          getImpressionEventData(
+            TelemetryConstants.FlowType.fetchLastBackupDetails,
+            TelemetryConstants.Screens.dataBackupScreen,
           ),
         );
       },
 
-      sendBackupAndRestoreSetupErrorEvent: (_context, event) => {
+      sendFetchLastBackupDetailsErrorEvent: (_context, event) => {
         sendErrorEvent(
           getErrorEventData(
-            TelemetryConstants.FlowType.dataBackupAndRestoreSetup,
-            TelemetryConstants.ErrorId.userCancel,
+            TelemetryConstants.FlowType.fetchLastBackupDetails,
+            TelemetryConstants.ErrorId.failure,
             JSON.stringify(event.data),
           ),
         );
       },
 
-      sendBackupAndRestoreSetupCancelEvent: (_context, event) => {
+      sendFetchLastBackupDetailsSuccessEvent: () => {
         sendEndEvent(
           getEndEventData(
-            TelemetryConstants.FlowType.dataBackupAndRestoreSetup,
+            TelemetryConstants.FlowType.fetchLastBackupDetails,
+            TelemetryConstants.EndEventStatus.success,
+          ),
+        );
+      },
+
+      sendFetchLastBackupDetailsFailureEvent: (_context, event) => {
+        sendEndEvent(
+          getEndEventData(
+            TelemetryConstants.FlowType.fetchLastBackupDetails,
+            TelemetryConstants.EndEventStatus.failure,
+            {comment: JSON.stringify(event.data)},
+          ),
+        );
+      },
+
+      sendFetchLastBackupDetailsCancelEvent: () => {
+        sendEndEvent(
+          getEndEventData(
+            TelemetryConstants.FlowType.fetchLastBackupDetails,
             TelemetryConstants.EndEventStatus.cancel,
           ),
         );

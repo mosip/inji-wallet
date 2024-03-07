@@ -78,9 +78,6 @@ export interface Typegen0 {
     extractLastBackupDetails: 'done.invoke.backup.backingUp.uploadBackupFile:invocation[0]';
     fetchAllDataFromDB: 'done.invoke.backup.backingUp.checkStorageAvailability:invocation[0]';
     loadVcs: 'done.invoke.backup.backingUp.checkInternet:invocation[0]';
-    sendBackupAndRestoreSetupCancelEvent: 'DISMISS';
-    sendBackupAndRestoreSetupErrorEvent: 'error.platform.backup.fetchLastBackupDetails.checkCloud:invocation[0]';
-    sendBackupAndRestoreSetupSuccessEvent: 'done.invoke.backup.fetchLastBackupDetails.checkCloud:invocation[0]';
     sendDataBackupFailureEvent:
       | 'STORE_ERROR'
       | 'STORE_RESPONSE'
@@ -90,8 +87,13 @@ export interface Typegen0 {
       | 'error.platform.backup.backingUp.checkStorageAvailability:invocation[0]'
       | 'error.platform.backup.backingUp.uploadBackupFile:invocation[0]'
       | 'error.platform.backup.backingUp.zipBackupFile:invocation[0]';
-    sendDataBackupStartEvent: 'done.invoke.backup.backingUp.checkInternet:invocation[0]';
+    sendDataBackupStartEvent: 'DATA_BACKUP';
     sendDataBackupSuccessEvent: 'done.invoke.backup.backingUp.uploadBackupFile:invocation[0]';
+    sendFetchLastBackupDetailsCancelEvent: 'DISMISS';
+    sendFetchLastBackupDetailsErrorEvent: 'error.platform.backup.fetchLastBackupDetails.checkCloud:invocation[0]';
+    sendFetchLastBackupDetailsFailureEvent: 'error.platform.backup.fetchLastBackupDetails.checkCloud:invocation[0]';
+    sendFetchLastBackupDetailsStartEvent: 'LAST_BACKUP_DETAILS' | 'TRY_AGAIN';
+    sendFetchLastBackupDetailsSuccessEvent: 'done.invoke.backup.fetchLastBackupDetails.checkCloud:invocation[0]';
     setBackUpNotPossible:
       | 'STORE_RESPONSE'
       | 'error.platform.backup.backingUp.checkStorageAvailability:invocation[0]';

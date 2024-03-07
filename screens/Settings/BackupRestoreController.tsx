@@ -12,7 +12,7 @@ import {GlobalContext} from '../../shared/GlobalContext';
 
 export function useBackupRestoreScreen() {
   const {appService} = useContext(GlobalContext);
-  const backupRestoreService = appService.children.get('backupRestore');
+  const backupRestoreService = appService.children.get('backupRestore')!!;
 
   return {
     isBackUpRestoring: useSelector(
@@ -29,7 +29,7 @@ export function useBackupRestoreScreen() {
       selectIsBackUpRestoreFailure,
     ),
     DOWNLOAD_UNSYNCED_BACKUP_FILES: () =>
-      backupRestoreService?.send(
+      backupRestoreService.send(
         BackupRestoreEvents.DOWNLOAD_UNSYNCED_BACKUP_FILES(),
       ),
     showRestoreInProgress: useSelector(
@@ -43,7 +43,7 @@ export function useBackupRestoreScreen() {
       backupRestoreService.send(BackupRestoreEvents.DISMISS());
     },
     DISMISS_SHOW_RESTORE_IN_PROGRESS: () => {
-      backupRestoreService?.send(
+      backupRestoreService.send(
         BackupRestoreEvents.DISMISS_SHOW_RESTORE_IN_PROGRESS(),
       );
     },

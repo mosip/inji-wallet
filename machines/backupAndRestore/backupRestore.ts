@@ -17,6 +17,8 @@ import {
   getImpressionEventData,
   sendEndEvent,
   getEndEventData,
+  sendErrorEvent,
+  getErrorEventData,
 } from '../../shared/telemetry/TelemetryUtils';
 import {VcEvents} from '../VCItemMachine/vc';
 import {NETWORK_REQUEST_FAILED, TECHNICAL_ERROR} from '../../shared/constants';
@@ -60,6 +62,7 @@ export const backupRestoreMachine = model.createMachine(
     on: {
       BACKUP_RESTORE: [
         {
+          actions: ['sendDataRestoreStartEvent'],
           target: 'restoreBackup',
         },
       ],
@@ -82,20 +85,25 @@ export const backupRestoreMachine = model.createMachine(
                   target: 'checkStorageAvailability',
                 },
                 {
-                  actions: 'setRestoreErrorReasonAsNetworkError',
+                  actions: [
+                    'setRestoreErrorReasonAsNetworkError',
+                    'sendDataRestoreErrorEvent',
+                  ],
                   target: 'failure',
                 },
               ],
               onError: [
                 {
-                  actions: 'setRestoreErrorReasonAsNetworkError',
+                  actions: [
+                    'setRestoreErrorReasonAsNetworkError',
+                    'sendDataRestoreErrorEvent',
+                  ],
                   target: 'failure',
                 },
               ],
             },
           },
           checkStorageAvailability: {
-            entry: ['sendDataRestoreStartEvent'],
             invoke: {
               src: 'checkStorageAvailability',
               onDone: [
@@ -253,6 +261,16 @@ export const backupRestoreMachine = model.createMachine(
           getEndEventData(
             TelemetryConstants.FlowType.dataRestore,
             TelemetryConstants.EndEventStatus.success,
+          ),
+        );
+      },
+
+      sendDataRestoreErrorEvent: (_context, event) => {
+        sendErrorEvent(
+          getErrorEventData(
+            TelemetryConstants.FlowType.dataRestore,
+            TelemetryConstants.ErrorId.failure,
+            JSON.stringify(event.data),
           ),
         );
       },

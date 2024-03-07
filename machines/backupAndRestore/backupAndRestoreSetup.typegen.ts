@@ -32,14 +32,21 @@ export interface Typegen0 {
   missingImplementations: {
     actions: never;
     delays: never;
-    guards: 'isIOS';
+    guards: never;
     services: never;
   };
   eventsCausingActions: {
     fetchShowConfirmationInfo: 'done.invoke.backupAndRestoreSetup.init.checkInternet:invocation[0]';
     openSettings: 'OPEN_SETTINGS';
     sendBackupAndRestoreSetupCancelEvent: 'DISMISS' | 'GO_BACK';
-    sendBackupAndRestoreSetupErrorEvent: 'done.invoke.signIn:invocation[0]';
+    sendBackupAndRestoreSetupErrorEvent:
+      | 'done.invoke.backupAndRestoreSetup.checkSignIn:invocation[0]'
+      | 'done.invoke.backupAndRestoreSetup.init.checkInternet:invocation[0]'
+      | 'done.invoke.signIn:invocation[0]'
+      | 'error.platform.backupAndRestoreSetup.init.checkInternet:invocation[0]';
+    sendBackupAndRestoreSetupSuccessEvent:
+      | 'done.invoke.backupAndRestoreSetup.checkSignIn:invocation[0]'
+      | 'done.invoke.signIn:invocation[0]';
     sendDataBackupAndRestoreSetupStartEvent: 'HANDLE_BACKUP_AND_RESTORE';
     setAccountSelectionConfirmationShown:
       | 'done.invoke.backupAndRestoreSetup.checkSignIn:invocation[0]'
@@ -50,7 +57,6 @@ export interface Typegen0 {
       | 'done.invoke.backupAndRestoreSetup.checkSignIn:invocation[0]'
       | 'done.invoke.signIn:invocation[0]';
     setShouldTriggerAutoBackup: 'done.invoke.signIn:invocation[0]';
-    setShowConfirmation: 'STORE_RESPONSE';
     unsetIsLoading:
       | 'DISMISS'
       | 'STORE_RESPONSE'
@@ -62,12 +68,11 @@ export interface Typegen0 {
   eventsCausingDelays: {};
   eventsCausingGuards: {
     isConfirmationAlreadyShown: 'STORE_RESPONSE';
-    isIOS: 'done.invoke.signIn:invocation[0]';
+    isIOSAndNotSignedIn: 'done.invoke.backupAndRestoreSetup.checkSignIn:invocation[0]';
     isInternetConnected: 'done.invoke.backupAndRestoreSetup.init.checkInternet:invocation[0]';
     isNetworkError:
       | 'done.invoke.backupAndRestoreSetup.checkSignIn:invocation[0]'
       | 'done.invoke.signIn:invocation[0]';
-    isNotSignedInIOS: 'done.invoke.backupAndRestoreSetup.checkSignIn:invocation[0]';
     isSignInSuccessful: 'done.invoke.signIn:invocation[0]';
     isSignedIn: 'done.invoke.backupAndRestoreSetup.checkSignIn:invocation[0]';
   };

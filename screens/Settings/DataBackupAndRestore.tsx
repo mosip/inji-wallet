@@ -109,13 +109,13 @@ export const DataBackupAndRestore: React.FC = ({} = () => {
         />
       )}
 
-      {controller.isNetworkOff && (
+      {controller.isNetworkError && (
         <Error
           testID="networkOffError"
           primaryButtonTestID="tryAgain"
           primaryButtonText="tryAgain"
           primaryButtonEvent={controller.TRY_AGAIN}
-          isVisible={controller.isNetworkOff}
+          isVisible={controller.isNetworkError}
           isModal={true}
           showClose
           title={t('errors.noInternetConnection.title')}

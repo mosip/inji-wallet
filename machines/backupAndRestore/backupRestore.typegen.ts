@@ -62,6 +62,9 @@ export interface Typegen0 {
     downloadUnsyncedBackupFiles: 'DOWNLOAD_UNSYNCED_BACKUP_FILES';
     loadDataToMemory: 'DATA_FROM_FILE';
     refreshVCs: 'STORE_RESPONSE';
+    sendDataRestoreErrorEvent:
+      | 'done.invoke.backupRestore.restoreBackup.checkInternet:invocation[0]'
+      | 'error.platform.backupRestore.restoreBackup.checkInternet:invocation[0]';
     sendDataRestoreFailureEvent:
       | 'STORE_ERROR'
       | 'done.invoke.backupRestore.restoreBackup.checkInternet:invocation[0]'
@@ -69,7 +72,7 @@ export interface Typegen0 {
       | 'error.platform.backupRestore.restoreBackup.checkInternet:invocation[0]'
       | 'error.platform.backupRestore.restoreBackup.downloadBackupFileFromCloud:invocation[0]'
       | 'error.platform.backupRestore.restoreBackup.unzipBackupFile:invocation[0]';
-    sendDataRestoreStartEvent: 'done.invoke.backupRestore.restoreBackup.checkInternet:invocation[0]';
+    sendDataRestoreStartEvent: 'BACKUP_RESTORE';
     sendDataRestoreSuccessEvent: 'STORE_RESPONSE';
     setBackupFileName: 'done.invoke.backupRestore.restoreBackup.downloadBackupFileFromCloud:invocation[0]';
     setDataFromBackupFile: 'DATA_FROM_FILE';

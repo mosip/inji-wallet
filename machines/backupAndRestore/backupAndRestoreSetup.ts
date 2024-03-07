@@ -8,7 +8,6 @@ import {
   isIOS,
 } from '../../shared/constants';
 import Cloud, {
-  IsIOSResult,
   ProfileInfo,
   SignInResult,
   isSignedInResult,
@@ -34,7 +33,6 @@ const model = createModel(
     profileInfo: undefined as ProfileInfo | undefined,
     errorMessage: '' as string,
     serviceRefs: {} as AppServices,
-    showConfirmation: false as boolean,
     shouldTriggerAutoBackup: false as boolean,
   },
   {
@@ -88,12 +86,18 @@ export const backupAndRestoreSetupMachine = model.createMachine(
                   target: '#backupAndRestoreSetup.fetchShowConfirmationInfo',
                 },
                 {
-                  actions: 'unsetIsLoading',
+                  actions: [
+                    'unsetIsLoading',
+                    'sendBackupAndRestoreSetupErrorEvent',
+                  ],
                   target: 'noInternet',
                 },
               ],
               onError: {
-                actions: 'unsetIsLoading',
+                actions: [
+                  'unsetIsLoading',
+                  'sendBackupAndRestoreSetupErrorEvent',
+                ],
                 target: 'noInternet',
               },
             },
@@ -105,7 +109,10 @@ export const backupAndRestoreSetupMachine = model.createMachine(
                 target: 'checkInternet',
               },
               DISMISS: {
-                actions: ['unsetIsLoading'],
+                actions: [
+                  'unsetIsLoading',
+                  'sendBackupAndRestoreSetupCancelEvent',
+                ],
                 target: '#backupAndRestoreSetup.init',
               },
             },
@@ -121,11 +128,10 @@ export const backupAndRestoreSetupMachine = model.createMachine(
           STORE_RESPONSE: [
             {
               cond: 'isConfirmationAlreadyShown',
-              actions: 'setShowConfirmation',
               target: 'checkSignIn',
             },
             {
-              actions: ['unsetIsLoading', 'setShowConfirmation'],
+              actions: ['unsetIsLoading'],
               target: 'selectCloudAccount',
             },
           ],
@@ -156,11 +162,16 @@ export const backupAndRestoreSetupMachine = model.createMachine(
             },
             {
               cond: 'isNetworkError',
+              actions: 'sendBackupAndRestoreSetupErrorEvent',
               target: '.noInternet',
             },
             {
-              cond: 'isNotSignedInIOS',
-              actions: ['unsetIsLoading', 'setErrorReasonAsAccountRequired'],
+              cond: 'isIOSAndNotSignedIn',
+              actions: [
+                'unsetIsLoading',
+                'setErrorReasonAsAccountRequired',
+                'sendBackupAndRestoreSetupErrorEvent',
+              ],
               target: '.error',
             },
             {
@@ -211,12 +222,6 @@ export const backupAndRestoreSetupMachine = model.createMachine(
               actions: ['setProfileInfo', 'setShouldTriggerAutoBackup'],
               target: 'backupAndRestore',
             },
-            // isIOS not required as we dont reach sign in state itself
-            {
-              cond: 'isIOS',
-              target: 'backupAndRestore',
-            },
-            // What if sign in fails due to n/w error?
             {
               cond: 'isNetworkError',
               actions: 'sendBackupAndRestoreSetupErrorEvent',
@@ -254,13 +259,12 @@ export const backupAndRestoreSetupMachine = model.createMachine(
         },
       },
       backupAndRestore: {
-        entry: ['setAccountSelectionConfirmationShown'],
+        entry: [
+          'setAccountSelectionConfirmationShown',
+          'sendBackupAndRestoreSetupSuccessEvent',
+        ],
         on: {
           GO_BACK: 'init',
-          DISMISS: {
-            actions: 'sendBackupAndRestoreSetupCancelEvent',
-            target: 'init',
-          },
         },
       },
     },
@@ -276,6 +280,7 @@ export const backupAndRestoreSetupMachine = model.createMachine(
       setProfileInfo: model.assign({
         profileInfo: (_context, event) => event.data?.profileInfo,
       }),
+
       sendDataBackupAndRestoreSetupStartEvent: () => {
         sendStartEvent(
           getStartEventData(
@@ -303,15 +308,21 @@ export const backupAndRestoreSetupMachine = model.createMachine(
         sendErrorEvent(
           getErrorEventData(
             TelemetryConstants.FlowType.dataBackupAndRestoreSetup,
-            TelemetryConstants.ErrorId.userCancel,
+            TelemetryConstants.ErrorId.failure,
             JSON.stringify(event.data),
           ),
         );
       },
-      setShowConfirmation: model.assign({
-        showConfirmation: (_context, event) =>
-          !event.response.isAccountSelectionConfirmationShown || false,
-      }),
+
+      sendBackupAndRestoreSetupSuccessEvent: () => {
+        sendEndEvent(
+          getEndEventData(
+            TelemetryConstants.FlowType.dataBackupAndRestoreSetup,
+            TelemetryConstants.EndEventStatus.success,
+          ),
+        );
+      },
+
       setErrorReasonAsAccountRequired: model.assign({
         errorMessage: 'noAccountAvailable',
       }),
@@ -348,7 +359,7 @@ export const backupAndRestoreSetupMachine = model.createMachine(
       isNetworkError: (_, event) => event.data.error === NETWORK_REQUEST_FAILED,
       isSignedIn: (_context, event) =>
         (event.data as isSignedInResult).isSignedIn,
-      isNotSignedInIOS: (_context, event) => {
+      isIOSAndNotSignedIn: (_context, event) => {
         return !(event.data as isSignedInResult).isSignedIn && isIOS();
       },
       isConfirmationAlreadyShown: (_context, event) => {
@@ -378,7 +389,7 @@ export function selectProfileInfo(state: State) {
   return state.context.profileInfo;
 }
 
-export function selectIsNetworkOff(state: State) {
+export function selectIsNetworkError(state: State) {
   return (
     state.matches('init.noInternet') ||
     state.matches('checkSignIn.noInternet') ||
