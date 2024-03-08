@@ -1,5 +1,6 @@
 import {WalletBindingResponse} from '../../../shared/cryptoutil/cryptoUtil';
 import {logoType} from '../../../machines/issuersMachine';
+import {VCMetadata} from '../../../shared/VCMetadata';
 
 export interface VC {
   id?: string;
@@ -72,6 +73,7 @@ export interface VerifiableCredential {
 
 export interface CredentialWrapper {
   verifiableCredential: VerifiableCredential;
+  vcMetadata: VCMetadata;
   identifier: string;
   generatedOn: Date;
   issuerLogo: string;

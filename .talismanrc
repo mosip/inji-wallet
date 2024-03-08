@@ -211,6 +211,6 @@ fileignoreconfig:
   - filename: components/kebabMenuUtils.ts
     checksum: c30a4b0d5b7d9ab50de5cea1f876809221311d96ac6d5b965329b1d080b9d4df
   - filename: screens/Home/MyVcsTab.tsx
-    checksum: 2fa45089d6c106a051213abaa9f493ca9e8b107aa1a93b78701aa6b48bc12422
+    checksum: ee2ed933c881181a96be432d1016bfa96cdf1723a3aa992cb93f40db527ce1bd
     version: ""
 
