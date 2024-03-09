@@ -123,6 +123,15 @@ export const updateCredentialInformation = (context, credential) => {
   //   'https://esignet.collab.mosip.net/.well-known/openid-credential-issuer';
   credentialWrapper.verifiableCredential.issuerLogo =
     getDisplayObjectForCurrentLanguage(context.selectedIssuer.display)?.logo;
+  credentialWrapper.vcMetadata = context.vcMetadata || {};
+  return credentialWrapper;
+};
+
+export const updateVCmetadataOfCredentialWrapper = (
+  context,
+  credentialWrapper: CredentialWrapper,
+) => {
+  credentialWrapper.vcMetadata = context.vcMetadata;
   return credentialWrapper;
 };
 
