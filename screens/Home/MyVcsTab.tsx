@@ -185,10 +185,9 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = props => {
     controller.downloadFailedVcs.length >= 1 &&
     !controller.AddVcModalService &&
     !controller.GetVcModalService;
-  const numberOfCardsAvailable =
-    filteredSearchData.length > 1
-      ? filteredSearchData.length
-      : controller.vcMetadatas.length;
+  const numberOfCardsAvailable = !showPinVc
+    ? filteredSearchData.length
+    : controller.vcMetadatas.length;
 
   const cardsAvailableText =
     numberOfCardsAvailable > 1
