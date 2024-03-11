@@ -595,6 +595,15 @@ export const IssuersMachine = model.createMachine(
         console.info(
           `VC download via ${context.selectedIssuerId} is succesfull`,
         );
+        if (credential.credential.credentialSubject.name) {
+          credential.credential.credentialSubject.fullName =
+            credential.credential.credentialSubject.name;
+        }
+        if (credential.credential.id) {
+          credential.credential.id = credential.credential.id
+            .split(':')
+            .reverse()[0];
+        }
         credential = updateCredentialInformation(context, credential);
         return credential;
       },
@@ -606,9 +615,11 @@ export const IssuersMachine = model.createMachine(
               TelemetryConstants.Screens.webViewPage,
           ),
         );
-        return await authorize(
-          constructAuthorizationConfiguration(context.selectedIssuer),
+        const constructAuthConf = constructAuthorizationConfiguration(
+          context.selectedIssuer,
         );
+
+        return await authorize(constructAuthConf);
       },
       generateKeyPair: async () => {
         if (!isHardwareKeystoreExists) {

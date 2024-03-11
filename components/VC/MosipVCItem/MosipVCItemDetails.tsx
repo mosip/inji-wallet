@@ -297,6 +297,7 @@ export const MosipVCItemDetails: React.FC<
               <Text
                 testID="emailIdValue"
                 style={
+                  verifiableCredential?.credentialSubject.email &&
                   verifiableCredential?.credentialSubject.email.length > 25
                     ? {flex: 1}
                     : {flex: 0}
@@ -305,7 +306,8 @@ export const MosipVCItemDetails: React.FC<
                 size="smaller"
                 color={Theme.Colors.Details}>
                 {getLocalizedField(
-                  verifiableCredential?.credentialSubject.email,
+                  verifiableCredential?.credentialSubject.email ||
+                    'example@example.com',
                 )}
               </Text>
             </Row>
@@ -443,12 +445,16 @@ export const MosipVCItemDetails: React.FC<
 
   function formattedDateOfBirth() {
     const dateOfBirth = verifiableCredential?.credentialSubject.dateOfBirth;
-    const formatString =
-      dateOfBirth.split('/').length === 1 ? 'yyyy' : 'yyyy/MM/dd';
+    if (dateOfBirth) {
+      const formatString =
+        dateOfBirth.split('/').length === 1 ? 'yyyy' : 'yyyy/MM/dd';
+      const parsedDate = parse(dateOfBirth, formatString, new Date());
 
-    const parsedDate = parse(dateOfBirth, formatString, new Date());
-
-    return format(parsedDate, 'MM/dd/yyyy');
+      return format(parsedDate, 'MM/dd/yyyy');
+    } else {
+      // If dateOfBirth is null, return a hardcoded date
+      return '01/01/2000'; // You can replace this with your desired hardcoded date
+    }
   }
 };
 

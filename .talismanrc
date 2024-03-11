@@ -101,3 +101,7 @@ fileignoreconfig:
     checksum: e9b85cf0405d777faee9345269f6f9eb861ed205728dca63cf27a5db79c876a7
   - filename: assets/Issuer_search_clearing_button.svg
     checksum: f4e8a054fc4168e08bc9e9fe3e644cebabacdfc31ef0cbe36dd281766f47df5e
+  - filename: .env
+    checksum: c09f4a095c60c4796a0bdf95c3674b0c1979ef60b1c661693c6621dd0e0afffc
+  - filename: components/ui/svg.tsx
+    checksum: 0f517c1530ef861d419b296f0789c69adabb4019c3a77f14260f106ffbdfc196

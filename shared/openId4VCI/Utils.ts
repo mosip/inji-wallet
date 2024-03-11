@@ -37,7 +37,7 @@ export const getBody = async context => {
   const payload = {
     iss: context.selectedIssuer.client_id,
     nonce: decodedToken.c_nonce,
-    aud: context.selectedIssuer.credential_audience,
+    aud: 'http://localhost:8088',
     iat: Math.floor(new Date().getTime() / 1000),
     exp: Math.floor(new Date().getTime() / 1000) + 18000,
   };
@@ -52,7 +52,7 @@ export const getBody = async context => {
     format: 'ldp_vc',
     credential_definition: {
       '@context': ['https://www.w3.org/2018/credentials/v1'],
-      type: ['VerifiableCredential', 'MOSIPVerifiableCredential'],
+      type: ['VerifiableCredential', 'SampleVerifiableCredential'],
     },
     proof: {
       proof_type: 'jwt',
@@ -103,6 +103,7 @@ export const constructAuthorizationConfiguration = (
     scopes: selectedIssuer.scopes_supported,
     additionalHeaders: selectedIssuer.additional_headers,
     wellKnownEndpoint: selectedIssuer['.well-known'],
+    dangerouslyAllowInsecureHttpRequests: true,
     redirectUrl: selectedIssuer.redirect_uri,
     serviceConfiguration: {
       authorizationEndpoint: selectedIssuer.authorization_endpoint,

@@ -3,8 +3,8 @@ import {MIMOTO_HOST, ESIGNET_HOST, DEBUG_MODE} from 'react-native-dotenv';
 import {Argon2iConfig} from './commonUtil';
 import {VcIdType} from '../types/VC/ExistingMosipVC/vc';
 
-export let MIMOTO_BASE_URL = MIMOTO_HOST;
-export let ESIGNET_BASE_URL = ESIGNET_HOST;
+export let MIMOTO_BASE_URL = 'https://id.credissuer.com/mimoto';
+export let ESIGNET_BASE_URL = 'https://id.credissuer.com/esignet';
 export let DEBUG_MODE_ENABLED = DEBUG_MODE === 'true';
 
 export const changeCrendetialRegistry = host => (MIMOTO_BASE_URL = host);

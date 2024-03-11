@@ -142,12 +142,36 @@ export const MosipVCItemContent: React.FC<
           ? Theme.Styles.vertloadingContainer
           : Theme.Styles.backgroundImageContainer
       }>
+      <Column style={{marginBottom: 5}}>
+        <Text
+          testID="nationalCard"
+          weight="semibold"
+          color={Theme.Colors.Details}
+          style={
+            !verifiableCredential
+              ? Theme.Styles.loadingTitle
+              : {
+                  ...Theme.Styles.detailsValue,
+                  ...{alignSelf: 'center', fontSize: 18, fontWeight: 'bold'},
+                }
+          }>
+          {
+            verifiableCredential?.type[1] &&
+              verifiableCredential.type[1]
+                .replace(/([a-z])([A-Z])/g, '$1 $2') // Add space before capital letters
+                .replace(/\bID\b/g, 'ID') // Preserve "ID" as a single word
+                .split(/\s+/) // Split into an array of words
+                .join(' ') // Join words with space
+          }
+        </Text>
+      </Column>
+
       <Column>
         <Row align="space-between">
           <Row margin="5 0 0 5">
             {SvgImage.VcItemContainerProfileImage(props, verifiableCredential)}
 
-            <Column margin="0 0 10 20" height={96} align="space-between">
+            <Column margin="0 0 10 55" height={96} align="space-between">
               <Column style={{maxWidth: 230}}>
                 <Text
                   testID="fullNameTitle"
@@ -174,7 +198,7 @@ export const MosipVCItemContent: React.FC<
 
               <Column>
                 <Text
-                  testID="idType"
+                  testID="credentialId"
                   color={
                     !verifiableCredential
                       ? Theme.Colors.LoadingDetailsLabel
@@ -183,10 +207,10 @@ export const MosipVCItemContent: React.FC<
                   weight="regular"
                   size="smaller"
                   align="left">
-                  {t('idType')}
+                  {t('credentialId')}
                 </Text>
                 <Text
-                  testID="nationalCard"
+                  testID="credentialId"
                   weight="semibold"
                   color={Theme.Colors.Details}
                   style={
@@ -194,13 +218,13 @@ export const MosipVCItemContent: React.FC<
                       ? Theme.Styles.loadingTitle
                       : Theme.Styles.detailsValue
                   }>
-                  {t('nationalCard')}
+                  {verifiableCredential?.credentialSubject?.credential_id}
                 </Text>
               </Column>
             </Column>
           </Row>
 
-          <Column>{verifiableCredential ? selectableOrCheck : null}</Column>
+          {/* <Column>{verifiableCredential ? selectableOrCheck : null}</Column> */}
         </Row>
 
         <Row
