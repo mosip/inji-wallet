@@ -50,25 +50,27 @@ export const removeWhiteSpace = (str: string) => {
 };
 
 export function logState(state: AnyState) {
-  const data = JSON.stringify(
-    state.event,
-    (key, value) => {
-      if (key === 'type') return undefined;
-      if (typeof value === 'string' && value.length >= 100) {
-        return value.slice(0, 100) + '...';
+  if (__DEV__) {
+    const data = JSON.stringify(
+      state.event,
+      (key, value) => {
+        if (key === 'type') return undefined;
+        if (typeof value === 'string' && value.length >= 100) {
+          return value.slice(0, 100) + '...';
+        }
+        return value;
+      },
+      2,
+    );
+    console.log(
+      `[${getDeviceNameSync()}] ${state.machine?.id}: ${
+        state.event.type
+      } -> ${state.toStrings().pop()}\n${
+        data.length > 300 ? data.slice(0, 300) + '...' : data
       }
-      return value;
-    },
-    2,
-  );
-  console.log(
-    `[${getDeviceNameSync()}] ${state.machine.id}: ${
-      state.event.type
-    } -> ${state.toStrings().pop()}\n${
-      data.length > 300 ? data.slice(0, 300) + '...' : data
-    }
-    `,
-  );
+      `,
+    );
+  }
 }
 
 export const getMaskedText = (id: string): string => {

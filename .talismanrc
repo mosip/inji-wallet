@@ -39,8 +39,6 @@ fileignoreconfig:
     checksum: 2ba2721d9722cd9420ae26762316230f7dab1a0be45820cbda4d0ecae0edf957
   - filename: screens/Issuers/IssuersScreen.tsx
     checksum: 9c53e3770dbefe26e0de67ee4b7d5cc9c52d9823cbb136a1a5104dcb0a101071
-  - filename: shared/commonUtil.ts
-    checksum: 4a53bb615f2ea0fbf687bd7027c4c246e819dd88bc273941ed611e763d9d2356
   - filename: screens/Home/MyVcs/GetIdInputModal.tsx
     checksum: 5c736ed79a372d0ffa7c02eb33d0dc06edbbb08d120978ff287f5f06cd6c7746
   - filename: shared/openId4VCI/Utils.ts
@@ -96,8 +94,6 @@ fileignoreconfig:
   - filename: screens/Settings/BackupController.tsx
     checksum: 054665c377b4a8e246ae1bfb419ab86d0cb1c120ae92cdc27ceed9cf1f39679b
   - filename: screens/Settings/BackupViaPassword.tsx
-    checksum: 5fb2f98fb8a4efeb6b691b8a29e62eba64a99e9b2129bc0af1d11bc56bdfb374
-  - filename: shared/commonUtil.ts
     checksum: d2a355356bcaf8f7ef3b53ba93710cec15fefd0fdf31efd779eebd2bfab61c19
   - filename: shared/api.ts
     checksum: 1c5d43058e8733a403e02d0b3fa5f56e11519efa4564e48c92b4491f4bd60508
@@ -214,7 +210,7 @@ fileignoreconfig:
   - filename: screens/Home/MyVcs/OtpVerificationModal.tsx
     checksum: c42e2387dfc2cc637033ae849d8b2c2fc30cabaeb77e074661cf466a8476e947  
   - filename: shared/commonUtil.ts
-    checksum: f98c2c6a9add155155d11b231b2c5db18eb0b4570990990c8300e621609e2c78 
+    checksum: e456f6aa366558e6a9b0761c752ff0a8072f25faf2d1e3ff20987a3b03d99742
   - filename: screens/Home/MyVcs/GetIdInputModal.tsx
     checksum: 1a15e4327b358ffee8bddfe412a38873ad6d4414d2b1d6bffd3c1782f5ec852f  
   version: ""
