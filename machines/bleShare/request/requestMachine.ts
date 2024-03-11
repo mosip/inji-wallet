@@ -87,6 +87,7 @@ const model = createModel(
       FACE_VALID: () => ({}),
       FACE_INVALID: () => ({}),
       RETRY_VERIFICATION: () => ({}),
+      GOTO_HOME: () => ({}),
     },
   },
 );
@@ -127,6 +128,9 @@ export const requestMachine =
         },
         RESET: {
           target: '.checkNearbyDevicesPermission',
+        },
+        GOTO_HOME: {
+          target: '#request.reviewing.navigatingToHome',
         },
       },
       states: {
@@ -473,11 +477,10 @@ export const requestMachine =
               },
               states: {
                 idle: {},
-                viewingVc: {},
               },
               on: {
-                DISMISS: {
-                  target: '.viewingVc',
+                RESET: {
+                  target: '#request.waitingForConnection',
                 },
                 GO_TO_RECEIVED_VC_TAB: {
                   target: 'navigatingToHistory',

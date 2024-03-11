@@ -47,7 +47,7 @@ public class ReceiveCardPage extends BasePage {
     }
 
     public boolean isQrCodeEnabled() {
-        return this.isElementEnabled(qrCode);
+        return this.isElementEnabled(qrCode,30);
     }
 
 }

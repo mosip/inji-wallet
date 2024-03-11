@@ -6,7 +6,7 @@ public class AndroidUtil {
 
     public static void invokeAppFromBackGroundAndroid() {
         try {
-        	ProcessBuilder processBuilder=null;
+        	ProcessBuilder processBuilder;
             String osName = System.getProperty("os.name");
             if (osName.contains("Windows")) {
             	processBuilder = new ProcessBuilder("cmd.exe", "/c", "adb shell am start -n io.mosip.residentapp/io.mosip.residentapp.MainActivity");
@@ -17,13 +17,13 @@ public class AndroidUtil {
             processBuilder.redirectErrorStream(true);
             processBuilder.start();
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
     }
     
     public static void enableAirplaneMode() {
         try {
-        	ProcessBuilder processBuilder=null;
+        	ProcessBuilder processBuilder;
             String osName = System.getProperty("os.name");
             if (osName.contains("Windows")) {
             	processBuilder = new ProcessBuilder("cmd.exe", "/c", "adb shell cmd connectivity airplane-mode enable");
@@ -34,13 +34,13 @@ public class AndroidUtil {
             processBuilder.redirectErrorStream(true);
             processBuilder.start();
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
     }
     
     public static void disableBluetooth() {
         try {
-        	ProcessBuilder processBuilder=null;
+        	ProcessBuilder processBuilder;
             String osName = System.getProperty("os.name");
             if (osName.contains("Windows")) {
             	processBuilder = new ProcessBuilder("cmd.exe", "/c", "adb shell cmd bluetooth_manager disable");
@@ -51,13 +51,13 @@ public class AndroidUtil {
             processBuilder.redirectErrorStream(true);
             processBuilder.start();
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
     }
     
-    public static void ForceStopeApp() {
+    public static void forceStopApp() {
         try {
-        	ProcessBuilder processBuilder=null;
+        	ProcessBuilder processBuilder;
             String osName = System.getProperty("os.name");
             if (osName.contains("Windows")) {
             	processBuilder = new ProcessBuilder("cmd.exe", "/c", "adb shell am force-stop io.mosip.residentapp");
@@ -68,13 +68,13 @@ public class AndroidUtil {
             processBuilder.redirectErrorStream(true);
             processBuilder.start();
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
     }
     
     public static void disableAirplaneMode() {
         try {
-        	ProcessBuilder processBuilder=null;
+        	ProcessBuilder processBuilder;
             String osName = System.getProperty("os.name");
             if (osName.contains("Windows")) {
             	processBuilder = new ProcessBuilder("cmd.exe", "/c", "adb shell cmd connectivity airplane-mode disable");
@@ -85,7 +85,7 @@ public class AndroidUtil {
             processBuilder.redirectErrorStream(true);
             processBuilder.start();
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
     }
 }

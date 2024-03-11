@@ -35,13 +35,6 @@ import {IssuerProps} from '../openId4VCI/Issuer';
 import Backup from '../../assets/Backup.svg';
 import Restore from '../../assets/Restore.svg';
 import PermissionDenied from '../../assets/Permission_Denied.svg';
-import {
-  EsignetMosipVCItemContentProps,
-  ExistingMosipVCItemContentProps,
-} from '../VC/MosipVCItem/MosipVCItemContent';
-import {VCMetadata} from '../../shared/VCMetadata';
-import {VerifiableCredential} from '../../types/VC/ExistingMosipVC/vc';
-import {ProfileIcon} from '../ProfileIcon';
 import CloudUploadDoneIcon from '../../assets/Cloud_Upload_Done_Icon.svg';
 
 export class SvgImage {
@@ -201,25 +194,6 @@ export class SvgImage {
     );
   }
 
-  static VcItemContainerProfileImage(
-    props: ExistingMosipVCItemContentProps | EsignetMosipVCItemContentProps,
-    verifiableCredential: VerifiableCredential,
-  ) {
-    const imageUri = faceImageSource(props, verifiableCredential);
-    return verifiableCredential && imageUri ? (
-      <ImageBackground
-        imageStyle={Theme.Styles.faceImage}
-        source={{uri: imageUri}}
-        style={Theme.Styles.closeCardImage}>
-        {props?.isPinned && SvgImage.pinIcon()}
-      </ImageBackground>
-    ) : (
-      <>
-        <ProfileIcon isPinned={props?.isPinned} />
-      </>
-    );
-  }
-
   static FlipCameraIcon() {
     const {width, height} = Theme.Styles.cameraFlipIcon;
     return (
@@ -349,22 +323,7 @@ function getIssuerLogo(props: displayType) {
   return {uri: props.logo.url};
 }
 
-function faceImageSource(
-  props: faceImageSourceProps,
-  verifiableCredential: VerifiableCredential,
-) {
-  return props?.vcMetadata?.isFromOpenId4VCI()
-    ? verifiableCredential?.credentialSubject?.face
-    : props?.context?.credential?.biometrics?.face;
-}
-
 interface LogoProps {
   width: number;
   height: number;
-}
-
-interface faceImageSourceProps {
-  vcMetadata: VCMetadata;
-  verifiableCredential: VerifiableCredential;
-  context: any;
 }

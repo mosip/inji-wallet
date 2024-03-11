@@ -8,15 +8,15 @@ import org.openqa.selenium.WebElement;
 public class QuickAccessPage extends BasePage {
 
     @AndroidFindBy(accessibility = "introTitle-four")
-    @iOSXCUITFindBy(xpath = "(//XCUIElementTypeStaticText[@name=\"introTitle\"])[2]")
+    @iOSXCUITFindBy(accessibility = "introTitle-four")
     private WebElement quickAccessText;
 
     @AndroidFindBy(accessibility = "introText-four")
-    @iOSXCUITFindBy(xpath = "(//XCUIElementTypeStaticText[@name=\"introText\"])[2]")
+    @iOSXCUITFindBy(accessibility = "introText-four")
     private WebElement quickAccessDescription;
 
     @AndroidFindBy(accessibility = "next")
-    @iOSXCUITFindBy(xpath = "(//XCUIElementTypeOther[@name=\"Susunod\" or @name=\"next\" or @name=\"अगला\" or @name=\"ಮುಂದೆ\" or @name=\"அடுத்தது\"])[4]\n")
+    @iOSXCUITFindBy(accessibility = "next")
     private WebElement nextButton;
 
     public QuickAccessPage(AppiumDriver driver) {

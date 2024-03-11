@@ -4,11 +4,8 @@ import {StoreEvents} from '../store';
 import {VC} from '../../types/VC/ExistingMosipVC/vc';
 import {AppServices} from '../../shared/GlobalContext';
 import {log, respond} from 'xstate/lib/actions';
-import {ExistingMosipVCItemEvents} from './ExistingMosipVCItem/ExistingMosipVCItemMachine';
 import {MY_VCS_STORE_KEY, RECEIVED_VCS_STORE_KEY} from '../../shared/constants';
 import {parseMetadatas, VCMetadata} from '../../shared/VCMetadata';
-import {Protocols} from '../../shared/openId4VCI/Utils';
-import {EsignetMosipVCItemEvents} from './EsignetMosipVCItem/EsignetMosipVCItemMachine';
 import {ActivityLogEvents} from '../activityLog';
 import {ActivityLog} from '../../components/ActivityLogEvent';
 import Cloud, {isSignedInResult} from '../../shared/CloudBackupAndRestoreUtils';
@@ -216,12 +213,14 @@ export const vcMachine =
           },
         },
         tamperedVCs: {
+          initial: 'idle',
           on: {
             REMOVE_TAMPERED_VCS: {
               target: '.triggerAutoBackupForTamperedVcDeletion',
             },
           },
           states: {
+            idle: {},
             triggerAutoBackupForTamperedVcDeletion: {
               invoke: {
                 src: 'isUserSignedAlready',
@@ -275,10 +274,10 @@ export const vcMachine =
         getVcItemResponse: respond((context, event) => {
           const vc =
             context.vcs[VCMetadata.fromVC(event.vcMetadata)?.getVcKey()];
-          if (event.protocol === Protocols.OpenId4VCI) {
-            return EsignetMosipVCItemEvents.GET_VC_RESPONSE(vc);
-          }
-          return ExistingMosipVCItemEvents.GET_VC_RESPONSE(vc);
+          return {
+            type: 'GET_VC_RESPONSE',
+            vc: vc,
+          };
         }),
 
         loadMyVcs: send(StoreEvents.GET(MY_VCS_STORE_KEY), {

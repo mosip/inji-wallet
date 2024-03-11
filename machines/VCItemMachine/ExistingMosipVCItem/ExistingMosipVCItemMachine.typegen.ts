@@ -1,3 +1,4 @@
+// This file was automatically generated. Edits will be overwritten
 
 export interface Typegen0 {
   '@@xstate/typegen': true;
@@ -152,6 +153,7 @@ export interface Typegen0 {
       | ''
       | 'CANCEL'
       | 'DISMISS'
+      | 'GET_VC_RESPONSE'
       | 'REVOKE_VC'
       | 'SHOW_BINDING_STATUS'
       | 'STORE_RESPONSE'
@@ -164,6 +166,7 @@ export interface Typegen0 {
       | ''
       | 'CANCEL'
       | 'DISMISS'
+      | 'GET_VC_RESPONSE'
       | 'SHOW_BINDING_STATUS'
       | 'STORE_RESPONSE'
       | 'done.invoke.vc-item.verifyingCredential.triggerAutoBackupForVcDownload:invocation[0]';
@@ -209,7 +212,10 @@ export interface Typegen0 {
     sendVcUpdated: 'PIN_CARD';
     sendVerificationError: 'STORE_RESPONSE';
     sendWalletBindingSuccess: 'SHOW_BINDING_STATUS';
-    setCredential: 'GET_VC_RESPONSE' | 'STORE_RESPONSE';
+    setCredential:
+      | 'CREDENTIAL_DOWNLOADED'
+      | 'GET_VC_RESPONSE'
+      | 'STORE_RESPONSE';
     setDownloadInterval: 'done.invoke.vc-item.checkingServerData.loadDownloadLimitConfig:invocation[0]';
     setLock: 'done.invoke.vc-item.requestingLock:invocation[0]';
     setMaxDownloadCount: 'done.invoke.vc-item.checkingServerData.loadDownloadLimitConfig:invocation[0]';
@@ -221,10 +227,6 @@ export interface Typegen0 {
     setPrivateKey: 'done.invoke.vc-item.addKeyPair:invocation[0]';
     setPublicKey: 'done.invoke.vc-item.addKeyPair:invocation[0]';
     setRevoke: 'done.invoke.vc-item.requestingRevoke:invocation[0]';
-    setStoreVerifiableCredential:
-      | 'CREDENTIAL_DOWNLOADED'
-      | 'GET_VC_RESPONSE'
-      | 'STORE_RESPONSE';
     setTempWalletBindingResponse: 'done.invoke.vc-item.addingWalletBindingId:invocation[0]';
     setThumbprintForWalletBindingId:
       | 'done.invoke.vc-item.addingWalletBindingId:invocation[0]'
@@ -237,7 +239,6 @@ export interface Typegen0 {
       | 'error.platform.vc-item.requestingRevoke:invocation[0]';
     setVcKey: 'REMOVE';
     setVcMetadata: 'UPDATE_VC_METADATA';
-    setVerifiableCredential: 'done.invoke.vc-item.verifyingCredential:invocation[0]';
     setWalletBindingError:
       | 'error.platform.vc-item.acceptingBindingOtp.resendOTP:invocation[0]'
       | 'error.platform.vc-item.addKeyPair:invocation[0]'
@@ -291,7 +292,7 @@ export interface Typegen0 {
     requestOtp: 'LOCK_VC' | 'RESEND_OTP';
     requestRevoke: 'INPUT_OTP';
     updatePrivateKey: 'done.invoke.vc-item.addingWalletBindingId:invocation[0]';
-    verifyCredential: '' | 'VERIFY';
+    verifyCredential: 'CREDENTIAL_DOWNLOADED';
   };
   matchesStates:
     | 'acceptingBindingOtp'
@@ -313,7 +314,6 @@ export interface Typegen0 {
     | 'checkingServerData.verifyingDownloadLimitExpiry'
     | 'checkingStore'
     | 'checkingVc'
-    | 'checkingVerificationStatus'
     | 'handleVCVerificationFailure'
     | 'idle'
     | 'invalid'
