@@ -111,5 +111,6 @@ export function useRequestLayout() {
     isNavigatingToReceivedCards,
     DISMISS: () => requestService.send(RequestEvents.DISMISS()),
     RESET: () => requestService.send(RequestEvents.RESET()),
+    GOTO_HOME: () => requestService.send(RequestEvents.GOTO_HOME()),
   };
 }

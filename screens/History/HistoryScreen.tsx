@@ -5,11 +5,10 @@ import {useTranslation} from 'react-i18next';
 import {Centered, Column, Text} from '../../components/ui';
 import {useHistoryTab} from './HistoryScreenController';
 import {ActivityLogText} from '../../components/ActivityLogText';
-import {MainRouteProps} from '../../routes/main';
 import {Theme} from '../../components/ui/styleUtils';
 import {BannerNotificationContainer} from '../../components/BannerNotificationContainer';
 
-export const HistoryScreen: React.FC<MainRouteProps> = () => {
+export const HistoryScreen: React.FC = () => {
   const {t} = useTranslation('HistoryScreen');
   const controller = useHistoryTab();
 
