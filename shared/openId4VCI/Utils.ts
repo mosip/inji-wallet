@@ -188,7 +188,6 @@ export const getCredentialIssuersWellKnownConfig = async (
         response?.credentials_supported[0].credential_definition
           .credentialSubject,
       );
-      console.log('fields => ', fields);
     }
   }
   return {

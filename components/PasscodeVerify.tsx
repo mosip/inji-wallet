@@ -42,7 +42,7 @@ export const PasscodeVerify: React.FC<PasscodeVerifyProps> = props => {
           error,
         ),
       );
-      console.log('error:', error);
+      console.log('error while verifying passCode ', error);
     }
   }
 };

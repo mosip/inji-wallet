@@ -513,9 +513,7 @@ export const backupMachine = model.createMachine(
 
       checkStorageAvailability: () => async () => {
         try {
-          console.log('Checking storage availability...');
           const isAvailable = await isMinimumLimitForBackupReached();
-          console.log('Storage availability:', isAvailable);
           return isAvailable;
         } catch (error) {
           console.log('Error in checkStorageAvailability:', error);

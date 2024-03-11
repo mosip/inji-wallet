@@ -41,7 +41,7 @@ export async function requestLocationPermission(
       return onDisabled();
     }
   } catch (error) {
-    console.log(error);
+    console.log('Error while requesting location permission', error);
   }
 }
 

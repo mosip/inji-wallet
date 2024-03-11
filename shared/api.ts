@@ -280,7 +280,7 @@ export async function downloadModel() {
     if (resp != null) {
       for (let counter = 0; counter < maxRetry; counter++) {
         let config = faceMatchConfig(resp);
-        var result = await configure(config);
+        let result = await configure(config);
         console.log('model download result is = ' + result);
         if (result) {
           sendImpressionEvent(
@@ -311,7 +311,7 @@ export async function downloadModel() {
         error,
       ),
     );
-    console.log(error);
+    console.log('Error while downloading face model - ', error);
   }
 }
 

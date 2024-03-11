@@ -410,7 +410,6 @@ export const IssuersMachine = model.createMachine(
         },
       },
       done: {
-        entry: () => console.log('Reached done'),
         type: 'final',
       },
     },
