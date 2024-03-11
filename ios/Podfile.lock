@@ -512,7 +512,7 @@ PODS:
   - RNZipArchive/Core (6.1.0):
     - React-Core
     - SSZipArchive (~> 2.2)
-  - secure-keystore (0.1.6):
+  - secure-keystore (0.1.7):
     - React-Core
   - SSZipArchive (2.4.3)
   - TensorFlowLiteC (2.12.0):
@@ -928,7 +928,7 @@ SPEC CHECKSUMS:
   RNSecureRandom: 07efbdf2cd99efe13497433668e54acd7df49fef
   RNSVG: 07dbd870b0dcdecc99b3a202fa37c8ca163caec2
   RNZipArchive: ef9451b849c45a29509bf44e65b788829ab07801
-  secure-keystore: 78bf735f42b9d19418568dadbb92712c19a5812e
+  secure-keystore: 3bc262bc91c5fbcfea92a8d0fd59c1b8b8ababee
   SSZipArchive: fe6a26b2a54d5a0890f2567b5cc6de5caa600aef
   TensorFlowLiteC: 20785a69299185a379ba9852b6625f00afd7984a
   TensorFlowLiteObjC: 9a46a29a76661c513172cfffd3bf712b11ef25c3

@@ -4,8 +4,7 @@ import {BIOMETRIC_CANCELLED, DEBUG_MODE_ENABLED, isIOS} from '../constants';
 import SecureKeystore from '@mosip/secure-keystore';
 import {BiometricCancellationError} from '../error/BiometricCancellationError';
 import {EncryptedOutput} from './encryptedOutput';
-import {getErrorEventData, sendErrorEvent} from '../telemetry/TelemetryUtils';
-import {TelemetryConstants} from '../telemetry/TelemetryConstants';
+import {Buffer} from 'buffer';
 
 // 5min
 export const AUTH_TIMEOUT = 5 * 60;
@@ -114,7 +113,8 @@ export async function encryptJson(
     if (!isHardwareKeystoreExists) {
       return encryptWithForge(data, encryptionKey).toString();
     }
-    return await SecureKeystore.encryptData(ENCRYPTION_ID, data);
+    const base64EncodedString = Buffer.from(data).toString('base64');
+    return await SecureKeystore.encryptData(ENCRYPTION_ID, base64EncodedString);
   } catch (error) {
     console.error('error while encrypting:', error);
     if (error.toString().includes(BIOMETRIC_CANCELLED)) {
@@ -144,13 +144,6 @@ export async function decryptJson(
 
     return await SecureKeystore.decryptData(ENCRYPTION_ID, encryptedData);
   } catch (e) {
-    sendErrorEvent(
-      getErrorEventData(
-        TelemetryConstants.FlowType.decryption,
-        e.message,
-        e.stack,
-      ),
-    );
     console.error('error decryptJson:', e);
 
     if (e.toString().includes(BIOMETRIC_CANCELLED)) {

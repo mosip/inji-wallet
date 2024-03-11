@@ -1,5 +1,6 @@
 package inji.pages;
 
+import inji.utils.IosUtil;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.pagefactory.AppiumFieldDecorator;
 import org.openqa.selenium.By;
@@ -100,9 +101,9 @@ public class BasePage {
         wait.until(ExpectedConditions.invisibilityOf(element));
     }
 
-    protected boolean isElementEnabled(WebElement element) {
+    protected boolean isElementEnabled(WebElement element,int waitTime) {
         try {
-            waitForElementToBeVisible(element);
+            waitForElementToBeVisible(element,waitTime);
             element.isEnabled();
             return true;
         } catch (Exception e) {
@@ -142,5 +143,31 @@ public class BasePage {
     	return text;
     	
     }
-    
+    public boolean retrieIsElementVisible(WebElement element) {
+        int maxRetries = 3;
+        for (int i = 0; i < maxRetries; i++) {
+            try {
+                isElementDisplayed(element);
+                return true;
+            } catch (StaleElementReferenceException e) {
+            }
+        }
+        return false;
+    }
+
+    public void retrieClickOnElemet(WebElement element) {
+        int maxRetries = 3;
+        for (int i = 0; i < maxRetries; i++) {
+            try {
+                clickOnElement(element);
+            } catch (StaleElementReferenceException e) {
+            }
+        }
+    }
+
+   public void  clickIfVisible(WebElement element){
+       if(isElementDisplayed(element)) {
+           clickOnElement(element);
+       }
+   }
 }

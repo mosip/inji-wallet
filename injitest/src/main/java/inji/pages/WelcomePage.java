@@ -13,7 +13,7 @@ public class WelcomePage extends BasePage {
     private WebElement welcomeText;
 
     @AndroidFindBy(accessibility = "introText-one")
-    @iOSXCUITFindBy(xpath = "(//XCUIElementTypeStaticText[@name=\"introText\"])[1]")
+    @iOSXCUITFindBy(accessibility = "introText-one")
     private WebElement welcomeTextDescription;
 
     @AndroidFindBy(accessibility = "skipButton-one")
@@ -21,11 +21,11 @@ public class WelcomePage extends BasePage {
     private WebElement skipButton;
 
     @AndroidFindBy(accessibility = "next")
-    @iOSXCUITFindBy(xpath = "(//XCUIElementTypeOther[@name=\"Susunod\" or @name=\"next\" or @name=\"अगला\" or @name=\"ಮುಂದೆ\" or @name=\"அடுத்தது\"])[4]\n")
+    @iOSXCUITFindBy(accessibility = "next")
     private WebElement nextButton;
 
     @AndroidFindBy(accessibility = "backButton-one")
-    @iOSXCUITFindBy(iOSClassChain = "**/XCUIElementTypeButton[`label == \"Back\"`][1]")
+    @iOSXCUITFindBy(accessibility = "backButton-one")
     public WebElement backButton;
 
     public WelcomePage(AppiumDriver driver) {

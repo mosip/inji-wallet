@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="All Test Suite">
+	<listeners>
+		<listener class-name="inji.listeners.Listeners" />
+	</listeners>
+	<test verbose="2" preserve-order="true" name="android">
+		<classes>
+            <class name="androidTestCases.AboutInjiTest">
+                <methods>
+                    <include name="copyAppId"/>
+                </methods>
+            </class>
+            <class name="androidTestCases.ActivateVcTest">
+                <methods>
+                    <include name="activateVc"/>
+                    <include name="noPreDownloadedVCAndNoHistoryInFreshInstallation"/>
+                    <include name="verifyInvalidOtpMessage"/>
+                    <include name="activateVcFromDetailedViewPage"/>
+                </methods>
+            </class>
+            <class name="androidTestCases.ChangeLanguageTest">
+                <methods>
+                    <include name="changeLanguage"/>
+                    <include name="languageShouldBeInNativeLanguages"/>
+                    <include name="verifyTuvaliVersion"/>
+                    <include name="changeLanguageToArabic"/>
+                    <include name="changeLanguageToFilipionAndSearchIssuer"/>
+                    <include name="changeLanguageToFilipionAndSearchIssuerEnterIncompleteName"/>
+                    <include name="changeLanguageToHindiAndSearchIssuer"/>
+                    <include name="changeLanguageToFilipionAndcheckInjiTour"/>
+                    <include name="changeLanguageToHindiAndcheckInjiTour"/>
+                    <include name="changeLanguageToTamilAndcheckInjiTour"/>
+                    <include name="changeLanguageToKannadAndcheckInjiTour"/>
+                    <include name="downloadVcAndChnageLangaugeVerifyVcViaSunbird"/>
+                    <include name="DownloadAndVerifyVcInArabic"/>
+                </methods>
+            </class>
+            <class name="androidTestCases.CredentialRegistryTest">
+                <methods>
+                    <include name="downloadAndVerifyVcInNewEnv"/>
+                    <include name="cancelChangeEnvAndVerify"/>
+                    <include name="downloadAndVerifyVcInInvalidEnv"/>
+                    <include name="generateUinInNewEnv"/>
+                    <include name="retrivingUinInOtherEnv"/>
+                    <include name="downloadAndVerifyVcInTwoEnv"/>
+                    <include name="downloadVcAndActivateItInOtherEnv"/>
+                    <include name="downloadAndVerifyVcInNewEnvForEsignet"/>
+                    <include name="downloadAndVerifyVcInInvalidEnvForEsignet"/>
+                    <include name="downloadAndVerifyVcInInvalidEnvForEsignetInFillpino"/>
+                    <include name="downloadVcInNewEnvAndVerifyInDetailedVcViewPage"/>
+                </methods>
+            </class>
+            <class name="androidTestCases.DeletingVcTest">
+                <methods>
+                    <include name="deleteVcAndVerifyInHistory"/>
+                    <include name="cancelDeleteVc"/>
+                    <include name="DownloadingDeletedVc"/>
+                </methods>
+            </class>
+            <class name="androidTestCases.GenerateUinOrVidTest">
+                <methods>
+                    <include name="generateUinOrVidUsingAid"/>
+                    <include name="goBackToGenerateUinOrVidUsingAidFromOtpVerificationPage"/>
+                </methods>
+            </class>
+            <class name="androidTestCases.NoNetworkAndroidTest">
+                <methods>
+                    <include name="setupPasscodeAndDownloadCardWithoutInternet"/>
+                    <include name="openCameraOnFlightMode"/>
+                    <include name="activateVcWithoutInternet"/>
+                    <include name="verifyListOfLanguagesInOfflineMode"/>
+                    <include name="verifyHelpPageOfflineMode"/>
+                    <include name="deleteDownloadedVcInOfflineMode"/>
+                    <include name="openQrOffline"/>
+                    <include name="verifyRecivedCardOffline"/>
+                    <include name="downloadCardWithoutInternetRetryWithInternet"/>
+                    <include name="downloadVcUsingUinViaEsignetWithoutInternet"/>
+                    <include name="downloadVcUsingUinViaEsignetNoInternateWhileDownloading"/>
+                    <include name="downloadVcViaEsignetAndPinUnpinWithNoNetwork"/>
+                    <include name="downloadVcUsingUinViaEsignetNoInternateOpenScan"/>
+                    <include name="downloadVcInOtherLanguageViaEsignetWithoutInternet"/>
+                    <include name="changeLanguageToTamilWithoutNetwork"/>
+                    <include name="verifyVcIssuerListWithoutNetwork"/>
+                </methods>
+            </class>
+            <class name="androidTestCases.PinVcTest">
+                <methods>
+                    <include name="pinVc"/>
+                    <include name="VerifyCameraOpenAfterPinVc"/>
+                    <include name="downloadVcViaEsignetAndPinUnpin"/>
+                    <include name="verifyMessageAfterDenyBluetoothPopup"/>
+                </methods>
+            </class>
+            <class name="androidTestCases.ReceiveCardTest">
+                <methods>
+                    <include name="verifyRecivedCardAndQrCode"/>
+                    <include name="verifyRecivedCardAndQrCodeInFilipinoLanguage"/>
+                </methods>
+            </class>
+            <class name="androidTestCases.ShareVcTest">
+                <methods>
+                    <include name="noCardsAvailableToShare"/>
+                    <include name="verifyReceivedCardTabPresent"/>
+                </methods>
+            </class>
+            <class name="androidTestCases.UnlockWithPasscodeTest">
+                <methods>
+                    <include name="logoutAndLoginWithPasscode"/>
+                    <include name="loginWithInvalidPasscode"/>
+                </methods>
+            </class>
+            <class name="androidTestCases.VcBackupAndRestoreTest">
+                <methods>
+                    <include name="VcBackupAndRestoreTest"/>
+                    <include name="DenyPermissionForInji"/>
+                    <include name="RestoreVcTwoTimes"/>
+                    <include name="VcRestoreWithoutBackup"/>
+                    <include name="VerifyBackUpAndRestorePageInMultipleLanguge"/>
+                    <include name="ActiveVcAfterBackup"/>
+                    <include name="VerifyHelpInBackupAndRestore"/>
+                    <include name="VerifyDeletingDownloadedvc"/>
+                    <include name="VerifyDeletingRestoredvc"/>
+                    <include name="VerifyPiningDownloadedVc"/>
+                    <include name="VerifyPiningRestoredVc"/>
+                </methods>
+            </class>
+            <class name="androidTestCases.VcDownloadAndVerifyUsingEsignetTest">
+                <methods>
+                    <include name="downloadAndVerifyVcUsingUinViaEsignet"/>
+                    <include name="downloadAndVerifyVcUsingVidViaEsignet"/>
+                </methods>
+            </class>
+            <class name="androidTestCases.VcDownloadAndVerifyUsingSunbirdTest">
+                <methods>
+                    <include name="downloadAndVerifyVcUsingUinViaSunbird"/>
+                </methods>
+            </class>
+            <class name="androidTestCases.VcDownloadAndVerifyUsingUinTest">
+                <methods>
+                    <include name="downloadAndVerifyVcUsingUin"/>
+                    <include name="downloadMultipleVcUsingDifferentUin"/>
+                    <include name="downloadWithEmptyUin"/>
+                    <include name="generateMultipleVcWithSameUin"/>
+                    <include name="verifyInvalidUinErrorMessage"/>
+                    <include name="verifyOtpTimeOutAndGoBack"/>
+                    <include name="DownloadMultipleVcAndForceStopeAndAgainInvokeApp"/>
+                </methods>
+            </class>
+            <class name="androidTestCases.VcDownloadAndVerifyUsingVidTest">
+                <methods>
+                    <include name="downloadAndVerifyVcUsingVid"/>
+                    <include name="downloadTwoVcDeleteOneUsingVid"/>
+                    <include name="verifyInvalidVidErrorMessage"/>
+                    <include name="downloadAndVerifyVcUsingRevokeVid"/>
+                    <include name="DownloadMultipleVcAndForceStopeAndAgainInvokeAppViaVid"/>
+                </methods>
+            </class>
+            <class name="androidTestCases.VerifyHelpPageTest">
+                <methods>
+                    <include name="verifyHelpPage"/>
+                </methods>
+            </class>
+            <class name="androidTestCases.VerifyHistoryTest">
+                <methods>
+                    <include name="downloadVcAndVerifyHistory"/>
+                    <include name="verifyActivationFailedRecordInHistory"/>
+                    <include name="verifyActivationFailedRecordInHistoryFromDetailedView"/>
+                    <include name="activateVcAndVerifyInHistory"/>
+                    <include name="downloadAndVerifyHistoryUsingUinViaEsignet"/>
+                    <include name="downloadAndVerifyHistoryUsingVidViaEsignet"/>
+                </methods>
+            </class>
+            <class name="androidTestCases.VerifyWelcomePagesTest">
+                <methods>
+                    <include name="verifyWelcomePagesContent"/>
+                    <include name="verifyWelcomePagesFromInjiTourGuide"/>
+                    <include name="verifyGoBackFromInjiTourGuide"/>
+                    <include name="verifyClickOnBackFromInjiTourGuide"/>
+                </methods>
+            </class>
+		</classes>
+	</test>
+</suite>

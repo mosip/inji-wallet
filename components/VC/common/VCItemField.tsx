@@ -1,7 +1,6 @@
 import {Column, Text} from '../../ui';
 import {Theme} from '../../ui/styleUtils';
 import React from 'react';
-import {setTextColor} from './VCUtils';
 import LinearGradient from 'react-native-linear-gradient';
 import ShimmerPlaceHolder from 'react-native-shimmer-placeholder';
 
@@ -58,4 +57,14 @@ export const VCItemField = ({
       )}
     </Column>
   );
+};
+
+export const setTextColor = (wellknown: any) => {
+  if (wellknown && wellknown?.credentials_supported[0]?.display) {
+    return {
+      color: wellknown.credentials_supported[0]?.display[0]?.text_color
+        ? wellknown.credentials_supported[0].display[0].text_color
+        : Theme.Colors.textValue,
+    };
+  }
 };

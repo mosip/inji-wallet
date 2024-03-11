@@ -4,7 +4,6 @@ import {VerifiableCredential} from '../../../types/VC/ExistingMosipVC/vc';
 import {Column, Row} from '../../ui';
 import {Theme} from '../../ui/styleUtils';
 import {CheckBox, Icon} from 'react-native-elements';
-import {SvgImage} from '../../ui/svg';
 import {
   fieldItemIterator,
   getIssuerLogo,
@@ -15,6 +14,7 @@ import {VCItemField} from '../common/VCItemField';
 import {useTranslation} from 'react-i18next';
 import {getIDType} from '../../../shared/openId4VCI/Utils';
 import {VCVerification} from '../../VCVerification';
+import {VcItemContainerProfileImage} from '../../VcItemContainerProfileImage';
 
 export const VCCardViewContent: React.FC<
   ExistingMosipVCItemContentProps | EsignetMosipVCItemContentProps
@@ -49,7 +49,7 @@ export const VCCardViewContent: React.FC<
       <Column>
         <Row align="space-between">
           <Row margin="0 0 0 5">
-            {SvgImage.VcItemContainerProfileImage(props, props.credential)}
+            {VcItemContainerProfileImage(props, props.credential)}
             <Column margin={'0 0 0 20'}>
               {fieldItemIterator(
                 props.fields.slice(0, 2),

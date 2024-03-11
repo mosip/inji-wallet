@@ -5,6 +5,7 @@ import io.appium.java_client.pagefactory.AndroidFindBy;
 import io.appium.java_client.pagefactory.iOSXCUITFindBy;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.RemoteWebElement;
 
@@ -238,7 +239,7 @@ public class HomePage extends BasePage {
     }
     
     public boolean isDownloadingVcPopupDisplayed() {
-        return this.isElementDisplayed(downloadingVcPopup,20);
+        return this.retrieIsElementVisible(downloadingVcPopup);
     }
 
     public String getfullNameTitleText() {

@@ -1,3 +1,6 @@
+
+// This file was automatically generated. Edits will be overwritten
+
 export interface Typegen0 {
   '@@xstate/typegen': true;
   internalEvents: {
@@ -56,7 +59,7 @@ export interface Typegen0 {
       | 'BLE_ERROR'
       | 'DISCONNECT'
       | 'DISMISS'
-      | 'RESET'
+      | 'RETRY'
       | 'SCREEN_BLUR'
       | 'SCREEN_FOCUS'
       | 'xstate.stop';
@@ -79,8 +82,7 @@ export interface Typegen0 {
       | 'DISMISS'
       | 'SCREEN_BLUR'
       | 'SCREEN_FOCUS'
-      | 'xstate.after(DESTROY_TIMEOUT)#scan.clearingConnection'
-      | 'xstate.init';
+    resetFaceCaptureBannerStatus: 'ACCEPT_REQUEST' | 'CLOSE_BANNER';
     resetShouldVerifyPresence: 'CANCEL' | 'CONNECTED' | 'DISMISS' | 'RETRY';
     sendBLEConnectionErrorEvent: 'BLE_ERROR';
     sendScanData: 'SCAN';
@@ -111,6 +113,9 @@ export interface Typegen0 {
   eventsCausingDelays: {
     CONNECTION_TIMEOUT: 'SCAN';
     DESTROY_TIMEOUT: '' | 'DISMISS' | 'LOCATION_ENABLED';
+    toggleShouldVerifyPresence: 'TOGGLE_USER_CONSENT';
+    updateFaceCaptureBannerStatus: 'FACE_VALID';
+  };
     SHARING_TIMEOUT:
       | 'ACCEPT_REQUEST'
       | 'FACE_VALID'
