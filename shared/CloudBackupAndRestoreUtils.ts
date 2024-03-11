@@ -71,6 +71,10 @@ class Cloud {
     return `/${sortedFiles[0]}`;
   };
 
+  /**
+   * This method is specific to iOS for downloading files from iCloud, which can be processed after
+   * Ref - https://react-native-cloud-storage.vercel.app/docs/api/CloudStorage#downloadfilepath-scope
+   */
   private static async syncBackupFiles() {
     const isSyncDone = await this.downloadUnSyncedBackupFiles();
     if (isSyncDone) return;

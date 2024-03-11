@@ -360,7 +360,7 @@ export const backupAndRestoreSetupMachine = model.createMachine(
       isSignedIn: (_context, event) =>
         (event.data as isSignedInResult).isSignedIn,
       isIOSAndNotSignedIn: (_context, event) => {
-        return !(event.data as isSignedInResult).isSignedIn && isIOS();
+        return isIOS() && !(event.data as isSignedInResult).isSignedIn;
       },
       isConfirmationAlreadyShown: (_context, event) => {
         return (
