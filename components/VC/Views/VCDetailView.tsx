@@ -26,8 +26,8 @@ import {
   fieldItemIterator,
   isVCLoaded,
   setBackgroundColour,
-  setTextColor,
 } from '../common/VCUtils';
+import {setTextColor} from '../common/VCItemField';
 import {ActivityIndicator} from '../../ui/ActivityIndicator';
 import {ProfileIcon} from '../../ProfileIcon';
 
@@ -168,9 +168,12 @@ export const VCDetailView: React.FC<
                   <View
                     style={[
                       Theme.Styles.hrLine,
-                      {borderBottomColor: setTextColor(wellknown)?.color},
+                      {
+                        borderBottomColor: setTextColor(wellknown, 'hrLine')
+                          ?.color,
+                      },
                     ]}></View>
-                  <Column padding="14">
+                  <Column padding="0 14 14 14">
                     {fieldItemIterator(
                       DETAIL_VIEW_BOTTOM_SECTION_FIELDS,
                       verifiableCredential,

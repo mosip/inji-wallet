@@ -3,9 +3,8 @@ import jose from 'node-jose';
 import {isIOS} from '../constants';
 import pem2jwk from 'simple-pem2jwk';
 import {displayType, issuerType} from '../../machines/issuersMachine';
-import getAllConfigurations from '../commonprops/commonProps';
+import getAllConfigurations from '../api';
 
-import {VCMetadata} from '../VCMetadata';
 import i18next from 'i18next';
 import {getJWT} from '../cryptoutil/cryptoUtil';
 import {CACHED_API} from '../api';
@@ -146,32 +145,6 @@ export const getDisplayObjectForCurrentLanguage = (
   return displayType;
 };
 
-export const getVCMetadata = context => {
-  const [issuer, protocol, requestId] =
-    context.credentialWrapper?.identifier.split(':');
-  // TODO(temp-solution): This is a temporary solution and will not work for every issuer
-  // This should be re-written in a more standards compliant way later.
-  if (issuer === Issuers.Sunbird) {
-    return VCMetadata.fromVC({
-      requestId: requestId ? requestId : null,
-      issuer: issuer,
-      protocol: protocol,
-      id: context.verifiableCredential?.credential.credentialSubject
-        .policyNumber,
-      timestamp: context.timestamp ?? '',
-    });
-  }
-  return VCMetadata.fromVC({
-    requestId: requestId ? requestId : null,
-    issuer: issuer,
-    protocol: protocol,
-    id: context.verifiableCredential?.credential.credentialSubject.UIN
-      ? context.verifiableCredential?.credential.credentialSubject.UIN
-      : context.verifiableCredential?.credential.credentialSubject.VID,
-    timestamp: context.timestamp ?? '',
-  });
-};
-
 export const constructAuthorizationConfiguration = (
   selectedIssuer: issuerType,
 ) => {
@@ -273,7 +246,7 @@ export const getDetailedViewFields = async (
 export const removeBottomSectionFields = fields => {
   return fields.filter(
     fieldName =>
-      !BOTTOM_SECTION_FIELDS_WITH_DETAILED_ADDRESS_FIELDS.includes(fieldName) ||
+      !BOTTOM_SECTION_FIELDS_WITH_DETAILED_ADDRESS_FIELDS.includes(fieldName) &&
       fieldName !== 'address',
   );
 };

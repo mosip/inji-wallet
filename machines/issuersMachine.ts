@@ -24,7 +24,6 @@ import {
   ErrorMessage,
   getBody,
   getIdType,
-  getVCMetadata,
   Issuers,
   Issuers_Key_Ref,
   OIDCErrors,
@@ -47,7 +46,7 @@ import {
 import {CACHED_API} from '../shared/api';
 import {request} from '../shared/request';
 import {BiometricCancellationError} from '../shared/error/BiometricCancellationError';
-import {VCMetadata} from '../shared/VCMetadata';
+import {VCMetadata, getVCMetadata} from '../shared/VCMetadata';
 import Cloud, {isSignedInResult} from '../shared/CloudBackupAndRestoreUtils';
 
 const model = createModel(

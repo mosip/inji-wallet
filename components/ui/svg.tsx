@@ -1,7 +1,6 @@
 import React from 'react';
 import Svg, {Image} from 'react-native-svg';
 import {Theme} from './styleUtils';
-import {ImageBackground} from 'react-native';
 import Home from '../../assets/Home_tab_icon.svg';
 import History from '../../assets/History_tab_icon.svg';
 import Share from '../../assets/Scan_tab_icon.svg';
@@ -49,13 +48,6 @@ import OutlinedShareWithSelfieIcon from '../../assets/Outlined_Share_With_Selfie
 import OutlinedShareIcon from '../../assets/Outlined_Share_Icon.svg';
 import Info from '../../assets/Info.svg';
 import Search from '../../assets/Search.svg';
-import {
-  EsignetMosipVCItemContentProps,
-  ExistingMosipVCItemContentProps,
-} from '../VC/MosipVCItem/MosipVCItemContent';
-import {VCMetadata} from '../../shared/VCMetadata';
-import {VerifiableCredential} from '../../types/VC/ExistingMosipVC/vc';
-import {ProfileIcon} from '../ProfileIcon';
 import CloudUploadDoneIcon from '../../assets/Cloud_Upload_Done_Icon.svg';
 
 export class SvgImage {
@@ -323,28 +315,6 @@ export class SvgImage {
     );
   }
 
-  static VcItemContainerProfileImage(
-    props: ExistingMosipVCItemContentProps | EsignetMosipVCItemContentProps,
-  ) {
-    const imageUri = faceImageSource(props);
-    return imageUri ? (
-      <ImageBackground
-        imageStyle={Theme.Styles.faceImage}
-        source={{uri: imageUri}}
-        style={Theme.Styles.closeCardImage}>
-        {props?.isPinned && SvgImage.pinIcon()}
-      </ImageBackground>
-    ) : (
-      <>
-        <ProfileIcon
-          isPinned={props?.isPinned}
-          profileIconContainerStyles={Theme.Styles.ProfileIconContainer}
-          profileIconSize={30}
-        />
-      </>
-    );
-  }
-
   static FlipCameraIcon() {
     const {width, height} = Theme.Styles.cameraFlipIcon;
     return (
@@ -488,19 +458,7 @@ function getIssuerLogo(props: displayType) {
   return {uri: props.logo.url};
 }
 
-export function faceImageSource(props) {
-  return new VCMetadata(props?.vcMetadata)?.isFromOpenId4VCI()
-    ? props?.credential?.credentialSubject?.face
-    : props?.context?.credential?.biometrics?.face;
-}
-
 interface LogoProps {
   width: number;
   height: number;
-}
-
-interface faceImageSourceProps {
-  vcMetadata: VCMetadata;
-  credential: VerifiableCredential;
-  context: any;
 }

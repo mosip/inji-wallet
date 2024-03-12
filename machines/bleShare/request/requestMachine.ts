@@ -87,6 +87,7 @@ const model = createModel(
       FACE_VALID: () => ({}),
       FACE_INVALID: () => ({}),
       RETRY_VERIFICATION: () => ({}),
+      GOTO_HOME: () => ({}),
     },
   },
 );
@@ -127,6 +128,9 @@ export const requestMachine =
         },
         RESET: {
           target: '.checkNearbyDevicesPermission',
+        },
+        GOTO_HOME: {
+          target: '#request.reviewing.navigatingToHome',
         },
       },
       states: {

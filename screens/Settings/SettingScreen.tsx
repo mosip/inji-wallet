@@ -152,7 +152,7 @@ export const SettingScreen: React.FC<
 
           <AboutInji appId={controller.appId} />
 
-            <DataBackupAndRestore />
+          <DataBackupAndRestore />
 
           {CREDENTIAL_REGISTRY_EDIT === 'true' && (
             <EditableListItem

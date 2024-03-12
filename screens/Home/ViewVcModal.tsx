@@ -24,7 +24,8 @@ import testIDProps from '../../shared/commonUtil';
 import {HelpScreen} from '../../components/HelpScreen';
 import {Pressable} from 'react-native';
 import {KebabPopUp} from '../../components/KebabPopUp';
-import {SvgImage, faceImageSource} from '../../components/ui/svg';
+import {SvgImage} from '../../components/ui/svg';
+import {faceImageSource} from '../../components/VcItemContainerProfileImage';
 import {VCMetadata} from '../../shared/VCMetadata';
 import {WalletBinding} from './MyVcs/WalletBinding';
 import {RemoveVcWarningOverlay} from './MyVcs/RemoveVcWarningOverlay';
@@ -156,6 +157,8 @@ export const ViewVcModal: React.FC<ViewVcModalProps> = props => {
           onInputDone={controller.inputOtp}
           error={controller.otpError}
           resend={controller.RESEND_OTP}
+          phone={controller.isPhoneNumber}
+          email={controller.isEmail}
           flow={TelemetryConstants.FlowType.vcActivation}
         />
       )}

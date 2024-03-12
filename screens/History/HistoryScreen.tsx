@@ -5,19 +5,12 @@ import {useTranslation} from 'react-i18next';
 import {Centered, Column, Text} from '../../components/ui';
 import {useHistoryTab} from './HistoryScreenController';
 import {ActivityLogText} from '../../components/ActivityLogText';
-import {MainRouteProps} from '../../routes/main';
 import {Theme} from '../../components/ui/styleUtils';
 import {BannerNotificationContainer} from '../../components/BannerNotificationContainer';
 
-export const HistoryScreen: React.FC<MainRouteProps> = props => {
+export const HistoryScreen: React.FC = () => {
   const {t} = useTranslation('HistoryScreen');
   const controller = useHistoryTab();
-
-  const activities = props.route.params?.vcKey
-    ? controller.activities.filter(
-        activity => activity._vcKey === props.route.params?.vcKey,
-      )
-    : controller.activities;
 
   return (
     <Column fill backgroundColor={Theme.Colors.whiteBackgroundColor}>
@@ -31,13 +24,13 @@ export const HistoryScreen: React.FC<MainRouteProps> = props => {
           />
         }>
         <BannerNotificationContainer />
-        {activities.map(activity => (
+        {controller.activities.map(activity => (
           <ActivityLogText
             key={`${activity.timestamp}-${activity._vcKey}`}
             activity={activity}
           />
         ))}
-        {activities.length === 0 && (
+        {controller.activities.length === 0 && (
           <Centered fill>
             <Icon
               style={{marginBottom: 20}}

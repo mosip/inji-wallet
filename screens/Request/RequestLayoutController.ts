@@ -2,7 +2,7 @@ import {NavigationProp, useNavigation} from '@react-navigation/native';
 import {useSelector} from '@xstate/react';
 import {useContext, useEffect} from 'react';
 
-import {MainBottomTabParamList} from '../../routes/main';
+import {MainBottomTabParamList} from '../../routes/routeTypes';
 import {GlobalContext} from '../../shared/GlobalContext';
 import {
   selectIsWaitingForConnection,
@@ -111,5 +111,6 @@ export function useRequestLayout() {
     isNavigatingToReceivedCards,
     DISMISS: () => requestService.send(RequestEvents.DISMISS()),
     RESET: () => requestService.send(RequestEvents.RESET()),
+    GOTO_HOME: () => requestService.send(RequestEvents.GOTO_HOME()),
   };
 }

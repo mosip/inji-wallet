@@ -8,13 +8,14 @@ import {VerifiableCredential} from '../../../types/VC/ExistingMosipVC/vc';
 import {Column, Row} from '../../ui';
 import {Theme} from '../../ui/styleUtils';
 import {CheckBox, Icon} from 'react-native-elements';
-import {SvgImage, faceImageSource} from '../../ui/svg';
+import {SvgImage} from '../../ui/svg';
+import {faceImageSource} from '../../VcItemContainerProfileImage';
 import {
   getIssuerLogo,
   isVCLoaded,
   setBackgroundColour,
-  setTextColor,
 } from '../common/VCUtils';
+import {setTextColor} from '../common/VCItemField';
 import {VCItemFieldValue} from '../common/VCItemField';
 import {WalletBinding} from '../../../screens/Home/MyVcs/WalletBinding';
 import {VCVerification} from '../../VCVerification';
@@ -22,6 +23,7 @@ import {Issuers} from '../../../shared/openId4VCI/Utils';
 import {VCItemContainerFlowType} from '../../../shared/Utils';
 import {RemoveVcWarningOverlay} from '../../../screens/Home/MyVcs/RemoveVcWarningOverlay';
 import {HistoryTab} from '../../../screens/Home/MyVcs/HistoryTab';
+import {VcItemContainerProfileImage} from '../../VcItemContainerProfileImage';
 
 export const VCCardViewContent: React.FC<
   ExistingMosipVCItemContentProps | EsignetMosipVCItemContentProps
@@ -54,7 +56,7 @@ export const VCCardViewContent: React.FC<
       ]}>
       <Column>
         <Row crossAlign="center" padding="3 0 0 3">
-          {SvgImage.VcItemContainerProfileImage(props)}
+          {VcItemContainerProfileImage(props)}
           <Column fill align={'space-around'} margin="0 10 0 10">
             <VCItemFieldValue
               key={'fullName'}

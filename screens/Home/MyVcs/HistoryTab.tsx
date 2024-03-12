@@ -21,7 +21,11 @@ export const HistoryTab: React.FC<HistoryTabProps> = props => {
         onDismiss={controller.DISMISS}>
         <Column fill>
           {controller.activities
-            .filter(activity => activity._vcKey === props.vcMetadata.getVcKey())
+            .filter(
+              activity =>
+                activity._vcKey ===
+                VCMetadata.fromVC(props.vcMetadata).getVcKey(),
+            )
             .map(activity => (
               <ActivityLogText
                 key={`${activity.timestamp}-${activity._vcKey}`}

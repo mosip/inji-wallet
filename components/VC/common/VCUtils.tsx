@@ -13,7 +13,6 @@ import {SvgImage} from '../../ui/svg';
 import {CREDENTIAL_REGISTRY_EDIT} from 'react-native-dotenv';
 import {getIDType} from '../../../shared/openId4VCI/Utils';
 import {VCVerification} from '../../VCVerification';
-import {VCMetadata} from '../../../shared/VCMetadata';
 
 export const CARD_VIEW_DEFAULT_FIELDS = ['fullName'];
 export const DETAIL_VIEW_DEFAULT_FIELDS = [
@@ -102,16 +101,6 @@ export const setBackgroundColour = (wellknown: any) => {
         ?.background_color
         ? wellknown.credentials_supported[0].display[0].background_color
         : Theme.Colors.textValue,
-    };
-  }
-};
-
-export const setTextColor = (wellknown: any) => {
-  if (wellknown && wellknown?.credentials_supported[0]?.display) {
-    return {
-      color: wellknown.credentials_supported[0]?.display[0]?.text_color
-        ? wellknown.credentials_supported[0].display[0].text_color
-        : Theme.Colors.DetailsLabel,
     };
   }
 };

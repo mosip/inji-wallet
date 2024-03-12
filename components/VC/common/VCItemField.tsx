@@ -1,7 +1,6 @@
 import {Column, Text} from '../../ui';
 import {Theme} from '../../ui/styleUtils';
 import React from 'react';
-import {setTextColor} from './VCUtils';
 
 export const VCItemFieldName = ({fieldName, wellknown}) => {
   return (
@@ -38,4 +37,16 @@ export const VCItemField = props => {
       <VCItemFieldValue {...props} />
     </Column>
   );
+};
+
+export const setTextColor = (wellknown: any, component = '') => {
+  if (wellknown && wellknown?.credentials_supported[0]?.display) {
+    return {
+      color: wellknown.credentials_supported[0]?.display[0]?.text_color
+        ? wellknown.credentials_supported[0].display[0].text_color
+        : component === 'hrLine'
+        ? Theme.Styles.hrLine.borderBottomColor
+        : Theme.Colors.Details,
+    };
+  }
 };

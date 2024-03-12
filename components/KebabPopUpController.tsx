@@ -13,6 +13,8 @@ import {
   selectShowActivities,
   selectShowWalletBindingError,
   selectWalletBindingError,
+  selectIsPhoneNumber,
+  selectIsEmail,
 } from '../machines/VCItemMachine/commonSelectors';
 import {
   ExistingMosipVCItemEvents,
@@ -82,7 +84,8 @@ export function useKebabPopUp(props) {
   const emptyWalletBindingId = useSelector(service, selectEmptyWalletBindingId);
   const isKebabPopUp = useSelector(service, selectKebabPopUp);
   const isShowActivities = useSelector(service, selectShowActivities);
-
+  const phoneNumber = useSelector(service, selectIsPhoneNumber);
+  const email = useSelector(service, selectIsEmail);
   const {appService} = useContext(GlobalContext);
   const activityLogService = appService.children.get('activityLog');
   const scanService = appService.children.get('scan');
@@ -125,5 +128,7 @@ export function useKebabPopUp(props) {
     isShowActivities,
     isRemoveWalletWarning,
     activities: useSelector(activityLogService, selectActivities),
+    phoneNumber,
+    email,
   };
 }

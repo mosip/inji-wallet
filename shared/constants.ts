@@ -10,6 +10,9 @@ export let DEBUG_MODE_ENABLED = DEBUG_MODE === 'true';
 export const changeCrendetialRegistry = host => (MIMOTO_BASE_URL = host);
 export const changeEsignetUrl = host => (ESIGNET_BASE_URL = host);
 
+export const COMMON_PROPS_KEY: string =
+  'CommonPropsKey-' + '6964d04a-9268-11ed-a1eb-0242ac120002';
+
 export const MY_VCS_STORE_KEY = 'myVCs';
 
 export const RECEIVED_VCS_STORE_KEY = 'receivedVCs';
@@ -54,6 +57,14 @@ export const APP_ID_DICTIONARY = [
     'M', 'N', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y',
 ];
 
+export const API_CACHED_STORAGE_KEYS = {
+  fetchIssuers: 'CACHE_FETCH_ISSUERS',
+  fetchIssuerConfig: (issuerId: string) =>
+    `CACHE_FETCH_ISSUER_CONFIG_${issuerId}`,
+  fetchIssuerWellknownConfig: (issuerId: string) =>
+    `CACHE_FETCH_ISSUER_WELLKNOWN_CONFIG_${issuerId}`,
+};
+
 export function isIOS(): boolean {
   return Platform.OS === 'ios';
 }
@@ -61,6 +72,8 @@ export function isIOS(): boolean {
 export function isAndroid(): boolean {
   return Platform.OS === 'android';
 }
+
+export const ENOENT = 'No such file or directory';
 
 export const androidVersion: number = Number(Platform.Version);
 

@@ -1,9 +1,9 @@
+import {setTextColor} from './VC/common/VCItemField';
 import VerifiedIcon from './VerifiedIcon';
 import {Row, Text} from './ui';
 import {Theme} from './ui/styleUtils';
 import React from 'react';
 import {useTranslation} from 'react-i18next';
-import {setTextColor} from './VC/common/VCUtils';
 
 export const VCVerification: React.FC = ({wellknown, isVerified}: any) => {
   const {t} = useTranslation('VcDetails');

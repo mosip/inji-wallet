@@ -596,7 +596,6 @@ export const PurpleTheme = {
       fontFamily: 'Inter_700Bold',
     },
     idInputContainer: {
-      marginTop: 20,
       width: Dimensions.get('window').width * 0.86,
     },
     idInputPicker: {
@@ -634,8 +633,9 @@ export const PurpleTheme = {
       borderBottomColor: Colors.Gray44,
       borderBottomWidth: 1,
       marginTop: 10,
-      marginLeft: 10,
-      marginRight: 10,
+      marginLeft: 14,
+      marginRight: 14,
+      marginBottom: 20,
       opacity: 0.2,
     },
     hrLineFill: {
@@ -699,10 +699,7 @@ export const PurpleTheme = {
     },
     keyboardAvoidStyle: {
       flex: 1,
-      paddingVertical: 40,
-      paddingHorizontal: 24,
       alignItems: 'center',
-      justifyContent: 'space-between',
     },
     passwordKeyboardAvoidStyle: {
       flex: 1,
