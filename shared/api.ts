@@ -272,7 +272,7 @@ export default async function getAllConfigurations(
 export async function downloadModel() {
   try {
     console.log('restart Face model init');
-    var injiProp = await getAllConfigurations();
+    let injiProp = await getAllConfigurations();
     const maxRetryStr = injiProp.modelDownloadMaxRetry;
     const maxRetry = parseInt(maxRetryStr);
     const resp: string = injiProp != null ? injiProp.faceSdkModelUrl : null;
@@ -311,7 +311,7 @@ export async function downloadModel() {
         error,
       ),
     );
-    console.log('Error while downloading face model - ', error);
+    console.error('Error while downloading face model - ', error);
   }
 }
 

@@ -516,7 +516,7 @@ export const backupMachine = model.createMachine(
           const isAvailable = await isMinimumLimitForBackupReached();
           return isAvailable;
         } catch (error) {
-          console.log('Error in checkStorageAvailability:', error);
+          console.error('Error in checkStorageAvailability:', error);
           throw error;
         }
       },

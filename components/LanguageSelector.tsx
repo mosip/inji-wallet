@@ -40,7 +40,7 @@ export const changeLanguage = async (i18n: i18n, language: string) => {
             RNRestart.Restart();
           }, 150);
         } catch (e) {
-          console.log('error while changing text direction ', e);
+          console.error('error while changing text direction ', e);
         }
       }
     });
