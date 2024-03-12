@@ -95,6 +95,12 @@ class Cloud {
       } catch (error) {
         console.error('Error while using the current token ', error);
         if (
+          error.toString().includes('401') &&
+          error.toString().includes('UNAUTHENTICATED')
+        ) {
+          await GoogleSignin.revokeAccess();
+          await GoogleSignin.signOut();
+        } else if (
           error.toString().includes('401') ||
           error.toString().includes('Unauthorized')
         ) {
