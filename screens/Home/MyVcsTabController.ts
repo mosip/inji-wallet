@@ -34,8 +34,6 @@ import {
 } from '../../machines/settings';
 import {EsignetMosipVCItemMachine} from '../../machines/VCItemMachine/EsignetMosipVCItem/EsignetMosipVCItemMachine';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
-import {BOTTOM_TAB_ROUTES} from '../../routes/routesConstants';
-import {HomeRouteProps, MainBottomTabParamList} from '../../routes/main';
 import {RootRouteProps} from '../../routes';
 
 type MyVcsTabNavigation = NavigationProp<RootRouteProps>;

@@ -10,6 +10,7 @@ import {CheckBox, Icon} from 'react-native-elements';
 import testIDProps, {getMaskedText} from '../../../shared/commonUtil';
 import {logoType} from '../../../machines/issuersMachine';
 import {SvgImage} from '../../ui/svg';
+import {VcItemContainerProfileImage} from '../../VcItemContainerProfileImage';
 
 const getDetails = (arg1, arg2, verifiableCredential) => {
   if (arg1 === 'Status') {
@@ -146,7 +147,7 @@ export const MosipVCItemContent: React.FC<
       <Column>
         <Row align="space-between">
           <Row margin="5 0 0 5">
-            {SvgImage.VcItemContainerProfileImage(props, verifiableCredential)}
+            {VcItemContainerProfileImage(props, verifiableCredential)}
 
             <Column margin="0 0 10 20" height={96} align="space-between">
               <Column style={{maxWidth: 230}}>

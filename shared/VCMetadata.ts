@@ -1,5 +1,5 @@
 import {VC, VcIdType} from '../types/VC/ExistingMosipVC/vc';
-import {Protocols} from './openId4VCI/Utils';
+import {Issuers, Protocols} from './openId4VCI/Utils';
 
 const VC_KEY_PREFIX = 'VC';
 const VC_ITEM_STORE_KEY_REGEX = '^VC_[a-zA-Z0-9_-]+$';
@@ -81,3 +81,29 @@ export class VCMetadata {
 export function parseMetadatas(metadataStrings: object[]) {
   return metadataStrings.map(o => new VCMetadata(o));
 }
+
+export const getVCMetadata = context => {
+  const [issuer, protocol, requestId] =
+    context.credentialWrapper?.identifier.split(':');
+  // TODO(temp-solution): This is a temporary solution and will not work for every issuer
+  // This should be re-written in a more standards compliant way later.
+  if (issuer === Issuers.Sunbird) {
+    return VCMetadata.fromVC({
+      requestId: requestId ? requestId : null,
+      issuer: issuer,
+      protocol: protocol,
+      id: context.verifiableCredential?.credential.credentialSubject
+        .policyNumber,
+      timestamp: context.timestamp ?? '',
+    });
+  }
+  return VCMetadata.fromVC({
+    requestId: requestId ? requestId : null,
+    issuer: issuer,
+    protocol: protocol,
+    id: context.verifiableCredential?.credential.credentialSubject.UIN
+      ? context.verifiableCredential?.credential.credentialSubject.UIN
+      : context.verifiableCredential?.credential.credentialSubject.VID,
+    timestamp: context.timestamp ?? '',
+  });
+};

@@ -1,6 +1,6 @@
 import {useInterpret, useSelector} from '@xstate/react';
 import {useContext, useEffect, useRef} from 'react';
-import {HomeRouteProps} from '../../routes/main';
+import {HomeRouteProps} from '../../routes/routeTypes';
 import {GlobalContext} from '../../shared/GlobalContext';
 import {
   HomeScreenEvents,

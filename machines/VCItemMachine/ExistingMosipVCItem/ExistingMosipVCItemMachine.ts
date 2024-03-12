@@ -23,9 +23,7 @@ import {
   getBindingCertificateConstant,
   savePrivateKey,
 } from '../../../shared/keystore/SecureKeystore';
-import getAllConfigurations, {
-  DownloadProps,
-} from '../../../shared/commonprops/commonProps';
+import getAllConfigurations, {DownloadProps} from '../../../shared/api';
 import {VcEvents} from '../vc';
 import i18n from '../../../i18n';
 import SecureKeystore from '@mosip/secure-keystore';
@@ -75,6 +73,8 @@ const model = createModel(
     isMachineInKebabPopupState: false,
     bindingAuthFailedMessage: '' as string,
     verificationErrorMessage: '',
+    phoneNumber: '' as string,
+    email: '' as string,
   },
   {
     events: {
@@ -449,6 +449,7 @@ export const ExistingMosipVCItemMachine =
             onDone: [
               {
                 target: 'acceptingBindingOtp',
+                actions: ['setPhoneNumber', 'setEmail'],
               },
             ],
             onError: [
@@ -512,6 +513,7 @@ export const ExistingMosipVCItemMachine =
                 src: 'requestBindingOtp',
                 onDone: {
                   target: 'idle',
+                  actions: ['setPhoneNumber', 'setEmail'],
                 },
                 onError: {
                   actions: 'setWalletBindingError',
@@ -1013,6 +1015,14 @@ export const ExistingMosipVCItemMachine =
             (event as ErrorPlatformEvent).data.message,
         }),
 
+        setPhoneNumber: assign({
+          phoneNumber: (_context, event) => event.data.response.maskedMobile,
+        }),
+
+        setEmail: model.assign({
+          email: (_context, event) => event.data.response.maskedEmail,
+        }),
+
         clearOtp: assign({otp: ''}),
 
         removeVcItem: send(
@@ -1143,6 +1153,7 @@ export const ExistingMosipVCItemMachine =
           if (response.response == null) {
             throw new Error('Could not process request');
           }
+          return response;
         },
 
         checkStatus: context => (callback, onReceive) => {

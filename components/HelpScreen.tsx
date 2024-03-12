@@ -5,7 +5,7 @@ import {Modal} from './ui/Modal';
 import {Column, Text} from './ui';
 import {Theme} from './ui/styleUtils';
 import {BannerNotificationContainer} from './BannerNotificationContainer';
-import getAllConfigurations from '../shared/commonprops/commonProps';
+import getAllConfigurations from '../shared/api';
 
 export const HelpScreen: React.FC<HelpScreenProps> = props => {
   const {t} = useTranslation('HelpScreen');

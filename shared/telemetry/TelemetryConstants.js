@@ -15,6 +15,8 @@ export const TelemetryConstants = {
     dataRestore: 'Data Restore',
     decryption: 'Decryption',
     dataBackupAndRestoreSetup: 'Data Backup & Restore Setup',
+    remove: 'remove VC',
+    removeVcMetadata: 'VC metadata removed',
   }),
 
   EndEventStatus: Object.freeze({
