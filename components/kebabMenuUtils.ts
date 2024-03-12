@@ -37,13 +37,8 @@ export const getKebabMenuOptions = props => {
     {
       label: t('viewActivityLog'),
       icon: SvgImage.OutlinedScheduleIcon(),
-      onPress: () => {
-        controller.SHOW_ACTIVITY,
-          props.service.send('CLOSE_VC_MODAL'),
-          navigation.navigate(BOTTOM_TAB_ROUTES.history, {
-            vcKey: props.vcMetadata.getVcKey(),
-          });
-      },
+      onPress: controller.SHOW_ACTIVITY,
+
       testID: 'viewActivityLog',
     },
     {

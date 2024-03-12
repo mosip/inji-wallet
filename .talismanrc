@@ -212,5 +212,7 @@ fileignoreconfig:
     checksum: c30a4b0d5b7d9ab50de5cea1f876809221311d96ac6d5b965329b1d080b9d4df
   - filename: screens/Home/MyVcsTab.tsx
     checksum: ee2ed933c881181a96be432d1016bfa96cdf1723a3aa992cb93f40db527ce1bd
+  - filename: screens/Home/MyVcs/HistoryTab.tsx
+    checksum: 7da1925c332513c0e43da7e88271fc346c67005192f664f047f7cc9eda167599
     version: ""
 

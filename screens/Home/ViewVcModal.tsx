@@ -28,6 +28,7 @@ import {SvgImage, faceImageSource} from '../../components/ui/svg';
 import {VCMetadata} from '../../shared/VCMetadata';
 import {WalletBinding} from './MyVcs/WalletBinding';
 import {RemoveVcWarningOverlay} from './MyVcs/RemoveVcWarningOverlay';
+import {HistoryTab} from './MyVcs/HistoryTab';
 
 export const ViewVcModal: React.FC<ViewVcModalProps> = props => {
   const {t} = useTranslation('ViewVcModal');
@@ -199,6 +200,11 @@ export const ViewVcModal: React.FC<ViewVcModalProps> = props => {
         testID="removeVcWarningOverlay"
         service={props.vcItemActor}
         vcMetadata={controller.vc.vcMetadata}
+      />
+
+      <HistoryTab
+        service={props.vcItemActor}
+        vcMetadata={VCMetadata.fromVC(controller.vc.vcMetadata)}
       />
     </Modal>
   );

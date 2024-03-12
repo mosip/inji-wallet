@@ -21,6 +21,7 @@ import {VCVerification} from '../../VCVerification';
 import {Issuers} from '../../../shared/openId4VCI/Utils';
 import {VCItemContainerFlowType} from '../../../shared/Utils';
 import {RemoveVcWarningOverlay} from '../../../screens/Home/MyVcs/RemoveVcWarningOverlay';
+import {HistoryTab} from '../../../screens/Home/MyVcs/HistoryTab';
 
 export const VCCardViewContent: React.FC<
   ExistingMosipVCItemContentProps | EsignetMosipVCItemContentProps
@@ -110,6 +111,8 @@ export const VCCardViewContent: React.FC<
           service={props.service}
           vcMetadata={props.vcMetadata}
         />
+
+        <HistoryTab service={props.service} vcMetadata={props.vcMetadata} />
       </Column>
     </ImageBackground>
   );
