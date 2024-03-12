@@ -56,7 +56,7 @@ public class HomePage extends BasePage {
     @iOSXCUITFindBy(accessibility = "bringYourDigitalID")
     private WebElement bringYourDigitalIdentity;
 
-    @AndroidFindBy(accessibility = "errorTitle")
+    @AndroidFindBy(accessibility = "noInternetConnectionErrorTitle")
     @iOSXCUITFindBy(accessibility = "errorTitle")
     private WebElement noInternetConnection;
 
@@ -72,7 +72,7 @@ public class HomePage extends BasePage {
     @iOSXCUITFindBy(accessibility = "nationalCard")
     private WebElement idTypeValue;
     
-    @AndroidFindBy(accessibility = "tryAgain")
+    @AndroidFindBy(xpath = "//android.widget.TextView[@text=\"Try again\"]")
     @iOSXCUITFindBy(accessibility = "errorTitle")
     private WebElement tryAgainButton;
 
@@ -230,12 +230,20 @@ public class HomePage extends BasePage {
         return this.isElementInvisibleYet(tryAgainButtonInFillpino);
     }
 
+    public boolean isTryAgainButtonDisplayedInFlillpino() {
+        return this.isElementDisplayed(tryAgainButtonInFillpino);
+    }
+
     public boolean isTryAgainButtonNotDisplayed() {
         return this.isElementInvisibleYet(tryAgainButton);
     }
 
     public void clickOnTryAgainButton() {
         clickOnElement(tryAgainButton);
+    }
+
+    public void clickOnTryAgainFillpinoButton() {
+        clickOnElement(tryAgainButtonInFillpino);
     }
     
     public boolean isDownloadingVcPopupDisplayed() {
@@ -265,7 +273,7 @@ public class HomePage extends BasePage {
     }
 
     public boolean isActivatedVcPopupTextDisplayed() {
-        return this.isElementDisplayed(activatedVcPopupText);
+        return this.retrieIsElementVisible(activatedVcPopupText);
     }
 
     public void clickPopupCloseButtonButton() {

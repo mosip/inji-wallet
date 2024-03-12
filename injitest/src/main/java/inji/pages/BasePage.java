@@ -1,18 +1,19 @@
 package inji.pages;
 
-import inji.utils.IosUtil;
+import inji.utils.UinGenerationUtil;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.pagefactory.AppiumFieldDecorator;
 import org.openqa.selenium.By;
 import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.remote.SessionId;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import static java.time.Duration.ofSeconds;
+import java.io.IOException;
 
-import java.time.Duration;
+import static java.time.Duration.ofSeconds;
 
 public class BasePage {
     protected AppiumDriver driver;
@@ -21,7 +22,6 @@ public class BasePage {
         this.driver = driver;
         PageFactory.initElements(new AppiumFieldDecorator(driver), this);
     }
-
     protected boolean isElementDisplayed(By locator) {
         return isElementDisplayed(locator, 30);
     }
@@ -63,12 +63,12 @@ public class BasePage {
         }
     }
 
-    protected boolean WaitTillElementVisible(WebElement element, int waitTime) {
+    protected void WaitTillElementVisible(WebElement element, int waitTime) {
         try {
             waitForElementToBeInvisible(element, waitTime);
-            return false;
+
         } catch (Exception e) {
-            return true;
+
         }
     }
 
@@ -170,4 +170,19 @@ public class BasePage {
            clickOnElement(element);
        }
    }
+
+    public  void enableAirplaneModeOnBrowserStack() {
+        String sessionid = String.valueOf(driver.getSessionId());
+        try {
+
+            String userName= UinGenerationUtil.getKeyValueFromYaml("/androidConfig.yml","userName");
+            String accessKey = UinGenerationUtil.getKeyValueFromYaml("/androidConfig.yml","accessKey");
+            ProcessBuilder processBuilder;
+            processBuilder = new ProcessBuilder("cmd.exe", "/c", "curl -u \"anupnehe_w1PZQx:Zenzg8a3RikxvTUmELFm\" -H \"Content-Type: application/json\" -d '{\"networkProfile\":\"no-network\"}' -X PUT \"https://api-cloud.browserstack.com/app-automate/sessions/"+sessionid+"/update_network.json");
+            processBuilder.redirectErrorStream(true);
+            processBuilder.start();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

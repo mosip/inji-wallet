@@ -1,9 +1,11 @@
 package inji.utils;
-import org.testng.TestListenerAdapter;
+import org.yaml.snakeyaml.Yaml;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
+import java.util.Map;
 import java.util.Random;
 import java.io.File;
 
@@ -51,11 +53,11 @@ public class UinGenerationUtil {
             return getRandomUinOrVidOrAid("AidData.json");
         }
 
-    public static String getRandomEmails () {
+    public static String getRandomEmails ( String fileName) {
         ObjectMapper mapper = new ObjectMapper();
         ArrayNode arrayNode = null;
         try {
-            arrayNode = (ArrayNode) mapper.readTree(new File(System.getProperty("user.dir") + "/src/main/resources/Emails.json"));
+            arrayNode = (ArrayNode) mapper.readTree(new File(System.getProperty("user.dir") + "/src/main/resources/"+fileName));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -79,4 +81,23 @@ public class UinGenerationUtil {
         String randomNumber = arrayNode.get(randomIndex).toString();
         return randomNumber;
     }
+
+
+
+    public static String getKeyValueFromYaml(String filePath, String key) throws IOException {
+        FileReader reader = new FileReader(System.getProperty("user.dir")+filePath);
+        Yaml yaml = new Yaml();
+        Object data = yaml.load(reader);
+
+        if (data instanceof Map) {
+            @SuppressWarnings("unchecked")
+            Map<String, String> map = (Map<String, String>) data;
+            return (String) map.get(key);
+        }  else {
+            throw new RuntimeException("Invalid YAML format, expected a map");
+        }
     }
+
+
+
+}

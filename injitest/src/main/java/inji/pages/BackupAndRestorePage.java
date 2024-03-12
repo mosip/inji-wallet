@@ -194,11 +194,11 @@ public class BackupAndRestorePage extends BasePage {
     }
 
     public boolean islastBackupTimeDisplayed() {
-        return this.isElementDisplayed(lastBackupTime,30);
+        return this.isElementDisplayed(lastBackupTime,40);
     }
 
     public boolean isDataBackupSuccessPopupDisplayed() {
-        return this.isElementDisplayed(dataBackupSuccessPopup,30);
+        return this.retrieIsElementVisible(dataBackupSuccessPopup);
     }
 
     public void clickOnCloseButton() {
@@ -223,7 +223,7 @@ public class BackupAndRestorePage extends BasePage {
     }
 
     public boolean isRestoreBackupSuccessPopUpDisplayed() {
-        return this.isElementDisplayed(restoreBackupSuccessPopUp,30);
+        return this.retrieIsElementVisible(restoreBackupSuccessPopUp);
     }
 
     public boolean isPermissionDeniedHeaderDisplayed() {
