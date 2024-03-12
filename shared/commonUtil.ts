@@ -4,6 +4,8 @@ import {getDeviceNameSync} from 'react-native-device-info';
 import {GOOGLE_DRIVE_NAME, ICLOUD_DRIVE_NAME, isAndroid} from './constants';
 import {generateSecureRandom} from 'react-native-securerandom';
 import forge from 'node-forge';
+import {useState, useEffect} from 'react';
+import {Dimensions, Keyboard} from 'react-native';
 
 export const hashData = async (
   data: string,
@@ -114,3 +116,27 @@ export const getDriveName = () =>
 export function sleep(time = 1000) {
   return new Promise(resolve => setTimeout(resolve, time));
 }
+
+export const getScreenHeight = () => {
+  const {height} = Dimensions.get('window');
+  const isSmallScreen = height < 600;
+
+  const [keyboardHeight, setKeyboardHeight] = useState(0);
+
+  useEffect(() => {
+    const keyboardDidShowListener = Keyboard.addListener(
+      'keyboardDidShow',
+      event => {
+        const keyboardHeight = event.endCoordinates.height;
+        setKeyboardHeight(keyboardHeight + 150);
+      },
+    );
+    return () => {
+      keyboardDidShowListener.remove();
+    };
+  }, []);
+
+  const screenHeight = Math.floor(height - keyboardHeight);
+
+  return {isSmallScreen, screenHeight};
+};

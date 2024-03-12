@@ -17,6 +17,7 @@ import {
   MY_VCS_STORE_KEY,
   RECEIVED_VCS_STORE_KEY,
   SETTINGS_STORE_KEY,
+  ENOENT,
 } from '../shared/constants';
 import SecureKeystore from '@mosip/secure-keystore';
 import {
@@ -41,7 +42,6 @@ import {Buffer} from 'buffer';
 export const keyinvalidatedString =
   'Key Invalidated due to biometric enrollment';
 export const tamperedErrorMessageString = 'Data is tampered';
-export const ENOENT = 'No such file or directory';
 
 const model = createModel(
   {
@@ -626,10 +626,20 @@ export async function getItem(
     }
   } catch (e) {
     console.error(`Exception in getting item for ${key}: ${e}`);
+    if (e.message === ENOENT) {
+      removeTamperedVcMetaData(key, encryptionKey);
+      sendErrorEvent(
+        getErrorEventData(
+          TelemetryConstants.FlowType.fetchData,
+          TelemetryConstants.ErrorId.tampered,
+          e.message,
+        ),
+      );
+      throw e;
+    }
     if (
       e.message.includes(tamperedErrorMessageString) ||
       e.message.includes(keyinvalidatedString) ||
-      e.message === ENOENT ||
       e instanceof BiometricCancellationError ||
       e.message.includes('Key not found') // this error happens when previous get Item calls failed due to key invalidation and data and keys are deleted
     ) {
@@ -739,6 +749,13 @@ export async function removeItem(
     }
   } catch (e) {
     console.error('error removeItem:', e);
+    sendErrorEvent(
+      getErrorEventData(
+        TelemetryConstants.FlowType.remove,
+        TelemetryConstants.ErrorId.failure,
+        e.message,
+      ),
+    );
     throw e;
   }
 }
@@ -764,6 +781,13 @@ export async function removeVCMetaData(
     await setItem(key, newList, encryptionKey);
   } catch (e) {
     console.error('error remove VC metadata:', e);
+    sendErrorEvent(
+      getErrorEventData(
+        TelemetryConstants.FlowType.removeVcMetadata,
+        TelemetryConstants.ErrorId.failure,
+        e.message,
+      ),
+    );
     throw e;
   }
 }
@@ -796,6 +820,13 @@ export async function removeTamperedVcMetaData(
     }
   } catch (e) {
     console.error('error while removing VC item metadata:', e);
+    sendErrorEvent(
+      getErrorEventData(
+        TelemetryConstants.FlowType.remove,
+        TelemetryConstants.ErrorId.tampered,
+        e.message,
+      ),
+    );
     throw e;
   }
 }
@@ -834,6 +865,13 @@ export async function removeItems(
     await setItem(key, newList, encryptionKey);
   } catch (e) {
     console.error('error removeItems:', e);
+    sendErrorEvent(
+      getErrorEventData(
+        TelemetryConstants.FlowType.remove,
+        TelemetryConstants.ErrorId.failure,
+        e.message,
+      ),
+    );
     throw e;
   }
 }

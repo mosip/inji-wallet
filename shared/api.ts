@@ -1,9 +1,21 @@
 import {request} from './request';
-import {API_CACHED_STORAGE_KEYS} from './storage';
-import {COMMON_PROPS_KEY} from './commonprops/commonProps';
+import {
+  API_CACHED_STORAGE_KEYS,
+  COMMON_PROPS_KEY,
+  changeCrendetialRegistry,
+} from './constants';
 import {INITIAL_CONFIG} from './InitialConfig';
 import Keychain from 'react-native-keychain';
 import {getItem, setItem} from '../machines/store';
+import {faceMatchConfig} from './commonUtil';
+import {configure} from '@iriscan/biometric-sdk-react-native';
+import {
+  getErrorEventData,
+  getImpressionEventData,
+  sendErrorEvent,
+  sendImpressionEvent,
+} from './telemetry/TelemetryUtils';
+import {TelemetryConstants} from './telemetry/TelemetryConstants';
 
 export const API_URLS: ApiUrls = {
   issuersList: {
@@ -82,6 +94,11 @@ export const API_URLS: ApiUrls = {
     method: 'POST',
     buildURL: (): `/${string}` => '/v1/esignet/linked-authorization/v2/consent',
   },
+  googleAccountProfileInfo: {
+    method: 'GET',
+    buildURL: (accessToken: string): `${string}` =>
+      `https://www.googleapis.com/oauth2/v1/userinfo?alt=json&access_token=${accessToken}`,
+  },
 };
 
 export const API = {
@@ -114,6 +131,13 @@ export const API = {
     );
     return response.response;
   },
+  getGoogleAccountProfileInfo: async accessToken =>
+    await request(
+      API_URLS.googleAccountProfileInfo.method,
+      API_URLS.googleAccountProfileInfo.buildURL(accessToken),
+      undefined,
+      '',
+    ),
 };
 
 export const CACHED_API = {
@@ -249,6 +273,60 @@ async function generateCacheAPIFunctionWithAPIPreference(
   }
 }
 
+export default async function getAllConfigurations(
+  host = undefined,
+  isCachePreferred = true,
+) {
+  host && changeCrendetialRegistry(host);
+  return await CACHED_API.getAllProperties(isCachePreferred);
+}
+
+export async function downloadModel() {
+  try {
+    console.log('restart Face model init');
+    var injiProp = await getAllConfigurations();
+    const maxRetryStr = injiProp.modelDownloadMaxRetry;
+    const maxRetry = parseInt(maxRetryStr);
+    const resp: string = injiProp != null ? injiProp.faceSdkModelUrl : null;
+
+    if (resp != null) {
+      for (let counter = 0; counter < maxRetry; counter++) {
+        let config = faceMatchConfig(resp);
+        var result = await configure(config);
+        console.log('model download result is = ' + result);
+        if (result) {
+          sendImpressionEvent(
+            getImpressionEventData(
+              TelemetryConstants.FlowType.faceModelInit,
+              TelemetryConstants.Screens.home,
+              {status: TelemetryConstants.EndEventStatus.success},
+            ),
+          );
+          break;
+        } else if (!result && counter === maxRetry - 1) {
+          sendErrorEvent(
+            getErrorEventData(
+              TelemetryConstants.FlowType.faceModelInit,
+              TelemetryConstants.ErrorId.failure,
+              TelemetryConstants.ErrorMessage.faceModelInitFailed,
+            ),
+          );
+        }
+      }
+    }
+  } catch (error) {
+    sendErrorEvent(
+      getErrorEventData(
+        TelemetryConstants.FlowType.faceModelInit,
+        TelemetryConstants.ErrorId.failure,
+        TelemetryConstants.ErrorMessage.faceModelInitFailed,
+        error,
+      ),
+    );
+    console.log(error);
+  }
+}
+
 type Api_Params = {
   method: 'GET' | 'POST' | 'PATCH'; // Define the HTTP methods
   buildURL: (param?: string) => `/${string}`; // Define the buildURL function signature
@@ -273,4 +351,10 @@ type ApiUrls = {
   linkTransaction: Api_Params;
   authenticate: Api_Params;
   sendConsent: Api_Params;
+  googleAccountProfileInfo: Api_Params;
 };
+
+export interface DownloadProps {
+  maxDownloadLimit: number;
+  downloadInterval: number;
+}

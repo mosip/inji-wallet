@@ -22,6 +22,7 @@ public class BasePage {
         this.driver = driver;
         PageFactory.initElements(new AppiumFieldDecorator(driver), this);
     }
+
     protected boolean isElementDisplayed(By locator) {
         return isElementDisplayed(locator, 30);
     }
@@ -171,18 +172,4 @@ public class BasePage {
        }
    }
 
-    public  void enableAirplaneModeOnBrowserStack() {
-        String sessionid = String.valueOf(driver.getSessionId());
-        try {
-
-            String userName= UinGenerationUtil.getKeyValueFromYaml("/androidConfig.yml","userName");
-            String accessKey = UinGenerationUtil.getKeyValueFromYaml("/androidConfig.yml","accessKey");
-            ProcessBuilder processBuilder;
-            processBuilder = new ProcessBuilder("cmd.exe", "/c", "curl -u \"anupnehe_w1PZQx:Zenzg8a3RikxvTUmELFm\" -H \"Content-Type: application/json\" -d '{\"networkProfile\":\"no-network\"}' -X PUT \"https://api-cloud.browserstack.com/app-automate/sessions/"+sessionid+"/update_network.json");
-            processBuilder.redirectErrorStream(true);
-            processBuilder.start();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
 }

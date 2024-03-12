@@ -16,6 +16,7 @@ export const GetVcModal: React.FC<GetVcModalProps> = props => {
         service={props.service}
         isVisible={controller.isAcceptingUinInput}
         onDismiss={controller.DISMISS}
+        arrowLeft={true}
       />
 
       <OtpVerificationModal
@@ -24,6 +25,8 @@ export const GetVcModal: React.FC<GetVcModalProps> = props => {
         onDismiss={controller.DISMISS}
         onInputDone={controller.INPUT_OTP}
         error={controller.otpError}
+        phone={controller.phoneNumber}
+        email={controller.email}
         resend={controller.RESEND_OTP}
         flow={TelemetryConstants.FlowType.getVcUsingAid}
       />

@@ -4,9 +4,9 @@ import BaseTest.AndroidBaseTest;
 import inji.api.BaseTestCase;
 import inji.constants.Target;
 import inji.pages.*;
-import inji.utils.IosUtil;
 import inji.utils.TestDataReader;
 import org.testng.annotations.Test;
+import inji.utils.IosUtil;
 
 import static org.testng.Assert.*;
 

@@ -59,7 +59,7 @@ export const getFieldValue = (
       );
     default: {
       const fieldValue = verifiableCredential?.credentialSubject[field];
-      if (Array.isArray(fieldValue) && typeof fieldValue[0] != Object) {
+      if (Array.isArray(fieldValue) && typeof fieldValue[0] != 'object') {
         return fieldValue;
       }
       return getLocalizedField(fieldValue);
@@ -88,16 +88,6 @@ export const setBackgroundColour = (wellknown: any) => {
       backgroundColor: wellknown.credentials_supported[0].display[0]
         ?.background_color
         ? wellknown.credentials_supported[0].display[0].background_color
-        : Theme.Colors.textValue,
-    };
-  }
-};
-
-export const setTextColor = (wellknown: any) => {
-  if (wellknown && wellknown?.credentials_supported[0]?.display) {
-    return {
-      color: wellknown.credentials_supported[0]?.display[0]?.text_color
-        ? wellknown.credentials_supported[0].display[0].text_color
         : Theme.Colors.textValue,
     };
   }

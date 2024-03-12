@@ -23,4 +23,6 @@ export interface OtpVerificationModalProps extends ModalProps {
   error?: string;
   resend?: () => void;
   flow: string;
+  phone: string;
+  email: string;
 }

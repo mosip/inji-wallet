@@ -8,6 +8,8 @@ import {
   selectOtpError,
   selectIsAcceptingIdInput,
   selectIsCancellingDownload,
+  selectIsPhoneNumber,
+  selectIsEmail,
 } from './AddVcModalMachine';
 
 export function useAddVcModal({service}: AddVcModalProps) {
@@ -19,6 +21,8 @@ export function useAddVcModal({service}: AddVcModalProps) {
     isAcceptingUinInput: useSelector(service, selectIsAcceptingIdInput),
     isAcceptingOtpInput: useSelector(service, selectIsAcceptingOtpInput),
     isDownloadCancelled: useSelector(service, selectIsCancellingDownload),
+    isPhoneNumber: useSelector(service, selectIsPhoneNumber),
+    isEmail: useSelector(service, selectIsEmail),
 
     INPUT_OTP: (otp: string) => service.send(AddVcModalEvents.INPUT_OTP(otp)),
 

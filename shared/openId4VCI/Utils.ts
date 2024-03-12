@@ -3,9 +3,8 @@ import jose from 'node-jose';
 import {isIOS} from '../constants';
 import pem2jwk from 'simple-pem2jwk';
 import {displayType, issuerType} from '../../machines/issuersMachine';
-import getAllConfigurations from '../commonprops/commonProps';
+import getAllConfigurations from '../api';
 
-import {VCMetadata} from '../VCMetadata';
 import i18next from 'i18next';
 import {getJWT} from '../cryptoutil/cryptoUtil';
 import {CACHED_API} from '../api';
@@ -19,6 +18,7 @@ export const Protocols = {
 };
 
 export const Issuers = {
+  Mosip: '',
   Sunbird: 'Sunbird',
   ESignet: 'ESignet',
 };
@@ -39,16 +39,18 @@ export function getIdType(issuer: string | undefined): string {
 export const ID_TYPE = {
   MOSIPVerifiableCredential: i18n.t('VcDetails:nationalCard'),
   InsuranceCredential: i18n.t('VcDetails:insuranceCard'),
+  OpenG2PBeneficiaryVerifiableCredential: i18n.t('VcDetails:beneficiaryCard'),
+  OpenG2PRegistryVerifiableCredential: i18n.t('VcDetails:socialRegistryCard'),
 };
 
 export const getIDType = (verifiableCredential: VerifiableCredential) => {
   return ID_TYPE[verifiableCredential.type[1]];
 };
 
-export const ACTIVATION_NOT_NEEDED = [Issuers.Sunbird];
+export const ACTIVATION_NEEDED = [Issuers.ESignet, Issuers.Mosip];
 
 export const isActivationNeeded = (issuer: string) => {
-  return ACTIVATION_NOT_NEEDED.indexOf(issuer) === -1;
+  return ACTIVATION_NEEDED.indexOf(issuer) !== -1;
 };
 
 export const Issuers_Key_Ref = 'OpenId4VCI_KeyPair';
@@ -126,32 +128,6 @@ export const getDisplayObjectForCurrentLanguage = (
     displayType = display.filter(obj => obj.language == 'en')[0];
   }
   return displayType;
-};
-
-export const getVCMetadata = context => {
-  const [issuer, protocol, requestId] =
-    context.credentialWrapper?.identifier.split(':');
-  // TODO(temp-solution): This is a temporary solution and will not work for every issuer
-  // This should be re-written in a more standards compliant way later.
-  if (issuer === Issuers.Sunbird) {
-    return VCMetadata.fromVC({
-      requestId: requestId ? requestId : null,
-      issuer: issuer,
-      protocol: protocol,
-      id: context.verifiableCredential?.credential.credentialSubject
-        .policyNumber,
-      timestamp: context.timestamp ?? '',
-    });
-  }
-  return VCMetadata.fromVC({
-    requestId: requestId ? requestId : null,
-    issuer: issuer,
-    protocol: protocol,
-    id: context.verifiableCredential?.credential.credentialSubject.UIN
-      ? context.verifiableCredential?.credential.credentialSubject.UIN
-      : context.verifiableCredential?.credential.credentialSubject.VID,
-    timestamp: context.timestamp ?? '',
-  });
 };
 
 export const constructAuthorizationConfiguration = (
