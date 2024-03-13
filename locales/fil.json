@@ -80,10 +80,6 @@
       "savingFailed": {
         "title": "Nabigong i-save ang Card",
         "message": "Nagkaproblema habang sine-save ang Card sa tindahan."
-      },
-      "diskFullError": {
-        "title": "Nabigong i-save ang Card",
-        "message": "Wala nang mga Card na matatanggap o mai-save dahil puno na ang Data ng App."
       }
     }
   },
