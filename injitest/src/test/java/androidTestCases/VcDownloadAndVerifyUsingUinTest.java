@@ -284,7 +284,7 @@ public class VcDownloadAndVerifyUsingUinTest extends AndroidBaseTest {
         OtpVerificationPage otpVerification = retrieveIdPage.setEnterIdTextBox(uin).clickOnGenerateCardButton();
 
         assertTrue(otpVerification.isOtpVerificationPageLoaded(), "Verify if otp verification page is displayed");
-        otpVerification.verifyOtpVerificationTimerCompleted();
+        otpVerification.WatingTimeForVerificationTimerComplete();
         assertTrue(otpVerification.verifyResendCodeButtonDisplayedEnabled(), "Verify if resend code is enabled");
         otpVerification.clickOnResendButton();
         assertTrue(otpVerification.verifyOtpVerificationTimerDisplayedAfterClickOnResend(), "verify is You can resend the code displayed again after click on resend button ");

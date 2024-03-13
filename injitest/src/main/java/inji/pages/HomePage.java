@@ -57,7 +57,7 @@ public class HomePage extends BasePage {
     private WebElement bringYourDigitalIdentity;
 
     @AndroidFindBy(accessibility = "noInternetConnectionErrorTitle")
-    @iOSXCUITFindBy(accessibility = "errorTitle")
+    @iOSXCUITFindBy(accessibility = "noInternetConnectionErrorTitle")
     private WebElement noInternetConnection;
 
     @AndroidFindBy(accessibility = "share")

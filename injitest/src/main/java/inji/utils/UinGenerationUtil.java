@@ -2,9 +2,8 @@ package inji.utils;
 import org.yaml.snakeyaml.Yaml;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
+
+import java.io.*;
 import java.util.Map;
 import java.util.Random;
 import java.io.File;
@@ -82,10 +81,13 @@ public class UinGenerationUtil {
         return randomNumber;
     }
 
-
-
-    public static String getKeyValueFromYaml(String filePath, String key) throws IOException {
-        FileReader reader = new FileReader(System.getProperty("user.dir")+filePath);
+    public static String getKeyValueFromYaml(String filePath, String key) {
+        FileReader reader = null;
+        try {
+            reader = new FileReader(System.getProperty("user.dir")+filePath);
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
         Yaml yaml = new Yaml();
         Object data = yaml.load(reader);
 
@@ -97,7 +99,5 @@ public class UinGenerationUtil {
             throw new RuntimeException("Invalid YAML format, expected a map");
         }
     }
-
-
 
 }
