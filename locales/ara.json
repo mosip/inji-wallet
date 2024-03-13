@@ -443,7 +443,7 @@
     "verifyAndSave": "تحقق وحفظ",
     "reject": "يرفض",
     "discard": "ينبذ",
-    "goToReceivedVCTab": "عرض تم استلامه بطاقة",
+    "goToReceivedVCTab": "عرض البطاقة المستلمة",
     "saving": "جارٍ حفظ البطاقة",
     "errors": {
       "savingFailed": {

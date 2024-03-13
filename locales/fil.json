@@ -440,19 +440,14 @@
   "ReceiveVcScreen": {
     "header": "Card mga detalye",
     "save": "I-save ang card",
-    "verifyAndSave": "I-verify at i-save",
     "reject": "Tanggihan",
     "discard": "Itapon",
-    "goToReceivedVCTab": "Natanggap na View card",
+    "goToReceivedVCTab": "Tingnan ang Natanggap na card",
     "saving": "Sine-save ang card",
     "errors": {
       "savingFailed": {
         "title": "Nabigong i-save ang card!",
         "message": "Dahil sa teknikal na error, hindi namin na-save ang card. Mangyaring hilingin ang nagpadala na maglipat muli."
-      },
-      "diskFullError": {
-        "title": "Nabigong i-save ang cards",
-        "message": "Wala nang cards ang matatanggap o mai-save dahil puno na ang Data ng App."
       }
     }
   },
