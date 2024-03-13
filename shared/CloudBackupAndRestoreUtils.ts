@@ -382,7 +382,7 @@ class Cloud {
       // return the path
       return Promise.resolve(fileName.split('.zip')[0]);
     } catch (error) {
-      console.log('error while downloading backup file ', error);
+      console.error('error while downloading backup file ', error);
       let downloadError;
       if (this.isNetworkError(error)) {
         downloadError = NETWORK_REQUEST_FAILED;

@@ -48,7 +48,7 @@ export async function request(
         signal: controller.signal,
       });
     } catch (error) {
-      console.log(
+      console.error(
         `Error occurred while making request: ${host + path}: ${error}`,
       );
       if (error.name === 'AbortError') {

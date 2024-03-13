@@ -161,7 +161,7 @@ export const getJWK = async publicKey => {
       use: 'sig',
     };
   } catch (e) {
-    console.log(
+    console.error(
       'Exception occured while constructing JWK from PEM : ' +
         publicKey +
         '  Exception is ',
@@ -188,7 +188,6 @@ export const getCredentialIssuersWellKnownConfig = async (
         response?.credentials_supported[0].credential_definition
           .credentialSubject,
       );
-      console.log('fields => ', fields);
     }
   }
   return {

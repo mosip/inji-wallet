@@ -241,9 +241,7 @@ export const appMachine = model.createMachine(
       }),
 
       logStoreEvents: context => {
-        if (__DEV__) {
-          context.serviceRefs.store.subscribe(logState);
-        }
+        context.serviceRefs.store.subscribe(logState);
       },
 
       spawnServiceActors: model.assign({
@@ -295,19 +293,19 @@ export const appMachine = model.createMachine(
       }),
 
       logServiceEvents: context => {
-        if (__DEV__) {
-          context.serviceRefs.auth.subscribe(logState);
-          context.serviceRefs.vc.subscribe(logState);
-          context.serviceRefs.settings.subscribe(logState);
-          context.serviceRefs.activityLog.subscribe(logState);
-          context.serviceRefs.scan.subscribe(logState);
-          context.serviceRefs.backup.subscribe(logState);
-          context.serviceRefs.backupRestore.subscribe(logState);
+        context.serviceRefs.auth.subscribe(logState);
+        context.serviceRefs.vc.subscribe(logState);
+        context.serviceRefs.settings.subscribe(logState);
+        context.serviceRefs.activityLog.subscribe(logState);
+        context.serviceRefs.scan.subscribe(logState);
+        context.serviceRefs.backup.subscribe(logState);
+        context.serviceRefs.backupRestore.subscribe(logState);
 
-          if (isAndroid()) {
-            context.serviceRefs.request.subscribe(logState);
-          }
+        if (isAndroid()) {
+          context.serviceRefs.request.subscribe(logState);
         }
+
+        context.serviceRefs.revoke.subscribe(logState);
       },
 
       setAppInfo: model.assign({
