@@ -9,7 +9,6 @@ export const TelemetryConstants = {
     vcActivationFromKebab: 'VC Activation from kebab popup',
     appOnboarding: 'App Onboarding',
     appLogin: 'App Login',
-    vcLockOrRevoke: 'VC Lock / VC Revoke',
     getVcUsingAid: 'Get VC using AID',
     fetchData: 'Fetch Data',
     dataBackup: 'Data Backup',

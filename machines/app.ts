@@ -13,7 +13,6 @@ import {
   requestMachine,
 } from './bleShare/request/requestMachine';
 import {createScanMachine, scanMachine} from './bleShare/scan/scanMachine';
-import {createRevokeMachine, revokeVidsMachine} from './revoke';
 import {pure, respond} from 'xstate/lib/actions';
 import {AppServices} from '../shared/GlobalContext';
 import {
@@ -291,12 +290,6 @@ export const appMachine = model.createMachine(
               requestMachine.id,
             );
           }
-
-          serviceRefs.revoke = spawn(
-            createRevokeMachine(serviceRefs),
-            revokeVidsMachine.id,
-          );
-
           return serviceRefs;
         },
       }),
@@ -314,8 +307,6 @@ export const appMachine = model.createMachine(
           if (isAndroid()) {
             context.serviceRefs.request.subscribe(logState);
           }
-
-          context.serviceRefs.revoke.subscribe(logState);
         }
       },
 
