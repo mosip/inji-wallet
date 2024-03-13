@@ -168,8 +168,7 @@ public class NoNetworkAndroidTest extends AndroidBaseTest {
         assertTrue(settingsPage.isSettingPageLoaded(), "Verify if setting page is displayed");
         settingsPage.clickOnLanguage();
 
-        assertTrue(settingsPage.verifyLanguagesInLanguageFilter(), "Verify if all languages are shown in language filter");
-        AndroidUtil.disableAirplaneMode();
+        assertTrue(settingsPage.verifyLanguagesInLanguageFilter("ANDROID"), "Verify if all languages are shown in language filter");
     }
     
     @Test
