@@ -22,6 +22,7 @@ import {
   isAndroid,
   isIOS,
   MY_LOGIN_STORE_KEY,
+  FACE_AUTH_CONSENT,
 } from '../../../shared/constants';
 import {subscribe} from '../../../shared/openIdBLE/walletEventHandler';
 import {
@@ -78,6 +79,7 @@ const model = createModel(
     shareLogType: '' as ActivityLogType,
     QrLoginRef: {} as ActorRefFrom<typeof qrLoginMachine>,
     linkCode: '',
+    showFaceAuthConsent: true as boolean,
     readyForBluetoothStateCheck: false,
     showFaceCaptureSuccessBanner: false,
   },
@@ -123,6 +125,9 @@ const model = createModel(
       VP_CREATED: (vp: VerifiablePresentation) => ({vp}),
       TOGGLE_USER_CONSENT: () => ({}),
       RESET: () => ({}),
+      FACE_VERIFICATION_CONSENT: (isConsentGiven: boolean) => ({
+        isConsentGiven,
+      }),
     },
   },
 );
@@ -155,7 +160,7 @@ export const scanMachine =
           target: '#scan.disconnectDevice',
         },
         SCREEN_FOCUS: {
-          target: '.checkStorage',
+          target: 'checkStorage',
         },
         BLE_ERROR: {
           target: '.handlingBleError',
@@ -392,16 +397,25 @@ export const scanMachine =
           },
           on: {
             DISCONNECT: {
-              target: '#scan.findingConnection',
+              target: '#scan.checkFaceAuthConsent',
               actions: ['resetFlowType', 'resetSelectedVc'],
               internal: false,
             },
           },
           after: {
             DESTROY_TIMEOUT: {
-              target: '#scan.findingConnection',
+              target: '#scan.checkFaceAuthConsent',
               actions: [],
               internal: false,
+            },
+          },
+        },
+        checkFaceAuthConsent: {
+          entry: 'getFaceAuthConsent',
+          on: {
+            STORE_RESPONSE: {
+              actions: 'updateShowFaceAuthConsent',
+              target: '#scan.findingConnection',
             },
           },
         },
@@ -434,10 +448,12 @@ export const scanMachine =
           invoke: {
             id: 'QrLogin',
             src: qrLoginMachine,
-            onDone: '.storing',
+            onDone: {
+              target: '.storing',
+            },
           },
           on: {
-            DISMISS: 'findingConnection',
+            DISMISS: '#scan.checkFaceAuthConsent',
           },
           initial: 'idle',
           states: {
@@ -532,9 +548,15 @@ export const scanMachine =
                 SELECT_VC: {
                   actions: ['setSelectedVc', 'setFlowType'],
                 },
-                VERIFY_AND_ACCEPT_REQUEST: {
-                  target: 'verifyingIdentity',
-                },
+                VERIFY_AND_ACCEPT_REQUEST: [
+                  {
+                    cond: 'showFaceAuthConsentScreen',
+                    target: 'faceVerificationConsent',
+                  },
+                  {
+                    target: 'verifyingIdentity',
+                  },
+                ],
                 ACCEPT_REQUEST: {
                   target: 'sendingVc',
                   actions: [
@@ -651,6 +673,20 @@ export const scanMachine =
             navigateToHistory: {
               entry: ['resetFlowType', 'resetSelectedVc'],
               always: '#scan.disconnected',
+            },
+            faceVerificationConsent: {
+              on: {
+                FACE_VERIFICATION_CONSENT: {
+                  actions: [
+                    'setShowFaceAuthConsent',
+                    'storeShowFaceAuthConsent',
+                  ],
+                  target: 'verifyingIdentity',
+                },
+                DISMISS: {
+                  target: '#scan.reviewing.selectingVc',
+                },
+              },
             },
             verifyingIdentity: {
               on: {
@@ -815,13 +851,39 @@ export const scanMachine =
           },
         }),
 
+        updateShowFaceAuthConsent: model.assign({
+          showFaceAuthConsent: (_, event) => {
+            return event.response || event.response === null;
+          },
+        }),
+
+        setShowFaceAuthConsent: model.assign({
+          showFaceAuthConsent: (_, event) => {
+            return !event.isConsentGiven;
+          },
+        }),
+
+        getFaceAuthConsent: send(StoreEvents.GET(FACE_AUTH_CONSENT), {
+          to: context => context.serviceRefs.store,
+        }),
+
+        storeShowFaceAuthConsent: send(
+          (context, event) =>
+            StoreEvents.SET(FACE_AUTH_CONSENT, !event.isConsentGiven),
+          {
+            to: context => context.serviceRefs.store,
+          },
+        ),
+
         sendScanData: context =>
           context.QrLoginRef.send({
             type: 'GET',
             linkCode: context.linkCode,
             flowType: context.flowType,
             selectedVc: context.selectedVc,
+            faceAuthConsentGiven: context.showFaceAuthConsent,
           }),
+
         openBluetoothSettings: () => {
           isAndroid()
             ? BluetoothStateManager.openSettings().catch()
@@ -1269,6 +1331,10 @@ export const scanMachine =
       },
 
       guards: {
+        showFaceAuthConsentScreen: context => {
+          return context.showFaceAuthConsent;
+        },
+
         // sample: 'OPENID4VP://connect:?name=OVPMOSIP&key=69dc92a2cc91f02258aa8094d6e2b62877f5b6498924fbaedaaa46af30abb364'
         isOpenIdQr: (_context, event) =>
           event.params.startsWith('OPENID4VP://'),
@@ -1321,4 +1387,8 @@ export function selectIsMinimumStorageRequiredForAuditEntryLimitReached(
   state: State,
 ) {
   return state.matches('restrictSharingVc');
+}
+
+export function selectIsFaceVerificationConsent(state: State) {
+  return state.matches('reviewing.faceVerificationConsent');
 }

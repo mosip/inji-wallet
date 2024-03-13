@@ -11,6 +11,7 @@ import {QrConsent} from './QrConsent';
 import {QrLoginRef} from '../../machines/QrLoginMachine';
 import {Icon} from 'react-native-elements';
 import {View} from 'react-native';
+import {FaceVerificationAlertOverlay} from '../Scan/FaceVerificationAlertOverlay';
 
 export const QrLogin: React.FC<QrLoginProps> = props => {
   const controller = useQrLogin(props);
@@ -56,6 +57,12 @@ export const QrLogin: React.FC<QrLoginProps> = props => {
           isInvalidIdentity={true}
           onDismiss={controller.DISMISS}
           onRetryVerification={controller.RETRY_VERIFICATION}
+        />
+
+        <FaceVerificationAlertOverlay
+          isVisible={controller.isFaceVerificationConsent}
+          onConfirm={controller.FACE_VERIFICATION_CONSENT}
+          close={controller.DISMISS}
         />
 
         <QrConsent

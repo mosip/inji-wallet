@@ -1,3 +1,4 @@
+
 // This file was automatically generated. Edits will be overwritten
 
 export interface Typegen0 {
@@ -57,7 +58,7 @@ export interface Typegen0 {
       | ''
       | 'BLE_ERROR'
       | 'DISCONNECT'
-      | 'RESET'
+      | 'DISMISS'
       | 'RETRY'
       | 'SCREEN_BLUR'
       | 'SCREEN_FOCUS'
@@ -66,8 +67,10 @@ export interface Typegen0 {
       | 'DISCONNECT'
       | 'DISMISS'
       | 'xstate.after(DESTROY_TIMEOUT)#scan.clearingConnection';
+    getFaceAuthConsent: 'SCREEN_FOCUS';
     logFailedVerification: 'FACE_INVALID';
     logShared: 'VC_ACCEPTED';
+    logValue: 'VERIFY_AND_ACCEPT_REQUEST';
     openAppPermission: 'GOTO_SETTINGS' | 'LOCATION_REQUEST';
     openBluetoothSettings: 'GOTO_SETTINGS';
     registerLoggers:
@@ -78,29 +81,8 @@ export interface Typegen0 {
       | 'DISCONNECT'
       | 'DISMISS'
       | 'SCREEN_BLUR'
-      | 'xstate.after(DESTROY_TIMEOUT)#scan.clearingConnection'
-      | 'xstate.init';
+      | 'SCREEN_FOCUS'
     resetFaceCaptureBannerStatus: 'ACCEPT_REQUEST' | 'CLOSE_BANNER';
-    resetFlowType:
-      | ''
-      | 'CANCEL'
-      | 'DISCONNECT'
-      | 'DISMISS'
-      | 'GOTO_HISTORY'
-      | 'RETRY'
-      | 'SCREEN_BLUR'
-      | 'SELECT_VC'
-      | 'xstate.init';
-    resetSelectedVc:
-      | ''
-      | 'CANCEL'
-      | 'DISCONNECT'
-      | 'DISMISS'
-      | 'GOTO_HISTORY'
-      | 'RETRY'
-      | 'SCREEN_BLUR'
-      | 'SELECT_VC'
-      | 'xstate.init';
     resetShouldVerifyPresence: 'CANCEL' | 'CONNECTED' | 'DISMISS' | 'RETRY';
     sendBLEConnectionErrorEvent: 'BLE_ERROR';
     sendScanData: 'SCAN';
@@ -121,15 +103,19 @@ export interface Typegen0 {
     setSenderInfo: 'CONNECTED';
     setShareLogTypeUnverified: 'ACCEPT_REQUEST';
     setShareLogTypeVerified: 'FACE_VALID';
+    setShowFaceAuthConsent: 'FACE_VERIFICATION_CONSENT' | 'STORE_RESPONSE';
     setUri: 'SCAN';
     storeLoginItem: 'done.invoke.QrLogin';
+    storeShowFaceAuthConsent: 'FACE_VERIFICATION_CONSENT';
     storingActivityLog: 'STORE_RESPONSE';
     toggleShouldVerifyPresence: 'TOGGLE_USER_CONSENT';
-    updateFaceCaptureBannerStatus: 'FACE_VALID';
   };
   eventsCausingDelays: {
     CONNECTION_TIMEOUT: 'SCAN';
-    DESTROY_TIMEOUT: '' | 'DISMISS' | 'LOCATION_ENABLED' | 'RETRY';
+    DESTROY_TIMEOUT: '' | 'DISMISS' | 'LOCATION_ENABLED';
+    toggleShouldVerifyPresence: 'TOGGLE_USER_CONSENT';
+    updateFaceCaptureBannerStatus: 'FACE_VALID';
+  };
     SHARING_TIMEOUT:
       | 'ACCEPT_REQUEST'
       | 'FACE_VALID'
@@ -140,6 +126,7 @@ export interface Typegen0 {
     isMinimumStorageRequiredForAuditEntryReached: 'done.invoke.scan.checkStorage:invocation[0]';
     isOpenIdQr: 'SCAN';
     isQrLogin: 'SCAN';
+    showFaceAuthConsentScreen: 'VERIFY_AND_ACCEPT_REQUEST';
     uptoAndroid11: '' | 'START_PERMISSION_CHECK';
   };
   eventsCausingServices: {
@@ -153,10 +140,14 @@ export interface Typegen0 {
     checkLocationPermission: 'APP_ACTIVE' | 'LOCATION_ENABLED';
     checkLocationStatus: '' | 'LOCATION_REQUEST';
     checkNearByDevicesPermission: 'APP_ACTIVE' | 'START_PERMISSION_CHECK';
-    checkStorageAvailability: 'RESET' | 'SCREEN_FOCUS';
+    checkStorageAvailability: 'RESET' | 'STORE_RESPONSE';
     createVp: never;
-    disconnect: '' | 'DISMISS' | 'LOCATION_ENABLED' | 'RETRY' | 'SCREEN_BLUR';
-    monitorConnection: 'DISMISS' | 'SCREEN_BLUR' | 'xstate.init';
+    disconnect: '' | 'DISMISS' | 'LOCATION_ENABLED' | 'SCREEN_BLUR';
+    monitorConnection:
+      | 'DISMISS'
+      | 'SCREEN_BLUR'
+      | 'SCREEN_FOCUS'
+      | 'xstate.init';
     requestBluetooth: 'BLUETOOTH_STATE_DISABLED';
     requestNearByDevicesPermission: 'NEARBY_DISABLED';
     requestToEnableLocationPermission: 'LOCATION_DISABLED';
@@ -176,6 +167,7 @@ export interface Typegen0 {
     | 'checkBluetoothState.checking'
     | 'checkBluetoothState.enabled'
     | 'checkBluetoothState.requesting'
+    | 'checkFaceAuthConsent'
     | 'checkNearbyDevicesPermission'
     | 'checkNearbyDevicesPermission.checking'
     | 'checkNearbyDevicesPermission.enabled'
@@ -207,6 +199,7 @@ export interface Typegen0 {
     | 'reviewing.cancelling'
     | 'reviewing.creatingVp'
     | 'reviewing.disconnect'
+    | 'reviewing.faceVerificationConsent'
     | 'reviewing.invalidIdentity'
     | 'reviewing.navigateToHistory'
     | 'reviewing.rejected'
@@ -238,6 +231,7 @@ export interface Typegen0 {
           | 'cancelling'
           | 'creatingVp'
           | 'disconnect'
+          | 'faceVerificationConsent'
           | 'invalidIdentity'
           | 'navigateToHistory'
           | 'rejected'

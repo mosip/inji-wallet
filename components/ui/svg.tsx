@@ -3,6 +3,9 @@ import Svg, {Image} from 'react-native-svg';
 import {Theme} from './styleUtils';
 import Home from '../../assets/Home_tab_icon.svg';
 import History from '../../assets/History_tab_icon.svg';
+import ShareWithSelfie from '../../assets/Share_with_selfie.svg';
+import CheckedIcon from '../../assets/CheckedIcon.svg';
+import UnCheckedIcon from '../../assets/UnCheckedIcon.svg';
 import Share from '../../assets/Scan_tab_icon.svg';
 import Settings from '../../assets/Settings.svg';
 import PinICon from '../../assets/Pin_Icon.svg';
@@ -419,6 +422,26 @@ export class SvgImage {
         {...testIDProps('infoIcon')}
       />
     );
+  }
+
+  static ShareWithSelfie() {
+    return (
+      <ShareWithSelfie
+        color1={Theme.Colors.linearGradientStart}
+        color2={Theme.Colors.linearGradientEnd}
+        {...testIDProps('shareWithSelfieIcon')}
+      />
+    );
+  }
+
+  static CheckedIcon() {
+    return (
+      <CheckedIcon color1={Theme.Colors.Icon} {...testIDProps('checkedIcon')} />
+    );
+  }
+
+  static UnCheckedIcon() {
+    return <UnCheckedIcon {...testIDProps('unCheckedIcon')} />;
   }
 
   static GoogleDriveIcon(width, height) {

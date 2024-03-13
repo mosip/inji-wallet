@@ -23,6 +23,7 @@ import {
   getVCsOrderedByPinStatus,
 } from '../../shared/Utils';
 import {Issuers} from '../../shared/openId4VCI/Utils';
+import {FaceVerificationAlertOverlay} from './FaceVerificationAlertOverlay';
 import {Error} from '../../components/ui/Error';
 import {SvgImage} from '../../components/ui/svg';
 
@@ -149,6 +150,12 @@ export const SendVcScreen: React.FC = () => {
         isInvalidIdentity={controller.isInvalidIdentity}
         onDismiss={controller.DISMISS}
         onRetryVerification={controller.RETRY_VERIFICATION}
+      />
+
+      <FaceVerificationAlertOverlay
+        isVisible={controller.isFaceVerificationConsent}
+        onConfirm={controller.FACE_VERIFICATION_CONSENT}
+        close={controller.DISMISS}
       />
 
       <Error

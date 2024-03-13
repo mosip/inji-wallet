@@ -42,6 +42,8 @@ export const LAST_BACKUP_DETAILS = 'lastBackupDetails';
 
 export const APP_ID_LENGTH = 12;
 
+export const FACE_AUTH_CONSENT = 'faceAuthConsent';
+
 //Banner Status
 export const BANNER_TYPE_SUCCESS = 'success';
 

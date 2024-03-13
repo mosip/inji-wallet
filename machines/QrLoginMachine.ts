@@ -8,7 +8,11 @@ import {
 } from 'xstate';
 import {createModel} from 'xstate/lib/model';
 import {AppServices} from '../shared/GlobalContext';
-import {ESIGNET_BASE_URL, MY_VCS_STORE_KEY} from '../shared/constants';
+import {
+  ESIGNET_BASE_URL,
+  FACE_AUTH_CONSENT,
+  MY_VCS_STORE_KEY,
+} from '../shared/constants';
 import {StoreEvents} from './store';
 import {linkTransactionResponse, VC} from '../types/VC/ExistingMosipVC/vc';
 import {request} from '../shared/request';
@@ -54,6 +58,7 @@ const model = createModel(
     consentClaims: ['name', 'picture'],
     isSharing: {},
     linkedTransactionId: '',
+    showFaceAuthConsent: true as boolean,
   },
   {
     events: {
@@ -67,16 +72,25 @@ const model = createModel(
       }),
       DISMISS: () => ({}),
       CONFIRM: () => ({}),
-      GET: (linkCode: string, flowType: string, selectedVc: VC) => ({
+      GET: (
+        linkCode: string,
+        flowType: string,
+        selectedVc: VC,
+        faceAuthConsentGiven: boolean,
+      ) => ({
         linkCode,
         flowType,
         selectedVc,
+        faceAuthConsentGiven,
       }),
       VERIFY: () => ({}),
       CANCEL: () => ({}),
       FACE_VALID: () => ({}),
       FACE_INVALID: () => ({}),
       RETRY_VERIFICATION: () => ({}),
+      FACE_VERIFICATION_CONSENT: (isConsentGiven: boolean) => ({
+        isConsentGiven,
+      }),
     },
   },
 );
@@ -104,6 +118,7 @@ export const qrLoginMachine =
             GET: {
               actions: [
                 'setScanData',
+                'setFaceAuthConsent',
                 'resetLinkTransactionId',
                 'resetSelectedVoluntaryClaims',
               ],
@@ -163,12 +178,29 @@ export const qrLoginMachine =
             SELECT_VC: {
               actions: 'setSelectedVc',
             },
-            VERIFY: {
-              target: 'faceAuth',
-            },
+            VERIFY: [
+              {
+                cond: 'showFaceAuthConsentScreen',
+                target: 'faceVerificationConsent',
+              },
+              {
+                target: 'faceAuth',
+              },
+            ],
             DISMISS: {
               actions: 'forwardToParent',
               target: 'waitingForData',
+            },
+          },
+        },
+        faceVerificationConsent: {
+          on: {
+            FACE_VERIFICATION_CONSENT: {
+              actions: ['storeShowFaceAuthConsent', 'setShowFaceAuthConsent'],
+              target: 'faceAuth',
+            },
+            DISMISS: {
+              target: 'showvcList',
             },
           },
         },
@@ -285,6 +317,20 @@ export const qrLoginMachine =
     },
     {
       actions: {
+        setShowFaceAuthConsent: model.assign({
+          showFaceAuthConsent: (_, event) => {
+            return !event.isConsentGiven;
+          },
+        }),
+
+        storeShowFaceAuthConsent: send(
+          (context, event) =>
+            StoreEvents.SET(FACE_AUTH_CONSENT, !event.isConsentGiven),
+          {
+            to: context => context.serviceRefs.store,
+          },
+        ),
+
         forwardToParent: sendParent('DISMISS'),
 
         setScanData: model.assign((context, event) => {
@@ -297,6 +343,12 @@ export const qrLoginMachine =
             flowType: flowType,
             selectedVc: selectedVc,
           };
+        }),
+
+        setFaceAuthConsent: assign({
+          showFaceAuthConsent: (context, event) => {
+            return event.faceAuthConsentGiven;
+          },
         }),
 
         // TODO: loaded VCMetadatas are not used anywhere. remove?
@@ -522,6 +574,10 @@ export const qrLoginMachine =
         },
       },
       guards: {
+        showFaceAuthConsentScreen: context => {
+          return context.showFaceAuthConsent;
+        },
+
         isConsentAlreadyCaptured: (_, event) =>
           event.data?.consentAction === 'NOCAPTURE',
 
@@ -618,4 +674,8 @@ export function selectErrorMessage(state: State) {
 }
 export function selectIsSharing(state: State) {
   return state.context.isSharing;
+}
+
+export function selectIsFaceVerificationConsent(state: State) {
+  return state.matches('faceVerificationConsent');
 }
