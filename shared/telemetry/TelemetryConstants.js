@@ -12,6 +12,7 @@ export const TelemetryConstants = {
     getVcUsingAid: 'Get VC using AID',
     fetchData: 'Fetch Data',
     dataBackup: 'Data Backup',
+    fetchLastBackupDetails: 'Fetch Last Backup Details',
     dataRestore: 'Data Restore',
     decryption: 'Decryption',
     dataBackupAndRestoreSetup: 'Data Backup & Restore Setup',
