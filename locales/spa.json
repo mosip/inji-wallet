@@ -116,9 +116,10 @@
   },
   "AuthScreen": {
     "header": "Seleccione el método de desbloqueo de la aplicación",
-    "Description": "¿Le gustaría utilizar datos biométricos para desbloquear la aplicación?",
+    "Description": "Para desbloquear la aplicación de forma segura, puede configurar la autenticación biométrica, como el reconocimiento facial o de huellas dactilares, u optar por un código de acceso de 6 dígitos para un acceso rápido.",
+    "PasswordTypeDescription": "Elija 'Usar datos biométricos' para habilitar la autenticación biométrica o 'Lo haré más tarde' para configurar un código de acceso de 6 dígitos.",
     "useBiometrics": "Utilice la biometría",
-    "usePasscode": "Usar contraseña",
+    "usePasscode": "lo haré más tarde",
     "errors": {
       "unavailable": "El dispositivo no admite datos biométricos",
       "unenrolled": "Para utilizar datos biométricos, registre sus datos biométricos en la configuración de su dispositivo.",
@@ -150,6 +151,11 @@
     "injiTourGuide": "Guía turístico de Inji",
     "logout": "Cerrar sesión",
     "resetInjiProps": "Restableciendo accesorios Inji..."
+  },
+  "BannerNotification": {
+    "alternatePasscodeSuccess": "¡Éxito! Ahora puedes usar el código de acceso para desbloquear la aplicación Inji.",
+    "alternateBiometricSuccess": "¡Éxito! Ahora puedes usar datos biométricos para desbloquear la aplicación Inji.",
+    "activated": "Las credenciales están habilitadas para la autenticación en línea."
   },
   "AboutInji": {
     "aboutInji": "Acerca de Inji",
@@ -402,6 +408,8 @@
     "header": "Código de acceso establecido",
     "enterNewPassword": "Ingrese una nueva contraseña",
     "reEnterPassword": "Vuelva a ingresar la nueva contraseña",
+    "enterAlternateNewPassword": "Su contraseña es su clave para acceder a la aplicación de forma segura. Elija una contraseña de 6 dígitos que sea única y memorable, garantizando la seguridad de sus datos y la privacidad dentro de la aplicación.",
+    "reEnterAlternatePassword": "Confirma tu contraseña ingresándola nuevamente. Una vez confirmada, tu contraseña se configurará de forma segura para acceder a la aplicación.",
     "confirmPasscode": "Confirmar contraseña",
     "enterPasscode": "Introduzca su código de acceso"
   },

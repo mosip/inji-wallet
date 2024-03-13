@@ -121,9 +121,10 @@
   },
   "AuthScreen": {
     "header": "Select App Unlock Method",
-    "Description": "Would you like to use biometrics to unlock the application?",
+    "Description": "To unlock the app securely, you can set up either biometric authentication, such as fingerprint or facial recognition or opt for a 6-digit Passcode for quick access.",
+    "PasswordTypeDescription": "Choose ‘Use Biometrics’ to enable biometric authentication or ‘I’ll Do Later’ to set up a 6-digit passcode.",
     "useBiometrics": "Use Biometrics",
-    "usePasscode": "Use Passcode",
+    "usePasscode": "I'll Do Later",
     "errors": {
       "unavailable": "Device does not support Biometrics",
       "unenrolled": "To use Biometrics, please enroll your biometrics in your device settings",
@@ -155,6 +156,11 @@
     "injiTourGuide": "Inji Tour Guide",
     "logout": "Logout",
     "resetInjiProps": "Resetting Inji Props..."
+  },
+  "BannerNotification": {
+    "alternatePasscodeSuccess": "Success! You can now use passcode to unlock Inji app.",
+    "alternateBiometricSuccess": "Success! You can now use biometrics to unlock Inji app.",
+    "activated": "Credentials are enabled for online authentication."
   },
   "AboutInji": {
     "aboutInji": "About Inji",
@@ -435,6 +441,8 @@
     "header": "Set Passcode",
     "enterNewPassword": "Enter a new passcode",
     "reEnterPassword": "Re-enter the new passcode",
+    "enterAlternateNewPassword": "Your passcode is your key to access the app securely. Choose a 6-digit passcode which is unique and memorable, ensuring the safety of your data and privacy within the app.",
+    "reEnterAlternatePassword": "Confirm your passcode by entering it again. Once confirmed, your passcode will be securely set for accessing the app.",
     "confirmPasscode": "Confirm passcode",
     "enterPasscode": "Enter your passcode"
   },
