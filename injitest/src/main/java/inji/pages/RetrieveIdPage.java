@@ -13,6 +13,9 @@ public class RetrieveIdPage extends BasePage {
 	@iOSXCUITFindBy(accessibility = "retrieveIdHeader")
 	private WebElement retrieveIdText;
 
+	@AndroidFindBy(uiAutomator = "new UiSelector().textContains(\"Allow\")")
+	private WebElement allowButton;
+
 	@AndroidFindBy(accessibility = "idInputModalIndividualId")
 	@iOSXCUITFindBy(accessibility = "idInputModalIndividualId")
 	private WebElement enterIdTextBox;
@@ -81,6 +84,12 @@ public class RetrieveIdPage extends BasePage {
 		return this;
 	}
 
+	public RetrieveIdPage acceptPermissionPopupBluetooth() {
+		if (isElementDisplayed(allowButton)) {
+			clickOnElement(allowButton);
+		}
+		return this;
+	}
 	public OtpVerificationPage clickOnGenerateCardButton() {
 		this.clickOnElement(generateCardButton);
 		return new OtpVerificationPage(driver);

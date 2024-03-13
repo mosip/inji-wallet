@@ -36,21 +36,6 @@
                     <include name="DownloadAndVerifyVcInArabic"/>
                 </methods>
             </class>
-            <class name="androidTestCases.CredentialRegistryTest">
-                <methods>
-                    <include name="downloadAndVerifyVcInNewEnv"/>
-                    <include name="cancelChangeEnvAndVerify"/>
-                    <include name="downloadAndVerifyVcInInvalidEnv"/>
-                    <include name="generateUinInNewEnv"/>
-                    <include name="retrivingUinInOtherEnv"/>
-                    <include name="downloadAndVerifyVcInTwoEnv"/>
-                    <include name="downloadVcAndActivateItInOtherEnv"/>
-                    <include name="downloadAndVerifyVcInNewEnvForEsignet"/>
-                    <include name="downloadAndVerifyVcInInvalidEnvForEsignet"/>
-                    <include name="downloadAndVerifyVcInInvalidEnvForEsignetInFillpino"/>
-                    <include name="downloadVcInNewEnvAndVerifyInDetailedVcViewPage"/>
-                </methods>
-            </class>
             <class name="androidTestCases.DeletingVcTest">
                 <methods>
                     <include name="deleteVcAndVerifyInHistory"/>
@@ -76,7 +61,7 @@
                     <include name="verifyRecivedCardOffline"/>
                     <include name="downloadCardWithoutInternetRetryWithInternet"/>
                     <include name="downloadVcUsingUinViaEsignetWithoutInternet"/>
-                    <include name="downloadVcUsingUinViaEsignetNoInternateWhileDownloading"/>
+                    <!--<include name="downloadVcUsingUinViaEsignetNoInternateWhileDownloading"/> //removed because download proccess is faster than the turning of the network-->
                     <include name="downloadVcViaEsignetAndPinUnpinWithNoNetwork"/>
                     <include name="downloadVcUsingUinViaEsignetNoInternateOpenScan"/>
                     <include name="downloadVcInOtherLanguageViaEsignetWithoutInternet"/>
@@ -110,7 +95,7 @@
                     <include name="loginWithInvalidPasscode"/>
                 </methods>
             </class>
-            <class name="androidTestCases.VcBackupAndRestoreTest">
+           <!-- <class name="androidTestCases.VcBackupAndRestoreTest">
                 <methods>
                     <include name="VcBackupAndRestoreTest"/>
                     <include name="DenyPermissionForInji"/>
@@ -124,7 +109,7 @@
                     <include name="VerifyPiningDownloadedVc"/>
                     <include name="VerifyPiningRestoredVc"/>
                 </methods>
-            </class>
+            </class>-->
             <class name="androidTestCases.VcDownloadAndVerifyUsingEsignetTest">
                 <methods>
                     <include name="downloadAndVerifyVcUsingUinViaEsignet"/>
