@@ -28,6 +28,7 @@ import {
   Issuers_Key_Ref,
   OIDCErrors,
   updateCredentialInformation,
+  updateVCmetadataOfCredentialWrapper,
   vcDownloadTimeout,
 } from '../shared/openId4VCI/Utils';
 import {
@@ -62,6 +63,7 @@ const model = createModel(
     verificationErrorMessage: '',
     publicKey: ``,
     privateKey: ``,
+    vcMetadata: {} as VCMetadata,
   },
   {
     events: {
@@ -385,6 +387,8 @@ export const IssuersMachine = model.createMachine(
       storing: {
         description: 'all the verified credential is stored.',
         entry: [
+          'setVCMetadata',
+          'setMetadataInCredentialData',
           'storeVerifiableCredentialMeta',
           'storeVerifiableCredentialData',
           'storeVcsContext',
@@ -487,6 +491,21 @@ export const IssuersMachine = model.createMachine(
           to: context => context.serviceRefs.store,
         },
       ),
+
+      setMetadataInCredentialData: (context, event) => {
+        const updatedCredentialWrapper = updateVCmetadataOfCredentialWrapper(
+          context,
+          context.credentialWrapper,
+        );
+        return updatedCredentialWrapper;
+      },
+
+      setVCMetadata: assign({
+        vcMetadata: (context, event) => {
+          const metadata = getVCMetadata(context);
+          return metadata;
+        },
+      }),
 
       storeVerifiableCredentialData: send(
         context =>

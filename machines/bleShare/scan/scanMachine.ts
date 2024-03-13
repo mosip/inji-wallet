@@ -57,6 +57,7 @@ import {
 } from '../../../shared/telemetry/TelemetryUtils';
 import {TelemetryConstants} from '../../../shared/telemetry/TelemetryConstants';
 import {logState} from '../../../shared/commonUtil';
+import {VCShareFlowType} from '../../../shared/Utils';
 import {getIdType} from '../../../shared/openId4VCI/Utils';
 
 const {wallet, EventTypes, VerificationStatus} = tuvali;
@@ -71,6 +72,7 @@ const model = createModel(
     createdVp: null as VC,
     loggers: [] as EmitterSubscription[],
     vcName: '',
+    flowType: VCShareFlowType.SIMPLE_SHARE,
     verificationImage: {} as CameraCapturedPicture,
     openId4VpUri: '',
     shareLogType: '' as ActivityLogType,
@@ -81,7 +83,7 @@ const model = createModel(
   },
   {
     events: {
-      SELECT_VC: (vc: VC) => ({vc}),
+      SELECT_VC: (vc: VC, flowType: string) => ({vc, flowType}),
       SCAN: (params: string) => ({params}),
       ACCEPT_REQUEST: () => ({}),
       VERIFY_AND_ACCEPT_REQUEST: () => ({}),
@@ -111,6 +113,7 @@ const model = createModel(
       LOCATION_ENABLED: () => ({}),
       LOCATION_DISABLED: () => ({}),
       LOCATION_REQUEST: () => ({}),
+      CHECK_FLOW_TYPE: () => ({}),
       UPDATE_VC_NAME: (vcName: string) => ({vcName}),
       STORE_RESPONSE: (response: any) => ({response}),
       APP_ACTIVE: () => ({}),
@@ -164,17 +167,23 @@ export const scanMachine =
         DISMISS: {
           target: '#scan.reviewing.disconnect',
         },
+        SELECT_VC: {
+          actions: ['setSelectedVc', 'setFlowType'],
+          target: 'disconnectDevice',
+        },
       },
       states: {
         inactive: {
-          entry: 'removeLoggers',
+          entry: ['removeLoggers', 'resetFlowType', 'resetSelectedVc'],
         },
         disconnectDevice: {
+          entry: ['resetFlowType', 'resetSelectedVc'],
           invoke: {
             src: 'disconnect',
           },
           on: {
             DISCONNECT: {
+              actions: ['resetFlowType', 'resetSelectedVc'],
               target: '#scan.inactive',
             },
           },
@@ -384,7 +393,7 @@ export const scanMachine =
           on: {
             DISCONNECT: {
               target: '#scan.findingConnection',
-              actions: [],
+              actions: ['resetFlowType', 'resetSelectedVc'],
               internal: false,
             },
           },
@@ -493,17 +502,35 @@ export const scanMachine =
           },
         },
         reviewing: {
-          entry: ['resetShouldVerifyPresence'],
+          initial: 'idle',
+          entry: ['resetShouldVerifyPresence', send('CHECK_FLOW_TYPE')],
+          on: {
+            CHECK_FLOW_TYPE: [
+              {
+                cond: 'isFlowTypeSimpleShare',
+                target: '.selectingVc',
+              },
+              {
+                cond: 'isFlowTypeMiniViewShare',
+                target: '.sendingVc',
+                actions: 'setShareLogTypeUnverified',
+              },
+              {
+                cond: 'isFlowTypeMiniViewShareWithSelfie',
+                target: '.verifyingIdentity',
+              },
+            ],
+          },
           exit: ['clearCreatedVp'],
-          initial: 'selectingVc',
           states: {
+            idle: {},
             selectingVc: {
               on: {
                 DISCONNECT: {
                   target: '#scan.disconnected',
                 },
                 SELECT_VC: {
-                  actions: 'setSelectedVc',
+                  actions: ['setSelectedVc', 'setFlowType'],
                 },
                 VERIFY_AND_ACCEPT_REQUEST: {
                   target: 'verifyingIdentity',
@@ -525,6 +552,7 @@ export const scanMachine =
               },
             },
             cancelling: {
+              entry: ['resetFlowType', 'resetSelectedVc'],
               always: {
                 target: '#scan.clearingConnection',
               },
@@ -615,11 +643,15 @@ export const scanMachine =
             },
             disconnect: {
               //Renamed this to disconnect from navigateToHome as we are disconnecting the devices.
+              entry: ['resetFlowType', 'resetSelectedVc'],
               invoke: {
                 src: 'disconnect',
               },
             },
-            navigateToHistory: {},
+            navigateToHistory: {
+              entry: ['resetFlowType', 'resetSelectedVc'],
+              always: '#scan.disconnected',
+            },
             verifyingIdentity: {
               on: {
                 FACE_VALID: {
@@ -633,9 +665,15 @@ export const scanMachine =
                   target: 'invalidIdentity',
                   actions: 'logFailedVerification',
                 },
-                CANCEL: {
-                  target: 'selectingVc',
-                },
+                CANCEL: [
+                  {
+                    cond: 'isFlowTypeSimpleShare',
+                    target: 'selectingVc',
+                  },
+                  {
+                    target: 'cancelling',
+                  },
+                ],
               },
             },
             creatingVp: {
@@ -657,9 +695,15 @@ export const scanMachine =
             },
             invalidIdentity: {
               on: {
-                DISMISS: {
-                  target: 'selectingVc',
-                },
+                DISMISS: [
+                  {
+                    cond: 'isFlowTypeSimpleShare',
+                    target: 'selectingVc',
+                  },
+                  {
+                    target: 'cancelling',
+                  },
+                ],
                 RETRY_VERIFICATION: {
                   target: 'verifyingIdentity',
                 },
@@ -668,6 +712,7 @@ export const scanMachine =
           },
         },
         disconnected: {
+          entry: ['resetSelectedVc', 'resetFlowType'],
           on: {
             RETRY: {
               target: '#scan.reviewing.cancelling',
@@ -773,7 +818,9 @@ export const scanMachine =
         sendScanData: context =>
           context.QrLoginRef.send({
             type: 'GET',
-            value: context.linkCode,
+            linkCode: context.linkCode,
+            flowType: context.flowType,
+            selectedVc: context.selectedVc,
           }),
         openBluetoothSettings: () => {
           isAndroid()
@@ -818,6 +865,18 @@ export const scanMachine =
               shouldVerifyPresence: context.selectedVc.shouldVerifyPresence,
             };
           },
+        }),
+
+        resetSelectedVc: assign({
+          selectedVc: {},
+        }),
+
+        setFlowType: assign({
+          flowType: (_context, event) => event.flowType,
+        }),
+
+        resetFlowType: assign({
+          flowType: VCShareFlowType.SIMPLE_SHARE,
         }),
 
         setCreatedVp: assign({
@@ -1213,7 +1272,8 @@ export const scanMachine =
         // sample: 'OPENID4VP://connect:?name=OVPMOSIP&key=69dc92a2cc91f02258aa8094d6e2b62877f5b6498924fbaedaaa46af30abb364'
         isOpenIdQr: (_context, event) =>
           event.params.startsWith('OPENID4VP://'),
-        isQrLogin: (_context, event) => {
+
+        isQrLogin: (context, event) => {
           try {
             let linkCode = new URL(event.params);
             // sample: 'inji://landing-page-name?linkCode=sTjp0XVH3t3dGCU&linkExpireDateTime=2023-11-09T06:56:18.482Z'
@@ -1229,6 +1289,15 @@ export const scanMachine =
 
         isMinimumStorageRequiredForAuditEntryReached: (_context, event) =>
           Boolean(event.data),
+
+        isFlowTypeMiniViewShareWithSelfie: context =>
+          context.flowType === VCShareFlowType.MINI_VIEW_SHARE_WITH_SELFIE,
+
+        isFlowTypeMiniViewShare: context =>
+          context.flowType === VCShareFlowType.MINI_VIEW_SHARE,
+
+        isFlowTypeSimpleShare: context =>
+          context.flowType === VCShareFlowType.SIMPLE_SHARE,
       },
 
       delays: {

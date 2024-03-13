@@ -90,9 +90,10 @@
   },
   "HomeScreenKebabPopUp": {
     "title": "المزيد من الخيارات",
-    "unPinCard": "قم بفك البطاقة",
-    "pinCard": "البطاقة الشخصية",
-    "offlineAuthenticationDisabled!": "التنشيط معلق لتسجيل الدخول عبر الإنترنت",
+    "unPinCard": "إزالة التثبيت",
+    "pinCard": "دبوس",
+    "share": "يشارك",
+    "shareWithSelfie": "شارك مع سيلفي",
     "offlineAuthDisabledMessage": "انقر هنا لتمكين استخدام بيانات الاعتماد هذه للمصادقة عبر الإنترنت.",
     "viewActivityLog": "عرض سجل النشاط",
     "removeFromWallet": "إزالة من المحفظة",
@@ -100,9 +101,10 @@
     "revokeMessage": "إبطال المعرف الظاهري لملف التعريف هذا"
   },
   "WalletBinding": {
+    "offlineAuthenticationDisabled": "تفعيل لتسجيل الدخول عبر الإنترنت",
     "inProgress": "في تَقَدم",
-    "profileAuthenticated": "تم التنشيط لتسجيل الدخول عبر الإنترنت",
-    "credentialActivated": "مفعل"
+    "credentialActivated": "مفعل",
+    "profileAuthenticated": "رمز الاستجابة السريعة تسجيل الدخول",
   },
   "BindingVcWarningOverlay": {
     "alert": "يرجى تأكيد",
@@ -110,11 +112,11 @@
     "yesConfirm": "نعم ، أؤكد",
     "no": "لا"
   },
-  "RemoveVcWarningOverlay": {
-    "alert": "يرجى تأكيد",
-    "removeWarning": "هل تريد حقًا إزالة البطاقة",
-    "confirm": "يتأكد",
-    "no": "لا"
+   "RemoveVcWarningOverlay": {
+    "alert": "هل تريد الإزالة من المحفظة؟",
+    "removeWarning": "ستقوم بإزالة البطاقة من المحفظة. بمجرد الإزالة، لا يمكن التراجع عن هذا الإجراء.",
+    "confirm": "نعم أؤكد",
+    "cancel": "يلغي"
   },
   "AuthScreen": {
     "header": "هل ترغب في استخدام المقاييس الحيوية لفتح التطبيق؟",
@@ -172,6 +174,7 @@
     "title": "أضف بطاقة جديدة",
     "description": "يرجى اختيار جهة الإصدار المفضلة لديك من الخيارات أدناه لإضافة بطاقة جديدة.",
     "searchByIssuersName": "البحث حسب اسم المصدر",
+    "help": "يساعد؟",
     "loaders": {
       "loading": "جار التحميل...",
       "subTitle": {
@@ -340,12 +343,15 @@
     }
   },
   "MyVcsTab": {
+    "searchByName": "البحث عن طريق الإسم",
     "bringYourDigitalID": "أحضر هويتك الرقمية",
     "generateVcDescription": "اضغط على \"إضافة بطاقة \" أدناه لتنزيل بطاقتك",
     "generateVcFABDescription": "اضغط على \"+\" أدناه لتنزيل بطاقتك",
     "downloadCard": "تحميل البطاقة",
     "downloadingYourCard": "تنزيل بطاقتك ، قد يستغرق هذا ما يصل إلى 5 دقائق",
     "activated": "يتم تمكين بيانات الاعتماد للمصادقة عبر الإنترنت.",
+    "noCardsTitle": "لم يتم العثور على بطاقات!",
+    "noCardsDescription": "عذرا، لم نتمكن من العثور على أي نتائج. الرجاء محاولة إدخال كلمة بحث أخرى",
     "errors": {
       "savingFailed": {
         "title": "فشل حفظ بطاقة",
@@ -835,6 +841,8 @@
     "save": "حفظ التفضيل"
   },
   "common": {
+    "card": "بطاقة",
+    "cards": "بطاقات",
     "cancel": "إلغاء",
     "accept": "يقبل",
     "save": "حفظ",

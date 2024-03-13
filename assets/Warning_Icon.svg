@@ -13,10 +13,10 @@
       <g transform="matrix(1, 0, 0, 1, 118.5, 157.5)" filter="url(#Rectangle_6853)">
         <rect id="Rectangle_6853-2" data-name="Rectangle 6853" width="108" height="108" rx="54" transform="translate(22.5 19.5)" fill="#fff"/>
       </g>
-      <rect id="Rectangle_6846" data-name="Rectangle 6846" width="96" height="96" rx="48" transform="translate(147 183)" fill="@fill"/>
+      <rect id="Rectangle_6846" data-name="Rectangle 6846" width="96" height="96" rx="48" transform="translate(147 183)" fill="rgba(242,29,29,0.08)"/>
     </g>
     <g id="info_icon">
-      <path id="Polygon_1" data-name="Polygon 1" d="M19.4,4.484a3,3,0,0,1,5.193,0L41.393,33.5A3,3,0,0,1,38.8,38H5.2a3,3,0,0,1-2.6-4.5Z" transform="translate(173 209)" fill="@fill2"/>
+      <path id="Polygon_1" data-name="Polygon 1" d="M19.4,4.484a3,3,0,0,1,5.193,0L41.393,33.5A3,3,0,0,1,38.8,38H5.2a3,3,0,0,1-2.6-4.5Z" transform="translate(173 209)" fill="#e01a1a"/>
       <path id="error_FILL0_wght400_GRAD0_opsz48" d="M23.765,31.109a1.392,1.392,0,1,0-1.008-.407A1.369,1.369,0,0,0,23.765,31.109Zm-1.158-6.561H25.18V13.7H22.607ZM23.765,22.533Z" transform="translate(170.885 210.445)" fill="#fff"/>
     </g>
   </g>

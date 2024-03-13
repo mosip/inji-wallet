@@ -1,11 +1,15 @@
 import React from 'react';
 import Svg, {Image} from 'react-native-svg';
 import {Theme} from './styleUtils';
-import {ImageBackground} from 'react-native';
 import Home from '../../assets/Home_tab_icon.svg';
 import History from '../../assets/History_tab_icon.svg';
 import Share from '../../assets/Scan_tab_icon.svg';
+import Settings from '../../assets/Settings.svg';
 import PinICon from '../../assets/Pin_Icon.svg';
+import WalletActivatedIcon from '../../assets/Wallet_Activated_Icon.svg';
+import WalletActivatedLargeIcon from '../../assets/Wallet_Activated_Large_Icon.svg';
+import WalletUnActivatedIcon from '../../assets/Wallet_UnActivated_Icon.svg';
+import WalletUnActivatedLargeIcon from '../../assets/Wallet_UnActivated_Large_Icon.svg';
 import InjiSmallLogo from '../../assets/Inji_Logo.svg';
 import LockIcon from '../../assets/Lock_Icon1.svg';
 import InjiLogo from '../../assets/Inji_Home_Logo1.svg';
@@ -30,17 +34,68 @@ import MagnifierZoom from '../../assets/Magnifier_Zoom.svg';
 import GoogleDriveIcon from '../../assets/Gdrive_Logo.svg';
 import GoogleDriveIconSmall from '../../assets/google-drive-28.svg';
 import ICloudLogo from '../../assets/Icloud-Logo.svg';
+import KebabIcon from '../../assets/Detailed_view_kebab_icon.svg';
 import {displayType} from '../../machines/issuersMachine';
 import {IssuerProps} from '../openId4VCI/Issuer';
 import Backup from '../../assets/Backup.svg';
 import Restore from '../../assets/Restore.svg';
 import PermissionDenied from '../../assets/Permission_Denied.svg';
+import OutlinedShieldedIcon from '../../assets/Outlined_Shielded_Icon.svg';
+import OutlinedPinIcon from '../../assets/Outlined_Pin_Icon.svg';
+import OutlinedDeleteIcon from '../../assets/Outlined_Delete_Icon.svg';
+import OutlinedScheduleIcon from '../../assets/Outlined_Schedule_Icon.svg';
+import OutlinedShareWithSelfieIcon from '../../assets/Outlined_Share_With_Selfie_Icon.svg';
+import OutlinedShareIcon from '../../assets/Outlined_Share_Icon.svg';
+import Info from '../../assets/Info.svg';
+import Search from '../../assets/Search.svg';
 import CloudUploadDoneIcon from '../../assets/Cloud_Upload_Done_Icon.svg';
 
 export class SvgImage {
   static MosipLogo(props: LogoProps) {
     const {width, height} = props;
     return <Logo width={width} height={height} />;
+  }
+
+  static kebabIcon() {
+    return <KebabIcon />;
+  }
+
+  static walletActivatedIcon() {
+    return (
+      <WalletActivatedIcon
+        {...testIDProps('wallet-activated-icon')}
+        style={{
+          marginLeft: 10,
+        }}
+      />
+    );
+  }
+
+  static walletUnActivatedIcon() {
+    return (
+      <WalletUnActivatedIcon
+        {...testIDProps('wallet-unactivated-icon')}
+        style={{
+          marginLeft: 10,
+        }}
+      />
+    );
+  }
+
+  static WalletUnActivatedLargeIcon() {
+    return (
+      <WalletUnActivatedLargeIcon
+        {...testIDProps('wallet-unactivated-large-icon')}
+      />
+    );
+  }
+
+  static WalletActivatedLargeIcon() {
+    return (
+      <WalletActivatedLargeIcon
+        {...testIDProps('wallet-activated-large-icon')}
+      />
+    );
   }
 
   static home(focused: boolean) {
@@ -71,6 +126,64 @@ export class SvgImage {
     );
   }
 
+  static OutlinedShareIcon() {
+    return (
+      <OutlinedShareIcon
+        {...testIDProps('outlined-share-icon')}
+        style={{
+          marginLeft: 5,
+        }}
+      />
+    );
+  }
+
+  static OutlinedShareWithSelfieIcon() {
+    return (
+      <OutlinedShareWithSelfieIcon
+        {...testIDProps('outlined-share-with-selfie-icon')}
+        style={{
+          marginLeft: 5,
+        }}
+      />
+    );
+  }
+
+  static outlinedDeleteIcon() {
+    return (
+      <OutlinedDeleteIcon
+        {...testIDProps('outlined-delete-icon')}
+        style={{
+          marginLeft: 5,
+        }}
+      />
+    );
+  }
+  static OutlinedScheduleIcon() {
+    return (
+      <OutlinedScheduleIcon
+        {...testIDProps('outlined-schedule-icon')}
+        style={{
+          marginLeft: 5,
+        }}
+      />
+    );
+  }
+
+  static OutlinedShieldedIcon() {
+    return (
+      <OutlinedShieldedIcon
+        {...testIDProps('outlined-shielded-icon')}
+        style={{
+          marginLeft: 5,
+        }}
+      />
+    );
+  }
+
+  static OutlinedPinIcon() {
+    return <OutlinedPinIcon {...testIDProps('outlinedPinIcon')} />;
+  }
+
   static history(focused: boolean) {
     //NOTE: Here tab icons names should be same with key "name" in main.ts
     return (
@@ -84,13 +197,26 @@ export class SvgImage {
       />
     );
   }
+  static settings(focused: boolean) {
+    //NOTE: Here tab icons names should be same with key "name" in main.ts
+    return (
+      <Settings
+        color1={
+          focused ? Theme.Colors.linearGradientStart : Theme.Colors.GrayIcon
+        }
+        color2={
+          focused ? Theme.Colors.linearGradientEnd : Theme.Colors.GrayIcon
+        }
+      />
+    );
+  }
 
-  static pinIcon() {
+  static pinIcon(customStyle?: object) {
     return (
       <PinICon
         color1={Theme.Colors.linearGradientStart}
         color2={Theme.Colors.linearGradientEnd}
-        style={Theme.Styles.pinIcon}
+        style={[Theme.Styles.pinIcon, customStyle]}
         {...testIDProps('pinIcon')}
       />
     );
@@ -177,12 +303,7 @@ export class SvgImage {
   }
 
   static WarningLogo() {
-    return (
-      <WarningLogo
-        color1={Theme.Colors.warningLogoBgColor}
-        color2={Theme.Colors.linearGradientEnd}
-      />
-    );
+    return <WarningLogo />;
   }
 
   static OtpVerificationIcon() {
@@ -289,6 +410,17 @@ export class SvgImage {
     return <MagnifierZoom />;
   }
 
+  static infoIcon() {
+    return (
+      <Info
+        color1={Theme.Colors.linearGradientStart}
+        color2={Theme.Colors.linearGradientEnd}
+        style={Theme.Styles.infoIcon}
+        {...testIDProps('infoIcon')}
+      />
+    );
+  }
+
   static GoogleDriveIcon(width, height) {
     return (
       <GoogleDriveIcon
@@ -316,6 +448,9 @@ export class SvgImage {
         {...testIDProps('iCloudIcon')}
       />
     );
+  }
+  static SearchIcon() {
+    return <Search {...testIDProps('searchIcon')} />;
   }
 }
 

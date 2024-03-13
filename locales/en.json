@@ -91,9 +91,10 @@
   },
   "HomeScreenKebabPopUp": {
     "title": "More Options",
-    "unPinCard": "Unpin Card",
-    "pinCard": "Pin Card",
-    "offlineAuthenticationDisabled!": "Activation pending for online login",
+    "unPinCard": "Unpin",
+    "pinCard": "Pin",
+    "share": "Share",
+    "shareWithSelfie": "Share with Selfie",
     "offlineAuthDisabledMessage": "Click here to enable this credentials to be used for online authentication.",
     "viewActivityLog": "View Activity Log",
     "removeFromWallet": "Remove from Wallet",
@@ -101,9 +102,10 @@
     "revokeMessage": "Revoke the virtual ID for this profile"
   },
   "WalletBinding": {
+    "offlineAuthenticationDisabled": "Activate for online login",
     "inProgress": "In progress",
-    "profileAuthenticated": "Activated for online login",
-    "credentialActivated": "Activated"
+    "credentialActivated": "Activated",
+    "profileAuthenticated": "QR Code Login"
   },
   "BindingVcWarningOverlay": {
     "alert": "Alert",
@@ -112,10 +114,10 @@
     "no": "No"
   },
   "RemoveVcWarningOverlay": {
-    "alert": "Please Confirm",
-    "removeWarning": "Do you want to remove this card?",
+    "alert": "Remove from Wallet?",
+    "removeWarning": "You're going to remove the card from the wallet. Once removed, this action can not be undone.",
     "confirm": "Yes, I confirm",
-    "no": "No"
+    "cancel": "Cancel"
   },
   "AuthScreen": {
     "header": "Select App Unlock Method",
@@ -174,6 +176,7 @@
     "title": "Add new card",
     "description": "Please choose your preferred issuer from the options below to add a new card.",
     "searchByIssuersName": "Search by Issuer’s name",
+    "help": "Help?",
     "loaders": {
       "loading": "Loading...",
       "subTitle": {
@@ -342,12 +345,15 @@
     }
   },
   "MyVcsTab": {
+    "searchByName": "Search by name",
     "bringYourDigitalID": "Bring your digital identity",
     "generateVcDescription": "Tap on \"Download card\" below to download your card",
     "generateVcFABDescription": "Tap on  \"+\" below to download your card",
     "downloadCard": "Download Card",
     "downloadingYourCard": "Downloading your card, this can take upto 5 minutes",
     "activated": "Credentials are enabled for online authentication.",
+    "noCardsTitle": "No Cards Found!",
+    "noCardsDescription": "Sorry, we couldn’t find any results. Please try entering another search keyword.",
     "errors": {
       "savingFailed": {
         "title": "Failed to save the Card",
@@ -844,6 +850,8 @@
     "save": "Save Preference"
   },
   "common": {
+    "card": "card",
+    "cards": "cards",
     "cancel": "Cancel",
     "accept": "Accept",
     "save": "Save",

@@ -101,6 +101,7 @@ export const HomeScreen: React.FC<HomeRouteProps> = props => {
             controller.REVOKE();
           }}
           activeTab={controller.activeTab}
+          flow="downloadedVc"
         />
       )}
     </React.Fragment>

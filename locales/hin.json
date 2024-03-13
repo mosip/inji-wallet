@@ -87,9 +87,10 @@
   },
   "HomeScreenKebabPopUp": {
     "title": "अधिक विकल्प",
-    "unPinCard": "अनपिन कार्ड",
-    "pinCard": "पिन कार्ड",
-    "offlineAuthenticationDisabled!": "ऑनलाइन लॉगिन के लिए सक्रियण लंबित है",
+    "unPinCard": "अनपिन",
+    "pinCard": "पिन",
+    "share": "शेयर करना",
+    "shareWithSelfie": "सेल्फी के साथ साझा करें",
     "offlineAuthDisabledMessage": "ऑनलाइन प्रमाणीकरण के लिए इस क्रेडेंशियल का उपयोग सक्षम करने के लिए यहां क्लिक करें।",
     "viewActivityLog": "गतिविधि लॉग देखें",
     "removeFromWallet": "वॉलेट से हटाए",
@@ -97,9 +98,10 @@
     "revokeMessage": "इस प्रोफ़ाइल के लिए वर्चुअल आईडी निरस्त करें"
   },
   "WalletBinding": {
+    "offlineAuthenticationDisabled": "ऑनलाइन लॉगिन के लिए सक्रिय करें",
     "inProgress": "चालू",
-    "profileAuthenticated": "ऑनलाइन लॉगिन के लिए सक्रिय",
-    "credentialActivated": "सक्रिय"
+    "credentialActivated": "सक्रिय",
+    "profileAuthenticated": "QR कोड लॉगिन"
   },
   "BindingVcWarningOverlay": {
     "alert": "कृपया पुष्टि करें",
@@ -108,10 +110,10 @@
     "no": "नहीं"
   },
   "RemoveVcWarningOverlay": {
-    "alert": "कृपया पुष्टि करें",
-    "removeWarning": "क्या आप यह कार्ड हटाना चाहते हैं",
+    "alert": "वॉलेट से निकालें?",
+    "removeWarning": "आप वॉलेट से कार्ड निकालने जा रहे हैं। एक बार हटाए जाने के बाद, इस क्रिया को पूर्ववत नहीं किया जा सकता.",
     "confirm": "हां, मैं पुष्टि करता हूं",
-    "no": "नहीं"
+    "cancel": "रद्द करना"
   },
   "AuthScreen": {
     "header": "क्या आप एप्लिकेशन को अनलॉक करने के लिए बायोमेट्रिक्स का उपयोग करना चाहेंगे?",
@@ -169,6 +171,7 @@
     "title": "नया कार्ड जोड़ें",
     "description": "नया कार्ड जोड़ने के लिए कृपया नीचे दिए गए विकल्पों में से अपना पसंदीदा जारीकर्ता चुनें।",
     "searchByIssuersName": "जारीकर्ता के नाम से खोजें",
+    "help": "मदद करना?",
     "loaders": {
       "loading": "लोड हो रहा है...",
       "subTitle": {
@@ -337,12 +340,15 @@
     }
   },
   "MyVcsTab": {
+    "searchByName": "नाम से खोजें",
     "downloadCard": "डाउनलोड कार्ड",
     "bringYourDigitalID": "अपनी डिजिटल आईडी लाओ",
     "generateVcDescription": "अपना कार्ड डाउनलोड करने के लिए नीचे डाउनलोड कार्ड टैप करें",
     "generateVcFABDescription": "अपना कार्ड डाउनलोड करने के लिए नीचे + कार्ड टैप करें",
     "downloadingYourCard": "आपका कार्ड डाउनलोड करने में 5 मिनट तक का समय लग सकता है",
     "activated": "ऑनलाइन प्रमाणीकरण के लिए क्रेडेंशियल सक्षम हैं।",
+    "noCardsTitle": "कोई कार्ड नहीं मिला!",
+    "noCardsDescription": "क्षमा करें, हमें कोई परिणाम नहीं मिला। कृपया कोई अन्य खोज कीवर्ड दर्ज करने का प्रयास करें।",
     "errors": {
       "savingFailed": {
         "title": "कार्ड सहेजने में विफल",
@@ -835,6 +841,8 @@
     "save": "वरीयता सहेजें"
   },
   "common": {
+    "card": "कार्ड",
+    "cards": "कार्ड",
     "cancel": "रद्द करें",
     "save": "सहेजें",
     "ok": "ठीक है",

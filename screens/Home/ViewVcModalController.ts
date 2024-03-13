@@ -188,4 +188,5 @@ export interface ViewVcModalProps extends ModalProps {
   onDismiss: () => void;
   onRevokeDelete: () => void;
   activeTab: Number;
+  flow: string;
 }

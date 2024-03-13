@@ -86,9 +86,10 @@
   },
   "HomeScreenKebabPopUp": {
     "title": "Mas opciones",
-    "unPinCard": "Desanclar tarjeta",
-    "pinCard": "Tarjeta PIN",
-    "offlineAuthenticationDisabled!": "Activación pendiente para iniciar sesión en línea",
+    "unPinCard": "Desanclar",
+    "pinCard": "PIN",
+    "share": "Compartir",
+    "shareWithSelfie": "Compartir con selfie",
     "offlineAuthDisabledMessage": "Haga clic aquí para permitir que estas credenciales se utilicen para la autenticación en línea.",
     "viewActivityLog": "Ver registro de actividad",
     "removeFromWallet": "Quitar de Wallet",
@@ -96,8 +97,10 @@
     "revokeMessage": "Revocar la identificación virtual de este perfil"
   },
   "WalletBinding": {
+    "offlineAuthenticationDisabled": "Activar para iniciar sesión en línea",
     "inProgress": "En curso",
-    "profileAuthenticated": "Activado para iniciar sesión en línea"
+    "credentialActivated": "Activada",
+    "profileAuthenticated": "inicio de sesión con código QR"
   },
   "BindingVcWarningOverlay": {
     "alert": "Alerta",
@@ -106,10 +109,10 @@
     "no": "No"
   },
   "RemoveVcWarningOverlay": {
-    "alert": "Por favor confirmar",
-    "removeWarning": "¿Quieres eliminar esta tarjeta?",
+    "alert": "¿Quitar de Wallet?",
+    "removeWarning": "Vas a sacar la tarjeta de la billetera. Una vez eliminada, esta acción no se puede deshacer.",
     "confirm": "Si, lo confirmo",
-    "no": "No"
+    "cancel": "Cancelar"
   },
   "AuthScreen": {
     "header": "Seleccione el método de desbloqueo de la aplicación",
@@ -168,6 +171,7 @@
     "title": "Agregar nueva tarjeta",
     "description": "Elija su emisor preferido entre las opciones siguientes para agregar una nueva tarjeta.",
     "searchByIssuersName": "Buscar por nombre del emisor",
+    "help": "¿Ayuda?",
     "loaders": {
       "loading": "Cargando...",
       "subTitle": {
@@ -308,12 +312,15 @@
     }
   },
   "MyVcsTab": {
+    "searchByName": "Buscar por nombre",
     "bringYourDigitalID": "Trae tu identidad digital",
     "generateVcDescription": "Toque \"Descargar tarjeta\" a continuación para descargar su tarjeta",
     "generateVcFABDescription": "Toque \" \" a continuación para descargar su tarjeta",
     "downloadCard": "Descargar tarjeta",
     "downloadingYourCard": "Descargar su tarjeta, esto puede tardar hasta 5 minutos",
     "activated": "Las credenciales están habilitadas para la autenticación en línea.",
+    "noCardsTitle": "¡No se encontraron tarjetas!",
+    "noCardsDescription": "Lo sentimos, no pudimos encontrar ningún resultado. Intente ingresar otra palabra clave de búsqueda.",
     "errors": {
       "savingFailed": {
         "title": "No se pudo guardar la tarjeta",
@@ -789,6 +796,8 @@
     "save": "Guardar preferencia"
   },
   "common": {
+    "card": "tarjeta",
+    "cards": "tarjetas",
     "cancel": "Cancelar",
     "accept": "Aceptar",
     "save": "Ahorrar",

@@ -1,30 +1,32 @@
 import {useContext, useRef} from 'react';
-import {GlobalContext} from '../../../shared/GlobalContext';
+import {GlobalContext} from '../../shared/GlobalContext';
 import {
   selectContext,
   selectEmptyWalletBindingId,
   selectGeneratedOn,
   selectKebabPopUp,
   selectVerifiableCredential,
-} from '../../../machines/VCItemMachine/commonSelectors';
+} from '../../machines/VCItemMachine/commonSelectors';
 import {
   createExistingMosipVCItemMachine,
   ExistingMosipVCItemEvents,
   selectIsSavingFailedInIdle,
-} from '../../../machines/VCItemMachine/ExistingMosipVCItem/ExistingMosipVCItemMachine';
+} from '../../machines/VCItemMachine/ExistingMosipVCItem/ExistingMosipVCItemMachine';
 import {
   createEsignetMosipVCItemMachine,
   EsignetMosipVCItemEvents,
-} from '../../../machines/VCItemMachine/EsignetMosipVCItem/EsignetMosipVCItemMachine';
+} from '../../machines/VCItemMachine/EsignetMosipVCItem/EsignetMosipVCItemMachine';
 import {useInterpret, useSelector} from '@xstate/react';
-import {EsignetMosipVCItemProps, ExistingMosipVCItemProps} from './MosipVCItem';
+import {EsignetVCItemProps, ExistingVCItemProps} from './Views/VCCardView';
+import {VCMetadata} from '../../shared/VCMetadata';
 
 export function useVcItemController(
-  props: ExistingMosipVCItemProps | EsignetMosipVCItemProps,
+  props: ExistingVCItemProps | EsignetVCItemProps,
 ) {
   const {appService} = useContext(GlobalContext);
+  const vcMetadata = VCMetadata.fromVC(props.vcMetadata);
   const machine = useRef(
-    !props.vcMetadata.isFromOpenId4VCI()
+    !vcMetadata.isFromOpenId4VCI()
       ? createExistingMosipVCItemMachine(
           appService.getSnapshot().context.serviceRefs,
           props.vcMetadata,
@@ -46,7 +48,7 @@ export function useVcItemController(
   const isSavingFailedInIdle = useSelector(service, selectIsSavingFailedInIdle);
   const storeErrorTranslationPath = 'errors.savingFailed';
   const generatedOn = useSelector(service, selectGeneratedOn);
-  if (props.vcMetadata.isFromOpenId4VCI()) {
+  if (vcMetadata.isFromOpenId4VCI()) {
     DISMISS = () => service.send(EsignetMosipVCItemEvents.DISMISS());
     KEBAB_POPUP = () => service.send(EsignetMosipVCItemEvents.KEBAB_POPUP());
   }

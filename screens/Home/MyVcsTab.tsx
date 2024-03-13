@@ -1,7 +1,7 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Button, Column, Row, Text} from '../../components/ui';
 import {Theme} from '../../components/ui/styleUtils';
-import {RefreshControl} from 'react-native';
+import {Pressable, RefreshControl} from 'react-native';
 import {useMyVcsTab} from './MyVcsTabController';
 import {HomeScreenTabProps} from './HomeScreen';
 import {AddVcModal} from './MyVcs/AddVcModal';
@@ -24,6 +24,9 @@ import {Error} from '../../components/ui/Error';
 import {useIsFocused} from '@react-navigation/native';
 import {getVCsOrderedByPinStatus} from '../../shared/Utils';
 import {SvgImage} from '../../components/ui/svg';
+import {SearchBar} from '../../components/ui/SearchBar';
+import {Icon} from 'react-native-elements';
+import {VCMetadata} from '../../shared/VCMetadata';
 import {BANNER_TYPE_SUCCESS} from '../../shared/constants';
 
 export const MyVcsTab: React.FC<HomeScreenTabProps> = props => {
@@ -33,6 +36,13 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = props => {
   const vcMetadataOrderedByPinStatus = getVCsOrderedByPinStatus(
     controller.vcMetadatas,
   );
+  const vcData = controller.vcData;
+  const [clearSearchIcon, setClearSearchIcon] = useState(false);
+  const [search, setSearch] = useState('');
+  const [filteredSearchData, setFilteredSearchData] = useState<
+    Array<Record<string, VCMetadata>>
+  >([]);
+  const [showPinVc, setShowPinVc] = useState(true);
 
   const getId = () => {
     controller.DISMISS();
@@ -41,6 +51,84 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = props => {
 
   const clearIndividualId = () => {
     GET_INDIVIDUAL_ID({id: '', idType: 'UIN'});
+  };
+
+  const onFocusSearch = () => {
+    setShowPinVc(false);
+  };
+
+  const clearSearchText = () => {
+    filterVcs('');
+    setClearSearchIcon(false);
+    setShowPinVc(true);
+  };
+
+  const filterVcs = (searchText: string) => {
+    setSearch(searchText);
+    setFilteredSearchData([]);
+    const searchTextLower = searchText.toLowerCase();
+    const filteredData: Array<Record<string, VCMetadata>> = [];
+
+    for (const [vcKey, vc] of Object.entries(vcData)) {
+      let isVcFound = false;
+      const credentialSubject =
+        vc.verifiableCredential.credentialSubject ||
+        vc.verifiableCredential.credential.credentialSubject;
+
+      if (credentialSubject) {
+        isVcFound = searchNestedCredentialFields(
+          searchTextLower,
+          credentialSubject,
+        );
+      }
+
+      if (isVcFound) {
+        filteredData.push({[vcKey]: vc['vcMetadata']});
+      }
+    }
+
+    setFilteredSearchData(filteredData);
+
+    const isSearchNotEmpty = searchText !== '';
+    setClearSearchIcon(isSearchNotEmpty);
+    setShowPinVc(!isSearchNotEmpty);
+  };
+
+  const searchNestedCredentialFields = (
+    searchText: string,
+    credentialSubjectData: any,
+  ): boolean => {
+    for (const [credentialKey, credentialValue] of Object.entries(
+      credentialSubjectData,
+    )) {
+      if (shouldSkip(credentialKey)) {
+        continue;
+      }
+      if (isStringAndContains(searchText, credentialValue)) {
+        return true;
+      }
+      if (
+        isObjectAndNotNull(credentialValue) &&
+        searchNestedCredentialFields(searchText, credentialValue)
+      ) {
+        return true;
+      }
+    }
+    return false;
+  };
+
+  const shouldSkip = (key: string): boolean => {
+    return key === 'biometrics' || key === 'id' || key === 'vcVer';
+  };
+
+  const isStringAndContains = (searchText: string, value: any): boolean => {
+    return (
+      typeof value === 'string' && value.toLowerCase().includes(searchText)
+    );
+  };
+
+  const isObjectAndNotNull = (value: any): boolean => {
+    return typeof value === 'object' && value !== null;
   };
 
   useEffect(() => {
@@ -97,7 +185,14 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = props => {
     controller.downloadFailedVcs.length >= 1 &&
     !controller.AddVcModalService &&
     !controller.GetVcModalService;
+  const numberOfCardsAvailable = !showPinVc
+    ? filteredSearchData.length
+    : controller.vcMetadatas.length;
 
+  const cardsAvailableText =
+    numberOfCardsAvailable > 1
+      ? numberOfCardsAvailable + ' ' + t('common:cards')
+      : numberOfCardsAvailable + ' ' + t('common:card');
   return (
     <React.Fragment>
       <Column fill style={{display: props.isVisible ? 'flex' : 'none'}}>
@@ -113,7 +208,7 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = props => {
             testId={'downloadingVcPopup'}
           />
         )}
-        <Column fill pY={11} pX={8}>
+        <Column fill pY={2} pX={8}>
           {vcMetadataOrderedByPinStatus.length > 0 && (
             <React.Fragment>
               <Column
@@ -127,20 +222,99 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = props => {
                     onRefresh={controller.REFRESH}
                   />
                 }>
-                {vcMetadataOrderedByPinStatus.map(vcMetadata => {
-                  return (
-                    <VcItemContainer
-                      key={vcMetadata.getVcKey()}
-                      vcMetadata={vcMetadata}
-                      margin="0 2 8 2"
-                      onPress={controller.VIEW_VC}
-                      isDownloading={controller.inProgressVcDownloads?.has(
-                        vcMetadata.getVcKey(),
-                      )}
-                      isPinned={vcMetadata.isPinned}
-                    />
-                  );
-                })}
+                <Row style={Theme.SearchBarStyles.vcSearchBarContainer}>
+                  <SearchBar
+                    isVcSearch
+                    searchIconTestID="searchIssuerIcon"
+                    searchBarTestID="issuerSearchBar"
+                    search={search}
+                    placeholder={t('searchByName')}
+                    onFocus={onFocusSearch}
+                    onChangeText={filterVcs}
+                    onLayout={() => filterVcs('')}
+                  />
+                  {clearSearchIcon && (
+                    <Pressable onPress={clearSearchText}>
+                      <Icon
+                        testID="clearingIssuerSearchIcon"
+                        name="circle-with-cross"
+                        type="entypo"
+                        size={15}
+                        color={Theme.Colors.DetailsLabel}
+                      />
+                    </Pressable>
+                  )}
+                </Row>
+                <Row pY={11} pX={8}>
+                  {numberOfCardsAvailable > 0 && (
+                    <Text style={{fontFamily: 'Inter_500Medium'}}>
+                      {cardsAvailableText}
+                    </Text>
+                  )}
+                </Row>
+                {showPinVc &&
+                  vcMetadataOrderedByPinStatus.map(vcMetadata => {
+                    return (
+                      <VcItemContainer
+                        key={vcMetadata.getVcKey()}
+                        vcMetadata={vcMetadata}
+                        margin="0 2 8 2"
+                        onPress={controller.VIEW_VC}
+                        isDownloading={controller.inProgressVcDownloads?.has(
+                          vcMetadata.getVcKey(),
+                        )}
+                        isPinned={vcMetadata.isPinned}
+                      />
+                    );
+                  })}
+
+                {filteredSearchData.length > 0 && !showPinVc
+                  ? filteredSearchData.map(vcMetadataObj => {
+                      const [vcKey, vcMetadata] =
+                        Object.entries(vcMetadataObj)[0];
+                      return (
+                        <VcItemContainer
+                          key={vcKey}
+                          vcMetadata={vcMetadata}
+                          margin="0 2 8 2"
+                          onPress={controller.VIEW_VC}
+                          isDownloading={controller.inProgressVcDownloads?.has(
+                            vcKey,
+                          )}
+                        />
+                      );
+                    })
+                  : filteredSearchData.length === 0 &&
+                    search &&
+                    !showPinVc && (
+                      <Column
+                        fill
+                        style={{
+                          justifyContent: 'center',
+                          alignItems: 'center',
+                          paddingTop: 170,
+                        }}>
+                        <Text
+                          style={{
+                            fontWeight: 'bold',
+                            textAlign: 'center',
+                            fontSize: 18,
+                            fontFamily: 'Inter_600SemiBold',
+                          }}>
+                          {t('noCardsTitle')}
+                        </Text>
+                        <Text
+                          style={{
+                            textAlign: 'center',
+                            lineHeight: 17,
+                            paddingTop: 10,
+                            fontSize: 14,
+                            fontFamily: 'Inter_400Regular',
+                          }}>
+                          {t('noCardsDescription')}
+                        </Text>
+                      </Column>
+                    )}
               </Column>
             </React.Fragment>
           )}

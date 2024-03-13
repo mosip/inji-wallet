@@ -1,15 +1,12 @@
 import React from 'react';
-import {
-  BottomTabNavigationOptions,
-  BottomTabScreenProps,
-} from '@react-navigation/bottom-tabs';
-import {RootStackParamList} from './index';
+import {BottomTabNavigationOptions} from '@react-navigation/bottom-tabs';
 import {ScanLayout} from '../screens/Scan/ScanLayout';
 import {HistoryScreen} from '../screens/History/HistoryScreen';
 import i18n from '../i18n';
 import {BOTTOM_TAB_ROUTES} from './routesConstants';
 import {HomeScreenLayout} from '../screens/HomeScreenLayout';
 import {Theme} from '../components/ui/styleUtils';
+import {SettingScreen} from '../screens/Settings/SettingScreen';
 
 const home: TabScreen = {
   name: BOTTOM_TAB_ROUTES.home,
@@ -40,10 +37,25 @@ const history: TabScreen = {
   },
 };
 
+const settings: TabScreen = {
+  name: BOTTOM_TAB_ROUTES.settings,
+  component: SettingScreen,
+  icon: 'settings',
+  options: {
+    headerTitleStyle: {
+      fontSize: 26,
+      fontFamily: 'Inter_600SemiBold',
+      marginTop: 15,
+    },
+    title: i18n.t('MainLayout:settings'),
+  },
+};
+
 export const mainRoutes: TabScreen[] = [];
 mainRoutes.push(home);
 mainRoutes.push(share);
 mainRoutes.push(history);
+mainRoutes.push(settings);
 
 export interface TabScreen {
   name: string;
