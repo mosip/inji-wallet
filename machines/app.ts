@@ -304,8 +304,6 @@ export const appMachine = model.createMachine(
         if (isAndroid()) {
           context.serviceRefs.request.subscribe(logState);
         }
-
-        context.serviceRefs.revoke.subscribe(logState);
       },
 
       setAppInfo: model.assign({
