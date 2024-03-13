@@ -17,9 +17,12 @@ import {
   getImpressionEventData,
   sendEndEvent,
   getEndEventData,
+  sendErrorEvent,
+  getErrorEventData,
 } from '../../shared/telemetry/TelemetryUtils';
 import {VcEvents} from '../VCItemMachine/vc';
 import {NETWORK_REQUEST_FAILED, TECHNICAL_ERROR} from '../../shared/constants';
+import NetInfo, {NetInfoState} from '@react-native-community/netinfo';
 
 const model = createModel(
   {
@@ -59,6 +62,7 @@ export const backupRestoreMachine = model.createMachine(
     on: {
       BACKUP_RESTORE: [
         {
+          actions: ['sendDataRestoreStartEvent'],
           target: 'restoreBackup',
         },
       ],
@@ -69,12 +73,37 @@ export const backupRestoreMachine = model.createMachine(
     states: {
       init: {},
       restoreBackup: {
-        initial: 'checkStorageAvailability',
+        initial: 'checkInternet',
         entry: 'setShowRestoreInProgress',
         states: {
-          idle: {},
+          checkInternet: {
+            invoke: {
+              src: 'checkInternet',
+              onDone: [
+                {
+                  cond: 'isInternetConnected',
+                  target: 'checkStorageAvailability',
+                },
+                {
+                  actions: [
+                    'setRestoreErrorReasonAsNetworkError',
+                    'sendDataRestoreErrorEvent',
+                  ],
+                  target: 'failure',
+                },
+              ],
+              onError: [
+                {
+                  actions: [
+                    'setRestoreErrorReasonAsNetworkError',
+                    'sendDataRestoreErrorEvent',
+                  ],
+                  target: 'failure',
+                },
+              ],
+            },
+          },
           checkStorageAvailability: {
-            entry: ['sendDataRestoreStartEvent'],
             invoke: {
               src: 'checkStorageAvailability',
               onDone: [
@@ -194,6 +223,10 @@ export const backupRestoreMachine = model.createMachine(
         },
       }),
 
+      setRestoreErrorReasonAsNetworkError: model.assign({
+        errorReason: 'networkError',
+      }),
+
       loadDataToMemory: send(
         context => {
           return StoreEvents.RESTORE_BACKUP(context.dataFromBackupFile);
@@ -232,6 +265,16 @@ export const backupRestoreMachine = model.createMachine(
         );
       },
 
+      sendDataRestoreErrorEvent: (_context, event) => {
+        sendErrorEvent(
+          getErrorEventData(
+            TelemetryConstants.FlowType.dataRestore,
+            TelemetryConstants.ErrorId.failure,
+            JSON.stringify(event.data),
+          ),
+        );
+      },
+
       sendDataRestoreFailureEvent: () => {
         sendEndEvent(
           getEndEventData(
@@ -243,6 +286,8 @@ export const backupRestoreMachine = model.createMachine(
     },
 
     services: {
+      checkInternet: async () => await NetInfo.fetch(),
+
       checkStorageAvailability: () => async () => {
         return await Storage.isMinimumLimitReached('minStorageRequired');
       },
@@ -271,7 +316,8 @@ export const backupRestoreMachine = model.createMachine(
     },
 
     guards: {
-      isBackupFile: (_, event) => event.data.endsWith('.injibackup'),
+      isInternetConnected: (_, event) =>
+        !!(event.data as NetInfoState).isConnected,
       isMinimumStorageRequiredForBackupRestorationReached: (_context, event) =>
         Boolean(event.data),
     },
