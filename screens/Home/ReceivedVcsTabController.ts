@@ -61,10 +61,6 @@ export function useReceivedVcsTab() {
     selectedVc,
     activeTab: 1,
     DISMISS_MODAL: () => service.send(HomeScreenEvents.DISMISS_MODAL()),
-    REVOKE: () => {
-      vcService.send(VcEvents.REFRESH_MY_VCS());
-      service.send(HomeScreenEvents.DISMISS_MODAL());
-    },
     REFRESH: () => ReceivedVcsService.send(ReceivedVcsTabEvents.REFRESH()),
   };
 }

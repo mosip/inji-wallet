@@ -71,11 +71,10 @@ const model = createModel(
       POLL: () => ({}),
       DOWNLOAD_READY: () => ({}),
       GET_VC_RESPONSE: (vc: VC) => ({vc}),
-      LOCK_VC: () => ({}),
+      VERIFY: () => ({}),
       RESEND_OTP: () => ({}),
       INPUT_OTP: (otp: string) => ({otp}),
       REFRESH: () => ({}),
-      REVOKE_VC: () => ({}),
       ADD_WALLET_BINDING_ID: () => ({}),
       CANCEL: () => ({}),
       CONFIRM: () => ({}),
@@ -272,9 +271,9 @@ export const EsignetMosipVCItemMachine = model.createMachine(
             },
             {
               target: 'updatingPrivateKey',
-              /*The walletBindingResponse is used for conditional rendering in wallet binding. 
-                However, it wrongly considers activation as successful even when there's an error 
-                in updatingPrivateKey state. So created a temporary context variable to store the binding 
+              /*The walletBindingResponse is used for conditional rendering in wallet binding.
+                However, it wrongly considers activation as successful even when there's an error
+                in updatingPrivateKey state. So created a temporary context variable to store the binding
                 response and use it in updatingPrivateKey state*/
               actions: 'setTempWalletBindingResponse',
             },
