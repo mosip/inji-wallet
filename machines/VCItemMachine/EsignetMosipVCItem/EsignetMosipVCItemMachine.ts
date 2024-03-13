@@ -33,6 +33,7 @@ import {
 import {TelemetryConstants} from '../../../shared/telemetry/TelemetryConstants';
 
 import {API_URLS} from '../../../shared/api';
+import {getHomeMachineService} from '../../../screens/Home/HomeScreenController';
 import {BackupEvents} from '../../backupAndRestore/backup';
 import Cloud, {
   isSignedInResult,
@@ -83,6 +84,7 @@ const model = createModel(
       PIN_CARD: () => ({}),
       KEBAB_POPUP: () => ({}),
       SHOW_ACTIVITY: () => ({}),
+      CLOSE_VC_MODAL: () => ({}),
       REMOVE: (vcMetadata: VCMetadata) => ({vcMetadata}),
       UPDATE_VC_METADATA: (vcMetadata: VCMetadata) => ({vcMetadata}),
       SHOW_BINDING_STATUS: () => ({}),
@@ -355,11 +357,8 @@ export const EsignetMosipVCItemMachine = model.createMachine(
         },
       },
       kebabPopUp: {
-        entry: assign({
-          isMachineInKebabPopupState: () => {
-            return true;
-          },
-        }),
+        entry: assign({isMachineInKebabPopupState: () => true}),
+        exit: assign({isMachineInKebabPopupState: () => false}),
         on: {
           DISMISS: {
             actions: assign({
@@ -372,24 +371,18 @@ export const EsignetMosipVCItemMachine = model.createMachine(
           },
           PIN_CARD: {
             target: '#vc-item-openid4vci.pinCard',
-            actions: [
-              'setPinCard',
-              assign({
-                isMachineInKebabPopupState: () => false,
-              }),
-            ],
+            actions: 'setPinCard',
           },
           SHOW_ACTIVITY: {
             target: '#vc-item-openid4vci.kebabPopUp.showActivities',
           },
           REMOVE: {
-            actions: [
-              'setVcKey',
-              assign({
-                isMachineInKebabPopupState: () => false,
-              }),
-            ],
+            actions: 'setVcKey',
             target: '#vc-item-openid4vci.kebabPopUp.removeWallet',
+          },
+          CLOSE_VC_MODAL: {
+            actions: ['closeViewVcModal'],
+            target: '#vc-item-openid4vci',
           },
         },
         initial: 'idle',
@@ -397,7 +390,7 @@ export const EsignetMosipVCItemMachine = model.createMachine(
           idle: {},
           showActivities: {
             on: {
-              DISMISS: '#vc-item-openid4vci.kebabPopUp',
+              DISMISS: '#vc-item-openid4vci',
             },
           },
           removeWallet: {
@@ -406,7 +399,7 @@ export const EsignetMosipVCItemMachine = model.createMachine(
                 target: 'removingVc',
               },
               CANCEL: {
-                target: 'idle',
+                target: '#vc-item-openid4vci',
               },
             },
           },
@@ -414,6 +407,7 @@ export const EsignetMosipVCItemMachine = model.createMachine(
             entry: 'removeVcItem',
             on: {
               STORE_RESPONSE: {
+                actions: ['closeViewVcModal', 'removedVc', 'logVCremoved'],
                 target: 'triggerAutoBackup',
               },
             },
@@ -741,6 +735,11 @@ export const EsignetMosipVCItemMachine = model.createMachine(
         },
         {to: context => context.serviceRefs.store},
       ),
+
+      closeViewVcModal: send('DISMISS_MODAL', {
+        to: () => getHomeMachineService(),
+      }),
+
       setVcKey: model.assign({
         vcMetadata: (_, event) => event.vcMetadata,
       }),

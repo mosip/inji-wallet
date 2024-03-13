@@ -49,11 +49,14 @@ export const QrLogin: React.FC<QrLoginProps> = props => {
         />
 
         <VerifyIdentityOverlay
-          isVisible={controller.isVerifyingIdentity}
           vc={controller.selectedVc}
+          isVerifyingIdentity={controller.isVerifyingIdentity}
           onCancel={controller.CANCEL}
           onFaceValid={controller.FACE_VALID}
           onFaceInvalid={controller.FACE_INVALID}
+          isInvalidIdentity={true}
+          onDismiss={controller.DISMISS}
+          onRetryVerification={controller.RETRY_VERIFICATION}
         />
 
         <FaceVerificationAlertOverlay
@@ -61,28 +64,6 @@ export const QrLogin: React.FC<QrLoginProps> = props => {
           onConfirm={controller.FACE_VERIFICATION_CONSENT}
           close={controller.DISMISS}
         />
-
-        <MessageOverlay
-          isVisible={controller.isInvalidIdentity}
-          title={t('VerifyIdentityOverlay:errors.invalidIdentity.title')}
-          message={t('VerifyIdentityOverlay:errors.invalidIdentity.message')}
-          onBackdropPress={controller.DISMISS}>
-          <Row>
-            <Button
-              fill
-              type="clear"
-              title={t('common:cancel')}
-              onPress={controller.DISMISS}
-              margin={[0, 8, 0, 0]}
-            />
-            <Button
-              testID="tryAgain"
-              fill
-              title={t('common:tryAgain')}
-              onPress={controller.RETRY_VERIFICATION}
-            />
-          </Row>
-        </MessageOverlay>
 
         <QrConsent
           isVisible={controller.isRequestConsent}

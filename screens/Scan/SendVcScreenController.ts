@@ -19,6 +19,7 @@ import {
   ScanEvents,
   selectIsFaceVerificationConsent,
 } from '../../machines/bleShare/scan/scanMachine';
+import {VCShareFlowType} from '../../shared/Utils';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
 import {RootRouteProps} from '../../routes';
 import {BOTTOM_TAB_ROUTES} from '../../routes/routesConstants';
@@ -44,7 +45,9 @@ export function useSendVcScreen() {
       (vcRef: ActorRefFrom<typeof ExistingMosipVCItemMachine>) => {
         setSelectedIndex(index);
         const {serviceRefs, ...vcData} = vcRef.getSnapshot().context;
-        scanService.send(ScanEvents.SELECT_VC(vcData));
+        scanService.send(
+          ScanEvents.SELECT_VC(vcData, VCShareFlowType.SIMPLE_SHARE),
+        );
       },
 
     receiverInfo: useSelector(scanService, selectReceiverInfo),

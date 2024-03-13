@@ -90,9 +90,10 @@
   },
   "HomeScreenKebabPopUp": {
     "title": "Higit pang mga Opsyon",
-    "unPinCard": "I-unpin ang Card",
-    "pinCard": "Pin Card",
-    "offlineAuthenticationDisabled!": "Nakabinbin ang pag-activate para sa online na pag-login",
+    "unPinCard": "I-unpin",
+    "pinCard": "Pin",
+    "share": "Ibahagi",
+    "shareWithSelfie": "Ibahagi sa Selfie",
     "offlineAuthDisabledMessage": "Mag-click dito upang paganahin ang mga kredensyal na ito na magamit para sa online na pagpapatotoo.",
     "viewActivityLog": "Tingnan ang log ng aktibidad",
     "removeFromWallet": "Alisin sa wallet",
@@ -100,9 +101,10 @@
     "revokeMessage": "Bawiin ang virtual ID para sa profile na ito"
   },
   "WalletBinding": {
+    "offlineAuthenticationDisabled": "I-activate para sa online na pag-login",
     "inProgress": "Isinasagawa",
-    "profileAuthenticated": "Na-activate para sa online na pag-login",
-    "credentialActivated": "Na-activate"
+    "credentialActivated": "Na-activate",
+    "profileAuthenticated": "Pag-login sa QR Code"
   },
   "BindingVcWarningOverlay": {
     "alert": "Pakikumpirma",
@@ -111,10 +113,10 @@
     "no": "Hindi"
   },
   "RemoveVcWarningOverlay": {
-    "alert": "Alerto",
-    "removeWarning": "Gusto mo ba talagang tanggalin ang card?",
-    "confirm": "Kumpirmahin",
-    "no": "Hindi"
+    "alert": "Alisin sa Wallet?",
+    "removeWarning": "Aalisin mo ang card sa wallet. Kapag naalis na, hindi na mababawi ang pagkilos na ito.",
+    "confirm": "Oo, kinukumpirma ko",
+    "cancel": "Kanselahin"
   },
   "AuthScreen": {
     "header": "Gusto mo bang gumamit ng biometrics upang i-unlock ang aplikasyon?",
@@ -166,6 +168,7 @@
     "title": "Magdagdag ng bagong card",
     "description": "Mangyaring piliin ang iyong gustong tagabigay mula sa mga opsyon sa ibaba upang magdagdag ng bagong card.",
     "searchByIssuersName": "Maghanap ayon sa pangalan ng Nag-isyu",
+    "help": "Tulong?",
     "loaders": {
       "loading": "Naglo-load...",
       "subTitle": {
@@ -338,12 +341,15 @@
     }
   },
   "MyVcsTab": {
+    "searchByName": "Maghanap ayon sa pangalan",
     "bringYourDigitalID": "Dalhin ang Iyong Digital ID",
     "generateVcDescription": "Upang i-download ang iyong card i-tap ang I-download card sa ibaba",
     "generateVcFABDescription": "Upang i-download ang iyong card i-tap ang + sa ibaba",
     "downloadCard": "I-download ang Card",
     "downloadingYourCard": "Ang pagda-download ng iyong card, maaari itong tumagal nang hanggang 5 minuto",
     "activated": "Ang mga kredensyal ay pinagana para sa online na pagpapatotoo.",
+    "noCardsTitle": "Walang Nahanap na Mga Card!",
+    "noCardsDescription": "Paumanhin, wala kaming mahanap na anumang resulta. Pakisubukang maglagay ng ibang keyword sa paghahanap.",
     "errors": {
       "savingFailed": {
         "title": "Nabigong i-save ang Card",
@@ -839,6 +845,8 @@
     "save": "I-save ang Kagustuhan"
   },
   "common": {
+    "card": "card",
+    "cards": "mga card",
     "cancel": "Kanselahin",
     "accept": "Tanggapin",
     "save": "I-save",

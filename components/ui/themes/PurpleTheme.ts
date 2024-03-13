@@ -22,13 +22,15 @@ const Colors = {
   Gray50: '#999999',
   Gray9: '#171717',
   Gray89: '#E3E3E3',
+  Gray97: '#F7F7F7',
   DimGray: '#737373',
+  DarkGray: '#A5A5A5',
   platinumGrey: '#EDEDED',
   Orange: '#F2811D',
   OrangeBrown: '#D9822B',
   Blue: '#0000FF',
   LightOrange: '#FDF1E6',
-  LightGrey: '#FAF9FF',
+  LightGrey: '#F8F8F8',
   ShadeOfGrey: '#6F6F6F',
   mediumDarkGrey: '#7B7B7B',
   White: '#FFFFFF',
@@ -60,12 +62,15 @@ const Colors = {
   tooltip: '#B7B7B7',
   toolTipContent: '#4B4B4B',
   toolTipPointer: '#E0E0E0',
+  Mercury: '#E6E6E6',
 };
 
 export type ElevationLevel = 0 | 1 | 2 | 3 | 4 | 5 | 6;
 
 export const PurpleTheme = {
   Colors: {
+    ProfileIconColor: Colors.DarkGray,
+    DetailedViewBackground: Colors.Gray97,
     TabItemText: Colors.Purple,
     Details: Colors.Black,
     DetailsLabel: Colors.Gray40,
@@ -135,6 +140,7 @@ export const PurpleTheme = {
     tooltipIcon: Colors.tooltip,
     toolTipPointerColor: Colors.toolTipPointer,
     urlLink: Colors.Purple,
+    warningText: Colors.Red,
   },
   Styles: StyleSheet.create({
     title: {
@@ -149,6 +155,17 @@ export const PurpleTheme = {
     subtitle: {
       backgroundColor: Colors.Transparent,
       fontSize: 12,
+    },
+    fieldItemTitle: {
+      backgroundColor: Colors.Transparent,
+      fontSize: 11,
+      fontFamily: 'Inter_400Regular',
+    },
+    fieldItemValue: {
+      backgroundColor: Colors.Transparent,
+      fontSize: 12,
+      fontFamily: 'Inter_600SemiBold',
+      marginTop: 3,
     },
     loadingSubtitle: {
       backgroundColor: Colors.Grey,
@@ -177,12 +194,10 @@ export const PurpleTheme = {
       height: '100%',
     },
     kebabPressableContainer: {
-      display: 'flex',
-      flexDirection: 'row',
-      width: '100%',
       height: '100%',
-      justifyContent: 'center',
       alignItems: 'center',
+      justifyContent: 'center',
+      width: '15%',
     },
     verifiedIconContainer: {
       marginRight: 3,
@@ -233,7 +248,8 @@ export const PurpleTheme = {
       flex: 1,
       backgroundColor: Colors.Grey6,
       borderRadius: 4,
-      padding: 5,
+      padding: 10,
+      paddingRight: 20,
     },
     closeDetailsContainer: {
       flex: 1,
@@ -346,6 +362,16 @@ export const PurpleTheme = {
       shadowRadius: 3,
       elevation: 4,
     },
+    detailedViewActivationPopupContainer: {
+      borderTopLeftRadius: 10,
+      borderTopRightRadius: 10,
+      backgroundColor: '#fff',
+      shadowColor: '#000',
+      shadowOffset: {width: -1, height: 1},
+      shadowOpacity: 0.4,
+      shadowRadius: 3,
+      elevation: 4,
+    },
     backgroundImageContainer: {
       flex: 1,
       padding: 10,
@@ -376,13 +402,13 @@ export const PurpleTheme = {
       height: 173.276,
     },
     logo: {
-      height: 65,
-      width: 65,
+      height: 35,
+      width: 35,
     },
     issuerLogo: {
       resizeMode: 'contain',
       aspectRatio: 1,
-      height: 60,
+      height: 35,
     },
     vcDetailsLogo: {
       height: 65,
@@ -412,22 +438,21 @@ export const PurpleTheme = {
       borderRadius: 6,
       backgroundColor: Colors.LightPurple,
     },
+    ProfileContainer: {
+      position: 'relative',
+    },
     ProfileIconContainer: {
       alignSelf: 'center',
       justifyContent: 'center',
-      width: 90,
-      height: 90,
-      borderRadius: 15,
-      borderWidth: 0.3,
-      borderColor: Colors.Purple,
+      width: 40,
+      height: 53,
+      borderRadius: 10,
+      borderWidth: 1,
+      borderColor: Colors.Mercury,
       backgroundColor: Colors.White,
     },
-    ProfileIconInnerStyle: {
-      flex: 1,
-    },
     ProfileIconPinnedStyle: {
-      alignSelf: 'center',
-      justifyContent: 'center',
+      position: 'absolute',
     },
     IconContainer: {
       padding: 6,
@@ -465,23 +490,40 @@ export const PurpleTheme = {
     pinIcon: {
       height: 39,
       width: 39,
+      marginLeft: -20,
+      marginTop: -15,
+    },
+    infoIcon: {
+      height: 39,
+      width: 39,
       marginLeft: -13,
       marginTop: -9,
     },
     faceImage: {
       borderRadius: 10,
-      height: 96,
-      width: 88,
+      height: 53,
+      width: 40,
     },
     closeCardImage: {
-      width: 88,
-      height: 96,
+      width: 40,
+      height: 53,
+      borderRadius: 100,
     },
-    openCardImage: {
-      width: 100,
+    detailedViewImage: {
+      width: 80,
       height: 106,
       borderRadius: 5,
       marginTop: 10,
+    },
+    openCardProfileIconContainer: {
+      alignSelf: 'center',
+      justifyContent: 'center',
+      width: 100,
+      height: 106,
+      borderRadius: 5,
+      borderWidth: 1,
+      borderColor: Colors.Mercury,
+      backgroundColor: Colors.White,
     },
     versionContainer: {
       backgroundColor: Colors.Grey6,
@@ -589,10 +631,12 @@ export const PurpleTheme = {
     },
     hrLine: {
       borderBottomColor: Colors.Gray44,
-      borderBottomWidth: 0.3,
+      borderBottomWidth: 1,
       marginTop: 10,
-      marginLeft: 10,
-      marginRight: 10,
+      marginLeft: 14,
+      marginRight: 14,
+      marginBottom: 20,
+      opacity: 0.2,
     },
     hrLineFill: {
       borderBottomColor: Colors.platinumGrey,
@@ -731,11 +775,15 @@ export const PurpleTheme = {
   QrCodeStyles: StyleSheet.create({
     magnifierZoom: {
       backgroundColor: Colors.White,
-      width: 30,
-      height: 30,
-      alignItems: 'center',
+      width: 27,
+      height: 27,
       padding: 5,
       borderTopLeftRadius: 11,
+      position: 'absolute',
+      bottom: 0,
+      right: 0,
+      alignItems: 'center',
+      justifyContent: 'center',
     },
     expandedQrCode: {
       backgroundColor: Colors.White,
@@ -758,15 +806,19 @@ export const PurpleTheme = {
       fontSize: 18,
     },
     QrView: {
-      padding: 6,
-      backgroundColor: 'white',
-      marginTop: 20,
-      borderRadius: 10,
+      width: 80,
+      height: 80,
+      padding: 8,
+      backgroundColor: Colors.White,
+      alignItems: 'center',
+      justifyContent: 'center',
+      borderRadius: 5,
       elevation: 6,
       shadowColor: '#000',
       shadowOffset: {width: -1, height: 1},
       shadowOpacity: 0.4,
       shadowRadius: 3,
+      marginTop: 14,
     },
   }),
   PinInputStyle: StyleSheet.create({
@@ -956,6 +1008,20 @@ export const PurpleTheme = {
       alignItems: 'center',
       borderBottomWidth: 1,
       borderBottomColor: Colors.Purple,
+    },
+    vcSearchBarContainer: {
+      alignItems: 'center',
+      borderBottomWidth: 0.5,
+      borderTopWidth: 0.5,
+      borderColor: Colors.DimGray,
+      width: Dimensions.get('window').width,
+      backgroundColor: Colors.White,
+    },
+    vcSearchIcon: {
+      justifyContent: 'center',
+      height: Dimensions.get('window').height * 0.055,
+      width: Dimensions.get('window').width * 0.1,
+      paddingLeft: 15,
     },
     searchIcon: {
       justifyContent: 'center',
@@ -1203,7 +1269,6 @@ export const PurpleTheme = {
     kebabHeaderStyle: {
       justifyContent: 'space-between',
       fontFamily: 'Inter_700Bold',
-      paddingTop: 15,
     },
   }),
   MessageOverlayStyles: StyleSheet.create({
@@ -1529,6 +1594,29 @@ export const PurpleTheme = {
       justifyContent: 'space-around',
       backgroundColor: Colors.White,
       maxHeight: Dimensions.get('window').height,
+    },
+  }),
+  HelpScreenStyle: StyleSheet.create({
+    viewStyle: {
+      width: 100,
+      padding: 7,
+      borderRadius: 8,
+      backgroundColor: Colors.LightPurple,
+    },
+    rowStyle: {
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      width: 45,
+      display: 'flex',
+    },
+    iconStyle: {
+      paddingTop: 7,
+      paddingLeft: 20,
+      paddingRight: 3,
+    },
+    labelStyle: {
+      width: 70,
+      fontWeight: 'bold',
     },
   }),
   BottomTabBarStyle: StyleSheet.create({
