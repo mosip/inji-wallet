@@ -72,6 +72,8 @@ export const VCCardViewContent: React.FC<
         <Row align={'space-between'} margin="0 8 5 8">
           <VCItemField
             key={'idType'}
+            testIDForName={'idType'}
+            testIDForValue={'idTypeValue'}
             fieldName={t('idType')}
             fieldValue={getIDType(props.credential)}
             wellknown={props.wellknown}
@@ -79,6 +81,7 @@ export const VCCardViewContent: React.FC<
           />
           <VCItemField
             key={'status'}
+            testIDForName={'status'}
             fieldName={t('status')}
             fieldValue={<VCVerification wellknown={props.wellknown} />}
             wellknown={props.wellknown}
@@ -86,7 +89,7 @@ export const VCCardViewContent: React.FC<
           />
 
           <Column
-            testID="logo"
+            testID="sunbirdLogo"
             style={{
               display: props.credential ? 'flex' : 'none',
               justifyContent: 'center',

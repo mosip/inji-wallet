@@ -9,6 +9,8 @@ export const VCItemField = ({
   fieldName,
   fieldValue,
   wellknown,
+  testIDForName = 'fieldName',
+  testIDForValue = 'fieldValue',
 }) => {
   if (!verifiableCredential) {
     return (
@@ -30,7 +32,7 @@ export const VCItemField = ({
   return (
     <Column margin="9 0 0 0">
       <Text
-        testID={`${fieldName}Title`}
+        testID={testIDForName}
         weight="regular"
         size="smaller"
         {...setTextColor(wellknown)}
@@ -38,10 +40,10 @@ export const VCItemField = ({
         {fieldName}
       </Text>
       {Array.isArray(fieldValue) ? (
-        fieldValue.map(field => (
+        fieldValue.map((field, index) => (
           <Text
-            key={field}
-            testID={`${field}Value`}
+            key={index}
+            testID={testIDForValue + index}
             weight="semibold"
             style={[Theme.Styles.subtitle, setTextColor(wellknown)]}>
             {field}
@@ -49,7 +51,7 @@ export const VCItemField = ({
         ))
       ) : (
         <Text
-          testID={`${fieldName}Value`}
+          testID={testIDForValue}
           weight="semibold"
           style={[Theme.Styles.subtitle, setTextColor(wellknown)]}>
           {fieldValue}
