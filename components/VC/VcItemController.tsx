@@ -2,61 +2,54 @@ import {useContext, useRef} from 'react';
 import {GlobalContext} from '../../shared/GlobalContext';
 import {
   selectContext,
-  selectEmptyWalletBindingId,
   selectGeneratedOn,
   selectKebabPopUp,
   selectVerifiableCredential,
+  selectWalletBindingResponse,
 } from '../../machines/VCItemMachine/commonSelectors';
-import {
-  createExistingMosipVCItemMachine,
-  ExistingMosipVCItemEvents,
-  selectIsSavingFailedInIdle,
-} from '../../machines/VCItemMachine/ExistingMosipVCItem/ExistingMosipVCItemMachine';
-import {
-  createEsignetMosipVCItemMachine,
-  EsignetMosipVCItemEvents,
-} from '../../machines/VCItemMachine/EsignetMosipVCItem/EsignetMosipVCItemMachine';
-import {useInterpret, useSelector} from '@xstate/react';
-import {EsignetVCItemProps, ExistingVCItemProps} from './Views/VCCardView';
-import {VCMetadata} from '../../shared/VCMetadata';
 
-export function useVcItemController(
-  props: ExistingVCItemProps | EsignetVCItemProps,
-) {
+import {useInterpret, useSelector} from '@xstate/react';
+import {VCItemProps} from './Views/VCCardView';
+import {VCMetadata} from '../../shared/VCMetadata';
+import {
+  createVCItemMachine,
+  VCItemEvents,
+} from '../../machines/VCItemMachine/VCItemMachine';
+import {selectIsSavingFailedInIdle} from '../../screens/Home/MyVcsTabMachine';
+
+export function useVcItemController(props: VCItemProps) {
   const {appService} = useContext(GlobalContext);
   const vcMetadata = VCMetadata.fromVC(props.vcMetadata);
   const machine = useRef(
-    !vcMetadata.isFromOpenId4VCI()
-      ? createExistingMosipVCItemMachine(
-          appService.getSnapshot().context.serviceRefs,
-          props.vcMetadata,
-        )
-      : createEsignetMosipVCItemMachine(
-          appService.getSnapshot().context.serviceRefs,
-          props.vcMetadata,
-        ),
+    createVCItemMachine(
+      appService.getSnapshot().context.serviceRefs,
+      props.vcMetadata,
+    ),
   );
 
   const service = useInterpret(machine.current, {devTools: __DEV__});
 
   const context = useSelector(service, selectContext);
   const verifiableCredential = useSelector(service, selectVerifiableCredential);
-  const emptyWalletBindingId = useSelector(service, selectEmptyWalletBindingId);
+  const walletBindingResponse = useSelector(
+    service,
+    selectWalletBindingResponse,
+  );
   const isKebabPopUp = useSelector(service, selectKebabPopUp);
-  let DISMISS = () => service.send(ExistingMosipVCItemEvents.DISMISS());
-  let KEBAB_POPUP = () => service.send(ExistingMosipVCItemEvents.KEBAB_POPUP());
+  let DISMISS = () => service.send(VCItemEvents.DISMISS());
+  let KEBAB_POPUP = () => service.send(VCItemEvents.KEBAB_POPUP());
   const isSavingFailedInIdle = useSelector(service, selectIsSavingFailedInIdle);
   const storeErrorTranslationPath = 'errors.savingFailed';
   const generatedOn = useSelector(service, selectGeneratedOn);
   if (vcMetadata.isFromOpenId4VCI()) {
-    DISMISS = () => service.send(EsignetMosipVCItemEvents.DISMISS());
-    KEBAB_POPUP = () => service.send(EsignetMosipVCItemEvents.KEBAB_POPUP());
+    DISMISS = () => service.send(VCItemEvents.DISMISS());
+    KEBAB_POPUP = () => service.send(VCItemEvents.KEBAB_POPUP());
   }
   return {
     service,
     context,
     verifiableCredential,
-    emptyWalletBindingId,
+    walletBindingResponse,
     isKebabPopUp,
     DISMISS,
     KEBAB_POPUP,

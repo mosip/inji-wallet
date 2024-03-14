@@ -2,7 +2,6 @@ import {useSelector} from '@xstate/react';
 import {useContext, useState} from 'react';
 import {ActorRefFrom} from 'xstate';
 import {selectShareableVcsMetadata} from '../../machines/VCItemMachine/vc';
-import {ExistingMosipVCItemMachine} from '../../machines/VCItemMachine/ExistingMosipVCItem/ExistingMosipVCItemMachine';
 import {GlobalContext} from '../../shared/GlobalContext';
 import {
   selectIsSelectingVc,
@@ -23,6 +22,7 @@ import {VCShareFlowType} from '../../shared/Utils';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
 import {RootRouteProps} from '../../routes';
 import {BOTTOM_TAB_ROUTES} from '../../routes/routesConstants';
+import {VCItemMachine} from '../../machines/VCItemMachine/VCItemMachine';
 
 type MyVcsTabNavigation = NavigationProp<RootRouteProps>;
 
@@ -41,8 +41,7 @@ export function useSendVcScreen() {
     TOGGLE_USER_CONSENT: () =>
       scanService.send(ScanEvents.TOGGLE_USER_CONSENT()),
     SELECT_VC_ITEM:
-      (index: number) =>
-      (vcRef: ActorRefFrom<typeof ExistingMosipVCItemMachine>) => {
+      (index: number) => (vcRef: ActorRefFrom<typeof VCItemMachine>) => {
         setSelectedIndex(index);
         const {serviceRefs, ...vcData} = vcRef.getSnapshot().context;
         scanService.send(

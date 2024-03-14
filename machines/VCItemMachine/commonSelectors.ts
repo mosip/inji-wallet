@@ -1,10 +1,7 @@
 import {StateFrom} from 'xstate';
-import {EsignetMosipVCItemMachine} from './EsignetMosipVCItem/EsignetMosipVCItemMachine';
-import {ExistingMosipVCItemMachine} from './ExistingMosipVCItem/ExistingMosipVCItemMachine';
+import {VCItemMachine} from './VCItemMachine';
 
-type State = StateFrom<
-  typeof ExistingMosipVCItemMachine & typeof EsignetMosipVCItemMachine
->;
+type State = StateFrom<typeof VCItemMachine>;
 
 export function selectVerifiableCredential(state: State) {
   return state.context.verifiableCredential;
@@ -23,7 +20,11 @@ export function selectGeneratedOn(state: State) {
 }
 
 export function selectWalletBindingSuccess(state: State) {
-  return state.context.walletBindingSuccess;
+  return state.context.walletBindingResponse;
+}
+
+export function selectWalletBindingResponse(state: State) {
+  return state.context.walletBindingResponse;
 }
 
 export function selectIsPhoneNumber(state: State) {
@@ -34,40 +35,29 @@ export function selectIsEmail(state: State) {
   return state.context.email;
 }
 
-export function selectEmptyWalletBindingId(state: State) {
-  var val = state.context.walletBindingResponse
-    ? state.context.walletBindingResponse.walletBindingId
-    : undefined;
-  return val == undefined || val == null || val.length <= 0 ? true : false;
-}
-
 export function selectWalletBindingError(state: State) {
-  return state.context.walletBindingError;
+  return state.context.error;
 }
 
 export function selectBindingAuthFailedError(state: State) {
-  return state.context.bindingAuthFailedMessage;
+  return state.context.error;
 }
 
 export function selectAcceptingBindingOtp(state: State) {
-  return state.matches('acceptingBindingOtp');
-}
-
-export function selectKebabPopUpShowWalletBindingError(state: State) {
-  return state.matches('showingWalletBindingError');
+  return state.matches('walletBinding.acceptingBindingOTP');
 }
 
 export function selectWalletBindingInProgress(state: State) {
-  return state.matches('requestingBindingOtp') ||
-    state.matches('addingWalletBindingId') ||
-    state.matches('addKeyPair') ||
-    state.matches('updatingPrivateKey')
-    ? true
-    : false;
+  return (
+    state.matches('walletBinding.requestingBindingOTP') ||
+    state.matches('walletBinding.addingWalletBindingId') ||
+    state.matches('walletBinding.addKeyPair') ||
+    state.matches('walletBinding.updatingPrivateKey')
+  );
 }
 
 export function selectBindingWarning(state: State) {
-  return state.matches('showBindingWarning');
+  return state.matches('walletBinding.showBindingWarning');
 }
 
 export function selectRemoveWalletWarning(state: State) {
@@ -79,7 +69,7 @@ export function selectIsPinned(state: State) {
 }
 
 export function selectOtpError(state: State) {
-  return state.context.otpError;
+  return state.context.error;
 }
 
 export function selectShowActivities(state: State) {
@@ -87,5 +77,18 @@ export function selectShowActivities(state: State) {
 }
 
 export function selectShowWalletBindingError(state: State) {
-  return state.matches('showingWalletBindingError');
+  return state.matches('walletBinding.showingWalletBindingError');
+}
+
+export function selectVc(state: State) {
+  const {serviceRefs, ...data} = state.context;
+  return data;
+}
+
+export function selectId(state: State) {
+  return state.context.vcMetadata.id;
+}
+
+export function selectRequestBindingOTP(state: State) {
+  return state.matches('walletBinding.requestBindingOTP');
 }

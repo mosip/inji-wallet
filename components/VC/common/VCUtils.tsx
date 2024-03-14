@@ -1,7 +1,4 @@
-import {
-  CredentialSubject,
-  VerifiableCredential,
-} from '../../../types/VC/ExistingMosipVC/vc';
+import {CredentialSubject, VerifiableCredential} from '../../../types/VC/vc';
 import i18n, {getLocalizedField} from '../../../i18n';
 import {Row} from '../../ui';
 import {VCItemField} from './VCItemField';

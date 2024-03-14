@@ -4,30 +4,29 @@ import {getLocalizedField} from '../../../i18n';
 import {VCMetadata} from '../../../shared/VCMetadata';
 
 import {KebabPopUp} from '../../KebabPopUp';
-import {VerifiableCredential} from '../../../types/VC/ExistingMosipVC/vc';
+import {VerifiableCredential} from '../../../types/VC/vc';
 import {Column, Row} from '../../ui';
 import {Theme} from '../../ui/styleUtils';
 import {CheckBox, Icon} from 'react-native-elements';
 import {SvgImage} from '../../ui/svg';
-import {faceImageSource} from '../../VcItemContainerProfileImage';
+import {
+  faceImageSource,
+  VcItemContainerProfileImage,
+} from '../../VcItemContainerProfileImage';
 import {
   getIssuerLogo,
   isVCLoaded,
   setBackgroundColour,
 } from '../common/VCUtils';
-import {setTextColor} from '../common/VCItemField';
-import {VCItemFieldValue} from '../common/VCItemField';
+import {setTextColor, VCItemFieldValue} from '../common/VCItemField';
 import {WalletBinding} from '../../../screens/Home/MyVcs/WalletBinding';
 import {VCVerification} from '../../VCVerification';
 import {Issuers} from '../../../shared/openId4VCI/Utils';
 import {VCItemContainerFlowType} from '../../../shared/Utils';
 import {RemoveVcWarningOverlay} from '../../../screens/Home/MyVcs/RemoveVcWarningOverlay';
 import {HistoryTab} from '../../../screens/Home/MyVcs/HistoryTab';
-import {VcItemContainerProfileImage} from '../../VcItemContainerProfileImage';
 
-export const VCCardViewContent: React.FC<
-  ExistingMosipVCItemContentProps | EsignetMosipVCItemContentProps
-> = props => {
+export const VCCardViewContent: React.FC<VCItemContentProps> = props => {
   const selectableOrCheck = props.selectable && (
     <CheckBox
       checked={props.selected}
@@ -83,7 +82,7 @@ export const VCCardViewContent: React.FC<
           {!Object.values(VCItemContainerFlowType).includes(props.flow) && (
             <>
               {props.vcMetadata.issuer === Issuers.Sunbird ||
-              !props.emptyWalletBindingId
+              props.walletBindingResponse
                 ? SvgImage.walletActivatedIcon()
                 : SvgImage.walletUnActivatedIcon()}
               <Pressable
@@ -120,7 +119,7 @@ export const VCCardViewContent: React.FC<
   );
 };
 
-export interface ExistingMosipVCItemContentProps {
+export interface VCItemContentProps {
   context: any;
   verifiableCredential: VerifiableCredential;
   credential: VerifiableCredential;
@@ -134,29 +133,7 @@ export interface ExistingMosipVCItemContentProps {
   onPress?: () => void;
   isDownloading?: boolean;
   flow?: string;
-  emptyWalletBindingId: boolean;
-  KEBAB_POPUP: () => {};
-  DISMISS: () => {};
-  isKebabPopUp: boolean;
-  vcMetadata: VCMetadata;
-  isVerified?: boolean;
-}
-
-export interface EsignetMosipVCItemContentProps {
-  context: any;
-  credential: VerifiableCredential;
-  fields: [];
-  wellknown: {};
-  generatedOn: string;
-  selectable: boolean;
-  selected: boolean;
-  isPinned?: boolean;
-  service: any;
-  onPress?: () => void;
-  isDownloading?: boolean;
-  flow?: string;
-  emptyWalletBindingId: boolean;
-  verifiableCredential: VerifiableCredential;
+  walletBindingResponse: {};
   KEBAB_POPUP: () => {};
   DISMISS: () => {};
   isKebabPopUp: boolean;

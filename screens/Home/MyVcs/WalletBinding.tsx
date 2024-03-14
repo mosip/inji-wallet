@@ -7,7 +7,6 @@ import {OtpVerificationModal} from './OtpVerificationModal';
 import {MessageOverlay} from '../../../components/MessageOverlay';
 import {useKebabPopUp} from '../../../components/KebabPopUpController';
 import {ActorRefFrom} from 'xstate';
-import {ExistingMosipVCItemMachine} from '../../../machines/VCItemMachine/ExistingMosipVCItem/ExistingMosipVCItemMachine';
 import {VCMetadata} from '../../../shared/VCMetadata';
 import {
   getEndEventData,
@@ -16,6 +15,7 @@ import {
   sendErrorEvent,
 } from '../../../shared/telemetry/TelemetryUtils';
 import {TelemetryConstants} from '../../../shared/telemetry/TelemetryConstants';
+import {VCItemMachine} from '../../../machines/VCItemMachine/VCItemMachine';
 
 export const WalletVerified: React.FC = () => {
   return (
@@ -93,6 +93,6 @@ export const WalletBinding: React.FC<WalletBindingProps> = props => {
 
 interface WalletBindingProps {
   testID?: string;
-  service: ActorRefFrom<typeof ExistingMosipVCItemMachine>;
+  service: ActorRefFrom<typeof VCItemMachine>;
   vcMetadata: VCMetadata;
 }

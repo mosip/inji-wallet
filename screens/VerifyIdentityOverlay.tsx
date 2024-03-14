@@ -1,9 +1,9 @@
 import React from 'react';
 
 import {FaceScanner} from '../components/FaceScanner';
-import {Column, Row, Button} from '../components/ui';
+import {Button, Column, Row} from '../components/ui';
 import {Theme} from '../components/ui/styleUtils';
-import {VC} from '../types/VC/ExistingMosipVC/vc';
+import {VC} from '../types/VC/vc';
 import {Modal} from '../components/ui/Modal';
 import {useTranslation} from 'react-i18next';
 import {VCMetadata} from '../shared/VCMetadata';

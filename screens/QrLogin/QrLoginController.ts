@@ -4,12 +4,16 @@ import {ActorRefFrom} from 'xstate';
 import {
   QrLoginEvents,
   selectClientName,
+  selectDomainName,
   selectErrorMessage,
+  selectEssentialClaims,
+  selectIsFaceVerificationConsent,
   selectIsInvalidIdentity,
   selectIsisVerifyingIdentity,
   selectIsLinkTransaction,
   selectIsloadMyVcs,
   selectIsRequestConsent,
+  selectIsSendingAuthenticate,
   selectIsSendingConsent,
   selectIsSharing,
   selectIsShowError,
@@ -18,18 +22,13 @@ import {
   selectIsWaitingForData,
   selectLinkTransactionResponse,
   selectLogoUrl,
-  selectDomainName,
   selectSelectedVc,
   selectVoluntaryClaims,
-  selectIsSendingAuthenticate,
-  selectEssentialClaims,
-  selectIsFaceVerificationConsent,
 } from '../../machines/QrLoginMachine';
 import {selectBindedVcsMetadata} from '../../machines/VCItemMachine/vc';
 import {GlobalContext} from '../../shared/GlobalContext';
-import {VC} from '../../types/VC/ExistingMosipVC/vc';
+import {VC} from '../../types/VC/vc';
 import {QrLoginProps} from './QrLogin';
-import {EsignetMosipVCItemMachine} from '../../machines/VCItemMachine/EsignetMosipVCItem/EsignetMosipVCItemMachine';
 
 export function useQrLogin({service}: QrLoginProps) {
   const {appService} = useContext(GlobalContext);
@@ -43,22 +42,19 @@ export function useQrLogin({service}: QrLoginProps) {
   };
 
   const isShare = useSelector(service, selectIsSharing);
-  
 
   return {
     SELECT_VC_ITEM:
-      (index: number) =>
-      (
-        vcRef: ActorRefFrom<
-          typeof EsignetMosipVCItemMachine | typeof EsignetMosipVCItemMachine
-        >,
-      ) => {
+      (index: number) => (vcRef: ActorRefFrom<typeof VCItemMachine>) => {
         setSelectedIndex(index);
         const vcData = vcRef.getSnapshot().context;
         SELECT_VC(vcData);
       },
 
-    isFaceVerificationConsent: useSelector(service, selectIsFaceVerificationConsent),
+    isFaceVerificationConsent: useSelector(
+      service,
+      selectIsFaceVerificationConsent,
+    ),
     shareableVcsMetadata: useSelector(vcService, selectBindedVcsMetadata),
     selectedVc: useSelector(service, selectSelectedVc),
     linkTransactionResponse: useSelector(
@@ -77,7 +73,8 @@ export function useQrLogin({service}: QrLoginProps) {
     selectedIndex,
     SELECT_VC,
     SELECT_CONSENT,
-    FACE_VERIFICATION_CONSENT: (isConsentGiven: boolean) => service.send(QrLoginEvents.FACE_VERIFICATION_CONSENT(isConsentGiven)),
+    FACE_VERIFICATION_CONSENT: (isConsentGiven: boolean) =>
+      service.send(QrLoginEvents.FACE_VERIFICATION_CONSENT(isConsentGiven)),
     isWaitingForData: useSelector(service, selectIsWaitingForData),
     isShowingVcList: useSelector(service, selectIsShowingVcList),
     isLinkTransaction: useSelector(service, selectIsLinkTransaction),

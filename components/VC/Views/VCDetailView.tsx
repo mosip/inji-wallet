@@ -1,18 +1,16 @@
 import React, {useEffect, useState} from 'react';
 import {useTranslation} from 'react-i18next';
 import {Image, ImageBackground, View} from 'react-native';
-import {Icon} from 'react-native-elements';
-import {VC} from '../../../types/VC/ExistingMosipVC/vc';
-import {Button, Column, Row, Text} from '../../ui';
-import {Theme} from '../../ui/styleUtils';
-import {QrCodeOverlay} from '../../QrCodeOverlay';
-import {VCMetadata} from '../../../shared/VCMetadata';
 import {
   VcIdType,
   VerifiableCredential,
   VerifiablePresentation,
-} from '../../../types/VC/EsignetMosipVC/vc';
-import {WalletBindingResponse} from '../../../shared/cryptoutil/cryptoUtil';
+  WalletBindingResponse,
+} from '../../../types/VC/vc';
+import {Button, Column, Row, Text} from '../../ui';
+import {Theme} from '../../ui/styleUtils';
+import {QrCodeOverlay} from '../../QrCodeOverlay';
+import {VCMetadata} from '../../../shared/VCMetadata';
 import {logoType} from '../../../machines/issuersMachine';
 import {SvgImage} from '../../ui/svg';
 import {
@@ -46,9 +44,9 @@ const getIssuerLogo = (isOpenId4VCI: boolean, issuerLogo: logoType) => {
 };
 
 const getProfileImage = (
-  props: ExistingVCItemDetailsProps | EsignetVCItemDetailsProps,
-  verifiableCredential,
-  isOpenId4VCI,
+  props: VCItemDetailsProps,
+  verifiableCredential: VC,
+  isOpenId4VCI: boolean,
 ) => {
   if (isOpenId4VCI) {
     if (verifiableCredential?.credentialSubject?.face) {
@@ -75,9 +73,7 @@ const getProfileImage = (
   );
 };
 
-export const VCDetailView: React.FC<
-  ExistingVCItemDetailsProps | EsignetVCItemDetailsProps
-> = props => {
+export const VCDetailView: React.FC<VCItemDetailsProps> = props => {
   const {t, i18n} = useTranslation('VcDetails');
 
   let isOpenId4VCI = VCMetadata.fromVC(props.vc.vcMetadata).isFromOpenId4VCI();
@@ -194,8 +190,10 @@ export const VCDetailView: React.FC<
             backgroundColor: Theme.Colors.DetailedViewBackground,
           }}>
           {props.activeTab !== 1 ? (
-            props.isBindingPending &&
-            isActivationNeeded(props.vc.vcMetadata.issuer) ? (
+            !props.walletBindingResponse &&
+            isActivationNeeded(
+              VCMetadata.fromVC(props.vc.vcMetadata).issuer,
+            ) ? (
               <Column
                 padding="10"
                 style={Theme.Styles.detailedViewActivationPopupContainer}>
@@ -271,23 +269,15 @@ export const VCDetailView: React.FC<
   );
 };
 
-export interface ExistingVCItemDetailsProps {
+export interface VCItemDetailsProps {
   vc: VC;
-  isBindingPending: boolean;
+  walletBindingResponse: WalletBindingResponse;
   onBinding?: () => void;
   activeTab?: Number;
   vcHasImage: boolean;
 }
 
-export interface EsignetVCItemDetailsProps {
-  vc: EsignetVC;
-  isBindingPending: boolean;
-  onBinding?: () => void;
-  activeTab?: number;
-  vcHasImage: boolean;
-}
-
-export interface EsignetVC {
+export interface VC {
   id: string;
   idType: VcIdType;
   verifiableCredential: VerifiableCredential;

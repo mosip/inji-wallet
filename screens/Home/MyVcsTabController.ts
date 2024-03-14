@@ -2,40 +2,39 @@ import {useSelector} from '@xstate/react';
 import {useContext} from 'react';
 import {ActorRefFrom} from 'xstate';
 import {
+  selectAreAllVcsDownloaded,
+  selectDownloadingFailedVcs,
+  selectInProgressVcDownloads,
   selectIsRefreshingMyVcs,
+  selectIsTampered,
+  selectMyVcs,
   selectMyVcsMetadata,
+  selectVerificationErrorMessage,
   selectWalletBindingSuccess,
   VcEvents,
-  selectAreAllVcsDownloaded,
-  selectInProgressVcDownloads,
-  selectIsTampered,
-  selectDownloadingFailedVcs,
-  selectMyVcs,
-  selectVerificationErrorMessage,
 } from '../../machines/VCItemMachine/vc';
 import {
-  selectWalletBindingError,
   selectShowWalletBindingError,
+  selectWalletBindingError,
 } from '../../machines/VCItemMachine/commonSelectors';
-import {ExistingMosipVCItemMachine} from '../../machines/VCItemMachine/ExistingMosipVCItem/ExistingMosipVCItemMachine';
 import {GlobalContext} from '../../shared/GlobalContext';
 import {HomeScreenTabProps} from './HomeScreen';
 import {
   MyVcsTabEvents,
   MyVcsTabMachine,
   selectAddVcModal,
-  selectIsRequestSuccessful,
   selectGetVcModal,
-  selectIsSavingFailedInIdle,
   selectIsNetworkOff,
+  selectIsRequestSuccessful,
+  selectIsSavingFailedInIdle,
 } from './MyVcsTabMachine';
 import {
   selectShowHardwareKeystoreNotExistsAlert,
   SettingsEvents,
 } from '../../machines/settings';
-import {EsignetMosipVCItemMachine} from '../../machines/VCItemMachine/EsignetMosipVCItem/EsignetMosipVCItemMachine';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
 import {RootRouteProps} from '../../routes';
+import {VCItemMachine} from '../../machines/VCItemMachine/VCItemMachine';
 
 type MyVcsTabNavigation = NavigationProp<RootRouteProps>;
 
@@ -96,11 +95,7 @@ export function useMyVcsTab(props: HomeScreenTabProps) {
 
     REFRESH: () => vcService.send(VcEvents.REFRESH_MY_VCS()),
 
-    VIEW_VC: (
-      vcRef:
-        | ActorRefFrom<typeof ExistingMosipVCItemMachine>
-        | ActorRefFrom<typeof EsignetMosipVCItemMachine>,
-    ) => {
+    VIEW_VC: (vcRef: ActorRefFrom<typeof VCItemMachine>) => {
       return service.send(MyVcsTabEvents.VIEW_VC(vcRef));
     },
 

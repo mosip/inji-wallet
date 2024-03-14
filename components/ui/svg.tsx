@@ -161,6 +161,7 @@ export class SvgImage {
       />
     );
   }
+
   static OutlinedScheduleIcon() {
     return (
       <OutlinedScheduleIcon
@@ -200,6 +201,7 @@ export class SvgImage {
       />
     );
   }
+
   static settings(focused: boolean) {
     //NOTE: Here tab icons names should be same with key "name" in main.ts
     return (
@@ -463,6 +465,7 @@ export class SvgImage {
       />
     );
   }
+
   static ICloudIcon(width, height) {
     return (
       <ICloudLogo
@@ -472,6 +475,7 @@ export class SvgImage {
       />
     );
   }
+
   static SearchIcon() {
     return <Search {...testIDProps('searchIcon')} />;
   }

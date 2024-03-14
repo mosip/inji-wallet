@@ -14,7 +14,7 @@ import {
   MY_VCS_STORE_KEY,
 } from '../shared/constants';
 import {StoreEvents} from './store';
-import {linkTransactionResponse, VC} from '../types/VC/ExistingMosipVC/vc';
+import {linkTransactionResponse, VC} from '../types/VC/vc';
 import {request} from '../shared/request';
 import {
   getJWT,
@@ -31,8 +31,7 @@ import {
   sendEndEvent,
 } from '../shared/telemetry/TelemetryUtils';
 import {TelemetryConstants} from '../shared/telemetry/TelemetryConstants';
-import {API_URLS} from '../shared/api';
-import getAllConfigurations from '../shared/api';
+import getAllConfigurations, {API_URLS} from '../shared/api';
 import {VCShareFlowType} from '../shared/Utils';
 
 const model = createModel(
@@ -599,6 +598,7 @@ type State = StateFrom<typeof qrLoginMachine>;
 export function selectMyVcs(state: State) {
   return state.context.myVcs;
 }
+
 export function selectIsWaitingForData(state: State) {
   return state.matches('waitingForData');
 }
@@ -634,6 +634,7 @@ export function selectIsShowError(state: State) {
 export function selectIsRequestConsent(state: State) {
   return state.matches('requestConsent');
 }
+
 export function selectIsSendingAuthenticate(state: State) {
   return state.matches('sendingAuthenticate');
 }
@@ -653,6 +654,7 @@ export function selectSelectedVc(state: State) {
 export function selectLinkTransactionResponse(state: State) {
   return state.context.linkTransactionResponse;
 }
+
 export function selectEssentialClaims(state: State) {
   return state.context.essentialClaims;
 }
@@ -672,6 +674,7 @@ export function selectClientName(state: State) {
 export function selectErrorMessage(state: State) {
   return state.context.errorMessage;
 }
+
 export function selectIsSharing(state: State) {
   return state.context.isSharing;
 }

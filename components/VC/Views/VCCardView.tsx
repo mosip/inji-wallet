@@ -1,30 +1,27 @@
 import React, {useEffect, useState} from 'react';
 import {Pressable, View} from 'react-native';
 import {ActorRefFrom} from 'xstate';
-import {
-  ExistingMosipVCItemEvents,
-  ExistingMosipVCItemMachine,
-} from '../../../machines/VCItemMachine/ExistingMosipVCItem/ExistingMosipVCItemMachine';
 import {ErrorMessageOverlay} from '../../MessageOverlay';
 import {Theme} from '../../ui/styleUtils';
 import {VCMetadata} from '../../../shared/VCMetadata';
 import {format} from 'date-fns';
-import {EsignetMosipVCItemMachine} from '../../../machines/VCItemMachine/EsignetMosipVCItem/EsignetMosipVCItemMachine';
 
 import {VCCardSkeleton} from '../common/VCCardSkeleton';
 import {VCCardViewContent} from './VCCardViewContent';
 import {useVcItemController} from '../VcItemController';
 import {getCredentialIssuersWellKnownConfig} from '../../../shared/openId4VCI/Utils';
 import {CARD_VIEW_DEFAULT_FIELDS, isVCLoaded} from '../common/VCUtils';
+import {
+  VCItemEvents,
+  VCItemMachine,
+} from '../../../machines/VCItemMachine/VCItemMachine';
 
-export const VCCardView: React.FC<
-  ExistingVCItemProps | EsignetVCItemProps
-> = props => {
+export const VCCardView: React.FC<VCItemProps> = props => {
   let {
     service,
     context,
     verifiableCredential,
-    emptyWalletBindingId,
+    walletBindingResponse,
     isKebabPopUp,
     isSavingFailedInIdle,
     storeErrorTranslationPath,
@@ -37,9 +34,7 @@ export const VCCardView: React.FC<
     generatedOn && format(new Date(generatedOn), 'MM/dd/yyyy');
 
   useEffect(() => {
-    service.send(
-      ExistingMosipVCItemEvents.UPDATE_VC_METADATA(props.vcMetadata),
-    );
+    service.send(VCItemEvents.UPDATE_VC_METADATA(props.vcMetadata));
   }, [props.vcMetadata]);
 
   const credential = props.isDownloading
@@ -84,7 +79,7 @@ export const VCCardView: React.FC<
           vcMetadata={props.vcMetadata}
           context={context}
           verifiableCredential={verifiableCredential}
-          emptyWalletBindingId={emptyWalletBindingId}
+          walletBindingResponse={walletBindingResponse}
           credential={credential}
           fields={fields}
           wellknown={wellknown}
@@ -112,25 +107,13 @@ export const VCCardView: React.FC<
   );
 };
 
-export interface ExistingVCItemProps {
+export interface VCItemProps {
   vcMetadata: VCMetadata;
   margin?: string;
   selectable?: boolean;
   selected?: boolean;
-  onPress?: (vcRef?: ActorRefFrom<typeof ExistingMosipVCItemMachine>) => void;
-  onShow?: (vcRef?: ActorRefFrom<typeof ExistingMosipVCItemMachine>) => void;
-  isDownloading?: boolean;
-  isPinned?: boolean;
-  flow?: string;
-}
-
-export interface EsignetVCItemProps {
-  vcMetadata: VCMetadata;
-  margin?: string;
-  selectable?: boolean;
-  selected?: boolean;
-  onPress?: (vcRef?: ActorRefFrom<typeof EsignetMosipVCItemMachine>) => void;
-  onShow?: (vcRef?: ActorRefFrom<typeof EsignetMosipVCItemMachine>) => void;
+  onPress?: (vcRef?: ActorRefFrom<typeof VCItemMachine>) => void;
+  onShow?: (vcRef?: ActorRefFrom<typeof VCItemMachine>) => void;
   isDownloading?: boolean;
   isPinned?: boolean;
   flow?: string;

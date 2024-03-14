@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import {Column, Row} from '../../components/ui';
+import {Row} from '../../components/ui';
 import {Modal} from '../../components/ui/Modal';
 import {MessageOverlay} from '../../components/MessageOverlay';
 import {ToastItem} from '../../components/ui/ToastItem';
@@ -121,7 +121,7 @@ export const ViewVcModal: React.FC<ViewVcModalProps> = props => {
       <VcDetailsContainer
         vc={controller.vc}
         onBinding={controller.addtoWallet}
-        isBindingPending={controller.isWalletBindingPending}
+        walletBindingResponse={controller.walletBindingResponse}
         activeTab={props.activeTab}
         vcHasImage={getVcProfileImage !== undefined}
       />

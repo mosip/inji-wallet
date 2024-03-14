@@ -1,7 +1,7 @@
 import {EventFrom, send, sendParent, StateFrom} from 'xstate';
 import {createModel} from 'xstate/lib/model';
 import {StoreEvents} from '../store';
-import {VC} from '../../types/VC/ExistingMosipVC/vc';
+import {VC} from '../../types/VC/vc';
 import {AppServices} from '../../shared/GlobalContext';
 import {log, respond} from 'xstate/lib/actions';
 import {MY_VCS_STORE_KEY, RECEIVED_VCS_STORE_KEY} from '../../shared/constants';
@@ -272,11 +272,10 @@ export const vcMachine =
         })),
 
         getVcItemResponse: respond((context, event) => {
-          const vc =
-            context.vcs[VCMetadata.fromVC(event.vcMetadata)?.getVcKey()];
           return {
             type: 'GET_VC_RESPONSE',
-            vc: vc,
+            response:
+              context.vcs[VCMetadata.fromVC(event.vcMetadata)?.getVcKey()],
           };
         }),
 
@@ -324,8 +323,13 @@ export const vcMachine =
         }),
 
         setDownloadedVc: (context, event) => {
-          const vcUniqueId = VCMetadata.fromVC(event.vc).getVcKey();
-          context.vcs[vcUniqueId] = event.vc;
+          if (event.vc) {
+            const vcUniqueId = VCMetadata.fromVC(event.vc).getVcKey();
+            console.log('>>>>>> setDownloadedVc => ', event.vc);
+            context.vcs[vcUniqueId] = event.vc;
+          }
+          // context.vcs[VCMetadata.fromVC(event.vcMetadata).getVcKey()] =
+          //     event.vc;
         },
 
         addVcToInProgressDownloads: model.assign({
