@@ -58,6 +58,7 @@ export const VCCardView: React.FC<
 
   const [fields, setFields] = useState([]);
   const [wellknown, setWellknown] = useState(null);
+  const [isConfigFetched, setIsConfigFetched] = useState(false);
   useEffect(() => {
     getCredentialIssuersWellKnownConfig(
       props?.vcMetadata.issuer,
@@ -66,10 +67,11 @@ export const VCCardView: React.FC<
     ).then(response => {
       setWellknown(response.wellknown);
       setFields(response.fields.slice(0, 3).concat(CARD_VIEW_ADD_ON_FIELDS));
+      setIsConfigFetched(true);
     });
   }, [verifiableCredential?.wellKnown]);
 
-  if (!isVCLoaded(verifiableCredential, fields)) {
+  if (!isVCLoaded(verifiableCredential, fields || !isConfigFetched)) {
     return <VCCardSkeleton />;
   }
 
