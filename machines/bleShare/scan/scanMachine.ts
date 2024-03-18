@@ -179,16 +179,14 @@ export const scanMachine =
       },
       states: {
         inactive: {
-          entry: ['removeLoggers', 'resetFlowType', 'resetSelectedVc'],
+          entry: ['removeLoggers'],
         },
         disconnectDevice: {
-          entry: ['resetFlowType', 'resetSelectedVc'],
           invoke: {
             src: 'disconnect',
           },
           on: {
             DISCONNECT: {
-              actions: ['resetFlowType', 'resetSelectedVc'],
               target: '#scan.inactive',
             },
           },
@@ -398,7 +396,6 @@ export const scanMachine =
           on: {
             DISCONNECT: {
               target: '#scan.checkFaceAuthConsent',
-              actions: ['resetFlowType', 'resetSelectedVc'],
               internal: false,
             },
           },
