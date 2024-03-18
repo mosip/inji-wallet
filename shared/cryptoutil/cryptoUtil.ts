@@ -40,7 +40,7 @@ export async function getJWT(
     );
     return header64 + '.' + payLoad64 + '.' + signature64;
   } catch (e) {
-    console.log('Exception Occurred While Constructing JWT ', e);
+    console.error('Exception Occurred While Constructing JWT ', e);
     throw e;
   }
 }

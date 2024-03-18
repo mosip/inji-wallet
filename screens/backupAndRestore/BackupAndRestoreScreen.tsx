@@ -25,25 +25,22 @@ const BackupAndRestoreScreen: React.FC<BackupAndRestoreProps> = props => {
   const {t} = useTranslation('BackupAndRestore');
 
   useEffect(() => {
-    const shouldFetchlastBackupDetails = isIOS()
-      ? !props.isLoading
-      : !props.isLoading && backupController.lastBackupDetails === null;
-    if (shouldFetchlastBackupDetails) {
+    if (!props.isSigningIn) {
       backupController.LAST_BACKUP_DETAILS();
     }
-  }, [props.isLoading]);
+  }, [props.isSigningIn]);
 
   useEffect(() => {
     if (
-      !props.isLoading &&
-      !backupController.isLoading &&
+      !props.isSigningIn &&
+      !backupController.isLoadingBackupDetails &&
       props.shouldTriggerAutoBackup
     ) {
-      backupController.DATA_BACKUP(true);
+      backupController.DATA_BACKUP(props.shouldTriggerAutoBackup);
     }
   }, [
-    props.isLoading,
-    backupController.isLoading,
+    props.isSigningIn,
+    backupController.isLoadingBackupDetails,
     props.shouldTriggerAutoBackup,
   ]);
 
@@ -223,7 +220,7 @@ const BackupAndRestoreScreen: React.FC<BackupAndRestoreProps> = props => {
           backgroundColor: Theme.Colors.lightGreyBackgroundColor,
           flex: 1,
         }}>
-        {props.isLoading || backupController.isLoading ? (
+        {props.isSigningIn || backupController.isLoadingBackupDetails ? (
           <Column fill align="center" crossAlign="center">
             <LoaderAnimation testID="backupAndRestoreScreen" />
           </Column>
@@ -243,7 +240,7 @@ export default BackupAndRestoreScreen;
 
 interface BackupAndRestoreProps {
   profileInfo: ProfileInfo | undefined;
-  isLoading: boolean;
+  isSigningIn: boolean;
   onBackPress: () => void;
   shouldTriggerAutoBackup: boolean;
 }

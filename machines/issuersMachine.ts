@@ -188,7 +188,7 @@ export const IssuersMachine = model.createMachine(
           ],
           onError: {
             actions: () =>
-              console.log('Error Occurred while checking Internet'),
+              console.error('Error Occurred while checking Internet'),
             target: 'error',
           },
         },
@@ -221,7 +221,7 @@ export const IssuersMachine = model.createMachine(
                 'setError',
                 'resetLoadingReason',
                 (_, event) =>
-                  console.log(
+                  console.error(
                     'Error Occurred while invoking Auth - ',
                     event.data,
                   ),
@@ -414,7 +414,6 @@ export const IssuersMachine = model.createMachine(
         },
       },
       done: {
-        entry: () => console.log('Reached done'),
         type: 'final',
       },
     },
@@ -441,7 +440,7 @@ export const IssuersMachine = model.createMachine(
       }),
       setError: model.assign({
         errorMessage: (_, event) => {
-          console.log('Error occured ', event.data.message);
+          console.error('Error occured ', event.data.message);
           const error = event.data.message;
           switch (error) {
             case NETWORK_REQUEST_FAILED:

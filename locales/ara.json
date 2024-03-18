@@ -5,7 +5,6 @@
     "VC_RECEIVED_NOT_SAVED": "لم يتمكن من حفظ {{idType}} {{id}}.",
     "VC_DELETED": "تم حذف {{idType}} {{id}} بنجاح.",
     "VC_DOWNLOADED": "تم تنزيل {{idType}} {{id}}.",
-    "VC_REVOKED": "تم إلغاء {{idType}} {{id}} من قِبل المصدر.",
     "VC_SHARED_WITH_VERIFICATION_CONSENT": "تم مشاركة {{idType}} {{id}} بالموافقة للتحقق من الحضور.",
     "VC_RECEIVED_WITH_PRESENCE_VERIFIED": "تم استلام {{idType}} {{id}} ونجح التحقق من الحضور.",
     "VC_RECEIVED_BUT_PRESENCE_VERIFICATION_FAILED": "تم استلام {{idType}} {{id}} ولكن فشل التحقق من الحضور.",
@@ -96,9 +95,7 @@
     "shareWithSelfie": "شارك مع سيلفي",
     "offlineAuthDisabledMessage": "انقر هنا لتمكين استخدام بيانات الاعتماد هذه للمصادقة عبر الإنترنت.",
     "viewActivityLog": "عرض سجل النشاط",
-    "removeFromWallet": "إزالة من المحفظة",
-    "revokeId": "إبطال الهوية",
-    "revokeMessage": "إبطال المعرف الظاهري لملف التعريف هذا"
+    "removeFromWallet": "إزالة من المحفظة"
   },
   "WalletBinding": {
     "offlineAuthenticationDisabled": "تفعيل لتسجيل الدخول عبر الإنترنت",
@@ -415,22 +412,7 @@
   },
   "ViewVcModal": {
     "title": "تفاصيل الهوية",
-    "inProgress": "في تَقَدم",
-    "cancel": "يلغي",
-    "lock": "قفل",
-    "unlock": "الغاء القفل",
-    "rename": "إعادة تسمية",
-    "delete": "يمسح",
-    "revoke": "سحب او إبطال",
-    "revoking": "تحتوي محفظتك على بيانات اعتماد مع VID {{vid}}. سيؤدي إبطال هذا إلى حذفه تلقائيًا من المحفظة. هل انت متأكد انك تريد المتابعة؟",
-    "requestingOtp": "جارٍ طلب OTP ...",
-    "activated": "يتم تمكين بيانات الاعتماد للمصادقة عبر الإنترنت.",
-    "redirecting": "إعادة توجيه...",
-    "success": {
-      "unlocked": "تم إلغاء قفل بطاقة بنجاح",
-      "locked": "تم قفل بطاقة بنجاح",
-      "revoked": "تم إبطال VID {{vid}}. ستتم إزالة أي بيانات اعتماد تحتوي على نفس الشيء تلقائيًا من المحفظة"
-    }
+    "inProgress": "في تَقَدم"
   },
   "MainLayout": {
     "home": "المنزل",

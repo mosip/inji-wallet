@@ -5,7 +5,6 @@
     "VC_RECEIVED_NOT_SAVED": "Couldn't save {{idType}} {{id}}.",
     "VC_DELETED": "{{idType}} {{id}} is deleted successfully.",
     "VC_DOWNLOADED": "{{idType}} {{id}} is downloaded.",
-    "VC_REVOKED": "{{idType}} {{id}} is revoked by the issuer.",
     "VC_SHARED_WITH_VERIFICATION_CONSENT": "Shared {{idType}} {{id}} with consent for presence verification.",
     "VC_RECEIVED_WITH_PRESENCE_VERIFIED": "Received {{idType}} {{id}} and presence verification is successful.",
     "VC_RECEIVED_BUT_PRESENCE_VERIFICATION_FAILED": "Received {{idType}} {{id}} and presence verification failed.",
@@ -97,9 +96,7 @@
     "shareWithSelfie": "Share with Selfie",
     "offlineAuthDisabledMessage": "Click here to enable this credentials to be used for online authentication.",
     "viewActivityLog": "View Activity Log",
-    "removeFromWallet": "Remove from Wallet",
-    "revokeId": "Revoke ID",
-    "revokeMessage": "Revoke the virtual ID for this profile"
+    "removeFromWallet": "Remove from Wallet"
   },
   "WalletBinding": {
     "offlineAuthenticationDisabled": "Activate for online login",
@@ -417,22 +414,7 @@
   },
   "ViewVcModal": {
     "title": "ID Details",
-    "inProgress": "In Progress",
-    "cancel": "Cancel",
-    "lock": "Lock",
-    "unlock": "Unlock",
-    "rename": "Rename",
-    "delete": "Delete",
-    "revoke": "Revoke",
-    "revoking": "Your wallet contains a credential with VID {{vid}}. Revoking this will automatically remove the same from the wallet. Are you sure you want to proceed?",
-    "requestingOtp": "Requesting OTP...",
-    "activated": "Credentials are enabled for online authentication.",
-    "redirecting": "Redirecting...",
-    "success": {
-      "unlocked": "Card successfully unlocked",
-      "locked": "Card successfully locked",
-      "revoked": "VID {{vid}} has been revoked. Any credential containing the same will be removed automatically from the wallet"
-    }
+    "inProgress": "In Progress"
   },
   "MainLayout": {
     "home": "Home",

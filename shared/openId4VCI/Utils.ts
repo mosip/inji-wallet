@@ -176,7 +176,7 @@ export const getJWK = async publicKey => {
       use: 'sig',
     };
   } catch (e) {
-    console.log(
+    console.error(
       'Exception occured while constructing JWK from PEM : ' +
         publicKey +
         '  Exception is ',

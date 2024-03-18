@@ -13,7 +13,6 @@ import {
   selectIssuersMachine,
   selectIsMinimumStorageLimitReached,
 } from './HomeScreenMachine';
-import {VcEvents} from '../../machines/VCItemMachine/vc';
 
 let homeMachineService;
 function useCreateHomeMachineService() {
@@ -60,12 +59,7 @@ export function useHomeScreen(props: HomeRouteProps) {
 
     DISMISS: () => service.send(HomeScreenEvents.DISMISS()),
     GOTO_ISSUERS: () => service.send(HomeScreenEvents.GOTO_ISSUERS()),
-    SELECT_TAB,
     DISMISS_MODAL: () => service.send(HomeScreenEvents.DISMISS_MODAL()),
-    REVOKE: () => {
-      vcService.send(VcEvents.REFRESH_MY_VCS());
-      service.send(HomeScreenEvents.DISMISS_MODAL());
-    },
   };
 
   function SELECT_TAB(index: number) {

@@ -48,7 +48,7 @@ export async function request(
         signal: controller.signal,
       });
     } catch (error) {
-      console.log(
+      console.error(
         `Error occurred while making request: ${host + path}: ${error}`,
       );
       if (error.name === 'AbortError') {
@@ -62,7 +62,11 @@ export async function request(
 
   if (response.status >= 400) {
     let backendUrl = host + path;
-    let errorMessage = jsonResponse.message || jsonResponse.error;
+    let errorMessage =
+      jsonResponse.message ||
+      (typeof jsonResponse.error === 'object'
+        ? JSON.stringify(jsonResponse.error)
+        : jsonResponse.error);
     console.error(
       `The backend API ${backendUrl} returned error code ${response.status} with message --> ${errorMessage}`,
     );

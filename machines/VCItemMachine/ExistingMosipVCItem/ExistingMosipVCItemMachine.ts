@@ -58,13 +58,11 @@ const model = createModel(
     verifiableCredential: null as VerifiableCredential,
     requestId: '',
     lastVerifiedOn: null,
-    locked: false,
     otp: '',
     otpError: '',
     idError: '',
     transactionId: '',
     bindingTransactionId: '',
-    revoked: false,
     downloadCounter: 0,
     maxDownloadCount: null as number,
     downloadInterval: null as number,
@@ -91,11 +89,10 @@ const model = createModel(
       DOWNLOAD_READY: () => ({}),
       FAILED: () => ({}),
       GET_VC_RESPONSE: (vc: VC) => ({vc}),
-      LOCK_VC: () => ({}),
+      VERIFY: () => ({}),
       INPUT_OTP: (otp: string) => ({otp}),
       RESEND_OTP: () => ({}),
       REFRESH: () => ({}),
-      REVOKE_VC: () => ({}),
       ADD_WALLET_BINDING_ID: () => ({}),
       CANCEL: () => ({}),
       CONFIRM: () => ({}),
@@ -264,11 +261,8 @@ export const ExistingMosipVCItemMachine =
         idle: {
           entry: ['clearTransactionId', 'clearOtp'],
           on: {
-            LOCK_VC: {
-              target: 'requestingOtp',
-            },
-            REVOKE_VC: {
-              target: 'acceptingRevokeInput',
+            VERIFY: {
+              target: 'verifyingCredential',
             },
             ADD_WALLET_BINDING_ID: {
               target: 'showBindingWarning',
@@ -427,154 +421,6 @@ export const ExistingMosipVCItemMachine =
           on: {
             STORE_RESPONSE: {
               actions: ['sendVerificationError'],
-            },
-          },
-        },
-        invalid: {
-          states: {
-            otp: {},
-            backend: {},
-          },
-          on: {
-            INPUT_OTP: {
-              actions: 'setOtp',
-              target: 'requestingLock',
-            },
-            DISMISS: {
-              target: 'idle',
-            },
-          },
-        },
-        requestingOtp: {
-          invoke: {
-            src: 'requestOtp',
-            onDone: [
-              {
-                actions: [log('accepting OTP')],
-                target: 'acceptingOtpInput',
-              },
-            ],
-            onError: [
-              {
-                actions: [log('error OTP')],
-                target: '#vc-item.invalid.backend',
-              },
-            ],
-          },
-        },
-        acceptingOtpInput: {
-          entry: ['clearOtp', 'setTransactionId'],
-          on: {
-            INPUT_OTP: [
-              {
-                actions: [
-                  log('setting OTP lock'),
-                  'setTransactionId',
-                  'setOtp',
-                ],
-                target: 'requestingLock',
-              },
-            ],
-            DISMISS: {
-              actions: ['clearOtp', 'clearTransactionId'],
-              target: 'idle',
-            },
-            RESEND_OTP: {
-              target: '.resendOTP',
-            },
-          },
-          initial: 'idle',
-          states: {
-            idle: {},
-            resendOTP: {
-              invoke: {
-                src: 'requestOtp',
-                onDone: [
-                  {
-                    target: 'idle',
-                  },
-                ],
-              },
-            },
-          },
-        },
-        acceptingRevokeInput: {
-          entry: [log('acceptingRevokeInput'), 'clearOtp', 'setTransactionId'],
-          on: {
-            INPUT_OTP: [
-              {
-                actions: [
-                  log('setting OTP revoke'),
-                  'setTransactionId',
-                  'setOtp',
-                ],
-                target: 'requestingRevoke',
-              },
-            ],
-            DISMISS: {
-              actions: ['clearOtp', 'clearTransactionId'],
-              target: 'idle',
-            },
-          },
-        },
-        requestingLock: {
-          invoke: {
-            src: 'requestLock',
-            onDone: [
-              {
-                actions: 'setLock',
-                target: 'lockingVc',
-              },
-            ],
-            onError: [
-              {
-                actions: 'setOtpError',
-                target: 'acceptingOtpInput',
-              },
-            ],
-          },
-        },
-        lockingVc: {
-          entry: ['storeLock'],
-          on: {
-            STORE_RESPONSE: {
-              target: 'idle',
-            },
-          },
-        },
-        requestingRevoke: {
-          invoke: {
-            src: 'requestRevoke',
-            onDone: [
-              {
-                actions: [log('doneRevoking'), 'setRevoke'],
-                target: 'revokingVc',
-              },
-            ],
-            onError: [
-              {
-                actions: [
-                  log((_, event) => (event.data as Error).message),
-                  'setOtpError',
-                ],
-                target: 'acceptingOtpInput',
-              },
-            ],
-          },
-        },
-        revokingVc: {
-          entry: ['revokeVID'],
-          on: {
-            STORE_RESPONSE: {
-              target: 'loggingRevoke',
-            },
-          },
-        },
-        loggingRevoke: {
-          entry: [log('loggingRevoke'), 'logRevoked'],
-          on: {
-            DISMISS: {
-              target: 'idle',
             },
           },
         },
@@ -1148,34 +994,6 @@ export const ExistingMosipVCItemMachine =
           },
         ),
 
-        logRevoked: send(
-          context =>
-            ActivityLogEvents.LOG_ACTIVITY({
-              _vcKey: context.vcMetadata.getVcKey(),
-              type: 'VC_REVOKED',
-              timestamp: Date.now(),
-              deviceName: '',
-              vcLabel: context.vcMetadata.id,
-              id: context.vcMetadata.id,
-              idType: getIdType(context.vcMetadata.issuer),
-            }),
-          {
-            to: context => context.serviceRefs.activityLog,
-          },
-        ),
-
-        revokeVID: send(
-          context => {
-            return StoreEvents.REMOVE(
-              MY_VCS_STORE_KEY,
-              context.vcMetadata.getVcKey(),
-            );
-          },
-          {
-            to: context => context.serviceRefs.store,
-          },
-        ),
-
         setTransactionId: assign({
           transactionId: () => String(new Date().valueOf()).substring(3, 13),
         }),
@@ -1204,22 +1022,6 @@ export const ExistingMosipVCItemMachine =
         }),
 
         clearOtp: assign({otp: ''}),
-
-        setLock: assign({
-          locked: context => !context.locked,
-        }),
-
-        setRevoke: assign({
-          revoked: () => true,
-        }),
-
-        storeLock: send(
-          context => {
-            const {serviceRefs, ...data} = context;
-            return StoreEvents.SET(context.vcMetadata.getVcKey(), data);
-          },
-          {to: context => context.serviceRefs.store},
-        ),
 
         removeVcItem: send(
           _context => {
@@ -1458,55 +1260,6 @@ export const ExistingMosipVCItemMachine =
             console.error(error);
           }
         },
-
-        requestLock: async context => {
-          let response = null;
-          if (context.locked) {
-            response = await request(
-              API_URLS.authUnLock.method,
-              API_URLS.authUnLock.buildURL(),
-              {
-                individualId: context.vcMetadata.id,
-                individualIdType: context.vcMetadata.idType,
-                otp: context.otp,
-                transactionID: context.transactionId,
-                authType: ['bio'],
-                unlockForSeconds: '120',
-              },
-            );
-          } else {
-            response = await request(
-              API_URLS.authLock.method,
-              API_URLS.authLock.buildURL(),
-              {
-                individualId: context.vcMetadata.id,
-                individualIdType: context.vcMetadata.idType,
-                otp: context.otp,
-                transactionID: context.transactionId,
-                authType: ['bio'],
-              },
-            );
-          }
-          return response.response;
-        },
-
-        requestRevoke: async context => {
-          try {
-            return request(
-              API_URLS.requestRevoke.method,
-              API_URLS.requestRevoke.buildURL(context.vcMetadata.id),
-              {
-                transactionID: context.transactionId,
-                vidStatus: 'REVOKED',
-                individualId: context.vcMetadata.id,
-                individualIdType: 'VID',
-                otp: context.otp,
-              },
-            );
-          } catch (error) {
-            console.error(error);
-          }
-        },
       },
 
       guards: {
@@ -1548,38 +1301,6 @@ export function selectVc(state: State) {
 
 export function selectId(state: State) {
   return state.context.vcMetadata.id;
-}
-
-export function selectIdType(state: State) {
-  return state.context.vcMetadata.idType;
-}
-
-export function selectCredential(state: State) {
-  return state.context.credential;
-}
-
-export function selectIsOtpError(state: State) {
-  return state.context.otpError;
-}
-
-export function selectIsLockingVc(state: State) {
-  return state.matches('lockingVc');
-}
-
-export function selectIsRevokingVc(state: State) {
-  return state.matches('revokingVc');
-}
-
-export function selectIsLoggingRevoke(state: State) {
-  return state.matches('loggingRevoke');
-}
-
-export function selectIsAcceptingOtpInput(state: State) {
-  return state.matches('acceptingOtpInput');
-}
-
-export function selectIsAcceptingRevokeInput(state: State) {
-  return state.matches('acceptingRevokeInput');
 }
 
 export function selectRequestBindingOtp(state: State) {

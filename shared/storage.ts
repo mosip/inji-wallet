@@ -173,7 +173,7 @@ class Storage {
 
       await MMKV.setItem(key, data);
     } catch (error) {
-      console.log('Error Occurred while saving in Storage.', error);
+      console.error('Error Occurred while saving in Storage.', error);
       throw error;
     }
   };
@@ -233,7 +233,7 @@ class Storage {
         ),
       );
 
-      console.log('Error Occurred while retrieving from Storage.', error);
+      console.error('Error Occurred while retrieving from Storage.', error);
       throw error;
     }
   };
@@ -399,7 +399,7 @@ class Storage {
       }
       return null;
     } catch (e) {
-      console.log('error while reading Hmac for VC ', e);
+      console.error('error while reading Hmac for VC ', e);
       throw e;
     }
   }
@@ -447,7 +447,7 @@ class Storage {
       if (isFileExists) {
         return await FileStorage.removeItem(path);
       } else {
-        console.log('file not exist`s');
+        console.warn('file not exist`s');
       }
     }
     MMKV.removeItem(key);
@@ -463,7 +463,7 @@ class Storage {
       MMKV.clearStore();
       await MMKV.setItem(SETTINGS_STORE_KEY, JSON.stringify({appId: appId}));
     } catch (e) {
-      console.log('Error Occurred while Clearing Storage.', e);
+      console.error('Error Occurred while Clearing Storage.', e);
     }
   };
 
@@ -479,8 +479,6 @@ class Storage {
         ? getFreeDiskStorageOldSync()
         : getFreeDiskStorageSync();
 
-    console.log('minimumStorageLimitInBytes ', minimumStorageLimitInBytes);
-    console.log('freeDiskStorageInBytes ', freeDiskStorageInBytes);
 
     return freeDiskStorageInBytes <= minimumStorageLimitInBytes;
   };
@@ -506,7 +504,7 @@ export async function isMinimumLimitForBackupReached() {
 
     return freeDiskStorageInBytes <= 2 * directorySize;
   } catch (error) {
-    console.log('Error in isMinimumLimitForBackupReached:', error);
+    console.error('Error in isMinimumLimitForBackupReached:', error);
     throw error;
   }
 }

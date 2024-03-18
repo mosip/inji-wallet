@@ -293,7 +293,7 @@ export const settingsMachine = model.createMachine(
           await Storage.removeItem(COMMON_PROPS_KEY);
           return await getAllConfigurations(event.credentialRegistry, false);
         } catch (error) {
-          console.log('Error from resetInjiProps ', error);
+          console.error('Error from resetInjiProps ', error);
           throw error;
         }
       },

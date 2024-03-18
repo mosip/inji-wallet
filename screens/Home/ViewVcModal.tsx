@@ -3,8 +3,6 @@ import {Column, Row} from '../../components/ui';
 import {Modal} from '../../components/ui/Modal';
 import {MessageOverlay} from '../../components/MessageOverlay';
 import {ToastItem} from '../../components/ui/ToastItem';
-import {RevokeConfirmModal} from '../../components/RevokeConfirm';
-import {OIDcAuthenticationModal} from '../../components/OIDcAuth';
 import {useViewVcModal, ViewVcModalProps} from './ViewVcModalController';
 import {useTranslation} from 'react-i18next';
 import {OtpVerificationModal} from './MyVcs/OtpVerificationModal';
@@ -126,29 +124,6 @@ export const ViewVcModal: React.FC<ViewVcModalProps> = props => {
         vcHasImage={getVcProfileImage !== undefined}
       />
 
-      {controller.isAcceptingRevokeInput && (
-        <OIDcAuthenticationModal
-          isVisible={controller.isAcceptingRevokeInput}
-          onDismiss={controller.DISMISS}
-          onVerify={() => {
-            controller.revokeVc('111111');
-          }}
-          error={controller.otpError}
-        />
-      )}
-
-      {controller.isAcceptingOtpInput && (
-        <OtpVerificationModal
-          service={props.vcItemActor}
-          isVisible={controller.isAcceptingOtpInput}
-          onDismiss={controller.DISMISS}
-          onInputDone={controller.inputOtp}
-          error={controller.otpError}
-          resend={controller.RESEND_OTP}
-          flow={TelemetryConstants.FlowType.vcLockOrRevoke}
-        />
-      )}
-
       {controller.isAcceptingBindingOtp && (
         <OtpVerificationModal
           service={props.vcItemActor}
@@ -183,14 +158,6 @@ export const ViewVcModal: React.FC<ViewVcModalProps> = props => {
         title={t('inProgress')}
         progress
       />
-
-      {controller.isRevoking && (
-        <RevokeConfirmModal
-          id={controller.vc.id}
-          onCancel={() => controller.setRevoking(false)}
-          onRevoke={controller.REVOKE_VC}
-        />
-      )}
 
       {controller.toastVisible && <ToastItem message={controller.message} />}
 

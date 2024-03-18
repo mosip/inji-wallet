@@ -322,12 +322,6 @@ export const PurpleTheme = {
       borderRadius: 12,
       fontSize: 12,
     },
-    lockDomainContainer: {
-      backgroundColor: Colors.White,
-      alignSelf: 'center',
-      borderRadius: 15,
-      width: 100,
-    },
     bottomButtonsContainer: {
       height: 'auto',
       borderTopLeftRadius: 27,
@@ -1306,76 +1300,12 @@ export const PurpleTheme = {
       borderTopRightRadius: 0,
     },
   }),
-  RevokeStyles: StyleSheet.create({
-    buttonContainer: {
-      position: 'absolute',
-      left: 0,
-      right: 'auto',
-    },
-    view: {
-      flex: 1,
-      width: Dimensions.get('screen').width,
-    },
-    revokeView: {padding: 20},
-    flexRow: {flexDirection: 'row', margin: 0, padding: 0},
-    rowStyle: {flexDirection: 'column', justifyContent: 'space-between'},
-    viewContainer: {
-      backgroundColor: 'rgba(0,0,0,.6)',
-      width: Dimensions.get('screen').width,
-      height: Dimensions.get('screen').height,
-      position: 'absolute',
-      top: 0,
-      zIndex: 999,
-    },
-    boxContainer: {
-      backgroundColor: Colors.White,
-      padding: 24,
-      elevation: 6,
-      borderRadius: 4,
-    },
-  }),
+
   VerifyIdentityOverlayStyles: StyleSheet.create({
     content: {
       width: Dimensions.get('screen').width,
       height: Dimensions.get('screen').height,
       backgroundColor: Colors.White,
-    },
-  }),
-  RevokeConfirmStyles: StyleSheet.create({
-    viewContainer: {
-      backgroundColor: 'rgba(0,0,0,.6)',
-      width: Dimensions.get('screen').width,
-      height: Dimensions.get('screen').height,
-      position: 'absolute',
-      top: 0,
-      zIndex: 999999,
-    },
-    boxContainer: {
-      backgroundColor: Colors.White,
-      padding: 24,
-      elevation: 6,
-      borderRadius: 4,
-    },
-  }),
-  OtpVerificationStyles: StyleSheet.create({
-    modal: {
-      width: Dimensions.get('screen').width,
-      height: Dimensions.get('screen').height,
-    },
-    viewContainer: {
-      backgroundColor: Colors.White,
-      width: Dimensions.get('screen').width,
-      height: Dimensions.get('screen').height,
-      position: 'absolute',
-      top: 0,
-      zIndex: 9,
-      padding: 32,
-    },
-    close: {
-      position: 'absolute',
-      top: 32,
-      right: 0,
-      color: Colors.Purple,
     },
   }),
   MessageStyles: StyleSheet.create({

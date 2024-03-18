@@ -1193,7 +1193,7 @@ export const scanMachine =
                 type: 'BLE_ERROR',
                 bleError: {message: event.message, code: event.code},
               });
-              console.log('BLE Exception: ' + event.message);
+              console.error('BLE Exception: ' + event.message);
             }
           });
 

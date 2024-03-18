@@ -19,7 +19,6 @@ import testIDProps from '../../shared/commonUtil';
 import {BannerNotificationContainer} from '../../components/BannerNotificationContainer';
 
 export const HomeScreen: React.FC<HomeRouteProps> = props => {
-  const {t} = useTranslation('HomeScreen');
   const controller = useHomeScreen(props);
 
   useEffect(() => {
@@ -97,9 +96,6 @@ export const HomeScreen: React.FC<HomeRouteProps> = props => {
           isVisible={controller.isViewingVc}
           onDismiss={controller.DISMISS_MODAL}
           vcItemActor={controller.selectedVc}
-          onRevokeDelete={() => {
-            controller.REVOKE();
-          }}
           activeTab={controller.activeTab}
           flow="downloadedVc"
         />

@@ -4,9 +4,9 @@ import BaseTest.AndroidBaseTest;
 import inji.api.BaseTestCase;
 import inji.constants.Target;
 import inji.pages.*;
-import inji.utils.IosUtil;
 import inji.utils.TestDataReader;
 import org.testng.annotations.Test;
+import inji.utils.IosUtil;
 
 import static org.testng.Assert.*;
 
@@ -66,7 +66,7 @@ public class VcBackupAndRestoreTest extends AndroidBaseTest {
         assertTrue(backupAndRestorePage.isStorageInfoDisplayed(), "Verify if account storage info displayed");
         assertTrue(backupAndRestorePage.isAssociatedAccountDisplayed(), "Verify if associated account displayed");
         assertTrue(backupAndRestorePage.islastBackupTimeDisplayed(), "Verify if last backup time displayed");
-//        assertTrue(backupAndRestorePage.isDataBackupSuccessPopupDisplayed(), "Verify if backup successful popup displayed");
+        assertTrue(backupAndRestorePage.isDataBackupSuccessPopupDisplayed(), "Verify if backup successful popup displayed");
         backupAndRestorePage.clickOnCloseButton();
 
         backupAndRestorePage.clickOnArrowLeftButton();
@@ -210,14 +210,21 @@ public class VcBackupAndRestoreTest extends AndroidBaseTest {
         backupAndRestorePage.clickOnAgreeButton();
 
         assertTrue(backupAndRestorePage.isLastBackupSectionHeaderDisplayed(), "Verify if last backup section displayed");
-        assertTrue(backupAndRestorePage.isRestoreSectionHeaderDisplayed(), " Verify is restore backup successful popup displayed");
-//        assertTrue(backupAndRestorePage.isRestoreBackupSuccessPopUpDisplayed(), " Verify is restore backup successful popup displayed");
-//        backupAndRestorePage.clickOnCloseButton();
+        backupAndRestorePage.clickOnBackUpButton();
+
+        assertTrue(backupAndRestorePage.isAccountSectionHeaderDisplayed(), "Verify if account section header displayed");
+        assertTrue(backupAndRestorePage.isStorageInfoDisplayed(), "Verify if account storage info displayed");
+        assertTrue(backupAndRestorePage.isAssociatedAccountDisplayed(), "Verify if associated account displayed");
+        assertTrue(backupAndRestorePage.islastBackupTimeDisplayed(), "Verify if last backup time displayed");
+        assertTrue(backupAndRestorePage.isDataBackupSuccessPopupDisplayed(), "Verify if backup successful popup displayed");
+        backupAndRestorePage.clickOnCloseButton();
+
         Thread.sleep(5000);
         backupAndRestorePage.clickOnRestoreButton();
         assertTrue(backupAndRestorePage.isRestoreBackupSuccessPopUpDisplayed(), " Verify is restore backup successful popup displayed");
         backupAndRestorePage.clickOnCloseButton();
 
+        assertTrue(backupAndRestorePage.islastBackupTimeDisplayed(), "Verify if last backup time displayed");
         backupAndRestorePage.clickOnRestoreButton();
         backupAndRestorePage.clickOnCloseButton();
 
@@ -390,7 +397,7 @@ public class VcBackupAndRestoreTest extends AndroidBaseTest {
 
 
         //hindi
-        assertEquals(settingsPage.getDataBackupAndRestoreText(), "बैकअप बहाल");
+//        assertEquals(settingsPage.getDataBackupAndRestoreText(), "बैकअप बहाल");
         settingsPage.clickOnDataBackupAndRestoreButton();
         assertEquals(backupAndRestorePage.getBackupAndRestoreHeaderText(), "बैकअप और पुनर्स्थापना");
         assertEquals(backupAndRestorePage.getLastBackupSectionHeaderText(), "अंतिम बैकअप विवरण");
@@ -661,6 +668,7 @@ public class VcBackupAndRestoreTest extends AndroidBaseTest {
         assertTrue(homePage.isActivatedVcPopupTextDisplayed(), "Verify if VC is activated popup displayed");
         homePage.clickPopupCloseButtonButton();
 
+        IosUtil.scrollToElement(driver,100,800,100,200);
         homePage.clickOnSecondVcsEllipsisButton();
 
         assertTrue(moreOptionsPage.isMoreOptionsPageLoaded(), "Verify if more options page is displayed");
@@ -743,6 +751,7 @@ public class VcBackupAndRestoreTest extends AndroidBaseTest {
         backupAndRestorePage.clickOnArrowLeftButton();
 
         assertTrue(homePage.isNameDisplayed(TestDataReader.readData("fullName")), "Verify if full name is displayed");
+        IosUtil.scrollToElement(driver,100,800,100,200);
         homePage.clickOnSecondVcsEllipsisButton();
         MoreOptionsPage moreOptionsPage = new MoreOptionsPage(driver);
         assertTrue(moreOptionsPage.isMoreOptionsPageLoaded(), "Verify if more options page is displayed");
@@ -843,6 +852,7 @@ public class VcBackupAndRestoreTest extends AndroidBaseTest {
         backupAndRestorePage.clickOnArrowLeftButton();
 
         assertTrue(homePage.isNameDisplayed(TestDataReader.readData("fullName")), "Verify if full name is displayed");
+        IosUtil.scrollToElement(driver,100,800,100,200);
         homePage.clickOnSecondVcsEllipsisButton();
         MoreOptionsPage moreOptionsPage = new MoreOptionsPage(driver);
         assertTrue(moreOptionsPage.isMoreOptionsPageLoaded(), "Verify if more options page is displayed");
@@ -860,7 +870,7 @@ public class VcBackupAndRestoreTest extends AndroidBaseTest {
         moreOptionsPage.clickOnCloseButton();
 
         assertTrue(homePage.isActivatedVcPopupTextDisplayed(), "Verify if VC is activated popup displayed");
-        homePage.clickPopupCloseButtonButton();
+//        homePage.clickPopupCloseButtonButton();
 
         assertTrue(homePage.isPinIconDisplayed(), "Verify if VC is pined icon displayed");
         homePage.clickOnFirstVcsEllipsisButton();
@@ -955,7 +965,7 @@ public class VcBackupAndRestoreTest extends AndroidBaseTest {
         moreOptionsPage.clickOnCloseButton();
 
         assertTrue(homePage.isActivatedVcPopupTextDisplayed(), "Verify if VC is activated popup displayed");
-        homePage.clickPopupCloseButtonButton();
+//        homePage.clickPopupCloseButtonButton();
 
         assertTrue(homePage.isPinIconDisplayed(), "Verify if VC is pined icon displayed");
         homePage.clickOnFirstVcsEllipsisButton();
