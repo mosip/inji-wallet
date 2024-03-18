@@ -1,4 +1,3 @@
-
 // This file was automatically generated. Edits will be overwritten
 
 export interface Typegen0 {
@@ -58,31 +57,32 @@ export interface Typegen0 {
       | ''
       | 'BLE_ERROR'
       | 'DISCONNECT'
-      | 'DISMISS'
+      | 'RESET'
       | 'RETRY'
       | 'SCREEN_BLUR'
       | 'SCREEN_FOCUS'
+      | 'SELECT_VC'
       | 'xstate.stop';
-    clearUri:
+    clearUri: 'STORE_RESPONSE';
+    getFaceAuthConsent:
       | 'DISCONNECT'
       | 'DISMISS'
       | 'xstate.after(DESTROY_TIMEOUT)#scan.clearingConnection';
-    getFaceAuthConsent: 'SCREEN_FOCUS';
     logFailedVerification: 'FACE_INVALID';
     logShared: 'VC_ACCEPTED';
-    logValue: 'VERIFY_AND_ACCEPT_REQUEST';
     openAppPermission: 'GOTO_SETTINGS' | 'LOCATION_REQUEST';
     openBluetoothSettings: 'GOTO_SETTINGS';
-    registerLoggers:
-      | 'DISCONNECT'
-      | 'DISMISS'
-      | 'xstate.after(DESTROY_TIMEOUT)#scan.clearingConnection';
+    registerLoggers: 'STORE_RESPONSE';
     removeLoggers:
       | 'DISCONNECT'
       | 'DISMISS'
       | 'SCREEN_BLUR'
       | 'SCREEN_FOCUS'
+      | 'STORE_RESPONSE'
+      | 'xstate.init';
     resetFaceCaptureBannerStatus: 'ACCEPT_REQUEST' | 'CLOSE_BANNER';
+    resetFlowType: 'DISMISS';
+    resetSelectedVc: 'DISMISS';
     resetShouldVerifyPresence: 'CANCEL' | 'CONNECTED' | 'DISMISS' | 'RETRY';
     sendBLEConnectionErrorEvent: 'BLE_ERROR';
     sendScanData: 'SCAN';
@@ -91,37 +91,38 @@ export interface Typegen0 {
     sendVcShareSuccessEvent: 'VC_ACCEPTED';
     sendVcSharingStartEvent: 'SCAN';
     setBleError: 'BLE_ERROR';
-    setChildRef:
-      | 'DISCONNECT'
-      | 'DISMISS'
-      | 'xstate.after(DESTROY_TIMEOUT)#scan.clearingConnection';
+    setChildRef: 'STORE_RESPONSE';
     setCreatedVp: 'done.invoke.scan.reviewing.creatingVp:invocation[0]';
+    setFlowType: 'SELECT_VC';
     setLinkCode: 'SCAN';
     setReadyForBluetoothStateCheck: 'BLUETOOTH_PERMISSION_ENABLED';
     setReceiverInfo: 'CONNECTED';
     setSelectedVc: 'SELECT_VC';
     setSenderInfo: 'CONNECTED';
-    setShareLogTypeUnverified: 'ACCEPT_REQUEST';
+    setShareLogTypeUnverified: 'ACCEPT_REQUEST' | 'CHECK_FLOW_TYPE';
     setShareLogTypeVerified: 'FACE_VALID';
-    setShowFaceAuthConsent: 'FACE_VERIFICATION_CONSENT' | 'STORE_RESPONSE';
+    setShowFaceAuthConsent: 'FACE_VERIFICATION_CONSENT';
     setUri: 'SCAN';
     storeLoginItem: 'done.invoke.QrLogin';
     storeShowFaceAuthConsent: 'FACE_VERIFICATION_CONSENT';
     storingActivityLog: 'STORE_RESPONSE';
     toggleShouldVerifyPresence: 'TOGGLE_USER_CONSENT';
+    updateFaceCaptureBannerStatus: 'FACE_VALID';
+    updateShowFaceAuthConsent: 'STORE_RESPONSE';
   };
   eventsCausingDelays: {
     CONNECTION_TIMEOUT: 'SCAN';
-    DESTROY_TIMEOUT: '' | 'DISMISS' | 'LOCATION_ENABLED';
-    toggleShouldVerifyPresence: 'TOGGLE_USER_CONSENT';
-    updateFaceCaptureBannerStatus: 'FACE_VALID';
-  };
+    DESTROY_TIMEOUT: '' | 'DISMISS' | 'LOCATION_ENABLED' | 'RETRY';
     SHARING_TIMEOUT:
       | 'ACCEPT_REQUEST'
+      | 'CHECK_FLOW_TYPE'
       | 'FACE_VALID'
       | 'done.invoke.scan.reviewing.creatingVp:invocation[0]';
   };
   eventsCausingGuards: {
+    isFlowTypeMiniViewShare: 'CHECK_FLOW_TYPE';
+    isFlowTypeMiniViewShareWithSelfie: 'CHECK_FLOW_TYPE';
+    isFlowTypeSimpleShare: 'CANCEL' | 'CHECK_FLOW_TYPE' | 'DISMISS';
     isIOS: 'BLUETOOTH_STATE_DISABLED' | 'START_PERMISSION_CHECK';
     isMinimumStorageRequiredForAuditEntryReached: 'done.invoke.scan.checkStorage:invocation[0]';
     isOpenIdQr: 'SCAN';
@@ -140,9 +141,9 @@ export interface Typegen0 {
     checkLocationPermission: 'APP_ACTIVE' | 'LOCATION_ENABLED';
     checkLocationStatus: '' | 'LOCATION_REQUEST';
     checkNearByDevicesPermission: 'APP_ACTIVE' | 'START_PERMISSION_CHECK';
-    checkStorageAvailability: 'RESET' | 'STORE_RESPONSE';
+    checkStorageAvailability: 'RESET' | 'SCREEN_FOCUS' | 'SELECT_VC';
     createVp: never;
-    disconnect: '' | 'DISMISS' | 'LOCATION_ENABLED' | 'SCREEN_BLUR';
+    disconnect: '' | 'DISMISS' | 'LOCATION_ENABLED' | 'RETRY' | 'SCREEN_BLUR';
     monitorConnection:
       | 'DISMISS'
       | 'SCREEN_BLUR'
@@ -153,6 +154,7 @@ export interface Typegen0 {
     requestToEnableLocationPermission: 'LOCATION_DISABLED';
     sendVc:
       | 'ACCEPT_REQUEST'
+      | 'CHECK_FLOW_TYPE'
       | 'FACE_VALID'
       | 'done.invoke.scan.reviewing.creatingVp:invocation[0]';
     startConnection: 'SCAN';
@@ -200,6 +202,7 @@ export interface Typegen0 {
     | 'reviewing.creatingVp'
     | 'reviewing.disconnect'
     | 'reviewing.faceVerificationConsent'
+    | 'reviewing.idle'
     | 'reviewing.invalidIdentity'
     | 'reviewing.navigateToHistory'
     | 'reviewing.rejected'
@@ -232,6 +235,7 @@ export interface Typegen0 {
           | 'creatingVp'
           | 'disconnect'
           | 'faceVerificationConsent'
+          | 'idle'
           | 'invalidIdentity'
           | 'navigateToHistory'
           | 'rejected'

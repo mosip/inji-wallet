@@ -174,7 +174,7 @@ export const scanMachine =
         },
         SELECT_VC: {
           actions: ['setSelectedVc', 'setFlowType'],
-          target: 'disconnectDevice',
+          target: '.checkStorage',
         },
       },
       states: {
@@ -571,7 +571,6 @@ export const scanMachine =
               },
             },
             cancelling: {
-              entry: ['resetFlowType', 'resetSelectedVc'],
               always: {
                 target: '#scan.clearingConnection',
               },
@@ -668,7 +667,6 @@ export const scanMachine =
               },
             },
             navigateToHistory: {
-              entry: ['resetFlowType', 'resetSelectedVc'],
               always: '#scan.disconnected',
             },
             faceVerificationConsent: {
@@ -745,7 +743,6 @@ export const scanMachine =
           },
         },
         disconnected: {
-          entry: ['resetSelectedVc', 'resetFlowType'],
           on: {
             RETRY: {
               target: '#scan.reviewing.cancelling',
