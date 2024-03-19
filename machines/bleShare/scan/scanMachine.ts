@@ -139,7 +139,7 @@ export const scanMachine =
           target: '#scan.disconnectDevice',
         },
         SCREEN_FOCUS: {
-          target: 'checkStorage',
+          target: '.checkStorage',
         },
         BLE_ERROR: {
           target: '.handlingBleError',
@@ -153,21 +153,19 @@ export const scanMachine =
         },
         SELECT_VC: {
           actions: ['setSelectedVc', 'setFlowType'],
-          target: 'disconnectDevice',
+          target: '.checkStorage',
         },
       },
       states: {
         inactive: {
-          entry: ['removeLoggers', 'resetFlowType', 'resetSelectedVc'],
+          entry: ['removeLoggers'],
         },
         disconnectDevice: {
-          entry: ['resetFlowType', 'resetSelectedVc'],
           invoke: {
             src: 'disconnect',
           },
           on: {
             DISCONNECT: {
-              actions: ['resetFlowType', 'resetSelectedVc'],
               target: '#scan.inactive',
             },
           },
@@ -377,7 +375,6 @@ export const scanMachine =
           on: {
             DISCONNECT: {
               target: '#scan.checkFaceAuthConsent',
-              actions: ['resetFlowType', 'resetSelectedVc'],
               internal: false,
             },
           },
@@ -553,7 +550,6 @@ export const scanMachine =
               },
             },
             cancelling: {
-              entry: ['resetFlowType', 'resetSelectedVc'],
               always: {
                 target: '#scan.clearingConnection',
               },
@@ -644,13 +640,12 @@ export const scanMachine =
             },
             disconnect: {
               //Renamed this to disconnect from navigateToHome as we are disconnecting the devices.
-              entry: ['resetFlowType', 'resetSelectedVc'],
               invoke: {
                 src: 'disconnect',
               },
             },
             navigateToHistory: {
-              entry: ['resetFlowType', 'resetSelectedVc'],
+             // entry: ['resetFlowType', 'resetSelectedVc'],
               always: '#scan.disconnected',
             },
             faceVerificationConsent: {
@@ -727,7 +722,6 @@ export const scanMachine =
           },
         },
         disconnected: {
-          entry: ['resetSelectedVc', 'resetFlowType'],
           on: {
             RETRY: {
               target: '#scan.reviewing.cancelling',
@@ -1172,7 +1166,7 @@ export const scanMachine =
                 type: 'BLE_ERROR',
                 bleError: {message: event.message, code: event.code},
               });
-              console.log('BLE Exception: ' + event.message);
+              console.error('BLE Exception: ' + event.message);
             }
           });
 

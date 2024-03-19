@@ -161,7 +161,6 @@ export class SvgImage {
       />
     );
   }
-
   static OutlinedScheduleIcon() {
     return (
       <OutlinedScheduleIcon

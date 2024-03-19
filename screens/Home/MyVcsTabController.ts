@@ -14,8 +14,8 @@ import {
   VcEvents,
 } from '../../machines/VCItemMachine/vc';
 import {
-  selectShowWalletBindingError,
   selectWalletBindingError,
+  selectShowWalletBindingError,
 } from '../../machines/VCItemMachine/commonSelectors';
 import {GlobalContext} from '../../shared/GlobalContext';
 import {HomeScreenTabProps} from './HomeScreen';

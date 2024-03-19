@@ -497,7 +497,7 @@ export const storeMachine =
                 'Could not get keychain credentials',
               ),
             );
-            console.log('Credentials failed to load for user');
+            console.error('Credentials failed to load for user');
             callback(
               model.events.ERROR(
                 new Error('Could not get keychain credentials.'),

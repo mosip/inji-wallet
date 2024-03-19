@@ -2,7 +2,6 @@ import React from 'react';
 import {ImageBackground, Pressable} from 'react-native';
 import {getLocalizedField} from '../../../i18n';
 import {VCMetadata} from '../../../shared/VCMetadata';
-
 import {KebabPopUp} from '../../KebabPopUp';
 import {VerifiableCredential} from '../../../types/VC/vc';
 import {Column, Row} from '../../ui';
@@ -25,6 +24,7 @@ import {Issuers} from '../../../shared/openId4VCI/Utils';
 import {VCItemContainerFlowType} from '../../../shared/Utils';
 import {RemoveVcWarningOverlay} from '../../../screens/Home/MyVcs/RemoveVcWarningOverlay';
 import {HistoryTab} from '../../../screens/Home/MyVcs/HistoryTab';
+import {VcItemContainerProfileImage} from '../../VcItemContainerProfileImage';
 
 export const VCCardViewContent: React.FC<VCItemContentProps> = props => {
   const selectableOrCheck = props.selectable && (
@@ -82,7 +82,7 @@ export const VCCardViewContent: React.FC<VCItemContentProps> = props => {
           {!Object.values(VCItemContainerFlowType).includes(props.flow) && (
             <>
               {props.vcMetadata.issuer === Issuers.Sunbird ||
-              props.walletBindingResponse
+               props.walletBindingResponse
                 ? SvgImage.walletActivatedIcon()
                 : SvgImage.walletUnActivatedIcon()}
               <Pressable

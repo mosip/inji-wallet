@@ -5,7 +5,6 @@
     "VC_RECEIVED_NOT_SAVED": "{{idType}} {{id}} को सहेजा नहीं जा सका।",
     "VC_DELETED": "{{idType}} {{id}} को सफलतापूर्वक हटा दिया गया।",
     "VC_DOWNLOADED": "{{idType}} {{id}} डाउनलोड हो गया है।",
-    "VC_REVOKED": "{{idType}} {{id}} को जारीकर्ता द्वारा रद्द कर दिया गया है।",
     "VC_SHARED_WITH_VERIFICATION_CONSENT": "उपस्थिति सत्यापन के लिए सहमति के साथ {{idType}} {{id}} साझा किया गया।",
     "VC_RECEIVED_WITH_PRESENCE_VERIFIED": "{{idType}} {{id}} प्राप्त किया गया और उपस्थिति सत्यापन सफल रहा।",
     "VC_RECEIVED_BUT_PRESENCE_VERIFICATION_FAILED": "{{idType}} {{id}} प्राप्त हुआ लेकिन उपस्थिति सत्यापन विफल रहा।",
@@ -93,9 +92,7 @@
     "shareWithSelfie": "सेल्फी के साथ साझा करें",
     "offlineAuthDisabledMessage": "ऑनलाइन प्रमाणीकरण के लिए इस क्रेडेंशियल का उपयोग सक्षम करने के लिए यहां क्लिक करें।",
     "viewActivityLog": "गतिविधि लॉग देखें",
-    "removeFromWallet": "वॉलेट से हटाए",
-    "revokeId": "आईडी निरस्त करें",
-    "revokeMessage": "इस प्रोफ़ाइल के लिए वर्चुअल आईडी निरस्त करें"
+    "removeFromWallet": "वॉलेट से हटाए"
   },
   "WalletBinding": {
     "offlineAuthenticationDisabled": "ऑनलाइन लॉगिन के लिए सक्रिय करें",
@@ -413,22 +410,7 @@
   },
   "ViewVcModal": {
     "title": "आईडी विवरण",
-    "inProgress": "चालू",
-    "cancel": "रद्द करना",
-    "lock": "ताला",
-    "unlock": "अनलॉक",
-    "rename": "नाम बदलें",
-    "delete": "मिटाना",
-    "revoke": "रद्द करना",
-    "revoking": "आपके वॉलेट में VID {{vid}} के साथ एक क्रेडेंशियल है। इसे रद्द करने से यह अपने आप वॉलेट से हट जाएगा। क्या आप सुनिश्चित रूप से आगे बढ़ना चाहते हैं?",
-    "requestingOtp": "ओटीपी का अनुरोध...",
-    "activated": "ऑनलाइन प्रमाणीकरण के लिए क्रेडेंशियल सक्षम हैं।",
-    "redirecting": "पुन: निर्देशित...",
-    "success": {
-      "unlocked": "कार्ड सफलतापूर्वक अनलॉक किया गया",
-      "locked": "कार्ड सफलतापूर्वक अनलॉक किया गया",
-      "revoked": "VID {{vid}} निरस्त कर दिया गया है। इसमें शामिल कोई भी क्रेडेंशियल वॉलेट से स्वचालित रूप से हटा दिया जाएगा"
-    }
+    "inProgress": "चालू"
   },
   "MainLayout": {
     "home": "होम",

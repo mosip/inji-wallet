@@ -13,7 +13,6 @@ import {
   requestMachine,
 } from './bleShare/request/requestMachine';
 import {createScanMachine, scanMachine} from './bleShare/scan/scanMachine';
-import {createRevokeMachine, revokeVidsMachine} from './revoke';
 import {pure, respond} from 'xstate/lib/actions';
 import {AppServices} from '../shared/GlobalContext';
 import {
@@ -242,9 +241,7 @@ export const appMachine = model.createMachine(
       }),
 
       logStoreEvents: context => {
-        if (__DEV__) {
-          context.serviceRefs.store.subscribe(logState);
-        }
+        context.serviceRefs.store.subscribe(logState);
       },
 
       spawnServiceActors: model.assign({
@@ -291,31 +288,21 @@ export const appMachine = model.createMachine(
               requestMachine.id,
             );
           }
-
-          serviceRefs.revoke = spawn(
-            createRevokeMachine(serviceRefs),
-            revokeVidsMachine.id,
-          );
-
           return serviceRefs;
         },
       }),
 
       logServiceEvents: context => {
-        if (__DEV__) {
-          context.serviceRefs.auth.subscribe(logState);
-          context.serviceRefs.vc.subscribe(logState);
-          context.serviceRefs.settings.subscribe(logState);
-          context.serviceRefs.activityLog.subscribe(logState);
-          context.serviceRefs.scan.subscribe(logState);
-          context.serviceRefs.backup.subscribe(logState);
-          context.serviceRefs.backupRestore.subscribe(logState);
+        context.serviceRefs.auth.subscribe(logState);
+        context.serviceRefs.vc.subscribe(logState);
+        context.serviceRefs.settings.subscribe(logState);
+        context.serviceRefs.activityLog.subscribe(logState);
+        context.serviceRefs.scan.subscribe(logState);
+        context.serviceRefs.backup.subscribe(logState);
+        context.serviceRefs.backupRestore.subscribe(logState);
 
-          if (isAndroid()) {
-            context.serviceRefs.request.subscribe(logState);
-          }
-
-          context.serviceRefs.revoke.subscribe(logState);
+        if (isAndroid()) {
+          context.serviceRefs.request.subscribe(logState);
         }
       },
 

@@ -190,10 +190,10 @@ export const VCDetailView: React.FC<VCItemDetailsProps> = props => {
             backgroundColor: Theme.Colors.DetailedViewBackground,
           }}>
           {props.activeTab !== 1 ? (
-            !props.walletBindingResponse &&
+            props.walletBindingResponse &&
             isActivationNeeded(
               VCMetadata.fromVC(props.vc.vcMetadata).issuer,
-            ) ? (
+              ) ? (
               <Column
                 padding="10"
                 style={Theme.Styles.detailedViewActivationPopupContainer}>
@@ -286,7 +286,6 @@ export interface VC {
   requestId: string;
   isVerified: boolean;
   lastVerifiedOn: number;
-  locked: boolean;
   shouldVerifyPresence?: boolean;
   walletBindingResponse?: WalletBindingResponse;
   credentialRegistry: string;

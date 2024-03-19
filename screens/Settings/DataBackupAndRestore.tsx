@@ -92,7 +92,9 @@ export const DataBackupAndRestore: React.FC = ({} = () => {
             'DataBackupScreen:errors.permissionDenied.actions.allowAccess'
           }
           primaryButtonEvent={
-            isAndroid() ? controller.TRY_AGAIN : controller.OPEN_SETTINGS
+            isAndroid()
+              ? controller.RECONFIGURE_ACCOUNT
+              : controller.OPEN_SETTINGS
           }
           textButtonText={
             'DataBackupScreen:errors.permissionDenied.actions.notNow'
@@ -107,13 +109,13 @@ export const DataBackupAndRestore: React.FC = ({} = () => {
         />
       )}
 
-      {controller.isNetworkOff && (
+      {controller.isNetworkError && (
         <Error
           testID="networkOffError"
           primaryButtonTestID="tryAgain"
           primaryButtonText="tryAgain"
           primaryButtonEvent={controller.TRY_AGAIN}
-          isVisible={controller.isNetworkOff}
+          isVisible={controller.isNetworkError}
           isModal={true}
           showClose
           title={t('errors.noInternetConnection.title')}
@@ -127,7 +129,7 @@ export const DataBackupAndRestore: React.FC = ({} = () => {
         <BackupAndRestoreScreen
           profileInfo={controller.profileInfo}
           onBackPress={controller.GO_BACK}
-          isLoading={controller.isSigningIn}
+          isSigningIn={controller.isSigningIn}
           shouldTriggerAutoBackup={controller.shouldTriggerAutoBackup}
         />
       )}

@@ -569,7 +569,6 @@ export const qrLoginMachine =
             },
             ESIGNET_BASE_URL,
           );
-          console.log(resp.response.linkedTransactionId);
         },
       },
       guards: {

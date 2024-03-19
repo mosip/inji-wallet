@@ -270,7 +270,7 @@ public class VcDownloadAndVerifyUsingUinTest extends IosBaseTest {
         OtpVerificationPage otpVerification = retrieveIdPage.setEnterIdTextBox(uin).clickOnGenerateCardButton();
 
         assertTrue(otpVerification.isOtpVerificationPageLoaded(), "Verify if otp verification page is displayed");
-        assertTrue(otpVerification.verifyOtpVerificationTimerCompleted(), "Verify timer has stop for otp verification");
+        otpVerification.WatingTimeForVerificationTimerComplete();
         assertTrue(otpVerification.verifyOtpVerificationTimerDisplayedAfterClickOnResend(), "Verify if resend code is displayed");
         
         otpVerification.clickOnCrossIcon();

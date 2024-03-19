@@ -22,7 +22,7 @@ export function checkLocationPermissionStatus(
         return onDisabled();
       }
     })
-    .catch(err => console.log('Error getting location:', err));
+    .catch(err => console.error('Error getting location:', err));
 }
 
 export async function requestLocationPermission(
@@ -41,7 +41,7 @@ export async function requestLocationPermission(
       return onDisabled();
     }
   } catch (error) {
-    console.log(error);
+    console.error('Error while requesting location permission', error);
   }
 }
 

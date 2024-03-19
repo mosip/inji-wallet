@@ -68,18 +68,6 @@ export const API_URLS: ApiUrls = {
     method: 'POST',
     buildURL: (): `/${string}` => '/residentmobileapp/credentialshare/download',
   },
-  authLock: {
-    method: 'POST',
-    buildURL: (): `/${string}` => '/residentmobileapp/req/auth/lock',
-  },
-  authUnLock: {
-    method: 'POST',
-    buildURL: (): `/${string}` => '/residentmobileapp/req/auth/unlock',
-  },
-  requestRevoke: {
-    method: 'PATCH',
-    buildURL: (id: string): `/${string}` => `/residentmobileapp/vid/${id}`,
-  },
   linkTransaction: {
     method: 'POST',
     buildURL: (): `/${string}` =>
@@ -284,15 +272,15 @@ export default async function getAllConfigurations(
 export async function downloadModel() {
   try {
     console.log('restart Face model init');
-    var injiProp = await getAllConfigurations();
+    const injiProp = await getAllConfigurations();
     const maxRetryStr = injiProp.modelDownloadMaxRetry;
     const maxRetry = parseInt(maxRetryStr);
     const resp: string = injiProp != null ? injiProp.faceSdkModelUrl : null;
 
     if (resp != null) {
       for (let counter = 0; counter < maxRetry; counter++) {
-        let config = faceMatchConfig(resp);
-        var result = await configure(config);
+        const config = faceMatchConfig(resp);
+        const result = await configure(config);
         console.log('model download result is = ' + result);
         if (result) {
           sendImpressionEvent(
@@ -323,7 +311,7 @@ export async function downloadModel() {
         error,
       ),
     );
-    console.log(error);
+    console.error('Error while downloading face model - ', error);
   }
 }
 
@@ -345,9 +333,6 @@ type ApiUrls = {
   credentialRequest: Api_Params;
   credentialStatus: Api_Params;
   credentialDownload: Api_Params;
-  authLock: Api_Params;
-  authUnLock: Api_Params;
-  requestRevoke: Api_Params;
   linkTransaction: Api_Params;
   authenticate: Api_Params;
   sendConsent: Api_Params;

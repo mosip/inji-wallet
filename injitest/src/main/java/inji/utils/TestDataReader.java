@@ -11,7 +11,7 @@ public class TestDataReader {
             case "externalemail":
                 return "Resident_AddIdentity_ValidParam_smoke_Pos@mosip.net";
             case "emailsForBackupAndRestore":
-                return UinGenerationUtil.getRandomEmails();
+                return UinGenerationUtil.getRandomEmails("Emails.json");
             case "passcode":
                 return "111111";
             case "otp":
@@ -57,9 +57,9 @@ public class TestDataReader {
             case "denyEmailPassword":
                 return "Hello@988";
             case "denyEmailId":
-                return "mosiptest988@gmail.com";
+                return UinGenerationUtil.getRandomEmails("EmailsDenyPermission.json");
             case "noBackupMail":
-                return "mosiptest99@gmail.com";
+                return UinGenerationUtil.getRandomEmails("NoBackupEmails.json");
             case "setExcludedGroups":
                 return "AVT,PVT";
             case "uin":

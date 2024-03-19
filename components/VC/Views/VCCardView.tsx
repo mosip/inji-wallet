@@ -8,7 +8,7 @@ import {format} from 'date-fns';
 
 import {VCCardSkeleton} from '../common/VCCardSkeleton';
 import {VCCardViewContent} from './VCCardViewContent';
-import {useVcItemController} from '../VcItemController';
+import {useVcItemController} from '../VCItemController';
 import {getCredentialIssuersWellKnownConfig} from '../../../shared/openId4VCI/Utils';
 import {CARD_VIEW_DEFAULT_FIELDS, isVCLoaded} from '../common/VCUtils';
 import {

@@ -16,11 +16,16 @@ import {
 } from '../machines/VCItemMachine/commonSelectors';
 import {selectActivities} from '../machines/activityLog';
 import {GlobalContext} from '../shared/GlobalContext';
-import {useContext} from 'react';
+import {useContext, useState} from 'react';
 import {VCMetadata} from '../shared/VCMetadata';
 import {ScanEvents} from '../machines/bleShare/scan/scanMachine';
-import {BOTTOM_TAB_ROUTES, ScanStackParamList} from '../routes/routesConstants';
+import {
+  BOTTOM_TAB_ROUTES,
+  SCAN_ROUTES,
+  ScanStackParamList,
+} from '../routes/routesConstants';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
+import {MainBottomTabParamList} from '../routes/main';
 import {selectIsScanning} from '../machines/bleShare/scan/selectors';
 import {
   VCItemEvents,
@@ -28,58 +33,95 @@ import {
 } from '../machines/VCItemMachine/VCItemMachine';
 import {selectError} from '../machines/biometrics';
 
-type ScanLayoutNavigation = NavigationProp<ScanStackParamList>;
+type ScanLayoutNavigation = NavigationProp<
+  ScanStackParamList & MainBottomTabParamList
+>;
 
 export function useKebabPopUp(props) {
   const service = props.service as ActorRefFrom<typeof VCItemMachine>;
   const navigation = useNavigation<ScanLayoutNavigation>();
-
+  const vcEvents =
+    props.vcKey !== undefined && props.vcMetadata.isFromOpenId4VCI()
+      ? EsignetMosipVCItemEvents
+      : ExistingMosipVCItemEvents;
+  const PIN_CARD = () => service.send(vcEvents.PIN_CARD());
+  const KEBAB_POPUP = () => service.send(vcEvents.KEBAB_POPUP());
+  const ADD_WALLET_BINDING_ID = () =>
+    service.send(vcEvents.ADD_WALLET_BINDING_ID());
+  const CONFIRM = () => service.send(vcEvents.CONFIRM());
+  const REMOVE = (vcMetadata: VCMetadata) =>
+    service.send(vcEvents.REMOVE(vcMetadata));
+  const DISMISS = () => service.send(vcEvents.DISMISS());
+  const CANCEL = () => service.send(vcEvents.CANCEL());
+  const SHOW_ACTIVITY = () => service.send(vcEvents.SHOW_ACTIVITY());
+  const INPUT_OTP = (otp: string) => service.send(vcEvents.INPUT_OTP(otp));
+  const RESEND_OTP = () => service.send(vcEvents.RESEND_OTP());
+  const isPinned = useSelector(service, selectIsPinned);
+  const isBindingWarning = useSelector(service, selectBindingWarning);
+  const isRemoveWalletWarning = useSelector(service, selectRemoveWalletWarning);
+  const isAcceptingOtpInput = useSelector(service, selectAcceptingBindingOtp);
+  const isWalletBindingError = useSelector(
+    service,
+    selectShowWalletBindingError,
+  );
+  const otpError = useSelector(service, selectOtpError);
+  const walletBindingError = useSelector(service, selectWalletBindingError);
+  const bindingAuthFailedError = useSelector(
+    service,
+    selectBindingAuthFailedError,
+  );
+  const WalletBindingInProgress = useSelector(
+    service,
+    selectWalletBindingInProgress,
+  );
+  const emptyWalletBindingId = useSelector(service, selectEmptyWalletBindingId);
+  const isKebabPopUp = useSelector(service, selectKebabPopUp);
+  const isShowActivities = useSelector(service, selectShowActivities);
+  const phoneNumber = useSelector(service, selectIsPhoneNumber);
+  const email = useSelector(service, selectIsEmail);
   const {appService} = useContext(GlobalContext);
   const activityLogService = appService.children.get('activityLog');
   const scanService = appService.children.get('scan');
+  const isScanning = useSelector(scanService, selectIsScanning);
+
+  const GOTO_SCANSCREEN = () => {
+    navigation.navigate(BOTTOM_TAB_ROUTES.share);
+  };
 
   return {
-    PIN_CARD: () => service.send(VCItemEvents.PIN_CARD()),
-    KEBAB_POPUP: () => service.send(VCItemEvents.KEBAB_POPUP()),
-    ADD_WALLET_BINDING_ID: () =>
-      service.send(VCItemEvents.ADD_WALLET_BINDING_ID()),
-    CONFIRM: () => service.send(VCItemEvents.CONFIRM()),
-    GOTO_SCANSCREEN: () => {
-      navigation.navigate(BOTTOM_TAB_ROUTES.share);
-    },
-    DISMISS: () => service.send(VCItemEvents.DISMISS()),
-    REMOVE: (vcMetadata: VCMetadata) =>
-      service.send(VCItemEvents.REMOVE(vcMetadata)),
-    CANCEL: () => service.send(VCItemEvents.CANCEL()),
-    INPUT_OTP: (otp: string) => service.send(VCItemEvents.INPUT_OTP(otp)),
-    RESEND_OTP: () => service.send(VCItemEvents.RESEND_OTP()),
-    SHOW_ACTIVITY: () => service.send(VCItemEvents.SHOW_ACTIVITY()),
+    isPinned,
+    PIN_CARD,
+    KEBAB_POPUP,
+    ADD_WALLET_BINDING_ID,
+    CONFIRM,
+    GOTO_SCANSCREEN,
+    DISMISS,
+    REMOVE,
+    CANCEL,
+    INPUT_OTP,
+    RESEND_OTP,
+    SHOW_ACTIVITY,
     SELECT_VC_ITEM: (
-      vcRef: ActorRefFrom<typeof VCItemMachine>,
+      vcRef: ActorRefFrom<typeof ExistingMosipVCItemMachine>,
       flowType: string,
     ) => {
       const {serviceRefs, ...vcData} = vcRef.getSnapshot().context;
       scanService.send(ScanEvents.SELECT_VC(vcData, flowType));
     },
-
-    isPinned: useSelector(service, selectIsPinned),
-    isScanning: useSelector(scanService, selectIsScanning),
-    isBindingWarning: useSelector(service, selectBindingWarning),
-    isAcceptingOtpInput: useSelector(service, selectAcceptingBindingOtp),
-    isWalletBindingError: useSelector(service, selectShowWalletBindingError),
-    walletBindingError: useSelector(service, selectError),
-    bindingAuthFailedError: useSelector(service, selectBindingAuthFailedError),
-    otpError: useSelector(service, selectError),
-    walletBindingResponse: useSelector(service, selectWalletBindingResponse),
-    isKebabPopUp: useSelector(service, selectKebabPopUp),
-    isShowActivities: useSelector(service, selectShowActivities),
-    isRemoveWalletWarning: useSelector(service, selectRemoveWalletWarning),
+    isScanning,
+    isBindingWarning,
+    isAcceptingOtpInput,
+    isWalletBindingError,
+    walletBindingError,
+    bindingAuthFailedError,
+    otpError,
+    WalletBindingInProgress,
+    emptyWalletBindingId,
+    isKebabPopUp,
+    isShowActivities,
+    isRemoveWalletWarning,
     activities: useSelector(activityLogService, selectActivities),
-    phoneNumber: useSelector(service, selectIsPhoneNumber),
-    email: useSelector(service, selectIsEmail),
-    WalletBindingInProgress: useSelector(
-      service,
-      selectWalletBindingInProgress,
-    ),
+    phoneNumber,
+    email,
   };
 }

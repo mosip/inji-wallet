@@ -1,18 +1,19 @@
 package inji.pages;
 
-import inji.utils.IosUtil;
+import inji.utils.UinGenerationUtil;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.pagefactory.AppiumFieldDecorator;
 import org.openqa.selenium.By;
 import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.remote.SessionId;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import static java.time.Duration.ofSeconds;
+import java.io.IOException;
 
-import java.time.Duration;
+import static java.time.Duration.ofSeconds;
 
 public class BasePage {
     protected AppiumDriver driver;
@@ -63,12 +64,12 @@ public class BasePage {
         }
     }
 
-    protected boolean WaitTillElementVisible(WebElement element, int waitTime) {
+    protected void WaitTillElementVisible(WebElement element, int waitTime) {
         try {
             waitForElementToBeInvisible(element, waitTime);
-            return false;
+
         } catch (Exception e) {
-            return true;
+
         }
     }
 
@@ -170,4 +171,5 @@ public class BasePage {
            clickOnElement(element);
        }
    }
+
 }

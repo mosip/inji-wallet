@@ -122,8 +122,8 @@ public class OtpVerificationPage extends BasePage {
         return this.isElementDisplayed(confirmationPopupHeader);
     }
 
-    public boolean verifyOtpVerificationTimerCompleted() {
-        return this.WaitTillElementVisible(otpVerificationTimer, 186);
+    public void WatingTimeForVerificationTimerComplete() {
+         this.WaitTillElementVisible(otpVerificationTimer, 186);
     }
     
     public boolean verifyOtpVerificationTimerDisplayedAfterClickOnResend() {

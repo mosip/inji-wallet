@@ -1,7 +1,7 @@
 import React from 'react';
 
 import {FaceScanner} from '../components/FaceScanner';
-import {Button, Column, Row} from '../components/ui';
+import {Column, Row, Button} from '../components/ui';
 import {Theme} from '../components/ui/styleUtils';
 import {VC} from '../types/VC/vc';
 import {Modal} from '../components/ui/Modal';

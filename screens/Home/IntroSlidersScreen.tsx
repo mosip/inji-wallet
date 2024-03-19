@@ -127,19 +127,21 @@ export const IntroSlidersScreen: React.FC<RootRouteProps> = props => {
     );
   };
   const renderDoneButton = () => {
+    const isPasscodeSet = controller.isPasscodeSet();
+    const testId = isPasscodeSet ? 'goBack' : 'getStarted';
+    const buttonText = isPasscodeSet ? t('goBack') : t('getStarted');
     return (
-      <View>
+      <View {...testIDProps(testId)}>
         <LinearGradient
           colors={Theme.Colors.gradientBtn}
           style={Theme.Styles.introSliderButton}>
           <Text
-            testID={controller.isPasscodeSet() ? 'goBack' : 'getStarted'}
             style={{paddingTop: 3}}
             weight="semibold"
             align="center"
             color="#FFFFFF"
             margin="15 0 0 0">
-            {controller.isPasscodeSet() ? t('goBack') : t('getStarted')}
+            {buttonText}
           </Text>
         </LinearGradient>
       </View>
