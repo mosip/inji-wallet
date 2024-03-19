@@ -529,6 +529,10 @@ export function selectDownloadingFailedVcs(state: State) {
   return state.context.downloadingFailedVcs;
 }
 
+export function selectMyVcs(state: State) {
+  return state.context.vcs;
+}
+
 export function selectVerificationErrorMessage(state: State) {
   return state.context.verificationErrorMessage;
 }

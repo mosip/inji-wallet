@@ -97,6 +97,7 @@ export const HomeScreen: React.FC<HomeRouteProps> = props => {
           onDismiss={controller.DISMISS_MODAL}
           vcItemActor={controller.selectedVc}
           activeTab={controller.activeTab}
+          flow="downloadedVc"
         />
       )}
     </React.Fragment>

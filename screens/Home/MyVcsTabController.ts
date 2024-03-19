@@ -10,6 +10,7 @@ import {
   selectInProgressVcDownloads,
   selectIsTampered,
   selectDownloadingFailedVcs,
+  selectMyVcs,
   selectVerificationErrorMessage,
 } from '../../machines/VCItemMachine/vc';
 import {
@@ -73,6 +74,8 @@ export function useMyVcsTab(props: HomeScreenTabProps) {
       vcService,
       selectVerificationErrorMessage,
     ),
+
+    vcData: useSelector(vcService, selectMyVcs),
 
     SET_STORE_VC_ITEM_STATUS: () =>
       service.send(MyVcsTabEvents.SET_STORE_VC_ITEM_STATUS()),
