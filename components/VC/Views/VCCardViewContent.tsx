@@ -1,26 +1,34 @@
 import React from 'react';
-import {ImageBackground} from 'react-native';
+import {ImageBackground, Pressable} from 'react-native';
+import {getLocalizedField} from '../../../i18n';
+import {VCMetadata} from '../../../shared/VCMetadata';
+
+import {KebabPopUp} from '../../KebabPopUp';
 import {VerifiableCredential} from '../../../types/VC/ExistingMosipVC/vc';
 import {Column, Row} from '../../ui';
 import {Theme} from '../../ui/styleUtils';
 import {CheckBox, Icon} from 'react-native-elements';
+import {SvgImage} from '../../ui/svg';
+import {faceImageSource} from '../../VcItemContainerProfileImage';
 import {
-  fieldItemIterator,
   getIssuerLogo,
   isVCLoaded,
   setBackgroundColour,
 } from '../common/VCUtils';
-import {VCItemField} from '../common/VCItemField';
-import {useTranslation} from 'react-i18next';
-import {getIDType} from '../../../shared/openId4VCI/Utils';
+import {setTextColor} from '../common/VCItemField';
+import {VCItemFieldValue} from '../common/VCItemField';
+import {WalletBinding} from '../../../screens/Home/MyVcs/WalletBinding';
 import {VCVerification} from '../../VCVerification';
+import {Issuers} from '../../../shared/openId4VCI/Utils';
+import {VCItemContainerFlowType} from '../../../shared/Utils';
+import {RemoveVcWarningOverlay} from '../../../screens/Home/MyVcs/RemoveVcWarningOverlay';
+import {HistoryTab} from '../../../screens/Home/MyVcs/HistoryTab';
 import {VcItemContainerProfileImage} from '../../VcItemContainerProfileImage';
 
 export const VCCardViewContent: React.FC<
   ExistingMosipVCItemContentProps | EsignetMosipVCItemContentProps
 > = props => {
-  const {t} = useTranslation('VcDetails');
-  const selectableOrCheck = props.selectable ? (
+  const selectableOrCheck = props.selectable && (
     <CheckBox
       checked={props.selected}
       checkedIcon={
@@ -34,7 +42,7 @@ export const VCCardViewContent: React.FC<
       }
       onPress={() => props.onPress()}
     />
-  ) : null;
+  );
 
   return (
     <ImageBackground
@@ -47,59 +55,66 @@ export const VCCardViewContent: React.FC<
         setBackgroundColour(props.wellknown),
       ]}>
       <Column>
-        <Row align="space-between">
-          <Row margin="0 0 0 5">
-            {VcItemContainerProfileImage(props, props.credential)}
-            <Column margin={'0 0 0 20'}>
-              {fieldItemIterator(
-                props.fields.slice(0, 2),
-                props.credential,
-                props.wellknown,
-                props,
+        <Row crossAlign="center" padding="3 0 0 3">
+          {VcItemContainerProfileImage(props)}
+          <Column fill align={'space-around'} margin="0 10 0 10">
+            <VCItemFieldValue
+              key={'fullName'}
+              fieldName="fullName"
+              fieldValue={getLocalizedField(
+                props.credential?.credentialSubject['fullName'],
               )}
-            </Column>
-          </Row>
-          <Column>{props.credential ? selectableOrCheck : null}</Column>
-        </Row>
-        <Column margin="0 0 0 8">
-          {fieldItemIterator(
-            props.fields.slice(2),
-            props.credential,
-            props.wellknown,
-            props,
-          )}
-        </Column>
-        <Row align={'space-between'} margin="0 8 5 8">
-          <VCItemField
-            key={'idType'}
-            fieldName={t('idType')}
-            fieldValue={getIDType(props.credential)}
-            wellknown={props.wellknown}
-            verifiableCredential={props.credential}
-          />
-          <VCItemField
-            key={'status'}
-            fieldName={t('status')}
-            fieldValue={<VCVerification wellknown={props.wellknown} />}
-            wellknown={props.wellknown}
-            verifiableCredential={props.credential}
-          />
-
-          <Column
-            testID="logo"
-            style={{
-              display: props.credential ? 'flex' : 'none',
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}>
-            {!isVCLoaded(props.credential, props.fields)
-              ? null
-              : getIssuerLogo(
-                  props.vcMetadata.isFromOpenId4VCI(),
-                  props.verifiableCredential?.issuerLogo,
-                )}
+              wellknown={props.wellknown}
+            />
+            <Row>
+              <VCVerification
+                wellknown={props.wellknown}
+                isVerified={props.isVerified}
+              />
+            </Row>
           </Column>
+
+          {!isVCLoaded(props.credential, props.fields)
+            ? null
+            : getIssuerLogo(
+                new VCMetadata(props.vcMetadata).isFromOpenId4VCI(),
+                props.verifiableCredential?.issuerLogo,
+              )}
+          {!Object.values(VCItemContainerFlowType).includes(props.flow) && (
+            <>
+              {props.vcMetadata.issuer === Issuers.Sunbird ||
+              !props.emptyWalletBindingId
+                ? SvgImage.walletActivatedIcon()
+                : SvgImage.walletUnActivatedIcon()}
+              <Pressable
+                onPress={props.KEBAB_POPUP}
+                accessible={false}
+                style={Theme.Styles.kebabPressableContainer}>
+                <KebabPopUp
+                  iconColor={setTextColor(props.wellknown)}
+                  vcMetadata={props.vcMetadata}
+                  iconName="dots-three-horizontal"
+                  iconType="entypo"
+                  isVisible={props.isKebabPopUp}
+                  onDismiss={props.DISMISS}
+                  service={props.service}
+                  vcHasImage={faceImageSource(props) !== undefined}
+                />
+              </Pressable>
+            </>
+          )}
+          {props.credential && selectableOrCheck}
         </Row>
+
+        <WalletBinding service={props.service} vcMetadata={props.vcMetadata} />
+
+        <RemoveVcWarningOverlay
+          testID="removeVcWarningOverlay"
+          service={props.service}
+          vcMetadata={props.vcMetadata}
+        />
+
+        <HistoryTab service={props.service} vcMetadata={props.vcMetadata} />
       </Column>
     </ImageBackground>
   );
@@ -118,6 +133,13 @@ export interface ExistingMosipVCItemContentProps {
   service: any;
   onPress?: () => void;
   isDownloading?: boolean;
+  flow?: string;
+  emptyWalletBindingId: boolean;
+  KEBAB_POPUP: () => {};
+  DISMISS: () => {};
+  isKebabPopUp: boolean;
+  vcMetadata: VCMetadata;
+  isVerified?: boolean;
 }
 
 export interface EsignetMosipVCItemContentProps {
@@ -132,6 +154,14 @@ export interface EsignetMosipVCItemContentProps {
   service: any;
   onPress?: () => void;
   isDownloading?: boolean;
+  flow?: string;
+  emptyWalletBindingId: boolean;
+  verifiableCredential: VerifiableCredential;
+  KEBAB_POPUP: () => {};
+  DISMISS: () => {};
+  isKebabPopUp: boolean;
+  vcMetadata: VCMetadata;
+  isVerified?: boolean;
 }
 
 VCCardViewContent.defaultProps = {

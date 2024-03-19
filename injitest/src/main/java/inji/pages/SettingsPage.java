@@ -1,5 +1,6 @@
 package inji.pages;
 
+import inji.constants.Target;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.pagefactory.AndroidFindBy;
 import io.appium.java_client.pagefactory.iOSXCUITFindBy;
@@ -50,7 +51,7 @@ public class SettingsPage extends BasePage {
     private WebElement wikaButton;
 
     @AndroidFindBy(uiAutomator = "new UiSelector().resourceId(\"listItemTitle\")")
-    @iOSXCUITFindBy(iOSNsPredicate = "name == \"listItemTitle\"")
+    @iOSXCUITFindBy(accessibility = "languages")
     private List<WebElement> languages;
 
     @AndroidFindBy(accessibility = "aboutInjiTitle")
@@ -152,12 +153,17 @@ public class SettingsPage extends BasePage {
         return this.isElementDisplayed(languageButton);
     }
 
-    public boolean verifyLanguagesInLanguageFilter() {
-        List<String> expectedLanguages = Arrays.asList("English", "Filipino","عربى", "हिंदी", "ಕನ್ನಡ", "தமிழ்");
-        List<String> actualLanguages = languages.stream()
+    public boolean verifyLanguagesInLanguageFilter(String os) {
+        List<String> expectedLanguages=null;
+        List<String> actualLanguages= null;
+       if(os.equals("IOS")){
+         expectedLanguages = Arrays.asList("English \uE5CA Filipino عربى हिंदी ಕನ್ನಡ தமிழ்");
+         } else if (os.equals("ANDROID")) {
+           expectedLanguages = Arrays.asList("English", "Filipino","عربى", "हिंदी", "ಕನ್ನಡ", "தமிழ்");
+       }
+        actualLanguages = languages.stream()
                 .map(WebElement::getText)
                 .collect(Collectors.toList());
-
         return new HashSet<>(expectedLanguages).equals(new HashSet<>(actualLanguages));
     }
 

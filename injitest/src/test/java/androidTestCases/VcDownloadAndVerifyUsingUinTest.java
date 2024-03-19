@@ -284,7 +284,7 @@ public class VcDownloadAndVerifyUsingUinTest extends AndroidBaseTest {
         OtpVerificationPage otpVerification = retrieveIdPage.setEnterIdTextBox(uin).clickOnGenerateCardButton();
 
         assertTrue(otpVerification.isOtpVerificationPageLoaded(), "Verify if otp verification page is displayed");
-        assertTrue(otpVerification.verifyOtpVerificationTimerCompleted(), "Verify timer has stop for otp verification");
+        otpVerification.WatingTimeForVerificationTimerComplete();
         assertTrue(otpVerification.verifyResendCodeButtonDisplayedEnabled(), "Verify if resend code is enabled");
         otpVerification.clickOnResendButton();
         assertTrue(otpVerification.verifyOtpVerificationTimerDisplayedAfterClickOnResend(), "verify is You can resend the code displayed again after click on resend button ");
@@ -334,7 +334,7 @@ public class VcDownloadAndVerifyUsingUinTest extends AndroidBaseTest {
         //2
         homePage.downloadCard();
         addNewCardPage.clickOnDownloadViaUin();
-          
+
         assertTrue(retrieveIdPage.isRetrieveIdPageLoaded(), "Verify if retrieve id page is displayed");
         retrieveIdPage.setEnterIdTextBox(uin).clickOnGenerateCardButton();
 
@@ -346,7 +346,7 @@ public class VcDownloadAndVerifyUsingUinTest extends AndroidBaseTest {
         //3
         homePage.downloadCard();
         addNewCardPage.clickOnDownloadViaUin();
-          
+
         assertTrue(retrieveIdPage.isRetrieveIdPageLoaded(), "Verify if retrieve id page is displayed");
         retrieveIdPage.setEnterIdTextBox(uin).clickOnGenerateCardButton();
 
@@ -358,7 +358,7 @@ public class VcDownloadAndVerifyUsingUinTest extends AndroidBaseTest {
         //4
         homePage.downloadCard();
         addNewCardPage.clickOnDownloadViaUin();
-          
+
         assertTrue(retrieveIdPage.isRetrieveIdPageLoaded(), "Verify if retrieve id page is displayed");
         retrieveIdPage.setEnterIdTextBox(uin).clickOnGenerateCardButton();
 
@@ -370,7 +370,7 @@ public class VcDownloadAndVerifyUsingUinTest extends AndroidBaseTest {
         //5
         homePage.downloadCard();
         addNewCardPage.clickOnDownloadViaUin();
-          
+
         assertTrue(retrieveIdPage.isRetrieveIdPageLoaded(), "Verify if retrieve id page is displayed");
         retrieveIdPage.setEnterIdTextBox(uin).clickOnGenerateCardButton();
 
@@ -379,11 +379,11 @@ public class VcDownloadAndVerifyUsingUinTest extends AndroidBaseTest {
 
         assertTrue(homePage.isDownloadingVcPopupDisplayed(),"verify downloading vc popup displayed");
         assertTrue(homePage.isSecondNameDisplayed(TestDataReader.readData("fullName")), "Verify if full name is displayed");
-        
+
         //6
         homePage.downloadCard();
         addNewCardPage.clickOnDownloadViaUin();
-          
+
         assertTrue(retrieveIdPage.isRetrieveIdPageLoaded(), "Verify if retrieve id page is displayed");
         retrieveIdPage.setEnterIdTextBox(uin).clickOnGenerateCardButton();
 
@@ -392,11 +392,11 @@ public class VcDownloadAndVerifyUsingUinTest extends AndroidBaseTest {
 
         assertTrue(homePage.isDownloadingVcPopupDisplayed(),"verify downloading vc popup displayed");
         assertTrue(homePage.isSecondNameDisplayed(TestDataReader.readData("fullName")), "Verify if full name is displayed");
-        
+
         //7
         homePage.downloadCard();
         addNewCardPage.clickOnDownloadViaUin();
-          
+
         assertTrue(retrieveIdPage.isRetrieveIdPageLoaded(), "Verify if retrieve id page is displayed");
         retrieveIdPage.setEnterIdTextBox(uin).clickOnGenerateCardButton();
 
@@ -405,11 +405,11 @@ public class VcDownloadAndVerifyUsingUinTest extends AndroidBaseTest {
 
         assertTrue(homePage.isDownloadingVcPopupDisplayed(),"verify downloading vc popup displayed");
         assertTrue(homePage.isSecondNameDisplayed(TestDataReader.readData("fullName")), "Verify if full name is displayed");
-        
+
         //8
         homePage.downloadCard();
         addNewCardPage.clickOnDownloadViaUin();
-          
+
         assertTrue(retrieveIdPage.isRetrieveIdPageLoaded(), "Verify if retrieve id page is displayed");
         retrieveIdPage.setEnterIdTextBox(uin).clickOnGenerateCardButton();
 
@@ -418,7 +418,7 @@ public class VcDownloadAndVerifyUsingUinTest extends AndroidBaseTest {
 
         assertTrue(homePage.isDownloadingVcPopupDisplayed(),"verify downloading vc popup displayed");
         assertTrue(homePage.isSecondNameDisplayed(TestDataReader.readData("fullName")), "Verify if full name is displayed");
-        
+
         AndroidUtil.forceStopApp();
         Thread.sleep(4000);
         AndroidUtil.invokeAppFromBackGroundAndroid();

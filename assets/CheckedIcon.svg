@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18">
+  <g id="Group_57140" data-name="Group 57140" transform="translate(-0.209 -0.21)">
+    <g id="Rectangle_7173" data-name="Rectangle 7173" transform="translate(0.209 0.21)" fill="@fill" stroke="@fill2" stroke-width="2">
+      <rect width="18" height="18" rx="4" stroke="none"/>
+      <rect x="1" y="1" width="16" height="16" rx="3" fill="none"/>
+    </g>
+    <path id="check_circle_FILL0_wght400_GRAD0_opsz48" d="M9.739,14.057,15.4,8.414l-.921-.9L9.739,12.242l-2.4-2.393-.9.9Z" transform="translate(-1.615 -1.732)" fill="#fff" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+  </g>
+</svg>

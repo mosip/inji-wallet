@@ -73,6 +73,7 @@ export const MessageOverlay: React.FC<MessageOverlayProps> = props => {
 };
 
 export const ErrorMessageOverlay: React.FC<ErrorMessageOverlayProps> = ({
+  testID,
   isVisible,
   error,
   onDismiss,
@@ -86,6 +87,7 @@ export const ErrorMessageOverlay: React.FC<ErrorMessageOverlayProps> = ({
       title={t(error + '.title')}
       message={t(error + '.message')}
       onBackdropPress={onDismiss}
+      testID={testID}
     />
   );
 };
@@ -95,6 +97,7 @@ export interface ErrorMessageOverlayProps {
   error?: string;
   onDismiss?: () => void;
   translationPath: string;
+  testID?: string;
 }
 
 const Progress: React.FC<Pick<MessageOverlayProps, 'progress'>> = props => {

@@ -39,6 +39,7 @@ import {
 import {TelemetryConstants} from '../../../shared/telemetry/TelemetryConstants';
 
 import {API_URLS} from '../../../shared/api';
+import {getHomeMachineService} from '../../../screens/Home/HomeScreenController';
 import {BackupEvents} from '../../backupAndRestore/backup';
 import Cloud, {
   isSignedInResult,
@@ -99,6 +100,7 @@ const model = createModel(
       PIN_CARD: () => ({}),
       KEBAB_POPUP: () => ({}),
       SHOW_ACTIVITY: () => ({}),
+      CLOSE_VC_MODAL: () => ({}),
       REMOVE: (vcMetadata: VCMetadata) => ({vcMetadata}),
       UPDATE_VC_METADATA: (vcMetadata: VCMetadata) => ({vcMetadata}),
       TAMPERED_VC: (key: string) => ({key}),
@@ -285,6 +287,7 @@ export const ExistingMosipVCItemMachine =
         },
         kebabPopUp: {
           entry: assign({isMachineInKebabPopupState: () => true}),
+          exit: assign({isMachineInKebabPopupState: () => false}),
           on: {
             DISMISS: {
               actions: assign({
@@ -297,24 +300,18 @@ export const ExistingMosipVCItemMachine =
             },
             PIN_CARD: {
               target: '#vc-item.pinCard',
-              actions: [
-                'setPinCard',
-                assign({
-                  isMachineInKebabPopupState: () => false,
-                }),
-              ],
+              actions: 'setPinCard',
             },
             SHOW_ACTIVITY: {
               target: '#vc-item.kebabPopUp.showActivities',
             },
             REMOVE: {
-              actions: [
-                'setVcKey',
-                assign({
-                  isMachineInKebabPopupState: () => false,
-                }),
-              ],
+              actions: 'setVcKey',
               target: '#vc-item.kebabPopUp.removeWallet',
+            },
+            CLOSE_VC_MODAL: {
+              actions: ['closeViewVcModal'],
+              target: '#vc-item',
             },
           },
           initial: 'idle',
@@ -322,7 +319,7 @@ export const ExistingMosipVCItemMachine =
             idle: {},
             showActivities: {
               on: {
-                DISMISS: '#vc-item.kebabPopUp',
+                DISMISS: '#vc-item',
               },
             },
             removeWallet: {
@@ -331,7 +328,7 @@ export const ExistingMosipVCItemMachine =
                   target: 'removingVc',
                 },
                 CANCEL: {
-                  target: 'idle',
+                  target: '#vc-item',
                 },
               },
             },
@@ -339,6 +336,7 @@ export const ExistingMosipVCItemMachine =
               entry: 'removeVcItem',
               on: {
                 STORE_RESPONSE: {
+                  actions: ['closeViewVcModal', 'refreshMyVcs', 'logVCremoved'],
                   target: '.triggerAutoBackup',
                 },
               },
@@ -1034,6 +1032,10 @@ export const ExistingMosipVCItemMachine =
           },
           {to: context => context.serviceRefs.store},
         ),
+
+        closeViewVcModal: send('DISMISS_MODAL', {
+          to: () => getHomeMachineService(),
+        }),
 
         logVCremoved: send(
           (context, _) =>

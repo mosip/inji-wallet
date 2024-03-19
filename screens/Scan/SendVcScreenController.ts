@@ -15,7 +15,11 @@ import {
   selectIsInvalidIdentity,
   selectIsVerifyingIdentity,
 } from '../../machines/bleShare/commonSelectors';
-import {ScanEvents} from '../../machines/bleShare/scan/scanMachine';
+import {
+  ScanEvents,
+  selectIsFaceVerificationConsent,
+} from '../../machines/bleShare/scan/scanMachine';
+import {VCShareFlowType} from '../../shared/Utils';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
 import {RootRouteProps} from '../../routes';
 import {BOTTOM_TAB_ROUTES} from '../../routes/routesConstants';
@@ -41,7 +45,9 @@ export function useSendVcScreen() {
       (vcRef: ActorRefFrom<typeof ExistingMosipVCItemMachine>) => {
         setSelectedIndex(index);
         const {serviceRefs, ...vcData} = vcRef.getSnapshot().context;
-        scanService.send(ScanEvents.SELECT_VC(vcData));
+        scanService.send(
+          ScanEvents.SELECT_VC(vcData, VCShareFlowType.SIMPLE_SHARE),
+        );
       },
 
     receiverInfo: useSelector(scanService, selectReceiverInfo),
@@ -53,9 +59,15 @@ export function useSendVcScreen() {
     isVerifyingIdentity: useSelector(scanService, selectIsVerifyingIdentity),
     isInvalidIdentity: useSelector(scanService, selectIsInvalidIdentity),
     isCancelling: useSelector(scanService, selectIsCancelling),
+    isFaceVerificationConsent: useSelector(
+      scanService,
+      selectIsFaceVerificationConsent,
+    ),
 
     CANCEL,
     ACCEPT_REQUEST: () => scanService.send(ScanEvents.ACCEPT_REQUEST()),
+    FACE_VERIFICATION_CONSENT: (isConsentGiven: boolean) =>
+      scanService.send(ScanEvents.FACE_VERIFICATION_CONSENT(isConsentGiven)),
     VERIFY_AND_ACCEPT_REQUEST: () =>
       scanService.send(ScanEvents.VERIFY_AND_ACCEPT_REQUEST()),
     DISMISS: () => scanService.send(ScanEvents.DISMISS()),

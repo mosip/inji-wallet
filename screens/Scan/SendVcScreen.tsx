@@ -18,8 +18,12 @@ import {
   sendImpressionEvent,
 } from '../../shared/telemetry/TelemetryUtils';
 import {TelemetryConstants} from '../../shared/telemetry/TelemetryConstants';
-import {getVCsOrderedByPinStatus} from '../../shared/Utils';
+import {
+  VCItemContainerFlowType,
+  getVCsOrderedByPinStatus,
+} from '../../shared/Utils';
 import {Issuers} from '../../shared/openId4VCI/Utils';
+import {FaceVerificationAlertOverlay} from './FaceVerificationAlertOverlay';
 import {Error} from '../../components/ui/Error';
 import {SvgImage} from '../../components/ui/svg';
 
@@ -97,7 +101,7 @@ export const SendVcScreen: React.FC = () => {
               onPress={controller.SELECT_VC_ITEM(index)}
               selectable
               selected={index === controller.selectedIndex}
-              isSharingVc
+              flow={VCItemContainerFlowType.VC_SHARE}
               isPinned={vcMetadata.isPinned}
             />
           ))}
@@ -138,11 +142,20 @@ export const SendVcScreen: React.FC = () => {
       </Column>
 
       <VerifyIdentityOverlay
-        isVisible={controller.isVerifyingIdentity}
         vc={controller.selectedVc}
+        isVerifyingIdentity={controller.isVerifyingIdentity}
         onCancel={controller.CANCEL}
         onFaceValid={controller.FACE_VALID}
         onFaceInvalid={controller.FACE_INVALID}
+        isInvalidIdentity={controller.isInvalidIdentity}
+        onDismiss={controller.DISMISS}
+        onRetryVerification={controller.RETRY_VERIFICATION}
+      />
+
+      <FaceVerificationAlertOverlay
+        isVisible={controller.isFaceVerificationConsent}
+        onConfirm={controller.FACE_VERIFICATION_CONSENT}
+        close={controller.DISMISS}
       />
 
       <Error

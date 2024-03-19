@@ -28,7 +28,7 @@
     "passcodeMismatchError": "Hindi tumugma ang passcode."
   },
   "FaceScanner": {
-    "imageCaptureGuide": "Hawakan nang matatag ang telepono at panatilihing nakatutok ang iyong mukha sa gitna",
+    "imageCaptureGuide": "Hawakan nang matatag ang telepono, panatilihing nakatutok ang iyong mukha sa gitna at mag-click sa Capture.",
     "capture": "Kunin",
     "flipCamera": "I-flip ang Camera"
   },
@@ -85,17 +85,19 @@
   },
   "HomeScreenKebabPopUp": {
     "title": "Higit pang mga Opsyon",
-    "unPinCard": "I-unpin ang Card",
-    "pinCard": "Pin Card",
-    "offlineAuthenticationDisabled!": "Nakabinbin ang pag-activate para sa online na pag-login",
+    "unPinCard": "I-unpin",
+    "pinCard": "Pin",
+    "share": "Ibahagi",
+    "shareWithSelfie": "Ibahagi sa Selfie",
     "offlineAuthDisabledMessage": "Mag-click dito upang paganahin ang mga kredensyal na ito na magamit para sa online na pagpapatotoo.",
     "viewActivityLog": "Tingnan ang log ng aktibidad",
     "removeFromWallet": "Alisin sa wallet"
   },
   "WalletBinding": {
+    "offlineAuthenticationDisabled": "I-activate para sa online na pag-login",
     "inProgress": "Isinasagawa",
-    "profileAuthenticated": "Na-activate para sa online na pag-login",
-    "credentialActivated": "Na-activate"
+    "credentialActivated": "Na-activate",
+    "profileAuthenticated": "Pag-login sa QR Code"
   },
   "BindingVcWarningOverlay": {
     "alert": "Pakikumpirma",
@@ -104,16 +106,17 @@
     "no": "Hindi"
   },
   "RemoveVcWarningOverlay": {
-    "alert": "Alerto",
-    "removeWarning": "Gusto mo ba talagang tanggalin ang card?",
-    "confirm": "Kumpirmahin",
-    "no": "Hindi"
+    "alert": "Alisin sa Wallet?",
+    "removeWarning": "Aalisin mo ang card sa wallet. Kapag naalis na, hindi na mababawi ang pagkilos na ito.",
+    "confirm": "Oo, kinukumpirma ko",
+    "cancel": "Kanselahin"
   },
   "AuthScreen": {
     "header": "Gusto mo bang gumamit ng biometrics upang i-unlock ang aplikasyon?",
-    "Description": "Gusto mo bang gumamit ng biometrics upang i-unlock ang application?",
+    "Description": "Para secure na i-unlock ang app, maaari mong i-set up ang alinman sa biometric authentication, gaya ng fingerprint o facial recognition o mag-opt para sa 6-digit na Passcode para sa mabilis na pag-access.",
+    "PasswordTypeDescription": "Piliin ang ‘Gumamit ng Biometrics’ para i-enable ang biometric authentication o ‘I’ll Do Later’ para mag-set up ng 6-digit na passcode.",
     "useBiometrics": "Gamitin ang biometrics",
-    "usePasscode": "Gumamit na lang ng passcode",
+    "usePasscode": "Gagawin Ko Mamaya",
     "errors": {
       "unavailable": "Hindi sinusuportahan ng device ang Biometrics",
       "unenrolled": "Upang magamit ang Biometrics, mangyaring i-enroll ang iyong fingerprint sa mga setting ng iyong device",
@@ -145,6 +148,11 @@
     "logout": "Mag-logout",
     "resetInjiProps": "Nire-reset ang Inji Props..."
   },
+  "BannerNotification": {
+    "alternatePasscodeSuccess": "Tagumpay! Magagamit mo na ngayon ang passcode upang i-unlock ang Inji app.",
+    "alternateBiometricSuccess": "Tagumpay! Maaari ka na ngayong gumamit ng biometrics upang i-unlock ang Inji app.",
+    "activated": "Ang mga kredensyal ay pinagana para sa online na pagpapatunay."
+  },
   "AboutInji": {
     "aboutInji": "Tungkol kay Inji",
     "header": "TUNGKOL KAY INJI",
@@ -159,6 +167,7 @@
     "title": "Magdagdag ng bagong card",
     "description": "Mangyaring piliin ang iyong gustong tagabigay mula sa mga opsyon sa ibaba upang magdagdag ng bagong card.",
     "searchByIssuersName": "Maghanap ayon sa pangalan ng Nag-isyu",
+    "help": "Tulong?",
     "loaders": {
       "loading": "Naglo-load...",
       "subTitle": {
@@ -201,7 +210,9 @@
         "twelve": "Paano magbahagi ng card?",
         "thirteen": "Paano mag-alis ng card mula sa wallet?",
         "fourteen": "Paano tingnan ang mga log ng aktibidad?",
-        "fifteen": "Ano ang mangyayari kapag binago ang biometric ng Android keystore?"
+        "fifteen": "Ano ang mangyayari kapag binago ang biometric ng Android keystore?",
+        "sixteen": "Ano ang Share?",
+        "seventeen": "Ano ang Share with selfie?"
       },
       "backup": {
         "one": "Ano ang data backup? ",
@@ -234,7 +245,9 @@
         "thirteen-a": "Maaari kang mag-click sa ...(meatballs menu) sa isang card sa Home page at piliin ang Remove from Wallet na opsyon upang alisin ang isang card mula sa wallet. ",
         "thirteen-b": " Pakitandaan na, maaaring i-download muli ang parehong card.",
         "fourteen": "Sa Home page, mag-click sa 'Kasaysayan' upang tingnan ang mga detalye ng aktibidad ng user.",
-        "fifteen": "Ang Android keystore ay nagtataglay ng mahalagang impormasyon tulad ng mga pribadong key para sa mga patunay ng pagkakakilanlan. "
+        "fifteen": "Ang Android keystore ay nagtataglay ng mahalagang impormasyon tulad ng mga pribadong key para sa mga patunay ng pagkakakilanlan. ",
+        "sixteen": "Ang pagbabahagi ng kredensyal ay tumutukoy sa proseso ng ligtas na paglilipat ng isang nabe-verify na kredensyal ng may hawak mula sa INJI wallet patungo sa umaasa na partido. Nagbibigay-daan ito sa mga indibidwal na patunayan ang kanilang pag-verify ng pagkakakilanlan sa digital na paraan, na pinapadali ang mahusay at pinagkakatiwalaang mga pakikipag-ugnayan sa iba't ibang konteksto.",
+        "seventeen": "Ang pagbabahagi ng VC na may selfie ay nagsasangkot ng karagdagang layer ng seguridad sa proseso ng pagbabahagi ng kredensyal. Bilang karagdagan sa pagpapadala ng nabe-verify na kredensyal, ang user ay kinakailangang magbigay ng selfie (isang larawan ng kanilang sarili) para sa facial verification. Pinapahusay nito ang seguridad at integridad ng paglilipat ng kredensyal sa pamamagitan ng pagtiyak na ang indibidwal na nagpapakita ng kredensyal ay ang lehitimong may-ari. Nakakatulong itong maiwasan ang pagpapanggap at hindi awtorisadong paggamit ng kredensyal, at sa gayon ay madaragdagan ang tiwala at pagiging maaasahan sa mga digital na transaksyon."
       },
       "backup": {
         "one": "Kasama sa pag-backup ng data ang paggawa ng kopya ng iyong Mga Na-verify na Kredensyal na nasa iyong wallet sa iyong Google Drive/iCloud, na tinitiyak na sa kaganapan ng pagkawala ng data, maaari mong ibalik ang iyong mga file sa dati nilang estado.",
@@ -327,12 +340,15 @@
     }
   },
   "MyVcsTab": {
+    "searchByName": "Maghanap ayon sa pangalan",
     "bringYourDigitalID": "Dalhin ang Iyong Digital ID",
     "generateVcDescription": "Upang i-download ang iyong card i-tap ang I-download card sa ibaba",
     "generateVcFABDescription": "Upang i-download ang iyong card i-tap ang + sa ibaba",
     "downloadCard": "I-download ang Card",
     "downloadingYourCard": "Ang pagda-download ng iyong card, maaari itong tumagal nang hanggang 5 minuto",
     "activated": "Ang mga kredensyal ay pinagana para sa online na pagpapatotoo.",
+    "noCardsTitle": "Walang Nahanap na Mga Card!",
+    "noCardsDescription": "Paumanhin, wala kaming mahanap na anumang resulta. Pakisubukang maglagay ng ibang keyword sa paghahanap.",
     "errors": {
       "savingFailed": {
         "title": "Nabigong i-save ang Card",
@@ -405,6 +421,8 @@
     "header": "Itakda ang Passcode",
     "enterNewPassword": "Maglagay ng bagong passcode",
     "reEnterPassword": "Ipasok muli ang bagong passcode",
+    "enterAlternateNewPassword": "Ang iyong passcode ay ang iyong susi upang ma-access ang app nang ligtas. Pumili ng isang 6 na digit na passcode na natatangi at hindi malilimutan, na tinitiyak ang kaligtasan ng iyong data at privacy sa loob ng app.",
+    "reEnterAlternatePassword": "Kumpirmahin ang iyong passcode sa pamamagitan ng muling pagpasok nito. Kapag nakumpirma na, ang iyong passcode ay ligtas na itatakda para sa pag-access sa app.",
     "confirmPasscode": "Kumpirmahin ang passcode",
     "enterPasscode": "Ilagay ang iyong passcode"
   },
@@ -419,7 +437,7 @@
     "back": "Bumalik ka",
     "confirm": "Kumpirmahin",
     "verify": "I-verify",
-    "faceAuth": "Face Authentication",
+    "faceAuth": "Pagpapatunay ng Mukha",
     "consent": "Pagpayag",
     "loading": "Naglo-load...",
     "domainWarning": "Pakikumpirma ang domain ng website kung saan mo ini-scan ang QR code mula sa ibaba",
@@ -554,6 +572,10 @@
     "gotoSettings": "Pumunta sa setting"
   },
   "ScanScreen": {
+    "shareWithSelfie": "Ibahagi sa Selfie",
+    "shareWithSelfieMessage": "Para ibahagi ang iyong Mga Nabe-verify na Kredensyal, secure naming ive-verify ang iyong pagkakakilanlan gamit ang pag-verify sa mukha. Sa pagpapatuloy, pumapayag ka sa INJI na gamitin ang iyong camera para sa layuning ito. \n\n Gagamitin lang ang iyong facial data para sa pag-verify at hindi ibabahagi sa anumang third party.",
+    "ConfirmButton": "Naiintindihan ko",
+    "doNotAskMessage": "Huwag mo na akong tanungin",
     "noShareableVcs": "Walang magagamit na mga card na maibabahagi.",
     "sharingVc": "Pagbabahagi ng card",
     "bluetoothStateIos": "Naka-OFF ang Bluetooth, paki-ON ito mula sa control center",
@@ -708,7 +730,7 @@
     }
   },
   "VerifyIdentityOverlay": {
-    "faceAuth": "Face Authentication",
+    "faceAuth": "Pagpapatunay ng Mukha",
     "status": {
       "verifyingIdentity": "Bine-verify ang pagkakakilanlan..."
     },
@@ -804,6 +826,8 @@
     "save": "I-save ang Kagustuhan"
   },
   "common": {
+    "card": "card",
+    "cards": "mga card",
     "cancel": "Kanselahin",
     "accept": "Tanggapin",
     "save": "I-save",
