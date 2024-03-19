@@ -40,6 +40,8 @@ export const SETTINGS_STORE_KEY = 'settings';
 
 export const APP_ID_LENGTH = 12;
 
+export const FACE_AUTH_CONSENT = 'faceAuthConsent';
+
 //Banner Status
 export const BANNER_TYPE_SUCCESS = 'success';
 

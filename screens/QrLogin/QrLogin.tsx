@@ -11,6 +11,7 @@ import {QrConsent} from './QrConsent';
 import {QrLoginRef} from '../../machines/QrLoginMachine';
 import {Icon} from 'react-native-elements';
 import {View} from 'react-native';
+import {FaceVerificationAlertOverlay} from '../Scan/FaceVerificationAlertOverlay';
 
 export const QrLogin: React.FC<QrLoginProps> = props => {
   const controller = useQrLogin(props);
@@ -44,38 +45,25 @@ export const QrLogin: React.FC<QrLoginProps> = props => {
           isVisible={controller.isShowingError}
           title={controller.error}
           onButtonPress={controller.DISMISS}
-          testID='qrLoginError'
+          testID="qrLoginError"
         />
 
         <VerifyIdentityOverlay
-          isVisible={controller.isVerifyingIdentity}
           vc={controller.selectedVc}
+          isVerifyingIdentity={controller.isVerifyingIdentity}
           onCancel={controller.CANCEL}
           onFaceValid={controller.FACE_VALID}
           onFaceInvalid={controller.FACE_INVALID}
+          isInvalidIdentity={true}
+          onDismiss={controller.DISMISS}
+          onRetryVerification={controller.RETRY_VERIFICATION}
         />
 
-        <MessageOverlay
-          isVisible={controller.isInvalidIdentity}
-          title={t('VerifyIdentityOverlay:errors.invalidIdentity.title')}
-          message={t('VerifyIdentityOverlay:errors.invalidIdentity.message')}
-          onBackdropPress={controller.DISMISS}>
-          <Row>
-            <Button
-              fill
-              type="clear"
-              title={t('common:cancel')}
-              onPress={controller.DISMISS}
-              margin={[0, 8, 0, 0]}
-            />
-            <Button
-              testID='tryAgain'
-              fill
-              title={t('common:tryAgain')}
-              onPress={controller.RETRY_VERIFICATION}
-            />
-          </Row>
-        </MessageOverlay>
+        <FaceVerificationAlertOverlay
+          isVisible={controller.isFaceVerificationConsent}
+          onConfirm={controller.FACE_VERIFICATION_CONSENT}
+          close={controller.DISMISS}
+        />
 
         <QrConsent
           isVisible={controller.isRequestConsent}

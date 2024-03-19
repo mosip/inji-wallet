@@ -18,15 +18,15 @@ To set up Appium for use with this framework, please follow the installation ins
 
 1. Update `Config>>kernal.properties` to modify the environment settings.
 2. Update the following keys in `src/main/java>>inji.utils>>TestDataReader.java`:
-    - `uin`
-    - `uin2`
-    - `aid` for environment changes.
+   - `uin`
+   - `uin2`
+   - `aid` for environment changes.
 3. Update `Config>>config.properties` with the following values:
-    - `nodePath`
-    - `appiumServerExecutable`
+   - `nodePath`
+   - `appiumServerExecutable`
 4. Update `Config>>DesiredCapabilies.json` with the following keys:
-    - `appium:udid`
-    - `appium:app`
+   - `appium:udid`
+   - `appium:app`
 5. If the run is on Device Farm, set `isDeviceFarmRun` to `true`.
 6. To run tests in an IDE, set `isDeviceFarmRun` to `false` and execute the `testng.xml` file.
 

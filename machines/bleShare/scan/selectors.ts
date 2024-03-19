@@ -3,6 +3,10 @@ import {scanMachine} from './scanMachine';
 
 type State = StateFrom<typeof scanMachine>;
 
+export function selectFlowType(state: State) {
+  return state.context.flowType;
+}
+
 export function selectReceiverInfo(state: State) {
   return state.context.receiverInfo;
 }

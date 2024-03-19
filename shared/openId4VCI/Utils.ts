@@ -11,6 +11,10 @@ import {CACHED_API} from '../api';
 import i18n from '../../i18n';
 import {VerifiableCredential} from '../../types/VC/ExistingMosipVC/vc';
 import {CredentialWrapper} from '../../types/VC/EsignetMosipVC/vc';
+import {
+  BOTTOM_SECTION_FIELDS_WITH_DETAILED_ADDRESS_FIELDS,
+  DETAIL_VIEW_ADD_ON_FIELDS,
+} from '../../components/VC/common/VCUtils';
 
 export const Protocols = {
   OpenId4VCI: 'OpenId4VCI',
@@ -112,10 +116,21 @@ export const updateCredentialInformation = (context, credential) => {
   credentialWrapper.generatedOn = new Date();
   credentialWrapper.verifiableCredential.wellKnown =
     context.selectedIssuer['.well-known'];
+  credentialWrapper.verifiableCredential.credentialTypes =
+    context.selectedIssuer['credential_type'];
   // credentialWrapper.verifiableCredential.wellKnown =
   //   'https://esignet.collab.mosip.net/.well-known/openid-credential-issuer';
   credentialWrapper.verifiableCredential.issuerLogo =
     getDisplayObjectForCurrentLanguage(context.selectedIssuer.display)?.logo;
+  credentialWrapper.vcMetadata = context.vcMetadata || {};
+  return credentialWrapper;
+};
+
+export const updateVCmetadataOfCredentialWrapper = (
+  context,
+  credentialWrapper: CredentialWrapper,
+) => {
+  credentialWrapper.vcMetadata = context.vcMetadata;
   return credentialWrapper;
 };
 
@@ -173,6 +188,7 @@ export const getJWK = async publicKey => {
 export const getCredentialIssuersWellKnownConfig = async (
   issuer: string,
   wellknown: string,
+  credentialTypes: Object[],
   defaultFields: string[],
 ) => {
   let fields: string[] = defaultFields;
@@ -184,16 +200,55 @@ export const getCredentialIssuersWellKnownConfig = async (
     } else if (response?.credentials_supported[0].order) {
       fields = response?.credentials_supported[0].order;
     } else {
-      fields = Object.keys(
-        response?.credentials_supported[0].credential_definition
-          .credentialSubject,
+      const supportedCredentialTypes = credentialTypes.filter(
+        type => type !== 'VerifiableCredential',
       );
+      const selectedCredentialType = supportedCredentialTypes[0];
+
+      response?.credentials_supported.filter(credential => {
+        if (credential.id === selectedCredentialType) {
+          fields = Object.keys(
+            credential.credential_definition.credentialSubject,
+          );
+        }
+      });
     }
   }
   return {
     wellknown: response,
     fields: fields,
   };
+};
+
+export const getDetailedViewFields = async (
+  issuer: string,
+  wellknown: string,
+  credentialTypes: Object[],
+  defaultFields: string[],
+) => {
+  let response = await getCredentialIssuersWellKnownConfig(
+    issuer,
+    wellknown,
+    credentialTypes,
+    defaultFields,
+  );
+
+  let updatedFieldsList = response.fields.concat(DETAIL_VIEW_ADD_ON_FIELDS);
+
+  updatedFieldsList = removeBottomSectionFields(updatedFieldsList);
+
+  return {
+    wellknown: response.wellknown,
+    fields: updatedFieldsList,
+  };
+};
+
+export const removeBottomSectionFields = fields => {
+  return fields.filter(
+    fieldName =>
+      !BOTTOM_SECTION_FIELDS_WITH_DETAILED_ADDRESS_FIELDS.includes(fieldName) &&
+      fieldName !== 'address',
+  );
 };
 
 export const vcDownloadTimeout = async (): Promise<number> => {

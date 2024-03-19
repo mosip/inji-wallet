@@ -7,6 +7,7 @@ import {Theme} from '../../components/ui/styleUtils';
 import {HomeScreenTabProps} from './HomeScreen';
 import {useReceivedVcsTab} from './ReceivedVcsTabController';
 import {VcItemContainer} from '../../components/VC/VcItemContainer';
+import {VCItemContainerFlowType} from '../../shared/Utils';
 
 export const ReceivedVcsTab: React.FC<HomeScreenTabProps> = props => {
   const {t} = useTranslation('ReceivedVcsTab');
@@ -29,7 +30,7 @@ export const ReceivedVcsTab: React.FC<HomeScreenTabProps> = props => {
             vcMetadata={vcMetadata}
             margin="0 2 8 2"
             onPress={controller.VIEW_VC}
-            isSharingVc
+            flow={VCItemContainerFlowType.VC_SHARE}
           />
         ))}
         {controller.receivedVcsMetadata.length === 0 && (

@@ -8,7 +8,11 @@ import {
 } from 'xstate';
 import {createModel} from 'xstate/lib/model';
 import {AppServices} from '../shared/GlobalContext';
-import {ESIGNET_BASE_URL, MY_VCS_STORE_KEY} from '../shared/constants';
+import {
+  ESIGNET_BASE_URL,
+  FACE_AUTH_CONSENT,
+  MY_VCS_STORE_KEY,
+} from '../shared/constants';
 import {StoreEvents} from './store';
 import {linkTransactionResponse, VC} from '../types/VC/ExistingMosipVC/vc';
 import {request} from '../shared/request';
@@ -29,12 +33,14 @@ import {
 import {TelemetryConstants} from '../shared/telemetry/TelemetryConstants';
 import {API_URLS} from '../shared/api';
 import getAllConfigurations from '../shared/api';
+import {VCShareFlowType} from '../shared/Utils';
 
 const model = createModel(
   {
     serviceRefs: {} as AppServices,
     selectedVc: {} as VC,
     linkCode: '',
+    flowType: VCShareFlowType.SIMPLE_SHARE,
     myVcs: [] as VCMetadata[],
     thumbprint: '',
     linkTransactionResponse: {} as linkTransactionResponse,
@@ -52,6 +58,7 @@ const model = createModel(
     consentClaims: ['name', 'picture'],
     isSharing: {},
     linkedTransactionId: '',
+    showFaceAuthConsent: true as boolean,
   },
   {
     events: {
@@ -65,12 +72,25 @@ const model = createModel(
       }),
       DISMISS: () => ({}),
       CONFIRM: () => ({}),
-      GET: (value: string) => ({value}),
+      GET: (
+        linkCode: string,
+        flowType: string,
+        selectedVc: VC,
+        faceAuthConsentGiven: boolean,
+      ) => ({
+        linkCode,
+        flowType,
+        selectedVc,
+        faceAuthConsentGiven,
+      }),
       VERIFY: () => ({}),
       CANCEL: () => ({}),
       FACE_VALID: () => ({}),
       FACE_INVALID: () => ({}),
       RETRY_VERIFICATION: () => ({}),
+      FACE_VERIFICATION_CONSENT: (isConsentGiven: boolean) => ({
+        isConsentGiven,
+      }),
     },
   },
 );
@@ -91,12 +111,14 @@ export const qrLoginMachine =
       },
       id: 'QrLogin',
       initial: 'waitingForData',
+      entry: ['resetSelectedVc', 'resetFlowType'],
       states: {
         waitingForData: {
           on: {
             GET: {
               actions: [
                 'setScanData',
+                'setFaceAuthConsent',
                 'resetLinkTransactionId',
                 'resetSelectedVoluntaryClaims',
               ],
@@ -109,12 +131,21 @@ export const qrLoginMachine =
             src: 'linkTransaction',
             onDone: [
               {
+                cond: 'isSimpleShareFlow',
                 actions: [
                   'setlinkTransactionResponse',
                   'expandLinkTransResp',
                   'setClaims',
                 ],
                 target: 'loadMyVcs',
+              },
+              {
+                actions: [
+                  'setlinkTransactionResponse',
+                  'expandLinkTransResp',
+                  'setClaims',
+                ],
+                target: 'faceAuth',
               },
             ],
             onError: [
@@ -147,12 +178,29 @@ export const qrLoginMachine =
             SELECT_VC: {
               actions: 'setSelectedVc',
             },
-            VERIFY: {
-              target: 'faceAuth',
-            },
+            VERIFY: [
+              {
+                cond: 'showFaceAuthConsentScreen',
+                target: 'faceVerificationConsent',
+              },
+              {
+                target: 'faceAuth',
+              },
+            ],
             DISMISS: {
               actions: 'forwardToParent',
               target: 'waitingForData',
+            },
+          },
+        },
+        faceVerificationConsent: {
+          on: {
+            FACE_VERIFICATION_CONSENT: {
+              actions: ['storeShowFaceAuthConsent', 'setShowFaceAuthConsent'],
+              target: 'faceAuth',
+            },
+            DISMISS: {
+              target: 'showvcList',
             },
           },
         },
@@ -164,9 +212,16 @@ export const qrLoginMachine =
             FACE_INVALID: {
               target: 'invalidIdentity',
             },
-            CANCEL: {
-              target: 'showvcList',
-            },
+            CANCEL: [
+              {
+                cond: 'isSimpleShareFlow',
+                target: 'showvcList',
+              },
+              {
+                actions: 'forwardToParent',
+                target: 'waitingForData',
+              },
+            ],
           },
         },
         invalidIdentity: {
@@ -262,10 +317,38 @@ export const qrLoginMachine =
     },
     {
       actions: {
+        setShowFaceAuthConsent: model.assign({
+          showFaceAuthConsent: (_, event) => {
+            return !event.isConsentGiven;
+          },
+        }),
+
+        storeShowFaceAuthConsent: send(
+          (context, event) =>
+            StoreEvents.SET(FACE_AUTH_CONSENT, !event.isConsentGiven),
+          {
+            to: context => context.serviceRefs.store,
+          },
+        ),
+
         forwardToParent: sendParent('DISMISS'),
 
-        setScanData: assign({
-          linkCode: (context, event) => event.value,
+        setScanData: model.assign((context, event) => {
+          const linkCode = event.linkCode;
+          const flowType = event.flowType;
+          const selectedVc = event.selectedVc;
+          return {
+            ...context,
+            linkCode: linkCode,
+            flowType: flowType,
+            selectedVc: selectedVc,
+          };
+        }),
+
+        setFaceAuthConsent: assign({
+          showFaceAuthConsent: (context, event) => {
+            return event.faceAuthConsentGiven;
+          },
         }),
 
         // TODO: loaded VCMetadatas are not used anywhere. remove?
@@ -304,6 +387,14 @@ export const qrLoginMachine =
           selectedVc: (context, event) => {
             return {...event.vc};
           },
+        }),
+
+        resetSelectedVc: assign({
+          selectedVc: {} as VC,
+        }),
+
+        resetFlowType: assign({
+          flowType: VCShareFlowType.SIMPLE_SHARE,
         }),
 
         setlinkTransactionResponse: assign({
@@ -482,8 +573,15 @@ export const qrLoginMachine =
         },
       },
       guards: {
+        showFaceAuthConsentScreen: context => {
+          return context.showFaceAuthConsent;
+        },
+
         isConsentAlreadyCaptured: (_, event) =>
           event.data?.consentAction === 'NOCAPTURE',
+
+        isSimpleShareFlow: (context, _event) =>
+          context.flowType === VCShareFlowType.SIMPLE_SHARE,
       },
     },
   );
@@ -575,4 +673,8 @@ export function selectErrorMessage(state: State) {
 }
 export function selectIsSharing(state: State) {
   return state.context.isSharing;
+}
+
+export function selectIsFaceVerificationConsent(state: State) {
+  return state.matches('faceVerificationConsent');
 }
