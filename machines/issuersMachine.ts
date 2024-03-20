@@ -28,6 +28,7 @@ import {
   Issuers_Key_Ref,
   OIDCErrors,
   updateCredentialInformation,
+  updateVCmetadataOfCredentialWrapper,
   vcDownloadTimeout,
 } from '../shared/openId4VCI/Utils';
 import {
@@ -62,6 +63,7 @@ const model = createModel(
     verificationErrorMessage: '',
     publicKey: ``,
     privateKey: ``,
+    vcMetadata: {} as VCMetadata,
   },
   {
     events: {
@@ -186,7 +188,7 @@ export const IssuersMachine = model.createMachine(
           ],
           onError: {
             actions: () =>
-              console.log('Error Occurred while checking Internet'),
+              console.error('Error Occurred while checking Internet'),
             target: 'error',
           },
         },
@@ -219,7 +221,7 @@ export const IssuersMachine = model.createMachine(
                 'setError',
                 'resetLoadingReason',
                 (_, event) =>
-                  console.log(
+                  console.error(
                     'Error Occurred while invoking Auth - ',
                     event.data,
                   ),
@@ -385,6 +387,8 @@ export const IssuersMachine = model.createMachine(
       storing: {
         description: 'all the verified credential is stored.',
         entry: [
+          'setVCMetadata',
+          'setMetadataInCredentialData',
           'storeVerifiableCredentialMeta',
           'storeVerifiableCredentialData',
           'storeVcsContext',
@@ -410,7 +414,6 @@ export const IssuersMachine = model.createMachine(
         },
       },
       done: {
-        entry: () => console.log('Reached done'),
         type: 'final',
       },
     },
@@ -437,7 +440,7 @@ export const IssuersMachine = model.createMachine(
       }),
       setError: model.assign({
         errorMessage: (_, event) => {
-          console.log('Error occured ', event.data.message);
+          console.error('Error occured ', event.data.message);
           const error = event.data.message;
           switch (error) {
             case NETWORK_REQUEST_FAILED:
@@ -487,6 +490,21 @@ export const IssuersMachine = model.createMachine(
           to: context => context.serviceRefs.store,
         },
       ),
+
+      setMetadataInCredentialData: (context, event) => {
+        const updatedCredentialWrapper = updateVCmetadataOfCredentialWrapper(
+          context,
+          context.credentialWrapper,
+        );
+        return updatedCredentialWrapper;
+      },
+
+      setVCMetadata: assign({
+        vcMetadata: (context, event) => {
+          const metadata = getVCMetadata(context);
+          return metadata;
+        },
+      }),
 
       storeVerifiableCredentialData: send(
         context =>

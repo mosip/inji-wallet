@@ -34,12 +34,19 @@ const model = createModel(
     hasUserShownWithHardwareKeystoreNotExists: false,
     isAccountSelectionConfirmationShown: false,
     credentialRegistryResponse: '' as string,
+    isBiometricToggled: false,
   },
   {
     events: {
       UPDATE_NAME: (name: string) => ({name}),
       UPDATE_VC_LABEL: (label: string) => ({label}),
-      TOGGLE_BIOMETRIC_UNLOCK: (enable: boolean) => ({enable}),
+      TOGGLE_BIOMETRIC_UNLOCK: (
+        enable: boolean,
+        isToggledFromSettings: boolean,
+      ) => ({
+        enable,
+        isToggledFromSettings,
+      }),
       STORE_RESPONSE: (response: unknown) => ({response}),
       CHANGE_LANGUAGE: (language: string) => ({language}),
       UPDATE_HOST: (credentialRegistry: string, esignetHostUrl: string) => ({
@@ -57,6 +64,7 @@ const model = createModel(
       ACCEPT_HARDWARE_SUPPORT_NOT_EXISTS: () => ({}),
       SET_IS_BACKUP_AND_RESTORE_EXPLORED: () => ({}),
       SHOWN_ACCOUNT_SELECTION_CONFIRMATION: () => ({}),
+      DISMISS: () => ({}),
     },
   },
 );
@@ -84,7 +92,11 @@ export const settingsMachine = model.createMachine(
               target: 'idle',
               actions: ['setContext', 'updatePartialDefaults', 'storeContext'],
             },
-            {cond: 'hasData', target: 'idle', actions: ['setContext']},
+            {
+              cond: 'hasData',
+              target: 'idle',
+              actions: ['setContext'],
+            },
             {target: 'storingDefaults'},
           ],
         },
@@ -98,7 +110,11 @@ export const settingsMachine = model.createMachine(
       idle: {
         on: {
           TOGGLE_BIOMETRIC_UNLOCK: {
-            actions: ['toggleBiometricUnlock', 'storeContext'],
+            actions: [
+              'toggleBiometricUnlock',
+              'setIsBiometricToggled',
+              'storeContext',
+            ],
           },
           UPDATE_NAME: {
             actions: ['updateName', 'storeContext'],
@@ -135,6 +151,10 @@ export const settingsMachine = model.createMachine(
               'updateIsAccountSelectionConfirmationShown',
               'storeContext',
             ],
+            target: 'idle',
+          },
+          DISMISS: {
+            actions: 'resetIsBiometricToggled',
             target: 'idle',
           },
         },
@@ -177,6 +197,14 @@ export const settingsMachine = model.createMachine(
         to: context => context.serviceRefs.store,
       }),
 
+      setIsBiometricToggled: model.assign({
+        isBiometricToggled: (_context, event) => event.isToggledFromSettings,
+      }),
+
+      resetIsBiometricToggled: model.assign({
+        isBiometricToggled: () => false,
+      }),
+
       updateDefaults: model.assign({
         appId: (_, event) => {
           const appId =
@@ -198,7 +226,7 @@ export const settingsMachine = model.createMachine(
 
       storeContext: send(
         context => {
-          const {serviceRefs, ...data} = context;
+          const {serviceRefs, isBiometricToggled, ...data} = context;
           return StoreEvents.SET(SETTINGS_STORE_KEY, data);
         },
         {to: context => context.serviceRefs.store},
@@ -265,7 +293,7 @@ export const settingsMachine = model.createMachine(
           await Storage.removeItem(COMMON_PROPS_KEY);
           return await getAllConfigurations(event.credentialRegistry, false);
         } catch (error) {
-          console.log('Error from resetInjiProps ', error);
+          console.error('Error from resetInjiProps ', error);
           throw error;
         }
       },
@@ -350,4 +378,16 @@ export function selectIsResetInjiProps(state: State) {
 
 export function selectIsBackUpAndRestoreExplored(state: State) {
   return state.context.isBackupAndRestoreExplored;
+}
+
+export function selectIsBiometricUnlock(state: State) {
+  return (
+    state.context.isBiometricToggled && state.context.isBiometricUnlockEnabled
+  );
+}
+
+export function selectIsPasscodeUnlock(state: State) {
+  return (
+    state.context.isBiometricToggled && !state.context.isBiometricUnlockEnabled
+  );
 }

@@ -1,6 +1,9 @@
 import React, {useEffect, useState} from 'react';
 import {useTranslation} from 'react-i18next';
-import {MessageOverlay} from '../../components/MessageOverlay';
+import {
+  ErrorMessageOverlay,
+  MessageOverlay,
+} from '../../components/MessageOverlay';
 import {QrScanner} from '../../components/QrScanner';
 import {Button, Centered, Column, Text} from '../../components/ui';
 import {Theme} from '../../components/ui/styleUtils';
@@ -167,14 +170,14 @@ export const ScanScreen: React.FC = () => {
   function displayStorageLimitReachedError(): React.ReactNode {
     return (
       !controller.isEmpty && (
-        <MessageOverlay
+        <ErrorMessageOverlay
           testID="storageLimitReachedError"
           isVisible={
             controller.isMinimumStorageRequiredForAuditEntryLimitReached
           }
           translationPath={'ScanScreen'}
           error="errors.storageLimitReached"
-          onBackdropPress={controller.GOTO_HOME}
+          onDismiss={controller.GOTO_HOME}
         />
       )
     );

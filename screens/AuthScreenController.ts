@@ -84,7 +84,7 @@ export function useAuthScreen(props: RootRouteProps) {
     // if biometic state is success then lets send auth service BIOMETRICS
     if (isSuccessBio) {
       authService.send(AuthEvents.SETUP_BIOMETRICS('true'));
-      settingsService.send(SettingsEvents.TOGGLE_BIOMETRIC_UNLOCK(true));
+      settingsService.send(SettingsEvents.TOGGLE_BIOMETRIC_UNLOCK(true, false));
       // setup passcode aswell
       usePasscode();
 

@@ -132,4 +132,5 @@ export interface ViewVcModalProps extends ModalProps {
   vcItemActor: ActorRefFrom<typeof ExistingMosipVCItemMachine>;
   onDismiss: () => void;
   activeTab: Number;
+  flow: string;
 }

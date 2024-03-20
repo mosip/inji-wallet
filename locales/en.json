@@ -26,7 +26,7 @@
     "Wallet": "Wallet"
   },
   "FaceScanner": {
-    "imageCaptureGuide": "Hold the phone steady and keep your face focused in the centre",
+    "imageCaptureGuide": "Hold the phone steady, keep your face focused in the centre and click on Capture.",
     "capture": "Capture",
     "flipCamera": "Flip Camera"
   },
@@ -81,26 +81,24 @@
       "savingFailed": {
         "title": "Failed to save the Card",
         "message": "Something went wrong while saving Card to the store."
-      },
-      "diskFullError": {
-        "title": "Failed to save the Card",
-        "message": "No more Cards can be received or saved as App Data is full."
       }
     }
   },
   "HomeScreenKebabPopUp": {
     "title": "More Options",
-    "unPinCard": "Unpin Card",
-    "pinCard": "Pin Card",
-    "offlineAuthenticationDisabled!": "Activation pending for online login",
+    "unPinCard": "Unpin",
+    "pinCard": "Pin",
+    "share": "Share",
+    "shareWithSelfie": "Share with Selfie",
     "offlineAuthDisabledMessage": "Click here to enable this credentials to be used for online authentication.",
     "viewActivityLog": "View Activity Log",
     "removeFromWallet": "Remove from Wallet"
   },
   "WalletBinding": {
+    "offlineAuthenticationDisabled": "Activate for online login",
     "inProgress": "In progress",
-    "profileAuthenticated": "Activated for online login",
-    "credentialActivated": "Activated"
+    "credentialActivated": "Activated",
+    "profileAuthenticated": "QR Code Login"
   },
   "BindingVcWarningOverlay": {
     "alert": "Alert",
@@ -109,16 +107,17 @@
     "no": "No"
   },
   "RemoveVcWarningOverlay": {
-    "alert": "Please Confirm",
-    "removeWarning": "Do you want to remove this card?",
+    "alert": "Remove from Wallet?",
+    "removeWarning": "You're going to remove the card from the wallet. Once removed, this action can not be undone.",
     "confirm": "Yes, I confirm",
-    "no": "No"
+    "cancel": "Cancel"
   },
   "AuthScreen": {
     "header": "Select App Unlock Method",
-    "Description": "Would you like to use biometrics to unlock the application?",
+    "Description": "To unlock the app securely, you can set up either biometric authentication, such as fingerprint or facial recognition or opt for a 6-digit Passcode for quick access.",
+    "PasswordTypeDescription": "Choose ‘Use Biometrics’ to enable biometric authentication or ‘I’ll Do Later’ to set up a 6-digit passcode.",
     "useBiometrics": "Use Biometrics",
-    "usePasscode": "Use Passcode",
+    "usePasscode": "I'll Do Later",
     "errors": {
       "unavailable": "Device does not support Biometrics",
       "unenrolled": "To use Biometrics, please enroll your biometrics in your device settings",
@@ -151,6 +150,11 @@
     "logout": "Logout",
     "resetInjiProps": "Resetting Inji Props..."
   },
+  "BannerNotification": {
+    "alternatePasscodeSuccess": "Success! You can now use passcode to unlock Inji app.",
+    "alternateBiometricSuccess": "Success! You can now use biometrics to unlock Inji app.",
+    "activated": "Credentials are enabled for online authentication."
+  },
   "AboutInji": {
     "aboutInji": "About Inji",
     "header": "ABOUT INJI",
@@ -165,6 +169,7 @@
     "title": "Add new card",
     "description": "Please choose your preferred issuer from the options below to add a new card.",
     "searchByIssuersName": "Search by Issuer’s name",
+    "help": "Help?",
     "loaders": {
       "loading": "Loading...",
       "subTitle": {
@@ -207,7 +212,9 @@
         "twelve": "How to share a card?",
         "thirteen": "How to remove a card from the wallet?",
         "fourteen": "How to view activity logs?",
-        "fifteen": "What happens when Android keystore biometric is changed?"
+        "fifteen": "What happens when Android keystore biometric is changed?",
+        "sixteen": "What is Share?",
+        "seventeen": "What is Share with selfie?"
       },
       "backup": {
         "one": "What is data backup? ",
@@ -240,7 +247,9 @@
         "thirteen-a": "You can click on ...(meatballs menu) on a card in the Home page and choose Remove from Wallet option to remove a card from the wallet. To know more, please read",
         "thirteen-b": " Please note that, the same card can be downloaded again.",
         "fourteen": "On the Home page, click on 'History' to view the details of the user's activitie.",
-        "fifteen": "The Android keystore holds important information like private keys for identity proofs. When you change your biometrics, old keys are no longer safe. To keep things secure, we remove identity proofs signed by those old keys. You can simply download your identity proofs again, and they will be signed with the latest, safer keys."
+        "fifteen": "The Android keystore holds important information like private keys for identity proofs. When you change your biometrics, old keys are no longer safe. To keep things secure, we remove identity proofs signed by those old keys. You can simply download your identity proofs again, and they will be signed with the latest, safer keys.",
+        "sixteen": "Sharing a credential refers to the process of securely transferring a verifiable credential by the holder from the INJI wallet to the relying party. This enables individuals to prove their identity verification in a digital way, facilitating efficient and trusted interactions in various contexts.",
+        "seventeen": "Sharing a VC with selfie involves an additional layer of security in the credential-sharing process. In addition to transmitting the verifiable credential, the user is required to provide a selfie (a photograph of themselves) for facial verification. This enhances the security and integrity of the credential transfer by ensuring that the individual presenting the credential is the legitimate owner. It helps prevent impersonation and unauthorized use of the credential, thereby increasing trust and reliability in digital transactions."
       },
       "backup": {
         "one": "Data backup involves creating a copy of your Verifiable Credentials present in your wallet in your Google Drive/iCloud, ensuring that in the event of data loss, you can restore your files to their previous state.",
@@ -333,12 +342,15 @@
     }
   },
   "MyVcsTab": {
+    "searchByName": "Search by name",
     "bringYourDigitalID": "Bring your digital identity",
     "generateVcDescription": "Tap on \"Download card\" below to download your card",
     "generateVcFABDescription": "Tap on  \"+\" below to download your card",
     "downloadCard": "Download Card",
     "downloadingYourCard": "Downloading your card, this can take upto 5 minutes",
     "activated": "Credentials are enabled for online authentication.",
+    "noCardsTitle": "No Cards Found!",
+    "noCardsDescription": "Sorry, we couldn’t find any results. Please try entering another search keyword.",
     "errors": {
       "savingFailed": {
         "title": "Failed to save the Card",
@@ -411,6 +423,8 @@
     "header": "Set Passcode",
     "enterNewPassword": "Enter a new passcode",
     "reEnterPassword": "Re-enter the new passcode",
+    "enterAlternateNewPassword": "Your passcode is your key to access the app securely. Choose a 6-digit passcode which is unique and memorable, ensuring the safety of your data and privacy within the app.",
+    "reEnterAlternatePassword": "Confirm your passcode by entering it again. Once confirmed, your passcode will be securely set for accessing the app.",
     "confirmPasscode": "Confirm passcode",
     "enterPasscode": "Enter your passcode"
   },
@@ -425,7 +439,7 @@
     "back": "Come back",
     "confirm": "Confirm",
     "verify": "Verify",
-    "faceAuth": "Face Authentication",
+    "faceAuth": "Face Verification",
     "consent": "Consent",
     "loading": "Loading...",
     "domainWarning": "Please confirm the domain of the website you are scanning the QR code from below",
@@ -564,6 +578,10 @@
     "gotoSettings": "Go to settings"
   },
   "ScanScreen": {
+    "shareWithSelfie": "Share with Selfie",
+    "shareWithSelfieMessage": "To share your Verifiable Credentials, we’ll securely verify your identity using face verification. By continuing, you consent to INJI using your camera for this purpose. \n\n Your facial data will only be used for verification and will not be shared with any third parties.",
+    "ConfirmButton": "I Understand",
+    "doNotAskMessage": "Don't ask me again",
     "noShareableVcs": "No shareable cards are available.",
     "sharingVc": "Sharing card",
     "bluetoothStateIos": "Bluetooth is turned OFF, please turn it ON from Control center",
@@ -722,7 +740,7 @@
     }
   },
   "VerifyIdentityOverlay": {
-    "faceAuth": "Face Authentication",
+    "faceAuth": "Face Verification",
     "status": {
       "verifyingIdentity": "Verifying identity..."
     },
@@ -818,6 +836,8 @@
     "save": "Save Preference"
   },
   "common": {
+    "card": "card",
+    "cards": "cards",
     "cancel": "Cancel",
     "accept": "Accept",
     "save": "Save",

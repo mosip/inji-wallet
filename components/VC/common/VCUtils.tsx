@@ -34,6 +34,18 @@ export const DETAIL_VIEW_ADD_ON_FIELDS = [
   'idType',
 ];
 
+export const DETAIL_VIEW_BOTTOM_SECTION_FIELDS = [
+  'email',
+  'address',
+  'credentialRegistry',
+];
+
+export const BOTTOM_SECTION_FIELDS_WITH_DETAILED_ADDRESS_FIELDS = [
+  ...getAddressFields(),
+  'email',
+  'credentialRegistry',
+];
+
 export const getFieldValue = (
   verifiableCredential: VerifiableCredential,
   field: string,
@@ -48,7 +60,7 @@ export const getFieldValue = (
   }
   switch (field) {
     case 'status':
-      return <VCVerification wellknown={wellknown} />;
+      return <VCVerification wellknown={wellknown} isVerified={props.vc} />;
     case 'idType':
       return getIDType(verifiableCredential);
     case 'credentialRegistry':
@@ -59,7 +71,7 @@ export const getFieldValue = (
       );
     default: {
       const fieldValue = verifiableCredential?.credentialSubject[field];
-      if (Array.isArray(fieldValue) && typeof fieldValue[0] != 'object') {
+      if (Array.isArray(fieldValue) && typeof fieldValue[0] !== 'object') {
         return fieldValue;
       }
       return getLocalizedField(fieldValue);
@@ -93,23 +105,27 @@ export const setBackgroundColour = (wellknown: any) => {
   }
 };
 
-function getFullAddress(credential: CredentialSubject) {
-  if (!credential) {
-    return '';
-  }
-
-  const fields = [
+export function getAddressFields() {
+  return [
     'addressLine1',
     'addressLine2',
     'addressLine3',
     'city',
     'province',
     'region',
+    'postalCode',
   ];
+}
+
+function getFullAddress(credential: CredentialSubject) {
+  if (!credential) {
+    return '';
+  }
+
+  const fields = getAddressFields();
 
   return fields
     .map(field => getLocalizedField(credential[field]))
-    .concat(credential.postalCode)
     .filter(Boolean)
     .join(', ');
 }
@@ -146,7 +162,7 @@ export const fieldItemIterator = (
         key={field}
         style={{flexDirection: 'row', flex: 1}}
         align="space-between"
-        margin="0 8 5 0">
+        margin="0 8 15 0">
         <VCItemField
           key={field}
           fieldName={fieldName}
@@ -167,7 +183,6 @@ export const getIssuerLogo = (isOpenId4VCI: boolean, issuerLogo: logoType) => {
   if (isOpenId4VCI) {
     return (
       <Image
-        testID="esignetLogo"
         src={issuerLogo?.url}
         alt={issuerLogo?.alt_text}
         style={Theme.Styles.issuerLogo}

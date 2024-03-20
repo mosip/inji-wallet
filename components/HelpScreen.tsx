@@ -226,6 +226,22 @@ export const HelpScreen: React.FC<HelpScreenProps> = props => {
       ),
     },
     {
+      title: t('questions.inji.sixteen'),
+      data: (
+        <React.Fragment>
+          {getTextField(t('answers.inji.sixteen'))}
+        </React.Fragment>
+      ),
+    },
+    {
+      title: t('questions.inji.seventeen'),
+      data: (
+        <React.Fragment>
+          {getTextField(t('answers.inji.seventeen'))}
+        </React.Fragment>
+      ),
+    },
+    {
       title: t('questions.inji.thirteen'),
       data: (
         <React.Fragment>

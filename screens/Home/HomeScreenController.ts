@@ -14,7 +14,8 @@ import {
   selectIsMinimumStorageLimitReached,
 } from './HomeScreenMachine';
 
-export function useHomeScreen(props: HomeRouteProps) {
+let homeMachineService;
+function useCreateHomeMachineService() {
   const {appService} = useContext(GlobalContext);
   const machine = useRef(
     HomeScreenMachine.withContext({
@@ -22,8 +23,17 @@ export function useHomeScreen(props: HomeRouteProps) {
       serviceRefs: appService.getSnapshot().context.serviceRefs,
     }),
   );
-  const service = useInterpret(machine.current);
+  return (homeMachineService = useInterpret(machine.current));
+}
+
+export function getHomeMachineService() {
+  return homeMachineService;
+}
+
+export function useHomeScreen(props: HomeRouteProps) {
+  const {appService} = useContext(GlobalContext);
   const vcService = appService.children.get('vc');
+  const service = useCreateHomeMachineService();
 
   useEffect(() => {
     if (props.route.params?.activeTab != null) {

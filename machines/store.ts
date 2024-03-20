@@ -17,6 +17,8 @@ import {
   MY_VCS_STORE_KEY,
   RECEIVED_VCS_STORE_KEY,
   SETTINGS_STORE_KEY,
+  SCAN_MACHINE_STORE_KEY,
+  FACE_AUTH_CONSENT,
   ENOENT,
 } from '../shared/constants';
 import SecureKeystore from '@mosip/secure-keystore';
@@ -495,7 +497,7 @@ export const storeMachine =
                 'Could not get keychain credentials',
               ),
             );
-            console.log('Credentials failed to load for user');
+            console.error('Credentials failed to load for user');
             callback(
               model.events.ERROR(
                 new Error('Could not get keychain credentials.'),
@@ -567,6 +569,8 @@ export async function setItem(
         appId,
       };
       encryptedData = JSON.stringify(settings);
+    } else if (key === FACE_AUTH_CONSENT) {
+      encryptedData = JSON.stringify(value);
     } else {
       encryptedData = await encryptJson(encryptionKey, JSON.stringify(value));
     }
@@ -604,10 +608,12 @@ export async function getItem(
           parsedData.encryptedData = JSON.parse(decryptedData);
         }
         return parsedData;
+      } else if (key === FACE_AUTH_CONSENT) {
+        return JSON.parse(data);
       }
       decryptedData = await decryptJson(encryptionKey, data);
       return JSON.parse(decryptedData);
-    }
+    } 
     if (data === null && VCMetadata.isVCKey(key)) {
       await removeItem(key, data, encryptionKey);
       sendErrorEvent(

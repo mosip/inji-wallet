@@ -9,6 +9,7 @@ import {
   useSelectVcOverlay,
 } from './SelectVcOverlayController';
 import {VcItemContainer} from '../../components/VC/VcItemContainer';
+import {VCItemContainerFlowType} from '../../shared/Utils';
 
 export const SelectVcOverlay: React.FC<SelectVcOverlayProps> = props => {
   const {t} = useTranslation('SelectVcOverlay');
@@ -36,7 +37,7 @@ export const SelectVcOverlay: React.FC<SelectVcOverlayProps> = props => {
               margin="0 2 8 2"
               onPress={controller.selectVcItem(index)}
               selectable
-              isSharingVc
+              flow={VCItemContainerFlowType.VC_SHARE}
               selected={index === controller.selectedIndex}
             />
           ))}

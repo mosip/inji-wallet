@@ -5,6 +5,7 @@ import {
   selectAuthorized,
   selectPasscode,
   selectPasscodeSalt,
+  selectIsBiometricToggleFromSettings,
 } from '../machines/auth';
 import {PasscodeRouteProps} from '../routes';
 import {GlobalContext} from '../shared/GlobalContext';
@@ -20,7 +21,7 @@ export function usePasscodeScreen(props: PasscodeRouteProps) {
   const authService = appService.children.get('auth');
 
   const isAuthorized = useSelector(authService, selectAuthorized);
-
+  const isPasscodeSet = () => !!passcode;
   const [passcode, setPasscode] = useState('');
   const [error, setError] = useState('');
 
@@ -40,12 +41,14 @@ export function usePasscodeScreen(props: PasscodeRouteProps) {
   }, [isAuthorized]);
 
   return {
+    isPasscodeSet,
     passcode,
     setPasscode,
     error,
     setError,
 
     storedPasscode: useSelector(authService, selectPasscode),
+    toggleUnlock: useSelector(authService, selectIsBiometricToggleFromSettings),
 
     LOGIN: () => {
       authService.send(AuthEvents.LOGIN());

@@ -7,25 +7,18 @@ import {
 } from '../../../machines/VCItemMachine/ExistingMosipVCItem/ExistingMosipVCItemMachine';
 import {ErrorMessageOverlay} from '../../MessageOverlay';
 import {Theme} from '../../ui/styleUtils';
-import {Row} from '../../ui';
-import {KebabPopUp} from '../../KebabPopUp';
 import {VCMetadata} from '../../../shared/VCMetadata';
 import {format} from 'date-fns';
 import {EsignetMosipVCItemMachine} from '../../../machines/VCItemMachine/EsignetMosipVCItem/EsignetMosipVCItemMachine';
 
 import {VCCardSkeleton} from '../common/VCCardSkeleton';
 import {VCCardViewContent} from './VCCardViewContent';
-import {MosipVCItemActivationStatus} from '../MosipVCItem/MosipVCItemActivationStatus';
-import {useVcItemController} from '../MosipVCItem/VcItemController';
+import {useVcItemController} from '../VcItemController';
 import {getCredentialIssuersWellKnownConfig} from '../../../shared/openId4VCI/Utils';
-import {
-  CARD_VIEW_ADD_ON_FIELDS,
-  CARD_VIEW_DEFAULT_FIELDS,
-  isVCLoaded,
-} from '../common/VCUtils';
+import {CARD_VIEW_DEFAULT_FIELDS, isVCLoaded} from '../common/VCUtils';
 
 export const VCCardView: React.FC<
-  ExistingMosipVCItemProps | EsignetMosipVCItemProps
+  ExistingVCItemProps | EsignetVCItemProps
 > = props => {
   let {
     service,
@@ -36,7 +29,6 @@ export const VCCardView: React.FC<
     isSavingFailedInIdle,
     storeErrorTranslationPath,
     generatedOn,
-
     DISMISS,
     KEBAB_POPUP,
   } = useVcItemController(props);
@@ -52,7 +44,7 @@ export const VCCardView: React.FC<
 
   const credential = props.isDownloading
     ? null
-    : props.vcMetadata.isFromOpenId4VCI()
+    : new VCMetadata(props.vcMetadata).isFromOpenId4VCI()
     ? verifiableCredential?.credential
     : verifiableCredential;
 
@@ -62,15 +54,20 @@ export const VCCardView: React.FC<
     getCredentialIssuersWellKnownConfig(
       props?.vcMetadata.issuer,
       verifiableCredential?.wellKnown,
+      verifiableCredential?.credentialTypes,
       CARD_VIEW_DEFAULT_FIELDS,
     ).then(response => {
       setWellknown(response.wellknown);
-      setFields(response.fields.slice(0, 3).concat(CARD_VIEW_ADD_ON_FIELDS));
+      setFields(response.fields);
     });
   }, [verifiableCredential?.wellKnown]);
 
-  if (!isVCLoaded(verifiableCredential, fields)) {
-    return <VCCardSkeleton />;
+  if (!isVCLoaded(verifiableCredential, fields) || wellknown === null) {
+    return (
+      <View style={Theme.Styles.closeCardBgContainer}>
+        <VCCardSkeleton />
+      </View>
+    );
   }
 
   return (
@@ -78,7 +75,6 @@ export const VCCardView: React.FC<
       <Pressable
         accessible={false}
         onPress={() => props.onPress(service)}
-        disabled={!verifiableCredential}
         style={
           props.selected
             ? Theme.Styles.selectedBindedVc
@@ -88,6 +84,7 @@ export const VCCardView: React.FC<
           vcMetadata={props.vcMetadata}
           context={context}
           verifiableCredential={verifiableCredential}
+          emptyWalletBindingId={emptyWalletBindingId}
           credential={credential}
           fields={fields}
           wellknown={wellknown}
@@ -98,36 +95,12 @@ export const VCCardView: React.FC<
           isPinned={props.isPinned}
           onPress={() => props.onPress(service)}
           isDownloading={props.isDownloading}
+          flow={props.flow}
+          isKebabPopUp={isKebabPopUp}
+          DISMISS={DISMISS}
+          KEBAB_POPUP={KEBAB_POPUP}
+          isVerified={verifiableCredential !== null}
         />
-        <View style={Theme.Styles.horizontalLine} />
-        {props.isSharingVc ? null : (
-          <Row style={Theme.Styles.activationTab}>
-            <MosipVCItemActivationStatus
-              vcMetadata={props.vcMetadata}
-              verifiableCredential={verifiableCredential}
-              emptyWalletBindingId={emptyWalletBindingId}
-              showOnlyBindedVc={props.showOnlyBindedVc}
-            />
-            <Row style={Theme.Styles.verticalLineWrapper}>
-              <View style={Theme.Styles.verticalLine} />
-            </Row>
-            <Row style={Theme.Styles.kebabIcon}>
-              <Pressable
-                onPress={KEBAB_POPUP}
-                accessible={false}
-                style={Theme.Styles.kebabPressableContainer}>
-                <KebabPopUp
-                  vcMetadata={props.vcMetadata}
-                  iconName="dots-three-horizontal"
-                  iconType="entypo"
-                  isVisible={isKebabPopUp}
-                  onDismiss={DISMISS}
-                  service={service}
-                />
-              </Pressable>
-            </Row>
-          </Row>
-        )}
       </Pressable>
       <ErrorMessageOverlay
         isVisible={isSavingFailedInIdle}
@@ -139,28 +112,26 @@ export const VCCardView: React.FC<
   );
 };
 
-export interface ExistingMosipVCItemProps {
+export interface ExistingVCItemProps {
   vcMetadata: VCMetadata;
   margin?: string;
   selectable?: boolean;
   selected?: boolean;
-  showOnlyBindedVc?: boolean;
   onPress?: (vcRef?: ActorRefFrom<typeof ExistingMosipVCItemMachine>) => void;
   onShow?: (vcRef?: ActorRefFrom<typeof ExistingMosipVCItemMachine>) => void;
-  isSharingVc?: boolean;
   isDownloading?: boolean;
   isPinned?: boolean;
+  flow?: string;
 }
 
-export interface EsignetMosipVCItemProps {
+export interface EsignetVCItemProps {
   vcMetadata: VCMetadata;
   margin?: string;
   selectable?: boolean;
   selected?: boolean;
-  showOnlyBindedVc?: boolean;
   onPress?: (vcRef?: ActorRefFrom<typeof EsignetMosipVCItemMachine>) => void;
   onShow?: (vcRef?: ActorRefFrom<typeof EsignetMosipVCItemMachine>) => void;
-  isSharingVc?: boolean;
   isDownloading?: boolean;
   isPinned?: boolean;
+  flow?: string;
 }
