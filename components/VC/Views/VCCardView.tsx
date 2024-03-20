@@ -62,7 +62,7 @@ export const VCCardView: React.FC<
     });
   }, [verifiableCredential?.wellKnown]);
 
-  if (!isVCLoaded(verifiableCredential, fields)) {
+  if (!isVCLoaded(verifiableCredential, fields) || wellknown === null) {
     return (
       <View style={Theme.Styles.closeCardBgContainer}>
         <VCCardSkeleton />
