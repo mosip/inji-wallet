@@ -25,11 +25,19 @@ public class SunbirdLoginPage extends BasePage {
     @iOSXCUITFindBy(xpath = "//XCUIElementTypeTextField[@name=\"Please fill in this field\" and @value=\"Policy Number\"]")
     private WebElement enterPolicyTextBox;
 
+    @AndroidFindBy(uiAutomator = "UiSelector().className(\"android.widget.EditText\").instance(0)")
+    @iOSXCUITFindBy(xpath = "//XCUIElementTypeTextField[@name=\"Please fill in this field\" and @value=\"Policy Number\"]")
+    private WebElement enterPolicyTextBoxSecondPath;
+
     @AndroidFindBy(xpath = "//android.widget.EditText[@resource-id=\"_form_fullName\"]")
     @iOSXCUITFindBy(iOSClassChain = "**/XCUIElementTypeTextField[`name == \"Please fill in this field\"`][2]")
     private WebElement enterFullnameTextBox;
 
-    @AndroidFindBy(xpath = "//android.widget.Spinner[@resource-id=\"_form_dob\"]")
+    @AndroidFindBy(uiAutomator = "UiSelector().className(\"android.widget.EditText\").instance(1)")
+    @iOSXCUITFindBy(iOSClassChain = "**/XCUIElementTypeTextField[`name == \"Please fill in this field\"`][2]")
+    private WebElement enterFullnameTextBoxSecondPath;
+
+    @AndroidFindBy(uiAutomator = "UiSelector().className(\"android.widget.Spinner\")")
     @iOSXCUITFindBy(iOSClassChain = "**/XCUIElementTypeOther[`name == \"Please fill in this field\"`]")
     private WebElement enterDateOfBirthTextBox;
 
@@ -50,6 +58,10 @@ public class SunbirdLoginPage extends BasePage {
     @iOSXCUITFindBy(iOSClassChain = "**/XCUIElementTypeButton[`name == \"Login\"`]")
     private WebElement loginButton;
 
+
+    @AndroidFindBy(xpath = "//android.widget.Button[@text=\"Login\"]")
+    @iOSXCUITFindBy(iOSClassChain = "**/XCUIElementTypeButton[`name == \"Login\"`]")
+    private WebElement loginButtonSecond;
     @AndroidFindBy(xpath = "//android.widget.ImageButton[@content-desc=\"Previous month\"]")
     @iOSXCUITFindBy(accessibility = "Previous Month")
     private WebElement previousMonth;
@@ -128,7 +140,13 @@ public class SunbirdLoginPage extends BasePage {
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
+        if(isElementDisplayed(enterPolicyTextBox)){
         sendKeysToTextBox(enterPolicyTextBox, PolicyNo);
+        }
+        else{
+            sendKeysToTextBox(enterPolicyTextBoxSecondPath, PolicyNo);
+        }
+
     }
 
     public void enterFullNameTextBox(String fullname) {
@@ -137,7 +155,12 @@ public class SunbirdLoginPage extends BasePage {
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
-        sendKeysToTextBox(enterFullnameTextBox, fullname);
+        if (isElementDisplayed(enterFullnameTextBox)) {
+            sendKeysToTextBox(enterFullnameTextBox, fullname);
+        }
+        else {
+            sendKeysToTextBox(enterFullnameTextBoxSecondPath, fullname);
+        }
     }
 
     public void enterDateOfBirthTextBox() {
@@ -169,7 +192,12 @@ public class SunbirdLoginPage extends BasePage {
         }
     }
     public void clickOnloginButton() {
-        clickOnElement(loginButton);
+        if(isElementDisplayed(loginButton)) {
+            clickOnElement(loginButton);
+        }
+        else {
+            clickOnElement(loginButtonSecond);
+        }
     }
 
     public boolean isSunbirdCardIsActive() {

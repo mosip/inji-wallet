@@ -73,7 +73,7 @@ public class HomePage extends BasePage {
     private WebElement idTypeValue;
     
     @AndroidFindBy(xpath = "//android.widget.TextView[@text=\"Try again\"]")
-    @iOSXCUITFindBy(accessibility = "errorTitle")
+    @iOSXCUITFindBy(accessibility = "tryAgain")
     private WebElement tryAgainButton;
 
     @AndroidFindBy(uiAutomator = "new UiSelector().textContains(\"Subukan muli\")")
@@ -117,12 +117,9 @@ public class HomePage extends BasePage {
 
     BasePage basePage = new BasePage(driver);
     public boolean isHomePageLoaded() {
-        /*if (isElementDisplayed(secureKeyStoragePopup, "secure key storage popup")) {
-            clickOnElement(riskItButton);
-        }*/
-//        if (isElementDisplayed(securityFeatureUnavailablePopup, "security features will be unavailable popup")) {
-//            clickOnElement(okButton);
-//        }
+        if (isElementDisplayed(okButton)) {
+            clickOnElement(okButton);
+        }
         return this.isElementDisplayed(homeButton);
     }
 
