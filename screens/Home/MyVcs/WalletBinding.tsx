@@ -70,8 +70,8 @@ export const WalletBinding: React.FC<WalletBindingProps> = props => {
           onInputDone={controller.INPUT_OTP}
           error={controller.otpError}
           resend={controller.RESEND_OTP}
-          phone={controller.phoneNumber}
-          email={controller.email}
+          phone={controller.communicationDetails.phoneNumber}
+          email={controller.communicationDetails.emailId}
           flow={TelemetryConstants.FlowType.vcActivationFromKebab}
         />
       )}

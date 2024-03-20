@@ -4,8 +4,7 @@ import {
   selectAcceptingBindingOtp,
   selectBindingAuthFailedError,
   selectBindingWarning,
-  selectIsEmail,
-  selectIsPhoneNumber,
+  selectIsCommunicationDetails,
   selectIsPinned,
   selectKebabPopUp,
   selectRemoveWalletWarning,
@@ -73,8 +72,10 @@ export function useKebabPopUp(props) {
 
   const isKebabPopUp = useSelector(service, selectKebabPopUp);
   const isShowActivities = useSelector(service, selectShowActivities);
-  const phoneNumber = useSelector(service, selectIsPhoneNumber);
-  const email = useSelector(service, selectIsEmail);
+  const communicationDetails = useSelector(
+    service,
+    selectIsCommunicationDetails,
+  );
   const {appService} = useContext(GlobalContext);
   const activityLogService = appService.children.get('activityLog');
   const scanService = appService.children.get('scan');
@@ -116,7 +117,6 @@ export function useKebabPopUp(props) {
     isShowActivities,
     isRemoveWalletWarning,
     activities: useSelector(activityLogService, selectActivities),
-    phoneNumber,
-    email,
+    communicationDetails,
   };
 }

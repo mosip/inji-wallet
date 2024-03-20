@@ -27,12 +27,8 @@ export function selectWalletBindingResponse(state: State) {
   return state.context.walletBindingResponse;
 }
 
-export function selectIsPhoneNumber(state: State) {
-  return state.context.phoneNumber;
-}
-
-export function selectIsEmail(state: State) {
-  return state.context.email;
+export function selectIsCommunicationDetails(state: State) {
+  return state.context.communicationDetails;
 }
 
 export function selectWalletBindingError(state: State) {

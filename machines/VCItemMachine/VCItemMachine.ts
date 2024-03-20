@@ -39,6 +39,7 @@ import {log} from 'xstate/lib/actions';
 import {getHomeMachineService} from '../../screens/Home/HomeScreenController';
 import {verifyCredential} from '../../shared/vcjs/verifyCredential';
 import getAllConfigurations, {API_URLS, DownloadProps} from '../../shared/api';
+import {CommunicationDetails} from '../../shared/Utils';
 
 const machineName = 'vc-item-machine';
 const model = createModel(
@@ -266,6 +267,7 @@ export const VCItemMachine = model.createMachine(
               onDone: [
                 {
                   target: 'acceptingBindingOTP',
+                  actions: ['setCommunicationDetails'],
                 },
               ],
               onError: [
@@ -332,6 +334,7 @@ export const VCItemMachine = model.createMachine(
                   src: 'requestBindingOTP',
                   onDone: {
                     target: '#vc-item-machine.idle',
+                    actions: ['setCommunicationDetails'],
                   },
                   onError: {
                     actions: 'setErrorAsWalletBindingError',
@@ -592,6 +595,15 @@ export const VCItemMachine = model.createMachine(
   },
   {
     actions: {
+      setCommunicationDetails: model.assign({
+        communicationDetails: (_context, event) => {
+          const communicationDetails: CommunicationDetails = {
+            phoneNumber: event.data.response.maskedMobile,
+            emailId: event.data.response.maskedEmail,
+          };
+          return communicationDetails;
+        },
+      }),
       requestVcContext: send(
         context => ({
           type: 'GET_VC_ITEM',
@@ -1079,6 +1091,7 @@ export const VCItemMachine = model.createMachine(
         if (response.response == null) {
           throw new Error('Could not process request');
         }
+        return response;
       },
       checkStatus: context => (callback, onReceive) => {
         const pollInterval = setInterval(

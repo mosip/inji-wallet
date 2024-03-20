@@ -8,8 +8,7 @@ import {
   selectAcceptingBindingOtp,
   selectBindingAuthFailedError,
   selectBindingWarning,
-  selectIsEmail,
-  selectIsPhoneNumber,
+  selectIsCommunicationDetails,
   selectOtpError,
   selectShowWalletBindingError,
   selectVc,
@@ -103,9 +102,10 @@ export function useViewVcModal({vcItemActor, isVisible}: ViewVcModalProps) {
     isBindingError: useSelector(vcItemActor, selectShowWalletBindingError),
     isBindingSuccess: useSelector(vcItemActor, selectWalletBindingSuccess),
     isBindingWarning: useSelector(vcItemActor, selectBindingWarning),
-    isPhoneNumber: useSelector(vcItemActor, selectIsPhoneNumber),
-    isEmail: useSelector(vcItemActor, selectIsEmail),
-
+    isCommunicationDetails: useSelector(
+      vcItemActor,
+      selectIsCommunicationDetails,
+    ),
     setReAuthenticating,
     onError,
     addtoWallet: () => {

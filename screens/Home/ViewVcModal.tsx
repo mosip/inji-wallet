@@ -132,8 +132,8 @@ export const ViewVcModal: React.FC<ViewVcModalProps> = props => {
           onInputDone={controller.inputOtp}
           error={controller.otpError}
           resend={controller.RESEND_OTP}
-          phone={controller.isPhoneNumber}
-          email={controller.isEmail}
+          phone={controller.isCommunicationDetails.phoneNumber}
+          email={controller.isCommunicationDetails.emailId}
           flow={TelemetryConstants.FlowType.vcActivation}
         />
       )}
