@@ -33,15 +33,13 @@ const model = createModel(
       VC_ADDED: (vcMetadata: VCMetadata) => ({vcMetadata}),
       REMOVE_VC_FROM_CONTEXT: (vcMetadata: VCMetadata) => ({vcMetadata}),
       VC_METADATA_UPDATED: (vcMetadata: VCMetadata) => ({vcMetadata}),
-      VC_DOWNLOADED: (vc: VC) => ({vc}),
-      VC_DOWNLOADED_FROM_OPENID4VCI: (vc: VC, vcMetadata: VCMetadata) => ({
+      VC_DOWNLOADED: (vc: VC, vcMetadata?: VCMetadata) => ({
         vc,
         vcMetadata,
       }),
       REFRESH_MY_VCS: () => ({}),
       REFRESH_MY_VCS_TWO: (vc: VC) => ({vc}),
       REFRESH_RECEIVED_VCS: () => ({}),
-      GET_RECEIVED_VCS: () => ({}),
       WALLET_BINDING_SUCCESS: () => ({}),
       RESET_WALLET_BINDING_SUCCESS: () => ({}),
       ADD_VC_TO_IN_PROGRESS_DOWNLOADS: (requestId: string) => ({requestId}),
@@ -177,9 +175,6 @@ export const vcMachine =
             RESET_ARE_ALL_VCS_DOWNLOADED: {
               actions: 'resetAreAllVcsDownloaded',
             },
-            VC_DOWNLOADED_FROM_OPENID4VCI: {
-              actions: 'setDownloadedVCFromOpenId4VCI',
-            },
             RESET_WALLET_BINDING_SUCCESS: {
               actions: 'resetWalletBindingSuccess',
             },
@@ -266,11 +261,6 @@ export const vcMachine =
           to: context => context.serviceRefs.backup,
         }),
 
-        getReceivedVcsResponse: respond(context => ({
-          type: 'VC_RESPONSE',
-          response: context.receivedVcs || [],
-        })),
-
         getVcItemResponse: respond((context, event) => {
           return {
             type: 'GET_VC_RESPONSE',
@@ -323,13 +313,9 @@ export const vcMachine =
         }),
 
         setDownloadedVc: (context, event) => {
-          if (event.vc) {
-            const vcUniqueId = VCMetadata.fromVC(event.vc).getVcKey();
-            console.log('>>>>>> setDownloadedVc => ', event.vc);
-            context.vcs[vcUniqueId] = event.vc;
-          }
-          // context.vcs[VCMetadata.fromVC(event.vcMetadata).getVcKey()] =
-          //     event.vc;
+          const vcMetaData = event.vcMetadata ? event.vcMetadata : event.vc;
+          const vcUniqueId = VCMetadata.fromVC(vcMetaData).getVcKey();
+          context.vcs[vcUniqueId] = event.vc;
         },
 
         addVcToInProgressDownloads: model.assign({
@@ -366,11 +352,6 @@ export const vcMachine =
           areAllVcsDownloaded: () => false,
           inProgressVcDownloads: new Set<string>(),
         }),
-        setDownloadedVCFromOpenId4VCI: (context, event) => {
-          if (event.vc)
-            context.vcs[VCMetadata.fromVC(event.vcMetadata).getVcKey()] =
-              event.vc;
-        },
 
         setUpdatedVcMetadatas: send(
           _context => {

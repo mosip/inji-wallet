@@ -12,7 +12,6 @@ import {
   selectShowActivities,
   selectShowWalletBindingError,
   selectWalletBindingInProgress,
-  selectWalletBindingResponse,
 } from '../machines/VCItemMachine/commonSelectors';
 import {selectActivities} from '../machines/activityLog';
 import {GlobalContext} from '../shared/GlobalContext';
@@ -40,10 +39,7 @@ type ScanLayoutNavigation = NavigationProp<
 export function useKebabPopUp(props) {
   const service = props.service as ActorRefFrom<typeof VCItemMachine>;
   const navigation = useNavigation<ScanLayoutNavigation>();
-  const vcEvents =
-    props.vcKey !== undefined && props.vcMetadata.isFromOpenId4VCI()
-      ? EsignetMosipVCItemEvents
-      : ExistingMosipVCItemEvents;
+  const vcEvents = VCItemEvents;
   const PIN_CARD = () => service.send(vcEvents.PIN_CARD());
   const KEBAB_POPUP = () => service.send(vcEvents.KEBAB_POPUP());
   const ADD_WALLET_BINDING_ID = () =>
@@ -64,8 +60,8 @@ export function useKebabPopUp(props) {
     service,
     selectShowWalletBindingError,
   );
-  const otpError = useSelector(service, selectOtpError);
-  const walletBindingError = useSelector(service, selectWalletBindingError);
+  const otpError = useSelector(service, selectError);
+  const walletBindingError = useSelector(service, selectError);
   const bindingAuthFailedError = useSelector(
     service,
     selectBindingAuthFailedError,
@@ -74,7 +70,7 @@ export function useKebabPopUp(props) {
     service,
     selectWalletBindingInProgress,
   );
-  const emptyWalletBindingId = useSelector(service, selectEmptyWalletBindingId);
+
   const isKebabPopUp = useSelector(service, selectKebabPopUp);
   const isShowActivities = useSelector(service, selectShowActivities);
   const phoneNumber = useSelector(service, selectIsPhoneNumber);
@@ -102,7 +98,7 @@ export function useKebabPopUp(props) {
     RESEND_OTP,
     SHOW_ACTIVITY,
     SELECT_VC_ITEM: (
-      vcRef: ActorRefFrom<typeof ExistingMosipVCItemMachine>,
+      vcRef: ActorRefFrom<typeof VCItemMachine>,
       flowType: string,
     ) => {
       const {serviceRefs, ...vcData} = vcRef.getSnapshot().context;
@@ -116,7 +112,6 @@ export function useKebabPopUp(props) {
     bindingAuthFailedError,
     otpError,
     WalletBindingInProgress,
-    emptyWalletBindingId,
     isKebabPopUp,
     isShowActivities,
     isRemoveWalletWarning,

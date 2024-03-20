@@ -529,7 +529,7 @@ export const IssuersMachine = model.createMachine(
       storeVcsContext: send(
         context => {
           return {
-            type: 'VC_DOWNLOADED_FROM_OPENID4VCI',
+            type: 'VC_DOWNLOADED',
             vcMetadata: getVCMetadata(context),
             vc: context.credentialWrapper,
           };

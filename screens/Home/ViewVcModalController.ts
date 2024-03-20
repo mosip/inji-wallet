@@ -11,7 +11,6 @@ import {
   selectIsEmail,
   selectIsPhoneNumber,
   selectOtpError,
-  selectRequestBindingOTP,
   selectShowWalletBindingError,
   selectVc,
   selectWalletBindingError,
@@ -91,7 +90,6 @@ export function useViewVcModal({vcItemActor, isVisible}: ViewVcModalProps) {
     reAuthenticating,
     isAcceptingOtpInput: useSelector(vcItemActor, selectIsAcceptingOtpInput),
     storedPasscode: useSelector(authService, selectPasscode),
-    isBindingOtp: useSelector(vcItemActor, selectRequestBindingOTP),
     isAcceptingBindingOtp: useSelector(vcItemActor, selectAcceptingBindingOtp),
     walletBindingResponse: useSelector(
       vcItemActor,

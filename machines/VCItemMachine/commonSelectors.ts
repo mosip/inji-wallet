@@ -88,7 +88,3 @@ export function selectVc(state: State) {
 export function selectId(state: State) {
   return state.context.vcMetadata.id;
 }
-
-export function selectRequestBindingOTP(state: State) {
-  return state.matches('walletBinding.requestBindingOTP');
-}

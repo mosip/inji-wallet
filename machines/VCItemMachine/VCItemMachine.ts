@@ -59,11 +59,12 @@ const model = createModel(
     downloadInterval: null as number,
     walletBindingResponse: null as WalletBindingResponse,
     isMachineInKebabPopupState: false,
+    communicationDetails: null as CommunicationDetails,
   },
   {
     events: {
       DISMISS: () => ({}),
-      CREDENTIAL_DOWNLOADED: (vc: VC) => ({vc}),
+      CREDENTIAL_DOWNLOADED: (response: VC) => ({response}),
       STORE_RESPONSE: (response: VC) => ({response}),
       STORE_ERROR: (error: Error) => ({error}),
       POLL: () => ({}),
@@ -615,20 +616,11 @@ export const VCItemMachine = model.createMachine(
         return {...context, ...data};
       }),
       setCredential: model.assign((context, event) => {
-        switch (event.type) {
-          case 'STORE_RESPONSE':
-            return {
-              ...context,
-              ...event.response,
-              vcMetadata: context.vcMetadata,
-            };
-          case 'GET_VC_RESPONSE':
-          case 'CREDENTIAL_DOWNLOADED':
-            return {
-              ...context,
-              ...event.vc,
-            };
-        }
+        return {
+          ...context,
+          ...event.response,
+          vcMetadata: context.vcMetadata,
+        };
       }),
       storeContext: send(
         context => {
@@ -698,7 +690,7 @@ export const VCItemMachine = model.createMachine(
         (context, event) => {
           return {
             type: 'VERIFY_VC_FAILED',
-            errorMessage: context.verificationErrorMessage,
+            errorMessage: context.error,
             vcMetadata: context.vcMetadata,
           };
         },
@@ -786,7 +778,6 @@ export const VCItemMachine = model.createMachine(
           Number((event.data as DownloadProps).downloadInterval),
       }),
       sendActivationStartEvent: context => {
-        console.log('>>>>>> Reached Here sendActivationStartEvent');
         sendStartEvent(
           getStartEventData(
             context.isMachineInKebabPopupState
@@ -1153,7 +1144,6 @@ export const VCItemMachine = model.createMachine(
                 idType: context.vcMetadata.idType,
                 requestId: context.vcMetadata.requestId,
                 lastVerifiedOn: null,
-                locked: context.locked,
                 walletBindingResponse: null,
                 credentialRegistry: '',
               }),
