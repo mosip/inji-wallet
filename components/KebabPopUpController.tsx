@@ -11,17 +11,13 @@ import {
   selectShowActivities,
   selectShowWalletBindingError,
   selectWalletBindingInProgress,
-} from '../machines/VCItemMachine/commonSelectors';
+} from '../machines/VCItemMachine/VCItemMachine';
 import {selectActivities} from '../machines/activityLog';
 import {GlobalContext} from '../shared/GlobalContext';
-import {useContext, useState} from 'react';
+import {useContext} from 'react';
 import {VCMetadata} from '../shared/VCMetadata';
 import {ScanEvents} from '../machines/bleShare/scan/scanMachine';
-import {
-  BOTTOM_TAB_ROUTES,
-  SCAN_ROUTES,
-  ScanStackParamList,
-} from '../routes/routesConstants';
+import {BOTTOM_TAB_ROUTES, ScanStackParamList} from '../routes/routesConstants';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
 import {MainBottomTabParamList} from '../routes/main';
 import {selectIsScanning} from '../machines/bleShare/scan/selectors';

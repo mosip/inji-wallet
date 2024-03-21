@@ -8,7 +8,7 @@ import {
   selectGeneratedOn,
   selectId,
   selectVerifiableCredential,
-} from '../machines/VCItemMachine/commonSelectors';
+} from '../machines/VCItemMachine/VCItemMachine';
 import {Column, Row, Text} from './ui';
 import {Theme} from './ui/styleUtils';
 import {RotatingIcon} from './RotatingIcon';
