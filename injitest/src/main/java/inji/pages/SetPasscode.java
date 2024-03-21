@@ -21,9 +21,6 @@ public class SetPasscode extends BasePage {
     @iOSXCUITFindBy(xpath = "//XCUIElementTypeOther[@name=\"e-Signet\"]/XCUIElementTypeOther[7]/XCUIElementTypeTextField[1]")
     private WebElement inputOtp;
 
-    @AndroidFindBy(xpath = "//android.view.View[contains(@resource-id, \"otp_verify_input\")]//android.widget.EditText[1]")
-    @iOSXCUITFindBy(xpath = "//XCUIElementTypeOther[@name=\"e-Signet\"]/XCUIElementTypeOther[7]/XCUIElementTypeTextField[1]")
-    private WebElement inputOtpSecond;
 
     public SetPasscode(AppiumDriver driver) {
         super(driver);
@@ -107,13 +104,6 @@ public class SetPasscode extends BasePage {
                 String locator = "//android.view.View[contains(@resource-id, \"otp_verify_input\")]//android.widget.EditText[" + i + "]";
                 driver.findElement(By.xpath(locator)).sendKeys(String.valueOf(arr[i - 1]));
             }
-        } else if (isElementDisplayed(inputOtpSecond)) {
-            for (int i = 1; i <= 6; i++) {
-                int j = i + 1;
-                String locator = "(//android.widget.TextView[@text=\"Enter Your VID\"]//following-sibling::android.widget.EditText)[" + j + "]";
-                driver.findElement(By.xpath(locator)).sendKeys(String.valueOf(arr[i - 1]));
-            }
-
         } else {
             for (int i = 1; i <= 6; i++) {
                 String locator = "(//android.webkit.WebView[@text=\"e-Signet\"]/android.view.View/android.view.View[2]/android.view.View/android.view.View[3]/android.view.View/android.widget.EditText)[" + i + "]";

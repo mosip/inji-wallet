@@ -21,21 +21,13 @@ public class SunbirdLoginPage extends BasePage {
     @AndroidFindBy(xpath = "//*[contains(@text,'Login with KBA')]")
     private WebElement loginWithKBA;
 
-    @AndroidFindBy(xpath = "//android.widget.EditText[@resource-id=\"_form_policyNumber\"]")
+    @AndroidFindBy(uiAutomator = "UiSelector().className(\"android.widget.EditText\").instance(0)")
     @iOSXCUITFindBy(xpath = "//XCUIElementTypeTextField[@name=\"Please fill in this field\" and @value=\"Policy Number\"]")
     private WebElement enterPolicyTextBox;
 
-    @AndroidFindBy(uiAutomator = "UiSelector().className(\"android.widget.EditText\").instance(0)")
-    @iOSXCUITFindBy(xpath = "//XCUIElementTypeTextField[@name=\"Please fill in this field\" and @value=\"Policy Number\"]")
-    private WebElement enterPolicyTextBoxSecondPath;
-
-    @AndroidFindBy(xpath = "//android.widget.EditText[@resource-id=\"_form_fullName\"]")
-    @iOSXCUITFindBy(iOSClassChain = "**/XCUIElementTypeTextField[`name == \"Please fill in this field\"`][2]")
-    private WebElement enterFullnameTextBox;
-
     @AndroidFindBy(uiAutomator = "UiSelector().className(\"android.widget.EditText\").instance(1)")
     @iOSXCUITFindBy(iOSClassChain = "**/XCUIElementTypeTextField[`name == \"Please fill in this field\"`][2]")
-    private WebElement enterFullnameTextBoxSecondPath;
+    private WebElement enterFullnameTextBox;
 
     @AndroidFindBy(uiAutomator = "UiSelector().className(\"android.widget.Spinner\")")
     @iOSXCUITFindBy(iOSClassChain = "**/XCUIElementTypeOther[`name == \"Please fill in this field\"`]")
@@ -140,13 +132,7 @@ public class SunbirdLoginPage extends BasePage {
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
-        if(isElementDisplayed(enterPolicyTextBox)){
         sendKeysToTextBox(enterPolicyTextBox, PolicyNo);
-        }
-        else{
-            sendKeysToTextBox(enterPolicyTextBoxSecondPath, PolicyNo);
-        }
-
     }
 
     public void enterFullNameTextBox(String fullname) {
@@ -155,12 +141,7 @@ public class SunbirdLoginPage extends BasePage {
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
-        if (isElementDisplayed(enterFullnameTextBox)) {
             sendKeysToTextBox(enterFullnameTextBox, fullname);
-        }
-        else {
-            sendKeysToTextBox(enterFullnameTextBoxSecondPath, fullname);
-        }
     }
 
     public void enterDateOfBirthTextBox() {
