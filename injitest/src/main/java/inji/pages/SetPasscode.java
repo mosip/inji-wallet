@@ -21,6 +21,7 @@ public class SetPasscode extends BasePage {
     @iOSXCUITFindBy(xpath = "//XCUIElementTypeOther[@name=\"e-Signet\"]/XCUIElementTypeOther[7]/XCUIElementTypeTextField[1]")
     private WebElement inputOtp;
 
+
     public SetPasscode(AppiumDriver driver) {
         super(driver);
     }
@@ -56,6 +57,11 @@ public class SetPasscode extends BasePage {
     }
 
     private void enterOtpAndroid(char[] arr) {
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
         for (int i = 1; i <= 6; i++) {
             String locator = "(//*[@class='android.widget.EditText'])[" + i + "]";
             driver.findElement(By.xpath(locator)).sendKeys(String.valueOf(arr[i - 1]));
@@ -71,15 +77,14 @@ public class SetPasscode extends BasePage {
 
 
     private void enterOtpIosForEsignet(char[] arr) {
-        if(isElementDisplayed(inputOtp)) {
+        if (isElementDisplayed(inputOtp)) {
             for (int i = 1; i <= 6; i++) {
 //                clickOnDoneButton();
                 String locator = "//XCUIElementTypeOther[@name=\"e-Signet\"]/XCUIElementTypeOther[7]/XCUIElementTypeTextField[" + i + "]";
                 driver.findElement(By.xpath(locator)).sendKeys(String.valueOf(arr[i - 1]));
 
             }
-        }
-        else{
+        } else {
             for (int i = 1; i <= 6; i++) {
                 String locator = "//XCUIElementTypeOther[@name=\"e-Signet\"]/XCUIElementTypeOther[6]/XCUIElementTypeTextField[" + i + "]";
                 driver.findElement(By.xpath(locator)).sendKeys(String.valueOf(arr[i - 1]));
@@ -88,24 +93,22 @@ public class SetPasscode extends BasePage {
     }
 
     private void clickOnDoneButton() {
-        if(isElementDisplayed(doneButton,3)) {
+        if (isElementDisplayed(doneButton, 3)) {
             clickOnElement(doneButton);
         }
     }
-    private void enterOtpAndroidForEsignet(char[] arr) {
-        if (isElementDisplayed(inputOtp)){
-            for (int i = 1; i <= 6; i++) {
-                String locator = "//android.view.View[contains(@resource-id, \"otp_verify_input\")]//android.widget.EditText["+i+"]";
-                driver.findElement(By.xpath(locator)).sendKeys(String.valueOf(arr[i-1]));
-        }
-    }
-    else{
-            for (int i = 1; i <= 6; i++) {
-                int j = i+1;
-                String locator = "(//android.widget.TextView[@text=\"Enter Your VID\"]//following-sibling::android.widget.EditText)["+j+"]";
-                driver.findElement(By.xpath(locator)).sendKeys(String.valueOf(arr[i-1]));
-        }
 
+    private void enterOtpAndroidForEsignet(char[] arr) {
+        if (isElementDisplayed(inputOtp)) {
+            for (int i = 1; i <= 6; i++) {
+                String locator = "//android.view.View[contains(@resource-id, \"otp_verify_input\")]//android.widget.EditText[" + i + "]";
+                driver.findElement(By.xpath(locator)).sendKeys(String.valueOf(arr[i - 1]));
+            }
+        } else {
+            for (int i = 1; i <= 6; i++) {
+                String locator = "(//android.webkit.WebView[@text=\"e-Signet\"]/android.view.View/android.view.View[2]/android.view.View/android.view.View[3]/android.view.View/android.widget.EditText)[" + i + "]";
+                driver.findElement(By.xpath(locator)).sendKeys(String.valueOf(arr[i - 1]));
+            }
         }
     }
 }
