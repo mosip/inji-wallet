@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import {Icon} from 'react-native-elements';
 import {Theme} from '../../../components/ui/styleUtils';
 import {useTranslation} from 'react-i18next';
@@ -8,12 +8,6 @@ import {MessageOverlay} from '../../../components/MessageOverlay';
 import {useKebabPopUp} from '../../../components/KebabPopUpController';
 import {ActorRefFrom} from 'xstate';
 import {VCMetadata} from '../../../shared/VCMetadata';
-import {
-  getEndEventData,
-  getErrorEventData,
-  sendEndEvent,
-  sendErrorEvent,
-} from '../../../shared/telemetry/TelemetryUtils';
 import {TelemetryConstants} from '../../../shared/telemetry/TelemetryConstants';
 import {VCItemMachine} from '../../../machines/VCItemMachine/VCItemMachine';
 
@@ -30,29 +24,6 @@ export const WalletVerified: React.FC = () => {
 
 export const WalletBinding: React.FC<WalletBindingProps> = props => {
   const controller = useKebabPopUp(props);
-
-  useEffect(() => {
-    let error = controller.walletBindingError;
-    if (error) {
-      error = controller.bindingAuthFailedError
-        ? controller.bindingAuthFailedError + '-' + error
-        : error;
-      sendErrorEvent(
-        getErrorEventData(
-          TelemetryConstants.FlowType.vcActivation,
-          TelemetryConstants.ErrorId.activationFailed,
-          error,
-        ),
-      );
-      sendEndEvent(
-        getEndEventData(
-          TelemetryConstants.FlowType.vcActivation,
-          TelemetryConstants.EndEventStatus.failure,
-        ),
-      );
-    }
-  }, [controller.walletBindingError]);
-
   const {t} = useTranslation('WalletBinding');
   return (
     <>

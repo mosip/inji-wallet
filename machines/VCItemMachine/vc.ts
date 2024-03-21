@@ -18,7 +18,6 @@ const model = createModel(
     receivedVcs: [] as VCMetadata[],
     vcs: {} as Record<string, VC>,
     inProgressVcDownloads: new Set<string>(),
-    areAllVcsDownloaded: false as boolean,
     walletBindingSuccess: false,
     tamperedVcs: [] as VCMetadata[],
     downloadingFailedVcs: [] as VCMetadata[],
@@ -46,7 +45,7 @@ const model = createModel(
       REMOVE_VC_FROM_IN_PROGRESS_DOWNLOADS: (vcMetadata: VCMetadata) => ({
         vcMetadata,
       }),
-      RESET_ARE_ALL_VCS_DOWNLOADED: () => ({}),
+      RESET_IN_PROGRESS_VCS_DOWNLOADED: () => ({}),
       TAMPERED_VC: (VC: VCMetadata) => ({VC}),
       REMOVE_TAMPERED_VCS: () => ({}),
       DOWNLOAD_LIMIT_EXPIRED: (vcMetadata: VCMetadata) => ({vcMetadata}),
@@ -172,8 +171,8 @@ export const vcMachine =
             REMOVE_VC_FROM_IN_PROGRESS_DOWNLOADS: {
               actions: 'removeVcFromInProgressDownlods',
             },
-            RESET_ARE_ALL_VCS_DOWNLOADED: {
-              actions: 'resetAreAllVcsDownloaded',
+            RESET_IN_PROGRESS_VCS_DOWNLOADED: {
+              actions: 'resetInProgressVcsDownloaded',
             },
             RESET_WALLET_BINDING_SUCCESS: {
               actions: 'resetWalletBindingSuccess',
@@ -340,16 +339,9 @@ export const vcMachine =
 
             return updatedInProgressList;
           },
-          areAllVcsDownloaded: context => {
-            if (context.inProgressVcDownloads.size == 0) {
-              return true;
-            }
-            return false;
-          },
         }),
 
-        resetAreAllVcsDownloaded: model.assign({
-          areAllVcsDownloaded: () => false,
+        resetInProgressVcsDownloaded: model.assign({
           inProgressVcDownloads: new Set<string>(),
         }),
 
@@ -471,10 +463,6 @@ export function selectBindedVcsMetadata(state: State): VCMetadata[] {
       !isEmpty(walletBindingResponse?.walletBindingId)
     );
   });
-}
-
-export function selectAreAllVcsDownloaded(state: State) {
-  return state.context.areAllVcsDownloaded;
 }
 
 export function selectInProgressVcDownloads(state: State) {

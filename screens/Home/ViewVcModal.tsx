@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import {Row} from '../../components/ui';
 import {Modal} from '../../components/ui/Modal';
 import {MessageOverlay} from '../../components/MessageOverlay';
@@ -8,12 +8,6 @@ import {useTranslation} from 'react-i18next';
 import {OtpVerificationModal} from './MyVcs/OtpVerificationModal';
 import {BindingVcWarningOverlay} from './MyVcs/BindingVcWarningOverlay';
 import {VcDetailsContainer} from '../../components/VC/VcDetailsContainer';
-import {
-  getEndEventData,
-  getErrorEventData,
-  sendEndEvent,
-  sendErrorEvent,
-} from '../../shared/telemetry/TelemetryUtils';
 import {TelemetryConstants} from '../../shared/telemetry/TelemetryConstants';
 import {BannerNotificationContainer} from '../../components/BannerNotificationContainer';
 import {Icon} from 'react-native-elements';
@@ -32,28 +26,6 @@ import {HistoryTab} from './MyVcs/HistoryTab';
 export const ViewVcModal: React.FC<ViewVcModalProps> = props => {
   const {t} = useTranslation('ViewVcModal');
   const controller = useViewVcModal(props);
-
-  useEffect(() => {
-    let error = controller.walletBindingError;
-    if (error) {
-      error = controller.bindingAuthFailedError
-        ? controller.bindingAuthFailedError + '-' + error
-        : error;
-      sendErrorEvent(
-        getErrorEventData(
-          TelemetryConstants.FlowType.vcActivation,
-          TelemetryConstants.ErrorId.activationFailed,
-          error,
-        ),
-      );
-      sendEndEvent(
-        getEndEventData(
-          TelemetryConstants.FlowType.vcActivation,
-          TelemetryConstants.EndEventStatus.failure,
-        ),
-      );
-    }
-  }, [controller.walletBindingError]);
 
   let selectedVcContext = props.vcItemActor.getSnapshot()?.context;
 

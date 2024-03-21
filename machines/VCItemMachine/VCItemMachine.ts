@@ -26,9 +26,11 @@ import {
 import {TelemetryConstants} from '../../shared/telemetry/TelemetryConstants';
 import {
   getEndEventData,
+  getErrorEventData,
   getInteractEventData,
   getStartEventData,
   sendEndEvent,
+  sendErrorEvent,
   sendInteractEvent,
   sendStartEvent,
 } from '../../shared/telemetry/TelemetryUtils';
@@ -47,7 +49,7 @@ const model = createModel(
     serviceRefs: {} as AppServices,
     vcMetadata: {} as VCMetadata,
     generatedOn: new Date() as Date,
-    verifiableCredential: null as VerifiableCredential,
+    verifiableCredential: null as unknown as VerifiableCredential,
     hashedId: '',
     publicKey: '',
     privateKey: '',
@@ -56,11 +58,11 @@ const model = createModel(
     bindingTransactionId: '',
     requestId: '',
     downloadCounter: 0,
-    maxDownloadCount: null as number,
-    downloadInterval: null as number,
-    walletBindingResponse: null as WalletBindingResponse,
+    maxDownloadCount: null as unknown as number,
+    downloadInterval: null as unknown as number,
+    walletBindingResponse: null as unknown as WalletBindingResponse,
     isMachineInKebabPopupState: false,
-    communicationDetails: null as CommunicationDetails,
+    communicationDetails: null as unknown as CommunicationDetails,
   },
   {
     events: {
@@ -274,6 +276,7 @@ export const VCItemMachine = model.createMachine(
                 {
                   actions: [
                     'setErrorAsWalletBindingError',
+                    'sendWalletBindingErrorEvent',
                     'logWalletBindingFailure',
                   ],
                   target: 'showingWalletBindingError',
@@ -308,7 +311,7 @@ export const VCItemMachine = model.createMachine(
                   cond: context => context.isMachineInKebabPopupState,
                   target: '#vc-item-machine.kebabPopUp',
                   actions: [
-                    'sendActivationFailedEndEvent',
+                    'sendUserCancelledActivationFailedEndEvent',
                     'unSetOTP',
                     'unSetBindingTransactionId',
                   ],
@@ -316,7 +319,7 @@ export const VCItemMachine = model.createMachine(
                 {
                   target: '#vc-item-machine.idle',
                   actions: [
-                    'sendActivationFailedEndEvent',
+                    'sendUserCancelledActivationFailedEndEvent',
                     'unSetOTP',
                     'unSetBindingTransactionId',
                   ],
@@ -337,7 +340,10 @@ export const VCItemMachine = model.createMachine(
                     actions: ['setCommunicationDetails'],
                   },
                   onError: {
-                    actions: 'setErrorAsWalletBindingError',
+                    actions: [
+                      'setErrorAsWalletBindingError',
+                      'sendWalletBindingErrorEvent',
+                    ],
                     target:
                       '#vc-item-machine.walletBinding.showingWalletBindingError',
                   },
@@ -363,6 +369,7 @@ export const VCItemMachine = model.createMachine(
                 {
                   actions: [
                     'setErrorAsWalletBindingError',
+                    'sendWalletBindingErrorEvent',
                     'logWalletBindingFailure',
                   ],
                   target: 'showingWalletBindingError',
@@ -389,6 +396,7 @@ export const VCItemMachine = model.createMachine(
                 {
                   actions: [
                     'setErrorAsWalletBindingError',
+                    'sendWalletBindingErrorEvent',
                     'logWalletBindingFailure',
                   ],
                   target: 'showingWalletBindingError',
@@ -406,8 +414,8 @@ export const VCItemMachine = model.createMachine(
               onError: {
                 actions: [
                   'setErrorAsWalletBindingError',
+                  'sendWalletBindingErrorEvent',
                   'logWalletBindingFailure',
-                  'sendActivationFailedEndEvent',
                 ],
                 target: 'showingWalletBindingError',
               },
@@ -743,7 +751,6 @@ export const VCItemMachine = model.createMachine(
         },
       ),
       setErrorAsWalletBindingError: assign({
-        //todo handle error message from different actions, check with bhargavi for bindingAuthFailedMessage
         error: () =>
           i18n.t('errors.genericError', {
             ns: 'common',
@@ -757,6 +764,7 @@ export const VCItemMachine = model.createMachine(
         error: () => '',
       }),
       setBindingTransactionId: assign({
+        //todo: check this with vijay
         bindingTransactionId: () =>
           String(new Date().valueOf()).substring(3, 13),
       }),
@@ -808,17 +816,11 @@ export const VCItemMachine = model.createMachine(
         );
       },
 
-      sendActivationFailedEndEvent: (context, event, meta) => {
-        const [errorId, errorMessage] =
-          event.data?.message === 'Could not store private key in keystore'
-            ? [
-                TelemetryConstants.ErrorId.updatePrivateKey,
-                TelemetryConstants.ErrorMessage.privateKeyUpdationFailed,
-              ]
-            : [
-                TelemetryConstants.ErrorId.userCancel,
-                TelemetryConstants.ErrorMessage.activationCancelled,
-              ];
+      sendUserCancelledActivationFailedEndEvent: context => {
+        const [errorId, errorMessage] = [
+          TelemetryConstants.ErrorId.userCancel,
+          TelemetryConstants.ErrorMessage.activationCancelled,
+        ];
         sendEndEvent(
           getEndEventData(
             context.isMachineInKebabPopupState
@@ -829,6 +831,27 @@ export const VCItemMachine = model.createMachine(
               errorId: errorId,
               errorMessage: errorMessage,
             },
+          ),
+        );
+      },
+
+      sendWalletBindingErrorEvent: (context, event) => {
+        if (context.error) {
+          const error = JSON.parse(JSON.stringify(event.data)).name
+            ? JSON.parse(JSON.stringify(event.data)).name + '-' + context.error
+            : context.error;
+          sendErrorEvent(
+            getErrorEventData(
+              TelemetryConstants.FlowType.vcActivation,
+              TelemetryConstants.ErrorId.activationFailed,
+              error,
+            ),
+          );
+        }
+        sendEndEvent(
+          getEndEventData(
+            TelemetryConstants.FlowType.vcActivation,
+            TelemetryConstants.EndEventStatus.failure,
           ),
         );
       },

@@ -2,7 +2,6 @@ import {useSelector} from '@xstate/react';
 import {useContext} from 'react';
 import {ActorRefFrom} from 'xstate';
 import {
-  selectAreAllVcsDownloaded,
   selectDownloadingFailedVcs,
   selectInProgressVcDownloads,
   selectIsRefreshingMyVcs,
@@ -32,26 +31,19 @@ import {
   selectShowHardwareKeystoreNotExistsAlert,
   SettingsEvents,
 } from '../../machines/settings';
-import {NavigationProp, useNavigation} from '@react-navigation/native';
-import {RootRouteProps} from '../../routes';
 import {VCItemMachine} from '../../machines/VCItemMachine/VCItemMachine';
-
-type MyVcsTabNavigation = NavigationProp<RootRouteProps>;
 
 export function useMyVcsTab(props: HomeScreenTabProps) {
   const service = props.service as ActorRefFrom<typeof MyVcsTabMachine>;
   const {appService} = useContext(GlobalContext);
-  const vcService = appService.children.get('vc');
-  const settingsService = appService.children.get('settings');
-  const navigation = useNavigation<MyVcsTabNavigation>();
+  const vcService = appService.children.get('vc')!!;
+  const settingsService = appService.children.get('settings')!!;
 
   return {
     service,
     AddVcModalService: useSelector(service, selectAddVcModal),
     GetVcModalService: useSelector(service, selectGetVcModal),
-
     vcMetadatas: useSelector(vcService, selectMyVcsMetadata),
-
     isRefreshingVcs: useSelector(vcService, selectIsRefreshingMyVcs),
     isRequestSuccessful: useSelector(service, selectIsRequestSuccessful),
     isSavingFailedInIdle: useSelector(service, selectIsSavingFailedInIdle),
@@ -59,22 +51,18 @@ export function useMyVcsTab(props: HomeScreenTabProps) {
     isBindingError: useSelector(service, selectShowWalletBindingError),
     isBindingSuccess: useSelector(vcService, selectWalletBindingSuccess),
     isNetworkOff: useSelector(service, selectIsNetworkOff),
+    inProgressVcDownloads: useSelector(vcService, selectInProgressVcDownloads),
+    isTampered: useSelector(vcService, selectIsTampered),
+    downloadFailedVcs: useSelector(vcService, selectDownloadingFailedVcs),
+    vcData: useSelector(vcService, selectMyVcs),
     showHardwareKeystoreNotExistsAlert: useSelector(
       settingsService,
       selectShowHardwareKeystoreNotExistsAlert,
     ),
-    areAllVcsLoaded: useSelector(vcService, selectAreAllVcsDownloaded),
-    inProgressVcDownloads: useSelector(vcService, selectInProgressVcDownloads),
-
-    isTampered: useSelector(vcService, selectIsTampered),
-
-    downloadFailedVcs: useSelector(vcService, selectDownloadingFailedVcs),
     verificationErrorMessage: useSelector(
       vcService,
       selectVerificationErrorMessage,
     ),
-
-    vcData: useSelector(vcService, selectMyVcs),
 
     SET_STORE_VC_ITEM_STATUS: () =>
       service.send(MyVcsTabEvents.SET_STORE_VC_ITEM_STATUS()),
@@ -82,8 +70,8 @@ export function useMyVcsTab(props: HomeScreenTabProps) {
     RESET_STORE_VC_ITEM_STATUS: () =>
       service.send(MyVcsTabEvents.RESET_STORE_VC_ITEM_STATUS()),
 
-    RESET_ARE_ALL_VCS_DOWNLOADED: () =>
-      vcService.send(VcEvents.RESET_ARE_ALL_VCS_DOWNLOADED()),
+    RESET_IN_PROGRESS_VCS_DOWNLOADED: () =>
+      vcService.send(VcEvents.RESET_IN_PROGRESS_VCS_DOWNLOADED()),
 
     DISMISS: () => service.send(MyVcsTabEvents.DISMISS()),
 
@@ -106,7 +94,9 @@ export function useMyVcsTab(props: HomeScreenTabProps) {
       settingsService.send(SettingsEvents.ACCEPT_HARDWARE_SUPPORT_NOT_EXISTS()),
 
     REMOVE_TAMPERED_VCS: () => vcService?.send(VcEvents.REMOVE_TAMPERED_VCS()),
+
     DELETE_VC: () => vcService?.send(VcEvents.DELETE_VC()),
+
     RESET_VERIFY_ERROR: () => {
       vcService?.send(VcEvents.RESET_VERIFY_ERROR());
     },
