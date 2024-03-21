@@ -1,8 +1,13 @@
 # Inji
 
-Inji provides a digital credential stack for creating, issuing, managing, sharing, verifying, and consuming credentials.
-This repository contains the reference implementation for mobile app, for more details
-refer [here](https://docs.mosip.io/inji)
+Inji Mobile Wallet is a mobile application specifically created to streamline all types of identification and credentials into one digital wallet.
+It offers a secure, trustworthy, and dependable mobile Verifiable Credentials wallet designed to fulfil the following functions
+- Download and store Verifiable Credentials
+- Conduct offline face authentication
+- Share Verifiable Credentials 
+- Enable users to log in to online portals 
+
+for more details refer [here](https://docs.mosip.io/inji)
 
 ## Setup PreRequisites
 
