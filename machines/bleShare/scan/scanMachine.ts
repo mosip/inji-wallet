@@ -1,7 +1,15 @@
 /* eslint-disable sonarjs/no-duplicate-string */
 import tuvali from '@mosip/tuvali';
 import BluetoothStateManager from 'react-native-bluetooth-state-manager';
-import {ActorRefFrom, assign, DoneInvokeEvent, EventFrom, send, spawn, StateFrom,} from 'xstate';
+import {
+  ActorRefFrom,
+  assign,
+  DoneInvokeEvent,
+  EventFrom,
+  send,
+  spawn,
+  StateFrom,
+} from 'xstate';
 import {createModel} from 'xstate/lib/model';
 import {EmitterSubscription, Linking} from 'react-native';
 import {DeviceInfo} from '../../../components/DeviceInfoList';
@@ -9,9 +17,22 @@ import {getDeviceNameSync} from 'react-native-device-info';
 import {VC, VerifiablePresentation} from '../../../types/VC/vc';
 import {AppServices} from '../../../shared/GlobalContext';
 import {ActivityLogEvents, ActivityLogType} from '../../activityLog';
-import {androidVersion, FACE_AUTH_CONSENT, isAndroid, isIOS, MY_LOGIN_STORE_KEY,} from '../../../shared/constants';
+import {
+  androidVersion,
+  FACE_AUTH_CONSENT,
+  isAndroid,
+  isIOS,
+  MY_LOGIN_STORE_KEY,
+} from '../../../shared/constants';
 import {subscribe} from '../../../shared/openIdBLE/walletEventHandler';
-import {check, checkMultiple, PERMISSIONS, PermissionStatus, requestMultiple, RESULTS,} from 'react-native-permissions';
+import {
+  check,
+  checkMultiple,
+  PERMISSIONS,
+  PermissionStatus,
+  requestMultiple,
+  RESULTS,
+} from 'react-native-permissions';
 import {
   checkLocationPermissionStatus,
   checkLocationService,
@@ -645,7 +666,7 @@ export const scanMachine =
               },
             },
             navigateToHistory: {
-             // entry: ['resetFlowType', 'resetSelectedVc'],
+              entry: ['resetFlowType', 'resetSelectedVc'],
               always: '#scan.disconnected',
             },
             faceVerificationConsent: {
