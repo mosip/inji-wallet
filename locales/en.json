@@ -14,7 +14,7 @@
     "WALLET_BINDING_SUCCESSFULL": "Activation of {{idType}} {{id}} is successful.",
     "WALLET_BINDING_FAILURE": "Activation of {{idType}} {{id}} has failed.",
     "VC_REMOVED": "{{idType}} {{id}} is removed from wallet.",
-    "TAMPERED_VC_REMOVED": "{{idType}} {{id}} is removed from from wallet due to tampering.",
+    "TAMPERED_VC_REMOVED": "{{idType}} {{id}} is removed from from wallet due to tampering."
   },
 
   "DeviceInfoList": {
@@ -410,7 +410,33 @@
   },
   "ViewVcModal": {
     "title": "ID Details",
-    "inProgress": "In Progress"
+    "inProgress": "In Progress",
+    "cancel": "Cancel",
+    "lock": "Lock",
+    "unlock": "Unlock",
+    "rename": "Rename",
+    "delete": "Delete",
+    "revoke": "Revoke",
+    "revoking": "Your wallet contains a credential with VID {{vid}}. Revoking this will automatically remove the same from the wallet. Are you sure you want to proceed?",
+    "requestingOtp": "Requesting OTP...",
+    "activated": "Credentials are enabled for online authentication.",
+    "redirecting": "Redirecting...",
+    "success": {
+      "unlocked": "Card successfully unlocked",
+      "locked": "Card successfully locked",
+      "revoked": "VID {{vid}} has been revoked. Any credential containing the same will be removed automatically from the wallet"
+    },
+    "bannerInfo": {
+      "verificationRetrigger": "We are validating your credential, this may take sometime. Once verified, you’ll be able to activate your credential.",
+      "success": "The card is successfully verified and now available for activation.",
+      "error": "Sorry, we are unable to verify the VC right now. Please try again later."
+    },
+    "statusToolTipContent": {
+      "valid_title": "Valid Status:",
+      "valid_desciption": "The credential has been successfully verified.",
+      "pending_title": "Pending Status:",
+      "pending_descirption": "Verification is currently pending due to technical issues."
+    }
   },
   "MainLayout": {
     "home": "Home",

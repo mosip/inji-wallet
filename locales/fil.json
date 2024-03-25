@@ -408,7 +408,33 @@
   },
   "ViewVcModal": {
     "title": "Mga Detalye ng ID",
-    "inProgress": "Isinasagawa"
+    "inProgress": "Isinasagawa",
+    "cancel": "Kanselahin",
+    "lock": "Lock",
+    "unlock": "I-unlock",
+    "rename": "Palitan ang pangalan",
+    "delete": "Tanggalin",
+    "revoke": "Bawiin",
+    "revoking": "Ang iyong wallet ay naglalaman ng kredensyal na may VID {{vid}}. Ang pagbawi nito ay awtomatikong mag-aalis ng pareho sa wallet. Sigurado ka bang gusto mong magpatuloy?",
+    "requestingOtp": "Humihiling ng OTP...",
+    "activated": "Ang mga kredensyal ay pinagana para sa online na pagpapatotoo.",
+    "redirecting": "Nire-redirect...",
+    "success": {
+      "unlocked": "Matagumpay na na-unlock ang card.",
+      "locked": "Matagumpay na na-lock ang card.",
+      "revoked": "Ang VID {{vid}} ay binawi. Awtomatikong aalisin sa wallet ang anumang kredensyal na naglalaman ng pareho"
+    },
+    "bannerInfo": {
+      "verificationRetrigger": "Pinapatunayan namin ang iyong kredensyal, maaaring magtagal ito. Kapag na-verify na, magagawa mong i-activate ang iyong kredensyal.",
+      "success": "Matagumpay na na-verify ang card at magagamit na ngayon para sa pag-activate.",
+      "error": "Paumanhin, hindi namin ma-verify ang VC sa ngayon. Subukang muli mamaya."
+    },
+    "statusToolTipContent": {
+      "valid_title": "Wastong Katayuan:",
+      "valid_desciption": "Matagumpay na na-verify ang kredensyal.",
+      "pending_title": "Nakabinbing Katayuan:",
+      "pending_descirption": "Kasalukuyang nakabinbin ang pag-verify dahil sa mga teknikal na isyu."
+    }
   },
   "MainLayout": {
     "home": "Bahay",
