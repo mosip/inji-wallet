@@ -36,16 +36,11 @@ public class VcDownloadAndVerifyUsingSunbirdTest extends AndroidBaseTest {
         assertTrue(addNewCardPage.isIssuerDescriptionMosipDisplayed(), "Verify if issuer description  mosip displayed");
         assertTrue(addNewCardPage.isIssuerDescriptionEsignetDisplayed(), "Verify if issuer description  esignet displayed");
         assertTrue(addNewCardPage.isIssuerSearchBarDisplayed(), "Verify if issuer search bar displayed");
-        //addNewCardPage.sendTextInIssuerSearchBar("Download Sunbird Credentials");
         assertTrue(addNewCardPage.isAddNewCardPageLoaded(), "Verify if add new card page is displayed");
         assertTrue(addNewCardPage.isAddNewCardPageGuideMessageForEsignetDisplayed(), "Verify if add new card guide message displayed");
         assertTrue(addNewCardPage.isDownloadViaSunbirdDisplayed(), "Verify if download sunbird displayed");
         SunbirdLoginPage sunbirdLoginPage =  addNewCardPage.clickOnDownloadViaSunbird();
 
-//      assertTrue(esignetLoginPage.isLoadingPageTextLoaded(), "Verify if loading page displayed");
-//      assertTrue(esignetLoginPage.isSettingUpTextDisplayed(), "Verify if loading page displayed");
-       
-       // sunbirdLoginPage.clickOnloginWithKbaButton();
         sunbirdLoginPage.enterPolicyNumberTextBox(TestDataReader.readData("policyNumberSunbird"));
         sunbirdLoginPage.enterFullNameTextBox(TestDataReader.readData("fullNameSunbird"));
         sunbirdLoginPage.enterDateOfBirthTextBox();

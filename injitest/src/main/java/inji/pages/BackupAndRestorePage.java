@@ -32,7 +32,7 @@ public class BackupAndRestorePage extends BasePage {
     private WebElement goBackButton;
 
     @AndroidFindBy(className = "android.view.View")
-    @iOSXCUITFindBy(className = "android.view.View")
+    @iOSXCUITFindBy(accessibility = "proceed")
     private WebElement proceedButton;
 
     @AndroidFindBy(uiAutomator = "new UiSelector().textContains(\"Add another account\")")
@@ -306,7 +306,6 @@ public class BackupAndRestorePage extends BasePage {
         Thread.sleep(5000);
         String context= driver.getPageSource();
         return context.contains("Why should I take a backup?") && context.contains("What is data backup? ") && context.contains("How to backup to your google account?");
-
     }
 
 }

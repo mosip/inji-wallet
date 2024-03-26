@@ -21,7 +21,6 @@ public class SetPasscode extends BasePage {
     @iOSXCUITFindBy(xpath = "//XCUIElementTypeOther[@name=\"e-Signet\"]/XCUIElementTypeOther[7]/XCUIElementTypeTextField[1]")
     private WebElement inputOtp;
 
-
     public SetPasscode(AppiumDriver driver) {
         super(driver);
     }
@@ -80,13 +79,13 @@ public class SetPasscode extends BasePage {
         if (isElementDisplayed(inputOtp)) {
             for (int i = 1; i <= 6; i++) {
 //                clickOnDoneButton();
-                String locator = "//XCUIElementTypeOther[@name=\"e-Signet\"]/XCUIElementTypeOther[7]/XCUIElementTypeTextField[" + i + "]";
+                String locator = "//XCUIElementTypeOther[@name=\"eSignet\"]/XCUIElementTypeOther[6]/XCUIElementTypeTextField[" + i + "]";
                 driver.findElement(By.xpath(locator)).sendKeys(String.valueOf(arr[i - 1]));
 
             }
         } else {
             for (int i = 1; i <= 6; i++) {
-                String locator = "//XCUIElementTypeOther[@name=\"e-Signet\"]/XCUIElementTypeOther[6]/XCUIElementTypeTextField[" + i + "]";
+                String locator = "//XCUIElementTypeOther[@name=\"eSignet\"]/XCUIElementTypeOther[7]/XCUIElementTypeTextField[" + i + "]";
                 driver.findElement(By.xpath(locator)).sendKeys(String.valueOf(arr[i - 1]));
             }
         }
@@ -97,7 +96,6 @@ public class SetPasscode extends BasePage {
             clickOnElement(doneButton);
         }
     }
-
     private void enterOtpAndroidForEsignet(char[] arr) {
         if (isElementDisplayed(inputOtp)) {
             for (int i = 1; i <= 6; i++) {
@@ -105,9 +103,12 @@ public class SetPasscode extends BasePage {
                 driver.findElement(By.xpath(locator)).sendKeys(String.valueOf(arr[i - 1]));
             }
         } else {
-            for (int i = 1; i <= 6; i++) {
-                String locator = "(//android.webkit.WebView[@text=\"e-Signet\"]/android.view.View/android.view.View[2]/android.view.View/android.view.View[3]/android.view.View/android.widget.EditText)[" + i + "]";
-                driver.findElement(By.xpath(locator)).sendKeys(String.valueOf(arr[i - 1]));
+            for (int i = 2; i <= 8; i++) {
+                int index = i - 2;
+                if (index < arr.length) {
+                    String locator = "(//*[@class='android.widget.EditText'])[" + i + "]";
+                    driver.findElement(By.xpath(locator)).sendKeys(String.valueOf(arr[index]));
+                }
             }
         }
     }

@@ -95,7 +95,7 @@
                     <include name="loginWithInvalidPasscode"/>
                 </methods>
             </class>
-           <!-- <class name="androidTestCases.VcBackupAndRestoreTest">
+            <!--<class name="androidTestCases.VcBackupAndRestoreTest">
                 <methods>
                     <include name="VcBackupAndRestoreTest"/>
                     <include name="DenyPermissionForInji"/>
@@ -129,7 +129,7 @@
                     <include name="generateMultipleVcWithSameUin"/>
                     <include name="verifyInvalidUinErrorMessage"/>
                     <include name="verifyOtpTimeOutAndGoBack"/>
-                    <include name="DownloadMultipleVcAndForceStopeAndAgainInvokeApp"/>
+                    <!--<include name="DownloadMultipleVcAndForceStopeAndAgainInvokeApp"/>//removed as browserStack does not support force stope and invoke  -->
                 </methods>
             </class>
             <class name="androidTestCases.VcDownloadAndVerifyUsingVidTest">
@@ -138,7 +138,7 @@
                     <include name="downloadTwoVcDeleteOneUsingVid"/>
                     <include name="verifyInvalidVidErrorMessage"/>
                     <include name="downloadAndVerifyVcUsingRevokeVid"/>
-                    <include name="DownloadMultipleVcAndForceStopeAndAgainInvokeAppViaVid"/>
+                    <!--<include name="DownloadMultipleVcAndForceStopeAndAgainInvokeAppViaVid"/> //removed as browserStack does not support force stope and invoke -->
                 </methods>
             </class>
             <class name="androidTestCases.VerifyHelpPageTest">

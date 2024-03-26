@@ -4,6 +4,7 @@ import BaseTest.IosBaseTest;
 import inji.api.BaseTestCase;
 import inji.constants.Target;
 import inji.pages.*;
+import inji.utils.IosUtil;
 import inji.utils.TestDataReader;
 import org.testng.annotations.Test;
 
@@ -597,10 +598,10 @@ public class ChangeLanguageTest extends IosBaseTest {
         assertTrue(addNewCardPage.isDownloadViaSunbirdDisplayed(), "Verify if download sunbird displayed");
         SunbirdLoginPage sunbirdLoginPage =  addNewCardPage.clickOnDownloadViaSunbird();
         addNewCardPage.clickOnContinueButtonInSigninPopupIos();
-        // sunbirdLoginPage.clickOnloginWithKbaButton();
         sunbirdLoginPage.enterPolicyNumberTextBox(TestDataReader.readData("policyNumberSunbird"));
         sunbirdLoginPage.enterFullNameTextBox(TestDataReader.readData("fullNameSunbird"));
         sunbirdLoginPage.enterDateOfBirthTextBox();
+        IosUtil.scrollToElement(driver,100,800,100,200);
         sunbirdLoginPage.clickOnloginButton();
 
         assertTrue(sunbirdLoginPage.isSunbirdCardIsActive(), "Verify if download sunbird displayed active");

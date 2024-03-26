@@ -42,8 +42,6 @@ public class VcDownloadAndVerifyUsingEsignetTest extends AndroidBaseTest {
         assertTrue(addNewCardPage.isDownloadViaEsignetDisplayed(), "Verify if download via uin displayed");
         EsignetLoginPage esignetLoginPage =  addNewCardPage.clickOnDownloadViaEsignet();
 
-//      assertTrue(esignetLoginPage.isLoadingPageTextLoaded(), "Verify if loading page displayed");
-//      assertTrue(esignetLoginPage.isSettingUpTextDisplayed(), "Verify if loading page displayed");
         esignetLoginPage.clickOnEsignetLoginWithOtpButton();
         
         assertTrue(esignetLoginPage.isEnterYourVidTextDisplayed(), "Verify if enter your vid text is displayed");
@@ -112,8 +110,6 @@ public class VcDownloadAndVerifyUsingEsignetTest extends AndroidBaseTest {
 
         assertTrue(addNewCardPage.isAddNewCardPageLoaded(), "Verify if add new card page is displayed");
         EsignetLoginPage esignetLoginPage =  addNewCardPage.clickOnDownloadViaEsignet();
-
-//        assertTrue(esignetLoginPage.isEsignetLoginPageDisplayed(), "Verify if esignet login page displayed");
         esignetLoginPage.clickOnEsignetLoginWithOtpButton();
         
         assertTrue(esignetLoginPage.isEnterYourVidTextDisplayed(), "Verify if enter your vid text is displayed");
@@ -123,7 +119,6 @@ public class VcDownloadAndVerifyUsingEsignetTest extends AndroidBaseTest {
         Thread.sleep(3000);
         otpVerification.enterOtpForEsignet(TestDataReader.readData("otp"), Target.ANDROID);
         esignetLoginPage.clickOnVerifyButton();
-//        assertTrue(homePage.isNameDisplayed(TestDataReader.readData("fullName")), "Verify if full name is displayed");
         DetailedVcViewPage detailedVcViewPage = homePage.openDetailedVcView(TestDataReader.readData("fullName"));
         detailedVcViewPage.clickOnQrCodeButton();
         assertTrue(detailedVcViewPage.isQrCodeDisplayed(), "Verify if QR Code header is displayed");

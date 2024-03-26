@@ -510,10 +510,6 @@ public class ChangeLanguageTest extends AndroidBaseTest {
         assertTrue(addNewCardPage.isDownloadViaSunbirdDisplayed(), "Verify if download sunbird displayed");
         SunbirdLoginPage sunbirdLoginPage =  addNewCardPage.clickOnDownloadViaSunbird();
 
-//          assertTrue(esignetLoginPage.isLoadingPageTextLoaded(), "Verify if loading page displayed");
-//          assertTrue(esignetLoginPage.isSettingUpTextDisplayed(), "Verify if loading page displayed");
-
-        // sunbirdLoginPage.clickOnloginWithKbaButton();
         sunbirdLoginPage.enterPolicyNumberTextBox(TestDataReader.readData("policyNumberSunbird"));
         sunbirdLoginPage.enterFullNameTextBox(TestDataReader.readData("fullNameSunbird"));
         sunbirdLoginPage.enterDateOfBirthTextBox();
