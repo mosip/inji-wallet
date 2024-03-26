@@ -35,7 +35,6 @@ public class ChooseLanguagePage extends BasePage {
     }
 
     public WelcomePage clickOnSavePreference() {
-
         clickOnElement(savePreferenceText);
         return new WelcomePage(driver);
     }

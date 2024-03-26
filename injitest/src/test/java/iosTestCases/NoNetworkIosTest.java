@@ -294,6 +294,41 @@ public class NoNetworkIosTest extends IosBaseTest {
     }
 
     @Test
+    public void downloadCardWithoutInternetRetryWithInternet() throws InterruptedException {
+        String sessionId  = driver.getSessionId().toString();
+        UpdateNetworkSettings.setNoNetworkProfile(sessionId);
+
+        ChooseLanguagePage chooseLanguagePage = new ChooseLanguagePage(driver);
+
+        assertTrue(chooseLanguagePage.isChooseLanguagePageLoaded(), "Verify if choose language page is displayed");
+        WelcomePage welcomePage = chooseLanguagePage.clickOnSavePreference();
+
+        assertTrue(welcomePage.isWelcomePageLoaded(), "Verify if welcome page is loaded");
+        AppUnlockMethodPage appUnlockMethodPage = welcomePage.clickOnSkipButton();
+
+        assertTrue(appUnlockMethodPage.isAppUnlockMethodPageLoaded(), "Verify if app unlocked page is displayed");
+        SetPasscode setPasscode = appUnlockMethodPage.clickOnUsePasscode();
+
+        assertTrue(setPasscode.isSetPassCodePageLoaded(), "Verify if set passcode page is displayed");
+        ConfirmPasscode confirmPasscode = setPasscode.enterPasscode(TestDataReader.readData("passcode"), Target.IOS);
+
+        assertTrue(confirmPasscode.isConfirmPassCodePageLoaded(), "Verify if confirm passcode page is displayed");
+        HomePage homePage = confirmPasscode.enterPasscodeInConfirmPasscodePage(TestDataReader.readData("passcode"), Target.IOS);
+
+        assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
+        AddNewCardPage addNewCardPage = homePage.downloadCard();
+
+        assertTrue(homePage.verifyLanguageForNoInternetConnectionDisplayed("English"), "Verify if no internet connection is displayed");
+        assertTrue(homePage.verifyLanguageForTryAgainButtonDisplayed("English"), "Verify if try again button displayed");
+
+        UpdateNetworkSettings.resetNetworkProfile(sessionId);
+        assertTrue(homePage.isTryAgainButtonNotDisplayed(), "Wating for network come online");
+
+        homePage.clickOnTryAgainButton();
+        assertTrue(addNewCardPage.isAddNewCardPageLoaded(), "Verify if add new card page is displayed");
+    }
+
+    @Test
     public void verifyRecivedCardOffline() throws InterruptedException {
         IosUtil.enableAirplaneMode();
         ChooseLanguagePage chooseLanguagePage = new ChooseLanguagePage(driver);

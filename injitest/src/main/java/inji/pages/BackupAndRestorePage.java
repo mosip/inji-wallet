@@ -139,34 +139,6 @@ public class BackupAndRestorePage extends BasePage {
     @AndroidFindBy(accessibility = "help")
     private WebElement helpButton;
 
-    @iOSXCUITFindBy(accessibility = "App Store")
-    private WebElement AppStore;
-
-    @iOSXCUITFindBy(accessibility = "Cancel")
-    private WebElement CancelButton;
-
-    @iOSXCUITFindBy(accessibility = "spotlight-pill")
-    private WebElement SerchButton;
-
-    @iOSXCUITFindBy(accessibility = "SpotlightSearchField")
-    private WebElement SerchBoxButton;
-
-    @iOSXCUITFindBy(xpath = "//XCUIElementTypeIcon[@name=\"Inji\"]")
-    private WebElement SerchResultInji;
-
-    @iOSXCUITFindBy(xpath = "(//XCUIElementTypeButton[@name=\"UIA.AppStore.AccountButton\"])[2]")
-    private WebElement ClickOnBlueIcon;
-
-    //XCUIElementTypeTextField[@name="Apple ID"]
-
-
-
-
-
-
-
-
-
 
     public BackupAndRestorePage(AppiumDriver driver) {
         super(driver);
@@ -336,20 +308,4 @@ public class BackupAndRestorePage extends BasePage {
         return context.contains("Why should I take a backup?") && context.contains("What is data backup? ") && context.contains("How to backup to your google account?");
     }
 
-    public void clickOnAppStore() {
-        clickOnElement(AppStore);
-    }
-    public void clickOnCancel() {
-        clickOnElement(CancelButton);
-    }
-
-    public void clickOnSerchButton() {
-        clickOnElement(SerchButton);
-    }
-    public void clickOnSerchBoxButton( String text) {
-        clearTextBoxAndSendKeys(SerchBoxButton,text);
-    }
-    public void clickOnSerchedInji() {
-        clickOnElement(SerchResultInji);
-    }
 }
