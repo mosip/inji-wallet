@@ -51,7 +51,6 @@ public class VcBackupAndRestoreTest extends AndroidBaseTest {
         assertTrue(backupAndRestorePage.isCloudInfoDisplayed(), "Verify if cloud information displayed");
         backupAndRestorePage.clickOnProceedButton();
 
-       //backupAndRestorePage.clickOnAddAnotherAccount();
         String email = TestDataReader.readData("emailsForBackupAndRestore");
         backupAndRestorePage.enterEmailTextBox(email);
         backupAndRestorePage.clickOnNextButton();
@@ -144,7 +143,6 @@ public class VcBackupAndRestoreTest extends AndroidBaseTest {
         settingsPage.clickOnDataBackupAndRestoreButton();
         backupAndRestorePage.clickOnProceedButton();
 
-     //   backupAndRestorePage.clickOnAddAnotherAccount();
         String denyMail= TestDataReader.readData("denyEmailId");
         backupAndRestorePage.enterEmailTextBox(denyMail);
         backupAndRestorePage.clickOnNextButton();
@@ -201,7 +199,6 @@ public class VcBackupAndRestoreTest extends AndroidBaseTest {
         assertTrue(backupAndRestorePage.isCloudInfoDisplayed(), "Verify if cloud information displayed");
         backupAndRestorePage.clickOnProceedButton();
 
-//        backupAndRestorePage.clickOnAddAnotherAccount();
         String email = TestDataReader.readData("emailsForBackupAndRestore");
         backupAndRestorePage.enterEmailTextBox(email);
         backupAndRestorePage.clickOnNextButton();
@@ -268,7 +265,6 @@ public class VcBackupAndRestoreTest extends AndroidBaseTest {
         assertTrue(backupAndRestorePage.isCloudInfoDisplayed(), "Verify if cloud information displayed");
         backupAndRestorePage.clickOnProceedButton();
 
-//        backupAndRestorePage.clickOnAddAnotherAccount();
         String mailWithNoBackup= TestDataReader.readData("noBackupMail");
         backupAndRestorePage.enterEmailTextBox(mailWithNoBackup);
         backupAndRestorePage.clickOnNextButton();
@@ -321,7 +317,6 @@ public class VcBackupAndRestoreTest extends AndroidBaseTest {
         assertTrue(backupAndRestorePage.isCloudInfoDisplayed(), "Verify if cloud information displayed");
         backupAndRestorePage.clickOnProceedButton();
 
-//        backupAndRestorePage.clickOnAddAnotherAccount();
         String email = TestDataReader.readData("emailsForBackupAndRestore");
         backupAndRestorePage.enterEmailTextBox(email);
         backupAndRestorePage.clickOnNextButton();
@@ -337,7 +332,6 @@ public class VcBackupAndRestoreTest extends AndroidBaseTest {
         assertTrue(backupAndRestorePage.isStorageInfoDisplayed(), "Verify if account storage info displayed");
         assertTrue(backupAndRestorePage.isAssociatedAccountDisplayed(), "Verify if associated account displayed");
         assertTrue(backupAndRestorePage.islastBackupTimeDisplayed(), "Verify if last backup time displayed");
-//        assertTrue(backupAndRestorePage.isDataBackupSuccessPopupDisplayed(), "Verify if backup successful popup displayed");
         backupAndRestorePage.clickOnCloseButton();
 
 
@@ -355,7 +349,6 @@ public class VcBackupAndRestoreTest extends AndroidBaseTest {
         assertEquals(backupAndRestorePage.getStorageInfoText(), "Ang backup ay maiimbak sa Google Drive na nauugnay sa iyong napiling gmail account.");
 
         backupAndRestorePage.clickOnRestoreButton();
-//         assertTrue(backupAndRestorePage.isRestoreBackupSuccessPopUpDisplayed(), " Verify is restore backup successful popup displayed");
         backupAndRestorePage.clickOnCloseButton();
 
         backupAndRestorePage.clickOnArrowLeftButton();
@@ -369,7 +362,7 @@ public class VcBackupAndRestoreTest extends AndroidBaseTest {
 
         //arabic
         homePage.clickOnSettingIcon();
-//        assertEquals(settingsPage.getDataBackupAndRestoreText(), "اسنرجاع البيانات");
+        assertEquals(settingsPage.getDataBackupAndRestoreText(), "اسنرجاع البيانات");
         settingsPage.clickOnDataBackupAndRestoreButton();
 
         assertEquals(backupAndRestorePage.getLastBackupSectionHeaderText(), "تفاصيل النسخ الاحتياطي الأخير");

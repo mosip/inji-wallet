@@ -41,7 +41,6 @@ public class NoNetworkIosTest extends IosBaseTest {
         AddNewCardPage addNewCardPage = homePage.downloadCard();
 
         assertTrue(homePage.verifyLanguageForNoInternetConnectionDisplayed("English"), "Verify if no internet connection is displayed");
-//        assertTrue(homePage.verifyLanguageForTryAgainButtonDisplayed("English"), "Verify if Try again button displayed");
         IosUtil.disableAirplaneMode();
 
         assertTrue(homePage.verifyLanguageForTryAgainButtonDisplayed("English"), "Verify if Try again button displayed");

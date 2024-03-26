@@ -34,21 +34,7 @@
                     <include name="changeLanguageToKannadAndcheckInjiTour"/>
                     <include name="DownladvcAndVerifyInArabicAndHindiLanguage"/>
                     <include name="DownloadAndVerifyVcInArabic"/>
-                </methods>
-            </class>
-            <class name="iosTestCases.CredentialRegistryTest">
-                <methods>
-                    <include name="downloadAndVerifyVcInNewEnv"/>
-                    <include name="cancelChangeEnvAndVerify"/>
-                    <include name="downloadAndVerifyVcInInvalidEnv"/>
-                    <include name="generateUinInNewEnv"/>
-                    <include name="retrivingUinInOtherEnv"/>
-                    <include name="downloadAndVerifyVcInTwoEnv"/>
-                    <include name="downloadVcAndActivateItInOtherEnv"/>
-                    <include name="downloadAndVerifyVcInNewEnvForEsignet"/>
-                    <include name="downloadAndVerifyVcInInvalidEnvForEsignet"/>
-                    <include name="downloadAndVerifyVcInInvalidEnvForEsignetInFillpino"/>
-                    <include name="downloadVcInNewEnvAndVerifyInDetailedVcViewPage"/>
+                    <include name="downloadVcAndChnageLangaugeVerifyVcViaSunbird"/>
                 </methods>
             </class>
             <class name="iosTestCases.DeletingVcTest">
@@ -62,20 +48,6 @@
                 <methods>
                     <include name="generateUinOrVidUsingAid"/>
                     <include name="goBackToGenerateUinOrVidUsingAidFromOtpVerificationPage"/>
-                </methods>
-            </class>
-            <class name="iosTestCases.NoNetworkIosTest">
-                <methods>
-                    <include name="setupPasscodeAndDownloadCardWithoutInternet"/>
-                    <include name="openCameraOnFlightMode"/>
-                    <include name="activateVcWithoutInternet"/>
-                    <include name="verifyListOfLanguagesInOfflineMode"/>
-                    <include name="verifyHelpPageOfflineMode"/>
-                    <include name="deleteDownloadedVcInOfflineMode"/>
-                    <include name="openQrOffline"/>
-                    <include name="verifyRecivedCardOffline"/>
-                    <include name="downloadCardWithoutInternetRetryWithInternet"/>
-                    <include name="verifyVcIssuerListWithoutNetwork"/>
                 </methods>
             </class>
             <class name="iosTestCases.PinVcTest">

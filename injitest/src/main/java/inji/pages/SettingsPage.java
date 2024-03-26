@@ -89,7 +89,7 @@ public class SettingsPage extends BasePage {
     private WebElement backButton;
 
     @AndroidFindBy(accessibility = "dataBackupAndRestore")
-    @iOSXCUITFindBy(accessibility = "dataBackupAndRestore")
+    @iOSXCUITFindBy(xpath = "//XCUIElementTypeStaticText[@name=\"dataBackupAndRestoreText\" and @label=\"Backup & Restore\"]")
     private WebElement dataBackupAndRestore;
 
     @AndroidFindBy(accessibility = "newLabel")
