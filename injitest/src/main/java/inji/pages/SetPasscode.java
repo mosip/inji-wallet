@@ -18,9 +18,8 @@ public class SetPasscode extends BasePage {
     private WebElement doneButton;
 
     @AndroidFindBy(xpath = "//android.view.View[contains(@resource-id, \"otp_verify_input\")]//android.widget.EditText[1]")
-    @iOSXCUITFindBy(xpath = "//XCUIElementTypeOther[@name=\"eSignet\"]/XCUIElementTypeOther[6]/XCUIElementTypeTextField[\" + i + \"]")
+    @iOSXCUITFindBy(xpath = "//XCUIElementTypeOther[@name=\"e-Signet\"]/XCUIElementTypeOther[7]/XCUIElementTypeTextField[1]")
     private WebElement inputOtp;
-
 
     public SetPasscode(AppiumDriver driver) {
         super(driver);
@@ -97,7 +96,6 @@ public class SetPasscode extends BasePage {
             clickOnElement(doneButton);
         }
     }
-
     private void enterOtpAndroidForEsignet(char[] arr) {
         if (isElementDisplayed(inputOtp)) {
             for (int i = 1; i <= 6; i++) {
