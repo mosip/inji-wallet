@@ -64,6 +64,20 @@
                     <include name="verifyReceivedCardTabPresent"/>
                 </methods>
             </class>
+            <class name="iosTestCases.NoNetworkIosTest">
+                <methods>
+                    <include name="setupPasscodeAndDownloadCardWithoutInternet"/>
+                    <include name="openCameraOnFlightMode"/>
+                    <include name="activateVcWithoutInternet"/>
+                    <include name="verifyListOfLanguagesInOfflineMode"/>
+                    <include name="verifyHelpPageOfflineMode"/>
+                    <include name="deleteDownloadedVcInOfflineMode"/>
+                    <include name="openQrOffline"/>
+                    <include name="verifyRecivedCardOffline"/>
+                    <include name="downloadCardWithoutInternetRetryWithInternet"/>
+                    <include name="verifyVcIssuerListWithoutNetwork"/>
+                </methods>
+            </class>
             <class name="iosTestCases.UnlockWithPasscodeTest">
                 <methods>
                     <include name="logoutAndLoginWithPasscode"/>
