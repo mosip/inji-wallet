@@ -9,6 +9,7 @@ import mockClipboard from '@react-native-clipboard/clipboard/jest/clipboard-mock
 import mockLocalization from 'expo-localization.mock';
 
 jest.mock('react-native-device-info', () => mockRNDeviceInfo);
+
 jest.mock('react-native', () => require('./react-native.mock'));
 
 jest.mock('expo-constants', () => mockedConstants);
@@ -71,11 +72,14 @@ jest.mock('expo-camera', () => {
 });
 
 jest.mock('base58-universal/main', () => require('base58-universal-main'));
+
 jest.mock('@react-native-clipboard/clipboard', () => mockClipboard);
+
 jest.mock(
   'react-native-shimmer-placeholder',
   () => (ShimmerPlaceHolder = jest.fn()),
 );
+
 jest.mock(
   'expo-camera/build/Camera.types',
   () => (
@@ -84,21 +88,28 @@ jest.mock(
     (ImageType = jest.fn())
   ),
 );
+
 jest.mock(
   'react-native-app-auth',
   () => ((authorize = jest.fn()), (AuthorizeResult = jest.fn())),
 );
+
 jest.mock('react-native-vector-icons/MaterialIcons', () => (Icon = jest.fn()));
+
 jest.mock(
   'react-native-vector-icons/MaterialCommunityIcons',
   () => (Icon = jest.fn()),
 );
+
 jest.mock('react-native-qrcode-svg', () => (QRCode = jest.fn()));
+
 jest.mock('react-native-spinkit', () => (Spinner = jest.fn()));
+
 jest.mock(
   'react-native-zip-archive',
   () => ((zip = jest.fn()), (unzip = jest.fn())),
 );
+
 jest.mock('react', () => ({
   ...jest.requireActual('react'),
   useState: jest.fn(),
