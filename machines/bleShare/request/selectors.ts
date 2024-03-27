@@ -1,5 +1,8 @@
 import {StateFrom} from 'xstate';
 import {requestMachine} from './requestMachine';
+import {VCMetadata} from '../../../shared/VCMetadata';
+import {SvgImage} from '../../../components/ui/svg';
+import {Theme} from '../../../components/ui/styleUtils';
 
 type State = StateFrom<typeof requestMachine>;
 
@@ -11,8 +14,23 @@ export function selectIncomingVc(state: State) {
   return state.context.incomingVc;
 }
 
-export function selectSharingProtocol(state: State) {
-  return state.context.sharingProtocol;
+export function selectCredential(state: State) {
+  return new VCMetadata(state.context.incomingVc.vcMetadata).isFromOpenId4VCI()
+    ? state.context.incomingVc.verifiableCredential?.credential
+    : state.context.incomingVc.verifiableCredential;
+}
+
+export function selectVerifiableCredentialData(state: State) {
+  return new VCMetadata(state.context.vcMetadata).isFromOpenId4VCI()
+    ? {
+        face: state.context.incomingVc.verifiableCredential.credential
+          .credentialSubject.face,
+        issuerLogo: state.context.incomingVc.verifiableCredential.issuerLogo,
+      }
+    : {
+        face: state.context.incomingVc.credential.biometrics.face,
+        issuerLogo: SvgImage.MosipLogo(Theme.Styles.logo),
+      };
 }
 
 export function selectIsIncomingVp(state: State) {

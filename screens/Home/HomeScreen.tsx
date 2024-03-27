@@ -16,6 +16,7 @@ import {Pressable} from 'react-native';
 import testIDProps from '../../shared/commonUtil';
 import {BannerNotificationContainer} from '../../components/BannerNotificationContainer';
 import {VCItemMachine} from '../../machines/VCItemMachine/VCItemMachine';
+import {VerifiableCredential} from '../../types/VC/vc';
 
 export const HomeScreen: React.FC<HomeRouteProps> = props => {
   const controller = useHomeScreen(props);
@@ -107,4 +108,5 @@ export interface HomeScreenTabProps {
   isVisible: boolean;
   service: TabRef;
   vcItemActor: ActorRefFrom<typeof VCItemMachine>;
+  vc: VerifiableCredential | Credential;
 }

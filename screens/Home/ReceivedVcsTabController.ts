@@ -19,6 +19,7 @@ import {
   selectViewingVc,
 } from './HomeScreenMachine';
 import {VCItemMachine} from '../../machines/VCItemMachine/VCItemMachine';
+import {selectVc} from '../../machines/VCItemMachine/selectors';
 
 export function useReceivedVcsTab() {
   const [isVisible, setIsVisible] = useState(false);
@@ -35,6 +36,8 @@ export function useReceivedVcsTab() {
   const tabRefs = useSelector(service, selectTabRefs);
 
   const selectedVc = useSelector(service, selectSelectedVc);
+
+  const vc = useSelector(service, selectVc);
 
   const isViewingVc = useSelector(service, selectViewingVc);
 
@@ -58,6 +61,7 @@ export function useReceivedVcsTab() {
     },
     isViewingVc,
     selectedVc,
+    vc,
     activeTab: 1,
     DISMISS_MODAL: () => service.send(HomeScreenEvents.DISMISS_MODAL()),
     REFRESH: () => ReceivedVcsService.send(ReceivedVcsTabEvents.REFRESH()),

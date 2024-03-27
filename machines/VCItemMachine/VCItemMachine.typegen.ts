@@ -38,6 +38,11 @@ export interface Typegen0 {
       data: unknown;
       __tip: 'See the XState TS docs to learn how to strongly type this.';
     };
+    'done.invoke.vc-item-machine.walletBinding.acceptingBindingOTP.resendOTP:invocation[0]': {
+      type: 'done.invoke.vc-item-machine.walletBinding.acceptingBindingOTP.resendOTP:invocation[0]';
+      data: unknown;
+      __tip: 'See the XState TS docs to learn how to strongly type this.';
+    };
     'done.invoke.vc-item-machine.walletBinding.addKeyPair:invocation[0]': {
       type: 'done.invoke.vc-item-machine.walletBinding.addKeyPair:invocation[0]';
       data: unknown;
@@ -150,9 +155,6 @@ export interface Typegen0 {
     resetPrivateKey:
       | 'done.invoke.vc-item-machine.walletBinding.addingWalletBindingId:invocation[0]'
       | 'done.invoke.vc-item-machine.walletBinding.updatingPrivateKey:invocation[0]';
-    sendActivationFailedEndEvent:
-      | 'DISMISS'
-      | 'error.platform.vc-item-machine.walletBinding.updatingPrivateKey:invocation[0]';
     sendActivationStartEvent: 'CONFIRM';
     sendActivationSuccessEvent:
       | 'done.invoke.vc-item-machine.walletBinding.addingWalletBindingId:invocation[0]'
@@ -165,9 +167,19 @@ export interface Typegen0 {
       | 'error.platform.vc-item-machine.loadVc.loadVcFromServer.verifyingDownloadLimitExpiry:invocation[0]';
     sendTamperedVc: 'TAMPERED_VC';
     sendTelemetryEvents: 'STORE_RESPONSE';
+    sendUserCancelledActivationFailedEndEvent: 'DISMISS';
     sendVcUpdated: 'PIN_CARD';
     sendVerificationError: 'STORE_RESPONSE';
+    sendWalletBindingErrorEvent:
+      | 'error.platform.vc-item-machine.walletBinding.acceptingBindingOTP.resendOTP:invocation[0]'
+      | 'error.platform.vc-item-machine.walletBinding.addKeyPair:invocation[0]'
+      | 'error.platform.vc-item-machine.walletBinding.addingWalletBindingId:invocation[0]'
+      | 'error.platform.vc-item-machine.walletBinding.requestingBindingOTP:invocation[0]'
+      | 'error.platform.vc-item-machine.walletBinding.updatingPrivateKey:invocation[0]';
     sendWalletBindingSuccess: 'SHOW_BINDING_STATUS';
+    setCommunicationDetails:
+      | 'done.invoke.vc-item-machine.walletBinding.acceptingBindingOTP.resendOTP:invocation[0]'
+      | 'done.invoke.vc-item-machine.walletBinding.requestingBindingOTP:invocation[0]';
     setContext: 'GET_VC_RESPONSE' | 'STORE_RESPONSE';
     setCredential: 'CREDENTIAL_DOWNLOADED';
     setDownloadInterval: 'done.invoke.vc-item-machine.loadVc.loadVcFromServer.loadDownloadLimitConfig:invocation[0]';
@@ -285,9 +297,7 @@ export interface Typegen0 {
                 | 'loadDownloadLimitConfig'
                 | 'savingFailed'
                 | 'verifyingDownloadLimitExpiry'
-                | {
-                    savingFailed?: 'idle' | 'viewingVc';
-                  };
+                | {savingFailed?: 'idle' | 'viewingVc'};
             };
         verifyingCredential?:
           | 'handleVCVerificationFailure'
@@ -302,9 +312,7 @@ export interface Typegen0 {
           | 'showingWalletBindingError'
           | 'updatingContextVariables'
           | 'updatingPrivateKey'
-          | {
-              acceptingBindingOTP?: 'idle' | 'resendOTP';
-            };
+          | {acceptingBindingOTP?: 'idle' | 'resendOTP'};
       };
   tags: never;
 }

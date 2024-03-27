@@ -11,7 +11,7 @@ import {
   selectShowActivities,
   selectShowWalletBindingError,
   selectWalletBindingInProgress,
-} from '../machines/VCItemMachine/VCItemMachine';
+} from '../machines/VCItemMachine/selectors';
 import {selectActivities} from '../machines/activityLog';
 import {GlobalContext} from '../shared/GlobalContext';
 import {useContext} from 'react';

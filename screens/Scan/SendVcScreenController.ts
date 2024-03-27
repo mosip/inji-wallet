@@ -4,10 +4,12 @@ import {ActorRefFrom} from 'xstate';
 import {selectShareableVcsMetadata} from '../../machines/VCItemMachine/vc';
 import {GlobalContext} from '../../shared/GlobalContext';
 import {
+  selectCredential,
   selectIsSelectingVc,
   selectReceiverInfo,
   selectSelectedVc,
   selectVcName,
+  selectVerifiableCredentialData,
 } from '../../machines/bleShare/scan/selectors';
 import {
   selectIsCancelling,
@@ -28,32 +30,18 @@ type MyVcsTabNavigation = NavigationProp<RootRouteProps>;
 
 export function useSendVcScreen() {
   const {appService} = useContext(GlobalContext);
-  const scanService = appService.children.get('scan');
-  const vcService = appService.children.get('vc');
+  const scanService = appService.children.get('scan')!!;
+  const vcService = appService.children.get('vc')!!;
   const navigation = useNavigation<MyVcsTabNavigation>();
-
-  const CANCEL = () => scanService.send(ScanEvents.CANCEL());
 
   const [selectedIndex, setSelectedIndex] = useState<number>(null);
 
   return {
     selectedIndex,
-    TOGGLE_USER_CONSENT: () =>
-      scanService.send(ScanEvents.TOGGLE_USER_CONSENT()),
-    SELECT_VC_ITEM:
-      (index: number) => (vcRef: ActorRefFrom<typeof VCItemMachine>) => {
-        setSelectedIndex(index);
-        const {serviceRefs, ...vcData} = vcRef.getSnapshot().context;
-        scanService.send(
-          ScanEvents.SELECT_VC(vcData, VCShareFlowType.SIMPLE_SHARE),
-        );
-      },
-
     receiverInfo: useSelector(scanService, selectReceiverInfo),
     vcName: useSelector(scanService, selectVcName),
     shareableVcsMetadata: useSelector(vcService, selectShareableVcsMetadata),
     selectedVc: useSelector(scanService, selectSelectedVc),
-
     isSelectingVc: useSelector(scanService, selectIsSelectingVc),
     isVerifyingIdentity: useSelector(scanService, selectIsVerifyingIdentity),
     isInvalidIdentity: useSelector(scanService, selectIsInvalidIdentity),
@@ -62,8 +50,12 @@ export function useSendVcScreen() {
       scanService,
       selectIsFaceVerificationConsent,
     ),
-
-    CANCEL,
+    credential: useSelector(scanService, selectCredential),
+    verifiableCredentialData: useSelector(
+      scanService,
+      selectVerifiableCredentialData,
+    ),
+    CANCEL: () => scanService.send(ScanEvents.CANCEL()),
     ACCEPT_REQUEST: () => scanService.send(ScanEvents.ACCEPT_REQUEST()),
     FACE_VERIFICATION_CONSENT: (isConsentGiven: boolean) =>
       scanService.send(ScanEvents.FACE_VERIFICATION_CONSENT(isConsentGiven)),
@@ -78,5 +70,15 @@ export function useSendVcScreen() {
     GO_TO_HOME: () => {
       navigation.navigate(BOTTOM_TAB_ROUTES.home, {screen: 'HomeScreen'});
     },
+    TOGGLE_USER_CONSENT: () =>
+      scanService.send(ScanEvents.TOGGLE_USER_CONSENT()),
+    SELECT_VC_ITEM:
+      (index: number) => (vcRef: ActorRefFrom<typeof VCItemMachine>) => {
+        setSelectedIndex(index);
+        const {serviceRefs, ...vcData} = vcRef.getSnapshot().context;
+        scanService.send(
+          ScanEvents.SELECT_VC(vcData, VCShareFlowType.SIMPLE_SHARE),
+        );
+      },
   };
 }

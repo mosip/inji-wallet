@@ -12,11 +12,13 @@ import {
   selectOtpError,
   selectShowWalletBindingError,
   selectVc,
+  selectCredential,
+  selectVerifiableCredentialData,
   selectWalletBindingError,
   selectWalletBindingInProgress,
   selectWalletBindingResponse,
   selectWalletBindingSuccess,
-} from '../../machines/VCItemMachine/VCItemMachine';
+} from '../../machines/VCItemMachine/selectors';
 import {selectPasscode} from '../../machines/auth';
 import {biometricsMachine, selectIsSuccess} from '../../machines/biometrics';
 import {
@@ -80,6 +82,11 @@ export function useViewVcModal({vcItemActor, isVisible}: ViewVcModalProps) {
     error,
     message,
     toastVisible,
+    credential: useSelector(vcItemActor, selectCredential),
+    verifiableCredentialData: useSelector(
+      vcItemActor,
+      selectVerifiableCredentialData,
+    ),
     vc,
     otpError: useSelector(vcItemActor, selectOtpError),
     bindingAuthFailedError: useSelector(

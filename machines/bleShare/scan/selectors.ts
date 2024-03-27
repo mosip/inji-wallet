@@ -1,5 +1,8 @@
 import {StateFrom} from 'xstate';
 import {scanMachine} from './scanMachine';
+import {VCMetadata} from '../../../shared/VCMetadata';
+import {SvgImage} from '../../../components/ui/svg';
+import {Theme} from '../../../components/ui/styleUtils';
 
 type State = StateFrom<typeof scanMachine>;
 
@@ -17,6 +20,25 @@ export function selectVcName(state: State) {
 
 export function selectSelectedVc(state: State) {
   return state.context.selectedVc;
+}
+
+export function selectCredential(state: State) {
+  return new VCMetadata(state.context.selectedVc.vcMetadata).isFromOpenId4VCI()
+    ? state.context.selectedVc.verifiableCredential?.credential
+    : state.context.selectedVc.verifiableCredential;
+}
+
+export function selectVerifiableCredentialData(state: State) {
+  return new VCMetadata(state.context.selectedVc.vcMetadata).isFromOpenId4VCI()
+    ? {
+        face: state.context.selectedVc.verifiableCredential.credential
+          .credentialSubject.face,
+        issuerLogo: state.context.selectedVc.verifiableCredential.issuerLogo,
+      }
+    : {
+        face: state.context.selectedVc.credential.biometrics.face,
+        issuerLogo: SvgImage.MosipLogo(Theme.Styles.logo),
+      };
 }
 
 export function selectQrLoginRef(state: State) {

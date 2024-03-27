@@ -206,6 +206,7 @@ export const scanMachine =
           },
         },
         restrictSharingVc: {},
+
         startPermissionCheck: {
           on: {
             START_PERMISSION_CHECK: [

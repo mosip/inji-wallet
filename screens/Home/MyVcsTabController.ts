@@ -15,7 +15,7 @@ import {
 import {
   selectWalletBindingError,
   selectShowWalletBindingError,
-} from '../../machines/VCItemMachine/VCItemMachine';
+} from '../../machines/VCItemMachine/selectors';
 import {GlobalContext} from '../../shared/GlobalContext';
 import {HomeScreenTabProps} from './HomeScreen';
 import {

@@ -6,7 +6,9 @@ import {
   selectKebabPopUp,
   selectVerifiableCredential,
   selectWalletBindingResponse,
-} from '../../machines/VCItemMachine/VCItemMachine';
+  selectCredential,
+  selectVerifiableCredentialData,
+} from '../../machines/VCItemMachine/selectors';
 
 import {useInterpret, useSelector} from '@xstate/react';
 import {VCItemProps} from './Views/VCCardView';
@@ -48,6 +50,11 @@ export function useVcItemController(props: VCItemProps) {
   return {
     service,
     context,
+    credential: useSelector(service, selectCredential),
+    verifiableCredentialData: useSelector(
+      service,
+      selectVerifiableCredentialData,
+    ),
     verifiableCredential,
     walletBindingResponse,
     isKebabPopUp,

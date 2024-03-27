@@ -2,6 +2,7 @@ import {useSelector} from '@xstate/react';
 import {useContext} from 'react';
 import {GlobalContext} from '../../shared/GlobalContext';
 import {
+  selectCredential,
   selectIncomingVc,
   selectIsAccepting,
   selectIsDisplayingIncomingVC,
@@ -9,6 +10,7 @@ import {
   selectIsReviewingInIdle,
   selectIsSavingFailedInIdle,
   selectSenderInfo,
+  selectVerifiableCredentialData,
 } from '../../machines/bleShare/request/selectors';
 import {
   selectIsInvalidIdentity,
@@ -18,12 +20,16 @@ import {RequestEvents} from '../../machines/bleShare/request/requestMachine';
 
 export function useReceiveVcScreen() {
   const {appService} = useContext(GlobalContext);
-  const requestService = appService.children.get('request');
+  const requestService = appService.children.get('request')!!;
 
   return {
     senderInfo: useSelector(requestService, selectSenderInfo),
     incomingVc: useSelector(requestService, selectIncomingVc),
-
+    credential: useSelector(requestService, selectCredential),
+    verifiableCredentialData: useSelector(
+      requestService,
+      selectVerifiableCredentialData,
+    ),
     isIncomingVp: useSelector(requestService, selectIsIncomingVp),
     isReviewingInIdle: useSelector(requestService, selectIsReviewingInIdle),
     isAccepting: useSelector(requestService, selectIsAccepting),

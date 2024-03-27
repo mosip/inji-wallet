@@ -3,10 +3,7 @@ import i18n, {getLocalizedField} from '../../../i18n';
 import {Row} from '../../ui';
 import {VCItemField} from './VCItemField';
 import React from 'react';
-import {logoType} from '../../../machines/issuersMachine';
-import {Image} from 'react-native';
 import {Theme} from '../../ui/styleUtils';
-import {SvgImage} from '../../ui/svg';
 import {CREDENTIAL_REGISTRY_EDIT} from 'react-native-dotenv';
 import {getIDType} from '../../../shared/openId4VCI/Utils';
 import {VCVerification} from '../../VCVerification';
@@ -174,19 +171,4 @@ export const fieldItemIterator = (
 
 export const isVCLoaded = (verifiableCredential: any, fields: string[]) => {
   return verifiableCredential != null && fields.length > 0;
-};
-
-export const getIssuerLogo = (isOpenId4VCI: boolean, issuerLogo: logoType) => {
-  if (isOpenId4VCI) {
-    return (
-      <Image
-        src={issuerLogo?.url}
-        alt={issuerLogo?.alt_text}
-        style={Theme.Styles.issuerLogo}
-        resizeMethod="scale"
-        resizeMode="contain"
-      />
-    );
-  }
-  return SvgImage.MosipLogo(Theme.Styles.logo);
 };

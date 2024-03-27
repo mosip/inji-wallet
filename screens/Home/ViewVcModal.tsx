@@ -17,7 +17,6 @@ import {HelpScreen} from '../../components/HelpScreen';
 import {Pressable} from 'react-native';
 import {KebabPopUp} from '../../components/KebabPopUp';
 import {SvgImage} from '../../components/ui/svg';
-import {faceImageSource} from '../../components/VcItemContainerProfileImage';
 import {VCMetadata} from '../../shared/VCMetadata';
 import {WalletBinding} from './MyVcs/WalletBinding';
 import {RemoveVcWarningOverlay} from './MyVcs/RemoveVcWarningOverlay';
@@ -26,20 +25,7 @@ import {HistoryTab} from './MyVcs/HistoryTab';
 export const ViewVcModal: React.FC<ViewVcModalProps> = props => {
   const {t} = useTranslation('ViewVcModal');
   const controller = useViewVcModal(props);
-
-  let selectedVcContext = props.vcItemActor.getSnapshot()?.context;
-
-  const credential = new VCMetadata(
-    selectedVcContext?.vcMetadata,
-  ).isFromOpenId4VCI()
-    ? selectedVcContext?.verifiableCredential?.credential
-    : selectedVcContext?.verifiableCredential;
-
-  const getVcProfileImage = faceImageSource({
-    vcMetadata: new VCMetadata(selectedVcContext?.vcMetadata),
-    context: props.vcItemActor.getSnapshot()?.context,
-    credential: credential,
-  });
+  const profileImage = controller.verifiableCredentialData.face;
 
   const headerRight = flow => {
     return flow === 'downloadedVc' ? (
@@ -72,7 +58,7 @@ export const ViewVcModal: React.FC<ViewVcModalProps> = props => {
             }
             onDismiss={() => props.vcItemActor.send('DISMISS')}
             service={props.vcItemActor}
-            vcHasImage={getVcProfileImage !== undefined}
+            vcHasImage={profileImage !== undefined}
           />
         </Pressable>
       </Row>
@@ -90,10 +76,12 @@ export const ViewVcModal: React.FC<ViewVcModalProps> = props => {
       <BannerNotificationContainer />
       <VcDetailsContainer
         vc={controller.vc}
+        credential={controller.credential}
+        verifiableCredentialData={controller.verifiableCredentialData}
         onBinding={controller.addtoWallet}
         walletBindingResponse={controller.walletBindingResponse}
         activeTab={props.activeTab}
-        vcHasImage={getVcProfileImage !== undefined}
+        vcHasImage={profileImage !== undefined}
       />
 
       {controller.isAcceptingBindingOtp && (

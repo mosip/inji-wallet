@@ -3,12 +3,10 @@ import {SvgImage} from './ui/svg';
 import {useKebabPopUp} from './KebabPopUpController';
 import {isActivationNeeded} from '../shared/openId4VCI/Utils';
 import {VCShareFlowType} from '../shared/Utils';
-import {useNavigation} from '@react-navigation/native';
 
 export const getKebabMenuOptions = props => {
   const controller = useKebabPopUp(props);
   const {t} = useTranslation('HomeScreenKebabPopUp');
-  const navigation = useNavigation();
 
   const loadScanScreen = flowType => () => {
     controller.SELECT_VC_ITEM(props.service, flowType),

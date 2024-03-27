@@ -23,6 +23,8 @@ import {
   selectFlowType,
   selectSelectedVc,
   selectIsFaceIdentityVerified,
+  selectCredential,
+  selectVerifiableCredentialData,
 } from '../../machines/bleShare/scan/selectors';
 import {
   selectBleError,
@@ -56,7 +58,7 @@ const changeTabBarVisible = (visible: string) => {
 export function useScanLayout() {
   const {t} = useTranslation('ScanScreen');
   const {appService} = useContext(GlobalContext);
-  const scanService = appService.children.get('scan');
+  const scanService = appService.children.get('scan')!!;
   const navigation = useNavigation<ScanLayoutNavigation>();
 
   const isLocationDisabled = useSelector(scanService, selectIsLocationDisabled);
@@ -70,6 +72,11 @@ export function useScanLayout() {
   );
   const selectedVc = useSelector(scanService, selectSelectedVc);
   const bleError = useSelector(scanService, selectBleError);
+  const credential = useSelector(scanService, selectCredential);
+  const verifiableCredentialData = useSelector(
+    scanService,
+    selectVerifiableCredentialData,
+  );
 
   const locationError = {message: '', button: ''};
 
@@ -282,6 +289,8 @@ export function useScanLayout() {
   ]);
 
   return {
+    credential,
+    verifiableCredentialData,
     isInvalid,
     isReviewing,
     isDone,

@@ -8,15 +8,8 @@ import {Column, Row} from '../../ui';
 import {Theme} from '../../ui/styleUtils';
 import {CheckBox, Icon} from 'react-native-elements';
 import {SvgImage} from '../../ui/svg';
-import {
-  faceImageSource,
-  VcItemContainerProfileImage,
-} from '../../VcItemContainerProfileImage';
-import {
-  getIssuerLogo,
-  isVCLoaded,
-  setBackgroundColour,
-} from '../common/VCUtils';
+import {VcItemContainerProfileImage} from '../../VcItemContainerProfileImage';
+import {isVCLoaded, setBackgroundColour} from '../common/VCUtils';
 import {setTextColor, VCItemFieldValue} from '../common/VCItemField';
 import {WalletBinding} from '../../../screens/Home/MyVcs/WalletBinding';
 import {VCVerification} from '../../VCVerification';
@@ -41,15 +34,15 @@ export const VCCardViewContent: React.FC<VCItemContentProps> = props => {
       onPress={() => props.onPress()}
     />
   );
+  const issuerLogo = props.verifiableCredentialData.issuerLogo;
+  const faceImage = props.verifiableCredentialData.face;
 
   return (
     <ImageBackground
-      source={!props.credential ? null : Theme.CloseCard}
+      source={Theme.CloseCard}
       resizeMode="stretch"
       style={[
-        !props.credential
-          ? Theme.Styles.vertloadingContainer
-          : Theme.Styles.backgroundImageContainer,
+        Theme.Styles.backgroundImageContainer,
         setBackgroundColour(props.wellknown),
       ]}>
       <Column>
@@ -72,12 +65,7 @@ export const VCCardViewContent: React.FC<VCItemContentProps> = props => {
             </Row>
           </Column>
 
-          {!isVCLoaded(props.credential, props.fields)
-            ? null
-            : getIssuerLogo(
-                new VCMetadata(props.vcMetadata).isFromOpenId4VCI(),
-                props.verifiableCredential?.issuerLogo,
-              )}
+          {!isVCLoaded(props.credential, props.fields) ? null : issuerLogo}
           {!Object.values(VCItemContainerFlowType).includes(props.flow) && (
             <>
               {props.vcMetadata.issuer === Issuers.Sunbird ||
@@ -96,12 +84,12 @@ export const VCCardViewContent: React.FC<VCItemContentProps> = props => {
                   isVisible={props.isKebabPopUp}
                   onDismiss={props.DISMISS}
                   service={props.service}
-                  vcHasImage={faceImageSource(props) !== undefined}
+                  vcHasImage={faceImage !== undefined}
                 />
               </Pressable>
             </>
           )}
-          {props.credential && selectableOrCheck}
+          {selectableOrCheck}
         </Row>
 
         <WalletBinding service={props.service} vcMetadata={props.vcMetadata} />
@@ -122,6 +110,7 @@ export interface VCItemContentProps {
   context: any;
   verifiableCredential: VerifiableCredential;
   credential: VerifiableCredential;
+  verifiableCredentialData: any;
   fields: [];
   wellknown: {};
   generatedOn: string;

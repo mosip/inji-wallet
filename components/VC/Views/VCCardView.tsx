@@ -20,7 +20,9 @@ export const VCCardView: React.FC<VCItemProps> = props => {
   let {
     service,
     context,
+    credential,
     verifiableCredential,
+    verifiableCredentialData,
     walletBindingResponse,
     isKebabPopUp,
     isSavingFailedInIdle,
@@ -37,11 +39,7 @@ export const VCCardView: React.FC<VCItemProps> = props => {
     service.send(VCItemEvents.UPDATE_VC_METADATA(props.vcMetadata));
   }, [props.vcMetadata]);
 
-  const credential = props.isDownloading
-    ? null
-    : new VCMetadata(props.vcMetadata).isFromOpenId4VCI()
-    ? verifiableCredential?.credential
-    : verifiableCredential;
+  const vc = props.isDownloading ? null : credential;
 
   const [fields, setFields] = useState([]);
   const [wellknown, setWellknown] = useState(null);
@@ -57,12 +55,8 @@ export const VCCardView: React.FC<VCItemProps> = props => {
     });
   }, [verifiableCredential?.wellKnown]);
 
-  if (!isVCLoaded(verifiableCredential, fields) || wellknown === null) {
-    return (
-      <View style={Theme.Styles.closeCardBgContainer}>
-        <VCCardSkeleton />
-      </View>
-    );
+  if (!isVCLoaded(verifiableCredential, fields)) {
+    return <VCCardSkeleton />;
   }
 
   return (
@@ -80,7 +74,8 @@ export const VCCardView: React.FC<VCItemProps> = props => {
           context={context}
           verifiableCredential={verifiableCredential}
           walletBindingResponse={walletBindingResponse}
-          credential={credential}
+          credential={vc}
+          verifiableCredentialData={verifiableCredentialData}
           fields={fields}
           wellknown={wellknown}
           generatedOn={formattedDate}

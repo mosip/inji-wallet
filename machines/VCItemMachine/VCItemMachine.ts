@@ -1,7 +1,7 @@
 import {createModel} from 'xstate/lib/model';
 import {AppServices} from '../../shared/GlobalContext';
 import {VCMetadata} from '../../shared/VCMetadata';
-import {assign, EventFrom, send, StateFrom} from 'xstate';
+import {assign, EventFrom, send} from 'xstate';
 import {getIdType} from '../../shared/openId4VCI/Utils';
 import {
   VC,
@@ -1228,87 +1228,3 @@ export const createVCItemMachine = (
     vcMetadata,
   });
 };
-
-type State = StateFrom<typeof VCItemMachine>;
-
-export function selectVerifiableCredential(state: State) {
-  return state.context.verifiableCredential;
-}
-
-export function selectKebabPopUp(state: State) {
-  return state.context.isMachineInKebabPopupState;
-}
-
-export function selectContext(state: State) {
-  return state.context;
-}
-
-export function selectGeneratedOn(state: State) {
-  return state.context.generatedOn;
-}
-
-export function selectWalletBindingSuccess(state: State) {
-  return state.context.walletBindingResponse;
-}
-
-export function selectWalletBindingResponse(state: State) {
-  return state.context.walletBindingResponse;
-}
-
-export function selectIsCommunicationDetails(state: State) {
-  return state.context.communicationDetails;
-}
-
-export function selectWalletBindingError(state: State) {
-  return state.context.error;
-}
-
-export function selectBindingAuthFailedError(state: State) {
-  return state.context.error;
-}
-
-export function selectAcceptingBindingOtp(state: State) {
-  return state.matches('walletBinding.acceptingBindingOTP');
-}
-
-export function selectWalletBindingInProgress(state: State) {
-  return (
-    state.matches('walletBinding.requestingBindingOTP') ||
-    state.matches('walletBinding.addingWalletBindingId') ||
-    state.matches('walletBinding.addKeyPair') ||
-    state.matches('walletBinding.updatingPrivateKey')
-  );
-}
-
-export function selectBindingWarning(state: State) {
-  return state.matches('walletBinding.showBindingWarning');
-}
-
-export function selectRemoveWalletWarning(state: State) {
-  return state.matches('kebabPopUp.removeWallet');
-}
-
-export function selectIsPinned(state: State) {
-  return state.context.vcMetadata.isPinned;
-}
-
-export function selectOtpError(state: State) {
-  return state.context.error;
-}
-
-export function selectShowActivities(state: State) {
-  return state.matches('kebabPopUp.showActivities');
-}
-
-export function selectShowWalletBindingError(state: State) {
-  return state.matches('walletBinding.showingWalletBindingError');
-}
-
-export function selectVc(state: State) {
-  const {serviceRefs, ...data} = state.context;
-  return data;
-}
-
-export function selectId(state: State) {
-  return state.context.vcMetadata.id;
-}
