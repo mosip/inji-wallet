@@ -33,12 +33,6 @@ export function selectVerifiableCredentialData(state: State) {
         issuerLogo: getMosipLogo(),
       };
 }
-export function selectEmptyWalletBindingId(state: State) {
-  var val = state.context.walletBindingResponse
-    ? state.context.walletBindingResponse.walletBindingId
-    : undefined;
-  return val == undefined || val == null || val.length <= 0 ? true : false;
-}
 
 export function selectKebabPopUp(state: State) {
   return state.context.isMachineInKebabPopupState;

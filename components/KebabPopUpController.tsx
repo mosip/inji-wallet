@@ -9,9 +9,9 @@ import {
   selectKebabPopUp,
   selectRemoveWalletWarning,
   selectShowActivities,
+  selectWalletBindingResponse,
   selectShowWalletBindingError,
   selectWalletBindingInProgress,
-  selectEmptyWalletBindingId,
 } from '../machines/VCItemMachine/selectors';
 import {selectActivities} from '../machines/activityLog';
 import {GlobalContext} from '../shared/GlobalContext';
@@ -56,7 +56,10 @@ export function useKebabPopUp(props) {
     service,
     selectShowWalletBindingError,
   );
-  const emptyWalletBindingId = useSelector(service, selectEmptyWalletBindingId);
+  const walletBindingResponse = useSelector(
+    service,
+    selectWalletBindingResponse,
+  );
   const otpError = useSelector(service, selectError);
   const walletBindingError = useSelector(service, selectError);
   const bindingAuthFailedError = useSelector(
@@ -109,11 +112,11 @@ export function useKebabPopUp(props) {
     isWalletBindingError,
     walletBindingError,
     bindingAuthFailedError,
+    walletBindingResponse,
     otpError,
     WalletBindingInProgress,
     isKebabPopUp,
     isShowActivities,
-    emptyWalletBindingId,
     isRemoveWalletWarning,
     activities: useSelector(activityLogService, selectActivities),
     communicationDetails,

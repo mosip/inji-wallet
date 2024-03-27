@@ -205,5 +205,7 @@ fileignoreconfig:
     checksum: 9386b7d2d9bba27d8f15e6cb482451dc45b785b4caa31bc29718ef16967e6ed1
   - filename: machines/VCItemMachine/VCItemMachine.typegen.ts
     checksum: 850b5d02636bef9e286fc0fbc4ffffbd38068f332c319302a906496f4bc1c8a1
+  - filename: machines/VCItemMachine/VCItemEvents.ts
+    checksum: 04e5758d4fa8bc37e8b66f7f51627a9e71ccbca7a046aa64e914f5cf855aa48b
     version: ""
 

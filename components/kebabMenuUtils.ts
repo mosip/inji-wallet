@@ -15,7 +15,7 @@ export const getKebabMenuOptions = props => {
   };
 
   const activationNotCompleted =
-    controller.emptyWalletBindingId &&
+    !controller.walletBindingResponse &&
     isActivationNeeded(props?.vcMetadata.issuer);
 
   const vcActionsList = [

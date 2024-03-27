@@ -3,11 +3,7 @@ import {AppServices} from '../../shared/GlobalContext';
 import {VCMetadata} from '../../shared/VCMetadata';
 import {assign, EventFrom, send} from 'xstate';
 import {getIdType} from '../../shared/openId4VCI/Utils';
-import {
-  VC,
-  VerifiableCredential,
-  WalletBindingResponse,
-} from '../../types/VC/vc';
+import {VerifiableCredential, WalletBindingResponse} from '../../types/VC/vc';
 import {StoreEvents} from '../store';
 import {ActivityLogEvents} from '../activityLog';
 import {MIMOTO_BASE_URL, MY_VCS_STORE_KEY} from '../../shared/constants';
@@ -42,6 +38,7 @@ import {getHomeMachineService} from '../../screens/Home/HomeScreenController';
 import {verifyCredential} from '../../shared/vcjs/verifyCredential';
 import getAllConfigurations, {API_URLS, DownloadProps} from '../../shared/api';
 import {CommunicationDetails} from '../../shared/Utils';
+import {VCItemEvent} from './VCItemEvents';
 
 const machineName = 'vc-item-machine';
 const model = createModel(
@@ -65,35 +62,11 @@ const model = createModel(
     communicationDetails: null as unknown as CommunicationDetails,
   },
   {
-    events: {
-      DISMISS: () => ({}),
-      CREDENTIAL_DOWNLOADED: (response: VC) => ({response}),
-      STORE_RESPONSE: (response: VC) => ({response}),
-      STORE_ERROR: (error: Error) => ({error}),
-      POLL: () => ({}),
-      DOWNLOAD_READY: () => ({}),
-      FAILED: () => ({}),
-      GET_VC_RESPONSE: (response: VC) => ({response}),
-      INPUT_OTP: (OTP: string) => ({OTP}),
-      RESEND_OTP: () => ({}),
-      REFRESH: () => ({}),
-      ADD_WALLET_BINDING_ID: () => ({}),
-      CANCEL: () => ({}),
-      CONFIRM: () => ({}),
-      PIN_CARD: () => ({}),
-      KEBAB_POPUP: () => ({}),
-      SHOW_ACTIVITY: () => ({}),
-      CLOSE_VC_MODAL: () => ({}),
-      REMOVE: (vcMetadata: VCMetadata) => ({vcMetadata}),
-      UPDATE_VC_METADATA: (vcMetadata: VCMetadata) => ({vcMetadata}),
-      TAMPERED_VC: (key: string) => ({key}),
-      SHOW_BINDING_STATUS: () => ({}),
-    },
+    events: VCItemEvent,
   },
 );
 
 export const VCItemEvents = model.events;
-
 export const VCItemMachine = model.createMachine(
   {
     predictableActionArguments: true,
