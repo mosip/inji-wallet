@@ -30,9 +30,15 @@ import {GlobalContext} from '../../shared/GlobalContext';
 import {VC} from '../../types/VC/ExistingMosipVC/vc';
 import {QrLoginProps} from './QrLogin';
 import {EsignetMosipVCItemMachine} from '../../machines/VCItemMachine/EsignetMosipVCItem/EsignetMosipVCItemMachine';
+import {NavigationProp, useNavigation} from '@react-navigation/native';
+import {RootRouteProps} from '../../routes';
+import {BOTTOM_TAB_ROUTES} from '../../routes/routesConstants';
+
+type MyVcsTabNavigation = NavigationProp<RootRouteProps>;
 
 export function useQrLogin({service}: QrLoginProps) {
   const {appService} = useContext(GlobalContext);
+  const navigation = useNavigation<MyVcsTabNavigation>();
 
   const vcService = appService.children.get('vc');
   const [selectedIndex, setSelectedIndex] = useState<number>(null);
@@ -100,5 +106,8 @@ export function useQrLogin({service}: QrLoginProps) {
     FACE_VALID: () => service.send(QrLoginEvents.FACE_VALID()),
     FACE_INVALID: () => service.send(QrLoginEvents.FACE_INVALID()),
     RETRY_VERIFICATION: () => service.send(QrLoginEvents.RETRY_VERIFICATION()),
+    GO_TO_HOME: () => {
+      navigation.navigate(BOTTOM_TAB_ROUTES.home, {screen: 'HomeScreen'});
+    },
   };
 }
