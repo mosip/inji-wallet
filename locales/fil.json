@@ -582,7 +582,7 @@
     "bluetoothStateAndroid": "Naka-OFF ang Bluetooth, paki-ON ito mula sa control center",
     "enableBluetoothMessage": "Mangyaring paganahin ang mga pahintulot ng bluetooth upang suportahan ang lokal na pagbabahagi",
     "enableBluetoothButtonText": "Payagan ang mga pahintulot ng bluetooth",
-    "scanningGuide": "Panatilihin ang telepono at i-scan ang QR code",
+    "scanningGuide": "Panatilihin ang telepono at i-scan ang QR code upang ibahagi ang iyong card.",
     "invalidQR": "Mangyaring mag-scan ng wastong QR",
     "errors": {
       "locationDisabled": {

@@ -140,9 +140,6 @@ export const SendVcScreen: React.FC = () => {
         onCancel={controller.CANCEL}
         onFaceValid={controller.FACE_VALID}
         onFaceInvalid={controller.FACE_INVALID}
-        isInvalidIdentity={controller.isInvalidIdentity}
-        onDismiss={controller.DISMISS}
-        onRetryVerification={controller.RETRY_VERIFICATION}
       />
 
       <FaceVerificationAlertOverlay

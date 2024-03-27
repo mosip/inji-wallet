@@ -247,7 +247,7 @@ public class NoNetworkAndroidTest extends AndroidBaseTest {
 
         pleaseConfirmPopupPage.clickOnConfirmButton();
 
-        AndroidUtil.disableAirplaneMode();
+        UpdateNetworkSettings.resetNetworkProfile(sessionId);
         assertEquals(homePage.verifyLanguageForNoVCDownloadedPageLoaded(), "Bring your digital identity");
     }
     
@@ -294,8 +294,6 @@ public class NoNetworkAndroidTest extends AndroidBaseTest {
         
         detailedVcViewPage.clickOnQrCrossIcon();
         assertTrue(homePage.isNameDisplayed(TestDataReader.readData("fullName")), "Verify if full name is displayed");
-        
-        AndroidUtil.disableAirplaneMode();
     }
     
     @Test

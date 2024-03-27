@@ -38,5 +38,4 @@ public class TrustedDigitalWalletPage extends BasePage {
         this.clickOnElement(nextButton);
         return new AppUnlockMethodPage(driver);
     }
-
 }

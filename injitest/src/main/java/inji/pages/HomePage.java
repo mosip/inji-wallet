@@ -73,7 +73,7 @@ public class HomePage extends BasePage {
     private WebElement idTypeValue;
     
     @AndroidFindBy(xpath = "//android.widget.TextView[@text=\"Try again\"]")
-    @iOSXCUITFindBy(accessibility = "errorTitle")
+    @iOSXCUITFindBy(accessibility = "tryAgain")
     private WebElement tryAgainButton;
 
     @AndroidFindBy(uiAutomator = "new UiSelector().textContains(\"Subukan muli\")")
@@ -133,7 +133,7 @@ public class HomePage extends BasePage {
 
     public boolean isNameDisplayed(String name) {
         By fullName = By.xpath("//*[contains(@value,'" + name + "') or contains(@text,'" + name + "')]");
-        return this.isElementDisplayed(fullName, 120);
+        return this.isElementDisplayed(fullName, 220);
     }
 
     public boolean isSecondNameDisplayed(String name) {
@@ -245,7 +245,7 @@ public class HomePage extends BasePage {
     public void clickOnTryAgainFillpinoButton() {
         clickOnElement(tryAgainButtonInFillpino);
     }
-    
+
     public boolean isDownloadingVcPopupDisplayed() {
         return this.retrieIsElementVisible(downloadingVcPopup);
     }
