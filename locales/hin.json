@@ -585,7 +585,7 @@
     "bluetoothStateAndroid": "ब्लूटूथ बंद है, कृपया इसे त्वरित सेटिंग मेनू से चालू करें",
     "enableBluetoothMessage": "कृपया स्थानीय साझाकरण का समर्थन करने के लिए ब्लूटूथ अनुमतियाँ सक्षम करें",
     "enableBluetoothButtonText": "ब्लूटूथ अनुमतियाँ दें",
-    "scanningGuide": "फ़ोन को स्थिर रखें और QR कोड को स्कैन करें",
+    "scanningGuide": "फ़ोन को स्थिर रखें और अपना कार्ड साझा करने के लिए QR कोड को स्कैन करें।",
     "invalidQR": "कृपया एक वैध क्यूआर स्कैन करें",
     "errors": {
       "locationDisabled": {

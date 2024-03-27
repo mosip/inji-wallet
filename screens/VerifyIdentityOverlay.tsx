@@ -1,13 +1,12 @@
 import React from 'react';
 
 import {FaceScanner} from '../components/FaceScanner';
-import {Column, Row, Button} from '../components/ui';
+import {Column} from '../components/ui';
 import {Theme} from '../components/ui/styleUtils';
 import {VC} from '../types/VC/ExistingMosipVC/vc';
 import {Modal} from '../components/ui/Modal';
 import {useTranslation} from 'react-i18next';
 import {VCMetadata} from '../shared/VCMetadata';
-import {MessageOverlay} from '../components/MessageOverlay';
 
 export const VerifyIdentityOverlay: React.FC<
   VerifyIdentityOverlayProps
@@ -43,30 +42,6 @@ export const VerifyIdentityOverlay: React.FC<
           )}
         </Column>
       </Modal>
-
-      <MessageOverlay
-        isVisible={props.isInvalidIdentity}
-        title={t('VerifyIdentityOverlay:errors.invalidIdentity.title')}
-        message={t('VerifyIdentityOverlay:errors.invalidIdentity.message')}
-        minHeight={'auto'}
-        onBackdropPress={props.onDismiss}>
-        <Row>
-          <Button
-            testID="cancel"
-            fill
-            type="clear"
-            title={t('common:cancel')}
-            onPress={props.onDismiss}
-            margin={[0, 8, 0, 0]}
-          />
-          <Button
-            testID="tryAgain"
-            fill
-            title={t('common:tryAgain')}
-            onPress={props.onRetryVerification}
-          />
-        </Row>
-      </MessageOverlay>
     </>
   );
 };
@@ -77,7 +52,4 @@ export interface VerifyIdentityOverlayProps {
   onCancel: () => void;
   onFaceValid: () => void;
   onFaceInvalid: () => void;
-  isInvalidIdentity: boolean;
-  onDismiss: () => void;
-  onRetryVerification: () => void;
 }

@@ -2,7 +2,6 @@ import React, {useContext, useEffect, useRef} from 'react';
 import {useTranslation} from 'react-i18next';
 import {Button, Column, Row, Text} from '../../components/ui';
 import {Theme} from '../../components/ui/styleUtils';
-import {MessageOverlay} from '../../components/MessageOverlay';
 import {useSendVcScreen} from './SendVcScreenController';
 import {VerifyIdentityOverlay} from '../VerifyIdentityOverlay';
 import {BackHandler} from 'react-native';
@@ -147,9 +146,6 @@ export const SendVcScreen: React.FC = () => {
         onCancel={controller.CANCEL}
         onFaceValid={controller.FACE_VALID}
         onFaceInvalid={controller.FACE_INVALID}
-        isInvalidIdentity={controller.isInvalidIdentity}
-        onDismiss={controller.DISMISS}
-        onRetryVerification={controller.RETRY_VERIFICATION}
       />
 
       <FaceVerificationAlertOverlay
