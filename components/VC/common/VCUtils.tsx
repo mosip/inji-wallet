@@ -7,6 +7,7 @@ import {Theme} from '../../ui/styleUtils';
 import {CREDENTIAL_REGISTRY_EDIT} from 'react-native-dotenv';
 import {getIDType} from '../../../shared/openId4VCI/Utils';
 import {VCVerification} from '../../VCVerification';
+import {MIMOTO_BASE_URL} from '../../../shared/constants';
 
 export const CARD_VIEW_DEFAULT_FIELDS = ['fullName'];
 export const DETAIL_VIEW_DEFAULT_FIELDS = [
@@ -171,4 +172,11 @@ export const fieldItemIterator = (
 
 export const isVCLoaded = (verifiableCredential: any, fields: string[]) => {
   return verifiableCredential != null && fields.length > 0;
+};
+
+export const getMosipLogo = () => {
+  return {
+    url: `${MIMOTO_BASE_URL}/inji/mosip-logo.png`,
+    alt_text: 'a square logo of mosip',
+  };
 };

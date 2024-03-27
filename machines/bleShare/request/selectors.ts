@@ -1,8 +1,7 @@
 import {StateFrom} from 'xstate';
 import {requestMachine} from './requestMachine';
 import {VCMetadata} from '../../../shared/VCMetadata';
-import {SvgImage} from '../../../components/ui/svg';
-import {Theme} from '../../../components/ui/styleUtils';
+import {getMosipLogo} from '../../../components/VC/common/VCUtils';
 
 type State = StateFrom<typeof requestMachine>;
 
@@ -10,26 +9,29 @@ export function selectSenderInfo(state: State) {
   return state.context.senderInfo;
 }
 
-export function selectIncomingVc(state: State) {
-  return state.context.incomingVc;
-}
-
 export function selectCredential(state: State) {
-  return new VCMetadata(state.context.incomingVc.vcMetadata).isFromOpenId4VCI()
-    ? state.context.incomingVc.verifiableCredential?.credential
-    : state.context.incomingVc.verifiableCredential;
+  return new VCMetadata(state.context.incomingVc?.vcMetadata).isFromOpenId4VCI()
+    ? state.context.incomingVc?.verifiableCredential?.credential
+    : state.context.incomingVc?.verifiableCredential;
 }
 
 export function selectVerifiableCredentialData(state: State) {
-  return new VCMetadata(state.context.vcMetadata).isFromOpenId4VCI()
+  const vcMetadata = new VCMetadata(state.context.incomingVc?.vcMetadata);
+  return vcMetadata.isFromOpenId4VCI()
     ? {
-        face: state.context.incomingVc.verifiableCredential.credential
+        vcMetadata: vcMetadata,
+        face: state.context.incomingVc?.verifiableCredential.credential
           .credentialSubject.face,
-        issuerLogo: state.context.incomingVc.verifiableCredential.issuerLogo,
+        issuerLogo: state.context.incomingVc?.verifiableCredential?.issuerLogo,
+        wellKnown: state.context.incomingVc?.verifiableCredential?.wellKnown,
+        credentialTypes:
+          state.context.incomingVc?.verifiableCredential?.credentialTypes,
+        issuer: vcMetadata.issuer,
       }
     : {
-        face: state.context.incomingVc.credential.biometrics.face,
-        issuerLogo: SvgImage.MosipLogo(Theme.Styles.logo),
+        vcMetadata: vcMetadata,
+        face: state.context.incomingVc?.credential?.biometrics?.face,
+        issuerLogo: getMosipLogo(),
       };
 }
 

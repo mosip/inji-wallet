@@ -1,8 +1,7 @@
 import {StateFrom} from 'xstate';
 import {scanMachine} from './scanMachine';
 import {VCMetadata} from '../../../shared/VCMetadata';
-import {SvgImage} from '../../../components/ui/svg';
-import {Theme} from '../../../components/ui/styleUtils';
+import {getMosipLogo} from '../../../components/VC/common/VCUtils';
 
 type State = StateFrom<typeof scanMachine>;
 
@@ -18,26 +17,31 @@ export function selectVcName(state: State) {
   return state.context.vcName;
 }
 
-export function selectSelectedVc(state: State) {
-  return state.context.selectedVc;
-}
-
 export function selectCredential(state: State) {
-  return new VCMetadata(state.context.selectedVc.vcMetadata).isFromOpenId4VCI()
-    ? state.context.selectedVc.verifiableCredential?.credential
-    : state.context.selectedVc.verifiableCredential;
+  return new VCMetadata(state.context.selectedVc?.vcMetadata).isFromOpenId4VCI()
+    ? state.context.selectedVc?.verifiableCredential?.credential
+    : state.context.selectedVc?.verifiableCredential;
 }
 
 export function selectVerifiableCredentialData(state: State) {
-  return new VCMetadata(state.context.selectedVc.vcMetadata).isFromOpenId4VCI()
+  const vcMetadata = new VCMetadata(state.context.selectedVc?.vcMetadata);
+  return vcMetadata.isFromOpenId4VCI()
     ? {
-        face: state.context.selectedVc.verifiableCredential.credential
-          .credentialSubject.face,
-        issuerLogo: state.context.selectedVc.verifiableCredential.issuerLogo,
+        vcMetadata: vcMetadata,
+        issuer: vcMetadata.issuer,
+        issuerLogo: state.context.selectedVc?.verifiableCredential?.issuerLogo,
+        wellKnown: state.context.selectedVc?.verifiableCredential?.wellKnown,
+        shouldVerifyPresence: state.context.selectedVc?.shouldVerifyPresence,
+        face: state.context.selectedVc?.verifiableCredential?.credential
+          .credentialSubject?.face,
+        credentialTypes:
+          state.context.selectedVc?.verifiableCredential?.credentialTypes,
       }
     : {
-        face: state.context.selectedVc.credential.biometrics.face,
-        issuerLogo: SvgImage.MosipLogo(Theme.Styles.logo),
+        vcMetadata: vcMetadata,
+        face: state.context.selectedVc?.credential?.biometrics?.face,
+        issuerLogo: getMosipLogo(),
+        shouldVerifyPresence: state.context.selectedVc?.shouldVerifyPresence,
       };
 }
 

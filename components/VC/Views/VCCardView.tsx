@@ -21,7 +21,6 @@ export const VCCardView: React.FC<VCItemProps> = props => {
     service,
     context,
     credential,
-    verifiableCredential,
     verifiableCredentialData,
     walletBindingResponse,
     isKebabPopUp,
@@ -45,17 +44,17 @@ export const VCCardView: React.FC<VCItemProps> = props => {
   const [wellknown, setWellknown] = useState(null);
   useEffect(() => {
     getCredentialIssuersWellKnownConfig(
-      props?.vcMetadata.issuer,
-      verifiableCredential?.wellKnown,
-      verifiableCredential?.credentialTypes,
+      verifiableCredentialData?.issuer,
+      verifiableCredentialData?.wellKnown,
+      verifiableCredentialData?.credentialTypes,
       CARD_VIEW_DEFAULT_FIELDS,
     ).then(response => {
       setWellknown(response.wellknown);
       setFields(response.fields);
     });
-  }, [verifiableCredential?.wellKnown]);
+  }, [verifiableCredentialData?.wellKnown]);
 
-  if (!isVCLoaded(verifiableCredential, fields)) {
+  if (!isVCLoaded(credential, fields)) {
     return <VCCardSkeleton />;
   }
 
@@ -72,7 +71,6 @@ export const VCCardView: React.FC<VCItemProps> = props => {
         <VCCardViewContent
           vcMetadata={props.vcMetadata}
           context={context}
-          verifiableCredential={verifiableCredential}
           walletBindingResponse={walletBindingResponse}
           credential={vc}
           verifiableCredentialData={verifiableCredentialData}
@@ -89,7 +87,7 @@ export const VCCardView: React.FC<VCItemProps> = props => {
           isKebabPopUp={isKebabPopUp}
           DISMISS={DISMISS}
           KEBAB_POPUP={KEBAB_POPUP}
-          isVerified={verifiableCredential !== null}
+          isVerified={credential !== null}
         />
       </Pressable>
       <ErrorMessageOverlay

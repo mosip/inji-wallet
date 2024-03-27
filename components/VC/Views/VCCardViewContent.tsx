@@ -1,5 +1,5 @@
 import React from 'react';
-import {ImageBackground, Pressable} from 'react-native';
+import {ImageBackground, Pressable, Image} from 'react-native';
 import {getLocalizedField} from '../../../i18n';
 import {VCMetadata} from '../../../shared/VCMetadata';
 import {KebabPopUp} from '../../KebabPopUp';
@@ -65,7 +65,16 @@ export const VCCardViewContent: React.FC<VCItemContentProps> = props => {
             </Row>
           </Column>
 
-          {!isVCLoaded(props.credential, props.fields) ? null : issuerLogo}
+          {isVCLoaded(props.credential, props.fields) && (
+            <Image
+              src={issuerLogo?.url}
+              alt={issuerLogo?.alt_text}
+              style={Theme.Styles.issuerLogo}
+              resizeMethod="scale"
+              resizeMode="contain"
+            />
+          )}
+
           {!Object.values(VCItemContainerFlowType).includes(props.flow) && (
             <>
               {props.vcMetadata.issuer === Issuers.Sunbird ||
@@ -108,7 +117,6 @@ export const VCCardViewContent: React.FC<VCItemContentProps> = props => {
 
 export interface VCItemContentProps {
   context: any;
-  verifiableCredential: VerifiableCredential;
   credential: VerifiableCredential;
   verifiableCredentialData: any;
   fields: [];

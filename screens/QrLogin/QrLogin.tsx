@@ -1,8 +1,7 @@
 import React from 'react';
-import {Button, Column, Row} from '../../components/ui';
+import {Column} from '../../components/ui';
 import {useTranslation} from 'react-i18next';
 import {useQrLogin} from './QrLoginController';
-import {Modal} from '../../components/ui/Modal';
 import {VerifyIdentityOverlay} from '../VerifyIdentityOverlay';
 import {MessageOverlay} from '../../components/MessageOverlay';
 import {MyBindedVcs} from './MyBindedVcs';
@@ -49,14 +48,13 @@ export const QrLogin: React.FC<QrLoginProps> = props => {
         />
 
         <VerifyIdentityOverlay
-          vc={controller.selectedVc}
           credential={controller.selectCredential}
           verifiableCredentialData={controller.verifiableCredentialData}
           isVerifyingIdentity={controller.isVerifyingIdentity}
           onCancel={controller.CANCEL}
           onFaceValid={controller.FACE_VALID}
           onFaceInvalid={controller.FACE_INVALID}
-          isInvalidIdentity={true}
+          isInvalidIdentity={controller.isInvalidIdentity}
           onDismiss={controller.DISMISS}
           onRetryVerification={controller.RETRY_VERIFICATION}
         />

@@ -51,7 +51,6 @@ export const ScanLayout: React.FC = () => {
   return (
     <React.Fragment>
       <VerifyIdentityOverlay
-        vc={controller.selectedVc}
         credential={controller.credential}
         verifiableCredentialData={controller.verifiableCredentialData}
         isVerifyingIdentity={controller.isVerifyingIdentity}

@@ -3,7 +3,6 @@ import {useContext} from 'react';
 import {GlobalContext} from '../../shared/GlobalContext';
 import {
   selectCredential,
-  selectIncomingVc,
   selectIsAccepting,
   selectIsDisplayingIncomingVC,
   selectIsIncomingVp,
@@ -24,7 +23,6 @@ export function useReceiveVcScreen() {
 
   return {
     senderInfo: useSelector(requestService, selectSenderInfo),
-    incomingVc: useSelector(requestService, selectIncomingVc),
     credential: useSelector(requestService, selectCredential),
     verifiableCredentialData: useSelector(
       requestService,

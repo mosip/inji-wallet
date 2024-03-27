@@ -17,10 +17,10 @@ const model = createModel(
     myVcs: [] as VCMetadata[],
     receivedVcs: [] as VCMetadata[],
     vcs: {} as Record<string, VC>,
-    inProgressVcDownloads: new Set<string>(),
+    inProgressVcDownloads: new Set<string>(), //VCDownloadInProgress
     walletBindingSuccess: false,
     tamperedVcs: [] as VCMetadata[],
-    downloadingFailedVcs: [] as VCMetadata[],
+    downloadingFailedVcs: [] as VCMetadata[], //VCDownloadFailed
     verificationErrorMessage: '' as string,
   },
   {

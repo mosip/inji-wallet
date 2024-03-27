@@ -21,7 +21,6 @@ import {
   selectIsSent,
   selectIsDone,
   selectFlowType,
-  selectSelectedVc,
   selectIsFaceIdentityVerified,
   selectCredential,
   selectVerifiableCredentialData,
@@ -70,7 +69,6 @@ export function useScanLayout() {
     scanService,
     selectIsVerifyingIdentity,
   );
-  const selectedVc = useSelector(scanService, selectSelectedVc);
   const bleError = useSelector(scanService, selectBleError);
   const credential = useSelector(scanService, selectCredential);
   const verifiableCredentialData = useSelector(
@@ -311,7 +309,6 @@ export function useScanLayout() {
     flowType,
     isVerifyingIdentity,
     isInvalidIdentity,
-    selectedVc,
     FACE_INVALID,
     FACE_VALID,
     RETRY_VERIFICATION,

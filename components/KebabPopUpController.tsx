@@ -11,6 +11,7 @@ import {
   selectShowActivities,
   selectShowWalletBindingError,
   selectWalletBindingInProgress,
+  selectEmptyWalletBindingId,
 } from '../machines/VCItemMachine/selectors';
 import {selectActivities} from '../machines/activityLog';
 import {GlobalContext} from '../shared/GlobalContext';
@@ -55,6 +56,7 @@ export function useKebabPopUp(props) {
     service,
     selectShowWalletBindingError,
   );
+  const emptyWalletBindingId = useSelector(service, selectEmptyWalletBindingId);
   const otpError = useSelector(service, selectError);
   const walletBindingError = useSelector(service, selectError);
   const bindingAuthFailedError = useSelector(
@@ -74,7 +76,7 @@ export function useKebabPopUp(props) {
   );
   const {appService} = useContext(GlobalContext);
   const activityLogService = appService.children.get('activityLog');
-  const scanService = appService.children.get('scan');
+  const scanService = appService.children.get('scan')!!;
   const isScanning = useSelector(scanService, selectIsScanning);
 
   const GOTO_SCANSCREEN = () => {
@@ -111,6 +113,7 @@ export function useKebabPopUp(props) {
     WalletBindingInProgress,
     isKebabPopUp,
     isShowActivities,
+    emptyWalletBindingId,
     isRemoveWalletWarning,
     activities: useSelector(activityLogService, selectActivities),
     communicationDetails,

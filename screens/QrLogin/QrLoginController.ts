@@ -22,9 +22,9 @@ import {
   selectLinkTransactionResponse,
   selectLogoUrl,
   selectDomainName,
-  selectSelectedVc,
   selectVoluntaryClaims,
   selectCredential,
+  selectVerifiableCredentialData,
 } from '../../machines/QrLoginMachine';
 import {selectBindedVcsMetadata} from '../../machines/VCItemMachine/vc';
 import {GlobalContext} from '../../shared/GlobalContext';
@@ -49,7 +49,6 @@ export function useQrLogin({service}: QrLoginProps) {
       service,
       selectVerifiableCredentialData,
     ),
-    selectedVc: useSelector(service, selectSelectedVc),
     domainName: useSelector(service, selectDomainName),
     logoUrl: useSelector(service, selectLogoUrl),
     essentialClaims: useSelector(service, selectEssentialClaims),

@@ -49,7 +49,7 @@ export const ViewVcModal: React.FC<ViewVcModalProps> = props => {
           <KebabPopUp
             icon={SvgImage.kebabIcon()}
             iconColor={null}
-            vcMetadata={VCMetadata.fromVC(controller.vc.vcMetadata)}
+            vcMetadata={controller.verifiableCredentialData.vcMetadata}
             iconName="dots-three-horizontal"
             iconType="entypo"
             isVisible={
@@ -75,7 +75,6 @@ export const ViewVcModal: React.FC<ViewVcModalProps> = props => {
       headerElevation={2}>
       <BannerNotificationContainer />
       <VcDetailsContainer
-        vc={controller.vc}
         credential={controller.credential}
         verifiableCredentialData={controller.verifiableCredentialData}
         onBinding={controller.addtoWallet}
@@ -123,18 +122,20 @@ export const ViewVcModal: React.FC<ViewVcModalProps> = props => {
 
       <WalletBinding
         service={props.vcItemActor}
-        vcMetadata={controller.vc.vcMetadata}
+        vcMetadata={controller.verifiableCredentialData.vcMetadata}
       />
 
       <RemoveVcWarningOverlay
         testID="removeVcWarningOverlay"
         service={props.vcItemActor}
-        vcMetadata={controller.vc.vcMetadata}
+        vcMetadata={controller.verifiableCredentialData.vcMetadata}
       />
 
       <HistoryTab
         service={props.vcItemActor}
-        vcMetadata={VCMetadata.fromVC(controller.vc.vcMetadata)}
+        vcMetadata={VCMetadata.fromVC(
+          controller.verifiableCredentialData.vcMetadata,
+        )}
       />
     </Modal>
   );

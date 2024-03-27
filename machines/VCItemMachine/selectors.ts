@@ -1,8 +1,7 @@
 import {StateFrom} from 'xstate';
 import {VCMetadata} from '../../shared/VCMetadata';
 import {VCItemMachine} from './VCItemMachine';
-import {SvgImage} from '../../components/ui/svg';
-import {Theme} from '../../components/ui/styleUtils';
+import {getMosipLogo} from '../../components/VC/common/VCUtils';
 
 type State = StateFrom<typeof VCItemMachine>;
 
@@ -17,16 +16,28 @@ export function selectCredential(state: State) {
 }
 
 export function selectVerifiableCredentialData(state: State) {
-  return new VCMetadata(state.context.vcMetadata).isFromOpenId4VCI()
+  const vcMetadata = new VCMetadata(state.context.vcMetadata);
+  return vcMetadata.isFromOpenId4VCI()
     ? {
-        face: state.context.verifiableCredential.credential.credentialSubject
+        vcMetadata: vcMetadata,
+        face: state.context.verifiableCredential?.credential?.credentialSubject
           .face,
-        issuerLogo: state.context.verifiableCredential.issuerLogo,
+        issuerLogo: state.context.verifiableCredential?.issuerLogo,
+        wellKnown: state.context.verifiableCredential?.wellKnown,
+        credentialTypes: state.context.verifiableCredential?.credentialTypes,
+        issuer: vcMetadata.issuer,
       }
     : {
-        face: state.context.credential.biometrics.face,
-        issuerLogo: SvgImage.MosipLogo(Theme.Styles.logo),
+        vcMetadata: vcMetadata,
+        face: state.context.credential?.biometrics?.face,
+        issuerLogo: getMosipLogo(),
       };
+}
+export function selectEmptyWalletBindingId(state: State) {
+  var val = state.context.walletBindingResponse
+    ? state.context.walletBindingResponse.walletBindingId
+    : undefined;
+  return val == undefined || val == null || val.length <= 0 ? true : false;
 }
 
 export function selectKebabPopUp(state: State) {

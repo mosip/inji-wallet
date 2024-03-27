@@ -4,7 +4,6 @@ import {
   selectContext,
   selectGeneratedOn,
   selectKebabPopUp,
-  selectVerifiableCredential,
   selectWalletBindingResponse,
   selectCredential,
   selectVerifiableCredentialData,
@@ -32,7 +31,6 @@ export function useVcItemController(props: VCItemProps) {
   const service = useInterpret(machine.current, {devTools: __DEV__});
 
   const context = useSelector(service, selectContext);
-  const verifiableCredential = useSelector(service, selectVerifiableCredential);
   const walletBindingResponse = useSelector(
     service,
     selectWalletBindingResponse,
@@ -55,7 +53,6 @@ export function useVcItemController(props: VCItemProps) {
       service,
       selectVerifiableCredentialData,
     ),
-    verifiableCredential,
     walletBindingResponse,
     isKebabPopUp,
     DISMISS,

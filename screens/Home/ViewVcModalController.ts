@@ -87,7 +87,6 @@ export function useViewVcModal({vcItemActor, isVisible}: ViewVcModalProps) {
       vcItemActor,
       selectVerifiableCredentialData,
     ),
-    vc,
     otpError: useSelector(vcItemActor, selectOtpError),
     bindingAuthFailedError: useSelector(
       vcItemActor,

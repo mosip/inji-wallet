@@ -102,11 +102,10 @@ export const SendVcScreen: React.FC = () => {
         <Column
           style={Theme.SendVcScreenStyles.shareOptionButtonsContainer}
           backgroundColor={Theme.Colors.whiteBackgroundColor}>
-          {!controller.selectedVc.shouldVerifyPresence &&
-            controller.selectedVc?.vcMetadata &&
+          {!controller.verifiableCredentialData.shouldVerifyPresence &&
+            controller.verifiableCredentialData.vcMetadata &&
             [Issuers.Mosip, Issuers.ESignet].indexOf(
-              VCMetadata.fromVcMetadataString(controller.selectedVc.vcMetadata)
-                .issuer,
+              controller.verifiableCredentialData.issuer,
             ) !== -1 && (
               <Button
                 type="gradient"
@@ -135,7 +134,6 @@ export const SendVcScreen: React.FC = () => {
       </Column>
 
       <VerifyIdentityOverlay
-        vc={controller.selectedVc}
         credential={controller.credential}
         verifiableCredentialData={controller.verifiableCredentialData}
         isVerifyingIdentity={controller.isVerifyingIdentity}

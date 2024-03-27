@@ -13,7 +13,7 @@ export const VerifyIdentityOverlay: React.FC<
 > = props => {
   const {t} = useTranslation('VerifyIdentityOverlay');
   const credential = props.credential;
-  const vcImage = props.verifiableCredentialData;
+  const vcImage = props.verifiableCredentialData.face;
 
   return (
     <>
@@ -64,7 +64,6 @@ export const VerifyIdentityOverlay: React.FC<
 };
 
 export interface VerifyIdentityOverlayProps {
-  vc?: VC;
   credential?: VerifiableCredential | Credential;
   verifiableCredentialData: any;
   isVerifyingIdentity: boolean;

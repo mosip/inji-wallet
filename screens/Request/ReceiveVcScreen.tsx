@@ -31,7 +31,6 @@ export const ReceiveVcScreen: React.FC = () => {
               {t('header')}
             </Text>
             <VcDetailsContainer
-              vc={controller.incomingVc}
               credential={controller.credential}
               verifiableCredentialData={controller.verifiableCredentialData}
               isBindingPending={false}
@@ -49,7 +48,6 @@ export const ReceiveVcScreen: React.FC = () => {
       )}
 
       <VerifyIdentityOverlay
-        vc={controller.incomingVc}
         credential={controller.selectCredential}
         verifiableCredentialData={controller.verifiableCredentialData}
         isVerifyingIdentity={controller.isVerifyingIdentity}
