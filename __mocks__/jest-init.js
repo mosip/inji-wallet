@@ -7,6 +7,9 @@ import mockReactNativeKeychain from 'react-native-keychain.mock';
 import mockRNSecureKeyStore from 'react-native-secure-key-store.mock';
 import mockClipboard from '@react-native-clipboard/clipboard/jest/clipboard-mock.js';
 import mockLocalization from 'expo-localization.mock';
+import mockRNCNetInfo from '@react-native-community/netinfo/jest/netinfo-mock.js';
+
+jest.mock('@react-native-community/netinfo', () => mockRNCNetInfo);
 
 jest.mock('react-native-device-info', () => mockRNDeviceInfo);
 
@@ -29,8 +32,6 @@ jest.mock('telemetry-sdk', () => require('./telemetry-sdk.mock'));
 jest.mock('react-native-localize', () => mockRNLocalize);
 
 jest.mock('expo-localization', () => mockLocalization);
-
-// jest.mock('./locales/en.json', () => require('en.mock.json'));
 
 jest.mock('iso-639-3');
 

@@ -64,8 +64,6 @@ module.exports = {
       '<rootDir>/__mocks__/fileMock.js',
     '\\.(svg)$': '<rootDir>/__mocks__/svg.mock.js',
     '^\\.\\/locales\\/en\\.json$': '<rootDir>/__mocks__/en.mock.json',
-    '^@digitalbazaar/rsa-verification-key-2018$':
-      '<rootDir>/__mocks__/rsa-verification-key-2018.js',
     '^react-native-biometrics-changed$':
       '<rootDir>/__mocks__/react-native-biometrics-changed.js',
   },

@@ -1078,9 +1078,6 @@ export const PurpleTheme = {
       borderRadius: 10,
       backgroundColor: Colors.Purple,
     },
-    plain: {
-      backgroundColor: Colors.Transparent,
-    },
   }),
   OIDCAuthStyles: StyleSheet.create({
     viewContainer: {
