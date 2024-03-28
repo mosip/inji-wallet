@@ -54,7 +54,7 @@ export const WalletBinding: React.FC<WalletBindingProps> = props => {
         onButtonPress={controller.CANCEL}
       />
       <MessageOverlay
-        isVisible={controller.WalletBindingInProgress}
+        isVisible={controller.walletBindingInProgress}
         title={t('inProgress')}
         progress
       />

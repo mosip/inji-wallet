@@ -7,7 +7,7 @@ import {
   selectWalletBindingResponse,
   selectCredential,
   selectVerifiableCredentialData,
-} from '../../machines/VCItemMachine/selectors';
+} from '../../machines/VCItemMachine/VCItemSelectors';
 import {useInterpret, useSelector} from '@xstate/react';
 import {VCItemProps} from './Views/VCCardView';
 import {

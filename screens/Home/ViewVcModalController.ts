@@ -18,7 +18,7 @@ import {
   selectWalletBindingInProgress,
   selectWalletBindingResponse,
   selectWalletBindingSuccess,
-} from '../../machines/VCItemMachine/selectors';
+} from '../../machines/VCItemMachine/VCItemSelectors';
 import {selectPasscode} from '../../machines/auth';
 import {biometricsMachine, selectIsSuccess} from '../../machines/biometrics';
 import {

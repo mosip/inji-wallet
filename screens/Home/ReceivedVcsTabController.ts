@@ -19,7 +19,7 @@ import {
   selectViewingVc,
 } from './HomeScreenMachine';
 import {VCItemMachine} from '../../machines/VCItemMachine/VCItemMachine';
-import {selectVc} from '../../machines/VCItemMachine/selectors';
+import {selectVc} from '../../machines/VCItemMachine/VCItemSelectors';
 
 export function useReceivedVcsTab() {
   const [isVisible, setIsVisible] = useState(false);

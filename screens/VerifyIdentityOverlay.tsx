@@ -1,12 +1,10 @@
 import React from 'react';
-
 import {FaceScanner} from '../components/FaceScanner';
 import {Column} from '../components/ui';
 import {Theme} from '../components/ui/styleUtils';
-import {VC, VerifiableCredential} from '../types/VC/vc';
+import {VerifiableCredential} from '../types/VC/vc';
 import {Modal} from '../components/ui/Modal';
 import {useTranslation} from 'react-i18next';
-import {MessageOverlay} from '../components/MessageOverlay';
 
 export const VerifyIdentityOverlay: React.FC<
   VerifyIdentityOverlayProps

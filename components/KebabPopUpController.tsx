@@ -12,7 +12,7 @@ import {
   selectWalletBindingResponse,
   selectShowWalletBindingError,
   selectWalletBindingInProgress,
-} from '../machines/VCItemMachine/selectors';
+} from '../machines/VCItemMachine/VCItemSelectors';
 import {selectActivities} from '../machines/activityLog';
 import {GlobalContext} from '../shared/GlobalContext';
 import {useContext} from 'react';
@@ -36,69 +36,46 @@ export function useKebabPopUp(props) {
   const service = props.service as ActorRefFrom<typeof VCItemMachine>;
   const navigation = useNavigation<ScanLayoutNavigation>();
   const vcEvents = VCItemEvents;
-  const PIN_CARD = () => service.send(vcEvents.PIN_CARD());
-  const KEBAB_POPUP = () => service.send(vcEvents.KEBAB_POPUP());
-  const ADD_WALLET_BINDING_ID = () =>
-    service.send(vcEvents.ADD_WALLET_BINDING_ID());
-  const CONFIRM = () => service.send(vcEvents.CONFIRM());
-  const REMOVE = (vcMetadata: VCMetadata) =>
-    service.send(vcEvents.REMOVE(vcMetadata));
-  const DISMISS = () => service.send(vcEvents.DISMISS());
-  const CANCEL = () => service.send(vcEvents.CANCEL());
-  const SHOW_ACTIVITY = () => service.send(vcEvents.SHOW_ACTIVITY());
-  const INPUT_OTP = (otp: string) => service.send(vcEvents.INPUT_OTP(otp));
-  const RESEND_OTP = () => service.send(vcEvents.RESEND_OTP());
-  const isPinned = useSelector(service, selectIsPinned);
-  const isBindingWarning = useSelector(service, selectBindingWarning);
-  const isRemoveWalletWarning = useSelector(service, selectRemoveWalletWarning);
-  const isAcceptingOtpInput = useSelector(service, selectAcceptingBindingOtp);
-  const isWalletBindingError = useSelector(
-    service,
-    selectShowWalletBindingError,
-  );
-  const walletBindingResponse = useSelector(
-    service,
-    selectWalletBindingResponse,
-  );
-  const otpError = useSelector(service, selectError);
-  const walletBindingError = useSelector(service, selectError);
-  const bindingAuthFailedError = useSelector(
-    service,
-    selectBindingAuthFailedError,
-  );
-  const WalletBindingInProgress = useSelector(
-    service,
-    selectWalletBindingInProgress,
-  );
-
-  const isKebabPopUp = useSelector(service, selectKebabPopUp);
-  const isShowActivities = useSelector(service, selectShowActivities);
-  const communicationDetails = useSelector(
-    service,
-    selectIsCommunicationDetails,
-  );
   const {appService} = useContext(GlobalContext);
-  const activityLogService = appService.children.get('activityLog');
+  const activityLogService = appService.children.get('activityLog')!!;
   const scanService = appService.children.get('scan')!!;
-  const isScanning = useSelector(scanService, selectIsScanning);
-
-  const GOTO_SCANSCREEN = () => {
-    navigation.navigate(BOTTOM_TAB_ROUTES.share);
-  };
 
   return {
-    isPinned,
-    PIN_CARD,
-    KEBAB_POPUP,
-    ADD_WALLET_BINDING_ID,
-    CONFIRM,
-    GOTO_SCANSCREEN,
-    DISMISS,
-    REMOVE,
-    CANCEL,
-    INPUT_OTP,
-    RESEND_OTP,
-    SHOW_ACTIVITY,
+    service: props.service as ActorRefFrom<typeof VCItemMachine>,
+    navigation: useNavigation<ScanLayoutNavigation>(),
+    vcEvents: VCItemEvents,
+    isScanning: useSelector(scanService, selectIsScanning),
+    activities: useSelector(activityLogService, selectActivities),
+    isPinned: useSelector(service, selectIsPinned),
+    isBindingWarning: useSelector(service, selectBindingWarning),
+    isRemoveWalletWarning: useSelector(service, selectRemoveWalletWarning),
+    isAcceptingOtpInput: useSelector(service, selectAcceptingBindingOtp),
+    isWalletBindingError: useSelector(service, selectShowWalletBindingError),
+    walletBindingResponse: useSelector(service, selectWalletBindingResponse),
+    otpError: useSelector(service, selectError),
+    walletBindingError: useSelector(service, selectError),
+    bindingAuthFailedError: useSelector(service, selectBindingAuthFailedError),
+    isKebabPopUp: useSelector(service, selectKebabPopUp),
+    isShowActivities: useSelector(service, selectShowActivities),
+    communicationDetails: useSelector(service, selectIsCommunicationDetails),
+    walletBindingInProgress: useSelector(
+      service,
+      selectWalletBindingInProgress,
+    ),
+    PIN_CARD: () => service.send(vcEvents.PIN_CARD()),
+    KEBAB_POPUP: () => service.send(vcEvents.KEBAB_POPUP()),
+    ADD_WALLET_BINDING_ID: () => service.send(vcEvents.ADD_WALLET_BINDING_ID()),
+    CONFIRM: () => service.send(vcEvents.CONFIRM()),
+    REMOVE: (vcMetadata: VCMetadata) =>
+      service.send(vcEvents.REMOVE(vcMetadata)),
+    DISMISS: () => service.send(vcEvents.DISMISS()),
+    CANCEL: () => service.send(vcEvents.CANCEL()),
+    SHOW_ACTIVITY: () => service.send(vcEvents.SHOW_ACTIVITY()),
+    INPUT_OTP: (otp: string) => service.send(vcEvents.INPUT_OTP(otp)),
+    RESEND_OTP: () => service.send(vcEvents.RESEND_OTP()),
+    GOTO_SCANSCREEN: () => {
+      navigation.navigate(BOTTOM_TAB_ROUTES.share);
+    },
     SELECT_VC_ITEM: (
       vcRef: ActorRefFrom<typeof VCItemMachine>,
       flowType: string,
@@ -106,19 +83,5 @@ export function useKebabPopUp(props) {
       const {serviceRefs, ...vcData} = vcRef.getSnapshot().context;
       scanService.send(ScanEvents.SELECT_VC(vcData, flowType));
     },
-    isScanning,
-    isBindingWarning,
-    isAcceptingOtpInput,
-    isWalletBindingError,
-    walletBindingError,
-    bindingAuthFailedError,
-    walletBindingResponse,
-    otpError,
-    WalletBindingInProgress,
-    isKebabPopUp,
-    isShowActivities,
-    isRemoveWalletWarning,
-    activities: useSelector(activityLogService, selectActivities),
-    communicationDetails,
   };
 }
