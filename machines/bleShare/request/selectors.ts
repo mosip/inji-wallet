@@ -30,6 +30,7 @@ export function selectVerifiableCredentialData(state: State) {
       }
     : {
         vcMetadata: vcMetadata,
+        issuer: vcMetadata.issuer,
         face: state.context.incomingVc?.credential?.biometrics?.face,
         issuerLogo: getMosipLogo(),
       };

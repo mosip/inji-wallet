@@ -33,8 +33,6 @@ import {
 import {TelemetryConstants} from '../shared/telemetry/TelemetryConstants';
 import getAllConfigurations, {API_URLS} from '../shared/api';
 import {VCShareFlowType} from '../shared/Utils';
-import {SvgImage} from '../components/ui/svg';
-import {Theme} from '../components/ui/styleUtils';
 import {getMosipLogo} from '../components/VC/common/VCUtils';
 
 const model = createModel(
@@ -670,6 +668,7 @@ export function selectVerifiableCredentialData(state: State) {
       }
     : {
         vcMetadata: vcMetadata,
+        issuer: vcMetadata.issuer,
         face: state.context.selectedVc?.credential?.biometrics?.face,
         issuerLogo: getMosipLogo(),
       };
