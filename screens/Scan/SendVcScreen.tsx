@@ -102,19 +102,17 @@ export const SendVcScreen: React.FC = () => {
         <Column
           style={Theme.SendVcScreenStyles.shareOptionButtonsContainer}
           backgroundColor={Theme.Colors.whiteBackgroundColor}>
-          {!controller.verifiableCredentialData.shouldVerifyPresence &&
-            controller.verifiableCredentialData.vcMetadata &&
-            [Issuers.Mosip, Issuers.ESignet].indexOf(
-              controller.verifiableCredentialData.issuer,
-            ) !== -1 && (
-              <Button
-                type="gradient"
-                title={t('acceptRequestAndVerify')}
-                styles={{marginTop: 12}}
-                disabled={controller.selectedIndex == null}
-                onPress={controller.VERIFY_AND_ACCEPT_REQUEST}
-              />
-            )}
+          {[Issuers.Mosip, Issuers.ESignet].indexOf(
+            controller.verifiableCredentialData.issuer,
+          ) !== -1 && (
+            <Button
+              type="gradient"
+              title={t('acceptRequestAndVerify')}
+              styles={{marginTop: 12}}
+              disabled={controller.selectedIndex == null}
+              onPress={controller.VERIFY_AND_ACCEPT_REQUEST}
+            />
+          )}
 
           <Button
             type="gradient"

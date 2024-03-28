@@ -2,9 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {useTranslation} from 'react-i18next';
 import {Image, ImageBackground, View} from 'react-native';
 import {
-  VcIdType,
   VerifiableCredential,
-  VerifiablePresentation,
   WalletBindingResponse,
 } from '../../../types/VC/vc';
 import {Button, Column, Row, Text} from '../../ui';
@@ -244,20 +242,4 @@ export interface VCItemDetailsProps {
   onBinding?: () => void;
   activeTab?: Number;
   vcHasImage: boolean;
-}
-
-export interface VC {
-  id: string;
-  idType: VcIdType;
-  verifiableCredential: VerifiableCredential;
-  verifiablePresentation?: VerifiablePresentation;
-  generatedOn: Date;
-  requestId: string;
-  isVerified: boolean;
-  lastVerifiedOn: number;
-  shouldVerifyPresence?: boolean;
-  walletBindingResponse?: WalletBindingResponse;
-  credentialRegistry: string;
-  isPinned?: boolean;
-  hashedId: string;
 }

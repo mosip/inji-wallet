@@ -19,7 +19,7 @@ import {RemoveVcWarningOverlay} from '../../../screens/Home/MyVcs/RemoveVcWarnin
 import {HistoryTab} from '../../../screens/Home/MyVcs/HistoryTab';
 
 export const VCCardViewContent: React.FC<VCItemContentProps> = props => {
-  const selectableOrCheck = props.selectable && (
+  const isVCSelectable = props.selectable && (
     <CheckBox
       checked={props.selected}
       checkedIcon={
@@ -98,7 +98,7 @@ export const VCCardViewContent: React.FC<VCItemContentProps> = props => {
               </Pressable>
             </>
           )}
-          {selectableOrCheck}
+          {isVCSelectable}
         </Row>
 
         <WalletBinding service={props.service} vcMetadata={props.vcMetadata} />

@@ -68,8 +68,6 @@ export function useSendVcScreen() {
     GO_TO_HOME: () => {
       navigation.navigate(BOTTOM_TAB_ROUTES.home, {screen: 'HomeScreen'});
     },
-    TOGGLE_USER_CONSENT: () =>
-      scanService.send(ScanEvents.TOGGLE_USER_CONSENT()),
     SELECT_VC_ITEM:
       (index: number) => (vcRef: ActorRefFrom<typeof VCItemMachine>) => {
         setSelectedIndex(index);

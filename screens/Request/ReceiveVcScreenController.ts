@@ -5,7 +5,6 @@ import {
   selectCredential,
   selectIsAccepting,
   selectIsDisplayingIncomingVC,
-  selectIsIncomingVp,
   selectIsReviewingInIdle,
   selectIsSavingFailedInIdle,
   selectSenderInfo,
@@ -28,7 +27,6 @@ export function useReceiveVcScreen() {
       requestService,
       selectVerifiableCredentialData,
     ),
-    isIncomingVp: useSelector(requestService, selectIsIncomingVp),
     isReviewingInIdle: useSelector(requestService, selectIsReviewingInIdle),
     isAccepting: useSelector(requestService, selectIsAccepting),
     isDisplayingIncomingVC: useSelector(

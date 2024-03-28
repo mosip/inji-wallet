@@ -736,12 +736,6 @@ export const VCItemMachine = model.createMachine(
       unSetError: assign({
         error: () => '',
       }),
-      setBindingTransactionId: assign({
-        //todo: check this with vijay
-        bindingTransactionId: () =>
-          String(new Date().valueOf()).substring(3, 13),
-      }),
-
       unSetBindingTransactionId: assign({bindingTransactionId: () => ''}),
       sendWalletBindingSuccess: send(
         context => {

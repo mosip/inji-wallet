@@ -36,10 +36,6 @@ export function selectVerifiableCredentialData(state: State) {
       };
 }
 
-export function selectIsIncomingVp(state: State) {
-  return state.context.incomingVc?.verifiablePresentation != null;
-}
-
 export function selectIsReviewingInIdle(state: State) {
   return state.matches('reviewing.idle');
 }
