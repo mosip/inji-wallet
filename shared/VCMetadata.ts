@@ -1,19 +1,19 @@
 import {VC, VcIdType} from '../types/VC/ExistingMosipVC/vc';
 import {Issuers, Protocols} from './openId4VCI/Utils';
+import {getMosipIdentifier} from './commonUtil';
 
 const VC_KEY_PREFIX = 'VC';
 const VC_ITEM_STORE_KEY_REGEX = '^VC_[a-zA-Z0-9_-]+$';
 
 export class VCMetadata {
+  static vcKeyRegExp = new RegExp(VC_ITEM_STORE_KEY_REGEX);
   idType: VcIdType | string = '';
   requestId = '';
   isPinned = false;
   id: string = '';
-
   issuer?: string = '';
   protocol?: string = '';
   timestamp?: string = '';
-  static vcKeyRegExp = new RegExp(VC_ITEM_STORE_KEY_REGEX);
 
   constructor({
     idType = '',
@@ -101,9 +101,9 @@ export const getVCMetadata = context => {
     requestId: requestId ? requestId : null,
     issuer: issuer,
     protocol: protocol,
-    id: context.verifiableCredential?.credential.credentialSubject.UIN
-      ? context.verifiableCredential?.credential.credentialSubject.UIN
-      : context.verifiableCredential?.credential.credentialSubject.VID,
+    id: getMosipIdentifier(
+      context.verifiableCredential?.credential.credentialSubject,
+    ),
     timestamp: context.timestamp ?? '',
   });
 };

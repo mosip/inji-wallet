@@ -8,6 +8,7 @@ import {VerifiableCredential} from '../../types/VC/ExistingMosipVC/vc';
 import {Credential} from '../../types/VC/EsignetMosipVC/vc';
 import {getErrorEventData, sendErrorEvent} from '../telemetry/TelemetryUtils';
 import {TelemetryConstants} from '../telemetry/TelemetryConstants';
+import {getMosipIdentifier} from '../commonUtil';
 
 // FIXME: Ed25519Signature2018 not fully supported yet.
 // Ed25519Signature2018 proof type check is not tested with its real credential
@@ -80,14 +81,16 @@ function handleResponse(
 
   if (!result?.verified) {
     let errorCodeName = result['results'][0].error.name;
+    errorMessage = VerificationErrorType.TECHNICAL_ERROR;
+    isVerifiedFlag = false;
+
     if (errorCodeName == 'jsonld.InvalidUrl') {
       errorMessage = VerificationErrorType.NETWORK_ERROR;
-      isVerifiedFlag = false;
     } else if (errorCodeName == VerificationErrorType.RANGE_ERROR) {
       errorMessage = VerificationErrorType.RANGE_ERROR;
-      const vcIdentifier = verifiableCredential.credentialSubject.UIN
-        ? verifiableCredential.credentialSubject.UIN
-        : verifiableCredential.credentialSubject.VID;
+      const vcIdentifier = getMosipIdentifier(
+        verifiableCredential.credentialSubject,
+      );
       sendErrorEvent(
         getErrorEventData(
           TelemetryConstants.FlowType.vcVerification,
@@ -96,9 +99,6 @@ function handleResponse(
         ),
       );
       isVerifiedFlag = true;
-    } else {
-      errorMessage = VerificationErrorType.TECHNICAL_ERROR;
-      isVerifiedFlag = false;
     }
   }
 
