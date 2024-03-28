@@ -14,7 +14,7 @@ import {createModel} from 'xstate/lib/model';
 import {EmitterSubscription, Linking} from 'react-native';
 import {DeviceInfo} from '../../../components/DeviceInfoList';
 import {getDeviceNameSync} from 'react-native-device-info';
-import {VC, VerifiablePresentation} from '../../../types/VC/vc';
+import {VC} from '../../../types/VC/vc';
 import {AppServices} from '../../../shared/GlobalContext';
 import {ActivityLogEvents, ActivityLogType} from '../../activityLog';
 import {
@@ -39,7 +39,6 @@ import {
   requestLocationPermission,
 } from '../../../shared/location';
 import {CameraCapturedPicture} from 'expo-camera';
-import {log} from 'xstate/lib/actions';
 import {createQrLoginMachine, qrLoginMachine} from '../../QrLoginMachine';
 import {StoreEvents} from '../../store';
 import {WalletDataEvent} from '@mosip/tuvali/lib/typescript/types/events';

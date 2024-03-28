@@ -35,7 +35,6 @@ type ScanLayoutNavigation = NavigationProp<
 export function useKebabPopUp(props) {
   const service = props.service as ActorRefFrom<typeof VCItemMachine>;
   const navigation = useNavigation<ScanLayoutNavigation>();
-  const vcEvents = VCItemEvents;
   const {appService} = useContext(GlobalContext);
   const activityLogService = appService.children.get('activityLog')!!;
   const scanService = appService.children.get('scan')!!;
@@ -43,7 +42,6 @@ export function useKebabPopUp(props) {
   return {
     service: props.service as ActorRefFrom<typeof VCItemMachine>,
     navigation: useNavigation<ScanLayoutNavigation>(),
-    vcEvents: VCItemEvents,
     isScanning: useSelector(scanService, selectIsScanning),
     activities: useSelector(activityLogService, selectActivities),
     isPinned: useSelector(service, selectIsPinned),
@@ -62,17 +60,18 @@ export function useKebabPopUp(props) {
       service,
       selectWalletBindingInProgress,
     ),
-    PIN_CARD: () => service.send(vcEvents.PIN_CARD()),
-    KEBAB_POPUP: () => service.send(vcEvents.KEBAB_POPUP()),
-    ADD_WALLET_BINDING_ID: () => service.send(vcEvents.ADD_WALLET_BINDING_ID()),
-    CONFIRM: () => service.send(vcEvents.CONFIRM()),
+    PIN_CARD: () => service.send(VCItemEvents.PIN_CARD()),
+    KEBAB_POPUP: () => service.send(VCItemEvents.KEBAB_POPUP()),
+    ADD_WALLET_BINDING_ID: () =>
+      service.send(VCItemEvents.ADD_WALLET_BINDING_ID()),
+    CONFIRM: () => service.send(VCItemEvents.CONFIRM()),
     REMOVE: (vcMetadata: VCMetadata) =>
-      service.send(vcEvents.REMOVE(vcMetadata)),
-    DISMISS: () => service.send(vcEvents.DISMISS()),
-    CANCEL: () => service.send(vcEvents.CANCEL()),
-    SHOW_ACTIVITY: () => service.send(vcEvents.SHOW_ACTIVITY()),
-    INPUT_OTP: (otp: string) => service.send(vcEvents.INPUT_OTP(otp)),
-    RESEND_OTP: () => service.send(vcEvents.RESEND_OTP()),
+      service.send(VCItemEvents.REMOVE(vcMetadata)),
+    DISMISS: () => service.send(VCItemEvents.DISMISS()),
+    CANCEL: () => service.send(VCItemEvents.CANCEL()),
+    SHOW_ACTIVITY: () => service.send(VCItemEvents.SHOW_ACTIVITY()),
+    INPUT_OTP: (otp: string) => service.send(VCItemEvents.INPUT_OTP(otp)),
+    RESEND_OTP: () => service.send(VCItemEvents.RESEND_OTP()),
     GOTO_SCANSCREEN: () => {
       navigation.navigate(BOTTOM_TAB_ROUTES.share);
     },

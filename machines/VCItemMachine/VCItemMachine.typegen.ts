@@ -118,10 +118,70 @@ export interface Typegen0 {
     verifyCredential: 'done.invoke.vc-item-machine.verifyingCredential:invocation[0]';
   };
   missingImplementations: {
-    actions: never;
+    actions:
+      | 'addVcToInProgressDownloads'
+      | 'closeViewVcModal'
+      | 'incrementDownloadCounter'
+      | 'logDownloaded'
+      | 'logRemovedVc'
+      | 'logWalletBindingFailure'
+      | 'logWalletBindingSuccess'
+      | 'refreshAllVcs'
+      | 'removeVcFromInProgressDownloads'
+      | 'removeVcItem'
+      | 'removeVcMetaDataFromStorage'
+      | 'removeVcMetaDataFromVcMachineContext'
+      | 'requestStoredContext'
+      | 'requestVcContext'
+      | 'resetPrivateKey'
+      | 'sendActivationStartEvent'
+      | 'sendActivationSuccessEvent'
+      | 'sendBackupEvent'
+      | 'sendDownloadLimitExpire'
+      | 'sendTamperedVc'
+      | 'sendTelemetryEvents'
+      | 'sendUserCancelledActivationFailedEndEvent'
+      | 'sendVcUpdated'
+      | 'sendVerificationError'
+      | 'sendWalletBindingErrorEvent'
+      | 'sendWalletBindingSuccess'
+      | 'setCommunicationDetails'
+      | 'setContext'
+      | 'setCredential'
+      | 'setDownloadInterval'
+      | 'setErrorAsVerificationError'
+      | 'setErrorAsWalletBindingError'
+      | 'setMaxDownloadCount'
+      | 'setOTP'
+      | 'setPinCard'
+      | 'setPrivateKey'
+      | 'setPublicKey'
+      | 'setThumbprintForWalletBindingId'
+      | 'setVcKey'
+      | 'setVcMetadata'
+      | 'setWalletBindingResponse'
+      | 'storeContext'
+      | 'storeVcInContext'
+      | 'unSetBindingTransactionId'
+      | 'unSetError'
+      | 'unSetOTP';
     delays: never;
-    guards: never;
-    services: never;
+    guards:
+      | 'hasCredential'
+      | 'isCustomSecureKeystore'
+      | 'isDownloadAllowed'
+      | 'isSignedIn';
+    services:
+      | 'addWalletBindingId'
+      | 'checkDownloadExpiryLimit'
+      | 'checkStatus'
+      | 'downloadCredential'
+      | 'generateKeyPair'
+      | 'isUserSignedAlready'
+      | 'loadDownloadLimitConfig'
+      | 'requestBindingOTP'
+      | 'updatePrivateKey'
+      | 'verifyCredential';
   };
   eventsCausingActions: {
     addVcToInProgressDownloads: 'STORE_RESPONSE';

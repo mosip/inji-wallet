@@ -22,7 +22,6 @@ import {
 import {ActivityLogEvents, ActivityLogType} from '../../activityLog';
 import {VcEvents} from '../../VCItemMachine/vc';
 import {subscribe} from '../../../shared/openIdBLE/verifierEventHandler';
-import {log} from 'xstate/lib/actions';
 import {VerifierDataEvent} from '@mosip/tuvali/src/types/events';
 import {BLEError} from '../types';
 import Storage from '../../../shared/storage';
@@ -39,7 +38,6 @@ import {
 } from '../../../shared/telemetry/TelemetryUtils';
 import {TelemetryConstants} from '../../../shared/telemetry/TelemetryConstants';
 import {getIdType} from '../../../shared/openId4VCI/Utils';
-// import { verifyPresentation } from '../shared/vcjs/verifyPresentation';
 
 const {verifier, EventTypes, VerificationStatus} = tuvali;
 

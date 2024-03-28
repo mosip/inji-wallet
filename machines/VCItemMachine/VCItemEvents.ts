@@ -1,7 +1,7 @@
 import {VCMetadata} from '../../shared/VCMetadata';
 import {VC} from '../../types/VC/vc';
 
-export const VCItemEvent = {
+export const VCItemEvents = {
   DISMISS: () => ({}),
   CREDENTIAL_DOWNLOADED: (response: VC) => ({response}),
   STORE_RESPONSE: (response: VC) => ({response}),
