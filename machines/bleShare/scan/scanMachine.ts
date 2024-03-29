@@ -179,7 +179,7 @@ export const scanMachine =
       },
       states: {
         inactive: {
-          entry: ['removeLoggers'],
+          entry: ['removeLoggers', 'resetFlowType', 'resetSelectedVc'],
         },
         disconnectDevice: {
           invoke: {
@@ -660,13 +660,13 @@ export const scanMachine =
               },
             },
             disconnect: {
-              //Renamed this to disconnect from navigateToHome as we are disconnecting the devices.
               entry: ['resetFlowType', 'resetSelectedVc'],
               invoke: {
                 src: 'disconnect',
               },
             },
             navigateToHistory: {
+              entry: ['resetFlowType', 'resetSelectedVc'],
               always: '#scan.disconnected',
             },
             faceVerificationConsent: {
