@@ -6,7 +6,7 @@ import {
 import {ActorRefFrom} from 'xstate';
 import {ModalProps} from '../../../components/ui/Modal';
 import {useSelector} from '@xstate/react';
-import {VCItemMachine} from '../../../machines/VCItemMachine/VCItemMachine';
+import {VCItemMachine} from '../../../machines/VerifiableCredential/VCItemMachine/VCItemMachine';
 
 export function useOtpVerificationModal({service}: OtpVerificationModalProps) {
   return {

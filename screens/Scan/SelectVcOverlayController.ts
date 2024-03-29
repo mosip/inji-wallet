@@ -2,7 +2,7 @@ import {useState} from 'react';
 import {ActorRefFrom} from 'xstate';
 import {VC} from '../../types/VC/vc';
 import {VCMetadata} from '../../shared/VCMetadata';
-import {VCItemMachine} from '../../machines/VCItemMachine/VCItemMachine';
+import {VCItemMachine} from '../../machines/VerifiableCredential/VCItemMachine/VCItemMachine';
 
 export function useSelectVcOverlay(props: SelectVcOverlayProps) {
   const [selectedIndex, setSelectedIndex] = useState<number>(null);

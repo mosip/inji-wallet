@@ -15,7 +15,7 @@ import {ErrorMessageOverlay} from '../../components/MessageOverlay';
 import {Pressable} from 'react-native';
 import testIDProps from '../../shared/commonUtil';
 import {BannerNotificationContainer} from '../../components/BannerNotificationContainer';
-import {VCItemMachine} from '../../machines/VCItemMachine/VCItemMachine';
+import {VCItemMachine} from '../../machines/VerifiableCredential/VCItemMachine/VCItemMachine';
 import {VerifiableCredential} from '../../types/VC/vc';
 
 export const HomeScreen: React.FC<HomeRouteProps> = props => {

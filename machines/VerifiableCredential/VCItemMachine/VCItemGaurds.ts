@@ -1,5 +1,5 @@
-import {isSignedInResult} from '../../shared/CloudBackupAndRestoreUtils';
-import {isHardwareKeystoreExists} from '../../shared/cryptoutil/cryptoUtil';
+import {isSignedInResult} from '../../../shared/CloudBackupAndRestoreUtils';
+import {isHardwareKeystoreExists} from '../../../shared/cryptoutil/cryptoUtil';
 
 export const VCItemGaurds = () => {
   return {

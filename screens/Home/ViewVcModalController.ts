@@ -18,13 +18,13 @@ import {
   selectWalletBindingInProgress,
   selectWalletBindingResponse,
   selectWalletBindingSuccess,
-} from '../../machines/VCItemMachine/VCItemSelectors';
+} from '../../machines/VerifiableCredential/VCItemMachine/VCItemSelectors';
 import {selectPasscode} from '../../machines/auth';
 import {biometricsMachine, selectIsSuccess} from '../../machines/biometrics';
 import {
   VCItemEvents,
   VCItemMachine,
-} from '../../machines/VCItemMachine/VCItemMachine';
+} from '../../machines/VerifiableCredential/VCItemMachine/VCItemMachine';
 import {selectIsAcceptingOtpInput} from './MyVcs/AddVcModalMachine';
 
 export function useViewVcModal({vcItemActor, isVisible}: ViewVcModalProps) {

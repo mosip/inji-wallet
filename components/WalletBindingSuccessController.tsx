@@ -4,7 +4,7 @@ import {useSelector} from '@xstate/react';
 import {
   VcEvents,
   selectWalletBindingSuccess,
-} from '../machines/VCItemMachine/vc';
+} from '../machines/VerifiableCredential/VCMetaMachine/vc';
 
 export const UseWalletBindingSuccess = () => {
   const {appService} = useContext(GlobalContext);

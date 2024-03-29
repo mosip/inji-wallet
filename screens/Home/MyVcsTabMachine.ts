@@ -9,14 +9,14 @@ import {
 } from 'xstate';
 import {createModel} from 'xstate/lib/model';
 import {StoreEvents} from '../../machines/store';
-import {VcEvents} from '../../machines/VCItemMachine/vc';
+import {VcEvents} from '../../machines/VerifiableCredential/VCMetaMachine/vc';
 import {AppServices} from '../../shared/GlobalContext';
 import {MY_VCS_STORE_KEY} from '../../shared/constants';
 import {AddVcModalMachine} from './MyVcs/AddVcModalMachine';
 import {GetVcModalMachine} from './MyVcs/GetVcModalMachine';
 import {VCMetadata} from '../../shared/VCMetadata';
 import NetInfo from '@react-native-community/netinfo';
-import {VCItemMachine} from '../../machines/VCItemMachine/VCItemMachine';
+import {VCItemMachine} from '../../machines/VerifiableCredential/VCItemMachine/VCItemMachine';
 
 const model = createModel(
   {

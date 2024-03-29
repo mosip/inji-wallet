@@ -1,7 +1,7 @@
 import {ActorRefFrom, EventFrom, sendParent} from 'xstate';
 import {createModel} from 'xstate/lib/model';
 import {AppServices} from '../../shared/GlobalContext';
-import {VCItemMachine} from '../../machines/VCItemMachine/VCItemMachine';
+import {VCItemMachine} from '../../machines/VerifiableCredential/VCItemMachine/VCItemMachine';
 
 const model = createModel(
   {

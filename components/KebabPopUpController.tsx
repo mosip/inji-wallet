@@ -12,7 +12,7 @@ import {
   selectWalletBindingResponse,
   selectShowWalletBindingError,
   selectWalletBindingInProgress,
-} from '../machines/VCItemMachine/VCItemSelectors';
+} from '../machines/VerifiableCredential/VCItemMachine/VCItemSelectors';
 import {selectActivities} from '../machines/activityLog';
 import {GlobalContext} from '../shared/GlobalContext';
 import {useContext} from 'react';
@@ -25,7 +25,7 @@ import {selectIsScanning} from '../machines/bleShare/scan/selectors';
 import {
   VCItemEvents,
   VCItemMachine,
-} from '../machines/VCItemMachine/VCItemMachine';
+} from '../machines/VerifiableCredential/VCItemMachine/VCItemMachine';
 import {selectError} from '../machines/biometrics';
 
 type ScanLayoutNavigation = NavigationProp<

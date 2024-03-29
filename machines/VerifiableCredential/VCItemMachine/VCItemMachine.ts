@@ -1,5 +1,5 @@
-import {AppServices} from '../../shared/GlobalContext';
-import {VCMetadata} from '../../shared/VCMetadata';
+import {AppServices} from '../../../shared/GlobalContext';
+import {VCMetadata} from '../../../shared/VCMetadata';
 import {assign, EventFrom, send} from 'xstate';
 import {log} from 'xstate/lib/actions';
 import {VCItemActions} from './VCItemActions';

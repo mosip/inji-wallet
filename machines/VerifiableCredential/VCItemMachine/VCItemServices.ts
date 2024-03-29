@@ -1,19 +1,22 @@
 import SecureKeystore from '@mosip/secure-keystore';
-import Cloud from '../../shared/CloudBackupAndRestoreUtils';
-import {VCMetadata} from '../../shared/VCMetadata';
-import getAllConfigurations, {API_URLS, DownloadProps} from '../../shared/api';
+import Cloud from '../../../shared/CloudBackupAndRestoreUtils';
+import {VCMetadata} from '../../../shared/VCMetadata';
+import getAllConfigurations, {
+  API_URLS,
+  DownloadProps,
+} from '../../../shared/api';
 import {
   generateKeys,
   isHardwareKeystoreExists,
-} from '../../shared/cryptoutil/cryptoUtil';
+} from '../../../shared/cryptoutil/cryptoUtil';
 import {
   getBindingCertificateConstant,
   savePrivateKey,
-} from '../../shared/keystore/SecureKeystore';
-import {CredentialDownloadResponse, request} from '../../shared/request';
-import {WalletBindingResponse} from '../../types/VC/vc';
-import {verifyCredential} from '../../shared/vcjs/verifyCredential';
-import { getMosipIdentifier } from '../../shared/commonUtil';
+} from '../../../shared/keystore/SecureKeystore';
+import {CredentialDownloadResponse, request} from '../../../shared/request';
+import {WalletBindingResponse} from '../../../types/VC/vc';
+import {verifyCredential} from '../../../shared/vcjs/verifyCredential';
+import {getMosipIdentifier} from '../../../shared/commonUtil';
 
 export const VCItemServices = model => {
   return {
@@ -109,9 +112,7 @@ export const VCItemServices = model => {
         {
           requestTime: String(new Date().toISOString()),
           request: {
-            individualId: getMosipIdentifier(
-              vc.credentialSubject,
-            ),
+            individualId: getMosipIdentifier(vc.credentialSubject),
             otpChannels: ['EMAIL', 'PHONE'],
           },
         },

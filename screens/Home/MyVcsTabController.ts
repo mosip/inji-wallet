@@ -11,11 +11,11 @@ import {
   selectVerificationErrorMessage,
   selectWalletBindingSuccess,
   VcEvents,
-} from '../../machines/VCItemMachine/vc';
+} from '../../machines/VerifiableCredential/VCMetaMachine/vc';
 import {
   selectWalletBindingError,
   selectShowWalletBindingError,
-} from '../../machines/VCItemMachine/VCItemSelectors';
+} from '../../machines/VerifiableCredential/VCItemMachine/VCItemSelectors';
 import {GlobalContext} from '../../shared/GlobalContext';
 import {HomeScreenTabProps} from './HomeScreen';
 import {
@@ -31,7 +31,7 @@ import {
   selectShowHardwareKeystoreNotExistsAlert,
   SettingsEvents,
 } from '../../machines/settings';
-import {VCItemMachine} from '../../machines/VCItemMachine/VCItemMachine';
+import {VCItemMachine} from '../../machines/VerifiableCredential/VCItemMachine/VCItemMachine';
 
 export function useMyVcsTab(props: HomeScreenTabProps) {
   const service = props.service as ActorRefFrom<typeof MyVcsTabMachine>;

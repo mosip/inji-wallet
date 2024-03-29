@@ -26,13 +26,13 @@ import {
   selectCredential,
   selectVerifiableCredentialData,
 } from '../../machines/QrLoginMachine';
-import {selectBindedVcsMetadata} from '../../machines/VCItemMachine/vc';
+import {selectBindedVcsMetadata} from '../../machines/VerifiableCredential/VCMetaMachine/vc';
 import {GlobalContext} from '../../shared/GlobalContext';
 import {QrLoginProps} from './QrLogin';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
 import {RootRouteProps} from '../../routes';
 import {BOTTOM_TAB_ROUTES} from '../../routes/routesConstants';
-import {VCItemMachine} from '../../machines/VCItemMachine/VCItemMachine';
+import {VCItemMachine} from '../../machines/VerifiableCredential/VCItemMachine/VCItemMachine';
 
 type MyVcsTabNavigation = NavigationProp<RootRouteProps>;
 

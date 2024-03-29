@@ -13,7 +13,7 @@ import {
   selectIssuersMachine,
   selectIsMinimumStorageLimitReached,
 } from './HomeScreenMachine';
-import {selectVc} from '../../machines/VCItemMachine/VCItemSelectors';
+import {selectVc} from '../../machines/VerifiableCredential/VCItemMachine/VCItemSelectors';
 
 let homeMachineService;
 function useCreateHomeMachineService() {

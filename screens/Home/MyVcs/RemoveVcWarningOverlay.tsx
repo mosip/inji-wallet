@@ -8,7 +8,7 @@ import {SvgImage} from '../../../components/ui/svg';
 import {useKebabPopUp} from '../../../components/KebabPopUpController';
 import {VCMetadata} from '../../../shared/VCMetadata';
 import {ActorRefFrom} from 'xstate';
-import {VCItemEvents} from '../../../machines/VCItemMachine/VCItemMachine';
+import {VCItemEvents} from '../../../machines/VerifiableCredential/VCItemMachine/VCItemMachine';
 
 export const RemoveVcWarningOverlay: React.FC<
   RemoveVcWarningOverlayProps

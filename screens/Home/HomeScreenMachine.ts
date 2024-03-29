@@ -8,7 +8,7 @@ import {
 } from './ReceivedVcsTabMachine';
 import {IssuersMachine} from '../../machines/issuersMachine';
 import Storage from '../../shared/storage';
-import {VCItemMachine} from '../../machines/VCItemMachine/VCItemMachine';
+import {VCItemMachine} from '../../machines/VerifiableCredential/VCItemMachine/VCItemMachine';
 
 const model = createModel(
   {

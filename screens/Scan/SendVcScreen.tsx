@@ -10,7 +10,7 @@ import {GlobalContext} from '../../shared/GlobalContext';
 import {useFocusEffect} from '@react-navigation/native';
 import {VcItemContainer} from '../../components/VC/VcItemContainer';
 import {VCMetadata} from '../../shared/VCMetadata';
-import {createVCItemMachine} from '../../machines/VCItemMachine/VCItemMachine';
+import {createVCItemMachine} from '../../machines/VerifiableCredential/VCItemMachine/VCItemMachine';
 import {
   getImpressionEventData,
   sendImpressionEvent,

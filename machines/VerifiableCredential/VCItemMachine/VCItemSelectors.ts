@@ -1,7 +1,7 @@
 import {StateFrom} from 'xstate';
-import {VCMetadata} from '../../shared/VCMetadata';
+import {VCMetadata} from '../../../shared/VCMetadata';
 import {VCItemMachine} from './VCItemMachine';
-import {getMosipLogo} from '../../components/VC/common/VCUtils';
+import {getMosipLogo} from '../../../components/VC/common/VCUtils';
 
 type State = StateFrom<typeof VCItemMachine>;
 

@@ -14,7 +14,7 @@ import {CARD_VIEW_DEFAULT_FIELDS, isVCLoaded} from '../common/VCUtils';
 import {
   VCItemEvents,
   VCItemMachine,
-} from '../../../machines/VCItemMachine/VCItemMachine';
+} from '../../../machines/VerifiableCredential/VCItemMachine/VCItemMachine';
 
 export const VCCardView: React.FC<VCItemProps> = props => {
   let {

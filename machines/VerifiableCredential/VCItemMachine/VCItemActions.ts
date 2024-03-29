@@ -1,16 +1,16 @@
 import {assign, send} from 'xstate';
-import {CommunicationDetails} from '../../shared/Utils';
-import {StoreEvents} from '../store';
-import {VCMetadata} from '../../shared/VCMetadata';
-import {MIMOTO_BASE_URL, MY_VCS_STORE_KEY} from '../../shared/constants';
+import {CommunicationDetails} from '../../../shared/Utils';
+import {StoreEvents} from '../../store';
+import {VCMetadata} from '../../../shared/VCMetadata';
+import {MIMOTO_BASE_URL, MY_VCS_STORE_KEY} from '../../../shared/constants';
 import {KeyPair} from 'react-native-rsa-native';
-import i18n from '../../i18n';
-import {getHomeMachineService} from '../../screens/Home/HomeScreenController';
-import {DownloadProps} from '../../shared/api';
-import {isHardwareKeystoreExists} from '../../shared/cryptoutil/cryptoUtil';
-import {getBindingCertificateConstant} from '../../shared/keystore/SecureKeystore';
-import {getIdType} from '../../shared/openId4VCI/Utils';
-import {TelemetryConstants} from '../../shared/telemetry/TelemetryConstants';
+import i18n from '../../../i18n';
+import {getHomeMachineService} from '../../../screens/Home/HomeScreenController';
+import {DownloadProps} from '../../../shared/api';
+import {isHardwareKeystoreExists} from '../../../shared/cryptoutil/cryptoUtil';
+import {getBindingCertificateConstant} from '../../../shared/keystore/SecureKeystore';
+import {getIdType} from '../../../shared/openId4VCI/Utils';
+import {TelemetryConstants} from '../../../shared/telemetry/TelemetryConstants';
 import {
   sendStartEvent,
   getStartEventData,
@@ -20,11 +20,11 @@ import {
   getEndEventData,
   sendErrorEvent,
   getErrorEventData,
-} from '../../shared/telemetry/TelemetryUtils';
-import {WalletBindingResponse} from '../../types/VC/vc';
-import {ActivityLogEvents} from '../activityLog';
-import {BackupEvents} from '../backupAndRestore/backup';
-import {VcEvents} from './vc';
+} from '../../../shared/telemetry/TelemetryUtils';
+import {WalletBindingResponse} from '../../../types/VC/vc';
+import {ActivityLogEvents} from '../../activityLog';
+import {BackupEvents} from '../../backupAndRestore/backup';
+import {VcEvents} from '../VCMetaMachine/vc';
 
 export const VCItemActions = model => {
   return {

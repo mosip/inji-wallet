@@ -7,7 +7,7 @@ import {ActivityLogText} from '../../../components/ActivityLogText';
 import {useKebabPopUp} from '../../../components/KebabPopUpController';
 import {VCMetadata} from '../../../shared/VCMetadata';
 import {ActorRefFrom} from 'xstate';
-import {VCItemMachine} from '../../../machines/VCItemMachine/VCItemMachine';
+import {VCItemMachine} from '../../../machines/VerifiableCredential/VCItemMachine/VCItemMachine';
 
 export const HistoryTab: React.FC<HistoryTabProps> = props => {
   const {t} = useTranslation('HistoryTab');

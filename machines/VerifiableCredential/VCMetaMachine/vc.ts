@@ -1,15 +1,20 @@
 import {EventFrom, send, sendParent, StateFrom} from 'xstate';
 import {createModel} from 'xstate/lib/model';
-import {StoreEvents} from '../store';
-import {VC} from '../../types/VC/vc';
-import {AppServices} from '../../shared/GlobalContext';
+import {StoreEvents} from '../../store';
+import {VC} from '../../../types/VC/vc';
+import {AppServices} from '../../../shared/GlobalContext';
 import {log, respond} from 'xstate/lib/actions';
-import {MY_VCS_STORE_KEY, RECEIVED_VCS_STORE_KEY} from '../../shared/constants';
-import {parseMetadatas, VCMetadata} from '../../shared/VCMetadata';
-import {ActivityLogEvents} from '../activityLog';
-import {ActivityLog} from '../../components/ActivityLogEvent';
-import Cloud, {isSignedInResult} from '../../shared/CloudBackupAndRestoreUtils';
-import {BackupEvents} from '../backupAndRestore/backup';
+import {
+  MY_VCS_STORE_KEY,
+  RECEIVED_VCS_STORE_KEY,
+} from '../../../shared/constants';
+import {parseMetadatas, VCMetadata} from '../../../shared/VCMetadata';
+import {ActivityLogEvents} from '../../activityLog';
+import {ActivityLog} from '../../../components/ActivityLogEvent';
+import Cloud, {
+  isSignedInResult,
+} from '../../../shared/CloudBackupAndRestoreUtils';
+import {BackupEvents} from '../../backupAndRestore/backup';
 
 const model = createModel(
   {

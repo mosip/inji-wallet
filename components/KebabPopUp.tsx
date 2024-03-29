@@ -10,7 +10,7 @@ import {FlatList} from 'react-native-gesture-handler';
 import {VCMetadata} from '../shared/VCMetadata';
 import testIDProps from '../shared/commonUtil';
 import {getKebabMenuOptions} from './kebabMenuUtils';
-import {VCItemMachine} from '../machines/VCItemMachine/VCItemMachine';
+import {VCItemMachine} from '../machines/VerifiableCredential/VCItemMachine/VCItemMachine';
 
 export const KebabPopUp: React.FC<KebabPopUpProps> = props => {
   const controller = useKebabPopUp(props);

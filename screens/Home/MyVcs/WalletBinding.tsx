@@ -9,7 +9,7 @@ import {useKebabPopUp} from '../../../components/KebabPopUpController';
 import {ActorRefFrom} from 'xstate';
 import {VCMetadata} from '../../../shared/VCMetadata';
 import {TelemetryConstants} from '../../../shared/telemetry/TelemetryConstants';
-import {VCItemMachine} from '../../../machines/VCItemMachine/VCItemMachine';
+import {VCItemMachine} from '../../../machines/VerifiableCredential/VCItemMachine/VCItemMachine';
 
 export const WalletVerified: React.FC = () => {
   return (

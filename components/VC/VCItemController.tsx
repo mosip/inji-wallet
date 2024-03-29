@@ -7,13 +7,13 @@ import {
   selectWalletBindingResponse,
   selectCredential,
   selectVerifiableCredentialData,
-} from '../../machines/VCItemMachine/VCItemSelectors';
+} from '../../machines/VerifiableCredential/VCItemMachine/VCItemSelectors';
 import {useInterpret, useSelector} from '@xstate/react';
 import {VCItemProps} from './Views/VCCardView';
 import {
   createVCItemMachine,
   VCItemEvents,
-} from '../../machines/VCItemMachine/VCItemMachine';
+} from '../../machines/VerifiableCredential/VCItemMachine/VCItemMachine';
 import {selectIsSavingFailedInIdle} from '../../screens/Home/MyVcsTabMachine';
 
 export function useVcItemController(props: VCItemProps) {

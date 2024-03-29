@@ -4,7 +4,7 @@ import {ActorRefFrom} from 'xstate';
 import {
   selectIsRefreshingReceivedVcs,
   selectReceivedVcsMetadata,
-} from '../../machines/VCItemMachine/vc';
+} from '../../machines/VerifiableCredential/VCMetaMachine/vc';
 import {GlobalContext} from '../../shared/GlobalContext';
 import {
   ReceivedVcsTabEvents,
@@ -18,8 +18,8 @@ import {
   selectTabRefs,
   selectViewingVc,
 } from './HomeScreenMachine';
-import {VCItemMachine} from '../../machines/VCItemMachine/VCItemMachine';
-import {selectVc} from '../../machines/VCItemMachine/VCItemSelectors';
+import {VCItemMachine} from '../../machines/VerifiableCredential/VCItemMachine/VCItemMachine';
+import {selectVc} from '../../machines/VerifiableCredential/VCItemMachine/VCItemSelectors';
 
 export function useReceivedVcsTab() {
   const [isVisible, setIsVisible] = useState(false);

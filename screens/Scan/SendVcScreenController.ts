@@ -1,7 +1,7 @@
 import {useSelector} from '@xstate/react';
 import {useContext, useState} from 'react';
 import {ActorRefFrom} from 'xstate';
-import {selectShareableVcsMetadata} from '../../machines/VCItemMachine/vc';
+import {selectShareableVcsMetadata} from '../../machines/VerifiableCredential/VCMetaMachine/vc';
 import {GlobalContext} from '../../shared/GlobalContext';
 import {
   selectCredential,
@@ -23,7 +23,7 @@ import {VCShareFlowType} from '../../shared/Utils';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
 import {RootRouteProps} from '../../routes';
 import {BOTTOM_TAB_ROUTES} from '../../routes/routesConstants';
-import {VCItemMachine} from '../../machines/VCItemMachine/VCItemMachine';
+import {VCItemMachine} from '../../machines/VerifiableCredential/VCItemMachine/VCItemMachine';
 
 type MyVcsTabNavigation = NavigationProp<RootRouteProps>;
 
