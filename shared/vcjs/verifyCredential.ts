@@ -6,6 +6,9 @@ import {AssertionProofPurpose} from '../../lib/jsonld-signatures/purposes/Assert
 import {PublicKeyProofPurpose} from '../../lib/jsonld-signatures/purposes/PublicKeyProofPurpose';
 import {VerifiableCredential} from '../../types/VC/ExistingMosipVC/vc';
 import {Credential} from '../../types/VC/EsignetMosipVC/vc';
+import {getErrorEventData, sendErrorEvent} from '../telemetry/TelemetryUtils';
+import {TelemetryConstants} from '../telemetry/TelemetryConstants';
+import {getMosipIdentifier} from '../commonUtil';
 
 // FIXME: Ed25519Signature2018 not fully supported yet.
 // Ed25519Signature2018 proof type check is not tested with its real credential
@@ -57,9 +60,8 @@ export async function verifyCredential(
     };
 
     //ToDo - Have to remove once range error is fixed during verification
-    //const result = await vcjs.verifyCredential(vcjsOptions);
-    const result = {verified: true};
-    return handleResponse(result);
+    const result = await vcjs.verifyCredential(vcjsOptions);
+    return handleResponse(result, verifiableCredential);
 
     //ToDo Handle Expiration error message
   } catch (error) {
@@ -70,17 +72,34 @@ export async function verifyCredential(
   }
 }
 
-function handleResponse(result: any) {
+function handleResponse(
+  result: any,
+  verifiableCredential: VerifiableCredential | Credential,
+) {
   var errorMessage = VerificationErrorType.NO_ERROR;
   var isVerifiedFlag = true;
 
   if (!result?.verified) {
-    if (result['results'][0].error.name == 'jsonld.InvalidUrl') {
-      errorMessage = VerificationErrorType.NETWORK_ERROR;
-    } else {
-      errorMessage = VerificationErrorType.TECHNICAL_ERROR;
-    }
+    let errorCodeName = result['results'][0].error.name;
+    errorMessage = VerificationErrorType.TECHNICAL_ERROR;
     isVerifiedFlag = false;
+
+    if (errorCodeName == 'jsonld.InvalidUrl') {
+      errorMessage = VerificationErrorType.NETWORK_ERROR;
+    } else if (errorCodeName == VerificationErrorType.RANGE_ERROR) {
+      errorMessage = VerificationErrorType.RANGE_ERROR;
+      const vcIdentifier = getMosipIdentifier(
+        verifiableCredential.credentialSubject,
+      );
+      sendErrorEvent(
+        getErrorEventData(
+          TelemetryConstants.FlowType.vcVerification,
+          TelemetryConstants.ErrorId.vcVerificationFailed,
+          TelemetryConstants.ErrorMessage.vcVerificationFailed + vcIdentifier,
+        ),
+      );
+      isVerifiedFlag = true;
+    }
   }
 
   const verificationResult: VerificationResult = {
@@ -93,6 +112,7 @@ function handleResponse(result: any) {
 const VerificationErrorType = {
   NO_ERROR: '',
   TECHNICAL_ERROR: 'technicalError',
+  RANGE_ERROR: 'RangeError',
   NETWORK_ERROR: 'networkError',
   EXPIRATION_ERROR: 'expirationError',
 };

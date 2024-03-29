@@ -1,4 +1,4 @@
-import {assign, ErrorPlatformEvent, EventFrom, send, StateFrom} from 'xstate';
+import {assign, ErrorPlatformEvent, EventFrom, send} from 'xstate';
 import {createModel} from 'xstate/lib/model';
 import {AppServices} from '../../../shared/GlobalContext';
 import {VCMetadata} from '../../../shared/VCMetadata';
@@ -38,6 +38,7 @@ import {BackupEvents} from '../../backupAndRestore/backup';
 import Cloud, {
   isSignedInResult,
 } from '../../../shared/CloudBackupAndRestoreUtils';
+import {getMosipIdentifier} from '../../../shared/commonUtil';
 
 const model = createModel(
   {
@@ -274,9 +275,9 @@ export const EsignetMosipVCItemMachine = model.createMachine(
             {
               target: 'updatingPrivateKey',
               /*The walletBindingResponse is used for conditional rendering in wallet binding.
-                However, it wrongly considers activation as successful even when there's an error
-                in updatingPrivateKey state. So created a temporary context variable to store the binding
-                response and use it in updatingPrivateKey state*/
+                              However, it wrongly considers activation as successful even when there's an error
+                              in updatingPrivateKey state. So created a temporary context variable to store the binding
+                              response and use it in updatingPrivateKey state*/
               actions: 'setTempWalletBindingResponse',
             },
           ],
@@ -830,10 +831,9 @@ export const EsignetMosipVCItemMachine = model.createMachine(
           {
             requestTime: String(new Date().toISOString()),
             request: {
-              individualId: context.verifiableCredential.credential
-                .credentialSubject.VID
-                ? context.verifiableCredential.credential.credentialSubject.VID
-                : context.verifiableCredential.credential.credentialSubject.UIN,
+              individualId: getMosipIdentifier(
+                context.verifiableCredential.credential.credentialSubject,
+              ),
               otpChannels: ['EMAIL', 'PHONE'],
             },
           },
