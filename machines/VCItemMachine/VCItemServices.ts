@@ -13,6 +13,7 @@ import {
 import {CredentialDownloadResponse, request} from '../../shared/request';
 import {WalletBindingResponse} from '../../types/VC/vc';
 import {verifyCredential} from '../../shared/vcjs/verifyCredential';
+import { getMosipIdentifier } from '../../shared/commonUtil';
 
 export const VCItemServices = model => {
   return {

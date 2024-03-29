@@ -1,5 +1,6 @@
 import {VC, VcIdType} from '../types/VC/vc';
 import {Issuers, Protocols} from './openId4VCI/Utils';
+import {getMosipIdentifier} from './commonUtil';
 
 const VC_KEY_PREFIX = 'VC';
 const VC_ITEM_STORE_KEY_REGEX = '^VC_[a-zA-Z0-9_-]+$';
@@ -100,9 +101,9 @@ export const getVCMetadata = context => {
     requestId: requestId ? requestId : null,
     issuer: issuer,
     protocol: protocol,
-    id: context.verifiableCredential?.credential.credentialSubject.UIN
-      ? context.verifiableCredential?.credential.credentialSubject.UIN
-      : context.verifiableCredential?.credential.credentialSubject.VID,
+    id: getMosipIdentifier(
+      context.verifiableCredential?.credential.credentialSubject,
+    ),
     timestamp: context.timestamp ?? '',
   });
 };

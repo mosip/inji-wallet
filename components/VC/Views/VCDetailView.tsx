@@ -149,15 +149,15 @@ export const VCDetailView: React.FC<VCItemDetailsProps> = props => {
           </Column>
         </Column>
       </Column>
-      {props.vcHasImage ? (
+      {props.vcHasImage && (
         <View
           style={{
             position: 'relative',
             backgroundColor: Theme.Colors.DetailedViewBackground,
           }}>
-          {props.activeTab !== 1 ? (
-            props.walletBindingResponse &&
-            isActivationNeeded(props.verifiableCredentialData?.issue) ? (
+          {props.activeTab !== 1 && (
+            !props.walletBindingResponse &&
+            isActivationNeeded(props.verifiableCredentialData?.issuer)? (
               <Column
                 padding="10"
                 style={Theme.Styles.detailedViewActivationPopupContainer}>
@@ -224,13 +224,9 @@ export const VCDetailView: React.FC<VCItemDetailsProps> = props => {
                 </Row>
               </Column>
             )
-          ) : (
-            <></>
-          )}
+          ) }
         </View>
-      ) : (
-        <></>
-      )}
+      ) }
     </>
   );
 };

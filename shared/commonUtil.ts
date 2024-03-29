@@ -4,8 +4,9 @@ import {getDeviceNameSync} from 'react-native-device-info';
 import {GOOGLE_DRIVE_NAME, ICLOUD_DRIVE_NAME, isAndroid} from './constants';
 import {generateSecureRandom} from 'react-native-securerandom';
 import forge from 'node-forge';
-import {useState, useEffect} from 'react';
+import {useEffect, useState} from 'react';
 import {Dimensions, Keyboard} from 'react-native';
+import {CredentialSubject} from '../types/VC/ExistingMosipVC/vc';
 
 export const hashData = async (
   data: string,
@@ -141,4 +142,8 @@ export const getScreenHeight = () => {
   const screenHeight = Math.floor(height - keyboardHeight);
 
   return {isSmallScreen, screenHeight};
+};
+
+export const getMosipIdentifier = (credentialSubject: CredentialSubject) => {
+  return credentialSubject.UIN ? credentialSubject.UIN : credentialSubject.VID;
 };
