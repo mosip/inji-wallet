@@ -6,7 +6,7 @@ import {generateSecureRandom} from 'react-native-securerandom';
 import forge from 'node-forge';
 import {useEffect, useState} from 'react';
 import {Dimensions, Keyboard} from 'react-native';
-import {CredentialSubject} from '../types/VC/ExistingMosipVC/vc';
+import { CredentialSubject } from '../types/VC/vc';
 
 export const hashData = async (
   data: string,

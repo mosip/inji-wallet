@@ -1,4 +1,5 @@
 import jsonld from '@digitalcredentials/jsonld';
+import vcjs from '@digitalcredentials/vc';
 import {RsaSignature2018} from '../../lib/jsonld-signatures/suites/rsa2018/RsaSignature2018';
 import {Ed25519Signature2018} from '../../lib/jsonld-signatures/suites/ed255192018/Ed25519Signature2018';
 import {AssertionProofPurpose} from '../../lib/jsonld-signatures/purposes/AssertionProofPurpose';
@@ -81,6 +82,10 @@ function handleResponse(
     let errorCodeName = result['results'][0].error.name;
     errorMessage = VerificationErrorType.TECHNICAL_ERROR;
     isVerifiedFlag = false;
+
+    console.log('Verification: ', result['results'][0]);
+    console.log('Verifiable Credential: ', verifiableCredential);
+
 
     if (errorCodeName == 'jsonld.InvalidUrl') {
       errorMessage = VerificationErrorType.NETWORK_ERROR;

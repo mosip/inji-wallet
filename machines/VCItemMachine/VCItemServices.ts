@@ -109,9 +109,9 @@ export const VCItemServices = model => {
         {
           requestTime: String(new Date().toISOString()),
           request: {
-            individualId: vc.credentialSubject.VID
-              ? vc.credentialSubject.VID
-              : vc.credentialSubject.UIN,
+            individualId: getMosipIdentifier(
+              vc.credentialSubject,
+            ),
             otpChannels: ['EMAIL', 'PHONE'],
           },
         },
