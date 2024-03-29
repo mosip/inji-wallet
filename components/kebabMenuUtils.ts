@@ -62,7 +62,7 @@ export const getKebabMenuOptions = props => {
     onPress: activationNotCompleted
       ? controller.ADD_WALLET_BINDING_ID
       : loadScanScreen(VCShareFlowType.MINI_VIEW_QR_LOGIN),
-    testID: 'pinOrUnPinCard',
+    testID: 'pendingActivationOrActivated',
   };
 
   if (props.vcHasImage) {
