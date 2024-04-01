@@ -2,7 +2,7 @@ fileignoreconfig:
   - filename: package.json
     checksum: 730263252adbe53cde58fb0b6988e519e766fe0f89a7b8cd261a1e5e5e598328
   - filename: package-lock.json
-    checksum: 11c53bf68c0e5ae73b810e3b651e57ab440cc8571ec7f2821b636d265cd4df8d
+    checksum: 8e91542dfeba34460b4700c5b640fe6802cb1b38e1dbafd2ebcaac2fd9dbed36
   - filename: lib/jsonld-signatures/suites/ed255192018/ed25519.ts
     checksum: 493b6e31144116cb612c24d98b97d8adcad5609c0a52c865a6847ced0a0ddc3a
   - filename: components/PasscodeVerify.tsx
@@ -160,7 +160,7 @@ fileignoreconfig:
   - filename: machines/backupAndRestore/backupRestore.typegen.ts
     checksum: 64a8e42712083e0cbf0d6ce6b1139c62b59a14af17e4132d14f903d4d3bbe6b2
   - filename: ios/Podfile.lock
-    checksum: 14402e8147c831b0cb620993842560f8a0cedbb1fe39f0881ba0ff31a638c14d
+    checksum: c8f330a55ad911e59921215bf7d086db3dbdb5eab28202b3b450d780498ea880
   - filename: screens/Home/MyVcsTab.tsx
     checksum: 8133e2fefddfd0207eb7207b660d317f9a6acafbab6a65762d29ea86e33787cb
   - filename: components/BackupAndRestoreBannerNotification.tsx

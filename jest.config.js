@@ -2,7 +2,7 @@
 const {defaults: tsjPreset} = require('ts-jest/presets');
 module.exports = {
   ...tsjPreset,
-  preset: 'jest-expo',
+  preset: 'react-native',
   setupFilesAfterEnv: ['@testing-library/jest-native/extend-expect'],
   testPathIgnorePatterns: ['<rootDir>/node_modules/', '\\.snap$'],
   cacheDirectory: '.jest/cache',
