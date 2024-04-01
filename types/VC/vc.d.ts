@@ -1,20 +1,14 @@
-import {WalletBindingResponse} from '../../../shared/cryptoutil/cryptoUtil';
-import {logoType} from '../../../machines/issuersMachine';
-import {VCMetadata} from '../../../shared/VCMetadata';
+import {logoType} from '../../machines/issuersMachine';
 
 export interface VC {
   id?: string;
   idType?: VcIdType;
   credential?: DecodedCredential;
   verifiableCredential: VerifiableCredential;
-  verifiablePresentation?: VerifiablePresentation;
   requestId?: string;
   isVerified?: boolean;
   lastVerifiedOn: number;
-  shouldVerifyPresence?: boolean;
   walletBindingResponse?: WalletBindingResponse;
-  credentialRegistry?: string;
-  isPinned?: boolean;
   hashedId?: string;
 }
 
@@ -73,25 +67,9 @@ export interface VerifiableCredential {
 
 export interface CredentialWrapper {
   verifiableCredential: VerifiableCredential;
-  vcMetadata: VCMetadata;
   identifier: string;
   generatedOn: Date;
   issuerLogo: string;
-}
-
-export interface VerifiablePresentation {
-  '@context': VCContext;
-  verifiableCredential: VerifiableCredential[];
-  type: 'VerifiablePresentation';
-  proof: {
-    created: string;
-    jws: string;
-    proofPurpose: 'authentication' | string;
-    type: 'RsaSignature2018' | string;
-    verificationMethod: string;
-    challenge: string;
-    domain: string;
-  };
 }
 
 export type VerifiableCredentialType =
@@ -118,4 +96,11 @@ export interface linkTransactionResponse {
   linkTransactionId: string;
   logoUrl: string;
   voluntaryClaims: string[];
+}
+
+export interface WalletBindingResponse {
+  walletBindingId: string;
+  keyId: string;
+  thumbprint: string;
+  expireDateTime: string;
 }

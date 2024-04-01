@@ -9,11 +9,6 @@ export interface Typegen0 {
       data: unknown;
       __tip: 'See the XState TS docs to learn how to strongly type this.';
     };
-    'done.invoke.request.reviewing.verifyingVp:invocation[0]': {
-      type: 'done.invoke.request.reviewing.verifyingVp:invocation[0]';
-      data: unknown;
-      __tip: 'See the XState TS docs to learn how to strongly type this.';
-    };
     'xstate.after(DESTROY_TIMEOUT)#request.clearingConnection': {
       type: 'xstate.after(DESTROY_TIMEOUT)#request.clearingConnection';
     };
@@ -21,7 +16,6 @@ export interface Typegen0 {
       type: 'xstate.after(SHARING_TIMEOUT)#request.waitingForVc.inProgress';
     };
     'xstate.init': {type: 'xstate.init'};
-    'xstate.stop': {type: 'xstate.stop'};
   };
   invokeSrcNameMap: {
     advertiseDevice: 'done.invoke.request.waitingForConnection:invocation[0]';
@@ -40,7 +34,6 @@ export interface Typegen0 {
       | 'done.invoke.request.reviewing.accepted:invocation[0]'
       | 'done.invoke.request.reviewing.rejected:invocation[0]'
       | 'done.invoke.request.reviewing.savingFailed:invocation[0]';
-    verifyVp: 'done.invoke.request.reviewing.verifyingVp:invocation[0]';
   };
   missingImplementations: {
     actions: never;
@@ -49,31 +42,20 @@ export interface Typegen0 {
     services: never;
   };
   eventsCausingActions: {
-    clearShouldVerifyPresence:
-      | 'ACCEPT'
-      | 'BLE_ERROR'
-      | 'CANCEL'
-      | 'FACE_INVALID'
-      | 'FACE_VALID'
-      | 'REJECT'
-      | 'RESET'
-      | 'SCREEN_BLUR'
-      | 'SCREEN_FOCUS'
-      | 'xstate.stop';
     logReceived: 'CANCEL' | 'REJECT' | 'STORE_ERROR' | 'STORE_RESPONSE';
     openAppPermission: 'GOTO_SETTINGS';
     prependReceivedVcMetadata:
       | 'ACCEPT'
       | 'DISMISS'
       | 'FACE_VALID'
-      | 'VC_RECEIVED'
-      | 'done.invoke.request.reviewing.verifyingVp:invocation[0]';
+      | 'VC_RECEIVED';
     registerLoggers:
       | 'DISCONNECT'
       | 'RESET'
       | 'xstate.after(DESTROY_TIMEOUT)#request.clearingConnection';
     removeLoggers:
       | 'DISCONNECT'
+      | 'GOTO_HOME'
       | 'RESET'
       | 'SCREEN_BLUR'
       | 'xstate.after(DESTROY_TIMEOUT)#request.clearingConnection'
@@ -118,13 +100,12 @@ export interface Typegen0 {
       | 'RESET'
       | 'done.invoke.request.checkStorage:invocation[0]';
     checkStorageAvailability: 'SCREEN_FOCUS';
-    disconnect: '' | 'DISMISS' | 'GO_TO_RECEIVED_VC_TAB';
-    monitorConnection: 'xstate.init';
+    disconnect: '' | 'DISMISS' | 'GOTO_HOME' | 'GO_TO_RECEIVED_VC_TAB';
+    monitorConnection: 'GOTO_HOME' | 'xstate.init';
     receiveVc: 'CONNECTED';
     requestBluetooth: 'BLUETOOTH_STATE_DISABLED';
     requestNearByDevicesPermission: 'NEARBY_DISABLED';
     sendVcResponse: 'CANCEL' | 'REJECT' | 'STORE_ERROR' | 'STORE_RESPONSE';
-    verifyVp: never;
   };
   matchesStates:
     | 'bluetoothDenied'
@@ -157,7 +138,6 @@ export interface Typegen0 {
     | 'reviewing.savingFailed'
     | 'reviewing.savingFailed.idle'
     | 'reviewing.verifyingIdentity'
-    | 'reviewing.verifyingVp'
     | 'storageLimitReached'
     | 'waitingForConnection'
     | 'waitingForVc'
@@ -178,7 +158,6 @@ export interface Typegen0 {
           | 'rejected'
           | 'savingFailed'
           | 'verifyingIdentity'
-          | 'verifyingVp'
           | {
               accepting?: 'prependingReceivedVcMetadata' | 'storingVc';
               savingFailed?: 'idle';

@@ -12,7 +12,7 @@ import {createModel} from 'xstate/lib/model';
 import {DeviceInfo} from '../../../components/DeviceInfoList';
 import {getDeviceNameSync} from 'react-native-device-info';
 import {StoreEvents} from '../../store';
-import {VC} from '../../../types/VC/ExistingMosipVC/vc';
+import {VC} from '../../../types/VC/vc';
 import {AppServices} from '../../../shared/GlobalContext';
 import {
   androidVersion,
@@ -20,9 +20,8 @@ import {
   RECEIVED_VCS_STORE_KEY,
 } from '../../../shared/constants';
 import {ActivityLogEvents, ActivityLogType} from '../../activityLog';
-import {VcEvents} from '../../VCItemMachine/vc';
+import {VcEvents} from '../../VerifiableCredential/VCMetaMachine/vc';
 import {subscribe} from '../../../shared/openIdBLE/verifierEventHandler';
-import {log} from 'xstate/lib/actions';
 import {VerifierDataEvent} from '@mosip/tuvali/src/types/events';
 import {BLEError} from '../types';
 import Storage from '../../../shared/storage';
@@ -39,7 +38,6 @@ import {
 } from '../../../shared/telemetry/TelemetryUtils';
 import {TelemetryConstants} from '../../../shared/telemetry/TelemetryConstants';
 import {getIdType} from '../../../shared/openId4VCI/Utils';
-// import { verifyPresentation } from '../shared/vcjs/verifyPresentation';
 
 const {verifier, EventTypes, VerificationStatus} = tuvali;
 
@@ -103,11 +101,6 @@ export const requestMachine =
       schema: {
         context: model.initialContext,
         events: {} as EventFrom<typeof model>,
-        services: {} as {
-          verifyVp: {
-            data: VC;
-          };
-        },
       },
       invoke: {
         src: 'monitorConnection',
@@ -324,7 +317,6 @@ export const requestMachine =
           states: {
             idle: {},
             verifyingIdentity: {
-              exit: 'clearShouldVerifyPresence',
               on: {
                 FACE_VALID: {
                   target: 'accepting',
@@ -350,22 +342,6 @@ export const requestMachine =
                 RETRY_VERIFICATION: {
                   target: 'verifyingIdentity',
                 },
-              },
-            },
-            verifyingVp: {
-              invoke: {
-                src: 'verifyVp',
-                onDone: [
-                  {
-                    target: 'accepting',
-                  },
-                ],
-                onError: [
-                  {
-                    target: 'idle',
-                    actions: log('Failed to verify Verifiable Presentation'),
-                  },
-                ],
               },
             },
             accepting: {
@@ -537,15 +513,7 @@ export const requestMachine =
         }),
 
         setIncomingVc: assign({
-          incomingVc: (_context, event) => {
-            const vp = event.vc.verifiablePresentation;
-            return vp != null
-              ? {
-                  ...event.vc,
-                  verifiableCredential: vp.verifiableCredential[0],
-                }
-              : event.vc;
-          },
+          incomingVc: (_context, event) => event.vc,
         }),
 
         setOpenID4VpUri: assign({
@@ -664,13 +632,6 @@ export const requestMachine =
 
         sendVcReceived: send(VcEvents.REFRESH_RECEIVED_VCS(), {
           to: context => context.serviceRefs.vc,
-        }),
-
-        clearShouldVerifyPresence: assign({
-          incomingVc: context => ({
-            ...context.incomingVc,
-            shouldVerifyPresence: false,
-          }),
         }),
 
         sendVCReceivingStartEvent: () => {
@@ -887,24 +848,8 @@ export const requestMachine =
           return () => subscription.remove();
         },
 
-        sendVcResponse: (context, _event, meta) => async () => {
+        sendVcResponse: (_context, _event, meta) => async () => {
           verifier.sendVerificationStatus(meta.data.status);
-        },
-
-        verifyVp: context => async () => {
-          const vp = context.incomingVc.verifiablePresentation;
-
-          // TODO
-          // const challenge = ?
-          // await verifyPresentation(vp, challenge);
-
-          const vc: VC = {
-            ...context.incomingVc,
-            verifiablePresentation: null,
-            verifiableCredential: vp.verifiableCredential[0],
-          };
-
-          return Promise.resolve(vc);
         },
 
         checkStorageAvailability: () => async () => {
@@ -915,15 +860,6 @@ export const requestMachine =
       },
 
       guards: {
-        hasExistingVc: (context, event) => {
-          const receivedVcs = event.vcMetadatas;
-          const incomingVcMetadata = VCMetadata.fromVC(context.incomingVc);
-          return receivedVcs?.some(
-            vcMetadata =>
-              vcMetadata.getVcKey() == incomingVcMetadata.getVcKey(),
-          );
-        },
-
         isMinimumStorageLimitReached: (_context, event) => Boolean(event.data),
       },
 

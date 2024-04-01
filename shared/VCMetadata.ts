@@ -1,4 +1,4 @@
-import {VC, VcIdType} from '../types/VC/ExistingMosipVC/vc';
+import {VC, VcIdType} from '../types/VC/vc';
 import {Issuers, Protocols} from './openId4VCI/Utils';
 import {getMosipIdentifier} from './commonUtil';
 
