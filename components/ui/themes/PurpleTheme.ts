@@ -1260,7 +1260,9 @@ export const PurpleTheme = {
       borderTopLeftRadius: 15,
       borderTopRightRadius: 15,
       width: Dimensions.get('screen').width,
-      marginTop: Dimensions.get('screen').height * 0.55,
+      maxHeight: 300,
+      position: 'absolute',
+      bottom: 0,
     },
     kebabHeaderStyle: {
       justifyContent: 'space-between',
