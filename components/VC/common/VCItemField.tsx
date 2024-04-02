@@ -1,4 +1,4 @@
-import {Dimensions} from 'react-native';
+import {Dimensions, View} from 'react-native';
 import {Column, Row, Text} from '../../ui';
 import {CustomTooltip} from '../../ui/ToolTip';
 import {Theme} from '../../ui/styleUtils';
@@ -28,22 +28,32 @@ export const VCItemFieldName = ({fieldName, wellknown}) => {
           triggerComponentStyles={{marginLeft: 2, marginTop: 2}}
           toolTipContent={
             <Column align="flex-start">
-              <Text weight="semibold">
-                {t('statusToolTipContent.valid_title')}
-              </Text>
-              <Text
-                weight="regular"
-                style={Theme.Styles.tooltipContentDescription}>
-                {t('statusToolTipContent.valid_desciption')}
-              </Text>
-              <Text weight="semibold">
-                {t('statusToolTipContent.pending_title')}
-              </Text>
-              <Text
-                weight="regular"
-                style={Theme.Styles.tooltipContentDescription}>
-                {t('statusToolTipContent.pending_descirption')}
-              </Text>
+              <View style={{marginBottom: 20}}>
+                <Text weight="semibold">
+                  {t('statusToolTipContent.valid_title')}
+                </Text>
+                <Text
+                  weight="regular"
+                  style={[
+                    Theme.Styles.tooltipContentDescription,
+                    {marginTop: 3},
+                  ]}>
+                  {t('statusToolTipContent.valid_desciption')}
+                </Text>
+              </View>
+              <View>
+                <Text weight="semibold">
+                  {t('statusToolTipContent.pending_title')}
+                </Text>
+                <Text
+                  weight="regular"
+                  style={[
+                    Theme.Styles.tooltipContentDescription,
+                    {marginTop: 3},
+                  ]}>
+                  {t('statusToolTipContent.pending_descirption')}
+                </Text>
+              </View>
             </Column>
           }
         />
