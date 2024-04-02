@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {Row} from '../../components/ui';
 import {Modal} from '../../components/ui/Modal';
 import {MessageOverlay} from '../../components/MessageOverlay';
@@ -21,11 +21,42 @@ import {VCMetadata} from '../../shared/VCMetadata';
 import {WalletBinding} from './MyVcs/WalletBinding';
 import {RemoveVcWarningOverlay} from './MyVcs/RemoveVcWarningOverlay';
 import {HistoryTab} from './MyVcs/HistoryTab';
+import {getDetailedViewFields} from '../../shared/openId4VCI/Utils';
+import {
+  DETAIL_VIEW_DEFAULT_FIELDS,
+  isVCLoaded,
+} from '../../components/VC/common/VCUtils';
+import {ActivityIndicator} from '../../components/ui/ActivityIndicator';
+import ShimmerPlaceholder from 'react-native-shimmer-placeholder';
+import LinearGradient from 'react-native-linear-gradient';
 
 export const ViewVcModal: React.FC<ViewVcModalProps> = props => {
   const {t} = useTranslation('ViewVcModal');
   const controller = useViewVcModal(props);
   const profileImage = controller.verifiableCredentialData.face;
+
+  useEffect(() => {
+    if (!controller.verifiableCredentialData.vcMetadata.isVerified) {
+      props.vcItemActor.send({type: 'VERIFY'});
+    }
+  }, [controller.verifiableCredentialData.vcMetadata.isVerified]);
+
+  let [fields, setFields] = useState([]);
+  const [wellknown, setWellknown] = useState(null);
+
+  const verifiableCredentialData = controller.verifiableCredentialData;
+
+  useEffect(() => {
+    getDetailedViewFields(
+      verifiableCredentialData?.issuer,
+      verifiableCredentialData?.wellKnown,
+      verifiableCredentialData?.credentialTypes,
+      DETAIL_VIEW_DEFAULT_FIELDS,
+    ).then(response => {
+      setWellknown(response.wellknown);
+      setFields(response.fields);
+    });
+  }, [verifiableCredentialData?.wellKnown]);
 
   const headerRight = flow => {
     return flow === 'downloadedVc' ? (
@@ -43,23 +74,32 @@ export const ViewVcModal: React.FC<ViewVcModalProps> = props => {
             />
           }
         />
-        <Pressable
-          onPress={() => props.vcItemActor.send('KEBAB_POPUP')}
-          accessible={false}>
-          <KebabPopUp
-            icon={SvgImage.kebabIcon()}
-            vcMetadata={controller.verifiableCredentialData.vcMetadata}
-            iconName="dots-three-horizontal"
-            iconType="entypo"
-            isVisible={
-              props.vcItemActor.getSnapshot()?.context
-                .isMachineInKebabPopupState
-            }
-            onDismiss={() => props.vcItemActor.send('DISMISS')}
-            service={props.vcItemActor}
-            vcHasImage={profileImage !== undefined}
+        {isVCLoaded(controller.credential, fields) ? (
+          <Pressable
+            onPress={() => props.vcItemActor.send('KEBAB_POPUP')}
+            accessible={false}>
+            <KebabPopUp
+              icon={SvgImage.kebabIcon()}
+              vcMetadata={controller.verifiableCredentialData.vcMetadata}
+              iconName="dots-three-horizontal"
+              iconType="entypo"
+              isVisible={
+                props.vcItemActor.getSnapshot()?.context
+                  .isMachineInKebabPopupState
+              }
+              onDismiss={() => props.vcItemActor.send('DISMISS')}
+              service={props.vcItemActor}
+              vcHasImage={profileImage !== undefined}
+            />
+          </Pressable>
+        ) : (
+          <ShimmerPlaceholder
+            LinearGradient={LinearGradient}
+            width={35}
+            height={35}
+            style={{borderRadius: 5, marginLeft: 2}}
           />
-        </Pressable>
+        )}
       </Row>
     ) : undefined;
   };
@@ -73,14 +113,20 @@ export const ViewVcModal: React.FC<ViewVcModalProps> = props => {
       onDismiss={props.onDismiss}
       headerElevation={2}>
       <BannerNotificationContainer />
-      <VcDetailsContainer
-        credential={controller.credential}
-        verifiableCredentialData={controller.verifiableCredentialData}
-        onBinding={controller.addtoWallet}
-        walletBindingResponse={controller.walletBindingResponse}
-        activeTab={props.activeTab}
-        vcHasImage={profileImage !== undefined}
-      />
+      {!isVCLoaded(controller.credential, fields) ? (
+        <ActivityIndicator />
+      ) : (
+        <VcDetailsContainer
+          fields={fields}
+          wellknown={wellknown}
+          credential={controller.credential}
+          verifiableCredentialData={controller.verifiableCredentialData}
+          onBinding={controller.addtoWallet}
+          walletBindingResponse={controller.walletBindingResponse}
+          activeTab={props.activeTab}
+          vcHasImage={profileImage !== undefined}
+        />
+      )}
 
       {controller.isAcceptingBindingOtp && (
         <OtpVerificationModal
