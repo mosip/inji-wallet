@@ -4,11 +4,6 @@ import {Column, Row, Text} from './ui';
 import {Theme} from './ui/styleUtils';
 import {Icon} from 'react-native-elements';
 import testIDProps from '../shared/commonUtil';
-import {
-  BANNER_TYPE_SUCCESS,
-  BANNER_TYPE_ERROR,
-  BANNER_TYPE_INFO,
-} from '../shared/constants';
 
 export const BannerNotification: React.FC<BannerNotificationProps> = props => {
   return (
@@ -37,12 +32,15 @@ export const BannerNotification: React.FC<BannerNotificationProps> = props => {
   );
 };
 
+export enum BannerStatusType {
+  INFO = 'info',
+  SUCCESS = 'success',
+  ERROR = 'errors',
+}
+
 export interface BannerNotificationProps {
   message: string;
   onClosePress: () => void;
   testId: string;
-  type:
-    | typeof BANNER_TYPE_SUCCESS
-    | typeof BANNER_TYPE_ERROR
-    | typeof BANNER_TYPE_INFO;
+  type: BannerStatusType;
 }

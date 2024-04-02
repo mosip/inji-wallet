@@ -13,7 +13,7 @@ import {
   MessageOverlay,
 } from '../../components/MessageOverlay';
 import {VcItemContainer} from '../../components/VC/VcItemContainer';
-import {BannerNotification} from '../../components/BannerNotification';
+import {BannerNotification, BannerStatusType} from '../../components/BannerNotification';
 import {
   getErrorEventData,
   sendErrorEvent,
@@ -27,7 +27,6 @@ import {SvgImage} from '../../components/ui/svg';
 import {SearchBar} from '../../components/ui/SearchBar';
 import {Icon} from 'react-native-elements';
 import {VCMetadata} from '../../shared/VCMetadata';
-import {BANNER_TYPE_SUCCESS} from '../../shared/constants';
 
 export const MyVcsTab: React.FC<HomeScreenTabProps> = props => {
   const {t} = useTranslation('MyVcsTab');
@@ -196,7 +195,7 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = props => {
       <Column fill style={{display: props.isVisible ? 'flex' : 'none'}}>
         {controller.isRequestSuccessful && (
           <BannerNotification
-            type={BANNER_TYPE_SUCCESS}
+            type={BannerStatusType.SUCCESS}
             message={t('downloadingYourCard')}
             onClosePress={() => {
               controller.RESET_STORE_VC_ITEM_STATUS();
