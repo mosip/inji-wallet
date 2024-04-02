@@ -25,7 +25,7 @@ export const VCVerification: React.FC = ({wellknown, isVerified}: any) => {
           color={Theme.Colors.Details}
           style={[
             Theme.Styles.detailsValue,
-            setTextColor(wellknown),
+            setTextColor(wellknown, Theme.Colors.Details),
             {fontFamily: 'Inter_600SemiBold'},
           ]}>
           {statusText}

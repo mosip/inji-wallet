@@ -13,7 +13,7 @@ export const VCItemFieldName = ({fieldName, wellknown}) => {
       {fieldName && (
         <Text
           testID={`${fieldName}Title`}
-          {...setTextColor(wellknown)}
+          {...setTextColor(wellknown, Theme.Colors.DetailsLabel)}
           style={Theme.Styles.fieldItemTitle}>
           {fieldName}
         </Text>
@@ -57,7 +57,7 @@ export const VCItemFieldValue = ({fieldName, fieldValue, wellknown}) => {
     <>
       <Text
         testID={`${fieldName}Value`}
-        {...setTextColor(wellknown)}
+        {...setTextColor(wellknown, Theme.Colors.Details)}
         style={Theme.Styles.fieldItemValue}>
         {fieldValue}
       </Text>
@@ -74,14 +74,10 @@ export const VCItemField = props => {
   );
 };
 
-export const setTextColor = (wellknown: any, component = '') => {
-  if (wellknown && wellknown?.credentials_supported[0]?.display) {
-    return {
-      color: wellknown.credentials_supported[0]?.display[0]?.text_color
-        ? wellknown.credentials_supported[0].display[0].text_color
-        : component === 'hrLine'
-        ? Theme.Styles.hrLine.borderBottomColor
-        : Theme.Colors.Details,
-    };
-  }
+export const setTextColor = (wellknown: any, defaultColor) => {
+  return {
+    color:
+      wellknown?.credentials_supported[0]?.display[0]?.text_color ??
+      defaultColor,
+  };
 };
