@@ -13,7 +13,7 @@ import {iso6393To1} from 'iso-639-3';
 
 import Keychain from 'react-native-keychain';
 import {getItem} from './machines/store';
-import {LocalizedField} from './types/VC/vc';
+import {LocalizedField} from './machines/VerifiableCredential/VCMetaMachine/vc';
 
 const resources = {en, fil, ar, hi, kn, ta};
 const locale = Localization.locale;

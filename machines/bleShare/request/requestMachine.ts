@@ -12,7 +12,7 @@ import {createModel} from 'xstate/lib/model';
 import {DeviceInfo} from '../../../components/DeviceInfoList';
 import {getDeviceNameSync} from 'react-native-device-info';
 import {StoreEvents} from '../../store';
-import {VC} from '../../../types/VC/vc';
+import {VC} from '../../VerifiableCredential/VCMetaMachine/vc';
 import {AppServices} from '../../../shared/GlobalContext';
 import {
   androidVersion,
@@ -20,7 +20,7 @@ import {
   RECEIVED_VCS_STORE_KEY,
 } from '../../../shared/constants';
 import {ActivityLogEvents, ActivityLogType} from '../../activityLog';
-import {VcEvents} from '../../VerifiableCredential/VCMetaMachine/vc';
+import {VcMetaEvents} from '../../VerifiableCredential/VCMetaMachine/VCMetaMachine';
 import {subscribe} from '../../../shared/openIdBLE/verifierEventHandler';
 import {VerifierDataEvent} from '@mosip/tuvali/src/types/events';
 import {BLEError} from '../types';
@@ -630,8 +630,8 @@ export const requestMachine =
           {to: context => context.serviceRefs.activityLog},
         ),
 
-        sendVcReceived: send(VcEvents.REFRESH_RECEIVED_VCS(), {
-          to: context => context.serviceRefs.vc,
+        sendVcReceived: send(VcMetaEvents.REFRESH_RECEIVED_VCS(), {
+          to: context => context.serviceRefs.vcMeta,
         }),
 
         sendVCReceivingStartEvent: () => {

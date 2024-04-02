@@ -1,6 +1,6 @@
 import {useState} from 'react';
 import {ActorRefFrom} from 'xstate';
-import {VC} from '../../types/VC/vc';
+import {VC} from '../../machines/VerifiableCredential/VCMetaMachine/vc';
 import {VCMetadata} from '../../shared/VCMetadata';
 import {VCItemMachine} from '../../machines/VerifiableCredential/VCItemMachine/VCItemMachine';
 

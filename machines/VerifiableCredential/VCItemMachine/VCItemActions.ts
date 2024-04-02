@@ -21,10 +21,10 @@ import {
   sendErrorEvent,
   getErrorEventData,
 } from '../../../shared/telemetry/TelemetryUtils';
-import {WalletBindingResponse} from '../../../types/VC/vc';
+import {WalletBindingResponse} from '../VCMetaMachine/vc';
 import {ActivityLogEvents} from '../../activityLog';
 import {BackupEvents} from '../../backupAndRestore/backup';
-import {VcEvents} from '../VCMetaMachine/vc';
+import {VcMetaEvents} from '../VCMetaMachine/VCMetaMachine';
 
 export const VCItemActions = model => {
   return {
@@ -164,13 +164,13 @@ export const VCItemActions = model => {
     }),
     //todo: revisit on this for naming and impl
     sendVcUpdated: send(
-      (context: any) => VcEvents.VC_METADATA_UPDATED(context.vcMetadata),
+      (context: any) => VcMetaEvents.VC_METADATA_UPDATED(context.vcMetadata),
       {
         to: (context: any) => context.serviceRefs.vc,
       },
     ),
     sendTamperedVc: send(
-      (context: any) => VcEvents.TAMPERED_VC(context.vcMetadata),
+      (context: any) => VcMetaEvents.TAMPERED_VC(context.vcMetadata),
       {
         to: context => context.serviceRefs.vc,
       },

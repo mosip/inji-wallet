@@ -1,5 +1,5 @@
 import {VCMetadata} from '../../../shared/VCMetadata';
-import {VC} from '../../../types/VC/vc';
+import {VC} from '../VCMetaMachine/vc';
 
 export const VCItemEvents = {
   DISMISS: () => ({}),

@@ -1,4 +1,7 @@
-import {DecodedCredential, VerifiableCredential} from '../types/VC/vc';
+import {
+  DecodedCredential,
+  VerifiableCredential,
+} from '../machines/VerifiableCredential/VCMetaMachine/vc';
 import {__AppId} from './GlobalVariables';
 import {MIMOTO_BASE_URL, REQUEST_TIMEOUT} from './constants';
 

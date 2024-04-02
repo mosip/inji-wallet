@@ -1,7 +1,7 @@
 import {useSelector} from '@xstate/react';
 import {useContext} from 'react';
 import {useTranslation} from 'react-i18next';
-import {selectShareableVcsMetadata} from '../../machines/VerifiableCredential/VCMetaMachine/vc';
+import {selectShareableVcsMetadata} from '../../machines/VerifiableCredential/VCMetaMachine/VCMetaMachine';
 import {GlobalContext} from '../../shared/GlobalContext';
 import {
   selectIsLocationDenied,
@@ -30,11 +30,11 @@ import {useNavigation, NavigationProp} from '@react-navigation/native';
 export function useScanScreen() {
   const {t} = useTranslation('ScanScreen');
   const {appService} = useContext(GlobalContext);
-  const scanService = appService.children.get('scan');
-  const vcService = appService.children.get('vc');
+  const scanService = appService.children.get('scan')!!;
+  const vcMetaService = appService.children.get('vcMeta')!!;
 
   const shareableVcsMetadata = useSelector(
-    vcService,
+    vcMetaService,
     selectShareableVcsMetadata,
   );
 
