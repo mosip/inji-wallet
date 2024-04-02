@@ -14,7 +14,7 @@ import {
   NETWORK_REQUEST_FAILED,
 } from './constants';
 import fileStorage, {backupDirectoryPath, zipFilePath} from './fileStorage';
-import {request} from './request';
+import {API} from './api';
 
 class Cloud {
   static status = {
@@ -28,6 +28,7 @@ class Cloud {
     'https://www.googleapis.com/auth/drive.file',
   ];
   private static readonly BACKUP_FILE_REG_EXP = /backup_[0-9]*.zip$/g;
+  private static readonly ALL_BACKUP_FILE_REG_EXP = /backup_[0-9]*.zip/g;
   private static readonly UNSYNCED_BACKUP_FILE_REG_EXP =
     /backup_[0-9]*.zip.icloud/g;
   private static readonly RETRY_SLEEP_TIME = 5000;
@@ -44,11 +45,8 @@ class Cloud {
   private static async profileInfo(): Promise<ProfileInfo | undefined> {
     try {
       const accessToken = await this.getAccessToken();
-      const profileResponse = await request(
-        'GET',
-        `https://www.googleapis.com/oauth2/v1/userinfo?alt=json&access_token=${accessToken}`,
-        undefined,
-        '',
+      const profileResponse = await API.getGoogleAccountProfileInfo(
+        accessToken,
       );
       return {
         email: profileResponse.email,
@@ -64,6 +62,19 @@ class Cloud {
     return await CloudStorage.readdir(`/`, CloudStorageScope.AppData);
   };
 
+  private static getLatestFileName = (allFiles: string[]): string => {
+    const sortedFiles = allFiles.sort((a, b) => {
+      const dateA = new Date(Number(a.split('.')[0].split('_')[1]));
+      const dateB = new Date(Number(b.split('.')[0].split('_')[1]));
+      return dateB > dateA ? 1 : dateB < dateA ? -1 : 0;
+    });
+    return `/${sortedFiles[0]}`;
+  };
+
+  /**
+   * This method is specific to iOS for downloading files from iCloud, which can be processed after
+   * Ref - https://react-native-cloud-storage.vercel.app/docs/api/CloudStorage#downloadfilepath-scope
+   */
   private static async syncBackupFiles() {
     const isSyncDone = await this.downloadUnSyncedBackupFiles();
     if (isSyncDone) return;
@@ -71,16 +82,47 @@ class Cloud {
     await this.syncBackupFiles();
   }
 
+  /**
+   * TODO: Remove the test call(get profile info) to reduce extra api calls
+   */
   static async getAccessToken() {
     try {
       const tokenResult = await GoogleSignin.getTokens();
+
+      try {
+        await API.getGoogleAccountProfileInfo(tokenResult.accessToken);
+        return tokenResult.accessToken;
+      } catch (error) {
+        console.error('Error while using the current token ', error);
+        if (
+          error.toString().includes('401') &&
+          error.toString().includes('UNAUTHENTICATED')
+        ) {
+          await GoogleSignin.revokeAccess();
+          await GoogleSignin.signOut();
+        } else if (
+          error.toString().includes('401') ||
+          error.toString().includes('Unauthorized')
+        ) {
+          return await refreshToken(tokenResult);
+        } else if (this.isNetworkError(error)) {
+          throw new Error(NETWORK_REQUEST_FAILED);
+        }
+        throw error;
+      }
+    } catch (error) {
+      console.error('Error while getting access token ', error);
+      throw error;
+    }
+
+    async function refreshToken(tokenResult: {
+      idToken: string;
+      accessToken: string;
+    }) {
       await GoogleSignin.clearCachedAccessToken(tokenResult.accessToken);
       await GoogleSignin.signInSilently();
       const {accessToken} = await GoogleSignin.getTokens();
       return accessToken;
-    } catch (error) {
-      console.error('Error while getting access token ', error);
-      throw error;
     }
   }
 
@@ -112,6 +154,8 @@ class Cloud {
           status: this.status.DECLINED,
           error,
         };
+      } else if (this.isNetworkError(error)) {
+        error = NETWORK_REQUEST_FAILED;
       }
       return {
         status: this.status.FAILURE,
@@ -150,11 +194,7 @@ class Cloud {
         error,
       );
       let errorReason: null | string = null;
-      if (
-        error.toString() === 'Error: NetworkError' ||
-        error.toString() === ' Error: NetworkError'
-      )
-        errorReason = NETWORK_REQUEST_FAILED;
+      if (this.isNetworkError(error)) errorReason = NETWORK_REQUEST_FAILED;
       //TODO: resolve and reject promise so it can be handled in onError
       return {
         error: errorReason || error,
@@ -202,7 +242,7 @@ class Cloud {
       if (availableBackupFilesInCloud.length === 0) {
         throw new Error(this.NO_BACKUP_FILE);
       }
-      cloudFileName = availableBackupFilesInCloud[0];
+      cloudFileName = this.getLatestFileName(availableBackupFilesInCloud);
     }
     const {birthtimeMs: creationTime, size} = await CloudStorage.stat(
       cloudFileName,
@@ -218,7 +258,7 @@ class Cloud {
   static async removeOldDriveBackupFiles(fileName: string) {
     const toBeRemovedFiles = (await this.getBackupFilesList())
       .filter(file => file !== fileName)
-      .filter(file => file.match(this.BACKUP_FILE_REG_EXP));
+      .filter(file => file.match(this.ALL_BACKUP_FILE_REG_EXP));
     for (const oldFileName of toBeRemovedFiles) {
       await CloudStorage.unlink(`/${oldFileName}`);
     }
@@ -281,10 +321,7 @@ class Cloud {
       console.log(
         `Error occurred while cloud upload.. retrying ${retryCounter} : Error : ${error}`,
       );
-      if (
-        error.toString() === 'Error: NetworkError' ||
-        error.toString() === ' Error: NetworkError'
-      ) {
+      if (this.isNetworkError(error)) {
         uploadError = NETWORK_REQUEST_FAILED;
       } else {
         uploadError = error;
@@ -323,7 +360,9 @@ class Cloud {
         throw new Error(Cloud.NO_BACKUP_FILE);
       }
 
-      const fileName = `/${availableBackupFilesInCloud[0]}`;
+      const fileName = `/${this.getLatestFileName(
+        availableBackupFilesInCloud,
+      )}`;
       const fileContent = await CloudStorage.readFile(
         fileName,
         CloudStorageScope.AppData,
@@ -343,9 +382,9 @@ class Cloud {
       // return the path
       return Promise.resolve(fileName.split('.zip')[0]);
     } catch (error) {
-      console.log('error while downloading backup file ', error);
+      console.error('error while downloading backup file ', error);
       let downloadError;
-      if (error.toString() === 'Error: NetworkError') {
+      if (this.isNetworkError(error)) {
         downloadError = NETWORK_REQUEST_FAILED;
       } else if (
         error.code?.toString() === 'ERR_DIRECTORY_NOT_FOUND' ||
@@ -357,6 +396,17 @@ class Cloud {
       }
       return Promise.reject({error: downloadError});
     }
+  }
+
+  private static isNetworkError(error: Error): boolean {
+    if (
+      error.toString().includes('NETWORK_ERROR') ||
+      error.toString().includes('Network Error') ||
+      error.toString().includes('NetworkError') ||
+      error.toString().includes(NETWORK_REQUEST_FAILED)
+    )
+      return true;
+    return false;
   }
 }
 

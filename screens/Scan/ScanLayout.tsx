@@ -4,12 +4,17 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {SendVcScreen} from './SendVcScreen';
 import {useScanLayout} from './ScanLayoutController';
 import {ScanScreen} from './ScanScreen';
-import {ProgressingModal} from '../../components/ProgressingModal';
 import {SCAN_ROUTES} from '../../routes/routesConstants';
-import {SharingSuccessModal} from './SuccessfullySharedModal';
+import {SharingStatusModal} from './SharingStatusModal';
 import {Theme} from '../../components/ui/styleUtils';
 import {Icon} from 'react-native-elements';
 import {Loader} from '../../components/ui/Loader';
+import {VCShareFlowType} from '../../shared/Utils';
+import {VerifyIdentityOverlay} from '../VerifyIdentityOverlay';
+import {SvgImage} from '../../components/ui/svg';
+import {BANNER_TYPE_SUCCESS} from '../../shared/constants';
+import {View, I18nManager} from 'react-native';
+import {Text} from './../../components/ui';
 
 const ScanStack = createNativeStackNavigator();
 
@@ -34,54 +39,105 @@ export const ScanLayout: React.FC = () => {
           controller.isSendingVc
         }
         onRetry={controller.statusOverlay?.onRetry}
+        showBanner={controller.isFaceIdentityVerified}
+        bannerMessage={t('ScanScreen:postFaceCapture:captureSuccessMessage')}
+        onBannerClose={controller.CLOSE_BANNER}
+        bannerType={BANNER_TYPE_SUCCESS}
+        bannerTestID={'faceVerificationSuccess'}
       />
     );
   }
 
   return (
     <React.Fragment>
+      <VerifyIdentityOverlay
+        credential={controller.credential}
+        verifiableCredentialData={controller.verifiableCredentialData}
+        isVerifyingIdentity={controller.isVerifyingIdentity}
+        onCancel={controller.CANCEL}
+        onFaceValid={controller.FACE_VALID}
+        onFaceInvalid={controller.FACE_INVALID}
+        isInvalidIdentity={controller.isInvalidIdentity}
+        onDismiss={controller.DISMISS}
+        onRetryVerification={controller.RETRY_VERIFICATION}
+      />
+
       <ScanStack.Navigator initialRouteName="ScanScreen">
-        {!controller.isDone && (
-          <ScanStack.Screen
-            name={SCAN_ROUTES.SendVcScreen}
-            component={SendVcScreen}
-            options={{
-              title: t('sharingVc'),
-              headerBackVisible: false,
-              headerRight: () => (
-                <Icon
-                  name="close"
-                  color={Theme.Colors.blackIcon}
-                  onPress={controller.CANCEL}
-                />
-              ),
-            }}
-          />
-        )}
+        {controller.isReviewing &&
+          controller.flowType === VCShareFlowType.SIMPLE_SHARE && (
+            <ScanStack.Screen
+              name={SCAN_ROUTES.SendVcScreen}
+              component={SendVcScreen}
+              options={{
+                title: t('sharingVc'),
+                headerTitleAlign: 'center',
+                headerTitle: props => (
+                  <View style={Theme.Styles.sendVcHeaderContainer}>
+                    <Text style={Theme.Styles.scanLayoutHeaderTitle}>
+                      {props.children}
+                    </Text>
+                  </View>
+                ),
+                headerBackVisible: false,
+                headerRight: () =>
+                  !I18nManager.isRTL && (
+                    <Icon
+                      name="close"
+                      color={Theme.Colors.blackIcon}
+                      onPress={controller.CANCEL}
+                    />
+                  ),
+                headerLeft: () =>
+                  I18nManager.isRTL && (
+                    <Icon
+                      name="close"
+                      color={Theme.Colors.blackIcon}
+                      onPress={controller.CANCEL}
+                    />
+                  ),
+              }}
+            />
+          )}
         <ScanStack.Screen
           name={SCAN_ROUTES.ScanScreen}
           component={ScanScreen}
           options={{
-            headerTitleStyle: {fontSize: 30, fontFamily: 'Inter_600SemiBold'},
             title: t('MainLayout:share'),
+            headerTitle: props => (
+              <View style={Theme.Styles.scanLayoutHeaderContainer}>
+                <Text style={Theme.Styles.scanLayoutHeaderTitle}>
+                  {props.children}
+                </Text>
+              </View>
+            ),
           }}
         />
       </ScanStack.Navigator>
 
-      <SharingSuccessModal
+      <SharingStatusModal
         isVisible={controller.isAccepted}
         testId={'sharingSuccessModal'}
+        buttonStatus={'homeAndHistoryIcons'}
+        title={t('status.accepted.title')}
+        message={t('status.accepted.message')}
+        image={SvgImage.SuccessLogo()}
+        goToHome={controller.GOTO_HOME}
+        goToHistory={controller.GOTO_HISTORY}
       />
 
-      <ProgressingModal
-        isVisible={controller.isDisconnected}
-        title={t('RequestScreen:status.disconnected.title')}
-        isHintVisible={true}
-        hint={t('RequestScreen:status.disconnected.message')}
-        onCancel={controller.DISMISS}
-        onRetry={controller.onRetry}
-        progress
-      />
+      {controller.errorStatusOverlay && (
+        <SharingStatusModal
+          isVisible={controller.errorStatusOverlay !== null}
+          testId={'walletSideSharingErrorModal'}
+          image={SvgImage.ErrorLogo()}
+          title={controller.errorStatusOverlay.title}
+          message={controller.errorStatusOverlay.message}
+          gradientButtonTitle={t('status.bleError.retry')}
+          clearButtonTitle={t('status.bleError.home')}
+          onGradientButton={controller.onRetry}
+          onClearButton={controller.GOTO_HOME}
+        />
+      )}
     </React.Fragment>
   );
 };

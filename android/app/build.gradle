@@ -296,4 +296,7 @@ dependencies {
 }
 
 apply from: file("../../node_modules/@react-native-community/cli-platform-android/native_modules.gradle"); applyNativeModulesAppBuildGradle(project)
+
+// https://github.com/oblador/react-native-vector-icons?tab=readme-ov-file#android-setup
+apply from: file("../../node_modules/react-native-vector-icons/fonts.gradle")
 apply from: "./eas-build.gradle"

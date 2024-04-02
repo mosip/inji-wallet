@@ -23,11 +23,12 @@ import {
   constructAuthorizationConfiguration,
   ErrorMessage,
   getBody,
-  getVCMetadata,
+  getIdType,
   Issuers,
   Issuers_Key_Ref,
   OIDCErrors,
   updateCredentialInformation,
+  updateVCmetadataOfCredentialWrapper,
   vcDownloadTimeout,
 } from '../shared/openId4VCI/Utils';
 import {
@@ -41,11 +42,11 @@ import {TelemetryConstants} from '../shared/telemetry/TelemetryConstants';
 import {
   CredentialWrapper,
   VerifiableCredential,
-} from '../types/VC/EsignetMosipVC/vc';
+} from './VerifiableCredential/VCMetaMachine/vc';
 import {CACHED_API} from '../shared/api';
 import {request} from '../shared/request';
 import {BiometricCancellationError} from '../shared/error/BiometricCancellationError';
-import {VCMetadata} from '../shared/VCMetadata';
+import {VCMetadata, getVCMetadata} from '../shared/VCMetadata';
 import Cloud, {isSignedInResult} from '../shared/CloudBackupAndRestoreUtils';
 
 const model = createModel(
@@ -59,9 +60,10 @@ const model = createModel(
     verifiableCredential: null as VerifiableCredential | null,
     credentialWrapper: {} as CredentialWrapper,
     serviceRefs: {} as AppServices,
-
+    verificationErrorMessage: '',
     publicKey: ``,
     privateKey: ``,
+    vcMetadata: {} as VCMetadata,
   },
   {
     events: {
@@ -75,6 +77,7 @@ const model = createModel(
       CANCEL: () => ({}),
       STORE_RESPONSE: (response?: unknown) => ({response}),
       STORE_ERROR: (error: Error, requester?: string) => ({error, requester}),
+      RESET_VERIFY_ERROR: () => ({}),
     },
   },
 );
@@ -185,7 +188,7 @@ export const IssuersMachine = model.createMachine(
           ],
           onError: {
             actions: () =>
-              console.log('Error Occurred while checking Internet'),
+              console.error('Error Occurred while checking Internet'),
             target: 'error',
           },
         },
@@ -218,7 +221,7 @@ export const IssuersMachine = model.createMachine(
                 'setError',
                 'resetLoadingReason',
                 (_, event) =>
-                  console.log(
+                  console.error(
                     'Error Occurred while invoking Auth - ',
                     event.data,
                   ),
@@ -361,18 +364,31 @@ export const IssuersMachine = model.createMachine(
           onError: [
             {
               actions: [
-                log((_, event) => (event.data as Error).message),
+                log('Verification Error.'),
+                'resetLoadingReason',
+                'updateVerificationErrorMessage',
                 'sendErrorEndEvent',
               ],
               //TODO: Move to state according to the required flow when verification of VC fails
-              target: 'idle',
+              target: 'handleVCVerificationFailure',
             },
           ],
         },
       },
+
+      handleVCVerificationFailure: {
+        on: {
+          RESET_VERIFY_ERROR: {
+            actions: ['resetVerificationErrorMessage'],
+          },
+        },
+      },
+
       storing: {
         description: 'all the verified credential is stored.',
         entry: [
+          'setVCMetadata',
+          'setMetadataInCredentialData',
           'storeVerifiableCredentialMeta',
           'storeVerifiableCredentialData',
           'storeVcsContext',
@@ -398,7 +414,6 @@ export const IssuersMachine = model.createMachine(
         },
       },
       done: {
-        entry: () => console.log('Reached done'),
         type: 'final',
       },
     },
@@ -425,7 +440,7 @@ export const IssuersMachine = model.createMachine(
       }),
       setError: model.assign({
         errorMessage: (_, event) => {
-          console.log('Error occured ', event.data.message);
+          console.error('Error occured ', event.data.message);
           const error = event.data.message;
           switch (error) {
             case NETWORK_REQUEST_FAILED:
@@ -476,6 +491,21 @@ export const IssuersMachine = model.createMachine(
         },
       ),
 
+      setMetadataInCredentialData: (context, event) => {
+        const updatedCredentialWrapper = updateVCmetadataOfCredentialWrapper(
+          context,
+          context.credentialWrapper,
+        );
+        return updatedCredentialWrapper;
+      },
+
+      setVCMetadata: assign({
+        vcMetadata: (context, event) => {
+          const metadata = getVCMetadata(context);
+          return metadata;
+        },
+      }),
+
       storeVerifiableCredentialData: send(
         context =>
           StoreEvents.SET(getVCMetadata(context).getVcKey(), {
@@ -495,20 +525,20 @@ export const IssuersMachine = model.createMachine(
           };
         },
         {
-          to: context => context.serviceRefs.vc,
+          to: context => context.serviceRefs.vcMeta,
         },
       ),
 
       storeVcsContext: send(
         context => {
           return {
-            type: 'VC_DOWNLOADED_FROM_OPENID4VCI',
+            type: 'VC_DOWNLOADED',
             vcMetadata: getVCMetadata(context),
             vc: context.credentialWrapper,
           };
         },
         {
-          to: context => context.serviceRefs.vc,
+          to: context => context.serviceRefs.vcMeta,
         },
       ),
 
@@ -549,6 +579,8 @@ export const IssuersMachine = model.createMachine(
           return ActivityLogEvents.LOG_ACTIVITY({
             _vcKey: getVCMetadata(context).getVcKey(),
             type: 'VC_DOWNLOADED',
+            id: getVCMetadata(context).id,
+            idType: getIdType(getVCMetadata(context).issuer),
             timestamp: Date.now(),
             deviceName: '',
             vcLabel: getVCMetadata(context).id,
@@ -583,6 +615,15 @@ export const IssuersMachine = model.createMachine(
           ),
         );
       },
+
+      updateVerificationErrorMessage: assign({
+        verificationErrorMessage: (context, event) =>
+          (event.data as Error).message,
+      }),
+
+      resetVerificationErrorMessage: model.assign({
+        verificationErrorMessage: (_context, event) => '',
+      }),
     },
     services: {
       isUserSignedAlready: () => async () => {
@@ -655,7 +696,12 @@ export const IssuersMachine = model.createMachine(
         ) {
           return true;
         }
-        return verifyCredential(context.verifiableCredential?.credential);
+        const verificationResult = await verifyCredential(
+          context.verifiableCredential?.credential,
+        );
+        if (!verificationResult.isVerified) {
+          throw new Error(verificationResult.errorMessage);
+        }
       },
     },
     guards: {
@@ -734,6 +780,10 @@ export function selectIsIdle(state: State) {
 
 export function selectStoring(state: State) {
   return state.matches('storing');
+}
+
+export function selectVerificationErrorMessage(state: State) {
+  return state.context.verificationErrorMessage;
 }
 
 export interface logoType {

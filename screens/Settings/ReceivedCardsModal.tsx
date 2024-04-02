@@ -7,6 +7,7 @@ import {Theme} from '../../components/ui/styleUtils';
 import {Modal} from '../../components/ui/Modal';
 import {ViewVcModal} from '../Home/ViewVcModal';
 import {VcItemContainer} from '../../components/VC/VcItemContainer';
+import {VCItemContainerFlowType} from '../../shared/Utils';
 
 export const ReceivedCardsModal: React.FC<ReceivedCardsProps> = ({
   isVisible,
@@ -36,7 +37,7 @@ export const ReceivedCardsModal: React.FC<ReceivedCardsProps> = ({
             key={vcMetadata.getVcKey()}
             vcMetadata={vcMetadata}
             margin="0 2 8 2"
-            isSharingVc
+            flow={VCItemContainerFlowType.VC_SHARE}
             onPress={controller.VIEW_VC}
           />
         ))}
@@ -72,10 +73,8 @@ export const ReceivedCardsModal: React.FC<ReceivedCardsProps> = ({
           isVisible={controller.isViewingVc}
           onDismiss={controller.DISMISS_MODAL}
           vcItemActor={controller.selectedVc}
-          onRevokeDelete={() => {
-            controller.REVOKE();
-          }}
           activeTab={controller.activeTab}
+          flow="receivedVc"
         />
       )}
     </Modal>

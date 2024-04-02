@@ -19,6 +19,7 @@ import {
 } from './OtpVerificationModalController';
 import {GET_INDIVIDUAL_ID, isIOS} from '../../../shared/constants';
 import {SvgImage} from '../../../components/ui/svg';
+import {getScreenHeight} from '../../../shared/commonUtil';
 
 export const OtpVerificationModal: React.FC<
   OtpVerificationModalProps
@@ -74,38 +75,51 @@ export const OtpVerificationModal: React.FC<
     controller.CANCEL();
   };
 
+  const {isSmallScreen, screenHeight} = getScreenHeight();
+
   return (
     <Modal
       isVisible={props.isVisible}
       onDismiss={props.onDismiss}
       onShow={() => setTimer(180)}>
       <KeyboardAvoidingView
-        style={Theme.Styles.keyboardAvoidStyle}
+        style={
+          isSmallScreen
+            ? {flex: 1, paddingHorizontal: 10}
+            : Theme.Styles.keyboardAvoidStyle
+        }
         behavior={isIOS() ? 'padding' : 'height'}>
-        <Column crossAlign="center">
+        <Column
+          crossAlign="center"
+          style={
+            isSmallScreen
+              ? null
+              : {
+                  maxHeight: screenHeight,
+                  flex: 1,
+                  justifyContent: 'space-between',
+                  marginBottom: 20,
+                }
+          }>
           {SvgImage.OtpVerificationIcon()}
           <Text
             testID="otpVerificationHeader"
-            margin="24 0 6 0"
             weight="bold"
             style={Theme.TextStyles.header}>
             {t('title')}
           </Text>
           <Text
             testID="otpVerificationDescription"
-            margin="0 24 15 24"
             color={Theme.Colors.RetrieveIdLabel}
             weight="semibold"
             size="small"
             align="center">
-            {t('otpSentMessage')}
+            {t('otpSentMessage', {phone: props.phone, email: props.email})}
           </Text>
-
           <Text
             testID="otpVerificationError"
             align="center"
-            color={Theme.Colors.errorMessage}
-            margin="16 0 30 0">
+            color={Theme.Colors.errorMessage}>
             {props.error}
           </Text>
           <PinInput
@@ -113,38 +127,37 @@ export const OtpVerificationModal: React.FC<
             length={6}
             onDone={handleEnteredOtp}
           />
-        </Column>
-
-        <Column crossAlign="center" padding="0 0 10 0">
-          <Text
-            testID="otpVerificationTimer"
-            margin="0 0 20 0"
-            color={Theme.Colors.resendCodeTimer}
-            weight="regular">
-            {timer > 0 ? `${t('resendTheCode')} : ${formatTime(timer)}` : ''}
-          </Text>
-
-          <TouchableOpacity
-            testID="resendCodeView"
-            disabled={timer > 0}
-            activeOpacity={1}
-            onPress={
-              timer > 0
-                ? null
-                : () => {
-                    handleOtpResend();
-                    setTimer(180);
-                  }
-            }>
+          <Column crossAlign="center">
             <Text
-              testID="resendCode"
-              color={
-                timer > 0 ? Theme.Colors.GrayText : Theme.Colors.AddIdBtnBg
-              }
-              weight="semibold">
-              {t('resendCode')}
+              testID="otpVerificationTimer"
+              color={Theme.Colors.resendCodeTimer}
+              weight="regular">
+              {timer > 0 ? `${t('resendTheCode')} : ${formatTime(timer)}` : ''}
             </Text>
-          </TouchableOpacity>
+
+            <TouchableOpacity
+              testID="resendCodeView"
+              disabled={timer > 0}
+              activeOpacity={1}
+              onPress={
+                timer > 0
+                  ? null
+                  : () => {
+                      handleOtpResend();
+                      setTimer(180);
+                    }
+              }>
+              <Text
+                testID="resendCode"
+                color={
+                  timer > 0 ? Theme.Colors.GrayText : Theme.Colors.AddIdBtnBg
+                }
+                margin="5 0 0 0"
+                weight="semibold">
+                {t('resendOtp')}
+              </Text>
+            </TouchableOpacity>
+          </Column>
         </Column>
       </KeyboardAvoidingView>
 

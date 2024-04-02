@@ -1,17 +1,19 @@
 package inji.pages;
 
+import inji.utils.UinGenerationUtil;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.pagefactory.AppiumFieldDecorator;
 import org.openqa.selenium.By;
 import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.remote.SessionId;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import static java.time.Duration.ofSeconds;
+import java.io.IOException;
 
-import java.time.Duration;
+import static java.time.Duration.ofSeconds;
 
 public class BasePage {
     protected AppiumDriver driver;
@@ -62,12 +64,12 @@ public class BasePage {
         }
     }
 
-    protected boolean WaitTillElementVisible(WebElement element, int waitTime) {
+    protected void WaitTillElementVisible(WebElement element, int waitTime) {
         try {
             waitForElementToBeInvisible(element, waitTime);
-            return false;
+
         } catch (Exception e) {
-            return true;
+
         }
     }
 
@@ -100,9 +102,9 @@ public class BasePage {
         wait.until(ExpectedConditions.invisibilityOf(element));
     }
 
-    protected boolean isElementEnabled(WebElement element) {
+    protected boolean isElementEnabled(WebElement element,int waitTime) {
         try {
-            waitForElementToBeVisible(element);
+            waitForElementToBeVisible(element,waitTime);
             element.isEnabled();
             return true;
         } catch (Exception e) {
@@ -142,5 +144,32 @@ public class BasePage {
     	return text;
     	
     }
-    
+    public boolean retrieIsElementVisible(WebElement element) {
+        int maxRetries = 3;
+        for (int i = 0; i < maxRetries; i++) {
+            try {
+                isElementDisplayed(element);
+                return true;
+            } catch (StaleElementReferenceException e) {
+            }
+        }
+        return false;
+    }
+
+    public void retrieClickOnElemet(WebElement element) {
+        int maxRetries = 3;
+        for (int i = 0; i < maxRetries; i++) {
+            try {
+                clickOnElement(element);
+            } catch (StaleElementReferenceException e) {
+            }
+        }
+    }
+
+   public void  clickIfVisible(WebElement element){
+       if(isElementDisplayed(element)) {
+           clickOnElement(element);
+       }
+   }
+
 }

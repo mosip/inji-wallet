@@ -36,7 +36,13 @@ interface TextProps {
   weight?: 'regular' | 'semibold' | 'bold';
   align?: TextStyle['textAlign'];
   margin?: Spacing;
-  size?: 'small' | 'extraSmall' | 'smaller' | 'regular' | 'large';
+  size?:
+    | 'small'
+    | 'extraSmall'
+    | 'smaller'
+    | 'regular'
+    | 'large'
+    | 'mediumSmall';
   lineHeight?: number;
   numLines?: number;
   ellipsizeMode?: 'head' | 'middle' | 'tail' | 'clip' | undefined;

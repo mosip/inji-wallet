@@ -4,16 +4,15 @@ import {AppServices} from '../shared/GlobalContext';
 import {
   APP_ID_DICTIONARY,
   APP_ID_LENGTH,
-  MIMOTO_BASE_URL,
-  isIOS,
-  SETTINGS_STORE_KEY,
-  ESIGNET_BASE_URL,
-} from '../shared/constants';
-import {VCLabel} from '../types/VC/ExistingMosipVC/vc';
-import {StoreEvents} from './store';
-import getAllConfigurations, {
   COMMON_PROPS_KEY,
-} from '../shared/commonprops/commonProps';
+  ESIGNET_BASE_URL,
+  isIOS,
+  MIMOTO_BASE_URL,
+  SETTINGS_STORE_KEY,
+} from '../shared/constants';
+import {VCLabel} from './VerifiableCredential/VCMetaMachine/vc';
+import {StoreEvents} from './store';
+import getAllConfigurations from '../shared/api';
 import Storage from '../shared/storage';
 import ShortUniqueId from 'short-unique-id';
 import {__AppId} from '../shared/GlobalVariables';
@@ -35,12 +34,19 @@ const model = createModel(
     hasUserShownWithHardwareKeystoreNotExists: false,
     isAccountSelectionConfirmationShown: false,
     credentialRegistryResponse: '' as string,
+    isBiometricToggled: false,
   },
   {
     events: {
       UPDATE_NAME: (name: string) => ({name}),
       UPDATE_VC_LABEL: (label: string) => ({label}),
-      TOGGLE_BIOMETRIC_UNLOCK: (enable: boolean) => ({enable}),
+      TOGGLE_BIOMETRIC_UNLOCK: (
+        enable: boolean,
+        isToggledFromSettings: boolean,
+      ) => ({
+        enable,
+        isToggledFromSettings,
+      }),
       STORE_RESPONSE: (response: unknown) => ({response}),
       CHANGE_LANGUAGE: (language: string) => ({language}),
       UPDATE_HOST: (credentialRegistry: string, esignetHostUrl: string) => ({
@@ -58,6 +64,7 @@ const model = createModel(
       ACCEPT_HARDWARE_SUPPORT_NOT_EXISTS: () => ({}),
       SET_IS_BACKUP_AND_RESTORE_EXPLORED: () => ({}),
       SHOWN_ACCOUNT_SELECTION_CONFIRMATION: () => ({}),
+      DISMISS: () => ({}),
     },
   },
 );
@@ -85,7 +92,11 @@ export const settingsMachine = model.createMachine(
               target: 'idle',
               actions: ['setContext', 'updatePartialDefaults', 'storeContext'],
             },
-            {cond: 'hasData', target: 'idle', actions: ['setContext']},
+            {
+              cond: 'hasData',
+              target: 'idle',
+              actions: ['setContext'],
+            },
             {target: 'storingDefaults'},
           ],
         },
@@ -99,7 +110,11 @@ export const settingsMachine = model.createMachine(
       idle: {
         on: {
           TOGGLE_BIOMETRIC_UNLOCK: {
-            actions: ['toggleBiometricUnlock', 'storeContext'],
+            actions: [
+              'toggleBiometricUnlock',
+              'setIsBiometricToggled',
+              'storeContext',
+            ],
           },
           UPDATE_NAME: {
             actions: ['updateName', 'storeContext'],
@@ -136,6 +151,10 @@ export const settingsMachine = model.createMachine(
               'updateIsAccountSelectionConfirmationShown',
               'storeContext',
             ],
+            target: 'idle',
+          },
+          DISMISS: {
+            actions: 'resetIsBiometricToggled',
             target: 'idle',
           },
         },
@@ -178,6 +197,14 @@ export const settingsMachine = model.createMachine(
         to: context => context.serviceRefs.store,
       }),
 
+      setIsBiometricToggled: model.assign({
+        isBiometricToggled: (_context, event) => event.isToggledFromSettings,
+      }),
+
+      resetIsBiometricToggled: model.assign({
+        isBiometricToggled: () => false,
+      }),
+
       updateDefaults: model.assign({
         appId: (_, event) => {
           const appId =
@@ -199,7 +226,7 @@ export const settingsMachine = model.createMachine(
 
       storeContext: send(
         context => {
-          const {serviceRefs, ...data} = context;
+          const {serviceRefs, isBiometricToggled, ...data} = context;
           return StoreEvents.SET(SETTINGS_STORE_KEY, data);
         },
         {to: context => context.serviceRefs.store},
@@ -266,7 +293,7 @@ export const settingsMachine = model.createMachine(
           await Storage.removeItem(COMMON_PROPS_KEY);
           return await getAllConfigurations(event.credentialRegistry, false);
         } catch (error) {
-          console.log('Error from resetInjiProps ', error);
+          console.error('Error from resetInjiProps ', error);
           throw error;
         }
       },
@@ -305,11 +332,11 @@ function deviceSupportsHardwareKeystore() {
 type State = StateFrom<typeof settingsMachine>;
 
 export function selectName(state: State) {
-  return state.context.name;
+  return state?.context?.name;
 }
 
 export function selectAppId(state: State) {
-  return state.context.appId;
+  return state?.context?.appId;
 }
 
 /** Alerting the user when the hardware keystore not supported by device and
@@ -326,29 +353,41 @@ export function selectShowAccountSelectionConfirmation(state: State) {
 }
 
 export function selectVcLabel(state: State) {
-  return state.context.vcLabel;
+  return state?.context?.vcLabel;
 }
 
 export function selectCredentialRegistry(state: State) {
-  return state.context.credentialRegistry;
+  return state?.context?.credentialRegistry;
 }
 
 export function selectEsignetHostUrl(state: State) {
-  return state.context.esignetHostUrl;
+  return state?.context?.esignetHostUrl;
 }
 
 export function selectCredentialRegistryResponse(state: State) {
-  return state.context.credentialRegistryResponse;
+  return state?.context?.credentialRegistryResponse;
 }
 
 export function selectBiometricUnlockEnabled(state: State) {
-  return state.context.isBiometricUnlockEnabled;
+  return state?.context?.isBiometricUnlockEnabled;
 }
 
 export function selectIsResetInjiProps(state: State) {
-  return state.matches('resetInjiProps');
+  return state?.matches('resetInjiProps');
 }
 
 export function selectIsBackUpAndRestoreExplored(state: State) {
-  return state.context.isBackupAndRestoreExplored;
+  return state?.context?.isBackupAndRestoreExplored;
+}
+
+export function selectIsBiometricUnlock(state: State) {
+  return (
+    state.context.isBiometricToggled && state.context.isBiometricUnlockEnabled
+  );
+}
+
+export function selectIsPasscodeUnlock(state: State) {
+  return (
+    state.context.isBiometricToggled && !state.context.isBiometricUnlockEnabled
+  );
 }

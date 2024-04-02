@@ -1,20 +1,20 @@
 {
   "ActivityLogText": {
-    "VC_SHARED": "ibinahagi",
-    "VC_RECEIVED": "natanggap",
-    "VC_RECEIVED_NOT_SAVED": "natanggap ngunit hindi na-save",
-    "VC_DELETED": "tinanggal",
-    "VC_DOWNLOADED": "na-download",
-    "VC_REVOKED": "binawi",
-    "VC_SHARED_WITH_VERIFICATION_CONSENT": "ibinahagi. Ibinibigay ang pahintulot para sa pag-verify ng presensya",
-    "VC_RECEIVED_WITH_PRESENCE_VERIFIED": "natanggap. Na-verify ang presensya",
-    "VC_RECEIVED_BUT_PRESENCE_VERIFICATION_FAILED": "natanggap. Nabigo ang pag-verify ng presensya",
-    "PRESENCE_VERIFIED_AND_VC_SHARED": "na-verify at ibinahagi",
-    "PRESENCE_VERIFICATION_FAILED": "nabigo ang pag-verify",
-    "QRLOGIN_SUCCESFULL": "Matagumpay ang QRLogin",
-    "WALLET_BINDING_SUCCESSFULL": "Matagumpay ang pag-activate",
-    "WALLET_BINDING_FAILURE": "Nabigo ang pag-activate",
-    "VC_REMOVED": "Inalis sa wallet"
+    "VC_SHARED": "Matagumpay na naibahagi ang {{idType}} {{id}}.",
+    "VC_RECEIVED": "Natanggap ang {{idType}} {{id}}.",
+    "VC_RECEIVED_NOT_SAVED": "Hindi ma-save ang {{idType}} {{id}}.",
+    "VC_DELETED": "Matagumpay na natanggal ang {{idType}} {{id}}.",
+    "VC_DOWNLOADED": "Na-download ang {{idType}} {{id}}.",
+    "VC_SHARED_WITH_VERIFICATION_CONSENT": "Ibinahagi ang {{idType}} {{id}} na may pahintulot para sa pag-verify ng presensya.",
+    "VC_RECEIVED_WITH_PRESENCE_VERIFIED": "Natanggap ang {{idType}} {{id}} at matagumpay ang pag-verify ng presensya.",
+    "VC_RECEIVED_BUT_PRESENCE_VERIFICATION_FAILED": "Natanggap ang {{idType}} {{id}} at nabigo ang pag-verify ng presensya.",
+    "PRESENCE_VERIFIED_AND_VC_SHARED": "Ang pag-verify ng mukha ay matagumpay at {{idType}} {{id}} at ibinahagi.",
+    "PRESENCE_VERIFICATION_FAILED": "Nabigo ang pag-verify ng mukha habang sinusubukang ibahagi ang {{idType}} {{id}}.",
+    "QRLOGIN_SUCCESFULL": "Ang QRlogin gamit ang {{idType}} {{id}} ay matagumpay.",
+    "WALLET_BINDING_SUCCESSFULL": "Ang pag-activate ng {{idType}} {{id}} ay matagumpay.",
+    "WALLET_BINDING_FAILURE": "Nabigo ang pag-activate ng {{idType}} {{id}}.",
+    "VC_REMOVED": "Ang {{idType}} {{id}} ay inalis sa wallet.",
+    "TAMPERED_VC_REMOVED": "Ang {{idType}} {{id}} ay inalis mula sa wallet dahil sa pakikialam."
   },
   "DeviceInfoList": {
     "requestedBy": "Hiniling ni",
@@ -28,7 +28,7 @@
     "passcodeMismatchError": "Hindi tumugma ang passcode."
   },
   "FaceScanner": {
-    "imageCaptureGuide": "Hawakan nang matatag ang telepono at panatilihing nakatutok ang iyong mukha sa gitna",
+    "imageCaptureGuide": "Hawakan nang matatag ang telepono, panatilihing nakatutok ang iyong mukha sa gitna at mag-click sa Capture.",
     "capture": "Kunin",
     "flipCamera": "I-flip ang Camera"
   },
@@ -59,6 +59,8 @@
     "qrCodeHeader": "QR Code",
     "nationalCard": "Pambansang Kard",
     "insuranceCard": "Insurance Card",
+    "beneficiaryCard": "Benepisyaryo Card",
+    "socialRegistryCard": "Social Registry Card",
     "uin": "UIN",
     "vid": "VID",
     "enableVerification": "I-activate",
@@ -78,28 +80,24 @@
       "savingFailed": {
         "title": "Nabigong i-save ang Card",
         "message": "Nagkaproblema habang sine-save ang Card sa tindahan."
-      },
-      "diskFullError": {
-        "title": "Nabigong i-save ang Card",
-        "message": "Wala nang mga Card na matatanggap o mai-save dahil puno na ang Data ng App."
       }
     }
   },
   "HomeScreenKebabPopUp": {
     "title": "Higit pang mga Opsyon",
-    "unPinCard": "I-unpin ang Card",
-    "pinCard": "Pin Card",
-    "offlineAuthenticationDisabled!": "Nakabinbin ang pag-activate para sa online na pag-login",
+    "unPinCard": "I-unpin",
+    "pinCard": "Pin",
+    "share": "Ibahagi",
+    "shareWithSelfie": "Ibahagi sa Selfie",
     "offlineAuthDisabledMessage": "Mag-click dito upang paganahin ang mga kredensyal na ito na magamit para sa online na pagpapatotoo.",
     "viewActivityLog": "Tingnan ang log ng aktibidad",
-    "removeFromWallet": "Alisin sa wallet",
-    "revokeId": "Bawiin ang ID",
-    "revokeMessage": "Bawiin ang virtual ID para sa profile na ito"
+    "removeFromWallet": "Alisin sa wallet"
   },
   "WalletBinding": {
+    "offlineAuthenticationDisabled": "I-activate para sa online na pag-login",
     "inProgress": "Isinasagawa",
-    "profileAuthenticated": "Na-activate para sa online na pag-login",
-    "credentialActivated": "Na-activate"
+    "credentialActivated": "Na-activate",
+    "profileAuthenticated": "Pag-login sa QR Code"
   },
   "BindingVcWarningOverlay": {
     "alert": "Pakikumpirma",
@@ -108,16 +106,17 @@
     "no": "Hindi"
   },
   "RemoveVcWarningOverlay": {
-    "alert": "Alerto",
-    "removeWarning": "Gusto mo ba talagang tanggalin ang card?",
-    "confirm": "Kumpirmahin",
-    "no": "Hindi"
+    "alert": "Alisin sa Wallet?",
+    "removeWarning": "Aalisin mo ang card sa wallet. Kapag naalis na, hindi na mababawi ang pagkilos na ito.",
+    "confirm": "Oo, kinukumpirma ko",
+    "cancel": "Kanselahin"
   },
   "AuthScreen": {
     "header": "Gusto mo bang gumamit ng biometrics upang i-unlock ang aplikasyon?",
-    "Description": "Gusto mo bang gumamit ng biometrics upang i-unlock ang application?",
+    "Description": "Para secure na i-unlock ang app, maaari mong i-set up ang alinman sa biometric authentication, gaya ng fingerprint o facial recognition o mag-opt para sa 6-digit na Passcode para sa mabilis na pag-access.",
+    "PasswordTypeDescription": "Piliin ang ‘Gumamit ng Biometrics’ para i-enable ang biometric authentication o ‘I’ll Do Later’ para mag-set up ng 6-digit na passcode.",
     "useBiometrics": "Gamitin ang biometrics",
-    "usePasscode": "Gumamit na lang ng passcode",
+    "usePasscode": "Gagawin Ko Mamaya",
     "errors": {
       "unavailable": "Hindi sinusuportahan ng device ang Biometrics",
       "unenrolled": "Upang magamit ang Biometrics, mangyaring i-enroll ang iyong fingerprint sa mga setting ng iyong device",
@@ -149,6 +148,11 @@
     "logout": "Mag-logout",
     "resetInjiProps": "Nire-reset ang Inji Props..."
   },
+  "BannerNotification": {
+    "alternatePasscodeSuccess": "Tagumpay! Magagamit mo na ngayon ang passcode upang i-unlock ang Inji app.",
+    "alternateBiometricSuccess": "Tagumpay! Maaari ka na ngayong gumamit ng biometrics upang i-unlock ang Inji app.",
+    "activated": "Ang mga kredensyal ay pinagana para sa online na pagpapatunay."
+  },
   "AboutInji": {
     "aboutInji": "Tungkol kay Inji",
     "header": "TUNGKOL KAY INJI",
@@ -163,6 +167,7 @@
     "title": "Magdagdag ng bagong card",
     "description": "Mangyaring piliin ang iyong gustong tagabigay mula sa mga opsyon sa ibaba upang magdagdag ng bagong card.",
     "searchByIssuersName": "Maghanap ayon sa pangalan ng Nag-isyu",
+    "help": "Tulong?",
     "loaders": {
       "loading": "Naglo-load...",
       "subTitle": {
@@ -205,7 +210,9 @@
         "twelve": "Paano magbahagi ng card?",
         "thirteen": "Paano mag-alis ng card mula sa wallet?",
         "fourteen": "Paano tingnan ang mga log ng aktibidad?",
-        "fifteen": "Ano ang mangyayari kapag binago ang biometric ng Android keystore?"
+        "fifteen": "Ano ang mangyayari kapag binago ang biometric ng Android keystore?",
+        "sixteen": "Ano ang Share?",
+        "seventeen": "Ano ang Share with selfie?"
       },
       "backup": {
         "one": "Ano ang data backup? ",
@@ -238,7 +245,9 @@
         "thirteen-a": "Maaari kang mag-click sa ...(meatballs menu) sa isang card sa Home page at piliin ang Remove from Wallet na opsyon upang alisin ang isang card mula sa wallet. ",
         "thirteen-b": " Pakitandaan na, maaaring i-download muli ang parehong card.",
         "fourteen": "Sa Home page, mag-click sa 'Kasaysayan' upang tingnan ang mga detalye ng aktibidad ng user.",
-        "fifteen": "Ang Android keystore ay nagtataglay ng mahalagang impormasyon tulad ng mga pribadong key para sa mga patunay ng pagkakakilanlan. "
+        "fifteen": "Ang Android keystore ay nagtataglay ng mahalagang impormasyon tulad ng mga pribadong key para sa mga patunay ng pagkakakilanlan. ",
+        "sixteen": "Ang pagbabahagi ng kredensyal ay tumutukoy sa proseso ng ligtas na paglilipat ng isang nabe-verify na kredensyal ng may hawak mula sa INJI wallet patungo sa umaasa na partido. Nagbibigay-daan ito sa mga indibidwal na patunayan ang kanilang pag-verify ng pagkakakilanlan sa digital na paraan, na pinapadali ang mahusay at pinagkakatiwalaang mga pakikipag-ugnayan sa iba't ibang konteksto.",
+        "seventeen": "Ang pagbabahagi ng VC na may selfie ay nagsasangkot ng karagdagang layer ng seguridad sa proseso ng pagbabahagi ng kredensyal. Bilang karagdagan sa pagpapadala ng nabe-verify na kredensyal, ang user ay kinakailangang magbigay ng selfie (isang larawan ng kanilang sarili) para sa facial verification. Pinapahusay nito ang seguridad at integridad ng paglilipat ng kredensyal sa pamamagitan ng pagtiyak na ang indibidwal na nagpapakita ng kredensyal ay ang lehitimong may-ari. Nakakatulong itong maiwasan ang pagpapanggap at hindi awtorisadong paggamit ng kredensyal, at sa gayon ay madaragdagan ang tiwala at pagiging maaasahan sa mga digital na transaksyon."
       },
       "backup": {
         "one": "Kasama sa pag-backup ng data ang paggawa ng kopya ng iyong Mga Na-verify na Kredensyal na nasa iyong wallet sa iyong Google Drive/iCloud, na tinitiyak na sa kaganapan ng pagkawala ng data, maaari mong ibalik ang iyong mga file sa dati nilang estado.",
@@ -320,9 +329,9 @@
   },
   "OtpVerificationModal": {
     "title": "Pag-verify ng OTP",
-    "otpSentMessage": "Ipinadala namin ang 6 na digit na code sa iyong rehistradong mobile number!",
-    "resendTheCode": "Maaari mong ipadala muli ang code sa ",
-    "resendCode": "Ipadala muli ang Code",
+    "otpSentMessage": "Nagpadala kami ng 6 na digit na OTP sa iyong rehistradong mobile number: {{phone}} at Email Address: {{email}}",
+    "resendTheCode": "Maaari mong ipadala muli ang OTP ",
+    "resendOtp": "Muling ipadala ang OTP",
     "confirmationDialog": {
       "title": "Gusto mo bang kanselahin ang pag-download?",
       "message": "Kapag nakansela, hindi na mada-download ang iyong card at kailangan mong simulan muli ang pag-download.",
@@ -331,12 +340,15 @@
     }
   },
   "MyVcsTab": {
+    "searchByName": "Maghanap ayon sa pangalan",
     "bringYourDigitalID": "Dalhin ang Iyong Digital ID",
     "generateVcDescription": "Upang i-download ang iyong card i-tap ang I-download card sa ibaba",
     "generateVcFABDescription": "Upang i-download ang iyong card i-tap ang + sa ibaba",
     "downloadCard": "I-download ang Card",
     "downloadingYourCard": "Ang pagda-download ng iyong card, maaari itong tumagal nang hanggang 5 minuto",
     "activated": "Ang mga kredensyal ay pinagana para sa online na pagpapatotoo.",
+    "noCardsTitle": "Walang Nahanap na Mga Card!",
+    "noCardsDescription": "Paumanhin, wala kaming mahanap na anumang resulta. Pakisubukang maglagay ng ibang keyword sa paghahanap.",
     "errors": {
       "savingFailed": {
         "title": "Nabigong i-save ang Card",
@@ -362,6 +374,12 @@
       "downloadLimitExpires": {
         "title": "Error sa Pag-download",
         "message": "Nagkaroon ng isyu sa pag-download ng mga sumusunod na card. Pakisubukang muli"
+      },
+      "verificationFailed": {
+        "title" : "May pagkakamaling naganap!",
+        "goBackButton": "Bumalik ka",
+        "technicalError": "Dahil sa Technical Error, hindi namin na-download ang card.",
+        "networkError": "Dahil sa hindi matatag na koneksyon sa internet, hindi namin na-download ang card. Pakisuri ang iyong koneksyon sa internet."
       }
     }
   },
@@ -390,22 +408,7 @@
   },
   "ViewVcModal": {
     "title": "Mga Detalye ng ID",
-    "inProgress": "Isinasagawa",
-    "cancel": "Kanselahin",
-    "lock": "Lock",
-    "unlock": "I-unlock",
-    "rename": "Palitan ang pangalan",
-    "delete": "Tanggalin",
-    "revoke": "Bawiin",
-    "revoking": "Ang iyong wallet ay naglalaman ng kredensyal na may VID {{vid}}. Ang pagbawi nito ay awtomatikong mag-aalis ng pareho sa wallet. Sigurado ka bang gusto mong magpatuloy?",
-    "requestingOtp": "Humihiling ng OTP...",
-    "activated": "Ang mga kredensyal ay pinagana para sa online na pagpapatotoo.",
-    "redirecting": "Nire-redirect...",
-    "success": {
-      "unlocked": "Matagumpay na na-unlock ang card.",
-      "locked": "Matagumpay na na-lock ang card.",
-      "revoked": "Ang VID {{vid}} ay binawi. Awtomatikong aalisin sa wallet ang anumang kredensyal na naglalaman ng pareho"
-    }
+    "inProgress": "Isinasagawa"
   },
   "MainLayout": {
     "home": "Bahay",
@@ -418,6 +421,8 @@
     "header": "Itakda ang Passcode",
     "enterNewPassword": "Maglagay ng bagong passcode",
     "reEnterPassword": "Ipasok muli ang bagong passcode",
+    "enterAlternateNewPassword": "Ang iyong passcode ay ang iyong susi upang ma-access ang app nang ligtas. Pumili ng isang 6 na digit na passcode na natatangi at hindi malilimutan, na tinitiyak ang kaligtasan ng iyong data at privacy sa loob ng app.",
+    "reEnterAlternatePassword": "Kumpirmahin ang iyong passcode sa pamamagitan ng muling pagpasok nito. Kapag nakumpirma na, ang iyong passcode ay ligtas na itatakda para sa pag-access sa app.",
     "confirmPasscode": "Kumpirmahin ang passcode",
     "enterPasscode": "Ilagay ang iyong passcode"
   },
@@ -432,7 +437,7 @@
     "back": "Bumalik ka",
     "confirm": "Kumpirmahin",
     "verify": "I-verify",
-    "faceAuth": "Face Authentication",
+    "faceAuth": "Pagpapatunay ng Mukha",
     "consent": "Pagpayag",
     "loading": "Naglo-load...",
     "domainWarning": "Pakikumpirma ang domain ng website kung saan mo ini-scan ang QR code mula sa ibaba",
@@ -449,19 +454,14 @@
   "ReceiveVcScreen": {
     "header": "Card mga detalye",
     "save": "I-save ang card",
-    "verifyAndSave": "I-verify at i-save",
     "reject": "Tanggihan",
     "discard": "Itapon",
-    "goToReceivedVCTab": "Natanggap na View card",
+    "goToReceivedVCTab": "Tingnan ang Natanggap na card",
     "saving": "Sine-save ang card",
     "errors": {
       "savingFailed": {
-        "title": "Failed to save card",
-        "message": "Nagkaproblema habang sine-save ang card sa tindahan."
-      },
-      "diskFullError": {
-        "title": "Nabigong i-save ang cards",
-        "message": "Wala nang cards ang matatanggap o mai-save dahil puno na ang Data ng App."
+        "title": "Nabigong i-save ang card!",
+        "message": "Dahil sa teknikal na error, hindi namin na-save ang card. Mangyaring hilingin ang nagpadala na maglipat muli."
       }
     }
   },
@@ -513,9 +513,58 @@
         "message": "Mangyaring kumonekta sa internet upang paganahin ang Online sharing mode"
       },
       "bleError": {
-        "title": "Nabigong ilipat",
-        "message": "Nagkaproblema habang inililipat ang card. Pakisubukang muli.",
-        "hint": "Error: {{code}}"
+        "TVW_CON_002": {
+          "title": "Nabigo ang koneksyon!",
+          "message": "Naputol ang koneksyon. Pakisubukang muli."
+        },
+        "TVW_CON_003": {
+          "title": "Nabigo ang koneksyon!",
+          "message": "Naputol ang koneksyon. Pakitiyak na ang mga Bluetooth device ay nasa discoverable mode at subukang muli."
+        },
+        "TVW_REP_001": {
+          "title": "Natanggap ang Sirang Tugon!",
+          "message": "Ang data na natanggap mula sa wallet ay sira at hindi maproseso. Hilingin sa nagpadala na maglipat muli."
+        },
+        "TVV_CON_001": {
+          "title": "Nabigo ang koneksyon!",
+          "message": "Hindi makapagtatag ng pinakamainam na koneksyon sa nagpadala. Pakisubukang muli."
+        },
+        "TVV_TRA_001": {
+          "title": "Natanggap ang Sirang Tugon!",
+          "message": "Ang data na natanggap mula sa wallet ay sira at hindi maproseso. Mangyaring hilingin ang nagpadala na maglipat muli."
+        },
+        "TVV_TRA_002": {
+          "title": "Natanggap ang Sirang Tugon!",
+          "message": "Ang data na natanggap mula sa wallet ay sira at hindi maproseso. Mangyaring hilingin ang nagpadala na maglipat muli."
+        },
+        "TUV_UNK_001": {
+          "title": "May pagkakamaling naganap!",
+          "message": "Dahil sa teknikal na error, hindi namin natanggap ang card. Pakisubukang muli."
+        },
+        "TVW_UNK_001": {
+          "title": "Nabigo ang koneksyon!",
+          "message": "Naputol ang koneksyon. Pakisubukang muli."
+        },
+        "TVW_UNK_002": {
+          "title": "Nabigo ang koneksyon!",
+          "message": "Naputol ang koneksyon. Pakisubukang muli."
+        },
+        "TVW_UNK_003": {
+          "title": "Nabigo ang koneksyon!",
+          "message": "Naputol ang koneksyon. Pakisubukang muli."
+        },
+        "TVV_UNK_001": {
+          "title": "May pagkakamaling naganap!",
+          "message": "Isang hindi inaasahang error ang naganap habang pinoproseso ang natanggap na data. Pakisuri ang iyong koneksyon at hilingin sa nagpadala na muling ipadala ang card."
+        },
+        "TVV_UNK_002": {
+          "title": "May pagkakamaling naganap!",
+          "message": "Isang hindi inaasahang error ang naganap habang pinoproseso ang natanggap na data. Pakisuri ang iyong koneksyon at hilingin sa nagpadala na muling ipadala ang card."
+        },
+        "TVV_UNK_003": {
+          "title": "May pagkakamaling naganap!",
+          "message": "Isang hindi inaasahang error ang naganap habang pinoproseso ang natanggap na data. Pakisuri ang iyong koneksyon at hilingin sa nagpadala na muling ipadala ang card."
+        }
       }
     },
     "online": "Online",
@@ -523,13 +572,17 @@
     "gotoSettings": "Pumunta sa setting"
   },
   "ScanScreen": {
+    "shareWithSelfie": "Ibahagi sa Selfie",
+    "shareWithSelfieMessage": "Para ibahagi ang iyong Mga Nabe-verify na Kredensyal, secure naming ive-verify ang iyong pagkakakilanlan gamit ang pag-verify sa mukha. Sa pagpapatuloy, pumapayag ka sa INJI na gamitin ang iyong camera para sa layuning ito. \n\n Gagamitin lang ang iyong facial data para sa pag-verify at hindi ibabahagi sa anumang third party.",
+    "ConfirmButton": "Naiintindihan ko",
+    "doNotAskMessage": "Huwag mo na akong tanungin",
     "noShareableVcs": "Walang magagamit na mga card na maibabahagi.",
     "sharingVc": "Pagbabahagi ng card",
     "bluetoothStateIos": "Naka-OFF ang Bluetooth, paki-ON ito mula sa control center",
     "bluetoothStateAndroid": "Naka-OFF ang Bluetooth, paki-ON ito mula sa control center",
     "enableBluetoothMessage": "Mangyaring paganahin ang mga pahintulot ng bluetooth upang suportahan ang lokal na pagbabahagi",
     "enableBluetoothButtonText": "Payagan ang mga pahintulot ng bluetooth",
-    "scanningGuide": "Panatilihin ang telepono at i-scan ang QR code",
+    "scanningGuide": "Panatilihin ang telepono at i-scan ang QR code upang ibahagi ang iyong card.",
     "invalidQR": "Mangyaring mag-scan ng wastong QR",
     "errors": {
       "locationDisabled": {
@@ -572,19 +625,79 @@
       },
       "accepted": {
         "title": "Matagumpay na naibahagi ang ID!",
-        "message": "Ang iyong ID ay matagumpay na naibahagi.",
+        "message": "Ang iyong ID ay matagumpay na naibahagi",
         "home": "Bahay",
         "history": "Kasaysayan"
       },
       "rejected": {
-        "title": "Pansinin",
-        "message": "Ang iyong card ay itinapon ng verifier"
+        "title": "May pagkakamaling naganap!",
+        "message": "Dahil sa teknikal na error, hindi namin naibahagi ang card sa umaasa na partido. Mangyaring ibahagi muli."
       },
       "bleError": {
-        "title": "Nabigong ilipat!",
-        "message": "Nagkaproblema habang inililipat ang card. Pakisubukang muli.",
-        "hint": "Error: {{code}}"
+        "retry": "Subukan muli",
+        "home": "Bahay",
+        "TVW_CON_001": {
+          "title": "Nabigo ang koneksyon!",
+          "message": "Di-wastong QR code ang na-scan. Pakisubukang i-scan muli ang wastong QR code mula sa umaasa na partido."
+        },
+        "TVW_CON_002": {
+          "title": "Nabigo ang koneksyon!",
+          "message": "Ang wallet ay hindi makapagtatag ng pinakamainam na koneksyon sa verifier. Pakisubukang muli."
+        },
+        "TVW_CON_003": {
+          "title": "Nabigo ang Pagtuklas ng Serbisyo!",
+          "message": "Serbisyo DisPaumanhin, ngunit hindi kami makatuklas ng koneksyon sa bluetooth kahit na pagkatapos ng maraming pagsubok. Pakitiyak na ang mga bluetooth device ay nasa discoverable mode at subukang muli.covery Failed!"
+        },
+        "TVW_REP_001": {
+          "title": "May pagkakamaling naganap!",
+          "message": "Dahil sa teknikal na error, hindi namin mailipat ang file. Pakisubukang muli. nangyari!"
+        },
+        "TVV_CON_001": {
+          "title": "Nabigo ang koneksyon!",
+          "message": "Ang wallet ay hindi makapagtatag ng pinakamainam na koneksyon sa verifier. Pakisubukang muli."
+        },
+        "TVV_TRA_001": {
+          "title": "May pagkakamaling naganap!",
+          "message": "Nagkaproblema habang inililipat ang card. Pakisubukang muli."
+        },
+        "TVV_TRA_002": {
+          "title": "May pagkakamaling naganap!",
+          "message": "Nagkaproblema habang inililipat ang card. Pakisubukang muli."
+        },
+        "TUV_UNK_001": {
+          "title": "May pagkakamaling naganap!",
+          "message": "Dahil sa teknikal na error, hindi namin naibahagi ang card sa umaasa na partido. Pakisubukang muli."
+        },
+        "TVW_UNK_001": {
+          "title": "May pagkakamaling naganap!",
+          "message": "Dahil sa teknikal na error, hindi namin naibahagi ang card sa umaasa na partido. Pakisubukang muli."
+        },
+        "TVW_UNK_002": {
+          "title": "May pagkakamaling naganap!",
+          "message": "Dahil sa teknikal na error, hindi namin naibahagi ang card sa umaasa na partido. Pakisubukang muli."
+        },
+        "TVW_UNK_003": {
+          "title": "May pagkakamaling naganap!",
+          "message": "Dahil sa teknikal na error, hindi namin naibahagi ang card sa umaasa na partido. Pakisubukang muli."
+        },
+        "TVV_UNK_001": {
+          "title": "May pagkakamaling naganap!",
+          "message": "Nagkaproblema habang inililipat ang card. Pakisubukang muli."
+        },
+        "TVV_UNK_002": {
+          "title": "May pagkakamaling naganap!",
+          "message": "Nagkaproblema habang inililipat ang card. Pakisubukang muli."
+        },
+        "TVV_UNK_003": {
+          "title": "May pagkakamaling naganap!",
+          "message": "Nagkaproblema habang inililipat ang card. Pakisubukang muli."
+        }
       }
+    },
+    "postFaceCapture": {
+      "captureSuccessMessage": "Matagumpay ang Face Verification! Sinisimulan ang pagbabahagi ng kredensyal.",
+      "captureFailureTitle": "Nabigo ang pag-verify ng mukha!",
+      "captureFailureMessage": "Pakitiyak na malinaw na nakikita ang iyong mukha at subukang mag-selfie muli."
     }
   },
   "SelectVcOverlay": {
@@ -617,7 +730,7 @@
     }
   },
   "VerifyIdentityOverlay": {
-    "faceAuth": "Face Authentication",
+    "faceAuth": "Pagpapatunay ng Mukha",
     "status": {
       "verifyingIdentity": "Bine-verify ang pagkakakilanlan..."
     },
@@ -650,6 +763,7 @@
     }
   },
   "BackupAndRestoreBanner": {
+    "backupInProgress": "Kasalukuyang isinasagawa ang backup ng data. Mangyaring huwag isara ang application.",
     "backupSuccessful": "Ang iyong backup ay matagumpay!",
     "backupFailure": {
       "networkError": "Dahil sa hindi matatag na koneksyon sa internet, hindi kami nakapagsagawa ng pag-backup ng data. Subukang muli mamaya.",
@@ -658,6 +772,7 @@
       "noDataForBackup": "Ikinalulungkot namin, ngunit walang data na magagamit upang i-back up sa ngayon.",
       "storageLimitReached": "Hindi namin makumpleto ang proseso ng pag-backup dahil sa hindi sapat na espasyo sa storage sa iyong device. Mangyaring magbakante ng espasyo sa pamamagitan ng pagtanggal ng mga hindi kinakailangang file o app, at subukang muli."
     },
+    "restoreInProgress": "Kasalukuyang isinasagawa ang pagpapanumbalik ng data. Mangyaring huwag isara ang application.",
     "restoreSuccessful": "Matagumpay na naibalik ang iyong backup",
     "restoreFailure": {
       "networkError": "Dahil sa hindi matatag na koneksyon sa internet, hindi namin nagawang magsagawa ng data restore. Subukang muli mamaya.",
@@ -685,7 +800,7 @@
     "size": "Size: ",
     "restore": "Ibalik",
     "restoreInProgress": "Ibinabalik namin ang iyong data, mangyaring huwag isara ang application. Maaari mong ipagpatuloy ang paggamit ng application.",
-    "restoreInfo": "Ibalik ang iyong data mula sa Google Drive",
+    "restoreInfo": "I-restore ang iyong data mula sa {{driveName}}",
     "driveSettings": "Mga Setting ng Google Drive",
     "successBanner": "Ang iyong backup ay matagumpay!",
     "backupFailed": "Nabigo ang pag-backup",
@@ -711,13 +826,16 @@
     "save": "I-save ang Kagustuhan"
   },
   "common": {
+    "card": "card",
+    "cards": "mga card",
     "cancel": "Kanselahin",
     "accept": "Tanggapin",
     "save": "I-save",
-    "ok": "Ok",
+    "ok": "OK",
     "dismiss": "Dismissed",
     "editLabel": "Palitan ang {{label}}",
     "tryAgain": "Subukan muli",
+    "goBack": "Bumalik ka",
     "camera": {
       "errors": {
         "missingPermission": "Ginagamit ng app na ito ang camera upang i-scan ang QR code ng isa pang device."

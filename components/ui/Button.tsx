@@ -11,19 +11,33 @@ import testIDProps from '../../shared/commonUtil';
 export const Button: React.FC<ButtonProps> = props => {
   const type =
     props.type || 'solid' || 'radius' || 'gradient' || 'clearAddIdBtnBg';
+
+  const buttonStylesWithSize =
+    props.size !== undefined
+      ? {
+          ...Theme.ButtonStyles[type],
+          ...Theme.ButtonStyles[props.size],
+        }
+      : Theme.ButtonStyles[type];
+
   const buttonStyle: StyleProp<ViewStyle> = [
     props.fill ? Theme.ButtonStyles.fill : null,
-    Theme.ButtonStyles[type],
+    buttonStylesWithSize,
+    props.disabled && props.type === 'outline'
+      ? Theme.ButtonStyles.disabledOutlineButton
+      : null,
     {width: props.width ?? '100%'},
   ];
   const containerStyle: StyleProp<ViewStyle> = [
     !(type === 'gradient') ? Theme.ButtonStyles.container : null,
-    props.disabled ? Theme.ButtonStyles.disabled : null,
+    props.disabled && props.type !== 'outline'
+      ? Theme.ButtonStyles.disabled
+      : null,
     props.margin ? Theme.spacing('margin', props.margin) : null,
     type === 'gradient'
       ? props.isVcThere
         ? Theme.ButtonStyles.float
-        : Theme.ButtonStyles.gradient
+        : buttonStylesWithSize
       : null,
     props.styles,
   ];
@@ -53,6 +67,8 @@ export const Button: React.FC<ButtonProps> = props => {
               ? Theme.Colors.whiteText
               : type === 'plain'
               ? Theme.Colors.plainText
+              : type === 'outline' && props.disabled
+              ? Theme.Colors.textLabel
               : Theme.Colors.AddIdBtnTxt
           }>
           {props.title}
@@ -113,4 +129,5 @@ interface ButtonProps {
   styles?: StyleProp<ViewStyle>;
   colors?: (string | number)[];
   width?: number;
+  size?: string;
 }

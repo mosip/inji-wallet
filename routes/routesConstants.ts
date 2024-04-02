@@ -1,9 +1,10 @@
-import {MainBottomTabParamList} from './main';
+import {MainBottomTabParamList} from './routeTypes';
 
 export const BOTTOM_TAB_ROUTES = {
   home: 'home' as keyof MainBottomTabParamList,
   share: 'share' as keyof MainBottomTabParamList,
   history: 'history' as keyof MainBottomTabParamList,
+  settings: 'settings' as keyof MainBottomTabParamList,
 };
 
 export const SCAN_ROUTES = {

@@ -9,15 +9,14 @@ import {
 } from 'xstate';
 import {createModel} from 'xstate/lib/model';
 import {StoreEvents} from '../../machines/store';
-import {VcEvents} from '../../machines/VCItemMachine/vc';
-import {ExistingMosipVCItemMachine} from '../../machines/VCItemMachine/ExistingMosipVCItem/ExistingMosipVCItemMachine';
+import {VcMetaEvents} from '../../machines/VerifiableCredential/VCMetaMachine/VCMetaMachine';
 import {AppServices} from '../../shared/GlobalContext';
 import {MY_VCS_STORE_KEY} from '../../shared/constants';
 import {AddVcModalMachine} from './MyVcs/AddVcModalMachine';
 import {GetVcModalMachine} from './MyVcs/GetVcModalMachine';
 import {VCMetadata} from '../../shared/VCMetadata';
-import {EsignetMosipVCItemMachine} from '../../machines/VCItemMachine/EsignetMosipVCItem/EsignetMosipVCItemMachine';
 import NetInfo from '@react-native-community/netinfo';
+import {VCItemMachine} from '../../machines/VerifiableCredential/VCItemMachine/VCItemMachine';
 
 const model = createModel(
   {
@@ -26,11 +25,7 @@ const model = createModel(
   },
   {
     events: {
-      VIEW_VC: (
-        vcItemActor:
-          | ActorRefFrom<typeof ExistingMosipVCItemMachine>
-          | ActorRefFrom<typeof EsignetMosipVCItemMachine>,
-      ) => ({
+      VIEW_VC: (vcItemActor: ActorRefFrom<typeof VCItemMachine>) => ({
         vcItemActor,
       }),
       DISMISS: () => ({}),
@@ -197,7 +192,8 @@ export const MyVcsTabMachine = model.createMachine(
       }),
 
       sendVcAdded: send(
-        (_context, event) => VcEvents.VC_ADDED(event.response as VCMetadata),
+        (_context, event) =>
+          VcMetaEvents.VC_ADDED(event.response as VCMetadata),
         {
           to: context => context.serviceRefs.vc,
         },

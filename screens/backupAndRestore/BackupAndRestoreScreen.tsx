@@ -16,7 +16,7 @@ import {useBackupRestoreScreen} from '../Settings/BackupRestoreController';
 import {Icon} from 'react-native-elements';
 import testIDProps, {getDriveName} from '../../shared/commonUtil';
 import {HelpScreen} from '../../components/HelpScreen';
-import {isAndroid} from '../../shared/constants';
+import {isAndroid, isIOS} from '../../shared/constants';
 
 const BackupAndRestoreScreen: React.FC<BackupAndRestoreProps> = props => {
   const backupController = useBackupScreen();
@@ -25,28 +25,36 @@ const BackupAndRestoreScreen: React.FC<BackupAndRestoreProps> = props => {
   const {t} = useTranslation('BackupAndRestore');
 
   useEffect(() => {
-    if (!props.isLoading && backupController.lastBackupDetails === null) {
+    if (!props.isSigningIn) {
       backupController.LAST_BACKUP_DETAILS();
     }
-  }, [props.isLoading, backupController.lastBackupDetails]);
+  }, [props.isSigningIn]);
 
   useEffect(() => {
     if (
-      !props.isLoading &&
-      !backupController.isLoading &&
+      !props.isSigningIn &&
+      !backupController.isLoadingBackupDetails &&
       props.shouldTriggerAutoBackup
     ) {
-      backupController.DATA_BACKUP(true);
+      backupController.DATA_BACKUP(props.shouldTriggerAutoBackup);
     }
   }, [
-    props.isLoading,
-    backupController.isLoading,
+    props.isSigningIn,
+    backupController.isLoadingBackupDetails,
     props.shouldTriggerAutoBackup,
   ]);
 
-  const Loading = (
+  function handleRestore() {
+    !backupController.isBackupInProgress && restoreController.BACKUP_RESTORE();
+  }
+
+  function handleBackup() {
+    !restoreController.isBackUpRestoring && backupController.DATA_BACKUP(false);
+  }
+
+  const Loading = testID => (
     <Centered fill>
-      <LoaderAnimation showLogo={false} />
+      <LoaderAnimation testID={testID} showLogo={false} />
     </Centered>
   );
 
@@ -110,14 +118,15 @@ const BackupAndRestoreScreen: React.FC<BackupAndRestoreProps> = props => {
       </Row>
       <Row style={Theme.BackupAndRestoreStyles.actionOrLoaderContainer}>
         {backupController.isBackupInProgress ? (
-          Loading
+          Loading('backup')
         ) : (
           <Button
             testID="backup"
             type="gradient"
             title={t('backup')}
-            onPress={() => backupController.DATA_BACKUP(false)}
-            styles={{...Theme.MessageOverlayStyles.button, flex: 1}}
+            disabled={restoreController.isBackUpRestoring}
+            onPress={handleBackup}
+            styles={{flex: 1}}
           />
         )}
       </Row>
@@ -160,19 +169,20 @@ const BackupAndRestoreScreen: React.FC<BackupAndRestoreProps> = props => {
             }>
             {restoreController.isBackUpRestoring
               ? t('restoreInProgress')
-              : t('restoreInfo')}
+              : t('restoreInfo', {driveName: getDriveName()})}
           </Text>
         </View>
       </Row>
       <Row style={Theme.BackupAndRestoreStyles.actionOrLoaderContainer}>
         {restoreController.isBackUpRestoring ? (
-          Loading
+          Loading('restore')
         ) : (
           <Button
             testID="restore"
             type="outline"
             title={t('restore')}
-            onPress={restoreController.BACKUP_RESTORE}
+            disabled={backupController.isBackupInProgress}
+            onPress={handleRestore}
             styles={{...Theme.MessageOverlayStyles.button, marginTop: 10}}
           />
         )}
@@ -210,9 +220,9 @@ const BackupAndRestoreScreen: React.FC<BackupAndRestoreProps> = props => {
           backgroundColor: Theme.Colors.lightGreyBackgroundColor,
           flex: 1,
         }}>
-        {props.isLoading || backupController.isLoading ? (
+        {props.isSigningIn || backupController.isLoadingBackupDetails ? (
           <Column fill align="center" crossAlign="center">
-            <LoaderAnimation />
+            <LoaderAnimation testID="backupAndRestoreScreen" />
           </Column>
         ) : (
           <ScrollView>
@@ -230,7 +240,7 @@ export default BackupAndRestoreScreen;
 
 interface BackupAndRestoreProps {
   profileInfo: ProfileInfo | undefined;
-  isLoading: boolean;
+  isSigningIn: boolean;
   onBackPress: () => void;
   shouldTriggerAutoBackup: boolean;
 }

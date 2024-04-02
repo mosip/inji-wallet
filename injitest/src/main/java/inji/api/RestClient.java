@@ -11,7 +11,7 @@ import static io.restassured.RestAssured.given;
 public class RestClient {
 
 	private static final Logger RESTCLIENT_LOGGER = Logger.getLogger(RestClient.class);
-	private static RestAssuredConfig config = RestAssured.config()
+	private static final RestAssuredConfig config = RestAssured.config()
 			.httpClient(HttpClientConfig.httpClientConfig().setParam("http.connection.timeout", 500000)
 					.setParam("http.socket.timeout", 500000).setParam("http.connection-manager.timeout", 500000));
 

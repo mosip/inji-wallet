@@ -1,5 +1,5 @@
 import React from 'react';
-import {I18nManager, Pressable, Modal as RNModal, View} from 'react-native';
+import {I18nManager, Modal as RNModal, Pressable, View} from 'react-native';
 import {Icon} from 'react-native-elements';
 import {Column, Row, Text} from '.';
 import {useSendVcScreen} from '../../screens/Scan/SendVcScreenController';
@@ -69,7 +69,7 @@ export const Modal: React.FC<ModalProps> = props => {
                 )}
               </Column>
             </Row>
-            {props.headerRight ||
+            {props.headerRight != null ||
               props.arrowLeft ||
               (props.showClose && (
                 <Icon
@@ -80,6 +80,7 @@ export const Modal: React.FC<ModalProps> = props => {
                   size={27}
                 />
               ))}
+            {props.headerRight && props.headerRight}
           </View>
         </Row>
         {props.children}
@@ -108,5 +109,5 @@ export interface ModalProps {
   headerLeft?: React.ReactElement;
   arrowLeft?: boolean;
   onShow?: () => void;
-  children: React.ReactNode;
+  children?: React.ReactNode;
 }

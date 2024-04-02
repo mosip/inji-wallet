@@ -5,7 +5,7 @@ import {RsaSignature2018} from '../../lib/jsonld-signatures/suites/rsa2018/RsaSi
 import {
   VerifiableCredential,
   VerifiablePresentation,
-} from '../../types/VC/ExistingMosipVC/vc';
+} from '../../machines/VerifiableCredential/VCMetaMachine/vc';
 
 export function createVerifiablePresentation(
   vc: VerifiableCredential,

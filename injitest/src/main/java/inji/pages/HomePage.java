@@ -5,6 +5,7 @@ import io.appium.java_client.pagefactory.AndroidFindBy;
 import io.appium.java_client.pagefactory.iOSXCUITFindBy;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.RemoteWebElement;
 
@@ -55,8 +56,8 @@ public class HomePage extends BasePage {
     @iOSXCUITFindBy(accessibility = "bringYourDigitalID")
     private WebElement bringYourDigitalIdentity;
 
-    @AndroidFindBy(accessibility = "errorTitle")
-    @iOSXCUITFindBy(accessibility = "errorTitle")
+    @AndroidFindBy(accessibility = "noInternetConnectionErrorTitle")
+    @iOSXCUITFindBy(accessibility = "noInternetConnectionErrorTitle")
     private WebElement noInternetConnection;
 
     @AndroidFindBy(accessibility = "share")
@@ -71,21 +72,50 @@ public class HomePage extends BasePage {
     @iOSXCUITFindBy(accessibility = "nationalCard")
     private WebElement idTypeValue;
     
-    @AndroidFindBy(accessibility = "tryAgain")
-    @iOSXCUITFindBy(accessibility = "errorTitle")
+    @AndroidFindBy(xpath = "//android.widget.TextView[@text=\"Try again\"]")
+    @iOSXCUITFindBy(accessibility = "tryAgain")
     private WebElement tryAgainButton;
 
     @AndroidFindBy(uiAutomator = "new UiSelector().textContains(\"Subukan muli\")")
     private WebElement tryAgainButtonInFillpino;
     
-    @AndroidFindBy(accessibility = "downloadingVcPopup")
+    @AndroidFindBy(accessibility = "downloadingVcPopupText")
     @iOSXCUITFindBy(accessibility = "Downloading your card, this can take upto 5 minutes")
     private WebElement downloadingVcPopup;
+
+    @AndroidFindBy(accessibility = "fullNameValue")
+    @iOSXCUITFindBy(accessibility = "fullNameValue")
+    private WebElement fullNameValue;
+
+    @AndroidFindBy(accessibility = "activationPending")
+    @iOSXCUITFindBy(accessibility = "activationPending")
+    private WebElement activationPending;
+
+    @AndroidFindBy(xpath = "(//android.view.ViewGroup[@content-desc=\"ellipsis\"])[1]")
+    private WebElement moreOptionsforFirstVc;
+
+    @AndroidFindBy(xpath = "(//android.view.ViewGroup[@content-desc=\"ellipsis\"])[2]")
+    private WebElement moreOptionsforSecondVc;
+
+    @AndroidFindBy(accessibility = "close")
+    @iOSXCUITFindBy(accessibility = "close")
+    private WebElement popupCloseButton;
+
+    @AndroidFindBy(accessibility = "activatedVcPopupText")
+    @iOSXCUITFindBy(accessibility = "activatedVcPopupText")
+    private WebElement activatedVcPopupText;
+
+    @AndroidFindBy(accessibility = "fullNameTitle")
+    @iOSXCUITFindBy(accessibility = "fullNameTitle")
+    private WebElement fullNameTitle;
+
+
 
     public HomePage(AppiumDriver driver) {
         super(driver);
     }
 
+    BasePage basePage = new BasePage(driver);
     public boolean isHomePageLoaded() {
         /*if (isElementDisplayed(secureKeyStoragePopup, "secure key storage popup")) {
             clickOnElement(riskItButton);
@@ -103,7 +133,7 @@ public class HomePage extends BasePage {
 
     public boolean isNameDisplayed(String name) {
         By fullName = By.xpath("//*[contains(@value,'" + name + "') or contains(@text,'" + name + "')]");
-        return this.isElementDisplayed(fullName, 120);
+        return this.isElementDisplayed(fullName, 220);
     }
 
     public boolean isSecondNameDisplayed(String name) {
@@ -114,7 +144,7 @@ public class HomePage extends BasePage {
 
     public DetailedVcViewPage openDetailedVcView(String name) {
         By fullName = By.xpath("//*[contains(@value,'" + name + "') or contains(@text,'" + name + "')]");
-        clickOnElement(fullName);
+        clickOnElement(fullNameTitle);
         return new DetailedVcViewPage(driver);
     }
 
@@ -200,6 +230,10 @@ public class HomePage extends BasePage {
         return this.isElementInvisibleYet(tryAgainButtonInFillpino);
     }
 
+    public boolean isTryAgainButtonDisplayedInFlillpino() {
+        return this.isElementDisplayed(tryAgainButtonInFillpino);
+    }
+
     public boolean isTryAgainButtonNotDisplayed() {
         return this.isElementInvisibleYet(tryAgainButton);
     }
@@ -207,9 +241,43 @@ public class HomePage extends BasePage {
     public void clickOnTryAgainButton() {
         clickOnElement(tryAgainButton);
     }
-    
+
+    public void clickOnTryAgainFillpinoButton() {
+        clickOnElement(tryAgainButtonInFillpino);
+    }
+
     public boolean isDownloadingVcPopupDisplayed() {
-        return this.isElementDisplayed(downloadingVcPopup);
+        return this.retrieIsElementVisible(downloadingVcPopup);
+    }
+
+    public String getfullNameTitleText() {
+        return this.getTextFromLocator(fullNameTitle);
+    }
+    public String  getFullNameValue(){
+        return getTextFromLocator(fullNameValue);
+    }
+    public String GetIdTypeText() {
+        return this.getTextFromLocator(idTypeValue);
+    }
+
+    public String GetActivationPendingText() {
+        return this.getTextFromLocator(activationPending);
+    }
+
+    public void clickOnFirstVcsEllipsisButton() {
+        clickOnElement(moreOptionsforFirstVc);
+    }
+
+    public void clickOnSecondVcsEllipsisButton() {
+        clickOnElement(moreOptionsforSecondVc);
+    }
+
+    public boolean isActivatedVcPopupTextDisplayed() {
+        return this.retrieIsElementVisible(activatedVcPopupText);
+    }
+
+    public void clickPopupCloseButtonButton() {
+        clickOnElement(popupCloseButton);
     }
 
 }
