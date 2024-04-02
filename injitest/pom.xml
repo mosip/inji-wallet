@@ -72,7 +72,7 @@
         <dependency>
             <groupId>io.appium</groupId>
             <artifactId>java-client</artifactId>
-            <version>9.0.0</version>
+            <version>8.6.0</version>
         </dependency>
 
         <dependency>
