@@ -121,6 +121,20 @@ export const IdInputModal: React.FC<IdInputModalProps> = props => {
                         color={Theme.Colors.tooltipIcon}
                       />
                     }
+                    triggerComponentStyles={{width: 32}}
+                    toolTipContent={
+                      <Column>
+                        <Text weight="semibold">
+                          {t('toolTipTitle', {idType: controller.idType})}
+                        </Text>
+                        <View style={Theme.Styles.tooltipHrLine}></View>
+                        <Text
+                          weight="regular"
+                          style={Theme.Styles.tooltipContentDescription}>
+                          {t(`toolTip${controller.idType}Description`)}
+                        </Text>
+                      </Column>
+                    }
                   />
                 }
                 errorStyle={Theme.TextStyles.error}
