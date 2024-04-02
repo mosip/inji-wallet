@@ -78,13 +78,13 @@ export const vcMetaMachine =
         context: model.initialContext,
         events: {} as EventFrom<typeof model>,
       },
-      id: 'vc',
+      id: 'vcMeta',
       initial: 'init',
       states: {
         init: {
           on: {
             REFRESH_MY_VCS: {
-              target: '#vc.ready.myVcs.refreshing',
+              target: '#vcMeta.ready.myVcs.refreshing',
             },
           },
           initial: 'myVcs',
@@ -103,7 +103,7 @@ export const vcMetaMachine =
               on: {
                 STORE_RESPONSE: {
                   actions: 'setReceivedVcs',
-                  target: '#vc.ready',
+                  target: '#vcMeta.ready',
                 },
               },
             },
@@ -183,7 +183,7 @@ export const vcMetaMachine =
               actions: 'resetWalletBindingSuccess',
             },
             REFRESH_RECEIVED_VCS: {
-              target: '#vc.ready.receivedVcs.refreshing',
+              target: '#vcMeta.ready.receivedVcs.refreshing',
             },
             TAMPERED_VC: {
               actions: 'setTamperedVcs',
@@ -194,7 +194,7 @@ export const vcMetaMachine =
                 'removeVcFromInProgressDownlods',
                 'setDownloadingFailedVcs',
               ],
-              target: '#vc.ready.myVcs.refreshing',
+              target: '#vcMeta.ready.myVcs.refreshing',
             },
             DELETE_VC: {
               target: 'deletingFailedVcs',
@@ -204,7 +204,7 @@ export const vcMetaMachine =
                 'removeVcFromInProgressDownlods',
                 'setVerificationErrorMessage',
               ],
-              target: '#vc.ready.myVcs.refreshing',
+              target: '#vcMeta.ready.myVcs.refreshing',
             },
             RESET_VERIFY_ERROR: {
               actions: 'resetVerificationErrorMessage',
@@ -239,7 +239,7 @@ export const vcMetaMachine =
               entry: ['logTamperedVCsremoved', send('REFRESH_VCS_METADATA')],
               on: {
                 REFRESH_VCS_METADATA: {
-                  target: '#vc.init',
+                  target: '#vcMeta.init',
                 },
               },
             },
@@ -253,7 +253,7 @@ export const vcMetaMachine =
                 'removeDownloadingFailedVcsFromMyVcs',
                 'resetDownloadFailedVcs',
               ],
-              target: '#vc.ready.myVcs.refreshing',
+              target: '#vcMeta.ready.myVcs.refreshing',
             },
           },
         },
