@@ -35,7 +35,7 @@ export const BannerNotification: React.FC<BannerNotificationProps> = props => {
 export enum BannerStatusType {
   INFO = 'info',
   SUCCESS = 'success',
-  ERROR = 'errors',
+  ERROR = 'error',
 }
 
 export interface BannerNotificationProps {

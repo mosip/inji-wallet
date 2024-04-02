@@ -425,7 +425,7 @@
       "revoked": "Ang VID {{vid}} ay binawi. Awtomatikong aalisin sa wallet ang anumang kredensyal na naglalaman ng pareho"
     },
     "bannerInfo": {
-      "verificationRetrigger": "Pinapatunayan namin ang iyong kredensyal, maaaring magtagal ito. Kapag na-verify na, magagawa mong i-activate ang iyong kredensyal.",
+      "info": "Pinapatunayan namin ang iyong kredensyal, maaaring magtagal ito. Kapag na-verify na, magagawa mong i-activate ang iyong kredensyal.",
       "success": "Matagumpay na na-verify ang card at magagamit na ngayon para sa pag-activate.",
       "error": "Paumanhin, hindi namin ma-verify ang VC sa ngayon. Subukang muli mamaya."
     },

@@ -427,7 +427,7 @@
       "revoked": "VID {{vid}} has been revoked. Any credential containing the same will be removed automatically from the wallet"
     },
     "bannerInfo": {
-      "verificationRetrigger": "We are validating your credential, this may take sometime. Once verified, you’ll be able to activate your credential.",
+      "info": "We are validating your credential, this may take sometime. Once verified, you’ll be able to activate your credential.",
       "success": "The card is successfully verified and now available for activation.",
       "error": "Sorry, we are unable to verify the VC right now. Please try again later."
     },
