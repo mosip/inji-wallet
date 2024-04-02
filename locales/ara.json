@@ -97,7 +97,7 @@
     "offlineAuthenticationDisabled": "تفعيل لتسجيل الدخول عبر الإنترنت",
     "inProgress": "في تَقَدم",
     "credentialActivated": "مفعل",
-    "profileAuthenticated": "رمز الاستجابة السريعة تسجيل الدخول",
+    "profileAuthenticated": "رمز الاستجابة السريعة تسجيل الدخول"
   },
   "BindingVcWarningOverlay": {
     "alert": "يرجى تأكيد",
