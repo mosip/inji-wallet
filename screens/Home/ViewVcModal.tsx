@@ -48,7 +48,6 @@ export const ViewVcModal: React.FC<ViewVcModalProps> = props => {
           accessible={false}>
           <KebabPopUp
             icon={SvgImage.kebabIcon()}
-            iconColor={null}
             vcMetadata={controller.verifiableCredentialData.vcMetadata}
             iconName="dots-three-horizontal"
             iconType="entypo"

@@ -26,7 +26,7 @@ export const KebabPopUp: React.FC<KebabPopUpProps> = props => {
           accessible={true}
           name={props.iconName}
           type={props.iconType}
-          {...(props.iconColor ? props.iconColor : Theme.Colors.helpText)}
+          {...props.iconColor}
           size={Theme.ICON_SMALL_SIZE}
         />
       )}
