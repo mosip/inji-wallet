@@ -86,9 +86,6 @@ function handleResponse(
     errorMessage = VerificationErrorType.TECHNICAL_ERROR;
     isVerifiedFlag = false;
 
-    console.log('Verification: ', result['results'][0]);
-    console.log('Verifiable Credential: ', verifiableCredential);
-
     if (errorCodeName == 'jsonld.InvalidUrl') {
       errorMessage = VerificationErrorType.NETWORK_ERROR;
     } else if (errorCodeName == VerificationErrorType.RANGE_ERROR) {
