@@ -1,12 +1,10 @@
-import {useSelector, useInterpret} from '@xstate/react';
+import {useInterpret, useSelector} from '@xstate/react';
 import {useContext, useRef, useState} from 'react';
 import {ActorRefFrom} from 'xstate';
 import {
-  VcEvents,
   selectIsRefreshingReceivedVcs,
   selectReceivedVcsMetadata,
-} from '../../machines/VCItemMachine/vc';
-import {ExistingMosipVCItemMachine} from '../../machines/VCItemMachine/ExistingMosipVCItem/ExistingMosipVCItemMachine';
+} from '../../machines/VerifiableCredential/VCMetaMachine/vc';
 import {GlobalContext} from '../../shared/GlobalContext';
 import {
   ReceivedVcsTabEvents,
@@ -20,6 +18,8 @@ import {
   selectTabRefs,
   selectViewingVc,
 } from './HomeScreenMachine';
+import {VCItemMachine} from '../../machines/VerifiableCredential/VCItemMachine/VCItemMachine';
+import {selectVc} from '../../machines/VerifiableCredential/VCItemMachine/VCItemSelectors';
 
 export function useReceivedVcsTab() {
   const [isVisible, setIsVisible] = useState(false);
@@ -36,6 +36,8 @@ export function useReceivedVcsTab() {
   const tabRefs = useSelector(service, selectTabRefs);
 
   const selectedVc = useSelector(service, selectSelectedVc);
+
+  const vc = useSelector(service, selectVc);
 
   const isViewingVc = useSelector(service, selectViewingVc);
 
@@ -54,17 +56,14 @@ export function useReceivedVcsTab() {
 
     TOGGLE_RECEIVED_CARDS: () => setIsVisible(!isVisible),
 
-    VIEW_VC: (vcRef: ActorRefFrom<typeof ExistingMosipVCItemMachine>) => {
+    VIEW_VC: (vcRef: ActorRefFrom<typeof VCItemMachine>) => {
       return myVcservice.send(MyVcsTabEvents.VIEW_VC(vcRef));
     },
     isViewingVc,
     selectedVc,
+    vc,
     activeTab: 1,
     DISMISS_MODAL: () => service.send(HomeScreenEvents.DISMISS_MODAL()),
-    REVOKE: () => {
-      vcService.send(VcEvents.REFRESH_MY_VCS());
-      service.send(HomeScreenEvents.DISMISS_MODAL());
-    },
     REFRESH: () => ReceivedVcsService.send(ReceivedVcsTabEvents.REFRESH()),
   };
 }

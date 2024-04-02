@@ -1,8 +1,6 @@
 import {assign, ContextFrom, EventFrom, send, StateFrom} from 'xstate';
 import {createModel} from 'xstate/lib/model';
-import getAllConfigurations, {
-  downloadModel,
-} from '../shared/commonprops/commonProps';
+import {downloadModel} from '../shared/api';
 import {AppServices} from '../shared/GlobalContext';
 import {StoreEvents, StoreResponseEvent} from './store';
 import {generateSecureRandom} from 'react-native-securerandom';
@@ -16,11 +14,15 @@ const model = createModel(
     biometrics: '',
     canUseBiometrics: false,
     selectLanguage: false,
+    toggleFromSettings: false,
   },
   {
     events: {
       SETUP_PASSCODE: (passcode: string) => ({passcode}),
       SETUP_BIOMETRICS: (biometrics: string) => ({biometrics}),
+      CHANGE_METHOD: (isToggleFromSettings: boolean) => ({
+        isToggleFromSettings,
+      }),
       LOGOUT: () => ({}),
       LOGIN: () => ({}),
       STORE_RESPONSE: (response?: unknown) => ({response}),
@@ -100,8 +102,7 @@ export const authMachine = model.createMachine(
             actions: ['setPasscode', 'setLanguage', 'storeContext'],
           },
           SETUP_BIOMETRICS: {
-            // Note! dont authorized yet we need to setup passcode too as discuss
-            // target: 'authorized',
+            target: 'authorized',
             actions: ['setBiometrics', 'setLanguage', 'storeContext'],
           },
         },
@@ -123,6 +124,10 @@ export const authMachine = model.createMachine(
           SETUP_BIOMETRICS: {
             actions: ['setBiometrics', 'storeContext'],
           },
+          CHANGE_METHOD: {
+            actions: ['setIsToggleFromSettings'],
+            target: 'settingUp',
+          },
         },
       },
     },
@@ -133,9 +138,13 @@ export const authMachine = model.createMachine(
         to: context => context.serviceRefs.store,
       }),
 
+      setIsToggleFromSettings: assign({
+        toggleFromSettings: (_, event) => event.isToggleFromSettings,
+      }),
+
       storeContext: send(
         context => {
-          const {serviceRefs, ...data} = context;
+          const {serviceRefs, toggleFromSettings, ...data} = context;
           return StoreEvents.SET('auth', data);
         },
         {to: context => context.serviceRefs.store},
@@ -184,7 +193,7 @@ export const authMachine = model.createMachine(
         return context.passcode !== '';
       },
       hasBiometricSet: context => {
-        return context.biometrics !== '' && context.passcode !== '';
+        return context.biometrics !== '';
       },
       hasLanguageset: context => {
         return !context.selectLanguage;
@@ -235,4 +244,11 @@ export function selectLanguagesetup(state: State) {
 }
 export function selectIntroSlider(state: State) {
   return state.matches('introSlider');
+}
+
+export function selectIsBiometricToggleFromSettings(state: State) {
+  if (state.matches('settingUp')) {
+    return state.context.toggleFromSettings;
+  }
+  return false;
 }

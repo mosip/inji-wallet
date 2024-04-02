@@ -8,40 +8,40 @@ import org.testng.Assert;
 
 public class WelcomePage extends BasePage {
 
-    @AndroidFindBy(accessibility = "introTitle")
-    @iOSXCUITFindBy(xpath = "(//XCUIElementTypeStaticText[@name=\"introTitle\"])[1]")
+    @AndroidFindBy(accessibility = "introTitle-one")
+    @iOSXCUITFindBy(accessibility = "introTitle-one")
     private WebElement welcomeText;
 
-    @AndroidFindBy(accessibility = "introText")
-    @iOSXCUITFindBy(xpath = "(//XCUIElementTypeStaticText[@name=\"introText\"])[1]")
+    @AndroidFindBy(accessibility = "introText-one")
+    @iOSXCUITFindBy(accessibility = "introText-one")
     private WebElement welcomeTextDescription;
 
-    @AndroidFindBy(accessibility = "skip")
-    @iOSXCUITFindBy(iOSClassChain = "**/XCUIElementTypeButton[`label == \"Skip\"`][1]")
+    @AndroidFindBy(accessibility = "skipButton-one")
+    @iOSXCUITFindBy(accessibility = "skipButton-one")
     private WebElement skipButton;
 
     @AndroidFindBy(accessibility = "next")
-    @iOSXCUITFindBy(xpath = "(//XCUIElementTypeOther[@name=\"Susunod\" or @name=\"next\" or @name=\"अगला\" or @name=\"ಮುಂದೆ\" or @name=\"அடுத்தது\"])[4]\n")
+    @iOSXCUITFindBy(accessibility = "next")
     private WebElement nextButton;
 
-    @AndroidFindBy(accessibility = "back")
-    @iOSXCUITFindBy(iOSClassChain = "**/XCUIElementTypeButton[`label == \"Back\"`][1]")
+    @AndroidFindBy(accessibility = "backButton-one")
+    @iOSXCUITFindBy(accessibility = "backButton-one")
     public WebElement backButton;
 
     public WelcomePage(AppiumDriver driver) {
         super(driver);
     }
     BasePage basePage = new BasePage(driver);
-    
+
     public String  verifyLanguageforWelcomePageLoaded(){
-    	return getTextFromLocator(welcomeText);
+        return getTextFromLocator(welcomeText);
     }
-    
+
     public boolean isWelcomePageLoaded() {
-		basePage.retrieToGetElement(welcomeText);
+        basePage.retrieToGetElement(welcomeText);
         return this.isElementDisplayed(welcomeText);
     }
-    
+
     public AppUnlockMethodPage clickOnSkipButton() {
         this.clickOnElement(skipButton);
         return new AppUnlockMethodPage(driver);
@@ -53,7 +53,7 @@ public class WelcomePage extends BasePage {
     }
 
     public String getWelcomeDescription() {
-		basePage.retrieToGetElement(welcomeTextDescription);
+        basePage.retrieToGetElement(welcomeTextDescription);
         return this.getTextFromLocator(welcomeTextDescription);
     }
 

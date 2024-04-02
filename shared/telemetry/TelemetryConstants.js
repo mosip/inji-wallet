@@ -9,13 +9,16 @@ export const TelemetryConstants = {
     vcActivationFromKebab: 'VC Activation from kebab popup',
     appOnboarding: 'App Onboarding',
     appLogin: 'App Login',
-    vcLockOrRevoke: 'VC Lock / VC Revoke',
     getVcUsingAid: 'Get VC using AID',
     fetchData: 'Fetch Data',
     dataBackup: 'Data Backup',
+    fetchLastBackupDetails: 'Fetch Last Backup Details',
     dataRestore: 'Data Restore',
     decryption: 'Decryption',
     dataBackupAndRestoreSetup: 'Data Backup & Restore Setup',
+    remove: 'remove VC',
+    removeVcMetadata: 'VC metadata removed',
+    vcVerification: 'VC Verification',
   }),
 
   EndEventStatus: Object.freeze({
@@ -41,6 +44,7 @@ export const TelemetryConstants = {
     vcsAreTampered:
       'Tampered cards detected and removed for security reasons. Please download again',
     privateKeyUpdationFailed: 'Failed to store private key in keystore',
+    vcVerificationFailed: 'VC verification Failed with Range Error - ',
   }),
 
   ErrorId: Object.freeze({
@@ -55,6 +59,7 @@ export const TelemetryConstants = {
     appWasReset: 'APP_WAS_RESET',
     vcsAreTampered: 'VC_TAMPERED',
     updatePrivateKey: 'UPDATE_PRIVATE_KEY',
+    vcVerificationFailed: 'VC_VERIFICATION_FAILED',
   }),
 
   Screens: Object.freeze({

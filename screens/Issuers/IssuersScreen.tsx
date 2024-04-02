@@ -7,7 +7,7 @@ import {Header} from '../../components/ui/Header';
 import {Button, Column, Row, Text} from '../../components/ui';
 import {Theme} from '../../components/ui/styleUtils';
 import {RootRouteProps} from '../../routes';
-import {HomeRouteProps} from '../../routes/main';
+import {HomeRouteProps} from '../../routes/routeTypes';
 import {useIssuerScreenController} from './IssuerScreenController';
 import {Loader} from '../../components/ui/Loader';
 import {removeWhiteSpace} from '../../shared/commonUtil';
@@ -40,6 +40,12 @@ export const IssuersScreen: React.FC<
   const [search, setSearch] = useState('');
   const [tapToSearch, setTapToSearch] = useState(false);
   const [clearSearchIcon, setClearSearchIcon] = useState(false);
+
+  const isVerificationFailed = controller.verificationErrorMessage !== '';
+
+  const verificationErrorMessage = t(
+    `MyVcsTab:errors.verificationFailed.${controller.verificationErrorMessage}`,
+  );
 
   useLayoutEffect(() => {
     if (controller.loadingReason || controller.errorMessageType) {
@@ -134,6 +140,25 @@ export const IssuersScreen: React.FC<
     }
   };
 
+  if (isVerificationFailed) {
+    return (
+      <Error
+        testID="verificationError"
+        isVisible={isVerificationFailed}
+        isModal={true}
+        alignActionsOnEnd
+        title={t('MyVcsTab:errors.verificationFailed.title')}
+        message={verificationErrorMessage}
+        image={SvgImage.PermissionDenied()}
+        showClose={false}
+        primaryButtonText="goBack"
+        primaryButtonEvent={controller.RESET_VERIFY_ERROR}
+        primaryButtonTestID="goBack"
+        customStyles={{marginTop: '30%'}}
+      />
+    );
+  }
+
   if (controller.isBiometricsCancelled) {
     return (
       <MessageOverlay
@@ -168,6 +193,8 @@ export const IssuersScreen: React.FC<
         isVisible={controller.errorMessageType !== ''}
         title={t(`errors.${controller.errorMessageType}.title`)}
         message={t(`errors.${controller.errorMessageType}.message`)}
+        goBack={goBack}
+        tryAgain={controller.TRY_AGAIN}
         image={getImage()}
         showClose
         primaryButtonTestID="tryAgain"

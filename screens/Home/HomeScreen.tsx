@@ -2,7 +2,7 @@ import React, {useEffect} from 'react';
 import {Icon} from 'react-native-elements';
 import {Column} from '../../components/ui';
 import {Theme} from '../../components/ui/styleUtils';
-import {HomeRouteProps} from '../../routes/main';
+import {HomeRouteProps} from '../../routes/routeTypes';
 import {MyVcsTab} from './MyVcsTab';
 import {ReceivedVcsTab} from './ReceivedVcsTab';
 import {ViewVcModal} from './ViewVcModal';
@@ -10,16 +10,15 @@ import {useHomeScreen} from './HomeScreenController';
 import {TabRef} from './HomeScreenMachine';
 import {useTranslation} from 'react-i18next';
 import {ActorRefFrom} from 'xstate';
-import {ExistingMosipVCItemMachine} from '../../machines/VCItemMachine/ExistingMosipVCItem/ExistingMosipVCItemMachine';
 import LinearGradient from 'react-native-linear-gradient';
-import {EsignetMosipVCItemMachine} from '../../machines/VCItemMachine/EsignetMosipVCItem/EsignetMosipVCItemMachine';
 import {ErrorMessageOverlay} from '../../components/MessageOverlay';
 import {Pressable} from 'react-native';
 import testIDProps from '../../shared/commonUtil';
 import {BannerNotificationContainer} from '../../components/BannerNotificationContainer';
+import {VCItemMachine} from '../../machines/VerifiableCredential/VCItemMachine/VCItemMachine';
+import {VerifiableCredential} from '../../types/VC/vc';
 
 export const HomeScreen: React.FC<HomeRouteProps> = props => {
-  const {t} = useTranslation('HomeScreen');
   const controller = useHomeScreen(props);
 
   useEffect(() => {
@@ -97,10 +96,8 @@ export const HomeScreen: React.FC<HomeRouteProps> = props => {
           isVisible={controller.isViewingVc}
           onDismiss={controller.DISMISS_MODAL}
           vcItemActor={controller.selectedVc}
-          onRevokeDelete={() => {
-            controller.REVOKE();
-          }}
           activeTab={controller.activeTab}
+          flow="downloadedVc"
         />
       )}
     </React.Fragment>
@@ -110,7 +107,6 @@ export const HomeScreen: React.FC<HomeRouteProps> = props => {
 export interface HomeScreenTabProps {
   isVisible: boolean;
   service: TabRef;
-  vcItemActor:
-    | ActorRefFrom<typeof ExistingMosipVCItemMachine>
-    | ActorRefFrom<typeof EsignetMosipVCItemMachine>;
+  vcItemActor: ActorRefFrom<typeof VCItemMachine>;
+  vc: VerifiableCredential | Credential;
 }

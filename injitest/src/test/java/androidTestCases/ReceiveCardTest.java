@@ -8,8 +8,6 @@ import org.testng.annotations.Test;
 
 import static org.testng.Assert.assertTrue;
 
-import static org.testng.Assert.assertTrue;
-
 public class ReceiveCardTest extends AndroidBaseTest {
 	
 	 @Test
@@ -68,6 +66,7 @@ public class ReceiveCardTest extends AndroidBaseTest {
 
 	        assertTrue(settingsPage.verifyFilipinoLanguage(), "Verify if language is changed to filipino");
 	        ReceiveCardPage receiveCardPage =settingsPage.clickOnReceiveCardFilipinoLanguage();
+		    receiveCardPage.clickOnAllowButton();
 	        
 	        assertTrue(receiveCardPage.isReceiveCardHeaderInFilipinoLanguageDisplayed(), "Verify if QR code  header is displayed filipino");
 	 }

@@ -6,14 +6,16 @@ import {createModel} from 'xstate/lib/model';
 import {authMachine, createAuthMachine} from './auth';
 import {createSettingsMachine, settingsMachine} from './settings';
 import {StoreEvents, storeMachine} from './store';
-import {createVcMachine, vcMachine} from './VCItemMachine/vc';
+import {
+  createVcMachine,
+  vcMachine,
+} from './VerifiableCredential/VCMetaMachine/vc';
 import {activityLogMachine, createActivityLogMachine} from './activityLog';
 import {
   createRequestMachine,
   requestMachine,
 } from './bleShare/request/requestMachine';
 import {createScanMachine, scanMachine} from './bleShare/scan/scanMachine';
-import {createRevokeMachine, revokeVidsMachine} from './revoke';
 import {pure, respond} from 'xstate/lib/actions';
 import {AppServices} from '../shared/GlobalContext';
 import {
@@ -29,7 +31,7 @@ import {backupMachine, createBackupMachine} from './backupAndRestore/backup';
 import {
   backupRestoreMachine,
   createBackupRestoreMachine,
-} from './backupRestore';
+} from './backupAndRestore/backupRestore';
 
 const model = createModel(
   {
@@ -242,9 +244,7 @@ export const appMachine = model.createMachine(
       }),
 
       logStoreEvents: context => {
-        if (__DEV__) {
-          context.serviceRefs.store.subscribe(logState);
-        }
+        context.serviceRefs.store.subscribe(logState);
       },
 
       spawnServiceActors: model.assign({
@@ -291,31 +291,21 @@ export const appMachine = model.createMachine(
               requestMachine.id,
             );
           }
-
-          serviceRefs.revoke = spawn(
-            createRevokeMachine(serviceRefs),
-            revokeVidsMachine.id,
-          );
-
           return serviceRefs;
         },
       }),
 
       logServiceEvents: context => {
-        if (__DEV__) {
-          context.serviceRefs.auth.subscribe(logState);
-          context.serviceRefs.vc.subscribe(logState);
-          context.serviceRefs.settings.subscribe(logState);
-          context.serviceRefs.activityLog.subscribe(logState);
-          context.serviceRefs.scan.subscribe(logState);
-          context.serviceRefs.backup.subscribe(logState);
-          context.serviceRefs.backupRestore.subscribe(logState);
+        context.serviceRefs.auth.subscribe(logState);
+        context.serviceRefs.vc.subscribe(logState);
+        context.serviceRefs.settings.subscribe(logState);
+        context.serviceRefs.activityLog.subscribe(logState);
+        context.serviceRefs.scan.subscribe(logState);
+        context.serviceRefs.backup.subscribe(logState);
+        context.serviceRefs.backupRestore.subscribe(logState);
 
-          if (isAndroid()) {
-            context.serviceRefs.request.subscribe(logState);
-          }
-
-          context.serviceRefs.revoke.subscribe(logState);
+        if (isAndroid()) {
+          context.serviceRefs.request.subscribe(logState);
         }
       },
 

@@ -31,6 +31,8 @@ public class ShareVcTest  extends IosBaseTest {
 
         assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
         SharePage scanPage = homePage.clickOnShareButton();
+        scanPage.acceptPermissionPopupBluetoothIos();
+        scanPage.acceptPermissionPopupCameraIos();
         assertTrue(scanPage.isNoShareableCardsMessageDisplayed(), "Verify if no shareable cards are available message is displayed");
     }
 

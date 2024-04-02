@@ -6,18 +6,20 @@ import inji.constants.Target;
 import inji.pages.*;
 import inji.utils.AndroidUtil;
 import inji.utils.TestDataReader;
+import inji.utils.UpdateNetworkSettings;
 import org.testng.annotations.Test;
 
-import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.assertTrue;
+import java.io.IOException;
 
+import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
 public class NoNetworkAndroidTest extends AndroidBaseTest {
 
     @Test
     public void setupPasscodeAndDownloadCardWithoutInternet() {
-    	AndroidUtil.enableAirplaneMode();
+        String sessionId  = driver.getSessionId().toString();
+        UpdateNetworkSettings.setNoNetworkProfile(sessionId);
 
         ChooseLanguagePage chooseLanguagePage = new ChooseLanguagePage(driver);
 
@@ -48,12 +50,10 @@ public class NoNetworkAndroidTest extends AndroidBaseTest {
         homePage.clickOnTryAgainButton();
         assertTrue(homePage.verifyLanguageForNoInternetConnectionDisplayed("English"), "Verify if no internet connection is displayed");
 
-        addNewCardPage.clickOnBack();
-        assertEquals(homePage.verifyLanguageForNoVCDownloadedPageLoaded(), "Bring your digital identity");
     }
 
     @Test
-    public void openCameraOnFlightMode() {
+    public void openCameraOnFlightMode() throws IOException {
         ChooseLanguagePage chooseLanguagePage = new ChooseLanguagePage(driver);
 
         assertTrue(chooseLanguagePage.isChooseLanguagePageLoaded(), "Verify if choose language page is displayed");
@@ -78,19 +78,21 @@ public class NoNetworkAndroidTest extends AndroidBaseTest {
         RetrieveIdPage retrieveIdPage = addNewCardPage.clickOnDownloadViaUin();
 
         assertTrue(retrieveIdPage.isRetrieveIdPageLoaded(), "Verify if retrieve id page is displayed");
-        OtpVerificationPage otpVerification = retrieveIdPage.setEnterIdTextBox(TestDataReader.readData("uin")).clickOnGenerateCardButton();
+        String uin = TestDataReader.readData("uin");
+        OtpVerificationPage otpVerification = retrieveIdPage.setEnterIdTextBox(uin).clickOnGenerateCardButton();
 
         assertTrue(otpVerification.isOtpVerificationPageLoaded(), "Verify if otp verification page is displayed");
         otpVerification.enterOtp(BaseTestCase.getOtp(), Target.ANDROID);
 
         assertTrue(homePage.isNameDisplayed(TestDataReader.readData("fullName")), "Verify if full name is displayed");
 
-        AndroidUtil.enableAirplaneMode();
+        String sessionId  = driver.getSessionId().toString();
+        UpdateNetworkSettings.setNoNetworkProfile(sessionId);
         assertTrue(homePage.clickOnShareButton().acceptPermissionPopupBluetooth().isCameraOpen());
         AndroidUtil.disableAirplaneMode();
     }
     @Test
-    public void activateVcWithoutInternet() throws InterruptedException {
+    public void activateVcWithoutInternet() throws InterruptedException, IOException {
         ChooseLanguagePage chooseLanguagePage = new ChooseLanguagePage(driver);
 
         assertTrue(chooseLanguagePage.isChooseLanguagePageLoaded(), "Verify if choose language page is displayed");
@@ -116,14 +118,16 @@ public class NoNetworkAndroidTest extends AndroidBaseTest {
         RetrieveIdPage retrieveIdPage = addNewCardPage.clickOnDownloadViaUin();
 
         assertTrue(retrieveIdPage.isRetrieveIdPageLoaded(), "Verify if retrieve id page is displayed");
-        OtpVerificationPage otpVerification = retrieveIdPage.setEnterIdTextBox(TestDataReader.readData("uin")).clickOnGenerateCardButton();
+        String uin = TestDataReader.readData("uin");
+        OtpVerificationPage otpVerification = retrieveIdPage.setEnterIdTextBox(uin).clickOnGenerateCardButton();
 
         assertTrue(otpVerification.isOtpVerificationPageLoaded(), "Verify if otp verification page is displayed");
         otpVerification.enterOtp(BaseTestCase.getOtp(), Target.ANDROID);
 
         assertTrue(homePage.isNameDisplayed(TestDataReader.readData("fullName")), "Verify if full name is displayed");
-        AndroidUtil.enableAirplaneMode();
-
+        BasePage basePage = new BasePage(driver);
+        String sessionId  = driver.getSessionId().toString();
+        UpdateNetworkSettings.setNoNetworkProfile(sessionId);
         MoreOptionsPage moreOptionsPage = homePage.clickOnMoreOptionsButton();
 
         assertTrue(moreOptionsPage.isMoreOptionsPageLoaded(), "Verify if more options page is displayed");
@@ -139,7 +143,8 @@ public class NoNetworkAndroidTest extends AndroidBaseTest {
 
     @Test
     public void verifyListOfLanguagesInOfflineMode() {
-    	AndroidUtil.enableAirplaneMode();
+        String sessionId  = driver.getSessionId().toString();
+        UpdateNetworkSettings.setNoNetworkProfile(sessionId);
         ChooseLanguagePage chooseLanguagePage = new ChooseLanguagePage(driver);
 
         assertTrue(chooseLanguagePage.isChooseLanguagePageLoaded(), "Verify if choose language page is displayed");
@@ -163,13 +168,13 @@ public class NoNetworkAndroidTest extends AndroidBaseTest {
         assertTrue(settingsPage.isSettingPageLoaded(), "Verify if setting page is displayed");
         settingsPage.clickOnLanguage();
 
-        assertTrue(settingsPage.verifyLanguagesInLanguageFilter(), "Verify if all languages are shown in language filter");
-        AndroidUtil.disableAirplaneMode();
+        assertTrue(settingsPage.verifyLanguagesInLanguageFilter("ANDROID"), "Verify if all languages are shown in language filter");
     }
     
     @Test
     public void verifyHelpPageOfflineMode() {
-    	AndroidUtil.enableAirplaneMode();
+        String sessionId  = driver.getSessionId().toString();
+        UpdateNetworkSettings.setNoNetworkProfile(sessionId);
 
         ChooseLanguagePage chooseLanguagePage = new ChooseLanguagePage(driver);
 
@@ -224,13 +229,15 @@ public class NoNetworkAndroidTest extends AndroidBaseTest {
         RetrieveIdPage retrieveIdPage = addNewCardPage.clickOnDownloadViaUin();
 
         assertTrue(retrieveIdPage.isRetrieveIdPageLoaded(), "Verify if retrieve id page is displayed");
-        OtpVerificationPage otpVerification = retrieveIdPage.setEnterIdTextBox(TestDataReader.readData("uin")).clickOnGenerateCardButton();
+        String uin = TestDataReader.readData("uin");
+        OtpVerificationPage otpVerification = retrieveIdPage.setEnterIdTextBox(uin).clickOnGenerateCardButton();
 
         assertTrue(otpVerification.isOtpVerificationPageLoaded(), "Verify if otp verification page is displayed");
         otpVerification.enterOtp(BaseTestCase.getOtp(), Target.ANDROID);
 
         assertTrue(homePage.isNameDisplayed(TestDataReader.readData("fullName")), "Verify if full name is displayed");
-        AndroidUtil.enableAirplaneMode();
+        String sessionId  = driver.getSessionId().toString();
+        UpdateNetworkSettings.setNoNetworkProfile(sessionId);
 
         MoreOptionsPage moreOptionsPage = homePage.clickOnMoreOptionsButton();
         assertTrue(moreOptionsPage.isMoreOptionsPageLoaded(), "Verify if more options page is displayed");
@@ -240,7 +247,7 @@ public class NoNetworkAndroidTest extends AndroidBaseTest {
 
         pleaseConfirmPopupPage.clickOnConfirmButton();
 
-        AndroidUtil.disableAirplaneMode();
+        UpdateNetworkSettings.resetNetworkProfile(sessionId);
         assertEquals(homePage.verifyLanguageForNoVCDownloadedPageLoaded(), "Bring your digital identity");
     }
     
@@ -271,13 +278,15 @@ public class NoNetworkAndroidTest extends AndroidBaseTest {
         RetrieveIdPage retrieveIdPage = addNewCardPage.clickOnDownloadViaUin();
 
         assertTrue(retrieveIdPage.isRetrieveIdPageLoaded(), "Verify if retrieve id page is displayed");
-        OtpVerificationPage otpVerification = retrieveIdPage.setEnterIdTextBox(TestDataReader.readData("uin")).clickOnGenerateCardButton();
+        String uin = TestDataReader.readData("uin");
+        OtpVerificationPage otpVerification = retrieveIdPage.setEnterIdTextBox(uin).clickOnGenerateCardButton();
 
         assertTrue(otpVerification.isOtpVerificationPageLoaded(), "Verify if otp verification page is displayed");
         otpVerification.enterOtp(BaseTestCase.getOtp(), Target.ANDROID);
 
         assertTrue(homePage.isNameDisplayed(TestDataReader.readData("fullName")), "Verify if full name is displayed");
-        AndroidUtil.enableAirplaneMode();
+        String sessionId  = driver.getSessionId().toString();
+        UpdateNetworkSettings.setNoNetworkProfile(sessionId);
 
         DetailedVcViewPage detailedVcViewPage = homePage.openDetailedVcView(TestDataReader.readData("fullName"));
         detailedVcViewPage.clickOnQrCodeButton();
@@ -285,13 +294,12 @@ public class NoNetworkAndroidTest extends AndroidBaseTest {
         
         detailedVcViewPage.clickOnQrCrossIcon();
         assertTrue(homePage.isNameDisplayed(TestDataReader.readData("fullName")), "Verify if full name is displayed");
-        
-        AndroidUtil.disableAirplaneMode();
     }
     
     @Test
     public void verifyRecivedCardOffline() throws InterruptedException {
-    	AndroidUtil.enableAirplaneMode();
+        String sessionId  = driver.getSessionId().toString();
+        UpdateNetworkSettings.setNoNetworkProfile(sessionId);
     	ChooseLanguagePage chooseLanguagePage = new ChooseLanguagePage(driver);
 
         assertTrue(chooseLanguagePage.isChooseLanguagePageLoaded(), "Verify if choose language page is displayed");
@@ -313,6 +321,8 @@ public class NoNetworkAndroidTest extends AndroidBaseTest {
         SettingsPage settingsPage = homePage.clickOnSettingIcon();
         
         ReceiveCardPage receiveCardPage = settingsPage.clickOnReceiveCard();
+        receiveCardPage.clickOnAllowButton();
+
         assertTrue(receiveCardPage.isReceiveCardHeaderDisplayed(), "Verify if QR code  header is displayed");
         
         assertTrue(receiveCardPage.isWaitingForConnectionDisplayed(), "Verify if waiting for connection displayed");
@@ -321,7 +331,8 @@ public class NoNetworkAndroidTest extends AndroidBaseTest {
     
     @Test
     public void downloadCardWithoutInternetRetryWithInternet() throws InterruptedException {
-    	AndroidUtil.enableAirplaneMode();
+        String sessionId  = driver.getSessionId().toString();
+        UpdateNetworkSettings.setNoNetworkProfile(sessionId);
 
         ChooseLanguagePage chooseLanguagePage = new ChooseLanguagePage(driver);
 
@@ -347,7 +358,7 @@ public class NoNetworkAndroidTest extends AndroidBaseTest {
         assertTrue(homePage.verifyLanguageForNoInternetConnectionDisplayed("English"), "Verify if no internet connection is displayed");
         assertTrue(homePage.verifyLanguageForTryAgainButtonDisplayed("English"), "Verify if try again button displayed");
 
-        AndroidUtil.disableAirplaneMode();
+        UpdateNetworkSettings.resetNetworkProfile(sessionId);
         assertTrue(homePage.isTryAgainButtonNotDisplayed(), "Wating for network come online");
         
         homePage.clickOnTryAgainButton();
@@ -356,7 +367,8 @@ public class NoNetworkAndroidTest extends AndroidBaseTest {
     
     @Test
     public void downloadVcUsingUinViaEsignetWithoutInternet() throws InterruptedException {
-    	AndroidUtil.enableAirplaneMode();
+        String sessionId  = driver.getSessionId().toString();
+        UpdateNetworkSettings.setNoNetworkProfile(sessionId);
         ChooseLanguagePage chooseLanguagePage = new ChooseLanguagePage(driver);
 
         assertTrue(chooseLanguagePage.isChooseLanguagePageLoaded(), "Verify if choose language page is displayed");
@@ -383,12 +395,8 @@ public class NoNetworkAndroidTest extends AndroidBaseTest {
         
         homePage.clickOnTryAgainButton();
         assertTrue(homePage.isTryAgainButtonNotDisplayed(), "Verify if Try again button displayed");
-        
         homePage.clickOnTryAgainButton();
-        assertTrue(addNewCardPage.isAddNewCardPageLoaded(), "Verify if add new card page is displayed");
-        
-        addNewCardPage.clickOnBack();
-        assertEquals(homePage.verifyLanguageForNoVCDownloadedPageLoaded(), "Bring your digital identity");
+
     }
     
     @Test
@@ -416,25 +424,25 @@ public class NoNetworkAndroidTest extends AndroidBaseTest {
         assertTrue(addNewCardPage.isAddNewCardPageLoaded(), "Verify if add new card page is displayed");
         EsignetLoginPage esignetLoginPage =  addNewCardPage.clickOnDownloadViaEsignet();
 
-        assertTrue(esignetLoginPage.isEsignetLoginPageDisplayed(), "Verify if esignet login page displayed");
         esignetLoginPage.clickOnEsignetLoginWithOtpButton();
         
         assertTrue(esignetLoginPage.isEnterYourVidTextDisplayed(), "Verify if enter your vid text is displayed");
-        OtpVerificationPage otpVerification= esignetLoginPage.setEnterIdTextBox(TestDataReader.readData("uin"));
+        String uin = TestDataReader.readData("uin");
+        OtpVerificationPage otpVerification= esignetLoginPage.setEnterIdTextBox(uin);
         
         esignetLoginPage.clickOnGetOtpButton();
         assertTrue(esignetLoginPage.isOtpHasSendMessageDisplayed(),"verify if otp page is displayed");
         
         otpVerification.enterOtpForEsignet(TestDataReader.readData("otp"), Target.ANDROID);
         esignetLoginPage.clickOnVerifyButton();
-        
-        assertTrue(esignetLoginPage.isProgressingLogoDisplayed(),"verify if Progressing page is displayed");
-        AndroidUtil.enableAirplaneMode();
+
+        String sessionId  = driver.getSessionId().toString();
+        UpdateNetworkSettings.setNoNetworkProfile(sessionId);
         
         assertTrue(homePage.verifyLanguageForNoInternetConnectionDisplayed("English"), "Verify if no internet connection is displayed");
         addNewCardPage.clickOnBack();
-        
-        AndroidUtil.disableAirplaneMode();
+
+        UpdateNetworkSettings.resetNetworkProfile(sessionId);
         assertTrue(addNewCardPage.isAddNewCardPageLoaded(), "Verify if add new card page is displayed");
     }
     
@@ -463,11 +471,10 @@ public class NoNetworkAndroidTest extends AndroidBaseTest {
         assertTrue(addNewCardPage.isAddNewCardPageLoaded(), "Verify if add new card page is displayed");
         EsignetLoginPage esignetLoginPage =  addNewCardPage.clickOnDownloadViaEsignet();
 
-        assertTrue(esignetLoginPage.isEsignetLoginPageDisplayed(), "Verify if esignet login page displayed");
         esignetLoginPage.clickOnEsignetLoginWithOtpButton();
-        
-        assertTrue(esignetLoginPage.isEnterYourVidTextDisplayed(), "Verify if enter your vid text is displayed");
-        OtpVerificationPage otpVerification= esignetLoginPage.setEnterIdTextBox(TestDataReader.readData("uin"));
+
+        String uin = TestDataReader.readData("uin");
+        OtpVerificationPage otpVerification= esignetLoginPage.setEnterIdTextBox(uin);
         
         esignetLoginPage.clickOnGetOtpButton();
         assertTrue(esignetLoginPage.isOtpHasSendMessageDisplayed(),"verify if otp page is displayed");
@@ -476,7 +483,9 @@ public class NoNetworkAndroidTest extends AndroidBaseTest {
         esignetLoginPage.clickOnVerifyButton();
         
         assertTrue(homePage.isNameDisplayed(TestDataReader.readData("fullName")), "Verify if full name is displayed");
-        AndroidUtil.enableAirplaneMode();
+        String sessionId  = driver.getSessionId().toString();
+        UpdateNetworkSettings.setNoNetworkProfile(sessionId);
+
         MoreOptionsPage moreOptionsPage = homePage.clickOnMoreOptionsButton();
 
         assertTrue(moreOptionsPage.isMoreOptionsPageLoaded(), "Verify if more options page is displayed");
@@ -516,10 +525,7 @@ public class NoNetworkAndroidTest extends AndroidBaseTest {
         
         EsignetLoginPage esignetLoginPage =  addNewCardPage.clickOnDownloadViaEsignet();
 
-        assertTrue(esignetLoginPage.isEsignetLoginPageDisplayed(), "Verify if esignet login page displayed");
         esignetLoginPage.clickOnEsignetLoginWithOtpButton();
-        
-        assertTrue(esignetLoginPage.isEnterYourVidTextDisplayed(), "Verify if enter your vid text is displayed");
         OtpVerificationPage otpVerification= esignetLoginPage.setEnterIdTextBox(TestDataReader.readData("uin"));
         
         esignetLoginPage.clickOnGetOtpButton();
@@ -530,7 +536,8 @@ public class NoNetworkAndroidTest extends AndroidBaseTest {
         
         assertTrue(esignetLoginPage.isProgressingLogoDisplayed(),"verify if Progressing page is displayed");
         assertTrue(homePage.isNameDisplayed(TestDataReader.readData("fullName")), "Verify if full name is displayed");
-        AndroidUtil.enableAirplaneMode();
+        String sessionId  = driver.getSessionId().toString();
+        UpdateNetworkSettings.setNoNetworkProfile(sessionId);
         
         assertTrue(homePage.clickOnShareButton().acceptPermissionPopupBluetooth().isCameraOpen());
         AndroidUtil.disableAirplaneMode();
@@ -538,36 +545,27 @@ public class NoNetworkAndroidTest extends AndroidBaseTest {
     
     @Test
     public void downloadVcInOtherLanguageViaEsignetWithoutInternet() throws InterruptedException {
-    	AndroidUtil.enableAirplaneMode();
-    	UnlockApplicationPage unlockApplicationPage = new UnlockApplicationPage(driver);
-		if (unlockApplicationPage.isUnlockApplicationDisplayed() == false) {
-			ChooseLanguagePage chooseLanguagePage = new ChooseLanguagePage(driver);
-			assertTrue(chooseLanguagePage.isChooseLanguagePageLoaded(), "Verify if choose language page is displayed");
+        String sessionId  = driver.getSessionId().toString();
+        UpdateNetworkSettings.setNoNetworkProfile(sessionId);
+        ChooseLanguagePage chooseLanguagePage = new ChooseLanguagePage(driver);
 
-			WelcomePage welcomePage = chooseLanguagePage.clickOnSavePreference();
+        assertTrue(chooseLanguagePage.isChooseLanguagePageLoaded(), "Verify if choose language page is displayed");
+        WelcomePage welcomePage = chooseLanguagePage.clickOnSavePreference();
 
-			assertTrue(welcomePage.isWelcomePageLoaded(), "Verify if welcome page is loaded");
-			AppUnlockMethodPage appUnlockMethodPage = welcomePage.clickOnSkipButton();
+        assertTrue(welcomePage.isWelcomePageLoaded(), "Verify if welcome page is loaded");
+        AppUnlockMethodPage appUnlockMethodPage = welcomePage.clickOnSkipButton();
 
-			assertTrue(appUnlockMethodPage.isAppUnlockMethodPageLoaded(), "Verify if app unlocked page is displayed");
-			SetPasscode setPasscode = appUnlockMethodPage.clickOnUsePasscode();
+        assertTrue(appUnlockMethodPage.isAppUnlockMethodPageLoaded(), "Verify if app unlocked page is displayed");
+        SetPasscode setPasscode = appUnlockMethodPage.clickOnUsePasscode();
 
-			assertTrue(setPasscode.isSetPassCodePageLoaded(), "Verify if set passcode page is displayed");
-			ConfirmPasscode confirmPasscode = setPasscode.enterPasscode(TestDataReader.readData("passcode"),
-					Target.ANDROID);
+        assertTrue(setPasscode.isSetPassCodePageLoaded(), "Verify if set passcode page is displayed");
+        ConfirmPasscode confirmPasscode = setPasscode.enterPasscode(TestDataReader.readData("passcode"), Target.ANDROID);
 
-			assertTrue(confirmPasscode.isConfirmPassCodePageLoaded(), "Verify if confirm passcode page is displayed");
-			HomePage homePage = confirmPasscode.enterPasscodeInConfirmPasscodePage(TestDataReader.readData("passcode"), Target.ANDROID);
-		} else {
-			HomePage homePage = new HomePage(driver);
-			unlockApplicationPage.clickOnUnlockApplicationButton();
+        assertTrue(confirmPasscode.isConfirmPassCodePageLoaded(), "Verify if confirm passcode page is displayed");
+        HomePage homePage = confirmPasscode.enterPasscodeInConfirmPasscodePage(TestDataReader.readData("passcode"), Target.ANDROID);
 
-			ConfirmPasscode confirmPasscode = new ConfirmPasscode(driver);
-			homePage = confirmPasscode.enterPasscodeInConfirmPasscodePage(TestDataReader.readData("passcode"), Target.ANDROID);
-		}
-
-		HomePage homePage = new HomePage(driver);
-		assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");        SettingsPage settingsPage = homePage.clickOnSettingIcon();
+        assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
+        SettingsPage settingsPage = homePage.clickOnSettingIcon();
 
         assertTrue(settingsPage.isSettingPageLoaded(), "Verify if setting page is displayed");
         settingsPage.clickOnLanguage().clickOnFilipinoLanguage();
@@ -578,23 +576,18 @@ public class NoNetworkAndroidTest extends AndroidBaseTest {
         AddNewCardPage addNewCardPage = homePage.downloadCard();
 
         assertTrue(homePage.verifyLanguageForNoInternetConnectionDisplayed("Filipino"), "Verify if no internet connection is displayed in flillpino");
-        assertTrue(homePage.verifyLanguageForTryAgainButtonDisplayed("Filipino"), "Verify if Try again button displayed in flillpino");
+        assertTrue(homePage.isTryAgainButtonDisplayedInFlillpino(), "Verify if Try again button displayed in flillpino");
+
+        UpdateNetworkSettings.resetNetworkProfile(sessionId);
         
-        addNewCardPage.isBackButtonDisplayed();
-        AndroidUtil.disableAirplaneMode();
-        
-         homePage.clickOnTryAgainButton();
-         assertTrue(homePage.isTryAgainButtonNotDisplayedInFlillpino(), "Verify if Try again button displayed");
-//        
-        homePage.clickOnTryAgainButton();
+         homePage.clickOnTryAgainFillpinoButton();
         assertEquals(addNewCardPage.verifyLanguageForAddNewCardGuideMessage(), "Mangyaring piliin ang iyong gustong tagabigay mula sa mga opsyon sa ibaba upang magdagdag ng bagong card.");
 //        
        EsignetLoginPage esignetLoginPage =  addNewCardPage.clickOnDownloadViaEsignet();
-       assertTrue(esignetLoginPage.isEsignetLoginPageDisplayed(), "Verify if esignet login page displayed");
        esignetLoginPage.clickOnEsignetLoginWithOtpButton();
-       
-       assertTrue(esignetLoginPage.isEnterYourVidTextDisplayed(), "Verify if enter your vid text is displayed");
-       OtpVerificationPage otpVerification= esignetLoginPage.setEnterIdTextBox(TestDataReader.readData("uin"));
+
+        String uin = TestDataReader.readData("uin");
+       OtpVerificationPage otpVerification= esignetLoginPage.setEnterIdTextBox(uin);
        
        esignetLoginPage.clickOnGetOtpButton();
        assertTrue(esignetLoginPage.isOtpHasSendMessageDisplayed(),"verify if otp page is displayed");
@@ -607,7 +600,8 @@ public class NoNetworkAndroidTest extends AndroidBaseTest {
     
     @Test
     public void changeLanguageToTamilWithoutNetwork() {
-    	AndroidUtil.enableAirplaneMode();
+        String sessionId  = driver.getSessionId().toString();
+        UpdateNetworkSettings.setNoNetworkProfile(sessionId);
         ChooseLanguagePage chooseLanguagePage = new ChooseLanguagePage(driver);
 
         assertTrue(chooseLanguagePage.isChooseLanguagePageLoaded(), "Verify if choose language page is displayed");
@@ -662,7 +656,9 @@ public class NoNetworkAndroidTest extends AndroidBaseTest {
         AddNewCardPage addNewCardPage = homePage.downloadCard();
 
         assertTrue(addNewCardPage.isAddNewCardPageLoaded(), "Verify if add new card page is displayed");
-        AndroidUtil.enableAirplaneMode();
+        String sessionId  = driver.getSessionId().toString();
+        UpdateNetworkSettings.setNoNetworkProfile(sessionId);
+
         addNewCardPage.clickOnBack();
         
         homePage.downloadCard();

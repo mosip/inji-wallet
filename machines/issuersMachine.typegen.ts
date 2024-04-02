@@ -33,6 +33,11 @@ export interface Typegen0 {
       data: unknown;
       __tip: 'See the XState TS docs to learn how to strongly type this.';
     };
+    'done.invoke.issuersMachine.storing:invocation[0]': {
+      type: 'done.invoke.issuersMachine.storing:invocation[0]';
+      data: unknown;
+      __tip: 'See the XState TS docs to learn how to strongly type this.';
+    };
     'done.invoke.issuersMachine.verifyingCredential:invocation[0]': {
       type: 'done.invoke.issuersMachine.verifyingCredential:invocation[0]';
       data: unknown;
@@ -71,6 +76,7 @@ export interface Typegen0 {
     downloadIssuersList: 'done.invoke.issuersMachine.displayIssuers:invocation[0]';
     generateKeyPair: 'done.invoke.issuersMachine.generateKeyPair:invocation[0]';
     invokeAuthorization: 'done.invoke.issuersMachine.performAuthorization:invocation[0]';
+    isUserSignedAlready: 'done.invoke.issuersMachine.storing:invocation[0]';
     verifyCredential: 'done.invoke.issuersMachine.verifyingCredential:invocation[0]';
   };
   missingImplementations: {
@@ -95,7 +101,10 @@ export interface Typegen0 {
       | 'done.invoke.issuersMachine.displayIssuers:invocation[0]'
       | 'error.platform.issuersMachine.downloadCredentials:invocation[0]'
       | 'error.platform.issuersMachine.downloadIssuerConfig:invocation[0]'
-      | 'error.platform.issuersMachine.performAuthorization:invocation[0]';
+      | 'error.platform.issuersMachine.performAuthorization:invocation[0]'
+      | 'error.platform.issuersMachine.verifyingCredential:invocation[0]';
+    resetVerificationErrorMessage: 'RESET_VERIFY_ERROR';
+    sendBackupEvent: 'done.invoke.issuersMachine.storing:invocation[0]';
     sendErrorEndEvent: 'error.platform.issuersMachine.verifyingCredential:invocation[0]';
     sendImpressionEvent: 'done.invoke.issuersMachine.displayIssuers:invocation[0]';
     sendSuccessEndEvent: 'done.invoke.issuersMachine.verifyingCredential:invocation[0]';
@@ -116,6 +125,7 @@ export interface Typegen0 {
       | 'SELECTED_ISSUER'
       | 'TRY_AGAIN'
       | 'done.invoke.issuersMachine.performAuthorization:invocation[0]';
+    setMetadataInCredentialData: 'done.invoke.issuersMachine.verifyingCredential:invocation[0]';
     setNoInternet: 'done.invoke.checkInternet';
     setOIDCConfigError: 'error.platform.issuersMachine.performAuthorization:invocation[0]';
     setPrivateKey: 'done.invoke.issuersMachine.generateKeyPair:invocation[0]';
@@ -123,12 +133,14 @@ export interface Typegen0 {
     setSelectedIssuerId: 'SELECTED_ISSUER';
     setSelectedIssuers: 'done.invoke.issuersMachine.downloadIssuerConfig:invocation[0]';
     setTokenResponse: 'done.invoke.issuersMachine.performAuthorization:invocation[0]';
+    setVCMetadata: 'done.invoke.issuersMachine.verifyingCredential:invocation[0]';
     setVerifiableCredential: 'done.invoke.issuersMachine.downloadCredentials:invocation[0]';
     storeKeyPair: 'done.invoke.issuersMachine.generateKeyPair:invocation[0]';
     storeVcMetaContext: 'done.invoke.issuersMachine.verifyingCredential:invocation[0]';
     storeVcsContext: 'done.invoke.issuersMachine.verifyingCredential:invocation[0]';
     storeVerifiableCredentialData: 'done.invoke.issuersMachine.verifyingCredential:invocation[0]';
     storeVerifiableCredentialMeta: 'done.invoke.issuersMachine.verifyingCredential:invocation[0]';
+    updateVerificationErrorMessage: 'error.platform.issuersMachine.verifyingCredential:invocation[0]';
   };
   eventsCausingDelays: {};
   eventsCausingGuards: {
@@ -139,6 +151,7 @@ export interface Typegen0 {
     isInternetConnected: 'done.invoke.checkInternet';
     isOIDCConfigError: 'error.platform.issuersMachine.performAuthorization:invocation[0]';
     isOIDCflowCancelled: 'error.platform.issuersMachine.performAuthorization:invocation[0]';
+    isSignedIn: 'done.invoke.issuersMachine.storing:invocation[0]';
     shouldFetchIssuersAgain: 'TRY_AGAIN';
   };
   eventsCausingServices: {
@@ -150,6 +163,7 @@ export interface Typegen0 {
     downloadIssuersList: 'TRY_AGAIN' | 'xstate.init';
     generateKeyPair: 'CHECK_KEY_PAIR';
     invokeAuthorization: 'done.invoke.checkInternet';
+    isUserSignedAlready: 'done.invoke.issuersMachine.verifyingCredential:invocation[0]';
     verifyCredential: 'done.invoke.issuersMachine.downloadCredentials:invocation[0]';
   };
   matchesStates:
@@ -163,6 +177,7 @@ export interface Typegen0 {
     | 'downloadIssuerConfig'
     | 'error'
     | 'generateKeyPair'
+    | 'handleVCVerificationFailure'
     | 'idle'
     | 'performAuthorization'
     | 'performAuthorization.idle'
