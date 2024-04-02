@@ -195,6 +195,9 @@ export const VCDetailView: React.FC<VCItemDetailsProps> = props => {
                   onPress={props.onBinding}
                   type="gradient"
                   size="Large"
+                  disabled={
+                    !props.verifiableCredentialData.vcMetadata.isVerified
+                  }
                 />
               </Column>
             ) : (
