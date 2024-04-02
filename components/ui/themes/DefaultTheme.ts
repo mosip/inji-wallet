@@ -1548,7 +1548,7 @@ export const DefaultTheme = {
     // https://ethercreative.github.io/react-native-shadow-generator/
 
     if (level === 0) {
-      return null;
+      return {};
     }
 
     const index = level - 1;

@@ -4,7 +4,7 @@ import {Image, ImageBackground, View} from 'react-native';
 import {
   VerifiableCredential,
   WalletBindingResponse,
-} from '../../../types/VC/vc';
+} from '../../../machines/VerifiableCredential/VCMetaMachine/vc';
 import {Button, Column, Row, Text} from '../../ui';
 import {Theme} from '../../ui/styleUtils';
 import {QrCodeOverlay} from '../../QrCodeOverlay';

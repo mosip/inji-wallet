@@ -26,7 +26,7 @@ import {
   selectCredential,
   selectVerifiableCredentialData,
 } from '../../machines/QrLoginMachine';
-import {selectBindedVcsMetadata} from '../../machines/VerifiableCredential/VCMetaMachine/vc';
+import {selectBindedVcsMetadata} from '../../machines/VerifiableCredential/VCMetaMachine/VCMetaMachine';
 import {GlobalContext} from '../../shared/GlobalContext';
 import {QrLoginProps} from './QrLogin';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
@@ -40,7 +40,7 @@ export function useQrLogin({service}: QrLoginProps) {
   const {appService} = useContext(GlobalContext);
   const navigation = useNavigation<MyVcsTabNavigation>();
 
-  const vcService = appService.children.get('vc')!!;
+  const vcMetaService = appService.children.get('vcMeta')!!;
   const [selectedIndex, setSelectedIndex] = useState<number>(null);
   return {
     isFaceVerificationConsent: useSelector(
@@ -51,7 +51,7 @@ export function useQrLogin({service}: QrLoginProps) {
       service,
       selectLinkTransactionResponse,
     ),
-    shareableVcsMetadata: useSelector(vcService, selectBindedVcsMetadata),
+    shareableVcsMetadata: useSelector(vcMetaService, selectBindedVcsMetadata),
     verifiableCredentialData: useSelector(
       service,
       selectVerifiableCredentialData,

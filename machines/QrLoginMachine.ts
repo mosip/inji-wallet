@@ -14,7 +14,10 @@ import {
   MY_VCS_STORE_KEY,
 } from '../shared/constants';
 import {StoreEvents} from './store';
-import {linkTransactionResponse, VC} from '../types/VC/vc';
+import {
+  linkTransactionResponse,
+  VC,
+} from './VerifiableCredential/VCMetaMachine/vc';
 import {request} from '../shared/request';
 import {
   getJWT,

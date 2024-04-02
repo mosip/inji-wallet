@@ -20,7 +20,7 @@ import {
   sendErrorEvent,
   getErrorEventData,
 } from '../../shared/telemetry/TelemetryUtils';
-import {VcEvents} from '../VerifiableCredential/VCMetaMachine/vc';
+import {VcMetaEvents} from '../VerifiableCredential/VCMetaMachine/VCMetaMachine';
 import {NETWORK_REQUEST_FAILED, TECHNICAL_ERROR} from '../../shared/constants';
 import NetInfo, {NetInfoState} from '@react-native-community/netinfo';
 
@@ -233,8 +233,8 @@ export const backupRestoreMachine = model.createMachine(
         },
         {to: context => context.serviceRefs.store},
       ),
-      refreshVCs: send(VcEvents.REFRESH_MY_VCS, {
-        to: context => context.serviceRefs.vc,
+      refreshVCs: send(VcMetaEvents.REFRESH_MY_VCS, {
+        to: context => context.serviceRefs.vcMeta,
       }),
 
       setDataFromBackupFile: model.assign({

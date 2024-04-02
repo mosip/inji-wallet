@@ -3,7 +3,7 @@ import {ImageBackground, Pressable, Image} from 'react-native';
 import {getLocalizedField} from '../../../i18n';
 import {VCMetadata} from '../../../shared/VCMetadata';
 import {KebabPopUp} from '../../KebabPopUp';
-import {VerifiableCredential} from '../../../types/VC/vc';
+import {VerifiableCredential} from '../../../machines/VerifiableCredential/VCMetaMachine/vc';
 import {Column, Row} from '../../ui';
 import {Theme} from '../../ui/styleUtils';
 import {CheckBox, Icon} from 'react-native-elements';

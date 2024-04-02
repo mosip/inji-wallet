@@ -14,7 +14,7 @@ import {
   selectIsRequestingOtp,
   selectOtpError,
 } from './AddVcModalMachine';
-import {VcIdType} from '../../../types/VC/vc';
+import {VcIdType} from '../../../machines/VerifiableCredential/VCMetaMachine/vc';
 import {IndividualId} from '../../../shared/constants';
 
 export function useIdInputModal({service}: IdInputModalProps) {

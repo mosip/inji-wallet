@@ -6,7 +6,7 @@ import {generateSecureRandom} from 'react-native-securerandom';
 import forge from 'node-forge';
 import {useEffect, useState} from 'react';
 import {Dimensions, Keyboard} from 'react-native';
-import {CredentialSubject} from '../types/VC/vc';
+import {CredentialSubject} from '../machines/VerifiableCredential/VCMetaMachine/vc';
 
 export const hashData = async (
   data: string,
@@ -40,7 +40,7 @@ export interface Argon2iConfig {
   mode: string;
 }
 
-export default function testIDProps(id) {
+export default function testIDProps(id: string) {
   return isAndroid()
     ? {accessible: true, accessibilityLabel: id}
     : {testID: id};
