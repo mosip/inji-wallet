@@ -14,7 +14,7 @@ import {
   savePrivateKey,
 } from '../../../shared/keystore/SecureKeystore';
 import {CredentialDownloadResponse, request} from '../../../shared/request';
-import {WalletBindingResponse} from '../../../types/VC/vc';
+import {WalletBindingResponse} from '../VCMetaMachine/vc';
 import {verifyCredential} from '../../../shared/vcjs/verifyCredential';
 import {getMosipIdentifier} from '../../../shared/commonUtil';
 

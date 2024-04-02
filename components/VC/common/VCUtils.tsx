@@ -1,4 +1,7 @@
-import {CredentialSubject, VerifiableCredential} from '../../../types/VC/vc';
+import {
+  CredentialSubject,
+  VerifiableCredential,
+} from '../../../machines/VerifiableCredential/VCMetaMachine/vc';
 import i18n, {getLocalizedField} from '../../../i18n';
 import {Row} from '../../ui';
 import {VCItemField} from './VCItemField';

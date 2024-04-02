@@ -10,7 +10,7 @@ import {
   MIMOTO_BASE_URL,
   SETTINGS_STORE_KEY,
 } from '../shared/constants';
-import {VCLabel} from '../types/VC/vc';
+import {VCLabel} from './VerifiableCredential/VCMetaMachine/vc';
 import {StoreEvents} from './store';
 import getAllConfigurations from '../shared/api';
 import Storage from '../shared/storage';

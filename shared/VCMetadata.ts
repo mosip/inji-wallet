@@ -1,4 +1,4 @@
-import {VC, VcIdType} from '../types/VC/vc';
+import {VC, VcIdType} from '../machines/VerifiableCredential/VCMetaMachine/vc';
 import {Issuers, Protocols} from './openId4VCI/Utils';
 import {getMosipIdentifier} from './commonUtil';
 

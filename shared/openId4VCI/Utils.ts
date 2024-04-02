@@ -9,7 +9,10 @@ import i18next from 'i18next';
 import {getJWT} from '../cryptoutil/cryptoUtil';
 import {CACHED_API} from '../api';
 import i18n from '../../i18n';
-import {CredentialWrapper, VerifiableCredential} from '../../types/VC/vc';
+import {
+  CredentialWrapper,
+  VerifiableCredential,
+} from '../../machines/VerifiableCredential/VCMetaMachine/vc';
 import {
   BOTTOM_SECTION_FIELDS_WITH_DETAILED_ADDRESS_FIELDS,
   DETAIL_VIEW_ADD_ON_FIELDS,

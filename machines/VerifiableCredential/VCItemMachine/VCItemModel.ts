@@ -1,10 +1,7 @@
 import {createModel} from 'xstate/lib/model';
 import {AppServices} from '../../../shared/GlobalContext';
 import {VCMetadata} from '../../../shared/VCMetadata';
-import {
-  VerifiableCredential,
-  WalletBindingResponse,
-} from '../../../types/VC/vc';
+import {VerifiableCredential, WalletBindingResponse} from '../VCMetaMachine/vc';
 import {CommunicationDetails} from '../../../shared/Utils';
 import {VCItemEvents} from './VCItemEvents';
 

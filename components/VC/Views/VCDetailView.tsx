@@ -4,7 +4,7 @@ import {Image, ImageBackground, View} from 'react-native';
 import {
   VerifiableCredential,
   WalletBindingResponse,
-} from '../../../types/VC/vc';
+} from '../../../machines/VerifiableCredential/VCMetaMachine/vc';
 import {Button, Column, Row, Text} from '../../ui';
 import {Theme} from '../../ui/styleUtils';
 import {QrCodeOverlay} from '../../QrCodeOverlay';
@@ -155,9 +155,9 @@ export const VCDetailView: React.FC<VCItemDetailsProps> = props => {
             position: 'relative',
             backgroundColor: Theme.Colors.DetailedViewBackground,
           }}>
-          {props.activeTab !== 1 && (
-            !props.walletBindingResponse &&
-            isActivationNeeded(props.verifiableCredentialData?.issuer)? (
+          {props.activeTab !== 1 &&
+            (!props.walletBindingResponse &&
+            isActivationNeeded(props.verifiableCredentialData?.issuer) ? (
               <Column
                 padding="10"
                 style={Theme.Styles.detailedViewActivationPopupContainer}>
@@ -223,10 +223,9 @@ export const VCDetailView: React.FC<VCItemDetailsProps> = props => {
                   </Column>
                 </Row>
               </Column>
-            )
-          ) }
+            ))}
         </View>
-      ) }
+      )}
     </>
   );
 };

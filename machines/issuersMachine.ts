@@ -39,7 +39,10 @@ import {
 } from '../shared/telemetry/TelemetryUtils';
 import {TelemetryConstants} from '../shared/telemetry/TelemetryConstants';
 
-import {CredentialWrapper, VerifiableCredential} from '../types/VC/vc';
+import {
+  CredentialWrapper,
+  VerifiableCredential,
+} from './VerifiableCredential/VCMetaMachine/vc';
 import {CACHED_API} from '../shared/api';
 import {request} from '../shared/request';
 import {BiometricCancellationError} from '../shared/error/BiometricCancellationError';
@@ -522,7 +525,7 @@ export const IssuersMachine = model.createMachine(
           };
         },
         {
-          to: context => context.serviceRefs.vc,
+          to: context => context.serviceRefs.vcMeta,
         },
       ),
 
@@ -535,7 +538,7 @@ export const IssuersMachine = model.createMachine(
           };
         },
         {
-          to: context => context.serviceRefs.vc,
+          to: context => context.serviceRefs.vcMeta,
         },
       ),
 

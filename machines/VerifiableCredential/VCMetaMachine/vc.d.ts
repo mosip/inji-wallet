@@ -1,4 +1,4 @@
-import {logoType} from '../../machines/issuersMachine';
+import {logoType} from '../../issuersMachine';
 
 export interface VC {
   id?: string;

@@ -1,7 +1,7 @@
 import {useSelector} from '@xstate/react';
 import {useContext, useState} from 'react';
 import {ActorRefFrom} from 'xstate';
-import {selectShareableVcsMetadata} from '../../machines/VerifiableCredential/VCMetaMachine/vc';
+import {selectShareableVcsMetadata} from '../../machines/VerifiableCredential/VCMetaMachine/VCMetaMachine';
 import {GlobalContext} from '../../shared/GlobalContext';
 import {
   selectCredential,
@@ -30,7 +30,7 @@ type MyVcsTabNavigation = NavigationProp<RootRouteProps>;
 export function useSendVcScreen() {
   const {appService} = useContext(GlobalContext);
   const scanService = appService.children.get('scan')!!;
-  const vcService = appService.children.get('vc')!!;
+  const vcMetaService = appService.children.get('vcMeta')!!;
   const navigation = useNavigation<MyVcsTabNavigation>();
 
   const [selectedIndex, setSelectedIndex] = useState<number>(null);
@@ -39,7 +39,10 @@ export function useSendVcScreen() {
     selectedIndex,
     receiverInfo: useSelector(scanService, selectReceiverInfo),
     vcName: useSelector(scanService, selectVcName),
-    shareableVcsMetadata: useSelector(vcService, selectShareableVcsMetadata),
+    shareableVcsMetadata: useSelector(
+      vcMetaService,
+      selectShareableVcsMetadata,
+    ),
     isSelectingVc: useSelector(scanService, selectIsSelectingVc),
     isVerifyingIdentity: useSelector(scanService, selectIsVerifyingIdentity),
     isInvalidIdentity: useSelector(scanService, selectIsInvalidIdentity),

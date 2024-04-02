@@ -6,10 +6,6 @@ import {createModel} from 'xstate/lib/model';
 import {authMachine, createAuthMachine} from './auth';
 import {createSettingsMachine, settingsMachine} from './settings';
 import {StoreEvents, storeMachine} from './store';
-import {
-  createVcMachine,
-  vcMachine,
-} from './VerifiableCredential/VCMetaMachine/vc';
 import {activityLogMachine, createActivityLogMachine} from './activityLog';
 import {
   createRequestMachine,
@@ -32,6 +28,10 @@ import {
   backupRestoreMachine,
   createBackupRestoreMachine,
 } from './backupAndRestore/backupRestore';
+import {
+  createVcMetaMachine,
+  vcMetaMachine,
+} from './VerifiableCredential/VCMetaMachine/VCMetaMachine';
 
 const model = createModel(
   {
@@ -258,7 +258,10 @@ export const appMachine = model.createMachine(
             authMachine.id,
           );
 
-          serviceRefs.vc = spawn(createVcMachine(serviceRefs), vcMachine.id);
+          serviceRefs.vcMeta = spawn(
+            createVcMetaMachine(serviceRefs),
+            vcMetaMachine.id,
+          );
 
           serviceRefs.settings = spawn(
             createSettingsMachine(serviceRefs),
@@ -297,7 +300,7 @@ export const appMachine = model.createMachine(
 
       logServiceEvents: context => {
         context.serviceRefs.auth.subscribe(logState);
-        context.serviceRefs.vc.subscribe(logState);
+        context.serviceRefs.vcMeta.subscribe(logState);
         context.serviceRefs.settings.subscribe(logState);
         context.serviceRefs.activityLog.subscribe(logState);
         context.serviceRefs.scan.subscribe(logState);
