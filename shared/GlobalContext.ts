@@ -7,7 +7,7 @@ import {requestMachine} from '../machines/bleShare/request/requestMachine';
 import {scanMachine} from '../machines/bleShare/scan/scanMachine';
 import {settingsMachine} from '../machines/settings';
 import {storeMachine} from '../machines/store';
-import {vcMachine} from '../machines/VCItemMachine/vc';
+import {vcMachine} from '../machines/VerifiableCredential/VCMetaMachine/vc';
 import {backupMachine} from '../machines/backupAndRestore/backup';
 import {backupRestoreMachine} from '../machines/backupAndRestore/backupRestore';
 

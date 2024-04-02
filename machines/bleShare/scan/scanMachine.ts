@@ -14,15 +14,15 @@ import {createModel} from 'xstate/lib/model';
 import {EmitterSubscription, Linking} from 'react-native';
 import {DeviceInfo} from '../../../components/DeviceInfoList';
 import {getDeviceNameSync} from 'react-native-device-info';
-import {VC, VerifiablePresentation} from '../../../types/VC/ExistingMosipVC/vc';
+import {VC} from '../../../types/VC/vc';
 import {AppServices} from '../../../shared/GlobalContext';
 import {ActivityLogEvents, ActivityLogType} from '../../activityLog';
 import {
   androidVersion,
+  FACE_AUTH_CONSENT,
   isAndroid,
   isIOS,
   MY_LOGIN_STORE_KEY,
-  FACE_AUTH_CONSENT,
 } from '../../../shared/constants';
 import {subscribe} from '../../../shared/openIdBLE/walletEventHandler';
 import {
@@ -39,7 +39,6 @@ import {
   requestLocationPermission,
 } from '../../../shared/location';
 import {CameraCapturedPicture} from 'expo-camera';
-import {log} from 'xstate/lib/actions';
 import {createQrLoginMachine, qrLoginMachine} from '../../QrLoginMachine';
 import {StoreEvents} from '../../store';
 import {WalletDataEvent} from '@mosip/tuvali/lib/typescript/types/events';
@@ -70,7 +69,6 @@ const model = createModel(
     receiverInfo: {} as DeviceInfo,
     selectedVc: {} as VC,
     bleError: {} as BLEError,
-    createdVp: null as VC,
     loggers: [] as EmitterSubscription[],
     vcName: '',
     flowType: VCShareFlowType.SIMPLE_SHARE,
@@ -122,8 +120,6 @@ const model = createModel(
       FACE_VALID: () => ({}),
       FACE_INVALID: () => ({}),
       RETRY_VERIFICATION: () => ({}),
-      VP_CREATED: (vp: VerifiablePresentation) => ({vp}),
-      TOGGLE_USER_CONSENT: () => ({}),
       RESET: () => ({}),
       FACE_VERIFICATION_CONSENT: (isConsentGiven: boolean) => ({
         isConsentGiven,
@@ -144,11 +140,6 @@ export const scanMachine =
       schema: {
         context: model.initialContext,
         events: {} as EventFrom<typeof model>,
-        services: {} as {
-          createVp: {
-            data: VC;
-          };
-        },
       },
       invoke: {
         src: 'monitorConnection',
@@ -160,7 +151,7 @@ export const scanMachine =
           target: '#scan.disconnectDevice',
         },
         SCREEN_FOCUS: {
-          target: 'checkStorage',
+          target: '.checkStorage',
         },
         BLE_ERROR: {
           target: '.handlingBleError',
@@ -179,7 +170,7 @@ export const scanMachine =
       },
       states: {
         inactive: {
-          entry: ['removeLoggers'],
+          entry: ['removeLoggers', 'resetFlowType', 'resetSelectedVc'],
         },
         disconnectDevice: {
           invoke: {
@@ -206,6 +197,7 @@ export const scanMachine =
           },
         },
         restrictSharingVc: {},
+
         startPermissionCheck: {
           on: {
             START_PERMISSION_CHECK: [
@@ -516,7 +508,7 @@ export const scanMachine =
         },
         reviewing: {
           initial: 'idle',
-          entry: ['resetShouldVerifyPresence', send('CHECK_FLOW_TYPE')],
+          entry: [send('CHECK_FLOW_TYPE')],
           on: {
             CHECK_FLOW_TYPE: [
               {
@@ -534,7 +526,6 @@ export const scanMachine =
               },
             ],
           },
-          exit: ['clearCreatedVp'],
           states: {
             idle: {},
             selectingVc: {
@@ -564,9 +555,6 @@ export const scanMachine =
                 CANCEL: {
                   target: 'cancelling',
                   actions: 'sendVCShareFlowCancelEndEvent',
-                },
-                TOGGLE_USER_CONSENT: {
-                  actions: 'toggleShouldVerifyPresence',
                 },
               },
             },
@@ -660,13 +648,13 @@ export const scanMachine =
               },
             },
             disconnect: {
-              //Renamed this to disconnect from navigateToHome as we are disconnecting the devices.
               entry: ['resetFlowType', 'resetSelectedVc'],
               invoke: {
                 src: 'disconnect',
               },
             },
             navigateToHistory: {
+              entry: ['resetFlowType', 'resetSelectedVc'],
               always: '#scan.disconnected',
             },
             faceVerificationConsent: {
@@ -707,23 +695,7 @@ export const scanMachine =
                 ],
               },
             },
-            creatingVp: {
-              invoke: {
-                src: 'createVp',
-                onDone: [
-                  {
-                    target: 'sendingVc',
-                    actions: 'setCreatedVp',
-                  },
-                ],
-                onError: [
-                  {
-                    target: 'selectingVc',
-                    actions: log('Could not create Verifiable Presentation'),
-                  },
-                ],
-              },
-            },
+
             invalidIdentity: {
               on: {
                 DISMISS: [
@@ -915,12 +887,7 @@ export const scanMachine =
         }),
 
         setSelectedVc: assign({
-          selectedVc: (context, event) => {
-            return {
-              ...event.vc,
-              shouldVerifyPresence: context.selectedVc.shouldVerifyPresence,
-            };
-          },
+          selectedVc: (_context, event) => event.vc,
         }),
 
         resetSelectedVc: assign({
@@ -933,14 +900,6 @@ export const scanMachine =
 
         resetFlowType: assign({
           flowType: VCShareFlowType.SIMPLE_SHARE,
-        }),
-
-        setCreatedVp: assign({
-          createdVp: (_context, event) => event.data,
-        }),
-
-        clearCreatedVp: assign({
-          createdVp: () => null,
         }),
 
         registerLoggers: assign({
@@ -989,9 +948,9 @@ export const scanMachine =
             const vcMetadata = context.selectedVc?.vcMetadata;
             return ActivityLogEvents.LOG_ACTIVITY({
               _vcKey: VCMetadata.fromVC(vcMetadata).getVcKey(),
-              type: context.selectedVc.shouldVerifyPresence
-                ? 'VC_SHARED_WITH_VERIFICATION_CONSENT'
-                : context.shareLogType,
+              type: context.shareLogType
+                ? context.shareLogType
+                : 'VC_SHARED_WITH_VERIFICATION_CONSENT',
               id: vcMetadata.id,
               idType: getIdType(vcMetadata.issuer),
               timestamp: Date.now(),
@@ -1018,23 +977,9 @@ export const scanMachine =
           {to: context => context.serviceRefs.activityLog},
         ),
 
-        toggleShouldVerifyPresence: assign({
-          selectedVc: context => ({
-            ...context.selectedVc,
-            shouldVerifyPresence: !context.selectedVc.shouldVerifyPresence,
-          }),
-        }),
-
         setLinkCode: assign({
           linkCode: (_, event) =>
             new URL(event.params).searchParams.get('linkCode'),
-        }),
-
-        resetShouldVerifyPresence: assign({
-          selectedVc: context => ({
-            ...context.selectedVc,
-            shouldVerifyPresence: false,
-          }),
         }),
 
         storeLoginItem: send(
@@ -1264,11 +1209,6 @@ export const scanMachine =
         },
 
         sendVc: context => callback => {
-          const vp = context.createdVp;
-          const vc = {
-            ...(vp != null ? vp : context.selectedVc),
-          };
-
           const statusCallback = (event: WalletDataEvent) => {
             if (event.type === EventTypes.onDataSent) {
               callback({type: 'VC_SENT'});
@@ -1283,7 +1223,7 @@ export const scanMachine =
           };
           wallet.sendData(
             JSON.stringify({
-              ...vc,
+              ...context.selectedVc,
             }),
           );
           const subscription = subscribe(statusCallback);
@@ -1296,25 +1236,6 @@ export const scanMachine =
           } catch (e) {
             // pass
           }
-        },
-
-        createVp: context => async () => {
-          // const verifiablePresentation = await createVerifiablePresentation(...);
-
-          const verifiablePresentation: VerifiablePresentation = {
-            '@context': [''],
-            proof: null,
-            type: 'VerifiablePresentation',
-            verifiableCredential: [context.selectedVc.verifiableCredential],
-          };
-
-          const vc: VC = {
-            ...context.selectedVc,
-            verifiableCredential: null,
-            verifiablePresentation,
-          };
-
-          return Promise.resolve(vc);
         },
 
         checkStorageAvailability: () => async () => {

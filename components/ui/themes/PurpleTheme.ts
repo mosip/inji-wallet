@@ -1339,31 +1339,6 @@ export const PurpleTheme = {
       borderRadius: 16,
     },
   }),
-  VidItemStyles: StyleSheet.create({
-    title: {
-      color: Colors.Black,
-      backgroundColor: 'transparent',
-    },
-    loadingTitle: {
-      color: 'transparent',
-      backgroundColor: Colors.Grey5,
-      borderRadius: 4,
-    },
-    subtitle: {
-      backgroundColor: 'transparent',
-    },
-    loadingSubtitle: {
-      backgroundColor: Colors.Grey,
-      borderRadius: 4,
-    },
-    container: {
-      backgroundColor: Colors.White,
-    },
-    loadingContainer: {
-      backgroundColor: Colors.Grey6,
-      borderRadius: 4,
-    },
-  }),
   OnboardingOverlayStyles: StyleSheet.create({
     overlay: {
       padding: 24,

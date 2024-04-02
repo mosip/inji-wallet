@@ -20,7 +20,7 @@ import {
   sendErrorEvent,
   getErrorEventData,
 } from '../../shared/telemetry/TelemetryUtils';
-import {VcEvents} from '../VCItemMachine/vc';
+import {VcEvents} from '../VerifiableCredential/VCMetaMachine/vc';
 import {NETWORK_REQUEST_FAILED, TECHNICAL_ERROR} from '../../shared/constants';
 import NetInfo, {NetInfoState} from '@react-native-community/netinfo';
 

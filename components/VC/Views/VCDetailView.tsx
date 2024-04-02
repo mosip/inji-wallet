@@ -1,19 +1,13 @@
 import React, {useEffect, useState} from 'react';
 import {useTranslation} from 'react-i18next';
 import {Image, ImageBackground, View} from 'react-native';
-import {Icon} from 'react-native-elements';
-import {VC} from '../../../types/VC/ExistingMosipVC/vc';
+import {
+  VerifiableCredential,
+  WalletBindingResponse,
+} from '../../../types/VC/vc';
 import {Button, Column, Row, Text} from '../../ui';
 import {Theme} from '../../ui/styleUtils';
 import {QrCodeOverlay} from '../../QrCodeOverlay';
-import {VCMetadata} from '../../../shared/VCMetadata';
-import {
-  VcIdType,
-  VerifiableCredential,
-  VerifiablePresentation,
-} from '../../../types/VC/EsignetMosipVC/vc';
-import {WalletBindingResponse} from '../../../shared/cryptoutil/cryptoUtil';
-import {logoType} from '../../../machines/issuersMachine';
 import {SvgImage} from '../../ui/svg';
 import {
   getDetailedViewFields,
@@ -31,40 +25,10 @@ import {setTextColor} from '../common/VCItemField';
 import {ActivityIndicator} from '../../ui/ActivityIndicator';
 import {ProfileIcon} from '../../ProfileIcon';
 
-const getIssuerLogo = (isOpenId4VCI: boolean, issuerLogo: logoType) => {
-  if (isOpenId4VCI) {
+const getProfileImage = (face: any) => {
+  if (face) {
     return (
-      <Image
-        testID="esignetLogo"
-        src={issuerLogo?.url}
-        alt={issuerLogo?.alt_text}
-        style={Theme.Styles.issuerLogo}
-      />
-    );
-  }
-  return SvgImage.MosipLogo(Theme.Styles.vcDetailsLogo);
-};
-
-const getProfileImage = (
-  props: ExistingVCItemDetailsProps | EsignetVCItemDetailsProps,
-  verifiableCredential,
-  isOpenId4VCI,
-) => {
-  if (isOpenId4VCI) {
-    if (verifiableCredential?.credentialSubject?.face) {
-      return (
-        <Image
-          source={{uri: verifiableCredential?.credentialSubject.face}}
-          style={Theme.Styles.detailedViewImage}
-        />
-      );
-    }
-  } else if (props?.vc?.credential?.biometrics?.face) {
-    return (
-      <Image
-        source={{uri: props?.vc?.credential.biometrics.face}}
-        style={Theme.Styles.detailedViewImage}
-      />
+      <Image source={{uri: face}} style={Theme.Styles.detailedViewImage} />
     );
   }
   return (
@@ -75,33 +39,25 @@ const getProfileImage = (
   );
 };
 
-export const VCDetailView: React.FC<
-  ExistingVCItemDetailsProps | EsignetVCItemDetailsProps
-> = props => {
+export const VCDetailView: React.FC<VCItemDetailsProps> = props => {
   const {t, i18n} = useTranslation('VcDetails');
-
-  let isOpenId4VCI = VCMetadata.fromVC(props.vc.vcMetadata).isFromOpenId4VCI();
-  const issuerLogo = getIssuerLogo(
-    isOpenId4VCI,
-    props.vc?.verifiableCredential?.issuerLogo,
-  );
-  const verifiableCredential = isOpenId4VCI
-    ? props.vc?.verifiableCredential.credential
-    : props.vc?.verifiableCredential;
-
+  const logo = props.verifiableCredentialData.issuerLogo;
+  const face = props.verifiableCredentialData.face;
+  const verifiableCredential = props.credential;
   let [fields, setFields] = useState([]);
   const [wellknown, setWellknown] = useState(null);
+
   useEffect(() => {
     getDetailedViewFields(
-      VCMetadata.fromVC(props.vc.vcMetadata).issuer,
-      props.vc?.verifiableCredential?.wellKnown,
-      props.vc?.verifiableCredential?.credentialTypes,
+      props.verifiableCredentialData?.issuer,
+      props.verifiableCredentialData?.wellKnown,
+      props.verifiableCredentialData?.credentialTypes,
       DETAIL_VIEW_DEFAULT_FIELDS,
     ).then(response => {
       setWellknown(response.wellknown);
       setFields(response.fields);
     });
-  }, [props.verifiableCredential?.wellKnown]);
+  }, [props.verifiableCredentialData?.wellKnown]);
 
   const shouldShowHrLine = verifiableCredential => {
     const availableFieldNames = Object.keys(
@@ -141,14 +97,20 @@ export const VCDetailView: React.FC<
               source={Theme.OpenCard}>
               <Row padding="14 14 0 14" margin="0 0 0 0">
                 <Column crossAlign="center">
-                  {getProfileImage(props, verifiableCredential, isOpenId4VCI)}
+                  {getProfileImage(face)}
                   <QrCodeOverlay qrCodeDetails={String(verifiableCredential)} />
                   <Column
                     width={80}
                     height={59}
                     crossAlign="center"
                     margin="12 0 0 0">
-                    {issuerLogo}
+                    <Image
+                      src={logo?.url}
+                      alt={logo?.alt_text}
+                      style={Theme.Styles.issuerLogo}
+                      resizeMethod="scale"
+                      resizeMode="contain"
+                    />
                   </Column>
                 </Column>
                 <Column
@@ -187,15 +149,15 @@ export const VCDetailView: React.FC<
           </Column>
         </Column>
       </Column>
-      {props.vcHasImage ? (
+      {props.vcHasImage && (
         <View
           style={{
             position: 'relative',
             backgroundColor: Theme.Colors.DetailedViewBackground,
           }}>
-          {props.activeTab !== 1 ? (
-            props.isBindingPending &&
-            isActivationNeeded(props.vc.vcMetadata.issuer) ? (
+          {props.activeTab !== 1 && (
+            !props.walletBindingResponse &&
+            isActivationNeeded(props.verifiableCredentialData?.issuer)? (
               <Column
                 padding="10"
                 style={Theme.Styles.detailedViewActivationPopupContainer}>
@@ -252,7 +214,9 @@ export const VCDetailView: React.FC<
                         fontSize: 14,
                       }}
                       margin={'0 18 0 0'}>
-                      {isActivationNeeded(props.vc.vcMetadata.issuer)
+                      {isActivationNeeded(
+                        props.verifiableCredentialData?.issuer,
+                      )
                         ? t('profileAuthenticated')
                         : t('credentialActivated')}
                     </Text>
@@ -260,45 +224,18 @@ export const VCDetailView: React.FC<
                 </Row>
               </Column>
             )
-          ) : (
-            <></>
-          )}
+          ) }
         </View>
-      ) : (
-        <></>
-      )}
+      ) }
     </>
   );
 };
 
-export interface ExistingVCItemDetailsProps {
-  vc: VC;
-  isBindingPending: boolean;
+export interface VCItemDetailsProps {
+  credential: VerifiableCredential | Credential;
+  verifiableCredentialData: any;
+  walletBindingResponse: WalletBindingResponse;
   onBinding?: () => void;
   activeTab?: Number;
   vcHasImage: boolean;
-}
-
-export interface EsignetVCItemDetailsProps {
-  vc: EsignetVC;
-  isBindingPending: boolean;
-  onBinding?: () => void;
-  activeTab?: number;
-  vcHasImage: boolean;
-}
-
-export interface EsignetVC {
-  id: string;
-  idType: VcIdType;
-  verifiableCredential: VerifiableCredential;
-  verifiablePresentation?: VerifiablePresentation;
-  generatedOn: Date;
-  requestId: string;
-  isVerified: boolean;
-  lastVerifiedOn: number;
-  shouldVerifyPresence?: boolean;
-  walletBindingResponse?: WalletBindingResponse;
-  credentialRegistry: string;
-  isPinned?: boolean;
-  hashedId: string;
 }
