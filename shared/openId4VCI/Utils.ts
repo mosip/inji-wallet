@@ -16,6 +16,7 @@ import {
 import {
   BOTTOM_SECTION_FIELDS_WITH_DETAILED_ADDRESS_FIELDS,
   DETAIL_VIEW_ADD_ON_FIELDS,
+  getCredentialDefinition,
 } from '../../components/VC/common/VCUtils';
 
 export const Protocols = {
@@ -190,30 +191,30 @@ export const getJWK = async publicKey => {
 export const getCredentialIssuersWellKnownConfig = async (
   issuer: string,
   wellknown: string,
-  credentialTypes: Object[],
+  vcCredentialTypes: Object[],
   defaultFields: string[],
 ) => {
-  let fields: string[] = defaultFields;
+  let fields: string[] = [];
   let response = null;
-  if (wellknown) {
+  if (issuer == Issuers.Mosip) {
+    fields = defaultFields;
+  } else if (wellknown) {
     response = await CACHED_API.fetchIssuerWellknownConfig(issuer, wellknown);
-    if (!response) {
-      fields = [];
-    } else if (response?.credentials_supported[0].order) {
-      fields = response?.credentials_supported[0].order;
-    } else {
-      const supportedCredentialTypes = credentialTypes.filter(
-        type => type !== 'VerifiableCredential',
-      );
-      const selectedCredentialType = supportedCredentialTypes[0];
-
-      response?.credentials_supported.filter(credential => {
-        if (credential.id === selectedCredentialType) {
-          fields = Object.keys(
-            credential.credential_definition.credentialSubject,
-          );
-        }
-      });
+    if (response) {
+      if (
+        Array.isArray(response.credentials_supported) &&
+        response?.credentials_supported[0].order
+      ) {
+        fields = response?.credentials_supported[0].order;
+      } else {
+        const credentialDefintion = getCredentialDefinition(
+          response,
+          vcCredentialTypes,
+        );
+        fields = credentialDefintion
+          ? Object.keys(credentialDefintion.credentialSubject)
+          : [];
+      }
     }
   }
   return {
