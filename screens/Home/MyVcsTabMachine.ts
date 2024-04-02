@@ -195,7 +195,7 @@ export const MyVcsTabMachine = model.createMachine(
         (_context, event) =>
           VcMetaEvents.VC_ADDED(event.response as VCMetadata),
         {
-          to: context => context.serviceRefs.vc,
+          to: context => context.serviceRefs.vcMeta,
         },
       ),
     },
