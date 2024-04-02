@@ -80,8 +80,6 @@ export const GetIdInputModal: React.FC<GetIdInputModalProps> = props => {
                 rightIcon={
                   <CustomTooltip
                     testID="GetIdInputToolTip"
-                    title={t('toolTipTitle')}
-                    description={t(`toolTipDescription`)}
                     width={Dimensions.get('screen').width * 0.87}
                     height={Dimensions.get('screen').height * 0.25}
                     triggerComponent={
