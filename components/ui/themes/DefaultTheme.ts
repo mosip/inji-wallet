@@ -1498,25 +1498,22 @@ export const DefaultTheme = {
     },
   }),
   HelpScreenStyle: StyleSheet.create({
-    viewStyle: {
-      width: 100,
-      padding: 7,
+    rowStyle: {
+      display: 'flex',
       borderRadius: 8,
       backgroundColor: Colors.LightOrange,
-    },
-    rowStyle: {
-      justifyContent: 'space-between',
+      justifyContent: 'center',
       alignItems: 'center',
-      width: 45,
-      display: 'flex',
+      paddingLeft: 16,
+      paddingRight: 16,
+      paddingBottom: 10,
+      paddingTop: 10,
     },
     iconStyle: {
-      paddingTop: 7,
-      paddingLeft: 20,
       paddingRight: 5,
     },
     labelStyle: {
-      width: 70,
+      marginBottom: -2,
       fontWeight: 'bold',
     },
   }),
