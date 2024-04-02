@@ -63,6 +63,7 @@ const Colors = {
   toolTipContent: '#4B4B4B',
   toolTipPointer: '#E0E0E0',
   Mercury: '#E6E6E6',
+  Yellow: '#E8A94F',
 };
 
 export type ElevationLevel = 0 | 1 | 2 | 3 | 4 | 5 | 6;
@@ -141,6 +142,7 @@ export const PurpleTheme = {
     toolTipPointerColor: Colors.toolTipPointer,
     urlLink: Colors.Purple,
     warningText: Colors.Red,
+    PendingIcon: Colors.Yellow,
   },
   Styles: StyleSheet.create({
     title: {
