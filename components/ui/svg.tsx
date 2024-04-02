@@ -478,25 +478,6 @@ export class SvgImage {
   static SearchIcon() {
     return <Search {...testIDProps('searchIcon')} />;
   }
-
-  static GoogleDriveIconSmall(width, height) {
-    return (
-      <GoogleDriveIconSmall
-        width={width}
-        height={height}
-        {...testIDProps('googleDriveIconSmall')}
-      />
-    );
-  }
-  static ICloudIcon(width, height) {
-    return (
-      <ICloudLogo
-        width={width}
-        height={height}
-        {...testIDProps('iCloudIcon')}
-      />
-    );
-  }
 }
 
 function getIssuerLogo(props: displayType) {
