@@ -132,9 +132,7 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = props => {
   };
 
   useEffect(() => {
-    const areAllVcsLoaded =
-      controller.inProgressVcDownloads.size == 0 ? true : false;
-    if (areAllVcsLoaded) {
+    if (controller.areAllVcsLoaded) {
       controller.RESET_STORE_VC_ITEM_STATUS();
       controller.RESET_IN_PROGRESS_VCS_DOWNLOADED();
     }
@@ -161,7 +159,11 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = props => {
         ),
       );
     }
-  }, [controller.inProgressVcDownloads, controller.isTampered]);
+  }, [
+    controller.areAllVcsLoaded,
+    controller.inProgressVcDownloads,
+    controller.isTampered,
+  ]);
 
   let failedVCsList = [];
   controller.downloadFailedVcs.forEach(vc => {
