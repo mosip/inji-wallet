@@ -5,8 +5,7 @@ on:
   workflow_dispatch:
     inputs:
       runName:
-        description: 'Name the run for Actions & DeviceFarm'
-        required: true
+        description: 'Name the run for Actions'
         default: 'Ex: Sanity/Regression[ENV]'
         type: string
       buildFor:
@@ -49,29 +48,17 @@ jobs:
           key: ${{ runner.os }}-npm-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
             ${{ runner.os }}-npm-
-      - name: Echo branch name
-        run: |
-          echo "BRANCH_NAME=$(echo ${{ github.ref }} | sed -e 's,.*/\(.*\),\1,')" >> $GITHUB_ENV
     
-      - name: Generate Dummy release keystore for build
+      - name: Install npm dependencies
         run: |
-            keytool \
-            -genkey -v \
-            -storetype PKCS12 \
-            -keyalg RSA \
-            -keysize 2048 \
-            -validity 10000 \
-            -storepass $KEYSTORE_PASSWORD \
-            -keypass $KEYSTORE_PASSWORD \
-            -alias $KEYSTORE_ALIAS \
-            -keystore android/app/release.keystore \
-            -dname "CN=io.mosip.residentapp,OU=,O=,L=,S=,C=US"
+          npm ci
+
+      - name: Generate Android keystore
+        run: |
+          echo "$ANDROID_KEYSTORE_FILE" > release.keystore.b64
+          base64 -d -i release.keystore.b64 > android/app/release.keystore
         env:
-          KEYSTORE_PASSWORD: ${{ secrets.INJI_ANDROID_RELEASE_STOREPASS }}
-          KEYSTORE_ALIAS: androidreleasekey
-      - name: Install Jetifier
-        run: |
-          npm install --save-dev jetifier
+          ANDROID_KEYSTORE_FILE: ${{ secrets.INJI_ANDROID_RELEASE_KEYSTORE }}
 
       - name: Create Android Build
         run: |
@@ -85,12 +72,12 @@ jobs:
           CREDENTIAL_REGISTRY_EDIT: 'false'
           RELEASE_KEYSTORE_ALIAS: 'androidreleasekey'
           RELEASE_KEYSTORE_PASSWORD: "${{ secrets.INJI_ANDROID_RELEASE_STOREPASS }}"
-
       - name: Upload Artifact to Actions
         uses: actions/upload-artifact@v3.1.1
         with:
           name: residentapp
           path: android/app/build/outputs/apk/residentapp/release/Inji_universal.apk
+          retention-days: 10
   
       - name: Run UI Automation Tests on BrowserStack
         run: |
@@ -154,7 +141,9 @@ jobs:
         uses: actions/upload-artifact@v3.1.1
         with:
           name: residentapp
-          path: ios/fastlane/Inji_artifacts/Inji.ipa 
+          path: ios/fastlane/Inji_artifacts/Inji.ipa
+          retention-days: 10
+
       - name: Run UI Automation Tests on BrowserStack
         run: |
           chmod +x injitest/automation_trigger.sh
