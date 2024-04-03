@@ -23,6 +23,7 @@ const model = createModel(
     receivedVcs: [] as VCMetadata[],
     vcs: {} as Record<string, VC>,
     inProgressVcDownloads: new Set<string>(), //VCDownloadInProgress
+    areAllVcsDownloaded: false as boolean,
     walletBindingSuccess: false,
     tamperedVcs: [] as VCMetadata[],
     downloadingFailedVcs: [] as VCMetadata[], //VCDownloadFailed
@@ -344,9 +345,16 @@ export const vcMetaMachine =
 
             return updatedInProgressList;
           },
+          areAllVcsDownloaded: context => {
+            if (context.inProgressVcDownloads.size == 0) {
+              return true;
+            }
+            return false;
+          },
         }),
 
         resetInProgressVcsDownloaded: model.assign({
+          areAllVcsDownloaded: () => false,
           inProgressVcDownloads: new Set<string>(),
         }),
 
@@ -454,6 +462,10 @@ export function selectIsRefreshingMyVcs(state: State) {
 
 export function selectIsRefreshingReceivedVcs(state: State) {
   return state.matches('ready.receivedVcs.refreshing');
+}
+
+export function selectAreAllVcsDownloaded(state: State) {
+  return state.context.areAllVcsDownloaded;
 }
 
 /*
