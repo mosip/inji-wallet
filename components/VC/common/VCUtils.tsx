@@ -135,7 +135,8 @@ function getFullAddress(credential: CredentialSubject) {
 
 function formattedDateTime(timeStamp: any) {
   if (timeStamp) {
-    return new Date(timeStamp).toLocaleDateString();
+    const options = {year: 'numeric', month: '2-digit', day: '2-digit'};
+    return new Date(timeStamp).toLocaleDateString('en-US', options);
   }
   return timeStamp;
 }
@@ -172,6 +173,7 @@ export const fieldItemIterator = (
           fieldValue={fieldValue}
           verifiableCredential={verifiableCredential}
           wellknown={wellknown}
+          testID={field}
         />
       </Row>
     );

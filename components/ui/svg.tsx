@@ -60,7 +60,7 @@ export class SvgImage {
   }
 
   static kebabIcon() {
-    return <KebabIcon />;
+    return <KebabIcon {...testIDProps('KebabIcon')} />;
   }
 
   static walletActivatedIcon() {
