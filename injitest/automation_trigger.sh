@@ -62,8 +62,7 @@ execute_android_tests() {
     local username="$2"
     local access_key="$3"
     local test_type="$4"
-    echo "the app urk is: $app_url"
-    echo "username is: $username "
+
     cd injitest
 
     # Update androidConfig.yml with the app_url obtained from BrowserStack
@@ -71,7 +70,6 @@ execute_android_tests() {
     sed -i "s|userName:.*|userName: $username|" androidConfig.yml
     sed -i "s|accessKey:.*|accessKey: $access_key|" androidConfig.yml
 
-    cat androidConfig.yml
 
     # Run UI tests using Maven with the updated androidConfig.yml file and TestNG XML file based on the test type
     mvn clean test -DtestngXmlFile="android${test_type^}.xml" -Dbrowserstack.config="androidConfig.yml"
@@ -86,9 +84,9 @@ execute_ios_tests() {
 
     cd injitest
     # Update iosConfig.yml with the app_url obtained from BrowserStack
-    sed -i "s|app:.*|app: "$app_url"|" iosConfig.yml
-    sed -i "s|userName:.*|userName: "$username"|" iosConfig.yml
-    sed -i "s|accessKey:.*|accessKey: "$access_key"|" iosConfig.yml
+    sed -i "s|app:.*|app: $app_url|" iosConfig.yml
+    sed -i "s|userName:.*|userName: $username|" iosConfig.yml
+    sed -i "s|accessKey:.*|accessKey: $access_key|" iosConfig.yml
 
     # Run UI tests using Maven with the updated iosConfig.yml file and TestNG XML file based on the test type
     mvn clean test -DtestngXmlFile="ios${test_type^}.xml" -Dbrowserstack.config="iosConfig.yml"
