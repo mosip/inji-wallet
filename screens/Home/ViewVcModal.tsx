@@ -47,7 +47,7 @@ export const ViewVcModal: React.FC<ViewVcModalProps> = props => {
           onPress={() => props.vcItemActor.send('KEBAB_POPUP')}
           accessible={false}>
           <KebabPopUp
-            icon={SvgImage.kebabIcon()}
+            icon={SvgImage.kebabIcon('KebabIcon')}
             iconColor={null}
             vcMetadata={controller.verifiableCredentialData.vcMetadata}
             isVisible={
