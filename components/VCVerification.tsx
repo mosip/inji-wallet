@@ -20,7 +20,7 @@ export const VCVerification: React.FC = ({wellknown, isVerified}: any) => {
         <React.Fragment>
           <VerifiedIcon />
           <Text
-            testID="statusValue"
+            testID="verificationStatus"
             color={Theme.Colors.Details}
             style={[
               Theme.Styles.detailsValue,
