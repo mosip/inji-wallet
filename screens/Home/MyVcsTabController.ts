@@ -2,6 +2,7 @@ import {useSelector} from '@xstate/react';
 import {useContext} from 'react';
 import {ActorRefFrom} from 'xstate';
 import {
+  selectAreAllVcsDownloaded,
   selectDownloadingFailedVcs,
   selectInProgressVcDownloads,
   selectIsRefreshingMyVcs,
@@ -55,6 +56,7 @@ export function useMyVcsTab(props: HomeScreenTabProps) {
       vcMetaService,
       selectInProgressVcDownloads,
     ),
+    areAllVcsLoaded: useSelector(vcMetaService, selectAreAllVcsDownloaded),
     isTampered: useSelector(vcMetaService, selectIsTampered),
     downloadFailedVcs: useSelector(vcMetaService, selectDownloadingFailedVcs),
     vcData: useSelector(vcMetaService, selectMyVcs),
