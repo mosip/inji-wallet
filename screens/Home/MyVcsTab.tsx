@@ -7,7 +7,6 @@ import {HomeScreenTabProps} from './HomeScreen';
 import {AddVcModal} from './MyVcs/AddVcModal';
 import {GetVcModal} from './MyVcs/GetVcModal';
 import {useTranslation} from 'react-i18next';
-import {GET_INDIVIDUAL_ID} from '../../shared/constants';
 import {
   BANNER_TYPE_ERROR,
   BANNER_TYPE_SUCCESS,
