@@ -7,7 +7,7 @@ import {HomeScreenTabProps} from './HomeScreen';
 import {AddVcModal} from './MyVcs/AddVcModal';
 import {GetVcModal} from './MyVcs/GetVcModal';
 import {useTranslation} from 'react-i18next';
-import {GET_INDIVIDUAL_ID} from '../../shared/constants';
+import {BANNER_TYPE_ERROR, GET_INDIVIDUAL_ID} from '../../shared/constants';
 import {
   ErrorMessageOverlay,
   MessageOverlay,
@@ -208,6 +208,15 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = props => {
             testId={'downloadingVcPopup'}
           />
         )}
+        {controller.isSavingFailedInIdle && (
+          <BannerNotification
+            type={BANNER_TYPE_ERROR}
+            message={t('downloadingVcFailed')}
+            onClosePress={controller.DISMISS}
+            key={'downloadingVcFailedPopup'}
+            testId={'downloadingVcFailedPopup'}
+          />
+        )}
         <Column fill pY={2} pX={8}>
           {vcMetadataOrderedByPinStatus.length > 0 && (
             <React.Fragment>
@@ -374,12 +383,6 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = props => {
         </Row>
       </MessageOverlay>
 
-      <ErrorMessageOverlay
-        translationPath={'MyVcsTab'}
-        isVisible={controller.isSavingFailedInIdle}
-        error={storeErrorTranslationPath}
-        onDismiss={controller.DISMISS}
-      />
       <MessageOverlay
         isVisible={controller.isBindingError}
         title={controller.walletBindingError}
