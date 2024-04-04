@@ -1498,8 +1498,7 @@ export const DefaultTheme = {
     },
   }),
   HelpScreenStyle: StyleSheet.create({
-    rowStyle: {
-      display: 'flex',
+    viewStyle: {
       borderRadius: 8,
       backgroundColor: Colors.LightOrange,
       justifyContent: 'center',
@@ -1509,11 +1508,15 @@ export const DefaultTheme = {
       paddingBottom: 10,
       paddingTop: 10,
     },
+    rowStyle: {
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      display: 'flex',
+    },
     iconStyle: {
       paddingRight: 5,
     },
     labelStyle: {
-      marginBottom: -2,
       fontWeight: 'bold',
     },
   }),
