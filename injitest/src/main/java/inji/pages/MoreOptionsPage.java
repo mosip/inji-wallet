@@ -7,28 +7,31 @@ import org.openqa.selenium.WebElement;
 
 public class MoreOptionsPage extends BasePage {
 
-    @AndroidFindBy(accessibility = "removeFromWallet")
-    @iOSXCUITFindBy(accessibility = "removeFromWallet")
+//    @AndroidFindBy(accessibility = "outlined-delete-icon")
+//    @iOSXCUITFindBy(accessibility = "removeFromWallet")
+//    private WebElement removeFromWalletButton;
+
+    @AndroidFindBy(uiAutomator = "new UiScrollable(new UiSelector().scrollable(true).instance(0)).scrollIntoView(new UiSelector().description(\"outlined-delete-icon\"))")
     private WebElement removeFromWalletButton;
 
     @AndroidFindBy(accessibility = "kebabTitle")
     @iOSXCUITFindBy(accessibility = "kebabTitle")
     private WebElement moreOptionsText;
 
-    @AndroidFindBy(accessibility = "viewActivityLog")
-    @iOSXCUITFindBy(accessibility = "viewActivityLog")
+    @AndroidFindBy(accessibility = "outlined-schedule-icon")
+    @iOSXCUITFindBy(accessibility = "outlined-schedule-icon")
     private WebElement viewActivityLogButton;
 
-    @AndroidFindBy(accessibility = "pinOrUnPinCard")
-    @iOSXCUITFindBy(accessibility = "pinOrUnPinCard")
+    @AndroidFindBy(accessibility = "outlinedPinIcon")
+    @iOSXCUITFindBy(accessibility = "outlinedPinIcon")
     private WebElement pinOrUnPinCardButton;
 
-    @AndroidFindBy(accessibility = "pendingActivationOrActivated")
-    @iOSXCUITFindBy(accessibility = "pendingActivationOrActivated")
+    @AndroidFindBy(accessibility = "outlined-shielded-icon")
+    @iOSXCUITFindBy(accessibility = "outlined-shielded-icon")
     private WebElement activationPending;
 
-    @AndroidFindBy(accessibility = "profileAuthenticated")
-    @iOSXCUITFindBy(accessibility = "profileAuthenticated")
+    @AndroidFindBy(accessibility = "wallet-activated-icon")
+    @iOSXCUITFindBy(accessibility = "wallet-activated-icon")
     private WebElement activatedForOnlineLoginButton;
 
     @AndroidFindBy(accessibility = "close")

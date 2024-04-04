@@ -139,6 +139,9 @@ public class BackupAndRestorePage extends BasePage {
     @AndroidFindBy(accessibility = "help")
     private WebElement helpButton;
 
+    @AndroidFindBy(xpath = "//*[@resource-id=\"com.google.android.gms:id/account_display_name\"]")
+    private WebElement selectAccount;
+
 
     public BackupAndRestorePage(AppiumDriver driver) {
         super(driver);
@@ -300,6 +303,10 @@ public class BackupAndRestorePage extends BasePage {
 
     public void clickOnHelpButton() {
         clickOnElement(helpButton);
+    }
+
+    public void clickOnEmailHeader() {
+        clickOnElement(selectAccount);
     }
 
     public boolean  isBackupFQADisplayed() throws InterruptedException {
