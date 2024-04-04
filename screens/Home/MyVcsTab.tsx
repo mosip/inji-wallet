@@ -7,11 +7,12 @@ import {HomeScreenTabProps} from './HomeScreen';
 import {AddVcModal} from './MyVcs/AddVcModal';
 import {GetVcModal} from './MyVcs/GetVcModal';
 import {useTranslation} from 'react-i18next';
-import {BANNER_TYPE_ERROR, GET_INDIVIDUAL_ID} from '../../shared/constants';
 import {
-  ErrorMessageOverlay,
-  MessageOverlay,
-} from '../../components/MessageOverlay';
+  BANNER_TYPE_ERROR,
+  BANNER_TYPE_SUCCESS,
+  GET_INDIVIDUAL_ID,
+} from '../../shared/constants';
+import {MessageOverlay} from '../../components/MessageOverlay';
 import {VcItemContainer} from '../../components/VC/VcItemContainer';
 import {BannerNotification} from '../../components/BannerNotification';
 import {
@@ -19,7 +20,6 @@ import {
   sendErrorEvent,
 } from '../../shared/telemetry/TelemetryUtils';
 import {TelemetryConstants} from '../../shared/telemetry/TelemetryConstants';
-
 import {Error} from '../../components/ui/Error';
 import {useIsFocused} from '@react-navigation/native';
 import {getVCsOrderedByPinStatus} from '../../shared/Utils';
@@ -27,12 +27,10 @@ import {SvgImage} from '../../components/ui/svg';
 import {SearchBar} from '../../components/ui/SearchBar';
 import {Icon} from 'react-native-elements';
 import {VCMetadata} from '../../shared/VCMetadata';
-import {BANNER_TYPE_SUCCESS} from '../../shared/constants';
 
 export const MyVcsTab: React.FC<HomeScreenTabProps> = props => {
   const {t} = useTranslation('MyVcsTab');
   const controller = useMyVcsTab(props);
-  const storeErrorTranslationPath = 'errors.savingFailed';
   const vcMetadataOrderedByPinStatus = getVCsOrderedByPinStatus(
     controller.vcMetadatas,
   );
