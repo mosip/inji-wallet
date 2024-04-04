@@ -4,7 +4,10 @@ import {RsaSignature2018} from '../../lib/jsonld-signatures/suites/rsa2018/RsaSi
 import {Ed25519Signature2018} from '../../lib/jsonld-signatures/suites/ed255192018/Ed25519Signature2018';
 import {AssertionProofPurpose} from '../../lib/jsonld-signatures/purposes/AssertionProofPurpose';
 import {PublicKeyProofPurpose} from '../../lib/jsonld-signatures/purposes/PublicKeyProofPurpose';
-import {Credential, VerifiableCredential} from '../../types/VC/vc';
+import {
+  Credential,
+  VerifiableCredential,
+} from '../../machines/VerifiableCredential/VCMetaMachine/vc';
 import {getErrorEventData, sendErrorEvent} from '../telemetry/TelemetryUtils';
 import {TelemetryConstants} from '../telemetry/TelemetryConstants';
 import {getMosipIdentifier} from '../commonUtil';
@@ -82,10 +85,6 @@ function handleResponse(
     let errorCodeName = result['results'][0].error.name;
     errorMessage = VerificationErrorType.TECHNICAL_ERROR;
     isVerifiedFlag = false;
-
-    console.log('Verification: ', result['results'][0]);
-    console.log('Verifiable Credential: ', verifiableCredential);
-
 
     if (errorCodeName == 'jsonld.InvalidUrl') {
       errorMessage = VerificationErrorType.NETWORK_ERROR;

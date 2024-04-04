@@ -1,7 +1,7 @@
 import {EventFrom, send, sendParent, StateFrom} from 'xstate';
 import {createModel} from 'xstate/lib/model';
 import {StoreEvents} from '../../store';
-import {VC} from '../../../types/VC/vc';
+import {VC} from './vc';
 import {AppServices} from '../../../shared/GlobalContext';
 import {log, respond} from 'xstate/lib/actions';
 import {
@@ -23,6 +23,7 @@ const model = createModel(
     receivedVcs: [] as VCMetadata[],
     vcs: {} as Record<string, VC>,
     inProgressVcDownloads: new Set<string>(), //VCDownloadInProgress
+    areAllVcsDownloaded: false as boolean,
     walletBindingSuccess: false,
     tamperedVcs: [] as VCMetadata[],
     downloadingFailedVcs: [] as VCMetadata[], //VCDownloadFailed
@@ -65,26 +66,26 @@ const model = createModel(
   },
 );
 
-export const VcEvents = model.events;
+export const VcMetaEvents = model.events;
 
-export const vcMachine =
+export const vcMetaMachine =
   /** @xstate-layout N4IgpgJg5mDOIC5QDcDGA6AlgO0wF3QFsBPANVVgGIBlAFQHkAlAUQH0XqAFegOWucSgADgHtY+TCOyCQAD0QBmABwAmdAEYALCoCsANgAMOgJx6dAdnNmANCGKIlBvemWbLKvcc06FVgL5+tmhYuAQATmCoYJjIkORUdExsHNx8AkggouJ4ktIZ8gjKalq65qrmmup6SpqatvYI6k6a6HoKmko6OkpK5sb9AUEYEQCGEMREZBRYEAA2YJQsAGIcABKsALIAmqykAMLUMlkSUjIF6uom6JV6ujrqxo7qZfWITRUamgpOKubdWuYVIMQMFRuNJvF0BEAGYRWAACxwUBoDBY7GYXF4-COYhOeVA50u5nQxh8fyKCm6uleCFMxKayjaBgUCjaFmBoLAYwmESiMTi00wcwWyzW6L2zAAkqRmAARXYHHHZXJnN7qXwacwGAyVJymJTqGnqlnoToqFS+XzqA1ODnDLng3nRWIQSEwuGI7DIxJolJY9LCXE5U75NV6dToJy+YwGXrGFRuI0WiNKUnqvS3LwGcwKO1Qh3ESgAcWYtHFUpl8v2hwyx2D+LkbxUplangzPVumhjdTsiEMBg0XWb6rp1vMebBhZLZf2rEltGYGyVeNVjQuEeZvi1zO1Nl7CH7g50w4Uo56E4LlFnAEFZbK5cv66vjAoI1ahyz9OSaYfLsfjCOejmGOF7cleeysLK9AAOo8AAMvQt4PrWQYqqGjTHgokbxhaKgPF46gqEoP7akeug1H0x7aKB4zgeW0rIYGyohgSfa6C4NRVO0mh6DxlQ0n8OitE0mhOD4OpuLmwLYCIEBwDIwQ4PgEIUI+aGsYU1ToBY0baM2Si3LxP5WJGNTNgYeFUgMgQghgSnhJEzoCvAKHMQ2BTtPSRg6o4omVBUNIAcUqgKCoTg9DqJh5vZaksY2hQWho3kdDqOrPD2DSGFhsbaAZDyAjxNETCQkJCvMsXuYgjzOOafxakorJuBaRoWUJ3wWRUHQ+AZehFSpsD5rCcCelAFWriOKbtg1XUmC8+79MYpras2Zj9H0CZ9SVqmuSu6GmGotUWLGjWAgoNKpi0DIhfoFhmFJQz5ty+Z8i6pXCmNe2dBoZj3BZlw1KyRqvhGGYWGtxhlAZSh9U6-KutM7rDUiH0aSOag+I8zQ-N4SYGd9VIPIRzZETDjlw-EKPxaYEZVF0TSWQDehGv9pqkgYENVJcvhFZTBQvvSP30-9XxM-ulgDldvjVA15qaHavOIM2i1NDoPmpf5GWIMe9JDjotSGFm6gBAEQA */
   model.createMachine(
     {
       predictableActionArguments: true,
       preserveActionOrder: true,
-      tsTypes: {} as import('./vc.typegen').Typegen0,
+      tsTypes: {} as import('./VCMetaMachine.typegen').Typegen0,
       schema: {
         context: model.initialContext,
         events: {} as EventFrom<typeof model>,
       },
-      id: 'vc',
+      id: 'vcMeta',
       initial: 'init',
       states: {
         init: {
           on: {
             REFRESH_MY_VCS: {
-              target: '#vc.ready.myVcs.refreshing',
+              target: '#vcMeta.ready.myVcs.refreshing',
             },
           },
           initial: 'myVcs',
@@ -103,7 +104,7 @@ export const vcMachine =
               on: {
                 STORE_RESPONSE: {
                   actions: 'setReceivedVcs',
-                  target: '#vc.ready',
+                  target: '#vcMeta.ready',
                 },
               },
             },
@@ -183,7 +184,7 @@ export const vcMachine =
               actions: 'resetWalletBindingSuccess',
             },
             REFRESH_RECEIVED_VCS: {
-              target: '#vc.ready.receivedVcs.refreshing',
+              target: '#vcMeta.ready.receivedVcs.refreshing',
             },
             TAMPERED_VC: {
               actions: 'setTamperedVcs',
@@ -194,7 +195,7 @@ export const vcMachine =
                 'removeVcFromInProgressDownlods',
                 'setDownloadingFailedVcs',
               ],
-              target: '#vc.ready.myVcs.refreshing',
+              target: '#vcMeta.ready.myVcs.refreshing',
             },
             DELETE_VC: {
               target: 'deletingFailedVcs',
@@ -204,7 +205,7 @@ export const vcMachine =
                 'removeVcFromInProgressDownlods',
                 'setVerificationErrorMessage',
               ],
-              target: '#vc.ready.myVcs.refreshing',
+              target: '#vcMeta.ready.myVcs.refreshing',
             },
             RESET_VERIFY_ERROR: {
               actions: 'resetVerificationErrorMessage',
@@ -239,7 +240,7 @@ export const vcMachine =
               entry: ['logTamperedVCsremoved', send('REFRESH_VCS_METADATA')],
               on: {
                 REFRESH_VCS_METADATA: {
-                  target: '#vc.init',
+                  target: '#vcMeta.init',
                 },
               },
             },
@@ -253,7 +254,7 @@ export const vcMachine =
                 'removeDownloadingFailedVcsFromMyVcs',
                 'resetDownloadFailedVcs',
               ],
-              target: '#vc.ready.myVcs.refreshing',
+              target: '#vcMeta.ready.myVcs.refreshing',
             },
           },
         },
@@ -344,9 +345,16 @@ export const vcMachine =
 
             return updatedInProgressList;
           },
+          areAllVcsDownloaded: context => {
+            if (context.inProgressVcDownloads.size == 0) {
+              return true;
+            }
+            return false;
+          },
         }),
 
         resetInProgressVcsDownloaded: model.assign({
+          areAllVcsDownloaded: () => false,
           inProgressVcDownloads: new Set<string>(),
         }),
 
@@ -423,14 +431,14 @@ export const vcMachine =
     },
   );
 
-export function createVcMachine(serviceRefs: AppServices) {
-  return vcMachine.withContext({
-    ...vcMachine.context,
+export function createVcMetaMachine(serviceRefs: AppServices) {
+  return vcMetaMachine.withContext({
+    ...vcMetaMachine.context,
     serviceRefs,
   });
 }
 
-type State = StateFrom<typeof vcMachine>;
+type State = StateFrom<typeof vcMetaMachine>;
 
 export function selectMyVcsMetadata(state: State): VCMetadata[] {
   return state.context.myVcs;
@@ -454,6 +462,10 @@ export function selectIsRefreshingMyVcs(state: State) {
 
 export function selectIsRefreshingReceivedVcs(state: State) {
   return state.matches('ready.receivedVcs.refreshing');
+}
+
+export function selectAreAllVcsDownloaded(state: State) {
+  return state.context.areAllVcsDownloaded;
 }
 
 /*

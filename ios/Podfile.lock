@@ -30,7 +30,7 @@ PODS:
     - ExpoModulesCore
   - EXConstants (14.4.2):
     - ExpoModulesCore
-  - EXFileSystem (15.4.4):
+  - EXFileSystem (15.4.5):
     - ExpoModulesCore
   - EXFont (11.1.1):
     - ExpoModulesCore
@@ -40,7 +40,7 @@ PODS:
   - EXJSONUtils (0.7.1)
   - EXManifests (0.7.2):
     - ExpoModulesCore
-  - Expo (49.0.16):
+  - Expo (49.0.23):
     - ExpoModulesCore
   - ExpoAdapterGoogleSignIn (10.1.1):
     - ExpoModulesCore
@@ -54,7 +54,7 @@ PODS:
     - ExpoModulesCore
   - ExpoLocalization (14.1.1):
     - ExpoModulesCore
-  - ExpoModulesCore (1.5.11):
+  - ExpoModulesCore (1.5.13):
     - RCT-Folly (= 2021.07.22.00)
     - React-Core
     - React-RCTAppDelegate
@@ -842,18 +842,18 @@ SPEC CHECKSUMS:
   EXBarCodeScanner: 8e23fae8d267dbef9f04817833a494200f1fce35
   EXCamera: 2dc2bd2828bca4e283018a0b5a84aec6639ff0b4
   EXConstants: ce5bbea779da8031ac818c36bea41b10e14d04e1
-  EXFileSystem: 2b826a3bf1071a4b80a8457e97124783d1ac860e
+  EXFileSystem: f8b838a880254de42a5a7da20ed5ce12e2697c1b
   EXFont: 6ea3800df746be7233208d80fe379b8ed74f4272
   EXImageLoader: fd053169a8ee932dd83bf1fe5487a50c26d27c2b
   EXJSONUtils: 6802be4282d42b97c51682468ddc1026a06f8276
   EXManifests: cf66451b11b2c2f6464917528d792759f7fd6ce0
-  Expo: fcfd60c1ed6806dee5103b210335ae0c72f675ed
+  Expo: ba9abdf444dc6d2c05a82c4c1b51a2400beb6167
   ExpoAdapterGoogleSignIn: 6c55782832b7fbdc2c27dac05ef00445c103b8f3
   ExpoCrypto: 42485127a5968dda6f67ac5f2b42d3c0af31d7db
   ExpoKeepAwake: be4cbd52d9b177cde0fd66daa1913afa3161fc1d
   ExpoLocalAuthentication: 32919307c66fb3661caefa07e7811a95a7539d7b
   ExpoLocalization: f26cd431ad9ea3533c5b08c4fabd879176a794bb
-  ExpoModulesCore: d9d45dcbb86a5dba2ec62253267720cb58516f75
+  ExpoModulesCore: f0581cd745335dd7a68117f6fedd22b98e2c73f0
   ExpoWebBrowser: b6e56949734089d75f758f21cfe93fad02bd828c
   EXSplashScreen: 5ed09ea490155ef603d007d9f194c9e04a4b7980
   EXStructuredHeaders: 324cc3130571d2696357fafd8be7fd9a0b5fdf6e
@@ -938,4 +938,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: 90dfa5dbb6ca0103a4e49014140523aff5458f68
 
-COCOAPODS: 1.14.3
+COCOAPODS: 1.15.2

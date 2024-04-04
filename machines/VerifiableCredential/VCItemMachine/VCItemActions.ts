@@ -21,10 +21,11 @@ import {
   sendErrorEvent,
   getErrorEventData,
 } from '../../../shared/telemetry/TelemetryUtils';
-import {WalletBindingResponse} from '../../../types/VC/vc';
+
 import {ActivityLogEvents} from '../../activityLog';
 import {BackupEvents} from '../../backupAndRestore/backup';
-import {VcEvents} from '../VCMetaMachine/vc';
+import {VcMetaEvents} from '../VCMetaMachine/VCMetaMachine';
+import {WalletBindingResponse} from '../VCMetaMachine/vc';
 
 export const VCItemActions = model => {
   return {
@@ -43,7 +44,7 @@ export const VCItemActions = model => {
         vcMetadata: context.vcMetadata,
       }),
       {
-        to: context => context.serviceRefs.vc,
+        to: context => context.serviceRefs.vcMeta,
       },
     ),
     requestStoredContext: send(
@@ -94,7 +95,7 @@ export const VCItemActions = model => {
         };
       },
       {
-        to: context => context.serviceRefs.vc,
+        to: context => context.serviceRefs.vcMeta,
       },
     ),
     removeVcMetaDataFromStorage: send(
@@ -116,7 +117,7 @@ export const VCItemActions = model => {
         };
       },
       {
-        to: context => context.serviceRefs.vc,
+        to: context => context.serviceRefs.vcMeta,
       },
     ),
     sendDownloadLimitExpire: send(
@@ -127,7 +128,7 @@ export const VCItemActions = model => {
         };
       },
       {
-        to: context => context.serviceRefs.vc,
+        to: context => context.serviceRefs.vcMeta,
       },
     ),
 
@@ -140,7 +141,7 @@ export const VCItemActions = model => {
         };
       },
       {
-        to: context => context.serviceRefs.vc,
+        to: context => context.serviceRefs.vcMeta,
       },
     ),
     refreshAllVcs: send(
@@ -148,7 +149,7 @@ export const VCItemActions = model => {
         type: 'REFRESH_MY_VCS',
       }),
       {
-        to: (context: any) => context.serviceRefs.vc,
+        to: (context: any) => context.serviceRefs.vcMeta,
       },
     ),
 
@@ -164,15 +165,15 @@ export const VCItemActions = model => {
     }),
     //todo: revisit on this for naming and impl
     sendVcUpdated: send(
-      (context: any) => VcEvents.VC_METADATA_UPDATED(context.vcMetadata),
+      (context: any) => VcMetaEvents.VC_METADATA_UPDATED(context.vcMetadata),
       {
-        to: (context: any) => context.serviceRefs.vc,
+        to: (context: any) => context.serviceRefs.vcMeta,
       },
     ),
     sendTamperedVc: send(
-      (context: any) => VcEvents.TAMPERED_VC(context.vcMetadata),
+      (context: any) => VcMetaEvents.TAMPERED_VC(context.vcMetadata),
       {
-        to: context => context.serviceRefs.vc,
+        to: context => context.serviceRefs.vcMeta,
       },
     ),
     setErrorAsWalletBindingError: assign({
@@ -196,7 +197,7 @@ export const VCItemActions = model => {
         };
       },
       {
-        to: (context: any) => context.serviceRefs.vc,
+        to: (context: any) => context.serviceRefs.vcMeta,
       },
     ),
     setWalletBindingResponse: assign({
@@ -340,7 +341,7 @@ export const VCItemActions = model => {
         };
       },
       {
-        to: context => context.serviceRefs.vc,
+        to: context => context.serviceRefs.vcMeta,
       },
     ),
 
@@ -352,7 +353,7 @@ export const VCItemActions = model => {
         };
       },
       {
-        to: context => context.serviceRefs.vc,
+        to: context => context.serviceRefs.vcMeta,
       },
     ),
     sendTelemetryEvents: () => {

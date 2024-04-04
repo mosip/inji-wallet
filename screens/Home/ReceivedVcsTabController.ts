@@ -4,7 +4,7 @@ import {ActorRefFrom} from 'xstate';
 import {
   selectIsRefreshingReceivedVcs,
   selectReceivedVcsMetadata,
-} from '../../machines/VerifiableCredential/VCMetaMachine/vc';
+} from '../../machines/VerifiableCredential/VCMetaMachine/VCMetaMachine';
 import {GlobalContext} from '../../shared/GlobalContext';
 import {
   ReceivedVcsTabEvents,
@@ -46,13 +46,13 @@ export function useReceivedVcsTab() {
   >;
   const myVcservice = tabRefs.myVcs as ActorRefFrom<typeof MyVcsTabMachine>;
 
-  const vcService = appService.children.get('vc');
+  const vcMetaService = appService.children.get('vcMeta')!!;
 
   return {
     isVisible,
-    receivedVcsMetadata: useSelector(vcService, selectReceivedVcsMetadata),
+    receivedVcsMetadata: useSelector(vcMetaService, selectReceivedVcsMetadata),
 
-    isRefreshingVcs: useSelector(vcService, selectIsRefreshingReceivedVcs),
+    isRefreshingVcs: useSelector(vcMetaService, selectIsRefreshingReceivedVcs),
 
     TOGGLE_RECEIVED_CARDS: () => setIsVisible(!isVisible),
 

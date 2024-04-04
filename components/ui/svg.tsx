@@ -59,8 +59,8 @@ export class SvgImage {
     return <Logo width={width} height={height} />;
   }
 
-  static kebabIcon() {
-    return <KebabIcon />;
+  static kebabIcon(testId) {
+    return <KebabIcon {...testIDProps(testId)} />;
   }
 
   static walletActivatedIcon() {

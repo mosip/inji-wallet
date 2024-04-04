@@ -2,13 +2,13 @@ fileignoreconfig:
   - filename: package.json
     checksum: 730263252adbe53cde58fb0b6988e519e766fe0f89a7b8cd261a1e5e5e598328
   - filename: package-lock.json
-    checksum: b018f6e214d4f1573c587d773984f2b10765b62100293b240cb48e724d9b0158
+    checksum: 8e91542dfeba34460b4700c5b640fe6802cb1b38e1dbafd2ebcaac2fd9dbed36
   - filename: lib/jsonld-signatures/suites/ed255192018/ed25519.ts
     checksum: 493b6e31144116cb612c24d98b97d8adcad5609c0a52c865a6847ced0a0ddc3a
   - filename: components/PasscodeVerify.tsx
     checksum: 14654c0f038979fcd0d260170a45894a072f81e0767ca9a0e66935d33b5cc703
   - filename: i18n.ts
-    checksum: 4af6370d4557b780f9a29590db91c3e5544a432e272afee6d21a0cabc2faaff0
+    checksum: e80d40f33692c195d034774d024cafdf63d010ac6d4a35f94b2a5d81b78c234b
   - filename: components/Passcode.tsx
     checksum: db4a18001be8c63bf7ffb389359861401fa1d22261b10ad729a76fd431c019a7
   - filename: components/PasscodeVerify.tsx
@@ -25,8 +25,6 @@ fileignoreconfig:
     checksum: 4a424adbd2d2404c9d968c54607885af643a07e09acc4a2d37c6e7a7952c4945
   - filename: machines/issuersMachine.ts
     checksum: 742b8ff561dca61be08ab0b9aef3997ad5d043df298a84c17349dc0206ddcee6
-  - filename: machines/issuersMachine.typegen.ts
-    checksum: 55c5f7cf6dab7cd299ae44c5fc749178747fc893715dcaf12f97d86be7fe3ff4
   - filename: screens/Home/MyVcs/IdInputModal.tsx
     checksum: 6f21b2caf20ee1821b69e178a69e755e0b1094275e4a9f9cb4ae5ab515ce5d23
   - filename: screens/WelcomeScreenController.ts
@@ -103,8 +101,6 @@ fileignoreconfig:
     checksum: 02655ff3d7f8a8ea4f3664485f98c961802c598242ec44408594a2ddb721fa5e
   - filename: screens/Settings/BackupController.tsx
     checksum: 4a031b46646aa982c8f40e4c7fe0bd3e05a76a6af1ff1c2de7350ba6ebf9a839
-  - filename: machines/backupRestore.typegen.ts
-    checksum: ac9c154060c7c1adb3392ac8c78a42cae5ca3faea3b4b0166dd00d4ca38b290d
   - filename: machines/settings.typegen.ts
     checksum: e4ae05822f1b1c23f3f70d03dd46fd8f29ba6b52d40f2f24c121f536fbb5f2c4
   - filename: .github/workflows/ui-automation.yml
@@ -148,17 +144,13 @@ fileignoreconfig:
   - filename: components/BannerNotificationContainer.tsx
     checksum: a98ff1a0dd96d3ead4b8191320be8b0c7a558cda6b0de39f1c62aaa8efef9fb8
   - filename: components/HelpScreen.tsx
-    checksum: bbc69143bd37d065bba3800396301db5a0318e8b7ba51ecd49142dda68783a01  
+    checksum: bbc69143bd37d065bba3800396301db5a0318e8b7ba51ecd49142dda68783a01
   - filename: injitest/README.md
     checksum: 82974a6b9363512472272245e9b433f92e63377e58ba306980876b745181a09c
   - filename: shared/VCMetadata.ts
     checksum: e93f988415bf91064e2cf5fbc09ff6c7226798baa5da721fa0715d5d0d6afddf
-  - filename: machines/backupAndRestore/backupRestore.ts
-    checksum: d1062b30fab8c3dcd5cdcb47c65b5f52234ebccd31c9a44e757855ca76d6f92f
-  - filename: machines/backupAndRestore/backupRestore.typegen.ts
-    checksum: 64a8e42712083e0cbf0d6ce6b1139c62b59a14af17e4132d14f903d4d3bbe6b2
   - filename: ios/Podfile.lock
-    checksum: 369fecac06b3c087b272e7920aa5ffe6734f261ae0af0c376a92ebf5c11415d4
+    checksum: c8f330a55ad911e59921215bf7d086db3dbdb5eab28202b3b450d780498ea880
   - filename: screens/Home/MyVcsTab.tsx
     checksum: 8133e2fefddfd0207eb7207b660d317f9a6acafbab6a65762d29ea86e33787cb
   - filename: components/BackupAndRestoreBannerNotification.tsx
@@ -213,5 +205,38 @@ fileignoreconfig:
     checksum: 51b4872a64abd76b124000358068c0b213d50fb131d735c122cd9a177cd8390c
   - filename: machines/VCItemMachine/VCItemActions.ts
     checksum: cda2ec61f0b884e537d05d018330d7b3c6febbf10ad4cd8cd87c715e6ad1dcf4
+  - filename: jest.setup.js
+    checksum: 2576884c00d7f90f20d4f9c5f1ec9ee97f4c41a2d9d37a649eaf26bfc2c01a50
+  - filename: __mocks__/react-native-rsa-native.mock.js
+    checksum: f5a4254f4d172107231a51ce0968ef1ad7ab0b8f0b5a4db72d1d5bc4e9ce179a  
+  - filename: __mocks__/react-native-secure-key-store.mock.js
+    checksum: 249eeeb9f8cf083f8d008882a5aeab194e9e6344f68732a2a8c78a69ff5f2ee8  
+  - filename: __mocks__/jest-init.js
+    checksum: 7cec36ae248f04fe50235f1281be455351002acbb6fdc881ad327a30b86ba5e5
+  - filename: components/ActivityLogEvent.test.ts
+    checksum: 5f9bf6d499106863fee65476adcec9253638d093bf0b58f1a11225915e9b0560
+  - filename: __mocks__/mmkv-db-setup.js
+    checksum: b94da7e4bc1bd52b5f0131104fcf25163df9cdb9af14425287d17fd56f4f09e3
+  - filename: __mocks__/react-native-keychain.mock.js
+    checksum: cc2798f843b776e70d957a4f7cdf47e199a29d9f6547fb9f59753108e8f252fa
+  - filename: machines/auth.ts
+    checksum: 46195ee93f9b7ac6794a06eeef5dee5ea242047a557af8bf95df04e1343d7b9e 
+  - filename: shared/commonUtil.generated.test.ts
+    checksum: 4ca5983bb133f8f02bfd52fd0cc49ce37b24b164f3ca78a03ad97bb353ed00a4 
+  - filename: __mocks__/en.mock.json
+    checksum: b34340a3f40c691f06698f7758b8c068a09ed7215098a0d11baed191c0972e04
+  - filename: ios/Inji.xcodeproj/project.pbxproj
+    checksum: 766e3dcb299f52ea75e87a1e6e7ce106872bb2f2481d54700995ca02b742b60f
+  - filename: ios/Inji/Info.plist
+    checksum: 57705369faf52801876baf0d25a3cee690de2fd87927454689b13963408a8e92
+  - filename: machines/backupAndRestore/backupRestore.ts
+    checksum: 60a55a1d0ef6e79f7b9fa1e61ed31b933364afb429bff03cebbc56339c764499
+  - filename: machines/backupAndRestore/backupRestore.typegen.ts
+    checksum: 90f6c78458e3bf24254acbb84864d594126375df0158d08d43dcb4fb541060f5
+  - filename: machines/app.typegen.ts
+    checksum: c310de13b855b22fe68e8fa954dc3a8a4728284c5904da99986a1f4eac8ea0be
+  - filename: screens/Home/MyVcsTabMachine.typegen.ts
+    checksum: 948efb4d61551e4f3cd9eb9913b927158daa5c3d16f49ad297e7cb63190bc023
+  - filename: machines/issuersMachine.typegen.ts
+    checksum: 959fef1e51f0f3d5b12933f7b362e96401fb776ab12f0d13c6e542918b2ff255
     version: ""
-

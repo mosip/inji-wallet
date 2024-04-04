@@ -2,12 +2,12 @@ import {Column, Text} from '../../ui';
 import {Theme} from '../../ui/styleUtils';
 import React from 'react';
 
-export const VCItemFieldName = ({fieldName, wellknown}) => {
+export const VCItemFieldName = ({fieldName, wellknown, testID}) => {
   return (
     <>
       {fieldName && (
         <Text
-          testID={`${fieldName}Title`}
+          testID={`${testID}Title`}
           {...setTextColor(wellknown)}
           style={Theme.Styles.fieldItemTitle}>
           {fieldName}
@@ -17,11 +17,11 @@ export const VCItemFieldName = ({fieldName, wellknown}) => {
   );
 };
 
-export const VCItemFieldValue = ({fieldName, fieldValue, wellknown}) => {
+export const VCItemFieldValue = ({fieldValue, wellknown, testID}) => {
   return (
     <>
       <Text
-        testID={`${fieldName}Value`}
+        testID={`${testID}Value`}
         {...setTextColor(wellknown)}
         style={Theme.Styles.fieldItemValue}>
         {fieldValue}

@@ -8,6 +8,11 @@ export interface Typegen0 {
       data: unknown;
       __tip: 'See the XState TS docs to learn how to strongly type this.';
     };
+    'done.invoke.AddVcModal.acceptingOtpInput.resendOTP:invocation[0]': {
+      type: 'done.invoke.AddVcModal.acceptingOtpInput.resendOTP:invocation[0]';
+      data: unknown;
+      __tip: 'See the XState TS docs to learn how to strongly type this.';
+    };
     'done.invoke.AddVcModal.requestingCredential:invocation[0]': {
       type: 'done.invoke.AddVcModal.requestingCredential:invocation[0]';
       data: unknown;
@@ -67,6 +72,9 @@ export interface Typegen0 {
       | 'xstate.after(100)#AddVcModal.acceptingIdInput.focusing';
     forwardToParent: 'CANCEL' | 'DISMISS';
     resetIdInputRef: 'CANCEL';
+    setEmail:
+      | 'done.invoke.AddVcModal.acceptingIdInput.requestingOtp:invocation[0]'
+      | 'done.invoke.AddVcModal.acceptingOtpInput.resendOTP:invocation[0]';
     setId: 'INPUT_ID' | 'SET_INDIVIDUAL_ID';
     setIdBackendError:
       | 'error.platform.AddVcModal.acceptingIdInput.requestingOtp:invocation[0]'
@@ -78,6 +86,9 @@ export interface Typegen0 {
     setIdType: 'SELECT_ID_TYPE' | 'SET_INDIVIDUAL_ID';
     setOtp: 'INPUT_OTP';
     setOtpError: 'error.platform.AddVcModal.requestingCredential:invocation[0]';
+    setPhoneNumber:
+      | 'done.invoke.AddVcModal.acceptingIdInput.requestingOtp:invocation[0]'
+      | 'done.invoke.AddVcModal.acceptingOtpInput.resendOTP:invocation[0]';
     setRequestId: 'done.invoke.AddVcModal.requestingCredential:invocation[0]';
     setTransactionId:
       | 'SET_INDIVIDUAL_ID'
