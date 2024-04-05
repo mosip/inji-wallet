@@ -58,10 +58,6 @@ export const VCItemActions = model => {
       },
     ),
     setContext: model.assign((context, event) => {
-      const {...data} = event.response;
-      return {...context, ...data};
-    }),
-    setCredential: model.assign((context, event) => {
       return {
         ...context,
         ...event.response,
