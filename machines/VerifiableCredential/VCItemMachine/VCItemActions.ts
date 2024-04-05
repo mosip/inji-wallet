@@ -160,6 +160,11 @@ export const VCItemActions = model => {
           isPinned: !context.vcMetadata.isPinned,
         }),
     }),
+
+    resetIsMachineInKebabPopupState: assign({
+      isMachineInKebabPopupState: () => false,
+    }),
+
     sendBackupEvent: send(BackupEvents.DATA_BACKUP(true), {
       to: (context: any) => context.serviceRefs.backup,
     }),
