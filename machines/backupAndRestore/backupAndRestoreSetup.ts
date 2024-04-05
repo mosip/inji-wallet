@@ -34,7 +34,7 @@ const model = createModel(
     errorMessage: '' as string,
     serviceRefs: {} as AppServices,
     shouldTriggerAutoBackup: false as boolean,
-    isCloudSignedIn:false as boolean
+    isCloudSignedIn: false as boolean,
   },
   {
     events: {
@@ -160,7 +160,7 @@ export const backupAndRestoreSetupMachine = model.createMachine(
             {
               cond: 'isSignedIn',
               actions: ['setProfileInfo', 'unsetIsLoading'],
-              target: 'backupAndRestore',  //backupAndRestore abhishek
+              target: 'backupAndRestore', //backupAndRestore abhishek
             },
             {
               cond: 'isNetworkError',
@@ -168,19 +168,9 @@ export const backupAndRestoreSetupMachine = model.createMachine(
               target: '.noInternet',
             },
             {
-<<<<<<< HEAD
-              cond: 'isIOSAndNotSignedIn',
-              actions: [
-                'unsetIsLoading',
-                'setErrorReasonAsAccountRequired',
-                'sendBackupAndRestoreSetupErrorEvent',
-              ],
+              cond: 'isAuthorised',
+              actions: ['unsetIsLoading'],
               target: '.error',
-=======
-              cond:'isAuthorised',
-              actions:['unsetIsLoading'],
-              target:'.error'
->>>>>>> 93fd7179 ([INJIMOB-854]: Refactor  package-lock and typegen)
             },
             // {
             //   cond: 'isIOSAndNotSignedIn',
@@ -200,8 +190,7 @@ export const backupAndRestoreSetupMachine = model.createMachine(
         initial: 'idle',
         states: {
           idle: {},
-          
-        
+
           error: {
             entry: 'unsetIsLoading',
             on: {
@@ -380,16 +369,14 @@ export const backupAndRestoreSetupMachine = model.createMachine(
       isInternetConnected: (_, event) =>
         !!(event.data as NetInfoState).isConnected,
       isNetworkError: (_, event) => event.data.error === NETWORK_REQUEST_FAILED,
-      isSignedIn: (_context, event) =>
-      {
-        
-        return (event.data as isSignedInResult).isSignedIn
+      isSignedIn: (_context, event) => {
+        return (event.data as isSignedInResult).isSignedIn;
       },
-        
-     
+
       isIOSAndSignInFailed: (_context, event) => {
-        console.warn("pp"+(event.data as SignInResult).status)
-        const isSignInFailed = !((event.data as SignInResult).status === Cloud.status.SUCCESS); // Adjust according to your data structure
+        const isSignInFailed = !(
+          (event.data as SignInResult).status === Cloud.status.SUCCESS
+        ); // Adjust according to your data structure
         return isIOS() && isSignInFailed;
       },
       isConfirmationAlreadyShown: (_context, event) => {
@@ -399,15 +386,13 @@ export const backupAndRestoreSetupMachine = model.createMachine(
           ] || false
         );
       },
-      isSignInSuccessful: (_context, event)=>{
-        
-        return (event.data as SignInResult).status === Cloud.status.SUCCESS
-        
+      isSignInSuccessful: (_context, event) => {
+        return (event.data as SignInResult).status === Cloud.status.SUCCESS;
       },
-      isAuthorised:(_context,event)=>{
-        console.warn("authorised "+(event.data as isSignedInResult).isAuthorisedd);
+      isAuthorised: (_context, event) => {
+       // console.log((event.data as isSignedInResult).isAuthorisedd)
         return (event.data as isSignedInResult).isAuthorisedd || false;
-      }
+      },
     },
   },
 );
@@ -451,14 +436,10 @@ export function selectIsSigningInSuccessful(state: State) {
 }
 
 export function selectIsSigningFailure(state: State) {
-  
   return state.matches('signIn.error') || state.matches('checkSignIn.error');
 }
 
-export function selectIsCloudSignedInFailed(state:State)
-{
-  console.log("cloudsigninfailed")
-  console.log(state)
-  return state.matches('checkSignIn.error')
+export function selectIsCloudSignedInFailed(state: State) {
+  return state.matches('checkSignIn.error');
 }
 type State = StateFrom<typeof backupAndRestoreSetupMachine>;
