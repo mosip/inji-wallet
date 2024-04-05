@@ -1,4 +1,4 @@
-import {logoType} from '../../issuersMachine';
+import {displayType, logoType} from '../../Issuers/IssuersMachine';
 
 export interface VC {
   id?: string;
@@ -70,6 +70,18 @@ export interface CredentialWrapper {
   identifier: string;
   generatedOn: Date;
   issuerLogo: string;
+}
+
+export interface CredentialTypes {
+  format: string;
+  id: string;
+  scope: string;
+  display: [displayType];
+  proof_types_supported: [string];
+  credential_definition: {
+    type: Object[];
+    credentialSubject: CredentialSubject;
+  };
 }
 
 export type VerifiableCredentialType =
