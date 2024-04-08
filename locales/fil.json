@@ -167,6 +167,7 @@
     "title": "Magdagdag ng bagong card",
     "description": "Mangyaring piliin ang iyong gustong tagabigay mula sa mga opsyon sa ibaba upang magdagdag ng bagong card.",
     "searchByIssuersName": "Maghanap ayon sa pangalan ng Nag-isyu",
+    "credentialTypeDescription": "Mangyaring pumili ng kredensyal",
     "help": "Tulong?",
     "loaders": {
       "loading": "Naglo-load...",
@@ -376,7 +377,7 @@
         "message": "Nagkaroon ng isyu sa pag-download ng mga sumusunod na card. Pakisubukang muli"
       },
       "verificationFailed": {
-        "title" : "May pagkakamaling naganap!",
+        "title": "May pagkakamaling naganap!",
         "goBackButton": "Bumalik ka",
         "technicalError": "Dahil sa Technical Error, hindi namin na-download ang card.",
         "networkError": "Dahil sa hindi matatag na koneksyon sa internet, hindi namin na-download ang card. Pakisuri ang iyong koneksyon sa internet."

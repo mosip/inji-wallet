@@ -14,9 +14,8 @@
     "WALLET_BINDING_SUCCESSFULL": "Activation of {{idType}} {{id}} is successful.",
     "WALLET_BINDING_FAILURE": "Activation of {{idType}} {{id}} has failed.",
     "VC_REMOVED": "{{idType}} {{id}} is removed from wallet.",
-    "TAMPERED_VC_REMOVED": "{{idType}} {{id}} is removed from from wallet due to tampering.",
+    "TAMPERED_VC_REMOVED": "{{idType}} {{id}} is removed from from wallet due to tampering."
   },
-
   "DeviceInfoList": {
     "requestedBy": "Requested by",
     "sentBy": "Sent by",
@@ -169,6 +168,7 @@
     "title": "Add new card",
     "description": "Please choose your preferred issuer from the options below to add a new card.",
     "searchByIssuersName": "Search by Issuer’s name",
+    "credentialTypeDescription": "Please select a credential",
     "help": "Help?",
     "loaders": {
       "loading": "Loading...",
@@ -378,7 +378,7 @@
         "message": "There was an issue downloading following cards. Please try again"
       },
       "verificationFailed": {
-        "title" : "An Error Occurred!",
+        "title": "An Error Occurred!",
         "goBackButton": "Go Back",
         "technicalError": "Due to Technical Error, we were unable to download the card.",
         "networkError": "Due to unstable internet connection, we were unable to download the card. Please check your internet connection."

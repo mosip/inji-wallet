@@ -23,7 +23,7 @@ fileignoreconfig:
     checksum: 18af825821bc95e1056050623b804a5a8e7435b9e3383916a5d63024eeba9553
   - filename: screens/BiometricScreenController.ts
     checksum: 4a424adbd2d2404c9d968c54607885af643a07e09acc4a2d37c6e7a7952c4945
-  - filename: machines/issuersMachine.ts
+  - filename: machines/IssuersMachine.ts
     checksum: 742b8ff561dca61be08ab0b9aef3997ad5d043df298a84c17349dc0206ddcee6
   - filename: screens/Home/MyVcs/IdInputModal.tsx
     checksum: 6f21b2caf20ee1821b69e178a69e755e0b1094275e4a9f9cb4ae5ab515ce5d23
@@ -184,13 +184,13 @@ fileignoreconfig:
   - filename: injitest/src/test/java/iosTestCases/ChangeLanguageTest.java
     checksum: d94cbf47726c3650b4b623e6aa76e113edf553616319450d01f05294163572e9
   - filename: screens/Home/MyVcs/IdInputModal.tsx
-    checksum: c18e8bbcf1c8de3327c0920fddcf1b6df54b74d894e3f04677f498712c680fe9  
+    checksum: c18e8bbcf1c8de3327c0920fddcf1b6df54b74d894e3f04677f498712c680fe9
   - filename: screens/Home/MyVcs/OtpVerificationModal.tsx
-    checksum: c42e2387dfc2cc637033ae849d8b2c2fc30cabaeb77e074661cf466a8476e947  
+    checksum: c42e2387dfc2cc637033ae849d8b2c2fc30cabaeb77e074661cf466a8476e947
   - filename: shared/commonUtil.ts
     checksum: e456f6aa366558e6a9b0761c752ff0a8072f25faf2d1e3ff20987a3b03d99742
   - filename: screens/Home/MyVcs/GetIdInputModal.tsx
-    checksum: 1a15e4327b358ffee8bddfe412a38873ad6d4414d2b1d6bffd3c1782f5ec852f  
+    checksum: 1a15e4327b358ffee8bddfe412a38873ad6d4414d2b1d6bffd3c1782f5ec852f
   - filename: screens/Home/IntroSlidersScreen.tsx
     checksum: 9880724461b194db7651737576ad2fd2db9cf3b4e732747f59be422a7ff4e4a1
   - filename: .env
@@ -208,9 +208,9 @@ fileignoreconfig:
   - filename: jest.setup.js
     checksum: 2576884c00d7f90f20d4f9c5f1ec9ee97f4c41a2d9d37a649eaf26bfc2c01a50
   - filename: __mocks__/react-native-rsa-native.mock.js
-    checksum: f5a4254f4d172107231a51ce0968ef1ad7ab0b8f0b5a4db72d1d5bc4e9ce179a  
+    checksum: f5a4254f4d172107231a51ce0968ef1ad7ab0b8f0b5a4db72d1d5bc4e9ce179a
   - filename: __mocks__/react-native-secure-key-store.mock.js
-    checksum: 249eeeb9f8cf083f8d008882a5aeab194e9e6344f68732a2a8c78a69ff5f2ee8  
+    checksum: 249eeeb9f8cf083f8d008882a5aeab194e9e6344f68732a2a8c78a69ff5f2ee8
   - filename: __mocks__/jest-init.js
     checksum: 7cec36ae248f04fe50235f1281be455351002acbb6fdc881ad327a30b86ba5e5
   - filename: components/ActivityLogEvent.test.ts
@@ -220,9 +220,9 @@ fileignoreconfig:
   - filename: __mocks__/react-native-keychain.mock.js
     checksum: cc2798f843b776e70d957a4f7cdf47e199a29d9f6547fb9f59753108e8f252fa
   - filename: machines/auth.ts
-    checksum: 46195ee93f9b7ac6794a06eeef5dee5ea242047a557af8bf95df04e1343d7b9e 
+    checksum: 46195ee93f9b7ac6794a06eeef5dee5ea242047a557af8bf95df04e1343d7b9e
   - filename: shared/commonUtil.generated.test.ts
-    checksum: 4ca5983bb133f8f02bfd52fd0cc49ce37b24b164f3ca78a03ad97bb353ed00a4 
+    checksum: 4ca5983bb133f8f02bfd52fd0cc49ce37b24b164f3ca78a03ad97bb353ed00a4
   - filename: __mocks__/en.mock.json
     checksum: b34340a3f40c691f06698f7758b8c068a09ed7215098a0d11baed191c0972e04
   - filename: ios/Inji.xcodeproj/project.pbxproj
@@ -237,6 +237,6 @@ fileignoreconfig:
     checksum: c310de13b855b22fe68e8fa954dc3a8a4728284c5904da99986a1f4eac8ea0be
   - filename: screens/Home/MyVcsTabMachine.typegen.ts
     checksum: 948efb4d61551e4f3cd9eb9913b927158daa5c3d16f49ad297e7cb63190bc023
-  - filename: machines/issuersMachine.typegen.ts
+  - filename: machines/IssuersMachine.typegen.ts
     checksum: 959fef1e51f0f3d5b12933f7b362e96401fb776ab12f0d13c6e542918b2ff255
     version: ""

@@ -38,7 +38,7 @@ import GoogleDriveIcon from '../../assets/Gdrive_Logo.svg';
 import GoogleDriveIconSmall from '../../assets/google-drive-28.svg';
 import ICloudLogo from '../../assets/Icloud-Logo.svg';
 import KebabIcon from '../../assets/Detailed_view_kebab_icon.svg';
-import {displayType} from '../../machines/issuersMachine';
+import {displayType} from '../../machines/Issuers/IssuersMachine';
 import {IssuerProps} from '../openId4VCI/Issuer';
 import Backup from '../../assets/Backup.svg';
 import Restore from '../../assets/Restore.svg';
@@ -161,6 +161,7 @@ export class SvgImage {
       />
     );
   }
+
   static OutlinedScheduleIcon() {
     return (
       <OutlinedScheduleIcon
