@@ -15,7 +15,7 @@ export const CredentialType: React.FC<CredentialTypeProps> = props => {
   return (
     <Pressable
       accessible={false}
-      {...testIDProps(`issuer-${props.testID}`)}
+      {...testIDProps(`credentialTypeItem-${props.testID}`)}
       onPress={props.onPress}
       style={({pressed}) =>
         pressed
@@ -36,7 +36,7 @@ export const CredentialType: React.FC<CredentialTypeProps> = props => {
       </View>
       <View style={Theme.IssuersScreenStyles.issuerBoxContent}>
         <Text
-          testID={`issuerHeading-${props.testID}`}
+          testID={`credentialTypeHeading-${props.testID}`}
           style={Theme.IssuersScreenStyles.issuerHeading}>
           {selectedIssuerDisplayObject?.name}
         </Text>

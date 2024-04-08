@@ -24,10 +24,10 @@ import {
 import {TelemetryConstants} from '../../shared/telemetry/TelemetryConstants';
 import {KeyPair} from 'react-native-rsa-native';
 
-export const IssuersActions = model => {
+export const IssuersActions = (model: any) => {
   return {
     setIssuers: model.assign({
-      issuers: (_, event) => event.data,
+      issuers: (_: any, event: any) => event.data,
     }),
     setNoInternet: model.assign({
       errorMessage: () => ErrorMessage.NO_INTERNET,
@@ -45,14 +45,14 @@ export const IssuersActions = model => {
       loadingReason: null,
     }),
     setSelectedCredentialType: model.assign({
-      selectedCredentialType: (_, event) => event.credType,
+      selectedCredentialType: (_: any, event: any) => event.credType,
     }),
     setCredentialTypes: model.assign({
-      credentialTypes: (_, event) => event.data.supportedCredentials,
+      credentialTypes: (_: any, event: any) => event.data.supportedCredentials,
     }),
     setError: model.assign({
-      errorMessage: (_, event) => {
-        console.error('Error occured ', event.data.message);
+      errorMessage: (_: any, event: any) => {
+        console.error('Error occurred ', event.data.message);
         const error = event.data.message;
         switch (error) {
           case NETWORK_REQUEST_FAILED:
@@ -65,27 +65,27 @@ export const IssuersActions = model => {
       },
     }),
     setOIDCConfigError: model.assign({
-      errorMessage: (_, event) => event.data.toString(),
+      errorMessage: (_: any, event: any) => event.data.toString(),
     }),
     resetError: model.assign({
       errorMessage: '',
     }),
 
     loadKeyPair: assign({
-      publicKey: (_, event) => event.response?.publicKey,
-      privateKey: (context, event) =>
+      publicKey: (_, event: any) => event.response?.publicKey,
+      privateKey: (context: any, event: any) =>
         event.response?.privateKey
           ? event.response.privateKey
           : context.privateKey,
     }),
     getKeyPairFromStore: send(StoreEvents.GET(Issuers_Key_Ref), {
-      to: context => context.serviceRefs.store,
+      to: (context: any) => context.serviceRefs.store,
     }),
     sendBackupEvent: send(BackupEvents.DATA_BACKUP(true), {
-      to: context => context.serviceRefs.backup,
+      to: (context: any) => context.serviceRefs.backup,
     }),
     storeKeyPair: send(
-      context => {
+      (context: any) => {
         return StoreEvents.SET(Issuers_Key_Ref, {
           publicKey: context.publicKey,
           privateKey: context.privateKey,
@@ -98,33 +98,31 @@ export const IssuersActions = model => {
     storeVerifiableCredentialMeta: send(
       context => StoreEvents.PREPEND(MY_VCS_STORE_KEY, getVCMetadata(context)),
       {
-        to: context => context.serviceRefs.store,
+        to: (context: any) => context.serviceRefs.store,
       },
     ),
 
-    setMetadataInCredentialData: (context, event) => {
-      const updatedCredentialWrapper = updateVCmetadataOfCredentialWrapper(
+    setMetadataInCredentialData: (context: any) => {
+      return updateVCmetadataOfCredentialWrapper(
         context,
         context.credentialWrapper,
       );
-      return updatedCredentialWrapper;
     },
 
     setVCMetadata: assign({
-      vcMetadata: (context, event) => {
-        const metadata = getVCMetadata(context);
-        return metadata;
+      vcMetadata: context => {
+        return getVCMetadata(context);
       },
     }),
 
     storeVerifiableCredentialData: send(
-      context =>
+      (context: any) =>
         StoreEvents.SET(getVCMetadata(context).getVcKey(), {
           ...context.credentialWrapper,
           vcMetadata: getVCMetadata(context),
         }),
       {
-        to: context => context.serviceRefs.store,
+        to: (context: any) => context.serviceRefs.store,
       },
     ),
 
@@ -136,12 +134,12 @@ export const IssuersActions = model => {
         };
       },
       {
-        to: context => context.serviceRefs.vcMeta,
+        to: (context: any) => context.serviceRefs.vcMeta,
       },
     ),
 
     storeVcsContext: send(
-      context => {
+      (context: any) => {
         return {
           type: 'VC_DOWNLOADED',
           vcMetadata: getVCMetadata(context),
@@ -154,26 +152,26 @@ export const IssuersActions = model => {
     ),
 
     setSelectedIssuers: model.assign({
-      selectedIssuer: (_, event) => event.data,
+      selectedIssuer: (_: any, event: any) => event.data,
     }),
     setSelectedIssuerId: model.assign({
-      selectedIssuerId: (_, event) => event.id,
+      selectedIssuerId: (_: any, event: any) => event.id,
     }),
     setTokenResponse: model.assign({
-      tokenResponse: (_, event) => event.data,
+      tokenResponse: (_: any, event: any) => event.data,
     }),
     setVerifiableCredential: model.assign({
-      verifiableCredential: (_, event) => {
+      verifiableCredential: (_: any, event: any) => {
         return event.data.verifiableCredential;
       },
     }),
     setCredentialWrapper: model.assign({
-      credentialWrapper: (_, event) => {
+      credentialWrapper: (_: any, event: any) => {
         return event.data;
       },
     }),
     setPublicKey: assign({
-      publicKey: (_, event) => {
+      publicKey: (_, event: any) => {
         if (!isHardwareKeystoreExists) {
           return (event.data as KeyPair).public;
         }
@@ -182,7 +180,7 @@ export const IssuersActions = model => {
     }),
 
     setPrivateKey: assign({
-      privateKey: (_, event) => (event.data as KeyPair).private,
+      privateKey: (_, event: any) => (event.data as KeyPair).private,
     }),
 
     logDownloaded: send(
@@ -198,7 +196,7 @@ export const IssuersActions = model => {
         });
       },
       {
-        to: context => context.serviceRefs.activityLog,
+        to: (context: any) => context.serviceRefs.activityLog,
       },
     ),
     sendSuccessEndEvent: () => {
@@ -228,7 +226,7 @@ export const IssuersActions = model => {
     },
 
     updateVerificationErrorMessage: assign({
-      verificationErrorMessage: (context, event) =>
+      verificationErrorMessage: (context: any, event: any) =>
         (event.data as Error).message,
     }),
 

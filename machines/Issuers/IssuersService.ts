@@ -24,7 +24,7 @@ import {
 } from '../../shared/telemetry/TelemetryUtils';
 import {TelemetryConstants} from '../../shared/telemetry/TelemetryConstants';
 
-export const IssuersService = (model: any) => {
+export const IssuersService = () => {
   return {
     isUserSignedAlready: () => async () => {
       return await Cloud.isSignedInAlready();
@@ -70,7 +70,7 @@ export const IssuersService = (model: any) => {
       credential = updateCredentialInformation(context, credential);
       return credential;
     },
-    invokeAuthorization: async context => {
+    invokeAuthorization: async (context: any) => {
       sendImpressionEvent(
         getImpressionEventData(
           TelemetryConstants.FlowType.vcDownload,

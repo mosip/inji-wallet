@@ -22,7 +22,7 @@ export const CredentialTypeSelectionScreen: React.FC<
 
   return (
     <Modal
-      testID="settingsScreen"
+      testID="credentialTypeSelectionScreen"
       isVisible={controller.isSelectingCredentialType}
       arrowLeft={true}
       headerTitle={selectedIssuerDisplayObject.name}
@@ -30,7 +30,7 @@ export const CredentialTypeSelectionScreen: React.FC<
       onDismiss={() => controller.CANCEL()}>
       <Column style={Theme.IssuersScreenStyles.issuerListOuterContainer}>
         <Text
-          testID="issuersScreenDescription"
+          testID="credentialTypeSelectionScreenDescription"
           style={{
             ...Theme.TextStyles.regularGrey,
             ...Theme.IssuersScreenStyles.issuersSearchSubText,

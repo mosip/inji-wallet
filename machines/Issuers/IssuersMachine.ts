@@ -381,7 +381,7 @@ export const IssuersMachine = model.createMachine(
   },
   {
     actions: IssuersActions(model),
-    services: IssuersService(model),
+    services: IssuersService(),
     guards: IssuersGuards(),
   },
 );
