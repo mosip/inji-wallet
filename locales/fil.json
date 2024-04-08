@@ -167,7 +167,7 @@
     "title": "Magdagdag ng bagong card",
     "description": "Mangyaring piliin ang iyong gustong tagabigay mula sa mga opsyon sa ibaba upang magdagdag ng bagong card.",
     "searchByIssuersName": "Maghanap ayon sa pangalan ng Nag-isyu",
-    "credentialTypeDescription": "Mangyaring pumili ng mga kredensyal mula sa listahan sa ibaba",
+    "credentialTypeDescription": "Mangyaring pumili ng kredensyal",
     "help": "Tulong?",
     "loaders": {
       "loading": "Naglo-load...",
