@@ -168,7 +168,7 @@
     "title": "Add new card",
     "description": "Please choose your preferred issuer from the options below to add a new card.",
     "searchByIssuersName": "Search by Issuer’s name",
-    "credentialTypeDescription": "Please select a credentials from the below list",
+    "credentialTypeDescription": "Please select a credential",
     "help": "Help?",
     "loaders": {
       "loading": "Loading...",
