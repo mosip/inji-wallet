@@ -19,7 +19,7 @@ export const IssuersMachine = model.createMachine(
     id: Issuer_Tab_Ref_Id,
     context: model.initialContext,
     initial: 'displayIssuers',
-    tsTypes: {} as import('../issuersMachine.typegen').Typegen0,
+    tsTypes: {} as import('./issuersMachine.typegen').Typegen0,
     schema: {
       context: model.initialContext,
       events: {} as EventFrom<typeof model>,

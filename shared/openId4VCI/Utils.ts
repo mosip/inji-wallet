@@ -109,10 +109,6 @@ export const getBody = async context => {
 };
 
 export const getCredentialType = (context: any) => {
-  console.log(
-    '>>>>>>> Context from getCredentialType -> ',
-    JSON.stringify(context, null, 4),
-  );
   return context.selectedCredentialType?.credential_definition?.type
     ? context.selectedCredentialType.credential_definition.type
     : context.selectedIssuer?.credential_type
