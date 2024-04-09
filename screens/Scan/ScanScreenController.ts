@@ -24,7 +24,7 @@ import {
   selectIsMinimumStorageRequiredForAuditEntryLimitReached,
 } from '../../machines/bleShare/scan/scanMachine';
 import {BOTTOM_TAB_ROUTES} from '../../routes/routesConstants';
-import {MainBottomTabParamList} from '../../routes/main';
+import {MainBottomTabParamList} from '../../routes/routeTypes';
 import {useNavigation, NavigationProp} from '@react-navigation/native';
 
 export function useScanScreen() {

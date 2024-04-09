@@ -58,10 +58,6 @@ export const VCItemActions = model => {
       },
     ),
     setContext: model.assign((context, event) => {
-      const {...data} = event.response;
-      return {...context, ...data};
-    }),
-    setCredential: model.assign((context, event) => {
       return {
         ...context,
         ...event.response,
@@ -160,6 +156,11 @@ export const VCItemActions = model => {
           isPinned: !context.vcMetadata.isPinned,
         }),
     }),
+
+    resetIsMachineInKebabPopupState: assign({
+      isMachineInKebabPopupState: () => false,
+    }),
+
     sendBackupEvent: send(BackupEvents.DATA_BACKUP(true), {
       to: (context: any) => context.serviceRefs.backup,
     }),
