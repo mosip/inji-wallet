@@ -2,10 +2,13 @@ import {
   GoogleSignin,
   statusCodes,
 } from '@react-native-google-signin/google-signin';
+import RNSecureStorage, {ACCESSIBLE} from 'react-native-secure-key-store';
 import {CloudStorage, CloudStorageScope} from 'react-native-cloud-storage';
 import {GOOGLE_ANDROID_CLIENT_ID} from 'react-native-dotenv';
 import {readFile, writeFile} from 'react-native-fs';
 import {BackupDetails} from '../types/backup-and-restore/backup';
+import {AppleButton, appleAuth} from '@invertase/react-native-apple-authentication';
+import jwt_decode from 'jwt-decode';
 import {bytesToMB, sleep} from './commonUtil';
 import {
   IOS_SIGNIN_FAILED,
@@ -125,10 +128,60 @@ class Cloud {
       return accessToken;
     }
   }
+  
+  
+
+   
 
   static async signIn(): Promise<SignInResult | IsIOSResult> {
     if (isIOS()) {
-      return {isIOS: true};
+    let profile;
+      console.warn('Beginning Apple Authentication');
+
+      // start a login request
+      try {
+        const appleAuthRequestResponse = await appleAuth.performRequest({
+          requestedOperation: appleAuth.Operation.LOGIN,
+          requestedScopes: [appleAuth.Scope.FULL_NAME, appleAuth.Scope.EMAIL],
+        });
+      //   const decodedToken=jwt_decode(appleAuthRequestResponse.identityToken + "")
+      //   console.log('appleAuthRequestResponse', appleAuthRequestResponse);
+      //  console.log(decodedToken);
+        const {
+          email,
+          nonce,
+          identityToken,
+          realUserStatus /* etc */,
+        } = appleAuthRequestResponse;
+        profile={email:email,picture: null};
+        await RNSecureStorage.set('userIdentifier', JSON.stringify(appleAuthRequestResponse),{accessible: ACCESSIBLE.WHEN_UNLOCKED});
+        console.log()
+        console.warn(`Apple Authentication Completed, ${email}`);
+        console.warn("profile"+profile)
+      
+      return {status:this.status.SUCCESS,profileInfo:profile}
+      } catch (error) {
+        if (error.code === appleAuth.Error.CANCELED) {
+          console.warn('User canceled Apple Sign in.');
+          return {
+            status: this.status.DECLINED,
+            error,
+          };
+        } else {
+          
+          console.error(error);
+          return {
+            status: this.status.FAILURE,
+            error,
+          };
+        }
+      }
+    
+      
+    
+      // Extract the user's email address from the response
+      
+      
     }
     this.configure();
     try {
@@ -166,11 +219,37 @@ class Cloud {
 
   static async isSignedInAlready(): Promise<isSignedInResult> {
     try {
+      console.warn("I am in is already signed in")
       if (isIOS()) {
+        console.warn("I am in is already signed in")
         const isSignedIn = await CloudStorage.isCloudAvailable();
+        console.log(isSignedIn)
+        const userIdentifier = await RNSecureStorage.get('userIdentifier');
+        const userToken=JSON.parse(userIdentifier+"");
+        const user=userToken.user;
+        const email=userToken.email;
+        console.warn(email)
+        const credentialState = await appleAuth.getCredentialStateForUser(user);
+        let profile={email:email,picture:undefined};
+        if((credentialState === appleAuth.State.AUTHORIZED) && isSignedIn==true)
+        {
+          
+          return{
+            isSignedIn:true,
+            isAuthorisedd:true,
+            profileInfo:profile
+          }
+        }
+      
+        else{
+          console.log("cloud "+ isSignedIn);
         return {
-          isSignedIn,
+         
+          isSignedIn:false,
+          isAuthorisedd:true,
+          profileInfo:profile
         };
+      }
       }
       this.configure();
       const isSignedIn = await GoogleSignin.isSignedIn();
@@ -180,12 +259,14 @@ class Cloud {
         return {
           isSignedIn: true,
           profileInfo,
+          isAuthorisedd:true,
         };
       } else {
         const profileInfo = await this.profileInfo();
         return {
           isSignedIn: true,
           profileInfo,
+          isAuthorisedd:true,
         };
       }
     } catch (error) {
@@ -199,6 +280,7 @@ class Cloud {
       return {
         error: errorReason || error,
         isSignedIn: false,
+        isAuthorisedd:false,
       };
     }
   }
@@ -431,6 +513,7 @@ export type isSignedInResult = {
   isSignedIn: boolean;
   error?: string | null;
   profileInfo?: ProfileInfo;
+  isAuthorisedd?:boolean;
 };
 
 export type CloudUploadResult = {

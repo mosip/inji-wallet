@@ -23,7 +23,7 @@ const BackupAndRestoreScreen: React.FC<BackupAndRestoreProps> = props => {
   const restoreController = useBackupRestoreScreen();
 
   const {t} = useTranslation('BackupAndRestore');
-
+  console.log("i am backup");
   useEffect(() => {
     if (!props.isSigningIn) {
       backupController.LAST_BACKUP_DETAILS();
