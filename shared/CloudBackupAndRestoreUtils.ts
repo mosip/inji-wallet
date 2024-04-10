@@ -134,7 +134,7 @@ class Cloud {
 
   static async signIn(): Promise<SignInResult | IsIOSResult> {
     if (isIOS()) {
-      let profile;
+      let profileInfo;
 
       // start a login request
       try {
@@ -142,19 +142,16 @@ class Cloud {
           requestedOperation: appleAuth.Operation.LOGIN,
           requestedScopes: [appleAuth.Scope.FULL_NAME, appleAuth.Scope.EMAIL],
         });
-        //   const decodedToken=jwt_decode(appleAuthRequestResponse.identityToken + "")
-        //   console.log('appleAuthRequestResponse', appleAuthRequestResponse);
-        //  console.log(decodedToken);
         const {email, nonce, identityToken, realUserStatus /* etc */} =
           appleAuthRequestResponse;
-        profile = {email: email, picture: null};
+        profileInfo = {email: email, picture: null};
         await RNSecureStorage.set(
           'userIdentifier',
           JSON.stringify(appleAuthRequestResponse),
           {accessible: ACCESSIBLE.WHEN_UNLOCKED},
         );
 
-        return {status: this.status.SUCCESS, profileInfo: profile};
+        return {status: this.status.SUCCESS, profileInfo: profileInfo};
       } catch (error) {
         if (error.code === appleAuth.Error.CANCELED) {
           console.warn('User canceled Apple Sign in.');
@@ -170,8 +167,6 @@ class Cloud {
           };
         }
       }
-
-      // Extract the user's email address from the response
     }
     this.configure();
     try {
@@ -218,21 +213,21 @@ class Cloud {
         const email = userToken.email;
 
         const credentialState = await appleAuth.getCredentialStateForUser(user);
-        let profile = {email: email, picture: undefined};
+        const profileInfo = {email: email, picture: undefined};
         if (
           credentialState === appleAuth.State.AUTHORIZED &&
-          isSignedIn == true
+          isSignedIn === true
         ) {
           return {
             isSignedIn: true,
-            isAuthorisedd: true,
-            profileInfo: profile,
+            isAuthorised: true,
+            profileInfo: profileInfo,
           };
         } else {
           return {
             isSignedIn: false,
-            isAuthorisedd: true,
-            profileInfo: profile,
+            isAuthorised: true,
+            profileInfo: profileInfo,
           };
         }
       }
@@ -244,14 +239,14 @@ class Cloud {
         return {
           isSignedIn: true,
           profileInfo,
-          isAuthorisedd: true,
+          isAuthorised: true,
         };
       } else {
         const profileInfo = await this.profileInfo();
         return {
           isSignedIn: true,
           profileInfo,
-          isAuthorisedd: true,
+          isAuthorised: true,
         };
       }
     } catch (error) {
@@ -265,7 +260,7 @@ class Cloud {
       return {
         error: errorReason || error,
         isSignedIn: false,
-        isAuthorisedd: false,
+        isAuthorised: false,
       };
     }
   }
@@ -498,7 +493,7 @@ export type isSignedInResult = {
   isSignedIn: boolean;
   error?: string | null;
   profileInfo?: ProfileInfo;
-  isAuthorisedd?: boolean;
+  isAuthorised?: boolean;
 };
 
 export type CloudUploadResult = {

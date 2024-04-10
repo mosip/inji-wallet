@@ -10,7 +10,6 @@ import testIDProps from '../../shared/commonUtil';
 import {Modal} from './Modal';
 
 export const Error: React.FC<ErrorProps> = props => {
-  console.log("I am error")
   const {t} = useTranslation('common');
   const errorContent = () => {
     return (

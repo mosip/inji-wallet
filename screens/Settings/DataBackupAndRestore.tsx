@@ -34,7 +34,6 @@ export const DataBackupAndRestore: React.FC = ({} = () => {
     controller.isSigningIn,
     delay,
   );
-  console.warn(controller.isCloudSignInFailed)
   return (
     <React.Fragment>
       <Pressable
@@ -76,7 +75,8 @@ export const DataBackupAndRestore: React.FC = ({} = () => {
         </ListItem>
       </Pressable>
 
-      {(controller.isSigningInFailed && !isIOS() || (controller.isCloudSignInFailed && isIOS())) && (
+      {((controller.isSigningInFailed && !isIOS()) ||
+        (controller.isCloudSignInFailed && isIOS())) && (
         <Error
           isModal
           alignActionsOnEnd
@@ -125,14 +125,15 @@ export const DataBackupAndRestore: React.FC = ({} = () => {
         />
       )}
 
-      {((isSigningIn || isSigningInSuccessful) && !controller.isCloudSignInFailed) && (
-        <BackupAndRestoreScreen
-          profileInfo={controller.profileInfo}
-          onBackPress={controller.GO_BACK}
-          isSigningIn={controller.isSigningIn}
-          shouldTriggerAutoBackup={controller.shouldTriggerAutoBackup}
-        />
-      )}
+      {(isSigningIn || isSigningInSuccessful) &&
+        !controller.isCloudSignInFailed && (
+          <BackupAndRestoreScreen
+            profileInfo={controller.profileInfo}
+            onBackPress={controller.GO_BACK}
+            isSigningIn={controller.isSigningIn}
+            shouldTriggerAutoBackup={controller.shouldTriggerAutoBackup}
+          />
+        )}
       {isLoaderVisible && <Loader title={t('loadingSubtitle')} isModal />}
 
       <AccountSelectionConfirmation

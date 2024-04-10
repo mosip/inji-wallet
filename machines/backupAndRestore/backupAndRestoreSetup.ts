@@ -160,7 +160,7 @@ export const backupAndRestoreSetupMachine = model.createMachine(
             {
               cond: 'isSignedIn',
               actions: ['setProfileInfo', 'unsetIsLoading'],
-              target: 'backupAndRestore', //backupAndRestore abhishek
+              target: 'backupAndRestore',
             },
             {
               cond: 'isNetworkError',
@@ -168,19 +168,10 @@ export const backupAndRestoreSetupMachine = model.createMachine(
               target: '.noInternet',
             },
             {
-              cond: 'isAuthorised',
+              cond: 'isAuthorisedAndCloudAccessNotGiven',
               actions: ['unsetIsLoading'],
               target: '.error',
             },
-            // {
-            //   cond: 'isIOSAndNotSignedIn',
-            //   actions: [
-            //     'unsetIsLoading',
-            //     'setErrorReasonAsAccountRequired',
-            //     'sendBackupAndRestoreSetupErrorEvent',
-            //   ],
-            //   target: 'signIn', // Abhisheks changes (.error)
-            // },
             {
               actions: ['unsetIsLoading'],
               target: 'signIn',
@@ -190,7 +181,6 @@ export const backupAndRestoreSetupMachine = model.createMachine(
         initial: 'idle',
         states: {
           idle: {},
-
           error: {
             entry: 'unsetIsLoading',
             on: {
@@ -389,9 +379,8 @@ export const backupAndRestoreSetupMachine = model.createMachine(
       isSignInSuccessful: (_context, event) => {
         return (event.data as SignInResult).status === Cloud.status.SUCCESS;
       },
-      isAuthorised: (_context, event) => {
-       // console.log((event.data as isSignedInResult).isAuthorisedd)
-        return (event.data as isSignedInResult).isAuthorisedd || false;
+      isAuthorisedAndCloudAccessNotGiven: (_context, event) => {
+        return (event.data as isSignedInResult).isAuthorised || false;
       },
     },
   },

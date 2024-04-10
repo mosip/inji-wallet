@@ -72,7 +72,10 @@ export function useBackupAndRestoreSetup() {
       backupAndRestoreSetupService,
       selectIsSigningInFailure,
     ),
-    isCloudSignInFailed:useSelector(backupAndRestoreSetupService,selectIsCloudSignedInFailed),
+    isCloudSignInFailed: useSelector(
+      backupAndRestoreSetupService,
+      selectIsCloudSignedInFailed,
+    ),
     isSigningInSuccessful: useSelector(
       backupAndRestoreSetupService,
       selectIsSigningInSuccessful,
@@ -114,5 +117,3 @@ export function useBackupAndRestoreSetup() {
     },
   };
 }
-
-

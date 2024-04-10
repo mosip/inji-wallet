@@ -125,4 +125,6 @@ export const IOS_SIGNIN_FAILED = 'iCloud not available';
 export const REQUEST_TIMEOUT = 'request timedout';
 export const BIOMETRIC_CANCELLED = 'User has cancelled biometric';
 export const GOOGLE_DRIVE_NAME = 'Google Drive';
+export const GMAIL = 'gmail';
+export const APPLE = 'Apple';
 export const ICLOUD_DRIVE_NAME = 'iCloud';

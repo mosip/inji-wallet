@@ -14,7 +14,10 @@ import {useBackupScreen} from './BackupController';
 import {BannerNotificationContainer} from '../../components/BannerNotificationContainer';
 import {useBackupRestoreScreen} from '../Settings/BackupRestoreController';
 import {Icon} from 'react-native-elements';
-import testIDProps, {getDriveName} from '../../shared/commonUtil';
+import testIDProps, {
+  getAccountType,
+  getDriveName,
+} from '../../shared/commonUtil';
 import {HelpScreen} from '../../components/HelpScreen';
 import {isAndroid, isIOS} from '../../shared/constants';
 
@@ -23,7 +26,7 @@ const BackupAndRestoreScreen: React.FC<BackupAndRestoreProps> = props => {
   const restoreController = useBackupRestoreScreen();
 
   const {t} = useTranslation('BackupAndRestore');
-  
+
   useEffect(() => {
     if (!props.isSigningIn) {
       backupController.LAST_BACKUP_DETAILS();
@@ -142,7 +145,32 @@ const BackupAndRestoreScreen: React.FC<BackupAndRestoreProps> = props => {
         <Text
           testID="storageInfo"
           style={Theme.BackupAndRestoreStyles.backupProgressText}>
-          {t('storage')}
+          {t('storage', {
+            driveName: getDriveName(),
+            accountType: getAccountType(),
+          })}
+        </Text>
+      </View>
+      <AccountInformation
+        email={props.profileInfo?.email}
+        picture={props.profileInfo?.picture}
+      />
+    </SectionLayout>
+  );
+
+  const IosAccountSection = (
+    <SectionLayout
+      testId="AccountSection"
+      headerText={''}
+      headerIcon={SvgImage.ICloudIcon(86, 25)}>
+      <View style={{marginBottom: 19}}>
+        <Text
+          testID="storageInfo"
+          style={Theme.BackupAndRestoreStyles.backupProgressText}>
+          {t('storage', {
+            driveName: getDriveName(),
+            accountType: getAccountType(),
+          })}
         </Text>
       </View>
       <AccountInformation
@@ -200,16 +228,20 @@ const BackupAndRestoreScreen: React.FC<BackupAndRestoreProps> = props => {
       headerRight={
         <HelpScreen
           source={'BackUp'}
+          source={'BackUp'}
           triggerComponent={
-            <Icon
-              {...testIDProps('help')}
-              accessible={true}
-              name="question"
-              type="font-awesome"
-              size={21}
-              style={Theme.Styles.IconContainer}
-              color={Theme.Colors.Icon}
-            />
+            <View testID="help" style={Theme.HelpScreenStyle.viewStyle}>
+              <Row crossAlign="center" style={Theme.HelpScreenStyle.rowStyle}>
+                <View testID="helpIcon" style={Theme.HelpScreenStyle.iconStyle}>
+                  {SvgImage.infoIcon()}
+                </View>
+                <Text
+                  testID="helpText"
+                  style={Theme.HelpScreenStyle.labelStyle}>
+                  {t('Help?')}
+                </Text>
+              </Row>
+            </View>
           }
         />
       }
