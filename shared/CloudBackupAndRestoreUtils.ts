@@ -476,7 +476,7 @@ export default Cloud;
 
 export type ProfileInfo = {
   email: string;
-  picture: string;
+  picture: string|undefined;
 };
 
 export type SignInResult = {

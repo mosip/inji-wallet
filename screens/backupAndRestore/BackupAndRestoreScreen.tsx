@@ -260,6 +260,7 @@ const BackupAndRestoreScreen: React.FC<BackupAndRestoreProps> = props => {
           <ScrollView>
             {LastBackupSection}
             {isAndroid() && AccountSection}
+            {isIOS() && IosAccountSection}
             {RestoreSection}
           </ScrollView>
         )}
