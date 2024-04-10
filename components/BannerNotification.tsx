@@ -38,6 +38,11 @@ export enum BannerStatusType {
   ERROR = 'error',
 }
 
+export type BannerStatus =
+  | BannerStatusType.INFO
+  | BannerStatusType.SUCCESS
+  | BannerStatusType.ERROR;
+
 export interface BannerNotificationProps {
   message: string;
   onClosePress: () => void;

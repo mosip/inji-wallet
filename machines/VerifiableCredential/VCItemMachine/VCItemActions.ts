@@ -26,9 +26,35 @@ import {ActivityLogEvents} from '../../activityLog';
 import {BackupEvents} from '../../backupAndRestore/backup';
 import {VcMetaEvents} from '../VCMetaMachine/VCMetaMachine';
 import {WalletBindingResponse} from '../VCMetaMachine/vc';
+import {BannerStatusType} from '../../../components/BannerNotification';
 
 export const VCItemActions = model => {
   return {
+    setIsVerified: assign({
+      vcMetadata: (context: any) =>
+        new VCMetadata({
+          ...context.vcMetadata,
+          isVerified: true,
+        }),
+    }),
+    resetIsVerified: assign({
+      vcMetadata: (context: any) =>
+        new VCMetadata({
+          ...context.vcMetadata,
+          isVerified: false,
+        }),
+    }),
+    setVerificationStatusType: assign({
+      verificationStatusType: (_, event) => {
+        return event.response.verificationStatusType === BannerStatusType.INFO
+          ? BannerStatusType.INFO
+          : (event.response.isVerified && BannerStatusType.SUCCESS) ||
+              BannerStatusType.ERROR;
+      },
+    }),
+    resetVerificationBannerStatus: assign({
+      verificationStatusType: () => null,
+    }),
     setCommunicationDetails: model.assign({
       communicationDetails: (_context, event) => {
         const communicationDetails: CommunicationDetails = {

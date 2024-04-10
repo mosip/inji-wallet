@@ -5,6 +5,10 @@ import {getMosipLogo} from '../../../components/VC/common/VCUtils';
 
 type State = StateFrom<typeof VCItemMachine>;
 
+export function selectVerificationStatusType(state: State) {
+  return state.context.verificationStatusType;
+}
+
 export function selectVerifiableCredential(state: State) {
   return state.context.verifiableCredential;
 }
@@ -68,24 +72,24 @@ export function selectBindingAuthFailedError(state: State) {
 }
 
 export function selectAcceptingBindingOtp(state: State) {
-  return state.matches('walletBinding.acceptingBindingOTP');
+  return state.matches('existingState.walletBinding.acceptingBindingOTP');
 }
 
 export function selectWalletBindingInProgress(state: State) {
   return (
-    state.matches('walletBinding.requestingBindingOTP') ||
-    state.matches('walletBinding.addingWalletBindingId') ||
-    state.matches('walletBinding.addKeyPair') ||
-    state.matches('walletBinding.updatingPrivateKey')
+    state.matches('existingState.walletBinding.requestingBindingOTP') ||
+    state.matches('existingState.walletBinding.addingWalletBindingId') ||
+    state.matches('existingState.walletBinding.addKeyPair') ||
+    state.matches('existingState.walletBinding.updatingPrivateKey')
   );
 }
 
 export function selectBindingWarning(state: State) {
-  return state.matches('walletBinding.showBindingWarning');
+  return state.matches('existingState.walletBinding.showBindingWarning');
 }
 
 export function selectRemoveWalletWarning(state: State) {
-  return state.matches('kebabPopUp.removeWallet');
+  return state.matches('existingState.kebabPopUp.removeWallet');
 }
 
 export function selectIsPinned(state: State) {
@@ -97,11 +101,11 @@ export function selectOtpError(state: State) {
 }
 
 export function selectShowActivities(state: State) {
-  return state.matches('kebabPopUp.showActivities');
+  return state.matches('existingState.kebabPopUp.showActivities');
 }
 
 export function selectShowWalletBindingError(state: State) {
-  return state.matches('walletBinding.showingWalletBindingError');
+  return state.matches('existingState.walletBinding.showingWalletBindingError');
 }
 
 export function selectVc(state: State) {

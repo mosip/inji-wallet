@@ -241,4 +241,10 @@ fileignoreconfig:
     checksum: 959fef1e51f0f3d5b12933f7b362e96401fb776ab12f0d13c6e542918b2ff255
   - filename: machines/VerifiableCredential/VCMetaMachine/VCMetaMachine.ts
     checksum: f78562c97f1ba605b3175be0b151aff763c6adb168d5e1b975f1ce346c417471
+  - filename: screens/Home/ViewVcModal.tsx
+    checksum: a950171932b20faf1fa17c10ef59692c1c3a9d25c954c6c62808f90fd8f6a3cb
+  - filename: machines/VerifiableCredential/VCItemMachine/VCItemMachine.ts
+    checksum: f0c4da97f5ae941946fa4aa36e6d4cec86d3b360f8328e729d9d9574ca0c38c9
+  - filename: machines/VerifiableCredential/VCItemMachine/VCItemMachine.typegen.ts
+    checksum: 8de92faa9ffa52199480a8431507326f82aad07ae29ffc80bf89fa67767ffafc
     version: ""

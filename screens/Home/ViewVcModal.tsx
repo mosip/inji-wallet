@@ -29,11 +29,13 @@ import {
 import {ActivityIndicator} from '../../components/ui/ActivityIndicator';
 import ShimmerPlaceholder from 'react-native-shimmer-placeholder';
 import LinearGradient from 'react-native-linear-gradient';
+import {BannerNotification} from '../../components/BannerNotification';
 
 export const ViewVcModal: React.FC<ViewVcModalProps> = props => {
   const {t} = useTranslation('ViewVcModal');
   const controller = useViewVcModal(props);
   const profileImage = controller.verifiableCredentialData.face;
+  const verificationStatusType = controller.verificationStatusType;
 
   useEffect(() => {
     if (!controller.verifiableCredentialData.vcMetadata.isVerified) {
@@ -113,6 +115,17 @@ export const ViewVcModal: React.FC<ViewVcModalProps> = props => {
       onDismiss={props.onDismiss}
       headerElevation={2}>
       <BannerNotificationContainer />
+
+      {verificationStatusType != null && (
+        <BannerNotification
+          type={verificationStatusType}
+          message={t(`bannerInfo.${verificationStatusType}`)}
+          onClosePress={() => controller.RESET_VERIFICATION_STATUS_TYPE()}
+          key={'reVerificationInProgress'}
+          testId={'reVerificationInProgress'}
+        />
+      )}
+
       {!isVCLoaded(controller.credential, fields) ? (
         <ActivityIndicator />
       ) : (

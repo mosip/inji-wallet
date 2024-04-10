@@ -24,4 +24,7 @@ export const VCItemEvents = {
   UPDATE_VC_METADATA: (vcMetadata: VCMetadata) => ({vcMetadata}),
   TAMPERED_VC: (key: string) => ({key}),
   SHOW_BINDING_STATUS: () => ({}),
+  VERIFY: () => ({}),
+  SET_VERIFICATION_STATUS_TYPE: (response: unknown) => ({response}),
+  RESET_VERIFICATION_STATUS_TYPE: () => ({}),
 };
