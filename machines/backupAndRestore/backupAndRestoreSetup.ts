@@ -226,7 +226,7 @@ export const backupAndRestoreSetupMachine = model.createMachine(
               target: '.noInternet',
             },
             {
-              cond: 'isIOSAndSignInFailed', // New condition to check if it's iOS and signIn failed
+              cond: 'isIOSAndSignInFailed',
               target: '#backupAndRestoreSetup.init',
             },
             {
@@ -366,7 +366,7 @@ export const backupAndRestoreSetupMachine = model.createMachine(
       isIOSAndSignInFailed: (_context, event) => {
         const isSignInFailed = !(
           (event.data as SignInResult).status === Cloud.status.SUCCESS
-        ); // Adjust according to your data structure
+        );
         return isIOS() && isSignInFailed;
       },
       isConfirmationAlreadyShown: (_context, event) => {

@@ -76,7 +76,7 @@ export const DataBackupAndRestore: React.FC = ({} = () => {
       </Pressable>
 
       {((controller.isSigningInFailed && !isIOS()) ||
-        (controller.isCloudSignInFailed && isIOS())) && (
+        controller.isCloudSignInFailed) && (
         <Error
           isModal
           alignActionsOnEnd

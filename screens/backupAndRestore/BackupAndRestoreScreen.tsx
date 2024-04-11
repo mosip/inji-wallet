@@ -139,30 +139,12 @@ const BackupAndRestoreScreen: React.FC<BackupAndRestoreProps> = props => {
   const AccountSection = (
     <SectionLayout
       testId="AccountSection"
-      headerText={t('driveSettings')}
-      headerIcon={SvgImage.GoogleDriveIconSmall(28, 25)}>
-      <View style={{marginBottom: 19}}>
-        <Text
-          testID="storageInfo"
-          style={Theme.BackupAndRestoreStyles.backupProgressText}>
-          {t('storage', {
-            driveName: getDriveName(),
-            accountType: getAccountType(),
-          })}
-        </Text>
-      </View>
-      <AccountInformation
-        email={props.profileInfo?.email}
-        picture={props.profileInfo?.picture}
-      />
-    </SectionLayout>
-  );
-
-  const IosAccountSection = (
-    <SectionLayout
-      testId="AccountSection"
-      headerText={''}
-      headerIcon={SvgImage.ICloudIcon(86, 25)}>
+      headerText={isIOS() ? t('') : t('driveSettings')}
+      headerIcon={
+        isIOS()
+          ? SvgImage.ICloudIcon(86, 25)
+          : SvgImage.GoogleDriveIconSmall(28, 25)
+      }>
       <View style={{marginBottom: 19}}>
         <Text
           testID="storageInfo"
@@ -228,7 +210,6 @@ const BackupAndRestoreScreen: React.FC<BackupAndRestoreProps> = props => {
       headerRight={
         <HelpScreen
           source={'BackUp'}
-          source={'BackUp'}
           triggerComponent={
             <View testID="help" style={Theme.HelpScreenStyle.viewStyle}>
               <Row crossAlign="center" style={Theme.HelpScreenStyle.rowStyle}>
@@ -259,8 +240,7 @@ const BackupAndRestoreScreen: React.FC<BackupAndRestoreProps> = props => {
         ) : (
           <ScrollView>
             {LastBackupSection}
-            {isAndroid() && AccountSection}
-            {isIOS() && IosAccountSection}
+            {AccountSection}
             {RestoreSection}
           </ScrollView>
         )}
