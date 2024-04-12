@@ -797,7 +797,7 @@
     "lastBackupDetails": "Mga Detalye ng Huling Backup",
     "backupInProgress": "Maaari mo pa ring gamitin ang application habang isinasagawa ang pag-backup ng data. Ang pagsasara ng app ay magwawakas sa proseso ng pag-backup ng data.",
     "noBackup": "I-backup ang iyong Data sa {{driveName}}. Maaari mong ibalik ang mga ito kapag na-install mong muli ang INJI.",
-    "storage": "Ang backup ay maiimbak sa Google Drive na nauugnay sa iyong napiling gmail account.",
+    "storage": "Ang backup ay maiimbak sa {{driveName}} na nauugnay sa iyong napiling {{accountType}} account.",
     "backup": "Backup",
     "size": "Size: ",
     "restore": "Ibalik",

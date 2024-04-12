@@ -2,10 +2,16 @@ import {
   GoogleSignin,
   statusCodes,
 } from '@react-native-google-signin/google-signin';
+import RNSecureStorage, {ACCESSIBLE} from 'react-native-secure-key-store';
 import {CloudStorage, CloudStorageScope} from 'react-native-cloud-storage';
 import {GOOGLE_ANDROID_CLIENT_ID} from 'react-native-dotenv';
 import {readFile, writeFile} from 'react-native-fs';
 import {BackupDetails} from '../types/backup-and-restore/backup';
+import {
+  AppleButton,
+  appleAuth,
+} from '@invertase/react-native-apple-authentication';
+import jwt_decode from 'jwt-decode';
 import {bytesToMB, sleep} from './commonUtil';
 import {
   IOS_SIGNIN_FAILED,
@@ -128,7 +134,39 @@ class Cloud {
 
   static async signIn(): Promise<SignInResult | IsIOSResult> {
     if (isIOS()) {
-      return {isIOS: true};
+      let profileInfo;
+
+      // start a login request
+      try {
+        const appleAuthRequestResponse = await appleAuth.performRequest({
+          requestedOperation: appleAuth.Operation.LOGIN,
+          requestedScopes: [appleAuth.Scope.FULL_NAME, appleAuth.Scope.EMAIL],
+        });
+        const {email, nonce, identityToken, realUserStatus /* etc */} =
+          appleAuthRequestResponse;
+        profileInfo = {email: email, picture: null};
+        await RNSecureStorage.set(
+          'userIdentifier',
+          JSON.stringify(appleAuthRequestResponse),
+          {accessible: ACCESSIBLE.WHEN_UNLOCKED},
+        );
+
+        return {status: this.status.SUCCESS, profileInfo: profileInfo};
+      } catch (error) {
+        if (error.code === appleAuth.Error.CANCELED) {
+          console.warn('User canceled Apple Sign in.');
+          return {
+            status: this.status.DECLINED,
+            error,
+          };
+        } else {
+          console.error(error);
+          return {
+            status: this.status.FAILURE,
+            error,
+          };
+        }
+      }
     }
     this.configure();
     try {
@@ -168,9 +206,30 @@ class Cloud {
     try {
       if (isIOS()) {
         const isSignedIn = await CloudStorage.isCloudAvailable();
-        return {
-          isSignedIn,
-        };
+
+        const userIdentifier = await RNSecureStorage.get('userIdentifier');
+        const userToken = JSON.parse(userIdentifier + '');
+        const user = userToken.user;
+        const email = userToken.email;
+
+        const credentialState = await appleAuth.getCredentialStateForUser(user);
+        const profileInfo = {email: email, picture: undefined};
+        if (
+          credentialState === appleAuth.State.AUTHORIZED &&
+          isSignedIn === true
+        ) {
+          return {
+            isSignedIn: true,
+            isAuthorised: true,
+            profileInfo: profileInfo,
+          };
+        } else {
+          return {
+            isSignedIn: false,
+            isAuthorised: true,
+            profileInfo: profileInfo,
+          };
+        }
       }
       this.configure();
       const isSignedIn = await GoogleSignin.isSignedIn();
@@ -180,12 +239,14 @@ class Cloud {
         return {
           isSignedIn: true,
           profileInfo,
+          isAuthorised: true,
         };
       } else {
         const profileInfo = await this.profileInfo();
         return {
           isSignedIn: true,
           profileInfo,
+          isAuthorised: true,
         };
       }
     } catch (error) {
@@ -199,6 +260,7 @@ class Cloud {
       return {
         error: errorReason || error,
         isSignedIn: false,
+        isAuthorised: false,
       };
     }
   }
@@ -414,7 +476,7 @@ export default Cloud;
 
 export type ProfileInfo = {
   email: string;
-  picture: string;
+  picture: string|undefined;
 };
 
 export type SignInResult = {
@@ -431,6 +493,7 @@ export type isSignedInResult = {
   isSignedIn: boolean;
   error?: string | null;
   profileInfo?: ProfileInfo;
+  isAuthorised?: boolean;
 };
 
 export type CloudUploadResult = {

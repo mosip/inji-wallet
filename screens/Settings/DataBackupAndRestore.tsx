@@ -12,7 +12,7 @@ import {useBackupAndRestoreSetup} from '../backupAndRestore/BackupAndRestoreSetu
 import BackupAndRestoreScreen from '../backupAndRestore/BackupAndRestoreScreen';
 import testIDProps, {getDriveName} from '../../shared/commonUtil';
 import {useOverlayVisibleAfterTimeout} from '../../shared/hooks/useOverlayVisibleAfterTimeout';
-import {isAndroid} from '../../shared/constants';
+import {isAndroid, isIOS} from '../../shared/constants';
 
 export const DataBackupAndRestore: React.FC = ({} = () => {
   const controller = useBackupAndRestoreSetup();
@@ -34,7 +34,6 @@ export const DataBackupAndRestore: React.FC = ({} = () => {
     controller.isSigningIn,
     delay,
   );
-
   return (
     <React.Fragment>
       <Pressable
@@ -76,7 +75,8 @@ export const DataBackupAndRestore: React.FC = ({} = () => {
         </ListItem>
       </Pressable>
 
-      {controller.isSigningInFailed && (
+      {((controller.isSigningInFailed && !isIOS()) ||
+        controller.isCloudSignInFailed) && (
         <Error
           isModal
           alignActionsOnEnd
@@ -125,14 +125,15 @@ export const DataBackupAndRestore: React.FC = ({} = () => {
         />
       )}
 
-      {(isSigningIn || isSigningInSuccessful) && (
-        <BackupAndRestoreScreen
-          profileInfo={controller.profileInfo}
-          onBackPress={controller.GO_BACK}
-          isSigningIn={controller.isSigningIn}
-          shouldTriggerAutoBackup={controller.shouldTriggerAutoBackup}
-        />
-      )}
+      {(isSigningIn || isSigningInSuccessful) &&
+        !controller.isCloudSignInFailed && (
+          <BackupAndRestoreScreen
+            profileInfo={controller.profileInfo}
+            onBackPress={controller.GO_BACK}
+            isSigningIn={controller.isSigningIn}
+            shouldTriggerAutoBackup={controller.shouldTriggerAutoBackup}
+          />
+        )}
       {isLoaderVisible && <Loader title={t('loadingSubtitle')} isModal />}
 
       <AccountSelectionConfirmation

@@ -3,15 +3,15 @@
 export interface Typegen0 {
   '@@xstate/typegen': true;
   internalEvents: {
-    'done.invoke.vc.tamperedVCs.triggerAutoBackupForTamperedVcDeletion:invocation[0]': {
-      type: 'done.invoke.vc.tamperedVCs.triggerAutoBackupForTamperedVcDeletion:invocation[0]';
+    'done.invoke.vcMeta.tamperedVCs.triggerAutoBackupForTamperedVcDeletion:invocation[0]': {
+      type: 'done.invoke.vcMeta.tamperedVCs.triggerAutoBackupForTamperedVcDeletion:invocation[0]';
       data: unknown;
       __tip: 'See the XState TS docs to learn how to strongly type this.';
     };
     'xstate.init': {type: 'xstate.init'};
   };
   invokeSrcNameMap: {
-    isUserSignedAlready: 'done.invoke.vc.tamperedVCs.triggerAutoBackupForTamperedVcDeletion:invocation[0]';
+    isUserSignedAlready: 'done.invoke.vcMeta.tamperedVCs.triggerAutoBackupForTamperedVcDeletion:invocation[0]';
   };
   missingImplementations: {
     actions: never;
@@ -30,7 +30,7 @@ export interface Typegen0 {
       | 'VERIFY_VC_FAILED'
       | 'xstate.init';
     loadReceivedVcs: 'REFRESH_RECEIVED_VCS' | 'STORE_RESPONSE';
-    logTamperedVCsremoved: 'done.invoke.vc.tamperedVCs.triggerAutoBackupForTamperedVcDeletion:invocation[0]';
+    logTamperedVCsremoved: 'done.invoke.vcMeta.tamperedVCs.triggerAutoBackupForTamperedVcDeletion:invocation[0]';
     prependToMyVcs: 'VC_ADDED';
     removeDownloadFailedVcsFromStorage: 'DELETE_VC';
     removeDownloadingFailedVcsFromMyVcs: 'STORE_RESPONSE';
@@ -43,7 +43,7 @@ export interface Typegen0 {
     resetInProgressVcsDownloaded: 'RESET_IN_PROGRESS_VCS_DOWNLOADED';
     resetVerificationErrorMessage: 'RESET_VERIFY_ERROR';
     resetWalletBindingSuccess: 'RESET_WALLET_BINDING_SUCCESS';
-    sendBackupEvent: 'done.invoke.vc.tamperedVCs.triggerAutoBackupForTamperedVcDeletion:invocation[0]';
+    sendBackupEvent: 'done.invoke.vcMeta.tamperedVCs.triggerAutoBackupForTamperedVcDeletion:invocation[0]';
     setDownloadedVc: 'VC_DOWNLOADED';
     setDownloadingFailedVcs: 'DOWNLOAD_LIMIT_EXPIRED';
     setMyVcs: 'STORE_RESPONSE';
@@ -56,7 +56,7 @@ export interface Typegen0 {
   };
   eventsCausingDelays: {};
   eventsCausingGuards: {
-    isSignedIn: 'done.invoke.vc.tamperedVCs.triggerAutoBackupForTamperedVcDeletion:invocation[0]';
+    isSignedIn: 'done.invoke.vcMeta.tamperedVCs.triggerAutoBackupForTamperedVcDeletion:invocation[0]';
   };
   eventsCausingServices: {
     isUserSignedAlready: 'REMOVE_TAMPERED_VCS';
