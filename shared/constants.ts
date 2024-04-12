@@ -126,3 +126,5 @@ export const REQUEST_TIMEOUT = 'request timedout';
 export const BIOMETRIC_CANCELLED = 'User has cancelled biometric';
 export const GOOGLE_DRIVE_NAME = 'Google Drive';
 export const ICLOUD_DRIVE_NAME = 'iCloud';
+export const DEFAULT_ECL = 'M';
+export const DEFAULT_QR_HEADER = 'INJIQUICKSHARE://';

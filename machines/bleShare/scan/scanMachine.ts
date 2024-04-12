@@ -19,10 +19,13 @@ import {AppServices} from '../../../shared/GlobalContext';
 import {ActivityLogEvents, ActivityLogType} from '../../activityLog';
 import {
   androidVersion,
+  DEFAULT_QR_HEADER,
   FACE_AUTH_CONSENT,
   isAndroid,
   isIOS,
   MY_LOGIN_STORE_KEY,
+  MY_VCS_STORE_KEY,
+  RECEIVED_VCS_STORE_KEY,
 } from '../../../shared/constants';
 import {subscribe} from '../../../shared/openIdBLE/walletEventHandler';
 import {
@@ -59,6 +62,9 @@ import {TelemetryConstants} from '../../../shared/telemetry/TelemetryConstants';
 import {logState} from '../../../shared/commonUtil';
 import {VCShareFlowType} from '../../../shared/Utils';
 import {getIdType} from '../../../shared/openId4VCI/Utils';
+import {VcMetaEvents} from '../../VerifiableCredential/VCMetaMachine/VCMetaMachine';
+// @ts-ignore
+import {decodeData} from '@mosip/pixelpass';
 
 const {wallet, EventTypes, VerificationStatus} = tuvali;
 
@@ -77,6 +83,7 @@ const model = createModel(
     shareLogType: '' as ActivityLogType,
     QrLoginRef: {} as ActorRefFrom<typeof qrLoginMachine>,
     linkCode: '',
+    quickShareData: {},
     showFaceAuthConsent: true as boolean,
     readyForBluetoothStateCheck: false,
     showFaceCaptureSuccessBanner: false,
@@ -428,9 +435,32 @@ export const scanMachine =
                 actions: ['sendVcSharingStartEvent', 'setLinkCode'],
               },
               {
+                target: 'decodeQuickShareData',
+                cond: 'isQuickShare',
+                actions: 'setQuickShareData',
+              },
+              {
                 target: 'invalid',
               },
             ],
+          },
+        },
+        decodeQuickShareData: {
+          entry: 'loadMetaDataToMemory',
+          on: {
+            STORE_RESPONSE: {
+              target: 'loadVCS',
+            },
+          },
+        },
+        loadVCS: {
+          entry: 'loadVCDataToMemory',
+          on: {
+            STORE_RESPONSE: {
+              actions: 'refreshVCs',
+              //todo : show msg
+              target: 'inactive',
+            },
           },
         },
         showQrLogin: {
@@ -981,7 +1011,34 @@ export const scanMachine =
           linkCode: (_, event) =>
             new URL(event.params).searchParams.get('linkCode'),
         }),
+        setQuickShareData: assign({
+          quickShareData: (_, event) =>
+            JSON.parse(decodeData(event.params.split(DEFAULT_QR_HEADER)[1])),
+        }),
+        loadMetaDataToMemory: send(
+          context => {
+            let metadata = VCMetadata.fromVC(context.quickShareData?.meta);
+            return StoreEvents.PREPEND(MY_VCS_STORE_KEY, metadata);
+          },
+          {to: context => context.serviceRefs.store},
+        ),
+        loadVCDataToMemory: send(
+          context => {
+            let metadata = VCMetadata.fromVC(context.quickShareData?.meta);
 
+            let verifiableCredential = metadata.isFromOpenId4VCI()
+              ? {credential: context.quickShareData?.verifiableCredential}
+              : context.quickShareData?.verifiableCredential;
+
+            return StoreEvents.SET(metadata.getVcKey(), {
+              verifiableCredential: verifiableCredential,
+            });
+          },
+          {to: context => context.serviceRefs.store},
+        ),
+        refreshVCs: send(VcMetaEvents.REFRESH_MY_VCS, {
+          to: context => context.serviceRefs.vcMeta,
+        }),
         storeLoginItem: send(
           (_context, event) => {
             return StoreEvents.PREPEND(
@@ -1253,7 +1310,9 @@ export const scanMachine =
         // sample: 'OPENID4VP://connect:?name=OVPMOSIP&key=69dc92a2cc91f02258aa8094d6e2b62877f5b6498924fbaedaaa46af30abb364'
         isOpenIdQr: (_context, event) =>
           event.params.startsWith('OPENID4VP://'),
-
+        // sample: 'INJIQUICKSHARE://NAKDFK:DB:JAHDIHAIDJXKABDAJDHUHW'
+        isQuickShare: (_context, event) =>
+          event.params.startsWith(DEFAULT_QR_HEADER),
         isQrLogin: (context, event) => {
           try {
             let linkCode = new URL(event.params);

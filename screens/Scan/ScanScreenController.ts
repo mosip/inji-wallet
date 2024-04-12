@@ -75,7 +75,7 @@ export function useScanScreen() {
   const GOTO_HOME = () => navigation.navigate(BOTTOM_TAB_ROUTES.home);
   return {
     locationError,
-    isEmpty: !shareableVcsMetadata.length,
+    isEmpty: false,
     isBluetoothPermissionDenied,
     isNearByDevicesPermissionDenied,
     isLocationDisabled,
