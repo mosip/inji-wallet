@@ -22,7 +22,7 @@ export interface OtpVerificationModalProps extends ModalProps {
   service: ActorRefFrom<typeof AddVcModalMachine | typeof VCItemMachine>;
   onInputDone: (otp: string) => void;
   error?: string;
-  resend?: () => void;
+  resend: () => void;
   flow: string;
   phone: string;
   email: string;
