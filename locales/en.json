@@ -107,7 +107,7 @@
   },
   "RemoveVcWarningOverlay": {
     "alert": "Remove from Wallet?",
-    "removeWarning": "You're going to remove the card from the wallet. Once removed, this action can not be undone.",
+    "removeWarning": "You're going to remove the card from the wallet. Once removed, this action cannot be undone.\nHowever, you can download the card again to your wallet.",
     "confirm": "Yes, I confirm",
     "cancel": "Cancel"
   },
