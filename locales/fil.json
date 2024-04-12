@@ -107,7 +107,7 @@
   },
   "RemoveVcWarningOverlay": {
     "alert": "Alisin sa Wallet?",
-    "removeWarning": "Aalisin mo ang card sa wallet. Kapag naalis na, hindi na mababawi ang pagkilos na ito.",
+    "removeWarning": "Aalisin mo ang card sa wallet. Kapag naalis na, hindi na mababawi ang pagkilos na ito.\nGayunpaman, maaari mong i-download muli ang card sa iyong wallet.",
     "confirm": "Oo, kinukumpirma ko",
     "cancel": "Kanselahin"
   },
