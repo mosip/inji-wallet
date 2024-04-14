@@ -82,6 +82,7 @@ const model = createModel(
     openId4VpUri: '',
     shareLogType: '' as ActivityLogType,
     QrLoginRef: {} as ActorRefFrom<typeof qrLoginMachine>,
+    showQuickShareSuccessBanner: false,
     linkCode: '',
     quickShareData: {},
     showFaceAuthConsent: true as boolean,
@@ -102,6 +103,7 @@ const model = createModel(
       STAY_IN_PROGRESS: () => ({}),
       RETRY: () => ({}),
       DISMISS: () => ({}),
+      DISMISS_QUICK_SHARE_BANNER: () => ({}),
       GOTO_HISTORY: () => ({}),
       CONNECTED: () => ({}),
       DISCONNECT: () => ({}),
@@ -173,6 +175,10 @@ export const scanMachine =
         SELECT_VC: {
           actions: ['setSelectedVc', 'setFlowType'],
           target: '.checkStorage',
+        },
+        DISMISS_QUICK_SHARE_BANNER: {
+          actions: 'resetShowQuickShareSuccessBanner',
+          target: '.inactive',
         },
       },
       states: {
@@ -457,10 +463,14 @@ export const scanMachine =
           entry: 'loadVCDataToMemory',
           on: {
             STORE_RESPONSE: {
-              actions: 'refreshVCs',
-              //todo : show msg
-              target: 'inactive',
+              actions: ['refreshVCs','setShowQuickShareSuccessBanner'],
+              target: '.navigatingToHome',
             },
+          },
+          initial: 'idle',
+          states: {
+            idle: {},
+            navigatingToHome: {},
           },
         },
         showQrLogin: {
@@ -678,7 +688,7 @@ export const scanMachine =
               },
             },
             disconnect: {
-              entry: ['resetFlowType', 'resetSelectedVc'],
+              entry: ['resetFlowType', 'resetSelectedVc','resetShowQuickShareSuccessBanner'],
               invoke: {
                 src: 'disconnect',
               },
@@ -922,6 +932,14 @@ export const scanMachine =
 
         resetSelectedVc: assign({
           selectedVc: {},
+        }),
+
+        resetShowQuickShareSuccessBanner: assign({
+          showQuickShareSuccessBanner: false,
+        }),
+
+        setShowQuickShareSuccessBanner: assign({
+          showQuickShareSuccessBanner: true,
         }),
 
         setFlowType: assign({

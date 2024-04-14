@@ -15,6 +15,7 @@ import {isIOS} from '../../shared/constants';
 import {BannerNotificationContainer} from '../../components/BannerNotificationContainer';
 import {SharingStatusModal} from './SharingStatusModal';
 import {SvgImage} from '../../components/ui/svg';
+import {assign} from "xstate";
 
 export const ScanScreen: React.FC = () => {
   const {t} = useTranslation('ScanScreen');
@@ -38,6 +39,11 @@ export const ScanScreen: React.FC = () => {
     if (controller.isStartPermissionCheck && !controller.isEmpty)
       controller.START_PERMISSION_CHECK();
   });
+
+  useEffect(() => {
+    if (controller.isQuickShareDone)
+      controller.GOTO_HOME();
+  },[controller.isQuickShareDone]);
 
   const openSettings = () => {
     Linking.openSettings();

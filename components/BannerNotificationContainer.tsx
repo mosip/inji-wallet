@@ -6,12 +6,17 @@ import {BackupAndRestoreBannerNotification} from './BackupAndRestoreBannerNotifi
 import {UseBannerNotification} from './BannerNotificationController';
 import {useTranslation} from 'react-i18next';
 import {BANNER_TYPE_SUCCESS} from '../shared/constants';
+import {useScanScreen} from "../screens/Scan/ScanScreenController";
 
 export const BannerNotificationContainer: React.FC = () => {
   const WalletBindingController = UseWalletBindingSuccess();
   const WalletBindingSuccess = WalletBindingController.isBindingSuccess;
+  const scanScreenController = useScanScreen();
+  const showQuickShareSuccessBanner  = scanScreenController.showQuickShareSuccessBanner
+
   const bannerNotificationController = UseBannerNotification();
   const {t} = useTranslation('BannerNotification');
+  const rt  = useTranslation('RequestScreen').t;
 
   return (
     <>
@@ -27,6 +32,18 @@ export const BannerNotificationContainer: React.FC = () => {
             testId={'activatedVcPopup'}
           />
         </View>
+      )}
+
+      {showQuickShareSuccessBanner && (
+          <View style={{marginTop: 10, marginBottom: 10}}>
+            <BannerNotification
+                type={BANNER_TYPE_SUCCESS}
+                message={rt('status.accepted.message')}
+                onClosePress={scanScreenController.DISMISS_QUICK_SHARE_BANNER}
+                key={'activatedVcPopup'}
+                testId={'activatedVcPopup'}
+            />
+          </View>
       )}
 
       {bannerNotificationController.isPasscodeUnlock && (
