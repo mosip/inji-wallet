@@ -51,7 +51,8 @@ export interface Typegen0 {
       | 'DISCONNECT'
       | 'DISMISS'
       | 'xstate.after(DESTROY_TIMEOUT)#scan.clearingConnection';
-    loadDataToMemory: 'SCAN';
+    loadMetaDataToMemory: 'SCAN';
+    loadVCDataToMemory: 'STORE_RESPONSE';
     logFailedVerification: 'FACE_INVALID';
     logShared: 'VC_ACCEPTED';
     openAppPermission: 'GOTO_SETTINGS' | 'LOCATION_REQUEST';
@@ -71,6 +72,7 @@ export interface Typegen0 {
       | 'GOTO_HISTORY'
       | 'SCREEN_BLUR'
       | 'xstate.init';
+    resetIsQuickShareDone: 'DISMISS';
     resetSelectedVc:
       | 'DISCONNECT'
       | 'DISMISS'
@@ -172,6 +174,9 @@ export interface Typegen0 {
     | 'handlingBleError'
     | 'inactive'
     | 'invalid'
+    | 'loadVCS'
+    | 'loadVCS.idle'
+    | 'loadVCS.navigatingToHome'
     | 'nearByDevicesPermissionDenied'
     | 'recheckBluetoothState'
     | 'recheckBluetoothState.checking'
@@ -208,6 +213,7 @@ export interface Typegen0 {
           | 'disabled'
           | 'requestToEnableLocation';
         connecting?: 'inProgress' | 'timeout';
+        loadVCS?: 'idle' | 'navigatingToHome';
         recheckBluetoothState?: 'checking' | 'enabled';
         reviewing?:
           | 'accepted'

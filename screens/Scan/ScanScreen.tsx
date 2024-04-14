@@ -15,6 +15,7 @@ import {isIOS} from '../../shared/constants';
 import {BannerNotificationContainer} from '../../components/BannerNotificationContainer';
 import {SharingStatusModal} from './SharingStatusModal';
 import {SvgImage} from '../../components/ui/svg';
+import {assign} from "xstate";
 
 export const ScanScreen: React.FC = () => {
   const {t} = useTranslation('ScanScreen');
