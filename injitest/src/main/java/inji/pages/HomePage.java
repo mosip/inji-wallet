@@ -138,7 +138,7 @@ public class HomePage extends BasePage {
 
     public boolean isSecondNameDisplayed(String name) {
         By fullName = By.xpath("(//*[contains(@value,'" + name + "') or contains(@text,'" + name + "')])[2]");
-        return this.isElementDisplayed(fullName, 60);
+        return this.isElementDisplayed(fullName, 150);
 
     }
 

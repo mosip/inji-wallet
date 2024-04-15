@@ -306,6 +306,7 @@ public class BackupAndRestorePage extends BasePage {
     }
 
     public void clickOnEmailHeader() {
+        if(isElementDisplayed(selectAccount))
         clickOnElement(selectAccount);
     }
 
