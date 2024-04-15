@@ -19,8 +19,8 @@ import {BackupEvents} from '../../backupAndRestore/backup';
 const model = createModel(
   {
     serviceRefs: {} as AppServices,
-    myVcs: [] as VCMetadata[],
-    receivedVcs: [] as VCMetadata[],
+    myVcsMetadata: [] as VCMetadata[],
+    receivedVcsMetadata: [] as VCMetadata[],
     vcs: {} as Record<string, VC>,
     inProgressVcDownloads: new Set<string>(), //VCDownloadInProgress
     areAllVcsDownloaded: false as boolean,
@@ -95,7 +95,7 @@ export const vcMetaMachine =
               entry: 'loadMyVcs',
               on: {
                 STORE_RESPONSE: {
-                  actions: 'setMyVcs',
+                  actions: 'setMyVcsMetadata',
                   target: 'receivedVcs',
                 },
               },
@@ -133,7 +133,7 @@ export const vcMetaMachine =
                   entry: 'loadMyVcs',
                   on: {
                     STORE_RESPONSE: {
-                      actions: 'setMyVcs',
+                      actions: 'setMyVcsMetadata',
                       target: 'idle',
                     },
                   },
@@ -161,13 +161,13 @@ export const vcMetaMachine =
               actions: 'getVcItemResponse',
             },
             VC_ADDED: {
-              actions: 'prependToMyVcs',
+              actions: 'prependToMyVcsMetadata',
             },
             REMOVE_VC_FROM_CONTEXT: {
-              actions: 'removeVcFromMyVcs',
+              actions: 'removeVcFromMyVcsMetadata',
             },
             VC_METADATA_UPDATED: {
-              actions: ['updateMyVcs', 'setUpdatedVcMetadatas'],
+              actions: ['updateMyVcsMetadata', 'setUpdatedVcMetadatas'],
             },
             VC_DOWNLOADED: {
               actions: 'setDownloadedVc',
@@ -286,14 +286,14 @@ export const vcMetaMachine =
           to: context => context.serviceRefs.store,
         }),
 
-        setMyVcs: model.assign({
-          myVcs: (_context, event) => {
+        setMyVcsMetadata: model.assign({
+          myVcsMetadata: (_context, event) => {
             return parseMetadatas((event.response || []) as object[]);
           },
         }),
 
         setReceivedVcs: model.assign({
-          receivedVcs: (_context, event) => {
+          receivedVcsMetadata: (_context, event) => {
             return parseMetadatas((event.response || []) as object[]);
           },
         }),
@@ -364,18 +364,21 @@ export const vcMetaMachine =
 
         setUpdatedVcMetadatas: send(
           _context => {
-            return StoreEvents.SET(MY_VCS_STORE_KEY, _context.myVcs);
+            return StoreEvents.SET(MY_VCS_STORE_KEY, _context.myVcsMetadata);
           },
           {to: context => context.serviceRefs.store},
         ),
 
-        prependToMyVcs: model.assign({
-          myVcs: (context, event) => [event.vcMetadata, ...context.myVcs],
+        prependToMyVcsMetadata: model.assign({
+          myVcsMetadata: (context, event) => [
+            event.vcMetadata,
+            ...context.myVcsMetadata,
+          ],
         }),
 
-        removeVcFromMyVcs: model.assign({
-          myVcs: (context, event) =>
-            context.myVcs.filter(
+        removeVcFromMyVcsMetadata: model.assign({
+          myVcsMetadata: (context, event) =>
+            context.myVcsMetadata.filter(
               (vc: VCMetadata) => !vc.equals(event.vcMetadata),
             ),
         }),
@@ -393,8 +396,8 @@ export const vcMetaMachine =
         }),
 
         removeDownloadingFailedVcsFromMyVcs: model.assign({
-          myVcs: (context, event) =>
-            context.myVcs.filter(
+          myVcsMetadata: (context, event) =>
+            context.myVcsMetadata.filter(
               value =>
                 !context.downloadingFailedVcs.some(item => item?.equals(value)),
             ),
@@ -420,9 +423,9 @@ export const vcMetaMachine =
           },
         ),
 
-        updateMyVcs: model.assign({
-          myVcs: (context, event) => [
-            ...getUpdatedVCMetadatas(context.myVcs, event.vcMetadata),
+        updateMyVcsMetadata: model.assign({
+          myVcsMetadata: (context, event) => [
+            ...getUpdatedVCMetadatas(context.myVcsMetadata, event.vcMetadata),
           ],
         }),
 
@@ -457,11 +460,11 @@ export function createVcMetaMachine(serviceRefs: AppServices) {
 type State = StateFrom<typeof vcMetaMachine>;
 
 export function selectMyVcsMetadata(state: State): VCMetadata[] {
-  return state.context.myVcs;
+  return state.context.myVcsMetadata;
 }
 
 export function selectShareableVcsMetadata(state: State): VCMetadata[] {
-  return state.context.myVcs.filter(
+  return state.context.myVcsMetadata.filter(
     vcMetadata =>
       state.context.vcs[vcMetadata.getVcKey()]?.credential != null ||
       state.context.vcs[vcMetadata.getVcKey()]?.verifiableCredential != null,
@@ -469,7 +472,7 @@ export function selectShareableVcsMetadata(state: State): VCMetadata[] {
 }
 
 export function selectReceivedVcsMetadata(state: State): VCMetadata[] {
-  return state.context.receivedVcs;
+  return state.context.receivedVcsMetadata;
 }
 
 export function selectIsRefreshingMyVcs(state: State) {
@@ -488,7 +491,7 @@ export function selectAreAllVcsDownloaded(state: State) {
   this methods returns all the binded vc's in the wallet.
  */
 export function selectBindedVcsMetadata(state: State): VCMetadata[] {
-  return state.context.myVcs.filter(vcMetadata => {
+  return state.context.myVcsMetadata.filter(vcMetadata => {
     const walletBindingResponse =
       state.context.vcs[vcMetadata.getVcKey()]?.walletBindingResponse;
     return (
