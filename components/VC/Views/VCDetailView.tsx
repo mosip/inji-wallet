@@ -98,7 +98,10 @@ export const VCDetailView: React.FC<VCItemDetailsProps> = props => {
               <Row padding="14 14 0 14" margin="0 0 0 0">
                 <Column crossAlign="center">
                   {getProfileImage(face)}
-                  <QrCodeOverlay qrCodeDetails={String(verifiableCredential)} />
+                  <QrCodeOverlay
+                    verifiableCredential={verifiableCredential}
+                    meta={props.verifiableCredentialData.vcMetadata}
+                  />
                   <Column
                     width={80}
                     height={59}
