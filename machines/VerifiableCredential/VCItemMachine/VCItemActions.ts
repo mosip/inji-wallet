@@ -331,6 +331,19 @@ export const VCItemActions = model => {
       },
       {to: context => context.serviceRefs.store},
     ),
+
+    removeVcFromVcs: send(
+      (context: any) => {
+        return {
+          type: 'REMOVE_VC_FROM_VCS',
+          vcMetadata: context.vcMetadata,
+        };
+      },
+      {
+        to: context => context.serviceRefs.vcMeta,
+      },
+    ),
+
     setVcKey: model.assign({
       vcMetadata: (_, event) => event.vcMetadata,
     }),

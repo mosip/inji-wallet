@@ -52,6 +52,7 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = props => {
   };
 
   const onFocusSearch = () => {
+    filterVcs('');
     setShowPinVc(false);
   };
 

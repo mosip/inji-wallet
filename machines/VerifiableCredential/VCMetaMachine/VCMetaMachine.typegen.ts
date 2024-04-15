@@ -39,6 +39,7 @@ export interface Typegen0 {
       | 'REMOVE_VC_FROM_IN_PROGRESS_DOWNLOADS'
       | 'VERIFY_VC_FAILED';
     removeVcFromMyVcs: 'REMOVE_VC_FROM_CONTEXT';
+    removeVcFromVcs: 'REMOVE_VC_FROM_VCS';
     resetDownloadFailedVcs: 'STORE_RESPONSE';
     resetInProgressVcsDownloaded: 'RESET_IN_PROGRESS_VCS_DOWNLOADED';
     resetVerificationErrorMessage: 'RESET_VERIFY_ERROR';
