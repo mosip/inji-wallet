@@ -17,7 +17,6 @@ import {
   MY_VCS_STORE_KEY,
   RECEIVED_VCS_STORE_KEY,
   SETTINGS_STORE_KEY,
-  SCAN_MACHINE_STORE_KEY,
   FACE_AUTH_CONSENT,
   ENOENT,
 } from '../shared/constants';
@@ -40,6 +39,7 @@ import {
 } from '../shared/telemetry/TelemetryUtils';
 import RNSecureKeyStore from 'react-native-secure-key-store';
 import {Buffer} from 'buffer';
+import {VC} from './VerifiableCredential/VCMetaMachine/vc';
 
 export const keyinvalidatedString =
   'Key Invalidated due to biometric enrollment';
@@ -56,6 +56,7 @@ const model = createModel(
       TRY_AGAIN: () => ({}),
       IGNORE: () => ({}),
       GET: (key: string) => ({key}),
+      GET_VCS_DATA: (key: string) => ({key}),
       EXPORT: () => ({}),
       RESTORE_BACKUP: (data: {}) => ({data}),
       DECRYPT_ERROR: () => ({}),
@@ -197,6 +198,9 @@ export const storeMachine =
           },
           on: {
             GET: {
+              actions: 'forwardStoreRequest',
+            },
+            GET_VCS_DATA: {
               actions: 'forwardStoreRequest',
             },
             EXPORT: {
@@ -365,6 +369,10 @@ export const storeMachine =
                 }
                 case 'EXPORT': {
                   response = await exportData(context.encryptionKey);
+                  break;
+                }
+                case 'GET_VCS_DATA': {
+                  response = await getVCsData(event.key, context.encryptionKey);
                   break;
                 }
                 case 'RESTORE_BACKUP': {
@@ -589,13 +597,13 @@ export async function loadBackupData(data, encryptionKey) {
   await Storage.loadBackupData(data, encryptionKey);
 }
 
-export async function getItem(
+export async function handleGetItemResponse(
   key: string,
   defaultValue: unknown,
   encryptionKey: string,
+  data: any,
 ) {
   try {
-    const data = await Storage.getItem(key, encryptionKey);
     if (data != null) {
       let decryptedData;
       if (key === SETTINGS_STORE_KEY) {
@@ -613,7 +621,7 @@ export async function getItem(
       }
       decryptedData = await decryptJson(encryptionKey, data);
       return JSON.parse(decryptedData);
-    } 
+    }
     if (data === null && VCMetadata.isVCKey(key)) {
       await removeItem(key, data, encryptionKey);
       sendErrorEvent(
@@ -666,6 +674,40 @@ export async function getItem(
       ),
     );
     return defaultValue;
+  }
+}
+
+export async function getVCsData(key: string, encryptionKey: string) {
+  try {
+    let myVcsData: Record<string, VC> = {};
+    const data = await Storage.getItem(key, encryptionKey);
+    const decryptedMyVcsMetadata: VCMetadata[] = await handleGetItemResponse(
+      key,
+      null,
+      encryptionKey,
+      data,
+    );
+    for (let ind in decryptedMyVcsMetadata) {
+      const key = VCMetadata.fromVC(decryptedMyVcsMetadata[ind]).getVcKey();
+      const vc = await getItem(key, null, encryptionKey);
+      myVcsData[key] = vc;
+    }
+    return myVcsData;
+  } catch (e) {
+    throw e;
+  }
+}
+
+export async function getItem(
+  key: string,
+  defaultValue: unknown,
+  encryptionKey: string,
+) {
+  try {
+    const data = await Storage.getItem(key, encryptionKey);
+    return await handleGetItemResponse(key, defaultValue, encryptionKey, data);
+  } catch (e) {
+    throw e;
   }
 }
 

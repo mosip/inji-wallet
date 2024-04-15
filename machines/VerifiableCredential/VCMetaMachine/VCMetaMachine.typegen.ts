@@ -22,14 +22,16 @@ export interface Typegen0 {
   eventsCausingActions: {
     addVcToInProgressDownloads: 'ADD_VC_TO_IN_PROGRESS_DOWNLOADS';
     getVcItemResponse: 'GET_VC_ITEM';
-    loadMyVcs:
+    loadMyVcs: 'STORE_RESPONSE';
+    loadMyVcsMetadata:
       | 'DOWNLOAD_LIMIT_EXPIRED'
       | 'REFRESH_MY_VCS'
       | 'REFRESH_VCS_METADATA'
       | 'STORE_RESPONSE'
       | 'VERIFY_VC_FAILED'
       | 'xstate.init';
-    loadReceivedVcs: 'REFRESH_RECEIVED_VCS' | 'STORE_RESPONSE';
+    loadReceivedVcs: 'STORE_RESPONSE';
+    loadReceivedVcsMetadata: 'REFRESH_RECEIVED_VCS' | 'STORE_RESPONSE';
     logTamperedVCsremoved: 'done.invoke.vcMeta.tamperedVCs.triggerAutoBackupForTamperedVcDeletion:invocation[0]';
     prependToMyVcsMetadata: 'VC_ADDED';
     removeDownloadFailedVcsFromStorage: 'DELETE_VC';
@@ -38,8 +40,8 @@ export interface Typegen0 {
       | 'DOWNLOAD_LIMIT_EXPIRED'
       | 'REMOVE_VC_FROM_IN_PROGRESS_DOWNLOADS'
       | 'VERIFY_VC_FAILED';
+    removeVcFromMyVcs: 'REMOVE_VC_FROM_MYVCS';
     removeVcFromMyVcsMetadata: 'REMOVE_VC_FROM_CONTEXT';
-    removeVcFromVcs: 'REMOVE_VC_FROM_VCS';
     resetDownloadFailedVcs: 'STORE_RESPONSE';
     resetInProgressVcsDownloaded: 'RESET_IN_PROGRESS_VCS_DOWNLOADED';
     resetVerificationErrorMessage: 'RESET_VERIFY_ERROR';
@@ -47,8 +49,10 @@ export interface Typegen0 {
     sendBackupEvent: 'done.invoke.vcMeta.tamperedVCs.triggerAutoBackupForTamperedVcDeletion:invocation[0]';
     setDownloadedVc: 'VC_DOWNLOADED';
     setDownloadingFailedVcs: 'DOWNLOAD_LIMIT_EXPIRED';
+    setMyVcs: 'STORE_RESPONSE';
     setMyVcsMetadata: 'STORE_RESPONSE';
     setReceivedVcs: 'STORE_RESPONSE';
+    setReceivedVcsMetadata: 'STORE_RESPONSE';
     setTamperedVcs: 'TAMPERED_VC';
     setUpdatedVcMetadatas: 'VC_METADATA_UPDATED';
     setVerificationErrorMessage: 'VERIFY_VC_FAILED';
@@ -65,27 +69,41 @@ export interface Typegen0 {
   matchesStates:
     | 'deletingFailedVcs'
     | 'init'
-    | 'init.myVcs'
+    | 'init.myVcsData'
+    | 'init.myVcsMetadata'
     | 'init.receivedVcs'
+    | 'init.receivedVcsMetadata'
     | 'ready'
     | 'ready.myVcs'
     | 'ready.myVcs.idle'
-    | 'ready.myVcs.refreshing'
+    | 'ready.myVcs.refreshingMyVcsData'
+    | 'ready.myVcs.refreshingMyVcsMetadata'
     | 'ready.receivedVcs'
     | 'ready.receivedVcs.idle'
-    | 'ready.receivedVcs.refreshing'
+    | 'ready.receivedVcs.refreshingReceivedVcsData'
+    | 'ready.receivedVcs.refreshingReceivedVcsMetadata'
     | 'tamperedVCs'
     | 'tamperedVCs.idle'
     | 'tamperedVCs.refreshVcsMetadata'
     | 'tamperedVCs.triggerAutoBackupForTamperedVcDeletion'
     | {
-        init?: 'myVcs' | 'receivedVcs';
+        init?:
+          | 'myVcsData'
+          | 'myVcsMetadata'
+          | 'receivedVcs'
+          | 'receivedVcsMetadata';
         ready?:
           | 'myVcs'
           | 'receivedVcs'
           | {
-              myVcs?: 'idle' | 'refreshing';
-              receivedVcs?: 'idle' | 'refreshing';
+              myVcs?:
+                | 'idle'
+                | 'refreshingMyVcsData'
+                | 'refreshingMyVcsMetadata';
+              receivedVcs?:
+                | 'idle'
+                | 'refreshingReceivedVcsData'
+                | 'refreshingReceivedVcsMetadata';
             };
         tamperedVCs?:
           | 'idle'

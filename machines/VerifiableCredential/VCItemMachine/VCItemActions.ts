@@ -332,10 +332,10 @@ export const VCItemActions = model => {
       {to: context => context.serviceRefs.store},
     ),
 
-    removeVcFromVcs: send(
+    removeVcFromMyVcs: send(
       (context: any) => {
         return {
-          type: 'REMOVE_VC_FROM_VCS',
+          type: 'REMOVE_VC_FROM_MYVCS',
           vcMetadata: context.vcMetadata,
         };
       },

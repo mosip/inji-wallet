@@ -46,23 +46,6 @@ export const VCItemMachine = model.createMachine(
                   target: `#vc-item-machine.idle`,
                 },
                 {
-                  target: 'loadVcFromStore',
-                },
-              ],
-            },
-          },
-          loadVcFromStore: {
-            entry: 'requestStoredContext',
-            description: 'Check if VC data is in secured local storage.',
-            on: {
-              STORE_RESPONSE: [
-                {
-                  actions: ['setContext', 'storeVcInContext'],
-                  cond: 'hasCredential',
-                  target: '#vc-item-machine.idle',
-                },
-                {
-                  actions: 'addVcToInProgressDownloads',
                   target: 'loadVcFromServer',
                 },
               ],
@@ -421,7 +404,7 @@ export const VCItemMachine = model.createMachine(
             on: {
               STORE_RESPONSE: {
                 actions: [
-                  'removeVcFromVcs',
+                  'removeVcFromMyVcs',
                   'closeViewVcModal',
                   'refreshAllVcs',
                   'logRemovedVc',
