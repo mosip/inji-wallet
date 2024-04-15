@@ -7,6 +7,7 @@ import {UseBannerNotification} from './BannerNotificationController';
 import {useTranslation} from 'react-i18next';
 import {BANNER_TYPE_SUCCESS} from '../shared/constants';
 import {useScanScreen} from "../screens/Scan/ScanScreenController";
+import {Theme} from "./ui/styleUtils";
 
 export const BannerNotificationContainer: React.FC = () => {
   const WalletBindingController = UseWalletBindingSuccess();
@@ -23,7 +24,7 @@ export const BannerNotificationContainer: React.FC = () => {
       <BackupAndRestoreBannerNotification />
 
       {WalletBindingSuccess && (
-        <View style={{marginTop: 10, marginBottom: 10}}>
+        <View style={Theme.BannerStyles.topBanner}>
           <BannerNotification
             type={BANNER_TYPE_SUCCESS}
             message={t('activated')}
@@ -35,13 +36,13 @@ export const BannerNotificationContainer: React.FC = () => {
       )}
 
       {showQuickShareSuccessBanner && (
-          <View style={{marginTop: 10, marginBottom: 10}}>
+          <View style={Theme.BannerStyles.topBanner}>
             <BannerNotification
                 type={BANNER_TYPE_SUCCESS}
                 message={rt('status.accepted.message')}
                 onClosePress={scanScreenController.DISMISS_QUICK_SHARE_BANNER}
-                key={'activatedVcPopup'}
-                testId={'activatedVcPopup'}
+                key={'quickShareSuccessBanner'}
+                testId={'quickShareSuccessBanner'}
             />
           </View>
       )}

@@ -40,7 +40,7 @@ export const QrCodeOverlay: React.FC<QrCodeOverlayProps> = props => {
       const qrString = await getQRData();
       setQrString(qrString);
     })();
-  }, []);
+  }, [qrString]);
   const [isQrOverlayVisible, setIsQrOverlayVisible] = useState(false);
   const toggleQrOverlay = () => setIsQrOverlayVisible(!isQrOverlayVisible);
   return (

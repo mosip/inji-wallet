@@ -755,6 +755,10 @@ export const PurpleTheme = {
       padding: 1,
       fontFamily: 'Inter_600SemiBold',
     },
+    topBanner : {
+      marginTop: 10,
+      marginBottom: 10,
+    },
     dismiss: {paddingLeft: 9},
     info: {
       backgroundColor: Colors.OrangeBrown,
