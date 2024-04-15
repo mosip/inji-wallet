@@ -36,7 +36,7 @@ public class HistoryPage extends BasePage {
     }
 
     private boolean verifyHistoryIos(String vcNumber) {
-        By locator = By.xpath("//*[contains(@name,'" + vcNumber + " downloaded')]");
+        By locator = By.xpath("//*[contains(@name,'" + vcNumber + " is downloaded.')]");
         return this.isElementDisplayed(locator);
     }
 
@@ -66,7 +66,7 @@ public class HistoryPage extends BasePage {
     }
 
     private int verifyNumberOfRecordsInHistoryIos(String vcNumber) {
-        By locator = By.xpath("//XCUIElementTypeStaticText[@name=\"" + vcNumber + " downloaded\"]");
+        By locator = By.xpath("//XCUIElementTypeStaticText[@name=\"National Card "+vcNumber+" is downloaded.\"]");
         List<WebElement> elements = driver.findElements(locator);
         return elements.size();
     }
