@@ -3,6 +3,7 @@
 export interface Typegen0 {
   '@@xstate/typegen': true;
   internalEvents: {
+    '': {type: ''};
     'done.invoke.checkStatus': {
       type: 'done.invoke.checkStatus';
       data: unknown;
@@ -100,6 +101,7 @@ export interface Typegen0 {
       data: unknown;
     };
     'xstate.init': {type: 'xstate.init'};
+    'xstate.stop': {type: 'xstate.stop'};
   };
   invokeSrcNameMap: {
     addWalletBindingId: 'done.invoke.vc-item-machine.walletBinding.addingWalletBindingId:invocation[0]';
@@ -133,6 +135,7 @@ export interface Typegen0 {
       | 'removeVcMetaDataFromVcMachineContext'
       | 'requestStoredContext'
       | 'requestVcContext'
+      | 'resetIsMachineInKebabPopupState'
       | 'resetPrivateKey'
       | 'sendActivationStartEvent'
       | 'sendActivationSuccessEvent'
@@ -147,7 +150,6 @@ export interface Typegen0 {
       | 'sendWalletBindingSuccess'
       | 'setCommunicationDetails'
       | 'setContext'
-      | 'setCredential'
       | 'setDownloadInterval'
       | 'setErrorAsVerificationError'
       | 'setErrorAsWalletBindingError'
@@ -212,6 +214,17 @@ export interface Typegen0 {
     removeVcMetaDataFromVcMachineContext: 'DISMISS';
     requestStoredContext: 'GET_VC_RESPONSE';
     requestVcContext: 'DISMISS' | 'REFRESH' | 'STORE_ERROR' | 'xstate.init';
+    resetIsMachineInKebabPopupState:
+      | ''
+      | 'ADD_WALLET_BINDING_ID'
+      | 'CANCEL'
+      | 'CLOSE_VC_MODAL'
+      | 'DISMISS'
+      | 'REFRESH'
+      | 'REMOVE'
+      | 'SHOW_ACTIVITY'
+      | 'done.invoke.vc-item-machine.kebabPopUp.triggerAutoBackup:invocation[0]'
+      | 'xstate.stop';
     resetPrivateKey:
       | 'done.invoke.vc-item-machine.walletBinding.addingWalletBindingId:invocation[0]'
       | 'done.invoke.vc-item-machine.walletBinding.updatingPrivateKey:invocation[0]';
@@ -240,8 +253,7 @@ export interface Typegen0 {
     setCommunicationDetails:
       | 'done.invoke.vc-item-machine.walletBinding.acceptingBindingOTP.resendOTP:invocation[0]'
       | 'done.invoke.vc-item-machine.walletBinding.requestingBindingOTP:invocation[0]';
-    setContext: 'GET_VC_RESPONSE' | 'STORE_RESPONSE';
-    setCredential: 'CREDENTIAL_DOWNLOADED';
+    setContext: 'CREDENTIAL_DOWNLOADED' | 'GET_VC_RESPONSE' | 'STORE_RESPONSE';
     setDownloadInterval: 'done.invoke.vc-item-machine.loadVc.loadVcFromServer.loadDownloadLimitConfig:invocation[0]';
     setErrorAsVerificationError: 'error.platform.vc-item-machine.verifyingCredential:invocation[0]';
     setErrorAsWalletBindingError:

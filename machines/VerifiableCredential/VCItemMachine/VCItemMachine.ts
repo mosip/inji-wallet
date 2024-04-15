@@ -136,7 +136,7 @@ export const VCItemMachine = model.createMachine(
                     },
                   ],
                   CREDENTIAL_DOWNLOADED: {
-                    actions: 'setCredential',
+                    actions: 'setContext',
                     target: '#vc-item-machine.verifyingCredential',
                   },
                 },
@@ -366,13 +366,10 @@ export const VCItemMachine = model.createMachine(
       },
       kebabPopUp: {
         entry: assign({isMachineInKebabPopupState: () => true}),
-        exit: assign({isMachineInKebabPopupState: () => false}),
+        exit: 'resetIsMachineInKebabPopupState',
         on: {
           DISMISS: {
-            actions: assign({
-              isMachineInKebabPopupState: () => false,
-            }),
-            target: 'idle',
+            target: '#vc-item-machine',
           },
           ADD_WALLET_BINDING_ID: {
             target: '#vc-item-machine.walletBinding',
@@ -396,12 +393,20 @@ export const VCItemMachine = model.createMachine(
         initial: 'idle',
         states: {
           idle: {},
+          pinCard: {
+            entry: 'sendVcUpdated',
+            always: {
+              target: '#vc-item-machine.idle',
+            },
+          },
           showActivities: {
+            entry: 'resetIsMachineInKebabPopupState',
             on: {
               DISMISS: '#vc-item-machine',
             },
           },
           removeWallet: {
+            entry: 'resetIsMachineInKebabPopupState',
             on: {
               CONFIRM: {
                 target: 'removingVc',
@@ -418,12 +423,6 @@ export const VCItemMachine = model.createMachine(
                 actions: ['closeViewVcModal', 'refreshAllVcs', 'logRemovedVc'],
                 target: 'triggerAutoBackup',
               },
-            },
-          },
-          pinCard: {
-            entry: 'sendVcUpdated',
-            always: {
-              target: '#vc-item-machine.idle',
             },
           },
           triggerAutoBackup: {

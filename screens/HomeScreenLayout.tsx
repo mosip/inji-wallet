@@ -48,12 +48,12 @@ export const HomeScreenLayout: React.FC<RootRouteProps> = props => {
     <HelpScreen
       source={'Inji'}
       triggerComponent={
-        <View testID="helop" style={Theme.HelpScreenStyle.viewStyle}>
+        <View testID="help" style={Theme.HelpScreenStyle.viewStyle}>
           <Row crossAlign="center" style={Theme.HelpScreenStyle.rowStyle}>
             <View testID="helpIcon" style={Theme.HelpScreenStyle.iconStyle}>
               {SvgImage.infoIcon()}
             </View>
-            <Text testID="help" style={Theme.HelpScreenStyle.labelStyle}>
+            <Text testID="helpText" style={Theme.HelpScreenStyle.labelStyle}>
               {t('help')}
             </Text>
           </Row>

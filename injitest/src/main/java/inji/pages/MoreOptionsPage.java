@@ -23,7 +23,7 @@ public class MoreOptionsPage extends BasePage {
     @iOSXCUITFindBy(accessibility = "viewActivityLog")
     private WebElement viewActivityLogButton;
 
-    @AndroidFindBy(accessibility = "outlinedPinIcon")
+    @AndroidFindBy(accessibility = "pinOrUnPinCard")
     @iOSXCUITFindBy(accessibility = "pinOrUnPinCard")
     private WebElement pinOrUnPinCardButton;
 
