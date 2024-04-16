@@ -147,8 +147,6 @@ fileignoreconfig:
     checksum: e93f988415bf91064e2cf5fbc09ff6c7226798baa5da721fa0715d5d0d6afddf
   - filename: ios/Podfile.lock
     checksum: c8f330a55ad911e59921215bf7d086db3dbdb5eab28202b3b450d780498ea880
-  - filename: screens/Home/MyVcsTab.tsx
-    checksum: 8133e2fefddfd0207eb7207b660d317f9a6acafbab6a65762d29ea86e33787cb
   - filename: components/BackupAndRestoreBannerNotification.tsx
     checksum: e465a9947727687d784d0cb9d8db1e28f765b0659bf4a3aa6d75643aa7b14102
   - filename: components/ActivityLogEvent.ts
@@ -238,7 +236,7 @@ fileignoreconfig:
   - filename: machines/IssuersMachine.typegen.ts
     checksum: 959fef1e51f0f3d5b12933f7b362e96401fb776ab12f0d13c6e542918b2ff255
   - filename: screens/Home/MyVcsTab.tsx
-    checksum: 4e94bbbd0fe486108a4612e461ae1066fe0c2f44187549158d6369b51a1ba055
+    checksum: 2dd6ce0466bf3a371e4a3fcc5a7f35e6c71f1668ce1e0572e5aa7a2b1f00fd72
   - filename: machines/store.ts
     checksum: 77bb25f9453169870496a15b7daa0a8094798895b70e3904e227a214ef4a1fec
   - filename: machines/store.typegen.ts
