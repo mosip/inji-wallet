@@ -607,7 +607,7 @@ export async function getVCsData(
 ) {
   try {
     let vcsData: Record<string, VC> = {};
-    let anyVcTampered: boolean = false;
+    let tamperedVcsList: VCMetadata[] = [];
     for (let ind in metadatas) {
       const vcKey = VCMetadata.fromVC(metadatas[ind]).getVcKey();
       try {
@@ -619,13 +619,13 @@ export async function getVCsData(
           e.message.includes(tamperedErrorMessageString) ||
           e.message.includes(ENOENT)
         ) {
-          anyVcTampered = true;
+          tamperedVcsList = [...tamperedVcsList, metadatas[ind]];
         } else {
           throw e;
         }
       }
     }
-    return {vcsData, anyVcTampered};
+    return {vcsData, tamperedVcsList};
   } catch (e) {
     throw e;
   }
