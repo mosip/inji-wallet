@@ -562,7 +562,7 @@ export function selectWalletBindingSuccess(state: State) {
 }
 
 export function selectIsTampered(state: State) {
-  return state.matches('tamperedVCs');
+  return state.matches('ready.tamperedVCs');
 }
 
 export function selectDownloadingFailedVcs(state: State) {
