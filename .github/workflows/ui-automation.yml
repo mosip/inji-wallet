@@ -29,7 +29,7 @@ on:
         default: 'https://api.sandbox.mosip.net'
         type: string
       backendServiceUrlEsiget:
-        description: 'Mimoto backend service URL'
+        description: 'Esignet backend service URL'
         required: true
         default: 'https://api.sandbox.mosip.net'
         type: string
