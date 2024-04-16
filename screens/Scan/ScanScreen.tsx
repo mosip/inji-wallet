@@ -10,11 +10,12 @@ import {Theme} from '../../components/ui/styleUtils';
 import {QrLogin} from '../QrLogin/QrLogin';
 import {useScanScreen} from './ScanScreenController';
 import BluetoothStateManager from 'react-native-bluetooth-state-manager';
-import {Linking} from 'react-native';
+import {Dimensions, Linking} from 'react-native';
 import {isIOS} from '../../shared/constants';
 import {BannerNotificationContainer} from '../../components/BannerNotificationContainer';
 import {SharingStatusModal} from './SharingStatusModal';
 import {SvgImage} from '../../components/ui/svg';
+import {Overlay} from 'react-native-elements';
 
 export const ScanScreen: React.FC = () => {
   const {t} = useTranslation('ScanScreen');
@@ -40,9 +41,8 @@ export const ScanScreen: React.FC = () => {
   });
 
   useEffect(() => {
-    if (controller.isQuickShareDone)
-      controller.GOTO_HOME();
-  },[controller.isQuickShareDone]);
+    if (controller.isQuickShareDone) controller.GOTO_HOME();
+  }, [controller.isQuickShareDone]);
 
   const openSettings = () => {
     Linking.openSettings();
@@ -144,6 +144,51 @@ export const ScanScreen: React.FC = () => {
     );
   }
 
+  function LocalPermissionRational() {
+    return (
+      <Overlay
+        isVisible={true}
+        overlayStyle={Theme.BindingVcWarningOverlay.overlay}>
+        <Column
+          align="space-between"
+          crossAlign="center"
+          padding={'10'}
+          width={Dimensions.get('screen').width * 0.8}
+          height={Dimensions.get('screen').height * 0}>
+          <Text testID="alert" weight="semibold" margin="15 0 0 0">
+            {t('rational.title')}
+          </Text>
+
+          <Text
+            testID="warningMsg"
+            align="center"
+            size="small"
+            weight="semibold"
+            margin="15 0 0 0"
+            color={Theme.Colors.GrayText}>
+            {t('rational.message')}
+          </Text>
+
+          <Button
+            testID="yesConfirm"
+            margin={'30 0 0 0'}
+            type="gradient"
+            title={t('rational.accept')}
+            onPress={controller.ALLOW}
+          />
+
+          <Button
+            testID="no"
+            margin={'10 0 0 0'}
+            type="clear"
+            title={t('rational.cancel')}
+            onPress={controller.DENIED}
+          />
+        </Column>
+      </Overlay>
+    );
+  }
+
   function loadQRScanner() {
     if (controller.isEmpty) {
       return noShareableVcText();
@@ -159,6 +204,9 @@ export const ScanScreen: React.FC = () => {
       controller.isReadyForBluetoothStateCheck
     ) {
       return bluetoothIsOffText();
+    }
+    if (controller.isLocalPermissionRational) {
+      return LocalPermissionRational();
     }
     if (controller.isLocationDisabled || controller.isLocationDenied) {
       return allowLocationComponent();

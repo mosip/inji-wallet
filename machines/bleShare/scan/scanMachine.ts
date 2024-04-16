@@ -25,7 +25,6 @@ import {
   isIOS,
   MY_LOGIN_STORE_KEY,
   MY_VCS_STORE_KEY,
-  RECEIVED_VCS_STORE_KEY,
 } from '../../../shared/constants';
 import {subscribe} from '../../../shared/openIdBLE/walletEventHandler';
 import {
@@ -133,6 +132,8 @@ const model = createModel(
       FACE_VERIFICATION_CONSENT: (isConsentGiven: boolean) => ({
         isConsentGiven,
       }),
+      ALLOW: () => ({}),
+      DENIED: () => ({}),
     },
   },
 );
@@ -463,7 +464,7 @@ export const scanMachine =
           entry: 'loadVCDataToMemory',
           on: {
             STORE_RESPONSE: {
-              actions: ['refreshVCs','setShowQuickShareSuccessBanner'],
+              actions: ['refreshVCs', 'setShowQuickShareSuccessBanner'],
               target: '.navigatingToHome',
             },
           },
@@ -688,7 +689,11 @@ export const scanMachine =
               },
             },
             disconnect: {
-              entry: ['resetFlowType', 'resetSelectedVc','resetShowQuickShareSuccessBanner'],
+              entry: [
+                'resetFlowType',
+                'resetSelectedVc',
+                'resetShowQuickShareSuccessBanner',
+              ],
               invoke: {
                 src: 'disconnect',
               },
@@ -819,15 +824,22 @@ export const scanMachine =
                   target: '#scan.clearingConnection',
                 },
                 LOCATION_DISABLED: {
+                  target: 'LocationPermissionRationale',
+                },
+              },
+            },
+            LocationPermissionRationale: {
+              on: {
+                ALLOW: {
+                  target: 'requestToEnableLocation',
+                },
+                DENIED: {
                   target: 'denied',
                 },
               },
             },
             denied: {
               on: {
-                APP_ACTIVE: {
-                  target: 'checkingPermissionStatus',
-                },
                 LOCATION_REQUEST: {
                   actions: 'openAppPermission',
                 },
