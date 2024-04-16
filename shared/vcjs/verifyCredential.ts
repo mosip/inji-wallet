@@ -98,6 +98,7 @@ function handleResponse(
           TelemetryConstants.FlowType.vcVerification,
           TelemetryConstants.ErrorId.vcVerificationFailed,
           TelemetryConstants.ErrorMessage.vcVerificationFailed + vcIdentifier,
+          verifiableCredential,
         ),
       );
       isVerifiedFlag = true;
