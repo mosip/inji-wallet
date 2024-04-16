@@ -93,11 +93,13 @@ function handleResponse(
       const vcIdentifier = getMosipIdentifier(
         verifiableCredential.credentialSubject,
       );
+      const stacktrace = __DEV__ ? verifiableCredential : {};
       sendErrorEvent(
         getErrorEventData(
           TelemetryConstants.FlowType.vcVerification,
           TelemetryConstants.ErrorId.vcVerificationFailed,
           TelemetryConstants.ErrorMessage.vcVerificationFailed + vcIdentifier,
+          stacktrace,
         ),
       );
       isVerifiedFlag = true;
