@@ -76,7 +76,7 @@ export function useScanScreen() {
   type ScanScreenNavigation = NavigationProp<MainBottomTabParamList>;
   const navigation = useNavigation<ScanScreenNavigation>();
   const GOTO_HOME = () => navigation.navigate(BOTTOM_TAB_ROUTES.home);
-  const ALLOW = () => scanService.send(ScanEvents.ALLOW());
+  const ALLOWED = () => scanService.send(ScanEvents.ALLOWED());
   const DENIED = () => scanService.send(ScanEvents.DENIED());
   const isLocalPermissionRational = useSelector(
     scanService,
@@ -112,7 +112,7 @@ export function useScanScreen() {
       scanService.send(ScanEvents.START_PERMISSION_CHECK()),
     SCAN: (qrCode: string) => scanService.send(ScanEvents.SCAN(qrCode)),
     GOTO_HOME,
-    ALLOW,
+    ALLOWED,
     DENIED,
     isLocalPermissionRational,
   };

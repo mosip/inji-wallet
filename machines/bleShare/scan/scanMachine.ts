@@ -132,7 +132,7 @@ const model = createModel(
       FACE_VERIFICATION_CONSENT: (isConsentGiven: boolean) => ({
         isConsentGiven,
       }),
-      ALLOW: () => ({}),
+      ALLOWED: () => ({}),
       DENIED: () => ({}),
     },
   },
@@ -830,7 +830,7 @@ export const scanMachine =
             },
             LocationPermissionRationale: {
               on: {
-                ALLOW: {
+                ALLOWED: {
                   target: 'requestToEnableLocation',
                 },
                 DENIED: {
