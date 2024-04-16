@@ -28,7 +28,6 @@ export interface Typegen0 {
       | 'REFRESH_MY_VCS'
       | 'REFRESH_RECEIVED_VCS'
       | 'STORE_RESPONSE'
-      | 'TAMPERED_VC'
       | 'VERIFY_VC_FAILED'
       | 'xstate.init';
     loadReceivedVcs: 'STORE_RESPONSE';
@@ -45,13 +44,12 @@ export interface Typegen0 {
     removeVcFromMyVcsMetadata: 'REMOVE_VC_FROM_CONTEXT';
     resetDownloadFailedVcs: 'STORE_RESPONSE';
     resetInProgressVcsDownloaded: 'RESET_IN_PROGRESS_VCS_DOWNLOADED';
-    resetIsAnyVcTampered: 'REMOVE_TAMPERED_VCS';
+    resetTamperedVcs: 'REMOVE_TAMPERED_VCS';
     resetVerificationErrorMessage: 'RESET_VERIFY_ERROR';
     resetWalletBindingSuccess: 'RESET_WALLET_BINDING_SUCCESS';
     sendBackupEvent: 'done.invoke.vcMeta.ready.tamperedVCs.triggerAutoBackupForTamperedVcDeletion:invocation[0]';
     setDownloadedVc: 'VC_DOWNLOADED';
     setDownloadingFailedVcs: 'DOWNLOAD_LIMIT_EXPIRED';
-    setIsAnyVcTampered: 'STORE_RESPONSE' | 'TAMPERED_VC';
     setMyVcs: 'STORE_RESPONSE';
     setMyVcsMetadata: 'STORE_RESPONSE';
     setReceivedVcs: 'STORE_RESPONSE';

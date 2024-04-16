@@ -27,6 +27,7 @@ const model = createModel(
     areAllVcsDownloaded: false as boolean,
     walletBindingSuccess: false,
     isAnyVcTampered: false as boolean,
+    tamperedVcs: [] as VCMetadata[],
     downloadingFailedVcs: [] as VCMetadata[], //VCDownloadFailed
     verificationErrorMessage: '' as string,
   },
@@ -102,7 +103,7 @@ export const vcMetaMachine =
               entry: 'loadMyVcs',
               on: {
                 STORE_RESPONSE: {
-                  actions: ['setMyVcs', 'setIsAnyVcTampered'],
+                  actions: 'setMyVcs',
                   target: 'receivedVcsMetadata',
                 },
               },
@@ -120,7 +121,7 @@ export const vcMetaMachine =
               entry: 'loadReceivedVcs',
               on: {
                 STORE_RESPONSE: {
-                  actions: ['setReceivedVcs', 'setIsAnyVcTampered'],
+                  actions: 'setReceivedVcs',
                   target: 'showTamperedPopup',
                 },
               },
@@ -140,7 +141,7 @@ export const vcMetaMachine =
               initial: 'idle',
               on: {
                 REMOVE_TAMPERED_VCS: {
-                  actions: ['resetIsAnyVcTampered'],
+                  actions: ['resetTamperedVcs'],
                   target: '.triggerAutoBackupForTamperedVcDeletion',
                 },
               },
@@ -225,10 +226,6 @@ export const vcMetaMachine =
             RESET_VERIFY_ERROR: {
               actions: 'resetVerificationErrorMessage',
             },
-            TAMPERED_VC: {
-              actions: 'setIsAnyVcTampered',
-              target: '#vcMeta.ready.showTamperedPopup',
-            },
           },
         },
         deletingFailedVcs: {
@@ -252,6 +249,12 @@ export const vcMetaMachine =
         }),
 
         getVcItemResponse: respond((context, event) => {
+          if (context.tamperedVcs.includes(event.vcMetadata)) {
+            return {
+              type: 'TAMPERED_VC',
+            };
+          }
+
           const isMyVCs = context.myVcsMetadata?.filter(
             (vcMetadataObject: Object) => {
               return (
@@ -311,22 +314,22 @@ export const vcMetaMachine =
           myVcs: (_context, event) => {
             return event.response.vcsData;
           },
+          tamperedVcs: (context, event) => {
+            return [...context.tamperedVcs, ...event.response.tamperedVcsList];
+          },
         }),
 
         setReceivedVcs: model.assign({
           receivedVcs: (_context, event) => {
             return event.response.vcsData;
           },
-        }),
-
-        setIsAnyVcTampered: model.assign({
-          isAnyVcTampered: (context, event) => {
-            return event.response.anyVcTampered || context.isAnyVcTampered;
+          tamperedVcs: (context, event) => {
+            return [...context.tamperedVcs, ...event.response.tamperedVcsList];
           },
         }),
 
-        resetIsAnyVcTampered: model.assign({
-          isAnyVcTampered: () => false,
+        resetTamperedVcs: model.assign({
+          tamperedVcs: () => [],
         }),
 
         setDownloadingFailedVcs: model.assign({
@@ -467,7 +470,7 @@ export const vcMetaMachine =
         isSignedIn: (_context, event) =>
           (event.data as isSignedInResult).isSignedIn,
         isAnyVcTampered: context => {
-          return context.isAnyVcTampered;
+          return context.tamperedVcs.length > 0;
         },
       },
 

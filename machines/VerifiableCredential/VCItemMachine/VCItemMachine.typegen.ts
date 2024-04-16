@@ -121,6 +121,7 @@ export interface Typegen0 {
   };
   missingImplementations: {
     actions:
+      | 'addVcToInProgressDownloads'
       | 'closeViewVcModal'
       | 'incrementDownloadCounter'
       | 'logDownloaded'
@@ -184,6 +185,7 @@ export interface Typegen0 {
       | 'verifyCredential';
   };
   eventsCausingActions: {
+    addVcToInProgressDownloads: 'GET_VC_RESPONSE';
     closeViewVcModal: 'CLOSE_VC_MODAL' | 'STORE_RESPONSE';
     incrementDownloadCounter:
       | 'POLL'
