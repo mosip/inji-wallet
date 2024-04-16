@@ -11,7 +11,7 @@ import {
 } from 'xstate';
 import {createModel} from 'xstate/lib/model';
 import {generateSecureRandom} from 'react-native-securerandom';
-import {log} from 'xstate/lib/actions';
+import {error, log} from 'xstate/lib/actions';
 import {
   isIOS,
   MY_VCS_STORE_KEY,
@@ -76,7 +76,11 @@ const model = createModel(
         requester,
       }),
       STORE_ERROR: (error: Error, requester?: string) => ({error, requester}),
-      TAMPERED_VC: (key: string, requester?: string) => ({key, requester}),
+      TAMPERED_VC: (
+        key: string,
+        tamperedVcsList: VCMetadata[],
+        requester?: string,
+      ) => ({key, tamperedVcsList, requester}),
     },
   },
 );
@@ -249,9 +253,13 @@ export const storeMachine =
             },
             TAMPERED_VC: {
               actions: [
-                send((_, event) => model.events.TAMPERED_VC(event.key), {
-                  to: (_, event) => event.requester,
-                }),
+                send(
+                  (_, event) =>
+                    model.events.TAMPERED_VC(event.key, event.tamperedVcsList),
+                  {
+                    to: (_, event) => event.requester,
+                  },
+                ),
               ],
             },
           },
@@ -466,12 +474,6 @@ export const storeMachine =
                 callback(model.events.KEY_INVALIDATE_ERROR());
                 sendUpdate();
               } else if (
-                e.message === tamperedErrorMessageString ||
-                e.message === ENOENT
-              ) {
-                callback(model.events.TAMPERED_VC(event.key, event.requester));
-                sendUpdate();
-              } else if (
                 e.message.includes('JSON') ||
                 e.message.includes('decrypt')
               ) {
@@ -679,7 +681,7 @@ export async function handleGetItemResponse(
 
 export async function getVCsData(key: string, encryptionKey: string) {
   try {
-    let myVcsData: Record<string, VC> = {};
+    let vcsData: Record<string, VC> = {};
     const data = await Storage.getItem(key, encryptionKey);
     const decryptedMyVcsMetadata: VCMetadata[] = await handleGetItemResponse(
       key,
@@ -687,12 +689,25 @@ export async function getVCsData(key: string, encryptionKey: string) {
       encryptionKey,
       data,
     );
+    let anyVcTampered: boolean = false;
     for (let ind in decryptedMyVcsMetadata) {
-      const key = VCMetadata.fromVC(decryptedMyVcsMetadata[ind]).getVcKey();
-      const vc = await getItem(key, null, encryptionKey);
-      myVcsData[key] = vc;
+      const vcKey = VCMetadata.fromVC(decryptedMyVcsMetadata[ind]).getVcKey();
+      try {
+        const vc = await getItem(vcKey, null, encryptionKey);
+        vcsData[vcKey] = vc;
+      } catch (e) {
+        console.log('error: ', e);
+        if (
+          e.message.includes(tamperedErrorMessageString) ||
+          e.message.includes(ENOENT)
+        ) {
+          anyVcTampered = true;
+        } else {
+          throw e;
+        }
+      }
     }
-    return myVcsData;
+    return {vcsData, anyVcTampered};
   } catch (e) {
     throw e;
   }

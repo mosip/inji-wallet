@@ -49,9 +49,6 @@ export const VCItemMachine = model.createMachine(
                   target: 'loadVcFromServer',
                 },
               ],
-              TAMPERED_VC: {
-                actions: 'sendTamperedVc',
-              },
             },
           },
           loadVcFromServer: {

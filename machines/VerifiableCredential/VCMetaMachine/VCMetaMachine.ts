@@ -26,7 +26,7 @@ const model = createModel(
     inProgressVcDownloads: new Set<string>(), //VCDownloadInProgress
     areAllVcsDownloaded: false as boolean,
     walletBindingSuccess: false,
-    tamperedVcs: [] as VCMetadata[],
+    isAnyVcTampered: false as boolean,
     downloadingFailedVcs: [] as VCMetadata[], //VCDownloadFailed
     verificationErrorMessage: '' as string,
   },
@@ -64,6 +64,7 @@ const model = createModel(
       }),
       RESET_VERIFY_ERROR: () => ({}),
       REFRESH_VCS_METADATA: () => ({}),
+      SHOW_TAMPERED_POPUP: () => ({}),
     },
   },
 );
@@ -82,18 +83,14 @@ export const vcMetaMachine =
         events: {} as EventFrom<typeof model>,
       },
       id: 'vcMeta',
-      initial: 'init',
+      initial: 'ready',
       states: {
-        init: {
-          on: {
-            REFRESH_MY_VCS: {
-              target: '#vcMeta.ready.myVcs.refreshingMyVcsMetadata',
-            },
-          },
+        ready: {
+          entry: sendParent('READY'),
           initial: 'myVcsMetadata',
           states: {
             myVcsMetadata: {
-              entry: 'loadMyVcsMetadata',
+              entry: ['loadMyVcsMetadata'],
               on: {
                 STORE_RESPONSE: {
                   actions: 'setMyVcsMetadata',
@@ -105,17 +102,8 @@ export const vcMetaMachine =
               entry: 'loadMyVcs',
               on: {
                 STORE_RESPONSE: {
-                  actions: 'setMyVcs',
+                  actions: ['setMyVcs', 'setIsAnyVcTampered'],
                   target: 'receivedVcsMetadata',
-                },
-              },
-            },
-            receivedVcs: {
-              entry: 'loadReceivedVcs',
-              on: {
-                STORE_RESPONSE: {
-                  actions: 'setReceivedVcs',
-                  target: '#vcMeta.ready',
                 },
               },
             },
@@ -128,72 +116,34 @@ export const vcMetaMachine =
                 },
               },
             },
-          },
-        },
-        ready: {
-          entry: sendParent('READY'),
-          type: 'parallel',
-          states: {
-            myVcs: {
-              initial: 'idle',
-              states: {
-                idle: {
-                  on: {
-                    REFRESH_MY_VCS: {
-                      actions: [log('REFRESH_MY_VCS:myVcs---')],
-                      target: 'refreshingMyVcsMetadata',
-                    },
-                    WALLET_BINDING_SUCCESS: {
-                      actions: 'setWalletBindingSuccess',
-                    },
-                  },
-                },
-                refreshingMyVcsMetadata: {
-                  entry: 'loadMyVcsMetadata',
-                  on: {
-                    STORE_RESPONSE: {
-                      actions: ['setMyVcsMetadata'],
-                      target: 'refreshingMyVcsData',
-                    },
-                  },
-                },
-                refreshingMyVcsData: {
-                  entry: 'loadMyVcs',
-                  on: {
-                    STORE_RESPONSE: {
-                      actions: ['setMyVcs'],
-                      target: 'idle',
-                    },
-                  },
+            receivedVcs: {
+              entry: 'loadReceivedVcs',
+              on: {
+                STORE_RESPONSE: {
+                  actions: ['setReceivedVcs', 'setIsAnyVcTampered'],
+                  target: 'showTamperedPopup',
                 },
               },
             },
-            receivedVcs: {
-              initial: 'idle',
-              states: {
-                idle: {},
-                refreshingReceivedVcsMetadata: {
-                  entry: 'loadReceivedVcsMetadata',
-                  on: {
-                    STORE_RESPONSE: {
-                      actions: 'setReceivedVcsMetadata',
-                      target: 'refreshingReceivedVcsData',
-                    },
+            showTamperedPopup: {
+              entry: send('SHOW_TAMPERED_POPUP'),
+              on: {
+                SHOW_TAMPERED_POPUP: [
+                  {
+                    cond: 'isAnyVcTampered',
+                    target: '#vcMeta.tamperedVCs',
                   },
-                },
-                refreshingReceivedVcsData: {
-                  entry: 'loadReceivedVcs',
-                  on: {
-                    STORE_RESPONSE: {
-                      actions: 'setReceivedVcs',
-                      target: 'idle',
-                    },
-                  },
-                },
+                ],
               },
             },
           },
           on: {
+            REFRESH_MY_VCS: {
+              target: '#vcMeta.ready',
+            },
+            WALLET_BINDING_SUCCESS: {
+              actions: 'setWalletBindingSuccess',
+            },
             GET_VC_ITEM: {
               actions: 'getVcItemResponse',
             },
@@ -225,18 +175,14 @@ export const vcMetaMachine =
               actions: 'resetWalletBindingSuccess',
             },
             REFRESH_RECEIVED_VCS: {
-              target: '#vcMeta.ready.receivedVcs.refreshingReceivedVcsMetadata',
-            },
-            TAMPERED_VC: {
-              actions: 'setTamperedVcs',
-              target: 'tamperedVCs',
+              target: '#vcMeta.ready.receivedVcsMetadata',
             },
             DOWNLOAD_LIMIT_EXPIRED: {
               actions: [
                 'removeVcFromInProgressDownlods',
                 'setDownloadingFailedVcs',
               ],
-              target: '#vcMeta.ready.myVcs.refreshingMyVcsMetadata',
+              target: '#vcMeta.ready',
             },
             DELETE_VC: {
               target: 'deletingFailedVcs',
@@ -246,7 +192,7 @@ export const vcMetaMachine =
                 'removeVcFromInProgressDownlods',
                 'setVerificationErrorMessage',
               ],
-              target: '#vcMeta.ready.myVcs.refreshingMyVcsMetadata',
+              target: '#vcMeta.ready',
             },
             RESET_VERIFY_ERROR: {
               actions: 'resetVerificationErrorMessage',
@@ -257,6 +203,7 @@ export const vcMetaMachine =
           initial: 'idle',
           on: {
             REMOVE_TAMPERED_VCS: {
+              actions: ['resetIsAnyVcTampered'],
               target: '.triggerAutoBackupForTamperedVcDeletion',
             },
           },
@@ -268,21 +215,14 @@ export const vcMetaMachine =
                 onDone: [
                   {
                     cond: 'isSignedIn',
-                    actions: 'sendBackupEvent',
-                    target: 'refreshVcsMetadata',
+                    actions: ['sendBackupEvent', 'logTamperedVCsremoved'],
+                    target: '#vcMeta.ready',
                   },
                   {
-                    target: 'refreshVcsMetadata',
+                    actions: 'logTamperedVCsremoved',
+                    target: '#vcMeta.ready',
                   },
                 ],
-              },
-            },
-            refreshVcsMetadata: {
-              entry: ['logTamperedVCsremoved', send('REFRESH_VCS_METADATA')],
-              on: {
-                REFRESH_VCS_METADATA: {
-                  target: '#vcMeta.init',
-                },
               },
             },
           },
@@ -295,7 +235,7 @@ export const vcMetaMachine =
                 'removeDownloadingFailedVcsFromMyVcs',
                 'resetDownloadFailedVcs',
               ],
-              target: '#vcMeta.ready.myVcs.refreshingMyVcsMetadata',
+              target: '#vcMeta.ready',
             },
           },
         },
@@ -362,18 +302,24 @@ export const vcMetaMachine =
 
         setMyVcs: model.assign({
           myVcs: (_context, event) => {
-            return event.response;
+            return event.response.vcsData;
           },
         }),
 
         setReceivedVcs: model.assign({
           receivedVcs: (_context, event) => {
-            return event.response;
+            return event.response.vcsData;
           },
         }),
 
-        setTamperedVcs: model.assign({
-          tamperedVcs: (context, event) => [event.VC, ...context.tamperedVcs],
+        setIsAnyVcTampered: model.assign({
+          isAnyVcTampered: (context, event) => {
+            return event.response.anyVcTampered || context.isAnyVcTampered;
+          },
+        }),
+
+        resetIsAnyVcTampered: model.assign({
+          isAnyVcTampered: () => false,
         }),
 
         setDownloadingFailedVcs: model.assign({
@@ -513,6 +459,9 @@ export const vcMetaMachine =
       guards: {
         isSignedIn: (_context, event) =>
           (event.data as isSignedInResult).isSignedIn,
+        isAnyVcTampered: context => {
+          return context.isAnyVcTampered;
+        },
       },
 
       services: {
@@ -549,11 +498,16 @@ export function selectReceivedVcsMetadata(state: State): VCMetadata[] {
 }
 
 export function selectIsRefreshingMyVcs(state: State) {
-  return state.matches('ready.myVcs.refreshingMyVcsMetadata');
+  return (
+    state.matches('ready.myVcsMetadata') || state.matches('ready.myVcsData')
+  );
 }
 
 export function selectIsRefreshingReceivedVcs(state: State) {
-  return state.matches('ready.receivedVcs.refreshingReceivedVcsMetadata');
+  return (
+    state.matches('ready.receivedVcsMetadata') ||
+    state.matches('ready.receivedVcs')
+  );
 }
 
 export function selectAreAllVcsDownloaded(state: State) {
