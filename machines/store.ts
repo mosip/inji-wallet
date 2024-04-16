@@ -76,11 +76,7 @@ const model = createModel(
         requester,
       }),
       STORE_ERROR: (error: Error, requester?: string) => ({error, requester}),
-      TAMPERED_VC: (
-        key: string,
-        tamperedVcsList: VCMetadata[],
-        requester?: string,
-      ) => ({key, tamperedVcsList, requester}),
+      TAMPERED_VC: (key: string, requester?: string) => ({key, requester}),
     },
   },
 );
@@ -473,6 +469,9 @@ export const storeMachine =
                 await clear();
                 callback(model.events.KEY_INVALIDATE_ERROR());
                 sendUpdate();
+              } else if (e.message === ENOENT) {
+                callback(model.events.TAMPERED_VC(event.key, event.requester));
+                sendUpdate();
               } else if (
                 e.message.includes('JSON') ||
                 e.message.includes('decrypt')
@@ -697,10 +696,7 @@ export async function getVCsData(key: string, encryptionKey: string) {
         vcsData[vcKey] = vc;
       } catch (e) {
         console.log('error: ', e);
-        if (
-          e.message.includes(tamperedErrorMessageString) ||
-          e.message.includes(ENOENT)
-        ) {
+        if (e.message.includes(tamperedErrorMessageString)) {
           anyVcTampered = true;
         } else {
           throw e;

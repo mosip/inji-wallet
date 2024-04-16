@@ -140,7 +140,6 @@ export interface Typegen0 {
       | 'sendActivationSuccessEvent'
       | 'sendBackupEvent'
       | 'sendDownloadLimitExpire'
-      | 'sendTamperedVc'
       | 'sendTelemetryEvents'
       | 'sendUserCancelledActivationFailedEndEvent'
       | 'sendVcUpdated'
@@ -236,7 +235,6 @@ export interface Typegen0 {
     sendDownloadLimitExpire:
       | 'FAILED'
       | 'error.platform.vc-item-machine.loadVc.loadVcFromServer.verifyingDownloadLimitExpiry:invocation[0]';
-    sendTamperedVc: 'TAMPERED_VC';
     sendTelemetryEvents: 'STORE_RESPONSE';
     sendUserCancelledActivationFailedEndEvent: 'DISMISS';
     sendVcUpdated: 'PIN_CARD';

@@ -131,9 +131,37 @@ export const vcMetaMachine =
                 SHOW_TAMPERED_POPUP: [
                   {
                     cond: 'isAnyVcTampered',
-                    target: '#vcMeta.tamperedVCs',
+                    target: 'tamperedVCs',
                   },
                 ],
+              },
+            },
+            tamperedVCs: {
+              initial: 'idle',
+              on: {
+                REMOVE_TAMPERED_VCS: {
+                  actions: ['resetIsAnyVcTampered'],
+                  target: '.triggerAutoBackupForTamperedVcDeletion',
+                },
+              },
+              states: {
+                idle: {},
+                triggerAutoBackupForTamperedVcDeletion: {
+                  invoke: {
+                    src: 'isUserSignedAlready',
+                    onDone: [
+                      {
+                        cond: 'isSignedIn',
+                        actions: ['sendBackupEvent', 'logTamperedVCsremoved'],
+                        target: '#vcMeta.ready',
+                      },
+                      {
+                        actions: 'logTamperedVCsremoved',
+                        target: '#vcMeta.ready',
+                      },
+                    ],
+                  },
+                },
               },
             },
           },
@@ -197,33 +225,9 @@ export const vcMetaMachine =
             RESET_VERIFY_ERROR: {
               actions: 'resetVerificationErrorMessage',
             },
-          },
-        },
-        tamperedVCs: {
-          initial: 'idle',
-          on: {
-            REMOVE_TAMPERED_VCS: {
-              actions: ['resetIsAnyVcTampered'],
-              target: '.triggerAutoBackupForTamperedVcDeletion',
-            },
-          },
-          states: {
-            idle: {},
-            triggerAutoBackupForTamperedVcDeletion: {
-              invoke: {
-                src: 'isUserSignedAlready',
-                onDone: [
-                  {
-                    cond: 'isSignedIn',
-                    actions: ['sendBackupEvent', 'logTamperedVCsremoved'],
-                    target: '#vcMeta.ready',
-                  },
-                  {
-                    actions: 'logTamperedVCsremoved',
-                    target: '#vcMeta.ready',
-                  },
-                ],
-              },
+            TAMPERED_VC: {
+              actions: 'setIsAnyVcTampered',
+              target: '#vcMeta.ready.showTamperedPopup',
             },
           },
         },

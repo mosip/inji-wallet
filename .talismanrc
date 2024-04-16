@@ -238,7 +238,7 @@ fileignoreconfig:
   - filename: screens/Home/MyVcsTab.tsx
     checksum: 4e94bbbd0fe486108a4612e461ae1066fe0c2f44187549158d6369b51a1ba055
   - filename: machines/store.ts
-    checksum: 3e7a0b4f86d754259f0de00e3db97713ef48729a94ba35bf88cd7b619159b628
+    checksum: 5e904d3094cc98a04155e6a4015f17f93c0dec8261d1041fb1d00ffa918eda73
   - filename: machines/store.typegen.ts
     checksum: 46f3a7c2d15ed03fc70e27ecae5a12c128011c49913b35cdb8edba12b1a999db
   - filename: machines/VerifiableCredential/VCMetaMachine/VCMetaMachine.ts
