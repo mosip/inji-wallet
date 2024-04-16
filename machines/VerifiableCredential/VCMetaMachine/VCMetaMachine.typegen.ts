@@ -40,7 +40,6 @@ export interface Typegen0 {
       | 'DOWNLOAD_LIMIT_EXPIRED'
       | 'REMOVE_VC_FROM_IN_PROGRESS_DOWNLOADS'
       | 'VERIFY_VC_FAILED';
-    removeVcFromMyVcs: 'REMOVE_VC_FROM_MYVCS';
     removeVcFromMyVcsMetadata: 'REMOVE_VC_FROM_CONTEXT';
     resetDownloadFailedVcs: 'STORE_RESPONSE';
     resetInProgressVcsDownloaded: 'RESET_IN_PROGRESS_VCS_DOWNLOADED';

@@ -405,12 +405,7 @@ export const VCItemMachine = model.createMachine(
             entry: 'removeVcItem',
             on: {
               STORE_RESPONSE: {
-                actions: [
-                  'removeVcFromMyVcs',
-                  'closeViewVcModal',
-                  'refreshAllVcs',
-                  'logRemovedVc',
-                ],
+                actions: ['closeViewVcModal', 'refreshAllVcs', 'logRemovedVc'],
                 target: 'triggerAutoBackup',
               },
             },

@@ -47,7 +47,6 @@ const model = createModel(
       REFRESH_MY_VCS: () => ({}),
       REFRESH_MY_VCS_TWO: (vc: VC) => ({vc}),
       REFRESH_RECEIVED_VCS: () => ({}),
-      REMOVE_VC_FROM_MYVCS: (vcMetadata: VCMetadata) => ({vcMetadata}),
       WALLET_BINDING_SUCCESS: () => ({}),
       RESET_WALLET_BINDING_SUCCESS: () => ({}),
       ADD_VC_TO_IN_PROGRESS_DOWNLOADS: (requestId: string) => ({requestId}),
@@ -189,9 +188,6 @@ export const vcMetaMachine =
             },
             ADD_VC_TO_IN_PROGRESS_DOWNLOADS: {
               actions: 'addVcToInProgressDownloads',
-            },
-            REMOVE_VC_FROM_MYVCS: {
-              actions: 'removeVcFromMyVcs',
             },
             REMOVE_VC_FROM_IN_PROGRESS_DOWNLOADS: {
               actions: 'removeVcFromInProgressDownlods',
@@ -410,17 +406,6 @@ export const vcMetaMachine =
             context.myVcsMetadata.filter(
               (vc: VCMetadata) => !vc.equals(event.vcMetadata),
             ),
-        }),
-
-        removeVcFromMyVcs: model.assign({
-          myVcs: (context, event) => {
-            const vcKeyToDelete = event.vcMetadata.getVcKey();
-            return Object.fromEntries(
-              Object.entries(context.myVcs).filter(
-                ([key]) => key !== vcKeyToDelete,
-              ),
-            );
-          },
         }),
 
         removeDownloadingFailedVcsFromMyVcs: model.assign({

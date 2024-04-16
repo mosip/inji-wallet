@@ -130,7 +130,6 @@ export interface Typegen0 {
       | 'logWalletBindingSuccess'
       | 'refreshAllVcs'
       | 'removeVcFromInProgressDownloads'
-      | 'removeVcFromMyVcs'
       | 'removeVcItem'
       | 'removeVcMetaDataFromStorage'
       | 'removeVcMetaDataFromVcMachineContext'
@@ -206,7 +205,6 @@ export interface Typegen0 {
       | 'STORE_RESPONSE'
       | 'done.invoke.vc-item-machine.kebabPopUp.triggerAutoBackup:invocation[0]';
     removeVcFromInProgressDownloads: 'STORE_RESPONSE';
-    removeVcFromMyVcs: 'STORE_RESPONSE';
     removeVcItem: 'CONFIRM';
     removeVcMetaDataFromStorage:
       | 'STORE_ERROR'

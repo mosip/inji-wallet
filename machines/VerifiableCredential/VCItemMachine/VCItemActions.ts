@@ -310,22 +310,10 @@ export const VCItemActions = model => {
       (context: any) => {
         return StoreEvents.REMOVE(
           MY_VCS_STORE_KEY,
-          context.vcMetadata.getVcKey(),
+          VCMetadata.fromVC(context.vcMetadata).getVcKey(),
         );
       },
       {to: context => context.serviceRefs.store},
-    ),
-
-    removeVcFromMyVcs: send(
-      (context: any) => {
-        return {
-          type: 'REMOVE_VC_FROM_MYVCS',
-          vcMetadata: context.vcMetadata,
-        };
-      },
-      {
-        to: context => context.serviceRefs.vcMeta,
-      },
     ),
 
     setVcKey: model.assign({
