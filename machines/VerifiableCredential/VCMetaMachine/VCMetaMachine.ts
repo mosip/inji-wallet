@@ -23,6 +23,7 @@ const model = createModel(
     receivedVcs: [] as VCMetadata[],
     vcs: {} as Record<string, VC>,
     inProgressVcDownloads: new Set<string>(), //VCDownloadInProgress
+    areAllVcsDownloaded: false as boolean,
     walletBindingSuccess: false,
     tamperedVcs: [] as VCMetadata[],
     downloadingFailedVcs: [] as VCMetadata[], //VCDownloadFailed
@@ -78,13 +79,13 @@ export const vcMetaMachine =
         context: model.initialContext,
         events: {} as EventFrom<typeof model>,
       },
-      id: 'vc',
+      id: 'vcMeta',
       initial: 'init',
       states: {
         init: {
           on: {
             REFRESH_MY_VCS: {
-              target: '#vc.ready.myVcs.refreshing',
+              target: '#vcMeta.ready.myVcs.refreshing',
             },
           },
           initial: 'myVcs',
@@ -103,7 +104,7 @@ export const vcMetaMachine =
               on: {
                 STORE_RESPONSE: {
                   actions: 'setReceivedVcs',
-                  target: '#vc.ready',
+                  target: '#vcMeta.ready',
                 },
               },
             },
@@ -183,7 +184,7 @@ export const vcMetaMachine =
               actions: 'resetWalletBindingSuccess',
             },
             REFRESH_RECEIVED_VCS: {
-              target: '#vc.ready.receivedVcs.refreshing',
+              target: '#vcMeta.ready.receivedVcs.refreshing',
             },
             TAMPERED_VC: {
               actions: 'setTamperedVcs',
@@ -194,7 +195,7 @@ export const vcMetaMachine =
                 'removeVcFromInProgressDownlods',
                 'setDownloadingFailedVcs',
               ],
-              target: '#vc.ready.myVcs.refreshing',
+              target: '#vcMeta.ready.myVcs.refreshing',
             },
             DELETE_VC: {
               target: 'deletingFailedVcs',
@@ -204,7 +205,7 @@ export const vcMetaMachine =
                 'removeVcFromInProgressDownlods',
                 'setVerificationErrorMessage',
               ],
-              target: '#vc.ready.myVcs.refreshing',
+              target: '#vcMeta.ready.myVcs.refreshing',
             },
             RESET_VERIFY_ERROR: {
               actions: 'resetVerificationErrorMessage',
@@ -239,7 +240,7 @@ export const vcMetaMachine =
               entry: ['logTamperedVCsremoved', send('REFRESH_VCS_METADATA')],
               on: {
                 REFRESH_VCS_METADATA: {
-                  target: '#vc.init',
+                  target: '#vcMeta.init',
                 },
               },
             },
@@ -253,7 +254,7 @@ export const vcMetaMachine =
                 'removeDownloadingFailedVcsFromMyVcs',
                 'resetDownloadFailedVcs',
               ],
-              target: '#vc.ready.myVcs.refreshing',
+              target: '#vcMeta.ready.myVcs.refreshing',
             },
           },
         },
@@ -344,9 +345,16 @@ export const vcMetaMachine =
 
             return updatedInProgressList;
           },
+          areAllVcsDownloaded: context => {
+            if (context.inProgressVcDownloads.size == 0) {
+              return true;
+            }
+            return false;
+          },
         }),
 
         resetInProgressVcsDownloaded: model.assign({
+          areAllVcsDownloaded: () => false,
           inProgressVcDownloads: new Set<string>(),
         }),
 
@@ -454,6 +462,10 @@ export function selectIsRefreshingMyVcs(state: State) {
 
 export function selectIsRefreshingReceivedVcs(state: State) {
   return state.matches('ready.receivedVcs.refreshing');
+}
+
+export function selectAreAllVcsDownloaded(state: State) {
+  return state.context.areAllVcsDownloaded;
 }
 
 /*

@@ -91,6 +91,7 @@ export const GetIdInputModal: React.FC<GetIdInputModalProps> = props => {
                 }
                 errorStyle={{color: Theme.Colors.errorMessage}}
                 errorMessage={controller.idError}
+                errorProps={{testID: 'getIdInputErrorMessage'}}
                 onChangeText={controller.INPUT_ID}
                 ref={node => !controller.idInputRef && controller.READY(node)}
               />

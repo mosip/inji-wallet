@@ -3,7 +3,7 @@ import {Pressable, View} from 'react-native';
 import {Theme} from '../ui/styleUtils';
 import testIDProps from '../../shared/commonUtil';
 import {Text} from '../ui';
-import {displayType} from '../../machines/issuersMachine';
+import {displayType} from '../../machines/Issuers/IssuersMachine';
 import {SvgImage} from '../ui/svg';
 
 export const Issuer: React.FC<IssuerProps> = (props: IssuerProps) => {

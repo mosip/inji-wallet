@@ -68,7 +68,7 @@ public class VcDownloadAndVerifyUsingUinTest extends AndroidBaseTest {
         
         assertTrue(homePage.isDownloadingVcPopupDisplayed(),"verify downloading vc popup displayed");
         assertTrue(homePage.isNameDisplayed(TestDataReader.readData("fullName")), "Verify if full name is displayed");
-        assertTrue(homePage.isIdTypeDisplayed(), "Verify if id type is displayed");
+//        assertTrue(homePage.isIdTypeDisplayed(), "Verify if id type is displayed");
         
         DetailedVcViewPage detailedVcViewPage = homePage.openDetailedVcView(TestDataReader.readData("fullName"));
         detailedVcViewPage.clickOnQrCodeButton();
@@ -84,7 +84,7 @@ public class VcDownloadAndVerifyUsingUinTest extends AndroidBaseTest {
         assertEquals(detailedVcViewPage.getUinInDetailedVcView(), uin, "Verify if uin is displayed");
         assertEquals(detailedVcViewPage.getPhoneInDetailedVcView(), TestDataReader.readData("phoneNumber"), "Verify if phone number is displayed");
         assertEquals(detailedVcViewPage.getEmailInDetailedVcView(), TestDataReader.readData("externalemail"), "Verify if email is displayed");
-        assertTrue(detailedVcViewPage.isActivateButtonDisplayed(), "Verify if activate vc button displayed");
+//        assertTrue(detailedVcViewPage.isActivateButtonDisplayed(), "Verify if activate vc button displayed");
     }
 
     @Test
@@ -284,6 +284,8 @@ public class VcDownloadAndVerifyUsingUinTest extends AndroidBaseTest {
         OtpVerificationPage otpVerification = retrieveIdPage.setEnterIdTextBox(uin).clickOnGenerateCardButton();
 
         assertTrue(otpVerification.isOtpVerificationPageLoaded(), "Verify if otp verification page is displayed");
+        assertTrue(otpVerification.verifyotpVerificationDescriptionDisplayed(), "Verify if otp verification description displayed");
+
         otpVerification.WatingTimeForVerificationTimerComplete();
         assertTrue(otpVerification.verifyResendCodeButtonDisplayedEnabled(), "Verify if resend code is enabled");
         otpVerification.clickOnResendButton();

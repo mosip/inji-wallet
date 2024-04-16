@@ -7,11 +7,12 @@ import {HomeScreenTabProps} from './HomeScreen';
 import {AddVcModal} from './MyVcs/AddVcModal';
 import {GetVcModal} from './MyVcs/GetVcModal';
 import {useTranslation} from 'react-i18next';
-import {GET_INDIVIDUAL_ID} from '../../shared/constants';
 import {
-  ErrorMessageOverlay,
-  MessageOverlay,
-} from '../../components/MessageOverlay';
+  BANNER_TYPE_ERROR,
+  BANNER_TYPE_SUCCESS,
+  GET_INDIVIDUAL_ID,
+} from '../../shared/constants';
+import {MessageOverlay} from '../../components/MessageOverlay';
 import {VcItemContainer} from '../../components/VC/VcItemContainer';
 import {BannerNotification} from '../../components/BannerNotification';
 import {
@@ -19,7 +20,6 @@ import {
   sendErrorEvent,
 } from '../../shared/telemetry/TelemetryUtils';
 import {TelemetryConstants} from '../../shared/telemetry/TelemetryConstants';
-
 import {Error} from '../../components/ui/Error';
 import {useIsFocused} from '@react-navigation/native';
 import {getVCsOrderedByPinStatus} from '../../shared/Utils';
@@ -27,12 +27,10 @@ import {SvgImage} from '../../components/ui/svg';
 import {SearchBar} from '../../components/ui/SearchBar';
 import {Icon} from 'react-native-elements';
 import {VCMetadata} from '../../shared/VCMetadata';
-import {BANNER_TYPE_SUCCESS} from '../../shared/constants';
 
 export const MyVcsTab: React.FC<HomeScreenTabProps> = props => {
   const {t} = useTranslation('MyVcsTab');
   const controller = useMyVcsTab(props);
-  const storeErrorTranslationPath = 'errors.savingFailed';
   const vcMetadataOrderedByPinStatus = getVCsOrderedByPinStatus(
     controller.vcMetadatas,
   );
@@ -132,9 +130,7 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = props => {
   };
 
   useEffect(() => {
-    const areAllVcsLoaded =
-      controller.inProgressVcDownloads.size == 0 ? true : false;
-    if (areAllVcsLoaded) {
+    if (controller.areAllVcsLoaded) {
       controller.RESET_STORE_VC_ITEM_STATUS();
       controller.RESET_IN_PROGRESS_VCS_DOWNLOADED();
     }
@@ -161,7 +157,11 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = props => {
         ),
       );
     }
-  }, [controller.inProgressVcDownloads, controller.isTampered]);
+  }, [
+    controller.areAllVcsLoaded,
+    controller.inProgressVcDownloads,
+    controller.isTampered,
+  ]);
 
   let failedVCsList = [];
   controller.downloadFailedVcs.forEach(vc => {
@@ -204,6 +204,15 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = props => {
             }}
             key={'downloadingVcPopup'}
             testId={'downloadingVcPopup'}
+          />
+        )}
+        {controller.isSavingFailedInIdle && (
+          <BannerNotification
+            type={BANNER_TYPE_ERROR}
+            message={t('downloadingVcFailed')}
+            onClosePress={controller.DISMISS}
+            key={'downloadingVcFailedPopup'}
+            testId={'downloadingVcFailedPopup'}
           />
         )}
         <Column fill pY={2} pX={8}>
@@ -372,12 +381,6 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = props => {
         </Row>
       </MessageOverlay>
 
-      <ErrorMessageOverlay
-        translationPath={'MyVcsTab'}
-        isVisible={controller.isSavingFailedInIdle}
-        error={storeErrorTranslationPath}
-        onDismiss={controller.DISMISS}
-      />
       <MessageOverlay
         isVisible={controller.isBindingError}
         title={controller.walletBindingError}
