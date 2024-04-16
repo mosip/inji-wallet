@@ -12,6 +12,7 @@ public class MoreOptionsPage extends BasePage {
 //    private WebElement removeFromWalletButton;
 
     @AndroidFindBy(uiAutomator = "new UiScrollable(new UiSelector().scrollable(true).instance(0)).scrollIntoView(new UiSelector().description(\"outlined-delete-icon\"))")
+    @iOSXCUITFindBy(accessibility = "removeFromWallet")
     private WebElement removeFromWalletButton;
 
     @AndroidFindBy(accessibility = "kebabTitle")
@@ -19,15 +20,15 @@ public class MoreOptionsPage extends BasePage {
     private WebElement moreOptionsText;
 
     @AndroidFindBy(accessibility = "outlined-schedule-icon")
-    @iOSXCUITFindBy(accessibility = "outlined-schedule-icon")
+    @iOSXCUITFindBy(accessibility = "viewActivityLog")
     private WebElement viewActivityLogButton;
 
-    @AndroidFindBy(accessibility = "outlinedPinIcon")
-    @iOSXCUITFindBy(accessibility = "outlinedPinIcon")
+    @AndroidFindBy(accessibility = "pinOrUnPinCard")
+    @iOSXCUITFindBy(accessibility = "pinOrUnPinCard")
     private WebElement pinOrUnPinCardButton;
 
-    @AndroidFindBy(accessibility = "outlined-shielded-icon")
-    @iOSXCUITFindBy(accessibility = "outlined-shielded-icon")
+    @AndroidFindBy(accessibility = "pendingActivationOrActivated")
+    @iOSXCUITFindBy(accessibility = "pendingActivationOrActivated")
     private WebElement activationPending;
 
     @AndroidFindBy(accessibility = "wallet-activated-icon")

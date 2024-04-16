@@ -232,7 +232,7 @@ export const VCItemMachine = model.createMachine(
                 invoke: {
                   src: 'requestBindingOTP',
                   onDone: {
-                    target: '#vc-item-machine.idle',
+                    target: '#vc-item-machine.walletBinding.acceptingBindingOTP',
                     actions: ['setCommunicationDetails'],
                   },
                   onError: {

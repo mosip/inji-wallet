@@ -6,8 +6,7 @@ import inji.pages.*;
 import inji.utils.TestDataReader;
 import org.testng.annotations.Test;
 
-import static org.testng.Assert.assertFalse;
-import static org.testng.Assert.assertTrue;
+import static org.testng.Assert.*;
 
 public class VerifyHelpPageTest extends AndroidBaseTest {
 
@@ -35,7 +34,11 @@ public class VerifyHelpPageTest extends AndroidBaseTest {
         HelpPage helpPage = homePage.clickOnHelpIcon();
 
         assertFalse(helpPage.isHelpPageContentEmpty(), "verifying text is not empty");
-        
+        helpPage.clickOnBackButton();
+
+        assertEquals(homePage.verifyLanguageForNoVCDownloadedPageLoaded(), "Bring your digital identity");
+        homePage.clickOnHelpIcon();
+
         assertTrue(helpPage.isHelpPageLoaded(), "Verify if help page is displayed");
         helpPage.exitHelpPage();
 
