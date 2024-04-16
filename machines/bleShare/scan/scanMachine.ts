@@ -463,7 +463,7 @@ export const scanMachine =
           entry: 'loadVCDataToMemory',
           on: {
             STORE_RESPONSE: {
-              actions: ['refreshVCs','setShowQuickShareSuccessBanner'],
+              actions: ['refreshVCs', 'setShowQuickShareSuccessBanner'],
               target: '.navigatingToHome',
             },
           },
@@ -688,7 +688,11 @@ export const scanMachine =
               },
             },
             disconnect: {
-              entry: ['resetFlowType', 'resetSelectedVc','resetShowQuickShareSuccessBanner'],
+              entry: [
+                'resetFlowType',
+                'resetSelectedVc',
+                'resetShowQuickShareSuccessBanner',
+              ],
               invoke: {
                 src: 'disconnect',
               },
@@ -1330,7 +1334,9 @@ export const scanMachine =
           event.params.startsWith('OPENID4VP://'),
         // sample: 'INJIQUICKSHARE://NAKDFK:DB:JAHDIHAIDJXKABDAJDHUHW'
         isQuickShare: (_context, event) =>
-          event.params.startsWith(DEFAULT_QR_HEADER),
+          // event.params.startsWith(DEFAULT_QR_HEADER),
+          // toggling the feature for now
+          false,
         isQrLogin: (context, event) => {
           try {
             let linkCode = new URL(event.params);
