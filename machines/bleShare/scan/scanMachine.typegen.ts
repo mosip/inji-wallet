@@ -62,6 +62,7 @@ export interface Typegen0 {
     removeLoggers:
       | 'DISCONNECT'
       | 'DISMISS'
+      | 'DISMISS_QUICK_SHARE_BANNER'
       | 'SCREEN_BLUR'
       | 'STORE_RESPONSE'
       | 'xstate.init';
@@ -69,16 +70,18 @@ export interface Typegen0 {
     resetFlowType:
       | 'DISCONNECT'
       | 'DISMISS'
+      | 'DISMISS_QUICK_SHARE_BANNER'
       | 'GOTO_HISTORY'
       | 'SCREEN_BLUR'
       | 'xstate.init';
-    resetIsQuickShareDone: 'DISMISS';
     resetSelectedVc:
       | 'DISCONNECT'
       | 'DISMISS'
+      | 'DISMISS_QUICK_SHARE_BANNER'
       | 'GOTO_HISTORY'
       | 'SCREEN_BLUR'
       | 'xstate.init';
+    resetShowQuickShareSuccessBanner: 'DISMISS' | 'DISMISS_QUICK_SHARE_BANNER';
     sendBLEConnectionErrorEvent: 'BLE_ERROR';
     sendScanData: 'SCAN';
     sendVCShareFlowCancelEndEvent: 'CANCEL';
@@ -97,6 +100,7 @@ export interface Typegen0 {
     setShareLogTypeUnverified: 'ACCEPT_REQUEST' | 'CHECK_FLOW_TYPE';
     setShareLogTypeVerified: 'FACE_VALID';
     setShowFaceAuthConsent: 'FACE_VERIFICATION_CONSENT';
+    setShowQuickShareSuccessBanner: 'STORE_RESPONSE';
     setUri: 'SCAN';
     storeLoginItem: 'done.invoke.QrLogin';
     storeShowFaceAuthConsent: 'FACE_VERIFICATION_CONSENT';

@@ -613,7 +613,7 @@ export async function getItem(
       }
       decryptedData = await decryptJson(encryptionKey, data);
       return JSON.parse(decryptedData);
-    } 
+    }
     if (data === null && VCMetadata.isVCKey(key)) {
       await removeItem(key, data, encryptionKey);
       sendErrorEvent(
