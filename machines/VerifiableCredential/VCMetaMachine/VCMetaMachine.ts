@@ -55,7 +55,6 @@ const model = createModel(
         vcMetadata,
       }),
       RESET_IN_PROGRESS_VCS_DOWNLOADED: () => ({}),
-      TAMPERED_VC: (VC: VCMetadata) => ({VC}),
       REMOVE_TAMPERED_VCS: () => ({}),
       DOWNLOAD_LIMIT_EXPIRED: (vcMetadata: VCMetadata) => ({vcMetadata}),
       DELETE_VC: () => ({}),

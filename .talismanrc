@@ -217,6 +217,8 @@ fileignoreconfig:
     checksum: cc2798f843b776e70d957a4f7cdf47e199a29d9f6547fb9f59753108e8f252fa
   - filename: machines/auth.ts
     checksum: 46195ee93f9b7ac6794a06eeef5dee5ea242047a557af8bf95df04e1343d7b9e
+  - filename: machines/auth.typegen.ts
+    checksum: 53be3eb5ec658fccc2764a5e8b0a9992c5c2b86f70ccb122c6cf6fba50f0d0f8
   - filename: shared/commonUtil.generated.test.ts
     checksum: 4ca5983bb133f8f02bfd52fd0cc49ce37b24b164f3ca78a03ad97bb353ed00a4
   - filename: __mocks__/en.mock.json

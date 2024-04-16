@@ -76,7 +76,6 @@ const model = createModel(
         requester,
       }),
       STORE_ERROR: (error: Error, requester?: string) => ({error, requester}),
-      TAMPERED_VC: (key: string, requester?: string) => ({key, requester}),
     },
   },
 );
@@ -246,17 +245,6 @@ export const storeMachine =
             },
             DECRYPT_ERROR: {
               actions: sendParent('DECRYPT_ERROR'),
-            },
-            TAMPERED_VC: {
-              actions: [
-                send(
-                  (_, event) =>
-                    model.events.TAMPERED_VC(event.key, event.tamperedVcsList),
-                  {
-                    to: (_, event) => event.requester,
-                  },
-                ),
-              ],
             },
           },
         },
@@ -471,9 +459,6 @@ export const storeMachine =
               if (e.message.includes(keyinvalidatedString)) {
                 await clear();
                 callback(model.events.KEY_INVALIDATE_ERROR());
-                sendUpdate();
-              } else if (e.message === ENOENT) {
-                callback(model.events.TAMPERED_VC(event.key, event.requester));
                 sendUpdate();
               } else if (
                 e.message.includes('JSON') ||
