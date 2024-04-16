@@ -293,12 +293,15 @@ export const vcMetaMachine =
           },
         }),
 
-        loadMyVcs: send(StoreEvents.GET_VCS_DATA(MY_VCS_STORE_KEY), {
-          to: context => context.serviceRefs.store,
-        }),
+        loadMyVcs: send(
+          context => StoreEvents.GET_VCS_DATA(context.myVcsMetadata),
+          {
+            to: context => context.serviceRefs.store,
+          },
+        ),
 
         loadReceivedVcs: send(
-          StoreEvents.GET_VCS_DATA(RECEIVED_VCS_STORE_KEY),
+          context => StoreEvents.GET_VCS_DATA(context.receivedVcsMetadata),
           {
             to: context => context.serviceRefs.store,
           },

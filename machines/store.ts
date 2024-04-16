@@ -56,7 +56,7 @@ const model = createModel(
       TRY_AGAIN: () => ({}),
       IGNORE: () => ({}),
       GET: (key: string) => ({key}),
-      GET_VCS_DATA: (key: string) => ({key}),
+      GET_VCS_DATA: (metadatas: VCMetadata[]) => ({metadatas}),
       EXPORT: () => ({}),
       RESTORE_BACKUP: (data: {}) => ({data}),
       DECRYPT_ERROR: () => ({}),
@@ -376,7 +376,10 @@ export const storeMachine =
                   break;
                 }
                 case 'GET_VCS_DATA': {
-                  response = await getVCsData(event.key, context.encryptionKey);
+                  response = await getVCsData(
+                    event.metadatas,
+                    context.encryptionKey,
+                  );
                   break;
                 }
                 case 'RESTORE_BACKUP': {
@@ -598,13 +601,43 @@ export async function loadBackupData(data, encryptionKey) {
   await Storage.loadBackupData(data, encryptionKey);
 }
 
-export async function handleGetItemResponse(
+export async function getVCsData(
+  metadatas: VCMetadata[],
+  encryptionKey: string,
+) {
+  try {
+    let vcsData: Record<string, VC> = {};
+    let anyVcTampered: boolean = false;
+    for (let ind in metadatas) {
+      const vcKey = VCMetadata.fromVC(metadatas[ind]).getVcKey();
+      try {
+        const vc = await getItem(vcKey, null, encryptionKey);
+        vcsData[vcKey] = vc;
+      } catch (e) {
+        console.log('error: ', e);
+        if (
+          e.message.includes(tamperedErrorMessageString) ||
+          e.message.includes(ENOENT)
+        ) {
+          anyVcTampered = true;
+        } else {
+          throw e;
+        }
+      }
+    }
+    return {vcsData, anyVcTampered};
+  } catch (e) {
+    throw e;
+  }
+}
+
+export async function getItem(
   key: string,
   defaultValue: unknown,
   encryptionKey: string,
-  data: any,
 ) {
   try {
+    const data = await Storage.getItem(key, encryptionKey);
     if (data != null) {
       let decryptedData;
       if (key === SETTINGS_STORE_KEY) {
@@ -642,7 +675,7 @@ export async function handleGetItemResponse(
   } catch (e) {
     console.error(`Exception in getting item for ${key}: ${e}`);
     if (e.message === ENOENT) {
-      removeTamperedVcMetaData(key, encryptionKey);
+      await removeTamperedVcMetaData(key, encryptionKey);
       sendErrorEvent(
         getErrorEventData(
           TelemetryConstants.FlowType.fetchData,
@@ -675,50 +708,6 @@ export async function handleGetItemResponse(
       ),
     );
     return defaultValue;
-  }
-}
-
-export async function getVCsData(key: string, encryptionKey: string) {
-  try {
-    let vcsData: Record<string, VC> = {};
-    const data = await Storage.getItem(key, encryptionKey);
-    const decryptedMyVcsMetadata: VCMetadata[] = await handleGetItemResponse(
-      key,
-      null,
-      encryptionKey,
-      data,
-    );
-    let anyVcTampered: boolean = false;
-    for (let ind in decryptedMyVcsMetadata) {
-      const vcKey = VCMetadata.fromVC(decryptedMyVcsMetadata[ind]).getVcKey();
-      try {
-        const vc = await getItem(vcKey, null, encryptionKey);
-        vcsData[vcKey] = vc;
-      } catch (e) {
-        console.log('error: ', e);
-        if (e.message.includes(tamperedErrorMessageString)) {
-          anyVcTampered = true;
-        } else {
-          throw e;
-        }
-      }
-    }
-    return {vcsData, anyVcTampered};
-  } catch (e) {
-    throw e;
-  }
-}
-
-export async function getItem(
-  key: string,
-  defaultValue: unknown,
-  encryptionKey: string,
-) {
-  try {
-    const data = await Storage.getItem(key, encryptionKey);
-    return await handleGetItemResponse(key, defaultValue, encryptionKey, data);
-  } catch (e) {
-    throw e;
   }
 }
 
@@ -788,7 +777,7 @@ export async function removeItem(
   try {
     if (value === null && VCMetadata.isVCKey(key)) {
       await Storage.removeItem(key);
-      removeTamperedVcMetaData(key, encryptionKey);
+      await removeTamperedVcMetaData(key, encryptionKey);
     } else if (key === MY_VCS_STORE_KEY) {
       const data = await Storage.getItem(key, encryptionKey);
       let list: Object[] = [];
