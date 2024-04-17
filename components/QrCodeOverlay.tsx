@@ -11,7 +11,7 @@ import {SvgImage} from './ui/svg';
 import {generateQRData} from '@mosip/pixelpass';
 import {VerifiableCredential} from '../machines/VerifiableCredential/VCMetaMachine/vc';
 import RNSecureKeyStore, {ACCESSIBLE} from 'react-native-secure-key-store';
-import {DEFAULT_ECL, DEFAULT_QR_HEADER} from '../shared/constants';
+import {DEFAULT_ECL} from '../shared/constants';
 import {VCMetadata} from '../shared/VCMetadata';
 
 export const QrCodeOverlay: React.FC<QrCodeOverlayProps> = props => {
@@ -27,7 +27,7 @@ export const QrCodeOverlay: React.FC<QrCodeOverlayProps> = props => {
         verifiableCredential: props.verifiableCredential,
         meta: props.meta,
       };
-      qrData = generateQRData(JSON.stringify(qrDataJSON), DEFAULT_QR_HEADER);
+      qrData = generateQRData(JSON.stringify(qrDataJSON));
       await RNSecureKeyStore.set(props.meta.id, qrData, {
         accessible: ACCESSIBLE.ALWAYS_THIS_DEVICE_ONLY,
       });
