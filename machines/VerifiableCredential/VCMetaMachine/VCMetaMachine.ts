@@ -26,7 +26,6 @@ const model = createModel(
     inProgressVcDownloads: new Set<string>(), //VCDownloadInProgress
     areAllVcsDownloaded: false as boolean,
     walletBindingSuccess: false,
-    isAnyVcTampered: false as boolean,
     tamperedVcs: [] as VCMetadata[],
     downloadingFailedVcs: [] as VCMetadata[], //VCDownloadFailed
     verificationErrorMessage: '' as string,
