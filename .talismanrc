@@ -41,8 +41,6 @@ fileignoreconfig:
     checksum: ba3041b2ce380f44f6f52dc2c3df337d857df4494bd3c8727df9bf6fb5734750
   - filename: shared/cryptoutil/cryptoUtil.ts
     checksum: adbc2ff6df1df412e891c988c9ba03fc82f66c2f6c64339f87d513fc835d14cc
-  - filename: machines/store.typegen.ts
-    checksum: 6d22bc5c77398316b943c512c208ce0846a9fff674c1ccac79e07f21962acd5f
   - filename: shared/telemetry/TelemetryConstants.js
     checksum: fd8dc3a69cdef68855dc5f0531d8e634bfa2621bb4dc22f85b8247512a349c4c
   - filename: shared/telemetry/TelemetryUtils.js
@@ -61,8 +59,6 @@ fileignoreconfig:
     checksum: 8563a194a4d38814eff670f0652d1a7af77134cafb350462174b4f147dbd890d
   - filename: assets/fingerprint_icon.svg
     checksum: b2d3a50ca1336f60123d96a8cc8ea663c3316ed2d8c31833bce7e393ca51695b
-  - filename: machines/store.ts
-    checksum: aa2026ff278e489814ac308b49b08db4a14b08388c380230eb1e39c7adc01293
   - filename: assets/Flip_Camera_Icon.svg
     checksum: 736b5a7ddb86bd4376229ce198dbf8a663e7ac89fc3311bd4f19afd4a2b36ffd
   - filename: assets/Finger_Print_Icon.svg
@@ -151,8 +147,6 @@ fileignoreconfig:
     checksum: e93f988415bf91064e2cf5fbc09ff6c7226798baa5da721fa0715d5d0d6afddf
   - filename: ios/Podfile.lock
     checksum: c8f330a55ad911e59921215bf7d086db3dbdb5eab28202b3b450d780498ea880
-  - filename: screens/Home/MyVcsTab.tsx
-    checksum: 8133e2fefddfd0207eb7207b660d317f9a6acafbab6a65762d29ea86e33787cb
   - filename: components/BackupAndRestoreBannerNotification.tsx
     checksum: e465a9947727687d784d0cb9d8db1e28f765b0659bf4a3aa6d75643aa7b14102
   - filename: components/ActivityLogEvent.ts
@@ -221,6 +215,8 @@ fileignoreconfig:
     checksum: cc2798f843b776e70d957a4f7cdf47e199a29d9f6547fb9f59753108e8f252fa
   - filename: machines/auth.ts
     checksum: 46195ee93f9b7ac6794a06eeef5dee5ea242047a557af8bf95df04e1343d7b9e
+  - filename: machines/auth.typegen.ts
+    checksum: 53be3eb5ec658fccc2764a5e8b0a9992c5c2b86f70ccb122c6cf6fba50f0d0f8
   - filename: shared/commonUtil.generated.test.ts
     checksum: 4ca5983bb133f8f02bfd52fd0cc49ce37b24b164f3ca78a03ad97bb353ed00a4
   - filename: __mocks__/en.mock.json
@@ -240,5 +236,11 @@ fileignoreconfig:
   - filename: machines/IssuersMachine.typegen.ts
     checksum: 959fef1e51f0f3d5b12933f7b362e96401fb776ab12f0d13c6e542918b2ff255
   - filename: screens/Home/MyVcsTab.tsx
-    checksum: 4e94bbbd0fe486108a4612e461ae1066fe0c2f44187549158d6369b51a1ba055
+    checksum: 2dd6ce0466bf3a371e4a3fcc5a7f35e6c71f1668ce1e0572e5aa7a2b1f00fd72
+  - filename: machines/store.ts
+    checksum: 77bb25f9453169870496a15b7daa0a8094798895b70e3904e227a214ef4a1fec
+  - filename: machines/store.typegen.ts
+    checksum: 46f3a7c2d15ed03fc70e27ecae5a12c128011c49913b35cdb8edba12b1a999db
+  - filename: machines/VerifiableCredential/VCMetaMachine/VCMetaMachine.ts
+    checksum: c80ba680932ae3af7d1238f4db0b3f5e12c343c79335f0cd235f40068bbc03cb
     version: ""

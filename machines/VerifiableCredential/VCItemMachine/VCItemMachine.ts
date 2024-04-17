@@ -46,28 +46,12 @@ export const VCItemMachine = model.createMachine(
                   target: `#vc-item-machine.idle`,
                 },
                 {
-                  target: 'loadVcFromStore',
-                },
-              ],
-            },
-          },
-          loadVcFromStore: {
-            entry: 'requestStoredContext',
-            description: 'Check if VC data is in secured local storage.',
-            on: {
-              STORE_RESPONSE: [
-                {
-                  actions: ['setContext', 'storeVcInContext'],
-                  cond: 'hasCredential',
-                  target: '#vc-item-machine.idle',
-                },
-                {
                   actions: 'addVcToInProgressDownloads',
                   target: 'loadVcFromServer',
                 },
               ],
               TAMPERED_VC: {
-                actions: 'sendTamperedVc',
+                target: '#vc-item-machine.idle',
               },
             },
           },
@@ -252,7 +236,8 @@ export const VCItemMachine = model.createMachine(
                 invoke: {
                   src: 'requestBindingOTP',
                   onDone: {
-                    target: '#vc-item-machine.walletBinding.acceptingBindingOTP',
+                    target:
+                      '#vc-item-machine.walletBinding.acceptingBindingOTP',
                     actions: ['setCommunicationDetails'],
                   },
                   onError: {
