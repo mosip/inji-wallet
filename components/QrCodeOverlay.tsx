@@ -17,6 +17,7 @@ import {VCMetadata} from '../shared/VCMetadata';
 export const QrCodeOverlay: React.FC<QrCodeOverlayProps> = props => {
   const {t} = useTranslation('VcDetails');
   const [qrString, setQrString] = useState('');
+  const [qrError,setQrError] = useState(false);
 
   async function getQRData(): Promise<string> {
     let qrData: string;
@@ -35,6 +36,11 @@ export const QrCodeOverlay: React.FC<QrCodeOverlayProps> = props => {
     return qrData;
   }
 
+  function onQRError(){
+    console.warn("Data is too big");
+    setQrError(true)
+  }
+
   useEffect(() => {
     (async () => {
       const qrString = await getQRData();
@@ -44,7 +50,7 @@ export const QrCodeOverlay: React.FC<QrCodeOverlayProps> = props => {
   const [isQrOverlayVisible, setIsQrOverlayVisible] = useState(false);
   const toggleQrOverlay = () => setIsQrOverlayVisible(!isQrOverlayVisible);
   return (
-    qrString != '' && (
+    qrString != '' && !qrError && (
       <React.Fragment>
         <View testID="qrCodeView" style={Theme.QrCodeStyles.QrView}>
           <Pressable
@@ -57,6 +63,7 @@ export const QrCodeOverlay: React.FC<QrCodeOverlayProps> = props => {
               value={qrString}
               backgroundColor={Theme.Colors.QRCodeBackgroundColor}
               ecl={DEFAULT_ECL}
+              onError={onQRError}
             />
             <View
               testID="magnifierZoom"
@@ -94,6 +101,7 @@ export const QrCodeOverlay: React.FC<QrCodeOverlayProps> = props => {
                 value={qrString}
                 backgroundColor={Theme.Colors.QRCodeBackgroundColor}
                 ecl={DEFAULT_ECL}
+                onError={onQRError}
               />
             </Centered>
           </Column>
