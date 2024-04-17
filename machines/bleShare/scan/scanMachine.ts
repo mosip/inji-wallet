@@ -13,7 +13,7 @@ import {
 import {createModel} from 'xstate/lib/model';
 import {EmitterSubscription, Linking} from 'react-native';
 import {DeviceInfo} from '../../../components/DeviceInfoList';
-import {getDeviceNameSync} from 'react-native-device-info';
+import {getDeviceNameSync, isLocationEnabled} from 'react-native-device-info';
 import {VC} from '../../VerifiableCredential/VCMetaMachine/vc';
 import {AppServices} from '../../../shared/GlobalContext';
 import {ActivityLogEvents, ActivityLogType} from '../../activityLog';
@@ -37,7 +37,6 @@ import {
 } from 'react-native-permissions';
 import {
   checkLocationPermissionStatus,
-  checkLocationService,
   requestLocationPermission,
 } from '../../../shared/location';
 import {CameraCapturedPicture} from 'expo-camera';
@@ -798,6 +797,19 @@ export const scanMachine =
                   target: 'checkingPermissionStatus',
                 },
                 LOCATION_DISABLED: {
+                  target: 'LocationPermissionRationale',
+                },
+              },
+            },
+            LocationPermissionRationale: {
+              on: {
+                APP_ACTIVE: {
+                  target: 'checkLocationService',
+                },
+                ALLOWED: {
+                  actions: 'enableLocation',
+                },
+                DENIED: {
                   target: 'disabled',
                 },
               },
@@ -824,16 +836,6 @@ export const scanMachine =
                   target: '#scan.clearingConnection',
                 },
                 LOCATION_DISABLED: {
-                  target: 'LocationPermissionRationale',
-                },
-              },
-            },
-            LocationPermissionRationale: {
-              on: {
-                ALLOWED: {
-                  target: 'requestToEnableLocation',
-                },
-                DENIED: {
                   target: 'denied',
                 },
               },
@@ -849,6 +851,7 @@ export const scanMachine =
               on: {
                 LOCATION_REQUEST: {
                   target: 'checkLocationService',
+                  actions: 'enableLocation',
                 },
               },
             },
@@ -909,6 +912,10 @@ export const scanMachine =
         },
 
         openAppPermission: () => Linking.openSettings(),
+
+        enableLocation: async () => {
+          await Linking.sendIntent('android.settings.LOCATION_SOURCE_SETTINGS');
+        },
 
         setUri: model.assign({
           openId4VpUri: (_context, event) => event.params,
@@ -1276,11 +1283,14 @@ export const scanMachine =
             () => callback(model.events.LOCATION_DISABLED()),
           );
         },
-        checkLocationStatus: () => callback => {
-          return checkLocationService(
-            () => callback(model.events.LOCATION_ENABLED()),
-            () => callback(model.events.LOCATION_DISABLED()),
-          );
+
+        checkLocationStatus: () => async callback => {
+          const isEnabled: boolean = await isLocationEnabled();
+          if (isEnabled) {
+            callback(model.events.LOCATION_ENABLED());
+          } else {
+            callback(model.events.LOCATION_DISABLED());
+          }
         },
 
         startConnection: context => callback => {
