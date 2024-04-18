@@ -9,7 +9,7 @@
     "VC_RECEIVED_WITH_PRESENCE_VERIFIED": "Received {{idType}} {{id}} and presence verification is successful.",
     "VC_RECEIVED_BUT_PRESENCE_VERIFICATION_FAILED": "Received {{idType}} {{id}} and presence verification failed.",
     "PRESENCE_VERIFIED_AND_VC_SHARED": "Face verification is successful and {{idType}} {{id}} is shared.",
-    "PRESENCE_VERIFICATION_FAILED": "Face verification has failed while trying to share {{idType}} {{id}}.",
+    "PRESENCE_VERIFICATION_FAILED": "Face verification has failed while trying to share Virtual Card {{id}}.",
     "QRLOGIN_SUCCESFULL": "QRLogin using {{idType}} {{id}} is successful.",
     "WALLET_BINDING_SUCCESSFULL": "Activation of {{idType}} {{id}} is successful.",
     "WALLET_BINDING_FAILURE": "Activation of {{idType}} {{id}} has failed.",
