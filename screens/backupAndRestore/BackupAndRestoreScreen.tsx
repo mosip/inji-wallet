@@ -14,7 +14,10 @@ import {useBackupScreen} from './BackupController';
 import {BannerNotificationContainer} from '../../components/BannerNotificationContainer';
 import {useBackupRestoreScreen} from '../Settings/BackupRestoreController';
 import {Icon} from 'react-native-elements';
-import testIDProps, {getDriveName} from '../../shared/commonUtil';
+import testIDProps, {
+  getAccountType,
+  getDriveName,
+} from '../../shared/commonUtil';
 import {HelpScreen} from '../../components/HelpScreen';
 import {isAndroid, isIOS} from '../../shared/constants';
 
@@ -136,13 +139,20 @@ const BackupAndRestoreScreen: React.FC<BackupAndRestoreProps> = props => {
   const AccountSection = (
     <SectionLayout
       testId="AccountSection"
-      headerText={t('driveSettings')}
-      headerIcon={SvgImage.GoogleDriveIconSmall(28, 25)}>
+      headerText={isIOS() ? t('') : t('driveSettings')}
+      headerIcon={
+        isIOS()
+          ? SvgImage.ICloudIcon(86, 25)
+          : SvgImage.GoogleDriveIconSmall(28, 25)
+      }>
       <View style={{marginBottom: 19}}>
         <Text
           testID="storageInfo"
           style={Theme.BackupAndRestoreStyles.backupProgressText}>
-          {t('storage')}
+          {t('storage', {
+            driveName: getDriveName(),
+            accountType: getAccountType(),
+          })}
         </Text>
       </View>
       <AccountInformation
@@ -201,15 +211,18 @@ const BackupAndRestoreScreen: React.FC<BackupAndRestoreProps> = props => {
         <HelpScreen
           source={'BackUp'}
           triggerComponent={
-            <Icon
-              {...testIDProps('help')}
-              accessible={true}
-              name="question"
-              type="font-awesome"
-              size={21}
-              style={Theme.Styles.IconContainer}
-              color={Theme.Colors.Icon}
-            />
+            <View testID="help" style={Theme.HelpScreenStyle.viewStyle}>
+              <Row crossAlign="center" style={Theme.HelpScreenStyle.rowStyle}>
+                <View testID="helpIcon" style={Theme.HelpScreenStyle.iconStyle}>
+                  {SvgImage.infoIcon()}
+                </View>
+                <Text
+                  testID="helpText"
+                  style={Theme.HelpScreenStyle.labelStyle}>
+                  {t('Help?')}
+                </Text>
+              </Row>
+            </View>
           }
         />
       }
@@ -227,7 +240,7 @@ const BackupAndRestoreScreen: React.FC<BackupAndRestoreProps> = props => {
         ) : (
           <ScrollView>
             {LastBackupSection}
-            {isAndroid() && AccountSection}
+            {AccountSection}
             {RestoreSection}
           </ScrollView>
         )}

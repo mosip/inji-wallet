@@ -51,12 +51,14 @@ public class VcBackupAndRestoreTest extends AndroidBaseTest {
         assertTrue(backupAndRestorePage.isCloudInfoDisplayed(), "Verify if cloud information displayed");
         backupAndRestorePage.clickOnProceedButton();
 
-        String email = TestDataReader.readData("emailsForBackupAndRestore");
-        backupAndRestorePage.enterEmailTextBox(email);
-        backupAndRestorePage.clickOnNextButton();
-        backupAndRestorePage.enterPasswordTextBox(TestDataReader.readData("emailPassword"));
-        backupAndRestorePage.clickOnNextButton();
-        backupAndRestorePage.clickOnAgreeButton();
+//        String email = TestDataReader.readData("emailsForBackupAndRestore");
+//        backupAndRestorePage.enterEmailTextBox(email);
+//        backupAndRestorePage.clickOnNextButton();
+//        backupAndRestorePage.enterPasswordTextBox(TestDataReader.readData("emailPassword"));
+//        backupAndRestorePage.clickOnNextButton();
+//        backupAndRestorePage.clickOnAgreeButton();
+
+        backupAndRestorePage.clickOnEmailHeader();
 
         assertTrue(backupAndRestorePage.isLastBackupSectionHeaderDisplayed(), "Verify if last backup section displayed");
         backupAndRestorePage.clickOnBackUpButton();

@@ -209,7 +209,7 @@ export const AddVcModalMachine =
                 src: 'requestOtp',
                 onDone: [
                   {
-                    target: 'idle',
+                    target: '#AddVcModal.acceptingOtpInput',
                     actions: ['setPhoneNumber', 'setEmail'],
                   },
                 ],

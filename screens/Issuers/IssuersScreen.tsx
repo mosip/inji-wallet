@@ -28,6 +28,7 @@ import {SearchBar} from '../../components/ui/SearchBar';
 import {SvgImage} from '../../components/ui/svg';
 import {Icon} from 'react-native-elements';
 import {BannerNotificationContainer} from '../../components/BannerNotificationContainer';
+import {CredentialTypeSelectionScreen} from './CredentialTypeSelectionScreen';
 
 export const IssuersScreen: React.FC<
   HomeRouteProps | RootRouteProps
@@ -139,6 +140,9 @@ export const IssuersScreen: React.FC<
       setClearSearchIcon(false);
     }
   };
+  if (controller.isSelectingCredentialType) {
+    return <CredentialTypeSelectionScreen {...props} />;
+  }
 
   if (isVerificationFailed) {
     return (

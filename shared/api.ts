@@ -1,8 +1,8 @@
 import {request} from './request';
 import {
   API_CACHED_STORAGE_KEYS,
-  COMMON_PROPS_KEY,
   changeCrendetialRegistry,
+  COMMON_PROPS_KEY,
 } from './constants';
 import {INITIAL_CONFIG} from './InitialConfig';
 import Keychain from 'react-native-keychain';
@@ -26,6 +26,11 @@ export const API_URLS: ApiUrls = {
     method: 'GET',
     buildURL: (issuerId: string): `/${string}` =>
       `/residentmobileapp/issuers/${issuerId}`,
+  },
+  credentialTypes: {
+    method: 'GET',
+    buildURL: (issuerId: string): `/${string}` =>
+      `/residentmobileapp/issuers/${issuerId}/credentialTypes`,
   },
   issuerWellknownConfig: {
     method: 'GET',
@@ -323,6 +328,7 @@ type Api_Params = {
 type ApiUrls = {
   issuersList: Api_Params;
   issuerConfig: Api_Params;
+  credentialTypes: Api_Params;
   issuerWellknownConfig: Api_Params;
   allProperties: Api_Params;
   getIndividualId: Api_Params;

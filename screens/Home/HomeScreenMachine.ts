@@ -6,7 +6,7 @@ import {
   createReceivedVcsTabMachine,
   ReceivedVcsTabMachine,
 } from './ReceivedVcsTabMachine';
-import {IssuersMachine} from '../../machines/issuersMachine';
+import {IssuersMachine} from '../../machines/Issuers/IssuersMachine';
 import Storage from '../../shared/storage';
 import {VCItemMachine} from '../../machines/VerifiableCredential/VCItemMachine/VCItemMachine';
 

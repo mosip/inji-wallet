@@ -4,6 +4,7 @@ import {useContext, useRef} from 'react';
 import {
   BackupAndRestoreSetupEvents,
   backupAndRestoreSetupMachine,
+  selectIsCloudSignedInFailed,
   selectIsLoading,
   selectIsNetworkError as selectIsNetworkErrorDuringSetup,
   selectIsSigningIn,
@@ -70,6 +71,10 @@ export function useBackupAndRestoreSetup() {
     isSigningInFailed: useSelector(
       backupAndRestoreSetupService,
       selectIsSigningInFailure,
+    ),
+    isCloudSignInFailed: useSelector(
+      backupAndRestoreSetupService,
+      selectIsCloudSignedInFailed,
     ),
     isSigningInSuccessful: useSelector(
       backupAndRestoreSetupService,

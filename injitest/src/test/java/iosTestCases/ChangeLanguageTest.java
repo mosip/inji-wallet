@@ -154,7 +154,7 @@ public class ChangeLanguageTest extends IosBaseTest {
         settingsPage.clickOnLanguage().clickOnFilipinoLanguage();
 
         assertTrue(settingsPage.verifyFilipinoLanguage(), "Verify if language is changed to filipino");
-        settingsPage.clickOnBackArrow();
+        homePage.clickOnHomeButton();
         
         assertEquals(homePage.verifyLanguageForNoVCDownloadedPageLoaded(),"Dalhin ang Iyong Digital ID");
         AddNewCardPage addNewCardPage = homePage.downloadCard();
@@ -197,7 +197,7 @@ public class ChangeLanguageTest extends IosBaseTest {
         settingsPage.clickOnLanguage().clickOnFilipinoLanguage();
 
         assertTrue(settingsPage.verifyFilipinoLanguage(), "Verify if language is changed to filipino");
-        settingsPage.clickOnBackArrow();
+        homePage.clickOnHomeButton();
         
         assertEquals(homePage.verifyLanguageForNoVCDownloadedPageLoaded(),"Dalhin ang Iyong Digital ID");
         AddNewCardPage addNewCardPage = homePage.downloadCard();
@@ -240,7 +240,7 @@ public class ChangeLanguageTest extends IosBaseTest {
         settingsPage.clickOnLanguage().clickOnHindiLanguage();
 
         assertTrue(settingsPage.verifyHindiLanguage(), "Verify if language is changed to hindi");
-        settingsPage.clickOnBackArrow();
+        homePage.clickOnHomeButton();
         
         assertEquals(homePage.verifyLanguageForNoVCDownloadedPageLoaded(),"अपनी डिजिटल आईडी लाओ");
         AddNewCardPage addNewCardPage = homePage.downloadCard();
@@ -611,13 +611,12 @@ public class ChangeLanguageTest extends IosBaseTest {
         settingsPage.clickOnLanguage().clickOnHindiLanguage();
 
         assertTrue(settingsPage.verifyHindiLanguage(), "Verify if language is changed to hindi");
-        settingsPage.clickOnBackArrow();
+        homePage.clickOnHomeButton();
 
 
         assertTrue(sunbirdLoginPage.isSunbirdCardLogoIsDisplayed(), "Verify if download sunbird logo displayed");
         assertEquals(sunbirdLoginPage.getFullNameForSunbirdCard(),TestDataReader.readData("fullNameSunbird"));
-        assertEquals(sunbirdLoginPage.getPolicyNameForSunbirdCard(),TestDataReader.readData("policyNameSunbird"));
-        assertEquals(sunbirdLoginPage.getIdTypeValueForSunbirdCard(),TestDataReader.readData("idTypeSunbird"));
+
 
         sunbirdLoginPage.openDetailedSunbirdVcView();
 

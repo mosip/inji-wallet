@@ -12,43 +12,43 @@ public class DetailedVcViewPage extends BasePage{
     @iOSXCUITFindBy(accessibility = "idDetailsHeader")
     private WebElement detailedVcViewPageTitle;
 
-    @AndroidFindBy(accessibility = "fullNameValue")
-    @iOSXCUITFindBy(accessibility = "fullNameValue")
+    @AndroidFindBy(accessibility = "Full NameValue")
+    @iOSXCUITFindBy(accessibility = "Full NameValue")
     private WebElement fullNameValue;
 
-    @AndroidFindBy(accessibility = "genderValue")
-    @iOSXCUITFindBy(accessibility = "genderValue")
+    @AndroidFindBy(accessibility = "GenderValue")
+    @iOSXCUITFindBy(accessibility = "GenderValue")
     private WebElement genderValue;
 
-    @AndroidFindBy(accessibility = "dateOfBirthValue")
-    @iOSXCUITFindBy(accessibility = "dateOfBirthValue")
+    @AndroidFindBy(accessibility = "Date of BirthValue")
+    @iOSXCUITFindBy(accessibility = "Date of BirthValue")
     private WebElement dateOfBirthValue;
 
-    @AndroidFindBy(accessibility = "nationalCard")
-    @iOSXCUITFindBy(accessibility = "nationalCard")
+    @AndroidFindBy(accessibility = "ID TypeValue")
+    @iOSXCUITFindBy(accessibility = "ID TypeValue")
     private WebElement idTypeValue;
 
     @AndroidFindBy(accessibility = "valid")
     @iOSXCUITFindBy(accessibility = "valid")
     private WebElement statusValue;
 
-    @AndroidFindBy(accessibility = "uinNumber")
-    @iOSXCUITFindBy(accessibility = "uinNumber")
+    @AndroidFindBy(accessibility = "UINValue")
+    @iOSXCUITFindBy(accessibility = "UINValue")
     private WebElement uinNumberValue;
 
     @AndroidFindBy(accessibility = "generatedOnValue")
     @iOSXCUITFindBy(accessibility = "generatedOnValue")
     private WebElement generatedOnValue;
 
-    @AndroidFindBy(accessibility = "phoneNumberValue")
-    @iOSXCUITFindBy(accessibility = "phoneNumberValue")
+    @AndroidFindBy(accessibility = "phoneValue")
+    @iOSXCUITFindBy(accessibility = "phoneValue")
     private WebElement phoneNumberValue;
 
-    @AndroidFindBy(accessibility = "emailIdValue")
-    @iOSXCUITFindBy(accessibility = "emailIdValue")
+    @AndroidFindBy(accessibility = "EmailValue")
+    @iOSXCUITFindBy(accessibility = "EmailValue")
     private WebElement emailIdValue;
 
-    @AndroidFindBy(uiAutomator = "new UiScrollable(new UiSelector()).scrollIntoView(new UiSelector().description(\"enableVerification\"));")
+    @AndroidFindBy(accessibility = "enableVerification")
     @iOSXCUITFindBy(accessibility = "enableVerification")
     private WebElement activateButton;
     
@@ -145,7 +145,7 @@ public class DetailedVcViewPage extends BasePage{
         return new PleaseConfirmPopupPage(driver);
     }
     
-    public PleaseConfirmPopupPage clickOnActivateButtonIos(){  //Scroll for ios need to be done
+    public PleaseConfirmPopupPage clickOnActivateButtonIos(){
         IosUtil.scrollToElement(driver,58,712,160,129);
         clickOnElement(activeButtonIos);
         return new PleaseConfirmPopupPage(driver);

@@ -39,11 +39,11 @@ i18next
   })
   .then(async () => {
     const existingCredentials = await Keychain.getGenericPassword();
-
-    const language = existingCredentials
-      ? await getItem('language', null, existingCredentials.password)
-      : null;
-
+    const language = await getItem(
+      'language',
+      null,
+      existingCredentials.password,
+    );
     if (language !== i18next.language) {
       i18next.changeLanguage(language);
       populateLanguageCodeMap();

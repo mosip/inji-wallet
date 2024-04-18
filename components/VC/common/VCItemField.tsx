@@ -6,13 +6,13 @@ import React from 'react';
 import {SvgImage} from '../../ui/svg';
 import {useTranslation} from 'react-i18next';
 
-export const VCItemFieldName = ({fieldName, wellknown}) => {
+export const VCItemFieldName = ({fieldName, wellknown, testID}) => {
   const {t} = useTranslation('ViewVcModal');
   return (
     <Row>
       {fieldName && (
         <Text
-          testID={`${fieldName}Title`}
+          testID={`${testID}Title`}
           {...setTextColor(wellknown, Theme.Colors.DetailsLabel)}
           style={Theme.Styles.fieldItemTitle}>
           {fieldName}
@@ -62,11 +62,11 @@ export const VCItemFieldName = ({fieldName, wellknown}) => {
   );
 };
 
-export const VCItemFieldValue = ({fieldName, fieldValue, wellknown}) => {
+export const VCItemFieldValue = ({fieldValue, wellknown, testID}) => {
   return (
     <>
       <Text
-        testID={`${fieldName}Value`}
+        testID={`${testID}Value`}
         {...setTextColor(wellknown, Theme.Colors.Details)}
         style={Theme.Styles.fieldItemValue}>
         {fieldValue}

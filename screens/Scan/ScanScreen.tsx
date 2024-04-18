@@ -39,6 +39,10 @@ export const ScanScreen: React.FC = () => {
       controller.START_PERMISSION_CHECK();
   });
 
+  useEffect(() => {
+    if (controller.isQuickShareDone) controller.GOTO_HOME();
+  }, [controller.isQuickShareDone]);
+
   const openSettings = () => {
     Linking.openSettings();
   };

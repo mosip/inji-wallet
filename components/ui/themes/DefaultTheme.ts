@@ -746,6 +746,10 @@ export const DefaultTheme = {
       marginVertical: 1,
       columnGap: 7,
     },
+    topBanner: {
+      marginTop: 10,
+      marginBottom: 10,
+    },
     text: {
       textAlignVertical: 'center',
       fontSize: 12,

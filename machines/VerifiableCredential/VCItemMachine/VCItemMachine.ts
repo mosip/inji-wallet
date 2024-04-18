@@ -51,28 +51,12 @@ export const VCItemMachine = model.createMachine(
                       target: `#vc-item-machine.existingState.idle`,
                     },
                     {
-                      target: 'loadVcFromStore',
-                    },
-                  ],
-                },
-              },
-              loadVcFromStore: {
-                entry: 'requestStoredContext',
-                description: 'Check if VC data is in secured local storage.',
-                on: {
-                  STORE_RESPONSE: [
-                    {
-                      actions: ['setContext', 'storeVcInContext'],
-                      cond: 'hasCredential',
-                      target: '#vc-item-machine.existingState.idle',
-                    },
-                    {
                       actions: 'addVcToInProgressDownloads',
                       target: 'loadVcFromServer',
                     },
                   ],
                   TAMPERED_VC: {
-                    actions: 'sendTamperedVc',
+                    target: '#vc-item-machine.existingState.idle',
                   },
                 },
               },
@@ -258,7 +242,8 @@ export const VCItemMachine = model.createMachine(
                     invoke: {
                       src: 'requestBindingOTP',
                       onDone: {
-                        target: '#vc-item-machine.existingState.idle',
+                        target:
+                          '#vc-item-machine.existingState.walletBinding.acceptingBindingOTP',
                         actions: ['setCommunicationDetails'],
                       },
                       onError: {
@@ -372,13 +357,10 @@ export const VCItemMachine = model.createMachine(
           },
           kebabPopUp: {
             entry: assign({isMachineInKebabPopupState: () => true}),
-            exit: assign({isMachineInKebabPopupState: () => false}),
+            exit: 'resetIsMachineInKebabPopupState',
             on: {
               DISMISS: {
-                actions: assign({
-                  isMachineInKebabPopupState: () => false,
-                }),
-                target: 'idle',
+                target: '#vc-item-machine.existingState.idle',
               },
               ADD_WALLET_BINDING_ID: {
                 target: '#vc-item-machine.existingState.walletBinding',
@@ -398,24 +380,32 @@ export const VCItemMachine = model.createMachine(
               },
               CLOSE_VC_MODAL: {
                 actions: ['closeViewVcModal'],
-                target: '#vc-item-machine.existingState',
+                target: '#vc-item-machine.existingState.idle',
               },
             },
             initial: 'idle',
             states: {
               idle: {},
+              pinCard: {
+                entry: 'sendVcUpdated',
+                always: {
+                  target: '#vc-item-machine.existingState.idle',
+                },
+              },
               showActivities: {
+                entry: 'resetIsMachineInKebabPopupState',
                 on: {
-                  DISMISS: '#vc-item-machine.existingState',
+                  DISMISS: '#vc-item-machine.existingState.idle',
                 },
               },
               removeWallet: {
+                entry: 'resetIsMachineInKebabPopupState',
                 on: {
                   CONFIRM: {
                     target: 'removingVc',
                   },
                   CANCEL: {
-                    target: '#vc-item-machine.existingState',
+                    target: '#vc-item-machine.existingState.idle',
                   },
                 },
               },
@@ -432,12 +422,6 @@ export const VCItemMachine = model.createMachine(
                   },
                 },
               },
-              pinCard: {
-                entry: 'sendVcUpdated',
-                always: {
-                  target: '#vc-item-machine.existingState.idle',
-                },
-              },
               triggerAutoBackup: {
                 invoke: {
                   src: 'isUserSignedAlready',
@@ -449,11 +433,11 @@ export const VCItemMachine = model.createMachine(
                         'refreshAllVcs',
                         'logRemovedVc',
                       ],
-                      target: '#vc-item-machine.existingState',
+                      target: '#vc-item-machine.existingState.idle',
                     },
                     {
                       actions: ['refreshAllVcs', 'logRemovedVc'],
-                      target: '#vc-item-machine.existingState',
+                      target: '#vc-item-machine.existingState.idle',
                     },
                   ],
                 },

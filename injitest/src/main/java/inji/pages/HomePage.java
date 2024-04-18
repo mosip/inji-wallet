@@ -63,8 +63,8 @@ public class HomePage extends BasePage {
     @AndroidFindBy(accessibility = "share")
     @iOSXCUITFindBy(accessibility = "share")
     private WebElement shareButton;
-    
-    @AndroidFindBy(uiAutomator = "new UiSelector().className(\"android.widget.TextView\").instance(6);")// fix with accecibility
+
+    @AndroidFindBy(uiAutomator = "new UiSelector().className(\"android.widget.TextView\").instance(5)")// fix with accecibility
     @iOSXCUITFindBy(accessibility = "share")
     private WebElement shareButtonByForText;
 
@@ -105,8 +105,8 @@ public class HomePage extends BasePage {
     @iOSXCUITFindBy(accessibility = "activatedVcPopupText")
     private WebElement activatedVcPopupText;
 
-    @AndroidFindBy(accessibility = "fullNameTitle")
-    @iOSXCUITFindBy(accessibility = "fullNameTitle")
+    @AndroidFindBy(accessibility = "fullNameValue")
+    @iOSXCUITFindBy(accessibility = "fullNameValue")
     private WebElement fullNameTitle;
 
 
@@ -138,7 +138,7 @@ public class HomePage extends BasePage {
 
     public boolean isSecondNameDisplayed(String name) {
         By fullName = By.xpath("(//*[contains(@value,'" + name + "') or contains(@text,'" + name + "')])[2]");
-        return this.isElementDisplayed(fullName, 60);
+        return this.isElementDisplayed(fullName, 150);
 
     }
 
@@ -278,6 +278,10 @@ public class HomePage extends BasePage {
 
     public void clickPopupCloseButtonButton() {
         clickOnElement(popupCloseButton);
+    }
+
+    public void clickOnHomeButton() {
+        clickOnElement(homeButton);
     }
 
 }

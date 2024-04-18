@@ -11,6 +11,8 @@ import {
   selectIsInvalid,
   selectIsShowQrLogin,
   selectQrLoginRef,
+  selectIsQuickShareDone,
+  selectShowQuickShareSuccessBanner,
 } from '../../machines/bleShare/scan/selectors';
 import {
   selectIsBluetoothDenied,
@@ -24,7 +26,7 @@ import {
   selectIsMinimumStorageRequiredForAuditEntryLimitReached,
 } from '../../machines/bleShare/scan/scanMachine';
 import {BOTTOM_TAB_ROUTES} from '../../routes/routesConstants';
-import {MainBottomTabParamList} from '../../routes/main';
+import {MainBottomTabParamList} from '../../routes/routeTypes';
 import {useNavigation, NavigationProp} from '@react-navigation/native';
 
 export function useScanScreen() {
@@ -85,6 +87,11 @@ export function useScanScreen() {
     isReadyForBluetoothStateCheck,
     isMinimumStorageRequiredForAuditEntryLimitReached,
     isScanning: useSelector(scanService, selectIsScanning),
+    isQuickShareDone: useSelector(scanService, selectIsQuickShareDone),
+    showQuickShareSuccessBanner: useSelector(
+      scanService,
+      selectShowQuickShareSuccessBanner,
+    ),
     selectIsInvalid: useSelector(scanService, selectIsInvalid),
     isQrLogin: useSelector(scanService, selectIsShowQrLogin),
     isQrLoginstoring: useSelector(scanService, selectIsQrLoginStoring),
@@ -92,6 +99,8 @@ export function useScanScreen() {
     LOCATION_REQUEST: () => scanService.send(ScanEvents.LOCATION_REQUEST()),
     GOTO_SETTINGS: () => scanService.send(ScanEvents.GOTO_SETTINGS()),
     DISMISS: () => scanService.send(ScanEvents.DISMISS()),
+    DISMISS_QUICK_SHARE_BANNER: () =>
+      scanService.send(ScanEvents.DISMISS_QUICK_SHARE_BANNER()),
     START_PERMISSION_CHECK: () =>
       scanService.send(ScanEvents.START_PERMISSION_CHECK()),
     SCAN: (qrCode: string) => scanService.send(ScanEvents.SCAN(qrCode)),

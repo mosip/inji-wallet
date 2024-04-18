@@ -65,6 +65,7 @@ export const KebabPopUp: React.FC<KebabPopUpProps> = props => {
                       ? Theme.Colors.warningText
                       : undefined
                   }
+                  testID={item.testID}
                   margin="0 0 0 10">
                   {item.label}
                 </Text>
@@ -78,7 +79,7 @@ export const KebabPopUp: React.FC<KebabPopUpProps> = props => {
 };
 
 export interface KebabPopUpProps {
-  iconName: string;
+  iconName?: string;
   iconType?: string;
   vcMetadata: VCMetadata;
   isVisible?: boolean;
