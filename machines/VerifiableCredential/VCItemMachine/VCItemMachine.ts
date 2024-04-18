@@ -125,7 +125,7 @@ export const VCItemMachine = model.createMachine(
                         },
                       ],
                       CREDENTIAL_DOWNLOADED: {
-                        actions: 'setCredential',
+                        actions: 'setContext',
                         target:
                           '#vc-item-machine.existingState.verifyingCredential',
                       },

@@ -161,7 +161,6 @@ export interface Typegen0 {
       | 'sendWalletBindingSuccess'
       | 'setCommunicationDetails'
       | 'setContext'
-      | 'setCredential'
       | 'setDownloadInterval'
       | 'setErrorAsVerificationError'
       | 'setErrorAsWalletBindingError'
@@ -272,8 +271,7 @@ export interface Typegen0 {
     setCommunicationDetails:
       | 'done.invoke.vc-item-machine.existingState.walletBinding.acceptingBindingOTP.resendOTP:invocation[0]'
       | 'done.invoke.vc-item-machine.existingState.walletBinding.requestingBindingOTP:invocation[0]';
-    setContext: 'GET_VC_RESPONSE';
-    setCredential: 'CREDENTIAL_DOWNLOADED';
+    setContext: 'CREDENTIAL_DOWNLOADED' | 'GET_VC_RESPONSE';
     setDownloadInterval: 'done.invoke.vc-item-machine.existingState.loadVc.loadVcFromServer.loadDownloadLimitConfig:invocation[0]';
     setErrorAsVerificationError: 'error.platform.vc-item-machine.existingState.verifyingCredential:invocation[0]';
     setErrorAsWalletBindingError:
