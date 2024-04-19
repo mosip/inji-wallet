@@ -1,7 +1,7 @@
 import {useSelector} from '@xstate/react';
 import {useContext, useState} from 'react';
 import {ActorRefFrom} from 'xstate';
-import {selectShareableVcsMetadata} from '../../machines/VerifiableCredential/VCMetaMachine/VCMetaMachine';
+import {selectShareableVcsMetadata} from '../../machines/VerifiableCredential/VCMetaMachine/VCMetaSelectors';
 import {GlobalContext} from '../../shared/GlobalContext';
 import {
   selectCredential,
@@ -24,8 +24,13 @@ import {NavigationProp, useNavigation} from '@react-navigation/native';
 import {RootRouteProps} from '../../routes';
 import {BOTTOM_TAB_ROUTES} from '../../routes/routesConstants';
 import {VCItemMachine} from '../../machines/VerifiableCredential/VCItemMachine/VCItemMachine';
+import { Theme } from '../../components/ui/styleUtils';
 
 type MyVcsTabNavigation = NavigationProp<RootRouteProps>;
+
+const changeTabBarVisible = (visible: string) => {
+  Theme.BottomTabBarStyle.tabBarStyle.display = visible;
+};
 
 export function useSendVcScreen() {
   const {appService} = useContext(GlobalContext);
@@ -70,6 +75,7 @@ export function useSendVcScreen() {
     RETRY_VERIFICATION: () => scanService.send(ScanEvents.RETRY_VERIFICATION()),
     GO_TO_HOME: () => {
       navigation.navigate(BOTTOM_TAB_ROUTES.home, {screen: 'HomeScreen'});
+      changeTabBarVisible('flex');
     },
     SELECT_VC_ITEM:
       (index: number) => (vcRef: ActorRefFrom<typeof VCItemMachine>) => {
