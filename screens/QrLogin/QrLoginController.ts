@@ -26,7 +26,7 @@ import {
   selectCredential,
   selectVerifiableCredentialData,
 } from '../../machines/QrLoginMachine';
-import {selectBindedVcsMetadata} from '../../machines/VerifiableCredential/VCMetaMachine/VCMetaMachine';
+import {selectBindedVcsMetadata} from '../../machines/VerifiableCredential/VCMetaMachine/VCMetaSelectors';
 import {GlobalContext} from '../../shared/GlobalContext';
 import {QrLoginProps} from './QrLogin';
 import {NavigationProp, useNavigation} from '@react-navigation/native';

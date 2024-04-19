@@ -13,11 +13,36 @@ export interface Typegen0 {
   invokeSrcNameMap: {
     isUserSignedAlready: 'done.invoke.vcMeta.ready.tamperedVCs.triggerAutoBackupForTamperedVcDeletion:invocation[0]';
   };
+
   missingImplementations: {
-    actions: never;
+    actions:
+      | 'addVcToInProgressDownloads'
+      | 'getVcItemResponse'
+      | 'loadMyVcs'
+      | 'loadReceivedVcs'
+      | 'logTamperedVCsremoved'
+      | 'prependToMyVcsMetadata'
+      | 'removeDownloadFailedVcsFromStorage'
+      | 'removeDownloadingFailedVcsFromMyVcs'
+      | 'removeVcFromInProgressDownlods'
+      | 'removeVcFromMyVcsMetadata'
+      | 'resetDownloadFailedVcs'
+      | 'resetInProgressVcsDownloaded'
+      | 'resetTamperedVcs'
+      | 'resetVerificationErrorMessage'
+      | 'resetWalletBindingSuccess'
+      | 'sendBackupEvent'
+      | 'setDownloadedVc'
+      | 'setDownloadingFailedVcs'
+      | 'setMyVcs'
+      | 'setReceivedVcs'
+      | 'setUpdatedVcMetadatas'
+      | 'setVerificationErrorMessage'
+      | 'setWalletBindingSuccess'
+      | 'updateMyVcsMetadata';
     delays: never;
-    guards: never;
-    services: never;
+    guards: 'isAnyVcTampered' | 'isSignedIn';
+    services: 'isUserSignedAlready';
   };
   eventsCausingActions: {
     addVcToInProgressDownloads: 'ADD_VC_TO_IN_PROGRESS_DOWNLOADS';

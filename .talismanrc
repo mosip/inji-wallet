@@ -243,4 +243,8 @@ fileignoreconfig:
     checksum: 46f3a7c2d15ed03fc70e27ecae5a12c128011c49913b35cdb8edba12b1a999db
   - filename: machines/VerifiableCredential/VCMetaMachine/VCMetaMachine.ts
     checksum: c80ba680932ae3af7d1238f4db0b3f5e12c343c79335f0cd235f40068bbc03cb
+  - filename: machines/VerifiableCredential/VCMetaMachine/VCMetaActions.ts
+    checksum: 528b2eb9640765896b25c3ac054d5b4015d9c1c255fb744308a766108d361c1d
+  - filename: machines/VerifiableCredential/VCMetaMachine/VCMetaSelectors.ts
+    checksum: 56f1a1d3a9272e1f152b0273535287e689abd5a01cdb34a357a44b71adb4de0b
     version: ""
