@@ -85,31 +85,22 @@ export const vcMetaMachine =
       states: {
         ready: {
           entry: sendParent('READY'),
-          initial: 'myVcsMetadata',
+          initial: 'myVcsData',
           states: {
-            myVcsMetadata: {
-              entry: ['loadMyVcsMetadata'],
-              on: {
-                STORE_RESPONSE: {
-                  actions: 'setMyVcsMetadata',
-                  target: 'myVcsData',
-                },
-              },
-            },
             myVcsData: {
               entry: 'loadMyVcs',
               on: {
                 STORE_RESPONSE: {
                   actions: 'setMyVcs',
-                  target: 'receivedVcsMetadata',
+                  target: 'myVcsMetadata',
                 },
               },
             },
-            receivedVcsMetadata: {
-              entry: 'loadReceivedVcsMetadata',
+            myVcsMetadata: {
+              entry: 'loadMyVcsMetadata',
               on: {
                 STORE_RESPONSE: {
-                  actions: 'setReceivedVcsMetadata',
+                  actions: 'setMyVcsMetadata',
                   target: 'receivedVcs',
                 },
               },
@@ -119,6 +110,15 @@ export const vcMetaMachine =
               on: {
                 STORE_RESPONSE: {
                   actions: 'setReceivedVcs',
+                  target: 'receivedVcsMetadata',
+                },
+              },
+            },
+            receivedVcsMetadata: {
+              entry: 'loadReceivedVcsMetadata',
+              on: {
+                STORE_RESPONSE: {
+                  actions: 'setReceivedVcsMetadata',
                   target: 'showTamperedPopup',
                 },
               },
@@ -290,15 +290,12 @@ export const vcMetaMachine =
           },
         }),
 
-        loadMyVcs: send(
-          context => StoreEvents.GET_VCS_DATA(context.myVcsMetadata),
-          {
-            to: context => context.serviceRefs.store,
-          },
-        ),
+        loadMyVcs: send(() => StoreEvents.GET_VCS_DATA(MY_VCS_STORE_KEY), {
+          to: context => context.serviceRefs.store,
+        }),
 
         loadReceivedVcs: send(
-          context => StoreEvents.GET_VCS_DATA(context.receivedVcsMetadata),
+          () => StoreEvents.GET_VCS_DATA(RECEIVED_VCS_STORE_KEY),
           {
             to: context => context.serviceRefs.store,
           },

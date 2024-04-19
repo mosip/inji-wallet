@@ -22,14 +22,14 @@ export interface Typegen0 {
   eventsCausingActions: {
     addVcToInProgressDownloads: 'ADD_VC_TO_IN_PROGRESS_DOWNLOADS';
     getVcItemResponse: 'GET_VC_ITEM';
-    loadMyVcs: 'STORE_RESPONSE';
-    loadMyVcsMetadata:
+    loadMyVcs:
       | 'DOWNLOAD_LIMIT_EXPIRED'
       | 'REFRESH_MY_VCS'
       | 'REFRESH_RECEIVED_VCS'
       | 'STORE_RESPONSE'
       | 'VERIFY_VC_FAILED'
       | 'xstate.init';
+    loadMyVcsMetadata: 'STORE_RESPONSE';
     loadReceivedVcs: 'STORE_RESPONSE';
     loadReceivedVcsMetadata: 'REFRESH_RECEIVED_VCS' | 'STORE_RESPONSE';
     logTamperedVCsremoved: 'done.invoke.vcMeta.ready.tamperedVCs.triggerAutoBackupForTamperedVcDeletion:invocation[0]';

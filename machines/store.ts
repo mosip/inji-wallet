@@ -56,7 +56,7 @@ const model = createModel(
       TRY_AGAIN: () => ({}),
       IGNORE: () => ({}),
       GET: (key: string) => ({key}),
-      GET_VCS_DATA: (metadatas: VCMetadata[]) => ({metadatas}),
+      GET_VCS_DATA: (key: string) => ({key}),
       EXPORT: () => ({}),
       RESTORE_BACKUP: (data: {}) => ({data}),
       DECRYPT_ERROR: () => ({}),
@@ -364,10 +364,7 @@ export const storeMachine =
                   break;
                 }
                 case 'GET_VCS_DATA': {
-                  response = await getVCsData(
-                    event.metadatas,
-                    context.encryptionKey,
-                  );
+                  response = await getVCsData(event.key, context.encryptionKey);
                   break;
                 }
                 case 'RESTORE_BACKUP': {
@@ -586,13 +583,13 @@ export async function loadBackupData(data, encryptionKey) {
   await Storage.loadBackupData(data, encryptionKey);
 }
 
-export async function getVCsData(
-  metadatas: VCMetadata[],
-  encryptionKey: string,
-) {
+export async function getVCsData(key: string, encryptionKey: string) {
   try {
     let vcsData: Record<string, VC> = {};
     let tamperedVcsList: VCMetadata[] = [];
+
+    const metadatas = await getItem(key, null, encryptionKey);
+
     for (let ind in metadatas) {
       const vcKey = VCMetadata.fromVC(metadatas[ind]).getVcKey();
       try {
