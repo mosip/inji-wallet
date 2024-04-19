@@ -2,12 +2,11 @@ import jwtDecode from 'jwt-decode';
 import jose from 'node-jose';
 import {isIOS} from '../constants';
 import pem2jwk from 'simple-pem2jwk';
-import {displayType, issuerType} from '../../machines/issuersMachine';
-import getAllConfigurations from '../api';
+import {displayType, issuerType} from '../../machines/Issuers/IssuersMachine';
+import getAllConfigurations, {CACHED_API} from '../api';
 
 import i18next from 'i18next';
 import {getJWT} from '../cryptoutil/cryptoUtil';
-import {CACHED_API} from '../api';
 import i18n from '../../i18n';
 import {
   CredentialWrapper,
@@ -100,15 +99,21 @@ export const getBody = async context => {
     format: 'ldp_vc',
     credential_definition: {
       '@context': ['https://www.w3.org/2018/credentials/v1'],
-      type: context.selectedIssuer?.credential_type
-        ? context.selectedIssuer.credential_type
-        : ['VerifiableCredential', 'MOSIPVerifiableCredential'],
+      type: getCredentialType(context),
     },
     proof: {
       proof_type: 'jwt',
       jwt: proofJWT,
     },
   };
+};
+
+export const getCredentialType = (context: any) => {
+  return context.selectedCredentialType?.credential_definition?.type
+    ? context.selectedCredentialType.credential_definition.type
+    : context.selectedIssuer?.credential_type
+    ? context.selectedIssuer.credential_type
+    : ['VerifiableCredential', 'MOSIPVerifiableCredential'];
 };
 
 export const updateCredentialInformation = (context, credential) => {
@@ -143,6 +148,9 @@ export const getDisplayObjectForCurrentLanguage = (
   let displayType = display.filter(obj => obj.language == currentLanguage)[0];
   if (!displayType) {
     displayType = display.filter(obj => obj.language == 'en')[0];
+  }
+  if (!displayType) {
+    displayType = display.filter(obj => obj.locale == currentLanguage)[0];
   }
   return displayType;
 };

@@ -28,6 +28,7 @@ import {SearchBar} from '../../components/ui/SearchBar';
 import {SvgImage} from '../../components/ui/svg';
 import {Icon} from 'react-native-elements';
 import {BannerNotificationContainer} from '../../components/BannerNotificationContainer';
+import {CredentialTypeSelectionScreen} from './CredentialTypeSelectionScreen';
 
 export const IssuersScreen: React.FC<
   HomeRouteProps | RootRouteProps
@@ -139,6 +140,28 @@ export const IssuersScreen: React.FC<
       setClearSearchIcon(false);
     }
   };
+  if (controller.isSelectingCredentialType) {
+    return <CredentialTypeSelectionScreen {...props} />;
+  }
+
+  if (isVerificationFailed) {
+    return (
+      <Error
+        testID="verificationError"
+        isVisible={isVerificationFailed}
+        isModal={true}
+        alignActionsOnEnd
+        title={t('MyVcsTab:errors.verificationFailed.title')}
+        message={verificationErrorMessage}
+        image={SvgImage.PermissionDenied()}
+        showClose={false}
+        primaryButtonText="goBack"
+        primaryButtonEvent={controller.RESET_VERIFY_ERROR}
+        primaryButtonTestID="goBack"
+        customStyles={{marginTop: '30%'}}
+      />
+    );
+  }
 
   if (isVerificationFailed) {
     return (

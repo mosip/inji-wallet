@@ -36,6 +36,7 @@ export interface Typegen0 {
       | 'CLEAR'
       | 'EXPORT'
       | 'GET'
+      | 'GET_VCS_DATA'
       | 'PREPEND'
       | 'REMOVE'
       | 'REMOVE_ITEMS'

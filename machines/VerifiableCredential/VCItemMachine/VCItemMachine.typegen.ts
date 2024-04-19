@@ -3,6 +3,7 @@
 export interface Typegen0 {
   '@@xstate/typegen': true;
   internalEvents: {
+    '': {type: ''};
     'done.invoke.checkStatus': {
       type: 'done.invoke.checkStatus';
       data: unknown;
@@ -100,6 +101,7 @@ export interface Typegen0 {
       data: unknown;
     };
     'xstate.init': {type: 'xstate.init'};
+    'xstate.stop': {type: 'xstate.stop'};
   };
   invokeSrcNameMap: {
     addWalletBindingId: 'done.invoke.vc-item-machine.walletBinding.addingWalletBindingId:invocation[0]';
@@ -131,14 +133,13 @@ export interface Typegen0 {
       | 'removeVcItem'
       | 'removeVcMetaDataFromStorage'
       | 'removeVcMetaDataFromVcMachineContext'
-      | 'requestStoredContext'
       | 'requestVcContext'
+      | 'resetIsMachineInKebabPopupState'
       | 'resetPrivateKey'
       | 'sendActivationStartEvent'
       | 'sendActivationSuccessEvent'
       | 'sendBackupEvent'
       | 'sendDownloadLimitExpire'
-      | 'sendTamperedVc'
       | 'sendTelemetryEvents'
       | 'sendUserCancelledActivationFailedEndEvent'
       | 'sendVcUpdated'
@@ -147,7 +148,6 @@ export interface Typegen0 {
       | 'sendWalletBindingSuccess'
       | 'setCommunicationDetails'
       | 'setContext'
-      | 'setCredential'
       | 'setDownloadInterval'
       | 'setErrorAsVerificationError'
       | 'setErrorAsWalletBindingError'
@@ -184,7 +184,7 @@ export interface Typegen0 {
       | 'verifyCredential';
   };
   eventsCausingActions: {
-    addVcToInProgressDownloads: 'STORE_RESPONSE';
+    addVcToInProgressDownloads: 'GET_VC_RESPONSE';
     closeViewVcModal: 'CLOSE_VC_MODAL' | 'STORE_RESPONSE';
     incrementDownloadCounter:
       | 'POLL'
@@ -210,8 +210,18 @@ export interface Typegen0 {
       | 'STORE_ERROR'
       | 'error.platform.vc-item-machine.verifyingCredential:invocation[0]';
     removeVcMetaDataFromVcMachineContext: 'DISMISS';
-    requestStoredContext: 'GET_VC_RESPONSE';
     requestVcContext: 'DISMISS' | 'REFRESH' | 'STORE_ERROR' | 'xstate.init';
+    resetIsMachineInKebabPopupState:
+      | ''
+      | 'ADD_WALLET_BINDING_ID'
+      | 'CANCEL'
+      | 'CLOSE_VC_MODAL'
+      | 'DISMISS'
+      | 'REFRESH'
+      | 'REMOVE'
+      | 'SHOW_ACTIVITY'
+      | 'done.invoke.vc-item-machine.kebabPopUp.triggerAutoBackup:invocation[0]'
+      | 'xstate.stop';
     resetPrivateKey:
       | 'done.invoke.vc-item-machine.walletBinding.addingWalletBindingId:invocation[0]'
       | 'done.invoke.vc-item-machine.walletBinding.updatingPrivateKey:invocation[0]';
@@ -225,7 +235,6 @@ export interface Typegen0 {
     sendDownloadLimitExpire:
       | 'FAILED'
       | 'error.platform.vc-item-machine.loadVc.loadVcFromServer.verifyingDownloadLimitExpiry:invocation[0]';
-    sendTamperedVc: 'TAMPERED_VC';
     sendTelemetryEvents: 'STORE_RESPONSE';
     sendUserCancelledActivationFailedEndEvent: 'DISMISS';
     sendVcUpdated: 'PIN_CARD';
@@ -240,8 +249,7 @@ export interface Typegen0 {
     setCommunicationDetails:
       | 'done.invoke.vc-item-machine.walletBinding.acceptingBindingOTP.resendOTP:invocation[0]'
       | 'done.invoke.vc-item-machine.walletBinding.requestingBindingOTP:invocation[0]';
-    setContext: 'GET_VC_RESPONSE' | 'STORE_RESPONSE';
-    setCredential: 'CREDENTIAL_DOWNLOADED';
+    setContext: 'CREDENTIAL_DOWNLOADED' | 'GET_VC_RESPONSE';
     setDownloadInterval: 'done.invoke.vc-item-machine.loadVc.loadVcFromServer.loadDownloadLimitConfig:invocation[0]';
     setErrorAsVerificationError: 'error.platform.vc-item-machine.verifyingCredential:invocation[0]';
     setErrorAsWalletBindingError:
@@ -280,7 +288,7 @@ export interface Typegen0 {
   };
   eventsCausingDelays: {};
   eventsCausingGuards: {
-    hasCredential: 'GET_VC_RESPONSE' | 'STORE_RESPONSE';
+    hasCredential: 'GET_VC_RESPONSE';
     isCustomSecureKeystore:
       | 'done.invoke.vc-item-machine.walletBinding.addKeyPair:invocation[0]'
       | 'done.invoke.vc-item-machine.walletBinding.addingWalletBindingId:invocation[0]';
@@ -298,7 +306,7 @@ export interface Typegen0 {
     downloadCredential: 'DOWNLOAD_READY';
     generateKeyPair: 'INPUT_OTP';
     isUserSignedAlready: 'STORE_RESPONSE';
-    loadDownloadLimitConfig: 'STORE_ERROR' | 'STORE_RESPONSE';
+    loadDownloadLimitConfig: 'GET_VC_RESPONSE' | 'STORE_ERROR';
     requestBindingOTP: 'CONFIRM' | 'RESEND_OTP';
     updatePrivateKey: 'done.invoke.vc-item-machine.walletBinding.addingWalletBindingId:invocation[0]';
     verifyCredential: 'CREDENTIAL_DOWNLOADED';
@@ -322,7 +330,6 @@ export interface Typegen0 {
     | 'loadVc.loadVcFromServer.savingFailed.idle'
     | 'loadVc.loadVcFromServer.savingFailed.viewingVc'
     | 'loadVc.loadVcFromServer.verifyingDownloadLimitExpiry'
-    | 'loadVc.loadVcFromStore'
     | 'verifyingCredential'
     | 'verifyingCredential.handleVCVerificationFailure'
     | 'verifyingCredential.idle'
@@ -349,7 +356,6 @@ export interface Typegen0 {
         loadVc?:
           | 'loadVcFromContext'
           | 'loadVcFromServer'
-          | 'loadVcFromStore'
           | {
               loadVcFromServer?:
                 | 'checkingStatus'

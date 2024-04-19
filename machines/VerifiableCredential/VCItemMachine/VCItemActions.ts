@@ -47,21 +47,7 @@ export const VCItemActions = model => {
         to: context => context.serviceRefs.vcMeta,
       },
     ),
-    requestStoredContext: send(
-      (context: any) => {
-        return StoreEvents.GET(
-          VCMetadata.fromVC(context.vcMetadata).getVcKey(),
-        );
-      },
-      {
-        to: context => context.serviceRefs.store,
-      },
-    ),
     setContext: model.assign((context, event) => {
-      const {...data} = event.response;
-      return {...context, ...data};
-    }),
-    setCredential: model.assign((context, event) => {
       return {
         ...context,
         ...event.response,
@@ -160,6 +146,11 @@ export const VCItemActions = model => {
           isPinned: !context.vcMetadata.isPinned,
         }),
     }),
+
+    resetIsMachineInKebabPopupState: assign({
+      isMachineInKebabPopupState: () => false,
+    }),
+
     sendBackupEvent: send(BackupEvents.DATA_BACKUP(true), {
       to: (context: any) => context.serviceRefs.backup,
     }),
@@ -168,12 +159,6 @@ export const VCItemActions = model => {
       (context: any) => VcMetaEvents.VC_METADATA_UPDATED(context.vcMetadata),
       {
         to: (context: any) => context.serviceRefs.vcMeta,
-      },
-    ),
-    sendTamperedVc: send(
-      (context: any) => VcMetaEvents.TAMPERED_VC(context.vcMetadata),
-      {
-        to: context => context.serviceRefs.vcMeta,
       },
     ),
     setErrorAsWalletBindingError: assign({
@@ -325,11 +310,12 @@ export const VCItemActions = model => {
       (context: any) => {
         return StoreEvents.REMOVE(
           MY_VCS_STORE_KEY,
-          context.vcMetadata.getVcKey(),
+          VCMetadata.fromVC(context.vcMetadata).getVcKey(),
         );
       },
       {to: context => context.serviceRefs.store},
     ),
+
     setVcKey: model.assign({
       vcMetadata: (_, event) => event.vcMetadata,
     }),

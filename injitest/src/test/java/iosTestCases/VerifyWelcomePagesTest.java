@@ -138,6 +138,7 @@ public class VerifyWelcomePagesTest extends IosBaseTest {
         assertEquals(backupDataPage.getBackupDataPageDescription(), "Protect your data with ease using our Backup & Restore feature. Safely store your VCs against loss or accidents by creating regular backups and recover it effortlessly whenever needed for seamless continuity.");
 
         backupDataPage.clickOnGoBack();
+        homePage.clickOnHomeButton();
         assertEquals(homePage.verifyLanguageForNoVCDownloadedPageLoaded(), "Bring your digital identity");
     }
     
@@ -168,8 +169,9 @@ public class VerifyWelcomePagesTest extends IosBaseTest {
         
         assertTrue(welcomePage.isWelcomePageLoaded(), "Verify if welcome page is loaded");
         assertEquals(welcomePage.getWelcomeDescription(), "Keep your digital credential with you at all times. Inji helps you manage and use them effectively. To get started, add cards to your profile.");
-        
+
         welcomePage.clickOnBackButton();
+        homePage.clickOnHomeButton();
         assertEquals(homePage.verifyLanguageForNoVCDownloadedPageLoaded(), "Bring your digital identity");
     }
 }

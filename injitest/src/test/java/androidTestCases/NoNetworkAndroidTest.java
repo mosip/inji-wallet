@@ -5,6 +5,7 @@ import inji.api.BaseTestCase;
 import inji.constants.Target;
 import inji.pages.*;
 import inji.utils.AndroidUtil;
+import inji.utils.IosUtil;
 import inji.utils.TestDataReader;
 import inji.utils.UpdateNetworkSettings;
 import org.testng.annotations.Test;
@@ -242,6 +243,7 @@ public class NoNetworkAndroidTest extends AndroidBaseTest {
         MoreOptionsPage moreOptionsPage = homePage.clickOnMoreOptionsButton();
         assertTrue(moreOptionsPage.isMoreOptionsPageLoaded(), "Verify if more options page is displayed");
 
+//        IosUtil.scrollToElement(driver,0,1430,1080,2288);
         PleaseConfirmPopupPage pleaseConfirmPopupPage = moreOptionsPage.clickOnRemoveFromWallet();
         assertTrue(pleaseConfirmPopupPage.isPleaseConfirmPopupPageLoaded(), "Verify if pop up page is displayed");
 
@@ -571,7 +573,7 @@ public class NoNetworkAndroidTest extends AndroidBaseTest {
         settingsPage.clickOnLanguage().clickOnFilipinoLanguage();
 
         assertTrue(settingsPage.verifyFilipinoLanguage(), "Verify if language is changed to filipino");
-        settingsPage.clickOnBackArrow();
+        homePage.clickOnHomeButton();
         
         AddNewCardPage addNewCardPage = homePage.downloadCard();
 
@@ -626,7 +628,7 @@ public class NoNetworkAndroidTest extends AndroidBaseTest {
         settingsPage.clickOnLanguage().clickOnTamilLanguage();
 
         assertTrue(settingsPage.verifyTamilLanguage(), "Verify if language is changed to tamil");
-        settingsPage.clickOnBackArrow();
+        homePage.clickOnHomeButton();
         
         homePage.downloadCard();
         assertTrue(homePage.verifyLanguageForNoInternetConnectionDisplayed("Tamil"), "Verify if try again in tamil is displayed");
@@ -666,7 +668,47 @@ public class NoNetworkAndroidTest extends AndroidBaseTest {
         assertTrue(addNewCardPage.isIssuerDescriptionEsignetDisplayed(), "Verify if issuer description  esignet displayed");
         
         AndroidUtil.disableAirplaneMode();
+    }
+
+    @Test
+    public void VerifyGenerateUinOrVidUsingAidHeader() {
+        ChooseLanguagePage chooseLanguagePage = new ChooseLanguagePage(driver);
+
+        assertTrue(chooseLanguagePage.isChooseLanguagePageLoaded(), "Verify if choose language page is displayed");
+        WelcomePage welcomePage = chooseLanguagePage.clickOnSavePreference();
+
+        assertTrue(welcomePage.isWelcomePageLoaded(), "Verify if welcome page is loaded");
+        AppUnlockMethodPage appUnlockMethodPage = welcomePage.clickOnSkipButton();
+
+        assertTrue(appUnlockMethodPage.isAppUnlockMethodPageLoaded(), "Verify if app unlocked page is displayed");
+        SetPasscode setPasscode = appUnlockMethodPage.clickOnUsePasscode();
+
+        assertTrue(setPasscode.isSetPassCodePageLoaded(), "Verify if set passcode page is displayed");
+        ConfirmPasscode confirmPasscode = setPasscode.enterPasscode(TestDataReader.readData("passcode"), Target.ANDROID);
+
+        assertTrue(confirmPasscode.isConfirmPassCodePageLoaded(), "Verify if confirm passcode page is displayed");
+        HomePage homePage = confirmPasscode.enterPasscodeInConfirmPasscodePage(TestDataReader.readData("passcode"), Target.ANDROID);
+
+        assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
+        AddNewCardPage addNewCardPage = homePage.downloadCard();
+
+        assertTrue(addNewCardPage.isAddNewCardPageLoaded(), "Verify if add new card page is displayed");
+        RetrieveIdPage retrieveIdPage = addNewCardPage.clickOnDownloadViaUin();
+
+        assertTrue(retrieveIdPage.isRetrieveIdPageLoaded(), "Verify if retrieve id page is displayed");
+        assertEquals(retrieveIdPage.verifyGetItTextDisplayed(), "Get it now using your AID.");
+        GenerateUinOrVidPage generateUinOrVidPage = retrieveIdPage.clickOnGetItNowText();
+
+        String sessionId  = driver.getSessionId().toString();
+        UpdateNetworkSettings.setNoNetworkProfile(sessionId);
+
+        assertTrue(generateUinOrVidPage.isGenerateUinOrVidPageLoaded(), "Verify if generate uin or vid page page is displayed");
+        assertEquals(generateUinOrVidPage.getGenerateUinOrVidPageTextloaded(), "Get your UIN/VID");
+
+        String aid=TestDataReader.readData("aid");
+        OtpVerificationPage otpVerification = generateUinOrVidPage.enterApplicationID(aid).clickOnGetUinOrVidButton();
+
+        assertTrue(generateUinOrVidPage.isNetworkRequesFailedDisplayed(), "Verify if no internet connection is displayed");
+    }
 
     }
-    
-}

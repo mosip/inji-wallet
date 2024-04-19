@@ -51,7 +51,7 @@ export const VCCardViewContent: React.FC<VCItemContentProps> = props => {
           <Column fill align={'space-around'} margin="0 10 0 10">
             <VCItemFieldValue
               key={'fullName'}
-              fieldName="fullName"
+              testID="fullName"
               fieldValue={getLocalizedField(
                 props.credential?.credentialSubject['fullName'],
               )}

@@ -1,7 +1,13 @@
 import argon2 from 'react-native-argon2';
 import {AnyState} from 'xstate';
 import {getDeviceNameSync} from 'react-native-device-info';
-import {GOOGLE_DRIVE_NAME, ICLOUD_DRIVE_NAME, isAndroid} from './constants';
+import {
+  GOOGLE_DRIVE_NAME,
+  ICLOUD_DRIVE_NAME,
+  isAndroid,
+  GMAIL,
+  APPLE,
+} from './constants';
 import {generateSecureRandom} from 'react-native-securerandom';
 import forge from 'node-forge';
 import {useEffect, useState} from 'react';
@@ -112,6 +118,8 @@ export const bytesToMB = (bytes: number): string => {
   const megabytes = bytes / BYTES_IN_MEGABYTE;
   return Number(megabytes).toFixed(2);
 };
+
+export const getAccountType = () => (isAndroid() ? GMAIL : APPLE);
 
 export const getDriveName = () =>
   isAndroid() ? GOOGLE_DRIVE_NAME : ICLOUD_DRIVE_NAME;
