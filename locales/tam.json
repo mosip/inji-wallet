@@ -272,8 +272,8 @@
       "backend": {
         "invalidOtp": "OTP தவறானது",
         "expiredOtp": "OTP காலாவதியானது",
-        "invalidUin": "UIN தவறானது",
-        "invalidVid": "VID தவறானது",
+        "invalidUin": "சரியான UIN ஐ உள்ளிடவும்",
+        "invalidVid": "சரியான VID ஐ உள்ளிடவும்",
         "missingUin": "உள்ளிட்ட UIN செயலிழக்கப்பட்டது/தடுக்கப்பட்டது. தொடர சரியான UIN ஐ உள்ளிடவும்",
         "missingVid": "VID தரவுத்தளத்தில் இல்லை",
         "noMessageAvailable": "சிறிது நேரம் கழித்து முயற்சிக்கவும்",
@@ -296,7 +296,7 @@
         "applicationProcessing": "AID தயாராக இல்லை",
         "noMessageAvailable": "சிறிது நேரம் கழித்து முயற்சிக்கவும்",
         "networkRequestFailed": "நெட்வொர்க் கோரிக்கை தோல்வியடைந்தது",
-        "invalidAid": "உள்ளிடப்பட்ட எய்ட் கிடைக்கவில்லை.நுழைவதற்கு முன் உங்கள் உதவியை சரிபார்க்கவும்",
+        "invalidAid": "சரியான AID ஐ உள்ளிடவும்",
         "timeout": "நேரம் முடிந்தது"
       }
     }
