@@ -174,7 +174,7 @@ fileignoreconfig:
   - filename: injitest/src/test/java/androidTestCases/ChangeLanguageTest.java
     checksum: c0234ddd85035f6c2cd62ba96a8a2b85da71f0752e9888130b9675bb6194bebe
   - filename: ios/Inji/Inji.entitlements
-    checksum: 86afecb1f8eb02b4446f94a092eca7f6e65310cc4ec5ccf89cd01ccb13a0749e
+    checksum: b2d643f91a929933747b539b9d6a87fcac17317716dbb9ccfb399e7c53d8cd52
   - filename: injitest/src/test/java/iosTestCases/ChangeLanguageTest.java
     checksum: d94cbf47726c3650b4b623e6aa76e113edf553616319450d01f05294163572e9
   - filename: screens/Home/MyVcs/IdInputModal.tsx
@@ -224,7 +224,7 @@ fileignoreconfig:
   - filename: ios/Inji.xcodeproj/project.pbxproj
     checksum: 766e3dcb299f52ea75e87a1e6e7ce106872bb2f2481d54700995ca02b742b60f
   - filename: ios/Inji/Info.plist
-    checksum: 57705369faf52801876baf0d25a3cee690de2fd87927454689b13963408a8e92
+    checksum: 56dc5e779373759ad93cbbdd7b87509913025ba307962c69d8ea13d976b602d9
   - filename: machines/backupAndRestore/backupRestore.ts
     checksum: 60a55a1d0ef6e79f7b9fa1e61ed31b933364afb429bff03cebbc56339c764499
   - filename: machines/backupAndRestore/backupRestore.typegen.ts

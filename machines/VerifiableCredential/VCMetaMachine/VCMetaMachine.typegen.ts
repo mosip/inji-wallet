@@ -13,7 +13,6 @@ export interface Typegen0 {
   invokeSrcNameMap: {
     isUserSignedAlready: 'done.invoke.vcMeta.ready.tamperedVCs.triggerAutoBackupForTamperedVcDeletion:invocation[0]';
   };
-
   missingImplementations: {
     actions:
       | 'addVcToInProgressDownloads'
