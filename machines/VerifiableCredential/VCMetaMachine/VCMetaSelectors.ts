@@ -21,16 +21,11 @@ export function selectReceivedVcsMetadata(state: State): VCMetadata[] {
 }
 
 export function selectIsRefreshingMyVcs(state: State) {
-  return (
-    state.matches('ready.myVcsMetadata') || state.matches('ready.myVcsData')
-  );
+  return state.matches('ready.myVcs');
 }
 
 export function selectIsRefreshingReceivedVcs(state: State) {
-  return (
-    state.matches('ready.receivedVcsMetadata') ||
-    state.matches('ready.receivedVcs')
-  );
+  return state.matches('ready.receivedVcs');
 }
 
 export function selectAreAllVcsDownloaded(state: State) {
