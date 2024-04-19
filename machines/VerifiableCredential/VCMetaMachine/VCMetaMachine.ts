@@ -85,22 +85,13 @@ export const vcMetaMachine =
       states: {
         ready: {
           entry: sendParent('READY'),
-          initial: 'myVcsData',
+          initial: 'myVcs',
           states: {
-            myVcsData: {
+            myVcs: {
               entry: 'loadMyVcs',
               on: {
                 STORE_RESPONSE: {
                   actions: 'setMyVcs',
-                  target: 'myVcsMetadata',
-                },
-              },
-            },
-            myVcsMetadata: {
-              entry: 'loadMyVcsMetadata',
-              on: {
-                STORE_RESPONSE: {
-                  actions: 'setMyVcsMetadata',
                   target: 'receivedVcs',
                 },
               },
@@ -110,15 +101,6 @@ export const vcMetaMachine =
               on: {
                 STORE_RESPONSE: {
                   actions: 'setReceivedVcs',
-                  target: 'receivedVcsMetadata',
-                },
-              },
-            },
-            receivedVcsMetadata: {
-              entry: 'loadReceivedVcsMetadata',
-              on: {
-                STORE_RESPONSE: {
-                  actions: 'setReceivedVcsMetadata',
                   target: 'showTamperedPopup',
                 },
               },
@@ -198,7 +180,7 @@ export const vcMetaMachine =
               actions: 'resetWalletBindingSuccess',
             },
             REFRESH_RECEIVED_VCS: {
-              target: '#vcMeta.ready.receivedVcsMetadata',
+              target: '#vcMeta.ready.receivedVcs',
             },
             DOWNLOAD_LIMIT_EXPIRED: {
               actions: [
@@ -270,26 +252,6 @@ export const vcMetaMachine =
           };
         }),
 
-        loadMyVcsMetadata: send(StoreEvents.GET(MY_VCS_STORE_KEY), {
-          to: context => context.serviceRefs.store,
-        }),
-
-        loadReceivedVcsMetadata: send(StoreEvents.GET(RECEIVED_VCS_STORE_KEY), {
-          to: context => context.serviceRefs.store,
-        }),
-
-        setMyVcsMetadata: model.assign({
-          myVcsMetadata: (_context, event) => {
-            return parseMetadatas((event.response || []) as object[]);
-          },
-        }),
-
-        setReceivedVcsMetadata: model.assign({
-          receivedVcsMetadata: (_context, event) => {
-            return parseMetadatas((event.response || []) as object[]);
-          },
-        }),
-
         loadMyVcs: send(() => StoreEvents.GET_VCS_DATA(MY_VCS_STORE_KEY), {
           to: context => context.serviceRefs.store,
         }),
@@ -308,6 +270,11 @@ export const vcMetaMachine =
           tamperedVcs: (context, event) => {
             return [...context.tamperedVcs, ...event.response.tamperedVcsList];
           },
+          myVcsMetadata: (_context, event) => {
+            return parseMetadatas(
+              (event.response.vcsMetadata || []) as object[],
+            );
+          },
         }),
 
         setReceivedVcs: model.assign({
@@ -316,6 +283,11 @@ export const vcMetaMachine =
           },
           tamperedVcs: (context, event) => {
             return [...context.tamperedVcs, ...event.response.tamperedVcsList];
+          },
+          receivedVcsMetadata: (_context, event) => {
+            return parseMetadatas(
+              (event.response.vcsMetadata || []) as object[],
+            );
           },
         }),
 
@@ -488,16 +460,11 @@ export function selectReceivedVcsMetadata(state: State): VCMetadata[] {
 }
 
 export function selectIsRefreshingMyVcs(state: State) {
-  return (
-    state.matches('ready.myVcsMetadata') || state.matches('ready.myVcsData')
-  );
+  return state.matches('ready.myVcs');
 }
 
 export function selectIsRefreshingReceivedVcs(state: State) {
-  return (
-    state.matches('ready.receivedVcsMetadata') ||
-    state.matches('ready.receivedVcs')
-  );
+  return state.matches('ready.receivedVcs');
 }
 
 export function selectAreAllVcsDownloaded(state: State) {

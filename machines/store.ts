@@ -588,10 +588,10 @@ export async function getVCsData(key: string, encryptionKey: string) {
     let vcsData: Record<string, VC> = {};
     let tamperedVcsList: VCMetadata[] = [];
 
-    const metadatas = await getItem(key, null, encryptionKey);
+    const vcsMetadata: VCMetadata[] = await getItem(key, null, encryptionKey);
 
-    for (let ind in metadatas) {
-      const vcKey = VCMetadata.fromVC(metadatas[ind]).getVcKey();
+    for (let ind in vcsMetadata) {
+      const vcKey = VCMetadata.fromVC(vcsMetadata[ind]).getVcKey();
       try {
         const vc = await getItem(vcKey, null, encryptionKey);
         vcsData[vcKey] = vc;
@@ -601,13 +601,13 @@ export async function getVCsData(key: string, encryptionKey: string) {
           e.message.includes(tamperedErrorMessageString) ||
           e.message.includes(ENOENT)
         ) {
-          tamperedVcsList = [...tamperedVcsList, metadatas[ind]];
+          tamperedVcsList = [...tamperedVcsList, vcsMetadata[ind]];
         } else {
           throw e;
         }
       }
     }
-    return {vcsData, tamperedVcsList};
+    return {vcsData, vcsMetadata, tamperedVcsList};
   } catch (e) {
     throw e;
   }

@@ -29,9 +29,7 @@ export interface Typegen0 {
       | 'STORE_RESPONSE'
       | 'VERIFY_VC_FAILED'
       | 'xstate.init';
-    loadMyVcsMetadata: 'STORE_RESPONSE';
-    loadReceivedVcs: 'STORE_RESPONSE';
-    loadReceivedVcsMetadata: 'REFRESH_RECEIVED_VCS' | 'STORE_RESPONSE';
+    loadReceivedVcs: 'REFRESH_RECEIVED_VCS' | 'STORE_RESPONSE';
     logTamperedVCsremoved: 'done.invoke.vcMeta.ready.tamperedVCs.triggerAutoBackupForTamperedVcDeletion:invocation[0]';
     prependToMyVcsMetadata: 'VC_ADDED';
     removeDownloadFailedVcsFromStorage: 'DELETE_VC';
@@ -50,9 +48,7 @@ export interface Typegen0 {
     setDownloadedVc: 'VC_DOWNLOADED';
     setDownloadingFailedVcs: 'DOWNLOAD_LIMIT_EXPIRED';
     setMyVcs: 'STORE_RESPONSE';
-    setMyVcsMetadata: 'STORE_RESPONSE';
     setReceivedVcs: 'STORE_RESPONSE';
-    setReceivedVcsMetadata: 'STORE_RESPONSE';
     setUpdatedVcMetadatas: 'VC_METADATA_UPDATED';
     setVerificationErrorMessage: 'VERIFY_VC_FAILED';
     setWalletBindingSuccess: 'WALLET_BINDING_SUCCESS';
@@ -69,20 +65,16 @@ export interface Typegen0 {
   matchesStates:
     | 'deletingFailedVcs'
     | 'ready'
-    | 'ready.myVcsData'
-    | 'ready.myVcsMetadata'
+    | 'ready.myVcs'
     | 'ready.receivedVcs'
-    | 'ready.receivedVcsMetadata'
     | 'ready.showTamperedPopup'
     | 'ready.tamperedVCs'
     | 'ready.tamperedVCs.idle'
     | 'ready.tamperedVCs.triggerAutoBackupForTamperedVcDeletion'
     | {
         ready?:
-          | 'myVcsData'
-          | 'myVcsMetadata'
+          | 'myVcs'
           | 'receivedVcs'
-          | 'receivedVcsMetadata'
           | 'showTamperedPopup'
           | 'tamperedVCs'
           | {tamperedVCs?: 'idle' | 'triggerAutoBackupForTamperedVcDeletion'};
