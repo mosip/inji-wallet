@@ -36,12 +36,12 @@ public class HistoryPage extends BasePage {
     }
 
     private boolean verifyHistoryIos(String vcNumber) {
-        By locator = By.xpath("//*[contains(@name,'" + vcNumber + " downloaded')]");
+        By locator = By.xpath("//*[contains(@name,'" + vcNumber + " is downloaded.')]");
         return this.isElementDisplayed(locator);
     }
 
     private boolean verifyHistoryAndroid(String vcNumber) {
-        By locator = By.xpath("//*[contains(@text,'" + vcNumber + " downloaded')]");
+        By locator = By.xpath("//*[contains(@text,'" + vcNumber + " is downloaded.')]");
         return this.isElementDisplayed(locator);
     }
 
@@ -50,23 +50,23 @@ public class HistoryPage extends BasePage {
     }
 
     private boolean verifyDeleteHistoryAndroid(String vcNumber) {
-        By locator = By.xpath("//*[contains(@text,'" + vcNumber + " Removed from wallet')]");
+        By locator = By.xpath("//*[contains(@text,'" + vcNumber + " is removed from wallet.')]");
         return this.isElementDisplayed(locator);
     }
 
     private boolean verifyDeletedHistoryIos(String vcNumber) {
-        By locator = By.xpath("//*[contains(@name,'" + vcNumber + " Removed from wallet')]");
+        By locator = By.xpath("//*[contains(@name,'" + vcNumber + " is removed from wallet.')]");
         return this.isElementDisplayed(locator);
     }
 
     private int verifyNumberOfRecordsInHistoryAndroid(String vcNumber) throws InterruptedException {
-        By locator = By.xpath("//*[contains(@text,'" + vcNumber + " downloaded')]");
+        By locator = By.xpath("//*[contains(@text,'" + vcNumber + " is downloaded.')]");
         List<WebElement> elements = driver.findElements(locator);
         return elements.size();
     }
 
     private int verifyNumberOfRecordsInHistoryIos(String vcNumber) {
-        By locator = By.xpath("//XCUIElementTypeStaticText[@name=\"" + vcNumber + " downloaded\"]");
+        By locator = By.xpath("//XCUIElementTypeStaticText[@name=\"National Card "+vcNumber+" is downloaded.\"]");
         List<WebElement> elements = driver.findElements(locator);
         return elements.size();
     }
@@ -145,12 +145,14 @@ public class HistoryPage extends BasePage {
     }
 
     private boolean verifyActivationSuccessfulRecordIos(String vcNumber) {
-        By locator = By.xpath("//*[contains(@name,'" + vcNumber + " Activation successful')]");
+        By locator = By.xpath("//*[contains(@name,'Activation of National Card " + vcNumber + " is successful.')]");
         return this.isElementDisplayed(locator);
     }
 
+
+
     private boolean verifyActivationSuccessfulRecordAndroid(String vcNumber) {
-        By locator = By.xpath("//*[contains(@text,'" + vcNumber + " Activation successful')]");
+        By locator = By.xpath("//*[contains(@text,'Activation of National Card " + vcNumber + " is successful.')]");
         return this.isElementDisplayed(locator);
     }
 }

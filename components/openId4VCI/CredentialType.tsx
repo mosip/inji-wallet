@@ -1,16 +1,21 @@
-import React from 'react';
 import {Pressable, View} from 'react-native';
-import {Theme} from '../ui/styleUtils';
 import testIDProps from '../../shared/commonUtil';
+import {Theme} from '../ui/styleUtils';
 import {Text} from '../ui';
+import React from 'react';
 import {displayType} from '../../machines/Issuers/IssuersMachine';
 import {SvgImage} from '../ui/svg';
+import {getDisplayObjectForCurrentLanguage} from '../../shared/openId4VCI/Utils';
+import {CredentialTypes} from '../../machines/VerifiableCredential/VCMetaMachine/vc';
 
-export const Issuer: React.FC<IssuerProps> = (props: IssuerProps) => {
+export const CredentialType: React.FC<CredentialTypeProps> = props => {
+  const selectedIssuerDisplayObject = getDisplayObjectForCurrentLanguage(
+    props.item.display,
+  );
   return (
     <Pressable
       accessible={false}
-      {...testIDProps(`issuer-${props.testID}`)}
+      {...testIDProps(`credentialTypeItem-${props.testID}`)}
       onPress={props.onPress}
       style={({pressed}) =>
         pressed
@@ -24,26 +29,25 @@ export const Issuer: React.FC<IssuerProps> = (props: IssuerProps) => {
             ]
       }>
       <View style={Theme.IssuersScreenStyles.issuerBoxIconContainer}>
-        {SvgImage.IssuerIcon(props)}
+        {SvgImage.IssuerIcon({
+          ...props,
+          displayDetails: selectedIssuerDisplayObject,
+        })}
       </View>
       <View style={Theme.IssuersScreenStyles.issuerBoxContent}>
         <Text
-          testID={`issuerHeading-${props.testID}`}
+          testID={`credentialTypeHeading-${props.testID}`}
           style={Theme.IssuersScreenStyles.issuerHeading}>
-          {props.displayDetails.title}
-        </Text>
-        <Text
-          testID={`issuerDescription-${props.testID}`}
-          style={Theme.IssuersScreenStyles.issuerDescription}>
-          {props.displayDetails.description}
+          {selectedIssuerDisplayObject?.name}
         </Text>
       </View>
     </Pressable>
   );
 };
 
-export interface IssuerProps {
+export interface CredentialTypeProps {
   displayDetails: displayType;
   onPress: () => void;
   testID: string;
+  item: CredentialTypes;
 }

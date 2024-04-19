@@ -45,13 +45,17 @@ public class OtpVerificationPage extends BasePage {
     @iOSXCUITFindBy(iOSClassChain = "**/XCUIElementTypeStaticText[`label == \"VID not available in database\"`]")
     private WebElement vidNotAvailableMessage;
 
-    @AndroidFindBy(xpath = "//android.view.ViewGroup[@resource-id=\"resendCodeView\"]") //Not using accessibility id as parent component has correct element property
+    @AndroidFindBy(xpath = "//*[@resource-id=\"resendCodeView\"]") //Not using accessibility id as parent component has correct element property
     @iOSXCUITFindBy(accessibility = "resendCode")
     private WebElement resendCodeButton;
 
     @AndroidFindBy(accessibility = "wait")
     @iOSXCUITFindBy(accessibility = "wait")
     private WebElement waitPopupButton;
+
+    @AndroidFindBy(accessibility = "otpVerificationDescription")
+    @iOSXCUITFindBy(accessibility = "otpVerificationDescription")
+    private WebElement otpVerificationDescription;
 
 
     public OtpVerificationPage(AppiumDriver driver) {
@@ -113,8 +117,13 @@ public class OtpVerificationPage extends BasePage {
     }
     
     public void clickOnResendButton() {
-        ((HidesKeyboard) driver).hideKeyboard();
-        clickIfVisible(waitPopupButton);
+//        ((HidesKeyboard) driver).hideKeyboard();
+//        clickIfVisible(waitPopupButton);
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
         retrieClickOnElemet(resendCodeButton);
     }
 
@@ -128,6 +137,9 @@ public class OtpVerificationPage extends BasePage {
     
     public boolean verifyOtpVerificationTimerDisplayedAfterClickOnResend() {
         return this.isElementDisplayed(otpVerificationTimer);
+    }
 
+    public boolean verifyotpVerificationDescriptionDisplayed() {
+        return this.isElementDisplayed(otpVerificationDescription);
     }
 }

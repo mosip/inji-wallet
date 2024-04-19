@@ -46,7 +46,7 @@ export class VCMetadata {
     });
   }
 
-  static fromVcMetadataString(vcMetadataStr: string) {
+  static fromVcMetadataString(vcMetadataStr: string | object) {
     try {
       if (typeof vcMetadataStr === 'object')
         return new VCMetadata(vcMetadataStr);
@@ -82,7 +82,7 @@ export function parseMetadatas(metadataStrings: object[]) {
   return metadataStrings.map(o => new VCMetadata(o));
 }
 
-export const getVCMetadata = context => {
+export const getVCMetadata = (context: object) => {
   const [issuer, protocol, requestId] =
     context.credentialWrapper?.identifier.split(':');
   // TODO(temp-solution): This is a temporary solution and will not work for every issuer

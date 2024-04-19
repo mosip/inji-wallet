@@ -21,11 +21,11 @@ public class SunbirdLoginPage extends BasePage {
     @AndroidFindBy(xpath = "//*[contains(@text,'Login with KBA')]")
     private WebElement loginWithKBA;
 
-    @AndroidFindBy(uiAutomator = "UiSelector().className(\"android.widget.EditText\").instance(0)")
+    @AndroidFindBy(xpath = "//android.widget.EditText[@resource-id=\"_form_policyNumber\"]")
     @iOSXCUITFindBy(xpath = "//XCUIElementTypeTextField[@name=\"Please fill in this field\" and @value=\"Policy Number\"]")
     private WebElement enterPolicyTextBox;
 
-    @AndroidFindBy(uiAutomator = "UiSelector().className(\"android.widget.EditText\").instance(1)")
+    @AndroidFindBy(xpath = "//android.widget.EditText[@resource-id=\"_form_fullName\"]")
     @iOSXCUITFindBy(iOSClassChain = "**/XCUIElementTypeTextField[`name == \"Please fill in this field\"`][2]")
     private WebElement enterFullnameTextBox;
 
@@ -58,24 +58,24 @@ public class SunbirdLoginPage extends BasePage {
     @iOSXCUITFindBy(accessibility = "Previous Month")
     private WebElement previousMonth;
 
-    @AndroidFindBy(accessibility = "activated")
-    @iOSXCUITFindBy(accessibility = "activated")
+    @AndroidFindBy(accessibility = "wallet-activated-icon")
+    @iOSXCUITFindBy(accessibility = "wallet-activated-icon")
     private WebElement activatedStatus;
 
     @AndroidFindBy(accessibility = "a square logo of a Sunbird")
     @iOSXCUITFindBy(accessibility = "a square logo of a Sunbird")
     private WebElement sunbirdLogo;
 
-    @AndroidFindBy(accessibility = "NameValue")
-    @iOSXCUITFindBy(accessibility = "NameValue")
+    @AndroidFindBy(accessibility = "fullNameValue")
+    @iOSXCUITFindBy(accessibility = "fullNameValue")
     private WebElement fullName;
 
     @AndroidFindBy(accessibility = "Policy NameValue")
     @iOSXCUITFindBy(accessibility = "Policy NameValue")
     private WebElement policyName;
 
-    @AndroidFindBy(accessibility = "idTypeValue")
-    @iOSXCUITFindBy(accessibility = "idTypeValue")
+    @AndroidFindBy(accessibility = "ID TypeValue")
+    @iOSXCUITFindBy(accessibility = "ID TypeValue")
     private WebElement idType;
 
     @iOSXCUITFindBy(accessibility = "Continue")

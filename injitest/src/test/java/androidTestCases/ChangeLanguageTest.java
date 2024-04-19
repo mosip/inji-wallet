@@ -153,7 +153,7 @@ public class ChangeLanguageTest extends AndroidBaseTest {
         settingsPage.clickOnLanguage().clickOnFilipinoLanguage();
 
         assertTrue(settingsPage.verifyFilipinoLanguage(), "Verify if language is changed to filipino");
-        settingsPage.clickOnBackArrow();
+        homePage.clickOnHomeButton();
 
         assertEquals(homePage.verifyLanguageForNoVCDownloadedPageLoaded(),"Dalhin ang Iyong Digital ID");
         AddNewCardPage addNewCardPage = homePage.downloadCard();
@@ -196,7 +196,7 @@ public class ChangeLanguageTest extends AndroidBaseTest {
         settingsPage.clickOnLanguage().clickOnFilipinoLanguage();
 
         assertTrue(settingsPage.verifyFilipinoLanguage(), "Verify if language is changed to filipino");
-        settingsPage.clickOnBackArrow();
+        homePage.clickOnHomeButton();
 
         assertEquals(homePage.verifyLanguageForNoVCDownloadedPageLoaded(),"Dalhin ang Iyong Digital ID");
         AddNewCardPage addNewCardPage = homePage.downloadCard();
@@ -239,7 +239,7 @@ public class ChangeLanguageTest extends AndroidBaseTest {
         settingsPage.clickOnLanguage().clickOnHindiLanguage();
 
         assertTrue(settingsPage.verifyHindiLanguage(), "Verify if language is changed to hindi");
-        settingsPage.clickOnBackArrow();
+        homePage.clickOnHomeButton();
 
         assertEquals(homePage.verifyLanguageForNoVCDownloadedPageLoaded(),"अपनी डिजिटल आईडी लाओ");
         AddNewCardPage addNewCardPage = homePage.downloadCard();
@@ -309,6 +309,7 @@ public class ChangeLanguageTest extends AndroidBaseTest {
         assertEquals(backupDataPage.verifyLanguageforBackupDataPageLoaded(), "Backup na Data");
         assertEquals(backupDataPage.getBackupDataPageDescription(), "Protektahan ang iyong data nang madali gamit ang aming Backup");
         backupDataPage.clickOnGoBack();
+        homePage.clickOnHomeButton();
         assertEquals(homePage.getShareButton(), "Ibahagi");
     }
 
@@ -364,6 +365,7 @@ public class ChangeLanguageTest extends AndroidBaseTest {
         assertEquals(backupDataPage.verifyLanguageforBackupDataPageLoaded(), "बैकअप डेटा");
         assertEquals(backupDataPage.getBackupDataPageDescription(), "हमारे बैकअप का उपयोग करके आसानी से अपने डेटा को सुरक्षित रखें");
         backupDataPage.clickOnGoBack();
+        homePage.clickOnHomeButton();
         assertEquals(homePage.getShareButton(), "शेयर करना");
     }
 
@@ -420,6 +422,7 @@ public class ChangeLanguageTest extends AndroidBaseTest {
         assertEquals(backupDataPage.getBackupDataPageDescription(), "எங்கள் காப்புப்பிரதியைப் பயன்படுத்தி உங்கள் தரவை எளிதாகப் பாதுகாக்கவும்");
 
         backupDataPage.clickOnGoBack();
+        homePage.clickOnHomeButton();
         assertEquals(homePage.getShareButton(), "பகிர்");
     }
 
@@ -475,6 +478,8 @@ public class ChangeLanguageTest extends AndroidBaseTest {
         assertEquals(backupDataPage.verifyLanguageforBackupDataPageLoaded(), "ಬ್ಯಾಕಪ್ ಡೇಟಾ");
         assertEquals(backupDataPage.getBackupDataPageDescription(), "ನಮ್ಮ ಬ್ಯಾಕಪ್ ಅನ್ನು ಬಳಸಿಕೊಂಡು ನಿಮ್ಮ ಡೇಟಾವನ್ನು ಸುಲಭವಾಗಿ ರಕ್ಷಿಸಿ");
         backupDataPage.clickOnGoBack();
+
+        homePage.clickOnHomeButton();
         assertEquals(homePage.getShareButton(), "ಹಂಚಿಕೊಳ್ಳಿ");
     }
 
@@ -522,7 +527,7 @@ public class ChangeLanguageTest extends AndroidBaseTest {
         settingsPage.clickOnLanguage().clickOnHindiLanguage();
 
         assertTrue(settingsPage.verifyHindiLanguage(), "Verify if language is changed to hindi");
-        settingsPage.clickOnBackArrow();
+        homePage.clickOnHomeButton();
 
 
         assertTrue(sunbirdLoginPage.isSunbirdCardLogoIsDisplayed(), "Verify if download sunbird logo displayed");
@@ -580,6 +585,7 @@ public class ChangeLanguageTest extends AndroidBaseTest {
         assertTrue(otpVerification.isOtpVerificationPageLoaded(), "Verify if otp verification page is displayed");
         otpVerification.enterOtp(BaseTestCase.getOtp(), Target.ANDROID);
 
+        DetailedVcViewPage detailedVcViewPage = homePage.openDetailedVcView(TestDataReader.readData("fullName"));
         assertEquals(homePage.getFullNameValue(), "TEST_FULLNAMEara");
         assertEquals(homePage.GetIdTypeText(), "البطاقة الوطنية");
         assertEquals(homePage.GetActivationPendingText(), "التنشيط معلق لتسجيل الدخول عبر الإنترنت!");
