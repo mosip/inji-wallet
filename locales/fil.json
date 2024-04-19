@@ -9,7 +9,7 @@
     "VC_RECEIVED_WITH_PRESENCE_VERIFIED": "Natanggap ang {{idType}} {{id}} at matagumpay ang pag-verify ng presensya.",
     "VC_RECEIVED_BUT_PRESENCE_VERIFICATION_FAILED": "Natanggap ang {{idType}} {{id}} at nabigo ang pag-verify ng presensya.",
     "PRESENCE_VERIFIED_AND_VC_SHARED": "Matagumpay ang pag-verify ng mukha at ibinahagi ang {{idType}} {{id}}.",
-    "PRESENCE_VERIFICATION_FAILED": "Nabigo ang pag-verify sa mukha habang sinusubukang ibahagi ang Virtual Card {{id}}.",
+    "PRESENCE_VERIFICATION_FAILED": "Nabigo ang pag-verify ng mukha habang sinusubukang ibahagi ang {{idType}} {{id}}.",
     "QRLOGIN_SUCCESFULL": "Ang QRlogin gamit ang {{idType}} {{id}} ay matagumpay.",
     "WALLET_BINDING_SUCCESSFULL": "Ang pag-activate ng {{idType}} {{id}} ay matagumpay.",
     "WALLET_BINDING_FAILURE": "Nabigo ang pag-activate ng {{idType}} {{id}}.",
