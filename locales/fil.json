@@ -700,6 +700,12 @@
       "captureSuccessMessage": "Matagumpay ang Face Verification! Sinisimulan ang pagbabahagi ng kredensyal.",
       "captureFailureTitle": "Nabigo ang pag-verify ng mukha!",
       "captureFailureMessage": "Pakitiyak na malinaw na nakikita ang iyong mukha at subukang mag-selfie muli."
+    },
+    "rational": {
+      "title": "I-on ang iyong lokasyon",
+      "message": "Kailangan ng app na ito ang iyong lokasyon upang maghanap ng mga kalapit na system upang matanggap ang iyong data.",
+      "accept": "OK",
+      "cancel": "Kanselahin"
     }
   },
   "SelectVcOverlay": {

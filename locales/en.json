@@ -709,6 +709,12 @@
       "captureSuccessMessage": "Face Verification is successful! Credential sharing is initiated.",
       "captureFailureTitle": "Face verification failed!",
       "captureFailureMessage": "Please ensure that your face is clearly visible and try taking selfie again."
+    },
+    "rational": {
+      "title": "Turn on your location",
+      "message": "This app needs your location to search for nearby systems to receive your data.",
+      "accept": "OK",
+      "cancel": "Cancel"
     }
   },
   "SelectVcOverlay": {
