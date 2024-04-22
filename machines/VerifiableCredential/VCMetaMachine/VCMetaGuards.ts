@@ -1,4 +1,4 @@
-import { isSignedInResult } from "../../../shared/CloudBackupAndRestoreUtils";
+import {isSignedInResult} from '../../../shared/CloudBackupAndRestoreUtils';
 
 export const VCMetaGuards = () => {
   return {

@@ -32,7 +32,7 @@ import {
   SettingsEvents,
 } from '../../machines/settings';
 import {VCItemMachine} from '../../machines/VerifiableCredential/VCItemMachine/VCItemMachine';
-import { VcMetaEvents } from '../../machines/VerifiableCredential/VCMetaMachine/VCMetaMachine';
+import {VcMetaEvents} from '../../machines/VerifiableCredential/VCMetaMachine/VCMetaMachine';
 
 export function useMyVcsTab(props: HomeScreenTabProps) {
   const service = props.service as ActorRefFrom<typeof MyVcsTabMachine>;

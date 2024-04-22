@@ -42,37 +42,14 @@ export const VCMetaActions = (model: any) => {
       };
     }),
 
-    loadMyVcsMetadata: send(StoreEvents.GET(MY_VCS_STORE_KEY), {
-      to: context => context.serviceRefs.store,
+    loadMyVcs: send(() => StoreEvents.GET_VCS_DATA(MY_VCS_STORE_KEY), {
+      to: (context: any) => context.serviceRefs.store,
     }),
-
-    loadReceivedVcsMetadata: send(StoreEvents.GET(RECEIVED_VCS_STORE_KEY), {
-      to: context => context.serviceRefs.store,
-    }),
-
-    setMyVcsMetadata: model.assign({
-      myVcsMetadata: (_context, event) => {
-        return parseMetadatas((event.response || []) as object[]);
-      },
-    }),
-
-    setReceivedVcsMetadata: model.assign({
-      receivedVcsMetadata: (_context, event) => {
-        return parseMetadatas((event.response || []) as object[]);
-      },
-    }),
-
-    loadMyVcs: send(
-      context => StoreEvents.GET_VCS_DATA(context.myVcsMetadata),
-      {
-        to: context => context.serviceRefs.store,
-      },
-    ),
 
     loadReceivedVcs: send(
-      context => StoreEvents.GET_VCS_DATA(context.receivedVcsMetadata),
+      () => StoreEvents.GET_VCS_DATA(RECEIVED_VCS_STORE_KEY),
       {
-        to: context => context.serviceRefs.store,
+        to: (context: any) => context.serviceRefs.store,
       },
     ),
 
@@ -83,6 +60,9 @@ export const VCMetaActions = (model: any) => {
       tamperedVcs: (context, event) => {
         return [...context.tamperedVcs, ...event.response.tamperedVcsList];
       },
+      myVcsMetadata: (_context, event) => {
+        return parseMetadatas((event.response.vcsMetadata || []) as object[]);
+      },
     }),
 
     setReceivedVcs: model.assign({
@@ -91,6 +71,9 @@ export const VCMetaActions = (model: any) => {
       },
       tamperedVcs: (context, event) => {
         return [...context.tamperedVcs, ...event.response.tamperedVcsList];
+      },
+      receivedVcsMetadata: (_context, event) => {
+        return parseMetadatas((event.response.vcsMetadata || []) as object[]);
       },
     }),
 

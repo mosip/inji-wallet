@@ -1,9 +1,9 @@
 import {EventFrom, send, sendParent} from 'xstate';
 import {AppServices} from '../../../shared/GlobalContext';
-import { VCMetamodel } from './VCMetaModel';
-import { VCMetaActions } from './VCMetaActions';
-import { VCMetaGuards } from './VCMetaGuards';
-import { VCMetaServices } from './VCMetaServices';
+import {VCMetamodel} from './VCMetaModel';
+import {VCMetaActions} from './VCMetaActions';
+import {VCMetaGuards} from './VCMetaGuards';
+import {VCMetaServices} from './VCMetaServices';
 
 const model = VCMetamodel;
 export const VcMetaEvents = model.events;
@@ -24,31 +24,13 @@ export const vcMetaMachine =
       states: {
         ready: {
           entry: sendParent('READY'),
-          initial: 'myVcsMetadata',
+          initial: 'myVcs',
           states: {
-            myVcsMetadata: {
-              entry: ['loadMyVcsMetadata'],
-              on: {
-                STORE_RESPONSE: {
-                  actions: 'setMyVcsMetadata',
-                  target: 'myVcsData',
-                },
-              },
-            },
-            myVcsData: {
+            myVcs: {
               entry: 'loadMyVcs',
               on: {
                 STORE_RESPONSE: {
                   actions: 'setMyVcs',
-                  target: 'receivedVcsMetadata',
-                },
-              },
-            },
-            receivedVcsMetadata: {
-              entry: 'loadReceivedVcsMetadata',
-              on: {
-                STORE_RESPONSE: {
-                  actions: 'setReceivedVcsMetadata',
                   target: 'receivedVcs',
                 },
               },
@@ -137,7 +119,7 @@ export const vcMetaMachine =
               actions: 'resetWalletBindingSuccess',
             },
             REFRESH_RECEIVED_VCS: {
-              target: '#vcMeta.ready.receivedVcsMetadata',
+              target: '#vcMeta.ready.receivedVcs',
             },
             DOWNLOAD_LIMIT_EXPIRED: {
               actions: [

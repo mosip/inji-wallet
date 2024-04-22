@@ -2,7 +2,7 @@ import {useContext} from 'react';
 import {GlobalContext} from '../shared/GlobalContext';
 import {useSelector} from '@xstate/react';
 import {selectWalletBindingSuccess} from '../machines/VerifiableCredential/VCMetaMachine/VCMetaSelectors';
-import { VcMetaEvents } from '../machines/VerifiableCredential/VCMetaMachine/VCMetaMachine';
+import {VcMetaEvents} from '../machines/VerifiableCredential/VCMetaMachine/VCMetaMachine';
 
 export const UseWalletBindingSuccess = () => {
   const {appService} = useContext(GlobalContext);

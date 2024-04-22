@@ -24,7 +24,7 @@ import {NavigationProp, useNavigation} from '@react-navigation/native';
 import {RootRouteProps} from '../../routes';
 import {BOTTOM_TAB_ROUTES} from '../../routes/routesConstants';
 import {VCItemMachine} from '../../machines/VerifiableCredential/VCItemMachine/VCItemMachine';
-import { Theme } from '../../components/ui/styleUtils';
+import {Theme} from '../../components/ui/styleUtils';
 
 type MyVcsTabNavigation = NavigationProp<RootRouteProps>;
 

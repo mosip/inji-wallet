@@ -1,4 +1,4 @@
-import Cloud from "../../../shared/CloudBackupAndRestoreUtils";
+import Cloud from '../../../shared/CloudBackupAndRestoreUtils';
 
 export const VCMetaServices = () => {
   return {
