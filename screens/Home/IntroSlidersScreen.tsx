@@ -56,7 +56,7 @@ export const IntroSlidersScreen: React.FC<RootRouteProps> = props => {
       <LinearGradient colors={Theme.Colors.gradientBtn}>
         <Centered>
           <Row align="space-between" style={Theme.Styles.introSliderHeader}>
-            <Column style={{marginLeft: Dimensions.get('screen').width * 0.4}}>
+            <Column style={{marginLeft: Dimensions.get('screen').width * 0.45}}>
               {SvgImage.InjiSmallLogo()}
             </Column>
 
