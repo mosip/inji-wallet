@@ -105,6 +105,9 @@ export const VCItemMachine = model.createMachine(
                 invoke: {
                   src: 'downloadCredential',
                   id: 'downloadCredential',
+                  onError: {
+                    actions: 'sendDownloadingFailedToVcMeta',
+                  },
                 },
                 on: {
                   POLL: [

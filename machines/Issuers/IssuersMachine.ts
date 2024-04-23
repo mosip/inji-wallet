@@ -282,7 +282,11 @@ export const IssuersMachine = model.createMachine(
               target: '.userCancelledBiometric',
             },
             {
-              actions: ['setError', 'resetLoadingReason'],
+              actions: [
+                'setError',
+                'resetLoadingReason',
+                'sendDownloadingFailedToVcMeta',
+              ],
               target: 'error',
             },
           ],

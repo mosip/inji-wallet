@@ -5,19 +5,20 @@ import {UseWalletBindingSuccess} from './WalletBindingSuccessController';
 import {BackupAndRestoreBannerNotification} from './BackupAndRestoreBannerNotification';
 import {UseBannerNotification} from './BannerNotificationController';
 import {useTranslation} from 'react-i18next';
-import {BANNER_TYPE_SUCCESS} from '../shared/constants';
-import {useScanScreen} from "../screens/Scan/ScanScreenController";
-import {Theme} from "./ui/styleUtils";
+import {BANNER_TYPE_ERROR, BANNER_TYPE_SUCCESS} from '../shared/constants';
+import {useScanScreen} from '../screens/Scan/ScanScreenController';
+import {Theme} from './ui/styleUtils';
 
 export const BannerNotificationContainer: React.FC = () => {
   const WalletBindingController = UseWalletBindingSuccess();
   const WalletBindingSuccess = WalletBindingController.isBindingSuccess;
   const scanScreenController = useScanScreen();
-  const showQuickShareSuccessBanner  = scanScreenController.showQuickShareSuccessBanner
+  const showQuickShareSuccessBanner =
+    scanScreenController.showQuickShareSuccessBanner;
 
   const bannerNotificationController = UseBannerNotification();
   const {t} = useTranslation('BannerNotification');
-  const rt  = useTranslation('RequestScreen').t;
+  const rt = useTranslation('RequestScreen').t;
 
   return (
     <>
@@ -36,15 +37,15 @@ export const BannerNotificationContainer: React.FC = () => {
       )}
 
       {showQuickShareSuccessBanner && (
-          <View style={Theme.BannerStyles.topBanner}>
-            <BannerNotification
-                type={BANNER_TYPE_SUCCESS}
-                message={rt('status.accepted.message')}
-                onClosePress={scanScreenController.DISMISS_QUICK_SHARE_BANNER}
-                key={'quickShareSuccessBanner'}
-                testId={'quickShareSuccessBanner'}
-            />
-          </View>
+        <View style={Theme.BannerStyles.topBanner}>
+          <BannerNotification
+            type={BANNER_TYPE_SUCCESS}
+            message={rt('status.accepted.message')}
+            onClosePress={scanScreenController.DISMISS_QUICK_SHARE_BANNER}
+            key={'quickShareSuccessBanner'}
+            testId={'quickShareSuccessBanner'}
+          />
+        </View>
       )}
 
       {bannerNotificationController.isPasscodeUnlock && (
@@ -64,6 +65,15 @@ export const BannerNotificationContainer: React.FC = () => {
           onClosePress={bannerNotificationController.DISMISS}
           testId={'alternateBiometricSuccess'}
           key={'updateBiometric'}
+        />
+      )}
+      {bannerNotificationController.isDownloadingFailed && (
+        <BannerNotification
+          type={BANNER_TYPE_ERROR}
+          message={t('MyVcsTab:downloadingVcFailed')}
+          onClosePress={bannerNotificationController.RESET_DOWNLOADING_FAILED}
+          key={'downloadingVcFailedPopup'}
+          testId={'downloadingVcFailedPopup'}
         />
       )}
     </>

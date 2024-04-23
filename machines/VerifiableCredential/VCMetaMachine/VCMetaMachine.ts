@@ -3,7 +3,7 @@ import {createModel} from 'xstate/lib/model';
 import {StoreEvents} from '../../store';
 import {VC} from './vc';
 import {AppServices} from '../../../shared/GlobalContext';
-import {log, respond} from 'xstate/lib/actions';
+import {respond} from 'xstate/lib/actions';
 import {
   MY_VCS_STORE_KEY,
   RECEIVED_VCS_STORE_KEY,
@@ -29,6 +29,7 @@ const model = createModel(
     tamperedVcs: [] as VCMetadata[],
     downloadingFailedVcs: [] as VCMetadata[], //VCDownloadFailed
     verificationErrorMessage: '' as string,
+    DownloadingCredentialsFailed: false,
   },
   {
     events: {
@@ -63,6 +64,8 @@ const model = createModel(
       RESET_VERIFY_ERROR: () => ({}),
       REFRESH_VCS_METADATA: () => ({}),
       SHOW_TAMPERED_POPUP: () => ({}),
+      VC_DOWNLOADING_FAILED: () => ({}),
+      RESET_DOWNLOADING_FAILED: () => ({}),
     },
   },
 );
@@ -82,6 +85,14 @@ export const vcMetaMachine =
       },
       id: 'vcMeta',
       initial: 'ready',
+      on: {
+        VC_DOWNLOADING_FAILED: {
+          actions: 'setDownloadCreadentialsFailed',
+        },
+        RESET_DOWNLOADING_FAILED: {
+          actions: 'resetDownloadCreadentialsFailed',
+        },
+      },
       states: {
         ready: {
           entry: sendParent('READY'),
@@ -326,6 +337,14 @@ export const vcMetaMachine =
           tamperedVcs: () => [],
         }),
 
+        setDownloadCreadentialsFailed: model.assign({
+          DownloadingCredentialsFailed: () => true,
+        }),
+
+        resetDownloadCreadentialsFailed: model.assign({
+          DownloadingCredentialsFailed: () => false,
+        }),
+
         setDownloadingFailedVcs: model.assign({
           downloadingFailedVcs: (context, event) => [
             ...context.downloadingFailedVcs,
@@ -564,4 +583,8 @@ export function selectMyVcs(state: State) {
 
 export function selectVerificationErrorMessage(state: State) {
   return state.context.verificationErrorMessage;
+}
+
+export function selectIsDownloadingFailed(state: State) {
+  return state.context.DownloadingCredentialsFailed;
 }
