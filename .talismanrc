@@ -236,7 +236,7 @@ fileignoreconfig:
   - filename: machines/IssuersMachine.typegen.ts
     checksum: 959fef1e51f0f3d5b12933f7b362e96401fb776ab12f0d13c6e542918b2ff255
   - filename: screens/Home/MyVcsTab.tsx
-    checksum: 2dd6ce0466bf3a371e4a3fcc5a7f35e6c71f1668ce1e0572e5aa7a2b1f00fd72
+    checksum: 2b40abfa481b73834ec423242e77b20d725579e7323011f27cfd571ba013fe96
   - filename: machines/store.ts
     checksum: 12defe49a865358a5212d03de75d13877e7c5cb75f5038c96abd3726b36c18dc
   - filename: machines/store.typegen.ts
