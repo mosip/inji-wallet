@@ -47,7 +47,6 @@ export interface Typegen0 {
     addVcToInProgressDownloads: 'ADD_VC_TO_IN_PROGRESS_DOWNLOADS';
     getVcItemResponse: 'GET_VC_ITEM';
     loadMyVcs:
-      | 'DOWNLOAD_LIMIT_EXPIRED'
       | 'REFRESH_MY_VCS'
       | 'REFRESH_RECEIVED_VCS'
       | 'STORE_RESPONSE'
