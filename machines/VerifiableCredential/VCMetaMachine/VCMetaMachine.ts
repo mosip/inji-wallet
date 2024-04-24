@@ -126,7 +126,6 @@ export const vcMetaMachine =
                 'removeVcFromInProgressDownlods',
                 'setDownloadingFailedVcs',
               ],
-              target: '#vcMeta.ready',
             },
             DELETE_VC: {
               target: 'deletingFailedVcs',
