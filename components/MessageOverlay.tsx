@@ -132,8 +132,3 @@ export interface VCSharingErrorStatusProps {
   title: string;
   message: string;
 }
-
-export interface VCSharingErrorStatusProps {
-  title: string;
-  message: string;
-}
