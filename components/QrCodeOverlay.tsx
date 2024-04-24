@@ -24,11 +24,7 @@ export const QrCodeOverlay: React.FC<QrCodeOverlayProps> = props => {
     try {
       qrData = await RNSecureKeyStore.get(props.meta.id);
     } catch {
-      let qrDataJSON = {
-        verifiableCredential: props.verifiableCredential,
-        meta: props.meta,
-      };
-      qrData = generateQRData(JSON.stringify(qrDataJSON));
+      qrData = generateQRData(JSON.stringify(props.verifiableCredential));
       await RNSecureKeyStore.set(props.meta.id, qrData, {
         accessible: ACCESSIBLE.ALWAYS_THIS_DEVICE_ONLY,
       });

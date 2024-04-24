@@ -35,7 +35,7 @@ export const Issuers = {
  * NOTE: This might be replaced by a more standards compliant way later.
  */
 export function getIdType(issuer: string | undefined): string {
-  if (issuer === '' || issuer === Issuers.ESignet) {
+  if (issuer === Issuers.Mosip || issuer === Issuers.ESignet) {
     return 'nationalCard';
   }
   return 'insuranceCard';

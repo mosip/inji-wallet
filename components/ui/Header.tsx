@@ -1,9 +1,9 @@
 import React from 'react';
-import {Text, TouchableOpacity, View, I18nManager} from 'react-native';
-import {Icon} from 'react-native-elements';
+import {Text, View} from 'react-native';
 import {Column, Row} from './Layout';
 import {Theme} from './styleUtils';
 import testIDProps from '../../shared/commonUtil';
+import {BackButton} from './backButton/BackButton';
 
 export const Header: React.FC<HeaderProps> = ({goBack, title, testID}) => {
   return (
@@ -18,31 +18,7 @@ export const Header: React.FC<HeaderProps> = ({goBack, title, testID}) => {
             marginBottom: 22,
             marginVertical: 16,
           }}>
-          <TouchableOpacity onPress={goBack} {...testIDProps('goBack')}>
-            {I18nManager.isRTL ? (
-              <Icon
-                name="arrow-right"
-                type="material-community"
-                onPress={goBack}
-                containerStyle={{
-                  ...Theme.Styles.backArrowContainer,
-                  marginLeft: 10,
-                }}
-                color={Theme.Colors.Icon}
-              />
-            ) : (
-              <Icon
-                name="arrow-left"
-                type="material-community"
-                onPress={goBack}
-                containerStyle={{
-                  ...Theme.Styles.backArrowContainer,
-                  marginLeft: 10,
-                }}
-                color={Theme.Colors.Icon}
-              />
-            )}
-          </TouchableOpacity>
+          <BackButton onPress={goBack} customIconStyle={{marginLeft: 10}} />
           <Row fill align={'center'}>
             <Column>
               <View style={{alignItems: 'center', marginLeft: -40}}>
