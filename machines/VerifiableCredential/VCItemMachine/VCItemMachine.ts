@@ -106,7 +106,10 @@ export const VCItemMachine = model.createMachine(
                   src: 'downloadCredential',
                   id: 'downloadCredential',
                   onError: {
-                    actions: 'sendDownloadingFailedToVcMeta',
+                    actions: [
+                      'sendDownloadingFailedToVcMeta',
+                      'removeVcFromInProgressDownloads',
+                    ],
                   },
                 },
                 on: {

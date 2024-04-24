@@ -1,6 +1,5 @@
 import {EventFrom, send, sendParent} from 'xstate';
 import {log} from 'xstate/lib/actions';
-import {verifyCredential} from '../../shared/vcjs/verifyCredential';
 import {IssuersModel} from './IssuersModel';
 import {IssuersActions} from './IssuersActions';
 import {IssuersService} from './IssuersService';
@@ -282,11 +281,16 @@ export const IssuersMachine = model.createMachine(
               target: '.userCancelledBiometric',
             },
             {
+              cond: 'isGenericError',
+              target: 'selectingIssuer',
               actions: [
                 'setError',
                 'resetLoadingReason',
                 'sendDownloadingFailedToVcMeta',
               ],
+            },
+            {
+              actions: ['setError', 'resetLoadingReason'],
               target: 'error',
             },
           ],
