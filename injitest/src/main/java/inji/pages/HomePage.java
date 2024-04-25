@@ -24,8 +24,8 @@ public class HomePage extends BasePage {
     @iOSXCUITFindBy(accessibility = "settings")
     private WebElement settingButton;
 
-    @AndroidFindBy(accessibility = "help")
-    @iOSXCUITFindBy(accessibility = "help")
+    @AndroidFindBy(accessibility = "helpText")
+    @iOSXCUITFindBy(accessibility = "helpText")
     private WebElement helpButton;
 
     @AndroidFindBy(accessibility = "history")
@@ -35,6 +35,16 @@ public class HomePage extends BasePage {
     @iOSXCUITFindBy(accessibility = "ellipsis")
     @AndroidFindBy(accessibility = "ellipsis")
     private WebElement moreOptionsButton;
+
+    @iOSXCUITFindBy(xpath = "(//android.view.ViewGroup[@content-desc=\"ellipsis\"])[2]")
+    @AndroidFindBy(accessibility = "ellipsis")
+    private WebElement moreOptionsButtonForSecondVc;
+
+    @iOSXCUITFindBy(xpath = "(//android.view.ViewGroup[@content-desc=\"ellipsis\"])[1]")
+    @AndroidFindBy(accessibility = "ellipsis")
+    private WebElement moreOptionsButtonForFirstVc;
+
+
 
     @AndroidFindBy(xpath = "//*[contains(@text,'Secure Key Storage not found')]")
     private WebElement secureKeyStoragePopup;
@@ -68,8 +78,8 @@ public class HomePage extends BasePage {
     @iOSXCUITFindBy(accessibility = "share")
     private WebElement shareButtonByForText;
 
-    @AndroidFindBy(accessibility = "nationalCard")
-    @iOSXCUITFindBy(accessibility = "nationalCard")
+    @AndroidFindBy(accessibility = "idTypeValue")
+    @iOSXCUITFindBy(accessibility = "idTypeValue")
     private WebElement idTypeValue;
     
     @AndroidFindBy(xpath = "//android.widget.TextView[@text=\"Try again\"]")
@@ -109,6 +119,21 @@ public class HomePage extends BasePage {
     @iOSXCUITFindBy(accessibility = "fullNameValue")
     private WebElement fullNameTitle;
 
+    @AndroidFindBy(xpath = "//android.widget.EditText[@resource-id=\"issuerSearchBar\"]")
+    @iOSXCUITFindBy(accessibility = "issuerSearchBar")
+    private WebElement issuerSearchBar;
+
+    @AndroidFindBy(xpath = "//*[@text=\"2 card\"]")
+    @iOSXCUITFindBy(xpath = "//*[@text=\"2 card\"]")
+    private WebElement visibleCard;
+
+    @AndroidFindBy(xpath = "//*[@text=\"No Cards Found!\"]")
+    @iOSXCUITFindBy(xpath = "//*[@text=\"No Cards Found!\"]")
+    private WebElement noCardFound;
+
+    @AndroidFindBy(accessibility = "wallet-unactivated-icon")
+    @iOSXCUITFindBy(accessibility = "wallet-unactivated-icon")
+    private WebElement walletUnactivatedIcon;
 
 
     public HomePage(AppiumDriver driver) {
@@ -165,7 +190,8 @@ public class HomePage extends BasePage {
 
     public MoreOptionsPage clickOnMoreOptionsButton() throws InterruptedException {
         Thread.sleep(2000);
-        clickOnElement(moreOptionsButton);
+        if(retrieIsElementVisible(moreOptionsButton)){
+        clickOnElement(moreOptionsButton);}
         return new MoreOptionsPage(driver);
     }
 
@@ -283,5 +309,35 @@ public class HomePage extends BasePage {
     public void clickOnHomeButton() {
         clickOnElement(homeButton);
     }
+
+    public void sendTextInIssuerSearchBar(String text) {
+        clearTextBoxAndSendKeys(issuerSearchBar, text);
+    }
+
+    public boolean isIssuerSearchBarDisplayed() {
+        return this.isElementDisplayed(issuerSearchBar);
+    }
+
+    public boolean isCardCountDisplayed() {
+        return this.isElementDisplayed(visibleCard);
+    }
+
+    public boolean isNoCardFoundTextDisplayed() {
+        return this.isElementDisplayed(noCardFound);
+    }
+
+    public boolean isWalletUnactivatedIconDisplayed() {
+        return this.isElementDisplayed(walletUnactivatedIcon);
+    }
+
+    public void clickOnSecondVcEllipsis() {
+        clickOnElement(moreOptionsButtonForSecondVc);
+    }
+
+    public void clickOnFirstVcEllipsis() {
+        clickOnElement(moreOptionsButtonForFirstVc);
+    }
+
+
 
 }
