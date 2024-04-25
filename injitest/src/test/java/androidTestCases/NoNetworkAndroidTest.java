@@ -9,6 +9,7 @@ import inji.utils.IosUtil;
 import inji.utils.TestDataReader;
 import inji.utils.UpdateNetworkSettings;
 import org.testng.annotations.Test;
+import org.testng.asserts.SoftAssert;
 
 import java.io.IOException;
 
@@ -44,7 +45,6 @@ public class NoNetworkAndroidTest extends AndroidBaseTest {
 
         assertTrue(homePage.verifyLanguageForNoInternetConnectionDisplayed("English"), "Verify if no internet connection is displayed");
         assertTrue(homePage.verifyLanguageForTryAgainButtonDisplayed("English"), "Verify if Try again button displayed");
-        AndroidUtil.disableAirplaneMode();
 
         assertTrue(homePage.verifyLanguageForNoInternetConnectionDisplayed("English"), "Verify if no internet connection is displayed");
 
@@ -90,7 +90,6 @@ public class NoNetworkAndroidTest extends AndroidBaseTest {
         String sessionId  = driver.getSessionId().toString();
         UpdateNetworkSettings.setNoNetworkProfile(sessionId);
         assertTrue(homePage.clickOnShareButton().acceptPermissionPopupBluetooth().isCameraOpen());
-        AndroidUtil.disableAirplaneMode();
     }
     @Test
     public void activateVcWithoutInternet() throws InterruptedException, IOException {
@@ -138,7 +137,6 @@ public class NoNetworkAndroidTest extends AndroidBaseTest {
         OtpVerificationPage otpVerificationPage = pleaseConfirmPopupPage.clickOnConfirmButton();
 
         assertTrue(otpVerificationPage.somethingWetWrongInVcActivationDisplayed(), "Verify if Something is wrong. Please try again later! is displayed");
-        AndroidUtil.disableAirplaneMode();
 
     }
 
@@ -201,7 +199,6 @@ public class NoNetworkAndroidTest extends AndroidBaseTest {
         helpPage.exitHelpPage();
 
         assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
-        AndroidUtil.disableAirplaneMode();
     }
     
     @Test
@@ -291,8 +288,9 @@ public class NoNetworkAndroidTest extends AndroidBaseTest {
         UpdateNetworkSettings.setNoNetworkProfile(sessionId);
 
         DetailedVcViewPage detailedVcViewPage = homePage.openDetailedVcView(TestDataReader.readData("fullName"));
+        SoftAssert softAssert = new SoftAssert();
         detailedVcViewPage.clickOnQrCodeButton();
-        assertTrue(detailedVcViewPage.isQrCodeDisplayed(), "Verify if QR Code header is displayed");
+        softAssert.assertTrue(detailedVcViewPage.isQrCodeDisplayed(), "Verify if QR Code header is displayed");
         
         detailedVcViewPage.clickOnQrCrossIcon();
         assertTrue(homePage.isNameDisplayed(TestDataReader.readData("fullName")), "Verify if full name is displayed");
@@ -328,7 +326,7 @@ public class NoNetworkAndroidTest extends AndroidBaseTest {
         assertTrue(receiveCardPage.isReceiveCardHeaderDisplayed(), "Verify if QR code  header is displayed");
         
         assertTrue(receiveCardPage.isWaitingForConnectionDisplayed(), "Verify if waiting for connection displayed");
-        AndroidUtil.disableAirplaneMode();
+
     }
     
     @Test
@@ -393,7 +391,7 @@ public class NoNetworkAndroidTest extends AndroidBaseTest {
 
         assertTrue(homePage.verifyLanguageForNoInternetConnectionDisplayed("English"), "Verify if no internet connection is displayed");
         assertTrue(homePage.verifyLanguageForTryAgainButtonDisplayed("English"), "Verify if Try again button displayed");
-        AndroidUtil.disableAirplaneMode();
+
         
         homePage.clickOnTryAgainButton();
         assertTrue(homePage.isTryAgainButtonNotDisplayed(), "Verify if Try again button displayed");
@@ -498,7 +496,7 @@ public class NoNetworkAndroidTest extends AndroidBaseTest {
 
         assertTrue(moreOptionsPage.isMoreOptionsPageLoaded(), "Verify if more options page is displayed");
         moreOptionsPage.clickOnPinOrUnPinCard();
-        AndroidUtil.disableAirplaneMode();
+
     }
     
     @Test
@@ -542,7 +540,7 @@ public class NoNetworkAndroidTest extends AndroidBaseTest {
         UpdateNetworkSettings.setNoNetworkProfile(sessionId);
         
         assertTrue(homePage.clickOnShareButton().acceptPermissionPopupBluetooth().isCameraOpen());
-        AndroidUtil.disableAirplaneMode();
+
     }
     
     @Test
@@ -666,8 +664,7 @@ public class NoNetworkAndroidTest extends AndroidBaseTest {
         homePage.downloadCard();
         assertTrue(addNewCardPage.isIssuerDescriptionMosipDisplayed(), "Verify if issuer description  mosip displayed");
         assertTrue(addNewCardPage.isIssuerDescriptionEsignetDisplayed(), "Verify if issuer description  esignet displayed");
-        
-        AndroidUtil.disableAirplaneMode();
+
     }
 
     @Test

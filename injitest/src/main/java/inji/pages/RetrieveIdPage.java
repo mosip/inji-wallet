@@ -48,6 +48,10 @@ public class RetrieveIdPage extends BasePage {
 	@iOSXCUITFindBy(accessibility = "idInputModalIndividualId")
 	private WebElement inputFormatErrorMessageVid;
 
+	@AndroidFindBy(xpath = "//*[contains(@text,'Please enter valid AID')]")
+	@iOSXCUITFindBy(accessibility = "idInputModalIndividualId")
+	private WebElement inputFormatErrorMessageAid;
+
 	@AndroidFindBy(xpath = "//*[contains(@text,'AID is not ready yet')]")
 	@iOSXCUITFindBy(accessibility = "AID is not ready yet")
 	private WebElement aidIsNotReadyYetMessage;
@@ -150,5 +154,9 @@ public class RetrieveIdPage extends BasePage {
 
 	public boolean isIncorrectInputFormatErrorVidMessageDisplayed() {
 		return isElementDisplayed(inputFormatErrorMessageVid);
+	}
+
+	public boolean isIncorrectInputFormatErrorAidMessageDisplayed() {
+		return isElementDisplayed(inputFormatErrorMessageAid);
 	}
 }
