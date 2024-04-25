@@ -102,7 +102,7 @@ fileignoreconfig:
   - filename: .github/workflows/ui-automation.yml
     checksum: 85993a912fb873a3a2a11adde702918aedff56494e6d45c2d70f272497bf9a27
   - filename: injitest/src/test/java/androidTestCases/PinVcTest.java
-    checksum: 6ec2787bee662ff158cbd7489d09ab131ab74484e42d7c5eba342e54898c891d
+    checksum: d2bb009653a57ad4ae46d2495973aa07cf64e11fd62c1d33d656cc1cdc135c93
   - filename: injitest/src/test/java/androidTestCases/NoNetworkAndroidTest.java
     checksum: 9d987a7422418f331960f897c1c10ca7e8209680b948eb8d7b48b0fe655e8659
   - filename: injitest/src/test/java/androidTestCases/CredentialRegistryTest.java
@@ -166,11 +166,11 @@ fileignoreconfig:
   - filename: injitest/src/main/java/inji/api/ConfigManager.java
     checksum: 880e066743f5979929cbfa90ef3a28bf4eb7147c9dba425b2abb035025d21aa7
   - filename: injitest/src/test/java/androidTestCases/VcDownloadAndVerifyUsingEsignetTest.java
-    checksum: 27ed9b9c785cb9f6fd9be727696f7f3dff1e26cec262ba5582ee6734402f6a9e
+    checksum: 0ddae5d539e3ff6ca6a9402d8261bb6de37ae6e6f81e6b523e71496e42e8f1f9
   - filename: injitest/src/test/java/androidTestCases/ChangeLanguageTest.java
     checksum: c0234ddd85035f6c2cd62ba96a8a2b85da71f0752e9888130b9675bb6194bebe
   - filename: ios/Inji/Inji.entitlements
-    checksum: c8fe11447ecb82eb456686522f816487c2fa7428bc71eb7e86330317f409ba15
+    checksum: b2d643f91a929933747b539b9d6a87fcac17317716dbb9ccfb399e7c53d8cd52
   - filename: injitest/src/test/java/iosTestCases/ChangeLanguageTest.java
     checksum: d94cbf47726c3650b4b623e6aa76e113edf553616319450d01f05294163572e9
   - filename: screens/Home/MyVcs/IdInputModal.tsx
@@ -184,7 +184,7 @@ fileignoreconfig:
   - filename: screens/Home/IntroSlidersScreen.tsx
     checksum: 9880724461b194db7651737576ad2fd2db9cf3b4e732747f59be422a7ff4e4a1
   - filename: .env
-    checksum: 9386b7d2d9bba27d8f15e6cb482451dc45b785b4caa31bc29718ef16967e6ed1
+    checksum: e4254ca79a1269161ac3e9d4870680a8650ac7dbdf61c39c084722a9e8925669
   - filename: machines/VCItemMachine/VCItemMachine.typegen.ts
     checksum: 850b5d02636bef9e286fc0fbc4ffffbd38068f332c319302a906496f4bc1c8a1
   - filename: machines/VCItemMachine/VCItemEvents.ts
@@ -220,7 +220,7 @@ fileignoreconfig:
   - filename: ios/Inji.xcodeproj/project.pbxproj
     checksum: 766e3dcb299f52ea75e87a1e6e7ce106872bb2f2481d54700995ca02b742b60f
   - filename: ios/Inji/Info.plist
-    checksum: 57705369faf52801876baf0d25a3cee690de2fd87927454689b13963408a8e92
+    checksum: 56dc5e779373759ad93cbbdd7b87509913025ba307962c69d8ea13d976b602d9
   - filename: machines/backupAndRestore/backupRestore.ts
     checksum: 60a55a1d0ef6e79f7b9fa1e61ed31b933364afb429bff03cebbc56339c764499
   - filename: machines/backupAndRestore/backupRestore.typegen.ts
@@ -232,9 +232,9 @@ fileignoreconfig:
   - filename: machines/IssuersMachine.typegen.ts
     checksum: 959fef1e51f0f3d5b12933f7b362e96401fb776ab12f0d13c6e542918b2ff255
   - filename: screens/Home/MyVcsTab.tsx
-    checksum: 57bf8825ccc46f7776d87c44cec91f7dfcbd8aa328c2aaebfe09ff2fe5fd9df6
+    checksum: 47f9d81e69eb662b76ab12640336b6409f89058c58137a9d837e998de7c0e75f
   - filename: machines/store.ts
-    checksum: 1796f1f6ada745f7ae504beddfa4de95e3a87fdcc39364827aaf9feb80d93b62
+    checksum: 12defe49a865358a5212d03de75d13877e7c5cb75f5038c96abd3726b36c18dc
   - filename: machines/store.typegen.ts
     checksum: 46f3a7c2d15ed03fc70e27ecae5a12c128011c49913b35cdb8edba12b1a999db
   - filename: machines/VerifiableCredential/VCMetaMachine/VCMetaMachine.ts
@@ -261,4 +261,22 @@ fileignoreconfig:
     checksum: 26e09d7f3b24abb025844a39000602ef73bea8a494fd1b21d6fdfdbd29927b87
   - filename: screens/Home/ViewVcModal.tsx
     checksum: 088992fe50e8c01726c71d17a3cb0e19098b4084df9b9198db69d204042a8080
+  - filename: injitest/src/main/resources/TestData.json
+    checksum: 1b5af14c96b456898259b4cb7a5607b006404cf0360274bdc204d7d065698e3c
+  - filename: injitest/src/test/java/androidTestCases/ActivateVcTest.java
+    checksum: c79ebcc903fda178b19b7476e4801c228cdb2cdb6f52bf0b6b5d81ca475bffb9
+  - filename: machines/VerifiableCredential/VCMetaMachine/VCMetaActions.ts
+    checksum: 6c1f69f90102e57d1c08816b2bedadaa0ee95e0c7f9b1bc124cccc66ffb69fa2
+  - filename: injitest/src/test/java/androidTestCases/DeletingVcTest.java
+    checksum: 6f95a4046eb7959ffccbc530936dd6ab14aad425b934e7bf3b65f0308ae07ff0
+  - filename: injitest/src/test/java/androidTestCases/GenerateUinOrVidTest.java
+    checksum: 677876a830862d779290d3272c4ad3bfdeb8d4f4c9899a6cdea5ceb7e52e1616
+  - filename: machines/VerifiableCredential/VCMetaMachine/VCMetaSelectors.ts
+    checksum: 5f89d24401e6345fd402c7f523f23d567031a571d4b04e1c993c091fa47dc781
+  - filename: injitest/src/test/java/androidTestCases/UnlockWithPasscodeTest.java
+    checksum: efe21ba6b9e1b760cee02f0d6c5c776722142feeff7417cfdb7536ab80be3476
+  - filename: injitest/src/test/java/androidTestCases/VerifyHistoryTest.java
+    checksum: ebd8683aed0b7b9be50ed8f900896557623c366c68b98bde392ea1a343edeafb
+  - filename: injitest/src/test/java/androidTestCases/VcDownloadAndVerifyUsingUinTest.java
+    checksum: ca06dd901386edcd914bd39b301629589d82269b79e80fad5e3562968532b590
     version: ""

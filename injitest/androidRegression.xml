@@ -17,6 +17,8 @@
                     <include name="noPreDownloadedVCAndNoHistoryInFreshInstallation"/>
                     <include name="verifyInvalidOtpMessage"/>
                     <include name="activateVcFromDetailedViewPage"/>
+                    <include name="verifyActiveVcAndWaitForOtpTimeOut"/>
+                    <include name="downloadAndActiveVcUsingUinViaEsignet"/>
                 </methods>
             </class>
             <class name="androidTestCases.ChangeLanguageTest">
@@ -41,12 +43,15 @@
                     <include name="deleteVcAndVerifyInHistory"/>
                     <include name="cancelDeleteVc"/>
                     <include name="DownloadingDeletedVc"/>
+                    <include name="deleteVcAndVerifyInHistoryForEsignet"/>
+                    <include name="deleteVcAndVerifyInHistoryForSunbird"/>
                 </methods>
             </class>
             <class name="androidTestCases.GenerateUinOrVidTest">
                 <methods>
                     <include name="generateUinOrVidUsingAid"/>
                     <include name="goBackToGenerateUinOrVidUsingAidFromOtpVerificationPage"/>
+                    <include name="generateUinOrVidUsingInvalidAid"/>
                 </methods>
             </class>
             <class name="androidTestCases.NoNetworkAndroidTest">
@@ -67,6 +72,7 @@
                     <include name="downloadVcInOtherLanguageViaEsignetWithoutInternet"/>
                     <include name="changeLanguageToTamilWithoutNetwork"/>
                     <include name="verifyVcIssuerListWithoutNetwork"/>
+                    <include name="VerifyGenerateUinOrVidUsingAidHeader"/>
                 </methods>
             </class>
             <class name="androidTestCases.PinVcTest">
@@ -75,6 +81,9 @@
                     <include name="VerifyCameraOpenAfterPinVc"/>
                     <include name="downloadVcViaEsignetAndPinUnpin"/>
                     <include name="verifyMessageAfterDenyBluetoothPopup"/>
+                    <include name="pinVcInDetailedVcView"/>
+                    <include name="pinEsignetVcMultipleTimes"/>
+                    <include name="pinMosipVcMultipleTimes"/>
                 </methods>
             </class>
             <class name="androidTestCases.ReceiveCardTest">
@@ -114,6 +123,9 @@
                 <methods>
                     <include name="downloadAndVerifyVcUsingUinViaEsignet"/>
                     <include name="downloadAndVerifyVcUsingVidViaEsignet"/>
+                    <include name="downloadMultipleVcViaEsignet"/>
+                    <include name="downloadMultipleCardsAndVerifySearch"/>
+                    <include name="downloadCardsAndVerifySearch"/>
                 </methods>
             </class>
             <class name="androidTestCases.VcDownloadAndVerifyUsingSunbirdTest">
@@ -153,7 +165,8 @@
                     <include name="verifyActivationFailedRecordInHistoryFromDetailedView"/>
                     <include name="activateVcAndVerifyInHistory"/>
                     <include name="downloadAndVerifyHistoryUsingUinViaEsignet"/>
-                    <include name="downloadAndVerifyHistoryUsingVidViaEsignet"/>
+                    <include name="downloadAndVerifyHistoryForSunbird"/>
+                    <include name="downloadVcAndVerifyHistoryFromMoreOptions"/>
                 </methods>
             </class>
             <class name="androidTestCases.VerifyWelcomePagesTest">

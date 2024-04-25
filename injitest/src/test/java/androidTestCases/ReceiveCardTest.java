@@ -70,4 +70,5 @@ public class ReceiveCardTest extends AndroidBaseTest {
 	        
 	        assertTrue(receiveCardPage.isReceiveCardHeaderInFilipinoLanguageDisplayed(), "Verify if QR code  header is displayed filipino");
 	 }
+
 }

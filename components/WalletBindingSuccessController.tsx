@@ -2,10 +2,10 @@ import {useContext} from 'react';
 import {GlobalContext} from '../shared/GlobalContext';
 import {useSelector} from '@xstate/react';
 import {
-  VcMetaEvents,
-  selectVerificationStatus,
   selectWalletBindingSuccess,
-} from '../machines/VerifiableCredential/VCMetaMachine/VCMetaMachine';
+  selectVerificationStatus,
+} from '../machines/VerifiableCredential/VCMetaMachine/VCMetaSelectors';
+import {VcMetaEvents} from '../machines/VerifiableCredential/VCMetaMachine/VCMetaMachine';
 
 export const UseBannerNotificationContainer = () => {
   const {appService} = useContext(GlobalContext);

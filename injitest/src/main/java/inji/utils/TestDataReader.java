@@ -35,7 +35,7 @@ public class TestDataReader {
             case "fullName":
                 return "TEST_FULLNAMEeng";
             case "idType":
-                return "National Card";
+                return "National ID";
             case "gender":
                 return "MLEeng";
             case "genderVidEsignet":
@@ -85,7 +85,7 @@ public class TestDataReader {
             case "phoneNumberSunbird":
                 return "8220255752";
             case "dateOfBirthSunbird":
-                return "2024-01-01";
+                return "01/01/2024";
             case "genderValueSunbird":
                 return "Female";
             case "emailIdValueSunbird":
