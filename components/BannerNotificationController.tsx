@@ -6,10 +6,8 @@ import {
 } from '../machines/settings';
 import {useContext} from 'react';
 import {GlobalContext} from '../shared/GlobalContext';
-import {
-  VcMetaEvents,
-  selectIsDownloadingFailed,
-} from '../machines/VerifiableCredential/VCMetaMachine/VCMetaMachine';
+import {VcMetaEvents} from '../machines/VerifiableCredential/VCMetaMachine/VCMetaMachine';
+import {selectIsDownloadingFailed} from '../machines/VerifiableCredential/VCMetaMachine/VCMetaSelectors';
 
 export const UseBannerNotification = () => {
   const {appService} = useContext(GlobalContext);

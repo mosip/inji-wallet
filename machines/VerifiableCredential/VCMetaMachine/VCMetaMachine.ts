@@ -28,6 +28,9 @@ export const vcMetaMachine =
         RESET_DOWNLOADING_FAILED: {
           actions: 'resetDownloadCreadentialsFailed',
         },
+        REMOVE_VC_FROM_IN_PROGRESS_DOWNLOADS: {
+          actions: 'removeVcFromInProgressDownlods',
+        },
       },
       states: {
         ready: {
