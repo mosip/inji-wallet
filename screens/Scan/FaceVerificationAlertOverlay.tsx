@@ -31,7 +31,7 @@ export const FaceVerificationAlertOverlay: React.FC<
 
         <Column crossAlign="center" margin="10 0 15 0" padding='0'>
           <Text testID="shareWithSelfieAlert" weight="bold" size="large" color="#000000" style={{padding:3}}>
-            {t('shareWithSelfie')}
+            {props.isQrLogin?t('shareWithSelfieQrLogin'):t('shareWithSelfie')}
           </Text>
 
           <Text
@@ -41,7 +41,7 @@ export const FaceVerificationAlertOverlay: React.FC<
             weight="regular"
             margin="10 0 0 0"
             color="#5D5D5D">
-            {t('shareWithSelfieMessage')}
+            {props.isQrLogin?t('shareWithSelfieMessageQrLogin'):t('shareWithSelfieMessage')}
           </Text>
         </Column>
 
@@ -83,4 +83,5 @@ interface FaceVerificationAlertProps {
   isVisible: boolean;
   onConfirm: (isConsentGiven: boolean) => void;
   close: () => void;
+  isQrLogin?: boolean;
 }

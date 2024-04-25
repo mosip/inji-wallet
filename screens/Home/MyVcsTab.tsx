@@ -21,7 +21,7 @@ import {
 } from '../../shared/telemetry/TelemetryUtils';
 import {TelemetryConstants} from '../../shared/telemetry/TelemetryConstants';
 import {Error} from '../../components/ui/Error';
-import {useIsFocused} from '@react-navigation/native';
+import {useFocusEffect, useIsFocused} from '@react-navigation/native';
 import {getVCsOrderedByPinStatus} from '../../shared/Utils';
 import {SvgImage} from '../../components/ui/svg';
 import {SearchBar} from '../../components/ui/SearchBar';
@@ -34,7 +34,6 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = props => {
   const vcMetadataOrderedByPinStatus = getVCsOrderedByPinStatus(
     controller.vcMetadatas,
   );
-  const vcData = controller.vcData;
   const [clearSearchIcon, setClearSearchIcon] = useState(false);
   const [search, setSearch] = useState('');
   const [filteredSearchData, setFilteredSearchData] = useState<
@@ -61,27 +60,33 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = props => {
     setShowPinVc(true);
   };
 
+  useEffect(() => {
+    filterVcs(search);
+  }, [controller.vcData]);
+
   const filterVcs = (searchText: string) => {
     setSearch(searchText);
     setFilteredSearchData([]);
     const searchTextLower = searchText.toLowerCase();
     const filteredData: Array<Record<string, VCMetadata>> = [];
+    for (const [vcKey, vc] of Object.entries(controller.vcData)) {
+      const isDownloading = vc === null;
+      if (!isDownloading) {
+        let isVcFound = false;
+        const credentialSubject =
+          vc.verifiableCredential.credentialSubject ||
+          vc.verifiableCredential.credential.credentialSubject;
 
-    for (const [vcKey, vc] of Object.entries(vcData)) {
-      let isVcFound = false;
-      const credentialSubject =
-        vc.verifiableCredential.credentialSubject ||
-        vc.verifiableCredential.credential.credentialSubject;
+        if (credentialSubject) {
+          isVcFound = searchNestedCredentialFields(
+            searchTextLower,
+            credentialSubject,
+          );
+        }
 
-      if (credentialSubject) {
-        isVcFound = searchNestedCredentialFields(
-          searchTextLower,
-          credentialSubject,
-        );
-      }
-
-      if (isVcFound) {
-        filteredData.push({[vcKey]: vc['vcMetadata']});
+        if (isVcFound) {
+          filteredData.push({[vcKey]: vc['vcMetadata']});
+        }
       }
     }
 
@@ -162,6 +167,12 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = props => {
     controller.inProgressVcDownloads,
     controller.isTampered,
   ]);
+
+  useFocusEffect(
+    React.useCallback(() => {
+      filterVcs('');
+    }, []),
+  );
 
   let failedVCsList = [];
   controller.downloadFailedVcs.forEach(vc => {
@@ -327,7 +338,16 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = props => {
           )}
           {controller.vcMetadatas.length === 0 && (
             <React.Fragment>
-              <Column fill style={Theme.Styles.homeScreenContainer}>
+              <Column
+                scroll
+                fill
+                style={Theme.Styles.homeScreenContainer}
+                refreshControl={
+                  <RefreshControl
+                    refreshing={controller.isRefreshingVcs}
+                    onRefresh={controller.REFRESH}
+                  />
+                }>
                 {SvgImage.DigitalIdentity()}
                 <Text
                   testID="bringYourDigitalID"
