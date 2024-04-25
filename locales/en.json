@@ -8,7 +8,7 @@
     "VC_SHARED_WITH_VERIFICATION_CONSENT": "Shared {{idType}} {{id}} with consent for presence verification.",
     "VC_RECEIVED_WITH_PRESENCE_VERIFIED": "Received {{idType}} {{id}} and presence verification is successful.",
     "VC_RECEIVED_BUT_PRESENCE_VERIFICATION_FAILED": "Received {{idType}} {{id}} and presence verification failed.",
-    "PRESENCE_VERIFIED_AND_VC_SHARED": "Face verification is successful and {{idType}} {{id}} and shared.",
+    "PRESENCE_VERIFIED_AND_VC_SHARED": "Face verification is successful and {{idType}} {{id}} is shared.",
     "PRESENCE_VERIFICATION_FAILED": "Face verification has failed while trying to share {{idType}} {{id}}.",
     "QRLOGIN_SUCCESFULL": "QRLogin using {{idType}} {{id}} is successful.",
     "WALLET_BINDING_SUCCESSFULL": "Activation of {{idType}} {{id}} is successful.",
@@ -57,7 +57,7 @@
     "idType": "ID Type",
     "id": "ID",
     "qrCodeHeader": "QR Code",
-    "nationalCard": "National Card",
+    "nationalCard": "National ID",
     "insuranceCard": "Insurance Card",
     "beneficiaryCard": "Beneficiary Card",
     "socialRegistryCard": "Social Registry Card",
@@ -273,8 +273,8 @@
       "backend": {
         "invalidOtp": "OTP is invalid",
         "expiredOtp": "OTP has expired",
-        "invalidUin": "UIN invalid",
-        "invalidVid": "VID invalid",
+        "invalidUin": "Please enter valid UIN",
+        "invalidVid": "Please enter valid VID",
         "missingUin": "The entered UIN is deactivated/blocked. Please enter a valid UIN to proceed",
         "missingVid": "VID not available in database",
         "noMessageAvailable": "Try after sometime",
@@ -297,7 +297,7 @@
         "applicationProcessing": "AID is not ready yet",
         "noMessageAvailable": "Try after sometime",
         "networkRequestFailed": "Network request failed",
-        "invalidAid": "AID entered is not available. Please check your AID before entering",
+        "invalidAid": "Please enter valid AID",
         "timeout": "Timeout"
       }
     }
@@ -395,7 +395,7 @@
     "stepThreeText": "Store and carry all your important cards in a single trusted wallet.",
     "stepFourTitle": "Quick Access",
     "stepFourText": "Authenticate yourself with ease using the stored digital credential.",
-    "stepFiveTitle": "Backup Data",
+    "stepFiveTitle": "Backup & Restore",
     "stepFiveText": "Protect your data with ease using our Backup & Restore feature. Safely store your VCs against loss or accidents by creating regular backups and recover it effortlessly whenever needed for seamless continuity.",
     "getStarted": "Get Started",
     "goBack": "Go Back",
@@ -580,7 +580,9 @@
   },
   "ScanScreen": {
     "shareWithSelfie": "Share with Selfie",
+    "shareWithSelfieQrLogin":"QR Code Login",
     "shareWithSelfieMessage": "To share your Verifiable Credentials, we’ll securely verify your identity using face verification. By continuing, you consent to INJI using your camera for this purpose. \n\n Your facial data will only be used for verification and will not be shared with any third parties.",
+    "shareWithSelfieMessageQrLogin":"In order to access the portal, you’ll need to share your Verifiable Credentials and verify your identity securely using face verification. By continuing, you consent to Inji using your camera for this purpose. \n\n Your facial data will only be used for verification and will not be shared. After successful verification, you can choose which details to share.",
     "ConfirmButton": "I Understand",
     "doNotAskMessage": "Don't ask me again",
     "noShareableVcs": "No shareable cards are available.",
@@ -709,6 +711,12 @@
       "captureSuccessMessage": "Face Verification is successful! Credential sharing is initiated.",
       "captureFailureTitle": "Face verification failed!",
       "captureFailureMessage": "Please ensure that your face is clearly visible and try taking selfie again."
+    },
+    "rational": {
+      "title": "Turn on your location",
+      "message": "This app needs your location to search for nearby systems to receive your data.",
+      "accept": "OK",
+      "cancel": "Cancel"
     }
   },
   "SelectVcOverlay": {

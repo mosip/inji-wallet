@@ -174,7 +174,7 @@ fileignoreconfig:
   - filename: injitest/src/test/java/androidTestCases/ChangeLanguageTest.java
     checksum: c0234ddd85035f6c2cd62ba96a8a2b85da71f0752e9888130b9675bb6194bebe
   - filename: ios/Inji/Inji.entitlements
-    checksum: 86afecb1f8eb02b4446f94a092eca7f6e65310cc4ec5ccf89cd01ccb13a0749e
+    checksum: b2d643f91a929933747b539b9d6a87fcac17317716dbb9ccfb399e7c53d8cd52
   - filename: injitest/src/test/java/iosTestCases/ChangeLanguageTest.java
     checksum: d94cbf47726c3650b4b623e6aa76e113edf553616319450d01f05294163572e9
   - filename: screens/Home/MyVcs/IdInputModal.tsx
@@ -188,7 +188,7 @@ fileignoreconfig:
   - filename: screens/Home/IntroSlidersScreen.tsx
     checksum: 9880724461b194db7651737576ad2fd2db9cf3b4e732747f59be422a7ff4e4a1
   - filename: .env
-    checksum: 9386b7d2d9bba27d8f15e6cb482451dc45b785b4caa31bc29718ef16967e6ed1
+    checksum: e4254ca79a1269161ac3e9d4870680a8650ac7dbdf61c39c084722a9e8925669
   - filename: machines/VCItemMachine/VCItemMachine.typegen.ts
     checksum: 850b5d02636bef9e286fc0fbc4ffffbd38068f332c319302a906496f4bc1c8a1
   - filename: machines/VCItemMachine/VCItemEvents.ts
@@ -224,7 +224,7 @@ fileignoreconfig:
   - filename: ios/Inji.xcodeproj/project.pbxproj
     checksum: 766e3dcb299f52ea75e87a1e6e7ce106872bb2f2481d54700995ca02b742b60f
   - filename: ios/Inji/Info.plist
-    checksum: 57705369faf52801876baf0d25a3cee690de2fd87927454689b13963408a8e92
+    checksum: 56dc5e779373759ad93cbbdd7b87509913025ba307962c69d8ea13d976b602d9
   - filename: machines/backupAndRestore/backupRestore.ts
     checksum: 60a55a1d0ef6e79f7b9fa1e61ed31b933364afb429bff03cebbc56339c764499
   - filename: machines/backupAndRestore/backupRestore.typegen.ts
@@ -236,11 +236,15 @@ fileignoreconfig:
   - filename: machines/IssuersMachine.typegen.ts
     checksum: 959fef1e51f0f3d5b12933f7b362e96401fb776ab12f0d13c6e542918b2ff255
   - filename: screens/Home/MyVcsTab.tsx
-    checksum: 2dd6ce0466bf3a371e4a3fcc5a7f35e6c71f1668ce1e0572e5aa7a2b1f00fd72
+    checksum: 977ebd7c7da214f1d214cb3568ca0b1e4f2463bb932e1149e2cf6aa90f2c3f9c
   - filename: machines/store.ts
-    checksum: 77bb25f9453169870496a15b7daa0a8094798895b70e3904e227a214ef4a1fec
+    checksum: 12defe49a865358a5212d03de75d13877e7c5cb75f5038c96abd3726b36c18dc
   - filename: machines/store.typegen.ts
     checksum: 46f3a7c2d15ed03fc70e27ecae5a12c128011c49913b35cdb8edba12b1a999db
   - filename: machines/VerifiableCredential/VCMetaMachine/VCMetaMachine.ts
     checksum: c80ba680932ae3af7d1238f4db0b3f5e12c343c79335f0cd235f40068bbc03cb
+  - filename: machines/VerifiableCredential/VCMetaMachine/VCMetaActions.ts
+    checksum: f7f2afe0ba50449a8cf2b7eef87b18082ab1cb0db287e198a709082046e5cb08
+  - filename: machines/VerifiableCredential/VCMetaMachine/VCMetaSelectors.ts
+    checksum: 648bf8c8cef0477f31b2a3f2b916a530cb55cf961dafa7c48992d70d7eb2b821
     version: ""

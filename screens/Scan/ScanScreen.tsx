@@ -15,6 +15,7 @@ import {isIOS} from '../../shared/constants';
 import {BannerNotificationContainer} from '../../components/BannerNotificationContainer';
 import {SharingStatusModal} from './SharingStatusModal';
 import {SvgImage} from '../../components/ui/svg';
+import {LocationPermissionRational} from './LocationPermissionRational';
 
 export const ScanScreen: React.FC = () => {
   const {t} = useTranslation('ScanScreen');
@@ -40,9 +41,8 @@ export const ScanScreen: React.FC = () => {
   });
 
   useEffect(() => {
-    if (controller.isQuickShareDone)
-      controller.GOTO_HOME();
-  },[controller.isQuickShareDone]);
+    if (controller.isQuickShareDone) controller.GOTO_HOME();
+  }, [controller.isQuickShareDone]);
 
   const openSettings = () => {
     Linking.openSettings();
@@ -159,6 +159,14 @@ export const ScanScreen: React.FC = () => {
       controller.isReadyForBluetoothStateCheck
     ) {
       return bluetoothIsOffText();
+    }
+    if (controller.isLocalPermissionRational) {
+      return (
+        <LocationPermissionRational
+          onConfirm={controller.ALLOWED}
+          onCancel={controller.DENIED}
+        />
+      );
     }
     if (controller.isLocationDisabled || controller.isLocationDenied) {
       return allowLocationComponent();
