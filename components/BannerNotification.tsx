@@ -33,13 +33,13 @@ export const BannerNotification: React.FC<BannerNotificationProps> = props => {
 };
 
 export enum BannerStatusType {
-  INFO = 'info',
+  IN_PROGRESS = 'inProgress',
   SUCCESS = 'success',
   ERROR = 'error',
 }
 
 export type BannerStatus =
-  | BannerStatusType.INFO
+  | BannerStatusType.IN_PROGRESS
   | BannerStatusType.SUCCESS
   | BannerStatusType.ERROR;
 

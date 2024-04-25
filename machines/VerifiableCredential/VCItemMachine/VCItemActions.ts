@@ -51,8 +51,8 @@ export const VCItemActions = model => {
     setVerificationStatus: assign({
       verificationStatus: (context: any, event) => {
         const statusType =
-          event.response.statusType === BannerStatusType.INFO
-            ? BannerStatusType.INFO
+          event.response.statusType === BannerStatusType.IN_PROGRESS
+            ? BannerStatusType.IN_PROGRESS
             : event.response.isVerified
             ? BannerStatusType.SUCCESS
             : BannerStatusType.ERROR;
@@ -67,7 +67,8 @@ export const VCItemActions = model => {
 
     resetVerificationStatus: assign({
       verificationStatus: (context: any) => {
-        return context.verificationStatus.statusType === BannerStatusType.INFO
+        return context.verificationStatus.statusType ===
+          BannerStatusType.IN_PROGRESS
           ? context.verificationStatus
           : null;
       },

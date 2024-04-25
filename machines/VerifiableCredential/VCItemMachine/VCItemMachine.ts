@@ -539,7 +539,7 @@ export const VCItemMachine = model.createMachine(
           verifyingCredential: {
             entry: send({
               type: 'SET_VERIFICATION_STATUS',
-              response: {statusType: BannerStatusType.INFO},
+              response: {statusType: BannerStatusType.IN_PROGRESS},
             }),
 
             invoke: {

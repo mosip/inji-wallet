@@ -41,7 +41,8 @@ export const ViewVcModal: React.FC<ViewVcModalProps> = props => {
   const verificationStatus = controller.verificationStatus;
   useEffect(() => {
     if (
-      controller.verificationStatus?.statusType === BannerStatusType.INFO &&
+      controller.verificationStatus?.statusType ===
+        BannerStatusType.IN_PROGRESS &&
       controller.showVerificationStatusBanner === false &&
       controller.isVerificationInProgress
     ) {

@@ -762,7 +762,7 @@ export const PurpleTheme = {
       marginBottom: 10,
     },
     dismiss: {paddingLeft: 9},
-    info: {
+    inProgress: {
       backgroundColor: Colors.OrangeBrown,
     },
     success: {

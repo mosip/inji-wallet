@@ -411,7 +411,7 @@
     "noReceivedVcsText": "Tap on Request below to receive card"
   },
   "VcVerificationBanner": {
-      "info": "We are validating your card, this may take sometime. Once verified, you’ll be able to activate your card.",
+      "inProgress": "We are validating your card, this may take sometime. Once verified, you’ll be able to activate your card.",
       "success": "{{vcDetails}} is verified successfully and now available for activation.",
       "error": "Sorry, we are unable to verify the {{vcDetails}} right now. Please try again later."
     },

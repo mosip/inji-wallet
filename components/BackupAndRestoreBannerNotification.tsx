@@ -47,7 +47,7 @@ export const BackupAndRestoreBannerNotification: React.FC = () => {
     <>
       {backUpController.showBackupInProgress && (
         <BannerNotification
-          type={BannerStatusType.INFO}
+          type={BannerStatusType.IN_PROGRESS}
           message={t('backupInProgress')}
           onClosePress={backUpController.DISMISS_SHOW_BACKUP_IN_PROGRESS}
           key={'dataBackupInProgress'}
@@ -69,7 +69,7 @@ export const BackupAndRestoreBannerNotification: React.FC = () => {
 
       {restoreController.showRestoreInProgress && (
         <BannerNotification
-          type={BannerStatusType.INFO}
+          type={BannerStatusType.IN_PROGRESS}
           message={t('restoreInProgress')}
           onClosePress={restoreController.DISMISS_SHOW_RESTORE_IN_PROGRESS}
           key={'restoreInProgress'}

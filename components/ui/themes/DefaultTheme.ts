@@ -758,7 +758,7 @@ export const DefaultTheme = {
       fontFamily: 'Inter_600SemiBold',
     },
     dismiss: {paddingLeft: 9},
-    info: {
+    inProgress: {
       backgroundColor: Colors.OrangeBrown,
     },
     success: {

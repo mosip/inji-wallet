@@ -143,7 +143,7 @@ export function useViewVcModal({vcItemActor, isVisible}: ViewVcModalProps) {
     SET_VERIFICATION_STATUS_BANNER: () =>
       vcItemActor.send({
         type: 'SET_VERIFICATION_STATUS',
-        response: {statusType: BannerStatusType.INFO},
+        response: {statusType: BannerStatusType.IN_PROGRESS},
       }),
     onSuccess,
     DISMISS: () => vcItemActor.send(VCItemEvents.DISMISS()),
