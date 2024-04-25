@@ -16,11 +16,9 @@ public class SharePage extends BasePage {
     private WebElement bluetoothPopUp;
 
     @AndroidFindBy(uiAutomator = "new UiSelector().textContains(\"Allow\")")
-    @iOSXCUITFindBy(accessibility = "OK")
     private WebElement allowButton;
 
     @AndroidFindBy(xpath = "//android.widget.Button[@resource-id=\"com.android.permissioncontroller:id/permission_allow_foreground_only_button\"]")
-    @iOSXCUITFindBy(accessibility = "OK")
     private WebElement cameraPopupAndroid;
 
     @AndroidFindBy(uiAutomator = "new UiSelector().textContains(\"Deny\")")
@@ -52,6 +50,7 @@ public class SharePage extends BasePage {
 
     @iOSXCUITFindBy(accessibility = "OK")
     private WebElement okButtonIos;
+    //android.widget.Button[@resource-id="com.android.permissioncontroller:id/permission_deny_button"]
     @iOSXCUITFindBy(accessibility = "Don’t Allow")
     @AndroidFindBy(xpath = "//android.widget.Button[@resource-id=\"com.android.permissioncontroller:id/permission_deny_button\"]")
     private WebElement dontAllowButtonIos;
@@ -118,7 +117,7 @@ public class SharePage extends BasePage {
         }
         return this;
     }
-
+    
     public boolean isCameraOpen() {
         return isElementDisplayed(camera);
     }

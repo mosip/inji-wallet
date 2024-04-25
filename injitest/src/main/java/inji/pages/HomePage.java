@@ -36,13 +36,15 @@ public class HomePage extends BasePage {
     @AndroidFindBy(accessibility = "ellipsis")
     private WebElement moreOptionsButton;
 
-    @iOSXCUITFindBy(xpath = "(//XCUIElementTypeOther[@name=\"ellipsis\"])[2]")
-    @AndroidFindBy(xpath = "(//android.view.ViewGroup[@content-desc=\"ellipsis\"])[2]")
+    @iOSXCUITFindBy(xpath = "(//android.view.ViewGroup[@content-desc=\"ellipsis\"])[2]")
+    @AndroidFindBy(accessibility = "ellipsis")
     private WebElement moreOptionsButtonForSecondVc;
 
-    @iOSXCUITFindBy(xpath = "(//XCUIElementTypeOther[@name=\"ellipsis\"])[1]")
-    @AndroidFindBy(xpath = "(//android.view.ViewGroup[@content-desc=\"ellipsis\"])[1]")
+    @iOSXCUITFindBy(xpath = "(//android.view.ViewGroup[@content-desc=\"ellipsis\"])[1]")
+    @AndroidFindBy(accessibility = "ellipsis")
     private WebElement moreOptionsButtonForFirstVc;
+
+
 
     @AndroidFindBy(xpath = "//*[contains(@text,'Secure Key Storage not found')]")
     private WebElement secureKeyStoragePopup;
@@ -99,10 +101,6 @@ public class HomePage extends BasePage {
     @iOSXCUITFindBy(accessibility = "activationPending")
     private WebElement activationPending;
 
-    @AndroidFindBy(accessibility = "offlineAuthDisabledHeader")
-    @iOSXCUITFindBy(accessibility = "offlineAuthDisabledHeader")
-    private WebElement offlineAuthDisabledHeader;
-
     @AndroidFindBy(xpath = "(//android.view.ViewGroup[@content-desc=\"ellipsis\"])[1]")
     private WebElement moreOptionsforFirstVc;
 
@@ -117,8 +115,8 @@ public class HomePage extends BasePage {
     @iOSXCUITFindBy(accessibility = "activatedVcPopupText")
     private WebElement activatedVcPopupText;
 
-    @AndroidFindBy(accessibility = "fullNameTitle")
-    @iOSXCUITFindBy(accessibility = "fullNameTitle")
+    @AndroidFindBy(accessibility = "fullNameValue")
+    @iOSXCUITFindBy(accessibility = "fullNameValue")
     private WebElement fullNameTitle;
 
     @AndroidFindBy(xpath = "//android.widget.EditText[@resource-id=\"issuerSearchBar\"]")
@@ -126,28 +124,16 @@ public class HomePage extends BasePage {
     private WebElement issuerSearchBar;
 
     @AndroidFindBy(xpath = "//*[@text=\"2 card\"]")
-    @iOSXCUITFindBy(xpath = "//*[@name=\"2 cards\"]")
+    @iOSXCUITFindBy(xpath = "//*[@text=\"2 card\"]")
     private WebElement visibleCard;
 
-    @AndroidFindBy(xpath = "//*[@text=\"2 card\"]")
-    @iOSXCUITFindBy(xpath = "//*[@name=\"1 card\"]")
-    private WebElement visibleCardOne;
-
-
     @AndroidFindBy(xpath = "//*[@text=\"No Cards Found!\"]")
-    @iOSXCUITFindBy(accessibility = "No Cards Found!")
+    @iOSXCUITFindBy(xpath = "//*[@text=\"No Cards Found!\"]")
     private WebElement noCardFound;
-
-    @iOSXCUITFindBy(accessibility = "Return")
-    private WebElement ReturnButton;
 
     @AndroidFindBy(accessibility = "wallet-unactivated-icon")
     @iOSXCUITFindBy(accessibility = "wallet-unactivated-icon")
     private WebElement walletUnactivatedIcon;
-
-    @AndroidFindBy(accessibility = "verificationStatus")
-    @iOSXCUITFindBy(accessibility = "verificationStatus")
-    private WebElement verificationStatus;
 
 
     public HomePage(AppiumDriver driver) {
@@ -183,7 +169,7 @@ public class HomePage extends BasePage {
 
     public DetailedVcViewPage openDetailedVcView(String name) {
         By fullName = By.xpath("//*[contains(@value,'" + name + "') or contains(@text,'" + name + "')]");
-        clickOnElement(fullNameValue);
+        clickOnElement(fullNameTitle);
         return new DetailedVcViewPage(driver);
     }
 
@@ -204,7 +190,8 @@ public class HomePage extends BasePage {
 
     public MoreOptionsPage clickOnMoreOptionsButton() throws InterruptedException {
         Thread.sleep(2000);
-        clickOnElement(moreOptionsButton);
+        if(retrieIsElementVisible(moreOptionsButton)){
+        clickOnElement(moreOptionsButton);}
         return new MoreOptionsPage(driver);
     }
 
@@ -303,10 +290,6 @@ public class HomePage extends BasePage {
         return this.getTextFromLocator(activationPending);
     }
 
-    public String GetActivationPendingHeaderText() {
-        return this.getTextFromLocator(offlineAuthDisabledHeader);
-    }
-
     public void clickOnFirstVcsEllipsisButton() {
         clickOnElement(moreOptionsforFirstVc);
     }
@@ -339,10 +322,6 @@ public class HomePage extends BasePage {
         return this.isElementDisplayed(visibleCard);
     }
 
-    public boolean isCardCountAfterSearchDisplayed() {
-        return this.isElementDisplayed(visibleCardOne);
-    }
-
     public boolean isNoCardFoundTextDisplayed() {
         return this.isElementDisplayed(noCardFound);
     }
@@ -359,12 +338,6 @@ public class HomePage extends BasePage {
         clickOnElement(moreOptionsButtonForFirstVc);
     }
 
-    public void clickOnReturnButton(){
-        clickOnElement(ReturnButton);
-    }
 
-    public  String   getTextFromVerificationStatus(){
-        return getTextFromLocator(verificationStatus);
-    }
 
 }

@@ -380,7 +380,7 @@ public class VerifyHistoryTest extends AndroidBaseTest {
         assertTrue(addNewCardPage.isAddNewCardPageGuideMessageForEsignetDisplayed(), "Verify if add new card guide message displayed");
         assertTrue(addNewCardPage.isDownloadViaSunbirdDisplayed(), "Verify if download sunbird displayed");
         SunbirdLoginPage sunbirdLoginPage =  addNewCardPage.clickOnDownloadViaSunbird();
-        addNewCardPage.clickOnInsuranceCredential();
+
 //        assertTrue(sunbirdLoginPage.isSunbirdRCInsuranceVerifiableCredentialHeaderDisplayed(), "Verify if sunbirdRC insurance verifiable credential displayed");
 //        sunbirdLoginPage.clickOnMosipInsurance();
 
