@@ -53,7 +53,7 @@ export const VCItemActions = model => {
         const statusType =
           event.response.statusType === BannerStatusType.IN_PROGRESS
             ? BannerStatusType.IN_PROGRESS
-            : event.response.isVerified
+            : event.response.vcMetadata.isVerified
             ? BannerStatusType.SUCCESS
             : BannerStatusType.ERROR;
 

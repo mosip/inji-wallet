@@ -332,7 +332,9 @@ export interface Typegen0 {
       | 'done.invoke.vc-item-machine.existingState.walletBinding.addKeyPair:invocation[0]'
       | 'done.invoke.vc-item-machine.existingState.walletBinding.addingWalletBindingId:invocation[0]';
     isDownloadAllowed: 'POLL';
-    isPendingVerificationError: 'error.platform.vc-item-machine.existingState.verifyingCredential:invocation[0]';
+    isPendingVerificationError:
+      | 'error.platform.vc-item-machine.existingState.verifyingCredential:invocation[0]'
+      | 'error.platform.vc-item-machine.verifyState.verifyingCredential:invocation[0]';
     isSignedIn:
       | 'done.invoke.vc-item-machine.existingState.kebabPopUp.triggerAutoBackup:invocation[0]'
       | 'done.invoke.vc-item-machine.existingState.verifyingCredential.triggerAutoBackupForVcDownload:invocation[0]';

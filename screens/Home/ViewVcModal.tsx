@@ -49,8 +49,8 @@ export const ViewVcModal: React.FC<ViewVcModalProps> = props => {
       controller.SET_VERIFICATION_STATUS_BANNER();
     }
     if (
-      !controller.verifiableCredentialData.vcMetadata.isVerified ||
-      controller.isVerificationCompleted
+      !controller.verifiableCredentialData.vcMetadata.isVerified &&
+      !controller.isVerificationInProgress
     ) {
       props.vcItemActor.send({type: 'VERIFY'});
     }

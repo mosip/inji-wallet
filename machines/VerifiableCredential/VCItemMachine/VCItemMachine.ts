@@ -549,8 +549,17 @@ export const VCItemMachine = model.createMachine(
               },
               onError: [
                 {
-                  // cond: 'isPendingVerificationError',
+                  cond: 'isPendingVerificationError',
                   actions: ['resetIsVerified', 'storeContext'],
+                },
+                {
+                  actions: [
+                    (_, event) =>
+                      console.error(
+                        'error has occured while doing verification::',
+                        event.data,
+                      ),
+                  ],
                 },
               ],
             },
