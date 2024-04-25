@@ -124,7 +124,9 @@ public class OtpVerificationPage extends BasePage {
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
-        retrieClickOnElemet(resendCodeButton);
+        if(retrieIsElementVisible(resendCodeButton)) {
+            clickOnElement(resendCodeButton);
+        }
     }
 
     public boolean confirmPopupHeaderDisplayed() {

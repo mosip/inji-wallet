@@ -41,7 +41,7 @@ public class BackupAndRestorePage extends BasePage {
     @AndroidFindBy(xpath = "//android.widget.TextView[@resource-id=\"com.google.android.gms:id/main_title\"]")
     private WebElement chooseAccountHeader;
 
-    @AndroidFindBy(xpath = "//android.widget.EditText[@resource-id=\"identifierId\"]")
+    @AndroidFindBy(xpath = "//android.widget.EditText")
     private WebElement enterEmail;
 
     @AndroidFindBy(uiAutomator = "new UiSelector().textContains(\"Next\")")
@@ -141,6 +141,10 @@ public class BackupAndRestorePage extends BasePage {
 
     @AndroidFindBy(xpath = "//*[@resource-id=\"com.google.android.gms:id/account_display_name\"]")
     private WebElement selectAccount;
+
+    @AndroidFindBy(accessibility = "dataBackupInProgressText")
+    @iOSXCUITFindBy(accessibility = "dataBackupInProgressText")
+    private WebElement dataBackupInProgressText;
 
 
     public BackupAndRestorePage(AppiumDriver driver) {
@@ -306,7 +310,7 @@ public class BackupAndRestorePage extends BasePage {
     }
 
     public void clickOnEmailHeader() {
-        if(isElementDisplayed(selectAccount))
+        if(isElementDisplayed(selectAccount,60))
         clickOnElement(selectAccount);
     }
 
@@ -314,6 +318,14 @@ public class BackupAndRestorePage extends BasePage {
         Thread.sleep(5000);
         String context= driver.getPageSource();
         return context.contains("Why should I take a backup?") && context.contains("What is data backup? ") && context.contains("How to backup to your google account?");
+    }
+
+    public boolean isDataBackupInProgressTextDisplayed() {
+        return this.isElementDisplayed(dataBackupInProgressText,30);
+    }
+
+    public boolean isDataBackupInProgressTextDisappear() {
+        return this.isElementDisplayed(dataBackupInProgressText, 10);
     }
 
 }
