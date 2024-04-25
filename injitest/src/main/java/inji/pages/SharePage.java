@@ -50,9 +50,20 @@ public class SharePage extends BasePage {
 
     @iOSXCUITFindBy(accessibility = "OK")
     private WebElement okButtonIos;
-
+    //android.widget.Button[@resource-id="com.android.permissioncontroller:id/permission_deny_button"]
     @iOSXCUITFindBy(accessibility = "Don’t Allow")
+    @AndroidFindBy(xpath = "//android.widget.Button[@resource-id=\"com.android.permissioncontroller:id/permission_deny_button\"]")
     private WebElement dontAllowButtonIos;
+
+    @AndroidFindBy(accessibility = "cameraAccessDisabled")
+    @iOSXCUITFindBy(accessibility = "cameraAccessDisabled")
+    private WebElement cameraAccessDisabledPopup;
+
+
+
+    @AndroidFindBy(xpath = "//android.widget.TextView[@resource-id=\"close\"]")
+    private WebElement closePopupButton;
+
 
     public SharePage(AppiumDriver driver) {
         super(driver);
@@ -129,6 +140,19 @@ public class SharePage extends BasePage {
 
     public boolean isFlipCameraClickable() {
         return this.isElementEnabled(flipCamera,30);
+    }
+
+    public void clickOnDenyCameraPopupButton() {
+        if (isElementDisplayed(dontAllowButtonIos)) {
+            clickOnElement(dontAllowButtonIos);
+        }
+    }
+
+    public boolean isCameraDisabledPopUpDisplayed(){
+        return isElementDisplayed(cameraAccessDisabledPopup);
+    }
+    public void clickOnPopupCloseButton(){
+         clickOnElement(closePopupButton);
     }
 
 }

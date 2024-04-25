@@ -66,39 +66,43 @@ public class SunbirdLoginPage extends BasePage {
     @iOSXCUITFindBy(accessibility = "a square logo of a Sunbird")
     private WebElement sunbirdLogo;
 
-    @AndroidFindBy(accessibility = "fullNameValue")
-    @iOSXCUITFindBy(accessibility = "fullNameValue")
+    @AndroidFindBy(accessibility = "undefinedValue")
+    @iOSXCUITFindBy(accessibility = "undefinedValue")
     private WebElement fullName;
 
-    @AndroidFindBy(accessibility = "Policy NameValue")
-    @iOSXCUITFindBy(accessibility = "Policy NameValue")
+    @AndroidFindBy(accessibility = "fullNameValue")
+    @iOSXCUITFindBy(accessibility = "fullNameValue")
+    private WebElement fullNameInDetailView;
+
+    @AndroidFindBy(accessibility = "policyNumberValue")
+    @iOSXCUITFindBy(accessibility = "policyNumberValue")
     private WebElement policyName;
 
-    @AndroidFindBy(accessibility = "ID TypeValue")
-    @iOSXCUITFindBy(accessibility = "ID TypeValue")
+    @AndroidFindBy(accessibility = "idTypeValue")
+    @iOSXCUITFindBy(accessibility = "idTypeValue")
     private WebElement idType;
 
     @iOSXCUITFindBy(accessibility = "Continue")
     private WebElement continueButton;
 
-    @AndroidFindBy(accessibility = "valid")
-    @iOSXCUITFindBy(accessibility = "valid")
+    @AndroidFindBy(accessibility = "verificationStatus")
+    @iOSXCUITFindBy(accessibility = "verificationStatus")
     private WebElement status;
 
-    @AndroidFindBy(accessibility = "Email IdValue")
-    @iOSXCUITFindBy(accessibility = "Email IdValue")
+    @AndroidFindBy(accessibility = "emailValue")
+    @iOSXCUITFindBy(accessibility = "emailValue")
     private WebElement emailIdValue;
 
-    @AndroidFindBy(accessibility = "GenderValue")
-    @iOSXCUITFindBy(accessibility = "GenderValue")
+    @AndroidFindBy(accessibility = "genderValue")
+    @iOSXCUITFindBy(accessibility = "genderValue")
     private WebElement gender;
 
-    @AndroidFindBy(accessibility = "Date of BirthValue")
-    @iOSXCUITFindBy(accessibility = "Date of BirthValue")
+    @AndroidFindBy(accessibility = "dobValue")
+    @iOSXCUITFindBy(accessibility = "dobValue")
     private WebElement dateofBirthValue;
 
-    @AndroidFindBy(accessibility = "Phone NumberValue")
-    @iOSXCUITFindBy(accessibility = "Phone NumberValue")
+    @AndroidFindBy(accessibility = "mobileValue")
+    @iOSXCUITFindBy(accessibility = "mobileValue")
     private WebElement phoneNumber;
 
     @AndroidFindBy(accessibility = "Policy NumberValue")
@@ -116,6 +120,24 @@ public class SunbirdLoginPage extends BasePage {
     @AndroidFindBy(accessibility = "qrCodeHeader")
     @iOSXCUITFindBy(accessibility = "qrCodeHeader")
     private WebElement qrCodeHeader;
+
+    @AndroidFindBy(accessibility = "credentialTypeSelectionScreen")
+    @iOSXCUITFindBy(accessibility = "credentialTypeSelectionScreen")
+    private WebElement credentialTypeSelectionScreen;
+
+    @AndroidFindBy(accessibility = "credentialTypeItem-InsuranceCredential")
+    @iOSXCUITFindBy(accessibility = "credentialTypeItem-InsuranceCredential")
+    private WebElement credentialTypeItemInsuranceCredential;
+
+    @AndroidFindBy(accessibility = "credentialTypeItem-LifeInsuranceCredential_ldp")
+    @iOSXCUITFindBy(accessibility = "credentialTypeItem-LifeInsuranceCredential_ldp")
+    private WebElement credentialTypeItemLifeInsuranceCredentialldp;
+
+    @AndroidFindBy(accessibility = "arrowLeft")
+    @iOSXCUITFindBy(accessibility = "arrowLeft")
+    private WebElement arrowLeft;
+
+
 
     public SunbirdLoginPage(AppiumDriver driver) {
         super(driver);
@@ -190,9 +212,14 @@ public class SunbirdLoginPage extends BasePage {
         basePage.retrieToGetElement(sunbirdLogo);
         return this.isElementDisplayed(sunbirdLogo);
     }
+
     public String getFullNameForSunbirdCard() {
         basePage.retrieToGetElement(fullName);
         return this.getTextFromLocator(fullName);
+    }
+    public String getFullNameForSunbirdCardForDetailView() {
+        basePage.retrieToGetElement(fullNameInDetailView);
+        return this.getTextFromLocator(fullNameInDetailView);
     }
     public String getPolicyNameForSunbirdCard() {
         basePage.retrieToGetElement(policyName);
@@ -242,4 +269,23 @@ public class SunbirdLoginPage extends BasePage {
         basePage.retrieToGetElement(fullName);
         clickOnElement(fullName);
     }
+
+    public boolean isSunbirdRCInsuranceVerifiableCredentialHeaderDisplayed() {
+        basePage.retrieToGetElement(credentialTypeSelectionScreen);
+        return this.isElementDisplayed(credentialTypeSelectionScreen);
+    }
+
+    public boolean isMosipInsuranceDisplayed() {
+        basePage.retrieToGetElement(credentialTypeItemInsuranceCredential);
+        return this.isElementDisplayed(credentialTypeItemInsuranceCredential);
+    }
+
+    public void clickOnMosipInsurance() {
+         this.clickOnElement(credentialTypeItemInsuranceCredential);
+    }
+
+ public void clickOnBackArrow() {
+        this.clickOnElement(arrowLeft);
+ }
+
 }
