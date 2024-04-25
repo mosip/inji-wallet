@@ -169,7 +169,7 @@ public class NoNetworkAndroidTest extends AndroidBaseTest {
 
         assertTrue(settingsPage.verifyLanguagesInLanguageFilter("ANDROID"), "Verify if all languages are shown in language filter");
     }
-
+    
     @Test
     public void verifyHelpPageOfflineMode() {
         String sessionId  = driver.getSessionId().toString();
@@ -200,7 +200,7 @@ public class NoNetworkAndroidTest extends AndroidBaseTest {
 
         assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
     }
-
+    
     @Test
     public void deleteDownloadedVcInOfflineMode() throws InterruptedException {
         ChooseLanguagePage chooseLanguagePage = new ChooseLanguagePage(driver);
@@ -249,7 +249,7 @@ public class NoNetworkAndroidTest extends AndroidBaseTest {
         UpdateNetworkSettings.resetNetworkProfile(sessionId);
         assertEquals(homePage.verifyLanguageForNoVCDownloadedPageLoaded(), "Bring your digital identity");
     }
-
+    
     @Test
     public void openQrOffline() throws InterruptedException {
         ChooseLanguagePage chooseLanguagePage = new ChooseLanguagePage(driver);
@@ -291,16 +291,16 @@ public class NoNetworkAndroidTest extends AndroidBaseTest {
         SoftAssert softAssert = new SoftAssert();
         detailedVcViewPage.clickOnQrCodeButton();
         softAssert.assertTrue(detailedVcViewPage.isQrCodeDisplayed(), "Verify if QR Code header is displayed");
-
+        
         detailedVcViewPage.clickOnQrCrossIcon();
         assertTrue(homePage.isNameDisplayed(TestDataReader.readData("fullName")), "Verify if full name is displayed");
     }
-
+    
     @Test
     public void verifyRecivedCardOffline() throws InterruptedException {
         String sessionId  = driver.getSessionId().toString();
         UpdateNetworkSettings.setNoNetworkProfile(sessionId);
-        ChooseLanguagePage chooseLanguagePage = new ChooseLanguagePage(driver);
+    	ChooseLanguagePage chooseLanguagePage = new ChooseLanguagePage(driver);
 
         assertTrue(chooseLanguagePage.isChooseLanguagePageLoaded(), "Verify if choose language page is displayed");
         WelcomePage welcomePage = chooseLanguagePage.clickOnSavePreference();
@@ -319,16 +319,16 @@ public class NoNetworkAndroidTest extends AndroidBaseTest {
 
         assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
         SettingsPage settingsPage = homePage.clickOnSettingIcon();
-
+        
         ReceiveCardPage receiveCardPage = settingsPage.clickOnReceiveCard();
         receiveCardPage.clickOnAllowButton();
 
         assertTrue(receiveCardPage.isReceiveCardHeaderDisplayed(), "Verify if QR code  header is displayed");
-
+        
         assertTrue(receiveCardPage.isWaitingForConnectionDisplayed(), "Verify if waiting for connection displayed");
 
     }
-
+    
     @Test
     public void downloadCardWithoutInternetRetryWithInternet() throws InterruptedException {
         String sessionId  = driver.getSessionId().toString();
@@ -354,17 +354,17 @@ public class NoNetworkAndroidTest extends AndroidBaseTest {
         assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
         AddNewCardPage addNewCardPage = homePage.downloadCard();
 
-
+        
         assertTrue(homePage.verifyLanguageForNoInternetConnectionDisplayed("English"), "Verify if no internet connection is displayed");
         assertTrue(homePage.verifyLanguageForTryAgainButtonDisplayed("English"), "Verify if try again button displayed");
 
         UpdateNetworkSettings.resetNetworkProfile(sessionId);
         assertTrue(homePage.isTryAgainButtonNotDisplayed(), "Wating for network come online");
-
+        
         homePage.clickOnTryAgainButton();
-        assertTrue(addNewCardPage.isAddNewCardPageLoaded(), "Verify if add new card page is displayed");
+        assertTrue(addNewCardPage.isAddNewCardPageLoaded(), "Verify if add new card page is displayed");        
     }
-
+    
     @Test
     public void downloadVcUsingUinViaEsignetWithoutInternet() throws InterruptedException {
         String sessionId  = driver.getSessionId().toString();
@@ -392,13 +392,13 @@ public class NoNetworkAndroidTest extends AndroidBaseTest {
         assertTrue(homePage.verifyLanguageForNoInternetConnectionDisplayed("English"), "Verify if no internet connection is displayed");
         assertTrue(homePage.verifyLanguageForTryAgainButtonDisplayed("English"), "Verify if Try again button displayed");
 
-
+        
         homePage.clickOnTryAgainButton();
         assertTrue(homePage.isTryAgainButtonNotDisplayed(), "Verify if Try again button displayed");
         homePage.clickOnTryAgainButton();
 
     }
-
+    
     @Test
     public void downloadVcUsingUinViaEsignetNoInternateWhileDownloading() throws InterruptedException {
         ChooseLanguagePage chooseLanguagePage = new ChooseLanguagePage(driver);
@@ -425,27 +425,27 @@ public class NoNetworkAndroidTest extends AndroidBaseTest {
         EsignetLoginPage esignetLoginPage =  addNewCardPage.clickOnDownloadViaEsignet();
 
         esignetLoginPage.clickOnEsignetLoginWithOtpButton();
-
+        
         assertTrue(esignetLoginPage.isEnterYourVidTextDisplayed(), "Verify if enter your vid text is displayed");
         String uin = TestDataReader.readData("uin");
         OtpVerificationPage otpVerification= esignetLoginPage.setEnterIdTextBox(uin);
-
+        
         esignetLoginPage.clickOnGetOtpButton();
         assertTrue(esignetLoginPage.isOtpHasSendMessageDisplayed(),"verify if otp page is displayed");
-
+        
         otpVerification.enterOtpForEsignet(TestDataReader.readData("otp"), Target.ANDROID);
         esignetLoginPage.clickOnVerifyButton();
 
         String sessionId  = driver.getSessionId().toString();
         UpdateNetworkSettings.setNoNetworkProfile(sessionId);
-
+        
         assertTrue(homePage.verifyLanguageForNoInternetConnectionDisplayed("English"), "Verify if no internet connection is displayed");
         addNewCardPage.clickOnBack();
 
         UpdateNetworkSettings.resetNetworkProfile(sessionId);
         assertTrue(addNewCardPage.isAddNewCardPageLoaded(), "Verify if add new card page is displayed");
     }
-
+    
     @Test
     public void downloadVcViaEsignetAndPinUnpinWithNoNetwork() throws InterruptedException {
         ChooseLanguagePage chooseLanguagePage = new ChooseLanguagePage(driver);
@@ -475,13 +475,13 @@ public class NoNetworkAndroidTest extends AndroidBaseTest {
 
         String uin = TestDataReader.readData("uin");
         OtpVerificationPage otpVerification= esignetLoginPage.setEnterIdTextBox(uin);
-
+        
         esignetLoginPage.clickOnGetOtpButton();
         assertTrue(esignetLoginPage.isOtpHasSendMessageDisplayed(),"verify if otp page is displayed");
-
+        
         otpVerification.enterOtpForEsignet(TestDataReader.readData("otp"), Target.ANDROID);
         esignetLoginPage.clickOnVerifyButton();
-
+        
         assertTrue(homePage.isNameDisplayed(TestDataReader.readData("fullName")), "Verify if full name is displayed");
         String sessionId  = driver.getSessionId().toString();
         UpdateNetworkSettings.setNoNetworkProfile(sessionId);
@@ -492,13 +492,13 @@ public class NoNetworkAndroidTest extends AndroidBaseTest {
         moreOptionsPage.clickOnPinOrUnPinCard();
 
         assertTrue(homePage.isPinIconDisplayed(), "Verify if pin icon on vc is displayed");
-        homePage.clickOnMoreOptionsButton();
+         homePage.clickOnMoreOptionsButton();
 
         assertTrue(moreOptionsPage.isMoreOptionsPageLoaded(), "Verify if more options page is displayed");
         moreOptionsPage.clickOnPinOrUnPinCard();
 
     }
-
+    
     @Test
     public void downloadVcUsingUinViaEsignetNoInternateOpenScan() throws InterruptedException {
         ChooseLanguagePage chooseLanguagePage = new ChooseLanguagePage(driver);
@@ -522,27 +522,27 @@ public class NoNetworkAndroidTest extends AndroidBaseTest {
         AddNewCardPage addNewCardPage = homePage.downloadCard();
 
         assertTrue(addNewCardPage.isAddNewCardPageLoaded(), "Verify if add new card page is displayed");
-
+        
         EsignetLoginPage esignetLoginPage =  addNewCardPage.clickOnDownloadViaEsignet();
 
         esignetLoginPage.clickOnEsignetLoginWithOtpButton();
         OtpVerificationPage otpVerification= esignetLoginPage.setEnterIdTextBox(TestDataReader.readData("uin"));
-
+        
         esignetLoginPage.clickOnGetOtpButton();
         assertTrue(esignetLoginPage.isOtpHasSendMessageDisplayed(),"verify if otp page is displayed");
-
+        
         otpVerification.enterOtpForEsignet(TestDataReader.readData("otp"), Target.ANDROID);
         esignetLoginPage.clickOnVerifyButton();
-
-//        assertTrue(esignetLoginPage.isProgressingLogoDisplayed(),"verify if Progressing page is displayed");
+        
+        assertTrue(esignetLoginPage.isProgressingLogoDisplayed(),"verify if Progressing page is displayed");
         assertTrue(homePage.isNameDisplayed(TestDataReader.readData("fullName")), "Verify if full name is displayed");
         String sessionId  = driver.getSessionId().toString();
         UpdateNetworkSettings.setNoNetworkProfile(sessionId);
-
+        
         assertTrue(homePage.clickOnShareButton().acceptPermissionPopupBluetooth().isCameraOpen());
 
     }
-
+    
     @Test
     public void downloadVcInOtherLanguageViaEsignetWithoutInternet() throws InterruptedException {
         String sessionId  = driver.getSessionId().toString();
@@ -572,32 +572,32 @@ public class NoNetworkAndroidTest extends AndroidBaseTest {
 
         assertTrue(settingsPage.verifyFilipinoLanguage(), "Verify if language is changed to filipino");
         homePage.clickOnHomeButton();
-
+        
         AddNewCardPage addNewCardPage = homePage.downloadCard();
 
         assertTrue(homePage.verifyLanguageForNoInternetConnectionDisplayed("Filipino"), "Verify if no internet connection is displayed in flillpino");
         assertTrue(homePage.isTryAgainButtonDisplayedInFlillpino(), "Verify if Try again button displayed in flillpino");
 
         UpdateNetworkSettings.resetNetworkProfile(sessionId);
-
-        homePage.clickOnTryAgainFillpinoButton();
+        
+         homePage.clickOnTryAgainFillpinoButton();
         assertEquals(addNewCardPage.verifyLanguageForAddNewCardGuideMessage(), "Mangyaring piliin ang iyong gustong tagabigay mula sa mga opsyon sa ibaba upang magdagdag ng bagong card.");
 //        
-        EsignetLoginPage esignetLoginPage =  addNewCardPage.clickOnDownloadViaEsignet();
-        esignetLoginPage.clickOnEsignetLoginWithOtpButton();
+       EsignetLoginPage esignetLoginPage =  addNewCardPage.clickOnDownloadViaEsignet();
+       esignetLoginPage.clickOnEsignetLoginWithOtpButton();
 
         String uin = TestDataReader.readData("uin");
-        OtpVerificationPage otpVerification= esignetLoginPage.setEnterIdTextBox(uin);
-
-        esignetLoginPage.clickOnGetOtpButton();
-        assertTrue(esignetLoginPage.isOtpHasSendMessageDisplayed(),"verify if otp page is displayed");
-
-        otpVerification.enterOtpForEsignet(TestDataReader.readData("otp"), Target.ANDROID);
-        esignetLoginPage.clickOnVerifyButton();
-
-        assertTrue(homePage.isNameDisplayed(TestDataReader.readData("fullName")), "Verify if full name is displayed");
+       OtpVerificationPage otpVerification= esignetLoginPage.setEnterIdTextBox(uin);
+       
+       esignetLoginPage.clickOnGetOtpButton();
+       assertTrue(esignetLoginPage.isOtpHasSendMessageDisplayed(),"verify if otp page is displayed");
+       
+       otpVerification.enterOtpForEsignet(TestDataReader.readData("otp"), Target.ANDROID);
+       esignetLoginPage.clickOnVerifyButton();
+       
+       assertTrue(homePage.isNameDisplayed(TestDataReader.readData("fullName")), "Verify if full name is displayed");
     }
-
+    
     @Test
     public void changeLanguageToTamilWithoutNetwork() {
         String sessionId  = driver.getSessionId().toString();
@@ -627,11 +627,11 @@ public class NoNetworkAndroidTest extends AndroidBaseTest {
 
         assertTrue(settingsPage.verifyTamilLanguage(), "Verify if language is changed to tamil");
         homePage.clickOnHomeButton();
-
+        
         homePage.downloadCard();
         assertTrue(homePage.verifyLanguageForNoInternetConnectionDisplayed("Tamil"), "Verify if try again in tamil is displayed");
     }
-
+    
     @Test
     public void verifyVcIssuerListWithoutNetwork() throws InterruptedException {
         ChooseLanguagePage chooseLanguagePage = new ChooseLanguagePage(driver);
@@ -660,7 +660,7 @@ public class NoNetworkAndroidTest extends AndroidBaseTest {
         UpdateNetworkSettings.setNoNetworkProfile(sessionId);
 
         addNewCardPage.clickOnBack();
-
+        
         homePage.downloadCard();
         assertTrue(addNewCardPage.isIssuerDescriptionMosipDisplayed(), "Verify if issuer description  mosip displayed");
         assertTrue(addNewCardPage.isIssuerDescriptionEsignetDisplayed(), "Verify if issuer description  esignet displayed");
@@ -708,4 +708,4 @@ public class NoNetworkAndroidTest extends AndroidBaseTest {
         assertTrue(generateUinOrVidPage.isNetworkRequesFailedDisplayed(), "Verify if no internet connection is displayed");
     }
 
-}
+    }

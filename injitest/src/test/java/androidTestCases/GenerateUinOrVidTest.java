@@ -101,8 +101,9 @@ public class GenerateUinOrVidTest extends AndroidBaseTest {
         assertTrue(otpVerification.verifyOtpVerificationTimerDisplayedAfterClickOnResend(), "verify is You can resend the code displayed again after click on resend button ");
 
         otpVerification.clickOnCrossIcon();
-
-        assertTrue(generateUinOrVidPage.isGenerateUinOrVidPageLoaded(), "Verify if generate uin or vid page page is displayed");
+        assertTrue(otpVerification.confirmPopupHeaderDisplayed(), "Verify if comfirm popup displayed");
+        otpVerification.clickOnCancelPopupButton();
+        assertEquals(homePage.verifyLanguageForNoVCDownloadedPageLoaded(), "Bring your digital identity");
 
     }
     @Test

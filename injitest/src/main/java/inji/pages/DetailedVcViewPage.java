@@ -87,8 +87,8 @@ public class DetailedVcViewPage extends BasePage{
     @iOSXCUITFindBy(accessibility = "mosip-logo")
     private WebElement esignetLogo;
     
-    @AndroidFindBy(accessibility = "goBack")
-    @iOSXCUITFindBy(accessibility = "goBack")
+    @AndroidFindBy(accessibility = "arrowLeft")
+    @iOSXCUITFindBy(accessibility = "arrowLeft")
     public WebElement backArrow;
 
     @AndroidFindBy(accessibility = "KebabIcon")
@@ -166,23 +166,19 @@ public class DetailedVcViewPage extends BasePage{
     }
 
     public HomePage clickOnQrCrossIcon() {
-        if (isElementDisplayed(qrCloseIcon)){
+        if(isElementDisplayed(qrCloseIcon))
         clickOnElement(qrCloseIcon);
-        }
         return new HomePage(driver);
     }
 
     public HomePage clickOnCrossIcon() {
-       if(isElementDisplayed(crossIcon)) {
-            clickOnElement(crossIcon);
-        }
+        clickOnElement(crossIcon);
         return new HomePage(driver);
     }
 
     public void clickOnQrCodeButton() {
-        if(isElementDisplayed(detailedVcViewPageQr)) {
-            clickOnElement(detailedVcViewPageQr);
-        }
+        if (isElementDisplayed(detailedVcViewPageQr))
+        clickOnElement(detailedVcViewPageQr);
         new PleaseConfirmPopupPage(driver);
     }
 
@@ -203,9 +199,7 @@ public class DetailedVcViewPage extends BasePage{
     }
 
     public void clickOnMoreOptionsInDetails() {
-        if(retrieIsElementVisible(moreOptionsButton)) {
-            clickOnElement(moreOptionsButton);
-        }
+        clickOnElement(moreOptionsButton);
     }
 
 }

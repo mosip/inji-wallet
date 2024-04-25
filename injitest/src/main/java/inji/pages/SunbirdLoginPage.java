@@ -21,7 +21,7 @@ public class SunbirdLoginPage extends BasePage {
     @AndroidFindBy(xpath = "//*[contains(@text,'Login with KBA')]")
     private WebElement loginWithKBA;
 
-    @AndroidFindBy(xpath = "//*[@resource-id=\"_form_policyNumber\"]")
+    @AndroidFindBy(xpath = "//android.widget.EditText[@resource-id=\"_form_policyNumber\"]")
     @iOSXCUITFindBy(xpath = "//XCUIElementTypeTextField[@name=\"Please fill in this field\" and @value=\"Policy Number\"]")
     private WebElement enterPolicyTextBox;
 
@@ -66,16 +66,16 @@ public class SunbirdLoginPage extends BasePage {
     @iOSXCUITFindBy(accessibility = "a square logo of a Sunbird")
     private WebElement sunbirdLogo;
 
-    @AndroidFindBy(accessibility = "fullNameValue")
-    @iOSXCUITFindBy(accessibility = "fullNameValue")
+    @AndroidFindBy(accessibility = "undefinedValue")
+    @iOSXCUITFindBy(accessibility = "undefinedValue")
     private WebElement fullName;
 
     @AndroidFindBy(accessibility = "fullNameValue")
     @iOSXCUITFindBy(accessibility = "fullNameValue")
     private WebElement fullNameInDetailView;
 
-    @AndroidFindBy(accessibility = "policyNameValue")
-    @iOSXCUITFindBy(accessibility = "policyNameValue")
+    @AndroidFindBy(accessibility = "policyNumberValue")
+    @iOSXCUITFindBy(accessibility = "policyNumberValue")
     private WebElement policyName;
 
     @AndroidFindBy(accessibility = "idTypeValue")
@@ -133,20 +133,11 @@ public class SunbirdLoginPage extends BasePage {
     @iOSXCUITFindBy(accessibility = "credentialTypeItem-LifeInsuranceCredential_ldp")
     private WebElement credentialTypeItemLifeInsuranceCredentialldp;
 
-    @AndroidFindBy(accessibility = "arrow-left")
-    @iOSXCUITFindBy(accessibility = "goBack")
+    @AndroidFindBy(accessibility = "arrowLeft")
+    @iOSXCUITFindBy(accessibility = "arrowLeft")
     private WebElement arrowLeft;
 
-    @AndroidFindBy(accessibility = "policyExpiresOnValue")
-    @iOSXCUITFindBy(accessibility = "policyExpiresOnValue")
-    private WebElement policyExpiresOnValue;
 
-    @AndroidFindBy(accessibility = "benefitsValue")
-    @iOSXCUITFindBy(accessibility = "benefitsValue")
-    private WebElement benefitsValue;
-
-    @AndroidFindBy(xpath = "//android.view.ViewGroup[@resource-id=\"statusIcon\"]")
-    private WebElement statusIcon;
 
     public SunbirdLoginPage(AppiumDriver driver) {
         super(driver);
@@ -296,17 +287,5 @@ public class SunbirdLoginPage extends BasePage {
  public void clickOnBackArrow() {
         this.clickOnElement(arrowLeft);
  }
-
-    public boolean isPolicyExpiresOnValueDisplayed() {
-        return this.isElementDisplayed(policyExpiresOnValue);
-    }
-
-    public boolean isbenefitsValueDisplayed() {
-        return this.isElementDisplayed(benefitsValue);
-    }
-
-    public boolean isStatusIconDisplayed() {
-        return this.isElementDisplayed(statusIcon);
-    }
 
 }
