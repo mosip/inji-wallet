@@ -90,9 +90,7 @@ jobs:
         id: client-id
         run: 
           cd .github/scripts
-          ./set-google-clientid.sh "$INJI_FLAVOR"
-        env:
-          INJI_FLAVOR: ${{ github.event.inputs.injiFlavor }}
+          ./set-google-clientid.sh ${{ github.event.inputs.injiFlavor }}
 
   build-android:
     if: ${{ inputs.buildFor == 'Both[Android and IOS]' || inputs.buildFor == 'Android'}}
