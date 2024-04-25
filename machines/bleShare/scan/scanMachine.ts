@@ -167,6 +167,7 @@ export const scanMachine =
           actions: ['sendBLEConnectionErrorEvent', 'setBleError'],
         },
         RESET: {
+          actions:['removeLoggers', 'resetFlowType', 'resetSelectedVc'],
           target: '.checkStorage',
         },
         DISMISS: {
@@ -204,7 +205,7 @@ export const scanMachine =
                 target: 'restrictSharingVc',
               },
               {
-                target: 'startPermissionCheck',
+               target: 'startPermissionCheck',
               },
             ],
           },
@@ -562,7 +563,7 @@ export const scanMachine =
               },
               {
                 cond: 'isFlowTypeMiniViewShareWithSelfie',
-                target: '.verifyingIdentity',
+                target:'.checkFaceAuthConsentForMiniView' ,
               },
             ],
           },
@@ -701,6 +702,16 @@ export const scanMachine =
               entry: ['resetFlowType', 'resetSelectedVc'],
               always: '#scan.disconnected',
             },
+            checkFaceAuthConsentForMiniView: {
+              always:[
+              {
+                cond: 'showFaceAuthConsentScreen',
+                target: 'faceVerificationConsent'
+              },
+              {
+                target: 'verifyingIdentity'
+              }
+            ],},
             faceVerificationConsent: {
               on: {
                 FACE_VERIFICATION_CONSENT: {
@@ -710,9 +721,15 @@ export const scanMachine =
                   ],
                   target: 'verifyingIdentity',
                 },
-                DISMISS: {
-                  target: '#scan.reviewing.selectingVc',
-                },
+                DISMISS:[
+                  {
+                    cond: 'isFlowTypeMiniViewShareWithSelfie',
+                    target: '#scan.checkFaceAuthConsent', 
+                  },
+                  {
+                    target: '#scan.reviewing.selectingVc',
+                  }
+                ],
               },
             },
             verifyingIdentity: {

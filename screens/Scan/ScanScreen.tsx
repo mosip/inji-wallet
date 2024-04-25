@@ -16,10 +16,13 @@ import {BannerNotificationContainer} from '../../components/BannerNotificationCo
 import {SharingStatusModal} from './SharingStatusModal';
 import {SvgImage} from '../../components/ui/svg';
 import {LocationPermissionRational} from './LocationPermissionRational';
+import { FaceVerificationAlertOverlay } from './FaceVerificationAlertOverlay';
+import { useSendVcScreen } from './SendVcScreenController';
 
 export const ScanScreen: React.FC = () => {
   const {t} = useTranslation('ScanScreen');
   const controller = useScanScreen();
+  const controller_scan = useSendVcScreen();
   const [isBluetoothOn, setIsBluetoothOn] = useState(false);
 
   useEffect(() => {
@@ -217,7 +220,12 @@ export const ScanScreen: React.FC = () => {
   return (
     <Column fill backgroundColor={Theme.Colors.whiteBackgroundColor}>
       <BannerNotificationContainer />
-      <Centered
+      <FaceVerificationAlertOverlay
+        isVisible={controller_scan.isFaceVerificationConsent}
+        onConfirm={controller_scan.FACE_VERIFICATION_CONSENT}
+        close={controller_scan.DISMISS}
+      />
+        <Centered
         padding="24 0"
         align="space-evenly"
         backgroundColor={Theme.Colors.whiteBackgroundColor}>

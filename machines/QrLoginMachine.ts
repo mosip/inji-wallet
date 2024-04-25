@@ -143,6 +143,10 @@ export const qrLoginMachine =
                 target: 'loadMyVcs',
               },
               {
+                cond: 'showFaceAuthConsentScreen',
+                target: 'faceVerificationConsent',
+              },
+              {
                 actions: [
                   'setlinkTransactionResponse',
                   'expandLinkTransResp',
@@ -202,9 +206,15 @@ export const qrLoginMachine =
               actions: ['storeShowFaceAuthConsent', 'setShowFaceAuthConsent'],
               target: 'faceAuth',
             },
-            DISMISS: {
+            DISMISS: [{
+              cond:'isSimpleShareFlow',
               target: 'showvcList',
             },
+            {
+              actions: 'forwardToParent',
+              target: 'waitingForData',
+            }
+          ]
           },
         },
         faceAuth: {
@@ -229,9 +239,16 @@ export const qrLoginMachine =
         },
         invalidIdentity: {
           on: {
-            DISMISS: {
-              target: 'showvcList',
-            },
+            DISMISS: [
+              {
+                cond: 'isSimpleShareFlow',
+                target: 'showvcList',
+              },
+              {
+                actions: 'forwardToParent',
+                target: 'waitingForData',
+              },
+            ,],
             RETRY_VERIFICATION: {
               target: 'faceAuth',
             },
