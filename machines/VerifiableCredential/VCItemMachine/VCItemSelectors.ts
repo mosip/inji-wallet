@@ -2,21 +2,46 @@ import {StateFrom} from 'xstate';
 import {VCMetadata} from '../../../shared/VCMetadata';
 import {VCItemMachine} from './VCItemMachine';
 import {getMosipLogo} from '../../../components/VC/common/VCUtils';
+import {getIdType} from '../../../shared/openId4VCI/Utils';
 
 type State = StateFrom<typeof VCItemMachine>;
 
-export function selectVerificationStatusType(state: State) {
-  return state.context.verificationStatusType;
+export function selectVerificationStatus(state: State) {
+  return state.context.verificationStatus;
+}
+
+export function selectIsVerificationInProgress(state: State) {
+  return state.matches(
+    'verifyState.verifyingCredential.verificationInProgress',
+  );
+}
+
+export function selectIsVerificationCompleted(state: State) {
+  return state.matches('verifyState.verifyingCredential.verificationCompleted');
+}
+
+export function selectShowVerificationStatusBanner(state: State) {
+  return state.context.showVerificationStatusBanner;
 }
 
 export function selectVerifiableCredential(state: State) {
   return state.context.verifiableCredential;
 }
 
+export function getVerifiableCredential(
+  vcMetadata: VCMetadata,
+  verifiableCredential,
+) {
+  return VCMetadata.fromVC(vcMetadata).isFromOpenId4VCI()
+    ? verifiableCredential?.credential
+    : verifiableCredential;
+}
+
 export function selectCredential(state: State) {
-  return new VCMetadata(state.context.vcMetadata).isFromOpenId4VCI()
-    ? state.context.verifiableCredential?.credential
-    : state.context.verifiableCredential;
+  return getVerifiableCredential(
+    state.context.vcMetadata,
+    state.context.verifiableCredential,
+  );
 }
 
 export function selectVerifiableCredentialData(state: State) {

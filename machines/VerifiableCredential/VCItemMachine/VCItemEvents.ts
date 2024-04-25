@@ -25,6 +25,8 @@ export const VCItemEvents = {
   TAMPERED_VC: (key: string) => ({key}),
   SHOW_BINDING_STATUS: () => ({}),
   VERIFY: () => ({}),
-  SET_VERIFICATION_STATUS_TYPE: (response: unknown) => ({response}),
-  RESET_VERIFICATION_STATUS_TYPE: () => ({}),
+  SET_VERIFICATION_STATUS: (response: unknown) => ({response}),
+  RESET_VERIFICATION_STATUS: () => ({}),
+  REMOVE_VERIFICATION_STATUS_BANNER: () => ({}),
+  SHOW_VERIFICATION_STATUS_BANNER: () => ({}),
 };

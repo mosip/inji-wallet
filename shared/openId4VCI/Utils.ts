@@ -17,6 +17,8 @@ import {
   DETAIL_VIEW_ADD_ON_FIELDS,
   getCredentialDefinition,
 } from '../../components/VC/common/VCUtils';
+import {getVerifiableCredential} from '../../machines/VerifiableCredential/VCItemMachine/VCItemSelectors';
+import {vcVerificationBannerDetails} from '../../components/BannerNotificationContainer';
 
 export const Protocols = {
   OpenId4VCI: 'OpenId4VCI',
@@ -40,6 +42,21 @@ export function getIdType(issuer: string | undefined): string {
     return 'nationalCard';
   }
   return 'insuranceCard';
+}
+
+export function getVcVerificationDetails(
+  statusType,
+  vcMetadata,
+  verifiableCredential,
+): vcVerificationBannerDetails {
+  return {
+    statusType: statusType,
+    vcType: getIdType(
+      getVerifiableCredential(vcMetadata, verifiableCredential),
+    ),
+    vcNumber: getVerifiableCredential(vcMetadata, verifiableCredential)
+      .credentialSubject[`${vcMetadata.idType}`],
+  };
 }
 
 export const ID_TYPE = {

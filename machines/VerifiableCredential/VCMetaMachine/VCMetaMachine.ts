@@ -15,6 +15,7 @@ import Cloud, {
   isSignedInResult,
 } from '../../../shared/CloudBackupAndRestoreUtils';
 import {BackupEvents} from '../../backupAndRestore/backup';
+import {vcVerificationBannerDetails} from '../../../components/BannerNotificationContainer';
 
 const model = createModel(
   {
@@ -29,6 +30,7 @@ const model = createModel(
     tamperedVcs: [] as VCMetadata[],
     downloadingFailedVcs: [] as VCMetadata[], //VCDownloadFailed
     verificationErrorMessage: '' as string,
+    verificationStatus: null as vcVerificationBannerDetails | null,
   },
   {
     events: {
@@ -63,6 +65,14 @@ const model = createModel(
       RESET_VERIFY_ERROR: () => ({}),
       REFRESH_VCS_METADATA: () => ({}),
       SHOW_TAMPERED_POPUP: () => ({}),
+      SET_VERIFICATION_STATUS: (verificationStatus: unknown) => ({
+        verificationStatus,
+      }),
+      RESET_VERIFICATION_STATUS: (
+        verificationStatus: vcVerificationBannerDetails | null,
+      ) => ({
+        verificationStatus,
+      }),
     },
   },
 );
@@ -220,6 +230,12 @@ export const vcMetaMachine =
             RESET_VERIFY_ERROR: {
               actions: 'resetVerificationErrorMessage',
             },
+            SET_VERIFICATION_STATUS: {
+              actions: 'setVerificationStatus',
+            },
+            RESET_VERIFICATION_STATUS: {
+              actions: 'resetVerificationStatus',
+            },
           },
         },
         deletingFailedVcs: {
@@ -238,6 +254,19 @@ export const vcMetaMachine =
     },
     {
       actions: {
+        resetVerificationStatus: model.assign({
+          verificationStatus: (context: any, event: any) =>
+            event.verificationStatus == null ||
+            context.verificationStatus == event.verificationStatus
+              ? null
+              : context.verificationStatus,
+        }),
+
+        setVerificationStatus: model.assign({
+          verificationStatus: (_, event) =>
+            event.verificationStatus as vcVerificationBannerDetails,
+        }),
+
         sendBackupEvent: send(BackupEvents.DATA_BACKUP(true), {
           to: context => context.serviceRefs.backup,
         }),
@@ -473,6 +502,10 @@ export function createVcMetaMachine(serviceRefs: AppServices) {
 }
 
 type State = StateFrom<typeof vcMetaMachine>;
+
+export function selectVerificationStatus(state: State) {
+  return state.context.verificationStatus;
+}
 
 export function selectMyVcsMetadata(state: State): VCMetadata[] {
   return state.context.myVcsMetadata;

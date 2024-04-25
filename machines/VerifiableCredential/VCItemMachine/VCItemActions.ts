@@ -9,7 +9,10 @@ import {getHomeMachineService} from '../../../screens/Home/HomeScreenController'
 import {DownloadProps} from '../../../shared/api';
 import {isHardwareKeystoreExists} from '../../../shared/cryptoutil/cryptoUtil';
 import {getBindingCertificateConstant} from '../../../shared/keystore/SecureKeystore';
-import {getIdType} from '../../../shared/openId4VCI/Utils';
+import {
+  getIdType,
+  getVcVerificationDetails,
+} from '../../../shared/openId4VCI/Utils';
 import {TelemetryConstants} from '../../../shared/telemetry/TelemetryConstants';
 import {
   sendStartEvent,
@@ -44,17 +47,53 @@ export const VCItemActions = model => {
           isVerified: false,
         }),
     }),
-    setVerificationStatusType: assign({
-      verificationStatusType: (_, event) => {
-        return event.response.verificationStatusType === BannerStatusType.INFO
-          ? BannerStatusType.INFO
-          : (event.response.isVerified && BannerStatusType.SUCCESS) ||
-              BannerStatusType.ERROR;
+
+    setVerificationStatus: assign({
+      verificationStatus: (context: any, event) => {
+        const statusType =
+          event.response.statusType === BannerStatusType.INFO
+            ? BannerStatusType.INFO
+            : event.response.isVerified
+            ? BannerStatusType.SUCCESS
+            : BannerStatusType.ERROR;
+
+        return getVcVerificationDetails(
+          statusType,
+          context.vcMetadata,
+          context.verifiableCredential,
+        );
       },
     }),
-    resetVerificationBannerStatus: assign({
-      verificationStatusType: () => null,
+
+    resetVerificationStatus: assign({
+      verificationStatus: (context: any) => {
+        return context.verificationStatus.statusType === BannerStatusType.INFO
+          ? context.verificationStatus
+          : null;
+      },
+      showVerificationStatusBanner: () => false,
     }),
+
+    showVerificationBannerStatus: assign({
+      showVerificationStatusBanner: () => true,
+    }),
+
+    sendVerificationStatusToVcMeta: send(
+      (context: any) => ({
+        type: 'SET_VERIFICATION_STATUS',
+        verificationStatus: context.verificationStatus,
+      }),
+      {to: context => context.serviceRefs.vcMeta},
+    ),
+
+    removeVerificationStatusFromVcMeta: send(
+      (context: any) => ({
+        type: 'RESET_VERIFICATION_STATUS',
+        verificationStatus: context.verificationStatus,
+      }),
+      {to: context => context.serviceRefs.vcMeta},
+    ),
+
     setCommunicationDetails: model.assign({
       communicationDetails: (_context, event) => {
         const communicationDetails: CommunicationDetails = {
@@ -82,7 +121,12 @@ export const VCItemActions = model => {
     }),
     storeContext: send(
       (context: any) => {
-        const {serviceRefs, isMachineInKebabPopupState, ...data} = context;
+        const {
+          serviceRefs,
+          isMachineInKebabPopupState,
+          verificationStatus,
+          ...data
+        } = context;
         data.credentialRegistry = MIMOTO_BASE_URL;
         return StoreEvents.SET(
           VCMetadata.fromVC(context.vcMetadata).getVcKey(),

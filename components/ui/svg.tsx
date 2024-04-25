@@ -421,7 +421,7 @@ export class SvgImage {
       <ColoredInfo
         color1={Theme.Colors.linearGradientStart}
         color2={Theme.Colors.linearGradientEnd}
-        {...testIDProps('infoIcon')}
+        {...testIDProps('coloredInfoIcon')}
       />
     );
   }

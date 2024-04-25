@@ -109,6 +109,9 @@ export interface Typegen0 {
       type: 'error.platform.vc-item-machine.verifyState.verifyingCredential:invocation[0]';
       data: unknown;
     };
+    'xstate.after(1000)#vc-item-machine.verifyState.verifyingCredential': {
+      type: 'xstate.after(1000)#vc-item-machine.verifyState.verifyingCredential';
+    };
     'xstate.init': {type: 'xstate.init'};
     'xstate.stop': {type: 'xstate.stop'};
   };
@@ -144,11 +147,12 @@ export interface Typegen0 {
       | 'removeVcItem'
       | 'removeVcMetaDataFromStorage'
       | 'removeVcMetaDataFromVcMachineContext'
+      | 'removeVerificationStatusFromVcMeta'
       | 'requestVcContext'
       | 'resetIsMachineInKebabPopupState'
       | 'resetIsVerified'
       | 'resetPrivateKey'
-      | 'resetVerificationBannerStatus'
+      | 'resetVerificationStatus'
       | 'sendActivationStartEvent'
       | 'sendActivationSuccessEvent'
       | 'sendBackupEvent'
@@ -157,6 +161,7 @@ export interface Typegen0 {
       | 'sendUserCancelledActivationFailedEndEvent'
       | 'sendVcUpdated'
       | 'sendVerificationError'
+      | 'sendVerificationStatusToVcMeta'
       | 'sendWalletBindingErrorEvent'
       | 'sendWalletBindingSuccess'
       | 'setCommunicationDetails'
@@ -173,8 +178,9 @@ export interface Typegen0 {
       | 'setThumbprintForWalletBindingId'
       | 'setVcKey'
       | 'setVcMetadata'
-      | 'setVerificationStatusType'
+      | 'setVerificationStatus'
       | 'setWalletBindingResponse'
+      | 'showVerificationBannerStatus'
       | 'storeContext'
       | 'storeVcInContext'
       | 'unSetBindingTransactionId'
@@ -228,6 +234,7 @@ export interface Typegen0 {
       | 'STORE_ERROR'
       | 'error.platform.vc-item-machine.existingState.verifyingCredential:invocation[0]';
     removeVcMetaDataFromVcMachineContext: 'DISMISS';
+    removeVerificationStatusFromVcMeta: 'RESET_VERIFICATION_STATUS';
     requestVcContext: 'DISMISS' | 'REFRESH' | 'STORE_ERROR' | 'xstate.init';
     resetIsMachineInKebabPopupState:
       | ''
@@ -246,7 +253,7 @@ export interface Typegen0 {
     resetPrivateKey:
       | 'done.invoke.vc-item-machine.existingState.walletBinding.addingWalletBindingId:invocation[0]'
       | 'done.invoke.vc-item-machine.existingState.walletBinding.updatingPrivateKey:invocation[0]';
-    resetVerificationBannerStatus: 'RESET_VERIFICATION_STATUS_TYPE';
+    resetVerificationStatus: 'RESET_VERIFICATION_STATUS';
     sendActivationStartEvent: 'CONFIRM';
     sendActivationSuccessEvent:
       | 'done.invoke.vc-item-machine.existingState.walletBinding.addingWalletBindingId:invocation[0]'
@@ -261,6 +268,7 @@ export interface Typegen0 {
     sendUserCancelledActivationFailedEndEvent: 'DISMISS';
     sendVcUpdated: 'PIN_CARD' | 'STORE_RESPONSE';
     sendVerificationError: 'STORE_RESPONSE';
+    sendVerificationStatusToVcMeta: 'STORE_RESPONSE';
     sendWalletBindingErrorEvent:
       | 'error.platform.vc-item-machine.existingState.walletBinding.acceptingBindingOTP.resendOTP:invocation[0]'
       | 'error.platform.vc-item-machine.existingState.walletBinding.addKeyPair:invocation[0]'
@@ -291,10 +299,12 @@ export interface Typegen0 {
       | 'done.invoke.vc-item-machine.existingState.walletBinding.updatingPrivateKey:invocation[0]';
     setVcKey: 'REMOVE';
     setVcMetadata: 'UPDATE_VC_METADATA';
-    setVerificationStatusType:
-      | 'SET_VERIFICATION_STATUS_TYPE'
-      | 'STORE_RESPONSE';
+    setVerificationStatus: 'SET_VERIFICATION_STATUS' | 'STORE_RESPONSE';
     setWalletBindingResponse: 'done.invoke.vc-item-machine.existingState.walletBinding.addingWalletBindingId:invocation[0]';
+    showVerificationBannerStatus:
+      | 'SHOW_VERIFICATION_STATUS_BANNER'
+      | 'STORE_RESPONSE'
+      | 'xstate.after(1000)#vc-item-machine.verifyState.verifyingCredential';
     storeContext:
       | 'done.invoke.vc-item-machine.existingState.verifyingCredential:invocation[0]'
       | 'done.invoke.vc-item-machine.existingState.walletBinding.addingWalletBindingId:invocation[0]'
@@ -379,6 +389,8 @@ export interface Typegen0 {
     | 'verifyState'
     | 'verifyState.idle'
     | 'verifyState.verifyingCredential'
+    | 'verifyState.verifyingCredential.verificationCompleted'
+    | 'verifyState.verifyingCredential.verificationInProgress'
     | {
         existingState?:
           | 'idle'
@@ -421,7 +433,14 @@ export interface Typegen0 {
                 | 'updatingPrivateKey'
                 | {acceptingBindingOTP?: 'idle' | 'resendOTP'};
             };
-        verifyState?: 'idle' | 'verifyingCredential';
+        verifyState?:
+          | 'idle'
+          | 'verifyingCredential'
+          | {
+              verifyingCredential?:
+                | 'verificationCompleted'
+                | 'verificationInProgress';
+            };
       };
   tags: never;
 }

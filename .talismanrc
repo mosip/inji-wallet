@@ -135,8 +135,6 @@ fileignoreconfig:
     checksum: 9af4308001e7e260ffffd26955ca49df3b388e34686509371e23dd837b11d030
   - filename: screens/Home/MyVcs/IdInputModal.tsx
     checksum: b735aedc84164d03c199fe89ccbf9df58f8997bfb4f60e7058a22bfe952fda3e
-  - filename: components/BannerNotificationContainer.tsx
-    checksum: 7a2f9794b96915179ad8bf9d578d06d35e5245c1d04279a589da916949aea64f
   - filename: components/HelpScreen.tsx
     checksum: bbc69143bd37d065bba3800396301db5a0318e8b7ba51ecd49142dda68783a01
   - filename: injitest/README.md
@@ -260,5 +258,7 @@ fileignoreconfig:
   - filename: machines/Issuers/IssuersService.ts
     checksum: ee7622a03c23705b4c4dea218ccbe6504a51a5a68170a9059a2cde3b4c6a9984
   - filename: components/BannerNotificationContainer.tsx
-    checksum: 7a2f9794b96915179ad8bf9d578d06d35e5245c1d04279a589da916949aea64f
+    checksum: 26e09d7f3b24abb025844a39000602ef73bea8a494fd1b21d6fdfdbd29927b87
+  - filename: screens/Home/ViewVcModal.tsx
+    checksum: 088992fe50e8c01726c71d17a3cb0e19098b4084df9b9198db69d204042a8080
     version: ""

@@ -3,10 +3,11 @@ import {GlobalContext} from '../shared/GlobalContext';
 import {useSelector} from '@xstate/react';
 import {
   VcMetaEvents,
+  selectVerificationStatus,
   selectWalletBindingSuccess,
 } from '../machines/VerifiableCredential/VCMetaMachine/VCMetaMachine';
 
-export const UseWalletBindingSuccess = () => {
+export const UseBannerNotificationContainer = () => {
   const {appService} = useContext(GlobalContext);
   const vcMetaService = appService.children.get('vcMeta')!!;
   const isBindingSuccess = useSelector(
@@ -18,6 +19,9 @@ export const UseWalletBindingSuccess = () => {
   };
   return {
     isBindingSuccess,
+    verificationStatus: useSelector(vcMetaService, selectVerificationStatus),
     DISMISS,
+    RESET_VERIFICATION_STATUS: () =>
+      vcMetaService?.send(VcMetaEvents.RESET_VERIFICATION_STATUS(null)),
   };
 };

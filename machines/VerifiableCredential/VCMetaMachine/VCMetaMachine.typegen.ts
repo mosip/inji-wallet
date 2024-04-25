@@ -45,6 +45,7 @@ export interface Typegen0 {
     resetInProgressVcsDownloaded: 'RESET_IN_PROGRESS_VCS_DOWNLOADED';
     resetTamperedVcs: 'REMOVE_TAMPERED_VCS';
     resetVerificationErrorMessage: 'RESET_VERIFY_ERROR';
+    resetVerificationStatus: 'RESET_VERIFICATION_STATUS';
     resetWalletBindingSuccess: 'RESET_WALLET_BINDING_SUCCESS';
     sendBackupEvent: 'done.invoke.vcMeta.ready.tamperedVCs.triggerAutoBackupForTamperedVcDeletion:invocation[0]';
     setDownloadedVc: 'VC_DOWNLOADED';
@@ -55,6 +56,7 @@ export interface Typegen0 {
     setReceivedVcsMetadata: 'STORE_RESPONSE';
     setUpdatedVcMetadatas: 'VC_METADATA_UPDATED';
     setVerificationErrorMessage: 'VERIFY_VC_FAILED';
+    setVerificationStatus: 'SET_VERIFICATION_STATUS';
     setWalletBindingSuccess: 'WALLET_BINDING_SUCCESS';
     updateMyVcsMetadata: 'VC_METADATA_UPDATED';
   };

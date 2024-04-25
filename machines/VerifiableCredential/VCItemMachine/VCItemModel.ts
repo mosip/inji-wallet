@@ -4,7 +4,7 @@ import {VCMetadata} from '../../../shared/VCMetadata';
 import {VerifiableCredential, WalletBindingResponse} from '../VCMetaMachine/vc';
 import {CommunicationDetails} from '../../../shared/Utils';
 import {VCItemEvents} from './VCItemEvents';
-import {BannerStatus} from '../../../components/BannerNotification';
+import {vcVerificationBannerDetails} from '../../../components/BannerNotificationContainer';
 
 export const VCItemModel = createModel(
   {
@@ -25,7 +25,8 @@ export const VCItemModel = createModel(
     walletBindingResponse: null as unknown as WalletBindingResponse,
     isMachineInKebabPopupState: false,
     communicationDetails: null as unknown as CommunicationDetails,
-    verificationStatusType: null as BannerStatus | null,
+    verificationStatus: null as vcVerificationBannerDetails | null,
+    showVerificationStatusBanner: false as boolean,
   },
   {
     events: VCItemEvents,
