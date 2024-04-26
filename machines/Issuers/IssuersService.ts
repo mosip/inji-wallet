@@ -78,8 +78,17 @@ export const IssuersService = () => {
             TelemetryConstants.Screens.webViewPage,
         ),
       );
+      let supportedScopes: [string];
+      if (Object.keys(context.selectedCredentialType).length === 0) {
+        supportedScopes = context.selectedIssuer.scopes_supported;
+      } else {
+        supportedScopes = [context.selectedCredentialType['scope']];
+      }
       return await authorize(
-        constructAuthorizationConfiguration(context.selectedIssuer),
+        constructAuthorizationConfiguration(
+          context.selectedIssuer,
+          supportedScopes,
+        ),
       );
     },
     generateKeyPair: async () => {
