@@ -1,11 +1,11 @@
 import { assign, send, sendParent } from "xstate";
-import i18n from "../i18n";
-import { VCShareFlowType } from "../shared/Utils";
-import { parseMetadatas } from "../shared/VCMetadata";
-import { FACE_AUTH_CONSENT, MY_VCS_STORE_KEY } from "../shared/constants";
-import { getBindingCertificateConstant } from "../shared/keystore/SecureKeystore";
-import { VC, linkTransactionResponse } from "./VerifiableCredential/VCMetaMachine/vc";
-import { StoreEvents } from "./store";
+import i18n from "../../i18n";
+import { VCShareFlowType } from "../../shared/Utils";
+import { parseMetadatas } from "../../shared/VCMetadata";
+import { FACE_AUTH_CONSENT, MY_VCS_STORE_KEY } from "../../shared/constants";
+import { getBindingCertificateConstant } from "../../shared/keystore/SecureKeystore";
+import { VC, linkTransactionResponse } from "../VerifiableCredential/VCMetaMachine/vc";
+import { StoreEvents } from "../store";
 import { QrLoginmodel } from "./QrLoginModel";
 
 

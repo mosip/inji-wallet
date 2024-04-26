@@ -8,7 +8,7 @@ import { FACE_AUTH_CONSENT, isAndroid, DEFAULT_QR_HEADER, MY_VCS_STORE_KEY, MY_L
 import { getIdType } from "../../../shared/openId4VCI/Utils";
 import { TelemetryConstants } from "../../../shared/telemetry/TelemetryConstants";
 import { sendImpressionEvent, getImpressionEventData, sendEndEvent, getEndEventData, sendErrorEvent, getErrorEventData, sendStartEvent, getStartEventData } from "../../../shared/telemetry/TelemetryUtils";
-import { createQrLoginMachine } from "../../QrLoginMachine";
+import { createQrLoginMachine } from "../../QrLogin/QrLoginMachine";
 import { VcMetaEvents } from "../../VerifiableCredential/VCMetaMachine/VCMetaEvents";
 import { ActivityLogEvents } from "../../activityLog";
 import { StoreEvents } from "../../store";

@@ -1,9 +1,9 @@
 import { createModel } from "xstate/lib/model";
-import { AppServices } from "../shared/GlobalContext";
-import { VCShareFlowType } from "../shared/Utils";
-import { VCMetadata } from "../shared/VCMetadata";
+import { AppServices } from "../../shared/GlobalContext";
+import { VCShareFlowType } from "../../shared/Utils";
+import { VCMetadata } from "../../shared/VCMetadata";
 import { QrLoginEvents } from "./QrLoginEvents";
-import { VC, linkTransactionResponse } from "./VerifiableCredential/VCMetaMachine/vc";
+import { VC, linkTransactionResponse } from "../VerifiableCredential/VCMetaMachine/vc";
 
 export const QrLoginmodel = createModel(
     {

@@ -1,8 +1,8 @@
-import {request} from '../shared/request';
-import getAllConfigurations, { API_URLS } from "../shared/api";
-import { ESIGNET_BASE_URL } from "../shared/constants";
-import { isHardwareKeystoreExists, getJWT } from "../shared/cryptoutil/cryptoUtil";
-import { getPrivateKey } from "../shared/keystore/SecureKeystore";
+import {request} from '../../shared/request';
+import getAllConfigurations, { API_URLS } from "../../shared/api";
+import { ESIGNET_BASE_URL } from "../../shared/constants";
+import { isHardwareKeystoreExists, getJWT } from "../../shared/cryptoutil/cryptoUtil";
+import { getPrivateKey } from "../../shared/keystore/SecureKeystore";
 
 export const QrLoginServices= {
     linkTransaction: async context => {

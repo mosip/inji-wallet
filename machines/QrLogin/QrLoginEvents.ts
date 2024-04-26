@@ -1,4 +1,4 @@
-import { VC } from "./VerifiableCredential/VCMetaMachine/vc";
+import { VC } from "../VerifiableCredential/VCMetaMachine/vc";
 
 export const QrLoginEvents= {
     SELECT_VC: (vc: VC) => ({vc}),

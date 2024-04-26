@@ -2,12 +2,12 @@ import {
   ActorRefFrom,
   EventFrom
 } from 'xstate';
-import { AppServices } from '../shared/GlobalContext';
-import { TelemetryConstants } from '../shared/telemetry/TelemetryConstants';
+import { AppServices } from '../../shared/GlobalContext';
+import { TelemetryConstants } from '../../shared/telemetry/TelemetryConstants';
 import {
   getEndEventData,
   sendEndEvent,
-} from '../shared/telemetry/TelemetryUtils';
+} from '../../shared/telemetry/TelemetryUtils';
 import { QrLoginActions } from './QrLoginActions';
 import { QrLoginmodel } from './QrLoginModel';
 import { QrLoginServices } from './QrLoginServices';

@@ -1,4 +1,4 @@
-import { VCShareFlowType } from "../shared/Utils";
+import { VCShareFlowType } from "../../shared/Utils";
 
 export const QrLOginGuards={
     showFaceAuthConsentScreen: context => {

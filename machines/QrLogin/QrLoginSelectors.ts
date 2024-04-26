@@ -1,6 +1,6 @@
 import { StateFrom } from "xstate";
-import { getMosipLogo } from "../components/VC/common/VCUtils";
-import { VCMetadata } from "../shared/VCMetadata";
+import { getMosipLogo } from "../../components/VC/common/VCUtils";
+import { VCMetadata } from "../../shared/VCMetadata";
 import { qrLoginMachine } from "./QrLoginMachine";
 
 type State = StateFrom<typeof qrLoginMachine>;

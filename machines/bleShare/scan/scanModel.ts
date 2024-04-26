@@ -5,7 +5,7 @@ import { createModel } from "xstate/lib/model";
 import { DeviceInfo } from "../../../components/DeviceInfoList";
 import { AppServices } from "../../../shared/GlobalContext";
 import { VCShareFlowType } from "../../../shared/Utils";
-import { qrLoginMachine } from "../../QrLoginMachine";
+import { qrLoginMachine } from "../../QrLogin/QrLoginMachine";
 import { VC } from "../../VerifiableCredential/VCMetaMachine/vc";
 import { ActivityLogType } from "../../activityLog";
 import { BLEError } from "../types";

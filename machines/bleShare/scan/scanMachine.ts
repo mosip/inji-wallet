@@ -10,7 +10,7 @@ import {
   getStartEventData,
   sendStartEvent
 } from '../../../shared/telemetry/TelemetryUtils';
-import { qrLoginMachine } from '../../QrLoginMachine';
+import { qrLoginMachine } from '../../QrLogin/QrLoginMachine';
 // @ts-ignore
 import { ScanActions } from './scanActions';
 import { ScanGuards } from './scanGuards';

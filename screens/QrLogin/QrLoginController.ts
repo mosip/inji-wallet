@@ -1,8 +1,8 @@
 import {useSelector} from '@xstate/react';
 import {useContext, useState} from 'react';
 import {ActorRefFrom} from 'xstate';
+import { QrLoginEvents } from '../../machines/QrLogin/QrLoginMachine';
 import {
-  QrLoginEvents,
   selectClientName,
   selectErrorMessage,
   selectEssentialClaims,
@@ -25,7 +25,7 @@ import {
   selectVoluntaryClaims,
   selectCredential,
   selectVerifiableCredentialData,
-} from '../../machines/QrLoginMachine';
+} from '../../machines/QrLogin/QrLoginSelectors';
 import {selectBindedVcsMetadata} from '../../machines/VerifiableCredential/VCMetaMachine/VCMetaSelectors';
 import {GlobalContext} from '../../shared/GlobalContext';
 import {QrLoginProps} from './QrLogin';
