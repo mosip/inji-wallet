@@ -17,10 +17,10 @@
 "sendConsent": "done.invoke.QrLogin.sendingConsent:invocation[0]";
         };
         missingImplementations: {
-          actions: never;
+          actions: "SetErrorMessage" | "expandLinkTransResp" | "forwardToParent" | "loadMyVcs" | "loadThumbprint" | "resetFlowType" | "resetLinkTransactionId" | "resetSelectedVc" | "resetSelectedVoluntaryClaims" | "setClaims" | "setConsentClaims" | "setFaceAuthConsent" | "setLinkedTransactionId" | "setMyVcs" | "setScanData" | "setSelectedVc" | "setShowFaceAuthConsent" | "setThumbprint" | "setlinkTransactionResponse" | "storeShowFaceAuthConsent";
           delays: never;
           guards: never;
-          services: never;
+          services: "linkTransaction" | "sendAuthenticate" | "sendConsent";
         };
         eventsCausingActions: {
           "SetErrorMessage": "error.platform.QrLogin.linkTransaction:invocation[0]" | "error.platform.QrLogin.sendingAuthenticate:invocation[0]" | "error.platform.QrLogin.sendingConsent:invocation[0]";

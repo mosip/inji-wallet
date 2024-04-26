@@ -13,7 +13,7 @@ import {
   selectQrLoginRef,
   selectIsQuickShareDone,
   selectShowQuickShareSuccessBanner,
-} from '../../machines/bleShare/scan/selectors';
+} from '../../machines/bleShare/scan/scanSelectors';
 import {
   selectIsBluetoothDenied,
   selectIsNearByDevicesPermissionDenied,

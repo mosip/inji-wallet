@@ -26,10 +26,10 @@
 "startConnection": "done.invoke.scan.connecting:invocation[0]";
         };
         missingImplementations: {
-          actions: never;
+          actions: "clearUri" | "enableLocation" | "getFaceAuthConsent" | "loadMetaDataToMemory" | "loadVCDataToMemory" | "logFailedVerification" | "logShared" | "openAppPermission" | "openBluetoothSettings" | "refreshVCs" | "registerLoggers" | "removeLoggers" | "resetFaceCaptureBannerStatus" | "resetFlowType" | "resetSelectedVc" | "resetShowQuickShareSuccessBanner" | "sendBLEConnectionErrorEvent" | "sendScanData" | "sendVCShareFlowCancelEndEvent" | "sendVCShareFlowTimeoutEndEvent" | "sendVcShareSuccessEvent" | "sendVcSharingStartEvent" | "setBleError" | "setChildRef" | "setFlowType" | "setLinkCode" | "setQuickShareData" | "setReadyForBluetoothStateCheck" | "setReceiverInfo" | "setSelectedVc" | "setSenderInfo" | "setShareLogTypeUnverified" | "setShareLogTypeVerified" | "setShowFaceAuthConsent" | "setShowQuickShareSuccessBanner" | "setUri" | "storeLoginItem" | "storeShowFaceAuthConsent" | "storingActivityLog" | "updateFaceCaptureBannerStatus" | "updateShowFaceAuthConsent";
           delays: never;
-          guards: never;
-          services: never;
+          guards: "isFlowTypeMiniViewShare" | "isFlowTypeMiniViewShareWithSelfie" | "isFlowTypeSimpleShare" | "isIOS" | "isMinimumStorageRequiredForAuditEntryReached" | "isOpenIdQr" | "isQrLogin" | "isQuickShare" | "showFaceAuthConsentScreen" | "uptoAndroid11";
+          services: "checkBluetoothPermission" | "checkBluetoothState" | "checkLocationPermission" | "checkLocationStatus" | "checkNearByDevicesPermission" | "checkStorageAvailability" | "disconnect" | "monitorConnection" | "requestBluetooth" | "requestNearByDevicesPermission" | "requestToEnableLocationPermission" | "sendVc" | "startConnection";
         };
         eventsCausingActions: {
           "clearUri": "STORE_RESPONSE";

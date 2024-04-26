@@ -9,7 +9,7 @@ import {
   selectReceiverInfo,
   selectVcName,
   selectVerifiableCredentialData,
-} from '../../machines/bleShare/scan/selectors';
+} from '../../machines/bleShare/scan/scanSelectors';
 import {
   selectIsCancelling,
   selectIsInvalidIdentity,
