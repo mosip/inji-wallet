@@ -17,8 +17,8 @@ import {
 } from '../../machines/bleShare/commonSelectors';
 import {
   ScanEvents,
-  selectIsFaceVerificationConsent,
 } from '../../machines/bleShare/scan/scanMachine';
+import { selectIsFaceVerificationConsent } from '../../machines/bleShare/scan/scanSelectors';
 import {VCShareFlowType} from '../../shared/Utils';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
 import {RootRouteProps} from '../../routes';

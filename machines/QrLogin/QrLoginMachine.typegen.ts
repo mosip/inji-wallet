@@ -19,7 +19,7 @@
         missingImplementations: {
           actions: "SetErrorMessage" | "expandLinkTransResp" | "forwardToParent" | "loadMyVcs" | "loadThumbprint" | "resetFlowType" | "resetLinkTransactionId" | "resetSelectedVc" | "resetSelectedVoluntaryClaims" | "setClaims" | "setConsentClaims" | "setFaceAuthConsent" | "setLinkedTransactionId" | "setMyVcs" | "setScanData" | "setSelectedVc" | "setShowFaceAuthConsent" | "setThumbprint" | "setlinkTransactionResponse" | "storeShowFaceAuthConsent";
           delays: never;
-          guards: never;
+          guards: "isConsentAlreadyCaptured" | "isSimpleShareFlow" | "showFaceAuthConsentScreen";
           services: "linkTransaction" | "sendAuthenticate" | "sendConsent";
         };
         eventsCausingActions: {

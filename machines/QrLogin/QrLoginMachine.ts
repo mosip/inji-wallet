@@ -11,10 +11,11 @@ import {
 import { QrLoginActions } from './QrLoginActions';
 import { QrLoginmodel } from './QrLoginModel';
 import { QrLoginServices } from './QrLoginServices';
+import { QrLoginGuards } from './QrLoginGuards';
 
 const model = QrLoginmodel;
 
-const QrLoginEvents = model.events;
+export const QrLoginEvents = model.events;
 export type QrLoginRef = ActorRefFrom<typeof qrLoginMachine>;
 
 export const qrLoginMachine =
@@ -254,7 +255,7 @@ export const qrLoginMachine =
     {
       actions:QrLoginActions(model),
       services:QrLoginServices,
-      guards: 
+      guards: QrLoginGuards,
     },
   );
 
