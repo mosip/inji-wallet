@@ -166,7 +166,6 @@ public class DetailedVcViewPage extends BasePage{
     }
 
     public HomePage clickOnQrCrossIcon() {
-        if(isElementDisplayed(qrCloseIcon))
         clickOnElement(qrCloseIcon);
         return new HomePage(driver);
     }
@@ -177,7 +176,6 @@ public class DetailedVcViewPage extends BasePage{
     }
 
     public void clickOnQrCodeButton() {
-        if (isElementDisplayed(detailedVcViewPageQr))
         clickOnElement(detailedVcViewPageQr);
         new PleaseConfirmPopupPage(driver);
     }
