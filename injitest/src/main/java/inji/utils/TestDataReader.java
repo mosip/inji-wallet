@@ -49,7 +49,7 @@ public class TestDataReader {
             case "dateOfBirth":
                 return "01/01/1996";
             case "dateOfBirthForVidEsignet":
-                return "04/15/1992";
+                return "1996/01/01";
             case "aid":
                 return UinGenerationUtil.getRandomAidData();
             case "emailPassword":

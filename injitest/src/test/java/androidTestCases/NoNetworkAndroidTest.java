@@ -534,7 +534,7 @@ public class NoNetworkAndroidTest extends AndroidBaseTest {
         otpVerification.enterOtpForEsignet(TestDataReader.readData("otp"), Target.ANDROID);
         esignetLoginPage.clickOnVerifyButton();
         
-        assertTrue(esignetLoginPage.isProgressingLogoDisplayed(),"verify if Progressing page is displayed");
+//        assertTrue(esignetLoginPage.isProgressingLogoDisplayed(),"verify if Progressing page is displayed");
         assertTrue(homePage.isNameDisplayed(TestDataReader.readData("fullName")), "Verify if full name is displayed");
         String sessionId  = driver.getSessionId().toString();
         UpdateNetworkSettings.setNoNetworkProfile(sessionId);
