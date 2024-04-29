@@ -191,19 +191,10 @@ export const VCItemMachine = model.createMachine(
             },
           },
           showingWalletBindingError: {
-            on: {
-              CANCEL: [
-                {
-                  cond: context => context.isMachineInKebabPopupState,
-                  actions: ['unSetError'],
-                  target: '#vc-item-machine.kebabPopUp',
-                },
-                {
-                  actions: ['unSetError'],
-                  target: '#vc-item-machine.idle',
-                },
-              ],
-            },
+            always:{
+              target:'#vc-item-machine.walletBinding.acceptingBindingOTP'
+            }
+            
           },
           acceptingBindingOTP: {
             entry: ['unSetOTP'],
@@ -252,7 +243,7 @@ export const VCItemMachine = model.createMachine(
                       'sendWalletBindingErrorEvent',
                     ],
                     target:
-                      '#vc-item-machine.walletBinding.showingWalletBindingError',
+                      '#vc-item-machine.walletBinding.acceptingBindingOTP',
                   },
                 },
               },

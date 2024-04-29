@@ -10,6 +10,9 @@ import {ActorRefFrom} from 'xstate';
 import {VCMetadata} from '../../../shared/VCMetadata';
 import {TelemetryConstants} from '../../../shared/telemetry/TelemetryConstants';
 import {VCItemMachine} from '../../../machines/VerifiableCredential/VCItemMachine/VCItemMachine';
+import { useViewVcModal } from '../ViewVcModalController';
+import { useHomeScreen } from '../HomeScreenController';
+import { useReceivedVcsTab } from '../ReceivedVcsTabController';
 
 export const WalletVerified: React.FC = () => {
   return (
@@ -47,17 +50,12 @@ export const WalletBinding: React.FC<WalletBindingProps> = props => {
         />
       )}
 
-      <MessageOverlay
-        testID="walletBindingError"
-        isVisible={controller.isWalletBindingError}
-        title={controller.walletBindingError}
-        onButtonPress={controller.CANCEL}
-      />
+      {
       <MessageOverlay
         isVisible={controller.walletBindingInProgress}
         title={t('inProgress')}
         progress
-      />
+      /> }
     </>
   );
 };
