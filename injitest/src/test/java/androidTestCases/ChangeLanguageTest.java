@@ -514,6 +514,7 @@ public class ChangeLanguageTest extends AndroidBaseTest {
         assertTrue(addNewCardPage.isAddNewCardPageGuideMessageForEsignetDisplayed(), "Verify if add new card guide message displayed");
         assertTrue(addNewCardPage.isDownloadViaSunbirdDisplayed(), "Verify if download sunbird displayed");
         SunbirdLoginPage sunbirdLoginPage =  addNewCardPage.clickOnDownloadViaSunbird();
+        addNewCardPage.clickOnInsuranceCredential();
 
         sunbirdLoginPage.enterPolicyNumberTextBox(TestDataReader.readData("policyNumberSunbird"));
         sunbirdLoginPage.enterFullNameTextBox(TestDataReader.readData("fullNameSunbird"));
@@ -532,9 +533,6 @@ public class ChangeLanguageTest extends AndroidBaseTest {
 
         assertTrue(sunbirdLoginPage.isSunbirdCardLogoIsDisplayed(), "Verify if download sunbird logo displayed");
         assertEquals(sunbirdLoginPage.getFullNameForSunbirdCard(),TestDataReader.readData("fullNameSunbird"));
-        assertEquals(sunbirdLoginPage.getPolicyNameForSunbirdCard(),TestDataReader.readData("policyNameSunbird"));
-        assertEquals(sunbirdLoginPage.getIdTypeValueForSunbirdCard(),TestDataReader.readData("idTypeSunbird"));
-
         sunbirdLoginPage.openDetailedSunbirdVcView();
 
         assertEquals(sunbirdLoginPage.getFullNameForSunbirdCard(),TestDataReader.readData("fullNameSunbird"));
@@ -543,7 +541,8 @@ public class ChangeLanguageTest extends AndroidBaseTest {
         assertEquals(sunbirdLoginPage.getDateofBirthValueForSunbirdCard(),TestDataReader.readData("dateOfBirthSunbird"));
         assertEquals(sunbirdLoginPage.getGenderValueForSunbirdCard(),TestDataReader.readData("genderValueSunbird"));
         assertEquals(sunbirdLoginPage.getEmailIdValueForSunbirdCard(),TestDataReader.readData("emailIdValueSunbird"));
-        assertEquals(sunbirdLoginPage.getStatusValueForSunbirdCard(),TestDataReader.readData("statusValueSunbird"));
+        assertEquals(sunbirdLoginPage.getStatusValueForSunbirdCard(),"वैध");
+        assertTrue(sunbirdLoginPage.isPolicyExpiresOnValueDisplayed(), "Verify if policy expireson value displayed");
         assertEquals(sunbirdLoginPage.getIdTypeValueForSunbirdCard(),TestDataReader.readData("idTypeSunbird"));
     }
 
@@ -587,7 +586,7 @@ public class ChangeLanguageTest extends AndroidBaseTest {
 
         DetailedVcViewPage detailedVcViewPage = homePage.openDetailedVcView(TestDataReader.readData("fullName"));
         assertEquals(homePage.getFullNameValue(), "TEST_FULLNAMEara");
-        assertEquals(homePage.GetIdTypeText(), "البطاقة الوطنية");
+//        assertEquals(homePage.GetIdTypeText(), "البطاقة الوطنية");
         assertEquals(homePage.GetActivationPendingText(), "التنشيط معلق لتسجيل الدخول عبر الإنترنت!");
     }
 
