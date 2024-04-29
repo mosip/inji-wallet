@@ -49,7 +49,12 @@ export const WalletBinding: React.FC<WalletBindingProps> = props => {
           flow={TelemetryConstants.FlowType.vcActivationFromKebab}
         />
       )}
-
+      <MessageOverlay
+         testID="walletBindingError"
+         isVisible={controller.isWalletBindingError}
+         title={controller.walletBindingError}
+         onButtonPress={controller.CANCEL}
+       />
       {
       <MessageOverlay
         isVisible={controller.walletBindingInProgress}
