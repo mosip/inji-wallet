@@ -247,9 +247,14 @@ export const VCItemActions = model => {
 
     setErrorAsWalletBindingError: assign({
       error: () =>
-        i18n.t('errors.invalidOtp', {
+        i18n.t('errors.genericError', {
           ns: 'common',
         }),
+    }),
+    setErrorAsInvalidOtpError:assign({
+      error:()=>i18n.t('errors.invalidOtp', {
+        ns: 'common',
+      }),
     }),
     setErrorAsVerificationError: assign({
       //todo handle error message from different actions
