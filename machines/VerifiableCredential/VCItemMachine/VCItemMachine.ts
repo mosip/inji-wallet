@@ -293,7 +293,7 @@ export const VCItemMachine = model.createMachine(
               onError: [
                 {
                   actions: [
-                    'setErrorAsWalletBindingError',
+                    'setErrorAsInvalidOtpError',
                     'sendWalletBindingErrorEvent',
                     'logWalletBindingFailure',
                   ],

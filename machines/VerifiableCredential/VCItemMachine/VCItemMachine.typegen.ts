@@ -42,7 +42,7 @@
 "verifyCredential": "done.invoke.vc-item-machine.verifyingCredential:invocation[0]";
         };
         missingImplementations: {
-          actions: "addVcToInProgressDownloads" | "closeViewVcModal" | "incrementDownloadCounter" | "logDownloaded" | "logRemovedVc" | "logWalletBindingFailure" | "logWalletBindingSuccess" | "refreshAllVcs" | "removeVcFromInProgressDownloads" | "removeVcItem" | "removeVcMetaDataFromStorage" | "removeVcMetaDataFromVcMachineContext" | "requestVcContext" | "resetIsMachineInKebabPopupState" | "resetPrivateKey" | "sendActivationStartEvent" | "sendActivationSuccessEvent" | "sendBackupEvent" | "sendDownloadLimitExpire" | "sendTelemetryEvents" | "sendUserCancelledActivationFailedEndEvent" | "sendVcUpdated" | "sendVerificationError" | "sendWalletBindingErrorEvent" | "sendWalletBindingSuccess" | "setCommunicationDetails" | "setContext" | "setDownloadInterval" | "setErrorAsVerificationError" | "setErrorAsWalletBindingError" | "setMaxDownloadCount" | "setOTP" | "setPinCard" | "setPrivateKey" | "setPublicKey" | "setThumbprintForWalletBindingId" | "setVcKey" | "setVcMetadata" | "setWalletBindingResponse" | "storeContext" | "storeVcInContext" | "unSetBindingTransactionId" | "unSetError" | "unSetOTP";
+          actions: "addVcToInProgressDownloads" | "closeViewVcModal" | "incrementDownloadCounter" | "logDownloaded" | "logRemovedVc" | "logWalletBindingFailure" | "logWalletBindingSuccess" | "refreshAllVcs" | "removeVcFromInProgressDownloads" | "removeVcItem" | "removeVcMetaDataFromStorage" | "removeVcMetaDataFromVcMachineContext" | "requestVcContext" | "resetIsMachineInKebabPopupState" | "resetPrivateKey" | "sendActivationStartEvent" | "sendActivationSuccessEvent" | "sendBackupEvent" | "sendDownloadLimitExpire" | "sendDownloadingFailedToVcMeta" | "sendTelemetryEvents" | "sendUserCancelledActivationFailedEndEvent" | "sendVcUpdated" | "sendVerificationError" | "sendWalletBindingErrorEvent" | "sendWalletBindingSuccess" | "setCommunicationDetails" | "setContext" | "setDownloadInterval" | "setErrorAsInvalidOtpError" | "setErrorAsVerificationError" | "setErrorAsWalletBindingError" | "setMaxDownloadCount" | "setOTP" | "setPinCard" | "setPrivateKey" | "setPublicKey" | "setThumbprintForWalletBindingId" | "setVcKey" | "setVcMetadata" | "setWalletBindingResponse" | "storeContext" | "storeVcInContext" | "unSetBindingTransactionId" | "unSetError" | "unSetOTP";
           delays: never;
           guards: "hasCredential" | "isCustomSecureKeystore" | "isDownloadAllowed" | "isSignedIn";
           services: "addWalletBindingId" | "checkDownloadExpiryLimit" | "checkStatus" | "downloadCredential" | "generateKeyPair" | "isUserSignedAlready" | "loadDownloadLimitConfig" | "requestBindingOTP" | "updatePrivateKey" | "verifyCredential";
@@ -56,7 +56,7 @@
 "logWalletBindingFailure": "error.platform.vc-item-machine.walletBinding.addKeyPair:invocation[0]" | "error.platform.vc-item-machine.walletBinding.addingWalletBindingId:invocation[0]" | "error.platform.vc-item-machine.walletBinding.requestingBindingOTP:invocation[0]" | "error.platform.vc-item-machine.walletBinding.updatingPrivateKey:invocation[0]";
 "logWalletBindingSuccess": "done.invoke.vc-item-machine.walletBinding.addingWalletBindingId:invocation[0]" | "done.invoke.vc-item-machine.walletBinding.updatingPrivateKey:invocation[0]";
 "refreshAllVcs": "STORE_RESPONSE" | "done.invoke.vc-item-machine.kebabPopUp.triggerAutoBackup:invocation[0]";
-"removeVcFromInProgressDownloads": "STORE_RESPONSE";
+"removeVcFromInProgressDownloads": "STORE_RESPONSE" | "error.platform.downloadCredential";
 "removeVcItem": "CONFIRM";
 "removeVcMetaDataFromStorage": "STORE_ERROR" | "error.platform.vc-item-machine.verifyingCredential:invocation[0]";
 "removeVcMetaDataFromVcMachineContext": "DISMISS";
@@ -67,6 +67,7 @@
 "sendActivationSuccessEvent": "done.invoke.vc-item-machine.walletBinding.addingWalletBindingId:invocation[0]" | "done.invoke.vc-item-machine.walletBinding.updatingPrivateKey:invocation[0]";
 "sendBackupEvent": "done.invoke.vc-item-machine.kebabPopUp.triggerAutoBackup:invocation[0]" | "done.invoke.vc-item-machine.verifyingCredential.triggerAutoBackupForVcDownload:invocation[0]";
 "sendDownloadLimitExpire": "FAILED" | "error.platform.vc-item-machine.loadVc.loadVcFromServer.verifyingDownloadLimitExpiry:invocation[0]";
+"sendDownloadingFailedToVcMeta": "error.platform.downloadCredential";
 "sendTelemetryEvents": "STORE_RESPONSE";
 "sendUserCancelledActivationFailedEndEvent": "DISMISS";
 "sendVcUpdated": "PIN_CARD";
@@ -76,8 +77,9 @@
 "setCommunicationDetails": "done.invoke.vc-item-machine.walletBinding.acceptingBindingOTP.resendOTP:invocation[0]" | "done.invoke.vc-item-machine.walletBinding.requestingBindingOTP:invocation[0]";
 "setContext": "CREDENTIAL_DOWNLOADED" | "GET_VC_RESPONSE";
 "setDownloadInterval": "done.invoke.vc-item-machine.loadVc.loadVcFromServer.loadDownloadLimitConfig:invocation[0]";
+"setErrorAsInvalidOtpError": "error.platform.vc-item-machine.walletBinding.addingWalletBindingId:invocation[0]";
 "setErrorAsVerificationError": "error.platform.vc-item-machine.verifyingCredential:invocation[0]";
-"setErrorAsWalletBindingError": "error.platform.vc-item-machine.walletBinding.acceptingBindingOTP.resendOTP:invocation[0]" | "error.platform.vc-item-machine.walletBinding.addKeyPair:invocation[0]" | "error.platform.vc-item-machine.walletBinding.addingWalletBindingId:invocation[0]" | "error.platform.vc-item-machine.walletBinding.requestingBindingOTP:invocation[0]" | "error.platform.vc-item-machine.walletBinding.updatingPrivateKey:invocation[0]";
+"setErrorAsWalletBindingError": "error.platform.vc-item-machine.walletBinding.acceptingBindingOTP.resendOTP:invocation[0]" | "error.platform.vc-item-machine.walletBinding.addKeyPair:invocation[0]" | "error.platform.vc-item-machine.walletBinding.requestingBindingOTP:invocation[0]" | "error.platform.vc-item-machine.walletBinding.updatingPrivateKey:invocation[0]";
 "setMaxDownloadCount": "done.invoke.vc-item-machine.loadVc.loadVcFromServer.loadDownloadLimitConfig:invocation[0]";
 "setOTP": "INPUT_OTP";
 "setPinCard": "PIN_CARD";
