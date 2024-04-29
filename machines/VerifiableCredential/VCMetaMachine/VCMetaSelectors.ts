@@ -73,3 +73,7 @@ export function selectMyVcs(state: State) {
 export function selectVerificationErrorMessage(state: State) {
   return state.context.verificationErrorMessage;
 }
+
+export function selectIsDownloadingFailed(state: State) {
+  return state.context.DownloadingCredentialsFailed;
+}

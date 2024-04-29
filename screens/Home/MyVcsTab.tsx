@@ -7,11 +7,7 @@ import {HomeScreenTabProps} from './HomeScreen';
 import {AddVcModal} from './MyVcs/AddVcModal';
 import {GetVcModal} from './MyVcs/GetVcModal';
 import {useTranslation} from 'react-i18next';
-import {
-  BANNER_TYPE_ERROR,
-  BANNER_TYPE_SUCCESS,
-  GET_INDIVIDUAL_ID,
-} from '../../shared/constants';
+import {BANNER_TYPE_SUCCESS, GET_INDIVIDUAL_ID} from '../../shared/constants';
 import {MessageOverlay} from '../../components/MessageOverlay';
 import {VcItemContainer} from '../../components/VC/VcItemContainer';
 import {BannerNotification} from '../../components/BannerNotification';
@@ -215,15 +211,6 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = props => {
             }}
             key={'downloadingVcPopup'}
             testId={'downloadingVcPopup'}
-          />
-        )}
-        {controller.isSavingFailedInIdle && (
-          <BannerNotification
-            type={BANNER_TYPE_ERROR}
-            message={t('downloadingVcFailed')}
-            onClosePress={controller.DISMISS}
-            key={'downloadingVcFailedPopup'}
-            testId={'downloadingVcFailedPopup'}
           />
         )}
         <Column fill pY={2} pX={8}>

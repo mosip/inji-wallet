@@ -138,7 +138,7 @@ fileignoreconfig:
   - filename: .github/workflows/ui-automation.yml
     checksum: 0b26a5dcb7524ba15d6aaeaf04f2ef94be9d25ef702d9072d6628bcd58e50f36
   - filename: components/BannerNotificationContainer.tsx
-    checksum: a98ff1a0dd96d3ead4b8191320be8b0c7a558cda6b0de39f1c62aaa8efef9fb8
+    checksum: 3788503c96cbd425a253ff3f589dcc0c9e2ec4b365e9e567858c52099909f0e0
   - filename: components/HelpScreen.tsx
     checksum: bbc69143bd37d065bba3800396301db5a0318e8b7ba51ecd49142dda68783a01
   - filename: injitest/README.md
@@ -236,7 +236,7 @@ fileignoreconfig:
   - filename: machines/IssuersMachine.typegen.ts
     checksum: 959fef1e51f0f3d5b12933f7b362e96401fb776ab12f0d13c6e542918b2ff255
   - filename: screens/Home/MyVcsTab.tsx
-    checksum: 2b40abfa481b73834ec423242e77b20d725579e7323011f27cfd571ba013fe96
+    checksum: 977ebd7c7da214f1d214cb3568ca0b1e4f2463bb932e1149e2cf6aa90f2c3f9c
   - filename: machines/store.ts
     checksum: 12defe49a865358a5212d03de75d13877e7c5cb75f5038c96abd3726b36c18dc
   - filename: machines/store.typegen.ts
@@ -244,7 +244,7 @@ fileignoreconfig:
   - filename: machines/VerifiableCredential/VCMetaMachine/VCMetaMachine.ts
     checksum: c80ba680932ae3af7d1238f4db0b3f5e12c343c79335f0cd235f40068bbc03cb
   - filename: machines/VerifiableCredential/VCMetaMachine/VCMetaActions.ts
-    checksum: 528b2eb9640765896b25c3ac054d5b4015d9c1c255fb744308a766108d361c1d
+    checksum: f7f2afe0ba50449a8cf2b7eef87b18082ab1cb0db287e198a709082046e5cb08
   - filename: machines/VerifiableCredential/VCMetaMachine/VCMetaSelectors.ts
-    checksum: 56f1a1d3a9272e1f152b0273535287e689abd5a01cdb34a357a44b71adb4de0b
+    checksum: 648bf8c8cef0477f31b2a3f2b916a530cb55cf961dafa7c48992d70d7eb2b821
     version: ""
