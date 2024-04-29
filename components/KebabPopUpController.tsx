@@ -20,13 +20,13 @@ import {VCMetadata} from '../shared/VCMetadata';
 import {ScanEvents} from '../machines/bleShare/scan/scanMachine';
 import {BOTTOM_TAB_ROUTES, ScanStackParamList} from '../routes/routesConstants';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
-import {MainBottomTabParamList} from '../routes/main';
+import { MainBottomTabParamList } from '../routes/routeTypes';
 import {selectIsScanning} from '../machines/bleShare/scan/scanSelectors';
 import {
   VCItemEvents,
   VCItemMachine,
 } from '../machines/VerifiableCredential/VCItemMachine/VCItemMachine';
-import {selectError} from '../machines/biometrics';
+import { selectOtpError } from '../machines/VerifiableCredential/VCItemMachine/VCItemSelectors';
 
 type ScanLayoutNavigation = NavigationProp<
   ScanStackParamList & MainBottomTabParamList
@@ -50,8 +50,8 @@ export function useKebabPopUp(props) {
     isAcceptingOtpInput: useSelector(service, selectAcceptingBindingOtp),
     isWalletBindingError: useSelector(service, selectShowWalletBindingError),
     walletBindingResponse: useSelector(service, selectWalletBindingResponse),
-    otpError: useSelector(service, selectError),
-    walletBindingError: useSelector(service, selectError),
+    otpError: useSelector(service, selectOtpError),
+    walletBindingError: useSelector(service, selectOtpError), // merge otperror and this
     bindingAuthFailedError: useSelector(service, selectBindingAuthFailedError),
     isKebabPopUp: useSelector(service, selectKebabPopUp),
     isShowActivities: useSelector(service, selectShowActivities),

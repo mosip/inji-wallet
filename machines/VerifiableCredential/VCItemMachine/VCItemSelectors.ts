@@ -94,7 +94,7 @@ export function selectBindingAuthFailedError(state: State) {
 }
 
 export function selectAcceptingBindingOtp(state: State) {
-  return state.matches('vcUtilitiesState.walletBinding.acceptingBindingOTP');
+  return state.matches('walletBinding.acceptingBindingOTP') || state.matches('walletBinding.showingWalletBindingError');
 }
 
 export function selectWalletBindingInProgress(state: State) {
@@ -127,9 +127,7 @@ export function selectShowActivities(state: State) {
 }
 
 export function selectShowWalletBindingError(state: State) {
-  return state.matches(
-    'vcUtilitiesState.walletBinding.showingWalletBindingError',
-  );
+  return state.matches('walletBinding.acceptingBindingOTP');
 }
 
 export function selectVc(state: State) {

@@ -20,302 +20,289 @@ export const VCItemMachine = model.createMachine(
       context: model.initialContext,
       events: {} as EventFrom<typeof model>,
     },
+    on: {
+      REFRESH: {
+        target: 'loadVc',
+      },
+      UPDATE_VC_METADATA: {
+        actions: 'setVcMetadata',
+      },
+    },
     description:
       'This machine is spawned for every VC downloaded, and tracks its lifecycle.',
     id: machineName,
-    type: 'parallel',
+    initial: 'loadVc',
     states: {
-      vcUtilitiesState: {
-        on: {
-          REFRESH: {
-            target: '.loadVc',
-          },
-          UPDATE_VC_METADATA: {
-            actions: 'setVcMetadata',
-          },
-        },
-        initial: 'loadVc',
+      loadVc: {
+        initial: 'loadVcFromContext',
         states: {
-          loadVc: {
-            initial: 'loadVcFromContext',
+          loadVcFromContext: {
+            entry: ['requestVcContext'],
+            description: 'Fetch the VC data from the Memory.',
+            on: {
+              GET_VC_RESPONSE: [
+                {
+                  actions: ['setContext'],
+                  cond: 'hasCredential',
+                  target: `#vc-item-machine.idle`,
+                },
+                {
+                  actions: 'addVcToInProgressDownloads',
+                  target: 'loadVcFromServer',
+                },
+              ],
+              TAMPERED_VC: {
+                target: '#vc-item-machine.idle',
+              },
+            },
+          },
+          loadVcFromServer: {
+            description:
+              "Download VC data from the server. Uses polling method to check when it's available.",
+            initial: 'loadDownloadLimitConfig',
             states: {
-              loadVcFromContext: {
-                entry: ['requestVcContext'],
-                description: 'Fetch the VC data from the Memory.',
-                on: {
-                  GET_VC_RESPONSE: [
-                    {
-                      actions: ['setContext'],
-                      cond: 'hasCredential',
-                      target: `#vc-item-machine.vcUtilitiesState.idle`,
-                    },
-                    {
-                      actions: 'addVcToInProgressDownloads',
-                      target: 'loadVcFromServer',
-                    },
-                  ],
-                  TAMPERED_VC: {
-                    target: '#vc-item-machine.vcUtilitiesState.idle',
+              loadDownloadLimitConfig: {
+                invoke: {
+                  src: 'loadDownloadLimitConfig',
+                  onDone: {
+                    actions: ['setMaxDownloadCount', 'setDownloadInterval'],
+                    target: 'verifyingDownloadLimitExpiry',
                   },
                 },
               },
-              loadVcFromServer: {
-                description:
-                  "Download VC data from the server. Uses polling method to check when it's available.",
-                initial: 'loadDownloadLimitConfig',
-                states: {
-                  loadDownloadLimitConfig: {
-                    invoke: {
-                      src: 'loadDownloadLimitConfig',
-                      onDone: {
-                        actions: ['setMaxDownloadCount', 'setDownloadInterval'],
-                        target: 'verifyingDownloadLimitExpiry',
-                      },
-                    },
+              verifyingDownloadLimitExpiry: {
+                entry: ['incrementDownloadCounter'],
+                invoke: {
+                  src: 'checkDownloadExpiryLimit',
+                  onDone: {
+                    target: 'checkingStatus',
                   },
-                  verifyingDownloadLimitExpiry: {
-                    entry: ['incrementDownloadCounter'],
-                    invoke: {
-                      src: 'checkDownloadExpiryLimit',
-                      onDone: {
-                        target: 'checkingStatus',
-                      },
-                      onError: {
-                        actions: [
-                          log((_, event) => (event.data as Error).message),
-                          'sendDownloadLimitExpire',
-                        ],
-                      },
-                    },
+                  onError: {
+                    actions: [
+                      log((_, event) => (event.data as Error).message),
+                      'sendDownloadLimitExpire',
+                    ],
                   },
-                  checkingStatus: {
-                    invoke: {
-                      src: 'checkStatus',
-                      id: 'checkStatus',
-                    },
-                    on: {
-                      POLL: {
-                        actions: send('POLL_STATUS', {to: 'checkStatus'}),
-                      },
-                      DOWNLOAD_READY: {
-                        target: 'downloadingCredential',
-                      },
-                      FAILED: {
-                        actions: 'sendDownloadLimitExpire',
-                      },
-                    },
+                },
+              },
+              checkingStatus: {
+                invoke: {
+                  src: 'checkStatus',
+                  id: 'checkStatus',
+                },
+                on: {
+                  POLL: {
+                    actions: send('POLL_STATUS', {to: 'checkStatus'}),
                   },
-                  downloadingCredential: {
-                    invoke: {
-                      src: 'downloadCredential',
-                      id: 'downloadCredential',
-                      onError: {
-                        actions: [
-                          'sendDownloadingFailedToVcMeta',
-                          'removeVcFromInProgressDownloads',
-                        ],
-                      },
-                    },
-                    on: {
-                      POLL: [
-                        {
-                          cond: 'isDownloadAllowed',
-                          actions: [
-                            send('POLL_DOWNLOAD', {to: 'downloadCredential'}),
-                            'incrementDownloadCounter',
-                          ],
-                        },
-                        {
-                          target: 'verifyingDownloadLimitExpiry',
-                        },
+                  DOWNLOAD_READY: {
+                    target: 'downloadingCredential',
+                  },
+                  FAILED: {
+                    actions: 'sendDownloadLimitExpire',
+                  },
+                },
+              },
+              downloadingCredential: {
+                invoke: {
+                  src: 'downloadCredential',
+                  id: 'downloadCredential',
+                  onError: {
+                    actions: [
+                      'sendDownloadingFailedToVcMeta',
+                      'removeVcFromInProgressDownloads',
+                    ],
+                  },
+                },
+                on: {
+                  POLL: [
+                    {
+                      cond: 'isDownloadAllowed',
+                      actions: [
+                        send('POLL_DOWNLOAD', {to: 'downloadCredential'}),
+                        'incrementDownloadCounter',
                       ],
-                      CREDENTIAL_DOWNLOADED: {
-                        actions: 'setContext',
-                        target:
-                          '#vc-item-machine.vcUtilitiesState.verifyingCredential',
-                      },
                     },
+                    {
+                      target: 'verifyingDownloadLimitExpiry',
+                    },
+                  ],
+                  CREDENTIAL_DOWNLOADED: {
+                    actions: 'setContext',
+                    target: '#vc-item-machine.verifyingCredential',
                   },
-                  savingFailed: {
-                    entry: ['removeVcMetaDataFromStorage'],
-                    initial: 'idle',
-                    states: {
-                      idle: {},
-                      viewingVc: {},
-                    },
-                    on: {
-                      DISMISS: {
-                        actions: ['removeVcMetaDataFromVcMachineContext'],
-                        target: '.viewingVc',
-                      },
-                    },
+                },
+              },
+              savingFailed: {
+                entry: ['removeVcMetaDataFromStorage'],
+                initial: 'idle',
+                states: {
+                  idle: {},
+                  viewingVc: {},
+                },
+                on: {
+                  DISMISS: {
+                    actions: ['removeVcMetaDataFromVcMachineContext'],
+                    target: '.viewingVc',
                   },
                 },
               },
             },
           },
-          walletBinding: {
-            initial: 'showBindingWarning',
-            states: {
-              showBindingWarning: {
-                on: {
-                  CONFIRM: {
-                    actions: 'sendActivationStartEvent',
-                    target: 'requestingBindingOTP',
-                  },
-                  CANCEL: [
-                    {
-                      cond: context => context.isMachineInKebabPopupState,
-                      target: '#vc-item-machine.vcUtilitiesState.kebabPopUp',
-                    },
-                    {
-                      target: '#vc-item-machine.vcUtilitiesState.idle',
-                    },
+        },
+      },
+      walletBinding: {
+        initial: 'showBindingWarning',
+        states: {
+          showBindingWarning: {
+            on: {
+              CONFIRM: {
+                actions: 'sendActivationStartEvent',
+                target: 'requestingBindingOTP',
+              },
+              CANCEL: [
+                {
+                  cond: context => context.isMachineInKebabPopupState,
+                  target: '#vc-item-machine.kebabPopUp',
+                },
+                {
+                  target: '#vc-item-machine.idle',
+                },
+              ],
+            },
+          },
+          requestingBindingOTP: {
+            invoke: {
+              src: 'requestBindingOTP',
+              onDone: [
+                {
+                  target: 'acceptingBindingOTP',
+                  actions: ['setCommunicationDetails'],
+                },
+              ],
+              onError: [
+                {
+                  actions: [
+                    'setErrorAsWalletBindingError',
+                    'sendWalletBindingErrorEvent',
+                    'logWalletBindingFailure',
+                  ],
+                  target: 'showingWalletBindingError',
+                },
+              ],
+            },
+          },
+          showingWalletBindingError: {
+            always:{
+              target:'#vc-item-machine.walletBinding.acceptingBindingOTP'
+            }
+            
+          },
+          acceptingBindingOTP: {
+            entry: ['unSetOTP'],
+            on: {
+              INPUT_OTP: {
+                target: 'addKeyPair',
+                actions: ['setOTP'],
+              },
+              DISMISS: [
+                {
+                  cond: context => context.isMachineInKebabPopupState,
+                  target: '#vc-item-machine.kebabPopUp',
+                  actions: [
+                    'sendUserCancelledActivationFailedEndEvent',
+                    'unSetOTP',
+                    'unSetBindingTransactionId',
                   ],
                 },
+                {
+                  target: '#vc-item-machine.idle',
+                  actions: [
+                    'sendUserCancelledActivationFailedEndEvent',
+                    'unSetOTP',
+                    'unSetBindingTransactionId',
+                  ],
+                },
+              ],
+              RESEND_OTP: {
+                target: '.resendOTP',
               },
-              requestingBindingOTP: {
+            },
+            initial: 'idle',
+            states: {
+              idle: {},
+              resendOTP: {
                 invoke: {
                   src: 'requestBindingOTP',
-                  onDone: [
-                    {
-                      target: 'acceptingBindingOTP',
-                      actions: ['setCommunicationDetails'],
-                    },
-                  ],
-                  onError: [
-                    {
-                      actions: [
-                        'setErrorAsWalletBindingError',
-                        'sendWalletBindingErrorEvent',
-                        'logWalletBindingFailure',
-                      ],
-                      target: 'showingWalletBindingError',
-                    },
-                  ],
-                },
-              },
-              showingWalletBindingError: {
-                on: {
-                  CANCEL: [
-                    {
-                      cond: context => context.isMachineInKebabPopupState,
-                      actions: ['unSetError'],
-                      target: '#vc-item-machine.vcUtilitiesState.kebabPopUp',
-                    },
-                    {
-                      actions: ['unSetError'],
-                      target: '#vc-item-machine.vcUtilitiesState.idle',
-                    },
-                  ],
-                },
-              },
-              acceptingBindingOTP: {
-                entry: ['unSetOTP'],
-                on: {
-                  INPUT_OTP: {
-                    target: 'addKeyPair',
-                    actions: ['setOTP'],
+                  onDone: {
+                    target:
+                      '#vc-item-machine.walletBinding.acceptingBindingOTP',
+                    actions: ['setCommunicationDetails'],
                   },
-                  DISMISS: [
-                    {
-                      cond: context => context.isMachineInKebabPopupState,
-                      target: '#vc-item-machine.vcUtilitiesState.kebabPopUp',
-                      actions: [
-                        'sendUserCancelledActivationFailedEndEvent',
-                        'unSetOTP',
-                        'unSetBindingTransactionId',
-                      ],
-                    },
-                    {
-                      target: '#vc-item-machine.vcUtilitiesState.idle',
-                      actions: [
-                        'sendUserCancelledActivationFailedEndEvent',
-                        'unSetOTP',
-                        'unSetBindingTransactionId',
-                      ],
-                    },
-                  ],
-                  RESEND_OTP: {
-                    target: '.resendOTP',
-                  },
-                },
-                initial: 'idle',
-                states: {
-                  idle: {},
-                  resendOTP: {
-                    invoke: {
-                      src: 'requestBindingOTP',
-                      onDone: {
-                        target:
-                          '#vc-item-machine.vcUtilitiesState.walletBinding.acceptingBindingOTP',
-                        actions: ['setCommunicationDetails'],
-                      },
-                      onError: {
-                        actions: [
-                          'setErrorAsWalletBindingError',
-                          'sendWalletBindingErrorEvent',
-                        ],
-                        target:
-                          '#vc-item-machine.vcUtilitiesState.walletBinding.showingWalletBindingError',
-                      },
-                    },
+                  onError: {
+                    actions: [
+                      'setErrorAsWalletBindingError',
+                      'sendWalletBindingErrorEvent',
+                    ],
+                    target:
+                      '#vc-item-machine.walletBinding.acceptingBindingOTP',
                   },
                 },
               },
-              addKeyPair: {
-                invoke: {
-                  src: 'generateKeyPair',
-                  onDone: [
-                    {
-                      cond: 'isCustomSecureKeystore',
-                      target: 'addingWalletBindingId',
-                      actions: ['setPublicKey'],
-                    },
-                    {
-                      target: 'addingWalletBindingId',
-                      actions: ['setPublicKey', 'setPrivateKey'],
-                    },
-                  ],
-                  onError: [
-                    {
-                      actions: [
-                        'setErrorAsWalletBindingError',
-                        'sendWalletBindingErrorEvent',
-                        'logWalletBindingFailure',
-                      ],
-                      target: 'showingWalletBindingError',
-                    },
-                  ],
+            },
+          },
+          addKeyPair: {
+            invoke: {
+              src: 'generateKeyPair',
+              onDone: [
+                {
+                  cond: 'isCustomSecureKeystore',
+                  target: 'addingWalletBindingId',
+                  actions: ['setPublicKey'],
                 },
-              },
-              addingWalletBindingId: {
-                invoke: {
-                  src: 'addWalletBindingId',
-                  onDone: [
-                    {
-                      cond: 'isCustomSecureKeystore',
-                      target: 'updatingContextVariables',
-                      actions: ['setWalletBindingResponse'],
-                    },
-                    {
-                      target: 'updatingPrivateKey',
-                      /*The walletBindingResponse is used for conditional rendering in wallet binding.                                                                                                                                                                                                                                                                                                                                                                                                                                          response and use it in updatingPrivateKey state*/
-                      actions: ['setWalletBindingResponse'],
-                    },
-                  ],
-                  onError: [
-                    {
-                      actions: [
-                        'setErrorAsWalletBindingError',
-                        'sendWalletBindingErrorEvent',
-                        'logWalletBindingFailure',
-                      ],
-                      target: 'showingWalletBindingError',
-                    },
-                  ],
+                {
+                  target: 'addingWalletBindingId',
+                  actions: ['setPublicKey', 'setPrivateKey'],
                 },
-              },
+              ],
+              onError: [
+                {
+                  actions: [
+                    'setErrorAsWalletBindingError',
+                    'sendWalletBindingErrorEvent',
+                    'logWalletBindingFailure',
+                  ],
+                  target: 'showingWalletBindingError',
+                },
+              ],
+            },
+          },
+          addingWalletBindingId: {
+            invoke: {
+              src: 'addWalletBindingId',
+              onDone: [
+                {
+                  cond: 'isCustomSecureKeystore',
+                  target: 'updatingContextVariables',
+                  actions: ['setWalletBindingResponse'],
+                },
+                {
+                  target: 'updatingPrivateKey',
+                  /*The walletBindingResponse is used for conditional rendering in wallet binding.                                                                                                                                                                                                                                                                                                                                                                                                                                          response and use it in updatingPrivateKey state*/
+                  actions: ['setWalletBindingResponse'],
+                },
+              ],
+              onError: [
+                {
+                  actions: [
+                    'setErrorAsWalletBindingError',
+                    'sendWalletBindingErrorEvent',
+                    'logWalletBindingFailure',
+                  ],
+                  target: 'showingWalletBindingError',
+                },
+              ],
+            },
+          },
 
               updatingPrivateKey: {
                 invoke: {

@@ -105,7 +105,7 @@ export const VCCardViewContent: React.FC<VCItemContentProps> = props => {
           {isVCSelectable}
         </Row>
 
-        <WalletBinding service={props.service} vcMetadata={props.vcMetadata} />
+        <WalletBinding service={props.service} vcMetadata={props.vcMetadata}/>
 
         <RemoveVcWarningOverlay
           testID="removeVcWarningOverlay"

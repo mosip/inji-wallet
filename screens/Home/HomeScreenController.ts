@@ -31,7 +31,7 @@ export function getHomeMachineService() {
   return homeMachineService;
 }
 
-export function useHomeScreen(props: HomeRouteProps) {
+export function useHomeScreen(props?: HomeRouteProps) {
   const service = useCreateHomeMachineService();
 
   useEffect(() => {

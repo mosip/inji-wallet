@@ -247,7 +247,7 @@ export const VCItemActions = model => {
 
     setErrorAsWalletBindingError: assign({
       error: () =>
-        i18n.t('errors.genericError', {
+        i18n.t('errors.invalidOtp', {
           ns: 'common',
         }),
     }),
@@ -270,8 +270,10 @@ export const VCItemActions = model => {
       },
     ),
     setWalletBindingResponse: assign({
-      walletBindingResponse: (_context, event) =>
-        event.data as WalletBindingResponse,
+      walletBindingResponse: (_context, event) =>{
+        return event.data as WalletBindingResponse
+      }
+        
     }),
     incrementDownloadCounter: model.assign({
       downloadCounter: ({downloadCounter}) => downloadCounter + 1,
