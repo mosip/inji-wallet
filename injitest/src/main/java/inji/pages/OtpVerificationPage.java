@@ -49,6 +49,11 @@ public class OtpVerificationPage extends BasePage {
     @iOSXCUITFindBy(accessibility = "resendCode")
     private WebElement resendCodeButton;
 
+    @AndroidFindBy(accessibility = "resendCode")
+    private WebElement resendCode;
+
+
+
     @AndroidFindBy(accessibility = "wait")
     @iOSXCUITFindBy(accessibility = "wait")
     private WebElement waitPopupButton;
@@ -124,8 +129,9 @@ public class OtpVerificationPage extends BasePage {
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
-        if(retrieIsElementVisible(resendCodeButton)) {
-            clickOnElement(resendCodeButton);
+        if(isElementEnabled(resendCodeButton,30)) {
+            clickOnElement(resendCode);
+
         }
     }
 

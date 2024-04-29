@@ -87,8 +87,8 @@ public class DetailedVcViewPage extends BasePage{
     @iOSXCUITFindBy(accessibility = "mosip-logo")
     private WebElement esignetLogo;
     
-    @AndroidFindBy(accessibility = "arrowLeft")
-    @iOSXCUITFindBy(accessibility = "arrowLeft")
+    @AndroidFindBy(accessibility = "goBack")
+    @iOSXCUITFindBy(accessibility = "goBack")
     public WebElement backArrow;
 
     @AndroidFindBy(accessibility = "KebabIcon")
@@ -199,7 +199,9 @@ public class DetailedVcViewPage extends BasePage{
     }
 
     public void clickOnMoreOptionsInDetails() {
-        clickOnElement(moreOptionsButton);
+        if(retrieIsElementVisible(moreOptionsButton)) {
+            clickOnElement(moreOptionsButton);
+        }
     }
 
 }

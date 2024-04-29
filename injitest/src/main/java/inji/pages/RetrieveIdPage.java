@@ -41,11 +41,11 @@ public class RetrieveIdPage extends BasePage {
 	private WebElement invalidUin;
 
 	@AndroidFindBy(xpath = "//*[contains(@text,'Please enter valid UIN')]")
-	@iOSXCUITFindBy(accessibility = "idInputModalIndividualId")
+	@iOSXCUITFindBy(accessibility = "Please enter valid UIN")
 	private WebElement inputFormatErrorMessageUin;
 
 	@AndroidFindBy(xpath = "//*[contains(@text,'Please enter valid VID')]")
-	@iOSXCUITFindBy(accessibility = "idInputModalIndividualId")
+	@iOSXCUITFindBy(accessibility = "Please enter valid VID")
 	private WebElement inputFormatErrorMessageVid;
 
 	@AndroidFindBy(xpath = "//*[contains(@text,'Please enter valid AID')]")

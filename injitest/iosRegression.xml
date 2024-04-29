@@ -127,6 +127,7 @@
                     <include name="activateVcAndVerifyInHistory"/>
                     <include name="downloadAndVerifyHistoryUsingUinViaEsignet"/>
                     <include name="downloadAndVerifyHistoryUsingVidViaEsignet"/>
+                    <include name="downloadAndVerifyHistoryForSunbird"/>
                 </methods>
             </class>
             <class name="iosTestCases.VerifyWelcomePagesTest">
