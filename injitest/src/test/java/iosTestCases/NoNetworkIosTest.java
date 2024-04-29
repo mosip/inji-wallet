@@ -9,6 +9,7 @@ import inji.utils.IosUtil;
 import inji.utils.TestDataReader;
 import inji.utils.UpdateNetworkSettings;
 import org.testng.annotations.Test;
+import org.testng.asserts.SoftAssert;
 
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
@@ -85,8 +86,7 @@ public class NoNetworkIosTest extends IosBaseTest {
 
         String sessionId  = driver.getSessionId().toString();
         UpdateNetworkSettings.setNoNetworkProfile(sessionId);
-        assertTrue(homePage.clickOnShareButton().acceptPermissionPopupBluetooth().isCameraOpen());
-
+        assertTrue(homePage.clickOnShareButton().acceptPermissionPopupBluetoothIos().acceptPermissionPopupBluetoothIos().isCameraOpen());
     }
 
     @Test
@@ -285,7 +285,8 @@ public class NoNetworkIosTest extends IosBaseTest {
 
         DetailedVcViewPage detailedVcViewPage = homePage.openDetailedVcView(TestDataReader.readData("fullName"));
         detailedVcViewPage.clickOnQrCodeButton();
-        assertTrue(detailedVcViewPage.isQrCodeDisplayed(), "Verify if QR Code header is displayed");
+        SoftAssert softAssert = new SoftAssert();
+        softAssert.assertTrue(detailedVcViewPage.isQrCodeDisplayed(), "Verify if QR Code header is displayed");
 
         detailedVcViewPage.clickOnQrCrossIcon();
         assertTrue(homePage.isNameDisplayed(TestDataReader.readData("fullName")), "Verify if full name is displayed");
