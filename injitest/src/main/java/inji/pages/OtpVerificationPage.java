@@ -52,8 +52,6 @@ public class OtpVerificationPage extends BasePage {
     @AndroidFindBy(accessibility = "resendCode")
     private WebElement resendCode;
 
-
-
     @AndroidFindBy(accessibility = "wait")
     @iOSXCUITFindBy(accessibility = "wait")
     private WebElement waitPopupButton;
@@ -61,7 +59,6 @@ public class OtpVerificationPage extends BasePage {
     @AndroidFindBy(accessibility = "otpVerificationDescription")
     @iOSXCUITFindBy(accessibility = "otpVerificationDescription")
     private WebElement otpVerificationDescription;
-
 
     public OtpVerificationPage(AppiumDriver driver) {
         super(driver);
@@ -122,8 +119,6 @@ public class OtpVerificationPage extends BasePage {
     }
     
     public void clickOnResendButton() {
-//        ((HidesKeyboard) driver).hideKeyboard();
-//        clickIfVisible(waitPopupButton);
         try {
             Thread.sleep(2000);
         } catch (InterruptedException e) {
@@ -131,7 +126,6 @@ public class OtpVerificationPage extends BasePage {
         }
         if(isElementEnabled(resendCodeButton,30)) {
             clickOnElement(resendCode);
-
         }
     }
 
