@@ -157,10 +157,11 @@ export const getDisplayObjectForCurrentLanguage = (
 
 export const constructAuthorizationConfiguration = (
   selectedIssuer: issuerType,
+  supportedScopes: string,
 ) => {
   return {
     clientId: selectedIssuer.client_id,
-    scopes: selectedIssuer.scopes_supported,
+    scopes: supportedScopes,
     additionalHeaders: selectedIssuer.additional_headers,
     redirectUrl: selectedIssuer.redirect_uri,
     serviceConfiguration: {
