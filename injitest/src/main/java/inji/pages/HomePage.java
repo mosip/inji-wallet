@@ -36,15 +36,13 @@ public class HomePage extends BasePage {
     @AndroidFindBy(accessibility = "ellipsis")
     private WebElement moreOptionsButton;
 
-    @iOSXCUITFindBy(xpath = "(//android.view.ViewGroup[@content-desc=\"ellipsis\"])[2]")
-    @AndroidFindBy(accessibility = "ellipsis")
+    @iOSXCUITFindBy(xpath = "(//XCUIElementTypeOther[@name=\"ellipsis\"])[2]")
+    @AndroidFindBy(xpath = "(//android.view.ViewGroup[@content-desc=\"ellipsis\"])[2]")
     private WebElement moreOptionsButtonForSecondVc;
 
-    @iOSXCUITFindBy(xpath = "(//android.view.ViewGroup[@content-desc=\"ellipsis\"])[1]")
-    @AndroidFindBy(accessibility = "ellipsis")
+    @iOSXCUITFindBy(xpath = "(//XCUIElementTypeOther[@name=\"ellipsis\"])[1]")
+    @AndroidFindBy(xpath = "(//android.view.ViewGroup[@content-desc=\"ellipsis\"])[1]")
     private WebElement moreOptionsButtonForFirstVc;
-
-
 
     @AndroidFindBy(xpath = "//*[contains(@text,'Secure Key Storage not found')]")
     private WebElement secureKeyStoragePopup;

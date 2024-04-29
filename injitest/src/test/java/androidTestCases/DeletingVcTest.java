@@ -269,6 +269,7 @@ public class DeletingVcTest extends AndroidBaseTest {
         assertTrue(addNewCardPage.isDownloadViaSunbirdDisplayed(), "Verify if download sunbird displayed");
         SunbirdLoginPage sunbirdLoginPage =  addNewCardPage.clickOnDownloadViaSunbird();
 
+        addNewCardPage.clickOnInsuranceCredential();
 //        assertTrue(sunbirdLoginPage.isSunbirdRCInsuranceVerifiableCredentialHeaderDisplayed(), "Verify if sunbirdRC insurance verifiable credential displayed");
 //        sunbirdLoginPage.clickOnMosipInsurance();
 
