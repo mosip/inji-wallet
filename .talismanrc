@@ -38,7 +38,7 @@ fileignoreconfig:
   - filename: screens/Home/MyVcs/GetIdInputModal.tsx
     checksum: 5c736ed79a372d0ffa7c02eb33d0dc06edbbb08d120978ff287f5f06cd6c7746
   - filename: shared/openId4VCI/Utils.ts
-    checksum: ba3041b2ce380f44f6f52dc2c3df337d857df4494bd3c8727df9bf6fb5734750
+    checksum: e09b2a01b4f8fccfacf393b3c0b89c795282191760481cd6b80b562065ae0010
   - filename: shared/cryptoutil/cryptoUtil.ts
     checksum: adbc2ff6df1df412e891c988c9ba03fc82f66c2f6c64339f87d513fc835d14cc
   - filename: shared/telemetry/TelemetryConstants.js
