@@ -14,13 +14,13 @@ export const QrLoginActions=(model:any)=>{
         return{
           setShowFaceAuthConsent: model.assign({
           showFaceAuthConsent: (_, event) => {
-            return !event.isDoNotShowPopUpConsentGiven;
+            return !event.isDoNotAskAgainChecked;
           },
         }),
 
         storeShowFaceAuthConsent: send(
           (context, event) =>
-            StoreEvents.SET(SHOW_FACE_AUTH_CONSENT_QR_LOGIN_FLOW, !event.isDoNotShowPopUpConsentGiven),
+            StoreEvents.SET(SHOW_FACE_AUTH_CONSENT_QR_LOGIN_FLOW, !event.isDoNotAskAgainChecked),
           {
             to: context => context.serviceRefs.store,
           },

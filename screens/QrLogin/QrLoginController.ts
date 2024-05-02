@@ -85,8 +85,8 @@ export function useQrLogin({service}: QrLoginProps) {
         const vcData = vcRef.getSnapshot().context;
         service.send(QrLoginEvents.SELECT_VC(vcData));
       },
-    FACE_VERIFICATION_CONSENT: (isDoNotShowPopUpConsentGiven: boolean) =>
-      service.send(QrLoginEvents.FACE_VERIFICATION_CONSENT(isDoNotShowPopUpConsentGiven)),
+    FACE_VERIFICATION_CONSENT: (isDoNotAskAgainChecked: boolean) =>
+      service.send(QrLoginEvents.FACE_VERIFICATION_CONSENT(isDoNotAskAgainChecked)),
     DISMISS: () => service.send(QrLoginEvents.DISMISS()),
     SCANNING_DONE: (qrCode: string) =>
       service.send(QrLoginEvents.SCANNING_DONE(qrCode)),

@@ -31,8 +31,8 @@ const QrLoginEvents= {
   FACE_VALID: () => ({}),
   FACE_INVALID: () => ({}),
   RETRY_VERIFICATION: () => ({}),
-  FACE_VERIFICATION_CONSENT: (isDoNotShowPopUpConsentGiven: boolean) => ({
-    isDoNotShowPopUpConsentGiven,
+  FACE_VERIFICATION_CONSENT: (isDoNotAskAgainChecked: boolean) => ({
+    isDoNotAskAgainChecked,
   }),
 }
 

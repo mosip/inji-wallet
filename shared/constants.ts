@@ -41,9 +41,9 @@ export const SETTINGS_STORE_KEY = 'settings';
 
 export const APP_ID_LENGTH = 12;
 
-export const SHOW_FACE_AUTH_CONSENT_SHARE_FLOW = 'faceAuthConsent';
+export const SHOW_FACE_AUTH_CONSENT_SHARE_FLOW = 'showFaceAuthConsentShareFlow';
 
-export const SHOW_FACE_AUTH_CONSENT_QR_LOGIN_FLOW='qrLogInConsent'
+export const SHOW_FACE_AUTH_CONSENT_QR_LOGIN_FLOW='showFaceAuthConsentQrLoginFlow'
 
 //Banner Status
 export const BANNER_TYPE_SUCCESS = 'success';

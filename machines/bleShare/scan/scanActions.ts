@@ -38,7 +38,7 @@ export const ScanActions =(model:any,QR_LOGIN_REF_ID:any)=>{
 
     setShowFaceAuthConsent: model.assign({
       showFaceAuthConsent: (_, event) => {
-        return !event.isDoNotShowPopUpConsentGiven;
+        return !event.isDoNotAskAgainChecked;
       },
     }),
 
@@ -48,7 +48,7 @@ export const ScanActions =(model:any,QR_LOGIN_REF_ID:any)=>{
 
     storeShowFaceAuthConsent: send(
       (context, event) =>
-        StoreEvents.SET(SHOW_FACE_AUTH_CONSENT_SHARE_FLOW, !event.isDoNotShowPopUpConsentGiven),
+        StoreEvents.SET(SHOW_FACE_AUTH_CONSENT_SHARE_FLOW, !event.isDoNotAskAgainChecked),
       {
         to: (context:any)  => context.serviceRefs.store,
       },

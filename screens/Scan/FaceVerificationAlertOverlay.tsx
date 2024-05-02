@@ -81,7 +81,7 @@ export const FaceVerificationAlertOverlay: React.FC<
 
 interface FaceVerificationAlertProps {
   isVisible: boolean;
-  onConfirm: (isDoNotShowPopUpConsentGiven: boolean) => void;
+  onConfirm: (isDoNotAskAgainChecked: boolean) => void;
   close: () => void;
   isQrLogin?: boolean;
 }
