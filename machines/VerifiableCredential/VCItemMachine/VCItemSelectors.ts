@@ -11,13 +11,11 @@ export function selectVerificationStatus(state: State) {
 }
 
 export function selectIsVerificationInProgress(state: State) {
-  return state.matches(
-    'verifyState.verifyingCredential.verificationInProgress',
-  );
+  return state.matches('verifyState.verifyingCredential');
 }
 
 export function selectIsVerificationCompleted(state: State) {
-  return state.matches('verifyState.verifyingCredential.verificationCompleted');
+  return state.matches('verifyState.verificationCompleted');
 }
 
 export function selectShowVerificationStatusBanner(state: State) {

@@ -260,7 +260,7 @@ fileignoreconfig:
   - filename: components/BannerNotificationContainer.tsx
     checksum: 26e09d7f3b24abb025844a39000602ef73bea8a494fd1b21d6fdfdbd29927b87
   - filename: screens/Home/ViewVcModal.tsx
-    checksum: 088992fe50e8c01726c71d17a3cb0e19098b4084df9b9198db69d204042a8080
+    checksum: 128176a2551fe256378eb88a3d962dd82bbaab44b5f986784de40bf1183f0145
   - filename: injitest/src/main/resources/TestData.json
     checksum: 1b5af14c96b456898259b4cb7a5607b006404cf0360274bdc204d7d065698e3c
   - filename: injitest/src/test/java/androidTestCases/ActivateVcTest.java

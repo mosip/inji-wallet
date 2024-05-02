@@ -31,7 +31,7 @@ import ShimmerPlaceholder from 'react-native-shimmer-placeholder';
 import LinearGradient from 'react-native-linear-gradient';
 import {
   BannerNotification,
-  BannerStatusType,
+  BannerStatus,
 } from '../../components/BannerNotification';
 
 export const ViewVcModal: React.FC<ViewVcModalProps> = props => {
@@ -40,13 +40,8 @@ export const ViewVcModal: React.FC<ViewVcModalProps> = props => {
   const profileImage = controller.verifiableCredentialData.face;
   const verificationStatus = controller.verificationStatus;
   useEffect(() => {
-    if (
-      controller.verificationStatus?.statusType ===
-        BannerStatusType.IN_PROGRESS &&
-      controller.showVerificationStatusBanner === false &&
-      controller.isVerificationInProgress
-    ) {
-      controller.SET_VERIFICATION_STATUS_BANNER();
+    if (controller.isVerificationInProgress) {
+      controller.SHOW_VERIFICATION_STATUS_BANNER();
     }
     if (
       !controller.verifiableCredentialData.vcMetadata.isVerified &&
@@ -128,23 +123,17 @@ export const ViewVcModal: React.FC<ViewVcModalProps> = props => {
       headerElevation={2}>
       <BannerNotificationContainer showBannerNotificationContainer={false} />
 
-      {(controller.isVerificationInProgress ||
-        controller.isVerificationCompleted) &&
-        controller.showVerificationStatusBanner &&
-        verificationStatus !== null && (
-          <BannerNotification
-            type={verificationStatus.statusType}
-            message={t(
-              `VcVerificationBanner:${verificationStatus?.statusType}`,
-              {
-                vcDetails: `${verificationStatus.vcType} ${verificationStatus.vcNumber}`,
-              },
-            )}
-            onClosePress={() => controller.RESET_VERIFICATION_STATUS()}
-            key={'reVerificationInProgress'}
-            testId={'reVerificationInProgress'}
-          />
-        )}
+      {controller.showVerificationStatusBanner && (
+        <BannerNotification
+          type={verificationStatus?.statusType as BannerStatus}
+          message={t(`VcVerificationBanner:${verificationStatus?.statusType}`, {
+            vcDetails: `${verificationStatus?.vcType} ${verificationStatus?.vcNumber}`,
+          })}
+          onClosePress={() => controller.RESET_VERIFICATION_STATUS()}
+          key={'reVerificationInProgress'}
+          testId={'reVerificationInProgress'}
+        />
+      )}
 
       {!isVCLoaded(controller.credential, fields) ? (
         <ActivityIndicator />

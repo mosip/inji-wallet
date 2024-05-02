@@ -28,5 +28,5 @@ export const VCItemEvents = {
   SET_VERIFICATION_STATUS: (response: unknown) => ({response}),
   RESET_VERIFICATION_STATUS: () => ({}),
   REMOVE_VERIFICATION_STATUS_BANNER: () => ({}),
-  SHOW_VERIFICATION_STATUS_BANNER: () => ({}),
+  SHOW_VERIFICATION_STATUS_BANNER: (response: unknown) => ({response}),
 };

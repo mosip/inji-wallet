@@ -532,6 +532,12 @@ export const VCItemMachine = model.createMachine(
           VERIFY: {
             target: '#vc-item-machine.verifyState.verifyingCredential',
           },
+          RESET_VERIFICATION_STATUS: {
+            actions: [
+              'resetVerificationStatus',
+              'removeVerificationStatusFromVcMeta',
+            ],
+          },
         },
         initial: 'idle',
         states: {
@@ -564,19 +570,11 @@ export const VCItemMachine = model.createMachine(
               ],
             },
             after: {
-              1000: [
+              500: [
                 {
-                  target: '.verificationInProgress',
+                  actions: 'showVerificationBannerStatus',
                 },
               ],
-            },
-            states: {
-              verificationInProgress: {
-                entry: 'showVerificationBannerStatus',
-              },
-              verificationCompleted: {
-                entry: 'showVerificationBannerStatus',
-              },
             },
             on: {
               STORE_RESPONSE: {
@@ -585,23 +583,23 @@ export const VCItemMachine = model.createMachine(
                   'sendVerificationStatusToVcMeta',
                   'sendVcUpdated',
                 ],
-                target: '.verificationCompleted',
+                target: 'verificationCompleted',
               },
               SET_VERIFICATION_STATUS: {
                 actions: 'setVerificationStatus',
               },
-              RESET_VERIFICATION_STATUS: {
-                actions: [
-                  'resetVerificationStatus',
-                  'removeVerificationStatusFromVcMeta',
-                ],
-              },
               SHOW_VERIFICATION_STATUS_BANNER: {
-                target: '.verificationInProgress',
+                actions: [
+                  'setVerificationStatus',
+                  'showVerificationBannerStatus',
+                ],
               },
               //TO-DO: Handle if some error is thrown when storing verified status into storage
               STORE_ERROR: {},
             },
+          },
+          verificationCompleted: {
+            entry: 'showVerificationBannerStatus',
           },
         },
       },

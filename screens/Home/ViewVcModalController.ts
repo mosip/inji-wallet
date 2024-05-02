@@ -140,9 +140,9 @@ export function useViewVcModal({vcItemActor, isVisible}: ViewVcModalProps) {
     ),
     RESET_VERIFICATION_STATUS: () =>
       vcItemActor.send(VCItemEvents.RESET_VERIFICATION_STATUS()),
-    SET_VERIFICATION_STATUS_BANNER: () =>
+    SHOW_VERIFICATION_STATUS_BANNER: () =>
       vcItemActor.send({
-        type: 'SET_VERIFICATION_STATUS',
+        type: 'SHOW_VERIFICATION_STATUS_BANNER',
         response: {statusType: BannerStatusType.IN_PROGRESS},
       }),
     onSuccess,
