@@ -204,7 +204,7 @@ export const VCItemMachine = model.createMachine(
                 },
               ],
             },
-          },
+            },
           acceptingBindingOTP: {
             entry: ['unSetOTP'],
             on: {
@@ -302,11 +302,11 @@ export const VCItemMachine = model.createMachine(
               onError: [
                 {
                   actions: [
-                    'setErrorAsWalletBindingError',
+                    'setErrorAsInvalidOtpError',
                     'sendWalletBindingErrorEvent',
                     'logWalletBindingFailure',
                   ],
-                  target: 'showingWalletBindingError',
+                  target: '#vc-item-machine.walletBinding.acceptingBindingOTP',
                 },
               ],
             },

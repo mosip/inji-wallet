@@ -854,7 +854,8 @@
     },
     "ignore": "Huwag pansinin",
     "errors": {
-      "genericError": "May mali. Subukang muli mamaya!"
+      "genericError": "May mali. Subukang muli mamaya!",
+      "invalidOtp": "Di-wasto ang OTP"
     },
     "clipboard": {
       "copy": "Kopya",

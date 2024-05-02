@@ -863,7 +863,8 @@
       "allowAccess": "Allow access to the camera"
     },
     "errors": {
-      "genericError": "Something is wrong. Please try again later!"
+      "genericError": "Something is wrong. Please try again later!",
+      "invalidOtp": "OTP is invalid"
     },
     "clipboard": {
       "copy": "Copy",

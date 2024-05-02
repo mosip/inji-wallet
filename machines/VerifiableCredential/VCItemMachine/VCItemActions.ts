@@ -2,14 +2,20 @@ import {assign, send} from 'xstate';
 import {CommunicationDetails} from '../../../shared/Utils';
 import {StoreEvents} from '../../store';
 import {VCMetadata} from '../../../shared/VCMetadata';
-import {MIMOTO_BASE_URL, MY_VCS_STORE_KEY} from '../../../shared/constants';
+import {
+  BINDING_AUTH_FAILED,
+  MIMOTO_BASE_URL,
+  MY_VCS_STORE_KEY,
+  NETWORK_REQUEST_FAILED,
+  REQUEST_TIMEOUT,
+} from '../../../shared/constants';
 import {KeyPair} from 'react-native-rsa-native';
 import i18n from '../../../i18n';
 import {getHomeMachineService} from '../../../screens/Home/HomeScreenController';
 import {DownloadProps} from '../../../shared/api';
 import {isHardwareKeystoreExists} from '../../../shared/cryptoutil/cryptoUtil';
 import {getBindingCertificateConstant} from '../../../shared/keystore/SecureKeystore';
-import {getIdType} from '../../../shared/openId4VCI/Utils';
+import {ErrorMessage, getIdType} from '../../../shared/openId4VCI/Utils';
 import {TelemetryConstants} from '../../../shared/telemetry/TelemetryConstants';
 import {
   sendStartEvent,
@@ -176,6 +182,24 @@ export const VCItemActions = model => {
         i18n.t('errors.genericError', {
           ns: 'common',
         }),
+    }),
+    setErrorAsInvalidOtpError: assign({
+      error: (_, event: any) => {
+        console.error('Error occurred ', event.data.message);
+        const error = event.data.message;
+        switch (error) {
+          case NETWORK_REQUEST_FAILED:
+            return ErrorMessage.NO_INTERNET;
+          case REQUEST_TIMEOUT:
+            return ErrorMessage.REQUEST_TIMEDOUT;
+          case BINDING_AUTH_FAILED:
+            return i18n.t('errors.invalidOtp', {
+              ns: 'common',
+            });
+          default:
+            return error;
+        }
+      },
     }),
     setErrorAsVerificationError: assign({
       //todo handle error message from different actions

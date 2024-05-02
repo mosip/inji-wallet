@@ -8,7 +8,7 @@ import BluetoothStateManager from 'react-native-bluetooth-state-manager';
 import {View} from 'react-native';
 import {ErrorMessageOverlay} from '../../components/MessageOverlay';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
-import {MainBottomTabParamList} from '../../routes/main';
+import {MainBottomTabParamList} from '../../routes/routeTypes';
 import {BOTTOM_TAB_ROUTES} from '../../routes/routesConstants';
 import {ProgressingModal} from '../../components/ProgressingModal';
 import {isIOS} from '../../shared/constants';
