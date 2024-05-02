@@ -38,10 +38,18 @@ export const qrLoginMachine =
             GET: {
               actions: [
                 'setScanData',
-                'setFaceAuthConsent',
                 'resetLinkTransactionId',
                 'resetSelectedVoluntaryClaims',
               ],
+              target: 'checkFaceAuthConsent',
+            },
+          },
+        },
+        checkFaceAuthConsent: {
+          entry: 'getQrLoginConsent',
+          on: {
+            STORE_RESPONSE: {
+              actions: 'updateShowQrLoginConsent',
               target: 'linkTransaction',
             },
           },
@@ -60,7 +68,7 @@ export const qrLoginMachine =
                 target: 'loadMyVcs',
               },
               {
-                cond: 'showFaceAuthConsentScreen',
+                cond: 'showQrLoginConsentScreen',
                 target: 'faceVerificationConsent',
               },
               {
@@ -104,7 +112,7 @@ export const qrLoginMachine =
             },
             VERIFY: [
               {
-                cond: 'showFaceAuthConsentScreen',
+                cond: 'showQrLoginConsentScreen',
                 target: 'faceVerificationConsent',
               },
               {
@@ -119,8 +127,8 @@ export const qrLoginMachine =
         },
         faceVerificationConsent: {
           on: {
-            FACE_VERIFICATION_CONSENT: {
-              actions: ['storeShowFaceAuthConsent', 'setShowFaceAuthConsent'],
+            QR_LOGIN_CONSENT: {
+              actions: ['storeShowQrLoginConsent', 'setShowQrLoginConsent'],
               target: 'faceAuth',
             },
             DISMISS: [{

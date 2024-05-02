@@ -27,7 +27,7 @@ export const QrLoginEvents= {
     FACE_VALID: () => ({}),
     FACE_INVALID: () => ({}),
     RETRY_VERIFICATION: () => ({}),
-    FACE_VERIFICATION_CONSENT: (isConsentGiven: boolean) => ({
+    QR_LOGIN_CONSENT: (isConsentGiven: boolean) => ({
       isConsentGiven,
     }),
   }

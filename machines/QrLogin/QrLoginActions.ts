@@ -2,7 +2,7 @@ import { assign, send, sendParent } from "xstate";
 import i18n from "../../i18n";
 import { VCShareFlowType } from "../../shared/Utils";
 import { parseMetadatas } from "../../shared/VCMetadata";
-import { FACE_AUTH_CONSENT, MY_VCS_STORE_KEY } from "../../shared/constants";
+import { QR_LOGIN_CONSENT, MY_VCS_STORE_KEY } from "../../shared/constants";
 import { getBindingCertificateConstant } from "../../shared/keystore/SecureKeystore";
 import { VC, linkTransactionResponse } from "../VerifiableCredential/VCMetaMachine/vc";
 import { StoreEvents } from "../store";
@@ -11,15 +11,16 @@ import { QrLoginmodel } from "./QrLoginModel";
 
 export const QrLoginActions=(model:any)=>{
   
-        return{setShowFaceAuthConsent: model.assign({
-          showFaceAuthConsent: (_, event) => {
+        return{
+          setShowQrLoginConsent: model.assign({
+          showQrLoginConsent: (_, event) => {
             return !event.isConsentGiven;
           },
         }),
 
-        storeShowFaceAuthConsent: send(
+        storeShowQrLoginConsent: send(
           (context, event) =>
-            StoreEvents.SET(FACE_AUTH_CONSENT, !event.isConsentGiven),
+            StoreEvents.SET(QR_LOGIN_CONSENT, !event.isConsentGiven),
           {
             to: context => context.serviceRefs.store,
           },
@@ -38,10 +39,13 @@ export const QrLoginActions=(model:any)=>{
             selectedVc: selectedVc,
           };
         }),
+        getQrLoginConsent: send(StoreEvents.GET(QR_LOGIN_CONSENT), {
+          to: (context:any) => context.serviceRefs.store,
+        }),
 
-        setFaceAuthConsent: assign({
-          showFaceAuthConsent: (context, event) => {
-            return event.faceAuthConsentGiven;
+        updateShowQrLoginConsent: model.assign({
+          showQrLoginConsent: (_, event) => {
+            return event.response || event.response === null;
           },
         }),
 

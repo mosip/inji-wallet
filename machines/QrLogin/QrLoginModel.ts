@@ -28,7 +28,7 @@ export const QrLoginmodel = createModel(
       consentClaims: ['name', 'picture'],
       isSharing: {},
       linkedTransactionId: '',
-      showFaceAuthConsent: true as boolean,
+      showQrLoginConsent: true as boolean,
     },
     {
       events:QrLoginEvents,

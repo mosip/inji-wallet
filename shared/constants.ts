@@ -43,6 +43,8 @@ export const APP_ID_LENGTH = 12;
 
 export const FACE_AUTH_CONSENT = 'faceAuthConsent';
 
+export const QR_LOGIN_CONSENT='qrLogInConsent'
+
 //Banner Status
 export const BANNER_TYPE_SUCCESS = 'success';
 

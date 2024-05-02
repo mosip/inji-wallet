@@ -4,7 +4,7 @@ import { assign, spawn, send, DoneInvokeEvent } from "xstate";
 import { VCShareFlowType } from "../../../shared/Utils";
 import { VCMetadata } from "../../../shared/VCMetadata";
 import { logState } from "../../../shared/commonUtil";
-import { FACE_AUTH_CONSENT, isAndroid, DEFAULT_QR_HEADER, MY_VCS_STORE_KEY, MY_LOGIN_STORE_KEY } from "../../../shared/constants";
+import { FACE_AUTH_CONSENT, isAndroid, DEFAULT_QR_HEADER, MY_VCS_STORE_KEY, MY_LOGIN_STORE_KEY, QR_LOGIN_CONSENT } from "../../../shared/constants";
 import { getIdType } from "../../../shared/openId4VCI/Utils";
 import { TelemetryConstants } from "../../../shared/telemetry/TelemetryConstants";
 import { sendImpressionEvent, getImpressionEventData, sendEndEvent, getEndEventData, sendErrorEvent, getErrorEventData, sendStartEvent, getStartEventData } from "../../../shared/telemetry/TelemetryUtils";
@@ -36,6 +36,7 @@ export const ScanActions =(model:any,QR_LOGIN_REF_ID:any)=>{
       },
     }),
 
+
     setShowFaceAuthConsent: model.assign({
       showFaceAuthConsent: (_, event) => {
         return !event.isConsentGiven;
@@ -60,7 +61,6 @@ export const ScanActions =(model:any,QR_LOGIN_REF_ID:any)=>{
         linkCode: context.linkCode,
         flowType: context.flowType,
         selectedVc: context.selectedVc,
-        faceAuthConsentGiven: context.showFaceAuthConsent,
       }),
 
     openBluetoothSettings: () => {
