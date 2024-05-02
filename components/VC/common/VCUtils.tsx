@@ -11,6 +11,7 @@ import {CREDENTIAL_REGISTRY_EDIT} from 'react-native-dotenv';
 import {getIDType} from '../../../shared/openId4VCI/Utils';
 import {VCVerification} from '../../VCVerification';
 import {MIMOTO_BASE_URL} from '../../../shared/constants';
+import {useTranslation} from 'react-i18next';
 
 export const CARD_VIEW_DEFAULT_FIELDS = ['fullName'];
 export const DETAIL_VIEW_DEFAULT_FIELDS = [
@@ -50,6 +51,7 @@ export const getFieldValue = (
   wellknown: any,
   props: any,
 ) => {
+  const {t} = useTranslation();
   const date = new Date(
     getLocalizedField(verifiableCredential?.credentialSubject[field]),
   ).toString();
@@ -65,7 +67,7 @@ export const getFieldValue = (
         />
       );
     case 'idType':
-      return getIDType(verifiableCredential);
+      return t(`VcDetails:${getIDType(verifiableCredential)}`);
     case 'credentialRegistry':
       return props?.vc?.credentialRegistry;
     case 'address':

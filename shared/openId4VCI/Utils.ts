@@ -51,7 +51,7 @@ export function getVcVerificationDetails(
 ): vcVerificationBannerDetails {
   return {
     statusType: statusType,
-    vcType: getIdType(
+    vcType: getIDType(
       getVerifiableCredential(vcMetadata, verifiableCredential),
     ),
     vcNumber: getVerifiableCredential(vcMetadata, verifiableCredential)
@@ -60,10 +60,10 @@ export function getVcVerificationDetails(
 }
 
 export const ID_TYPE = {
-  MOSIPVerifiableCredential: i18n.t('VcDetails:nationalCard'),
-  InsuranceCredential: i18n.t('VcDetails:insuranceCard'),
-  OpenG2PBeneficiaryVerifiableCredential: i18n.t('VcDetails:beneficiaryCard'),
-  OpenG2PRegistryVerifiableCredential: i18n.t('VcDetails:socialRegistryCard'),
+  MOSIPVerifiableCredential: 'nationalCard',
+  InsuranceCredential: 'insuranceCard',
+  OpenG2PBeneficiaryVerifiableCredential: 'beneficiaryCard',
+  OpenG2PRegistryVerifiableCredential: 'socialRegistryCard',
 };
 
 export const getIDType = (verifiableCredential: VerifiableCredential) => {
