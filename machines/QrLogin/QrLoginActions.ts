@@ -2,25 +2,25 @@ import { assign, send, sendParent } from "xstate";
 import i18n from "../../i18n";
 import { VCShareFlowType } from "../../shared/Utils";
 import { parseMetadatas } from "../../shared/VCMetadata";
-import { QR_LOGIN_CONSENT, MY_VCS_STORE_KEY } from "../../shared/constants";
+import { SHOW_FACE_AUTH_CONSENT_QR_LOGIN_FLOW, MY_VCS_STORE_KEY } from "../../shared/constants";
 import { getBindingCertificateConstant } from "../../shared/keystore/SecureKeystore";
 import { VC, linkTransactionResponse } from "../VerifiableCredential/VCMetaMachine/vc";
 import { StoreEvents } from "../store";
-import { QrLoginmodel } from "./QrLoginModel";
+
 
 
 export const QrLoginActions=(model:any)=>{
   
         return{
-          setShowQrLoginConsent: model.assign({
-          showQrLoginConsent: (_, event) => {
-            return !event.isConsentGiven;
+          setShowFaceAuthConsent: model.assign({
+          showFaceAuthConsent: (_, event) => {
+            return !event.isDoNotShowPopUpConsentGiven;
           },
         }),
 
-        storeShowQrLoginConsent: send(
+        storeShowFaceAuthConsent: send(
           (context, event) =>
-            StoreEvents.SET(QR_LOGIN_CONSENT, !event.isConsentGiven),
+            StoreEvents.SET(SHOW_FACE_AUTH_CONSENT_QR_LOGIN_FLOW, !event.isDoNotShowPopUpConsentGiven),
           {
             to: context => context.serviceRefs.store,
           },
@@ -39,12 +39,12 @@ export const QrLoginActions=(model:any)=>{
             selectedVc: selectedVc,
           };
         }),
-        getQrLoginConsent: send(StoreEvents.GET(QR_LOGIN_CONSENT), {
+        getFaceAuthConsent: send(StoreEvents.GET(SHOW_FACE_AUTH_CONSENT_QR_LOGIN_FLOW), {
           to: (context:any) => context.serviceRefs.store,
         }),
 
-        updateShowQrLoginConsent: model.assign({
-          showQrLoginConsent: (_, event) => {
+        updateShowFaceAuthConsent: model.assign({
+          showFaceAuthConsent: (_, event) => {
             return event.response || event.response === null;
           },
         }),

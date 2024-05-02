@@ -4,7 +4,7 @@ import { assign, spawn, send, DoneInvokeEvent } from "xstate";
 import { VCShareFlowType } from "../../../shared/Utils";
 import { VCMetadata } from "../../../shared/VCMetadata";
 import { logState } from "../../../shared/commonUtil";
-import { FACE_AUTH_CONSENT, isAndroid, DEFAULT_QR_HEADER, MY_VCS_STORE_KEY, MY_LOGIN_STORE_KEY, QR_LOGIN_CONSENT } from "../../../shared/constants";
+import { SHOW_FACE_AUTH_CONSENT_SHARE_FLOW, isAndroid, DEFAULT_QR_HEADER, MY_VCS_STORE_KEY, MY_LOGIN_STORE_KEY } from "../../../shared/constants";
 import { getIdType } from "../../../shared/openId4VCI/Utils";
 import { TelemetryConstants } from "../../../shared/telemetry/TelemetryConstants";
 import { sendImpressionEvent, getImpressionEventData, sendEndEvent, getEndEventData, sendErrorEvent, getErrorEventData, sendStartEvent, getStartEventData } from "../../../shared/telemetry/TelemetryUtils";
@@ -13,7 +13,6 @@ import { VcMetaEvents } from "../../VerifiableCredential/VCMetaMachine/VCMetaEve
 import { ActivityLogEvents } from "../../activityLog";
 import { StoreEvents } from "../../store";
 import tuvali from '@mosip/tuvali';
-import { BLEError } from "../types";
 import BluetoothStateManager from 'react-native-bluetooth-state-manager';
 
 const {wallet, EventTypes, VerificationStatus} = tuvali;
@@ -39,17 +38,17 @@ export const ScanActions =(model:any,QR_LOGIN_REF_ID:any)=>{
 
     setShowFaceAuthConsent: model.assign({
       showFaceAuthConsent: (_, event) => {
-        return !event.isConsentGiven;
+        return !event.isDoNotShowPopUpConsentGiven;
       },
     }),
 
-    getFaceAuthConsent: send(StoreEvents.GET(FACE_AUTH_CONSENT), {
+    getFaceAuthConsent: send(StoreEvents.GET(SHOW_FACE_AUTH_CONSENT_SHARE_FLOW), {
       to: (context:any) => context.serviceRefs.store,
     }),
 
     storeShowFaceAuthConsent: send(
       (context, event) =>
-        StoreEvents.SET(FACE_AUTH_CONSENT, !event.isConsentGiven),
+        StoreEvents.SET(SHOW_FACE_AUTH_CONSENT_SHARE_FLOW, !event.isDoNotShowPopUpConsentGiven),
       {
         to: (context:any)  => context.serviceRefs.store,
       },

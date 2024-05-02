@@ -17,16 +17,16 @@
 "sendConsent": "done.invoke.QrLogin.sendingConsent:invocation[0]";
         };
         missingImplementations: {
-          actions: "SetErrorMessage" | "expandLinkTransResp" | "forwardToParent" | "getQrLoginConsent" | "loadMyVcs" | "loadThumbprint" | "resetFlowType" | "resetLinkTransactionId" | "resetSelectedVc" | "resetSelectedVoluntaryClaims" | "setClaims" | "setConsentClaims" | "setLinkedTransactionId" | "setMyVcs" | "setScanData" | "setSelectedVc" | "setShowQrLoginConsent" | "setThumbprint" | "setlinkTransactionResponse" | "storeShowQrLoginConsent" | "updateShowQrLoginConsent";
+          actions: "SetErrorMessage" | "expandLinkTransResp" | "forwardToParent" | "getFaceAuthConsent" | "loadMyVcs" | "loadThumbprint" | "resetFlowType" | "resetLinkTransactionId" | "resetSelectedVc" | "resetSelectedVoluntaryClaims" | "setClaims" | "setConsentClaims" | "setLinkedTransactionId" | "setMyVcs" | "setScanData" | "setSelectedVc" | "setShowFaceAuthConsent" | "setThumbprint" | "setlinkTransactionResponse" | "storeShowFaceAuthConsent" | "updateShowFaceAuthConsent";
           delays: never;
-          guards: "isConsentAlreadyCaptured" | "isSimpleShareFlow" | "showQrLoginConsentScreen";
+          guards: "isConsentAlreadyCaptured" | "isSimpleShareFlow" | "showFaceAuthConsentScreen";
           services: "linkTransaction" | "sendAuthenticate" | "sendConsent";
         };
         eventsCausingActions: {
           "SetErrorMessage": "error.platform.QrLogin.linkTransaction:invocation[0]" | "error.platform.QrLogin.sendingAuthenticate:invocation[0]" | "error.platform.QrLogin.sendingConsent:invocation[0]";
 "expandLinkTransResp": "done.invoke.QrLogin.linkTransaction:invocation[0]";
 "forwardToParent": "CANCEL" | "DISMISS";
-"getQrLoginConsent": "GET";
+"getFaceAuthConsent": "GET";
 "loadMyVcs": "done.invoke.QrLogin.linkTransaction:invocation[0]";
 "loadThumbprint": "FACE_VALID";
 "resetFlowType": "xstate.init";
@@ -39,11 +39,11 @@
 "setMyVcs": "STORE_RESPONSE";
 "setScanData": "GET";
 "setSelectedVc": "SELECT_VC";
-"setShowQrLoginConsent": "QR_LOGIN_CONSENT";
+"setShowFaceAuthConsent": "FACE_VERIFICATION_CONSENT";
 "setThumbprint": "STORE_RESPONSE";
 "setlinkTransactionResponse": "done.invoke.QrLogin.linkTransaction:invocation[0]";
-"storeShowQrLoginConsent": "QR_LOGIN_CONSENT";
-"updateShowQrLoginConsent": "STORE_RESPONSE";
+"storeShowFaceAuthConsent": "FACE_VERIFICATION_CONSENT";
+"updateShowFaceAuthConsent": "STORE_RESPONSE";
         };
         eventsCausingDelays: {
           
@@ -51,7 +51,7 @@
         eventsCausingGuards: {
           "isConsentAlreadyCaptured": "done.invoke.QrLogin.sendingAuthenticate:invocation[0]";
 "isSimpleShareFlow": "CANCEL" | "DISMISS" | "done.invoke.QrLogin.linkTransaction:invocation[0]";
-"showQrLoginConsentScreen": "VERIFY" | "done.invoke.QrLogin.linkTransaction:invocation[0]";
+"showFaceAuthConsentScreen": "VERIFY" | "done.invoke.QrLogin.linkTransaction:invocation[0]";
         };
         eventsCausingServices: {
           "linkTransaction": "STORE_RESPONSE";

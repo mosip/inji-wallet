@@ -1,8 +1,8 @@
 import { VCShareFlowType } from "../../shared/Utils";
 
 export const QrLoginGuards={
-  showQrLoginConsentScreen: context => {
-      return context.showQrLoginConsent;
+  showFaceAuthConsentScreen: context => {
+      return context.showFaceAuthConsent;
     },
 
     isConsentAlreadyCaptured: (_, event) =>

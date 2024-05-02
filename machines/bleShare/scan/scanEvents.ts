@@ -41,8 +41,8 @@ export const ScanEvents ={
     FACE_INVALID: () => ({}),
     RETRY_VERIFICATION: () => ({}),
     RESET: () => ({}),
-    FACE_VERIFICATION_CONSENT: (isConsentGiven: boolean) => ({
-      isConsentGiven,
+    FACE_VERIFICATION_CONSENT: (isDoNotShowPopUpConsentGiven: boolean) => ({
+     isDoNotShowPopUpConsentGiven,
     }),
     ALLOWED: () => ({}),
     DENIED: () => ({}),

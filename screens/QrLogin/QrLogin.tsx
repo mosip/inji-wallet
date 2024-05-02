@@ -64,7 +64,7 @@ export const QrLogin: React.FC<QrLoginProps> = props => {
         <FaceVerificationAlertOverlay
           isQrLogin={true}
           isVisible={controller.isFaceVerificationConsent}
-          onConfirm={controller.QR_LOGIN_CONSENT}
+          onConfirm={controller.FACE_VERIFICATION_CONSENT}
           close={controller.DISMISS}
         />
 
