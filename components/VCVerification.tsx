@@ -15,7 +15,6 @@ export const VCVerification: React.FC = ({wellknown, isVerified}: any) => {
     <Row
       {...testIDProps('verified')}
       style={{
-        justifyContent: 'space-between',
         alignItems: 'center',
       }}>
       <React.Fragment>
