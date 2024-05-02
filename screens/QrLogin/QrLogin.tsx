@@ -7,7 +7,7 @@ import {MessageOverlay} from '../../components/MessageOverlay';
 import {MyBindedVcs} from './MyBindedVcs';
 import {QrLoginSuccess} from './QrLoginSuccessMessage';
 import {QrConsent} from './QrConsent';
-import {QrLoginRef} from '../../machines/QrLoginMachine';
+import {QrLoginRef} from '../../machines/QrLogin/QrLoginMachine';
 import {Icon} from 'react-native-elements';
 import {View} from 'react-native';
 import {FaceVerificationAlertOverlay} from '../Scan/FaceVerificationAlertOverlay';

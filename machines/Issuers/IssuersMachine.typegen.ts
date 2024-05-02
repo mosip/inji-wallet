@@ -34,10 +34,10 @@
 "verifyCredential": "done.invoke.issuersMachine.verifyingCredential:invocation[0]";
         };
         missingImplementations: {
-          actions: never;
+          actions: "getKeyPairFromStore" | "loadKeyPair" | "logDownloaded" | "resetError" | "resetLoadingReason" | "resetVerificationErrorMessage" | "sendBackupEvent" | "sendErrorEndEvent" | "sendImpressionEvent" | "sendSuccessEndEvent" | "setCredentialTypes" | "setCredentialWrapper" | "setError" | "setIssuers" | "setLoadingReasonAsDisplayIssuers" | "setLoadingReasonAsDownloadingCredentials" | "setLoadingReasonAsSettingUp" | "setMetadataInCredentialData" | "setNoInternet" | "setOIDCConfigError" | "setPrivateKey" | "setPublicKey" | "setSelectedCredentialType" | "setSelectedIssuerId" | "setSelectedIssuers" | "setTokenResponse" | "setVCMetadata" | "setVerifiableCredential" | "storeKeyPair" | "storeVcMetaContext" | "storeVcsContext" | "storeVerifiableCredentialData" | "storeVerifiableCredentialMeta" | "updateVerificationErrorMessage";
           delays: never;
-          guards: never;
-          services: never;
+          guards: "canSelectIssuerAgain" | "hasKeyPair" | "hasUserCancelledBiometric" | "isCustomSecureKeystore" | "isInternetConnected" | "isMultipleCredentialsSupported" | "isOIDCConfigError" | "isOIDCflowCancelled" | "isSignedIn" | "shouldFetchIssuersAgain";
+          services: "checkInternet" | "downloadCredential" | "downloadCredentialTypes" | "downloadIssuerConfig" | "downloadIssuersList" | "generateKeyPair" | "invokeAuthorization" | "isUserSignedAlready" | "verifyCredential";
         };
         eventsCausingActions: {
           "getKeyPairFromStore": "TRY_AGAIN" | "done.invoke.issuersMachine.performAuthorization:invocation[0]";
