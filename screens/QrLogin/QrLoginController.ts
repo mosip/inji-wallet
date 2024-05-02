@@ -1,8 +1,8 @@
 import {useSelector} from '@xstate/react';
 import {useContext, useState} from 'react';
 import {ActorRefFrom} from 'xstate';
+import {QrLoginEvents} from '../../machines/QrLogin/QrLoginMachine';
 import {
-  QrLoginEvents,
   selectClientName,
   selectErrorMessage,
   selectEssentialClaims,
@@ -25,7 +25,7 @@ import {
   selectVoluntaryClaims,
   selectCredential,
   selectVerifiableCredentialData,
-} from '../../machines/QrLoginMachine';
+} from '../../machines/QrLogin/QrLoginSelectors';
 import {selectBindedVcsMetadata} from '../../machines/VerifiableCredential/VCMetaMachine/VCMetaSelectors';
 import {GlobalContext} from '../../shared/GlobalContext';
 import {QrLoginProps} from './QrLogin';
@@ -85,8 +85,10 @@ export function useQrLogin({service}: QrLoginProps) {
         const vcData = vcRef.getSnapshot().context;
         service.send(QrLoginEvents.SELECT_VC(vcData));
       },
-    FACE_VERIFICATION_CONSENT: (isConsentGiven: boolean) =>
-      service.send(QrLoginEvents.FACE_VERIFICATION_CONSENT(isConsentGiven)),
+    FACE_VERIFICATION_CONSENT: (isDoNotAskAgainChecked: boolean) =>
+      service.send(
+        QrLoginEvents.FACE_VERIFICATION_CONSENT(isDoNotAskAgainChecked),
+      ),
     DISMISS: () => service.send(QrLoginEvents.DISMISS()),
     SCANNING_DONE: (qrCode: string) =>
       service.send(QrLoginEvents.SCANNING_DONE(qrCode)),

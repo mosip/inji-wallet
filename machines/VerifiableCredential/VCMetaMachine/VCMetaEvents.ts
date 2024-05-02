@@ -42,4 +42,6 @@ export const VcMetaEvents = {
   ) => ({
     verificationStatus,
   }),
+  VC_DOWNLOADING_FAILED: () => ({}),
+  RESET_DOWNLOADING_FAILED: () => ({}),
 };

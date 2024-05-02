@@ -129,6 +129,7 @@ export const MyVcsTabMachine = model.createMachine(
                 actions: ['setStoringVcItemStatus', 'sendVcAdded'],
               },
               STORE_ERROR: {
+                actions: 'sendDownloadingFailedToVcMeta',
                 target: '#MyVcsTab.addingVc.savingFailed',
               },
             },
@@ -194,6 +195,16 @@ export const MyVcsTabMachine = model.createMachine(
       sendVcAdded: send(
         (_context, event) =>
           VcMetaEvents.VC_ADDED(event.response as VCMetadata),
+        {
+          to: context => context.serviceRefs.vcMeta,
+        },
+      ),
+
+      sendDownloadingFailedToVcMeta: send(
+        (context: any) => ({
+          type: 'VC_DOWNLOADING_FAILED',
+          vcMetadata: context.vcMetadata,
+        }),
         {
           to: context => context.serviceRefs.vcMeta,
         },

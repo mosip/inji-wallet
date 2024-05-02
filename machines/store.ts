@@ -17,7 +17,7 @@ import {
   MY_VCS_STORE_KEY,
   RECEIVED_VCS_STORE_KEY,
   SETTINGS_STORE_KEY,
-  FACE_AUTH_CONSENT,
+  SHOW_FACE_AUTH_CONSENT_SHARE_FLOW,
   ENOENT,
 } from '../shared/constants';
 import SecureKeystore from '@mosip/secure-keystore';
@@ -563,7 +563,7 @@ export async function setItem(
         appId,
       };
       encryptedData = JSON.stringify(settings);
-    } else if (key === FACE_AUTH_CONSENT) {
+    } else if (key === SHOW_FACE_AUTH_CONSENT_SHARE_FLOW) {
       encryptedData = JSON.stringify(value);
     } else {
       encryptedData = await encryptJson(encryptionKey, JSON.stringify(value));
@@ -632,7 +632,7 @@ export async function getItem(
           parsedData.encryptedData = JSON.parse(decryptedData);
         }
         return parsedData;
-      } else if (key === FACE_AUTH_CONSENT) {
+      } else if (key === SHOW_FACE_AUTH_CONSENT_SHARE_FLOW) {
         return JSON.parse(data);
       }
       decryptedData = await decryptJson(encryptionKey, data);

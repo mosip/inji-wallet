@@ -33,10 +33,34 @@ export interface Typegen0 {
     sendConsent: 'done.invoke.QrLogin.sendingConsent:invocation[0]';
   };
   missingImplementations: {
-    actions: never;
+    actions:
+      | 'SetErrorMessage'
+      | 'expandLinkTransResp'
+      | 'forwardToParent'
+      | 'getFaceAuthConsent'
+      | 'loadMyVcs'
+      | 'loadThumbprint'
+      | 'resetFlowType'
+      | 'resetLinkTransactionId'
+      | 'resetSelectedVc'
+      | 'resetSelectedVoluntaryClaims'
+      | 'setClaims'
+      | 'setConsentClaims'
+      | 'setLinkedTransactionId'
+      | 'setMyVcs'
+      | 'setScanData'
+      | 'setSelectedVc'
+      | 'setShowFaceAuthConsent'
+      | 'setThumbprint'
+      | 'setlinkTransactionResponse'
+      | 'storeShowFaceAuthConsent'
+      | 'updateShowFaceAuthConsent';
     delays: never;
-    guards: never;
-    services: never;
+    guards:
+      | 'isConsentAlreadyCaptured'
+      | 'isSimpleShareFlow'
+      | 'showFaceAuthConsentScreen';
+    services: 'linkTransaction' | 'sendAuthenticate' | 'sendConsent';
   };
   eventsCausingActions: {
     SetErrorMessage:
@@ -45,6 +69,7 @@ export interface Typegen0 {
       | 'error.platform.QrLogin.sendingConsent:invocation[0]';
     expandLinkTransResp: 'done.invoke.QrLogin.linkTransaction:invocation[0]';
     forwardToParent: 'CANCEL' | 'DISMISS';
+    getFaceAuthConsent: 'GET';
     loadMyVcs: 'done.invoke.QrLogin.linkTransaction:invocation[0]';
     loadThumbprint: 'FACE_VALID';
     resetFlowType: 'xstate.init';
@@ -53,7 +78,6 @@ export interface Typegen0 {
     resetSelectedVoluntaryClaims: 'GET';
     setClaims: 'done.invoke.QrLogin.linkTransaction:invocation[0]';
     setConsentClaims: 'TOGGLE_CONSENT_CLAIM';
-    setFaceAuthConsent: 'GET';
     setLinkedTransactionId: 'done.invoke.QrLogin.sendingAuthenticate:invocation[0]';
     setMyVcs: 'STORE_RESPONSE';
     setScanData: 'GET';
@@ -62,22 +86,27 @@ export interface Typegen0 {
     setThumbprint: 'STORE_RESPONSE';
     setlinkTransactionResponse: 'done.invoke.QrLogin.linkTransaction:invocation[0]';
     storeShowFaceAuthConsent: 'FACE_VERIFICATION_CONSENT';
+    updateShowFaceAuthConsent: 'STORE_RESPONSE';
   };
   eventsCausingDelays: {};
   eventsCausingGuards: {
     isConsentAlreadyCaptured: 'done.invoke.QrLogin.sendingAuthenticate:invocation[0]';
     isSimpleShareFlow:
       | 'CANCEL'
+      | 'DISMISS'
       | 'done.invoke.QrLogin.linkTransaction:invocation[0]';
-    showFaceAuthConsentScreen: 'VERIFY';
+    showFaceAuthConsentScreen:
+      | 'VERIFY'
+      | 'done.invoke.QrLogin.linkTransaction:invocation[0]';
   };
   eventsCausingServices: {
-    linkTransaction: 'GET';
+    linkTransaction: 'STORE_RESPONSE';
     sendAuthenticate: 'STORE_RESPONSE';
     sendConsent: 'CONFIRM';
   };
   matchesStates:
     | 'ShowError'
+    | 'checkFaceAuthConsent'
     | 'done'
     | 'faceAuth'
     | 'faceVerificationConsent'

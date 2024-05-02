@@ -117,3 +117,13 @@ export function selectIsQrLoginStoring(state: State) {
 export function selectIsDone(state: State) {
   return state.matches('reviewing.disconnect');
 }
+
+export function selectIsMinimumStorageRequiredForAuditEntryLimitReached(
+  state: State,
+) {
+  return state.matches('restrictSharingVc');
+}
+
+export function selectIsFaceVerificationConsent(state: State) {
+  return state.matches('reviewing.faceVerificationConsent');
+}

@@ -157,6 +157,7 @@ export interface Typegen0 {
       | 'sendActivationSuccessEvent'
       | 'sendBackupEvent'
       | 'sendDownloadLimitExpire'
+      | 'sendDownloadingFailedToVcMeta'
       | 'sendTelemetryEvents'
       | 'sendUserCancelledActivationFailedEndEvent'
       | 'sendVcUpdated'
@@ -228,6 +229,7 @@ export interface Typegen0 {
       | 'done.invoke.vc-item-machine.existingState.kebabPopUp.triggerAutoBackup:invocation[0]';
     removeVcFromInProgressDownloads:
       | 'STORE_RESPONSE'
+      | 'error.platform.downloadCredential'
       | 'error.platform.vc-item-machine.existingState.verifyingCredential:invocation[0]';
     removeVcItem: 'CONFIRM';
     removeVcMetaDataFromStorage:
@@ -264,6 +266,7 @@ export interface Typegen0 {
     sendDownloadLimitExpire:
       | 'FAILED'
       | 'error.platform.vc-item-machine.existingState.loadVc.loadVcFromServer.verifyingDownloadLimitExpiry:invocation[0]';
+    sendDownloadingFailedToVcMeta: 'error.platform.downloadCredential';
     sendTelemetryEvents: 'STORE_RESPONSE';
     sendUserCancelledActivationFailedEndEvent: 'DISMISS';
     sendVcUpdated: 'PIN_CARD' | 'STORE_RESPONSE';
