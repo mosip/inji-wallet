@@ -44,8 +44,6 @@ public class VerifyHelpPageTest extends AndroidBaseTest {
         helpPage.exitHelpPage();
 
         assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
-
-
     }
 
 }
