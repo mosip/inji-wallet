@@ -47,6 +47,16 @@ export const VCItemActions = model => {
         to: context => context.serviceRefs.vcMeta,
       },
     ),
+
+    sendDownloadingFailedToVcMeta: send(
+      (_: any) => ({
+        type: 'VC_DOWNLOADING_FAILED',
+      }),
+      {
+        to: context => context.serviceRefs.vcMeta,
+      },
+    ),
+
     setContext: model.assign((context, event) => {
       return {
         ...context,

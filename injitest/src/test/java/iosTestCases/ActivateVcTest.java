@@ -297,6 +297,5 @@ public class ActivateVcTest extends IosBaseTest {
 
         detailedVcViewPage.clickOnBackArrow();
         assertTrue(detailedVcViewPage.isEsignetLogoDisplayed(), "Verify if detailed Vc esignet logo is displayed");
-
     }
 }

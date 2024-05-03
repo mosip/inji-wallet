@@ -233,5 +233,14 @@ export const IssuersActions = (model: any) => {
     resetVerificationErrorMessage: model.assign({
       verificationErrorMessage: () => '',
     }),
+
+    sendDownloadingFailedToVcMeta: send(
+      (_: any) => ({
+        type: 'VC_DOWNLOADING_FAILED',
+      }),
+      {
+        to: context => context.serviceRefs.vcMeta,
+      },
+    ),
   };
 };

@@ -21,7 +21,7 @@
     "@expo/metro-config": "~0.10.0",
     "@invertase/react-native-apple-authentication": "^2.3.0",
     "@iriscan/biometric-sdk-react-native": "0.2.6",
-    "@mosip/pixelpass": "^0.1.2",
+    "@mosip/pixelpass": "^0.1.5",
     "@mosip/secure-keystore": "^0.1.7",
     "@mosip/tuvali": "^0.4.9",
     "@react-native-clipboard/clipboard": "^1.10.0",

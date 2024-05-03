@@ -16,7 +16,7 @@ export function selectErrorMessageType(state: State) {
   const nonGenericErrors = ['', ErrorMessage.NO_INTERNET];
   return nonGenericErrors.includes(state.context.errorMessage)
     ? state.context.errorMessage
-    : ErrorMessage.GENERIC;
+    : null;
 }
 
 export function selectLoadingReason(state: State) {

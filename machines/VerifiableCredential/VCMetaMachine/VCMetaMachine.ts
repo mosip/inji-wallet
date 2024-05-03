@@ -21,6 +21,17 @@ export const vcMetaMachine =
       },
       id: 'vcMeta',
       initial: 'ready',
+      on: {
+        VC_DOWNLOADING_FAILED: {
+          actions: 'setDownloadCreadentialsFailed',
+        },
+        RESET_DOWNLOADING_FAILED: {
+          actions: 'resetDownloadCreadentialsFailed',
+        },
+        REMOVE_VC_FROM_IN_PROGRESS_DOWNLOADS: {
+          actions: 'removeVcFromInProgressDownlods',
+        },
+      },
       states: {
         ready: {
           entry: sendParent('READY'),

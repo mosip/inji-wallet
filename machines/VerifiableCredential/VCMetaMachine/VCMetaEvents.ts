@@ -33,4 +33,6 @@ export const VcMetaEvents = {
   RESET_VERIFY_ERROR: () => ({}),
   REFRESH_VCS_METADATA: () => ({}),
   SHOW_TAMPERED_POPUP: () => ({}),
+  VC_DOWNLOADING_FAILED: () => ({}),
+  RESET_DOWNLOADING_FAILED: () => ({}),
 };

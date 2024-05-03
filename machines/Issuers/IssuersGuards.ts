@@ -2,6 +2,7 @@ import {isSignedInResult} from '../../shared/CloudBackupAndRestoreUtils';
 import {ErrorMessage, Issuers, OIDCErrors} from '../../shared/openId4VCI/Utils';
 import {isHardwareKeystoreExists} from '../../shared/cryptoutil/cryptoUtil';
 import {BiometricCancellationError} from '../../shared/error/BiometricCancellationError';
+import {NETWORK_REQUEST_FAILED, REQUEST_TIMEOUT} from '../../shared/constants';
 
 export const IssuersGuards = () => {
   return {
@@ -41,5 +42,7 @@ export const IssuersGuards = () => {
     isCustomSecureKeystore: () => isHardwareKeystoreExists,
     hasUserCancelledBiometric: (_: any, event: any) =>
       event.data instanceof BiometricCancellationError,
+    isGenericError: (_: any, event: any) =>
+      event.data.message !== (NETWORK_REQUEST_FAILED || REQUEST_TIMEOUT),
   };
 };

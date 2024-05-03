@@ -29,9 +29,16 @@ export const FaceVerificationAlertOverlay: React.FC<
           {SvgImage.ShareWithSelfie()}
         </Row>
 
-        <Column crossAlign="center" margin="10 0 15 0" padding='0'>
-          <Text testID="shareWithSelfieAlert" weight="bold" size="large" color="#000000" style={{padding:3}}>
-            {props.isQrLogin?t('shareWithSelfieQrLogin'):t('shareWithSelfie')}
+        <Column crossAlign="center" margin="10 0 15 0" padding="0">
+          <Text
+            testID="shareWithSelfieAlert"
+            weight="bold"
+            size="large"
+            color="#000000"
+            style={{padding: 3}}>
+            {props.isQrLogin
+              ? t('shareWithSelfieQrLogin')
+              : t('shareWithSelfie')}
           </Text>
 
           <Text
@@ -41,7 +48,9 @@ export const FaceVerificationAlertOverlay: React.FC<
             weight="regular"
             margin="10 0 0 0"
             color="#5D5D5D">
-            {props.isQrLogin?t('shareWithSelfieMessageQrLogin'):t('shareWithSelfieMessage')}
+            {props.isQrLogin
+              ? t('shareWithSelfieMessageQrLogin')
+              : t('shareWithSelfieMessage')}
           </Text>
         </Column>
 
@@ -81,7 +90,7 @@ export const FaceVerificationAlertOverlay: React.FC<
 
 interface FaceVerificationAlertProps {
   isVisible: boolean;
-  onConfirm: (isConsentGiven: boolean) => void;
+  onConfirm: (isDoNotAskAgainChecked: boolean) => void;
   close: () => void;
   isQrLogin?: boolean;
 }

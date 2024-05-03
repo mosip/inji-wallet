@@ -199,6 +199,13 @@ export const VCMetaActions = (model: any) => {
     resetWalletBindingSuccess: model.assign({
       walletBindingSuccess: false,
     }),
+    setDownloadCreadentialsFailed: model.assign({
+      DownloadingCredentialsFailed: () => true,
+    }),
+
+    resetDownloadCreadentialsFailed: model.assign({
+      DownloadingCredentialsFailed: () => false,
+    }),
   };
 };
 

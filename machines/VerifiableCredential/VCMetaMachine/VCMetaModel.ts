@@ -17,6 +17,7 @@ export const VCMetamodel = createModel(
     tamperedVcs: [] as VCMetadata[],
     downloadingFailedVcs: [] as VCMetadata[], //VCDownloadFailed
     verificationErrorMessage: '' as string,
+    DownloadingCredentialsFailed: false,
   },
   {
     events: VcMetaEvents,
