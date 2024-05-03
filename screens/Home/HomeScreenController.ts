@@ -1,6 +1,6 @@
 import {useInterpret, useSelector} from '@xstate/react';
 import {useContext, useEffect, useRef} from 'react';
-import {HomeRouteProps} from '../../routes/main';
+import {HomeRouteProps} from '../../routes/routeTypes';
 import {GlobalContext} from '../../shared/GlobalContext';
 import {
   HomeScreenEvents,
@@ -13,9 +13,10 @@ import {
   selectIssuersMachine,
   selectIsMinimumStorageLimitReached,
 } from './HomeScreenMachine';
-import {VcEvents} from '../../machines/VCItemMachine/vc';
+import {selectVc} from '../../machines/VerifiableCredential/VCItemMachine/VCItemSelectors';
 
-export function useHomeScreen(props: HomeRouteProps) {
+let homeMachineService;
+function useCreateHomeMachineService() {
   const {appService} = useContext(GlobalContext);
   const machine = useRef(
     HomeScreenMachine.withContext({
@@ -23,8 +24,15 @@ export function useHomeScreen(props: HomeRouteProps) {
       serviceRefs: appService.getSnapshot().context.serviceRefs,
     }),
   );
-  const service = useInterpret(machine.current);
-  const vcService = appService.children.get('vc');
+  return (homeMachineService = useInterpret(machine.current));
+}
+
+export function getHomeMachineService() {
+  return homeMachineService;
+}
+
+export function useHomeScreen(props: HomeRouteProps) {
+  const service = useCreateHomeMachineService();
 
   useEffect(() => {
     if (props.route.params?.activeTab != null) {
@@ -34,28 +42,20 @@ export function useHomeScreen(props: HomeRouteProps) {
 
   return {
     service,
-
     activeTab: useSelector(service, selectActiveTab),
     selectedVc: useSelector(service, selectSelectedVc),
+    vc: useSelector(service, selectVc),
     tabRefs: useSelector(service, selectTabRefs),
-
     isViewingVc: useSelector(service, selectViewingVc),
     haveTabsLoaded: useSelector(service, selectTabsLoaded),
-
     IssuersService: useSelector(service, selectIssuersMachine),
     isMinimumStorageLimitReached: useSelector(
       service,
       selectIsMinimumStorageLimitReached,
     ),
-
     DISMISS: () => service.send(HomeScreenEvents.DISMISS()),
     GOTO_ISSUERS: () => service.send(HomeScreenEvents.GOTO_ISSUERS()),
-    SELECT_TAB,
     DISMISS_MODAL: () => service.send(HomeScreenEvents.DISMISS_MODAL()),
-    REVOKE: () => {
-      vcService.send(VcEvents.REFRESH_MY_VCS());
-      service.send(HomeScreenEvents.DISMISS_MODAL());
-    },
   };
 
   function SELECT_TAB(index: number) {

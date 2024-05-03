@@ -12,30 +12,43 @@ import {useBackupAndRestoreSetup} from '../backupAndRestore/BackupAndRestoreSetu
 import BackupAndRestoreScreen from '../backupAndRestore/BackupAndRestoreScreen';
 import testIDProps, {getDriveName} from '../../shared/commonUtil';
 import {useOverlayVisibleAfterTimeout} from '../../shared/hooks/useOverlayVisibleAfterTimeout';
-import {isAndroid} from '../../shared/constants';
+import {isAndroid, isIOS} from '../../shared/constants';
 
 export const DataBackupAndRestore: React.FC = ({} = () => {
   const controller = useBackupAndRestoreSetup();
+  const delay = isAndroid() ? 0 : 1000;
   const {t} = useTranslation('DataBackupScreen');
   const accountSelectionModalVisible = useOverlayVisibleAfterTimeout(
     controller.showAccountSelectionConfirmation,
+    delay,
   );
-  const isLoaderVisible = useOverlayVisibleAfterTimeout(controller.isLoading);
+  const isLoaderVisible = useOverlayVisibleAfterTimeout(
+    controller.isLoading,
+    delay,
+  );
   const isSigningInSuccessful = useOverlayVisibleAfterTimeout(
     controller.isSigningInSuccessful,
+    delay,
   );
-  const isSigningIn = useOverlayVisibleAfterTimeout(controller.isSigningIn);
-
+  const isSigningIn = useOverlayVisibleAfterTimeout(
+    controller.isSigningIn,
+    delay,
+  );
   return (
     <React.Fragment>
-      <Pressable onPress={controller.BACKUP_AND_RESTORE}>
+      <Pressable
+        accessible={false}
+        {...testIDProps('dataBackupAndRestore')}
+        onPress={controller.BACKUP_AND_RESTORE}>
         <ListItem topDivider bottomDivider>
           {SvgImage.DataBackupIcon(25, 25)}
           <ListItem.Content>
-            <ListItem.Title>
+            <ListItem.Title
+              accessible={false}
+              {...testIDProps('dataBackupAndRestoreText')}>
               <Row>
                 <Text
-                  testID="dataBackupAndRestore"
+                  testID="dataBackupAndRestoreText"
                   weight="semibold"
                   color={Theme.Colors.settingsLabel}
                   style={{paddingRight: 10, paddingTop: 10}}>
@@ -55,14 +68,15 @@ export const DataBackupAndRestore: React.FC = ({} = () => {
           <Icon
             name="chevron-right"
             size={21}
-            {...testIDProps('rightArrowIcon')}
+            {...testIDProps('dataBackupAndRestoreChevronRight')}
             color={Theme.Colors.chevronRightColor}
             style={{marginRight: 15}}
           />
         </ListItem>
       </Pressable>
 
-      {controller.isSigningInFailed && (
+      {((controller.isSigningInFailed && !isIOS()) ||
+        controller.isCloudSignInFailed) && (
         <Error
           isModal
           alignActionsOnEnd
@@ -78,7 +92,9 @@ export const DataBackupAndRestore: React.FC = ({} = () => {
             'DataBackupScreen:errors.permissionDenied.actions.allowAccess'
           }
           primaryButtonEvent={
-            isAndroid() ? controller.TRY_AGAIN : controller.OPEN_SETTINGS
+            isAndroid()
+              ? controller.RECONFIGURE_ACCOUNT
+              : controller.OPEN_SETTINGS
           }
           textButtonText={
             'DataBackupScreen:errors.permissionDenied.actions.notNow'
@@ -93,13 +109,13 @@ export const DataBackupAndRestore: React.FC = ({} = () => {
         />
       )}
 
-      {controller.isNetworkOff && (
+      {controller.isNetworkError && (
         <Error
           testID="networkOffError"
           primaryButtonTestID="tryAgain"
           primaryButtonText="tryAgain"
           primaryButtonEvent={controller.TRY_AGAIN}
-          isVisible={controller.isNetworkOff}
+          isVisible={controller.isNetworkError}
           isModal={true}
           showClose
           title={t('errors.noInternetConnection.title')}
@@ -109,14 +125,15 @@ export const DataBackupAndRestore: React.FC = ({} = () => {
         />
       )}
 
-      {(isSigningIn || isSigningInSuccessful) && (
-        <BackupAndRestoreScreen
-          profileInfo={controller.profileInfo}
-          onBackPress={controller.GO_BACK}
-          isLoading={controller.isSigningIn}
-          shouldTriggerAutoBackup={controller.shouldTriggerAutoBackup}
-        />
-      )}
+      {(isSigningIn || isSigningInSuccessful) &&
+        !controller.isCloudSignInFailed && (
+          <BackupAndRestoreScreen
+            profileInfo={controller.profileInfo}
+            onBackPress={controller.GO_BACK}
+            isSigningIn={controller.isSigningIn}
+            shouldTriggerAutoBackup={controller.shouldTriggerAutoBackup}
+          />
+        )}
       {isLoaderVisible && <Loader title={t('loadingSubtitle')} isModal />}
 
       <AccountSelectionConfirmation

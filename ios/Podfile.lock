@@ -30,7 +30,7 @@ PODS:
     - ExpoModulesCore
   - EXConstants (14.4.2):
     - ExpoModulesCore
-  - EXFileSystem (15.4.4):
+  - EXFileSystem (15.4.5):
     - ExpoModulesCore
   - EXFont (11.1.1):
     - ExpoModulesCore
@@ -40,7 +40,7 @@ PODS:
   - EXJSONUtils (0.7.1)
   - EXManifests (0.7.2):
     - ExpoModulesCore
-  - Expo (49.0.16):
+  - Expo (49.0.23):
     - ExpoModulesCore
   - ExpoAdapterGoogleSignIn (10.1.1):
     - ExpoModulesCore
@@ -54,7 +54,7 @@ PODS:
     - ExpoModulesCore
   - ExpoLocalization (14.1.1):
     - ExpoModulesCore
-  - ExpoModulesCore (1.5.11):
+  - ExpoModulesCore (1.5.13):
     - RCT-Folly (= 2021.07.22.00)
     - React-Core
     - React-RCTAppDelegate
@@ -474,6 +474,8 @@ PODS:
     - React-jsi (= 0.71.8)
     - React-logger (= 0.71.8)
     - React-perflogger (= 0.71.8)
+  - RNAppleAuthentication (2.3.0):
+    - React-Core
   - RNArgon2 (2.0.1):
     - CatCrypto
     - React-Core
@@ -512,7 +514,7 @@ PODS:
   - RNZipArchive/Core (6.1.0):
     - React-Core
     - SSZipArchive (~> 2.2)
-  - secure-keystore (0.1.6):
+  - secure-keystore (0.1.7):
     - React-Core
   - SSZipArchive (2.4.3)
   - TensorFlowLiteC (2.12.0):
@@ -607,6 +609,7 @@ DEPENDENCIES:
   - React-RCTVibration (from `../node_modules/react-native/Libraries/Vibration`)
   - React-runtimeexecutor (from `../node_modules/react-native/ReactCommon/runtimeexecutor`)
   - ReactCommon/turbomodule/core (from `../node_modules/react-native/ReactCommon`)
+  - "RNAppleAuthentication (from `../node_modules/@invertase/react-native-apple-authentication`)"
   - RNArgon2 (from `../node_modules/react-native-argon2`)
   - RNBluetoothStateManager (from `../node_modules/react-native-bluetooth-state-manager`)
   - "RNCClipboard (from `../node_modules/@react-native-clipboard/clipboard`)"
@@ -790,6 +793,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon/runtimeexecutor"
   ReactCommon:
     :path: "../node_modules/react-native/ReactCommon"
+  RNAppleAuthentication:
+    :path: "../node_modules/@invertase/react-native-apple-authentication"
   RNArgon2:
     :path: "../node_modules/react-native-argon2"
   RNBluetoothStateManager:
@@ -832,7 +837,7 @@ SPEC CHECKSUMS:
   ASN1Decoder: 6110fdeacfdb41559b1481457a1645be716610aa
   biometric-sdk-react-native: d2a3a1279013cc4a7514a1b43fe557eb76e4e4c1
   BiometricSdk: 303e7329404ea4d922dc14108449d10d21574f77
-  boost: 64032b9e9b938fda23325e68a3771f0fabf414dc
+  boost: 57d2868c099736d80fcd648bf211b4431e51a558
   BVLinearGradient: 880f91a7854faff2df62518f0281afb1c60d49a3
   CatCrypto: a477899b6be4954e75be4897e732da098cc0a5a8
   CrcSwift: f85dea6b41dddb5f98bb3743fd777ce58b77bc2e
@@ -842,18 +847,18 @@ SPEC CHECKSUMS:
   EXBarCodeScanner: 8e23fae8d267dbef9f04817833a494200f1fce35
   EXCamera: 2dc2bd2828bca4e283018a0b5a84aec6639ff0b4
   EXConstants: ce5bbea779da8031ac818c36bea41b10e14d04e1
-  EXFileSystem: 2b826a3bf1071a4b80a8457e97124783d1ac860e
+  EXFileSystem: f8b838a880254de42a5a7da20ed5ce12e2697c1b
   EXFont: 6ea3800df746be7233208d80fe379b8ed74f4272
   EXImageLoader: fd053169a8ee932dd83bf1fe5487a50c26d27c2b
   EXJSONUtils: 6802be4282d42b97c51682468ddc1026a06f8276
   EXManifests: cf66451b11b2c2f6464917528d792759f7fd6ce0
-  Expo: fcfd60c1ed6806dee5103b210335ae0c72f675ed
+  Expo: ba9abdf444dc6d2c05a82c4c1b51a2400beb6167
   ExpoAdapterGoogleSignIn: 6c55782832b7fbdc2c27dac05ef00445c103b8f3
   ExpoCrypto: 42485127a5968dda6f67ac5f2b42d3c0af31d7db
   ExpoKeepAwake: be4cbd52d9b177cde0fd66daa1913afa3161fc1d
   ExpoLocalAuthentication: 32919307c66fb3661caefa07e7811a95a7539d7b
   ExpoLocalization: f26cd431ad9ea3533c5b08c4fabd879176a794bb
-  ExpoModulesCore: d9d45dcbb86a5dba2ec62253267720cb58516f75
+  ExpoModulesCore: f0581cd745335dd7a68117f6fedd22b98e2c73f0
   ExpoWebBrowser: b6e56949734089d75f758f21cfe93fad02bd828c
   EXSplashScreen: 5ed09ea490155ef603d007d9f194c9e04a4b7980
   EXStructuredHeaders: 324cc3130571d2696357fafd8be7fd9a0b5fdf6e
@@ -913,6 +918,7 @@ SPEC CHECKSUMS:
   React-RCTVibration: 43ffd976a25f6057a7cf95ea3648ba4e00287f89
   React-runtimeexecutor: 7c51ae9d4b3e9608a2366e39ccaa606aa551b9ed
   ReactCommon: 85c98ab0a509e70bf5ee5d9715cf68dbf495b84c
+  RNAppleAuthentication: e99eaf3c4c01ad8ecb6125dd6f0cfd98871685b5
   RNArgon2: 1481820722fd4af1575c09f7fc9ad67c00ee8a42
   RNBluetoothStateManager: ae6a26260cbdf1827b58bd3bcc563527d61e6488
   RNCClipboard: 3f0451a8100393908bea5c5c5b16f96d45f30bfc
@@ -928,7 +934,7 @@ SPEC CHECKSUMS:
   RNSecureRandom: 07efbdf2cd99efe13497433668e54acd7df49fef
   RNSVG: 07dbd870b0dcdecc99b3a202fa37c8ca163caec2
   RNZipArchive: ef9451b849c45a29509bf44e65b788829ab07801
-  secure-keystore: 78bf735f42b9d19418568dadbb92712c19a5812e
+  secure-keystore: 3bc262bc91c5fbcfea92a8d0fd59c1b8b8ababee
   SSZipArchive: fe6a26b2a54d5a0890f2567b5cc6de5caa600aef
   TensorFlowLiteC: 20785a69299185a379ba9852b6625f00afd7984a
   TensorFlowLiteObjC: 9a46a29a76661c513172cfffd3bf712b11ef25c3

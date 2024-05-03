@@ -1,15 +1,17 @@
 package iosTestCases;
 
 import BaseTest.AndroidBaseTest;
+import BaseTest.IosBaseTest;
 import inji.constants.Target;
 import inji.pages.*;
+import inji.utils.IosUtil;
 import inji.utils.TestDataReader;
 import org.testng.annotations.Test;
 
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
-public class VcDownloadAndVerifyUsingSunbirdTest extends AndroidBaseTest {
+public class VcDownloadAndVerifyUsingSunbirdTest extends IosBaseTest {
     @Test
     public void downloadAndVerifyVcUsingUinViaSunbird() throws InterruptedException {
         ChooseLanguagePage chooseLanguagePage = new ChooseLanguagePage(driver);
@@ -32,31 +34,32 @@ public class VcDownloadAndVerifyUsingSunbirdTest extends AndroidBaseTest {
         assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
         AddNewCardPage addNewCardPage = homePage.downloadCard();
 
-        assertTrue(addNewCardPage.isAddNewCardPageLoaded(), "Verify if add new card page is displayed");
-//        assertTrue(addNewCardPage.isIssuerDescriptionMosipDisplayed(), "Verify if issuer description  mosip displayed");
-//        assertTrue(addNewCardPage.isIssuerDescriptionEsignetDisplayed(), "Verify if issuer description  esignet displayed");
-//        assertTrue(addNewCardPage.isIssuerSearchBarDisplayed(), "Verify if issuer search bar displayed");
-        //addNewCardPage.sendTextInIssuerSearchBar("Download Sunbird Credentials");
-        assertTrue(addNewCardPage.isAddNewCardPageLoaded(), "Verify if add new card page is displayed");
-        assertTrue(addNewCardPage.isAddNewCardPageGuideMessageForEsignetDisplayed(), "Verify if add new card guide message displayed");
+
         assertTrue(addNewCardPage.isDownloadViaSunbirdDisplayed(), "Verify if download sunbird displayed");
         SunbirdLoginPage sunbirdLoginPage =  addNewCardPage.clickOnDownloadViaSunbird();
-
+        addNewCardPage.clickOnInsuranceCredential();
         addNewCardPage.clickOnContinueButtonInSigninPopupIos();
-//      assertTrue(esignetLoginPage.isLoadingPageTextLoaded(), "Verify if loading page displayed");
-//      assertTrue(esignetLoginPage.isSettingUpTextDisplayed(), "Verify if loading page displayed");
-       
-       // sunbirdLoginPage.clickOnloginWithKbaButton();
-        sunbirdLoginPage.enterPolicyNumberTextBox(TestDataReader.readData("policyNumber"));
+        sunbirdLoginPage.enterPolicyNumberTextBox(TestDataReader.readData("policyNumberSunbird"));
         sunbirdLoginPage.enterFullNameTextBox(TestDataReader.readData("fullNameSunbird"));
         sunbirdLoginPage.enterDateOfBirthTextBox();
+        IosUtil.scrollToElement(driver,100,800,100,200);
         sunbirdLoginPage.clickOnloginButton();
-        
+
         assertTrue(sunbirdLoginPage.isSunbirdCardIsActive(), "Verify if download sunbird displayed active");
-//        assertTrue(sunbirdLoginPage.isSunbirdCardLogoIsDisplayed(), "Verify if download sunbird logo displayed");
+        assertTrue(sunbirdLoginPage.isSunbirdCardLogoIsDisplayed(), "Verify if download sunbird logo displayed");
+        assertEquals(sunbirdLoginPage.getFullNameForSunbirdCard(),TestDataReader.readData("fullNameSunbird"));
+        sunbirdLoginPage.openDetailedSunbirdVcView();
+
         assertEquals(sunbirdLoginPage.getFullNameForSunbirdCard(),TestDataReader.readData("fullNameSunbird"));
         assertEquals(sunbirdLoginPage.getPolicyNameForSunbirdCard(),TestDataReader.readData("policyNameSunbird"));
-        assertEquals(sunbirdLoginPage.getIdTypeForSunbirdCard(),TestDataReader.readData("idTypeSunbird"));
+        assertEquals(sunbirdLoginPage.getPhoneNumberForSunbirdCard(),TestDataReader.readData("phoneNumberSunbird"));
+        assertEquals(sunbirdLoginPage.getDateofBirthValueForSunbirdCard(),TestDataReader.readData("dateOfBirthSunbird"));
+        assertEquals(sunbirdLoginPage.getGenderValueForSunbirdCard(),TestDataReader.readData("genderValueSunbird"));
+        assertEquals(sunbirdLoginPage.getEmailIdValueForSunbirdCard(),TestDataReader.readData("emailIdValueSunbird"));
+        assertEquals(sunbirdLoginPage.getStatusValueForSunbirdCard(),TestDataReader.readData("status"));
+        assertTrue(sunbirdLoginPage.isPolicyExpiresOnValueDisplayed(), "Verify if policy expireson value displayed");
+        assertTrue(sunbirdLoginPage.isbenefitsValueDisplayed(), "Verify if policy expireson value displayed");
+        assertEquals(sunbirdLoginPage.getIdTypeValueForSunbirdCard(),TestDataReader.readData("idTypeSunbird"));
     }
     
    }

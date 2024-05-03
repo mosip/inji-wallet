@@ -6,8 +6,8 @@ import {Modal} from '../../components/ui/Modal';
 import {Centered, Button, Text, Column} from '../../components/ui';
 import {Theme} from '../../components/ui/styleUtils';
 import {useQrLogin} from './QrLoginController';
-import {QrLoginRef} from '../../machines/QrLoginMachine';
-import {getLocalizedField} from '../../i18n';
+import {QrLoginRef} from '../../machines/QrLogin/QrLoginMachine';
+import {getClientNameForCurrentLanguage} from '../../i18n';
 
 export const QrLoginSuccess: React.FC<QrLoginSuccessProps> = props => {
   const {t} = useTranslation('QrLogin');
@@ -35,7 +35,7 @@ export const QrLoginSuccess: React.FC<QrLoginSuccessProps> = props => {
             margin="20 0 0 0"
             align="center">
             {t('successMessage')}
-            {getLocalizedField(controller.clientName)}
+            {getClientNameForCurrentLanguage(controller.clientName)}
           </Text>
         </Centered>
         <Column

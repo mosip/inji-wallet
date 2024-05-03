@@ -1,25 +1,28 @@
 import React, {useEffect, useState} from 'react';
 import {useTranslation} from 'react-i18next';
-import {MessageOverlay} from '../../components/MessageOverlay';
+import {
+  ErrorMessageOverlay,
+  MessageOverlay,
+} from '../../components/MessageOverlay';
 import {QrScanner} from '../../components/QrScanner';
-import {Button, Centered, Column, Text, Row} from '../../components/ui';
+import {Button, Centered, Column, Text} from '../../components/ui';
 import {Theme} from '../../components/ui/styleUtils';
 import {QrLogin} from '../QrLogin/QrLogin';
 import {useScanScreen} from './ScanScreenController';
 import BluetoothStateManager from 'react-native-bluetooth-state-manager';
 import {Linking} from 'react-native';
-import {useNavigation, NavigationProp} from '@react-navigation/native';
-import {MainBottomTabParamList} from '../../routes/main';
-import {BOTTOM_TAB_ROUTES} from '../../routes/routesConstants';
 import {isIOS} from '../../shared/constants';
 import {BannerNotificationContainer} from '../../components/BannerNotificationContainer';
+import {SharingStatusModal} from './SharingStatusModal';
+import {SvgImage} from '../../components/ui/svg';
+import {LocationPermissionRational} from './LocationPermissionRational';
+import { FaceVerificationAlertOverlay } from './FaceVerificationAlertOverlay';
+import { useSendVcScreen } from './SendVcScreenController';
 
 export const ScanScreen: React.FC = () => {
-  type ScanScreenNavigation = NavigationProp<MainBottomTabParamList>;
-
   const {t} = useTranslation('ScanScreen');
-  const controller = useScanScreen();
-  const navigation = useNavigation<ScanScreenNavigation>();
+  const scanScreenController = useScanScreen();
+  const sendVcScreenController = useSendVcScreen();
   const [isBluetoothOn, setIsBluetoothOn] = useState(false);
 
   useEffect(() => {
@@ -36,9 +39,13 @@ export const ScanScreen: React.FC = () => {
 
   // TODO(kludge): skip running this hook on every render
   useEffect(() => {
-    if (controller.isStartPermissionCheck && !controller.isEmpty)
-      controller.START_PERMISSION_CHECK();
+    if (scanScreenController.isStartPermissionCheck && !scanScreenController.isEmpty)
+    scanScreenController.START_PERMISSION_CHECK();
   });
+
+  useEffect(() => {
+    if (scanScreenController.isQuickShareDone) scanScreenController.GOTO_HOME();
+  }, [scanScreenController.isQuickShareDone]);
 
   const openSettings = () => {
     Linking.openSettings();
@@ -84,7 +91,8 @@ export const ScanScreen: React.FC = () => {
         <Button
           testID="enableBluetoothButton"
           title={t('enableBluetoothButtonText')}
-          onPress={openSettings}></Button>
+          onPress={openSettings}
+        />
       </Column>
     );
   }
@@ -104,7 +112,8 @@ export const ScanScreen: React.FC = () => {
         <Button
           testID="allowNearbyDevicesPermissionButton"
           title={t('errors.nearbyDevicesPermissionDenied.button')}
-          onPress={openSettings}></Button>
+          onPress={openSettings}
+        />
       </Column>
     );
   }
@@ -117,14 +126,14 @@ export const ScanScreen: React.FC = () => {
             testID="enableLocationServicesMessage"
             align="center"
             color={Theme.Colors.errorMessage}>
-            {controller.locationError.message}
+            {scanScreenController.locationError.message}
           </Text>
         </Centered>
 
         <Button
           testID="enableLocationServicesButton"
-          title={controller.locationError.button}
-          onPress={controller.LOCATION_REQUEST}
+          title={scanScreenController.locationError.button}
+          onPress={scanScreenController.LOCATION_REQUEST}
         />
       </Column>
     );
@@ -133,50 +142,58 @@ export const ScanScreen: React.FC = () => {
   function qrScannerComponent() {
     return (
       <Column crossAlign="center" margin="0 0 0 -6">
-        <QrScanner onQrFound={controller.SCAN} title={t('scanningGuide')} />
+        <QrScanner onQrFound={scanScreenController.SCAN} title={t('scanningGuide')} />
       </Column>
     );
   }
 
   function loadQRScanner() {
-    if (controller.isEmpty) {
+    if (scanScreenController.isEmpty) {
       return noShareableVcText();
     }
-    if (controller.selectIsInvalid) {
+    if (scanScreenController.selectIsInvalid) {
       return displayInvalidQRpopup();
     }
-    if (controller.isNearByDevicesPermissionDenied) {
+    if (scanScreenController.isNearByDevicesPermissionDenied) {
       return allowNearbyDevicesPermissionComponent();
     }
     if (
-      (controller.isBluetoothDenied || !isBluetoothOn) &&
-      controller.isReadyForBluetoothStateCheck
+      (scanScreenController.isBluetoothDenied || !isBluetoothOn) &&
+      scanScreenController.isReadyForBluetoothStateCheck
     ) {
       return bluetoothIsOffText();
     }
-    if (controller.isLocationDisabled || controller.isLocationDenied) {
+    if (scanScreenController.isLocalPermissionRational) {
+      return (
+        <LocationPermissionRational
+          onConfirm={scanScreenController.ALLOWED}
+          onCancel={scanScreenController.DENIED}
+        />
+      );
+    }
+    if (scanScreenController.isLocationDisabled || scanScreenController.isLocationDenied) {
       return allowLocationComponent();
     }
 
-    if (controller.isBluetoothPermissionDenied) {
+    if (scanScreenController.isBluetoothPermissionDenied) {
       return allowBluetoothPermissionComponent();
     }
-    if (controller.isScanning) {
+    if (scanScreenController.isScanning) {
       return qrScannerComponent();
     }
   }
 
   function displayStorageLimitReachedError(): React.ReactNode {
     return (
-      !controller.isEmpty && (
-        <MessageOverlay
+      !scanScreenController.isEmpty && (
+        <ErrorMessageOverlay
           testID="storageLimitReachedError"
           isVisible={
-            controller.isMinimumStorageRequiredForAuditEntryLimitReached
+            scanScreenController.isMinimumStorageRequiredForAuditEntryLimitReached
           }
           translationPath={'ScanScreen'}
           error="errors.storageLimitReached"
-          onBackdropPress={() => navigation.navigate(BOTTOM_TAB_ROUTES.home)}
+          onDismiss={scanScreenController.GOTO_HOME}
         />
       )
     );
@@ -184,30 +201,18 @@ export const ScanScreen: React.FC = () => {
 
   function displayInvalidQRpopup(): React.ReactNode {
     return (
-      !controller.isEmpty && (
-        <MessageOverlay
-          testID="invalidQrPopup"
-          isVisible={controller.selectIsInvalid}
-          minHeight={'auto'}
-          title={t('invalidQR')}
-          onBackdropPress={controller.DISMISS}>
-          <Row>
-            <Button
-              testID="cancel"
-              fill
-              type="clear"
-              title={t('common:cancel')}
-              onPress={() => navigation.navigate(BOTTOM_TAB_ROUTES.home)}
-              margin={[0, 8, 0, 0]}
-            />
-            <Button
-              testID="tryAgain"
-              fill
-              title={t('common:tryAgain')}
-              onPress={controller.DISMISS}
-            />
-          </Row>
-        </MessageOverlay>
+      !scanScreenController.isEmpty && (
+        <SharingStatusModal
+          isVisible={scanScreenController.selectIsInvalid}
+          testId={'invalidQrPopup'}
+          image={SvgImage.ErrorLogo()}
+          title={t(`status.bleError.TVW_CON_001.title`)}
+          message={t(`status.bleError.TVW_CON_001.message`)}
+          gradientButtonTitle={t('status.bleError.retry')}
+          clearButtonTitle={t('status.bleError.home')}
+          onGradientButton={scanScreenController.DISMISS}
+          onClearButton={scanScreenController.GOTO_HOME}
+        />
       )
     );
   }
@@ -215,19 +220,24 @@ export const ScanScreen: React.FC = () => {
   return (
     <Column fill backgroundColor={Theme.Colors.whiteBackgroundColor}>
       <BannerNotificationContainer />
-      <Centered
+      <FaceVerificationAlertOverlay
+        isVisible={sendVcScreenController.isFaceVerificationConsent}
+        onConfirm={sendVcScreenController.FACE_VERIFICATION_CONSENT}
+        close={sendVcScreenController.DISMISS}
+      />
+        <Centered
         padding="24 0"
         align="space-evenly"
         backgroundColor={Theme.Colors.whiteBackgroundColor}>
         {loadQRScanner()}
-        {controller.isQrLogin && (
+        {scanScreenController.isQrLogin && (
           <QrLogin
-            isVisible={controller.isQrLogin}
-            service={controller.isQrRef}
+            isVisible={scanScreenController.isQrLogin}
+            service={scanScreenController.isQrRef}
           />
         )}
         <MessageOverlay
-          isVisible={controller.isQrLoginstoring}
+          isVisible={scanScreenController.isQrLoginstoring}
           title={t('loading')}
           progress
         />

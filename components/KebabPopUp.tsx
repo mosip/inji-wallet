@@ -1,37 +1,43 @@
+import React from 'react';
 import {Icon, ListItem, Overlay} from 'react-native-elements';
 import {Theme} from '../components/ui/styleUtils';
 import {Column, Row, Text} from '../components/ui';
-import {WalletBinding} from '../screens/Home/MyVcs/WalletBinding';
-import {Pressable, View} from 'react-native';
+import {View} from 'react-native';
 import {useKebabPopUp} from './KebabPopUpController';
 import {ActorRefFrom} from 'xstate';
-import {ExistingMosipVCItemMachine} from '../machines/VCItemMachine/ExistingMosipVCItem/ExistingMosipVCItemMachine';
 import {useTranslation} from 'react-i18next';
-import {HistoryTab} from '../screens/Home/MyVcs/HistoryTab';
-import {RemoveVcWarningOverlay} from '../screens/Home/MyVcs/RemoveVcWarningOverlay';
-import {ScrollView} from 'react-native-gesture-handler';
+import {FlatList} from 'react-native-gesture-handler';
 import {VCMetadata} from '../shared/VCMetadata';
 import testIDProps from '../shared/commonUtil';
+import {getKebabMenuOptions} from './kebabMenuUtils';
+import {VCItemMachine} from '../machines/VerifiableCredential/VCItemMachine/VCItemMachine';
 
 export const KebabPopUp: React.FC<KebabPopUpProps> = props => {
   const controller = useKebabPopUp(props);
   const {t} = useTranslation('HomeScreenKebabPopUp');
+
   return (
     <Column>
-      <Icon
-        {...testIDProps('ellipsis')}
-        accessible={true}
-        name={props.iconName}
-        type={props.iconType}
-        color={Theme.Colors.GrayIcon}
-        size={Theme.ICON_SMALL_SIZE}
-      />
+      {props.icon ? (
+        props.icon
+      ) : (
+        <Icon
+          {...testIDProps('ellipsis')}
+          accessible={true}
+          name={props.iconName}
+          type={props.iconType}
+          {...(props.iconColor ? props.iconColor : Theme.Colors.helpText)}
+          size={Theme.ICON_SMALL_SIZE}
+        />
+      )}
       <Overlay
-        isVisible={props.isVisible}
+        isVisible={props.isVisible && !controller.isScanning}
         onBackdropPress={props.onDismiss}
         overlayStyle={Theme.KebabPopUpStyles.kebabPopUp}>
-        <Row style={Theme.KebabPopUpStyles.kebabHeaderStyle}>
-          <View></View>
+        <Row
+          style={Theme.KebabPopUpStyles.kebabHeaderStyle}
+          margin="15"
+          crossAlign="center">
           <Text testID="kebabTitle" weight="bold">
             {t('title')}
           </Text>
@@ -43,61 +49,43 @@ export const KebabPopUp: React.FC<KebabPopUpProps> = props => {
             size={25}
           />
         </Row>
-        <ScrollView>
-          <ListItem bottomDivider>
-            <ListItem.Content>
-              <ListItem.Title
-                onPress={controller.PIN_CARD}
-                {...testIDProps('pinOrUnPinCard')}>
-                <Text size="small" weight="bold">
-                  {props.vcMetadata.isPinned ? t('unPinCard') : t('pinCard')}
+
+        <FlatList
+          data={getKebabMenuOptions(props)}
+          renderItem={({item}) => (
+            <ListItem topDivider onPress={item.onPress}>
+              <Row crossAlign="center" style={{flex: 1}}>
+                <View style={{width: 25, alignItems: 'center'}}>
+                  {item.icon}
+                </View>
+                <Text
+                  style={{fontFamily: 'Inter_600SemiBold'}}
+                  color={
+                    item.testID === 'removeFromWallet'
+                      ? Theme.Colors.warningText
+                      : undefined
+                  }
+                  testID={item.testID}
+                  margin="0 0 0 10">
+                  {item.label}
                 </Text>
-              </ListItem.Title>
-            </ListItem.Content>
-          </ListItem>
-
-          <WalletBinding
-            label={t('offlineAuthenticationDisabled!')}
-            content={t('offlineAuthDisabledMessage')}
-            service={props.service}
-            vcMetadata={props.vcMetadata}
-          />
-
-          <HistoryTab
-            testID="viewActivityLog"
-            service={props.service}
-            label={t('viewActivityLog')}
-            vcMetadata={props.vcMetadata}
-          />
-
-          <ListItem bottomDivider>
-            <ListItem.Content>
-              <ListItem.Title
-                onPress={() => controller.REMOVE(props.vcMetadata)}
-                {...testIDProps('removeFromWallet')}>
-                <Text size="small" weight="bold">
-                  {t('removeFromWallet')}
-                </Text>
-              </ListItem.Title>
-            </ListItem.Content>
-          </ListItem>
-
-          <RemoveVcWarningOverlay
-            isVisible={controller.isRemoveWalletWarning}
-            onConfirm={controller.CONFIRM}
-            onCancel={controller.CANCEL}
-          />
-        </ScrollView>
+              </Row>
+            </ListItem>
+          )}
+        />
       </Overlay>
     </Column>
   );
 };
 
 export interface KebabPopUpProps {
-  iconName: string;
+  iconName?: string;
   iconType?: string;
   vcMetadata: VCMetadata;
-  isVisible: boolean;
+  isVisible?: boolean;
   onDismiss: () => void;
-  service: ActorRefFrom<typeof ExistingMosipVCItemMachine>;
+  service: ActorRefFrom<typeof VCItemMachine>;
+  iconColor?: any;
+  icon?: any;
+  vcHasImage: boolean;
 }

@@ -1,8 +1,8 @@
-import React from 'react';
+import React, {ReactElement} from 'react';
 import {useTranslation} from 'react-i18next';
 
 import {Dimensions, StyleSheet} from 'react-native';
-import {Overlay, LinearProgress} from 'react-native-elements';
+import {LinearProgress, Overlay} from 'react-native-elements';
 import {Button, Column, Text} from './ui';
 import {Theme} from './ui/styleUtils';
 
@@ -73,6 +73,7 @@ export const MessageOverlay: React.FC<MessageOverlayProps> = props => {
 };
 
 export const ErrorMessageOverlay: React.FC<ErrorMessageOverlayProps> = ({
+  testID,
   isVisible,
   error,
   onDismiss,
@@ -86,6 +87,7 @@ export const ErrorMessageOverlay: React.FC<ErrorMessageOverlayProps> = ({
       title={t(error + '.title')}
       message={t(error + '.message')}
       onBackdropPress={onDismiss}
+      testID={testID}
     />
   );
 };
@@ -95,9 +97,10 @@ export interface ErrorMessageOverlayProps {
   error?: string;
   onDismiss?: () => void;
   translationPath: string;
+  testID?: string;
 }
 
-const Progress: React.FC<Pick<MessageOverlayProps, 'progress'>> = props => {
+const Progress: React.FC<MessageOverlayProps> = props => {
   return typeof props.progress === 'boolean' ? (
     props.progress && (
       <LinearProgress variant="indeterminate" color={Theme.Colors.Loading} />
@@ -122,4 +125,10 @@ export interface MessageOverlayProps {
   onBackdropPress?: () => void;
   onShow?: () => void;
   minHeight?: number | string | undefined;
+  children?: ReactElement<any, any>;
+}
+
+export interface VCSharingErrorStatusProps {
+  title: string;
+  message: string;
 }

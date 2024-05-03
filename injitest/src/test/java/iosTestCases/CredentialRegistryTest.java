@@ -471,7 +471,7 @@ public class CredentialRegistryTest extends IosBaseTest {
 	@Test
 	public void downloadAndVerifyVcInInvalidEnvForEsignetInFillpino() throws InterruptedException {
 		UnlockApplicationPage unlockApplicationPage = new UnlockApplicationPage(driver);
-		if (unlockApplicationPage.isUnlockApplicationDisplayed() == false) {
+		if (!unlockApplicationPage.isUnlockApplicationDisplayed()) {
 			ChooseLanguagePage chooseLanguagePage = new ChooseLanguagePage(driver);
 			assertTrue(chooseLanguagePage.isChooseLanguagePageLoaded(), "Verify if choose language page is displayed");
 

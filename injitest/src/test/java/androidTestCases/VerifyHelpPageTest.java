@@ -4,17 +4,7 @@ import BaseTest.AndroidBaseTest;
 import inji.constants.Target;
 import inji.pages.*;
 import inji.utils.TestDataReader;
-import io.appium.java_client.PerformsTouchActions;
-import io.appium.java_client.TouchAction;
-import io.appium.java_client.touch.offset.PointOption;
-
 import org.testng.annotations.Test;
-
-import com.google.common.collect.ImmutableMap;
-
-import static org.testng.Assert.assertTrue;
-
-import org.openqa.selenium.JavascriptExecutor;
 
 import static org.testng.Assert.*;
 
@@ -42,10 +32,15 @@ public class VerifyHelpPageTest extends AndroidBaseTest {
 
         assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
         HelpPage helpPage = homePage.clickOnHelpIcon();
-        
-        assertEquals(helpPage.isHelpPageContentEmpty(),false,"verifying text is not empty");
-        
+
+        assertFalse(helpPage.isHelpPageContentEmpty(), "verifying text is not empty");
+        helpPage.clickOnBackButton();
+
+        assertEquals(homePage.verifyLanguageForNoVCDownloadedPageLoaded(), "Bring your digital identity");
+        homePage.clickOnHelpIcon();
+
         assertTrue(helpPage.isHelpPageLoaded(), "Verify if help page is displayed");
+        assertTrue(helpPage.isWhatIsShareWithSelfieTextdHeader(),"verify if share with selfie text displayed");
         helpPage.exitHelpPage();
 
         assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");

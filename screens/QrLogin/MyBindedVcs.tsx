@@ -3,11 +3,14 @@ import {Button, Centered, Column, Text} from '../../components/ui';
 import {Theme} from '../../components/ui/styleUtils';
 import {useTranslation} from 'react-i18next';
 import {useQrLogin} from './QrLoginController';
-import {QrLoginRef} from '../../machines/QrLoginMachine';
+import {QrLoginRef} from '../../machines/QrLogin/QrLoginMachine';
 import {Icon} from 'react-native-elements';
 import {Modal} from '../../components/ui/Modal';
 import {VcItemContainer} from '../../components/VC/VcItemContainer';
-import {getVCsOrderedByPinStatus} from '../../shared/Utils';
+import {
+  VCItemContainerFlowType,
+  getVCsOrderedByPinStatus,
+} from '../../shared/Utils';
 
 export const MyBindedVcs: React.FC<MyBindedVcsProps> = props => {
   const controller = useQrLogin(props);
@@ -43,10 +46,9 @@ export const MyBindedVcs: React.FC<MyBindedVcsProps> = props => {
                               vcMetadata={vcMetadata}
                               margin="0 2 8 2"
                               onPress={controller.SELECT_VC_ITEM(index)}
-                              showOnlyBindedVc
+                              flow={VCItemContainerFlowType.QR_LOGIN}
                               selectable
                               selected={index === controller.selectedIndex}
-                              isSharingVc
                               isPinned={vcMetadata.isPinned}
                             />
                           ),

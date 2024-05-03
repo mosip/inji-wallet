@@ -5,7 +5,7 @@ import {Modal} from './ui/Modal';
 import {Column, Text} from './ui';
 import {Theme} from './ui/styleUtils';
 import {BannerNotificationContainer} from './BannerNotificationContainer';
-import getAllConfigurations from '../shared/commonprops/commonProps';
+import getAllConfigurations from '../shared/api';
 
 export const HelpScreen: React.FC<HelpScreenProps> = props => {
   const {t} = useTranslation('HelpScreen');
@@ -25,9 +25,10 @@ export const HelpScreen: React.FC<HelpScreenProps> = props => {
         if (listingRef?.current != null) {
           listingRef.current.scrollToIndex({
             index: 15,
+            animated: true,
           });
         }
-      }, 3000);
+      }, 2000);
     }
   }, [showHelpPage]);
 
@@ -225,6 +226,22 @@ export const HelpScreen: React.FC<HelpScreenProps> = props => {
       ),
     },
     {
+      title: t('questions.inji.sixteen'),
+      data: (
+        <React.Fragment>
+          {getTextField(t('answers.inji.sixteen'))}
+        </React.Fragment>
+      ),
+    },
+    {
+      title: t('questions.inji.seventeen'),
+      data: (
+        <React.Fragment>
+          {getTextField(t('answers.inji.seventeen'))}
+        </React.Fragment>
+      ),
+    },
+    {
       title: t('questions.inji.thirteen'),
       data: (
         <React.Fragment>
@@ -288,6 +305,15 @@ export const HelpScreen: React.FC<HelpScreenProps> = props => {
                 </View>
               )}
               data={[...InjiFaqMap, ...BackupFaqMap]}
+              onScrollToIndexFailed={info => {
+                const wait = new Promise(resolve => setTimeout(resolve, 500));
+                wait.then(() => {
+                  listingRef.current?.scrollToIndex({
+                    index: info.index,
+                    animated: true,
+                  });
+                });
+              }}
             />
           </Column>
         </SafeAreaView>

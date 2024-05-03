@@ -3,10 +3,11 @@ package iosTestCases;
 import BaseTest.IosBaseTest;
 import inji.constants.Target;
 import inji.pages.*;
+import inji.utils.IosUtil;
 import inji.utils.TestDataReader;
 import org.testng.annotations.Test;
 
-import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 
 public class VerifyHelpPageTest extends IosBaseTest {
@@ -33,12 +34,10 @@ public class VerifyHelpPageTest extends IosBaseTest {
 
         assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
         HelpPage helpPage = homePage.clickOnHelpIcon();
-        
-        assertEquals(helpPage.isHelpPageContentEmpty(),false,"verifying if help page is not empty");
+        IosUtil.scrollToElement(driver,100,800,100,200);
 
+        assertFalse(helpPage.isHelpPageContentEmpty(), "verifying if help page is not empty");
         helpPage.exitHelpPage();
-
-        
         assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
     }
 

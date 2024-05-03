@@ -1,19 +1,12 @@
 import React from 'react';
-import {
-  BottomTabNavigationOptions,
-  BottomTabScreenProps,
-} from '@react-navigation/bottom-tabs';
-import {RootStackParamList} from './index';
+import {BottomTabNavigationOptions} from '@react-navigation/bottom-tabs';
 import {ScanLayout} from '../screens/Scan/ScanLayout';
 import {HistoryScreen} from '../screens/History/HistoryScreen';
 import i18n from '../i18n';
 import {BOTTOM_TAB_ROUTES} from './routesConstants';
 import {HomeScreenLayout} from '../screens/HomeScreenLayout';
 import {Theme} from '../components/ui/styleUtils';
-
-export const changeTabBarVisible = (visible: string) => {
-  Theme.BottomTabBarStyle.tabBarStyle.display = visible;
-};
+import {SettingScreen} from '../screens/Settings/SettingScreen';
 
 const home: TabScreen = {
   name: BOTTOM_TAB_ROUTES.home,
@@ -39,8 +32,22 @@ const history: TabScreen = {
   component: HistoryScreen,
   icon: 'history',
   options: {
+    headerTitleStyle: Theme.Styles.HistoryHeaderTitleStyle,
     title: i18n.t('MainLayout:history'),
-    headerRight: null,
+  },
+};
+
+const settings: TabScreen = {
+  name: BOTTOM_TAB_ROUTES.settings,
+  component: SettingScreen,
+  icon: 'settings',
+  options: {
+    headerTitleStyle: {
+      fontSize: 26,
+      fontFamily: 'Inter_600SemiBold',
+      marginTop: 15,
+    },
+    title: i18n.t('MainLayout:settings'),
   },
 };
 
@@ -48,12 +55,7 @@ export const mainRoutes: TabScreen[] = [];
 mainRoutes.push(home);
 mainRoutes.push(share);
 mainRoutes.push(history);
-
-export type MainBottomTabParamList = {
-  home: undefined;
-  share: undefined;
-  history: undefined;
-};
+mainRoutes.push(settings);
 
 export interface TabScreen {
   name: string;
@@ -61,12 +63,3 @@ export interface TabScreen {
   component: React.FC;
   options?: BottomTabNavigationOptions;
 }
-
-export type MainRouteProps = BottomTabScreenProps<
-  MainBottomTabParamList & RootStackParamList
->;
-
-export type HomeRouteProps = BottomTabScreenProps<
-  MainBottomTabParamList & RootStackParamList,
-  'home'
->;

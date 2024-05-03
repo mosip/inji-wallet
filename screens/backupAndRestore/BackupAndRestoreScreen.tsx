@@ -14,9 +14,12 @@ import {useBackupScreen} from './BackupController';
 import {BannerNotificationContainer} from '../../components/BannerNotificationContainer';
 import {useBackupRestoreScreen} from '../Settings/BackupRestoreController';
 import {Icon} from 'react-native-elements';
-import testIDProps, {getDriveName} from '../../shared/commonUtil';
+import testIDProps, {
+  getAccountType,
+  getDriveName,
+} from '../../shared/commonUtil';
 import {HelpScreen} from '../../components/HelpScreen';
-import {isAndroid} from '../../shared/constants';
+import {isAndroid, isIOS} from '../../shared/constants';
 
 const BackupAndRestoreScreen: React.FC<BackupAndRestoreProps> = props => {
   const backupController = useBackupScreen();
@@ -25,28 +28,36 @@ const BackupAndRestoreScreen: React.FC<BackupAndRestoreProps> = props => {
   const {t} = useTranslation('BackupAndRestore');
 
   useEffect(() => {
-    if (!props.isLoading && backupController.lastBackupDetails === null) {
+    if (!props.isSigningIn) {
       backupController.LAST_BACKUP_DETAILS();
     }
-  }, [props.isLoading, backupController.lastBackupDetails]);
+  }, [props.isSigningIn]);
 
   useEffect(() => {
     if (
-      !props.isLoading &&
-      !backupController.isLoading &&
+      !props.isSigningIn &&
+      !backupController.isLoadingBackupDetails &&
       props.shouldTriggerAutoBackup
     ) {
-      backupController.DATA_BACKUP(true);
+      backupController.DATA_BACKUP(props.shouldTriggerAutoBackup);
     }
   }, [
-    props.isLoading,
-    backupController.isLoading,
+    props.isSigningIn,
+    backupController.isLoadingBackupDetails,
     props.shouldTriggerAutoBackup,
   ]);
 
-  const Loading = (
+  function handleRestore() {
+    !backupController.isBackupInProgress && restoreController.BACKUP_RESTORE();
+  }
+
+  function handleBackup() {
+    !restoreController.isBackUpRestoring && backupController.DATA_BACKUP(false);
+  }
+
+  const Loading = testID => (
     <Centered fill>
-      <LoaderAnimation showLogo={false} />
+      <LoaderAnimation testID={testID} showLogo={false} />
     </Centered>
   );
 
@@ -110,14 +121,15 @@ const BackupAndRestoreScreen: React.FC<BackupAndRestoreProps> = props => {
       </Row>
       <Row style={Theme.BackupAndRestoreStyles.actionOrLoaderContainer}>
         {backupController.isBackupInProgress ? (
-          Loading
+          Loading('backup')
         ) : (
           <Button
             testID="backup"
             type="gradient"
             title={t('backup')}
-            onPress={() => backupController.DATA_BACKUP(false)}
-            styles={{...Theme.MessageOverlayStyles.button, flex: 1}}
+            disabled={restoreController.isBackUpRestoring}
+            onPress={handleBackup}
+            styles={{flex: 1}}
           />
         )}
       </Row>
@@ -127,13 +139,20 @@ const BackupAndRestoreScreen: React.FC<BackupAndRestoreProps> = props => {
   const AccountSection = (
     <SectionLayout
       testId="AccountSection"
-      headerText={t('driveSettings')}
-      headerIcon={SvgImage.GoogleDriveIconSmall(28, 25)}>
+      headerText={isIOS() ? t('') : t('driveSettings')}
+      headerIcon={
+        isIOS()
+          ? SvgImage.ICloudIcon(86, 25)
+          : SvgImage.GoogleDriveIconSmall(28, 25)
+      }>
       <View style={{marginBottom: 19}}>
         <Text
           testID="storageInfo"
           style={Theme.BackupAndRestoreStyles.backupProgressText}>
-          {t('storage')}
+          {t('storage', {
+            driveName: getDriveName(),
+            accountType: getAccountType(),
+          })}
         </Text>
       </View>
       <AccountInformation
@@ -160,19 +179,20 @@ const BackupAndRestoreScreen: React.FC<BackupAndRestoreProps> = props => {
             }>
             {restoreController.isBackUpRestoring
               ? t('restoreInProgress')
-              : t('restoreInfo')}
+              : t('restoreInfo', {driveName: getDriveName()})}
           </Text>
         </View>
       </Row>
       <Row style={Theme.BackupAndRestoreStyles.actionOrLoaderContainer}>
         {restoreController.isBackUpRestoring ? (
-          Loading
+          Loading('restore')
         ) : (
           <Button
             testID="restore"
             type="outline"
             title={t('restore')}
-            onPress={restoreController.BACKUP_RESTORE}
+            disabled={backupController.isBackupInProgress}
+            onPress={handleRestore}
             styles={{...Theme.MessageOverlayStyles.button, marginTop: 10}}
           />
         )}
@@ -191,15 +211,18 @@ const BackupAndRestoreScreen: React.FC<BackupAndRestoreProps> = props => {
         <HelpScreen
           source={'BackUp'}
           triggerComponent={
-            <Icon
-              {...testIDProps('help')}
-              accessible={true}
-              name="question"
-              type="font-awesome"
-              size={21}
-              style={Theme.Styles.IconContainer}
-              color={Theme.Colors.Icon}
-            />
+            <View testID="help" style={Theme.HelpScreenStyle.viewStyle}>
+              <Row crossAlign="center" style={Theme.HelpScreenStyle.rowStyle}>
+                <View testID="helpIcon" style={Theme.HelpScreenStyle.iconStyle}>
+                  {SvgImage.infoIcon()}
+                </View>
+                <Text
+                  testID="helpText"
+                  style={Theme.HelpScreenStyle.labelStyle}>
+                  {t('Help?')}
+                </Text>
+              </Row>
+            </View>
           }
         />
       }
@@ -210,14 +233,14 @@ const BackupAndRestoreScreen: React.FC<BackupAndRestoreProps> = props => {
           backgroundColor: Theme.Colors.lightGreyBackgroundColor,
           flex: 1,
         }}>
-        {props.isLoading || backupController.isLoading ? (
+        {props.isSigningIn || backupController.isLoadingBackupDetails ? (
           <Column fill align="center" crossAlign="center">
-            <LoaderAnimation />
+            <LoaderAnimation testID="backupAndRestoreScreen" />
           </Column>
         ) : (
           <ScrollView>
             {LastBackupSection}
-            {isAndroid() && AccountSection}
+            {AccountSection}
             {RestoreSection}
           </ScrollView>
         )}
@@ -230,7 +253,7 @@ export default BackupAndRestoreScreen;
 
 interface BackupAndRestoreProps {
   profileInfo: ProfileInfo | undefined;
-  isLoading: boolean;
+  isSigningIn: boolean;
   onBackPress: () => void;
   shouldTriggerAutoBackup: boolean;
 }

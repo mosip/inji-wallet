@@ -5,6 +5,8 @@ import {
   AuthEvents,
   selectBiometrics,
   selectCanUseBiometrics,
+  selectPasscode,
+  selectSettingUp,
 } from '../../machines/auth';
 import {
   selectBiometricUnlockEnabled,
@@ -26,15 +28,13 @@ import {
 } from '../../machines/biometrics';
 import {GlobalContext} from '../../shared/GlobalContext';
 import {useTranslation} from 'react-i18next';
-import {Platform} from 'react-native';
 import {RequestRouteProps, RootRouteProps} from '../../routes';
 import {REQUEST_ROUTES} from '../../routes/routesConstants';
-import {isIOS} from '../../shared/constants';
 
 export function useSettingsScreen(props: RootRouteProps & RequestRouteProps) {
   const {appService} = useContext(GlobalContext);
-  const authService = appService.children.get('auth');
-  const settingsService = appService.children.get('settings');
+  const authService = appService?.children?.get('auth') || {};
+  const settingsService = appService?.children?.get('settings') || {};
 
   const [isVisible, setIsVisible] = useState(false);
 
@@ -42,6 +42,9 @@ export function useSettingsScreen(props: RootRouteProps & RequestRouteProps) {
   const authBiometrics = useSelector(authService, selectBiometrics);
   const [biometricState, biometricSend, bioService] =
     useMachine(biometricsMachine);
+  const passcode = useSelector(authService, selectPasscode);
+  const isPasscodeSet = () => !!passcode;
+  const isSettingUp = useSelector(authService, selectSettingUp);
 
   const isSuccessBio: boolean = useSelector(bioService, selectIsSuccess);
   const errorMsgBio: string = useSelector(bioService, selectError);
@@ -56,14 +59,16 @@ export function useSettingsScreen(props: RootRouteProps & RequestRouteProps) {
       const hasEnrolledBiometrics = await LocalAuthentication.isEnrolledAsync();
       if (!hasEnrolledBiometrics) {
         authService.send(AuthEvents.SETUP_BIOMETRICS(''));
-        settingsService.send(SettingsEvents.TOGGLE_BIOMETRIC_UNLOCK(false));
+        settingsService.send(
+          SettingsEvents.TOGGLE_BIOMETRIC_UNLOCK(false, false),
+        );
       }
     }, 0);
 
     // if biometic state is success then lets send auth service BIOMETRICS
     if (isSuccessBio) {
       authService.send(AuthEvents.SETUP_BIOMETRICS('true'));
-      settingsService.send(SettingsEvents.TOGGLE_BIOMETRIC_UNLOCK(true));
+      settingsService.send(SettingsEvents.TOGGLE_BIOMETRIC_UNLOCK(true, true));
 
       // handle biometric failure unknown error
     } else {
@@ -79,19 +84,17 @@ export function useSettingsScreen(props: RootRouteProps & RequestRouteProps) {
       // But check if we already enrolled biometrics
       if (authBiometrics) {
         authService.send(AuthEvents.SETUP_BIOMETRICS('true'));
-        settingsService.send(SettingsEvents.TOGGLE_BIOMETRIC_UNLOCK(true));
-
-        // but if device does not have any enrolled biometrics
+        settingsService.send(
+          SettingsEvents.TOGGLE_BIOMETRIC_UNLOCK(true, true),
+        );
       } else if (biometricState.matches({failure: 'unenrolled'})) {
         biometricSend({type: 'RETRY_AUTHENTICATE'});
-
-        // otherwise lets do a biometric auth
       } else {
         biometricSend({type: 'AUTHENTICATE'});
       }
     } else {
       authService.send(AuthEvents.SETUP_BIOMETRICS(''));
-      settingsService.send(SettingsEvents.TOGGLE_BIOMETRIC_UNLOCK(false));
+      settingsService.send(SettingsEvents.TOGGLE_BIOMETRIC_UNLOCK(false, true));
     }
   };
 
@@ -103,21 +106,29 @@ export function useSettingsScreen(props: RootRouteProps & RequestRouteProps) {
     isVisible,
     alertMsg,
     hideAlert,
-    appId: useSelector(settingsService, selectAppId),
-    name: useSelector(settingsService, selectName),
-    vcLabel: useSelector(settingsService, selectVcLabel),
-    credentialRegistry: useSelector(settingsService, selectCredentialRegistry),
-    esignetHostUrl: useSelector(settingsService, selectEsignetHostUrl),
+    isPasscodeSet,
+    isSettingUp,
+    appId: useSelector(settingsService || {}, selectAppId),
+    name: useSelector(settingsService || {}, selectName),
+    vcLabel: useSelector(settingsService || {}, selectVcLabel),
+    credentialRegistry: useSelector(
+      settingsService || {},
+      selectCredentialRegistry,
+    ),
+    esignetHostUrl: useSelector(settingsService || {}, selectEsignetHostUrl),
     credentialRegistryResponse: useSelector(
-      settingsService,
+      settingsService || {},
       selectCredentialRegistryResponse,
     ),
     isBiometricUnlockEnabled: useSelector(
-      settingsService,
+      settingsService || {},
       selectBiometricUnlockEnabled,
     ),
-    isResetInjiProps: useSelector(settingsService, selectIsResetInjiProps),
-    canUseBiometrics: useSelector(authService, selectCanUseBiometrics),
+    isResetInjiProps: useSelector(
+      settingsService || {},
+      selectIsResetInjiProps,
+    ),
+    canUseBiometrics: useSelector(authService || {}, selectCanUseBiometrics),
     useBiometrics,
 
     UPDATE_NAME: (name: string) =>
@@ -149,14 +160,23 @@ export function useSettingsScreen(props: RootRouteProps & RequestRouteProps) {
       setIsVisible(false);
     },
 
+    CHANGE_UNLOCK_METHOD: (val: boolean) => {
+      authService.send(AuthEvents.CHANGE_METHOD(true));
+      settingsService.send(SettingsEvents.TOGGLE_BIOMETRIC_UNLOCK(val, true));
+      props.navigation.navigate('Passcode', {setup: true});
+    },
+
     INJI_TOUR_GUIDE: () => {
       settingsService.send(SettingsEvents.INJI_TOUR_GUIDE()),
         props.navigation.navigate('IntroSliders'),
         setIsVisible(false);
     },
 
-    TOGGLE_BIOMETRIC: (enable: boolean) =>
-      settingsService.send(SettingsEvents.TOGGLE_BIOMETRIC_UNLOCK(enable)),
+    TOGGLE_BIOMETRIC: (enable: boolean) => {
+      settingsService.send(
+        SettingsEvents.TOGGLE_BIOMETRIC_UNLOCK(enable, true),
+      );
+    },
 
     LOGOUT: () => {
       setIsVisible(false);

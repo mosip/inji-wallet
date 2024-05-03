@@ -17,6 +17,7 @@ import {GlobalContext} from '../shared/GlobalContext';
 import {ScanEvents} from '../machines/bleShare/scan/scanMachine';
 import testIDProps from '../shared/commonUtil';
 import {SvgImage} from '../components/ui/svg';
+import {isIOS} from '../shared/constants';
 
 const {Navigator, Screen} = createBottomTabNavigator();
 
@@ -64,6 +65,8 @@ export const MainLayout: React.FC<
                 {SvgImage[`${route.name}`](focused)}
               </Column>
             ),
+            tabBarAccessibilityLabel: isIOS() ? t(route.name) : route.name,
+            tabBarTestID: route.name,
           }}
         />
       ))}

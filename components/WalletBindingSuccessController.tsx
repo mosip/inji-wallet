@@ -1,17 +1,18 @@
 import {useContext} from 'react';
 import {GlobalContext} from '../shared/GlobalContext';
 import {useSelector} from '@xstate/react';
-import {
-  VcEvents,
-  selectWalletBindingSuccess,
-} from '../machines/VCItemMachine/vc';
+import {selectWalletBindingSuccess} from '../machines/VerifiableCredential/VCMetaMachine/VCMetaSelectors';
+import {VcMetaEvents} from '../machines/VerifiableCredential/VCMetaMachine/VCMetaMachine';
 
 export const UseWalletBindingSuccess = () => {
   const {appService} = useContext(GlobalContext);
-  const vcService = appService.children.get('vc');
-  const isBindingSuccess = useSelector(vcService, selectWalletBindingSuccess);
+  const vcMetaService = appService.children.get('vcMeta')!!;
+  const isBindingSuccess = useSelector(
+    vcMetaService,
+    selectWalletBindingSuccess,
+  );
   const DISMISS = () => {
-    vcService?.send(VcEvents.RESET_WALLET_BINDING_SUCCESS());
+    vcMetaService?.send(VcMetaEvents.RESET_WALLET_BINDING_SUCCESS());
   };
   return {
     isBindingSuccess,

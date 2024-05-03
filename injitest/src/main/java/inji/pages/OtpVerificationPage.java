@@ -2,6 +2,7 @@ package inji.pages;
 
 import inji.constants.Target;
 import io.appium.java_client.AppiumDriver;
+import io.appium.java_client.HidesKeyboard;
 import io.appium.java_client.pagefactory.AndroidFindBy;
 import io.appium.java_client.pagefactory.iOSXCUITFindBy;
 import org.openqa.selenium.WebElement;
@@ -11,6 +12,10 @@ public class OtpVerificationPage extends BasePage {
     @AndroidFindBy(accessibility = "otpVerificationHeader")
     @iOSXCUITFindBy(accessibility = "otpVerificationHeader")
     private WebElement otpVerificationText;
+
+    @AndroidFindBy(accessibility = "otpVerificationDescription")
+    @iOSXCUITFindBy(accessibility = "otpVerificationDescription")
+    private WebElement otpVerificationDescription;
 
     @AndroidFindBy(accessibility = "otpVerificationError")
     @iOSXCUITFindBy(accessibility = "otpVerificationError")
@@ -44,9 +49,16 @@ public class OtpVerificationPage extends BasePage {
     @iOSXCUITFindBy(iOSClassChain = "**/XCUIElementTypeStaticText[`label == \"VID not available in database\"`]")
     private WebElement vidNotAvailableMessage;
 
-    @AndroidFindBy(uiAutomator = "new UiSelector().resourceId(\"resendCodeView\")") //as parent component has correct property 
+    @AndroidFindBy(xpath = "//*[@resource-id=\"resendCodeView\"]") //Not using accessibility id as parent component has correct element property
     @iOSXCUITFindBy(accessibility = "resendCode")
     private WebElement resendCodeButton;
+
+    @AndroidFindBy(accessibility = "resendCode")
+    private WebElement resendCode;
+
+    @AndroidFindBy(accessibility = "wait")
+    @iOSXCUITFindBy(accessibility = "wait")
+    private WebElement waitPopupButton;
 
     public OtpVerificationPage(AppiumDriver driver) {
         super(driver);
@@ -103,23 +115,33 @@ public class OtpVerificationPage extends BasePage {
     }
 
     public boolean verifyResendCodeButtonDisplayedEnabled() {
-        return this.isElementEnabled(resendCodeButton);
+        return this.isElementEnabled(resendCodeButton,30);
     }
     
     public void clickOnResendButton() {
-        clickOnElement(resendCodeButton);
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        if(isElementEnabled(resendCodeButton,30)) {
+            clickOnElement(resendCode);
+        }
     }
 
     public boolean confirmPopupHeaderDisplayed() {
         return this.isElementDisplayed(confirmationPopupHeader);
     }
 
-    public boolean verifyOtpVerificationTimerCompleted() {
-        return this.WaitTillElementVisible(otpVerificationTimer, 190);
+    public void WatingTimeForVerificationTimerComplete() {
+         this.WaitTillElementVisible(otpVerificationTimer, 186);
     }
     
     public boolean verifyOtpVerificationTimerDisplayedAfterClickOnResend() {
         return this.isElementDisplayed(otpVerificationTimer);
+    }
 
+    public boolean verifyotpVerificationDescriptionDisplayed() {
+        return this.isElementDisplayed(otpVerificationDescription);
     }
 }

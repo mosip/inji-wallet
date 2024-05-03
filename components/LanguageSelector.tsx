@@ -32,7 +32,7 @@ export const changeLanguage = async (i18n: i18n, language: string) => {
     await i18n.changeLanguage(language).then(async () => {
       const existingCredentials = await Keychain.getGenericPassword();
       await setItem('language', i18n.language, existingCredentials.password);
-      const isRTL = i18next.dir(language) === 'rtl' ? true : false;
+      const isRTL = i18next.dir(language) === 'rtl';
       if (isRTL !== I18nManager.isRTL) {
         try {
           I18nManager.forceRTL(isRTL);
@@ -40,7 +40,7 @@ export const changeLanguage = async (i18n: i18n, language: string) => {
             RNRestart.Restart();
           }, 150);
         } catch (e) {
-          console.log('error', e);
+          console.error('error while changing text direction ', e);
         }
       }
     });

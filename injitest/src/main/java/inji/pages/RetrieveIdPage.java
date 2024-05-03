@@ -4,7 +4,6 @@ import inji.constants.Target;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.pagefactory.AndroidFindBy;
 import io.appium.java_client.pagefactory.iOSXCUITFindBy;
-
 import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebElement;
 
@@ -13,6 +12,9 @@ public class RetrieveIdPage extends BasePage {
 	@AndroidFindBy(accessibility = "retrieveIdHeader")
 	@iOSXCUITFindBy(accessibility = "retrieveIdHeader")
 	private WebElement retrieveIdText;
+
+	@AndroidFindBy(uiAutomator = "new UiSelector().textContains(\"Allow\")")
+	private WebElement allowButton;
 
 	@AndroidFindBy(accessibility = "idInputModalIndividualId")
 	@iOSXCUITFindBy(accessibility = "idInputModalIndividualId")
@@ -38,9 +40,17 @@ public class RetrieveIdPage extends BasePage {
 	@AndroidFindBy(xpath = "//*[contains(@text,'UIN invalid')]")
 	private WebElement invalidUin;
 
-	@AndroidFindBy(xpath = "//*[contains(@text,'The input format is incorrect')]")
+	@AndroidFindBy(xpath = "//*[contains(@text,'Please enter valid UIN')]")
+	@iOSXCUITFindBy(accessibility = "Please enter valid UIN")
+	private WebElement inputFormatErrorMessageUin;
+
+	@AndroidFindBy(xpath = "//*[contains(@text,'Please enter valid VID')]")
+	@iOSXCUITFindBy(accessibility = "Please enter valid VID")
+	private WebElement inputFormatErrorMessageVid;
+
+	@AndroidFindBy(xpath = "//*[contains(@text,'Please enter valid AID')]")
 	@iOSXCUITFindBy(accessibility = "idInputModalIndividualId")
-	private WebElement inputFormatErrorMessage;
+	private WebElement inputFormatErrorMessageAid;
 
 	@AndroidFindBy(xpath = "//*[contains(@text,'AID is not ready yet')]")
 	@iOSXCUITFindBy(accessibility = "AID is not ready yet")
@@ -78,6 +88,12 @@ public class RetrieveIdPage extends BasePage {
 		return this;
 	}
 
+	public RetrieveIdPage acceptPermissionPopupBluetooth() {
+		if (isElementDisplayed(allowButton)) {
+			clickOnElement(allowButton);
+		}
+		return this;
+	}
 	public OtpVerificationPage clickOnGenerateCardButton() {
 		this.clickOnElement(generateCardButton);
 		return new OtpVerificationPage(driver);
@@ -132,8 +148,15 @@ public class RetrieveIdPage extends BasePage {
 		return this;
 	}
 
-	public boolean isIncorrectInputFormatErrorMessageDisplayed() {
-		return isElementDisplayed(inputFormatErrorMessage);
+	public boolean isIncorrectInputFormatErrorUinMessageDisplayed() {
+		return isElementDisplayed(inputFormatErrorMessageUin);
 	}
 
+	public boolean isIncorrectInputFormatErrorVidMessageDisplayed() {
+		return isElementDisplayed(inputFormatErrorMessageVid);
+	}
+
+	public boolean isIncorrectInputFormatErrorAidMessageDisplayed() {
+		return isElementDisplayed(inputFormatErrorMessageAid);
+	}
 }

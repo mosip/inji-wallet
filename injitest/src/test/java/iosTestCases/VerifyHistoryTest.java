@@ -4,6 +4,7 @@ import BaseTest.IosBaseTest;
 import inji.api.BaseTestCase;
 import inji.constants.Target;
 import inji.pages.*;
+import inji.utils.IosUtil;
 import inji.utils.TestDataReader;
 import org.testng.annotations.Test;
 
@@ -37,7 +38,8 @@ public class VerifyHistoryTest extends IosBaseTest {
         RetrieveIdPage retrieveIdPage = addNewCardPage.clickOnDownloadViaUin();
 
         assertTrue(retrieveIdPage.isRetrieveIdPageLoaded(), "Verify if retrieve id page is displayed");
-        OtpVerificationPage otpVerification = retrieveIdPage.setEnterIdTextBox(TestDataReader.readData("uin")).clickOnGenerateCardButton();
+        String uin = TestDataReader.readData("uin");
+        OtpVerificationPage otpVerification = retrieveIdPage.setEnterIdTextBox(uin).clickOnGenerateCardButton();
 
         assertTrue(otpVerification.isOtpVerificationPageLoaded(), "Verify if otp verification page is displayed");
         otpVerification.enterOtp(BaseTestCase.getOtp(), Target.IOS);
@@ -46,7 +48,7 @@ public class VerifyHistoryTest extends IosBaseTest {
         HistoryPage historyPage = homePage.clickOnHistoryButton();
 
         assertTrue(historyPage.isHistoryPageLoaded(), "Verify if history page is displayed");
-        assertTrue(historyPage.verifyHistory(TestDataReader.readData("uin"), Target.IOS));
+        assertTrue(historyPage.verifyHistory(uin, Target.IOS));
 
     }
 
@@ -77,7 +79,8 @@ public class VerifyHistoryTest extends IosBaseTest {
         RetrieveIdPage retrieveIdPage = addNewCardPage.clickOnDownloadViaUin();
 
         assertTrue(retrieveIdPage.isRetrieveIdPageLoaded(), "Verify if retrieve id page is displayed");
-        OtpVerificationPage otpVerification = retrieveIdPage.setEnterIdTextBox(TestDataReader.readData("uin")).clickOnGenerateCardButton();
+        String uin = TestDataReader.readData("uin");
+        OtpVerificationPage otpVerification = retrieveIdPage.setEnterIdTextBox(uin).clickOnGenerateCardButton();
 
         assertTrue(otpVerification.isOtpVerificationPageLoaded(), "Verify if otp verification page is displayed");
         otpVerification.enterOtp(BaseTestCase.getOtp(), Target.IOS);
@@ -94,15 +97,15 @@ public class VerifyHistoryTest extends IosBaseTest {
         assertTrue(otpVerificationPage.isOtpVerificationPageLoaded(), "Verify if otp verification page is displayed");
         otpVerificationPage.enterOtp(TestDataReader.readData("invalidOtp"), Target.IOS);
 
-//        assertTrue(otpVerification.invalidOtpMessageDisplayed(), "Verify if OTP is invalid message is displayed");
-//        otpVerificationPage.enterOtp(TestDataReader.readData("invalidOtp"), Target.IOS);
+        assertTrue(otpVerification.invalidOtpMessageDisplayed(), "Verify if OTP is invalid message is displayed");
+        otpVerificationPage.enterOtp(TestDataReader.readData("invalidOtp"), Target.IOS);
 //
         assertTrue(otpVerificationPage.somethingWetWrongInVcActivationDisplayed(), "Verify if Something is wrong. Please try again later displayed");
         assertTrue(otpVerificationPage.isCancelButtonDisplayed(), "Verify if cancel button is displayed");
 
         HistoryPage historyPage = otpVerificationPage.clickOnCancelButton().clickOnCloseButton().clickOnHistoryButton();
         assertTrue(historyPage.isHistoryPageLoaded(), "Verify if history page is displayed");
-        assertTrue(historyPage.verifyActivationFailedRecordInHistory(TestDataReader.readData("uin"), Target.IOS));
+        assertTrue(historyPage.verifyActivationFailedRecordInHistory(uin, Target.IOS));
     }
 
     @Test
@@ -132,7 +135,8 @@ public class VerifyHistoryTest extends IosBaseTest {
         RetrieveIdPage retrieveIdPage = addNewCardPage.clickOnDownloadViaUin();
 
         assertTrue(retrieveIdPage.isRetrieveIdPageLoaded(), "Verify if retrieve id page is displayed");
-        OtpVerificationPage otpVerification = retrieveIdPage.setEnterIdTextBox(TestDataReader.readData("uin")).clickOnGenerateCardButton();
+        String uin = TestDataReader.readData("uin");
+        OtpVerificationPage otpVerification = retrieveIdPage.setEnterIdTextBox(uin).clickOnGenerateCardButton();
 
         assertTrue(otpVerification.isOtpVerificationPageLoaded(), "Verify if otp verification page is displayed");
         otpVerification.enterOtp(BaseTestCase.getOtp(), Target.IOS);
@@ -148,13 +152,16 @@ public class VerifyHistoryTest extends IosBaseTest {
         assertTrue(otpVerificationPage.isOtpVerificationPageLoaded(), "Verify if otp verification page is displayed");
         otpVerificationPage.enterOtp(TestDataReader.readData("invalidOtp"), Target.IOS);
 
+        assertTrue(otpVerification.invalidOtpMessageDisplayed(), "Verify if OTP is invalid message is displayed");
+        otpVerificationPage.enterOtp(TestDataReader.readData("invalidOtp"), Target.IOS);
+
         assertTrue(otpVerificationPage.somethingWetWrongInVcActivationDisplayed(), "Verify if Something is wrong. Please try again later displayed");
         assertTrue(otpVerificationPage.isCancelButtonDisplayed(), "Verify if cancel button is displayed");
 
         otpVerificationPage.clickOnCancelButton();
         HistoryPage historyPage = detailedVcViewPage.clickOnBackArrow().clickOnHistoryButton();
         assertTrue(historyPage.isHistoryPageLoaded(), "Verify if history page is displayed");
-        assertTrue(historyPage.verifyActivationFailedRecordInHistory(TestDataReader.readData("uin"), Target.IOS));
+        assertTrue(historyPage.verifyActivationFailedRecordInHistory(uin, Target.IOS));
     }
 
     @Test
@@ -184,7 +191,8 @@ public class VerifyHistoryTest extends IosBaseTest {
         RetrieveIdPage retrieveIdPage = addNewCardPage.clickOnDownloadViaUin();
 
         assertTrue(retrieveIdPage.isRetrieveIdPageLoaded(), "Verify if retrieve id page is displayed");
-        OtpVerificationPage otpVerification = retrieveIdPage.setEnterIdTextBox(TestDataReader.readData("uin")).clickOnGenerateCardButton();
+        String uin = TestDataReader.readData("uin");
+        OtpVerificationPage otpVerification = retrieveIdPage.setEnterIdTextBox(uin).clickOnGenerateCardButton();
 
         assertTrue(otpVerification.isOtpVerificationPageLoaded(), "Verify if otp verification page is displayed");
         otpVerification.enterOtp(BaseTestCase.getOtp(), Target.IOS);
@@ -204,7 +212,7 @@ public class VerifyHistoryTest extends IosBaseTest {
         assertTrue(moreOptionsPage.isVcActivatedForOnlineLogin(), "Verify if VC is activated");
         HistoryPage historyPage = moreOptionsPage.clickOnCloseButton().clickOnHistoryButton();
         assertTrue(historyPage.isHistoryPageLoaded(), "Verify if history page is displayed");
-        assertTrue(historyPage.verifyActivationSuccessfulRecordInHistory(TestDataReader.readData("uin"), Target.IOS));
+        assertTrue(historyPage.verifyActivationSuccessfulRecordInHistory(uin, Target.IOS));
 
     }
 
@@ -233,17 +241,17 @@ public class VerifyHistoryTest extends IosBaseTest {
         assertTrue(addNewCardPage.isAddNewCardPageLoaded(), "Verify if add new card page is displayed");
         EsignetLoginPage esignetLoginPage =  addNewCardPage.clickOnDownloadViaEsignet();
 
-        assertTrue(esignetLoginPage.isEsignetLoginPageDisplayed(), "Verify if esignet login page displayed");
         esignetLoginPage.clickOnEsignetLoginWithOtpButton();
-        
-        assertTrue(esignetLoginPage.isEnterYourVidTextDisplayed(), "Verify if enter your vid text is displayed");
-        OtpVerificationPage otpVerification= esignetLoginPage.setEnterIdTextBox(TestDataReader.readData("uin"));
+
+        addNewCardPage.clickOnContinueButtonInSigninPopupIos();
+        esignetLoginPage.clickOnEsignetLoginWithOtpButton();
+        String uin = TestDataReader.readData("uin");
+        OtpVerificationPage otpVerification= esignetLoginPage.setEnterIdTextBox(uin);
         
         esignetLoginPage.clickOnGetOtpButton();
-        assertTrue(esignetLoginPage.isOtpHasSendMessageDisplayed(),"verify if otp page is displayed");
         
         otpVerification.enterOtpForEsignet(TestDataReader.readData("otp"), Target.IOS);
-        esignetLoginPage.clickOnVerifyButton();
+        esignetLoginPage.clickOnVerifyButtonIos();
         
         assertTrue(homePage.isNameDisplayed(TestDataReader.readData("fullName")), "Verify if full name is displayed");
         DetailedVcViewPage detailedVcViewPage = homePage.openDetailedVcView(TestDataReader.readData("fullName"));
@@ -258,7 +266,7 @@ public class VerifyHistoryTest extends IosBaseTest {
        
         otpVerification.enterOtp(TestDataReader.readData("passcode"), Target.IOS);
         assertTrue(detailedVcViewPage.isProfileAuthenticatedDisplayed(), "Verify profile authenticated displayed");
-        detailedVcViewPage.clickOnQrCrossIcon();
+        detailedVcViewPage.clickOnBackArrow();
         
         MoreOptionsPage moreOptionsPage = homePage.clickOnMoreOptionsButton();
         assertTrue(moreOptionsPage.isMoreOptionsPageLoaded(), "Verify if more options page is displayed");
@@ -271,9 +279,9 @@ public class VerifyHistoryTest extends IosBaseTest {
         
         HistoryPage historyPage = homePage.clickOnHistoryButton();
         assertTrue(historyPage.isHistoryPageLoaded(), "Verify if history page is displayed");
-        assertTrue(historyPage.verifyActivationSuccessfulRecordInHistory(TestDataReader.readData("uin"), Target.IOS));
-        assertTrue(historyPage.verifyHistory(TestDataReader.readData("uin"), Target.IOS),"verify if download history is displayed");
-        assertTrue(historyPage.verifyDeleteHistory(TestDataReader.readData("uin"), Target.IOS), "Verify if deleted history is displayed");
+        assertTrue(historyPage.verifyActivationSuccessfulRecordInHistory(uin, Target.IOS));
+        assertTrue(historyPage.verifyHistory(uin, Target.IOS),"verify if download history is displayed");
+        assertTrue(historyPage.verifyDeleteHistory(uin, Target.IOS), "Verify if deleted history is displayed");
     }
     
     @Test
@@ -301,17 +309,18 @@ public class VerifyHistoryTest extends IosBaseTest {
         assertTrue(addNewCardPage.isAddNewCardPageLoaded(), "Verify if add new card page is displayed");
         EsignetLoginPage esignetLoginPage =  addNewCardPage.clickOnDownloadViaEsignet();
 
-        assertTrue(esignetLoginPage.isEsignetLoginPageDisplayed(), "Verify if esignet login page displayed");
         esignetLoginPage.clickOnEsignetLoginWithOtpButton();
-        
-        assertTrue(esignetLoginPage.isEnterYourVidTextDisplayed(), "Verify if enter your vid text is displayed");
-        OtpVerificationPage otpVerification= esignetLoginPage.setEnterIdTextBox(TestDataReader.readData("vid"));
+
+        addNewCardPage.clickOnContinueButtonInSigninPopupIos();
+        esignetLoginPage.clickOnEsignetLoginWithOtpButton();
+
+        String vid = TestDataReader.readData("vid");
+        OtpVerificationPage otpVerification= esignetLoginPage.setEnterIdTextBox(vid);
         
         esignetLoginPage.clickOnGetOtpButton();
-        assertTrue(esignetLoginPage.isOtpHasSendMessageDisplayed(),"verify if otp page is displayed");
         
         otpVerification.enterOtpForEsignet(TestDataReader.readData("otp"), Target.IOS);
-        esignetLoginPage.clickOnVerifyButton();
+        esignetLoginPage.clickOnVerifyButtonIos();
         
         assertTrue(homePage.isNameDisplayed(TestDataReader.readData("fullName")), "Verify if full name is displayed");
         DetailedVcViewPage detailedVcViewPage = homePage.openDetailedVcView(TestDataReader.readData("fullName"));
@@ -326,7 +335,7 @@ public class VerifyHistoryTest extends IosBaseTest {
        
         otpVerification.enterOtp(TestDataReader.readData("passcode"), Target.IOS);
         assertTrue(detailedVcViewPage.isProfileAuthenticatedDisplayed(), "Verify profile authenticated displayed");
-        detailedVcViewPage.clickOnQrCrossIcon();
+        detailedVcViewPage.clickOnBackArrow();
         
         MoreOptionsPage moreOptionsPage = homePage.clickOnMoreOptionsButton();
         assertTrue(moreOptionsPage.isMoreOptionsPageLoaded(), "Verify if more options page is displayed");
@@ -338,7 +347,102 @@ public class VerifyHistoryTest extends IosBaseTest {
         
         HistoryPage historyPage = moreOptionsPage.clickOnCloseButton().clickOnHistoryButton();
         assertTrue(historyPage.isHistoryPageLoaded(), "Verify if history page is displayed");
-        assertTrue(historyPage.verifyActivationSuccessfulRecordInHistory(TestDataReader.readData("vid"), Target.IOS));
-        assertTrue(historyPage.verifyHistory(TestDataReader.readData("vid"), Target.IOS),"verify if download history is displayed");
+        assertTrue(historyPage.verifyActivationSuccessfulRecordInHistory(vid, Target.IOS));
+        assertTrue(historyPage.verifyHistory(vid, Target.IOS),"verify if download history is displayed");
+    }
+
+    @Test
+    public void downloadAndVerifyHistoryForSunbird() throws InterruptedException {
+        ChooseLanguagePage chooseLanguagePage = new ChooseLanguagePage(driver);
+
+        assertTrue(chooseLanguagePage.isChooseLanguagePageLoaded(), "Verify if choose language page is displayed");
+        WelcomePage welcomePage = chooseLanguagePage.clickOnSavePreference();
+
+        assertTrue(welcomePage.isWelcomePageLoaded(), "Verify if welcome page is loaded");
+        AppUnlockMethodPage appUnlockMethodPage = welcomePage.clickOnSkipButton();
+
+        assertTrue(appUnlockMethodPage.isAppUnlockMethodPageLoaded(), "Verify if app unlocked page is displayed");
+        SetPasscode setPasscode = appUnlockMethodPage.clickOnUsePasscode();
+
+        assertTrue(setPasscode.isSetPassCodePageLoaded(), "Verify if set passcode page is displayed");
+        ConfirmPasscode confirmPasscode = setPasscode.enterPasscode(TestDataReader.readData("passcode"), Target.IOS);
+
+        assertTrue(confirmPasscode.isConfirmPassCodePageLoaded(), "Verify if confirm passcode page is displayed");
+        HomePage homePage = confirmPasscode.enterPasscodeInConfirmPasscodePage(TestDataReader.readData("passcode"), Target.IOS);
+
+        assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
+        AddNewCardPage addNewCardPage = homePage.downloadCard();
+
+
+        assertTrue(addNewCardPage.isDownloadViaSunbirdDisplayed(), "Verify if download sunbird displayed");
+        SunbirdLoginPage sunbirdLoginPage =  addNewCardPage.clickOnDownloadViaSunbird();
+        addNewCardPage.clickOnInsuranceCredential();
+        addNewCardPage.clickOnContinueButtonInSigninPopupIos();
+        sunbirdLoginPage.enterPolicyNumberTextBox(TestDataReader.readData("policyNumberSunbird"));
+        sunbirdLoginPage.enterFullNameTextBox(TestDataReader.readData("fullNameSunbird"));
+        sunbirdLoginPage.enterDateOfBirthTextBox();
+        IosUtil.scrollToElement(driver,100,800,100,200);
+        sunbirdLoginPage.clickOnloginButton();
+
+        assertTrue(sunbirdLoginPage.isSunbirdCardIsActive(), "Verify if download sunbird displayed active");
+        assertTrue(sunbirdLoginPage.isSunbirdCardLogoIsDisplayed(), "Verify if download sunbird logo displayed");
+        assertEquals(sunbirdLoginPage.getFullNameForSunbirdCard(),TestDataReader.readData("fullNameSunbird"));
+
+        sunbirdLoginPage.openDetailedSunbirdVcView();
+
+        assertEquals(sunbirdLoginPage.getFullNameForSunbirdCardForDetailView(),TestDataReader.readData("fullNameSunbird"));
+//        assertEquals(sunbirdLoginPage.getPolicyNameForSunbirdCard(),TestDataReader.readData("policyNameSunbird"));
+        assertEquals(sunbirdLoginPage.getPhoneNumberForSunbirdCard(),TestDataReader.readData("phoneNumberSunbird"));
+        assertEquals(sunbirdLoginPage.getDateofBirthValueForSunbirdCard(),TestDataReader.readData("dateOfBirthSunbird"));
+        assertEquals(sunbirdLoginPage.getGenderValueForSunbirdCard(),TestDataReader.readData("genderValueSunbird"));
+        assertEquals(sunbirdLoginPage.getEmailIdValueForSunbirdCard(),TestDataReader.readData("emailIdValueSunbird"));
+        assertEquals(sunbirdLoginPage.getStatusValueForSunbirdCard(),TestDataReader.readData("statusValueSunbird"));
+        assertEquals(sunbirdLoginPage.getIdTypeValueForSunbirdCard(),TestDataReader.readData("idTypeSunbird"));
+
+        sunbirdLoginPage.clickOnBackArrow();
+        HistoryPage historyPage = homePage.clickOnHistoryButton();
+
+        assertTrue(historyPage.isHistoryPageLoaded(), "Verify if history page is displayed");
+        assertTrue(historyPage.verifyHistoryForInsuranceCard(TestDataReader.readData("policyNumberSunbird"), Target.IOS));
+    }
+
+    @Test
+    public void downloadVcAndVerifyActivityLog() throws InterruptedException {
+        ChooseLanguagePage chooseLanguagePage = new ChooseLanguagePage(driver);
+
+        assertTrue(chooseLanguagePage.isChooseLanguagePageLoaded(), "Verify if choose language page is displayed");
+        WelcomePage welcomePage = chooseLanguagePage.clickOnSavePreference();
+
+        assertTrue(welcomePage.isWelcomePageLoaded(), "Verify if welcome page is loaded");
+        AppUnlockMethodPage appUnlockMethodPage = welcomePage.clickOnSkipButton();
+
+        assertTrue(appUnlockMethodPage.isAppUnlockMethodPageLoaded(), "Verify if app unlocked page is displayed");
+        SetPasscode setPasscode = appUnlockMethodPage.clickOnUsePasscode();
+
+        assertTrue(setPasscode.isSetPassCodePageLoaded(), "Verify if set passcode page is displayed");
+        ConfirmPasscode confirmPasscode = setPasscode.enterPasscode(TestDataReader.readData("passcode"), Target.IOS);
+
+        assertTrue(confirmPasscode.isConfirmPassCodePageLoaded(), "Verify if confirm passcode page is displayed");
+        HomePage homePage = confirmPasscode.enterPasscodeInConfirmPasscodePage(TestDataReader.readData("passcode"), Target.IOS);
+
+        assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
+        AddNewCardPage addNewCardPage = homePage.downloadCard();
+
+        EsignetLoginPage esignetLoginPage =  addNewCardPage.clickOnDownloadViaEsignet();
+        addNewCardPage.clickOnContinueButtonInSigninPopupIos();
+
+        esignetLoginPage.clickOnEsignetLoginWithOtpButton();
+        Thread.sleep(9000);
+        String uin = TestDataReader.readData("uin");
+        OtpVerificationPage otpVerification= esignetLoginPage.setEnterIdTextBox(uin);
+
+        esignetLoginPage.clickOnGetOtpButton();
+
+        otpVerification.enterOtpForEsignet(TestDataReader.readData("otp"), Target.IOS);
+        esignetLoginPage.clickOnVerifyButtonIos();
+
+        assertTrue(homePage.isNameDisplayed(TestDataReader.readData("fullName")), "Verify if full name is displayed");
+
+
     }
 }

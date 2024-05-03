@@ -7,7 +7,11 @@ import org.openqa.selenium.WebElement;
 
 public class MoreOptionsPage extends BasePage {
 
-    @AndroidFindBy(accessibility = "removeFromWallet")
+//    @AndroidFindBy(accessibility = "outlined-delete-icon")
+//    @iOSXCUITFindBy(accessibility = "removeFromWallet")
+//    private WebElement removeFromWalletButton;
+
+    @AndroidFindBy(uiAutomator = "new UiScrollable(new UiSelector().scrollable(true).instance(0)).scrollIntoView(new UiSelector().description(\"outlined-delete-icon\"))")
     @iOSXCUITFindBy(accessibility = "removeFromWallet")
     private WebElement removeFromWalletButton;
 
@@ -15,7 +19,7 @@ public class MoreOptionsPage extends BasePage {
     @iOSXCUITFindBy(accessibility = "kebabTitle")
     private WebElement moreOptionsText;
 
-    @AndroidFindBy(accessibility = "viewActivityLog")
+    @AndroidFindBy(accessibility = "outlined-schedule-icon")
     @iOSXCUITFindBy(accessibility = "viewActivityLog")
     private WebElement viewActivityLogButton;
 
@@ -27,8 +31,8 @@ public class MoreOptionsPage extends BasePage {
     @iOSXCUITFindBy(accessibility = "pendingActivationOrActivated")
     private WebElement activationPending;
 
-    @AndroidFindBy(accessibility = "profileAuthenticated")
-    @iOSXCUITFindBy(accessibility = "profileAuthenticated")
+    @AndroidFindBy(accessibility = "wallet-activated-icon")
+    @iOSXCUITFindBy(accessibility = "wallet-activated-icon")
     private WebElement activatedForOnlineLoginButton;
 
     @AndroidFindBy(accessibility = "close")
@@ -38,6 +42,10 @@ public class MoreOptionsPage extends BasePage {
     @AndroidFindBy(uiAutomator = "new UiSelector().textContains(\"Something is wrong. Please try again later!\")")
     @iOSXCUITFindBy(accessibility = "walletBindingErrorTitle")
     public WebElement somethingIsWrongPopup;
+
+    @AndroidFindBy(accessibility = "activated")
+    @iOSXCUITFindBy(accessibility = "activated")
+    private WebElement activated;
 
     public MoreOptionsPage(AppiumDriver driver) {
         super(driver);
@@ -77,5 +85,9 @@ public class MoreOptionsPage extends BasePage {
 
     public boolean isSomethingIsWrongPopupVisible() {
         return this.isElementDisplayed(somethingIsWrongPopup);
+    }
+
+    public boolean isVcActivatedDisplayed() {
+        return this.isElementDisplayed(activated);
     }
 }

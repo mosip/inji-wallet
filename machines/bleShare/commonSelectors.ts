@@ -72,3 +72,7 @@ export function selectIsBluetoothPermissionDenied(state: State) {
 export function selectIsStartPermissionCheck(state: State) {
   return state.matches('startPermissionCheck');
 }
+
+export function selectIsLocationPermissionRationale(state: State) {
+  return state.matches('checkingLocationState.LocationPermissionRationale');
+}

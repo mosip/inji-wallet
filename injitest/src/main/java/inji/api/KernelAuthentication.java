@@ -7,16 +7,16 @@ import java.util.Map;
 
 
 public class KernelAuthentication extends BaseTestCase {
-	private String authRequest="/config/Authorization/request.json";
-	private String authInternalRequest="/config/Authorization/internalAuthRequest.json";
+	private final String authRequest="/config/Authorization/request.json";
+	private final String authInternalRequest="/config/Authorization/internalAuthRequest.json";
 	String cookie;
 	static String dataKey = "response";
 	CommonLibrary clib= new CommonLibrary();
 	public final Map<String, String> props = clib.readProperty("Kernel");
-	private String admin_password = props.get("admin_password");
-	private String admin_userName=props.get("admin_userName");
-	private String authenticationInternalEndpoint = props.get("authenticationInternal");
-	private ApplicationLibrary appl=new ApplicationLibrary();
+	private final String admin_password = props.get("admin_password");
+	private final String admin_userName=props.get("admin_userName");
+	private final String authenticationInternalEndpoint = props.get("authenticationInternal");
+	private final ApplicationLibrary appl=new ApplicationLibrary();
 
 
 

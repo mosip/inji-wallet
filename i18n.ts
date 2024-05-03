@@ -10,9 +10,10 @@ import kn from './locales/kan.json';
 import ta from './locales/tam.json';
 
 import {iso6393To1} from 'iso-639-3';
-import {LocalizedField} from './types/VC/ExistingMosipVC/vc';
+
 import Keychain from 'react-native-keychain';
 import {getItem} from './machines/store';
+import {LocalizedField} from './machines/VerifiableCredential/VCMetaMachine/vc';
 
 const resources = {en, fil, ar, hi, kn, ta};
 const locale = Localization.locale;
@@ -75,20 +76,30 @@ export function getValueForCurrentLanguage(
       ? valueForCurrentLanguage[0].value
       : localizedData[0]?.value;
   } else {
-    const localizedDataObject = localizedData as {[key: string]: string};
-
-    return localizedDataObject.hasOwnProperty(currentLanguageCode)
-      ? localizedDataObject[currentLanguageCode]
-      : localizedDataObject[defaultLanguage];
+    return localizedData?.value;
   }
+}
+
+export function getClientNameForCurrentLanguage(
+  localizedData: Object,
+  defaultLanguage = '@none',
+) {
+  const currentLanguage = i18next.language;
+  const currentLanguageCode = languageCodeMap[currentLanguage];
+  const localizedDataObject = localizedData as {[key: string]: string};
+  return localizedDataObject.hasOwnProperty(currentLanguageCode)
+    ? localizedDataObject[currentLanguageCode]
+    : localizedDataObject[defaultLanguage];
 }
 
 // This method gets the value from iso-639-3 package, which contains key value pairs of three letter language codes[key] and two letter langugae code[value]. These values are according to iso standards.
 // The response received from the server is three letter language code and the value in the inji code base is two letter language code. Hence the conversion is done.
 function getThreeLetterLanguageCode(twoLetterLanguageCode: string) {
-  return Object.keys(iso6393To1).find(
-    key => iso6393To1[key] === twoLetterLanguageCode,
-  );
+  return iso6393To1
+    ? Object.keys(iso6393To1).find(
+        key => iso6393To1[key] === twoLetterLanguageCode,
+      )
+    : null;
 }
 
 function populateLanguageCodeMap() {
