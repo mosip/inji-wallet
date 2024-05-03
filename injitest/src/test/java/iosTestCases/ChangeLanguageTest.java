@@ -519,7 +519,9 @@ public class ChangeLanguageTest extends IosBaseTest {
         assertTrue(unlockApplicationPage.isUnlockApplicationPageLoadedInArabic(), "Verify if language is changed to arabic");
         unlockApplicationPage.clickOnUnlockApplicationButton();
         setPasscode.enterPasscode(TestDataReader.readData("passcode"), Target.IOS);
+        DetailedVcViewPage detailedVcViewPage = homePage.openDetailedVcView(TestDataReader.readData("fullName"));
         assertEquals(homePage.getfullNameTitleText(), "الاسم الكامل");
+        detailedVcViewPage.clickOnBackArrow();
 
         homePage.clickOnSettingIcon();
         settingsPage.clickOnlanguageButtonInArabic();
@@ -527,6 +529,7 @@ public class ChangeLanguageTest extends IosBaseTest {
 
         unlockApplicationPage.clickOnUnlockApplicationButton();
         setPasscode.enterPasscode(TestDataReader.readData("passcode"), Target.IOS);
+        homePage.openDetailedVcView(TestDataReader.readData("fullName"));
         assertEquals(homePage.getfullNameTitleText(), "पूरा नाम");
     }
 

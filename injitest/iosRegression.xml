@@ -17,6 +17,8 @@
                     <include name="noPreDownloadedVCAndNoHistoryInFreshInstallation"/>
                     <include name="verifyInvalidOtpMessage"/>
                     <include name="activateVcFromDetailedViewPage"/>
+                    <include name="verifyActiveVcAndWaitForOtpTimeOut"/>
+                    <include name="downloadAndActiveVcUsingUinViaEsignet"/>
                 </methods>
             </class>
             <class name="iosTestCases.ChangeLanguageTest">
@@ -42,12 +44,15 @@
                     <include name="deleteVcAndVerifyInHistory"/>
                     <include name="cancelDeleteVc"/>
                     <include name="DownloadingDeletedVc"/>
+                    <include name="deleteVcAndVerifyInHistoryForEsignet"/>
+                    <include name="deleteVcAndVerifyInHistoryForSunbird"/>
                 </methods>
             </class>
             <class name="iosTestCases.GenerateUinOrVidTest">
                 <methods>
                     <include name="generateUinOrVidUsingAid"/>
                     <include name="goBackToGenerateUinOrVidUsingAidFromOtpVerificationPage"/>
+                    <include name="generateUinOrVidUsingInvalidAid"/>
                 </methods>
             </class>
             <class name="iosTestCases.PinVcTest">
@@ -56,6 +61,9 @@
                     <include name="VerifyCameraOpenAfterPinVc"/>
                     <include name="downloadVcViaEsignetAndPinUnpin"/>
                     <include name="verifyMessageAfterDenyBluetoothPopup"/>
+                    <include name="pinEsignetVcMultipleTimes"/>
+                    <include name="pinMosipVcMultipleTimes"/>
+                    <include name="pinVcInDetailedVcView"/>
                 </methods>
             </class>
             <class name="iosTestCases.ShareVcTest">
@@ -76,6 +84,9 @@
                     <include name="verifyRecivedCardOffline"/>
                     <include name="downloadCardWithoutInternetRetryWithInternet"/>
                     <include name="verifyVcIssuerListWithoutNetwork"/>
+                    <include name="DownloadVcWithUinWithoutNetwork"/>
+                    <include name="DownloadVcWithEsignetWithoutNetwork"/>
+                    <include name="verifyGetUinHeaderOffline"/>
                 </methods>
             </class>
             <class name="iosTestCases.UnlockWithPasscodeTest">
@@ -89,6 +100,8 @@
                     <include name="downloadAndVerifyVcUsingUinViaEsignet"/>
                     <include name="downloadAndVerifyVcUsingVidViaEsignet"/>
                     <include name="denyPopupforEsignetLoginWebPage"/>
+                    <include name="downloadMultipleVcViaEsignet"/>
+
                 </methods>
             </class>
             <class name="iosTestCases.VcDownloadAndVerifyUsingSunbirdTest">
@@ -104,6 +117,8 @@
                     <include name="generateMultipleVcWithSameUin"/>
                     <include name="verifyInvalidUinErrorMessage"/>
                     <include name="verifyOtpTimeOutAndGoBack"/>
+                    <include name="downloadMultipleCardsAndVerifySearch"/>
+                    <include name="downloadCardsAndVerifySearch"/>
                 </methods>
             </class>
             <class name="iosTestCases.VcDownloadAndVerifyUsingVidTest">
@@ -128,6 +143,7 @@
                     <include name="downloadAndVerifyHistoryUsingUinViaEsignet"/>
                     <include name="downloadAndVerifyHistoryUsingVidViaEsignet"/>
                     <include name="downloadAndVerifyHistoryForSunbird"/>
+                    <include name="downloadVcAndVerifyActivityLog"/>
                 </methods>
             </class>
             <class name="iosTestCases.VerifyWelcomePagesTest">

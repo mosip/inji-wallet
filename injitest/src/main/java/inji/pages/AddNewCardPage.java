@@ -45,8 +45,8 @@ public class AddNewCardPage extends BasePage{
     @iOSXCUITFindBy(accessibility = "issuerSearchBar")
     private WebElement issuerSearchBar;
 
-    @AndroidFindBy(accessibility = "issuerHeading-Sunbirdtemp")
-    @iOSXCUITFindBy(accessibility = "issuerHeading-Sunbirdtemp")
+    @AndroidFindBy(accessibility = "issuerHeading-Sunbird")
+    @iOSXCUITFindBy(accessibility = "issuerHeading-Sunbird")
     private WebElement downloadViaSunbird;
 
     @AndroidFindBy(accessibility = "credentialTypeHeading-InsuranceCredential")
