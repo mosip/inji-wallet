@@ -8,31 +8,24 @@ import org.openqa.selenium.WebElement;
 public class BackupAndRestorePage extends BasePage {
 
     @AndroidFindBy(accessibility = "backupAndRestore")
-    @iOSXCUITFindBy(accessibility = "backupAndRestore")
     private WebElement backupAndRestoreHeader;
 
     @AndroidFindBy(accessibility = "backupProcessInfo")
-    @iOSXCUITFindBy(accessibility = "backupProcessInfo")
     private WebElement backupProcessInfo;
 
     @AndroidFindBy(accessibility = "cloudInfo")
-    @iOSXCUITFindBy(accessibility = "cloudInfo")
     private WebElement cloudInfo;
 
     @AndroidFindBy(accessibility = "googleDriveTitle")
-    @iOSXCUITFindBy(accessibility = "googleDriveTitle")
     private WebElement googleDriveTitle;
 
     @AndroidFindBy(accessibility = "googleDriveIcon")
-    @iOSXCUITFindBy(accessibility = "googleDriveIcon")
     private WebElement googleDriveIcon;
 
     @AndroidFindBy(accessibility = "goBack")
-    @iOSXCUITFindBy(accessibility = "goBack")
     private WebElement goBackButton;
 
     @AndroidFindBy(className = "android.view.View")
-    @iOSXCUITFindBy(accessibility = "proceed")
     private WebElement proceedButton;
 
     @AndroidFindBy(uiAutomator = "new UiSelector().textContains(\"Add another account\")")
@@ -60,77 +53,62 @@ public class BackupAndRestorePage extends BasePage {
     public WebElement agreeButton;
 
     @AndroidFindBy(accessibility = "backup")
-    @iOSXCUITFindBy(accessibility = "backup")
     private WebElement BackupButton;
 
     @AndroidFindBy(accessibility = "restore")
-    @iOSXCUITFindBy(accessibility = "restore")
     private WebElement restoreButton;
 
     @AndroidFindBy(accessibility = "lastBackupTime")
-    @iOSXCUITFindBy(accessibility = "lastBackupTime")
     private WebElement lastBackupTime;
 
-    @AndroidFindBy(accessibility = "dataBackupSuccessPopup")
-    @iOSXCUITFindBy(accessibility = "dataBackupSuccessPopup")
+    @AndroidFindBy(accessibility = "dataBackupSuccessPopupText")
     private WebElement dataBackupSuccessPopup;
 
     @AndroidFindBy(accessibility = "close")
-    @iOSXCUITFindBy(accessibility = "close")
     private WebElement closeButton;
 
-    @AndroidFindBy(accessibility = "arrowLeft")
-    @iOSXCUITFindBy(accessibility = "arrowLeft")
+    @AndroidFindBy(accessibility = "dataBackupInProgressText")
+    private WebElement dataBackupInProgressText;
+
+    @AndroidFindBy(accessibility = "arrow-left")
     private WebElement arrowLeftButton;
 
     @AndroidFindBy(accessibility = "associatedAccountEmail")
-    @iOSXCUITFindBy(accessibility = "associatedAccountEmail")
     private WebElement associatedAccountEmail;
 
-    @AndroidFindBy(accessibility = "restoreBackupSuccessPopup")
-    @iOSXCUITFindBy(accessibility = "restoreBackupSuccessPopup")
+    @AndroidFindBy(accessibility = "restoreBackupSuccessPopupText")
     private WebElement restoreBackupSuccessPopUp;
 
 
     @AndroidFindBy(accessibility = "CloudBackupConsentDeniedTitle")
-    @iOSXCUITFindBy(accessibility = "CloudBackupConsentDeniedTitle")
     private WebElement permissionDeniedHeader;
 
     @AndroidFindBy(accessibility = "CloudBackupConsentDeniedMessage")
-    @iOSXCUITFindBy(accessibility = "CloudBackupConsentDeniedMessage")
     private WebElement errorMessageDescription;
 
     @AndroidFindBy(accessibility = "errorHelpText")
-    @iOSXCUITFindBy(accessibility = "errorHelpText")
     private WebElement errorHelpText;
 
 
     @AndroidFindBy(accessibility = "allowAccess")
-    @iOSXCUITFindBy(accessibility = "allowAccess")
     private WebElement allowAccessButton;
 
     @AndroidFindBy(accessibility = "LastBackupSectionHeader")
-    @iOSXCUITFindBy(accessibility = "LastBackupSectionHeader")
     private WebElement lastBackupSectionHeader;
 
     @AndroidFindBy(accessibility = "AccountSectionHeader")
-    @iOSXCUITFindBy(accessibility = "AccountSectionHeader")
     private WebElement AccountSectionHeader;
 
     @AndroidFindBy(accessibility = "storageInfo")
-    @iOSXCUITFindBy(accessibility = "storageInfo")
     private WebElement storageInfo;
 
-    @AndroidFindBy(accessibility = "associatedAccount")
-    @iOSXCUITFindBy(accessibility = "associatedAccount")
+    @AndroidFindBy(accessibility = "associatedAccountEmail")
     private WebElement associatedAccount;
 
     @AndroidFindBy(accessibility = "restoreSectionHeader")
-    @iOSXCUITFindBy(accessibility = "restoreSectionHeader")
     private WebElement restoreSectionHeader;
 
     @AndroidFindBy(accessibility = "restoreFailure-noBackupFilePopup")
-    @iOSXCUITFindBy(accessibility = "restoreFailure-noBackupFilePopup")
     private WebElement restoreFailurePopup;
 
     @AndroidFindBy(accessibility = "restoreInfo")
@@ -142,9 +120,8 @@ public class BackupAndRestorePage extends BasePage {
     @AndroidFindBy(xpath = "//*[@resource-id=\"com.google.android.gms:id/account_display_name\"]")
     private WebElement selectAccount;
 
-    @AndroidFindBy(accessibility = "dataBackupInProgressText")
-    @iOSXCUITFindBy(accessibility = "dataBackupInProgressText")
-    private WebElement dataBackupInProgressText;
+    @AndroidFindBy(accessibility = "restoreBackupSuccessPopupText")
+    private WebElement restoreBackupSuccessPopupText;
 
 
     public BackupAndRestorePage(AppiumDriver driver) {
@@ -310,7 +287,9 @@ public class BackupAndRestorePage extends BasePage {
     }
 
     public void clickOnEmailHeader() {
-        clickOnElement(selectAccount);
+        if(isElementDisplayed(selectAccount)) {
+            clickOnElement(selectAccount);
+        }
     }
 
     public boolean  isBackupFQADisplayed() throws InterruptedException {

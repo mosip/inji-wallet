@@ -27,7 +27,7 @@ public class HelpPage extends BasePage {
     public WebElement helpPageContent;
 
     @AndroidFindBy(uiAutomator = "new UiScrollable(new UiSelector()).scrollIntoView(text(\"What is Share with selfie?\"));")
-    @iOSXCUITFindBy(accessibility = "How to add a card?")
+    @iOSXCUITFindBy(accessibility = "new UiScrollable(new UiSelector()).scrollIntoView(text(\"What is Share with selfie?\"));")
     public WebElement whatIsShareWithSelfieTextdHeader;
 
     public HelpPage(AppiumDriver driver) {
@@ -60,6 +60,10 @@ public class HelpPage extends BasePage {
     public boolean isWhatIsShareWithSelfieTextdHeader() {
 
         return this.isElementDisplayed(whatIsShareWithSelfieTextdHeader);
+    }
+
+    public void clickOnCrossButton(){
+        clickOnElement(crossIcon);
     }
     }
 
