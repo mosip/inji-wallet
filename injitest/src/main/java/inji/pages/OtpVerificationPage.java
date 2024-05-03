@@ -13,6 +13,10 @@ public class OtpVerificationPage extends BasePage {
     @iOSXCUITFindBy(accessibility = "otpVerificationHeader")
     private WebElement otpVerificationText;
 
+    @AndroidFindBy(accessibility = "otpVerificationDescription")
+    @iOSXCUITFindBy(accessibility = "otpVerificationDescription")
+    private WebElement otpVerificationDescription;
+
     @AndroidFindBy(accessibility = "otpVerificationError")
     @iOSXCUITFindBy(accessibility = "otpVerificationError")
     private WebElement invalidOtpMessage;
@@ -55,10 +59,6 @@ public class OtpVerificationPage extends BasePage {
     @AndroidFindBy(accessibility = "wait")
     @iOSXCUITFindBy(accessibility = "wait")
     private WebElement waitPopupButton;
-
-    @AndroidFindBy(accessibility = "otpVerificationDescription")
-    @iOSXCUITFindBy(accessibility = "otpVerificationDescription")
-    private WebElement otpVerificationDescription;
 
     public OtpVerificationPage(AppiumDriver driver) {
         super(driver);

@@ -530,7 +530,6 @@ public class ChangeLanguageTest extends AndroidBaseTest {
         assertTrue(settingsPage.verifyHindiLanguage(), "Verify if language is changed to hindi");
         homePage.clickOnHomeButton();
 
-
         assertTrue(sunbirdLoginPage.isSunbirdCardLogoIsDisplayed(), "Verify if download sunbird logo displayed");
         assertEquals(sunbirdLoginPage.getFullNameForSunbirdCard(),TestDataReader.readData("fullNameSunbird"));
         sunbirdLoginPage.openDetailedSunbirdVcView();
@@ -544,6 +543,16 @@ public class ChangeLanguageTest extends AndroidBaseTest {
         assertEquals(sunbirdLoginPage.getStatusValueForSunbirdCard(),"वैध");
         assertTrue(sunbirdLoginPage.isPolicyExpiresOnValueDisplayed(), "Verify if policy expireson value displayed");
         assertEquals(sunbirdLoginPage.getIdTypeValueForSunbirdCard(),TestDataReader.readData("idTypeSunbird"));
+        sunbirdLoginPage.clickOnBackArrow();
+
+        homePage.clickOnSettingIcon();
+        assertTrue(settingsPage.isSettingPageLoaded(), "Verify if setting page is displayed");
+        UnlockApplicationPage unlockApplicationPage = settingsPage.clickOnLanguage().clickOnArabicLanguageButton();
+
+        assertTrue(unlockApplicationPage.isUnlockApplicationPageLoadedInArabic(), "Verify if language is changed to arabic");
+        unlockApplicationPage.clickOnUnlockApplicationButton();
+        setPasscode.enterPasscode(TestDataReader.readData("passcode"), Target.ANDROID);
+        assertTrue(sunbirdLoginPage.isStatusIconDisplayed(), "Verify if status icon displayed");
     }
 
     @Test
@@ -587,7 +596,7 @@ public class ChangeLanguageTest extends AndroidBaseTest {
         DetailedVcViewPage detailedVcViewPage = homePage.openDetailedVcView(TestDataReader.readData("fullName"));
         assertEquals(homePage.getFullNameValue(), "TEST_FULLNAMEara");
 //        assertEquals(homePage.GetIdTypeText(), "البطاقة الوطنية");
-        assertEquals(homePage.GetActivationPendingText(), "التنشيط معلق لتسجيل الدخول عبر الإنترنت!");
+        assertEquals(homePage.GetActivationPendingHeaderText(), "التنشيط معلق لتسجيل الدخول عبر الإنترنت!");
     }
 
 }
