@@ -145,8 +145,8 @@ public class SunbirdLoginPage extends BasePage {
     @iOSXCUITFindBy(accessibility = "benefitsValue")
     private WebElement benefitsValue;
 
-
-
+    @AndroidFindBy(xpath = "//android.view.ViewGroup[@resource-id=\"statusIcon\"]")
+    private WebElement statusIcon;
 
     public SunbirdLoginPage(AppiumDriver driver) {
         super(driver);
@@ -303,6 +303,10 @@ public class SunbirdLoginPage extends BasePage {
 
     public boolean isbenefitsValueDisplayed() {
         return this.isElementDisplayed(benefitsValue);
+    }
+
+    public boolean isStatusIconDisplayed() {
+        return this.isElementDisplayed(statusIcon);
     }
 
 }

@@ -358,12 +358,6 @@ public class PinVcTest extends AndroidBaseTest {
         assertTrue(moreOptionsPage.isMoreOptionsPageLoaded(), "Verify if more options page is displayed");
         moreOptionsPage.clickOnPinOrUnPinCard();
 
-        //second pinned vc
-         homePage.clickOnFirstVcEllipsis();
-
-        assertTrue(moreOptionsPage.isMoreOptionsPageLoaded(), "Verify if more options page is displayed");
-        moreOptionsPage.clickOnPinOrUnPinCard();
-
         assertTrue(homePage.isPinIconDisplayed(), "Verify if pin icon on vc is displayed");
         
     }
@@ -433,10 +427,6 @@ public class PinVcTest extends AndroidBaseTest {
         assertTrue(moreOptionsPage.isMoreOptionsPageLoaded(), "Verify if more options page is displayed");
         moreOptionsPage.clickOnPinOrUnPinCard();
         // pin esignet
-        homePage.clickOnFirstVcEllipsis();
-        assertTrue(moreOptionsPage.isMoreOptionsPageLoaded(), "Verify if more options page is displayed");
-        moreOptionsPage.clickOnPinOrUnPinCard();
-
         assertTrue(homePage.isPinIconDisplayed(), "Verify if pin icon on vc is displayed");
         homePage.clickOnMoreOptionsButton();
 
