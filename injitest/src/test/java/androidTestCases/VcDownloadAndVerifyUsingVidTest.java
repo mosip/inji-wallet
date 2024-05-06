@@ -134,7 +134,7 @@ public class VcDownloadAndVerifyUsingVidTest extends AndroidBaseTest {
         RetrieveIdPage retrieveIdPage = addNewCardPage.clickOnDownloadViaUin();
 
         assertTrue(retrieveIdPage.isRetrieveIdPageLoaded(), "Verify if retrieve id page is displayed");
-        OtpVerificationPage otpVerification = retrieveIdPage.clickOnVid(Target.ANDROID).setEnterIdTextBox("00").clickOnGenerateCardButton();
+        OtpVerificationPage otpVerification = retrieveIdPage.clickOnVid(Target.ANDROID).setEnterIdTextBox("6501560247302345").clickOnGenerateCardButton();
 
         assertTrue(retrieveIdPage.isIncorrectInputFormatErrorVidMessageDisplayed());
     }

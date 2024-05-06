@@ -101,12 +101,47 @@ public class GenerateUinOrVidTest extends AndroidBaseTest {
         assertTrue(otpVerification.verifyOtpVerificationTimerDisplayedAfterClickOnResend(), "verify is You can resend the code displayed again after click on resend button ");
 
         otpVerification.clickOnCrossIcon();
-        assertTrue(otpVerification.confirmPopupHeaderDisplayed(), "Verify if comfirm popup displayed");
-        otpVerification.clickOnCancelPopupButton();
-        assertEquals(homePage.verifyLanguageForNoVCDownloadedPageLoaded(), "Bring your digital identity");
+
+        assertTrue(generateUinOrVidPage.isGenerateUinOrVidPageLoaded(), "Verify if generate uin or vid page page is displayed");
 
     }
+    @Test
+    public void generateUinOrVidUsingInvalidAid() {
+        ChooseLanguagePage chooseLanguagePage = new ChooseLanguagePage(driver);
 
+        assertTrue(chooseLanguagePage.isChooseLanguagePageLoaded(), "Verify if choose language page is displayed");
+        WelcomePage welcomePage = chooseLanguagePage.clickOnSavePreference();
+
+        assertTrue(welcomePage.isWelcomePageLoaded(), "Verify if welcome page is loaded");
+        AppUnlockMethodPage appUnlockMethodPage = welcomePage.clickOnSkipButton();
+
+        assertTrue(appUnlockMethodPage.isAppUnlockMethodPageLoaded(), "Verify if app unlocked page is displayed");
+        SetPasscode setPasscode = appUnlockMethodPage.clickOnUsePasscode();
+
+        assertTrue(setPasscode.isSetPassCodePageLoaded(), "Verify if set passcode page is displayed");
+        ConfirmPasscode confirmPasscode = setPasscode.enterPasscode(TestDataReader.readData("passcode"), Target.ANDROID);
+
+        assertTrue(confirmPasscode.isConfirmPassCodePageLoaded(), "Verify if confirm passcode page is displayed");
+        HomePage homePage = confirmPasscode.enterPasscodeInConfirmPasscodePage(TestDataReader.readData("passcode"), Target.ANDROID);
+
+        assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
+        AddNewCardPage addNewCardPage = homePage.downloadCard();
+
+        assertTrue(addNewCardPage.isAddNewCardPageLoaded(), "Verify if add new card page is displayed");
+        RetrieveIdPage retrieveIdPage = addNewCardPage.clickOnDownloadViaUin();
+
+        assertTrue(retrieveIdPage.isRetrieveIdPageLoaded(), "Verify if retrieve id page is displayed");
+        assertEquals(retrieveIdPage.verifyGetItTextDisplayed(),"Get it now using your AID.");
+        GenerateUinOrVidPage generateUinOrVidPage = retrieveIdPage.clickOnGetItNowText();
+
+        assertTrue(generateUinOrVidPage.isGenerateUinOrVidPageLoaded(), "Verify if generate uin or vid page page is displayed");
+        assertEquals(generateUinOrVidPage.getGenerateUinOrVidPageTextloaded(), "Get your UIN/VID");
+
+        OtpVerificationPage otpVerification = generateUinOrVidPage.enterApplicationID(TestDataReader.readData("invalidaid")).clickOnGetUinOrVidButton();
+
+        assertTrue(retrieveIdPage.isIncorrectInputFormatErrorAidMessageDisplayed(),"Verify if correct error message displayed");
+
+    }
 
     
 }

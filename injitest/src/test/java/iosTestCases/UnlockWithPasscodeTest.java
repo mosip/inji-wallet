@@ -6,6 +6,7 @@ import inji.pages.*;
 import inji.utils.TestDataReader;
 import org.testng.annotations.Test;
 
+import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
 public class UnlockWithPasscodeTest extends IosBaseTest {
@@ -21,6 +22,9 @@ public class UnlockWithPasscodeTest extends IosBaseTest {
         AppUnlockMethodPage appUnlockMethodPage = welcomePage.clickOnSkipButton();
 
         assertTrue(appUnlockMethodPage.isAppUnlockMethodPageLoaded(), "Verify if app unlocked page is displayed");
+        assertEquals(appUnlockMethodPage.getDescriptionText(), "To unlock the app securely, you can set up either biometric authentication, such as fingerprint or facial recognition or opt for a 6-digit Passcode for quick access.");
+        assertEquals(appUnlockMethodPage.getPasswordTypeDescriptionText(), "Choose ‘Use Biometrics’ to enable biometric authentication or ‘I’ll Do Later’ to set up a 6-digit passcode.");
+        assertTrue(appUnlockMethodPage.isUseBiometricsButton(), "Verify if Usebiometrics button is displayed");
         SetPasscode setPasscode = appUnlockMethodPage.clickOnUsePasscode();
 
         assertTrue(setPasscode.isSetPassCodePageLoaded(), "Verify if set passcode page is displayed");
@@ -33,6 +37,7 @@ public class UnlockWithPasscodeTest extends IosBaseTest {
         SettingsPage settingsPage = homePage.clickOnSettingIcon();
 
         assertTrue(settingsPage.isSettingPageLoaded(), "Verify if setting page is displayed");
+        assertTrue(settingsPage.isdataBackupAndRestoreDisplayed(),"Verify if backup & restore is displayed");
         UnlockApplicationPage unlockApplicationPage = settingsPage.clickOnLogoutButton();
 
         assertTrue(unlockApplicationPage.isUnlockApplicationPageLoaded(), "Verify if unlock application page is displayed");
