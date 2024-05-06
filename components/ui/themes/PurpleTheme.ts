@@ -555,20 +555,6 @@ export const PurpleTheme = {
       borderWidth: 1,
       borderColor: Colors.Gray89,
     },
-    cameraDisabledPopupContainer: {
-      position: 'absolute',
-      top: 0,
-      left: 0,
-      right: 0,
-    },
-    cameraDisabledPopUp: {
-      justifyContent: 'space-between',
-      backgroundColor: Colors.Red,
-      position: 'relative',
-      padding: 20,
-      paddingHorizontal: 15,
-      marginTop: -24,
-    },
     photoConsentLabel: {
       backgroundColor: Colors.White,
       padding: 0,
@@ -1519,6 +1505,40 @@ export const PurpleTheme = {
     labelStyle: {
       width: 70,
       fontWeight: 'bold',
+    },
+  }),
+  CameraDisabledBannerStyle: StyleSheet.create({
+    container: {
+      position: 'absolute',
+      top: 0,
+      left: 0,
+      right: 0,
+    },
+    disabledPopUp: {
+      justifyContent: 'space-between',
+      backgroundColor: Colors.Red,
+      position: 'relative',
+      padding: 20,
+      paddingHorizontal: 15,
+      marginTop: -24,
+    },
+    disabledTextContainer: {
+      justifyContent: 'space-between',
+    },
+    permissionDisabledTitle: {
+      fontFamily: 'Inter_600SemiBold',
+    },
+    permissionGuideText: {
+      opacity: 0.8,
+      fontFamily: 'Inter_400Regular',
+    },
+    enablePermissionTextContainer: {
+      marginTop: 15,
+    },
+    enablePermissionText: {
+      borderBottomWidth: 1.5,
+      borderBottomColor: Colors.White,
+      fontFamily: 'Inter_600SemiBold',
     },
   }),
   BottomTabBarStyle: StyleSheet.create({
