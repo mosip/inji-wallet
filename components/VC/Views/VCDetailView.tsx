@@ -14,7 +14,7 @@ import {
   BOTTOM_SECTION_FIELDS_WITH_DETAILED_ADDRESS_FIELDS,
   DETAIL_VIEW_BOTTOM_SECTION_FIELDS,
   fieldItemIterator,
-  setBackgroundColour,
+  getBackgroundColour,
   getTextColor,
 } from '../common/VCUtils';
 import {ProfileIcon} from '../../ProfileIcon';
@@ -68,7 +68,7 @@ export const VCDetailView: React.FC<VCItemDetailsProps> = props => {
               resizeMode="stretch"
               style={[
                 Theme.Styles.openCardBgContainer,
-                setBackgroundColour(props.wellknown),
+                getBackgroundColour(props.wellknown),
               ]}
               source={Theme.OpenCard}>
               <Row padding="14 14 0 14" margin="0 0 0 0">

@@ -132,7 +132,7 @@ export const getFieldName = (
   return i18n.t(`VcDetails:${field}`);
 };
 
-export const setBackgroundColour = (wellknown: any) => {
+export const getBackgroundColour = (wellknown: any) => {
   if (wellknown && wellknown.credentials_supported[0]?.display) {
     return {
       backgroundColor: wellknown.credentials_supported[0].display[0]
