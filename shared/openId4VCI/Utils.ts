@@ -222,7 +222,7 @@ export const getCredentialIssuersWellKnownConfig = async (
 ) => {
   let fields: string[] = [];
   let response = null;
-  if (issuer == Issuers.Mosip) {
+  if (issuer === Issuers.Mosip) {
     fields = defaultFields;
   } else if (wellknown) {
     response = await CACHED_API.fetchIssuerWellknownConfig(issuer, wellknown);
@@ -233,12 +233,12 @@ export const getCredentialIssuersWellKnownConfig = async (
       ) {
         fields = response?.credentials_supported[0].order;
       } else {
-        const credentialDefintion = getCredentialDefinition(
+        const credentialDefinition = getCredentialDefinition(
           response,
           vcCredentialTypes,
         );
-        fields = credentialDefintion
-          ? Object.keys(credentialDefintion.credentialSubject)
+        fields = credentialDefinition
+          ? Object.keys(credentialDefinition.credentialSubject)
           : [];
       }
     }

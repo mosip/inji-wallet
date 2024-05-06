@@ -20,6 +20,8 @@ export const VCItemMachine = model.createMachine(
       context: model.initialContext,
       events: {} as EventFrom<typeof model>,
     },
+    description:
+      'This machine is spawned for every VC downloaded, and tracks its lifecycle.',
     id: machineName,
     type: 'parallel',
     states: {
@@ -32,9 +34,6 @@ export const VCItemMachine = model.createMachine(
             actions: 'setVcMetadata',
           },
         },
-        description:
-          'This machine is spawned for every VC downloaded, and tracks its lifecycle.',
-
         initial: 'loadVc',
         states: {
           loadVc: {

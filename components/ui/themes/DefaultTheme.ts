@@ -197,10 +197,10 @@ export const DefaultTheme = {
       justifyContent: 'center',
       width: '15%',
     },
-    verifiedIconContainer: {
+    verificationStatusIconContainer: {
       marginRight: 3,
     },
-    verifiedIconInner: {
+    verificationStatusIconInner: {
       backgroundColor: 'white',
       borderRadius: 10,
     },

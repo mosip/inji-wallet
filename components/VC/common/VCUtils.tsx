@@ -92,14 +92,14 @@ export const getCredentialDefinition = (
     return wellknown.credentials_supported[0].credential_definition;
   } else {
     for (const supportedCredential in wellknown.credentials_supported) {
-      const credentialDefintion =
+      const credentialDefinition =
         wellknown.credentials_supported[supportedCredential]
           .credential_definition;
       if (
-        JSON.stringify(credentialDefintion.type) ===
+        JSON.stringify(credentialDefinition.type) ===
         JSON.stringify(vcCredentialTypes)
       ) {
-        return credentialDefintion;
+        return credentialDefinition;
       }
     }
     return null;

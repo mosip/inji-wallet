@@ -129,7 +129,7 @@ export const ViewVcModal: React.FC<ViewVcModalProps> = props => {
       headerTitle={t('title')}
       onDismiss={handleModalDismiss}
       headerElevation={2}>
-      <BannerNotificationContainer showBannerNotificationContainer={false} />
+      <BannerNotificationContainer showVerificationStatusBanner={false} />
 
       {controller.showVerificationStatusBanner && (
         <BannerNotification
@@ -139,7 +139,7 @@ export const ViewVcModal: React.FC<ViewVcModalProps> = props => {
               verificationStatus?.vcNumber
             }`,
           })}
-          onClosePress={() => controller.RESET_VERIFICATION_STATUS()}
+          onClosePress={controller.RESET_VERIFICATION_STATUS}
           key={'reVerificationInProgress'}
           testId={'reVerificationInProgress'}
         />

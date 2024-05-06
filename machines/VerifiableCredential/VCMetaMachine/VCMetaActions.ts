@@ -15,8 +15,8 @@ export const VCMetaActions = (model: any) => {
   return {
     resetVerificationStatus: model.assign({
       verificationStatus: (context: any, event: any) =>
-        event.verificationStatus == null ||
-        context.verificationStatus == event.verificationStatus
+        event.verificationStatus === null ||
+        context.verificationStatus === event.verificationStatus
           ? null
           : context.verificationStatus,
     }),

@@ -14,7 +14,7 @@ import {Theme} from './ui/styleUtils';
 
 export const BannerNotificationContainer: React.FC<
   BannerNotificationContainerProps
-> = ({showBannerNotificationContainer = true}) => {
+> = ({showVerificationStatusBanner = true}) => {
   const controller = UseBannerNotificationContainer();
   const WalletBindingSuccess = controller.isBindingSuccess;
   const scanScreenController = useScanScreen();
@@ -74,7 +74,7 @@ export const BannerNotificationContainer: React.FC<
         />
       )}
 
-      {verificationStatus != null && showBannerNotificationContainer && (
+      {verificationStatus != null && showVerificationStatusBanner && (
         <BannerNotification
           type={verificationStatus.statusType}
           message={t(`VcVerificationBanner:${verificationStatus?.statusType}`, {
@@ -82,7 +82,7 @@ export const BannerNotificationContainer: React.FC<
               verificationStatus.vcNumber
             }`,
           })}
-          onClosePress={() => controller.RESET_VERIFICATION_STATUS()}
+          onClosePress={controller.RESET_VERIFICATION_STATUS}
           key={'reVerificationInProgress'}
           testId={'reVerificationInProgress'}
         />
@@ -108,5 +108,5 @@ export type vcVerificationBannerDetails = {
 };
 
 export interface BannerNotificationContainerProps {
-  showBannerNotificationContainer?: boolean;
+  showVerificationStatusBanner?: boolean;
 }
