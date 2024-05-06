@@ -106,6 +106,8 @@ public class PinVcTest extends AndroidBaseTest {
         
         scanPage.acceptPermissionPopupBluetooth();
         scanPage.acceptPermissionPopupCamera();
+        scanPage.clickOnAllowLocationPopupButton();
+        scanPage.clickOnAllowGallaryAccessButton();
 
         assertTrue(scanPage.isCameraPageLoaded(), "Verify camera page is displayed");
         assertTrue(scanPage.isFlipCameraClickable(),"Verify if flip camera is enabled");

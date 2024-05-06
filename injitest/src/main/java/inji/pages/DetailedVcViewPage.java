@@ -145,7 +145,7 @@ public class DetailedVcViewPage extends BasePage{
     }
 
     public PleaseConfirmPopupPage clickOnActivateButtonAndroid(){
-        IosUtil.scrollToElement(driver,58,712,160,129);
+//        IosUtil.scrollToElement(driver,58,712,160,129);
         clickOnElement(activateButton);
         return new PleaseConfirmPopupPage(driver);
     }
@@ -203,9 +203,7 @@ public class DetailedVcViewPage extends BasePage{
     }
 
     public void clickOnMoreOptionsInDetails() {
-        if(retrieIsElementVisible(moreOptionsButton)) {
             clickOnElement(moreOptionsButton);
-        }
     }
 
 }
