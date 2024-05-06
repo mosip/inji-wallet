@@ -5,6 +5,7 @@ import {Theme} from '../../ui/styleUtils';
 import React from 'react';
 import {SvgImage} from '../../ui/svg';
 import {useTranslation} from 'react-i18next';
+import {getTextColor} from './VCUtils';
 
 export const VCItemFieldName = ({fieldName, wellknown, testID}) => {
   const {t} = useTranslation('ViewVcModal');
@@ -13,7 +14,7 @@ export const VCItemFieldName = ({fieldName, wellknown, testID}) => {
       {fieldName && (
         <Text
           testID={`${testID}Title`}
-          {...setTextColor(wellknown, Theme.Colors.DetailsLabel)}
+          color={getTextColor(wellknown, Theme.Colors.DetailsLabel)}
           style={Theme.Styles.fieldItemTitle}>
           {fieldName}
         </Text>
@@ -67,7 +68,7 @@ export const VCItemFieldValue = ({fieldValue, wellknown, testID}) => {
     <>
       <Text
         testID={`${testID}Value`}
-        {...setTextColor(wellknown, Theme.Colors.Details)}
+        color={getTextColor(wellknown, Theme.Colors.Details)}
         style={Theme.Styles.fieldItemValue}>
         {fieldValue}
       </Text>
@@ -82,12 +83,4 @@ export const VCItemField = props => {
       <VCItemFieldValue {...props} />
     </Column>
   );
-};
-
-export const setTextColor = (wellknown: any, defaultColor) => {
-  return {
-    color:
-      wellknown?.credentials_supported[0]?.display[0]?.text_color ??
-      defaultColor,
-  };
 };

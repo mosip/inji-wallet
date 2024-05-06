@@ -10,13 +10,14 @@ import {CheckBox, Icon} from 'react-native-elements';
 import {SvgImage} from '../../ui/svg';
 import {VcItemContainerProfileImage} from '../../VcItemContainerProfileImage';
 import {isVCLoaded, setBackgroundColour} from '../common/VCUtils';
-import {setTextColor, VCItemFieldValue} from '../common/VCItemField';
+import {VCItemFieldValue} from '../common/VCItemField';
 import {WalletBinding} from '../../../screens/Home/MyVcs/WalletBinding';
 import {VCVerification} from '../../VCVerification';
 import {Issuers} from '../../../shared/openId4VCI/Utils';
 import {VCItemContainerFlowType} from '../../../shared/Utils';
 import {RemoveVcWarningOverlay} from '../../../screens/Home/MyVcs/RemoveVcWarningOverlay';
 import {HistoryTab} from '../../../screens/Home/MyVcs/HistoryTab';
+import {getTextColor} from '../common/VCUtils';
 
 export const VCCardViewContent: React.FC<VCItemContentProps> = props => {
   const isVCSelectable = props.selectable && (
@@ -86,7 +87,7 @@ export const VCCardViewContent: React.FC<VCItemContentProps> = props => {
                 accessible={false}
                 style={Theme.Styles.kebabPressableContainer}>
                 <KebabPopUp
-                  iconColor={setTextColor(
+                  iconColor={getTextColor(
                     props.wellknown,
                     Theme.Colors.helpText,
                   )}

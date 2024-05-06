@@ -143,6 +143,12 @@ export const setBackgroundColour = (wellknown: any) => {
   }
 };
 
+export const getTextColor = (wellknown: any, defaultColor: string) => {
+  return (
+    wellknown?.credentials_supported[0]?.display[0]?.text_color ?? defaultColor
+  );
+};
+
 export function getAddressFields() {
   return [
     'addressLine1',

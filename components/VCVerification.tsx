@@ -1,5 +1,5 @@
 import testIDProps from '../shared/commonUtil';
-import {setTextColor} from './VC/common/VCItemField';
+import {getTextColor} from './VC/common/VCUtils';
 import VerifiedIcon from './VerifiedIcon';
 import {Row, Text} from './ui';
 import {Theme} from './ui/styleUtils';
@@ -21,10 +21,9 @@ export const VCVerification: React.FC = ({wellknown, isVerified}: any) => {
         {statusIcon}
         <Text
           testID="verificationStatus"
-          color={Theme.Colors.Details}
+          color={getTextColor(wellknown, Theme.Colors.Details)}
           style={[
             Theme.Styles.detailsValue,
-            setTextColor(wellknown, Theme.Colors.Details),
             {fontFamily: 'Inter_600SemiBold'},
           ]}>
           {statusText}

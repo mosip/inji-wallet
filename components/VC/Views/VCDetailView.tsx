@@ -15,8 +15,8 @@ import {
   DETAIL_VIEW_BOTTOM_SECTION_FIELDS,
   fieldItemIterator,
   setBackgroundColour,
+  getTextColor,
 } from '../common/VCUtils';
-import {setTextColor} from '../common/VCItemField';
 import {ProfileIcon} from '../../ProfileIcon';
 
 const getProfileImage = (face: any) => {
@@ -110,10 +110,10 @@ export const VCDetailView: React.FC<VCItemDetailsProps> = props => {
                     style={[
                       Theme.Styles.hrLine,
                       {
-                        borderBottomColor: setTextColor(
+                        borderBottomColor: getTextColor(
                           props.wellknown,
                           Theme.Styles.hrLine.borderBottomColor,
-                        )?.color,
+                        ),
                       },
                     ]}></View>
                   <Column padding="0 14 14 14">
