@@ -37,7 +37,7 @@ public class VcBackupAndRestoreTest extends AndroidBaseTest {
         OtpVerificationPage otpVerification = retrieveIdPage.setEnterIdTextBox(uin).clickOnGenerateCardButton();
 
         otpVerification.enterOtp(BaseTestCase.getOtp(), Target.ANDROID);
-        
+
         assertTrue(homePage.isNameDisplayed(TestDataReader.readData("fullName")), "Verify if full name is displayed");
 
         assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
@@ -51,15 +51,15 @@ public class VcBackupAndRestoreTest extends AndroidBaseTest {
         assertTrue(backupAndRestorePage.isCloudInfoDisplayed(), "Verify if cloud information displayed");
         backupAndRestorePage.clickOnProceedButton();
 
-//        backupAndRestorePage.clickOnAddAnotherAccount();
-//        String email = TestDataReader.readData("emailsForBackupAndRestore");
-//        backupAndRestorePage.enterEmailTextBox(email);
-//        backupAndRestorePage.clickOnNextButton();
-//        backupAndRestorePage.enterPasswordTextBox(TestDataReader.readData("emailPassword"));
-//        backupAndRestorePage.clickOnNextButton();
-//        backupAndRestorePage.clickOnAgreeButton();
+        backupAndRestorePage.clickOnAddAnotherAccount();
+        String email = TestDataReader.readData("emailsForBackupAndRestore");
+        backupAndRestorePage.enterEmailTextBox(email);
+        backupAndRestorePage.clickOnNextButton();
+        backupAndRestorePage.enterPasswordTextBox(TestDataReader.readData("emailPassword"));
+        backupAndRestorePage.clickOnNextButton();
+        backupAndRestorePage.clickOnAgreeButton();
 
-        backupAndRestorePage.clickOnEmailHeader();
+//        backupAndRestorePage.clickOnEmailHeader();
 
         assertTrue(backupAndRestorePage.isLastBackupSectionHeaderDisplayed(), "Verify if last backup section displayed");
         backupAndRestorePage.clickOnBackUpButton();
@@ -93,7 +93,7 @@ public class VcBackupAndRestoreTest extends AndroidBaseTest {
         backupAndRestorePage.clickOnRestoreButton();
 
         assertTrue(backupAndRestorePage.isRestoreSectionHeaderDisplayed(), " Verify is restore backup successful popup displayed");
-         assertTrue(backupAndRestorePage.isRestoreBackupSuccessPopUpDisplayed(), " Verify is restore backup successful popup displayed");
+        assertTrue(backupAndRestorePage.isRestoreBackupSuccessPopUpDisplayed(), " Verify is restore backup successful popup displayed");
         backupAndRestorePage.clickOnCloseButton();
         backupAndRestorePage.clickOnArrowLeftButton();
 
@@ -223,21 +223,22 @@ public class VcBackupAndRestoreTest extends AndroidBaseTest {
 
         Thread.sleep(5000);
         backupAndRestorePage.clickOnRestoreButton();
+        assertTrue(backupAndRestorePage.isRestoreInProgressPopupTextDisplayed(), "Verify if restore in progress displayed");
         assertTrue(backupAndRestorePage.isRestoreBackupSuccessPopUpDisplayed(), " Verify is restore backup successful popup displayed");
         backupAndRestorePage.clickOnCloseButton();
 
         assertTrue(backupAndRestorePage.islastBackupTimeDisplayed(), "Verify if last backup time displayed");
         backupAndRestorePage.clickOnRestoreButton();
+        assertTrue(backupAndRestorePage.isRestoreInProgressPopupTextDisplayed(), "Verify if restore in progress displayed");
+        assertTrue(backupAndRestorePage.isRestoreBackupSuccessPopUpDisplayed(), " Verify is restore backup successful popup displayed");
         backupAndRestorePage.clickOnCloseButton();
 
         backupAndRestorePage.clickOnArrowLeftButton();
         assertTrue(settingsPage.isSettingPageLoaded(), "Verify if setting page is displayed");
-        backupAndRestorePage.clickOnArrowLeftButton();
-
+        homePage.clickOnHomeButton();
 
         assertTrue(homePage.isNameDisplayed(TestDataReader.readData("fullName")), "Verify if full name is displayed");
         assertTrue(homePage.isSecondNameDisplayed(TestDataReader.readData("fullName")), "Verify if second vc full name is displayed");
-        assertEquals(homePage.GetActivationPendingText(), "Activation pending for online login");
     }
 
 //    @Test
@@ -284,68 +285,67 @@ public class VcBackupAndRestoreTest extends AndroidBaseTest {
 
     @Test
     public void VerifyBackUpAndRestorePageInMultipleLanguge() throws InterruptedException {
-//        ChooseLanguagePage chooseLanguagePage = new ChooseLanguagePage(driver);
-//
-//        assertTrue(chooseLanguagePage.isChooseLanguagePageLoaded(), "Verify if choose language page is displayed");
-//        WelcomePage welcomePage = chooseLanguagePage.clickOnSavePreference();
-//
-//        assertTrue(welcomePage.isWelcomePageLoaded(), "Verify if welcome page is loaded");
-//        AppUnlockMethodPage appUnlockMethodPage = welcomePage.clickOnSkipButton();
-//
-//        assertTrue(appUnlockMethodPage.isAppUnlockMethodPageLoaded(), "Verify if app unlocked page is displayed");
-//        SetPasscode setPasscode = appUnlockMethodPage.clickOnUsePasscode();
-//
-//        assertTrue(setPasscode.isSetPassCodePageLoaded(), "Verify if set passcode page is displayed");
-//        ConfirmPasscode confirmPasscode = setPasscode.enterPasscode(TestDataReader.readData("passcode"), Target.ANDROID);
-//
-//        assertTrue(confirmPasscode.isConfirmPassCodePageLoaded(), "Verify if confirm passcode page is displayed");
-//        HomePage homePage = confirmPasscode.enterPasscodeInConfirmPasscodePage(TestDataReader.readData("passcode"), Target.ANDROID);
-//
-//        assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
-//        AddNewCardPage addNewCardPage = homePage.downloadCard();
-//        RetrieveIdPage retrieveIdPage = addNewCardPage.clickOnDownloadViaUin();
-//        String uin=TestDataReader.readData("uin");
-//        OtpVerificationPage otpVerification = retrieveIdPage.setEnterIdTextBox(uin).clickOnGenerateCardButton();
-//
-//        otpVerification.enterOtp(BaseTestCase.getOtp(), Target.ANDROID);
-//
-//        assertTrue(homePage.isNameDisplayed(TestDataReader.readData("fullName")), "Verify if full name is displayed");
-//
-//        assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
-//        SettingsPage settingsPage = homePage.clickOnSettingIcon();
-//
-//        assertTrue(settingsPage.isdataBackupAndRestoreDisplayed(), "Verify if backup & restore displayed");
-//        assertTrue(settingsPage.isNewlableDisplayed(), "Verify if backup & restore new tag displayed");
-//        BackupAndRestorePage backupAndRestorePage = settingsPage.clickOnDataBackupAndRestoreButton();
-//
-//        assertTrue(backupAndRestorePage.isBackupProcessInfoDisplayed(), "Verify if backup information displayed");
-//        assertTrue(backupAndRestorePage.isCloudInfoDisplayed(), "Verify if cloud information displayed");
-//        backupAndRestorePage.clickOnProceedButton();
-//
-//        String email = TestDataReader.readData("emailsForBackupAndRestore");
-//        backupAndRestorePage.enterEmailTextBox("mosiptest20@gmail.com");
-//        backupAndRestorePage.clickOnNextButton();
-//        backupAndRestorePage.enterPasswordTextBox(TestDataReader.readData("Hello@20"));
-//        backupAndRestorePage.clickOnNextButton();
-//        backupAndRestorePage.clickOnAgreeButton();
-//        Thread.sleep(3000);
+        ChooseLanguagePage chooseLanguagePage = new ChooseLanguagePage(driver);
+
+        assertTrue(chooseLanguagePage.isChooseLanguagePageLoaded(), "Verify if choose language page is displayed");
+        WelcomePage welcomePage = chooseLanguagePage.clickOnSavePreference();
+
+        assertTrue(welcomePage.isWelcomePageLoaded(), "Verify if welcome page is loaded");
+        AppUnlockMethodPage appUnlockMethodPage = welcomePage.clickOnSkipButton();
+
+        assertTrue(appUnlockMethodPage.isAppUnlockMethodPageLoaded(), "Verify if app unlocked page is displayed");
+        SetPasscode setPasscode = appUnlockMethodPage.clickOnUsePasscode();
+
+        assertTrue(setPasscode.isSetPassCodePageLoaded(), "Verify if set passcode page is displayed");
+        ConfirmPasscode confirmPasscode = setPasscode.enterPasscode(TestDataReader.readData("passcode"), Target.ANDROID);
+
+        assertTrue(confirmPasscode.isConfirmPassCodePageLoaded(), "Verify if confirm passcode page is displayed");
+        HomePage homePage = confirmPasscode.enterPasscodeInConfirmPasscodePage(TestDataReader.readData("passcode"), Target.ANDROID);
+
+        assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
+        AddNewCardPage addNewCardPage = homePage.downloadCard();
+        RetrieveIdPage retrieveIdPage = addNewCardPage.clickOnDownloadViaUin();
+        String uin=TestDataReader.readData("uin");
+        OtpVerificationPage otpVerification = retrieveIdPage.setEnterIdTextBox(uin).clickOnGenerateCardButton();
+
+        otpVerification.enterOtp(BaseTestCase.getOtp(), Target.ANDROID);
+
+        assertTrue(homePage.isNameDisplayed(TestDataReader.readData("fullName")), "Verify if full name is displayed");
+
+        assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
+        SettingsPage settingsPage = homePage.clickOnSettingIcon();
+
+        assertTrue(settingsPage.isdataBackupAndRestoreDisplayed(), "Verify if backup & restore displayed");
+        assertTrue(settingsPage.isNewlableDisplayed(), "Verify if backup & restore new tag displayed");
+        BackupAndRestorePage backupAndRestorePage = settingsPage.clickOnDataBackupAndRestoreButton();
+
+        assertTrue(backupAndRestorePage.isBackupProcessInfoDisplayed(), "Verify if backup information displayed");
+        assertTrue(backupAndRestorePage.isCloudInfoDisplayed(), "Verify if cloud information displayed");
+        backupAndRestorePage.clickOnProceedButton();
+
+        String email = TestDataReader.readData("emailsForBackupAndRestore");
+        backupAndRestorePage.enterEmailTextBox("mosiptest20@gmail.com");
+        backupAndRestorePage.clickOnNextButton();
+        backupAndRestorePage.enterPasswordTextBox(TestDataReader.readData("Hello@20"));
+        backupAndRestorePage.clickOnNextButton();
+        backupAndRestorePage.clickOnAgreeButton();
+        Thread.sleep(3000);
 
 //        backupAndRestorePage.clickOnEmailHeader();
-        BackupAndRestorePage backupAndRestorePage = new BackupAndRestorePage(driver);
         assertTrue(backupAndRestorePage.isLastBackupSectionHeaderDisplayed(), "Verify if last backup section displayed");
         backupAndRestorePage.clickOnBackUpButton();
 
+//
         assertTrue(backupAndRestorePage.isAccountSectionHeaderDisplayed(), "Verify if account section header displayed");
         assertTrue(backupAndRestorePage.isStorageInfoDisplayed(), "Verify if account storage info displayed");
         assertTrue(backupAndRestorePage.isAssociatedAccountDisplayed(), "Verify if associated account displayed");
         assertTrue(backupAndRestorePage.islastBackupTimeDisplayed(), "Verify if last backup time displayed");
+        assertFalse(backupAndRestorePage.isDataBackupInProgressTextDisappear(), "Verify if last backup backup is progress pop up is dissappear");
         backupAndRestorePage.clickOnCloseButton();
-
 
         assertTrue(backupAndRestorePage.isRestoreSectionHeaderDisplayed(), " Verify is restore backup successful popup displayed");
         backupAndRestorePage.clickOnArrowLeftButton();
 
-        SettingsPage settingsPage = new SettingsPage(driver);
         assertTrue(settingsPage.isSettingPageLoaded(), "Verify if setting page is displayed");
 
         settingsPage.clickOnLanguage().clickOnFilipinoLanguage();
@@ -356,7 +356,10 @@ public class VcBackupAndRestoreTest extends AndroidBaseTest {
         assertEquals(backupAndRestorePage.getAccountSectionHeaderText(), "Mga Setting ng Google Drive");
         assertEquals(backupAndRestorePage.getStorageInfoText(), "Ang backup ay maiimbak sa Google Drive na nauugnay sa iyong napiling gmail account.");
 
-        backupAndRestorePage.clickOnRestoreButton();
+        backupAndRestorePage.clickOnBackUpButton();
+        assertEquals(backupAndRestorePage.getDataBackupInProgressText(), "Kasalukuyang isinasagawa ang backup ng data. Mangyaring huwag isara ang application.");
+        assertTrue(backupAndRestorePage.isDataBackupSuccessPopupDisplayed(), "Verify if backup successful popup displayed");
+        assertEquals(backupAndRestorePage.getDataBackupSuccessPopupText(), "Ang iyong backup ay matagumpay!");
         backupAndRestorePage.clickOnCloseButton();
 
         backupAndRestorePage.clickOnArrowLeftButton();
@@ -366,14 +369,10 @@ public class VcBackupAndRestoreTest extends AndroidBaseTest {
 
         assertTrue(unlockApplicationPage.isUnlockApplicationPageLoadedInArabic(), "Verify if language is changed to arabic");
         unlockApplicationPage.clickOnUnlockApplicationButton();
-        SetPasscode setPasscode = new SetPasscode(driver);
         setPasscode.enterPasscode(TestDataReader.readData("passcode"), Target.ANDROID);
 
         //arabic
-        HomePage homePage = new HomePage(driver);
-
         homePage.clickOnSettingIcon();
-//        assertEquals(settingsPage.getDataBackupAndRestoreText(), "اسنرجاع البيانات");
         settingsPage.clickOnDataBackupAndRestoreButton();
 
         assertEquals(backupAndRestorePage.getLastBackupSectionHeaderText(), "تفاصيل النسخ الاحتياطي الأخير");
@@ -381,16 +380,19 @@ public class VcBackupAndRestoreTest extends AndroidBaseTest {
         assertEquals(backupAndRestorePage.getStorageInfoText(), "سيتم تخزين النسخة الاحتياطية في Google Drive المرتبط بحساب gmail الذي اخترته.");
 
         backupAndRestorePage.clickOnBackUpButton();
-//         assertTrue(backupAndRestorePage.isDataBackupSuccessPopupDisplayed(), "Verify if backup successful popup displayed");
+        assertEquals(backupAndRestorePage.getDataBackupInProgressText(), "النسخ الاحتياطي للبيانات قيد التقدم. من فضلك لا تغلق التطبيق.");
+        assertTrue(backupAndRestorePage.isDataBackupSuccessPopupDisplayed(), "Verify if backup successful popup displayed");
+        assertEquals(backupAndRestorePage.getDataBackupSuccessPopupText(), "تمت عملية النسخ الاحتياطي الخاصة بك بنجاح!");
         backupAndRestorePage.clickOnCloseButton();
 
         backupAndRestorePage.clickOnRestoreButton();
-//         assertTrue(backupAndRestorePage.isRestoreBackupSuccessPopUpDisplayed(), " Verify is restore backup successful popup displayed");
+        assertEquals(backupAndRestorePage.getRestoreInProgressPopupText(), "استعادة البيانات قيد التقدم. من فضلك لا تغلق التطبيق.");
+        assertTrue(backupAndRestorePage.isRestoreBackupSuccessPopUpDisplayed(), " Verify is restore backup successful popup displayed");
+        assertEquals(backupAndRestorePage.getRestoreBackupSuccessPopUpText(), "تمت استعادة النسخة الاحتياطية الخاصة بك بنجاح");
         backupAndRestorePage.clickOnCloseButton();
 
         backupAndRestorePage.clickOnArrowLeftButton();
         assertTrue(settingsPage.isSettingPageLoaded(), "Verify if setting page is displayed");
-
         settingsPage.clickOnLanguage().clickOnHindiLanguage();
 
         assertTrue(unlockApplicationPage.isUnlockApplicationPageLoadedInArabic(), "Verify if language is changed to arabic");
@@ -399,64 +401,71 @@ public class VcBackupAndRestoreTest extends AndroidBaseTest {
 
         homePage.clickOnSettingIcon();
 
-
         //hindi
 //        assertEquals(settingsPage.getDataBackupAndRestoreText(), "बैकअप बहाल");
         settingsPage.clickOnDataBackupAndRestoreButton();
         assertEquals(backupAndRestorePage.getBackupAndRestoreHeaderText(), "बैकअप और पुनर्स्थापना");
         assertEquals(backupAndRestorePage.getLastBackupSectionHeaderText(), "अंतिम बैकअप विवरण");
         assertEquals(backupAndRestorePage.getAccountSectionHeaderText(), "Google ड्राइव सेटिंग्स");
-        assertEquals(backupAndRestorePage.getStorageInfoText(), "बैकअप आपके चुने हुए जीमेल खाते से जुड़े Google ड्राइव में संग्रहीत किया जाएगा।");
+        assertEquals(backupAndRestorePage.getStorageInfoText(), "बैकअप आपके चुने हुए gmail खाते से जुड़े Google Drive में संग्रहीत किया जाएगा।");
 
         backupAndRestorePage.clickOnBackUpButton();
-//         assertTrue(backupAndRestorePage.isDataBackupSuccessPopupDisplayed(), "Verify if backup successful popup displayed");
+        assertEquals(backupAndRestorePage.getDataBackupInProgressText(), "डेटा बैकअप चल रहा है. कृपया एप्लिकेशन को बंद न करें.");
+        assertTrue(backupAndRestorePage.isDataBackupSuccessPopupDisplayed(), "Verify if backup successful popup displayed");
+        assertEquals(backupAndRestorePage.getDataBackupSuccessPopupText(), "आपका बैकअप सफल रहा!");
         backupAndRestorePage.clickOnCloseButton();
 
         backupAndRestorePage.clickOnRestoreButton();
-//         assertTrue(backupAndRestorePage.isRestoreBackupSuccessPopUpDisplayed(), " Verify is restore backup successful popup displayed");
+        assertEquals(backupAndRestorePage.getRestoreInProgressPopupText(), "डेटा पुनर्स्थापना प्रगति पर है. कृपया एप्लिकेशन को बंद न करें.");
+        assertTrue(backupAndRestorePage.isRestoreBackupSuccessPopUpDisplayed(), " Verify is restore backup successful popup displayed");
+        assertEquals(backupAndRestorePage.getRestoreBackupSuccessPopUpText(), "आपका बैकअप सफलतापूर्वक बहाल कर दिया गया है");
         backupAndRestorePage.clickOnCloseButton();
 
         backupAndRestorePage.clickOnArrowLeftButton();
         assertTrue(settingsPage.isSettingPageLoaded(), "Verify if setting page is displayed");
-
 
         //kannada
         settingsPage.clickOnLanguage().clickOnKannadaLanguage();
-
-        assertEquals(settingsPage.getDataBackupAndRestoreText(), "ಬ್ಯಾಕಪ್ ಮತ್ತು ಮರುಸ್ಥಾಪಿಸಿ");
         settingsPage.clickOnDataBackupAndRestoreButton();
+
         assertEquals(backupAndRestorePage.getBackupAndRestoreHeaderText(), "ಬ್ಯಾಕಪ್ ಮತ್ತು ಮರುಸ್ಥಾಪನೆ");
         assertEquals(backupAndRestorePage.getLastBackupSectionHeaderText(), "ಕೊನೆಯ ಬ್ಯಾಕಪ್ ವಿವರಗಳು");
         assertEquals(backupAndRestorePage.getAccountSectionHeaderText(), "Google Drive Settings");
-        assertEquals(backupAndRestorePage.getStorageInfoText(), "ನಿಮ್ಮ ಆಯ್ಕೆಮಾಡಿದ gmail ಖಾತೆಗೆ ಸಂಯೋಜಿತವಾಗಿರುವ Google ಡ್ರೈವ್‌ನಲ್ಲಿ ಬ್ಯಾಕಪ್ ಅನ್ನು ಸಂಗ್ರಹಿಸಲಾಗುತ್ತದೆ.");
+        assertEquals(backupAndRestorePage.getStorageInfoText(), "ನೀವು ಆಯ್ಕೆ ಮಾಡಿದ gmail ಖಾತೆಗೆ ಸಂಯೋಜಿತವಾಗಿರುವ Google Drive ನಲ್ಲಿ ಬ್ಯಾಕಪ್ ಅನ್ನು ಸಂಗ್ರಹಿಸಲಾಗುತ್ತದೆ.");
 
         backupAndRestorePage.clickOnBackUpButton();
-//         assertTrue(backupAndRestorePage.isDataBackupSuccessPopupDisplayed(), "Verify if backup successful popup displayed");
+        assertEquals(backupAndRestorePage.getDataBackupInProgressText(), "ಡೇಟಾ ಬ್ಯಾಕಪ್ ಪ್ರಗತಿಯಲ್ಲಿದೆ. ದಯವಿಟ್ಟು ಅಪ್ಲಿಕೇಶನ್ ಅನ್ನು ಮುಚ್ಚಬೇಡಿ.");
+        assertTrue(backupAndRestorePage.isDataBackupSuccessPopupDisplayed(), "Verify if backup successful popup displayed");
+        assertEquals(backupAndRestorePage.getDataBackupSuccessPopupText(), "ನಿಮ್ಮ ಬ್ಯಾಕಪ್ ಯಶಸ್ವಿಯಾಗಿದೆ!");
         backupAndRestorePage.clickOnCloseButton();
 
         backupAndRestorePage.clickOnRestoreButton();
-//         assertTrue(backupAndRestorePage.isRestoreBackupSuccessPopUpDisplayed(), " Verify is restore backup successful popup displayed");
+        assertEquals(backupAndRestorePage.getRestoreInProgressPopupText(), "ಡೇಟಾ ಮರುಸ್ಥಾಪನೆ ಪ್ರಗತಿಯಲ್ಲಿದೆ. ದಯವಿಟ್ಟು ಅಪ್ಲಿಕೇಶನ್ ಅನ್ನು ಮುಚ್ಚಬೇಡಿ.");
+        assertTrue(backupAndRestorePage.isRestoreBackupSuccessPopUpDisplayed(), " Verify is restore backup successful popup displayed");
+        assertEquals(backupAndRestorePage.getRestoreBackupSuccessPopUpText(), "ನಿಮ್ಮ ಬ್ಯಾಕಪ್ ಅನ್ನು ಯಶಸ್ವಿಯಾಗಿ ಮರುಸ್ಥಾಪಿಸಲಾಗಿದೆ");
         backupAndRestorePage.clickOnCloseButton();
 
         backupAndRestorePage.clickOnArrowLeftButton();
         assertTrue(settingsPage.isSettingPageLoaded(), "Verify if setting page is displayed");
 
-//
         settingsPage.clickOnLanguage().clickOnTamilLanguage();
 
-        assertEquals(settingsPage.getDataBackupAndRestoreText(), "காப்புப்பிரதி & மீட்டமை");
         settingsPage.clickOnDataBackupAndRestoreButton();
         assertEquals(backupAndRestorePage.getBackupAndRestoreHeaderText(), "காப்புப்பிரதி & மீட்டமை");
         assertEquals(backupAndRestorePage.getLastBackupSectionHeaderText(), "கடைசி காப்பு விவரங்கள்");
         assertEquals(backupAndRestorePage.getAccountSectionHeaderText(), "Google இயக்கக அமைப்புகள்");
-        assertEquals(backupAndRestorePage.getStorageInfoText(), "நீங்கள் தேர்ந்தெடுத்த ஜிமெயில் கணக்குடன் தொடர்புடைய Google இயக்ககத்தில் காப்புப்பிரதி சேமிக்கப்படும்.");
+        assertEquals(backupAndRestorePage.getStorageInfoText(), "நீங்கள் தேர்ந்தெடுத்த gmail கணக்குடன் தொடர்புடைய Google Drive இல் காப்புப்பிரதி சேமிக்கப்படும்.");
 
         backupAndRestorePage.clickOnBackUpButton();
-         assertTrue(backupAndRestorePage.isDataBackupSuccessPopupDisplayed(), "Verify if backup successful popup displayed");
+        assertEquals(backupAndRestorePage.getDataBackupInProgressText(), "தரவு காப்புப்பிரதி செயலில் உள்ளது. தயவுசெய்து விண்ணப்பத்தை மூட வேண்டாம்.");
+        assertTrue(backupAndRestorePage.isDataBackupSuccessPopupDisplayed(), "Verify if backup successful popup displayed");
+        assertEquals(backupAndRestorePage.getDataBackupSuccessPopupText(), "உங்கள் காப்புப்பிரதி வெற்றிகரமாக இருந்தது!");
         backupAndRestorePage.clickOnCloseButton();
 
         backupAndRestorePage.clickOnRestoreButton();
-         assertTrue(backupAndRestorePage.isRestoreBackupSuccessPopUpDisplayed(), " Verify is restore backup successful popup displayed");
+        assertEquals(backupAndRestorePage.getRestoreInProgressPopupText(), "தரவு மீட்டெடுப்பு செயலில் உள்ளது. விண்ணப்பத்தை மூட வேண்டாம்.");
+        assertTrue(backupAndRestorePage.isRestoreBackupSuccessPopUpDisplayed(), " Verify is restore backup successful popup displayed");
+        assertEquals(backupAndRestorePage.getRestoreBackupSuccessPopUpText(), "உங்கள் காப்புப்பிரதி வெற்றிகரமாக மீட்டெடுக்கப்பட்டது");
         backupAndRestorePage.clickOnCloseButton();
 
         backupAndRestorePage.clickOnArrowLeftButton();
@@ -503,17 +512,17 @@ public class VcBackupAndRestoreTest extends AndroidBaseTest {
         assertTrue(backupAndRestorePage.isCloudInfoDisplayed(), "Verify if cloud information displayed");
         backupAndRestorePage.clickOnProceedButton();
 
-//        backupAndRestorePage.clickOnAddAnotherAccount();
-//        String email = TestDataReader.readData("emailsForBackupAndRestore");
-//        backupAndRestorePage.enterEmailTextBox(email);
-//        backupAndRestorePage.clickOnNextButton();
-//        backupAndRestorePage.enterPasswordTextBox(TestDataReader.readData("emailPassword"));
-//        backupAndRestorePage.clickOnNextButton();
-//        backupAndRestorePage.clickOnAgreeButton();
+        backupAndRestorePage.clickOnAddAnotherAccount();
+        String email = TestDataReader.readData("emailsForBackupAndRestore");
+        backupAndRestorePage.enterEmailTextBox(email);
+        backupAndRestorePage.clickOnNextButton();
+        backupAndRestorePage.enterPasswordTextBox(TestDataReader.readData("emailPassword"));
+        backupAndRestorePage.clickOnNextButton();
+        backupAndRestorePage.clickOnAgreeButton();
 
-        backupAndRestorePage.clickOnEmailHeader();
+//        backupAndRestorePage.clickOnEmailHeader();
+
         assertTrue(backupAndRestorePage.isLastBackupSectionHeaderDisplayed(), "Verify if last backup section displayed");
-//        assertTrue(backupAndRestorePage.isDataBackupSuccessPopupDisplayed(), "Verify if backup successful popup displayed");
         backupAndRestorePage.clickOnBackUpButton();
         assertTrue(backupAndRestorePage.isAccountSectionHeaderDisplayed(), "Verify if account section header displayed");
         assertTrue(backupAndRestorePage.isStorageInfoDisplayed(), "Verify if account storage info displayed");
@@ -576,7 +585,7 @@ public class VcBackupAndRestoreTest extends AndroidBaseTest {
         backupAndRestorePage.clickOnNextButton();
         backupAndRestorePage.clickOnAgreeButton();
 
-        assertFalse(backupAndRestorePage.islastBackupTimeDisplayed(), "Verify if help page is displayed");
+        assertTrue(backupAndRestorePage.islastBackupTimeDisplayed(), "Verify if help page is displayed");
         assertTrue(backupAndRestorePage.isHelpButtonDisplayed(), "Verify if help page is displayed");
         Thread.sleep(4000);
         backupAndRestorePage.clickOnHelpButton();
@@ -640,18 +649,18 @@ public class VcBackupAndRestoreTest extends AndroidBaseTest {
         assertTrue(backupAndRestorePage.isStorageInfoDisplayed(), "Verify if account storage info displayed");
         assertTrue(backupAndRestorePage.isAssociatedAccountDisplayed(), "Verify if associated account displayed");
         assertTrue(backupAndRestorePage.islastBackupTimeDisplayed(), "Verify if last backup time displayed");
-//        assertTrue(backupAndRestorePage.isDataBackupSuccessPopupDisplayed(), "Verify if backup successful popup displayed");
+        assertTrue(backupAndRestorePage.isDataBackupSuccessPopupDisplayed(), "Verify if backup successful popup displayed");
         backupAndRestorePage.clickOnCloseButton();
 
         backupAndRestorePage.clickOnRestoreButton();
 
         assertTrue(backupAndRestorePage.isRestoreSectionHeaderDisplayed(), " Verify is restore backup successful popup displayed");
-//        assertTrue(backupAndRestorePage.isRestoreBackupSuccessPopUpDisplayed(), " Verify is restore backup successful popup displayed");
+        assertTrue(backupAndRestorePage.isRestoreBackupSuccessPopUpDisplayed(), " Verify is restore backup successful popup displayed");
         backupAndRestorePage.clickOnCloseButton();
         backupAndRestorePage.clickOnArrowLeftButton();
 
         assertTrue(settingsPage.isSettingPageLoaded(), "Verify if setting page is displayed");
-        backupAndRestorePage.clickOnArrowLeftButton();
+        homePage.clickOnHomeButton();
 
         assertTrue(homePage.isNameDisplayed(TestDataReader.readData("fullName")), "Verify if full name is displayed");
         homePage.clickOnFirstVcsEllipsisButton();
@@ -667,7 +676,6 @@ public class VcBackupAndRestoreTest extends AndroidBaseTest {
         otpVerificationPage.enterOtp(TestDataReader.readData("passcode"), Target.ANDROID);
 
         assertTrue(moreOptionsPage.isVcActivatedForOnlineLogin(), "Verify if VC is activated");
-        moreOptionsPage.clickOnCloseButton();
 
         assertTrue(homePage.isActivatedVcPopupTextDisplayed(), "Verify if VC is activated popup displayed");
         homePage.clickPopupCloseButtonButton();
@@ -747,12 +755,13 @@ public class VcBackupAndRestoreTest extends AndroidBaseTest {
         backupAndRestorePage.clickOnRestoreButton();
 
         assertTrue(backupAndRestorePage.isRestoreSectionHeaderDisplayed(), " Verify is restore backup successful popup displayed");
+        assertTrue(backupAndRestorePage.isRestoreInProgressPopupTextDisplayed(), " Verify is restore in progress popup displayed");
         assertTrue(backupAndRestorePage.isRestoreBackupSuccessPopUpDisplayed(), " Verify is restore backup successful popup displayed");
         backupAndRestorePage.clickOnCloseButton();
         backupAndRestorePage.clickOnArrowLeftButton();
 
         assertTrue(settingsPage.isSettingPageLoaded(), "Verify if setting page is displayed");
-        backupAndRestorePage.clickOnArrowLeftButton();
+        homePage.clickOnHomeButton();
 
         assertTrue(homePage.isNameDisplayed(TestDataReader.readData("fullName")), "Verify if full name is displayed");
         IosUtil.scrollToElement(driver,100,800,100,200);
@@ -769,13 +778,10 @@ public class VcBackupAndRestoreTest extends AndroidBaseTest {
         otpVerificationPage.enterOtp(TestDataReader.readData("passcode"), Target.ANDROID);
 
         assertTrue(moreOptionsPage.isVcActivatedForOnlineLogin(), "Verify if VC is activated");
-        moreOptionsPage.clickOnCloseButton();
-
         assertTrue(homePage.isActivatedVcPopupTextDisplayed(), "Verify if VC is activated popup displayed");
         homePage.clickPopupCloseButtonButton();
 
         homePage.clickOnFirstVcsEllipsisButton();
-
         assertTrue(moreOptionsPage.isMoreOptionsPageLoaded(), "Verify if more options page is displayed");
 
         moreOptionsPage.clickOnRemoveFromWallet();
@@ -853,7 +859,7 @@ public class VcBackupAndRestoreTest extends AndroidBaseTest {
         backupAndRestorePage.clickOnArrowLeftButton();
 
         assertTrue(settingsPage.isSettingPageLoaded(), "Verify if setting page is displayed");
-        backupAndRestorePage.clickOnArrowLeftButton();
+        homePage.clickOnHomeButton();
 
         assertTrue(homePage.isNameDisplayed(TestDataReader.readData("fullName")), "Verify if full name is displayed");
         IosUtil.scrollToElement(driver,100,800,100,200);
@@ -870,67 +876,63 @@ public class VcBackupAndRestoreTest extends AndroidBaseTest {
         otpVerificationPage.enterOtp(TestDataReader.readData("passcode"), Target.ANDROID);
 
         assertTrue(moreOptionsPage.isVcActivatedForOnlineLogin(), "Verify if VC is activated");
+        homePage.clickOnSecondVcsEllipsisButton();
+        assertTrue(moreOptionsPage.isMoreOptionsPageLoaded(), "Verify if more options page is displayed");
         moreOptionsPage.clickOnPinOrUnPinCard();
-        moreOptionsPage.clickOnCloseButton();
-
         assertTrue(homePage.isActivatedVcPopupTextDisplayed(), "Verify if VC is activated popup displayed");
-//        homePage.clickPopupCloseButtonButton();
+        homePage.clickPopupCloseButtonButton();
 
         assertTrue(homePage.isPinIconDisplayed(), "Verify if VC is pined icon displayed");
-        homePage.clickOnFirstVcsEllipsisButton();
-
         assertTrue(moreOptionsPage.isVcActivatedForOnlineLogin(), "Verify if VC is activaed for login use displayed");
     }
 
     @Test
     public void VerifyPiningRestoredVc() throws InterruptedException {
-//        ChooseLanguagePage chooseLanguagePage = new ChooseLanguagePage(driver);
-//
-//        assertTrue(chooseLanguagePage.isChooseLanguagePageLoaded(), "Verify if choose language page is displayed");
-//        WelcomePage welcomePage = chooseLanguagePage.clickOnSavePreference();
-//
-//        assertTrue(welcomePage.isWelcomePageLoaded(), "Verify if welcome page is loaded");
-//        AppUnlockMethodPage appUnlockMethodPage = welcomePage.clickOnSkipButton();
-//
-//        assertTrue(appUnlockMethodPage.isAppUnlockMethodPageLoaded(), "Verify if app unlocked page is displayed");
-//        SetPasscode setPasscode = appUnlockMethodPage.clickOnUsePasscode();
-//
-//        assertTrue(setPasscode.isSetPassCodePageLoaded(), "Verify if set passcode page is displayed");
-//        ConfirmPasscode confirmPasscode = setPasscode.enterPasscode(TestDataReader.readData("passcode"), Target.ANDROID);
-//
-//        assertTrue(confirmPasscode.isConfirmPassCodePageLoaded(), "Verify if confirm passcode page is displayed");
-//        HomePage homePage = confirmPasscode.enterPasscodeInConfirmPasscodePage(TestDataReader.readData("passcode"), Target.ANDROID);
-//
-//        assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
-//        AddNewCardPage addNewCardPage = homePage.downloadCard();
-//        RetrieveIdPage retrieveIdPage = addNewCardPage.clickOnDownloadViaUin();
-//        String uin=TestDataReader.readData("uin");
-//        OtpVerificationPage otpVerification = retrieveIdPage.setEnterIdTextBox(uin).clickOnGenerateCardButton();
-//
-//        otpVerification.enterOtp(BaseTestCase.getOtp(), Target.ANDROID);
-//
-//        assertTrue(homePage.isNameDisplayed(TestDataReader.readData("fullName")), "Verify if full name is displayed");
-//
-//        assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
-//        SettingsPage settingsPage = homePage.clickOnSettingIcon();
-//
-//        assertTrue(settingsPage.isdataBackupAndRestoreDisplayed(), "Verify if backup & restore displayed");
-//        assertTrue(settingsPage.isNewlableDisplayed(), "Verify if backup & restore new tag displayed");
-//        BackupAndRestorePage backupAndRestorePage = settingsPage.clickOnDataBackupAndRestoreButton();
-//
-//        assertTrue(backupAndRestorePage.isBackupProcessInfoDisplayed(), "Verify if backup information displayed");
-//        assertTrue(backupAndRestorePage.isCloudInfoDisplayed(), "Verify if cloud information displayed");
-//        backupAndRestorePage.clickOnProceedButton();
-//
-//        backupAndRestorePage.clickOnAddAnotherAccount();
-//        String email = TestDataReader.readData("emailsForBackupAndRestore");
-//        backupAndRestorePage.enterEmailTextBox(email);
-//        backupAndRestorePage.clickOnNextButton();
-//        backupAndRestorePage.enterPasswordTextBox(TestDataReader.readData("emailPassword"));
-//        backupAndRestorePage.clickOnNextButton();
-//        backupAndRestorePage.clickOnAgreeButton();
+        ChooseLanguagePage chooseLanguagePage = new ChooseLanguagePage(driver);
 
-        BackupAndRestorePage backupAndRestorePage = new BackupAndRestorePage(driver);
+        assertTrue(chooseLanguagePage.isChooseLanguagePageLoaded(), "Verify if choose language page is displayed");
+        WelcomePage welcomePage = chooseLanguagePage.clickOnSavePreference();
+
+        assertTrue(welcomePage.isWelcomePageLoaded(), "Verify if welcome page is loaded");
+        AppUnlockMethodPage appUnlockMethodPage = welcomePage.clickOnSkipButton();
+
+        assertTrue(appUnlockMethodPage.isAppUnlockMethodPageLoaded(), "Verify if app unlocked page is displayed");
+        SetPasscode setPasscode = appUnlockMethodPage.clickOnUsePasscode();
+
+        assertTrue(setPasscode.isSetPassCodePageLoaded(), "Verify if set passcode page is displayed");
+        ConfirmPasscode confirmPasscode = setPasscode.enterPasscode(TestDataReader.readData("passcode"), Target.ANDROID);
+
+        assertTrue(confirmPasscode.isConfirmPassCodePageLoaded(), "Verify if confirm passcode page is displayed");
+        HomePage homePage = confirmPasscode.enterPasscodeInConfirmPasscodePage(TestDataReader.readData("passcode"), Target.ANDROID);
+
+        assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
+        AddNewCardPage addNewCardPage = homePage.downloadCard();
+        RetrieveIdPage retrieveIdPage = addNewCardPage.clickOnDownloadViaUin();
+        String uin=TestDataReader.readData("uin");
+        OtpVerificationPage otpVerification = retrieveIdPage.setEnterIdTextBox(uin).clickOnGenerateCardButton();
+
+        otpVerification.enterOtp(BaseTestCase.getOtp(), Target.ANDROID);
+
+        assertTrue(homePage.isNameDisplayed(TestDataReader.readData("fullName")), "Verify if full name is displayed");
+
+        assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
+        SettingsPage settingsPage = homePage.clickOnSettingIcon();
+
+        assertTrue(settingsPage.isdataBackupAndRestoreDisplayed(), "Verify if backup & restore displayed");
+        assertTrue(settingsPage.isNewlableDisplayed(), "Verify if backup & restore new tag displayed");
+        BackupAndRestorePage backupAndRestorePage = settingsPage.clickOnDataBackupAndRestoreButton();
+
+        assertTrue(backupAndRestorePage.isBackupProcessInfoDisplayed(), "Verify if backup information displayed");
+        assertTrue(backupAndRestorePage.isCloudInfoDisplayed(), "Verify if cloud information displayed");
+        backupAndRestorePage.clickOnProceedButton();
+
+        backupAndRestorePage.clickOnAddAnotherAccount();
+        String email = TestDataReader.readData("emailsForBackupAndRestore");
+        backupAndRestorePage.enterEmailTextBox(email);
+        backupAndRestorePage.clickOnNextButton();
+        backupAndRestorePage.enterPasswordTextBox(TestDataReader.readData("emailPassword"));
+        backupAndRestorePage.clickOnNextButton();
+        backupAndRestorePage.clickOnAgreeButton();
 
         assertTrue(backupAndRestorePage.isLastBackupSectionHeaderDisplayed(), "Verify if last backup section displayed");
         assertTrue(backupAndRestorePage.islastBackupTimeDisplayed(), "Verify if last backup time displayed");
@@ -950,12 +952,8 @@ public class VcBackupAndRestoreTest extends AndroidBaseTest {
         backupAndRestorePage.clickOnCloseButton();
         backupAndRestorePage.clickOnArrowLeftButton();
 
-        SettingsPage settingsPage = new SettingsPage(driver);
-
         assertTrue(settingsPage.isSettingPageLoaded(), "Verify if setting page is displayed");
-        backupAndRestorePage.clickOnArrowLeftButton();
-
-        HomePage homePage = new HomePage(driver);
+        homePage.clickOnHomeButton();
 
         assertTrue(homePage.isNameDisplayed(TestDataReader.readData("fullName")), "Verify if full name is displayed");
         homePage.clickOnFirstVcsEllipsisButton();
@@ -971,15 +969,14 @@ public class VcBackupAndRestoreTest extends AndroidBaseTest {
         otpVerificationPage.enterOtp(TestDataReader.readData("passcode"), Target.ANDROID);
 
         assertTrue(moreOptionsPage.isVcActivatedForOnlineLogin(), "Verify if VC is activated");
+        homePage.clickOnFirstVcsEllipsisButton();
         moreOptionsPage.clickOnPinOrUnPinCard();
-        moreOptionsPage.clickOnCloseButton();
+
 
         assertTrue(homePage.isActivatedVcPopupTextDisplayed(), "Verify if VC is activated popup displayed");
-//        homePage.clickPopupCloseButtonButton();
+        homePage.clickPopupCloseButtonButton();
 
         assertTrue(homePage.isPinIconDisplayed(), "Verify if VC is pined icon displayed");
-        homePage.clickOnFirstVcsEllipsisButton();
-
         assertTrue(moreOptionsPage.isVcActivatedForOnlineLogin(), "Verify if VC is activaed for login use displayed");
     }
 
@@ -1040,16 +1037,17 @@ public class VcBackupAndRestoreTest extends AndroidBaseTest {
         backupAndRestorePage.clickOnProceedButton();
 
 //        backupAndRestorePage.clickOnAddAnotherAccount();
-//        String email = TestDataReader.readData("emailsForBackupAndRestore");
-//        backupAndRestorePage.enterEmailTextBox(email);
-//        backupAndRestorePage.clickOnNextButton();
-//        backupAndRestorePage.enterPasswordTextBox(TestDataReader.readData("emailPassword"));
-//        backupAndRestorePage.clickOnNextButton();
-//        backupAndRestorePage.clickOnAgreeButton();
+        String email = TestDataReader.readData("emailsForBackupAndRestore");
+        backupAndRestorePage.enterEmailTextBox(email);
+        backupAndRestorePage.clickOnNextButton();
+        backupAndRestorePage.enterPasswordTextBox(TestDataReader.readData("emailPassword"));
+        backupAndRestorePage.clickOnNextButton();
+        backupAndRestorePage.clickOnAgreeButton();
 
         backupAndRestorePage.clickOnEmailHeader();
+
+
         assertTrue(backupAndRestorePage.isLastBackupSectionHeaderDisplayed(), "Verify if last backup section displayed");
-//        assertTrue(backupAndRestorePage.isDataBackupSuccessPopupDisplayed(), "Verify if backup successful popup displayed");
         backupAndRestorePage.clickOnBackUpButton();
         assertTrue(backupAndRestorePage.isAccountSectionHeaderDisplayed(), "Verify if account section header displayed");
         assertTrue(backupAndRestorePage.isStorageInfoDisplayed(), "Verify if account storage info displayed");
@@ -1069,6 +1067,185 @@ public class VcBackupAndRestoreTest extends AndroidBaseTest {
 
         assertTrue(homePage.isNameDisplayed(TestDataReader.readData("fullName")), "Verify if full name is displayed");
         assertTrue(moreOptionsPage.isVcActivatedForOnlineLogin(), "Verify if VC is activated");
-        assertTrue(homePage.isWalletUnactivatedIconDisplayed(), "Verify if wallet unactived icon displayed");
+    }
+
+    @Test
+    public void VcBackupAndRestoreTestAndCheckBackupTosterInOtherPages() throws InterruptedException {
+        ChooseLanguagePage chooseLanguagePage = new ChooseLanguagePage(driver);
+
+        assertTrue(chooseLanguagePage.isChooseLanguagePageLoaded(), "Verify if choose language page is displayed");
+        WelcomePage welcomePage = chooseLanguagePage.clickOnSavePreference();
+
+        assertTrue(welcomePage.isWelcomePageLoaded(), "Verify if welcome page is loaded");
+        AppUnlockMethodPage appUnlockMethodPage = welcomePage.clickOnSkipButton();
+
+        assertTrue(appUnlockMethodPage.isAppUnlockMethodPageLoaded(), "Verify if app unlocked page is displayed");
+        SetPasscode setPasscode = appUnlockMethodPage.clickOnUsePasscode();
+
+        assertTrue(setPasscode.isSetPassCodePageLoaded(), "Verify if set passcode page is displayed");
+        ConfirmPasscode confirmPasscode = setPasscode.enterPasscode(TestDataReader.readData("passcode"), Target.ANDROID);
+
+        assertTrue(confirmPasscode.isConfirmPassCodePageLoaded(), "Verify if confirm passcode page is displayed");
+        HomePage homePage = confirmPasscode.enterPasscodeInConfirmPasscodePage(TestDataReader.readData("passcode"), Target.ANDROID);
+
+        assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
+        AddNewCardPage addNewCardPage = homePage.downloadCard();
+        RetrieveIdPage retrieveIdPage = addNewCardPage.clickOnDownloadViaUin();
+        String uin=TestDataReader.readData("uin");
+        OtpVerificationPage otpVerification = retrieveIdPage.setEnterIdTextBox(uin).clickOnGenerateCardButton();
+
+        otpVerification.enterOtp(BaseTestCase.getOtp(), Target.ANDROID);
+
+        assertTrue(homePage.isNameDisplayed(TestDataReader.readData("fullName")), "Verify if full name is displayed");
+
+        assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
+        SettingsPage settingsPage = homePage.clickOnSettingIcon();
+
+        assertTrue(settingsPage.isdataBackupAndRestoreDisplayed(), "Verify if backup & restore displayed");
+        assertTrue(settingsPage.isNewlableDisplayed(), "Verify if backup & restore new tag displayed");
+        BackupAndRestorePage backupAndRestorePage = settingsPage.clickOnDataBackupAndRestoreButton();
+
+        assertTrue(backupAndRestorePage.isBackupProcessInfoDisplayed(), "Verify if backup information displayed");
+        assertTrue(backupAndRestorePage.isCloudInfoDisplayed(), "Verify if cloud information displayed");
+        backupAndRestorePage.clickOnProceedButton();
+
+        backupAndRestorePage.clickOnAddAnotherAccount();
+        String email = TestDataReader.readData("emailsForBackupAndRestore");
+        backupAndRestorePage.enterEmailTextBox(email);
+        backupAndRestorePage.clickOnNextButton();
+        backupAndRestorePage.enterPasswordTextBox(TestDataReader.readData("emailPassword"));
+        backupAndRestorePage.clickOnNextButton();
+        backupAndRestorePage.clickOnAgreeButton();
+
+//        backupAndRestorePage.clickOnEmailHeader();
+
+        assertTrue(backupAndRestorePage.isLastBackupSectionHeaderDisplayed(), "Verify if last backup section displayed");
+        backupAndRestorePage.clickOnBackUpButton();
+
+        assertTrue(backupAndRestorePage.isDataBackupInProgressTextDisplayed(),"verify if data backup in progress popup displayed");
+        assertTrue(backupAndRestorePage.isAccountSectionHeaderDisplayed(), "Verify if account section header displayed");
+        assertTrue(backupAndRestorePage.islastBackupTimeDisplayed(), "Verify if last backup time displayed");
+        assertFalse(backupAndRestorePage.isDataBackupInProgressTextDisappear(),"verify if data backup in progress Disappear");
+        assertTrue(backupAndRestorePage.isStorageInfoDisplayed(), "Verify if account storage info displayed");
+        assertTrue(backupAndRestorePage.isAssociatedAccountDisplayed(), "Verify if associated account displayed");
+        assertTrue(backupAndRestorePage.islastBackupTimeDisplayed(), "Verify if last backup time displayed");
+        assertTrue(backupAndRestorePage.isDataBackupSuccessPopupDisplayed(), "Verify if backup successful popup displayed");
+
+        backupAndRestorePage.clickOnArrowLeftButton();
+        assertTrue(backupAndRestorePage.isDataBackupSuccessPopupDisplayed(), "Verify if backup successful popup displayed");
+        assertTrue(settingsPage.isSettingPageLoaded(), "Verify if setting page is displayed");
+        homePage.clickOnHomeButton();
+        assertTrue(backupAndRestorePage.isDataBackupSuccessPopupDisplayed(), "Verify if backup successful popup displayed");
+
+        homePage.clickOnSettingIcon();
+        assertTrue(backupAndRestorePage.isDataBackupSuccessPopupDisplayed(), "Verify if backup successful popup displayed");
+        settingsPage.clickOnDataBackupAndRestoreButton();
+        backupAndRestorePage.clickOnRestoreButton();
+
+        assertTrue(backupAndRestorePage.isRestoreSectionHeaderDisplayed(), " Verify is restore backup successful popup displayed");
+        assertTrue(backupAndRestorePage.isRestoreBackupSuccessPopUpDisplayed(), " Verify is restore backup successful popup displayed");
+        backupAndRestorePage.clickOnCloseButton();
+        backupAndRestorePage.clickOnArrowLeftButton();
+
+        assertTrue(settingsPage.isSettingPageLoaded(), "Verify if setting page is displayed");
+        homePage.clickOnHomeButton();
+
+        assertTrue(homePage.isNameDisplayed(TestDataReader.readData("fullName")), "Verify if full name is displayed");
+
+        homePage.clickOnHistoryButton();
+        assertTrue(backupAndRestorePage.isDataBackupSuccessPopupDisplayed(), "Verify if backup successful popup displayed");
+
+        homePage.clickOnHomeButton();
+        homePage.clickOnHelpIcon();
+        assertTrue(backupAndRestorePage.isDataBackupSuccessPopupDisplayed(), "Verify if backup successful popup displayed");
+
+    }
+
+    @Test
+    public void VcBackupAndRestoreTestAndCheckRestoreTosterInOtherPages() throws InterruptedException {
+        ChooseLanguagePage chooseLanguagePage = new ChooseLanguagePage(driver);
+
+        assertTrue(chooseLanguagePage.isChooseLanguagePageLoaded(), "Verify if choose language page is displayed");
+        WelcomePage welcomePage = chooseLanguagePage.clickOnSavePreference();
+
+        assertTrue(welcomePage.isWelcomePageLoaded(), "Verify if welcome page is loaded");
+        AppUnlockMethodPage appUnlockMethodPage = welcomePage.clickOnSkipButton();
+
+        assertTrue(appUnlockMethodPage.isAppUnlockMethodPageLoaded(), "Verify if app unlocked page is displayed");
+        SetPasscode setPasscode = appUnlockMethodPage.clickOnUsePasscode();
+
+        assertTrue(setPasscode.isSetPassCodePageLoaded(), "Verify if set passcode page is displayed");
+        ConfirmPasscode confirmPasscode = setPasscode.enterPasscode(TestDataReader.readData("passcode"), Target.ANDROID);
+
+        assertTrue(confirmPasscode.isConfirmPassCodePageLoaded(), "Verify if confirm passcode page is displayed");
+        HomePage homePage = confirmPasscode.enterPasscodeInConfirmPasscodePage(TestDataReader.readData("passcode"), Target.ANDROID);
+
+        assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
+        AddNewCardPage addNewCardPage = homePage.downloadCard();
+        RetrieveIdPage retrieveIdPage = addNewCardPage.clickOnDownloadViaUin();
+        String uin=TestDataReader.readData("uin");
+        OtpVerificationPage otpVerification = retrieveIdPage.setEnterIdTextBox(uin).clickOnGenerateCardButton();
+
+        otpVerification.enterOtp(BaseTestCase.getOtp(), Target.ANDROID);
+
+        assertTrue(homePage.isNameDisplayed(TestDataReader.readData("fullName")), "Verify if full name is displayed");
+
+        assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
+        SettingsPage settingsPage = homePage.clickOnSettingIcon();
+
+        assertTrue(settingsPage.isdataBackupAndRestoreDisplayed(), "Verify if backup & restore displayed");
+        assertTrue(settingsPage.isNewlableDisplayed(), "Verify if backup & restore new tag displayed");
+        BackupAndRestorePage backupAndRestorePage = settingsPage.clickOnDataBackupAndRestoreButton();
+
+        assertTrue(backupAndRestorePage.isBackupProcessInfoDisplayed(), "Verify if backup information displayed");
+        assertTrue(backupAndRestorePage.isCloudInfoDisplayed(), "Verify if cloud information displayed");
+        backupAndRestorePage.clickOnProceedButton();
+
+        backupAndRestorePage.clickOnAddAnotherAccount();
+        String email = TestDataReader.readData("emailsForBackupAndRestore");
+        backupAndRestorePage.enterEmailTextBox(email);
+        backupAndRestorePage.clickOnNextButton();
+        backupAndRestorePage.enterPasswordTextBox(TestDataReader.readData("emailPassword"));
+        backupAndRestorePage.clickOnNextButton();
+        backupAndRestorePage.clickOnAgreeButton();
+
+//        backupAndRestorePage.clickOnEmailHeader();
+
+        assertTrue(backupAndRestorePage.isLastBackupSectionHeaderDisplayed(), "Verify if last backup section displayed");
+        backupAndRestorePage.clickOnBackUpButton();
+
+        assertTrue(backupAndRestorePage.isDataBackupInProgressTextDisplayed(),"verify if data backup in progress popup displayed");
+        assertTrue(backupAndRestorePage.isAccountSectionHeaderDisplayed(), "Verify if account section header displayed");
+        assertTrue(backupAndRestorePage.islastBackupTimeDisplayed(), "Verify if last backup time displayed");
+        assertFalse(backupAndRestorePage.isDataBackupInProgressTextDisappear(),"verify if data backup in progress Disappear");
+        assertTrue(backupAndRestorePage.isStorageInfoDisplayed(), "Verify if account storage info displayed");
+        assertTrue(backupAndRestorePage.isAssociatedAccountDisplayed(), "Verify if associated account displayed");
+        assertTrue(backupAndRestorePage.islastBackupTimeDisplayed(), "Verify if last backup time displayed");
+        assertTrue(backupAndRestorePage.isDataBackupSuccessPopupDisplayed(), "Verify if backup successful popup displayed");
+        backupAndRestorePage.clickOnCloseButton();
+        backupAndRestorePage.clickOnRestoreButton();
+        assertTrue(backupAndRestorePage.isRestoreBackupSuccessPopUpDisplayed(), " Verify is restore backup successful popup displayed");
+
+        backupAndRestorePage.clickOnArrowLeftButton();
+        assertTrue(backupAndRestorePage.isRestoreBackupSuccessPopUpDisplayed(), " Verify is restore backup successful popup displayed");
+        assertTrue(settingsPage.isSettingPageLoaded(), "Verify if setting page is displayed");
+        homePage.clickOnHomeButton();
+        assertTrue(backupAndRestorePage.isRestoreBackupSuccessPopUpDisplayed(), " Verify is restore backup successful popup displayed");
+
+        homePage.clickOnSettingIcon();
+        assertTrue(backupAndRestorePage.isRestoreBackupSuccessPopUpDisplayed(), " Verify is restore backup successful popup displayed");
+
+        assertTrue(settingsPage.isSettingPageLoaded(), "Verify if setting page is displayed");
+        homePage.clickOnHomeButton();
+
+        assertTrue(homePage.isNameDisplayed(TestDataReader.readData("fullName")), "Verify if full name is displayed");
+
+        homePage.clickOnHistoryButton();
+        assertTrue(backupAndRestorePage.isRestoreBackupSuccessPopUpDisplayed(), " Verify is restore backup successful popup displayed");
+
+        homePage.clickOnHomeButton();
+        homePage.clickOnHelpIcon();
+        assertTrue(backupAndRestorePage.isRestoreBackupSuccessPopUpDisplayed(), " Verify is restore backup successful popup displayed");
+
     }
 }
