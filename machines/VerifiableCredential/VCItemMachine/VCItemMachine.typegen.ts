@@ -255,7 +255,9 @@ export interface Typegen0 {
     resetPrivateKey:
       | 'done.invoke.vc-item-machine.existingState.walletBinding.addingWalletBindingId:invocation[0]'
       | 'done.invoke.vc-item-machine.existingState.walletBinding.updatingPrivateKey:invocation[0]';
-    resetVerificationStatus: 'RESET_VERIFICATION_STATUS';
+    resetVerificationStatus:
+      | 'REMOVE_VERIFICATION_STATUS_BANNER'
+      | 'RESET_VERIFICATION_STATUS';
     sendActivationStartEvent: 'CONFIRM';
     sendActivationSuccessEvent:
       | 'done.invoke.vc-item-machine.existingState.walletBinding.addingWalletBindingId:invocation[0]'

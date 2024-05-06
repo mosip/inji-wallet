@@ -606,6 +606,11 @@ export const VCItemMachine = model.createMachine(
           },
           verificationCompleted: {
             entry: 'showVerificationBannerStatus',
+            on: {
+              REMOVE_VERIFICATION_STATUS_BANNER: {
+                actions: 'resetVerificationStatus',
+              },
+            },
           },
         },
       },

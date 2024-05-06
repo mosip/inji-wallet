@@ -112,6 +112,14 @@ export const ViewVcModal: React.FC<ViewVcModalProps> = props => {
       </Row>
     ) : undefined;
   };
+
+  const handleModalDismiss = () => {
+    props.onDismiss();
+    if (controller.isVerificationCompleted) {
+      props.vcItemActor.send('REMOVE_VERIFICATION_STATUS_BANNER');
+    }
+  };
+
   return (
     <Modal
       isVisible={props.isVisible}
@@ -119,7 +127,7 @@ export const ViewVcModal: React.FC<ViewVcModalProps> = props => {
       arrowLeft={true}
       headerRight={headerRight(props.flow)}
       headerTitle={t('title')}
-      onDismiss={props.onDismiss}
+      onDismiss={handleModalDismiss}
       headerElevation={2}>
       <BannerNotificationContainer showBannerNotificationContainer={false} />
 

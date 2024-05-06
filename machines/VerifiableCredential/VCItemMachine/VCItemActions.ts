@@ -67,7 +67,7 @@ export const VCItemActions = model => {
 
     resetVerificationStatus: assign({
       verificationStatus: (context: any) => {
-        return context.verificationStatus.statusType ===
+        return context.verificationStatus?.statusType ===
           BannerStatusType.IN_PROGRESS
           ? context.verificationStatus
           : null;
@@ -136,6 +136,7 @@ export const VCItemActions = model => {
           serviceRefs,
           isMachineInKebabPopupState,
           verificationStatus,
+          showVerificationStatusBanner,
           ...data
         } = context;
         data.credentialRegistry = MIMOTO_BASE_URL;
