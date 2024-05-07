@@ -165,7 +165,6 @@ public class NoNetworkIosTest extends IosBaseTest {
         settingsPage.clickOnLanguage();
 
         assertTrue(settingsPage.verifyLanguagesInLanguageFilter("IOS"), "Verify if all languages are shown in language filter");
-        IosUtil.disableAirplaneMode();
     }
 
     @Test
@@ -290,8 +289,6 @@ public class NoNetworkIosTest extends IosBaseTest {
 
         detailedVcViewPage.clickOnQrCrossIcon();
         assertTrue(homePage.isNameDisplayed(TestDataReader.readData("fullName")), "Verify if full name is displayed");
-
-        IosUtil.disableAirplaneMode();
     }
 
     @Test
