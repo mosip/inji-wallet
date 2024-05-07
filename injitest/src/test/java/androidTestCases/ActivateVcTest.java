@@ -224,6 +224,7 @@ public class ActivateVcTest extends AndroidBaseTest {
         otpVerification.WatingTimeForVerificationTimerComplete();
         assertTrue(otpVerification.verifyResendCodeButtonDisplayedEnabled(), "Verify if resend code is enabled");
         otpVerification.clickOnResendButton();
+        otpVerification.clickOnResendButton();
         assertTrue(otpVerification.verifyOtpVerificationTimerDisplayedAfterClickOnResend(), "verify is You can resend the code displayed again after click on resend button ");
     }
 
