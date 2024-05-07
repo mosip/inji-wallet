@@ -5,7 +5,6 @@ import {
   BannerStatus,
   BannerStatusType,
 } from './BannerNotification';
-import {UseBannerNotificationContainer} from './WalletBindingSuccessController';
 import {BackupAndRestoreBannerNotification} from './BackupAndRestoreBannerNotification';
 import {UseBannerNotification} from './BannerNotificationController';
 import {useTranslation} from 'react-i18next';
@@ -15,16 +14,15 @@ import {Theme} from './ui/styleUtils';
 export const BannerNotificationContainer: React.FC<
   BannerNotificationContainerProps
 > = ({showVerificationStatusBanner = true}) => {
-  const controller = UseBannerNotificationContainer();
-  const WalletBindingSuccess = controller.isBindingSuccess;
   const scanScreenController = useScanScreen();
   const showQuickShareSuccessBanner =
     scanScreenController.showQuickShareSuccessBanner;
 
   const bannerNotificationController = UseBannerNotification();
+  const WalletBindingSuccess = bannerNotificationController.isBindingSuccess;
   const {t} = useTranslation('BannerNotification');
   const rt = useTranslation('RequestScreen').t;
-  const verificationStatus = controller.verificationStatus;
+  const verificationStatus = bannerNotificationController.verificationStatus;
 
   return (
     <>
@@ -35,7 +33,9 @@ export const BannerNotificationContainer: React.FC<
           <BannerNotification
             type={BannerStatusType.SUCCESS}
             message={t('activated')}
-            onClosePress={controller.DISMISS}
+            onClosePress={
+              bannerNotificationController.RESET_WALLET_BINDING_SUCCESS
+            }
             key={'activatedVcPopup'}
             testId={'activatedVcPopup'}
           />
@@ -74,7 +74,7 @@ export const BannerNotificationContainer: React.FC<
         />
       )}
 
-      {verificationStatus != null && showVerificationStatusBanner && (
+      {verificationStatus !== null && showVerificationStatusBanner && (
         <BannerNotification
           type={verificationStatus.statusType}
           message={t(`VcVerificationBanner:${verificationStatus?.statusType}`, {
@@ -82,7 +82,7 @@ export const BannerNotificationContainer: React.FC<
               verificationStatus.vcNumber
             }`,
           })}
-          onClosePress={controller.RESET_VERIFICATION_STATUS}
+          onClosePress={bannerNotificationController.RESET_VERIFICATION_STATUS}
           key={'reVerificationInProgress'}
           testId={'reVerificationInProgress'}
         />
