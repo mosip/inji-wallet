@@ -418,10 +418,14 @@
     "title": "Mga Detalye ng ID",
     "inProgress": "Isinasagawa",
     "statusToolTipContent": {
-      "valid_title": "Wastong Katayuan:",
-      "valid_desciption": "Matagumpay na na-verify ang kredensyal.",
-      "pending_title": "Nakabinbing Katayuan:",
-      "pending_descirption": "Kasalukuyang nakabinbin ang pag-verify dahil sa mga teknikal na isyu."
+      "valid": {
+        "title": "Wastong Katayuan:",
+        "description": "Matagumpay na na-verify ang kredensyal."
+      },
+      "pending": {
+        "title": "Nakabinbing Katayuan:",
+        "description": "Kasalukuyang nakabinbin ang pag-verify dahil sa mga teknikal na isyu."
+      }
     }
   },
   "MainLayout": {

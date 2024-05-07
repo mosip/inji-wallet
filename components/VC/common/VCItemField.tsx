@@ -31,7 +31,7 @@ export const VCItemFieldName = ({fieldName, wellknown, testID}) => {
             <Column align="flex-start">
               <View style={{marginBottom: 20}}>
                 <Text weight="semibold">
-                  {t('statusToolTipContent.valid_title')}
+                  {t('statusToolTipContent.valid.title')}
                 </Text>
                 <Text
                   weight="regular"
@@ -39,12 +39,12 @@ export const VCItemFieldName = ({fieldName, wellknown, testID}) => {
                     Theme.Styles.tooltipContentDescription,
                     {marginTop: 3},
                   ]}>
-                  {t('statusToolTipContent.valid_desciption')}
+                  {t('statusToolTipContent.valid.description')}
                 </Text>
               </View>
               <View>
                 <Text weight="semibold">
-                  {t('statusToolTipContent.pending_title')}
+                  {t('statusToolTipContent.pending.title')}
                 </Text>
                 <Text
                   weight="regular"
@@ -52,7 +52,7 @@ export const VCItemFieldName = ({fieldName, wellknown, testID}) => {
                     Theme.Styles.tooltipContentDescription,
                     {marginTop: 3},
                   ]}>
-                  {t('statusToolTipContent.pending_descirption')}
+                  {t('statusToolTipContent.pending.description')}
                 </Text>
               </View>
             </Column>

@@ -420,10 +420,14 @@
     "title": "आईडी विवरण",
     "inProgress": "चालू",
     "statusToolTipContent": {
-      "valid_title": "वैध स्थिति:",
-      "valid_desciption": "क्रेडेंशियल सफलतापूर्वक सत्यापित किया गया है.",
-      "pending_title": "लंबित स्थिति:",
-      "pending_descirption": "तकनीकी समस्याओं के कारण सत्यापन फिलहाल लंबित है।"
+      "valid": {
+        "title": "वैध स्थिति:",
+        "description": "क्रेडेंशियल सफलतापूर्वक सत्यापित किया गया है."
+      },
+      "pending": {
+        "title": "लंबित स्थिति:",
+        "description": "तकनीकी समस्याओं के कारण सत्यापन फिलहाल लंबित है।"
+      }
     }
   },
   "MainLayout": {

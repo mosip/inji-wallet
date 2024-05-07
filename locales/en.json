@@ -411,18 +411,22 @@
     "noReceivedVcsText": "Tap on Request below to receive card"
   },
   "VcVerificationBanner": {
-      "inProgress": "We are validating your card, this may take sometime. Once verified, you’ll be able to activate your card.",
-      "success": "{{vcDetails}} is verified successfully and now available for activation.",
-      "error": "Sorry, we are unable to verify the {{vcDetails}} right now. Please try again later."
-    },
+    "inProgress": "We are validating your card, this may take sometime. Once verified, you’ll be able to activate your card.",
+    "success": "{{vcDetails}} is verified successfully and now available for activation.",
+    "error": "Sorry, we are unable to verify the {{vcDetails}} right now. Please try again later."
+  },
   "ViewVcModal": {
     "title": "ID Details",
     "inProgress": "In Progress",
     "statusToolTipContent": {
-      "valid_title": "Valid Status:",
-      "valid_desciption": "The credential has been successfully verified.",
-      "pending_title": "Pending Status:",
-      "pending_descirption": "Verification is currently pending due to technical issues."
+      "valid": {
+        "title": "Valid Status:",
+        "description": "The credential has been successfully verified."
+      },
+      "pending": {
+        "title": "Pending Status:",
+        "description": "Verification is currently pending due to technical issues."
+      }
     }
   },
   "MainLayout": {
@@ -592,9 +596,9 @@
   },
   "ScanScreen": {
     "shareWithSelfie": "Share with Selfie",
-    "shareWithSelfieQrLogin":"QR Code Login",
+    "shareWithSelfieQrLogin": "QR Code Login",
     "shareWithSelfieMessage": "To share your Verifiable Credentials, we’ll securely verify your identity using face verification. By continuing, you consent to INJI using your camera for this purpose. \n\n Your facial data will only be used for verification and will not be shared with any third parties.",
-    "shareWithSelfieMessageQrLogin":"In order to access the portal, you’ll need to share your Verifiable Credentials and verify your identity securely using face verification. By continuing, you consent to Inji using your camera for this purpose. \n\n Your facial data will only be used for verification and will not be shared. After successful verification, you can choose which details to share.",
+    "shareWithSelfieMessageQrLogin": "In order to access the portal, you’ll need to share your Verifiable Credentials and verify your identity securely using face verification. By continuing, you consent to Inji using your camera for this purpose. \n\n Your facial data will only be used for verification and will not be shared. After successful verification, you can choose which details to share.",
     "ConfirmButton": "I Understand",
     "doNotAskMessage": "Don't ask me again",
     "noShareableVcs": "No shareable cards are available.",
