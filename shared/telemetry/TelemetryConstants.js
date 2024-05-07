@@ -60,6 +60,7 @@ export const TelemetryConstants = {
     vcsAreTampered: 'VC_TAMPERED',
     updatePrivateKey: 'UPDATE_PRIVATE_KEY',
     vcVerificationFailed: 'VC_VERIFICATION_FAILED',
+    crcFailure: 'CRC_FAILURE',
   }),
 
   Screens: Object.freeze({
