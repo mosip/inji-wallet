@@ -1,6 +1,7 @@
 import 'react-native-gesture-handler';
 import 'react-native-url-polyfill/auto'; // https://stackoverflow.com/a/75787849
 import {registerRootComponent} from 'expo';
+import './globals.js';
 
 import App from './App';
 
