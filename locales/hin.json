@@ -470,6 +470,9 @@
       }
     }
   },
+  "Permissions": {
+    "enablePermission": "अनुमति सक्षम करें"
+  },
   "RequestScreen": {
     "receiveCard": "कार्ड प्राप्त करें",
     "bluetoothDenied": "कृपया ब्लूटूथ को सक्षम करें ताकि वह कार्ड का अनुरोध कर सके",

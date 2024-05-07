@@ -468,6 +468,9 @@
       }
     }
   },
+  "Permissions": {
+    "enablePermission": "ಅನುಮತಿಯನ್ನು ಸಕ್ರಿಯಗೊಳಿಸಿ"
+  },
   "RequestScreen": {
     "receiveCard": "ಕಾರ್ಡ್ ಸ್ವೀಕರಿಸಿ",
     "bluetoothDenied": "ವಿನಂತಿಸಲು ಬ್ಲೂಟೂತ್ ಅನ್ನು ಸಕ್ರಿಯಗೊಳಿಸಿಕಾರ್ಡ್",

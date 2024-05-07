@@ -472,6 +472,9 @@
       }
     }
   },
+  "Permissions": {
+    "enablePermission": "Enable Permission"
+  },
   "RequestScreen": {
     "receiveCard": "Receive Card",
     "bluetoothDenied": "Please enable Bluetooth to be able to request card",
