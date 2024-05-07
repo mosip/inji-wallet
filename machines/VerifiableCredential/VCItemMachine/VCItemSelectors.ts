@@ -2,7 +2,6 @@ import {StateFrom} from 'xstate';
 import {VCMetadata} from '../../../shared/VCMetadata';
 import {VCItemMachine} from './VCItemMachine';
 import {getMosipLogo} from '../../../components/VC/common/VCUtils';
-import {getIdType} from '../../../shared/openId4VCI/Utils';
 
 type State = StateFrom<typeof VCItemMachine>;
 
@@ -95,24 +94,24 @@ export function selectBindingAuthFailedError(state: State) {
 }
 
 export function selectAcceptingBindingOtp(state: State) {
-  return state.matches('existingState.walletBinding.acceptingBindingOTP');
+  return state.matches('vcUtilitiesState.walletBinding.acceptingBindingOTP');
 }
 
 export function selectWalletBindingInProgress(state: State) {
   return (
-    state.matches('existingState.walletBinding.requestingBindingOTP') ||
-    state.matches('existingState.walletBinding.addingWalletBindingId') ||
-    state.matches('existingState.walletBinding.addKeyPair') ||
-    state.matches('existingState.walletBinding.updatingPrivateKey')
+    state.matches('vcUtilitiesState.walletBinding.requestingBindingOTP') ||
+    state.matches('vcUtilitiesState.walletBinding.addingWalletBindingId') ||
+    state.matches('vcUtilitiesState.walletBinding.addKeyPair') ||
+    state.matches('vcUtilitiesState.walletBinding.updatingPrivateKey')
   );
 }
 
 export function selectBindingWarning(state: State) {
-  return state.matches('existingState.walletBinding.showBindingWarning');
+  return state.matches('vcUtilitiesState.walletBinding.showBindingWarning');
 }
 
 export function selectRemoveWalletWarning(state: State) {
-  return state.matches('existingState.kebabPopUp.removeWallet');
+  return state.matches('vcUtilitiesState.kebabPopUp.removeWallet');
 }
 
 export function selectIsPinned(state: State) {
@@ -124,11 +123,13 @@ export function selectOtpError(state: State) {
 }
 
 export function selectShowActivities(state: State) {
-  return state.matches('existingState.kebabPopUp.showActivities');
+  return state.matches('vcUtilitiesState.kebabPopUp.showActivities');
 }
 
 export function selectShowWalletBindingError(state: State) {
-  return state.matches('existingState.walletBinding.showingWalletBindingError');
+  return state.matches(
+    'vcUtilitiesState.walletBinding.showingWalletBindingError',
+  );
 }
 
 export function selectVc(state: State) {

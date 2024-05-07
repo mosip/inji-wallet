@@ -25,7 +25,7 @@ export const VCItemMachine = model.createMachine(
     id: machineName,
     type: 'parallel',
     states: {
-      existingState: {
+      vcUtilitiesState: {
         on: {
           REFRESH: {
             target: '.loadVc',
@@ -47,7 +47,7 @@ export const VCItemMachine = model.createMachine(
                     {
                       actions: ['setContext'],
                       cond: 'hasCredential',
-                      target: `#vc-item-machine.existingState.idle`,
+                      target: `#vc-item-machine.vcUtilitiesState.idle`,
                     },
                     {
                       actions: 'addVcToInProgressDownloads',
@@ -55,7 +55,7 @@ export const VCItemMachine = model.createMachine(
                     },
                   ],
                   TAMPERED_VC: {
-                    target: '#vc-item-machine.existingState.idle',
+                    target: '#vc-item-machine.vcUtilitiesState.idle',
                   },
                 },
               },
@@ -132,7 +132,7 @@ export const VCItemMachine = model.createMachine(
                       CREDENTIAL_DOWNLOADED: {
                         actions: 'setContext',
                         target:
-                          '#vc-item-machine.existingState.verifyingCredential',
+                          '#vc-item-machine.vcUtilitiesState.verifyingCredential',
                       },
                     },
                   },
@@ -166,10 +166,10 @@ export const VCItemMachine = model.createMachine(
                   CANCEL: [
                     {
                       cond: context => context.isMachineInKebabPopupState,
-                      target: '#vc-item-machine.existingState.kebabPopUp',
+                      target: '#vc-item-machine.vcUtilitiesState.kebabPopUp',
                     },
                     {
-                      target: '#vc-item-machine.existingState.idle',
+                      target: '#vc-item-machine.vcUtilitiesState.idle',
                     },
                   ],
                 },
@@ -201,11 +201,11 @@ export const VCItemMachine = model.createMachine(
                     {
                       cond: context => context.isMachineInKebabPopupState,
                       actions: ['unSetError'],
-                      target: '#vc-item-machine.existingState.kebabPopUp',
+                      target: '#vc-item-machine.vcUtilitiesState.kebabPopUp',
                     },
                     {
                       actions: ['unSetError'],
-                      target: '#vc-item-machine.existingState.idle',
+                      target: '#vc-item-machine.vcUtilitiesState.idle',
                     },
                   ],
                 },
@@ -220,7 +220,7 @@ export const VCItemMachine = model.createMachine(
                   DISMISS: [
                     {
                       cond: context => context.isMachineInKebabPopupState,
-                      target: '#vc-item-machine.existingState.kebabPopUp',
+                      target: '#vc-item-machine.vcUtilitiesState.kebabPopUp',
                       actions: [
                         'sendUserCancelledActivationFailedEndEvent',
                         'unSetOTP',
@@ -228,7 +228,7 @@ export const VCItemMachine = model.createMachine(
                       ],
                     },
                     {
-                      target: '#vc-item-machine.existingState.idle',
+                      target: '#vc-item-machine.vcUtilitiesState.idle',
                       actions: [
                         'sendUserCancelledActivationFailedEndEvent',
                         'unSetOTP',
@@ -248,7 +248,7 @@ export const VCItemMachine = model.createMachine(
                       src: 'requestBindingOTP',
                       onDone: {
                         target:
-                          '#vc-item-machine.existingState.walletBinding.acceptingBindingOTP',
+                          '#vc-item-machine.vcUtilitiesState.walletBinding.acceptingBindingOTP',
                         actions: ['setCommunicationDetails'],
                       },
                       onError: {
@@ -257,7 +257,7 @@ export const VCItemMachine = model.createMachine(
                           'sendWalletBindingErrorEvent',
                         ],
                         target:
-                          '#vc-item-machine.existingState.walletBinding.showingWalletBindingError',
+                          '#vc-item-machine.vcUtilitiesState.walletBinding.showingWalletBindingError',
                       },
                     },
                   },
@@ -349,11 +349,11 @@ export const VCItemMachine = model.createMachine(
                     {
                       cond: context => context.isMachineInKebabPopupState,
                       actions: 'sendWalletBindingSuccess',
-                      target: '#vc-item-machine.existingState.kebabPopUp',
+                      target: '#vc-item-machine.vcUtilitiesState.kebabPopUp',
                     },
                     {
                       actions: 'sendWalletBindingSuccess',
-                      target: '#vc-item-machine.existingState.idle',
+                      target: '#vc-item-machine.vcUtilitiesState.idle',
                     },
                   ],
                 },
@@ -365,10 +365,10 @@ export const VCItemMachine = model.createMachine(
             exit: 'resetIsMachineInKebabPopupState',
             on: {
               DISMISS: {
-                target: '#vc-item-machine.existingState.idle',
+                target: '#vc-item-machine.vcUtilitiesState.idle',
               },
               ADD_WALLET_BINDING_ID: {
-                target: '#vc-item-machine.existingState.walletBinding',
+                target: '#vc-item-machine.vcUtilitiesState.walletBinding',
               },
               PIN_CARD: {
                 target: '.pinCard',
@@ -376,16 +376,16 @@ export const VCItemMachine = model.createMachine(
               },
               SHOW_ACTIVITY: {
                 target:
-                  '#vc-item-machine.existingState.kebabPopUp.showActivities',
+                  '#vc-item-machine.vcUtilitiesState.kebabPopUp.showActivities',
               },
               REMOVE: {
                 actions: 'setVcKey',
                 target:
-                  '#vc-item-machine.existingState.kebabPopUp.removeWallet',
+                  '#vc-item-machine.vcUtilitiesState.kebabPopUp.removeWallet',
               },
               CLOSE_VC_MODAL: {
                 actions: ['closeViewVcModal'],
-                target: '#vc-item-machine.existingState.idle',
+                target: '#vc-item-machine.vcUtilitiesState.idle',
               },
             },
             initial: 'idle',
@@ -394,13 +394,13 @@ export const VCItemMachine = model.createMachine(
               pinCard: {
                 entry: 'sendVcUpdated',
                 always: {
-                  target: '#vc-item-machine.existingState.idle',
+                  target: '#vc-item-machine.vcUtilitiesState.idle',
                 },
               },
               showActivities: {
                 entry: 'resetIsMachineInKebabPopupState',
                 on: {
-                  DISMISS: '#vc-item-machine.existingState.idle',
+                  DISMISS: '#vc-item-machine.vcUtilitiesState.idle',
                 },
               },
               removeWallet: {
@@ -410,7 +410,7 @@ export const VCItemMachine = model.createMachine(
                     target: 'removingVc',
                   },
                   CANCEL: {
-                    target: '#vc-item-machine.existingState.idle',
+                    target: '#vc-item-machine.vcUtilitiesState.idle',
                   },
                 },
               },
@@ -438,11 +438,11 @@ export const VCItemMachine = model.createMachine(
                         'refreshAllVcs',
                         'logRemovedVc',
                       ],
-                      target: '#vc-item-machine.existingState.idle',
+                      target: '#vc-item-machine.vcUtilitiesState.idle',
                     },
                     {
                       actions: ['refreshAllVcs', 'logRemovedVc'],
-                      target: '#vc-item-machine.existingState.idle',
+                      target: '#vc-item-machine.vcUtilitiesState.idle',
                     },
                   ],
                 },
@@ -478,7 +478,7 @@ export const VCItemMachine = model.createMachine(
               },
               STORE_ERROR: {
                 target:
-                  '#vc-item-machine.existingState.loadVc.loadVcFromServer.savingFailed',
+                  '#vc-item-machine.vcUtilitiesState.loadVc.loadVcFromServer.savingFailed',
               },
             },
             initial: 'idle',
@@ -491,10 +491,10 @@ export const VCItemMachine = model.createMachine(
                     {
                       cond: 'isSignedIn',
                       actions: ['sendBackupEvent'],
-                      target: '#vc-item-machine.existingState.idle',
+                      target: '#vc-item-machine.vcUtilitiesState.idle',
                     },
                     {
-                      target: '#vc-item-machine.existingState.idle',
+                      target: '#vc-item-machine.vcUtilitiesState.idle',
                     },
                   ],
                 },
@@ -516,16 +516,16 @@ export const VCItemMachine = model.createMachine(
             on: {
               DISMISS: {
                 target:
-                  '#vc-item-machine.existingState.loadVc.loadVcFromContext',
+                  '#vc-item-machine.vcUtilitiesState.loadVc.loadVcFromContext',
               },
               KEBAB_POPUP: {
                 target: 'kebabPopUp',
               },
               ADD_WALLET_BINDING_ID: {
-                target: '#vc-item-machine.existingState.walletBinding',
+                target: '#vc-item-machine.vcUtilitiesState.walletBinding',
               },
               PIN_CARD: {
-                target: '#vc-item-machine.existingState.kebabPopUp.pinCard',
+                target: '#vc-item-machine.vcUtilitiesState.kebabPopUp.pinCard',
                 actions: 'setPinCard',
               },
             },

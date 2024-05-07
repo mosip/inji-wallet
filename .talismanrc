@@ -299,4 +299,6 @@ fileignoreconfig:
     checksum: 435d345931e2d14dad99faafdf0d79fad025c049252ea94bca57dd6608d69c4c
   - filename: injitest/src/test/java/androidTestCases/VcBackupAndRestoreTest.java
     checksum: 8713672812eb3f737243c0d431574a84766559a336754bc53c9c5bfbd006707d
+  - filename: machines/VerifiableCredential/VCItemMachine/VCItemMachine.typegen.ts
+    checksum: 8ac74d2e5c6de179e460b86899eb048ad4c5bd67abc3d28c015e92335b8afe24
     version: ""
