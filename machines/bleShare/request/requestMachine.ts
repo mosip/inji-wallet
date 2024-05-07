@@ -828,11 +828,11 @@ export const requestMachine =
             ) {
               let errorMessage = event.message;
               if (event.message.includes('CRCFailureCount')) {
-                let eventMessageList = event.message.split(' ');
-                let crcFailureCount = parseInt(
+                const eventMessageList = event.message.split(' ');
+                const crcFailureCount = parseInt(
                   eventMessageList[0].split(':')[1],
                 );
-                let totalChunkCount = parseInt(
+                const totalChunkCount = parseInt(
                   eventMessageList[1].split(':')[1],
                 );
                 if (crcFailureCount > 0) {
