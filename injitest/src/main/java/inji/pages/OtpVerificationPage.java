@@ -125,6 +125,7 @@ public class OtpVerificationPage extends BasePage {
             throw new RuntimeException(e);
         }
         if(isElementEnabled(resendCodeButton,30)) {
+//            ((HidesKeyboard) driver).hideKeyboard();
             clickOnElement(resendCode);
         }
     }
