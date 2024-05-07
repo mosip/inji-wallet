@@ -145,7 +145,7 @@ public class DetailedVcViewPage extends BasePage{
     }
 
     public PleaseConfirmPopupPage clickOnActivateButtonAndroid(){
-        IosUtil.scrollToElement(driver,58,712,160,129);
+//        IosUtil.scrollToElement(driver,58,712,160,129);
         clickOnElement(activateButton);
         return new PleaseConfirmPopupPage(driver);
     }
@@ -166,17 +166,23 @@ public class DetailedVcViewPage extends BasePage{
     }
 
     public HomePage clickOnQrCrossIcon() {
+        if (isElementDisplayed(qrCloseIcon)){
         clickOnElement(qrCloseIcon);
+        }
         return new HomePage(driver);
     }
 
     public HomePage clickOnCrossIcon() {
-        clickOnElement(crossIcon);
+       if(isElementDisplayed(crossIcon)) {
+            clickOnElement(crossIcon);
+        }
         return new HomePage(driver);
     }
 
     public void clickOnQrCodeButton() {
-        clickOnElement(detailedVcViewPageQr);
+        if(isElementDisplayed(detailedVcViewPageQr)) {
+            clickOnElement(detailedVcViewPageQr);
+        }
         new PleaseConfirmPopupPage(driver);
     }
 
@@ -197,9 +203,7 @@ public class DetailedVcViewPage extends BasePage{
     }
 
     public void clickOnMoreOptionsInDetails() {
-        if(retrieIsElementVisible(moreOptionsButton)) {
             clickOnElement(moreOptionsButton);
-        }
     }
 
 }

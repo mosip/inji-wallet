@@ -33,6 +33,10 @@ public class GenerateUinOrVidPage extends BasePage {
         return this.isElementDisplayed(retrieveUinVidText);
     }
 
+    public String getRetrieveUinVidText() {
+        return this.getTextFromLocator(retrieveUinVidText);
+    }
+
     public GenerateUinOrVidPage enterApplicationID(String applicationId) {
         sendKeysToTextBox(applicationIdTextBox, applicationId);
         return this;

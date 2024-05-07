@@ -60,7 +60,11 @@ public class SharePage extends BasePage {
     @iOSXCUITFindBy(accessibility = "cameraAccessDisabled")
     private WebElement cameraAccessDisabledPopup;
 
+    @AndroidFindBy(xpath = "//*[@resource-id=\"com.android.permissioncontroller:id/permission_allow_one_time_button\"]")
+    private WebElement locationAccessPopup;
 
+    @AndroidFindBy(xpath = "//*[@resource-id=\"com.android.permissioncontroller:id/permission_allow_one_time_button\"]")
+    private WebElement gallaryAccessPopup;
 
     @AndroidFindBy(xpath = "//android.widget.TextView[@resource-id=\"close\"]")
     private WebElement closePopupButton;
@@ -154,6 +158,16 @@ public class SharePage extends BasePage {
     }
     public void clickOnPopupCloseButton(){
          clickOnElement(closePopupButton);
+    }
+
+    public void clickOnAllowLocationPopupButton(){
+        if(isElementDisplayed(locationAccessPopup))
+        clickOnElement(locationAccessPopup);
+    }
+
+    public void clickOnAllowGallaryAccessButton(){
+        if(isElementDisplayed(gallaryAccessPopup))
+        clickOnElement(gallaryAccessPopup);
     }
 
 }
