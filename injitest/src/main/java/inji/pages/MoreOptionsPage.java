@@ -66,7 +66,7 @@ public class MoreOptionsPage extends BasePage {
     }
 
     public HistoryPage clickOnViewActivityLog() {
-        IosUtil.scrollToElement(driver,100,800,100,200);
+        IosUtil.scrollToElement(driver, 171, 2149, 625, 1944);
         clickOnElement(viewActivityLogButton);
         return new HistoryPage(driver);
     }
