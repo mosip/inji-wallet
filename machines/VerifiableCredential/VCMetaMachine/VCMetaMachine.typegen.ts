@@ -1,3 +1,5 @@
+// This file was automatically generated. Edits will be overwritten
+
 export interface Typegen0 {
   '@@xstate/typegen': true;
   internalEvents: {
@@ -23,6 +25,7 @@ export interface Typegen0 {
       | 'removeDownloadingFailedVcsFromMyVcs'
       | 'removeVcFromInProgressDownlods'
       | 'removeVcFromMyVcsMetadata'
+      | 'resetDownloadCreadentialsFailed'
       | 'resetDownloadFailedVcs'
       | 'resetInProgressVcsDownloaded'
       | 'resetTamperedVcs'
@@ -30,6 +33,7 @@ export interface Typegen0 {
       | 'resetVerificationStatus'
       | 'resetWalletBindingSuccess'
       | 'sendBackupEvent'
+      | 'setDownloadCreadentialsFailed'
       | 'setDownloadedVc'
       | 'setDownloadingFailedVcs'
       | 'setMyVcs'
@@ -62,6 +66,7 @@ export interface Typegen0 {
       | 'REMOVE_VC_FROM_IN_PROGRESS_DOWNLOADS'
       | 'VERIFY_VC_FAILED';
     removeVcFromMyVcsMetadata: 'REMOVE_VC_FROM_CONTEXT';
+    resetDownloadCreadentialsFailed: 'RESET_DOWNLOADING_FAILED';
     resetDownloadFailedVcs: 'STORE_RESPONSE';
     resetInProgressVcsDownloaded: 'RESET_IN_PROGRESS_VCS_DOWNLOADED';
     resetTamperedVcs: 'REMOVE_TAMPERED_VCS';
@@ -69,6 +74,7 @@ export interface Typegen0 {
     resetVerificationStatus: 'RESET_VERIFICATION_STATUS';
     resetWalletBindingSuccess: 'RESET_WALLET_BINDING_SUCCESS';
     sendBackupEvent: 'done.invoke.vcMeta.ready.tamperedVCs.triggerAutoBackupForTamperedVcDeletion:invocation[0]';
+    setDownloadCreadentialsFailed: 'VC_DOWNLOADING_FAILED';
     setDownloadedVc: 'VC_DOWNLOADED';
     setDownloadingFailedVcs: 'DOWNLOAD_LIMIT_EXPIRED';
     setMyVcs: 'STORE_RESPONSE';

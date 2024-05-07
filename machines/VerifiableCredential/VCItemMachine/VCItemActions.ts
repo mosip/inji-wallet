@@ -166,6 +166,14 @@ export const VCItemActions = model => {
         to: context => context.serviceRefs.vcMeta,
       },
     ),
+
+    updateVcMetadata: send(
+      (context: any) => VcMetaEvents.VC_METADATA_UPDATED(context.vcMetadata),
+      {
+        to: (context: any) => context.serviceRefs.vcMeta,
+      },
+    ),
+
     removeVcMetaDataFromStorage: send(
       (context: any) => {
         return StoreEvents.REMOVE_VC_METADATA(
@@ -236,13 +244,7 @@ export const VCItemActions = model => {
     sendBackupEvent: send(BackupEvents.DATA_BACKUP(true), {
       to: (context: any) => context.serviceRefs.backup,
     }),
-    //todo: revisit on this for naming and impl
-    sendVcUpdated: send(
-      (context: any) => VcMetaEvents.VC_METADATA_UPDATED(context.vcMetadata),
-      {
-        to: (context: any) => context.serviceRefs.vcMeta,
-      },
-    ),
+
     setErrorAsWalletBindingError: assign({
       error: () =>
         i18n.t('errors.genericError', {

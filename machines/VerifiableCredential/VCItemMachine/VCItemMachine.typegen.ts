@@ -160,7 +160,6 @@ export interface Typegen0 {
       | 'sendDownloadingFailedToVcMeta'
       | 'sendTelemetryEvents'
       | 'sendUserCancelledActivationFailedEndEvent'
-      | 'sendVcUpdated'
       | 'sendVerificationError'
       | 'sendVerificationStatusToVcMeta'
       | 'sendWalletBindingErrorEvent'
@@ -186,7 +185,8 @@ export interface Typegen0 {
       | 'storeVcInContext'
       | 'unSetBindingTransactionId'
       | 'unSetError'
-      | 'unSetOTP';
+      | 'unSetOTP'
+      | 'updateVcMetadata';
     delays: never;
     guards:
       | 'hasCredential'
@@ -271,7 +271,6 @@ export interface Typegen0 {
     sendDownloadingFailedToVcMeta: 'error.platform.downloadCredential';
     sendTelemetryEvents: 'STORE_RESPONSE';
     sendUserCancelledActivationFailedEndEvent: 'DISMISS';
-    sendVcUpdated: 'PIN_CARD' | 'STORE_RESPONSE';
     sendVerificationError: 'STORE_RESPONSE';
     sendVerificationStatusToVcMeta: 'STORE_RESPONSE';
     sendWalletBindingErrorEvent:
@@ -293,7 +292,9 @@ export interface Typegen0 {
       | 'error.platform.vc-item-machine.vcUtilitiesState.walletBinding.addingWalletBindingId:invocation[0]'
       | 'error.platform.vc-item-machine.vcUtilitiesState.walletBinding.requestingBindingOTP:invocation[0]'
       | 'error.platform.vc-item-machine.vcUtilitiesState.walletBinding.updatingPrivateKey:invocation[0]';
-    setIsVerified: 'done.invoke.vc-item-machine.verifyState.verifyingCredential:invocation[0]';
+    setIsVerified:
+      | 'done.invoke.vc-item-machine.vcUtilitiesState.verifyingCredential:invocation[0]'
+      | 'done.invoke.vc-item-machine.verifyState.verifyingCredential:invocation[0]';
     setMaxDownloadCount: 'done.invoke.vc-item-machine.vcUtilitiesState.loadVc.loadVcFromServer.loadDownloadLimitConfig:invocation[0]';
     setOTP: 'INPUT_OTP';
     setPinCard: 'PIN_CARD';
@@ -332,6 +333,7 @@ export interface Typegen0 {
     unSetOTP:
       | 'DISMISS'
       | 'done.invoke.vc-item-machine.vcUtilitiesState.walletBinding.requestingBindingOTP:invocation[0]';
+    updateVcMetadata: 'PIN_CARD' | 'STORE_RESPONSE';
   };
   eventsCausingDelays: {};
   eventsCausingGuards: {

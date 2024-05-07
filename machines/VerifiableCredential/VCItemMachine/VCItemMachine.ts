@@ -392,7 +392,7 @@ export const VCItemMachine = model.createMachine(
             states: {
               idle: {},
               pinCard: {
-                entry: 'sendVcUpdated',
+                entry: 'updateVcMetadata',
                 always: {
                   target: '#vc-item-machine.vcUtilitiesState.idle',
                 },
@@ -453,7 +453,7 @@ export const VCItemMachine = model.createMachine(
             invoke: {
               src: 'verifyCredential',
               onDone: {
-                actions: ['storeContext'],
+                actions: ['setIsVerified', 'storeContext'],
               },
               onError: [
                 {
@@ -470,6 +470,7 @@ export const VCItemMachine = model.createMachine(
               STORE_RESPONSE: {
                 actions: [
                   'storeVcInContext',
+                  'updateVcMetadata',
                   'logDownloaded',
                   'sendTelemetryEvents',
                   'removeVcFromInProgressDownloads',
@@ -586,7 +587,7 @@ export const VCItemMachine = model.createMachine(
                 actions: [
                   'setVerificationStatus',
                   'sendVerificationStatusToVcMeta',
-                  'sendVcUpdated',
+                  'updateVcMetadata',
                 ],
                 target: 'verificationCompleted',
               },
