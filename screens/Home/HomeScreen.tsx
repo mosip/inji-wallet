@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useRef} from 'react';
 import {Icon} from 'react-native-elements';
 import {Column} from '../../components/ui';
 import {Theme} from '../../components/ui/styleUtils';
@@ -8,30 +8,39 @@ import {ReceivedVcsTab} from './ReceivedVcsTab';
 import {ViewVcModal} from './ViewVcModal';
 import {useHomeScreen} from './HomeScreenController';
 import {TabRef} from './HomeScreenMachine';
-import {useTranslation} from 'react-i18next';
 import {ActorRefFrom} from 'xstate';
 import LinearGradient from 'react-native-linear-gradient';
 import {ErrorMessageOverlay} from '../../components/MessageOverlay';
-import {Pressable} from 'react-native';
+import {Pressable, View} from 'react-native';
 import testIDProps from '../../shared/commonUtil';
 import {BannerNotificationContainer} from '../../components/BannerNotificationContainer';
 import {VCItemMachine} from '../../machines/VerifiableCredential/VCItemMachine/VCItemMachine';
 import {VerifiableCredential} from '../../machines/VerifiableCredential/VCMetaMachine/vc';
+import {CopilotStep, walkthroughable, useCopilot} from 'react-native-copilot';
 
 export const HomeScreen: React.FC<HomeRouteProps> = props => {
   const controller = useHomeScreen(props);
+  const hasRendered = useRef(1);
+  const {start, copilotEvents, stop} = useCopilot();
 
   useEffect(() => {
     if (controller.IssuersService) {
       navigateToIssuers();
     }
-  }, [controller.IssuersService]);
+
+    if (controller.isInitialLaunch && hasRendered.current !== 3) {
+      start();
+      console.log('Starting the copilot walkthrough ===>>');
+      hasRendered.current += 1;
+    }
+  }, [controller.IssuersService, controller.isInitialLaunch, start]);
 
   const navigateToIssuers = () => {
     props.navigation.navigate('IssuersScreen', {
       service: controller.IssuersService,
     });
   };
+  const CopilotView = walkthroughable(View);
 
   const DownloadFABIcon: React.FC = () => {
     const plusIcon = (
@@ -84,7 +93,16 @@ export const HomeScreen: React.FC<HomeRouteProps> = props => {
           </Column>
         )}
       </Column>
-      <DownloadFABIcon />
+
+      <CopilotStep
+        name="Add Card"
+        text="Lorem Ipsum is simply dummy text of the printing and typesetting industry."
+        order={2}>
+        <CopilotView style={Theme.Styles.downloadFabIconCopilotContainer}>
+          <DownloadFABIcon />
+        </CopilotView>
+      </CopilotStep>
+
       <ErrorMessageOverlay
         translationPath={'MyVcsTab'}
         isVisible={controller.isMinimumStorageLimitReached}

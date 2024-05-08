@@ -15,6 +15,7 @@ const model = createModel(
     canUseBiometrics: false,
     selectLanguage: false,
     toggleFromSettings: false,
+    isInitialLaunch: true,
   },
   {
     events: {
@@ -28,6 +29,7 @@ const model = createModel(
       STORE_RESPONSE: (response?: unknown) => ({response}),
       SELECT: () => ({}),
       NEXT: () => ({}),
+      RESET_INITIAL_LAUNCH: () => ({}),
     },
   },
 );
@@ -47,6 +49,14 @@ export const authMachine = model.createMachine(
     },
     id: 'auth',
     initial: 'init',
+    on: {
+      RESET_INITIAL_LAUNCH: {
+        actions: [
+          'resetInitialLaunch',
+          () => console.log('resetInitialLaunch===>>'),
+        ],
+      },
+    },
     states: {
       init: {
         entry: ['requestStoredContext'],
@@ -174,6 +184,10 @@ export const authMachine = model.createMachine(
           return event.data as string;
         },
       }),
+
+      resetInitialLaunch: assign({
+        isInitialLaunch: context => false,
+      }),
     },
 
     services: {
@@ -225,6 +239,10 @@ export function selectBiometrics(state: State) {
 
 export function selectCanUseBiometrics(state: State) {
   return state?.context?.canUseBiometrics;
+}
+
+export function selectIsInitialLaunch(state: State) {
+  return state?.context?.isInitialLaunch;
 }
 
 export function selectAuthorized(state: State) {

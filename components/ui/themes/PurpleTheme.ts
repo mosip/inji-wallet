@@ -636,17 +636,21 @@ export const PurpleTheme = {
       borderBottomColor: Colors.platinumGrey,
       borderBottomWidth: 1.3,
     },
+    downloadFabIconCopilotContainer: {
+      height: 70,
+      width: 70,
+      borderRadius: 200,
+      position: 'absolute',
+      bottom: Dimensions.get('window').width * 0.1,
+      right: Dimensions.get('window').width * 0.1,
+    },
     downloadFabIconContainer: {
       height: 70,
       width: 70,
       borderRadius: 200,
-      padding: 10,
       shadowColor: '#000',
       shadowOpacity: 0.4,
       elevation: 5,
-      position: 'absolute',
-      bottom: Dimensions.get('window').width * 0.1,
-      right: Dimensions.get('window').width * 0.1,
     },
     downloadFabIconNormal: {
       borderRadius: 200,
@@ -735,6 +739,10 @@ export const PurpleTheme = {
       fontFamily: 'Inter_600SemiBold',
       marginTop: isIOS() ? 5 : 15,
     },
+    tabBarIconCopilot: {
+      height: 50,
+      width: 50,
+    },
   }),
   BannerStyles: StyleSheet.create({
     container: {
@@ -755,7 +763,7 @@ export const PurpleTheme = {
       padding: 1,
       fontFamily: 'Inter_600SemiBold',
     },
-    topBanner : {
+    topBanner: {
       marginTop: 10,
       marginBottom: 10,
     },
@@ -1536,6 +1544,11 @@ export const PurpleTheme = {
     tabBarItemStyle: {
       height: 83,
       padding: 11,
+    },
+  }),
+  CopilotTooltip: StyleSheet.create({
+    tooltipContainer: {
+      backgroundColor: Colors.White,
     },
   }),
 

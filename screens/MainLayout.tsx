@@ -3,7 +3,6 @@ import {
   BottomTabNavigationOptions,
   createBottomTabNavigator,
 } from '@react-navigation/bottom-tabs';
-import {RequestRouteProps, RootRouteProps} from '../routes';
 import {mainRoutes, share} from '../routes/main';
 import {Theme} from '../components/ui/styleUtils';
 import {useTranslation} from 'react-i18next';
@@ -13,12 +12,17 @@ import {ScanEvents} from '../machines/bleShare/scan/scanMachine';
 import testIDProps from '../shared/commonUtil';
 import {SvgImage} from '../components/ui/svg';
 import {isIOS} from '../shared/constants';
+import {
+  CopilotProvider,
+  CopilotStep,
+  walkthroughable,
+} from 'react-native-copilot';
+import {View} from 'react-native';
+import {CopilotTooltip} from '../components/CopilotTooltip';
 
 const {Navigator, Screen} = createBottomTabNavigator();
 
-export const MainLayout: React.FC<
-  RootRouteProps & RequestRouteProps
-> = props => {
+export const MainLayout: React.FC = () => {
   const {t} = useTranslation('MainLayout');
   const {appService} = useContext(GlobalContext);
   const scanService = appService.children.get('scan');
@@ -29,42 +33,64 @@ export const MainLayout: React.FC<
     ...Theme.BottomTabBarStyle,
   };
 
+  const CopilotView = walkthroughable(View);
+
   return (
-    <Navigator
-      initialRouteName={mainRoutes[0].name}
-      screenOptions={({route}) => ({
-        tabBarAccessibilityLabel: route.name,
-        ...options,
-      })}>
-      {mainRoutes.map(route => (
-        <Screen
-          key={route.name}
-          name={route.name}
-          component={route.component}
-          listeners={{
-            tabPress: e => {
-              if (route.name == share.name) {
-                scanService.send(ScanEvents.RESET());
-              }
-            },
-          }}
-          options={{
-            ...route.options,
-            title: t(route.name),
-            tabBarIcon: ({focused}) => (
-              <Column
-                {...testIDProps(route.name + 'Icon')}
-                align="center"
-                crossAlign="center"
-                style={focused ? Theme.Styles.bottomTabIconStyle : null}>
-                {SvgImage[`${route.name}`](focused)}
-              </Column>
-            ),
-            tabBarAccessibilityLabel: isIOS() ? t(route.name) : route.name,
-            tabBarTestID: route.name,
-          }}
-        />
-      ))}
-    </Navigator>
+    <CopilotProvider
+      androidStatusBarVisible
+      tooltipComponent={CopilotTooltip}
+      animated>
+      <Navigator
+        initialRouteName={mainRoutes[0].name}
+        screenOptions={({route}) => ({
+          tabBarAccessibilityLabel: route.name,
+          ...options,
+        })}>
+        {mainRoutes.map((route, index) => (
+          <Screen
+            key={route.name}
+            name={route.name}
+            component={route.component}
+            listeners={{
+              tabPress: e => {
+                if (route.name == share.name) {
+                  scanService?.send(ScanEvents.RESET());
+                }
+              },
+            }}
+            options={{
+              ...route.options,
+              title: t(route.name),
+              tabBarIcon: ({focused}) => (
+                <Column
+                  {...testIDProps(route.name + 'Icon')}
+                  align="center"
+                  crossAlign="center"
+                  style={focused ? Theme.Styles.bottomTabIconStyle : null}>
+                  {route.name === 'home' ? (
+                    <View style={Theme.Styles.tabBarIconCopilot}>
+                      {SvgImage[`${route.name}`](focused)}
+                    </View>
+                  ) : (
+                    <CopilotStep
+                      text={
+                        'Lorem Ipsum is simply dummy text of the printing and typesetting industry.'
+                      }
+                      order={2 + index + 1}
+                      name={t(route.name)}>
+                      <CopilotView style={Theme.Styles.tabBarIconCopilot}>
+                        {SvgImage[`${route.name}`](focused)}
+                      </CopilotView>
+                    </CopilotStep>
+                  )}
+                </Column>
+              ),
+              tabBarAccessibilityLabel: isIOS() ? t(route.name) : route.name,
+              tabBarTestID: route.name,
+            }}
+          />
+        ))}
+      </Navigator>
+    </CopilotProvider>
   );
 };

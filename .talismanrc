@@ -247,4 +247,6 @@ fileignoreconfig:
     checksum: f7f2afe0ba50449a8cf2b7eef87b18082ab1cb0db287e198a709082046e5cb08
   - filename: machines/VerifiableCredential/VCMetaMachine/VCMetaSelectors.ts
     checksum: 648bf8c8cef0477f31b2a3f2b916a530cb55cf961dafa7c48992d70d7eb2b821
+  - filename: screens/MainLayout.tsx
+    checksum: f0acd97b97a28ee939e3f16c3201cc7be861721c049c1482afbc3a541480ae6f       
     version: ""

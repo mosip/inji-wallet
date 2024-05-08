@@ -2,19 +2,17 @@ import {getFocusedRouteNameFromRoute} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import React, {useState} from 'react';
 import {useTranslation} from 'react-i18next';
-import {Icon} from 'react-native-elements';
 import {Row, Text} from '../components/ui';
 import {Header} from '../components/ui/Header';
 import {Theme} from '../components/ui/styleUtils';
 import {RootRouteProps} from '../routes';
 import {HomeScreen} from './Home/HomeScreen';
 import {IssuersScreen} from './Issuers/IssuersScreen';
-import {SettingScreen} from './Settings/SettingScreen';
-import testIDProps from '../shared/commonUtil';
 import {SvgImage} from '../components/ui/svg';
 import {HelpScreen} from '../components/HelpScreen';
 import {I18nManager, View} from 'react-native';
 import {isIOS} from '../shared/constants';
+import {CopilotStep, walkthroughable} from 'react-native-copilot';
 
 export const HomeScreenLayout: React.FC<RootRouteProps> = props => {
   const {t} = useTranslation('IssuersScreen');
@@ -44,20 +42,27 @@ export const HomeScreenLayout: React.FC<RootRouteProps> = props => {
     }
   }, [props.navigation, props.route]);
 
+  const CopilotView = walkthroughable(View);
+
   const screenOptions = (
     <HelpScreen
       source={'Inji'}
       triggerComponent={
-        <View testID="help" style={Theme.HelpScreenStyle.viewStyle}>
-          <Row crossAlign="center" style={Theme.HelpScreenStyle.rowStyle}>
-            <View testID="helpIcon" style={Theme.HelpScreenStyle.iconStyle}>
-              {SvgImage.infoIcon()}
-            </View>
-            <Text testID="helpText" style={Theme.HelpScreenStyle.labelStyle}>
-              {t('help')}
-            </Text>
-          </Row>
-        </View>
+        <CopilotStep
+          text="Lorem Ipsum is simply dummy text of the printing and typesetting industry."
+          order={1}
+          name="App Tour Guide">
+          <CopilotView testID="help" style={Theme.HelpScreenStyle.viewStyle}>
+            <Row crossAlign="center" style={Theme.HelpScreenStyle.rowStyle}>
+              <View testID="helpIcon" style={Theme.HelpScreenStyle.iconStyle}>
+                {SvgImage.infoIcon()}
+              </View>
+              <Text testID="helpText" style={Theme.HelpScreenStyle.labelStyle}>
+                {t('help')}
+              </Text>
+            </Row>
+          </CopilotView>
+        </CopilotStep>
       }
     />
   );

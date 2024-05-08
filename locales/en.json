@@ -580,9 +580,9 @@
   },
   "ScanScreen": {
     "shareWithSelfie": "Share with Selfie",
-    "shareWithSelfieQrLogin":"QR Code Login",
+    "shareWithSelfieQrLogin": "QR Code Login",
     "shareWithSelfieMessage": "To share your Verifiable Credentials, we’ll securely verify your identity using face verification. By continuing, you consent to INJI using your camera for this purpose. \n\n Your facial data will only be used for verification and will not be shared with any third parties.",
-    "shareWithSelfieMessageQrLogin":"In order to access the portal, you’ll need to share your Verifiable Credentials and verify your identity securely using face verification. By continuing, you consent to Inji using your camera for this purpose. \n\n Your facial data will only be used for verification and will not be shared. After successful verification, you can choose which details to share.",
+    "shareWithSelfieMessageQrLogin": "In order to access the portal, you’ll need to share your Verifiable Credentials and verify your identity securely using face verification. By continuing, you consent to Inji using your camera for this purpose. \n\n Your facial data will only be used for verification and will not be shared. After successful verification, you can choose which details to share.",
     "ConfirmButton": "I Understand",
     "doNotAskMessage": "Don't ask me again",
     "noShareableVcs": "No shareable cards are available.",
@@ -856,6 +856,7 @@
     "tryAgain": "Try again",
     "goBack": "Go Back",
     "ignore": "Ignore",
+    "done": "Done",
     "camera": {
       "errors": {
         "missingPermission": "This app uses the camera to scan the QR code of another device."

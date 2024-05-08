@@ -631,17 +631,21 @@ export const DefaultTheme = {
       borderBottomColor: Colors.platinumGrey,
       borderBottomWidth: 1.3,
     },
+    downloadFabIconCopilotContainer: {
+      height: 70,
+      width: 70,
+      borderRadius: 200,
+      position: 'absolute',
+      bottom: Dimensions.get('window').width * 0.1,
+      right: Dimensions.get('window').width * 0.1,
+    },
     downloadFabIconContainer: {
       height: 70,
       width: 70,
       borderRadius: 200,
-      padding: 10,
       shadowColor: '#000',
       shadowOpacity: 0.4,
       elevation: 5,
-      position: 'absolute',
-      bottom: Dimensions.get('window').width * 0.1,
-      right: Dimensions.get('window').width * 0.1,
     },
     downloadFabIconNormal: {
       borderRadius: 200,
@@ -731,6 +735,16 @@ export const DefaultTheme = {
       fontFamily: 'Inter_600SemiBold',
       marginTop: isIOS() ? 5 : 15,
     },
+    tabBarIconCopilot: {
+      flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center',
+      height: 100,
+      width: 70,
+      zIndex: -20,
+      overflow: 'visible',
+      marginBottom: -18,
+    },
   }),
   BannerStyles: StyleSheet.create({
     container: {
@@ -744,7 +758,7 @@ export const DefaultTheme = {
       marginVertical: 1,
       columnGap: 7,
     },
-    topBanner : {
+    topBanner: {
       marginTop: 10,
       marginBottom: 10,
     },
@@ -1535,6 +1549,15 @@ export const DefaultTheme = {
     tabBarItemStyle: {
       height: 83,
       padding: 11,
+    },
+  }),
+  CopilotTooltip: StyleSheet.create({
+    tooltipContainer: {
+      flex: 1,
+      backgroundColor: Colors.White,
+      minHeight: Dimensions.get('screen').height * 0.2,
+      minWidth: Dimensions.get('screen').width * 0.8,
+      padding: 20,
     },
   }),
 
