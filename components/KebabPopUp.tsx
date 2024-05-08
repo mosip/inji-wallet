@@ -26,7 +26,7 @@ export const KebabPopUp: React.FC<KebabPopUpProps> = props => {
           accessible={true}
           name={props.iconName}
           type={props.iconType}
-          {...(props.iconColor ? props.iconColor : Theme.Colors.helpText)}
+          color={props.iconColor}
           size={Theme.ICON_SMALL_SIZE}
         />
       )}
@@ -85,7 +85,7 @@ export interface KebabPopUpProps {
   isVisible?: boolean;
   onDismiss: () => void;
   service: ActorRefFrom<typeof VCItemMachine>;
-  iconColor?: any;
+  iconColor?: string;
   icon?: any;
   vcHasImage: boolean;
 }

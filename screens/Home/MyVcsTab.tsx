@@ -10,7 +10,10 @@ import {useTranslation} from 'react-i18next';
 import {BANNER_TYPE_SUCCESS, GET_INDIVIDUAL_ID} from '../../shared/constants';
 import {MessageOverlay} from '../../components/MessageOverlay';
 import {VcItemContainer} from '../../components/VC/VcItemContainer';
-import {BannerNotification} from '../../components/BannerNotification';
+import {
+  BannerNotification,
+  BannerStatusType,
+} from '../../components/BannerNotification';
 import {
   getErrorEventData,
   sendErrorEvent,
@@ -203,7 +206,7 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = props => {
       <Column fill style={{display: props.isVisible ? 'flex' : 'none'}}>
         {controller.isRequestSuccessful && (
           <BannerNotification
-            type={BANNER_TYPE_SUCCESS}
+            type={BannerStatusType.SUCCESS}
             message={t('downloadingYourCard')}
             onClosePress={() => {
               controller.RESET_STORE_VC_ITEM_STATUS();

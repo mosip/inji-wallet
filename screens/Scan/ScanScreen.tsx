@@ -16,8 +16,8 @@ import {BannerNotificationContainer} from '../../components/BannerNotificationCo
 import {SharingStatusModal} from './SharingStatusModal';
 import {SvgImage} from '../../components/ui/svg';
 import {LocationPermissionRational} from './LocationPermissionRational';
-import { FaceVerificationAlertOverlay } from './FaceVerificationAlertOverlay';
-import { useSendVcScreen } from './SendVcScreenController';
+import {FaceVerificationAlertOverlay} from './FaceVerificationAlertOverlay';
+import {useSendVcScreen} from './SendVcScreenController';
 
 export const ScanScreen: React.FC = () => {
   const {t} = useTranslation('ScanScreen');
@@ -39,8 +39,11 @@ export const ScanScreen: React.FC = () => {
 
   // TODO(kludge): skip running this hook on every render
   useEffect(() => {
-    if (scanScreenController.isStartPermissionCheck && !scanScreenController.isEmpty)
-    scanScreenController.START_PERMISSION_CHECK();
+    if (
+      scanScreenController.isStartPermissionCheck &&
+      !scanScreenController.isEmpty
+    )
+      scanScreenController.START_PERMISSION_CHECK();
   });
 
   useEffect(() => {
@@ -142,7 +145,10 @@ export const ScanScreen: React.FC = () => {
   function qrScannerComponent() {
     return (
       <Column crossAlign="center" margin="0 0 0 -6">
-        <QrScanner onQrFound={scanScreenController.SCAN} title={t('scanningGuide')} />
+        <QrScanner
+          onQrFound={scanScreenController.SCAN}
+          title={t('scanningGuide')}
+        />
       </Column>
     );
   }
@@ -171,7 +177,10 @@ export const ScanScreen: React.FC = () => {
         />
       );
     }
-    if (scanScreenController.isLocationDisabled || scanScreenController.isLocationDenied) {
+    if (
+      scanScreenController.isLocationDisabled ||
+      scanScreenController.isLocationDenied
+    ) {
       return allowLocationComponent();
     }
 
@@ -225,7 +234,7 @@ export const ScanScreen: React.FC = () => {
         onConfirm={sendVcScreenController.FACE_VERIFICATION_CONSENT}
         close={sendVcScreenController.DISMISS}
       />
-        <Centered
+      <Centered
         padding="24 0"
         align="space-evenly"
         backgroundColor={Theme.Colors.whiteBackgroundColor}>

@@ -87,7 +87,7 @@ export const VCCardView: React.FC<VCItemProps> = props => {
           isKebabPopUp={isKebabPopUp}
           DISMISS={DISMISS}
           KEBAB_POPUP={KEBAB_POPUP}
-          isVerified={credential !== null}
+          isVerified={props.vcMetadata.isVerified}
         />
       </Pressable>
       <ErrorMessageOverlay

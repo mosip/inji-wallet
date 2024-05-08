@@ -4,6 +4,10 @@ import {vcMetaMachine} from './VCMetaMachine';
 
 type State = StateFrom<typeof vcMetaMachine>;
 
+export function selectVerificationStatus(state: State) {
+  return state.context.verificationStatus;
+}
+
 export function selectMyVcsMetadata(state: State): VCMetadata[] {
   return state.context.myVcsMetadata;
 }

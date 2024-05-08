@@ -22,10 +22,8 @@ import {
   selectIsStartPermissionCheck,
   selectIsLocationPermissionRationale,
 } from '../../machines/bleShare/commonSelectors';
-import {
-  ScanEvents,
-} from '../../machines/bleShare/scan/scanMachine';
-import { selectIsMinimumStorageRequiredForAuditEntryLimitReached } from '../../machines/bleShare/scan/scanSelectors';
+import {ScanEvents} from '../../machines/bleShare/scan/scanMachine';
+import {selectIsMinimumStorageRequiredForAuditEntryLimitReached} from '../../machines/bleShare/scan/scanSelectors';
 import {BOTTOM_TAB_ROUTES} from '../../routes/routesConstants';
 import {MainBottomTabParamList} from '../../routes/routeTypes';
 import {useNavigation, NavigationProp} from '@react-navigation/native';

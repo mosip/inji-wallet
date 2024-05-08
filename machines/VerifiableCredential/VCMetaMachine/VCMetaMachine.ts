@@ -151,6 +151,12 @@ export const vcMetaMachine =
             RESET_VERIFY_ERROR: {
               actions: 'resetVerificationErrorMessage',
             },
+            SET_VERIFICATION_STATUS: {
+              actions: 'setVerificationStatus',
+            },
+            RESET_VERIFICATION_STATUS: {
+              actions: 'resetVerificationStatus',
+            },
           },
         },
         deletingFailedVcs: {

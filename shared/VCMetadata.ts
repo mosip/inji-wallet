@@ -14,6 +14,7 @@ export class VCMetadata {
   issuer?: string = '';
   protocol?: string = '';
   timestamp?: string = '';
+  isVerified: boolean = false;
 
   constructor({
     idType = '',
@@ -23,6 +24,7 @@ export class VCMetadata {
     issuer = '',
     protocol = '',
     timestamp = '',
+    isVerified = false,
   } = {}) {
     this.idType = idType;
     this.requestId = requestId;
@@ -31,6 +33,7 @@ export class VCMetadata {
     this.protocol = protocol;
     this.issuer = issuer;
     this.timestamp = timestamp;
+    this.isVerified = isVerified;
   }
 
   //TODO: Remove any typing and use appropriate typing
@@ -43,6 +46,7 @@ export class VCMetadata {
       protocol: vc.protocol,
       issuer: vc.issuer,
       timestamp: vc.vcMetadata ? vc.vcMetadata.timestamp : vc.timestamp,
+      isVerified: vc.isVerified,
     });
   }
 
@@ -95,6 +99,7 @@ export const getVCMetadata = (context: object) => {
       id: context.verifiableCredential?.credential.credentialSubject
         .policyNumber,
       timestamp: context.timestamp ?? '',
+      isVerified: context.isVerified ?? false,
     });
   }
   return VCMetadata.fromVC({
@@ -105,5 +110,6 @@ export const getVCMetadata = (context: object) => {
       context.verifiableCredential?.credential.credentialSubject,
     ),
     timestamp: context.timestamp ?? '',
+    isVerified: context.isVerified ?? false,
   });
 };

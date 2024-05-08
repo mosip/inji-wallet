@@ -53,11 +53,11 @@ export function selectIsScanning(state: State) {
 }
 
 export function selectIsQuickShareDone(state: State) {
-    return state.matches('loadVCS.navigatingToHome');
+  return state.matches('loadVCS.navigatingToHome');
 }
 
 export function selectShowQuickShareSuccessBanner(state: State) {
-    return state.context.showQuickShareSuccessBanner
+  return state.context.showQuickShareSuccessBanner;
 }
 export function selectIsConnecting(state: State) {
   return state.matches('connecting.inProgress');

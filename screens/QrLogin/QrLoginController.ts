@@ -1,7 +1,7 @@
 import {useSelector} from '@xstate/react';
 import {useContext, useState} from 'react';
 import {ActorRefFrom} from 'xstate';
-import { QrLoginEvents } from '../../machines/QrLogin/QrLoginMachine';
+import {QrLoginEvents} from '../../machines/QrLogin/QrLoginMachine';
 import {
   selectClientName,
   selectErrorMessage,
@@ -86,7 +86,9 @@ export function useQrLogin({service}: QrLoginProps) {
         service.send(QrLoginEvents.SELECT_VC(vcData));
       },
     FACE_VERIFICATION_CONSENT: (isDoNotAskAgainChecked: boolean) =>
-      service.send(QrLoginEvents.FACE_VERIFICATION_CONSENT(isDoNotAskAgainChecked)),
+      service.send(
+        QrLoginEvents.FACE_VERIFICATION_CONSENT(isDoNotAskAgainChecked),
+      ),
     DISMISS: () => service.send(QrLoginEvents.DISMISS()),
     SCANNING_DONE: (qrCode: string) =>
       service.send(QrLoginEvents.SCANNING_DONE(qrCode)),

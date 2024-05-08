@@ -3,14 +3,14 @@ import {View} from 'react-native';
 import {Icon} from 'react-native-elements';
 import {Theme} from './ui/styleUtils';
 
-const VerifiedIcon: React.FC = () => {
+const PendingIcon: React.FC = () => {
   return (
     <View style={Theme.Styles.verificationStatusIconContainer}>
       <View style={Theme.Styles.verificationStatusIconInner}>
         <Icon
-          testID="statusIcon"
-          name="check-circle"
-          color={Theme.Colors.VerifiedIcon}
+          name="alert-circle"
+          type="material-community"
+          color={Theme.Colors.PendingIcon}
           size={12}
         />
       </View>
@@ -18,4 +18,4 @@ const VerifiedIcon: React.FC = () => {
   );
 };
 
-export default VerifiedIcon;
+export default PendingIcon;

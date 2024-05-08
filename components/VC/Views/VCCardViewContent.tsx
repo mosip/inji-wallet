@@ -9,14 +9,15 @@ import {Theme} from '../../ui/styleUtils';
 import {CheckBox, Icon} from 'react-native-elements';
 import {SvgImage} from '../../ui/svg';
 import {VcItemContainerProfileImage} from '../../VcItemContainerProfileImage';
-import {isVCLoaded, setBackgroundColour} from '../common/VCUtils';
-import {setTextColor, VCItemFieldValue} from '../common/VCItemField';
+import {isVCLoaded, getBackgroundColour} from '../common/VCUtils';
+import {VCItemFieldValue} from '../common/VCItemField';
 import {WalletBinding} from '../../../screens/Home/MyVcs/WalletBinding';
 import {VCVerification} from '../../VCVerification';
 import {Issuers} from '../../../shared/openId4VCI/Utils';
 import {VCItemContainerFlowType} from '../../../shared/Utils';
 import {RemoveVcWarningOverlay} from '../../../screens/Home/MyVcs/RemoveVcWarningOverlay';
 import {HistoryTab} from '../../../screens/Home/MyVcs/HistoryTab';
+import {getTextColor} from '../common/VCUtils';
 
 export const VCCardViewContent: React.FC<VCItemContentProps> = props => {
   const isVCSelectable = props.selectable && (
@@ -43,7 +44,7 @@ export const VCCardViewContent: React.FC<VCItemContentProps> = props => {
       resizeMode="stretch"
       style={[
         Theme.Styles.backgroundImageContainer,
-        setBackgroundColour(props.wellknown),
+        getBackgroundColour(props.wellknown),
       ]}>
       <Column>
         <Row crossAlign="center" padding="3 0 0 3">
@@ -86,7 +87,10 @@ export const VCCardViewContent: React.FC<VCItemContentProps> = props => {
                 accessible={false}
                 style={Theme.Styles.kebabPressableContainer}>
                 <KebabPopUp
-                  iconColor={setTextColor(props.wellknown)}
+                  iconColor={getTextColor(
+                    props.wellknown,
+                    Theme.Colors.helpText,
+                  )}
                   vcMetadata={props.vcMetadata}
                   iconName="dots-three-horizontal"
                   iconType="entypo"
