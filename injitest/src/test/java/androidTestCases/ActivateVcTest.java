@@ -169,7 +169,7 @@ public class ActivateVcTest extends AndroidBaseTest {
 
         MoreOptionsPage moreOptionsPage = new MoreOptionsPage(driver);
 
-        moreOptionsPage.clickOnActivationButton();
+        moreOptionsPage.clickOnActivationPending();
         PleaseConfirmPopupPage pleaseConfirmPopupPage = new PleaseConfirmPopupPage(driver);
 
         assertTrue(pleaseConfirmPopupPage.isPleaseConfirmPopupPageLoaded(), "Verify if pop up page is displayed");
@@ -308,7 +308,6 @@ public class ActivateVcTest extends AndroidBaseTest {
 
         detailedVcViewPage.clickOnBackArrow();
         assertTrue(detailedVcViewPage.isEsignetLogoDisplayed(), "Verify if detailed Vc esignet logo is displayed");
-
     }
 
 }

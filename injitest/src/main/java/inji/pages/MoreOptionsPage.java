@@ -1,6 +1,5 @@
 package inji.pages;
 
-import inji.utils.IosUtil;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.pagefactory.AndroidFindBy;
 import io.appium.java_client.pagefactory.iOSXCUITFindBy;
@@ -12,7 +11,7 @@ public class MoreOptionsPage extends BasePage {
 //    @iOSXCUITFindBy(accessibility = "removeFromWallet")
 //    private WebElement removeFromWalletButton;
 
-    @AndroidFindBy(uiAutomator = "new UiScrollable(new UiSelector().scrollable(true).instance(0)).scrollIntoView(new UiSelector().description(\"removeFromWallet\"))")
+    @AndroidFindBy(uiAutomator = "new UiScrollable(new UiSelector().scrollable(true).instance(0)).scrollIntoView(new UiSelector().description(\"outlined-delete-icon\"))")
     @iOSXCUITFindBy(accessibility = "removeFromWallet")
     private WebElement removeFromWalletButton;
 

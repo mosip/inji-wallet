@@ -1,17 +1,14 @@
-import {
-  ActorRefFrom,
-  EventFrom
-} from 'xstate';
-import { AppServices } from '../../shared/GlobalContext';
-import { TelemetryConstants } from '../../shared/telemetry/TelemetryConstants';
+import {ActorRefFrom, EventFrom} from 'xstate';
+import {AppServices} from '../../shared/GlobalContext';
+import {TelemetryConstants} from '../../shared/telemetry/TelemetryConstants';
 import {
   getEndEventData,
   sendEndEvent,
 } from '../../shared/telemetry/TelemetryUtils';
-import { QrLoginActions } from './QrLoginActions';
-import { QrLoginmodel } from './QrLoginModel';
-import { QrLoginServices } from './QrLoginServices';
-import { QrLoginGuards } from './QrLoginGuards';
+import {QrLoginActions} from './QrLoginActions';
+import {QrLoginmodel} from './QrLoginModel';
+import {QrLoginServices} from './QrLoginServices';
+import {QrLoginGuards} from './QrLoginGuards';
 
 const model = QrLoginmodel;
 
@@ -131,15 +128,16 @@ export const qrLoginMachine =
               actions: ['storeShowFaceAuthConsent', 'setShowFaceAuthConsent'],
               target: 'faceAuth',
             },
-            DISMISS: [{
-              cond:'isSimpleShareFlow',
-              target: 'showvcList',
-            },
-            {
-              actions: 'forwardToParent',
-              target: 'waitingForData',
-            }
-          ]
+            DISMISS: [
+              {
+                cond: 'isSimpleShareFlow',
+                target: 'showvcList',
+              },
+              {
+                actions: 'forwardToParent',
+                target: 'waitingForData',
+              },
+            ],
           },
         },
         faceAuth: {
@@ -173,7 +171,8 @@ export const qrLoginMachine =
                 actions: 'forwardToParent',
                 target: 'waitingForData',
               },
-            ,],
+              ,
+            ],
             RETRY_VERIFICATION: {
               target: 'faceAuth',
             },
@@ -261,8 +260,8 @@ export const qrLoginMachine =
       },
     },
     {
-      actions:QrLoginActions(model),
-      services:QrLoginServices,
+      actions: QrLoginActions(model),
+      services: QrLoginServices,
       guards: QrLoginGuards,
     },
   );
@@ -273,5 +272,3 @@ export function createQrLoginMachine(serviceRefs: AppServices) {
     serviceRefs,
   });
 }
-
-

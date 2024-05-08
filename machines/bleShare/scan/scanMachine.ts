@@ -1,23 +1,19 @@
 /* eslint-disable sonarjs/no-duplicate-string */
-import {
-  EventFrom,
-  send,
-  StateFrom
-} from 'xstate';
-import { AppServices } from '../../../shared/GlobalContext';
-import { TelemetryConstants } from '../../../shared/telemetry/TelemetryConstants';
+import {EventFrom, send, StateFrom} from 'xstate';
+import {AppServices} from '../../../shared/GlobalContext';
+import {TelemetryConstants} from '../../../shared/telemetry/TelemetryConstants';
 import {
   getStartEventData,
-  sendStartEvent
+  sendStartEvent,
 } from '../../../shared/telemetry/TelemetryUtils';
-import { qrLoginMachine } from '../../QrLogin/QrLoginMachine';
+import {qrLoginMachine} from '../../QrLogin/QrLoginMachine';
 // @ts-ignore
-import { ScanActions } from './scanActions';
-import { ScanGuards } from './scanGuards';
-import { ScanModel } from './scanModel';
-import { ScanServices } from './scanServices';
+import {ScanActions} from './scanActions';
+import {ScanGuards} from './scanGuards';
+import {ScanModel} from './scanModel';
+import {ScanServices} from './scanServices';
 
-const model=ScanModel;
+const model = ScanModel;
 const QR_LOGIN_REF_ID = 'QrLogin';
 export const ScanEvents = model.events;
 
@@ -49,7 +45,7 @@ export const scanMachine =
           actions: ['sendBLEConnectionErrorEvent', 'setBleError'],
         },
         RESET: {
-          actions:['removeLoggers', 'resetFlowType', 'resetSelectedVc'],
+          actions: ['removeLoggers', 'resetFlowType', 'resetSelectedVc'],
           target: '.checkStorage',
         },
         DISMISS: {
@@ -87,7 +83,7 @@ export const scanMachine =
                 target: 'restrictSharingVc',
               },
               {
-               target: 'startPermissionCheck',
+                target: 'startPermissionCheck',
               },
             ],
           },
@@ -445,7 +441,7 @@ export const scanMachine =
               },
               {
                 cond: 'isFlowTypeMiniViewShareWithSelfie',
-                target:'.checkFaceAuthConsentForMiniView' ,
+                target: '.checkFaceAuthConsentForMiniView',
               },
             ],
           },
@@ -585,15 +581,16 @@ export const scanMachine =
               always: '#scan.disconnected',
             },
             checkFaceAuthConsentForMiniView: {
-              always:[
-              {
-                cond: 'showFaceAuthConsentScreen',
-                target: 'faceVerificationConsent'
-              },
-              {
-                target: 'verifyingIdentity'
-              }
-            ],},
+              always: [
+                {
+                  cond: 'showFaceAuthConsentScreen',
+                  target: 'faceVerificationConsent',
+                },
+                {
+                  target: 'verifyingIdentity',
+                },
+              ],
+            },
             faceVerificationConsent: {
               on: {
                 FACE_VERIFICATION_CONSENT: {
@@ -603,14 +600,14 @@ export const scanMachine =
                   ],
                   target: 'verifyingIdentity',
                 },
-                DISMISS:[
+                DISMISS: [
                   {
                     cond: 'isFlowTypeMiniViewShareWithSelfie',
-                    target: '#scan.checkFaceAuthConsent', 
+                    target: '#scan.checkFaceAuthConsent',
                   },
                   {
                     target: '#scan.reviewing.selectingVc',
-                  }
+                  },
                 ],
               },
             },
@@ -759,7 +756,7 @@ export const scanMachine =
       },
     },
     {
-      actions: ScanActions(model,QR_LOGIN_REF_ID),
+      actions: ScanActions(model, QR_LOGIN_REF_ID),
 
       services: ScanServices(model),
 
@@ -770,8 +767,6 @@ export const scanMachine =
         SHARING_TIMEOUT: 15 * 1000,
       },
     },
-    
-    
   );
 
 type State = StateFrom<typeof scanMachine>;
@@ -782,4 +777,3 @@ export function createScanMachine(serviceRefs: AppServices) {
     serviceRefs,
   });
 }
-

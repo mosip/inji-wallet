@@ -15,7 +15,10 @@ import {
 import {
   BOTTOM_SECTION_FIELDS_WITH_DETAILED_ADDRESS_FIELDS,
   DETAIL_VIEW_ADD_ON_FIELDS,
+  getCredentialDefinition,
 } from '../../components/VC/common/VCUtils';
+import {getVerifiableCredential} from '../../machines/VerifiableCredential/VCItemMachine/VCItemSelectors';
+import {vcVerificationBannerDetails} from '../../components/BannerNotificationContainer';
 
 export const Protocols = {
   OpenId4VCI: 'OpenId4VCI',
@@ -41,11 +44,26 @@ export function getIdType(issuer: string | undefined): string {
   return 'insuranceCard';
 }
 
+export function getVcVerificationDetails(
+  statusType,
+  vcMetadata,
+  verifiableCredential,
+): vcVerificationBannerDetails {
+  return {
+    statusType: statusType,
+    vcType: getIDType(
+      getVerifiableCredential(vcMetadata, verifiableCredential),
+    ),
+    vcNumber: getVerifiableCredential(vcMetadata, verifiableCredential)
+      .credentialSubject[`${vcMetadata.idType}`],
+  };
+}
+
 export const ID_TYPE = {
-  MOSIPVerifiableCredential: i18n.t('VcDetails:nationalCard'),
-  InsuranceCredential: i18n.t('VcDetails:insuranceCard'),
-  OpenG2PBeneficiaryVerifiableCredential: i18n.t('VcDetails:beneficiaryCard'),
-  OpenG2PRegistryVerifiableCredential: i18n.t('VcDetails:socialRegistryCard'),
+  MOSIPVerifiableCredential: 'nationalCard',
+  InsuranceCredential: 'insuranceCard',
+  OpenG2PBeneficiaryVerifiableCredential: 'beneficiaryCard',
+  OpenG2PRegistryVerifiableCredential: 'socialRegistryCard',
 };
 
 export const getIDType = (verifiableCredential: VerifiableCredential) => {
@@ -199,30 +217,30 @@ export const getJWK = async publicKey => {
 export const getCredentialIssuersWellKnownConfig = async (
   issuer: string,
   wellknown: string,
-  credentialTypes: Object[],
+  vcCredentialTypes: Object[],
   defaultFields: string[],
 ) => {
-  let fields: string[] = defaultFields;
+  let fields: string[] = [];
   let response = null;
-  if (wellknown) {
+  if (issuer === Issuers.Mosip) {
+    fields = defaultFields;
+  } else if (wellknown) {
     response = await CACHED_API.fetchIssuerWellknownConfig(issuer, wellknown);
-    if (!response) {
-      fields = [];
-    } else if (response?.credentials_supported[0].order) {
-      fields = response?.credentials_supported[0].order;
-    } else {
-      const supportedCredentialTypes = credentialTypes.filter(
-        type => type !== 'VerifiableCredential',
-      );
-      const selectedCredentialType = supportedCredentialTypes[0];
-
-      response?.credentials_supported.filter(credential => {
-        if (credential.id === selectedCredentialType) {
-          fields = Object.keys(
-            credential.credential_definition.credentialSubject,
-          );
-        }
-      });
+    if (response) {
+      if (
+        Array.isArray(response.credentials_supported) &&
+        response?.credentials_supported[0].order
+      ) {
+        fields = response?.credentials_supported[0].order;
+      } else {
+        const credentialDefinition = getCredentialDefinition(
+          response,
+          vcCredentialTypes,
+        );
+        fields = credentialDefinition
+          ? Object.keys(credentialDefinition.credentialSubject)
+          : [];
+      }
     }
   }
   return {
