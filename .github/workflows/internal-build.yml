@@ -88,7 +88,7 @@ jobs:
     steps:
       - name: Set Google client id
         id: client-id
-        run: 
+        run: |
           cd .github/scripts
           ./set-google-clientid.sh "$INJI_FLAVOR"
         env:
