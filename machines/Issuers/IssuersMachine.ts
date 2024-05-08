@@ -326,19 +326,22 @@ export const IssuersMachine = model.createMachine(
           src: 'verifyCredential',
           onDone: [
             {
-              actions: ['sendSuccessEndEvent'],
+              actions: ['sendSuccessEndEvent', 'setIsVerified'],
               target: 'storing',
             },
           ],
           onError: [
             {
+              cond: 'isPendingVerificationError',
+              actions: ['resetLoadingReason', 'resetIsVerified'],
+              target: 'storing',
+            },
+            {
               actions: [
-                log('Verification Error.'),
                 'resetLoadingReason',
-                'updateVerificationErrorMessage',
                 'sendErrorEndEvent',
+                'setErrorAsVerificationError',
               ],
-              //TODO: Move to state according to the required flow when verification of VC fails
               target: 'handleVCVerificationFailure',
             },
           ],
@@ -346,11 +349,7 @@ export const IssuersMachine = model.createMachine(
       },
 
       handleVCVerificationFailure: {
-        on: {
-          RESET_VERIFY_ERROR: {
-            actions: ['resetVerificationErrorMessage'],
-          },
-        },
+        entry: 'sendVerificationError',
       },
 
       storing: {
