@@ -86,7 +86,6 @@ jobs:
     outputs:
       CLIENT_ID: ${{ steps.client-id.outputs.CLIENT_ID }}
     steps:
-      - uses: actions/checkout@v3.1.0
       - name: Set Google client id
         id: client-id
         run: 
