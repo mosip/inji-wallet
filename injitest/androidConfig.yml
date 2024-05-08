@@ -38,13 +38,19 @@ app: bs://114fb1285e1395a931b70fb713ca4cf1c4529e7e # BrowserStack Sample App
 # Entire list available here -> (https://www.browserstack.com/list-of-browsers-and-platforms/automate)
 platforms:
   - platformName: android
-    deviceName: Samsung Galaxy S22 Ultra
-    platformVersion: 12.0
-  - platformName: android
     deviceName: Google Pixel 7 Pro
     platformVersion: 13.0
   - platformName: android
     deviceName: OnePlus 9
+    platformVersion: 11.0
+  - platformName: android
+    deviceName: Xiaomi Redmi Note 11
+    platformVersion: 11.0
+  - platformName: android
+    deviceName: Samsung Galaxy S21
+    platformVersion: 12.0
+  - platformName: android
+    deviceName: Motorola Moto G71 5G
     platformVersion: 11.0
 
 # =======================
@@ -56,7 +62,7 @@ platforms:
 # Example 1 - If you have configured 3 platforms and set `parallelsPerPlatform` as 2, a total of 6 (2 * 3) parallel threads will be used on BrowserStack
 #
 # Example 2 - If you have configured 1 platform and set `parallelsPerPlatform` as 5, a total of 5 (1 * 5) parallel threads will be used on BrowserStack
-parallelsPerPlatform: 5
+parallelsPerPlatform: 1
 
 source: java:appium-intellij:v1.1.4
 
@@ -68,12 +74,12 @@ source: java:appium-intellij:v1.1.4
 # Learn more about how BrowserStack Local works here -> https://www.browserstack.com/docs/automate/selenium/local-testing-introduction
 browserstackLocal: true # <boolean> (Default false)
 
-# Options to be passed to BrowserStack local in-case of advanced configurations
-# browserStackLocalOptions:
+  # Options to be passed to BrowserStack local in-case of advanced configurations
+  # browserStackLocalOptions:
   # localIdentifier: # <string> (Default: null) Needed if you need to run multiple instances of local.
   # forceLocal: true  # <boolean> (Default: false) Set to true if you need to resolve all your traffic via BrowserStack Local tunnel.
   # Entire list of arguments available here -> https://www.browserstack.com/docs/automate/selenium/manage-incoming-connections
-  
+
 # ===================
 # Debugging features
 # ===================

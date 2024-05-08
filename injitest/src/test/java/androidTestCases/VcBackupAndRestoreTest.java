@@ -239,6 +239,7 @@ public class VcBackupAndRestoreTest extends AndroidBaseTest {
 
         assertTrue(homePage.isNameDisplayed(TestDataReader.readData("fullName")), "Verify if full name is displayed");
         assertTrue(homePage.isSecondNameDisplayed(TestDataReader.readData("fullName")), "Verify if second vc full name is displayed");
+        assertEquals(homePage.GetActivationPendingText(), "Activation pending for online login");
     }
 
 //    @Test

@@ -1,6 +1,7 @@
 package inji.pages;
 
 import inji.constants.Target;
+import inji.utils.IosUtil;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.pagefactory.AndroidFindBy;
 import io.appium.java_client.pagefactory.iOSXCUITFindBy;
@@ -26,21 +27,21 @@ public class SettingsPage extends BasePage {
     @iOSXCUITFindBy(accessibility = "languageTitle")
     private WebElement languageButton;
 
-    @iOSXCUITFindBy(accessibility = "لغة")
+    @iOSXCUITFindBy(accessibility = "Ù„ØºØ©")
     private WebElement languageButtonInArabic;
 
     @AndroidFindBy(accessibility = "fil")
     @iOSXCUITFindBy(accessibility = "fil")
     private WebElement filipinoLanguageButton;
-    
+
     @AndroidFindBy(accessibility = "hi")
     @iOSXCUITFindBy(accessibility = "hi")
     private WebElement hindiLanguageButton;
-    
+
     @AndroidFindBy(accessibility = "ta")
     @iOSXCUITFindBy(accessibility = "ta")
     private WebElement tamilLanguageButton;
-    
+
     @AndroidFindBy(accessibility = "kn")
     @iOSXCUITFindBy(accessibility = "kn")
     private WebElement kannadaLanguageButton;
@@ -83,7 +84,7 @@ public class SettingsPage extends BasePage {
     @AndroidFindBy(accessibility = "ar")
     @iOSXCUITFindBy(accessibility = "ar")
     private WebElement arabicLanguageButton;
-    
+
     @AndroidFindBy(accessibility = "arrowLeft")
     @iOSXCUITFindBy(accessibility = "arrowLeft")
     private WebElement backButton;
@@ -102,12 +103,13 @@ public class SettingsPage extends BasePage {
     public boolean isSettingPageLoaded() {
         return this.isElementDisplayed(settingsTittle);
     }
-    
+
     public boolean isSettingPageLoadedInFilipion() {
         return this.isElementDisplayed(settingsTittle);
     }
 
     public UnlockApplicationPage clickOnLogoutButton() {
+        IosUtil.scrollToElement(driver,100,800,100,200);
         clickOnElement(logoutButton);
         return new UnlockApplicationPage(driver);
     }
@@ -126,11 +128,11 @@ public class SettingsPage extends BasePage {
     public void clickOnTamilLanguage() {
         clickOnElement(tamilLanguageButton);
     }
-    
+
     public void clickOnHindiLanguage() {
         clickOnElement(hindiLanguageButton);
     }
-    
+
     public void clickOnKannadaLanguage() {
         clickOnElement(kannadaLanguageButton);
     }
@@ -138,15 +140,15 @@ public class SettingsPage extends BasePage {
     public boolean verifyFilipinoLanguage() {
         return this.isElementDisplayed(wikaButton);
     }
-    
+
     public boolean verifyTamilLanguage() {
         return this.isElementDisplayed(languageButton);
     }
-    
+
     public boolean verifyHindiLanguage() {
         return this.isElementDisplayed(languageButton);
     }
-    
+
     public boolean verifyKannadaLanguage() {
         return this.isElementDisplayed(languageButton);
     }
@@ -154,11 +156,11 @@ public class SettingsPage extends BasePage {
     public boolean verifyLanguagesInLanguageFilter(String os) {
         List<String> expectedLanguages=null;
         List<String> actualLanguages= null;
-       if(os.equals("IOS")){
-         expectedLanguages = Arrays.asList("English \uE5CA Filipino عربى हिंदी ಕನ್ನಡ தமிழ்");
-         } else if (os.equals("ANDROID")) {
-           expectedLanguages = Arrays.asList("English", "Filipino","عربى", "हिंदी", "ಕನ್ನಡ", "தமிழ்");
-       }
+        if(os.equals("IOS")){
+            expectedLanguages = Arrays.asList("English \uE5CA Filipino Ø¹Ø±Ø¨Ù‰ à¤¹à¤¿à¤‚à¤¦à¥€ à²•à²¨à³à²¨à²¡ à®¤à®®à®¿à®´à¯");
+        } else if (os.equals("ANDROID")) {
+            expectedLanguages = Arrays.asList("English", "Filipino","Ø¹Ø±Ø¨Ù‰", "à¤¹à¤¿à¤‚à¤¦à¥€", "à²•à²¨à³à²¨à²¡", "à®¤à®®à®¿à®´à¯");
+        }
         actualLanguages = languages.stream()
                 .map(WebElement::getText)
                 .collect(Collectors.toList());
@@ -211,7 +213,7 @@ public class SettingsPage extends BasePage {
         return new UnlockApplicationPage(driver);
     }
 
-    
+
     public UnlockApplicationPage clickOnArabicLanguageButton() {
         clickOnElement(arabicLanguageButton);
         return new UnlockApplicationPage(driver);

@@ -37,9 +37,21 @@ app: bs://0e29daf05319be0da00ca11b0acdd385cacaae78 # BrowserStack Sample App
 # Platforms object contains all the browser / device combinations you want to test on.
 # Entire list available here -> (https://www.browserstack.com/list-of-browsers-and-platforms/automate)
 platforms:
-    - platformName: ios
-      deviceName: iPhone 14 Pro Max
-      platformVersion: 16
+  - platformName: ios
+    deviceName: iPhone 14 Pro Max
+    platformVersion: 16
+  - platformName: ios
+    deviceName: iPhone 13 Pro
+    platformVersion: 15
+  - platformName: ios
+    deviceName: iPhone 11
+    platformVersion: 14
+  - platformName: ios
+    deviceName: iPhone 15 Pro
+    platformVersion: 17
+  - platformName: ios
+    deviceName: iPhone 12 Pro Max
+    platformVersion: 14
 
 # =======================
 # Parallels per Platform
@@ -50,7 +62,7 @@ platforms:
 # Example 1 - If you have configured 3 platforms and set `parallelsPerPlatform` as 2, a total of 6 (2 * 3) parallel threads will be used on BrowserStack
 #
 # Example 2 - If you have configured 1 platform and set `parallelsPerPlatform` as 5, a total of 5 (1 * 5) parallel threads will be used on BrowserStack
-parallelsPerPlatform: 5
+parallelsPerPlatform: 1
 
 source: java:appium-intellij:v1.1.4
 
@@ -65,7 +77,7 @@ browserstackLocal: true # <boolean> (Default false)
   # Options to be passed to BrowserStack local in-case of advanced configurations
   # browserStackLocalOptions:
   # localIdentifier: # <string> (Default: null) Needed if you need to run multiple instances of local.
-  # forceLocal: true  # <boolean> (Default: false) Set to true if you need to resolve all your traffic via BrowserStack Local tunnel.
+# forceLocal: true  # <boolean> (Default: false) Set to true if you need to resolve all your traffic via BrowserStack Local tunnel.
 # Entire list of arguments available here -> https://www.browserstack.com/docs/automate/selenium/manage-incoming-connections
 
 # ===================

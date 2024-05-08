@@ -1,5 +1,6 @@
 package inji.pages;
 
+import inji.utils.IosUtil;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.HidesKeyboard;
 import io.appium.java_client.pagefactory.AndroidFindBy;
@@ -172,7 +173,7 @@ public class SunbirdLoginPage extends BasePage {
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
-            sendKeysToTextBox(enterFullnameTextBox, fullname);
+        sendKeysToTextBox(enterFullnameTextBox, fullname);
     }
 
     public void enterDateOfBirthTextBox() {
@@ -256,6 +257,7 @@ public class SunbirdLoginPage extends BasePage {
     }
 
     public String getEmailIdValueForSunbirdCard() {
+        IosUtil.scrollToElement(driver, 171, 2149, 625, 1944);
         basePage.retrieToGetElement(emailIdValue);
         return this.getTextFromLocator(emailIdValue);
     }
@@ -290,12 +292,12 @@ public class SunbirdLoginPage extends BasePage {
     }
 
     public void clickOnMosipInsurance() {
-         this.clickOnElement(credentialTypeItemInsuranceCredential);
+        this.clickOnElement(credentialTypeItemInsuranceCredential);
     }
 
- public void clickOnBackArrow() {
+    public void clickOnBackArrow() {
         this.clickOnElement(arrowLeft);
- }
+    }
 
     public boolean isPolicyExpiresOnValueDisplayed() {
         return this.isElementDisplayed(policyExpiresOnValue);

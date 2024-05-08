@@ -6,7 +6,7 @@
 	</listeners>
 	<test verbose="2" preserve-order="true" name="ios">
 		<classes>
-		<class name="iosTestCases.UnlockWithPasscodeTest">
+			<class name="iosTestCases.UnlockWithPasscodeTest">
 				<methods>
 					<include name="logoutAndLoginWithPasscode" />
 					<include name="loginWithInvalidPasscode" />
