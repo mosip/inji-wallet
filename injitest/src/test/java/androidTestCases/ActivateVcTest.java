@@ -165,7 +165,12 @@ public class ActivateVcTest extends AndroidBaseTest {
 
         DetailedVcViewPage detailedVcViewPage = homePage.openDetailedVcView(TestDataReader.readData("fullName"));
         assertTrue(detailedVcViewPage.isDetailedVcViewPageLoaded(), "Verify if detailed Vc view page is displayed");
-        PleaseConfirmPopupPage pleaseConfirmPopupPage = detailedVcViewPage.clickOnActivateButtonAndroid();
+        detailedVcViewPage.clickOnMoreOptionsInDetails();
+
+        MoreOptionsPage moreOptionsPage = new MoreOptionsPage(driver);
+
+        moreOptionsPage.clickOnActivationPending();
+        PleaseConfirmPopupPage pleaseConfirmPopupPage = new PleaseConfirmPopupPage(driver);
 
         assertTrue(pleaseConfirmPopupPage.isPleaseConfirmPopupPageLoaded(), "Verify if pop up page is displayed");
         OtpVerificationPage otpVerificationPage = pleaseConfirmPopupPage.clickOnConfirmButton();
@@ -303,7 +308,6 @@ public class ActivateVcTest extends AndroidBaseTest {
 
         detailedVcViewPage.clickOnBackArrow();
         assertTrue(detailedVcViewPage.isEsignetLogoDisplayed(), "Verify if detailed Vc esignet logo is displayed");
-
     }
 
 }

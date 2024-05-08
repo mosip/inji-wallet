@@ -38,13 +38,19 @@ app: bs://114fb1285e1395a931b70fb713ca4cf1c4529e7e # BrowserStack Sample App
 # Entire list available here -> (https://www.browserstack.com/list-of-browsers-and-platforms/automate)
 platforms:
   - platformName: android
-    deviceName: Samsung Galaxy S22 Ultra
-    platformVersion: 12.0
-  - platformName: android
     deviceName: Google Pixel 7 Pro
     platformVersion: 13.0
   - platformName: android
     deviceName: OnePlus 9
+    platformVersion: 11.0
+  - platformName: android
+    deviceName: Xiaomi Redmi Note 11
+    platformVersion: 11.0
+  - platformName: android
+    deviceName: Samsung Galaxy S21
+    platformVersion: 12.0
+  - platformName: android
+    deviceName: Motorola Moto G71 5G
     platformVersion: 11.0
 
 # =======================

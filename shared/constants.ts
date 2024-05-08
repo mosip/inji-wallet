@@ -41,14 +41,10 @@ export const SETTINGS_STORE_KEY = 'settings';
 
 export const APP_ID_LENGTH = 12;
 
-export const FACE_AUTH_CONSENT = 'faceAuthConsent';
+export const SHOW_FACE_AUTH_CONSENT_SHARE_FLOW = 'showFaceAuthConsentShareFlow';
 
-//Banner Status
-export const BANNER_TYPE_SUCCESS = 'success';
-
-export const BANNER_TYPE_ERROR = 'error';
-
-export const BANNER_TYPE_INFO = 'info';
+export const SHOW_FACE_AUTH_CONSENT_QR_LOGIN_FLOW =
+  'showFaceAuthConsentQrLoginFlow';
 
 // Numbers and Upper case Alphabets without confusing characters like 0, 1, 2, I, O, Z
 // prettier-ignore

@@ -132,36 +132,36 @@ export const SettingScreen: React.FC<
           />
 
           <LanguageSetting />
-          <ListItem topDivider disabled={!controller.canUseBiometrics}>
-            <Icon
-              type={'MaterialCommunityIcons'}
-              name={'fingerprint'}
-              color={Theme.Colors.Icon}
-              size={25}
-            />
-            <ListItem.Content>
-              <ListItem.Title
-                {...testIDProps('bioUnlock')}
-                style={{paddingTop: 3}}>
-                <Text weight="semibold" color={Theme.Colors.settingsLabel}>
-                  {t('bioUnlock')}
-                </Text>
-              </ListItem.Title>
-            </ListItem.Content>
-            <Switch
-              {...testIDProps('biometricToggle')}
-              value={controller.isBiometricUnlockEnabled}
-              onValueChange={handleBiometricToggle}
-              trackColor={{
-                false: Theme.Colors.switchTrackFalse,
-                true:
-                  Platform.OS == 'ios'
-                    ? Theme.Colors.switchHead
-                    : Theme.Colors.switchTrackTrue,
-              }}
-              color={Theme.Colors.switchHead}
-            />
-          </ListItem>
+            <ListItem topDivider disabled={!controller.canUseBiometrics}>
+              <Icon
+                type={'MaterialCommunityIcons'}
+                name={'fingerprint'}
+                color={Theme.Colors.Icon}
+                size={25}
+              />
+              <ListItem.Content>
+                <ListItem.Title
+                  {...testIDProps('bioUnlock')}
+                  style={{paddingTop: 3}}>
+                  <Text weight="semibold" color={Theme.Colors.settingsLabel}>
+                    {t('bioUnlock')}
+                  </Text>
+                </ListItem.Title>
+              </ListItem.Content>
+              <Switch
+                {...testIDProps('biometricToggle')}
+                value={controller.isBiometricUnlockEnabled}
+                onValueChange={handleBiometricToggle}
+                trackColor={{
+                  false: Theme.Colors.switchTrackFalse,
+                  true:
+                    Platform.OS == 'ios'
+                      ? Theme.Colors.switchHead
+                      : Theme.Colors.switchTrackTrue,
+                }}
+                color={Theme.Colors.switchHead}
+              />
+            </ListItem>
 
           <AboutInji appId={controller.appId} />
 

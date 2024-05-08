@@ -25,18 +25,22 @@ export interface Typegen0 {
       | 'removeDownloadingFailedVcsFromMyVcs'
       | 'removeVcFromInProgressDownlods'
       | 'removeVcFromMyVcsMetadata'
+      | 'resetDownloadCreadentialsFailed'
       | 'resetDownloadFailedVcs'
       | 'resetInProgressVcsDownloaded'
       | 'resetTamperedVcs'
       | 'resetVerificationErrorMessage'
+      | 'resetVerificationStatus'
       | 'resetWalletBindingSuccess'
       | 'sendBackupEvent'
+      | 'setDownloadCreadentialsFailed'
       | 'setDownloadedVc'
       | 'setDownloadingFailedVcs'
       | 'setMyVcs'
       | 'setReceivedVcs'
       | 'setUpdatedVcMetadatas'
       | 'setVerificationErrorMessage'
+      | 'setVerificationStatus'
       | 'setWalletBindingSuccess'
       | 'updateMyVcsMetadata';
     delays: never;
@@ -62,18 +66,22 @@ export interface Typegen0 {
       | 'REMOVE_VC_FROM_IN_PROGRESS_DOWNLOADS'
       | 'VERIFY_VC_FAILED';
     removeVcFromMyVcsMetadata: 'REMOVE_VC_FROM_CONTEXT';
+    resetDownloadCreadentialsFailed: 'RESET_DOWNLOADING_FAILED';
     resetDownloadFailedVcs: 'STORE_RESPONSE';
     resetInProgressVcsDownloaded: 'RESET_IN_PROGRESS_VCS_DOWNLOADED';
     resetTamperedVcs: 'REMOVE_TAMPERED_VCS';
     resetVerificationErrorMessage: 'RESET_VERIFY_ERROR';
+    resetVerificationStatus: 'RESET_VERIFICATION_STATUS';
     resetWalletBindingSuccess: 'RESET_WALLET_BINDING_SUCCESS';
     sendBackupEvent: 'done.invoke.vcMeta.ready.tamperedVCs.triggerAutoBackupForTamperedVcDeletion:invocation[0]';
+    setDownloadCreadentialsFailed: 'VC_DOWNLOADING_FAILED';
     setDownloadedVc: 'VC_DOWNLOADED';
     setDownloadingFailedVcs: 'DOWNLOAD_LIMIT_EXPIRED';
     setMyVcs: 'STORE_RESPONSE';
     setReceivedVcs: 'STORE_RESPONSE';
     setUpdatedVcMetadatas: 'VC_METADATA_UPDATED';
     setVerificationErrorMessage: 'VERIFY_VC_FAILED';
+    setVerificationStatus: 'SET_VERIFICATION_STATUS';
     setWalletBindingSuccess: 'WALLET_BINDING_SUCCESS';
     updateMyVcsMetadata: 'VC_METADATA_UPDATED';
   };

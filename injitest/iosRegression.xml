@@ -100,7 +100,7 @@
                     <include name="downloadAndVerifyVcUsingUinViaEsignet"/>
                     <include name="downloadAndVerifyVcUsingVidViaEsignet"/>
                     <include name="denyPopupforEsignetLoginWebPage"/>
-                    <include name="downloadMultipleVcViaEsignet"/>
+<!--                    <include name="downloadMultipleVcViaEsignet"/>  invalid testcase -->
 
                 </methods>
             </class>

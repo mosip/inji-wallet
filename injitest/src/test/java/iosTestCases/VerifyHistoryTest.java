@@ -443,6 +443,10 @@ public class VerifyHistoryTest extends IosBaseTest {
 
         assertTrue(homePage.isNameDisplayed(TestDataReader.readData("fullName")), "Verify if full name is displayed");
 
+       MoreOptionsPage moreOptionsPage =  homePage.clickOnMoreOptionsButton();
 
+        moreOptionsPage.clickOnViewActivityLog();
+        HistoryPage historyPage = new HistoryPage(driver);
+        assertTrue(historyPage.verifyHistory(uin, Target.IOS),"verify if download history is displayed");
     }
 }

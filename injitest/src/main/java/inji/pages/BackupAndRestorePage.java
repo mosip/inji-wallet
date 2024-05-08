@@ -79,7 +79,6 @@ public class BackupAndRestorePage extends BasePage {
     @AndroidFindBy(accessibility = "restoreBackupSuccessPopupText")
     private WebElement restoreBackupSuccessPopUp;
 
-
     @AndroidFindBy(accessibility = "CloudBackupConsentDeniedTitle")
     private WebElement permissionDeniedHeader;
 
@@ -114,14 +113,14 @@ public class BackupAndRestorePage extends BasePage {
     @AndroidFindBy(accessibility = "restoreInfo")
     private WebElement restoreInfo;
 
-    @AndroidFindBy(accessibility = "help")
+    @AndroidFindBy(xpath = "//*[@resource-id=\"help\"]")
     private WebElement helpButton;
 
     @AndroidFindBy(xpath = "//*[@resource-id=\"com.google.android.gms:id/account_display_name\"]")
     private WebElement selectAccount;
 
-    @AndroidFindBy(accessibility = "restoreBackupSuccessPopupText")
-    private WebElement restoreBackupSuccessPopupText;
+    @AndroidFindBy(accessibility = "restoreInProgressText")
+    private WebElement restoreInProgressPopupText;
 
 
     public BackupAndRestorePage(AppiumDriver driver) {
@@ -303,7 +302,27 @@ public class BackupAndRestorePage extends BasePage {
     }
 
     public boolean isDataBackupInProgressTextDisappear() {
-        return this.isElementDisplayed(dataBackupInProgressText, 10);
+        return this.isElementDisplayed(dataBackupInProgressText, 20);
+    }
+
+    public String getDataBackupInProgressText(){
+        return getTextFromLocator(dataBackupInProgressText);
+    }
+
+    public String getDataBackupSuccessPopupText(){
+        return getTextFromLocator(dataBackupSuccessPopup);
+    }
+
+    public String getRestoreBackupSuccessPopUpText(){
+        return getTextFromLocator(restoreBackupSuccessPopUp);
+    }
+
+    public String getRestoreInProgressPopupText(){
+        return getTextFromLocator(restoreInProgressPopupText);
+    }
+
+    public boolean isRestoreInProgressPopupTextDisplayed() {
+        return this.isElementDisplayed(restoreInProgressPopupText, 20);
     }
 
 }

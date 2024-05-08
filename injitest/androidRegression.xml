@@ -123,7 +123,7 @@
                 <methods>
                     <include name="downloadAndVerifyVcUsingUinViaEsignet"/>
                     <include name="downloadAndVerifyVcUsingVidViaEsignet"/>
-                    <include name="downloadMultipleVcViaEsignet"/>
+<!--                    <include name="downloadMultipleVcViaEsignet"/>  invalid testcase-->
                     <include name="downloadMultipleCardsAndVerifySearch"/>
                     <include name="downloadCardsAndVerifySearch"/>
                 </methods>

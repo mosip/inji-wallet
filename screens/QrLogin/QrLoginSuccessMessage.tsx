@@ -6,7 +6,7 @@ import {Modal} from '../../components/ui/Modal';
 import {Centered, Button, Text, Column} from '../../components/ui';
 import {Theme} from '../../components/ui/styleUtils';
 import {useQrLogin} from './QrLoginController';
-import {QrLoginRef} from '../../machines/QrLoginMachine';
+import {QrLoginRef} from '../../machines/QrLogin/QrLoginMachine';
 import {getClientNameForCurrentLanguage} from '../../i18n';
 
 export const QrLoginSuccess: React.FC<QrLoginSuccessProps> = props => {

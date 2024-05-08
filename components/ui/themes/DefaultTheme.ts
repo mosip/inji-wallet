@@ -60,6 +60,7 @@ const Colors = {
   toolTipContent: '#4B4B4B',
   toolTipPointer: '#E0E0E0',
   Mercury: '#E6E6E6',
+  Yellow: '#E8A94F',
 };
 
 export type ElevationLevel = 0 | 1 | 2 | 3 | 4 | 5 | 6;
@@ -138,6 +139,7 @@ export const DefaultTheme = {
     toolTipPointerColor: Colors.toolTipPointer,
     urlLink: Colors.Orange,
     warningText: Colors.Red,
+    PendingIcon: Colors.Yellow,
   },
   Styles: StyleSheet.create({
     title: {
@@ -195,10 +197,10 @@ export const DefaultTheme = {
       justifyContent: 'center',
       width: '15%',
     },
-    verifiedIconContainer: {
+    verificationStatusIconContainer: {
       marginRight: 3,
     },
-    verifiedIconInner: {
+    verificationStatusIconInner: {
       backgroundColor: 'white',
       borderRadius: 10,
     },
@@ -756,7 +758,7 @@ export const DefaultTheme = {
       fontFamily: 'Inter_600SemiBold',
     },
     dismiss: {paddingLeft: 9},
-    info: {
+    inProgress: {
       backgroundColor: Colors.OrangeBrown,
     },
     success: {
@@ -1261,7 +1263,9 @@ export const DefaultTheme = {
       borderTopLeftRadius: 15,
       borderTopRightRadius: 15,
       width: Dimensions.get('screen').width,
-      marginTop: Dimensions.get('screen').height * 0.55,
+      maxHeight: 300,
+      position: 'absolute',
+      bottom: 0,
     },
     kebabHeaderStyle: {
       justifyContent: 'space-between',
@@ -1499,24 +1503,24 @@ export const DefaultTheme = {
   }),
   HelpScreenStyle: StyleSheet.create({
     viewStyle: {
-      width: 100,
-      padding: 7,
       borderRadius: 8,
       backgroundColor: Colors.LightOrange,
+      justifyContent: 'center',
+      alignItems: 'center',
+      paddingLeft: 16,
+      paddingRight: 16,
+      paddingBottom: 10,
+      paddingTop: 10,
     },
     rowStyle: {
       justifyContent: 'space-between',
       alignItems: 'center',
-      width: 45,
       display: 'flex',
     },
     iconStyle: {
-      paddingTop: 7,
-      paddingLeft: 20,
       paddingRight: 5,
     },
     labelStyle: {
-      width: 70,
       fontWeight: 'bold',
     },
   }),

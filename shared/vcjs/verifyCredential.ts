@@ -113,7 +113,7 @@ function handleResponse(
   return verificationResult;
 }
 
-const VerificationErrorType = {
+export const VerificationErrorType = {
   NO_ERROR: '',
   TECHNICAL_ERROR: 'technicalError',
   RANGE_ERROR: 'RangeError',

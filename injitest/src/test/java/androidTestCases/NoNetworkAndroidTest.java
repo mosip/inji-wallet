@@ -89,7 +89,11 @@ public class NoNetworkAndroidTest extends AndroidBaseTest {
 
         String sessionId  = driver.getSessionId().toString();
         UpdateNetworkSettings.setNoNetworkProfile(sessionId);
-        assertTrue(homePage.clickOnShareButton().acceptPermissionPopupBluetooth().isCameraOpen());
+        homePage.clickOnShareButton().acceptPermissionPopupBluetooth().clickOnAllowLocationPopupButton();
+        SharePage  SharePage = new SharePage(driver);
+        SharePage.clickOnAllowGallaryAccessButton();
+
+        assertTrue(SharePage.isCameraPageLoaded(), "Verify camera page is displayed");
     }
     @Test
     public void activateVcWithoutInternet() throws InterruptedException, IOException {
@@ -539,7 +543,11 @@ public class NoNetworkAndroidTest extends AndroidBaseTest {
         String sessionId  = driver.getSessionId().toString();
         UpdateNetworkSettings.setNoNetworkProfile(sessionId);
         
-        assertTrue(homePage.clickOnShareButton().acceptPermissionPopupBluetooth().isCameraOpen());
+        homePage.clickOnShareButton().acceptPermissionPopupBluetooth().clickOnAllowLocationPopupButton();
+        SharePage  SharePage = new SharePage(driver);
+        SharePage.clickOnAllowGallaryAccessButton();
+
+        assertTrue(SharePage.isCameraPageLoaded(), "Verify camera page is displayed");
 
     }
     

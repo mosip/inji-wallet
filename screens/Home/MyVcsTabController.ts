@@ -25,7 +25,6 @@ import {
   selectGetVcModal,
   selectIsNetworkOff,
   selectIsRequestSuccessful,
-  selectIsSavingFailedInIdle,
 } from './MyVcsTabMachine';
 import {
   selectShowHardwareKeystoreNotExistsAlert,
@@ -47,7 +46,6 @@ export function useMyVcsTab(props: HomeScreenTabProps) {
     vcMetadatas: useSelector(vcMetaService, selectMyVcsMetadata),
     isRefreshingVcs: useSelector(vcMetaService, selectIsRefreshingMyVcs),
     isRequestSuccessful: useSelector(service, selectIsRequestSuccessful),
-    isSavingFailedInIdle: useSelector(service, selectIsSavingFailedInIdle),
     walletBindingError: useSelector(service, selectWalletBindingError),
     isBindingError: useSelector(service, selectShowWalletBindingError),
     isBindingSuccess: useSelector(vcMetaService, selectWalletBindingSuccess),

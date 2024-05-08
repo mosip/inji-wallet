@@ -3,6 +3,7 @@ import {AppServices} from '../../../shared/GlobalContext';
 import {VCMetadata} from '../../../shared/VCMetadata';
 import {VC} from './vc';
 import {VcMetaEvents} from './VCMetaEvents';
+import {vcVerificationBannerDetails} from '../../../components/BannerNotificationContainer';
 
 export const VCMetamodel = createModel(
   {
@@ -17,6 +18,8 @@ export const VCMetamodel = createModel(
     tamperedVcs: [] as VCMetadata[],
     downloadingFailedVcs: [] as VCMetadata[], //VCDownloadFailed
     verificationErrorMessage: '' as string,
+    verificationStatus: null as vcVerificationBannerDetails | null,
+    DownloadingCredentialsFailed: false,
   },
   {
     events: VcMetaEvents,

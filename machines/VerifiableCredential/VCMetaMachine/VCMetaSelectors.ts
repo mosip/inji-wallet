@@ -4,6 +4,10 @@ import {vcMetaMachine} from './VCMetaMachine';
 
 type State = StateFrom<typeof vcMetaMachine>;
 
+export function selectVerificationStatus(state: State) {
+  return state.context.verificationStatus;
+}
+
 export function selectMyVcsMetadata(state: State): VCMetadata[] {
   return state.context.myVcsMetadata;
 }
@@ -72,4 +76,8 @@ export function selectMyVcs(state: State) {
 
 export function selectVerificationErrorMessage(state: State) {
   return state.context.verificationErrorMessage;
+}
+
+export function selectIsDownloadingFailed(state: State) {
+  return state.context.DownloadingCredentialsFailed;
 }

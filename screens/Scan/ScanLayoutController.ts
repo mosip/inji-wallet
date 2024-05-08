@@ -24,7 +24,7 @@ import {
   selectIsFaceIdentityVerified,
   selectCredential,
   selectVerifiableCredentialData,
-} from '../../machines/bleShare/scan/selectors';
+} from '../../machines/bleShare/scan/scanSelectors';
 import {
   selectBleError,
   selectIsAccepted,

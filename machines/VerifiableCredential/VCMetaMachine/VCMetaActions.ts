@@ -9,14 +9,28 @@ import {
 import {ActivityLogEvents} from '../../activityLog';
 import {BackupEvents} from '../../backupAndRestore/backup';
 import {StoreEvents} from '../../store';
+import {vcVerificationBannerDetails} from '../../../components/BannerNotificationContainer';
 
 export const VCMetaActions = (model: any) => {
   return {
-    sendBackupEvent: send(BackupEvents.DATA_BACKUP(true), {
-      to: context => context.serviceRefs.backup,
+    resetVerificationStatus: model.assign({
+      verificationStatus: (context: any, event: any) =>
+        event.verificationStatus === null ||
+        context.verificationStatus === event.verificationStatus
+          ? null
+          : context.verificationStatus,
     }),
 
-    getVcItemResponse: respond((context, event) => {
+    setVerificationStatus: model.assign({
+      verificationStatus: (_, event) =>
+        event.verificationStatus as vcVerificationBannerDetails,
+    }),
+
+    sendBackupEvent: send(BackupEvents.DATA_BACKUP(true), {
+      to: (context: any) => context.serviceRefs.backup,
+    }),
+
+    getVcItemResponse: respond((context: any, event: any) => {
       if (context.tamperedVcs.includes(event.vcMetadata)) {
         return {
           type: 'TAMPERED_VC',
@@ -140,10 +154,10 @@ export const VCMetaActions = (model: any) => {
     }),
 
     setUpdatedVcMetadatas: send(
-      _context => {
-        return StoreEvents.SET(MY_VCS_STORE_KEY, _context.myVcsMetadata);
+      (context: any) => {
+        return StoreEvents.SET(MY_VCS_STORE_KEY, context.myVcsMetadata);
       },
-      {to: context => context.serviceRefs.store},
+      {to: (context: any) => context.serviceRefs.store},
     ),
 
     prependToMyVcsMetadata: model.assign({
@@ -169,21 +183,21 @@ export const VCMetaActions = (model: any) => {
     }),
 
     removeDownloadFailedVcsFromStorage: send(
-      context => {
+      (context: any) => {
         return StoreEvents.REMOVE_ITEMS(
           MY_VCS_STORE_KEY,
           context.downloadingFailedVcs.map(m => m.getVcKey()),
         );
       },
       {
-        to: context => context.serviceRefs.store,
+        to: (context: any) => context.serviceRefs.store,
       },
     ),
 
     logTamperedVCsremoved: send(
       context => ActivityLogEvents.LOG_ACTIVITY(ActivityLog.logTamperedVCs()),
       {
-        to: context => context.serviceRefs.activityLog,
+        to: (context: any) => context.serviceRefs.activityLog,
       },
     ),
 
@@ -198,6 +212,13 @@ export const VCMetaActions = (model: any) => {
     }),
     resetWalletBindingSuccess: model.assign({
       walletBindingSuccess: false,
+    }),
+    setDownloadCreadentialsFailed: model.assign({
+      DownloadingCredentialsFailed: () => true,
+    }),
+
+    resetDownloadCreadentialsFailed: model.assign({
+      DownloadingCredentialsFailed: () => false,
     }),
   };
 };

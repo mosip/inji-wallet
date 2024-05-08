@@ -5,8 +5,8 @@ import {Theme} from './ui/styleUtils';
 
 const VerifiedIcon: React.FC = () => {
   return (
-    <View style={Theme.Styles.verifiedIconContainer}>
-      <View style={Theme.Styles.verifiedIconInner}>
+    <View style={Theme.Styles.verificationStatusIconContainer}>
+      <View style={Theme.Styles.verificationStatusIconInner}>
         <Icon
           testID="statusIcon"
           name="check-circle"

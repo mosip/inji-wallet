@@ -5,14 +5,40 @@ import {getMosipLogo} from '../../../components/VC/common/VCUtils';
 
 type State = StateFrom<typeof VCItemMachine>;
 
+export function selectVerificationStatus(state: State) {
+  return state.context.verificationStatus;
+}
+
+export function selectIsVerificationInProgress(state: State) {
+  return state.matches('verifyState.verifyingCredential');
+}
+
+export function selectIsVerificationCompleted(state: State) {
+  return state.matches('verifyState.verificationCompleted');
+}
+
+export function selectShowVerificationStatusBanner(state: State) {
+  return state.context.showVerificationStatusBanner;
+}
+
 export function selectVerifiableCredential(state: State) {
   return state.context.verifiableCredential;
 }
 
+export function getVerifiableCredential(
+  vcMetadata: VCMetadata,
+  verifiableCredential,
+) {
+  return VCMetadata.fromVC(vcMetadata).isFromOpenId4VCI()
+    ? verifiableCredential?.credential
+    : verifiableCredential;
+}
+
 export function selectCredential(state: State) {
-  return new VCMetadata(state.context.vcMetadata).isFromOpenId4VCI()
-    ? state.context.verifiableCredential?.credential
-    : state.context.verifiableCredential;
+  return getVerifiableCredential(
+    state.context.vcMetadata,
+    state.context.verifiableCredential,
+  );
 }
 
 export function selectVerifiableCredentialData(state: State) {
@@ -68,24 +94,24 @@ export function selectBindingAuthFailedError(state: State) {
 }
 
 export function selectAcceptingBindingOtp(state: State) {
-  return state.matches('walletBinding.acceptingBindingOTP');
+  return state.matches('vcUtilitiesState.walletBinding.acceptingBindingOTP');
 }
 
 export function selectWalletBindingInProgress(state: State) {
   return (
-    state.matches('walletBinding.requestingBindingOTP') ||
-    state.matches('walletBinding.addingWalletBindingId') ||
-    state.matches('walletBinding.addKeyPair') ||
-    state.matches('walletBinding.updatingPrivateKey')
+    state.matches('vcUtilitiesState.walletBinding.requestingBindingOTP') ||
+    state.matches('vcUtilitiesState.walletBinding.addingWalletBindingId') ||
+    state.matches('vcUtilitiesState.walletBinding.addKeyPair') ||
+    state.matches('vcUtilitiesState.walletBinding.updatingPrivateKey')
   );
 }
 
 export function selectBindingWarning(state: State) {
-  return state.matches('walletBinding.showBindingWarning');
+  return state.matches('vcUtilitiesState.walletBinding.showBindingWarning');
 }
 
 export function selectRemoveWalletWarning(state: State) {
-  return state.matches('kebabPopUp.removeWallet');
+  return state.matches('vcUtilitiesState.kebabPopUp.removeWallet');
 }
 
 export function selectIsPinned(state: State) {
@@ -97,11 +123,13 @@ export function selectOtpError(state: State) {
 }
 
 export function selectShowActivities(state: State) {
-  return state.matches('kebabPopUp.showActivities');
+  return state.matches('vcUtilitiesState.kebabPopUp.showActivities');
 }
 
 export function selectShowWalletBindingError(state: State) {
-  return state.matches('walletBinding.showingWalletBindingError');
+  return state.matches(
+    'vcUtilitiesState.walletBinding.showingWalletBindingError',
+  );
 }
 
 export function selectVc(state: State) {
