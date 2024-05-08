@@ -48,6 +48,12 @@ public class MoreOptionsPage extends BasePage {
     @iOSXCUITFindBy(accessibility = "activated")
     private WebElement activated;
 
+    @AndroidFindBy(accessibility = "enableVerification")
+    @iOSXCUITFindBy(accessibility = "enableVerification")
+    private WebElement enableVerification;
+
+
+
     public MoreOptionsPage(AppiumDriver driver) {
         super(driver);
     }
@@ -91,5 +97,9 @@ public class MoreOptionsPage extends BasePage {
 
     public boolean isVcActivatedDisplayed() {
         return this.isElementDisplayed(activatedForOnlineLoginButton);
+    }
+
+    public void clickOnActivationButton() {
+        clickOnElement(enableVerification);
     }
 }

@@ -169,7 +169,7 @@ public class ActivateVcTest extends AndroidBaseTest {
 
         MoreOptionsPage moreOptionsPage = new MoreOptionsPage(driver);
 
-        moreOptionsPage.clickOnActivationPending();
+        moreOptionsPage.clickOnActivationButton();
         PleaseConfirmPopupPage pleaseConfirmPopupPage = new PleaseConfirmPopupPage(driver);
 
         assertTrue(pleaseConfirmPopupPage.isPleaseConfirmPopupPageLoaded(), "Verify if pop up page is displayed");
