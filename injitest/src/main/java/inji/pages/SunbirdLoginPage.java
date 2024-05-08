@@ -1,5 +1,6 @@
 package inji.pages;
 
+import inji.utils.IosUtil;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.HidesKeyboard;
 import io.appium.java_client.pagefactory.AndroidFindBy;
@@ -256,6 +257,7 @@ public class SunbirdLoginPage extends BasePage {
     }
 
     public String getEmailIdValueForSunbirdCard() {
+        IosUtil.scrollToElement(driver, 171, 2149, 625, 1944);
         basePage.retrieToGetElement(emailIdValue);
         return this.getTextFromLocator(emailIdValue);
     }

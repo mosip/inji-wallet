@@ -26,9 +26,9 @@ export const Protocols = {
 };
 
 export const Issuers = {
-  Mosip: '',
+  MosipOtp: '',
   Sunbird: 'Sunbird',
-  ESignet: 'ESignet',
+  Mosip: 'Mosip',
 };
 
 /**
@@ -38,7 +38,7 @@ export const Issuers = {
  * NOTE: This might be replaced by a more standards compliant way later.
  */
 export function getIdType(issuer: string | undefined): string {
-  if (issuer === Issuers.Mosip || issuer === Issuers.ESignet) {
+  if (issuer === Issuers.MosipOtp || issuer === Issuers.Mosip) {
     return 'nationalCard';
   }
   return 'insuranceCard';
@@ -70,7 +70,7 @@ export const getIDType = (verifiableCredential: VerifiableCredential) => {
   return ID_TYPE[verifiableCredential.type[1]];
 };
 
-export const ACTIVATION_NEEDED = [Issuers.ESignet, Issuers.Mosip];
+export const ACTIVATION_NEEDED = [Issuers.Mosip, Issuers.MosipOtp];
 
 export const isActivationNeeded = (issuer: string) => {
   return ACTIVATION_NEEDED.indexOf(issuer) !== -1;
@@ -143,8 +143,6 @@ export const updateCredentialInformation = (context, credential) => {
     context.selectedIssuer['.well-known'];
   credentialWrapper.verifiableCredential.credentialTypes =
     context.selectedIssuer['credential_type'];
-  // credentialWrapper.verifiableCredential.wellKnown =
-  //   'https://esignet.collab.mosip.net/.well-known/openid-credential-issuer';
   credentialWrapper.verifiableCredential.issuerLogo =
     getDisplayObjectForCurrentLanguage(context.selectedIssuer.display)?.logo;
   credentialWrapper.vcMetadata = context.vcMetadata || {};
@@ -163,12 +161,14 @@ export const getDisplayObjectForCurrentLanguage = (
   display: [displayType],
 ): displayType => {
   const currentLanguage = i18next.language;
-  let displayType = display.filter(obj => obj.language == currentLanguage)[0];
+  const languageKey = Object.keys(display[0]).includes('language')
+    ? 'language'
+    : 'locale';
+  let displayType = display.filter(
+    obj => obj[languageKey] == currentLanguage,
+  )[0];
   if (!displayType) {
-    displayType = display.filter(obj => obj.language == 'en')[0];
-  }
-  if (!displayType) {
-    displayType = display.filter(obj => obj.locale == currentLanguage)[0];
+    displayType = display.filter(obj => obj[languageKey] === 'en')[0];
   }
   return displayType;
 };
@@ -182,6 +182,7 @@ export const constructAuthorizationConfiguration = (
     scopes: supportedScopes,
     additionalHeaders: selectedIssuer.additional_headers,
     redirectUrl: selectedIssuer.redirect_uri,
+    additionalParameters: {ui_locales: i18n.language},
     serviceConfiguration: {
       authorizationEndpoint: selectedIssuer.authorization_endpoint,
       tokenEndpoint: selectedIssuer.token_endpoint,
@@ -222,7 +223,7 @@ export const getCredentialIssuersWellKnownConfig = async (
 ) => {
   let fields: string[] = [];
   let response = null;
-  if (issuer === Issuers.Mosip) {
+  if (issuer === Issuers.MosipOtp) {
     fields = defaultFields;
   } else if (wellknown) {
     response = await CACHED_API.fetchIssuerWellknownConfig(issuer, wellknown);

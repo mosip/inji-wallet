@@ -65,7 +65,7 @@ public class TestDataReader {
             case "uin":
                 return UinGenerationUtil.getRandomUin();
             case "uin2":
-                return "5945769861";
+                return "2162743612";
             case "uin2FullName":
                 return "TEST_FULLNAMEeng";
             case "newEnv":

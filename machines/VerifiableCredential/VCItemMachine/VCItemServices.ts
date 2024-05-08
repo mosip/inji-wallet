@@ -112,7 +112,7 @@ export const VCItemServices = model => {
         {
           requestTime: String(new Date().toISOString()),
           request: {
-            individualId: getMosipIdentifier(vc.credentialSubject),
+            individualId: VCMetadata.fromVC(context.vcMetadata).id,
             otpChannels: ['EMAIL', 'PHONE'],
           },
         },
