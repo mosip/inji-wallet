@@ -101,7 +101,7 @@ export const SendVcScreen: React.FC = () => {
         <Column
           style={Theme.SendVcScreenStyles.shareOptionButtonsContainer}
           backgroundColor={Theme.Colors.whiteBackgroundColor}>
-          {[Issuers.Mosip, Issuers.ESignet].indexOf(
+          {[Issuers.MosipOtp, Issuers.Mosip].indexOf(
             controller.verifiableCredentialData.issuer,
           ) !== -1 && (
             <Button

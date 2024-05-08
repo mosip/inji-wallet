@@ -26,9 +26,9 @@ export const Protocols = {
 };
 
 export const Issuers = {
-  Mosip: '',
+  MosipOtp: '',
   Sunbird: 'Sunbird',
-  ESignet: 'ESignet',
+  Mosip: 'Mosip',
 };
 
 /**
@@ -38,7 +38,7 @@ export const Issuers = {
  * NOTE: This might be replaced by a more standards compliant way later.
  */
 export function getIdType(issuer: string | undefined): string {
-  if (issuer === Issuers.Mosip || issuer === Issuers.ESignet) {
+  if (issuer === Issuers.MosipOtp || issuer === Issuers.Mosip) {
     return 'nationalCard';
   }
   return 'insuranceCard';
@@ -70,7 +70,7 @@ export const getIDType = (verifiableCredential: VerifiableCredential) => {
   return ID_TYPE[verifiableCredential.type[1]];
 };
 
-export const ACTIVATION_NEEDED = [Issuers.ESignet, Issuers.Mosip];
+export const ACTIVATION_NEEDED = [Issuers.Mosip, Issuers.MosipOtp];
 
 export const isActivationNeeded = (issuer: string) => {
   return ACTIVATION_NEEDED.indexOf(issuer) !== -1;
@@ -223,7 +223,7 @@ export const getCredentialIssuersWellKnownConfig = async (
 ) => {
   let fields: string[] = [];
   let response = null;
-  if (issuer === Issuers.Mosip) {
+  if (issuer === Issuers.MosipOtp) {
     fields = defaultFields;
   } else if (wellknown) {
     response = await CACHED_API.fetchIssuerWellknownConfig(issuer, wellknown);
