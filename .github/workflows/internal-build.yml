@@ -89,7 +89,7 @@ jobs:
       - uses: actions/checkout@v3.1.0
       - name: Set Google client id
         id: client-id
-        run: |
+        run: 
           cd .github/scripts
           ./set-google-clientid.sh "$INJI_FLAVOR"
         env:
