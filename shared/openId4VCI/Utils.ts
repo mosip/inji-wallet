@@ -143,8 +143,6 @@ export const updateCredentialInformation = (context, credential) => {
     context.selectedIssuer['.well-known'];
   credentialWrapper.verifiableCredential.credentialTypes =
     context.selectedIssuer['credential_type'];
-  // credentialWrapper.verifiableCredential.wellKnown =
-  //   'https://esignet.collab.mosip.net/.well-known/openid-credential-issuer';
   credentialWrapper.verifiableCredential.issuerLogo =
     getDisplayObjectForCurrentLanguage(context.selectedIssuer.display)?.logo;
   credentialWrapper.vcMetadata = context.vcMetadata || {};
@@ -163,12 +161,14 @@ export const getDisplayObjectForCurrentLanguage = (
   display: [displayType],
 ): displayType => {
   const currentLanguage = i18next.language;
-  let displayType = display.filter(obj => obj.language == currentLanguage)[0];
+  const languageKey = Object.keys(display[0]).includes('language')
+    ? 'language'
+    : 'locale';
+  let displayType = display.filter(
+    obj => obj[languageKey] == currentLanguage,
+  )[0];
   if (!displayType) {
-    displayType = display.filter(obj => obj.language == 'en')[0];
-  }
-  if (!displayType) {
-    displayType = display.filter(obj => obj.locale == currentLanguage)[0];
+    displayType = display.filter(obj => obj[languageKey] === 'en')[0];
   }
   return displayType;
 };
