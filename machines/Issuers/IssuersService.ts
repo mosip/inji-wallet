@@ -17,7 +17,10 @@ import {
 } from '../../shared/cryptoutil/cryptoUtil';
 import SecureKeystore from '@mosip/secure-keystore';
 import {getVCMetadata, VCMetadata} from '../../shared/VCMetadata';
-import {verifyCredential} from '../../shared/vcjs/verifyCredential';
+import {
+  VerificationErrorType,
+  verifyCredential,
+} from '../../shared/vcjs/verifyCredential';
 import {
   getImpressionEventData,
   sendImpressionEvent,
@@ -108,7 +111,10 @@ export const IssuersService = () => {
         VCMetadata.fromVcMetadataString(getVCMetadata(context)).issuer ===
         Issuers.Sunbird
       ) {
-        return true;
+        return {
+          isVerified: true,
+          errorMessage: VerificationErrorType.NO_ERROR,
+        };
       }
       const verificationResult = await verifyCredential(
         context.verifiableCredential?.credential,

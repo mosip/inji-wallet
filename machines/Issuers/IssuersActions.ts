@@ -12,20 +12,53 @@ import {
 import {assign, send} from 'xstate';
 import {StoreEvents} from '../store';
 import {BackupEvents} from '../backupAndRestore/backup';
-import {getVCMetadata} from '../../shared/VCMetadata';
+import {getVCMetadata, VCMetadata} from '../../shared/VCMetadata';
 import {isHardwareKeystoreExists} from '../../shared/cryptoutil/cryptoUtil';
 import {ActivityLogEvents} from '../activityLog';
 import {
   getEndEventData,
+  getErrorEventData,
   getImpressionEventData,
   sendEndEvent,
+  sendErrorEvent,
   sendImpressionEvent,
 } from '../../shared/telemetry/TelemetryUtils';
 import {TelemetryConstants} from '../../shared/telemetry/TelemetryConstants';
 import {KeyPair} from 'react-native-rsa-native';
+import {getMosipIdentifier} from '../../shared/commonUtil';
+import {VerificationErrorType} from '../../shared/vcjs/verifyCredential';
 
 export const IssuersActions = (model: any) => {
   return {
+    setIsVerified: assign({
+      vcMetadata: (context: any) =>
+        new VCMetadata({
+          ...context.vcMetadata,
+          isVerified: true,
+        }),
+    }),
+    resetIsVerified: assign({
+      vcMetadata: (context: any) =>
+        new VCMetadata({
+          ...context.vcMetadata,
+          isVerified: false,
+        }),
+    }),
+    sendVerificationError: send(
+      (context: any, _event) => {
+        return {
+          type: 'VERIFY_VC_FAILED',
+          errorMessage: context.errorMessage,
+          vcMetadata: context.vcMetadata,
+        };
+      },
+      {
+        to: context => context.serviceRefs.vcMeta,
+      },
+    ),
+    setErrorAsVerificationError: assign({
+      errorMessage: () => VerificationErrorType.TECHNICAL_ERROR,
+    }),
     setIssuers: model.assign({
       issuers: (_: any, event: any) => event.data,
     }),
@@ -224,11 +257,6 @@ export const IssuersActions = (model: any) => {
         ),
       );
     },
-
-    updateVerificationErrorMessage: assign({
-      verificationErrorMessage: (context: any, event: any) =>
-        (event.data as Error).message,
-    }),
 
     resetVerificationErrorMessage: model.assign({
       verificationErrorMessage: () => '',

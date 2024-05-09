@@ -3,9 +3,12 @@ import {ErrorMessage, Issuers, OIDCErrors} from '../../shared/openId4VCI/Utils';
 import {isHardwareKeystoreExists} from '../../shared/cryptoutil/cryptoUtil';
 import {BiometricCancellationError} from '../../shared/error/BiometricCancellationError';
 import {NETWORK_REQUEST_FAILED, REQUEST_TIMEOUT} from '../../shared/constants';
+import {VerificationErrorType} from '../../shared/vcjs/verifyCredential';
 
 export const IssuersGuards = () => {
   return {
+    isPendingVerificationError: (_context, event) =>
+      (event.data as Error).message == VerificationErrorType.NETWORK_ERROR,
     isSignedIn: (_: any, event: any) =>
       (event.data as isSignedInResult).isSignedIn,
     hasKeyPair: (context: any) => !!context.publicKey,
