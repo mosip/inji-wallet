@@ -25,9 +25,9 @@ import SecureKeystore from '@mosip/secure-keystore';
 import {isHardwareKeystoreExists} from './shared/cryptoutil/cryptoUtil';
 import i18n from './i18n';
 import './shared/flipperConfig';
-import * as SplashScreen from 'expo-splash-screen';
+//import * as SplashScreen from 'expo-splash-screen';
 
-SplashScreen.preventAutoHideAsync();
+//SplashScreen.preventAutoHideAsync();
 
 // kludge: this is a bad practice but has been done temporarily to surface
 //  an occurrence of a bug with minimal residual code changes, this should
@@ -51,12 +51,12 @@ const AppLayoutWrapper: React.FC = () => {
   const controller = useApp();
   const {t} = useTranslation('WelcomeScreen');
 
-  useEffect(() => {
-    async function hideAppLoading() {
-      await SplashScreen.hideAsync();
-    }
-    hideAppLoading();
-  }, []);
+//   useEffect(() => {
+//     async function hideAppLoading() {
+//       await SplashScreen.hideAsync();
+//     }
+//     hideAppLoading();
+//   }, []);
 
   if (isDecryptError) {
     DecryptErrorAlert(controller, t);
