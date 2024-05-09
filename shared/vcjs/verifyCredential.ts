@@ -26,17 +26,11 @@ const ProofPurpose = {
 };
 
 export async function verifyCredential(
-  verifiableCredential: VerifiableCredential | Credential,
-  vcMetadata: VCMetadata,
+  verifiableCredential: Credential,
 ): Promise<VerificationResult> {
   try {
     let purpose: PublicKeyProofPurpose | AssertionProofPurpose;
-    const proof = VCMetadata.fromVC(vcMetadata).isFromOpenId4VCI()
-      ? verifiableCredential.credential.proof
-      : verifiableCredential.proof;
-    const credential = VCMetadata.fromVC(vcMetadata).isFromOpenId4VCI()
-      ? verifiableCredential.credential
-      : verifiableCredential;
+    const proof = verifiableCredential.proof;
     switch (proof.proofPurpose) {
       case ProofPurpose.PublicKey:
         purpose = new PublicKeyProofPurpose();
@@ -65,7 +59,7 @@ export async function verifyCredential(
     const vcjsOptions = {
       purpose,
       suite,
-      credential: credential,
+      credential: verifiableCredential,
       documentLoader: jsonld.documentLoaders.xhr(),
     };
 
@@ -75,6 +69,18 @@ export async function verifyCredential(
 
     //ToDo Handle Expiration error message
   } catch (error) {
+    console.error('Error occured while verifying the VC:', error);
+    const stacktrace = __DEV__ ? verifiableCredential : {};
+    sendErrorEvent(
+      getErrorEventData(
+        TelemetryConstants.FlowType.vcVerification,
+        TelemetryConstants.ErrorId.vcVerificationFailed,
+        error +
+          '-' +
+          getMosipIdentifier(verifiableCredential.credentialSubject),
+        stacktrace,
+      ),
+    );
     return {
       isVerified: false,
       errorMessage: error,

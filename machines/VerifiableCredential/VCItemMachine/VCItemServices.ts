@@ -17,6 +17,7 @@ import {CredentialDownloadResponse, request} from '../../../shared/request';
 import {WalletBindingResponse} from '../VCMetaMachine/vc';
 import {verifyCredential} from '../../../shared/vcjs/verifyCredential';
 import {getMosipIdentifier} from '../../../shared/commonUtil';
+import {getVerifiableCredential} from './VCItemSelectors';
 
 export const VCItemServices = model => {
   return {
@@ -197,8 +198,10 @@ export const VCItemServices = model => {
     verifyCredential: async context => {
       if (context.verifiableCredential) {
         const verificationResult = await verifyCredential(
-          context.verifiableCredential,
-          context.vcMetadata,
+          getVerifiableCredential(
+            context.vcMetadata,
+            context.verifiableCredential,
+          ),
         );
         if (!verificationResult.isVerified) {
           throw new Error(verificationResult.errorMessage);

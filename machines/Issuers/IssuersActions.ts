@@ -17,12 +17,16 @@ import {isHardwareKeystoreExists} from '../../shared/cryptoutil/cryptoUtil';
 import {ActivityLogEvents} from '../activityLog';
 import {
   getEndEventData,
+  getErrorEventData,
   getImpressionEventData,
   sendEndEvent,
+  sendErrorEvent,
   sendImpressionEvent,
 } from '../../shared/telemetry/TelemetryUtils';
 import {TelemetryConstants} from '../../shared/telemetry/TelemetryConstants';
 import {KeyPair} from 'react-native-rsa-native';
+import {getMosipIdentifier} from '../../shared/commonUtil';
+import {VerificationErrorType} from '../../shared/vcjs/verifyCredential';
 
 export const IssuersActions = (model: any) => {
   return {
@@ -53,7 +57,7 @@ export const IssuersActions = (model: any) => {
       },
     ),
     setErrorAsVerificationError: assign({
-      errorMessage: (_context, event) => (event.data as Error).message,
+      errorMessage: () => VerificationErrorType.TECHNICAL_ERROR,
     }),
     setIssuers: model.assign({
       issuers: (_: any, event: any) => event.data,
