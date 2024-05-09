@@ -14,7 +14,6 @@ import {
   selectIsMinimumStorageLimitReached,
 } from './HomeScreenMachine';
 import {selectVc} from '../../machines/VerifiableCredential/VCItemMachine/VCItemSelectors';
-import {selectIsInitialLaunch} from '../../machines/auth';
 
 let homeMachineService;
 function useCreateHomeMachineService() {
@@ -35,8 +34,6 @@ export function getHomeMachineService() {
 export function useHomeScreen(props: HomeRouteProps) {
   const service = useCreateHomeMachineService();
   const {appService} = useContext(GlobalContext);
-  const authService = appService.children.get('auth');
-  const isInitialLaunch = useSelector(authService, selectIsInitialLaunch);
 
   useEffect(() => {
     if (props.route.params?.activeTab != null) {
@@ -60,7 +57,6 @@ export function useHomeScreen(props: HomeRouteProps) {
     DISMISS: () => service.send(HomeScreenEvents.DISMISS()),
     GOTO_ISSUERS: () => service.send(HomeScreenEvents.GOTO_ISSUERS()),
     DISMISS_MODAL: () => service.send(HomeScreenEvents.DISMISS_MODAL()),
-    isInitialLaunch,
   };
 
   function SELECT_TAB(index: number) {

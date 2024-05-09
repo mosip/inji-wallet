@@ -1,4 +1,4 @@
-import React, {useContext} from 'react';
+import React, {useContext, useRef} from 'react';
 import {
   BottomTabNavigationOptions,
   createBottomTabNavigator,
@@ -15,15 +15,20 @@ import {isIOS} from '../shared/constants';
 import {
   CopilotProvider,
   CopilotStep,
+  useCopilot,
   walkthroughable,
 } from 'react-native-copilot';
-import {View} from 'react-native';
+import {Dimensions, View} from 'react-native';
 import {CopilotTooltip} from '../components/CopilotTooltip';
+import {useSelector} from '@xstate/react';
+import {selectIsInitialLaunch} from '../machines/auth';
 
 const {Navigator, Screen} = createBottomTabNavigator();
 
 export const MainLayout: React.FC = () => {
   const {t} = useTranslation('MainLayout');
+  const hasRendered = useRef(1);
+
   const {appService} = useContext(GlobalContext);
   const scanService = appService.children.get('scan');
 
@@ -34,11 +39,27 @@ export const MainLayout: React.FC = () => {
   };
 
   const CopilotView = walkthroughable(View);
+  const {start, stop} = useCopilot();
+
+  const authService = appService.children.get('auth');
+  const isInitialLaunch =
+    authService && useSelector(authService, selectIsInitialLaunch);
+
+  if (isInitialLaunch) {
+    start();
+    console.log('Starting the copilot walkthrough ===>>');
+    hasRendered.current += 1;
+  }
 
   return (
     <CopilotProvider
+      stopOnOutsideClick
       androidStatusBarVisible
-      tooltipComponent={CopilotTooltip}
+      tooltipComponent={stop => <CopilotTooltip onStop={() => stop()} />}
+      tooltipStyle={{
+        width: Dimensions.get('screen').width * 1,
+        height: Dimensions.get('screen').height * 0.2,
+      }}
       animated>
       <Navigator
         initialRouteName={mainRoutes[0].name}

@@ -740,8 +740,14 @@ export const PurpleTheme = {
       marginTop: isIOS() ? 5 : 15,
     },
     tabBarIconCopilot: {
-      height: 50,
-      width: 50,
+      flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center',
+      height: 100,
+      width: 70,
+      zIndex: -20,
+      overflow: 'visible',
+      marginBottom: -18,
     },
   }),
   BannerStyles: StyleSheet.create({
@@ -1548,7 +1554,9 @@ export const PurpleTheme = {
   }),
   CopilotTooltip: StyleSheet.create({
     tooltipContainer: {
+      flex: 1,
       backgroundColor: Colors.White,
+      minWidth: Dimensions.get('screen').width * 0.5,
     },
   }),
 

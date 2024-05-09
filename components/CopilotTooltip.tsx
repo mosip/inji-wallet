@@ -1,19 +1,28 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {View} from 'react-native';
 import {useCopilot, TooltipProps} from 'react-native-copilot';
 import {Theme} from './../components/ui/styleUtils';
 import {Text, Button, Row} from './../components/ui';
 import {useTranslation} from 'react-i18next';
+import {GlobalContext} from '../shared/GlobalContext';
+import {AuthEvents} from '../machines/auth';
 
-export const CopilotTooltip = ({labels}: TooltipProps) => {
-  const {goToNext, goToPrev, stop, currentStep, isFirstStep, isLastStep} =
+export const CopilotTooltip = ({labels}: TooltipProps, props) => {
+  const {goToNext, goToPrev, currentStep, isFirstStep, isLastStep} =
     useCopilot();
 
   const {t} = useTranslation();
+  const {appService} = useContext(GlobalContext);
+  const authService = appService.children.get('auth');
+  const RESET_COPILOT = () =>
+    authService?.send(AuthEvents.RESET_INITIAL_LAUNCH());
 
-  const handleStop = () => {
-    void stop();
+  const handleStop = async () => {
+    RESET_COPILOT();
+    props.onStop();
+    console.log('Stopping the copilot walkthrough ===>>');
   };
+
   const handleNext = () => {
     void goToNext();
   };
@@ -24,11 +33,13 @@ export const CopilotTooltip = ({labels}: TooltipProps) => {
 
   return (
     <View style={Theme.CopilotTooltip.tooltipContainer}>
-      <Text testID="stepTitle">{currentStep?.name}</Text>
+      <Text testID="stepTitle" weight="semibold" margin="0 0 10 0">
+        {currentStep?.name}
+      </Text>
       <Text testID="stepDescription">{currentStep?.text}</Text>
       <Row
         align="center"
-        margin="10 0 0 0"
+        margin="25 0 0 0"
         style={{justifyContent: 'flex-end'}}>
         {!isFirstStep ? (
           <Button

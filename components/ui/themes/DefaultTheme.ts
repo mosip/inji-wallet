@@ -1555,9 +1555,7 @@ export const DefaultTheme = {
     tooltipContainer: {
       flex: 1,
       backgroundColor: Colors.White,
-      minHeight: Dimensions.get('screen').height * 0.2,
-      minWidth: Dimensions.get('screen').width * 0.8,
-      padding: 20,
+      minWidth: Dimensions.get('screen').width * 0.5,
     },
   }),
 

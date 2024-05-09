@@ -1,4 +1,4 @@
-import React, {useEffect, useRef} from 'react';
+import React, {useEffect} from 'react';
 import {Icon} from 'react-native-elements';
 import {Column} from '../../components/ui';
 import {Theme} from '../../components/ui/styleUtils';
@@ -16,24 +16,16 @@ import testIDProps from '../../shared/commonUtil';
 import {BannerNotificationContainer} from '../../components/BannerNotificationContainer';
 import {VCItemMachine} from '../../machines/VerifiableCredential/VCItemMachine/VCItemMachine';
 import {VerifiableCredential} from '../../machines/VerifiableCredential/VCMetaMachine/vc';
-import {CopilotStep, walkthroughable, useCopilot} from 'react-native-copilot';
+import {CopilotStep, walkthroughable} from 'react-native-copilot';
 
 export const HomeScreen: React.FC<HomeRouteProps> = props => {
   const controller = useHomeScreen(props);
-  const hasRendered = useRef(1);
-  const {start, copilotEvents, stop} = useCopilot();
 
   useEffect(() => {
     if (controller.IssuersService) {
       navigateToIssuers();
     }
-
-    if (controller.isInitialLaunch && hasRendered.current !== 3) {
-      start();
-      console.log('Starting the copilot walkthrough ===>>');
-      hasRendered.current += 1;
-    }
-  }, [controller.IssuersService, controller.isInitialLaunch, start]);
+  }, [controller.IssuersService]);
 
   const navigateToIssuers = () => {
     props.navigation.navigate('IssuersScreen', {
