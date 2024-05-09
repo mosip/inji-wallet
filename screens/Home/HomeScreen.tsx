@@ -8,7 +8,6 @@ import {ReceivedVcsTab} from './ReceivedVcsTab';
 import {ViewVcModal} from './ViewVcModal';
 import {useHomeScreen} from './HomeScreenController';
 import {TabRef} from './HomeScreenMachine';
-import {useTranslation} from 'react-i18next';
 import {ActorRefFrom} from 'xstate';
 import LinearGradient from 'react-native-linear-gradient';
 import {ErrorMessageOverlay} from '../../components/MessageOverlay';
@@ -16,7 +15,7 @@ import {Pressable} from 'react-native';
 import testIDProps from '../../shared/commonUtil';
 import {BannerNotificationContainer} from '../../components/BannerNotificationContainer';
 import {VCItemMachine} from '../../machines/VerifiableCredential/VCItemMachine/VCItemMachine';
-import {VerifiableCredential} from '../../machines/VerifiableCredential/VCMetaMachine/vc';
+import {Credential} from '../../machines/VerifiableCredential/VCMetaMachine/vc';
 
 export const HomeScreen: React.FC<HomeRouteProps> = props => {
   const controller = useHomeScreen(props);
@@ -108,5 +107,5 @@ export interface HomeScreenTabProps {
   isVisible: boolean;
   service: TabRef;
   vcItemActor: ActorRefFrom<typeof VCItemMachine>;
-  vc: VerifiableCredential | Credential;
+  vc: Credential;
 }
