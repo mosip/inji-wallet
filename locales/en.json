@@ -413,7 +413,7 @@
   "VcVerificationBanner": {
     "inProgress": "We are validating your card, this may take sometime. Once verified, you’ll be able to activate your card.",
     "success": "{{vcDetails}} is verified successfully and now available for activation.",
-    "error": "Sorry, we are unable to verify the {{vcDetails}} right now. Please try again later."
+    "error": "Sorry, we are unable to verify the {{vcDetails}} right now. Please try again later. Until then, you won't be able to activate or share your card."
   },
   "ViewVcModal": {
     "title": "ID Details",
