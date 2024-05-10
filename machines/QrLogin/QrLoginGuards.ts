@@ -1,13 +1,13 @@
-import { VCShareFlowType } from "../../shared/Utils";
+import {VCShareFlowType} from '../../shared/Utils';
 
-export const QrLoginGuards={
+export const QrLoginGuards = {
   showFaceAuthConsentScreen: context => {
-      return context.showFaceAuthConsent;
-    },
+    return context.showFaceAuthConsent;
+  },
 
-    isConsentAlreadyCaptured: (_, event) =>
-      event.data?.consentAction === 'NOCAPTURE',
+  isConsentAlreadyCaptured: (_, event) =>
+    event.data?.consentAction === 'NOCAPTURE',
 
-    isSimpleShareFlow: (context, _event) =>
-      context.flowType === VCShareFlowType.SIMPLE_SHARE,
-  }
+  isSimpleShareFlow: (context, _event) =>
+    context.flowType === VCShareFlowType.SIMPLE_SHARE,
+};

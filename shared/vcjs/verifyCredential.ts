@@ -11,6 +11,7 @@ import {
 import {getErrorEventData, sendErrorEvent} from '../telemetry/TelemetryUtils';
 import {TelemetryConstants} from '../telemetry/TelemetryConstants';
 import {getMosipIdentifier} from '../commonUtil';
+import {VCMetadata} from '../VCMetadata';
 
 // FIXME: Ed25519Signature2018 not fully supported yet.
 // Ed25519Signature2018 proof type check is not tested with its real credential
@@ -26,10 +27,17 @@ const ProofPurpose = {
 
 export async function verifyCredential(
   verifiableCredential: VerifiableCredential | Credential,
+  vcMetadata: VCMetadata,
 ): Promise<VerificationResult> {
   try {
     let purpose: PublicKeyProofPurpose | AssertionProofPurpose;
-    switch (verifiableCredential.proof.proofPurpose) {
+    const proof = VCMetadata.fromVC(vcMetadata).isFromOpenId4VCI()
+      ? verifiableCredential.credential.proof
+      : verifiableCredential.proof;
+    const credential = VCMetadata.fromVC(vcMetadata).isFromOpenId4VCI()
+      ? verifiableCredential.credential
+      : verifiableCredential;
+    switch (proof.proofPurpose) {
       case ProofPurpose.PublicKey:
         purpose = new PublicKeyProofPurpose();
         break;
@@ -40,10 +48,10 @@ export async function verifyCredential(
 
     let suite: Ed25519Signature2018 | RsaSignature2018;
     const suiteOptions = {
-      verificationMethod: verifiableCredential.proof.verificationMethod,
-      date: verifiableCredential.proof.created,
+      verificationMethod: proof.verificationMethod,
+      date: proof.created,
     };
-    switch (verifiableCredential.proof.type) {
+    switch (proof.type) {
       case ProofType.ED25519: {
         suite = new Ed25519Signature2018(suiteOptions);
         break;
@@ -57,7 +65,7 @@ export async function verifyCredential(
     const vcjsOptions = {
       purpose,
       suite,
-      credential: verifiableCredential,
+      credential: credential,
       documentLoader: jsonld.documentLoaders.xhr(),
     };
 
@@ -69,7 +77,7 @@ export async function verifyCredential(
   } catch (error) {
     return {
       isVerified: false,
-      errorMessage: VerificationErrorType.TECHNICAL_ERROR,
+      errorMessage: error,
     };
   }
 }
@@ -113,7 +121,7 @@ function handleResponse(
   return verificationResult;
 }
 
-const VerificationErrorType = {
+export const VerificationErrorType = {
   NO_ERROR: '',
   TECHNICAL_ERROR: 'technicalError',
   RANGE_ERROR: 'RangeError',

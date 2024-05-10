@@ -46,6 +46,7 @@
     "generatedOn": "Nilikha noong",
     "status": "Katayuan",
     "valid": "Napatunayan",
+    "pending": "Nakabinbin",
     "photo": "Larawan",
     "fullName": "Buong pangalan",
     "gender": "Kasarian",
@@ -408,9 +409,24 @@
     "noReceivedVcsTitle": "Wala pang card",
     "noReceivedVcsText": "Pindutin ang Humiling sa ibaba para makatanggap ng card"
   },
+  "VcVerificationBanner": {
+      "inProgress": "Pina-validate namin ang iyong card, maaaring magtagal ito. Kapag na-verify na, magagawa mong i-activate ang iyong card.",
+      "success": "Matagumpay na na-verify ang {{vcDetails}} at magagamit na ngayon para sa pag-activate.",
+      "error": "Paumanhin, hindi namin ma-verify ang {{vcDetails}} ngayon. Subukang muli mamaya."
+    },
   "ViewVcModal": {
     "title": "Mga Detalye ng ID",
-    "inProgress": "Isinasagawa"
+    "inProgress": "Isinasagawa",
+    "statusToolTipContent": {
+      "valid": {
+        "title": "Wastong Katayuan:",
+        "description": "Matagumpay na na-verify ang kredensyal."
+      },
+      "pending": {
+        "title": "Nakabinbing Katayuan:",
+        "description": "Kasalukuyang nakabinbin ang pag-verify dahil sa mga teknikal na isyu."
+      }
+    }
   },
   "MainLayout": {
     "home": "Bahay",

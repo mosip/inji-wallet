@@ -308,7 +308,6 @@ public class ActivateVcTest extends AndroidBaseTest {
 
         detailedVcViewPage.clickOnBackArrow();
         assertTrue(detailedVcViewPage.isEsignetLogoDisplayed(), "Verify if detailed Vc esignet logo is displayed");
-
     }
 
 }

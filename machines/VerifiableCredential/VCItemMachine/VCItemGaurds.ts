@@ -1,5 +1,6 @@
 import {isSignedInResult} from '../../../shared/CloudBackupAndRestoreUtils';
 import {isHardwareKeystoreExists} from '../../../shared/cryptoutil/cryptoUtil';
+import {VerificationErrorType} from '../../../shared/vcjs/verifyCredential';
 
 export const VCItemGaurds = () => {
   return {
@@ -15,5 +16,8 @@ export const VCItemGaurds = () => {
     },
 
     isCustomSecureKeystore: () => isHardwareKeystoreExists,
+
+    isPendingVerificationError: (_context, event) =>
+      (event.data as Error).message == VerificationErrorType.NETWORK_ERROR,
   };
 };

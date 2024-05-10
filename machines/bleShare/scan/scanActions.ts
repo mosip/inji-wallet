@@ -1,25 +1,40 @@
-import { Linking } from "react-native";
-import { getDeviceNameSync } from "react-native-device-info";
-import { assign, spawn, send, DoneInvokeEvent } from "xstate";
-import { VCShareFlowType } from "../../../shared/Utils";
-import { VCMetadata } from "../../../shared/VCMetadata";
-import { logState } from "../../../shared/commonUtil";
-import { SHOW_FACE_AUTH_CONSENT_SHARE_FLOW, isAndroid, DEFAULT_QR_HEADER, MY_VCS_STORE_KEY, MY_LOGIN_STORE_KEY } from "../../../shared/constants";
-import { getIdType } from "../../../shared/openId4VCI/Utils";
-import { TelemetryConstants } from "../../../shared/telemetry/TelemetryConstants";
-import { sendImpressionEvent, getImpressionEventData, sendEndEvent, getEndEventData, sendErrorEvent, getErrorEventData, sendStartEvent, getStartEventData } from "../../../shared/telemetry/TelemetryUtils";
-import { createQrLoginMachine } from "../../QrLogin/QrLoginMachine";
-import { VcMetaEvents } from "../../VerifiableCredential/VCMetaMachine/VCMetaEvents";
-import { ActivityLogEvents } from "../../activityLog";
-import { StoreEvents } from "../../store";
+import {Linking} from 'react-native';
+import {getDeviceNameSync} from 'react-native-device-info';
+import {assign, spawn, send, DoneInvokeEvent} from 'xstate';
+import {VCShareFlowType} from '../../../shared/Utils';
+import {VCMetadata} from '../../../shared/VCMetadata';
+import {logState} from '../../../shared/commonUtil';
+import {
+  SHOW_FACE_AUTH_CONSENT_SHARE_FLOW,
+  isAndroid,
+  DEFAULT_QR_HEADER,
+  MY_VCS_STORE_KEY,
+  MY_LOGIN_STORE_KEY,
+} from '../../../shared/constants';
+import {getIdType} from '../../../shared/openId4VCI/Utils';
+import {TelemetryConstants} from '../../../shared/telemetry/TelemetryConstants';
+import {
+  sendImpressionEvent,
+  getImpressionEventData,
+  sendEndEvent,
+  getEndEventData,
+  sendErrorEvent,
+  getErrorEventData,
+  sendStartEvent,
+  getStartEventData,
+} from '../../../shared/telemetry/TelemetryUtils';
+import {createQrLoginMachine} from '../../QrLogin/QrLoginMachine';
+import {VcMetaEvents} from '../../VerifiableCredential/VCMetaMachine/VCMetaEvents';
+import {ActivityLogEvents} from '../../activityLog';
+import {StoreEvents} from '../../store';
 import tuvali from '@mosip/tuvali';
 import BluetoothStateManager from 'react-native-bluetooth-state-manager';
 
 const {wallet, EventTypes, VerificationStatus} = tuvali;
-export const ScanActions =(model:any,QR_LOGIN_REF_ID:any)=>{
-    return{
+export const ScanActions = (model: any, QR_LOGIN_REF_ID: any) => {
+  return {
     setChildRef: assign({
-      QrLoginRef: (context:any) => {
+      QrLoginRef: (context: any) => {
         const service = spawn(
           createQrLoginMachine(context.serviceRefs),
           QR_LOGIN_REF_ID,
@@ -35,22 +50,27 @@ export const ScanActions =(model:any,QR_LOGIN_REF_ID:any)=>{
       },
     }),
 
-
     setShowFaceAuthConsent: model.assign({
       showFaceAuthConsent: (_, event) => {
         return !event.isDoNotAskAgainChecked;
       },
     }),
 
-    getFaceAuthConsent: send(StoreEvents.GET(SHOW_FACE_AUTH_CONSENT_SHARE_FLOW), {
-      to: (context:any) => context.serviceRefs.store,
-    }),
+    getFaceAuthConsent: send(
+      StoreEvents.GET(SHOW_FACE_AUTH_CONSENT_SHARE_FLOW),
+      {
+        to: (context: any) => context.serviceRefs.store,
+      },
+    ),
 
     storeShowFaceAuthConsent: send(
       (context, event) =>
-        StoreEvents.SET(SHOW_FACE_AUTH_CONSENT_SHARE_FLOW, !event.isDoNotAskAgainChecked),
+        StoreEvents.SET(
+          SHOW_FACE_AUTH_CONSENT_SHARE_FLOW,
+          !event.isDoNotAskAgainChecked,
+        ),
       {
-        to: (context:any)  => context.serviceRefs.store,
+        to: (context: any) => context.serviceRefs.store,
       },
     ),
 
@@ -168,7 +188,7 @@ export const ScanActions =(model:any,QR_LOGIN_REF_ID:any)=>{
     }),
 
     logShared: send(
-      (context:any) => {
+      (context: any) => {
         const vcMetadata = context.selectedVc?.vcMetadata;
         return ActivityLogEvents.LOG_ACTIVITY({
           _vcKey: VCMetadata.fromVC(vcMetadata).getVcKey(),
@@ -210,14 +230,14 @@ export const ScanActions =(model:any,QR_LOGIN_REF_ID:any)=>{
         JSON.parse(decodeData(event.params.split(DEFAULT_QR_HEADER)[1])),
     }),
     loadMetaDataToMemory: send(
-      (context:any) => {
+      (context: any) => {
         let metadata = VCMetadata.fromVC(context.quickShareData?.meta);
         return StoreEvents.PREPEND(MY_VCS_STORE_KEY, metadata);
       },
       {to: context => context.serviceRefs.store},
     ),
     loadVCDataToMemory: send(
-      (context:any)  => {
+      (context: any) => {
         let metadata = VCMetadata.fromVC(context.quickShareData?.meta);
 
         let verifiableCredential = metadata.isFromOpenId4VCI()
@@ -240,7 +260,7 @@ export const ScanActions =(model:any,QR_LOGIN_REF_ID:any)=>{
           (event as DoneInvokeEvent<string>).data,
         );
       },
-      {to:  (context:any)  => context.serviceRefs.store},
+      {to: (context: any) => context.serviceRefs.store},
     ),
 
     storingActivityLog: send(
@@ -255,7 +275,7 @@ export const ScanActions =(model:any,QR_LOGIN_REF_ID:any)=>{
           vcLabel: String(event.response.selectedVc.vcMetadata.id),
         }),
       {
-        to:  (context:any)  => context.serviceRefs.activityLog,
+        to: (context: any) => context.serviceRefs.activityLog,
       },
     ),
 
@@ -321,7 +341,5 @@ export const ScanActions =(model:any,QR_LOGIN_REF_ID:any)=>{
         ),
       );
     },
-    
-  }
-}
-
+  };
+};

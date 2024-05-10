@@ -46,6 +46,7 @@
     "generatedOn": "Generated On",
     "status": "Status",
     "valid": "Valid",
+    "pending": "Pending",
     "photo": "Photo",
     "fullName": "Full Name",
     "gender": "Gender",
@@ -409,9 +410,24 @@
     "noReceivedVcsTitle": "No card available yet",
     "noReceivedVcsText": "Tap on Request below to receive card"
   },
+  "VcVerificationBanner": {
+    "inProgress": "We are validating your card, this may take sometime. Once verified, you’ll be able to activate your card.",
+    "success": "{{vcDetails}} is verified successfully and now available for activation.",
+    "error": "Sorry, we are unable to verify the {{vcDetails}} right now. Please try again later."
+  },
   "ViewVcModal": {
     "title": "ID Details",
-    "inProgress": "In Progress"
+    "inProgress": "In Progress",
+    "statusToolTipContent": {
+      "valid": {
+        "title": "Valid Status:",
+        "description": "The credential has been successfully verified."
+      },
+      "pending": {
+        "title": "Pending Status:",
+        "description": "Verification is currently pending due to technical issues."
+      }
+    }
   },
   "MainLayout": {
     "home": "Home",

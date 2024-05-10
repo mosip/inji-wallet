@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import {useTranslation} from 'react-i18next';
 import {Image, ImageBackground, View} from 'react-native';
 import {
@@ -9,20 +9,14 @@ import {Button, Column, Row, Text} from '../../ui';
 import {Theme} from '../../ui/styleUtils';
 import {QrCodeOverlay} from '../../QrCodeOverlay';
 import {SvgImage} from '../../ui/svg';
-import {
-  getDetailedViewFields,
-  isActivationNeeded,
-} from '../../../shared/openId4VCI/Utils';
+import {isActivationNeeded} from '../../../shared/openId4VCI/Utils';
 import {
   BOTTOM_SECTION_FIELDS_WITH_DETAILED_ADDRESS_FIELDS,
   DETAIL_VIEW_BOTTOM_SECTION_FIELDS,
-  DETAIL_VIEW_DEFAULT_FIELDS,
   fieldItemIterator,
-  isVCLoaded,
-  setBackgroundColour,
+  getBackgroundColour,
+  getTextColor,
 } from '../common/VCUtils';
-import {setTextColor} from '../common/VCItemField';
-import {ActivityIndicator} from '../../ui/ActivityIndicator';
 import {ProfileIcon} from '../../ProfileIcon';
 
 const getProfileImage = (face: any) => {
@@ -44,20 +38,6 @@ export const VCDetailView: React.FC<VCItemDetailsProps> = props => {
   const logo = props.verifiableCredentialData.issuerLogo;
   const face = props.verifiableCredentialData.face;
   const verifiableCredential = props.credential;
-  let [fields, setFields] = useState([]);
-  const [wellknown, setWellknown] = useState(null);
-
-  useEffect(() => {
-    getDetailedViewFields(
-      props.verifiableCredentialData?.issuer,
-      props.verifiableCredentialData?.wellKnown,
-      props.verifiableCredentialData?.credentialTypes,
-      DETAIL_VIEW_DEFAULT_FIELDS,
-    ).then(response => {
-      setWellknown(response.wellknown);
-      setFields(response.fields);
-    });
-  }, [props.verifiableCredentialData?.wellKnown]);
 
   const shouldShowHrLine = verifiableCredential => {
     const availableFieldNames = Object.keys(
@@ -75,10 +55,6 @@ export const VCDetailView: React.FC<VCItemDetailsProps> = props => {
     return false;
   };
 
-  if (!isVCLoaded(verifiableCredential, fields)) {
-    return <ActivityIndicator />;
-  }
-
   return (
     <>
       <Column scroll>
@@ -92,7 +68,7 @@ export const VCDetailView: React.FC<VCItemDetailsProps> = props => {
               resizeMode="stretch"
               style={[
                 Theme.Styles.openCardBgContainer,
-                setBackgroundColour(wellknown),
+                getBackgroundColour(props.wellknown),
               ]}
               source={Theme.OpenCard}>
               <Row padding="14 14 0 14" margin="0 0 0 0">
@@ -121,9 +97,9 @@ export const VCDetailView: React.FC<VCItemDetailsProps> = props => {
                   margin={'0 0 0 24'}
                   style={{flex: 1}}>
                   {fieldItemIterator(
-                    fields,
+                    props.fields,
                     verifiableCredential,
-                    wellknown,
+                    props.wellknown,
                     props,
                   )}
                 </Column>
@@ -134,15 +110,17 @@ export const VCDetailView: React.FC<VCItemDetailsProps> = props => {
                     style={[
                       Theme.Styles.hrLine,
                       {
-                        borderBottomColor: setTextColor(wellknown, 'hrLine')
-                          ?.color,
+                        borderBottomColor: getTextColor(
+                          props.wellknown,
+                          Theme.Styles.hrLine.borderBottomColor,
+                        ),
                       },
                     ]}></View>
                   <Column padding="0 14 14 14">
                     {fieldItemIterator(
                       DETAIL_VIEW_BOTTOM_SECTION_FIELDS,
                       verifiableCredential,
-                      wellknown,
+                      props.wellknown,
                       props,
                     )}
                   </Column>
@@ -198,6 +176,9 @@ export const VCDetailView: React.FC<VCItemDetailsProps> = props => {
                   onPress={props.onBinding}
                   type="gradient"
                   size="Large"
+                  disabled={
+                    !props.verifiableCredentialData.vcMetadata.isVerified
+                  }
                 />
               </Column>
             ) : (
@@ -234,9 +215,11 @@ export const VCDetailView: React.FC<VCItemDetailsProps> = props => {
 };
 
 export interface VCItemDetailsProps {
+  fields: any[];
+  wellknown: any;
   credential: VerifiableCredential | Credential;
   verifiableCredentialData: any;
-  walletBindingResponse: WalletBindingResponse;
+  walletBindingResponse?: WalletBindingResponse;
   onBinding?: () => void;
   activeTab?: Number;
   vcHasImage: boolean;

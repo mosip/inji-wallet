@@ -55,7 +55,7 @@ export const HomeScreenLayout: React.FC<RootRouteProps> = props => {
           <CopilotView testID="help" style={Theme.HelpScreenStyle.viewStyle}>
             <Row crossAlign="center" style={Theme.HelpScreenStyle.rowStyle}>
               <View testID="helpIcon" style={Theme.HelpScreenStyle.iconStyle}>
-                {SvgImage.infoIcon()}
+                {SvgImage.coloredInfo()}
               </View>
               <Text testID="helpText" style={Theme.HelpScreenStyle.labelStyle}>
                 {t('help')}

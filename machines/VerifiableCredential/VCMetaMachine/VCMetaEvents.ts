@@ -1,5 +1,6 @@
 import {VCMetadata} from '../../../shared/VCMetadata';
 import {VC} from './vc';
+import {vcVerificationBannerDetails} from '../../../components/BannerNotificationContainer';
 
 export const VcMetaEvents = {
   VIEW_VC: (vc: VC) => ({vc}),
@@ -33,6 +34,14 @@ export const VcMetaEvents = {
   RESET_VERIFY_ERROR: () => ({}),
   REFRESH_VCS_METADATA: () => ({}),
   SHOW_TAMPERED_POPUP: () => ({}),
+  SET_VERIFICATION_STATUS: (verificationStatus: unknown) => ({
+    verificationStatus,
+  }),
+  RESET_VERIFICATION_STATUS: (
+    verificationStatus: vcVerificationBannerDetails | null,
+  ) => ({
+    verificationStatus,
+  }),
   VC_DOWNLOADING_FAILED: () => ({}),
   RESET_DOWNLOADING_FAILED: () => ({}),
 };

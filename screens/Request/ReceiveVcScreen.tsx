@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {useTranslation} from 'react-i18next';
 import {DeviceInfoList} from '../../components/DeviceInfoList';
 import {Button, Column, Text} from '../../components/ui';
@@ -10,13 +10,31 @@ import {useOverlayVisibleAfterTimeout} from '../../shared/hooks/useOverlayVisibl
 import {VcDetailsContainer} from '../../components/VC/VcDetailsContainer';
 import {SharingStatusModal} from '../Scan/SharingStatusModal';
 import {SvgImage} from '../../components/ui/svg';
+import {DETAIL_VIEW_DEFAULT_FIELDS} from '../../components/VC/common/VCUtils';
+import {getDetailedViewFields} from '../../shared/openId4VCI/Utils';
 
 export const ReceiveVcScreen: React.FC = () => {
   const {t} = useTranslation('ReceiveVcScreen');
+  const [fields, setFields] = useState([]);
+  const [wellknown, setWellknown] = useState(null);
   const controller = useReceiveVcScreen();
   const savingOverlayVisible = useOverlayVisibleAfterTimeout(
     controller.isAccepting,
   );
+  const verifiableCredentialData = controller.verifiableCredentialData;
+  const profileImage = verifiableCredentialData.face;
+
+  useEffect(() => {
+    getDetailedViewFields(
+      verifiableCredentialData?.issuer,
+      verifiableCredentialData?.wellKnown,
+      verifiableCredentialData?.credentialTypes,
+      DETAIL_VIEW_DEFAULT_FIELDS,
+    ).then(response => {
+      setWellknown(response.wellknown);
+      setFields(response.fields);
+    });
+  }, [verifiableCredentialData?.wellKnown]);
 
   return (
     <React.Fragment>
@@ -31,10 +49,13 @@ export const ReceiveVcScreen: React.FC = () => {
               {t('header')}
             </Text>
             <VcDetailsContainer
+              fields={fields}
+              wellknown={wellknown}
               credential={controller.credential}
-              verifiableCredentialData={controller.verifiableCredentialData}
+              verifiableCredentialData={verifiableCredentialData}
               isBindingPending={false}
               activeTab={1}
+              vcHasImage={profileImage !== undefined}
             />
           </Column>
           <Column padding="0 24" margin="32 0 0 0">
@@ -49,7 +70,7 @@ export const ReceiveVcScreen: React.FC = () => {
 
       <VerifyIdentityOverlay
         credential={controller.selectCredential}
-        verifiableCredentialData={controller.verifiableCredentialData}
+        verifiableCredentialData={verifiableCredentialData}
         isVerifyingIdentity={controller.isVerifyingIdentity}
         onCancel={controller.CANCEL}
         onFaceValid={controller.FACE_VALID}

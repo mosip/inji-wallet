@@ -18,6 +18,10 @@ import {
   selectWalletBindingInProgress,
   selectWalletBindingResponse,
   selectWalletBindingSuccess,
+  selectVerificationStatus,
+  selectIsVerificationInProgress,
+  selectShowVerificationStatusBanner,
+  selectIsVerificationCompleted,
 } from '../../machines/VerifiableCredential/VCItemMachine/VCItemSelectors';
 import {selectPasscode} from '../../machines/auth';
 import {biometricsMachine, selectIsSuccess} from '../../machines/biometrics';
@@ -26,6 +30,7 @@ import {
   VCItemMachine,
 } from '../../machines/VerifiableCredential/VCItemMachine/VCItemMachine';
 import {selectIsAcceptingOtpInput} from './MyVcs/AddVcModalMachine';
+import {BannerStatusType} from '../../components/BannerNotification';
 
 export function useViewVcModal({vcItemActor, isVisible}: ViewVcModalProps) {
   const [toastVisible, setToastVisible] = useState(false);
@@ -120,6 +125,26 @@ export function useViewVcModal({vcItemActor, isVisible}: ViewVcModalProps) {
     inputOtp: (otp: string) => {
       netInfoFetch(otp);
     },
+    verificationStatus: useSelector(vcItemActor, selectVerificationStatus),
+    isVerificationInProgress: useSelector(
+      vcItemActor,
+      selectIsVerificationInProgress,
+    ),
+    isVerificationCompleted: useSelector(
+      vcItemActor,
+      selectIsVerificationCompleted,
+    ),
+    showVerificationStatusBanner: useSelector(
+      vcItemActor,
+      selectShowVerificationStatusBanner,
+    ),
+    RESET_VERIFICATION_STATUS: () =>
+      vcItemActor.send(VCItemEvents.RESET_VERIFICATION_STATUS()),
+    SHOW_VERIFICATION_STATUS_BANNER: () =>
+      vcItemActor.send({
+        type: 'SHOW_VERIFICATION_STATUS_BANNER',
+        response: {statusType: BannerStatusType.IN_PROGRESS},
+      }),
     onSuccess,
     DISMISS: () => vcItemActor.send(VCItemEvents.DISMISS()),
     INPUT_OTP: (otp: string) => vcItemActor.send(VCItemEvents.INPUT_OTP(otp)),

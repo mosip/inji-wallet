@@ -112,7 +112,7 @@ export const VCItemServices = model => {
         {
           requestTime: String(new Date().toISOString()),
           request: {
-            individualId: getMosipIdentifier(vc.credentialSubject),
+            individualId: VCMetadata.fromVC(context.vcMetadata).id,
             otpChannels: ['EMAIL', 'PHONE'],
           },
         },
@@ -198,6 +198,7 @@ export const VCItemServices = model => {
       if (context.verifiableCredential) {
         const verificationResult = await verifyCredential(
           context.verifiableCredential,
+          context.vcMetadata,
         );
         if (!verificationResult.isVerified) {
           throw new Error(verificationResult.errorMessage);

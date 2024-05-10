@@ -12,9 +12,9 @@ import {Loader} from '../../components/ui/Loader';
 import {VCShareFlowType} from '../../shared/Utils';
 import {VerifyIdentityOverlay} from '../VerifyIdentityOverlay';
 import {SvgImage} from '../../components/ui/svg';
-import {BANNER_TYPE_SUCCESS} from '../../shared/constants';
 import {View, I18nManager} from 'react-native';
 import {Text} from './../../components/ui';
+import {BannerStatusType} from '../../components/BannerNotification';
 
 const ScanStack = createNativeStackNavigator();
 
@@ -42,7 +42,7 @@ export const ScanLayout: React.FC = () => {
         showBanner={controller.isFaceIdentityVerified}
         bannerMessage={t('ScanScreen:postFaceCapture:captureSuccessMessage')}
         onBannerClose={controller.CLOSE_BANNER}
-        bannerType={BANNER_TYPE_SUCCESS}
+        bannerType={BannerStatusType.SUCCESS}
         bannerTestID={'faceVerificationSuccess'}
       />
     );
