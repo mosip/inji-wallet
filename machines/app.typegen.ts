@@ -6,7 +6,6 @@ export interface Typegen0 {
     'xstate.init': {type: 'xstate.init'};
   };
   invokeSrcNameMap: {
-    checkFocusState: 'done.invoke.app.ready.focus:invocation[0]';
     checkNetworkState: 'done.invoke.app.ready.network:invocation[0]';
     getAppInfo: 'done.invoke.app.init.info:invocation[0]';
   };
@@ -44,7 +43,6 @@ export interface Typegen0 {
   eventsCausingDelays: {};
   eventsCausingGuards: {};
   eventsCausingServices: {
-    checkFocusState: 'APP_INFO_RECEIVED';
     checkNetworkState: 'APP_INFO_RECEIVED';
     getAppInfo: 'STORE_RESPONSE';
   };

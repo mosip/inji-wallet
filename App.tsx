@@ -1,4 +1,4 @@
-import React, {useContext, useEffect} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {AppLayout} from './screens/AppLayout';
 import {useFont} from './shared/hooks/useFont';
 import {GlobalContextProvider} from './components/GlobalContextProvider';
@@ -6,6 +6,7 @@ import {GlobalContext} from './shared/GlobalContext';
 import {useSelector} from '@xstate/react';
 import {useTranslation} from 'react-i18next';
 import {
+  APP_EVENTS,
   selectIsDecryptError,
   selectIsKeyInvalidateError,
   selectIsReadError,
@@ -13,7 +14,7 @@ import {
 } from './machines/app';
 import {DualMessageOverlay} from './components/DualMessageOverlay';
 import {useApp} from './screens/AppController';
-import {Alert} from 'react-native';
+import {Alert, AppState, AppStateStatus} from 'react-native';
 import {
   configureTelemetry,
   getErrorEventData,
@@ -26,6 +27,7 @@ import {isHardwareKeystoreExists} from './shared/cryptoutil/cryptoUtil';
 import i18n from './i18n';
 import './shared/flipperConfig';
 import * as SplashScreen from 'expo-splash-screen';
+import {isAndroid} from './shared/constants';
 
 SplashScreen.preventAutoHideAsync();
 
@@ -115,6 +117,7 @@ const AppInitialization: React.FC = () => {
   const isReady = useSelector(appService, selectIsReady);
   const hasFontsLoaded = useFont();
   const {t} = useTranslation('common');
+  const [isActive, setIsActive] = useState(false);
 
   useEffect(() => {
     if (isHardwareKeystoreExists) {
@@ -124,6 +127,54 @@ const AppInitialization: React.FC = () => {
       );
     }
   }, [i18n.language]);
+
+  useEffect(() => {
+    const changeHandler = (newState: AppStateStatus) => {
+      switch (newState) {
+        case 'background':
+          setIsActive(false);
+          break;
+        case 'inactive':
+          setIsActive(false);
+          break;
+        case 'active':
+          setIsActive(true);
+          break;
+      }
+    };
+
+    const blurHandler = () => setIsActive(false);
+    const focusHandler = () => setIsActive(true);
+
+    let changeEventSubscription = AppState.addEventListener(
+      'change',
+      changeHandler,
+    );
+    let blurEventSubscription, focusEventSubscription;
+
+    if (isAndroid()) {
+      blurEventSubscription = AppState.addEventListener('blur', blurHandler);
+      focusEventSubscription = AppState.addEventListener('focus', focusHandler);
+    }
+
+    return () => {
+      changeEventSubscription.remove();
+      if (isAndroid()) {
+        blurEventSubscription.remove();
+        focusEventSubscription.remove();
+      }
+    };
+  });
+
+  useEffect(() => {
+    if (isReady && hasFontsLoaded) {
+      if (isActive) {
+        appService.send(APP_EVENTS.ACTIVE());
+      } else {
+        appService.send(APP_EVENTS.INACTIVE());
+      }
+    }
+  }, [isActive, isReady, hasFontsLoaded]);
 
   return isReady && hasFontsLoaded ? (
     <AppLayoutWrapper />

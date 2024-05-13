@@ -457,10 +457,6 @@ export const PurpleTheme = {
       borderRadius: 10,
       backgroundColor: Colors.LightPurple,
     },
-    cameraFlipIcon: {
-      width: 42,
-      height: 42,
-    },
     imageCaptureButton: {
       marginLeft: 130,
       marginRight: 50,
@@ -533,27 +529,6 @@ export const PurpleTheme = {
     iconContainer: {
       flexDirection: 'row',
       alignItems: 'flex-end',
-    },
-    scannerContainer: {
-      borderRadius: 24,
-      alignSelf: 'center',
-      height: 350,
-      width: 320,
-      overflow: 'hidden',
-    },
-    scanner: {
-      height: 400,
-      width: '100%',
-      margin: 'auto',
-    },
-    disabledScannerContainer: {
-      borderRadius: 24,
-      height: 350,
-      width: '100%',
-      margin: 'auto',
-      backgroundColor: Colors.White,
-      borderWidth: 1,
-      borderColor: Colors.Gray89,
     },
     photoConsentLabel: {
       backgroundColor: Colors.White,
@@ -741,7 +716,7 @@ export const PurpleTheme = {
       padding: 1,
       fontFamily: 'Inter_600SemiBold',
     },
-    topBanner : {
+    topBanner: {
       marginTop: 10,
       marginBottom: 10,
     },
@@ -1507,39 +1482,68 @@ export const PurpleTheme = {
       fontWeight: 'bold',
     },
   }),
-  CameraDisabledBannerStyle: StyleSheet.create({
+  CameraDisabledStyles: StyleSheet.create({
     container: {
       position: 'absolute',
-      top: 0,
-      left: 0,
-      right: 0,
+      width: Dimensions.get('screen').width,
     },
-    disabledPopUp: {
+    banner: {
       justifyContent: 'space-between',
       backgroundColor: Colors.Red,
-      position: 'relative',
       padding: 20,
       paddingHorizontal: 15,
       marginTop: -24,
     },
-    disabledTextContainer: {
+    bannerTextContainer: {
       justifyContent: 'space-between',
     },
-    permissionDisabledTitle: {
+    bannerTitle: {
       fontFamily: 'Inter_600SemiBold',
     },
-    permissionGuideText: {
+    bannerGuide: {
       opacity: 0.8,
       fontFamily: 'Inter_400Regular',
     },
-    enablePermissionTextContainer: {
+    bannerEnablePermissionContainer: {
       marginTop: 15,
     },
-    enablePermissionText: {
+    bannerEnablePermission: {
       borderBottomWidth: 1.5,
       borderBottomColor: Colors.White,
       fontFamily: 'Inter_600SemiBold',
     },
+    scannerContainer: {
+      borderRadius: 24,
+      height: Dimensions.get('screen').height * 0.4,
+      width: Dimensions.get('screen').width * 0.8,
+      marginTop: 40,
+      backgroundColor: Colors.White,
+      borderWidth: 1,
+      borderColor: Colors.Gray89,
+    },
+  }),
+  CameraEnabledStyles: StyleSheet.create({
+    scannerContainer: {
+      borderRadius: 24,
+      alignSelf: 'center',
+      height: Dimensions.get('screen').height * 0.4,
+      width: Dimensions.get('screen').width * 0.8,
+      overflow: 'hidden',
+    },
+    scanner: {
+      height: '100%',
+      width: '100%',
+      margin: 'auto',
+    },
+    holdPhoneSteadyText: {
+      color: Colors.Black,
+      fontFamily: 'Inter_600SemiBold',
+    },
+    cameraFlipIcon: {
+      height: 50,
+      width: 50,
+    },
+    iconText: {fontFamily: 'Inter_600SemiBold', fontSize: 12, margin: 6},
   }),
   BottomTabBarStyle: StyleSheet.create({
     headerRightContainerStyle: {paddingEnd: 13},

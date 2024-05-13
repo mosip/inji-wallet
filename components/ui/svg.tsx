@@ -321,7 +321,7 @@ export class SvgImage {
   }
 
   static FlipCameraIcon() {
-    const {width, height} = Theme.Styles.cameraFlipIcon;
+    const {width, height} = Theme.CameraEnabledStyles.cameraFlipIcon;
     return (
       <FlipCameraIcon
         {...testIDProps('flipCameraIcon')}
@@ -336,6 +336,7 @@ export class SvgImage {
   static CameraCaptureIcon() {
     return (
       <CameraCaptureIcon
+        {...testIDProps('CameraCaptureIcon')}
         color1={Theme.Colors.linearGradientStart}
         color2={Theme.Colors.linearGradientEnd}
       />

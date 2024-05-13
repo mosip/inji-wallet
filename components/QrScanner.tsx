@@ -22,10 +22,14 @@ import {SvgImage} from './ui/svg';
 export const QrScanner: React.FC<QrScannerProps> = props => {
   const {t} = useTranslation('QrScanner');
   const {appService} = useContext(GlobalContext);
-  const [hasPermission, setHasPermission] = useState(null);
   const [scanned, setScanned] = useState(false);
   const [cameraType, setCameraType] = useState(Camera.Constants.Type.back);
   const controller = useScanLayout();
+  const [hasCameraPermission, setHasCameraPermission] = useState(null);
+  const [
+    showCameraPermissionDeniedBanner,
+    setShowCameraPermissionDeniedBanner,
+  ] = useState(false);
 
   const isActive = useSelector(appService, selectIsActive);
 
@@ -38,22 +42,27 @@ export const QrScanner: React.FC<QrScannerProps> = props => {
   };
 
   useEffect(() => {
-    (async () => {
-      const response = await Camera.requestCameraPermissionsAsync();
-      setHasPermission(response.granted);
-    })();
-  }, []);
-
-  useEffect(() => {
-    if (isActive && hasPermission === false) {
+    if (isActive && !Boolean(hasCameraPermission)) {
       (async () => {
-        const response = await Camera.requestCameraPermissionsAsync();
-        setHasPermission(response.granted);
+        setShowCameraPermissionDeniedBanner(false);
+        const cameraPermissionResult = await Camera.getCameraPermissionsAsync();
+        if (cameraPermissionResult.status === 'undetermined') {
+          const response = await Camera.requestCameraPermissionsAsync();
+          setHasCameraPermission(response.granted);
+          if (response.granted === false) {
+            setShowCameraPermissionDeniedBanner(true);
+          }
+        } else if (cameraPermissionResult.status === 'granted') {
+          setHasCameraPermission(true);
+        } else if (cameraPermissionResult.status === 'denied') {
+          setHasCameraPermission(false);
+          setShowCameraPermissionDeniedBanner(true);
+        }
       })();
     }
   }, [isActive]);
 
-  if (hasPermission === null) {
+  if (hasCameraPermission === null) {
     return <View />;
   }
 
@@ -61,21 +70,21 @@ export const QrScanner: React.FC<QrScannerProps> = props => {
     return (
       <View
         {...testIDProps('cameraDisabledPopup')}
-        style={Theme.CameraDisabledBannerStyle.container}>
-        <Column style={Theme.CameraDisabledBannerStyle.disabledPopUp}>
-          <Row style={Theme.CameraDisabledBannerStyle.disabledTextContainer}>
+        style={Theme.CameraDisabledStyles.container}>
+        <Column style={Theme.CameraDisabledStyles.banner}>
+          <Row style={Theme.CameraDisabledStyles.bannerTextContainer}>
             <Column>
               <Text
                 testID="cameraAccessDisabled"
                 color={Theme.Colors.whiteText}
                 margin="0 0 5 0"
-                style={Theme.CameraDisabledBannerStyle.permissionDisabledTitle}>
+                style={Theme.CameraDisabledStyles.bannerTitle}>
                 {t('cameraAccessDisabled')}
               </Text>
               <Text
                 testID="cameraPermissionGuide"
                 color={Theme.Colors.whiteText}
-                style={Theme.CameraDisabledBannerStyle.permissionGuideText}>
+                style={Theme.CameraDisabledStyles.bannerGuide}>
                 {t('cameraPermissionGuideLabel')}
               </Text>
             </Column>
@@ -83,22 +92,20 @@ export const QrScanner: React.FC<QrScannerProps> = props => {
               <Icon
                 testID="close"
                 name="close"
-                onPress={controller.DISMISS}
+                onPress={() => setShowCameraPermissionDeniedBanner(false)}
                 color={Theme.Colors.whiteText}
                 size={18}
               />
             </Pressable>
           </Row>
           <Row
-            style={
-              Theme.CameraDisabledBannerStyle.enablePermissionTextContainer
-            }>
+            style={Theme.CameraDisabledStyles.bannerEnablePermissionContainer}>
             <Pressable onPress={openSettings}>
               <Text
                 testID="EnablePermissionText"
                 color={Theme.Colors.whiteText}
                 size="regular"
-                style={Theme.CameraDisabledBannerStyle.enablePermissionText}>
+                style={Theme.CameraDisabledStyles.bannerEnablePermission}>
                 {t('EnablePermission')}
               </Text>
             </Pressable>
@@ -108,50 +115,54 @@ export const QrScanner: React.FC<QrScannerProps> = props => {
     );
   };
   return (
-    <Column fill align="space-between" margin="0 0 60 0">
-      <View style={Theme.Styles.scannerContainer}>
-        {hasPermission ? (
-          <Camera
-            {...testIDProps('camera')}
-            style={Theme.Styles.scanner}
-            barCodeScannerSettings={{
-              barcodeTypes: [BarCodeScanner.Constants.BarCodeType.qr],
-            }}
-            onBarCodeScanned={scanned ? undefined : onBarcodeScanned}
-            type={cameraType}
-          />
+    <>
+      <Column fill align="space-around">
+        {hasCameraPermission ? (
+          <>
+            <View style={Theme.CameraEnabledStyles.scannerContainer}>
+              <Camera
+                {...testIDProps('camera')}
+                style={Theme.CameraEnabledStyles.scanner}
+                barCodeScannerSettings={{
+                  barcodeTypes: [BarCodeScanner.Constants.BarCodeType.qr],
+                }}
+                onBarCodeScanned={scanned ? undefined : onBarcodeScanned}
+                type={cameraType}
+              />
+            </View>
+            {props.title && (
+              <Text
+                testID="holdPhoneSteadyMessage"
+                align="center"
+                style={Theme.CameraEnabledStyles.holdPhoneSteadyText}
+                margin="0 57">
+                {props.title}
+              </Text>
+            )}
+            <Column crossAlign="center">
+              <TouchableOpacity
+                onPress={() => {
+                  setCameraType(
+                    cameraType === Camera.Constants.Type.back
+                      ? Camera.Constants.Type.front
+                      : Camera.Constants.Type.back,
+                  );
+                }}>
+                {SvgImage.FlipCameraIcon()}
+              </TouchableOpacity>
+              <Text
+                testID="flipCameraText"
+                style={Theme.CameraEnabledStyles.iconText}>
+                {t('flipCamera')}
+              </Text>
+            </Column>
+          </>
         ) : (
-          <View style={Theme.Styles.disabledScannerContainer} />
+          <View style={Theme.CameraDisabledStyles.scannerContainer} />
         )}
-      </View>
-      {props.title && (
-        <Text
-          testID="holdPhoneSteadyMessage"
-          align="center"
-          weight="semibold"
-          style={Theme.TextStyles.base}
-          margin="0 57">
-          {props.title}
-        </Text>
-      )}
-      <Column crossAlign="center">
-        <TouchableOpacity
-          disabled={hasPermission === false}
-          onPress={() => {
-            setCameraType(
-              cameraType === Camera.Constants.Type.back
-                ? Camera.Constants.Type.front
-                : Camera.Constants.Type.back,
-            );
-          }}>
-          {SvgImage.FlipCameraIcon()}
-        </TouchableOpacity>
-        <Text testID="flipCameraText" size="small" weight="semibold" margin="8">
-          {t('flipCamera')}
-        </Text>
       </Column>
-      {hasPermission == false && <CameraDisabledPopUp />}
-    </Column>
+      {showCameraPermissionDeniedBanner && <CameraDisabledPopUp />}
+    </>
   );
 
   function onBarcodeScanned(event: BarCodeEvent) {

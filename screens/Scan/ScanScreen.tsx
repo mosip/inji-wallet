@@ -40,9 +40,8 @@ export const ScanScreen: React.FC = () => {
   });
 
   useEffect(() => {
-    if (controller.isQuickShareDone)
-      controller.GOTO_HOME();
-  },[controller.isQuickShareDone]);
+    if (controller.isQuickShareDone) controller.GOTO_HOME();
+  }, [controller.isQuickShareDone]);
 
   const openSettings = () => {
     Linking.openSettings();
@@ -138,7 +137,7 @@ export const ScanScreen: React.FC = () => {
 
   function qrScannerComponent() {
     return (
-      <Column crossAlign="center" margin="0 0 0 -6">
+      <Column crossAlign="center">
         <QrScanner onQrFound={controller.SCAN} title={t('scanningGuide')} />
       </Column>
     );
