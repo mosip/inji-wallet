@@ -75,6 +75,7 @@ export async function verifyCredential(
 
     //ToDo Handle Expiration error message
   } catch (error) {
+    console.error('Error occured while verifying the VC:', error);
     return {
       isVerified: false,
       errorMessage: VerificationErrorType.TECHNICAL_ERROR,
