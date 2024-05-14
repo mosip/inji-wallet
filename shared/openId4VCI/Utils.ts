@@ -26,6 +26,7 @@ export const Issuers = {
   Mosip: '',
   Sunbird: 'Sunbird',
   ESignet: 'ESignet',
+  OpenG2P: 'OpenG2PSocialCashTransferProgram',
 };
 
 /**

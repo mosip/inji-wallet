@@ -106,7 +106,9 @@ export const IssuersService = () => {
       //this issuer specific check has to be removed once vc validation is done.
       if (
         VCMetadata.fromVcMetadataString(getVCMetadata(context)).issuer ===
-        Issuers.Sunbird
+          Issuers.Sunbird ||
+        VCMetadata.fromVcMetadataString(getVCMetadata(context)).issuer ===
+          Issuers.OpenG2P
       ) {
         return true;
       }
