@@ -77,7 +77,7 @@ export async function verifyCredential(
   } catch (error) {
     return {
       isVerified: false,
-      errorMessage: error,
+      errorMessage: VerificationErrorType.TECHNICAL_ERROR,
     };
   }
 }
