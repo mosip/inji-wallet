@@ -40,9 +40,6 @@ export const IssuersActions = (model: any) => {
           isVerified: false,
         }),
     }),
-    setErrorAsVerificationError: assign({
-      errorMessage: (_context, event) => (event.data as Error).message,
-    }),
     setIssuers: model.assign({
       issuers: (_: any, event: any) => event.data,
     }),
