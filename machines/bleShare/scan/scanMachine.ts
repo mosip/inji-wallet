@@ -59,7 +59,7 @@ import {
 import {TelemetryConstants} from '../../../shared/telemetry/TelemetryConstants';
 import {logState} from '../../../shared/commonUtil';
 import {VCShareFlowType} from '../../../shared/Utils';
-import {getIdType} from '../../../shared/openId4VCI/Utils';
+import {getIDType} from '../../../shared/openId4VCI/Utils';
 import {VcMetaEvents} from '../../VerifiableCredential/VCMetaMachine/VCMetaMachine';
 // @ts-ignore
 import {decodeData} from '@mosip/pixelpass';
@@ -1019,7 +1019,7 @@ export const scanMachine =
                 ? context.shareLogType
                 : 'VC_SHARED_WITH_VERIFICATION_CONSENT',
               id: vcMetadata.id,
-              idType: getIdType(vcMetadata.issuer),
+              idType: getIDType(context.selectedVc?.verifiableCredential?.credential),
               timestamp: Date.now(),
               deviceName:
                 context.receiverInfo.name || context.receiverInfo.deviceName,
@@ -1035,7 +1035,7 @@ export const scanMachine =
               _vcKey: VCMetadata.fromVC(context.selectedVc).getVcKey(),
               type: 'PRESENCE_VERIFICATION_FAILED',
               timestamp: Date.now(),
-              idType: getIdType(context.selectedVc.vcMetadata.issuer),
+              idType: getIDType(context.selectedVc?.verifiableCredential?.credential),
               id: context.selectedVc.vcMetadata.id,
               deviceName:
                 context.receiverInfo.name || context.receiverInfo.deviceName,
@@ -1091,7 +1091,7 @@ export const scanMachine =
             ActivityLogEvents.LOG_ACTIVITY({
               _vcKey: '',
               id: event.response.selectedVc.vcMetadata.id,
-              idType: getIdType(event.response.selectedVc.vcMetadata.issuer),
+              idType: getIDType(event.response.selectedVc.verifiableCredential?.credential),
               type: 'QRLOGIN_SUCCESFULL',
               timestamp: Date.now(),
               deviceName: '',

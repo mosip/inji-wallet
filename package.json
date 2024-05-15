@@ -22,7 +22,7 @@
     "@invertase/react-native-apple-authentication": "^2.3.0",
     "@iriscan/biometric-sdk-react-native": "0.2.6",
     "@mosip/pixelpass": "^0.1.2",
-    "@mosip/secure-keystore": "^0.1.7",
+    "@mosip/secure-keystore": "https://github.com/mosip/secure-keystore#injimob-1369-id4africa",
     "@mosip/tuvali": "^0.4.9",
     "@react-native-clipboard/clipboard": "^1.10.0",
     "@react-native-community/netinfo": "9.3.7",

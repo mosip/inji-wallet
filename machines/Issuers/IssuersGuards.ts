@@ -8,9 +8,6 @@ export const IssuersGuards = () => {
     isSignedIn: (_: any, event: any) =>
       (event.data as isSignedInResult).isSignedIn,
     hasKeyPair: (context: any) => !!context.publicKey,
-    isMultipleCredentialsSupported: (context: any, event: any) =>
-      event.data.supportedCredentials.length > 1 &&
-      context.selectedIssuer.credential_issuer === Issuers.Sunbird,
     isInternetConnected: (_: any, event: any) => !!event.data.isConnected,
     isOIDCflowCancelled: (_: any, event: any) => {
       // iOS & Android have different error strings for user cancelled flow

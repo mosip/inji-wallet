@@ -1,6 +1,5 @@
 import {
-  ErrorMessage,
-  getIdType,
+  ErrorMessage, getIDType,
   Issuers_Key_Ref,
   updateVCmetadataOfCredentialWrapper,
 } from '../../shared/openId4VCI/Utils';
@@ -189,7 +188,7 @@ export const IssuersActions = (model: any) => {
           _vcKey: getVCMetadata(context).getVcKey(),
           type: 'VC_DOWNLOADED',
           id: getVCMetadata(context).id,
-          idType: getIdType(getVCMetadata(context).issuer),
+          idType: getIDType(context.verifiableCredential?.credential),
           timestamp: Date.now(),
           deviceName: '',
           vcLabel: getVCMetadata(context).id,

@@ -90,10 +90,62 @@ export interface Typegen0 {
     verifyCredential: 'done.invoke.issuersMachine.verifyingCredential:invocation[0]';
   };
   missingImplementations: {
-    actions: never;
+    actions:
+      | 'getKeyPairFromStore'
+      | 'loadKeyPair'
+      | 'logDownloaded'
+      | 'resetError'
+      | 'resetLoadingReason'
+      | 'resetVerificationErrorMessage'
+      | 'sendBackupEvent'
+      | 'sendErrorEndEvent'
+      | 'sendImpressionEvent'
+      | 'sendSuccessEndEvent'
+      | 'setCredentialTypes'
+      | 'setCredentialWrapper'
+      | 'setError'
+      | 'setIssuers'
+      | 'setLoadingReasonAsDisplayIssuers'
+      | 'setLoadingReasonAsDownloadingCredentials'
+      | 'setLoadingReasonAsSettingUp'
+      | 'setMetadataInCredentialData'
+      | 'setNoInternet'
+      | 'setOIDCConfigError'
+      | 'setPrivateKey'
+      | 'setPublicKey'
+      | 'setSelectedCredentialType'
+      | 'setSelectedIssuerId'
+      | 'setSelectedIssuers'
+      | 'setTokenResponse'
+      | 'setVCMetadata'
+      | 'setVerifiableCredential'
+      | 'storeKeyPair'
+      | 'storeVcMetaContext'
+      | 'storeVcsContext'
+      | 'storeVerifiableCredentialData'
+      | 'storeVerifiableCredentialMeta'
+      | 'updateVerificationErrorMessage';
     delays: never;
-    guards: never;
-    services: never;
+    guards:
+      | 'canSelectIssuerAgain'
+      | 'hasKeyPair'
+      | 'hasUserCancelledBiometric'
+      | 'isCustomSecureKeystore'
+      | 'isInternetConnected'
+      | 'isOIDCConfigError'
+      | 'isOIDCflowCancelled'
+      | 'isSignedIn'
+      | 'shouldFetchIssuersAgain';
+    services:
+      | 'checkInternet'
+      | 'downloadCredential'
+      | 'downloadCredentialTypes'
+      | 'downloadIssuerConfig'
+      | 'downloadIssuersList'
+      | 'generateKeyPair'
+      | 'invokeAuthorization'
+      | 'isUserSignedAlready'
+      | 'verifyCredential';
   };
   eventsCausingActions: {
     getKeyPairFromStore:
@@ -163,7 +215,6 @@ export interface Typegen0 {
     hasUserCancelledBiometric: 'error.platform.issuersMachine.downloadCredentials:invocation[0]';
     isCustomSecureKeystore: 'done.invoke.issuersMachine.generateKeyPair:invocation[0]';
     isInternetConnected: 'done.invoke.checkInternet';
-    isMultipleCredentialsSupported: 'done.invoke.issuersMachine.downloadCredentialTypes:invocation[0]';
     isOIDCConfigError: 'error.platform.issuersMachine.performAuthorization:invocation[0]';
     isOIDCflowCancelled: 'error.platform.issuersMachine.performAuthorization:invocation[0]';
     isSignedIn: 'done.invoke.issuersMachine.storing:invocation[0]';

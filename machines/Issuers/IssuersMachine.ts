@@ -105,7 +105,6 @@ export const IssuersMachine = model.createMachine(
           onDone: [
             {
               actions: 'setCredentialTypes',
-              cond: 'isMultipleCredentialsSupported',
               target: 'selectingCredentialType',
             },
             {
@@ -124,10 +123,7 @@ export const IssuersMachine = model.createMachine(
             target: 'displayIssuers',
           },
           SELECTED_CREDENTIAL_TYPE: {
-            actions: [
-              (_, event) => console.log('>>>>> event', event),
-              'setSelectedCredentialType',
-            ],
+            actions: 'setSelectedCredentialType',
             target: 'checkInternet',
           },
         },

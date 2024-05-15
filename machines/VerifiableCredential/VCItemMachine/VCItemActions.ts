@@ -9,7 +9,7 @@ import {getHomeMachineService} from '../../../screens/Home/HomeScreenController'
 import {DownloadProps} from '../../../shared/api';
 import {isHardwareKeystoreExists} from '../../../shared/cryptoutil/cryptoUtil';
 import {getBindingCertificateConstant} from '../../../shared/keystore/SecureKeystore';
-import {getIdType} from '../../../shared/openId4VCI/Utils';
+import {getIDType} from '../../../shared/openId4VCI/Utils';
 import {TelemetryConstants} from '../../../shared/telemetry/TelemetryConstants';
 import {
   sendStartEvent,
@@ -358,7 +358,7 @@ export const VCItemActions = model => {
           _vcKey: context.vcMetadata.getVcKey(),
           type: 'VC_DOWNLOADED',
           id: context.vcMetadata.id,
-          idType: getIdType(context.vcMetadata.issuer),
+          idType: getIDType(context.verifiableCredential?.credential),
           timestamp: Date.now(),
           deviceName: '',
           vcLabel: data.id,
@@ -371,7 +371,7 @@ export const VCItemActions = model => {
     logRemovedVc: send(
       (context: any, _) =>
         ActivityLogEvents.LOG_ACTIVITY({
-          idType: getIdType(context.vcMetadata.issuer),
+          idType: getIDType(context.verifiableCredential?.credential),
           id: context.vcMetadata.id,
           _vcKey: VCMetadata.fromVC(context.vcMetadata).getVcKey(),
           type: 'VC_REMOVED',
@@ -388,7 +388,7 @@ export const VCItemActions = model => {
         ActivityLogEvents.LOG_ACTIVITY({
           _vcKey: VCMetadata.fromVC(context.vcMetadata).getVcKey(),
           type: 'WALLET_BINDING_SUCCESSFULL',
-          idType: getIdType(context.vcMetadata.issuer),
+          idType: getIDType(context.verifiableCredential?.credential),
           id: context.vcMetadata.id,
           timestamp: Date.now(),
           deviceName: '',
@@ -405,7 +405,7 @@ export const VCItemActions = model => {
           _vcKey: VCMetadata.fromVC(context.vcMetadata).getVcKey(),
           type: 'WALLET_BINDING_FAILURE',
           id: context.vcMetadata.id,
-          idType: getIdType(context.vcMetadata.issuer),
+          idType: getIDType(context.verifiableCredential?.credential),
           timestamp: Date.now(),
           deviceName: '',
           vcLabel: VCMetadata.fromVC(context.vcMetadata).id,

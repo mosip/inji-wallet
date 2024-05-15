@@ -56,7 +56,7 @@ export class ActivityLog {
 
 export function getActionText(activity: ActivityLog, t) {
   if (activity.idType && activity.idType !== '') {
-    let cardType = t(`VcDetails:${activity.idType}`);
+    let cardType = t(`${activity.idType}`);
     return `${t(activity.type, {idType: cardType, id: activity.id})}`;
   }
   return `${t(activity.type, {idType: '', id: activity.id})}`;
