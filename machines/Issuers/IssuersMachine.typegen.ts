@@ -132,7 +132,6 @@ export interface Typegen0 {
       | 'hasUserCancelledBiometric'
       | 'isCustomSecureKeystore'
       | 'isInternetConnected'
-      | 'isMultipleCredentialsSupported'
       | 'isOIDCConfigError'
       | 'isOIDCflowCancelled'
       | 'isSignedIn'
@@ -216,7 +215,6 @@ export interface Typegen0 {
     hasUserCancelledBiometric: 'error.platform.issuersMachine.downloadCredentials:invocation[0]';
     isCustomSecureKeystore: 'done.invoke.issuersMachine.generateKeyPair:invocation[0]';
     isInternetConnected: 'done.invoke.checkInternet';
-    isMultipleCredentialsSupported: 'done.invoke.issuersMachine.downloadCredentialTypes:invocation[0]';
     isOIDCConfigError: 'error.platform.issuersMachine.performAuthorization:invocation[0]';
     isOIDCflowCancelled: 'error.platform.issuersMachine.performAuthorization:invocation[0]';
     isSignedIn: 'done.invoke.issuersMachine.storing:invocation[0]';
