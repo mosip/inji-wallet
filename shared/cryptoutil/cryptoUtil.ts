@@ -15,7 +15,7 @@ export const DUMMY_KEY_FOR_BIOMETRIC_ALIAS =
   '9a6cfc0e-4248-11ee-be56-0242ac120002';
 
 export function generateKeys(): Promise<KeyPair> {
-  return Promise.resolve(RSA.generateKeys(4096));
+  return Promise.resolve(RSA.generateKeys(1024));
 }
 
 /**
