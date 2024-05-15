@@ -21,7 +21,7 @@ import ReceiveCard from '../../assets/Receive_Card.svg';
 import ReceivedCards from '../../assets/Received_Cards.svg';
 import ProgressIcon from '../../assets/Progress_Icon1.svg';
 import testIDProps from '../../shared/commonUtil';
-import Logo from '../../assets/Mosip_Logo1.svg';
+import Logo from '../../assets/Inji_Logo';
 import WarningLogo from '../../assets/Warning_Icon.svg';
 import OtpVerificationIcon from '../../assets/Otp_Verification_Icon.svg';
 import FlipCameraIcon from '../../assets/Flip_Camera_Icon.svg';
@@ -252,11 +252,14 @@ export class SvgImage {
     );
   }
 
-  static InjiLogo() {
+  static InjiLogo(props: LogoProps) {
+    const {width, height} = props;
     return (
       <InjiLogo
         color1={Theme.Colors.linearGradientStart}
         color2={Theme.Colors.linearGradientEnd}
+        width={width}
+        height={height}
       />
     );
   }
