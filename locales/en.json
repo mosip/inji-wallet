@@ -434,7 +434,13 @@
     "share": "Share",
     "history": "History",
     "request": "Request",
-    "settings": "Settings"
+    "settings": "Settings",
+    "shareTitle": "Share Card",
+    "shareMessage": "Share your card with ease in offline mode using bluetooth, empowering you to provide verified information whenever required.",
+    "historyTitle": "Access to History",
+    "historyMessage": "View your activity history to track your interactions and stay informed about your past actions within the app.",
+    "settingsTitle": "App Settings",
+    "settingsMessage": "Customize your app experience with personalized settings as per your preferences."
   },
   "PasscodeScreen": {
     "header": "Set Passcode",

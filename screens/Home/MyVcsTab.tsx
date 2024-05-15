@@ -1,13 +1,13 @@
 import React, {useEffect, useState} from 'react';
 import {Button, Column, Row, Text} from '../../components/ui';
 import {Theme} from '../../components/ui/styleUtils';
-import {Pressable, RefreshControl} from 'react-native';
+import {Pressable, RefreshControl, View} from 'react-native';
 import {useMyVcsTab} from './MyVcsTabController';
 import {HomeScreenTabProps} from './HomeScreen';
 import {AddVcModal} from './MyVcs/AddVcModal';
 import {GetVcModal} from './MyVcs/GetVcModal';
 import {useTranslation} from 'react-i18next';
-import {BANNER_TYPE_SUCCESS, GET_INDIVIDUAL_ID} from '../../shared/constants';
+import {GET_INDIVIDUAL_ID} from '../../shared/constants';
 import {MessageOverlay} from '../../components/MessageOverlay';
 import {VcItemContainer} from '../../components/VC/VcItemContainer';
 import {
@@ -26,6 +26,7 @@ import {SvgImage} from '../../components/ui/svg';
 import {SearchBar} from '../../components/ui/SearchBar';
 import {Icon} from 'react-native-elements';
 import {VCMetadata} from '../../shared/VCMetadata';
+import {CopilotStep, useCopilot, walkthroughable} from 'react-native-copilot';
 
 export const MyVcsTab: React.FC<HomeScreenTabProps> = props => {
   const {t} = useTranslation('MyVcsTab');
@@ -58,6 +59,7 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = props => {
     setClearSearchIcon(false);
     setShowPinVc(true);
   };
+  const {start} = useCopilot();
 
   useEffect(() => {
     filterVcs(search);
@@ -201,6 +203,14 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = props => {
     numberOfCardsAvailable > 1
       ? numberOfCardsAvailable + ' ' + t('common:cards')
       : numberOfCardsAvailable + ' ' + t('common:card');
+
+  const CopilotView = walkthroughable(View);
+
+  if (controller.vcMetadatas.length == 1) {
+    console.log('restarting the copilot at 6th ===>>');
+    start('6');
+  }
+
   return (
     <React.Fragment>
       <Column fill style={{display: props.isVisible ? 'flex' : 'none'}}>
@@ -261,8 +271,26 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = props => {
                   )}
                 </Row>
                 {showPinVc &&
-                  vcMetadataOrderedByPinStatus.map(vcMetadata => {
-                    return (
+                  vcMetadataOrderedByPinStatus.map((vcMetadata, index) => {
+                    return index === 0 ? (
+                      <CopilotStep
+                        text="Your card displays your verified identity information. Tap for a detailed view or click on … for additional options."
+                        order={6}
+                        name="Card">
+                        <CopilotView>
+                          <VcItemContainer
+                            key={vcMetadata.getVcKey()}
+                            vcMetadata={vcMetadata}
+                            margin="0 2 8 2"
+                            onPress={controller.VIEW_VC}
+                            isDownloading={controller.inProgressVcDownloads?.has(
+                              vcMetadata.getVcKey(),
+                            )}
+                            isPinned={vcMetadata.isPinned}
+                          />
+                        </CopilotView>
+                      </CopilotStep>
+                    ) : (
                       <VcItemContainer
                         key={vcMetadata.getVcKey()}
                         vcMetadata={vcMetadata}

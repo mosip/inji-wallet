@@ -51,10 +51,7 @@ export const authMachine = model.createMachine(
     initial: 'init',
     on: {
       RESET_INITIAL_LAUNCH: {
-        actions: [
-          'resetInitialLaunch',
-          () => console.log('resetInitialLaunch===>>'),
-        ],
+        actions: ['resetInitialLaunch', 'storeContext'],
       },
     },
     states: {

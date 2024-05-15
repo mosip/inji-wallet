@@ -1,4 +1,4 @@
-import React, {useContext, useRef} from 'react';
+import React, {useContext} from 'react';
 import {
   BottomTabNavigationOptions,
   createBottomTabNavigator,
@@ -6,10 +6,7 @@ import {
 import {mainRoutes, share} from '../routes/main';
 import {Theme} from '../components/ui/styleUtils';
 import {useTranslation} from 'react-i18next';
-import {Column, Row} from '../components/ui';
-import {Image} from 'react-native';
-import {SettingScreen} from './Settings/SettingScreen';
-import {HelpScreen} from '../components/HelpScreen';
+import {Column} from '../components/ui';
 
 import {GlobalContext} from '../shared/GlobalContext';
 import {ScanEvents} from '../machines/bleShare/scan/scanMachine';
@@ -19,19 +16,15 @@ import {isIOS} from '../shared/constants';
 import {
   CopilotProvider,
   CopilotStep,
-  useCopilot,
   walkthroughable,
 } from 'react-native-copilot';
 import {Dimensions, View} from 'react-native';
 import {CopilotTooltip} from '../components/CopilotTooltip';
-import {useSelector} from '@xstate/react';
-import {selectIsInitialLaunch} from '../machines/auth';
 
 const {Navigator, Screen} = createBottomTabNavigator();
 
 export const MainLayout: React.FC = () => {
   const {t} = useTranslation('MainLayout');
-  const hasRendered = useRef(1);
 
   const {appService} = useContext(GlobalContext);
   const scanService = appService.children.get('scan');
@@ -43,23 +36,12 @@ export const MainLayout: React.FC = () => {
   };
 
   const CopilotView = walkthroughable(View);
-  const {start, stop} = useCopilot();
-
-  const authService = appService.children.get('auth');
-  const isInitialLaunch =
-    authService && useSelector(authService, selectIsInitialLaunch);
-
-  if (isInitialLaunch) {
-    start();
-    console.log('Starting the copilot walkthrough ===>>');
-    hasRendered.current += 1;
-  }
 
   return (
     <CopilotProvider
       stopOnOutsideClick
       androidStatusBarVisible
-      tooltipComponent={stop => <CopilotTooltip onStop={() => stop()} />}
+      tooltipComponent={CopilotTooltip}
       tooltipStyle={{
         width: Dimensions.get('screen').width * 1,
         height: Dimensions.get('screen').height * 0.2,
@@ -98,11 +80,9 @@ export const MainLayout: React.FC = () => {
                     </View>
                   ) : (
                     <CopilotStep
-                      text={
-                        'Lorem Ipsum is simply dummy text of the printing and typesetting industry.'
-                      }
-                      order={2 + index + 1}
-                      name={t(route.name)}>
+                      text={t(route.name + 'Message')}
+                      order={2 + index}
+                      name={t(route.name + 'Title')}>
                       <CopilotView style={Theme.Styles.tabBarIconCopilot}>
                         {SvgImage[`${route.name}`](focused)}
                       </CopilotView>

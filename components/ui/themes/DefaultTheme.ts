@@ -741,8 +741,8 @@ export const DefaultTheme = {
       flex: 1,
       justifyContent: 'center',
       alignItems: 'center',
-      height: 100,
-      width: 70,
+      height: 250,
+      width: 120,
       zIndex: -20,
       overflow: 'visible',
       marginBottom: -18,
@@ -1559,7 +1559,8 @@ export const DefaultTheme = {
     tooltipContainer: {
       flex: 1,
       backgroundColor: Colors.White,
-      minWidth: Dimensions.get('screen').width * 0.5,
+      minWidth: Dimensions.get('screen').width * 0.55,
+      height: Dimensions.get('screen').width * 0.45,
     },
   }),
 

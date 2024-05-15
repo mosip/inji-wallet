@@ -49,9 +49,9 @@ export const HomeScreenLayout: React.FC<RootRouteProps> = props => {
       source={'Inji'}
       triggerComponent={
         <CopilotStep
-          text="Lorem Ipsum is simply dummy text of the printing and typesetting industry."
+          text="Find answers to common questions and access helpful resources in our FAQ section, ensuring you have the support whenever you need it."
           order={1}
-          name="App Tour Guide">
+          name="Help/FAQs">
           <CopilotView testID="help" style={Theme.HelpScreenStyle.viewStyle}>
             <Row crossAlign="center" style={Theme.HelpScreenStyle.rowStyle}>
               <View testID="helpIcon" style={Theme.HelpScreenStyle.iconStyle}>
