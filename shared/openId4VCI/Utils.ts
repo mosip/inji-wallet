@@ -29,14 +29,16 @@ export const Issuers = {
 };
 
 export const ID_TYPE = {
-  MOSIPVerifiableCredential: i18n.t('VcDetails:nationalCard'),
-  InsuranceCredential: i18n.t('VcDetails:insuranceCard'),
-  OpenG2PBeneficiaryVerifiableCredential: i18n.t('VcDetails:beneficiaryCard'),
-  OpenG2PRegistryVerifiableCredential: i18n.t('VcDetails:socialRegistryCard'),
+  MOSIPVerifiableCredential: () => i18n.t('VcDetails:nationalCard'),
+  InsuranceCredential: () => i18n.t('VcDetails:insuranceCard'),
+  OpenG2PBeneficiaryVerifiableCredential: () =>
+    i18n.t('VcDetails:beneficiaryCard'),
+  OpenG2PRegistryVerifiableCredential: () =>
+    i18n.t('VcDetails:socialRegistryCard'),
 };
 
 export const getIDType = (verifiableCredential: Credential) => {
-  return ID_TYPE[verifiableCredential.type[1]];
+  return verifiableCredential.type[1];
 };
 
 export const ACTIVATION_NEEDED = [Issuers.ESignet, Issuers.Mosip];

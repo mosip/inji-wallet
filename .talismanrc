@@ -247,4 +247,6 @@ fileignoreconfig:
     checksum: 528b2eb9640765896b25c3ac054d5b4015d9c1c255fb744308a766108d361c1d
   - filename: machines/VerifiableCredential/VCMetaMachine/VCMetaSelectors.ts
     checksum: fdc3d7685b7a3ad764ef5259814e921887f4c4941b952a9c169ef030905ea956
+  - filename: .github/scripts/set-google-clientid.sh
+    checksum: 013ef3b43f50ba05e18c9c83e89cc366c3f0d8ed4d931ce7daa19a757880419b
     version: ""

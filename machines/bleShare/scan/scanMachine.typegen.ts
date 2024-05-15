@@ -47,6 +47,7 @@ export interface Typegen0 {
   };
   eventsCausingActions: {
     clearUri: 'STORE_RESPONSE';
+    enableLocation: 'ALLOWED' | 'LOCATION_REQUEST';
     getFaceAuthConsent:
       | 'DISCONNECT'
       | 'DISMISS'
@@ -133,8 +134,8 @@ export interface Typegen0 {
       | 'NEARBY_ENABLED'
       | 'START_PERMISSION_CHECK';
     checkBluetoothState: '' | 'APP_ACTIVE';
-    checkLocationPermission: 'APP_ACTIVE' | 'LOCATION_ENABLED';
-    checkLocationStatus: '' | 'LOCATION_REQUEST';
+    checkLocationPermission: 'LOCATION_ENABLED';
+    checkLocationStatus: '' | 'APP_ACTIVE' | 'LOCATION_REQUEST';
     checkNearByDevicesPermission: 'APP_ACTIVE' | 'START_PERMISSION_CHECK';
     checkStorageAvailability: 'RESET' | 'SCREEN_FOCUS' | 'SELECT_VC';
     disconnect: '' | 'DISMISS' | 'LOCATION_ENABLED' | 'RETRY' | 'SCREEN_BLUR';
@@ -162,6 +163,7 @@ export interface Typegen0 {
     | 'checkNearbyDevicesPermission.requesting'
     | 'checkStorage'
     | 'checkingLocationState'
+    | 'checkingLocationState.LocationPermissionRationale'
     | 'checkingLocationState.checkLocationService'
     | 'checkingLocationState.checkingPermissionStatus'
     | 'checkingLocationState.denied'
@@ -211,6 +213,7 @@ export interface Typegen0 {
         checkBluetoothState?: 'checking' | 'enabled' | 'requesting';
         checkNearbyDevicesPermission?: 'checking' | 'enabled' | 'requesting';
         checkingLocationState?:
+          | 'LocationPermissionRationale'
           | 'checkLocationService'
           | 'checkingPermissionStatus'
           | 'denied'

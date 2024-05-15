@@ -8,7 +8,7 @@ import {VCItemField} from './VCItemField';
 import React from 'react';
 import {Theme} from '../../ui/styleUtils';
 import {CREDENTIAL_REGISTRY_EDIT} from 'react-native-dotenv';
-import {getIDType} from '../../../shared/openId4VCI/Utils';
+import {ID_TYPE, getIDType} from '../../../shared/openId4VCI/Utils';
 import {VCVerification} from '../../VCVerification';
 import {MIMOTO_BASE_URL} from '../../../shared/constants';
 
@@ -65,7 +65,7 @@ export const getFieldValue = (
         />
       );
     case 'idType':
-      return getIDType(verifiableCredential);
+      return ID_TYPE[getIDType(props.credential)]();
     case 'credentialRegistry':
       return props?.vc?.credentialRegistry;
     case 'address':
@@ -75,7 +75,7 @@ export const getFieldValue = (
     default: {
       const fieldValue = verifiableCredential?.credentialSubject[field];
       if (Array.isArray(fieldValue) && typeof fieldValue[0] !== 'object') {
-        return fieldValue;
+        return fieldValue.join(', ');
       }
       return getLocalizedField(fieldValue);
     }
