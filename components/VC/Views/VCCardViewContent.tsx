@@ -13,7 +13,7 @@ import {isVCLoaded, setBackgroundColour} from '../common/VCUtils';
 import {setTextColor, VCItemFieldValue} from '../common/VCItemField';
 import {WalletBinding} from '../../../screens/Home/MyVcs/WalletBinding';
 import {VCVerification} from '../../VCVerification';
-import {Issuers} from '../../../shared/openId4VCI/Utils';
+import {isActivationNotNeeded, Issuers} from '../../../shared/openId4VCI/Utils';
 import {VCItemContainerFlowType} from '../../../shared/Utils';
 import {RemoveVcWarningOverlay} from '../../../screens/Home/MyVcs/RemoveVcWarningOverlay';
 import {HistoryTab} from '../../../screens/Home/MyVcs/HistoryTab';
@@ -77,7 +77,7 @@ export const VCCardViewContent: React.FC<VCItemContentProps> = props => {
 
           {!Object.values(VCItemContainerFlowType).includes(props.flow) && (
             <>
-              {props.vcMetadata.issuer === Issuers.Sunbird ||
+              {isActivationNotNeeded(props.vcMetadata.issuer) ||
               props.walletBindingResponse
                 ? SvgImage.walletActivatedIcon()
                 : SvgImage.walletUnActivatedIcon()}

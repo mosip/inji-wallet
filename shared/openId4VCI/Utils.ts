@@ -9,8 +9,8 @@ import i18next from 'i18next';
 import {getJWT} from '../cryptoutil/cryptoUtil';
 import i18n from '../../i18n';
 import {
+  Credential,
   CredentialWrapper,
-  VerifiableCredential,
 } from '../../machines/VerifiableCredential/VCMetaMachine/vc';
 import {
   BOTTOM_SECTION_FIELDS_WITH_DETAILED_ADDRESS_FIELDS,
@@ -26,21 +26,7 @@ export const Issuers = {
   Mosip: '',
   Sunbird: 'Sunbird',
   ESignet: 'ESignet',
-  OpenG2P: 'OpenG2PSocialCashTransferProgram',
 };
-
-/**
- * @param issuer of the VC as per the VC metadata in MMKV
- * @returns the ID-type to be used for further translation
- *
- * NOTE: This might be replaced by a more standards compliant way later.
- */
-export function getIdType(issuer: string | undefined): string {
-  if (issuer === Issuers.Mosip || issuer === Issuers.ESignet) {
-    return 'nationalCard';
-  }
-  return 'insuranceCard';
-}
 
 export const ID_TYPE = {
   MOSIPVerifiableCredential: i18n.t('VcDetails:nationalCard'),
@@ -49,7 +35,7 @@ export const ID_TYPE = {
   OpenG2PRegistryVerifiableCredential: i18n.t('VcDetails:socialRegistryCard'),
 };
 
-export const getIDType = (verifiableCredential: VerifiableCredential) => {
+export const getIDType = (verifiableCredential: Credential) => {
   return ID_TYPE[verifiableCredential.type[1]];
 };
 
@@ -57,6 +43,10 @@ export const ACTIVATION_NEEDED = [Issuers.ESignet, Issuers.Mosip];
 
 export const isActivationNeeded = (issuer: string) => {
   return ACTIVATION_NEEDED.indexOf(issuer) !== -1;
+};
+
+export const isActivationNotNeeded = (issuer: string) => {
+  return ACTIVATION_NEEDED.indexOf(issuer) === -1;
 };
 
 export const Issuers_Key_Ref = 'OpenId4VCI_KeyPair';
