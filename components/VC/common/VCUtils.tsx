@@ -75,7 +75,7 @@ export const getFieldValue = (
     default: {
       const fieldValue = verifiableCredential?.credentialSubject[field];
       if (Array.isArray(fieldValue) && typeof fieldValue[0] !== 'object') {
-        return fieldValue.join('; ');
+        return fieldValue.join(', ');
       }
       return getLocalizedField(fieldValue);
     }
