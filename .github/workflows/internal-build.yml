@@ -81,8 +81,23 @@ on:
           - true
 
 jobs:
+  set-client-id:
+    runs-on: ubuntu-latest
+    outputs:
+      CLIENT_ID: ${{ steps.client-id.outputs.CLIENT_ID }}
+    steps:
+      - uses: actions/checkout@v3.1.0
+      - name: Set Google client id
+        id: client-id
+        run: |
+          cd .github/scripts
+          ./set-google-clientid.sh "$INJI_FLAVOR"
+        env:
+          INJI_FLAVOR: ${{ github.event.inputs.injiFlavor }}
+
   build-android:
     if: ${{ inputs.buildFor == 'Both[Android and IOS]' || inputs.buildFor == 'Android'}}
+    needs: set-client-id
     uses: mosip/kattu/.github/workflows/android-publish.yml@master
     with:
       RELEASE: ${{ inputs.release }}
@@ -105,7 +120,7 @@ jobs:
       RELEASE_KEYSTORE_PASSWORD: '${{ secrets.INJI_ANDROID_RELEASE_STOREPASS }}'
       INJI_ANDROID_PLAY_STORE_CONFIG_JSON: ${{ secrets.INJI_ANDROID_PLAY_STORE_CONFIG_JSON }}
       SLACK_WEBHOOK_URL: '${{ secrets.SLACK_WEBHOOK_INJI_TEAM }}'
-      GOOGLE_ANDROID_CLIENT_ID: ${{secrets.INJI_GOOGLE_CLIENT_ID}}
+      GOOGLE_ANDROID_CLIENT_ID: ${{ secrets[needs.set-client-id.outputs.CLIENT_ID] }}
 
   build-android-beta:
     if: ${{ inputs.release == 'beta' && (inputs.buildFor == 'Both[Android and IOS]' || inputs.buildFor == 'Android') }}
