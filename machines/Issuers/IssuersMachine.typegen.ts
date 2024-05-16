@@ -97,16 +97,15 @@ export interface Typegen0 {
       | 'resetError'
       | 'resetIsVerified'
       | 'resetLoadingReason'
+      | 'resetVerificationErrorMessage'
       | 'sendBackupEvent'
       | 'sendDownloadingFailedToVcMeta'
       | 'sendErrorEndEvent'
       | 'sendImpressionEvent'
       | 'sendSuccessEndEvent'
-      | 'sendVerificationError'
       | 'setCredentialTypes'
       | 'setCredentialWrapper'
       | 'setError'
-      | 'setErrorAsVerificationError'
       | 'setIsVerified'
       | 'setIssuers'
       | 'setLoadingReasonAsDisplayIssuers'
@@ -127,7 +126,8 @@ export interface Typegen0 {
       | 'storeVcMetaContext'
       | 'storeVcsContext'
       | 'storeVerifiableCredentialData'
-      | 'storeVerifiableCredentialMeta';
+      | 'storeVerifiableCredentialMeta'
+      | 'updateVerificationErrorMessage';
     delays: never;
     guards:
       | 'canSelectIssuerAgain'
@@ -175,12 +175,12 @@ export interface Typegen0 {
       | 'error.platform.issuersMachine.downloadIssuerConfig:invocation[0]'
       | 'error.platform.issuersMachine.performAuthorization:invocation[0]'
       | 'error.platform.issuersMachine.verifyingCredential:invocation[0]';
+    resetVerificationErrorMessage: 'RESET_VERIFY_ERROR';
     sendBackupEvent: 'done.invoke.issuersMachine.storing:invocation[0]';
     sendDownloadingFailedToVcMeta: 'error.platform.issuersMachine.downloadCredentials:invocation[0]';
     sendErrorEndEvent: 'error.platform.issuersMachine.verifyingCredential:invocation[0]';
     sendImpressionEvent: 'done.invoke.issuersMachine.displayIssuers:invocation[0]';
     sendSuccessEndEvent: 'done.invoke.issuersMachine.verifyingCredential:invocation[0]';
-    sendVerificationError: 'error.platform.issuersMachine.verifyingCredential:invocation[0]';
     setCredentialTypes: 'done.invoke.issuersMachine.downloadCredentialTypes:invocation[0]';
     setCredentialWrapper: 'done.invoke.issuersMachine.downloadCredentials:invocation[0]';
     setError:
@@ -189,7 +189,6 @@ export interface Typegen0 {
       | 'error.platform.issuersMachine.downloadCredentials:invocation[0]'
       | 'error.platform.issuersMachine.downloadIssuerConfig:invocation[0]'
       | 'error.platform.issuersMachine.performAuthorization:invocation[0]';
-    setErrorAsVerificationError: 'error.platform.issuersMachine.verifyingCredential:invocation[0]';
     setIsVerified: 'done.invoke.issuersMachine.verifyingCredential:invocation[0]';
     setIssuers: 'done.invoke.issuersMachine.displayIssuers:invocation[0]';
     setLoadingReasonAsDisplayIssuers: 'TRY_AGAIN';
@@ -230,6 +229,7 @@ export interface Typegen0 {
     storeVerifiableCredentialMeta:
       | 'done.invoke.issuersMachine.verifyingCredential:invocation[0]'
       | 'error.platform.issuersMachine.verifyingCredential:invocation[0]';
+    updateVerificationErrorMessage: 'error.platform.issuersMachine.verifyingCredential:invocation[0]';
   };
   eventsCausingDelays: {};
   eventsCausingGuards: {

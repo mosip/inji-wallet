@@ -44,21 +44,6 @@ export const IssuersActions = (model: any) => {
           isVerified: false,
         }),
     }),
-    sendVerificationError: send(
-      (context: any, _event) => {
-        return {
-          type: 'VERIFY_VC_FAILED',
-          errorMessage: context.errorMessage,
-          vcMetadata: context.vcMetadata,
-        };
-      },
-      {
-        to: context => context.serviceRefs.vcMeta,
-      },
-    ),
-    setErrorAsVerificationError: assign({
-      errorMessage: () => VerificationErrorType.TECHNICAL_ERROR,
-    }),
     setIssuers: model.assign({
       issuers: (_: any, event: any) => event.data,
     }),
@@ -257,6 +242,11 @@ export const IssuersActions = (model: any) => {
         ),
       );
     },
+
+    updateVerificationErrorMessage: assign({
+      verificationErrorMessage: (context: any, event: any) =>
+        (event.data as Error).message,
+    }),
 
     resetVerificationErrorMessage: model.assign({
       verificationErrorMessage: () => '',
