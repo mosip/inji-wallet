@@ -109,6 +109,6 @@ export const QrCodeOverlay: React.FC<QrCodeOverlayProps> = props => {
 };
 
 interface QrCodeOverlayProps {
-  verifiableCredential: VerifiableCredential;
+  verifiableCredential: VerifiableCredential | Credential;
   meta: VCMetadata;
 }

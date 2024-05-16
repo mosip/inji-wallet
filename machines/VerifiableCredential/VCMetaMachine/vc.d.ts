@@ -1,3 +1,4 @@
+import {VCMetadata} from '../../../shared/VCMetadata';
 import {displayType, logoType} from '../../Issuers/IssuersMachine';
 
 export interface VC {
@@ -63,6 +64,15 @@ export interface VerifiableCredential {
   credential: Credential;
   wellKnown: string;
   credentialTypes: Object[];
+}
+
+export interface VerifiableCredentialData {
+  vcMetadata: VCMetadata;
+  face: string;
+  issuerLogo: logoType;
+  wellKnown?: string;
+  credentialTypes?: Object[];
+  issuer?: string;
 }
 
 export interface CredentialWrapper {

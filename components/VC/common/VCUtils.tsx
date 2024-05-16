@@ -14,6 +14,7 @@ import {
 } from '../../../shared/openId4VCI/Utils';
 import {VCVerification} from '../../VCVerification';
 import {MIMOTO_BASE_URL} from '../../../shared/constants';
+import {VCItemDetailsProps} from '../Views/VCDetailView';
 
 export const CARD_VIEW_DEFAULT_FIELDS = ['fullName'];
 export const DETAIL_VIEW_DEFAULT_FIELDS = [
@@ -46,7 +47,7 @@ export const BOTTOM_SECTION_FIELDS_WITH_DETAILED_ADDRESS_FIELDS = [
 ];
 
 export const getFieldValue = (
-  verifiableCredential: VerifiableCredential,
+  verifiableCredential: VerifiableCredential | Credential,
   field: string,
   wellknown: any,
   props: any,
@@ -83,11 +84,38 @@ export const getFieldValue = (
   }
 };
 
-export const getFieldName = (field: string, wellknown: any) => {
-  if (wellknown && wellknown.credentials_supported) {
-    const fieldObj =
-      wellknown.credentials_supported[0].credential_definition
-        .credentialSubject[field];
+export const getSelectedCredentialTypeDetails = (
+  wellknown: any,
+  vcCredentialTypes: Object[],
+) => {
+  for (let credential in wellknown.credentials_supported) {
+    const credentialDetails = wellknown.credentials_supported[credential];
+
+    if (
+      JSON.stringify(credentialDetails.credential_definition.type) ===
+      JSON.stringify(vcCredentialTypes)
+    ) {
+      return credentialDetails;
+    }
+  }
+
+  console.error(
+    'Selected credential type is not available in wellknown config supported credentials list',
+  );
+};
+
+export const getFieldName = (
+  field: string,
+  wellknown: any,
+  vcCredentialTypes?: Object[],
+) => {
+  if (wellknown && wellknown.credentials_supported && vcCredentialTypes) {
+    const credentialDetails = getSelectedCredentialTypeDetails(
+      wellknown,
+      vcCredentialTypes,
+    );
+    const credentialDefinition = credentialDetails.credential_definition;
+    let fieldObj = credentialDefinition.credentialSubject[field];
     if (fieldObj) {
       const newFieldObj = fieldObj.display.map(obj => {
         return {language: obj.locale, value: obj.name};
@@ -144,12 +172,16 @@ function formattedDateTime(timeStamp: any) {
 
 export const fieldItemIterator = (
   fields: any[],
-  verifiableCredential: any,
+  verifiableCredential: VerifiableCredential | Credential,
   wellknown: any,
-  props: any,
+  props: VCItemDetailsProps,
 ) => {
   return fields.map(field => {
-    const fieldName = getFieldName(field, wellknown);
+    const fieldName = getFieldName(
+      field,
+      wellknown,
+      props.verifiableCredentialData.credentialTypes,
+    );
     const fieldValue = getFieldValue(
       verifiableCredential,
       field,

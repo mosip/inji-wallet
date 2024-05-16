@@ -3,6 +3,7 @@ import {useTranslation} from 'react-i18next';
 import {Image, ImageBackground, View} from 'react-native';
 import {
   VerifiableCredential,
+  VerifiableCredentialData,
   WalletBindingResponse,
 } from '../../../machines/VerifiableCredential/VCMetaMachine/vc';
 import {Button, Column, Row, Text} from '../../ui';
@@ -235,8 +236,8 @@ export const VCDetailView: React.FC<VCItemDetailsProps> = props => {
 
 export interface VCItemDetailsProps {
   credential: VerifiableCredential | Credential;
-  verifiableCredentialData: any;
-  walletBindingResponse: WalletBindingResponse;
+  verifiableCredentialData: VerifiableCredentialData;
+  walletBindingResponse?: WalletBindingResponse;
   onBinding?: () => void;
   activeTab?: Number;
   vcHasImage: boolean;
