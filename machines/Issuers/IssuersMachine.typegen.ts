@@ -139,8 +139,8 @@ export interface Typegen0 {
       | 'isMultipleCredentialsSupported'
       | 'isOIDCConfigError'
       | 'isOIDCflowCancelled'
-      | 'isPendingVerificationError'
       | 'isSignedIn'
+      | 'isVerificationPendingBecauseOfNetworkIssue'
       | 'shouldFetchIssuersAgain';
     services:
       | 'checkInternet'
@@ -242,8 +242,8 @@ export interface Typegen0 {
     isMultipleCredentialsSupported: 'done.invoke.issuersMachine.downloadCredentialTypes:invocation[0]';
     isOIDCConfigError: 'error.platform.issuersMachine.performAuthorization:invocation[0]';
     isOIDCflowCancelled: 'error.platform.issuersMachine.performAuthorization:invocation[0]';
-    isPendingVerificationError: 'error.platform.issuersMachine.verifyingCredential:invocation[0]';
     isSignedIn: 'done.invoke.issuersMachine.storing:invocation[0]';
+    isVerificationPendingBecauseOfNetworkIssue: 'error.platform.issuersMachine.verifyingCredential:invocation[0]';
     shouldFetchIssuersAgain: 'TRY_AGAIN';
   };
   eventsCausingServices: {
