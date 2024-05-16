@@ -332,7 +332,7 @@ export const IssuersMachine = model.createMachine(
           ],
           onError: [
             {
-              cond: 'isPendingVerificationError',
+              cond: 'isVerificationPendingBecauseOfNetworkIssue',
               actions: ['resetLoadingReason', 'resetIsVerified'],
               target: 'storing',
             },

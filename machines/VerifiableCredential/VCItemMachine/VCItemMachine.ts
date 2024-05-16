@@ -457,7 +457,7 @@ export const VCItemMachine = model.createMachine(
               },
               onError: [
                 {
-                  cond: 'isPendingVerificationError',
+                  cond: 'isVerificationPendingBecauseOfNetworkIssue',
                   actions: ['resetIsVerified', 'storeContext'],
                 },
                 {
@@ -561,7 +561,7 @@ export const VCItemMachine = model.createMachine(
               },
               onError: [
                 {
-                  cond: 'isPendingVerificationError',
+                  cond: 'isVerificationPendingBecauseOfNetworkIssue',
                   actions: ['resetIsVerified', 'storeContext'],
                 },
               ],
