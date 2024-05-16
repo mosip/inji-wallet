@@ -244,7 +244,7 @@ export const IssuersActions = (model: any) => {
     },
 
     updateVerificationErrorMessage: assign({
-      verificationErrorMessage: (context: any, event: any) =>
+      verificationErrorMessage: (_, event: any) =>
         (event.data as Error).message,
     }),
 
