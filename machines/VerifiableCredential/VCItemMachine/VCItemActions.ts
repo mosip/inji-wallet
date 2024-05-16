@@ -30,9 +30,6 @@ import {BackupEvents} from '../../backupAndRestore/backup';
 import {VcMetaEvents} from '../VCMetaMachine/VCMetaMachine';
 import {WalletBindingResponse} from '../VCMetaMachine/vc';
 import {BannerStatusType} from '../../../components/BannerNotification';
-import {getMosipIdentifier} from '../../../shared/commonUtil';
-import {getVerifiableCredential} from './VCItemSelectors';
-import {VerificationErrorType} from '../../../shared/vcjs/verifyCredential';
 
 export const VCItemActions = model => {
   return {
@@ -256,7 +253,7 @@ export const VCItemActions = model => {
     }),
     setErrorAsVerificationError: assign({
       //todo handle error message from different actions
-      error: (_context, event) => VerificationErrorType.TECHNICAL_ERROR,
+      error: (_context, event) => (event.data as Error).message,
     }),
     unSetError: assign({
       error: () => '',
