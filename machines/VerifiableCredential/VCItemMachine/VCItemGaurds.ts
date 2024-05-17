@@ -17,7 +17,7 @@ export const VCItemGaurds = () => {
 
     isCustomSecureKeystore: () => isHardwareKeystoreExists,
 
-    isPendingVerificationError: (_context, event) =>
+    isVerificationPendingBecauseOfNetworkIssue: (_context, event) =>
       (event.data as Error).message == VerificationErrorType.NETWORK_ERROR,
   };
 };

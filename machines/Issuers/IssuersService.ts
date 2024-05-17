@@ -118,7 +118,6 @@ export const IssuersService = () => {
       }
       const verificationResult = await verifyCredential(
         context.verifiableCredential?.credential,
-        context.vcMetadata,
       );
       if (!verificationResult.isVerified) {
         throw new Error(verificationResult.errorMessage);

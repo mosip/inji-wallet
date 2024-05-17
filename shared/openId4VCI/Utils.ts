@@ -54,8 +54,7 @@ export function getVcVerificationDetails(
     vcType: getIDType(
       getVerifiableCredential(vcMetadata, verifiableCredential),
     ),
-    vcNumber: getVerifiableCredential(vcMetadata, verifiableCredential)
-      .credentialSubject[`${vcMetadata.idType}`],
+    vcNumber: vcMetadata.id,
   };
 }
 

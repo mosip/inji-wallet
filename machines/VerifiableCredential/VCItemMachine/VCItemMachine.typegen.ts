@@ -192,8 +192,8 @@ export interface Typegen0 {
       | 'hasCredential'
       | 'isCustomSecureKeystore'
       | 'isDownloadAllowed'
-      | 'isPendingVerificationError'
-      | 'isSignedIn';
+      | 'isSignedIn'
+      | 'isVerificationPendingBecauseOfNetworkIssue';
     services:
       | 'addWalletBindingId'
       | 'checkDownloadExpiryLimit'
@@ -342,12 +342,12 @@ export interface Typegen0 {
       | 'done.invoke.vc-item-machine.vcUtilitiesState.walletBinding.addKeyPair:invocation[0]'
       | 'done.invoke.vc-item-machine.vcUtilitiesState.walletBinding.addingWalletBindingId:invocation[0]';
     isDownloadAllowed: 'POLL';
-    isPendingVerificationError:
-      | 'error.platform.vc-item-machine.vcUtilitiesState.verifyingCredential:invocation[0]'
-      | 'error.platform.vc-item-machine.verifyState.verifyingCredential:invocation[0]';
     isSignedIn:
       | 'done.invoke.vc-item-machine.vcUtilitiesState.kebabPopUp.triggerAutoBackup:invocation[0]'
       | 'done.invoke.vc-item-machine.vcUtilitiesState.verifyingCredential.triggerAutoBackupForVcDownload:invocation[0]';
+    isVerificationPendingBecauseOfNetworkIssue:
+      | 'error.platform.vc-item-machine.vcUtilitiesState.verifyingCredential:invocation[0]'
+      | 'error.platform.vc-item-machine.verifyState.verifyingCredential:invocation[0]';
   };
   eventsCausingServices: {
     addWalletBindingId: 'done.invoke.vc-item-machine.vcUtilitiesState.walletBinding.addKeyPair:invocation[0]';
