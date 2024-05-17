@@ -1543,7 +1543,7 @@ export const PurpleTheme = {
       height: 50,
       width: 50,
     },
-    iconText: {fontFamily: 'Inter_600SemiBold', fontSize: 12, margin: 6},
+    iconText: {fontFamily: 'Inter_600SemiBold', fontSize: 12, marginTop: 6},
   }),
   BottomTabBarStyle: StyleSheet.create({
     headerRightContainerStyle: {paddingEnd: 13},

@@ -116,51 +116,49 @@ export const QrScanner: React.FC<QrScannerProps> = props => {
   };
   return (
     <>
-      <Column fill align="space-around">
-        {hasCameraPermission ? (
-          <>
-            <View style={Theme.CameraEnabledStyles.scannerContainer}>
-              <Camera
-                {...testIDProps('camera')}
-                style={Theme.CameraEnabledStyles.scanner}
-                barCodeScannerSettings={{
-                  barcodeTypes: [BarCodeScanner.Constants.BarCodeType.qr],
-                }}
-                onBarCodeScanned={scanned ? undefined : onBarcodeScanned}
-                type={cameraType}
-              />
-            </View>
-            {props.title && (
-              <Text
-                testID="holdPhoneSteadyMessage"
-                align="center"
-                style={Theme.CameraEnabledStyles.holdPhoneSteadyText}
-                margin="0 57">
-                {props.title}
-              </Text>
-            )}
-            <Column crossAlign="center">
-              <TouchableOpacity
-                onPress={() => {
-                  setCameraType(
-                    cameraType === Camera.Constants.Type.back
-                      ? Camera.Constants.Type.front
-                      : Camera.Constants.Type.back,
-                  );
-                }}>
-                {SvgImage.FlipCameraIcon()}
-              </TouchableOpacity>
-              <Text
-                testID="flipCameraText"
-                style={Theme.CameraEnabledStyles.iconText}>
-                {t('flipCamera')}
-              </Text>
-            </Column>
-          </>
-        ) : (
-          <View style={Theme.CameraDisabledStyles.scannerContainer} />
-        )}
-      </Column>
+      {hasCameraPermission ? (
+        <Column fill align="space-between">
+          <View style={Theme.CameraEnabledStyles.scannerContainer}>
+            <Camera
+              {...testIDProps('camera')}
+              style={Theme.CameraEnabledStyles.scanner}
+              barCodeScannerSettings={{
+                barcodeTypes: [BarCodeScanner.Constants.BarCodeType.qr],
+              }}
+              onBarCodeScanned={scanned ? undefined : onBarcodeScanned}
+              type={cameraType}
+            />
+          </View>
+          {props.title && (
+            <Text
+              testID="holdPhoneSteadyMessage"
+              align="center"
+              style={Theme.CameraEnabledStyles.holdPhoneSteadyText}
+              margin="0 57">
+              {props.title}
+            </Text>
+          )}
+          <Column crossAlign="center">
+            <TouchableOpacity
+              onPress={() => {
+                setCameraType(
+                  cameraType === Camera.Constants.Type.back
+                    ? Camera.Constants.Type.front
+                    : Camera.Constants.Type.back,
+                );
+              }}>
+              {SvgImage.FlipCameraIcon()}
+            </TouchableOpacity>
+            <Text
+              testID="flipCameraText"
+              style={Theme.CameraEnabledStyles.iconText}>
+              {t('flipCamera')}
+            </Text>
+          </Column>
+        </Column>
+      ) : (
+        <View style={Theme.CameraDisabledStyles.scannerContainer} />
+      )}
       {showCameraPermissionDeniedBanner && <CameraDisabledPopUp />}
     </>
   );
