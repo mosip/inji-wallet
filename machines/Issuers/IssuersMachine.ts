@@ -332,7 +332,7 @@ export const IssuersMachine = model.createMachine(
           ],
           onError: [
             {
-              cond: 'isPendingVerificationError',
+              cond: 'isVerificationPendingBecauseOfNetworkIssue',
               actions: ['resetLoadingReason', 'resetIsVerified'],
               target: 'storing',
             },
@@ -340,7 +340,7 @@ export const IssuersMachine = model.createMachine(
               actions: [
                 'resetLoadingReason',
                 'sendErrorEndEvent',
-                'setErrorAsVerificationError',
+                'updateVerificationErrorMessage',
               ],
               target: 'handleVCVerificationFailure',
             },
@@ -349,7 +349,11 @@ export const IssuersMachine = model.createMachine(
       },
 
       handleVCVerificationFailure: {
-        entry: 'sendVerificationError',
+        on: {
+          RESET_VERIFY_ERROR: {
+            actions: ['resetVerificationErrorMessage'],
+          },
+        },
       },
 
       storing: {

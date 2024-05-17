@@ -7,7 +7,7 @@ import {VerificationErrorType} from '../../shared/vcjs/verifyCredential';
 
 export const IssuersGuards = () => {
   return {
-    isPendingVerificationError: (_context, event) =>
+    isVerificationPendingBecauseOfNetworkIssue: (_context, event) =>
       (event.data as Error).message == VerificationErrorType.NETWORK_ERROR,
     isSignedIn: (_: any, event: any) =>
       (event.data as isSignedInResult).isSignedIn,

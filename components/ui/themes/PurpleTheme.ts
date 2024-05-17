@@ -173,9 +173,9 @@ export const PurpleTheme = {
       backgroundColor: Colors.Grey,
       borderRadius: 4,
     },
-    detailsValue: {
-      color: Colors.Black,
+    verificationStatus: {
       fontSize: 12,
+      fontFamily: 'Inter_600SemiBold',
     },
     statusLabel: {
       color: Colors.Gray30,

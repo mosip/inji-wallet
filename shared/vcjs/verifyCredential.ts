@@ -83,7 +83,7 @@ export async function verifyCredential(
     );
     return {
       isVerified: false,
-      errorMessage: error,
+      errorMessage: VerificationErrorType.TECHNICAL_ERROR,
     };
   }
 }
