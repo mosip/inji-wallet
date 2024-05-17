@@ -69,7 +69,7 @@ export const HomeScreen: React.FC<HomeRouteProps> = props => {
 
   return (
     <View
-      onLayout={controller.isInitialLaunch ? () => start() : null}
+      onLayout={controller.isInitialLaunch ? () => start() : undefined}
       style={{
         width: Dimensions.get('screen').width,
         height: Dimensions.get('screen').height * 0.78,

@@ -59,7 +59,7 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = props => {
     setClearSearchIcon(false);
     setShowPinVc(true);
   };
-  const {start} = useCopilot();
+  const {start, goToNth} = useCopilot();
 
   useEffect(() => {
     filterVcs(search);
@@ -206,11 +206,6 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = props => {
 
   const CopilotView = walkthroughable(View);
 
-  if (controller.vcMetadatas.length == 1) {
-    console.log('restarting the copilot at 6th ===>>');
-    start('6');
-  }
-
   return (
     <React.Fragment>
       <Column fill style={{display: props.isVisible ? 'flex' : 'none'}}>
@@ -277,7 +272,16 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = props => {
                         text="Your card displays your verified identity information. Tap for a detailed view or click on … for additional options."
                         order={6}
                         name="Card">
-                        <CopilotView>
+                        <CopilotView
+                          onLayout={
+                            controller.vcMetadatas.length == 1 &&
+                            controller.isInitialLaunch
+                              ? () => {
+                                  start();
+                                  goToNth(6);
+                                }
+                              : undefined
+                          }>
                           <VcItemContainer
                             key={vcMetadata.getVcKey()}
                             vcMetadata={vcMetadata}

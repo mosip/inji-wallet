@@ -46,6 +46,7 @@ export const MainLayout: React.FC = () => {
         width: Dimensions.get('screen').width * 1,
         height: Dimensions.get('screen').height * 0.2,
       }}
+      stepNumberComponent={() => null}
       animated>
       <Navigator
         initialRouteName={mainRoutes[0].name}
@@ -80,6 +81,7 @@ export const MainLayout: React.FC = () => {
                     </View>
                   ) : (
                     <CopilotStep
+                      key={t(route.name)}
                       text={t(route.name + 'Message')}
                       order={2 + index}
                       name={t(route.name + 'Title')}>

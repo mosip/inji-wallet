@@ -302,7 +302,7 @@ fileignoreconfig:
   - filename: machines/VerifiableCredential/VCItemMachine/VCItemMachine.typegen.ts
     checksum: c19a4c3d148d606d4ad138fe33dd8ae5d13a3689f0fd98dbbff80814d7ab72c1
   - filename: screens/MainLayout.tsx
-    checksum: f0acd97b97a28ee939e3f16c3201cc7be861721c049c1482afbc3a541480ae6f       
+    checksum: e293dce188ed0fcad5b29968b799f959a8fdd5de616cbabab63805c44596c24e       
   - filename: machines/backupAndRestore/backupWithEncryption.typegen.ts        
     checksum: 19ccac58df42ce0b6e36c66592e53441d709713fb1bff64454e0039dd3b0ac97 
   - filename: machines/VerifiableCredential/VCItemMachine/VCItemMachine.ts     
