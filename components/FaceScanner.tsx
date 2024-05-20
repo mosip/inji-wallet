@@ -1,6 +1,6 @@
 import React, {useCallback, useContext, useEffect, useRef} from 'react';
 import {Camera} from 'expo-camera';
-import {TouchableOpacity, View, Image} from 'react-native';
+import {TouchableOpacity, View} from 'react-native';
 import {Button, Centered, Column, Row, Text} from './ui';
 import {useInterpret, useSelector} from '@xstate/react';
 import {useTranslation} from 'react-i18next';
