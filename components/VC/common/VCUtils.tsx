@@ -8,7 +8,10 @@ import {VCItemField} from './VCItemField';
 import React from 'react';
 import {Theme} from '../../ui/styleUtils';
 import {CREDENTIAL_REGISTRY_EDIT} from 'react-native-dotenv';
-import {ID_TYPE, getIDType} from '../../../shared/openId4VCI/Utils';
+import {
+  getIDType,
+  getIDTypeTranslations,
+} from '../../../shared/openId4VCI/Utils';
 import {VCVerification} from '../../VCVerification';
 import {MIMOTO_BASE_URL} from '../../../shared/constants';
 
@@ -63,7 +66,7 @@ export const getFieldValue = (
         />
       );
     case 'idType':
-      return ID_TYPE[getIDType(props.credential)]();
+      return getIDTypeTranslations(getIDType(props.credential));
     case 'credentialRegistry':
       return props?.vc?.credentialRegistry;
     case 'address':

@@ -11,6 +11,7 @@ import i18n from '../../i18n';
 import {
   Credential,
   CredentialWrapper,
+  VerifiableCredentialType,
 } from '../../machines/VerifiableCredential/VCMetaMachine/vc';
 import {
   BOTTOM_SECTION_FIELDS_WITH_DETAILED_ADDRESS_FIELDS,
@@ -28,13 +29,20 @@ export const Issuers = {
   ESignet: 'ESignet',
 };
 
-export const ID_TYPE = {
-  MOSIPVerifiableCredential: () => i18n.t('VcDetails:nationalCard'),
-  InsuranceCredential: () => i18n.t('VcDetails:insuranceCard'),
-  OpenG2PBeneficiaryVerifiableCredential: () =>
-    i18n.t('VcDetails:beneficiaryCard'),
-  OpenG2PRegistryVerifiableCredential: () =>
-    i18n.t('VcDetails:socialRegistryCard'),
+export const getIDTypeTranslations = (idType: VerifiableCredentialType) => {
+  switch (idType) {
+    case 'MOSIPVerifiableCredential':
+      return i18n.t('VcDetails:nationalCard');
+    case 'InsuranceCredential':
+      return i18n.t('VcDetails:insuranceCard');
+    case 'OpenG2PBeneficiaryVerifiableCredential':
+      return i18n.t('VcDetails:beneficiaryCard');
+    case 'OpenG2PRegistryVerifiableCredential':
+      return i18n.t('VcDetails:socialRegistryCard');
+    default: {
+      return i18n.t('VcDetails:insuranceCard');
+    }
+  }
 };
 
 export const getIDType = (verifiableCredential: Credential) => {
