@@ -8,7 +8,7 @@
     "VC_SHARED_WITH_VERIFICATION_CONSENT": "Ibinahagi ang {{idType}} {{id}} na may pahintulot para sa pag-verify ng presensya.",
     "VC_RECEIVED_WITH_PRESENCE_VERIFIED": "Natanggap ang {{idType}} {{id}} at matagumpay ang pag-verify ng presensya.",
     "VC_RECEIVED_BUT_PRESENCE_VERIFICATION_FAILED": "Natanggap ang {{idType}} {{id}} at nabigo ang pag-verify ng presensya.",
-    "PRESENCE_VERIFIED_AND_VC_SHARED": "Ang pag-verify ng mukha ay matagumpay at {{idType}} {{id}} at ibinahagi.",
+    "PRESENCE_VERIFIED_AND_VC_SHARED": "Matagumpay ang pag-verify ng mukha at ibinahagi ang {{idType}} {{id}}.",
     "PRESENCE_VERIFICATION_FAILED": "Nabigo ang pag-verify ng mukha habang sinusubukang ibahagi ang {{idType}} {{id}}.",
     "QRLOGIN_SUCCESFULL": "Ang QRlogin gamit ang {{idType}} {{id}} ay matagumpay.",
     "WALLET_BINDING_SUCCESSFULL": "Ang pag-activate ng {{idType}} {{id}} ay matagumpay.",
@@ -46,6 +46,7 @@
     "generatedOn": "Nilikha noong",
     "status": "Katayuan",
     "valid": "Napatunayan",
+    "pending": "Nakabinbin",
     "photo": "Larawan",
     "fullName": "Buong pangalan",
     "gender": "Kasarian",
@@ -57,7 +58,7 @@
     "idType": "Uri ng ID",
     "id": "Id",
     "qrCodeHeader": "QR Code",
-    "nationalCard": "Pambansang Kard",
+    "nationalCard": "Pambansang ID",
     "insuranceCard": "Insurance Card",
     "beneficiaryCard": "Benepisyaryo Card",
     "socialRegistryCard": "Social Registry Card",
@@ -272,8 +273,8 @@
       "backend": {
         "invalidOtp": "Di-wasto ang OTP",
         "expiredOtp": "Nag-expire na ang OTP",
-        "invalidUin": "Di-wastong UIN",
-        "invalidVid": "Di-wastong VID",
+        "invalidUin": "Mangyaring magpasok ng wastong UIN",
+        "invalidVid": "Mangyaring maglagay ng wastong VID",
         "missingUin": "Ang ipinasok na UIN ay na-deactivate/na-block. Mangyaring magpasok ng wastong UIN upang magpatuloy",
         "missingVid": "Hindi mahanap ang iyong VID",
         "noMessageAvailable": "Subukan pagkatapos ng ilang oras",
@@ -296,7 +297,7 @@
         "applicationProcessing": "Hindi pa handa ang AID",
         "noMessageAvailable": "Subukan pagkatapos ng ilang oras",
         "networkRequestFailed": "Nabigo ang kahilingan sa network",
-        "invalidAid": "Hindi available ang ipinasok na AID. Pakisuri ang iyong AID bago pumasok",
+        "invalidAid": "Mangyaring maglagay ng wastong AID",
         "timeout": "timeout"
       }
     }
@@ -394,7 +395,7 @@
     "stepThreeText": "Itabi at dalhin ang lahat ng iyong mahahalagang card sa isang pinagkakatiwalaang wallet.",
     "stepFourTitle": "Mabilis na pagpasok",
     "stepFourText": "I-authenticate ang iyong sarili nang madali gamit ang nakaimbak na digital na kredensyal.",
-    "stepFiveTitle": "Backup na Data",
+    "stepFiveTitle": "Backup & Ibalik",
     "stepFiveText": "Protektahan ang iyong data nang madali gamit ang aming Backup",
     "getStarted": "Magsimula",
     "goBack": "Bumalik ka",
@@ -408,9 +409,24 @@
     "noReceivedVcsTitle": "Wala pang card",
     "noReceivedVcsText": "Pindutin ang Humiling sa ibaba para makatanggap ng card"
   },
+  "VcVerificationBanner": {
+      "inProgress": "Pina-validate namin ang iyong card, maaaring magtagal ito. Kapag na-verify na, magagawa mong i-activate ang iyong card.",
+      "success": "Matagumpay na na-verify ang {{vcDetails}} at magagamit na ngayon para sa pag-activate.",
+      "error": "Paumanhin, hindi namin ma-verify ang {{vcDetails}} ngayon. Subukang muli mamaya. Hanggang sa panahong iyon, hindi mo maa-activate o maibabahagi ang iyong card."
+    },
   "ViewVcModal": {
     "title": "Mga Detalye ng ID",
-    "inProgress": "Isinasagawa"
+    "inProgress": "Isinasagawa",
+    "statusToolTipContent": {
+      "valid": {
+        "title": "Wastong Katayuan:",
+        "description": "Matagumpay na na-verify ang kredensyal."
+      },
+      "pending": {
+        "title": "Nakabinbing Katayuan:",
+        "description": "Kasalukuyang nakabinbin ang pag-verify dahil sa mga teknikal na isyu."
+      }
+    }
   },
   "MainLayout": {
     "home": "Bahay",
@@ -578,7 +594,9 @@
   },
   "ScanScreen": {
     "shareWithSelfie": "Ibahagi sa Selfie",
+    "shareWithSelfieQrLogin":"Pag-login sa QR Code",
     "shareWithSelfieMessage": "Para ibahagi ang iyong Mga Nabe-verify na Kredensyal, secure naming ive-verify ang iyong pagkakakilanlan gamit ang pag-verify sa mukha. Sa pagpapatuloy, pumapayag ka sa INJI na gamitin ang iyong camera para sa layuning ito. \n\n Gagamitin lang ang iyong facial data para sa pag-verify at hindi ibabahagi sa anumang third party.",
+    "shareWithSelfieMessageQrLogin":"Upang ma-access ang portal, kakailanganin mong ibahagi ang iyong Mga Na-verify na Kredensyal at secure na i-verify ang iyong pagkakakilanlan gamit ang pag-verify sa mukha. Sa pagpapatuloy, pumapayag ka sa Inji na gamitin ang iyong camera para sa layuning ito. \n\n Gagamitin lang ang iyong facial data para sa pag-verify at hindi ibabahagi. Pagkatapos ng matagumpay na pag-verify, maaari mong piliin kung aling mga detalye ang ibabahagi.",
     "ConfirmButton": "Naiintindihan ko",
     "doNotAskMessage": "Huwag mo na akong tanungin",
     "noShareableVcs": "Walang magagamit na mga card na maibabahagi.",
@@ -703,6 +721,12 @@
       "captureSuccessMessage": "Matagumpay ang Face Verification! Sinisimulan ang pagbabahagi ng kredensyal.",
       "captureFailureTitle": "Nabigo ang pag-verify ng mukha!",
       "captureFailureMessage": "Pakitiyak na malinaw na nakikita ang iyong mukha at subukang mag-selfie muli."
+    },
+    "rational": {
+      "title": "I-on ang iyong lokasyon",
+      "message": "Kailangan ng app na ito ang iyong lokasyon upang maghanap ng mga kalapit na system upang matanggap ang iyong data.",
+      "accept": "OK",
+      "cancel": "Kanselahin"
     }
   },
   "SelectVcOverlay": {

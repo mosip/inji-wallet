@@ -17,7 +17,7 @@ const model = createModel(
       myVcs: {} as ActorRefFrom<typeof MyVcsTabMachine>,
       receivedVcs: {} as ActorRefFrom<typeof ReceivedVcsTabMachine>,
     },
-    selectedVc: ActorRefFrom<typeof VCItemMachine>,
+    selectedVc: null as ActorRefFrom<typeof VCItemMachine> | null,
     activeTab: 0,
   },
   {

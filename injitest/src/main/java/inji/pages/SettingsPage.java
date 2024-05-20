@@ -1,6 +1,7 @@
 package inji.pages;
 
 import inji.constants.Target;
+import inji.utils.IosUtil;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.pagefactory.AndroidFindBy;
 import io.appium.java_client.pagefactory.iOSXCUITFindBy;
@@ -89,11 +90,9 @@ public class SettingsPage extends BasePage {
     private WebElement backButton;
 
     @AndroidFindBy(accessibility = "dataBackupAndRestore")
-    @iOSXCUITFindBy(xpath = "//XCUIElementTypeStaticText[@name=\"dataBackupAndRestoreText\" and @label=\"Backup & Restore\"]")
     private WebElement dataBackupAndRestore;
 
     @AndroidFindBy(accessibility = "newLabel")
-    @iOSXCUITFindBy(accessibility = "newLabel")
     private WebElement newlable;
 
 
@@ -110,6 +109,7 @@ public class SettingsPage extends BasePage {
     }
 
     public UnlockApplicationPage clickOnLogoutButton() {
+        IosUtil.scrollToElement(driver,100,800,100,200);
         clickOnElement(logoutButton);
         return new UnlockApplicationPage(driver);
     }
@@ -233,6 +233,10 @@ public class SettingsPage extends BasePage {
     }
     public String  getDataBackupAndRestoreText(){
         return getTextFromLocator(dataBackupAndRestore);
+    }
+
+    public String getreceiveCardText(){
+        return getTextFromLocator(receiveCardText);
     }
 
 }

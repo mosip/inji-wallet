@@ -9,7 +9,6 @@ import {useInterpret} from '@xstate/react';
 import {GlobalContext} from '../../shared/GlobalContext';
 import {useFocusEffect} from '@react-navigation/native';
 import {VcItemContainer} from '../../components/VC/VcItemContainer';
-import {VCMetadata} from '../../shared/VCMetadata';
 import {createVCItemMachine} from '../../machines/VerifiableCredential/VCItemMachine/VCItemMachine';
 import {
   getImpressionEventData,
@@ -102,7 +101,7 @@ export const SendVcScreen: React.FC = () => {
         <Column
           style={Theme.SendVcScreenStyles.shareOptionButtonsContainer}
           backgroundColor={Theme.Colors.whiteBackgroundColor}>
-          {[Issuers.Mosip, Issuers.ESignet].indexOf(
+          {[Issuers.MosipOtp, Issuers.Mosip].indexOf(
             controller.verifiableCredentialData.issuer,
           ) !== -1 && (
             <Button

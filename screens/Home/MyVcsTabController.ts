@@ -11,8 +11,7 @@ import {
   selectMyVcsMetadata,
   selectVerificationErrorMessage,
   selectWalletBindingSuccess,
-  VcMetaEvents,
-} from '../../machines/VerifiableCredential/VCMetaMachine/VCMetaMachine';
+} from '../../machines/VerifiableCredential/VCMetaMachine/VCMetaSelectors';
 import {
   selectWalletBindingError,
   selectShowWalletBindingError,
@@ -26,13 +25,13 @@ import {
   selectGetVcModal,
   selectIsNetworkOff,
   selectIsRequestSuccessful,
-  selectIsSavingFailedInIdle,
 } from './MyVcsTabMachine';
 import {
   selectShowHardwareKeystoreNotExistsAlert,
   SettingsEvents,
 } from '../../machines/settings';
 import {VCItemMachine} from '../../machines/VerifiableCredential/VCItemMachine/VCItemMachine';
+import {VcMetaEvents} from '../../machines/VerifiableCredential/VCMetaMachine/VCMetaMachine';
 
 export function useMyVcsTab(props: HomeScreenTabProps) {
   const service = props.service as ActorRefFrom<typeof MyVcsTabMachine>;
@@ -47,7 +46,6 @@ export function useMyVcsTab(props: HomeScreenTabProps) {
     vcMetadatas: useSelector(vcMetaService, selectMyVcsMetadata),
     isRefreshingVcs: useSelector(vcMetaService, selectIsRefreshingMyVcs),
     isRequestSuccessful: useSelector(service, selectIsRequestSuccessful),
-    isSavingFailedInIdle: useSelector(service, selectIsSavingFailedInIdle),
     walletBindingError: useSelector(service, selectWalletBindingError),
     isBindingError: useSelector(service, selectShowWalletBindingError),
     isBindingSuccess: useSelector(vcMetaService, selectWalletBindingSuccess),

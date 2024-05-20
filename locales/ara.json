@@ -8,7 +8,7 @@
     "VC_SHARED_WITH_VERIFICATION_CONSENT": "تم مشاركة {{idType}} {{id}} بالموافقة للتحقق من الحضور.",
     "VC_RECEIVED_WITH_PRESENCE_VERIFIED": "تم استلام {{idType}} {{id}} ونجح التحقق من الحضور.",
     "VC_RECEIVED_BUT_PRESENCE_VERIFICATION_FAILED": "تم استلام {{idType}} {{id}} ولكن فشل التحقق من الحضور.",
-    "PRESENCE_VERIFIED_AND_VC_SHARED": "نجح التحقق من الوجه وتم مشاركة {{idType}} {{id}}.",
+    "PRESENCE_VERIFIED_AND_VC_SHARED": "تم التحقق من الوجه بنجاح وتمت مشاركة {{idType}} {{id}}.",
     "PRESENCE_VERIFICATION_FAILED": "فشل التحقق من الوجه أثناء محاولة مشاركة {{idType}} {{id}}.",
     "QRLOGIN_SUCCESFULL": "نجح تسجيل الدخول باستخدام QR باستخدام {{idType}} {{id}}.",
     "WALLET_BINDING_SUCCESSFULL": "تم تفعيل {{idType}} {{id}} بنجاح.",
@@ -46,6 +46,7 @@
     "generatedOn": "تم إنشاؤه في",
     "status": "الحالة",
     "valid": "صالح",
+    "pending": "قيد الانتظار",
     "photo": " صورة",
     "fullName": "الاسم الكامل",
     "gender": "الجنس",
@@ -57,7 +58,7 @@
     "idType": "نوع الهوية",
     "id": "بطاقة تعريف",
     "qrCodeHeader": "رمز الاستجابة السريعة",
-    "nationalCard": "البطاقة الوطنية",
+    "nationalCard": "الهوية الوطنية",
     "insuranceCard": "بطاقة التأمين",
     "beneficiaryCard": "بطاقة المستفيد",
     "socialRegistryCard": "بطاقة السجل الاجتماعي",
@@ -272,8 +273,8 @@
       "backend": {
         "invalidOtp": "OTP غير صالح",
         "expiredOtp": "انتهت صلاحية كلمة المرور لمرة واحدة",
-        "invalidUin": "UIN غير صالح",
-        "invalidVid": "VID غير صالح",
+        "invalidUin": "الرجاء إدخال UIN صالح",
+        "invalidVid": "الرجاء إدخال VID صالح",
         "missingUin": "تم إلغاء تنشيط / حظر UIN الذي تم إدخاله. الرجاء إدخال UIN صالح للمتابعة",
         "missingVid": "VID غير متوفر في قاعدة البيانات",
         "noMessageAvailable": "حاول بعد فترةe",
@@ -296,7 +297,7 @@
         "applicationProcessing": "غير جاهز AID",
         "noMessageAvailable": "حاول بعد فترة",
         "networkRequestFailed": "فشل طلب الشبكة",
-        "invalidAid": "AID الذي تم إدخاله غير متوفر. يرجى التحقق من AID الخاص بك قبل الدخول",
+        "invalidAid": "الرجاء إدخال معرف صالح",
         "timeout": "نفذ الوقت"
       }
     }
@@ -394,7 +395,7 @@
     "stepThreeText": "قم بتخزين وحمل جميع بطاقاتك المهمة في محفظة واحدة موثوقة.",
     "stepFourTitle": "الوصول السريع",
     "stepFourText": "قم بالمصادقة على نفسك بسهولة باستخدام بيانات الاعتماد الرقمية المخزنة.",
-    "stepFiveTitle": "نسخ إحتياطي للبيانات",
+    "stepFiveTitle": "دعم & يعيد",
     "stepFiveText": "قم بحماية بياناتك بسهولة باستخدام النسخة الاحتياطية لدينا",
     "getStarted": "البدء",
     "goBack": "عُد",
@@ -408,9 +409,24 @@
     "noReceivedVcsTitle": "لا يوجد بطاقة متاح حتى الآن",
     "noReceivedVcsText": "اضغط على الطلب أدناه لتلقيبطاقة"
   },
+  "VcVerificationBanner": {
+    "inProgress": "نحن نقوم بالتحقق من بطاقتك، قد يستغرق هذا بعض الوقت. بمجرد التحقق، ستتمكن من تفعيل بطاقتك.",
+    "success": "تم التحقق من {{vcDetails}} بنجاح وهو متاح الآن للتنشيط.",
+    "error": "عذرًا، لا يمكننا التحقق من {{vcDetails}} الآن. الرجاء معاودة المحاولة في وقت لاحق. وحتى ذلك الحين، لن تتمكن من تفعيل بطاقتك أو مشاركتها."
+  },
   "ViewVcModal": {
     "title": "تفاصيل الهوية",
-    "inProgress": "في تَقَدم"
+    "inProgress": "في تَقَدم",
+    "statusToolTipContent": {
+      "valid": {
+        "title": "حالة صالحة:",
+        "description": "تم التحقق من بيانات الاعتماد بنجاح."
+      },
+      "pending": {
+        "title": "وضع انتظار:",
+        "description": "التحقق معلق حاليًا بسبب مشكلات فنية."
+      }
+    }
   },
   "MainLayout": {
     "home": "المنزل",
@@ -579,7 +595,9 @@
   },
   "ScanScreen": {
     "shareWithSelfie": "شارك مع صورة شخصية",
+    "shareWithSelfieQrLogin": "ريال قطري رمز الدخول",
     "shareWithSelfieMessage": "لمشاركة بيانات الاعتماد التي يمكن التحقق منها، سنتحقق من هويتك بشكل آمن باستخدام التحقق من الوجه. من خلال المتابعة، فإنك توافق على استخدام INJI للكاميرا الخاصة بك لهذا الغرض. \n\n سيتم استخدام بيانات وجهك فقط للتحقق ولن تتم مشاركتها مع أي طرف ثالث.",
+    "shareWithSelfieMessageQrLogin": "من أجل الوصول إلى البوابة، ستحتاج إلى مشاركة بيانات الاعتماد التي يمكن التحقق منها والتحقق من هويتك بشكل آمن باستخدام التحقق من الوجه. من خلال المتابعة، فإنك توافق على استخدام Inji للكاميرا الخاصة بك لهذا الغرض. \n\n سيتم استخدام بيانات وجهك فقط للتحقق ولن تتم مشاركتها. بعد التحقق بنجاح، يمكنك اختيار التفاصيل التي تريد مشاركتها.",
     "ConfirmButton": "أفهم",
     "doNotAskMessage": "لا تسألني مرة أخرى",
     "noShareableVcs": "لا تتوفر بطاقات قابلة للمشاركة",
@@ -704,6 +722,12 @@
       "captureSuccessMessage": "تم التحقق من الوجه بنجاح! يتم بدء مشاركة بيانات الاعتماد.",
       "captureFailureTitle": "فشل التحقق من الوجه!",
       "captureFailureMessage": "يرجى التأكد من أن وجهك مرئي بوضوح وحاول التقاط صورة شخصية مرة أخرى."
+    },
+    "rational": {
+      "title": "قم بتشغيل موقعك",
+      "message": "يحتاج هذا التطبيق إلى موقعك للبحث عن الأنظمة القريبة لتلقي بياناتك.",
+      "accept": "نعم",
+      "cancel": "يلغي"
     }
   },
   "SelectVcOverlay": {

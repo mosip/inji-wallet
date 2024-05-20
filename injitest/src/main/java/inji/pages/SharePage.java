@@ -16,9 +16,11 @@ public class SharePage extends BasePage {
     private WebElement bluetoothPopUp;
 
     @AndroidFindBy(uiAutomator = "new UiSelector().textContains(\"Allow\")")
+    @iOSXCUITFindBy(accessibility = "OK")
     private WebElement allowButton;
 
     @AndroidFindBy(xpath = "//android.widget.Button[@resource-id=\"com.android.permissioncontroller:id/permission_allow_foreground_only_button\"]")
+    @iOSXCUITFindBy(accessibility = "OK")
     private WebElement cameraPopupAndroid;
 
     @AndroidFindBy(uiAutomator = "new UiSelector().textContains(\"Deny\")")
@@ -50,9 +52,23 @@ public class SharePage extends BasePage {
 
     @iOSXCUITFindBy(accessibility = "OK")
     private WebElement okButtonIos;
-
     @iOSXCUITFindBy(accessibility = "Don’t Allow")
+    @AndroidFindBy(xpath = "//android.widget.Button[@resource-id=\"com.android.permissioncontroller:id/permission_deny_button\"]")
     private WebElement dontAllowButtonIos;
+
+    @AndroidFindBy(accessibility = "cameraAccessDisabled")
+    @iOSXCUITFindBy(accessibility = "cameraAccessDisabled")
+    private WebElement cameraAccessDisabledPopup;
+
+    @AndroidFindBy(xpath = "//*[@resource-id=\"com.android.permissioncontroller:id/permission_allow_one_time_button\"]")
+    private WebElement locationAccessPopup;
+
+    @AndroidFindBy(xpath = "//*[@resource-id=\"com.android.permissioncontroller:id/permission_allow_one_time_button\"]")
+    private WebElement gallaryAccessPopup;
+
+    @AndroidFindBy(xpath = "//android.widget.TextView[@resource-id=\"close\"]")
+    private WebElement closePopupButton;
+
 
     public SharePage(AppiumDriver driver) {
         super(driver);
@@ -106,7 +122,7 @@ public class SharePage extends BasePage {
         }
         return this;
     }
-    
+
     public boolean isCameraOpen() {
         return isElementDisplayed(camera);
     }
@@ -129,6 +145,29 @@ public class SharePage extends BasePage {
 
     public boolean isFlipCameraClickable() {
         return this.isElementEnabled(flipCamera,30);
+    }
+
+    public void clickOnDenyCameraPopupButton() {
+        if (isElementDisplayed(dontAllowButtonIos)) {
+            clickOnElement(dontAllowButtonIos);
+        }
+    }
+
+    public boolean isCameraDisabledPopUpDisplayed(){
+        return isElementDisplayed(cameraAccessDisabledPopup);
+    }
+    public void clickOnPopupCloseButton(){
+         clickOnElement(closePopupButton);
+    }
+
+    public void clickOnAllowLocationPopupButton(){
+        if(isElementDisplayed(locationAccessPopup))
+        clickOnElement(locationAccessPopup);
+    }
+
+    public void clickOnAllowGallaryAccessButton(){
+        if(isElementDisplayed(gallaryAccessPopup))
+        clickOnElement(gallaryAccessPopup);
     }
 
 }

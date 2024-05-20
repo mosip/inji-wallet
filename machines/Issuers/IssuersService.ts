@@ -17,7 +17,10 @@ import {
 } from '../../shared/cryptoutil/cryptoUtil';
 import SecureKeystore from '@mosip/secure-keystore';
 import {getVCMetadata, VCMetadata} from '../../shared/VCMetadata';
-import {verifyCredential} from '../../shared/vcjs/verifyCredential';
+import {
+  VerificationErrorType,
+  verifyCredential,
+} from '../../shared/vcjs/verifyCredential';
 import {
   getImpressionEventData,
   sendImpressionEvent,
@@ -78,8 +81,17 @@ export const IssuersService = () => {
             TelemetryConstants.Screens.webViewPage,
         ),
       );
+      let supportedScopes: [string];
+      if (Object.keys(context.selectedCredentialType).length === 0) {
+        supportedScopes = context.selectedIssuer.scopes_supported;
+      } else {
+        supportedScopes = [context.selectedCredentialType['scope']];
+      }
       return await authorize(
-        constructAuthorizationConfiguration(context.selectedIssuer),
+        constructAuthorizationConfiguration(
+          context.selectedIssuer,
+          supportedScopes,
+        ),
       );
     },
     generateKeyPair: async () => {
@@ -99,7 +111,10 @@ export const IssuersService = () => {
         VCMetadata.fromVcMetadataString(getVCMetadata(context)).issuer ===
         Issuers.Sunbird
       ) {
-        return true;
+        return {
+          isVerified: true,
+          errorMessage: VerificationErrorType.NO_ERROR,
+        };
       }
       const verificationResult = await verifyCredential(
         context.verifiableCredential?.credential,

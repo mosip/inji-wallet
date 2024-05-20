@@ -1,5 +1,6 @@
 package inji.pages;
 
+import inji.utils.IosUtil;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.pagefactory.AndroidFindBy;
 import io.appium.java_client.pagefactory.iOSXCUITFindBy;
@@ -19,7 +20,7 @@ public class MoreOptionsPage extends BasePage {
     @iOSXCUITFindBy(accessibility = "kebabTitle")
     private WebElement moreOptionsText;
 
-    @AndroidFindBy(accessibility = "outlined-schedule-icon")
+    @AndroidFindBy(accessibility = "viewActivityLog")
     @iOSXCUITFindBy(accessibility = "viewActivityLog")
     private WebElement viewActivityLogButton;
 
@@ -47,6 +48,12 @@ public class MoreOptionsPage extends BasePage {
     @iOSXCUITFindBy(accessibility = "activated")
     private WebElement activated;
 
+    @AndroidFindBy(accessibility = "enableVerification")
+    @iOSXCUITFindBy(accessibility = "enableVerification")
+    private WebElement enableVerification;
+
+
+
     public MoreOptionsPage(AppiumDriver driver) {
         super(driver);
     }
@@ -65,6 +72,7 @@ public class MoreOptionsPage extends BasePage {
     }
 
     public HistoryPage clickOnViewActivityLog() {
+        IosUtil.scrollToElement(driver, 171, 2149, 625, 1944);
         clickOnElement(viewActivityLogButton);
         return new HistoryPage(driver);
     }
@@ -88,6 +96,10 @@ public class MoreOptionsPage extends BasePage {
     }
 
     public boolean isVcActivatedDisplayed() {
-        return this.isElementDisplayed(activated);
+        return this.isElementDisplayed(activatedForOnlineLoginButton);
+    }
+
+    public void clickOnActivationButton() {
+        clickOnElement(enableVerification);
     }
 }

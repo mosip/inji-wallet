@@ -15,6 +15,18 @@ public class AppUnlockMethodPage extends BasePage {
     @iOSXCUITFindBy(accessibility = "usePasscode")
     private WebElement usePasscodeButton;
 
+    @AndroidFindBy(accessibility = "description")
+    @iOSXCUITFindBy(accessibility = "description")
+    private WebElement descriptionText;
+
+    @AndroidFindBy(accessibility = "passwordTypeDescription")
+    @iOSXCUITFindBy(accessibility = "passwordTypeDescription")
+    private WebElement passwordTypeDescriptionText;
+
+    @AndroidFindBy(accessibility = "useBiometrics")
+    @iOSXCUITFindBy(accessibility = "useBiometrics")
+    private WebElement useBiometricsButton;
+
     public AppUnlockMethodPage(AppiumDriver driver) {
         super(driver);
     }
@@ -27,4 +39,17 @@ public class AppUnlockMethodPage extends BasePage {
         this.clickOnElement(usePasscodeButton);
         return new SetPasscode(driver);
     }
+
+    public String getDescriptionText() {
+        return this.getTextFromLocator(descriptionText);
+    }
+
+    public String getPasswordTypeDescriptionText() {
+        return this.getTextFromLocator(passwordTypeDescriptionText);
+    }
+
+    public boolean isUseBiometricsButton() {
+        return this.isElementDisplayed(useBiometricsButton);
+    }
+
 }

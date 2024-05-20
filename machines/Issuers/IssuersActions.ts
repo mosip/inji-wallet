@@ -12,7 +12,7 @@ import {
 import {assign, send} from 'xstate';
 import {StoreEvents} from '../store';
 import {BackupEvents} from '../backupAndRestore/backup';
-import {getVCMetadata} from '../../shared/VCMetadata';
+import {getVCMetadata, VCMetadata} from '../../shared/VCMetadata';
 import {isHardwareKeystoreExists} from '../../shared/cryptoutil/cryptoUtil';
 import {ActivityLogEvents} from '../activityLog';
 import {
@@ -26,6 +26,20 @@ import {KeyPair} from 'react-native-rsa-native';
 
 export const IssuersActions = (model: any) => {
   return {
+    setIsVerified: assign({
+      vcMetadata: (context: any) =>
+        new VCMetadata({
+          ...context.vcMetadata,
+          isVerified: true,
+        }),
+    }),
+    resetIsVerified: assign({
+      vcMetadata: (context: any) =>
+        new VCMetadata({
+          ...context.vcMetadata,
+          isVerified: false,
+        }),
+    }),
     setIssuers: model.assign({
       issuers: (_: any, event: any) => event.data,
     }),
@@ -226,12 +240,21 @@ export const IssuersActions = (model: any) => {
     },
 
     updateVerificationErrorMessage: assign({
-      verificationErrorMessage: (context: any, event: any) =>
+      verificationErrorMessage: (_, event: any) =>
         (event.data as Error).message,
     }),
 
     resetVerificationErrorMessage: model.assign({
       verificationErrorMessage: () => '',
     }),
+
+    sendDownloadingFailedToVcMeta: send(
+      (_: any) => ({
+        type: 'VC_DOWNLOADING_FAILED',
+      }),
+      {
+        to: context => context.serviceRefs.vcMeta,
+      },
+    ),
   };
 };

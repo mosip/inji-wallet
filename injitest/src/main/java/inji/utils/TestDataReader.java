@@ -27,7 +27,7 @@ public class TestDataReader {
             case "newaid":
                 return "10001112180007620240217011225";
             case "invalidaid":
-                return "10001100050003220231220202335";
+                return "10004101950000920240314061837";
             case "invalidpasscode":
                 return "123456";
             case "invaliduin":
@@ -35,7 +35,7 @@ public class TestDataReader {
             case "fullName":
                 return "TEST_FULLNAMEeng";
             case "idType":
-                return "National Card";
+                return "National ID";
             case "gender":
                 return "MLEeng";
             case "genderVidEsignet":
@@ -49,7 +49,7 @@ public class TestDataReader {
             case "dateOfBirth":
                 return "01/01/1996";
             case "dateOfBirthForVidEsignet":
-                return "04/15/1992";
+                return "1996/01/01";
             case "aid":
                 return UinGenerationUtil.getRandomAidData();
             case "emailPassword":
@@ -65,7 +65,7 @@ public class TestDataReader {
             case "uin":
                 return UinGenerationUtil.getRandomUin();
             case "uin2":
-                return "5945769861";
+                return "2162743612";
             case "uin2FullName":
                 return "TEST_FULLNAMEeng";
             case "newEnv":
@@ -85,7 +85,7 @@ public class TestDataReader {
             case "phoneNumberSunbird":
                 return "8220255752";
             case "dateOfBirthSunbird":
-                return "2024-01-01";
+                return "01/01/2024";
             case "genderValueSunbird":
                 return "Female";
             case "emailIdValueSunbird":

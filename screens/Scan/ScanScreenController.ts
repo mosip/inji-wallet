@@ -1,7 +1,7 @@
 import {useSelector} from '@xstate/react';
 import {useContext} from 'react';
 import {useTranslation} from 'react-i18next';
-import {selectShareableVcsMetadata} from '../../machines/VerifiableCredential/VCMetaMachine/VCMetaMachine';
+import {selectShareableVcsMetadata} from '../../machines/VerifiableCredential/VCMetaMachine/VCMetaSelectors';
 import {GlobalContext} from '../../shared/GlobalContext';
 import {
   selectIsLocationDenied,
@@ -13,18 +13,17 @@ import {
   selectQrLoginRef,
   selectIsQuickShareDone,
   selectShowQuickShareSuccessBanner,
-} from '../../machines/bleShare/scan/selectors';
+} from '../../machines/bleShare/scan/scanSelectors';
 import {
   selectIsBluetoothDenied,
   selectIsNearByDevicesPermissionDenied,
   selectReadyForBluetoothStateCheck,
   selectIsBluetoothPermissionDenied,
   selectIsStartPermissionCheck,
+  selectIsLocationPermissionRationale,
 } from '../../machines/bleShare/commonSelectors';
-import {
-  ScanEvents,
-  selectIsMinimumStorageRequiredForAuditEntryLimitReached,
-} from '../../machines/bleShare/scan/scanMachine';
+import {ScanEvents} from '../../machines/bleShare/scan/scanMachine';
+import {selectIsMinimumStorageRequiredForAuditEntryLimitReached} from '../../machines/bleShare/scan/scanSelectors';
 import {BOTTOM_TAB_ROUTES} from '../../routes/routesConstants';
 import {MainBottomTabParamList} from '../../routes/routeTypes';
 import {useNavigation, NavigationProp} from '@react-navigation/native';
@@ -75,6 +74,12 @@ export function useScanScreen() {
   type ScanScreenNavigation = NavigationProp<MainBottomTabParamList>;
   const navigation = useNavigation<ScanScreenNavigation>();
   const GOTO_HOME = () => navigation.navigate(BOTTOM_TAB_ROUTES.home);
+  const ALLOWED = () => scanService.send(ScanEvents.ALLOWED());
+  const DENIED = () => scanService.send(ScanEvents.DENIED());
+  const isLocalPermissionRational = useSelector(
+    scanService,
+    selectIsLocationPermissionRationale,
+  );
   return {
     locationError,
     isEmpty: !shareableVcsMetadata.length,
@@ -105,5 +110,8 @@ export function useScanScreen() {
       scanService.send(ScanEvents.START_PERMISSION_CHECK()),
     SCAN: (qrCode: string) => scanService.send(ScanEvents.SCAN(qrCode)),
     GOTO_HOME,
+    ALLOWED,
+    DENIED,
+    isLocalPermissionRational,
   };
 }

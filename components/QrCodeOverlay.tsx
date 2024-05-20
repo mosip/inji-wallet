@@ -17,18 +17,14 @@ import {VCMetadata} from '../shared/VCMetadata';
 export const QrCodeOverlay: React.FC<QrCodeOverlayProps> = props => {
   const {t} = useTranslation('VcDetails');
   const [qrString, setQrString] = useState('');
-  const [qrError,setQrError] = useState(false);
+  const [qrError, setQrError] = useState(false);
 
   async function getQRData(): Promise<string> {
     let qrData: string;
     try {
       qrData = await RNSecureKeyStore.get(props.meta.id);
     } catch {
-      let qrDataJSON = {
-        verifiableCredential: props.verifiableCredential,
-        meta: props.meta,
-      };
-      qrData = generateQRData(JSON.stringify(qrDataJSON));
+      qrData = generateQRData(JSON.stringify(props.verifiableCredential));
       await RNSecureKeyStore.set(props.meta.id, qrData, {
         accessible: ACCESSIBLE.ALWAYS_THIS_DEVICE_ONLY,
       });
@@ -36,9 +32,9 @@ export const QrCodeOverlay: React.FC<QrCodeOverlayProps> = props => {
     return qrData;
   }
 
-  function onQRError(){
-    console.warn("Data is too big");
-    setQrError(true)
+  function onQRError() {
+    console.warn('Data is too big');
+    setQrError(true);
   }
 
   useEffect(() => {
@@ -50,7 +46,8 @@ export const QrCodeOverlay: React.FC<QrCodeOverlayProps> = props => {
   const [isQrOverlayVisible, setIsQrOverlayVisible] = useState(false);
   const toggleQrOverlay = () => setIsQrOverlayVisible(!isQrOverlayVisible);
   return (
-    qrString != '' && !qrError && (
+    qrString != '' &&
+    !qrError && (
       <React.Fragment>
         <View testID="qrCodeView" style={Theme.QrCodeStyles.QrView}>
           <Pressable

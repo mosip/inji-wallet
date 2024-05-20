@@ -48,6 +48,10 @@ public class AddNewCardPage extends BasePage{
     @AndroidFindBy(accessibility = "issuerHeading-Sunbird")
     @iOSXCUITFindBy(accessibility = "issuerHeading-Sunbird")
     private WebElement downloadViaSunbird;
+
+    @AndroidFindBy(accessibility = "credentialTypeHeading-InsuranceCredential")
+    @iOSXCUITFindBy(accessibility = "credentialTypeHeading-InsuranceCredential")
+    private WebElement credentialTypeHeadingInsuranceCredential;
     
     public AddNewCardPage(AppiumDriver driver) {
         super(driver);
@@ -152,6 +156,9 @@ public class AddNewCardPage extends BasePage{
     public SunbirdLoginPage clickOnDownloadViaSunbird(){
         clickOnElement(downloadViaSunbird);
         return new SunbirdLoginPage(driver);
+    }
+    public void clickOnInsuranceCredential(){
+        clickOnElement(credentialTypeHeadingInsuranceCredential);
     }
 }
 
