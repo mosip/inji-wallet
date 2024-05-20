@@ -22,7 +22,7 @@ import {
   isVCLoaded,
   setBackgroundColour,
 } from '../common/VCUtils';
-import {setTextColor} from '../common/VCItemField';
+import {setHrLineColor, setTextColor} from '../common/VCItemField';
 import {ActivityIndicator} from '../../ui/ActivityIndicator';
 import {ProfileIcon} from '../../ProfileIcon';
 
@@ -135,8 +135,7 @@ export const VCDetailView: React.FC<VCItemDetailsProps> = props => {
                     style={[
                       Theme.Styles.hrLine,
                       {
-                        borderBottomColor: setTextColor(wellknown, 'hrLine')
-                          ?.color,
+                        borderBottomColor: setHrLineColor(wellknown),
                       },
                     ]}></View>
                   <Column padding="0 14 14 14">

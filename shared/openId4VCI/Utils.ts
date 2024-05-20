@@ -126,7 +126,7 @@ export const updateCredentialInformation = (context, credential) => {
   credentialWrapper.verifiableCredential.wellKnown =
     context.selectedIssuer['.well-known'];
   credentialWrapper.verifiableCredential.credentialTypes =
-    context.selectedIssuer['credential_type'];
+    getCredentialType(context);
   credentialWrapper.verifiableCredential.issuerLogo =
     getDisplayObjectForCurrentLanguage(context.selectedIssuer.display)?.logo;
   credentialWrapper.vcMetadata = context.vcMetadata || {};
@@ -206,10 +206,11 @@ export const getCredentialIssuersWellKnownConfig = async (
 ) => {
   let fields: string[] = defaultFields;
   let response = null;
+  let credentialDetails;
   if (wellknown) {
     response = await CACHED_API.fetchIssuerWellknownConfig(issuer, wellknown);
     if (response) {
-      const credentialDetails = getSelectedCredentialTypeDetails(
+      credentialDetails = getSelectedCredentialTypeDetails(
         response,
         vcCredentialTypes,
       );
@@ -225,7 +226,7 @@ export const getCredentialIssuersWellKnownConfig = async (
     }
   }
   return {
-    wellknown: response,
+    wellknown: credentialDetails,
     fields: fields,
   };
 };

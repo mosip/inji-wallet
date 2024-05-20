@@ -67,7 +67,7 @@ export const getFieldValue = (
         />
       );
     case 'idType':
-      return getIDTypeTranslations(getIDType(props.credential));
+      return getIdType(wellknown);
     case 'credentialRegistry':
       return props?.vc?.credentialRegistry;
     case 'address':
@@ -104,17 +104,9 @@ export const getSelectedCredentialTypeDetails = (
   );
 };
 
-export const getFieldName = (
-  field: string,
-  wellknown: any,
-  vcCredentialTypes?: Object[],
-) => {
-  if (wellknown && wellknown.credentials_supported && vcCredentialTypes) {
-    const credentialDetails = getSelectedCredentialTypeDetails(
-      wellknown,
-      vcCredentialTypes,
-    );
-    const credentialDefinition = credentialDetails.credential_definition;
+export const getFieldName = (field: string, wellknown: any) => {
+  if (wellknown) {
+    const credentialDefinition = wellknown.credential_definition;
     let fieldObj = credentialDefinition.credentialSubject[field];
     if (fieldObj) {
       const newFieldObj = fieldObj.display.map(obj => {
@@ -127,12 +119,10 @@ export const getFieldName = (
 };
 
 export const setBackgroundColour = (wellknown: any) => {
-  if (wellknown && wellknown.credentials_supported[0]?.display) {
+  if (wellknown?.display) {
     return {
-      backgroundColor: wellknown.credentials_supported[0].display[0]
-        ?.background_color
-        ? wellknown.credentials_supported[0].display[0].background_color
-        : Theme.Colors.textValue,
+      backgroundColor:
+        wellknown.display[0]?.background_color ?? Theme.Colors.textValue,
     };
   }
 };
@@ -177,11 +167,7 @@ export const fieldItemIterator = (
   props: VCItemDetailsProps,
 ) => {
   return fields.map(field => {
-    const fieldName = getFieldName(
-      field,
-      wellknown,
-      props.verifiableCredentialData.credentialTypes,
-    );
+    const fieldName = getFieldName(field, wellknown);
     const fieldValue = getFieldValue(
       verifiableCredential,
       field,
@@ -222,4 +208,13 @@ export const getMosipLogo = () => {
     url: `${MIMOTO_BASE_URL}/inji/mosip-logo.png`,
     alt_text: 'a square logo of mosip',
   };
+};
+
+export const getIdType = (wellknown: any) => {
+  if (wellknown && wellknown?.display) {
+    const idTypeObj = wellknown.display.map(displayProps => {
+      return {language: displayProps.locale, value: displayProps.name};
+    });
+    return getLocalizedField(idTypeObj);
+  }
 };
