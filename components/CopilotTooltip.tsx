@@ -1,11 +1,9 @@
 import React, {useContext} from 'react';
-import {View} from 'react-native';
 import {useCopilot, TooltipProps} from 'react-native-copilot';
-import {Theme} from './../components/ui/styleUtils';
-import {Text, Button, Row} from './../components/ui';
+import {Text, Button, Row, Column} from './../components/ui';
 import {useTranslation} from 'react-i18next';
 import {GlobalContext} from '../shared/GlobalContext';
-import {AuthEvents, selectIsInitialLaunch} from '../machines/auth';
+import {AuthEvents, selectIsInitialDownload} from '../machines/auth';
 import {useSelector} from '@xstate/react';
 
 export const CopilotTooltip = ({labels}: TooltipProps, props) => {
@@ -23,15 +21,14 @@ export const CopilotTooltip = ({labels}: TooltipProps, props) => {
   const {t} = useTranslation();
   const {appService} = useContext(GlobalContext);
   const authService = appService.children.get('auth');
-  const isInitialLaunch =
-    authService && useSelector(authService, selectIsInitialLaunch);
-  const RESET_COPILOT = () =>
-    authService?.send(AuthEvents.RESET_INITIAL_LAUNCH());
-
+  const ONBOARDING_DONE = () => authService?.send(AuthEvents.ONBOARDING_DONE());
+  const INITIAL_DOWNLOAD_DONE = () =>
+    authService?.send(AuthEvents.INITIAL_DOWNLOAD_DONE());
+  const isInitialDownloading = useSelector(
+    authService,
+    selectIsInitialDownload,
+  );
   const handleStop = async () => {
-    if (currentStep?.order === 6 && isInitialLaunch) {
-      RESET_COPILOT();
-    }
     stop();
   };
 
@@ -44,13 +41,16 @@ export const CopilotTooltip = ({labels}: TooltipProps, props) => {
   };
 
   copilotEvents.on('stop', () => {
+    if (currentStep?.order <= 5) {
+      ONBOARDING_DONE();
+    }
     if (currentStep?.order === 6) {
-      RESET_COPILOT();
+      INITIAL_DOWNLOAD_DONE();
     }
   });
 
   return (
-    <View style={Theme.CopilotTooltip.tooltipContainer}>
+    <Column>
       <Text testID="stepTitle" weight="semibold" margin="0 0 10 0">
         {currentStep?.name}
       </Text>
@@ -60,9 +60,14 @@ export const CopilotTooltip = ({labels}: TooltipProps, props) => {
         crossAlign="center"
         margin="25 0 0 0"
         style={{justifyContent: 'space-between'}}>
-        <Text>{currentStep?.order + ' of ' + totalStepsNumber}</Text>
+        <Text>
+          {currentStep?.order === 6 && isInitialDownloading
+            ? '1 of 1'
+            : currentStep?.order + ' of ' + totalStepsNumber}
+        </Text>
         <Row>
-          {isFirstStep || currentStep?.order === 6 ? null : (
+          {isFirstStep ||
+          (currentStep?.order === 6 && isInitialDownloading) ? null : (
             <Button
               title={labels?.previous}
               type="outline"
@@ -87,6 +92,6 @@ export const CopilotTooltip = ({labels}: TooltipProps, props) => {
           )}
         </Row>
       </Row>
-    </View>
+    </Column>
   );
 };

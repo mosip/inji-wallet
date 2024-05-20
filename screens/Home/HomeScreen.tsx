@@ -11,7 +11,7 @@ import {TabRef} from './HomeScreenMachine';
 import {ActorRefFrom} from 'xstate';
 import LinearGradient from 'react-native-linear-gradient';
 import {ErrorMessageOverlay} from '../../components/MessageOverlay';
-import {Dimensions, Pressable, View} from 'react-native';
+import {Pressable, View} from 'react-native';
 import testIDProps from '../../shared/commonUtil';
 import {BannerNotificationContainer} from '../../components/BannerNotificationContainer';
 import {VCItemMachine} from '../../machines/VerifiableCredential/VCItemMachine/VCItemMachine';
@@ -20,7 +20,6 @@ import {CopilotStep, useCopilot, walkthroughable} from 'react-native-copilot';
 
 export const HomeScreen: React.FC<HomeRouteProps> = props => {
   const controller = useHomeScreen(props);
-  const {start} = useCopilot();
 
   useEffect(() => {
     if (controller.IssuersService) {
@@ -68,12 +67,7 @@ export const HomeScreen: React.FC<HomeRouteProps> = props => {
   };
 
   return (
-    <View
-      onLayout={controller.isInitialLaunch ? () => start() : undefined}
-      style={{
-        width: Dimensions.get('screen').width,
-        height: Dimensions.get('screen').height * 0.78,
-      }}>
+    <React.Fragment>
       <BannerNotificationContainer />
       <Column fill backgroundColor={Theme.Colors.lightGreyBackgroundColor}>
         {controller.haveTabsLoaded && (
@@ -116,7 +110,7 @@ export const HomeScreen: React.FC<HomeRouteProps> = props => {
           flow="downloadedVc"
         />
       )}
-    </View>
+    </React.Fragment>
   );
 };
 

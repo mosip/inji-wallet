@@ -6,7 +6,7 @@ import {
 import {mainRoutes, share} from '../routes/main';
 import {Theme} from '../components/ui/styleUtils';
 import {useTranslation} from 'react-i18next';
-import {Column} from '../components/ui';
+import {Column, Text} from '../components/ui';
 
 import {GlobalContext} from '../shared/GlobalContext';
 import {ScanEvents} from '../machines/bleShare/scan/scanMachine';
@@ -42,10 +42,7 @@ export const MainLayout: React.FC = () => {
       stopOnOutsideClick
       androidStatusBarVisible
       tooltipComponent={CopilotTooltip}
-      tooltipStyle={{
-        width: Dimensions.get('screen').width * 1,
-        height: Dimensions.get('screen').height * 0.2,
-      }}
+      tooltipStyle={Theme.Styles.copilotStyle}
       stepNumberComponent={() => null}
       animated>
       <Navigator
@@ -68,7 +65,7 @@ export const MainLayout: React.FC = () => {
             }}
             options={{
               ...route.options,
-              title: t(route.name),
+              title: '',
               tabBarIcon: ({focused}) => (
                 <Column
                   {...testIDProps(route.name + 'Icon')}
@@ -78,6 +75,7 @@ export const MainLayout: React.FC = () => {
                   {route.name === 'home' ? (
                     <View style={Theme.Styles.tabBarIconCopilot}>
                       {SvgImage[`${route.name}`](focused)}
+                      <Text margin="6 0 0 0">{t(route.name)}</Text>
                     </View>
                   ) : (
                     <CopilotStep
@@ -87,6 +85,7 @@ export const MainLayout: React.FC = () => {
                       name={t(route.name + 'Title')}>
                       <CopilotView style={Theme.Styles.tabBarIconCopilot}>
                         {SvgImage[`${route.name}`](focused)}
+                        <Text margin="6 0 0 0">{t(route.name)}</Text>
                       </CopilotView>
                     </CopilotStep>
                   )}

@@ -739,13 +739,18 @@ export const DefaultTheme = {
     },
     tabBarIconCopilot: {
       flex: 1,
-      justifyContent: 'center',
+      justifyContent: 'flex-end',
       alignItems: 'center',
-      height: 250,
-      width: 120,
-      zIndex: -20,
-      overflow: 'visible',
-      marginBottom: -18,
+      minWidth: 70,
+      minHeight: 70,
+      marginBottom: -5,
+    },
+    copilotStyle: {
+      position: 'absolute',
+      left: 10,
+      right: 10,
+      maxWidth: Dimensions.get('screen').width,
+      height: Dimensions.get('screen').height * 0.2,
     },
   }),
   BannerStyles: StyleSheet.create({
@@ -1553,14 +1558,6 @@ export const DefaultTheme = {
     tabBarItemStyle: {
       height: 83,
       padding: 11,
-    },
-  }),
-  CopilotTooltip: StyleSheet.create({
-    tooltipContainer: {
-      flex: 1,
-      backgroundColor: Colors.White,
-      minWidth: Dimensions.get('screen').width * 0.55,
-      height: Dimensions.get('screen').width * 0.45,
     },
   }),
 

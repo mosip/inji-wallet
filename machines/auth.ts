@@ -15,7 +15,8 @@ const model = createModel(
     canUseBiometrics: false,
     selectLanguage: false,
     toggleFromSettings: false,
-    isInitialLaunch: true,
+    isOnboarding: true,
+    isInitialDownload: true,
   },
   {
     events: {
@@ -29,7 +30,8 @@ const model = createModel(
       STORE_RESPONSE: (response?: unknown) => ({response}),
       SELECT: () => ({}),
       NEXT: () => ({}),
-      RESET_INITIAL_LAUNCH: () => ({}),
+      ONBOARDING_DONE: () => ({}),
+      INITIAL_DOWNLOAD_DONE: () => ({}),
     },
   },
 );
@@ -50,8 +52,11 @@ export const authMachine = model.createMachine(
     id: 'auth',
     initial: 'init',
     on: {
-      RESET_INITIAL_LAUNCH: {
-        actions: ['resetInitialLaunch', 'storeContext'],
+      ONBOARDING_DONE: {
+        actions: ['setOnboardingDone', 'storeContext'],
+      },
+      INITIAL_DOWNLOAD_DONE: {
+        actions: ['setInitialDownloadDone', 'storeContext'],
       },
     },
     states: {
@@ -182,8 +187,12 @@ export const authMachine = model.createMachine(
         },
       }),
 
-      resetInitialLaunch: assign({
-        isInitialLaunch: context => false,
+      setOnboardingDone: assign({
+        isOnboarding: context => false,
+      }),
+
+      setInitialDownloadDone: assign({
+        isInitialDownload: context => false,
       }),
     },
 
@@ -238,8 +247,12 @@ export function selectCanUseBiometrics(state: State) {
   return state?.context?.canUseBiometrics;
 }
 
-export function selectIsInitialLaunch(state: State) {
-  return state?.context?.isInitialLaunch;
+export function selectIsOnboarding(state: State) {
+  return state?.context?.isOnboarding;
+}
+
+export function selectIsInitialDownload(state: State) {
+  return state?.context?.isInitialDownload;
 }
 
 export function selectAuthorized(state: State) {

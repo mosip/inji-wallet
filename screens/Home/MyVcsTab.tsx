@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {Button, Column, Row, Text} from '../../components/ui';
 import {Theme} from '../../components/ui/styleUtils';
-import {Pressable, RefreshControl, View} from 'react-native';
+import {Dimensions, Pressable, RefreshControl, View} from 'react-native';
 import {useMyVcsTab} from './MyVcsTabController';
 import {HomeScreenTabProps} from './HomeScreen';
 import {AddVcModal} from './MyVcs/AddVcModal';
@@ -207,7 +207,11 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = props => {
   const CopilotView = walkthroughable(View);
 
   return (
-    <React.Fragment>
+    <View
+      onLayout={controller.isOnboarding ? () => start() : undefined}
+      style={{
+        height: Dimensions.get('screen').height * 0.78,
+      }}>
       <Column fill style={{display: props.isVisible ? 'flex' : 'none'}}>
         {controller.isRequestSuccessful && (
           <BannerNotification
@@ -275,7 +279,7 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = props => {
                         <CopilotView
                           onLayout={
                             controller.vcMetadatas.length == 1 &&
-                            controller.isInitialLaunch
+                            controller.isInitialDownloading
                               ? () => {
                                   start();
                                   goToNth(6);
@@ -478,6 +482,6 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = props => {
           primaryButtonTestID="tryAgain"
         />
       )}
-    </React.Fragment>
+    </View>
   );
 };
