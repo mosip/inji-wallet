@@ -2,6 +2,7 @@ import {StateFrom} from 'xstate';
 import {VCMetadata} from '../../../shared/VCMetadata';
 import {VCItemMachine} from './VCItemMachine';
 import {getMosipLogo} from '../../../components/VC/common/VCUtils';
+import {VerifiableCredentialData} from '../VCMetaMachine/vc';
 
 type State = StateFrom<typeof VCItemMachine>;
 
@@ -15,7 +16,9 @@ export function selectCredential(state: State) {
     : state.context.verifiableCredential;
 }
 
-export function selectVerifiableCredentialData(state: State) {
+export function selectVerifiableCredentialData(
+  state: State,
+): VerifiableCredentialData {
   const vcMetadata = new VCMetadata(state.context.vcMetadata);
   return vcMetadata.isFromOpenId4VCI()
     ? {

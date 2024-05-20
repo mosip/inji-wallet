@@ -11,10 +11,12 @@ import i18n from '../../i18n';
 import {
   Credential,
   CredentialWrapper,
+  VerifiableCredentialType,
 } from '../../machines/VerifiableCredential/VCMetaMachine/vc';
 import {
   BOTTOM_SECTION_FIELDS_WITH_DETAILED_ADDRESS_FIELDS,
   DETAIL_VIEW_ADD_ON_FIELDS,
+  getSelectedCredentialTypeDetails,
 } from '../../components/VC/common/VCUtils';
 
 export const Protocols = {
@@ -28,13 +30,20 @@ export const Issuers = {
   ESignet: 'ESignet',
 };
 
-export const ID_TYPE = {
-  MOSIPVerifiableCredential: () => i18n.t('VcDetails:nationalCard'),
-  InsuranceCredential: () => i18n.t('VcDetails:insuranceCard'),
-  OpenG2PBeneficiaryVerifiableCredential: () =>
-    i18n.t('VcDetails:beneficiaryCard'),
-  OpenG2PRegistryVerifiableCredential: () =>
-    i18n.t('VcDetails:socialRegistryCard'),
+export const getIDTypeTranslations = (idType: VerifiableCredentialType) => {
+  switch (idType) {
+    case 'MOSIPVerifiableCredential':
+      return i18n.t('VcDetails:nationalCard');
+    case 'InsuranceCredential':
+      return i18n.t('VcDetails:insuranceCard');
+    case 'OpenG2PBeneficiaryVerifiableCredential':
+      return i18n.t('VcDetails:beneficiaryCard');
+    case 'OpenG2PRegistryVerifiableCredential':
+      return i18n.t('VcDetails:socialRegistryCard');
+    default: {
+      return i18n.t('VcDetails:insuranceCard');
+    }
+  }
 };
 
 export const getIDType = (verifiableCredential: Credential) => {
@@ -117,7 +126,7 @@ export const updateCredentialInformation = (context, credential) => {
   credentialWrapper.verifiableCredential.wellKnown =
     context.selectedIssuer['.well-known'];
   credentialWrapper.verifiableCredential.credentialTypes =
-    context.selectedIssuer['credential_type'];
+    getCredentialType(context);
   credentialWrapper.verifiableCredential.issuerLogo =
     getDisplayObjectForCurrentLanguage(context.selectedIssuer.display)?.logo;
   credentialWrapper.vcMetadata = context.vcMetadata || {};
@@ -192,34 +201,32 @@ export const getJWK = async publicKey => {
 export const getCredentialIssuersWellKnownConfig = async (
   issuer: string,
   wellknown: string,
-  credentialTypes: Object[],
+  vcCredentialTypes: Object[],
   defaultFields: string[],
 ) => {
   let fields: string[] = defaultFields;
   let response = null;
+  let credentialDetails;
   if (wellknown) {
     response = await CACHED_API.fetchIssuerWellknownConfig(issuer, wellknown);
-    if (!response) {
-      fields = [];
-    } else if (response?.credentials_supported[0].order) {
-      fields = response?.credentials_supported[0].order;
-    } else {
-      const supportedCredentialTypes = credentialTypes.filter(
-        type => type !== 'VerifiableCredential',
+    if (response) {
+      credentialDetails = getSelectedCredentialTypeDetails(
+        response,
+        vcCredentialTypes,
       );
-      const selectedCredentialType = supportedCredentialTypes[0];
-
-      response?.credentials_supported.filter(credential => {
-        if (credential.id === selectedCredentialType) {
-          fields = Object.keys(
-            credential.credential_definition.credentialSubject,
-          );
-        }
-      });
+      if (Object.keys(credentialDetails).includes('order')) {
+        fields = credentialDetails.order;
+      } else {
+        fields = Object.keys(
+          credentialDetails.credential_definition.credentialSubject,
+        );
+      }
+    } else {
+      fields = [];
     }
   }
   return {
-    wellknown: response,
+    wellknown: credentialDetails,
     fields: fields,
   };
 };
@@ -227,13 +234,13 @@ export const getCredentialIssuersWellKnownConfig = async (
 export const getDetailedViewFields = async (
   issuer: string,
   wellknown: string,
-  credentialTypes: Object[],
+  vcCredentialTypes: Object[],
   defaultFields: string[],
 ) => {
   let response = await getCredentialIssuersWellKnownConfig(
     issuer,
     wellknown,
-    credentialTypes,
+    vcCredentialTypes,
     defaultFields,
   );
 

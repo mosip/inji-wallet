@@ -39,14 +39,18 @@ export const VCItemField = props => {
   );
 };
 
-export const setTextColor = (wellknown: any, component = '') => {
-  if (wellknown && wellknown?.credentials_supported[0]?.display) {
+export const setTextColor = (wellknown: any) => {
+  if (wellknown?.display) {
     return {
-      color: wellknown.credentials_supported[0]?.display[0]?.text_color
-        ? wellknown.credentials_supported[0].display[0].text_color
-        : component === 'hrLine'
-        ? Theme.Styles.hrLine.borderBottomColor
-        : Theme.Colors.Details,
+      color: wellknown.display[0]?.text_color ?? Theme.Colors.Details,
     };
+  }
+};
+
+export const setHrLineColor = (wellknown: any) => {
+  if (wellknown && wellknown?.display) {
+    return (
+      wellknown?.display[0]?.text_color ?? Theme.Styles.hrLine.borderBottomColor
+    );
   }
 };

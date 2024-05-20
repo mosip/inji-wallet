@@ -3,6 +3,7 @@ import {useTranslation} from 'react-i18next';
 import {Image, ImageBackground, View} from 'react-native';
 import {
   VerifiableCredential,
+  VerifiableCredentialData,
   WalletBindingResponse,
 } from '../../../machines/VerifiableCredential/VCMetaMachine/vc';
 import {Button, Column, Row, Text} from '../../ui';
@@ -21,7 +22,7 @@ import {
   isVCLoaded,
   setBackgroundColour,
 } from '../common/VCUtils';
-import {setTextColor} from '../common/VCItemField';
+import {setHrLineColor, setTextColor} from '../common/VCItemField';
 import {ActivityIndicator} from '../../ui/ActivityIndicator';
 import {ProfileIcon} from '../../ProfileIcon';
 
@@ -134,8 +135,7 @@ export const VCDetailView: React.FC<VCItemDetailsProps> = props => {
                     style={[
                       Theme.Styles.hrLine,
                       {
-                        borderBottomColor: setTextColor(wellknown, 'hrLine')
-                          ?.color,
+                        borderBottomColor: setHrLineColor(wellknown),
                       },
                     ]}></View>
                   <Column padding="0 14 14 14">
@@ -235,8 +235,8 @@ export const VCDetailView: React.FC<VCItemDetailsProps> = props => {
 
 export interface VCItemDetailsProps {
   credential: VerifiableCredential | Credential;
-  verifiableCredentialData: any;
-  walletBindingResponse: WalletBindingResponse;
+  verifiableCredentialData: VerifiableCredentialData;
+  walletBindingResponse?: WalletBindingResponse;
   onBinding?: () => void;
   activeTab?: Number;
   vcHasImage: boolean;
