@@ -1517,8 +1517,8 @@ export const DefaultTheme = {
     },
     scannerContainer: {
       borderRadius: 24,
-      height: Dimensions.get('screen').height * 0.4,
-      width: Dimensions.get('screen').width * 0.8,
+      height: 300,
+      width: 300,
       marginTop: 40,
       backgroundColor: Colors.White,
       borderWidth: 1,
@@ -1527,11 +1527,12 @@ export const DefaultTheme = {
   }),
 
   CameraEnabledStyles: StyleSheet.create({
+    container: {marginTop: 25, marginBottom: 25},
     scannerContainer: {
       borderRadius: 24,
       alignSelf: 'center',
-      height: Dimensions.get('screen').height * 0.4,
-      width: Dimensions.get('screen').width * 0.8,
+      height: 300,
+      width: 300,
       overflow: 'hidden',
     },
     scanner: {

@@ -24,8 +24,9 @@ export const QrScanner: React.FC<QrScannerProps> = props => {
   const {appService} = useContext(GlobalContext);
   const [scanned, setScanned] = useState(false);
   const [cameraType, setCameraType] = useState(Camera.Constants.Type.back);
-  const controller = useScanLayout();
-  const [hasCameraPermission, setHasCameraPermission] = useState(null);
+  const [hasCameraPermission, setHasCameraPermission] = useState<
+    boolean | null
+  >(null);
   const [
     showCameraPermissionDeniedBanner,
     setShowCameraPermissionDeniedBanner,
@@ -117,7 +118,7 @@ export const QrScanner: React.FC<QrScannerProps> = props => {
   return (
     <>
       {hasCameraPermission ? (
-        <Column fill align="space-between">
+        <Column style={Theme.CameraEnabledStyles.container}>
           <View style={Theme.CameraEnabledStyles.scannerContainer}>
             <Camera
               {...testIDProps('camera')}
@@ -129,31 +130,33 @@ export const QrScanner: React.FC<QrScannerProps> = props => {
               type={cameraType}
             />
           </View>
-          {props.title && (
-            <Text
-              testID="holdPhoneSteadyMessage"
-              align="center"
-              style={Theme.CameraEnabledStyles.holdPhoneSteadyText}
-              margin="0 57">
-              {props.title}
-            </Text>
-          )}
-          <Column crossAlign="center">
-            <TouchableOpacity
-              onPress={() => {
-                setCameraType(
-                  cameraType === Camera.Constants.Type.back
-                    ? Camera.Constants.Type.front
-                    : Camera.Constants.Type.back,
-                );
-              }}>
-              {SvgImage.FlipCameraIcon()}
-            </TouchableOpacity>
-            <Text
-              testID="flipCameraText"
-              style={Theme.CameraEnabledStyles.iconText}>
-              {t('flipCamera')}
-            </Text>
+          <Column fill align="space-between" style={{marginTop: 24}}>
+            {props.title && (
+              <Text
+                testID="holdPhoneSteadyMessage"
+                align="center"
+                style={Theme.CameraEnabledStyles.holdPhoneSteadyText}
+                margin="0 57">
+                {props.title}
+              </Text>
+            )}
+            <Column crossAlign="center">
+              <TouchableOpacity
+                onPress={() => {
+                  setCameraType(
+                    cameraType === Camera.Constants.Type.back
+                      ? Camera.Constants.Type.front
+                      : Camera.Constants.Type.back,
+                  );
+                }}>
+                {SvgImage.FlipCameraIcon()}
+              </TouchableOpacity>
+              <Text
+                testID="flipCameraText"
+                style={Theme.CameraEnabledStyles.iconText}>
+                {t('flipCamera')}
+              </Text>
+            </Column>
           </Column>
         </Column>
       ) : (
