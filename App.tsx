@@ -60,6 +60,14 @@ const AppLayoutWrapper: React.FC = () => {
     hideAppLoading();
   }, []);
 
+  useEffect(() => {
+    if (AppState.currentState === 'active') {
+      appService.send(APP_EVENTS.ACTIVE());
+    } else {
+      appService.send(APP_EVENTS.INACTIVE());
+    }
+  }, []);
+
   if (isDecryptError) {
     DecryptErrorAlert(controller, t);
   }
@@ -117,7 +125,6 @@ const AppInitialization: React.FC = () => {
   const isReady = useSelector(appService, selectIsReady);
   const hasFontsLoaded = useFont();
   const {t} = useTranslation('common');
-  const [isActive, setIsActive] = useState(false);
 
   useEffect(() => {
     if (isHardwareKeystoreExists) {
@@ -127,54 +134,6 @@ const AppInitialization: React.FC = () => {
       );
     }
   }, [i18n.language]);
-
-  useEffect(() => {
-    const changeHandler = (newState: AppStateStatus) => {
-      switch (newState) {
-        case 'background':
-          setIsActive(false);
-          break;
-        case 'inactive':
-          setIsActive(false);
-          break;
-        case 'active':
-          setIsActive(true);
-          break;
-      }
-    };
-
-    const blurHandler = () => setIsActive(false);
-    const focusHandler = () => setIsActive(true);
-
-    let changeEventSubscription = AppState.addEventListener(
-      'change',
-      changeHandler,
-    );
-    let blurEventSubscription, focusEventSubscription;
-
-    if (isAndroid()) {
-      blurEventSubscription = AppState.addEventListener('blur', blurHandler);
-      focusEventSubscription = AppState.addEventListener('focus', focusHandler);
-    }
-
-    return () => {
-      changeEventSubscription.remove();
-      if (isAndroid()) {
-        blurEventSubscription.remove();
-        focusEventSubscription.remove();
-      }
-    };
-  });
-
-  useEffect(() => {
-    if (isReady && hasFontsLoaded) {
-      if (isActive) {
-        appService.send(APP_EVENTS.ACTIVE());
-      } else {
-        appService.send(APP_EVENTS.INACTIVE());
-      }
-    }
-  }, [isActive, isReady, hasFontsLoaded]);
 
   return isReady && hasFontsLoaded ? (
     <AppLayoutWrapper />

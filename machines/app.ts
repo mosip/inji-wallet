@@ -154,6 +154,9 @@ export const appMachine = model.createMachine(
         },
         states: {
           focus: {
+            invoke: {
+              src: 'checkFocusState',
+            },
             on: {
               ACTIVE: '.active',
               INACTIVE: '.inactive',
@@ -348,6 +351,50 @@ export const appMachine = model.createMachine(
           deviceName: await getDeviceName(),
         };
         callback(model.events.APP_INFO_RECEIVED(appInfo));
+      },
+
+      checkFocusState: () => callback => {
+        const changeHandler = (newState: AppStateStatus) => {
+          switch (newState) {
+            case 'background':
+            case 'inactive':
+              callback({type: 'INACTIVE'});
+              break;
+            case 'active':
+              callback({type: 'ACTIVE'});
+              break;
+          }
+        };
+
+        const blurHandler = () => callback({type: 'INACTIVE'});
+        const focusHandler = () => callback({type: 'ACTIVE'});
+
+        let changeEventSubscription = AppState.addEventListener(
+          'change',
+          changeHandler,
+        );
+        AppState.addEventListener('change', changeHandler);
+
+        let blurEventSubscription, focusEventSubscription;
+
+        if (isAndroid()) {
+          blurEventSubscription = AppState.addEventListener(
+            'blur',
+            blurHandler,
+          );
+          focusEventSubscription = AppState.addEventListener(
+            'focus',
+            focusHandler,
+          );
+        }
+
+        return () => {
+          changeEventSubscription.remove();
+          if (isAndroid()) {
+            blurEventSubscription.remove();
+            focusEventSubscription.remove();
+          }
+        };
       },
 
       checkNetworkState: () => callback => {
