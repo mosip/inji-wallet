@@ -2,22 +2,16 @@ import React, {useContext, useEffect, useState} from 'react';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {Camera} from 'expo-camera';
 import {BarCodeEvent, BarCodeScanner} from 'expo-barcode-scanner';
-import {
-  Linking,
-  TouchableOpacity,
-  View,
-  Pressable,
-  Platform,
-} from 'react-native';
+import {Linking, TouchableOpacity, View, Pressable} from 'react-native';
 import {Theme} from './ui/styleUtils';
-import {Column, Button, Text, Centered, Row} from './ui';
+import {Column, Text, Row} from './ui';
 import {GlobalContext} from '../shared/GlobalContext';
 import {useSelector} from '@xstate/react';
 import {selectIsActive} from '../machines/app';
 import {useTranslation} from 'react-i18next';
-import {useScanLayout} from '../screens/Scan/ScanLayoutController';
 import testIDProps from '../shared/commonUtil';
 import {SvgImage} from './ui/svg';
+import {isAndroid} from '../shared/constants';
 
 export const QrScanner: React.FC<QrScannerProps> = props => {
   const {t} = useTranslation('QrScanner');
@@ -35,7 +29,7 @@ export const QrScanner: React.FC<QrScannerProps> = props => {
   const isActive = useSelector(appService, selectIsActive);
 
   const openSettings = () => {
-    if (Platform.OS === 'android') {
+    if (isAndroid()) {
       Linking.openSettings();
     } else {
       Linking.openURL('App-Prefs:Privacy');
@@ -136,7 +130,7 @@ export const QrScanner: React.FC<QrScannerProps> = props => {
                 testID="holdPhoneSteadyMessage"
                 align="center"
                 style={Theme.CameraEnabledStyles.holdPhoneSteadyText}
-                margin="0 57">
+                margin="24 57 0 57">
                 {props.title}
               </Text>
             )}

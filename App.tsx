@@ -27,7 +27,6 @@ import {isHardwareKeystoreExists} from './shared/cryptoutil/cryptoUtil';
 import i18n from './i18n';
 import './shared/flipperConfig';
 import * as SplashScreen from 'expo-splash-screen';
-import {isAndroid} from './shared/constants';
 
 SplashScreen.preventAutoHideAsync();
 
