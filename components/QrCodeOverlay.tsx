@@ -10,7 +10,6 @@ import {SvgImage} from './ui/svg';
 // @ts-ignore
 import {generateQRData} from '@mosip/pixelpass';
 import {VerifiableCredential} from '../machines/VerifiableCredential/VCMetaMachine/vc';
-import RNSecureKeyStore, {ACCESSIBLE} from 'react-native-secure-key-store';
 import {DEFAULT_ECL} from '../shared/constants';
 import {VCMetadata} from '../shared/VCMetadata';
 
@@ -19,19 +18,6 @@ export const QrCodeOverlay: React.FC<QrCodeOverlayProps> = props => {
   const [qrString, setQrString] = useState('');
   const [qrError, setQrError] = useState(false);
 
-  async function getQRData(): Promise<string> {
-    let qrData: string;
-    try {
-      qrData = await RNSecureKeyStore.get(props.meta.id);
-    } catch {
-      qrData = generateQRData(JSON.stringify(props.verifiableCredential));
-      await RNSecureKeyStore.set(props.meta.id, qrData, {
-        accessible: ACCESSIBLE.ALWAYS_THIS_DEVICE_ONLY,
-      });
-    }
-    return qrData;
-  }
-
   function onQRError() {
     console.warn('Data is too big');
     setQrError(true);
@@ -39,7 +25,9 @@ export const QrCodeOverlay: React.FC<QrCodeOverlayProps> = props => {
 
   useEffect(() => {
     (async () => {
-      const qrString = await getQRData();
+      const qrString = generateQRData(
+        JSON.stringify(props.verifiableCredential),
+      );
       setQrString(qrString);
     })();
   }, [qrString]);
