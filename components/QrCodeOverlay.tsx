@@ -8,13 +8,15 @@ import {useTranslation} from 'react-i18next';
 import testIDProps from '../shared/commonUtil';
 import {SvgImage} from './ui/svg';
 // @ts-ignore
-import {generateQRData} from '@mosip/pixelpass';
+//import {generateQRData} from '@mosip/pixelpass';
+import {NativeModules} from 'react-native';
 import {VerifiableCredential} from '../machines/VerifiableCredential/VCMetaMachine/vc';
 import RNSecureKeyStore, {ACCESSIBLE} from 'react-native-secure-key-store';
 import {DEFAULT_ECL} from '../shared/constants';
 import {VCMetadata} from '../shared/VCMetadata';
 
 export const QrCodeOverlay: React.FC<QrCodeOverlayProps> = props => {
+  const {RNPixelpassModule} = NativeModules;
   const {t} = useTranslation('VcDetails');
   const [qrString, setQrString] = useState('');
   const [qrError, setQrError] = useState(false);
@@ -24,7 +26,16 @@ export const QrCodeOverlay: React.FC<QrCodeOverlayProps> = props => {
     try {
       qrData = await RNSecureKeyStore.get(props.meta.id);
     } catch {
-      qrData = generateQRData(JSON.stringify(props.verifiableCredential));
+      RNPixelpassModule.generateQRData(
+        JSON.stringify(props.verifiableCredential),
+        '',
+      )
+        .then(result => {
+          console.log('testwa2 ' + result);
+        })
+        .catch(error => {
+          console.error('testwa ' + error);
+        });
       await RNSecureKeyStore.set(props.meta.id, qrData, {
         accessible: ACCESSIBLE.ALWAYS_THIS_DEVICE_ONLY,
       });

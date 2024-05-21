@@ -17,11 +17,18 @@ import testIDProps from '../../shared/commonUtil';
 import {BannerNotificationContainer} from '../../components/BannerNotificationContainer';
 import {VCItemMachine} from '../../machines/VerifiableCredential/VCItemMachine/VCItemMachine';
 import {VerifiableCredential} from '../../machines/VerifiableCredential/VCMetaMachine/vc';
-//import RNPixelpassModule from 'react-native-pixelpass';
+import {NativeModules} from 'react-native';
+const {RNPixelpassModule} = NativeModules;
 
 export const HomeScreen: React.FC<HomeRouteProps> = props => {
   const controller = useHomeScreen(props);
-
+  RNPixelpassModule.generateQRData('hello', '')
+    .then(result => {
+      console.log('testwa2 ' + result);
+    })
+    .catch(error => {
+      console.error('testwa ' + error);
+    });
   useEffect(() => {
     if (controller.IssuersService) {
       navigateToIssuers();

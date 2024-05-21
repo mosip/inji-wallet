@@ -7,8 +7,8 @@ class RNPixelpassModule: NSObject, RCTBridgeModule {
         return "RNPixelpassModule"
     }
     
-    @objc(decode:resolver:rejecter:)
-    func decode(_ parameter: String, resolve:  RCTPromiseResolveBlock, reject:  RCTPromiseRejectBlock) {
+    @objc
+    func decode(_ parameter: String, resolve:  @escaping RCTPromiseResolveBlock, reject: @escaping RCTPromiseRejectBlock) {
         do {
             let pixelPass = PixelPass()
           guard let result = pixelPass.decode(data:parameter) else { return resolve("Failed") }
@@ -18,10 +18,9 @@ class RNPixelpassModule: NSObject, RCTBridgeModule {
         }
     }
 
-    @objc(generateQRCode:data:ecc:header:resolver:rejecter:)
-    func generateQRCode(data: String, ecc: String = "L", header: String = "", resolve: @escaping RCTPromiseResolveBlock, reject: @escaping RCTPromiseRejectBlock) {
-        let eccValue = ECC(rawValue: ecc) ?? .L
-        if let imageData = generateQRCode(data: data, ecc: eccValue, header: header) {
+    @objc
+    func generateQRData(_ data: String, header: String = "", resolve: @escaping RCTPromiseResolveBlock, reject: @escaping RCTPromiseRejectBlock) {
+      if let imageData = PixelPass().generateQRCode(data: data, ecc: .L, header: header) {
             let base64Image = imageData.base64EncodedString(options: [])
             resolve(base64Image)
         } else {
