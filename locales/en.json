@@ -434,13 +434,7 @@
     "share": "Share",
     "history": "History",
     "request": "Request",
-    "settings": "Settings",
-    "shareTitle": "Share Card",
-    "shareMessage": "Share your card with ease in offline mode using bluetooth, empowering you to provide verified information whenever required.",
-    "historyTitle": "Access to History",
-    "historyMessage": "View your activity history to track your interactions and stay informed about your past actions within the app.",
-    "settingsTitle": "App Settings",
-    "settingsMessage": "Customize your app experience with personalized settings as per your preferences."
+    "settings": "Settings"
   },
   "PasscodeScreen": {
     "header": "Set Passcode",
@@ -878,7 +872,6 @@
     "tryAgain": "Try again",
     "goBack": "Go Back",
     "ignore": "Ignore",
-    "done": "Done",
     "camera": {
       "errors": {
         "missingPermission": "This app uses the camera to scan the QR code of another device."
@@ -896,5 +889,23 @@
       "title": "Unlock App",
       "description": "Please use fingerprint to unlock the app"
     }
+  },
+  "copilot": {
+    "helpTitle": "Help/FAQs",
+    "helpMessage": "Find answers to common questions and access helpful resources in our FAQ section, ensuring you have the support whenever you need it.",
+    "downloadTitle": "Download Card",
+    "downloadMessage": "Easily download and securely store your card in the app for convenient access whenever you need them.",
+    "shareTitle": "Share Card",
+    "shareMessage": "Share your card with ease in offline mode using bluetooth, empowering you to provide verified information whenever required.",
+    "historyTitle": "Access to History",
+    "historyMessage": "View your activity history to track your interactions and stay informed about your past actions within the app.",
+    "settingsTitle": "App Settings",
+    "settingsMessage": "Customize your app experience with personalized settings as per your preferences.",
+    "cardTitle": "Card",
+    "cardMessage": "Your card displays your verified identity information. Tap for a detailed view or click on … for additional options.",
+    "next": "Next",
+    "previous": "Previous",
+    "skip": "Skip",
+    "final": "Done"
   }
 }

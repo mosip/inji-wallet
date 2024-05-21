@@ -1,12 +1,13 @@
 import React, {useContext} from 'react';
-import {useCopilot, TooltipProps} from 'react-native-copilot';
+import {useCopilot} from 'react-native-copilot';
 import {Text, Button, Row, Column} from './../components/ui';
 import {useTranslation} from 'react-i18next';
 import {GlobalContext} from '../shared/GlobalContext';
 import {AuthEvents, selectIsInitialDownload} from '../machines/auth';
 import {useSelector} from '@xstate/react';
 
-export const CopilotTooltip = ({labels}: TooltipProps, props) => {
+export const CopilotTooltip = () => {
+  const {t} = useTranslation('copilot');
   const {
     goToNext,
     goToPrev,
@@ -18,7 +19,6 @@ export const CopilotTooltip = ({labels}: TooltipProps, props) => {
     copilotEvents,
   } = useCopilot();
 
-  const {t} = useTranslation();
   const {appService} = useContext(GlobalContext);
   const authService = appService.children.get('auth');
   const ONBOARDING_DONE = () => authService?.send(AuthEvents.ONBOARDING_DONE());
@@ -60,7 +60,7 @@ export const CopilotTooltip = ({labels}: TooltipProps, props) => {
         crossAlign="center"
         margin="25 0 0 0"
         style={{justifyContent: 'space-between'}}>
-        <Text>
+        <Text weight="bold">
           {currentStep?.order === 6 && isInitialDownloading
             ? '1 of 1'
             : currentStep?.order + ' of ' + totalStepsNumber}
@@ -69,7 +69,7 @@ export const CopilotTooltip = ({labels}: TooltipProps, props) => {
           {isFirstStep ||
           (currentStep?.order === 6 && isInitialDownloading) ? null : (
             <Button
-              title={labels?.previous}
+              title={t('previous')}
               type="outline"
               styles={{width: 104, height: 40}}
               onPress={handlePrev}
@@ -77,14 +77,14 @@ export const CopilotTooltip = ({labels}: TooltipProps, props) => {
           )}
           {!isLastStep ? (
             <Button
-              title={labels?.next}
+              title={t('next')}
               type="solid"
               styles={{width: 104, height: 40, marginLeft: 10}}
               onPress={handleNext}
             />
           ) : (
             <Button
-              title={t('common:done')}
+              title={t('done')}
               type="solid"
               styles={{width: 104, height: 40, marginLeft: 10}}
               onPress={handleStop}

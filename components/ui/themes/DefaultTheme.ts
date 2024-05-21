@@ -749,6 +749,7 @@ export const DefaultTheme = {
       position: 'absolute',
       left: 10,
       right: 10,
+      borderRadius: 8,
       maxWidth: Dimensions.get('screen').width,
       height: Dimensions.get('screen').height * 0.2,
     },

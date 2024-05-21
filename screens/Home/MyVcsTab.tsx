@@ -271,14 +271,13 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = props => {
                 </Row>
                 {showPinVc &&
                   vcMetadataOrderedByPinStatus.map((vcMetadata, index) => {
-                    return index === 0 ? (
+                    return index === 0 || controller.isInitialDownloading ? (
                       <CopilotStep
-                        text="Your card displays your verified identity information. Tap for a detailed view or click on … for additional options."
+                        text={t('copilot:cardMessage')}
                         order={6}
-                        name="Card">
+                        name={t('copilot:cardTitle')}>
                         <CopilotView
                           onLayout={
-                            controller.vcMetadatas.length == 1 &&
                             controller.isInitialDownloading
                               ? () => {
                                   start();
