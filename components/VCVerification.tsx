@@ -21,13 +21,8 @@ export const VCVerification: React.FC = ({wellknown, isVerified}: any) => {
         {statusIcon}
         <Text
           testID="verificationStatus"
-          style={[
-            Theme.Styles.detailsValue,
-            {
-              fontFamily: 'Inter_600SemiBold',
-              color: getTextColor(wellknown, Theme.Colors.Details),
-            },
-          ]}>
+          color={getTextColor(wellknown, Theme.Colors.Details)}
+          style={Theme.Styles.verificationStatus}>
           {statusText}
         </Text>
       </React.Fragment>

@@ -144,7 +144,7 @@ export const ScanScreen: React.FC = () => {
 
   function qrScannerComponent() {
     return (
-      <Column crossAlign="center" margin="0 0 0 -6">
+      <Column crossAlign="center">
         <QrScanner
           onQrFound={scanScreenController.SCAN}
           title={t('scanningGuide')}
