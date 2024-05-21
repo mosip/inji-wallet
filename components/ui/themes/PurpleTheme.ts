@@ -1518,7 +1518,7 @@ export const PurpleTheme = {
     },
     scannerContainer: {
       borderRadius: 24,
-      height: 300,
+      height: 320,
       width: 300,
       marginTop: 40,
       backgroundColor: Colors.White,
@@ -1527,11 +1527,11 @@ export const PurpleTheme = {
     },
   }),
   CameraEnabledStyles: StyleSheet.create({
-    container: {marginTop: 25, marginBottom: 25},
+    container: {marginTop: 20, marginBottom: 20},
     scannerContainer: {
       borderRadius: 24,
       alignSelf: 'center',
-      height: 300,
+      height: 320,
       width: 300,
       overflow: 'hidden',
     },
