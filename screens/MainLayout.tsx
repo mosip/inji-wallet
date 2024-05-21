@@ -84,9 +84,9 @@ export const MainLayout: React.FC = () => {
                   ) : (
                     <CopilotStep
                       key={t(route.name)}
-                      text={t(route.name + 'Message')}
+                      text={t(`copilot:${route.name}Message`)}
                       order={2 + index}
-                      name={t(route.name + 'Title')}>
+                      name={t(`copilot:${route.name}Title`)}>
                       <CopilotView style={Theme.Styles.tabBarIconCopilot}>
                         {SvgImage[`${route.name}`](focused)}
                         <Text

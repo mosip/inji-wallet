@@ -17,9 +17,11 @@ import {BannerNotificationContainer} from '../../components/BannerNotificationCo
 import {VCItemMachine} from '../../machines/VerifiableCredential/VCItemMachine/VCItemMachine';
 import {VerifiableCredential} from '../../machines/VerifiableCredential/VCMetaMachine/vc';
 import {CopilotStep, walkthroughable} from 'react-native-copilot';
+import {useTranslation} from 'react-i18next';
 
 export const HomeScreen: React.FC<HomeRouteProps> = props => {
   const controller = useHomeScreen(props);
+  const {t} = useTranslation();
 
   useEffect(() => {
     if (controller.IssuersService) {
@@ -87,8 +89,8 @@ export const HomeScreen: React.FC<HomeRouteProps> = props => {
       </Column>
 
       <CopilotStep
-        name="Download Card"
-        text="Easily download and securely store your card in the app for convenient access whenever you need them."
+        name={t('copilot:downloadTitle')}
+        text={t('copilot:downloadMessage')}
         order={2}>
         <CopilotView style={Theme.Styles.downloadFabIconCopilotContainer}>
           <DownloadFABIcon />

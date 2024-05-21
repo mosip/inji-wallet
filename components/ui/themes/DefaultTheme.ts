@@ -751,7 +751,7 @@ export const DefaultTheme = {
       right: 10,
       borderRadius: 8,
       maxWidth: Dimensions.get('screen').width,
-      height: Dimensions.get('screen').height * 0.2,
+      minHeight: Dimensions.get('screen').height * 0.22,
     },
   }),
   BannerStyles: StyleSheet.create({
