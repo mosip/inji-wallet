@@ -1543,6 +1543,7 @@ export const PurpleTheme = {
     holdPhoneSteadyText: {
       color: Colors.Black,
       fontFamily: 'Inter_600SemiBold',
+      fontSize: 15,
     },
     cameraFlipIcon: {
       height: 50,
