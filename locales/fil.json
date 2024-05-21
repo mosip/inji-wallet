@@ -410,10 +410,10 @@
     "noReceivedVcsText": "Pindutin ang Humiling sa ibaba para makatanggap ng card"
   },
   "VcVerificationBanner": {
-      "inProgress": "Pina-validate namin ang iyong card, maaaring magtagal ito. Kapag na-verify na, magagawa mong i-activate ang iyong card.",
-      "success": "Matagumpay na na-verify ang {{vcDetails}} at magagamit na ngayon para sa pag-activate.",
-      "error": "Paumanhin, hindi namin ma-verify ang {{vcDetails}} ngayon. Subukang muli mamaya."
-    },
+    "inProgress": "Pina-validate namin ang iyong card, maaaring magtagal ito. Kapag na-verify na, magagawa mong i-activate ang iyong card.",
+    "success": "Matagumpay na na-verify ang {{vcDetails}} at magagamit na ngayon para sa pag-activate.",
+    "error": "Paumanhin, hindi namin ma-verify ang {{vcDetails}} ngayon. Subukang muli mamaya."
+  },
   "ViewVcModal": {
     "title": "Mga Detalye ng ID",
     "inProgress": "Isinasagawa",
@@ -591,9 +591,9 @@
   },
   "ScanScreen": {
     "shareWithSelfie": "Ibahagi sa Selfie",
-    "shareWithSelfieQrLogin":"Pag-login sa QR Code",
+    "shareWithSelfieQrLogin": "Pag-login sa QR Code",
     "shareWithSelfieMessage": "Para ibahagi ang iyong Mga Nabe-verify na Kredensyal, secure naming ive-verify ang iyong pagkakakilanlan gamit ang pag-verify sa mukha. Sa pagpapatuloy, pumapayag ka sa INJI na gamitin ang iyong camera para sa layuning ito. \n\n Gagamitin lang ang iyong facial data para sa pag-verify at hindi ibabahagi sa anumang third party.",
-    "shareWithSelfieMessageQrLogin":"Upang ma-access ang portal, kakailanganin mong ibahagi ang iyong Mga Na-verify na Kredensyal at secure na i-verify ang iyong pagkakakilanlan gamit ang pag-verify sa mukha. Sa pagpapatuloy, pumapayag ka sa Inji na gamitin ang iyong camera para sa layuning ito. \n\n Gagamitin lang ang iyong facial data para sa pag-verify at hindi ibabahagi. Pagkatapos ng matagumpay na pag-verify, maaari mong piliin kung aling mga detalye ang ibabahagi.",
+    "shareWithSelfieMessageQrLogin": "Upang ma-access ang portal, kakailanganin mong ibahagi ang iyong Mga Na-verify na Kredensyal at secure na i-verify ang iyong pagkakakilanlan gamit ang pag-verify sa mukha. Sa pagpapatuloy, pumapayag ka sa Inji na gamitin ang iyong camera para sa layuning ito. \n\n Gagamitin lang ang iyong facial data para sa pag-verify at hindi ibabahagi. Pagkatapos ng matagumpay na pag-verify, maaari mong piliin kung aling mga detalye ang ibabahagi.",
     "ConfirmButton": "Naiintindihan ko",
     "doNotAskMessage": "Huwag mo na akong tanungin",
     "noShareableVcs": "Walang magagamit na mga card na maibabahagi.",
@@ -880,5 +880,23 @@
       "title": "I-unlock ang App",
       "description": "Mangyaring gumamit ng fingerprint upang i-unlock ang app"
     }
+  },
+  "copilot": {
+    "helpTitle": "Tulong/Mga FAQ",
+    "helpMessage": "Maghanap ng mga sagot sa mga karaniwang tanong at i-access ang mga kapaki-pakinabang na mapagkukunan sa aming seksyong FAQ, na tinitiyak na mayroon kang suporta sa tuwing kailangan mo ito.",
+    "downloadTitle": "I-download ang Card",
+    "downloadMessage": "Madaling i-download at secure na iimbak ang iyong card sa app para sa maginhawang pag-access sa tuwing kailangan mo ang mga ito.",
+    "shareTitle": "Share Card",
+    "shareMessage": "Ibahagi ang iyong card nang madali sa offline mode gamit ang bluetooth, na nagbibigay ng kapangyarihan sa iyong magbigay ng na-verify na impormasyon kapag kinakailangan.",
+    "historyTitle": "Access sa Kasaysayan",
+    "historyMessage": "Tingnan ang iyong history ng aktibidad upang subaybayan ang iyong mga pakikipag-ugnayan at manatiling may alam tungkol sa iyong mga nakaraang pagkilos sa loob ng app.",
+    "settingsTitle": "Mga Setting ng App",
+    "settingsMessage": "I-customize ang iyong karanasan sa app gamit ang mga naka-personalize na setting ayon sa iyong mga kagustuhan.",
+    "cardTitle": "Card",
+    "cardMessage": "Ipinapakita ng iyong card ang iyong na-verify na impormasyon ng pagkakakilanlan. I-tap para sa isang detalyadong view o mag-click sa … para sa mga karagdagang opsyon.",
+    "next": "Susunod",
+    "previous": "Nakaraang",
+    "skip": "Laktawan",
+    "done": "Tapos na"
   }
 }

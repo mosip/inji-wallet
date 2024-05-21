@@ -207,7 +207,7 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = props => {
   const CopilotView = walkthroughable(View);
 
   return (
-    <View
+    <Column
       onLayout={controller.isOnboarding ? () => start() : undefined}
       style={{
         height: Dimensions.get('screen').height * 0.78,
@@ -481,6 +481,6 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = props => {
           primaryButtonTestID="tryAgain"
         />
       )}
-    </View>
+    </Column>
   );
 };

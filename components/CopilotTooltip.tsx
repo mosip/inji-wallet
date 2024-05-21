@@ -51,7 +51,7 @@ export const CopilotTooltip = () => {
 
   return (
     <Column>
-      <Text testID="stepTitle" weight="semibold" margin="0 0 10 0">
+      <Text testID="stepTitle" weight="bold" margin="0 0 10 0">
         {currentStep?.name}
       </Text>
       <Text testID="stepDescription">{currentStep?.text}</Text>
