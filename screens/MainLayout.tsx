@@ -18,7 +18,7 @@ import {
   CopilotStep,
   walkthroughable,
 } from 'react-native-copilot';
-import {Dimensions, View} from 'react-native';
+import {View} from 'react-native';
 import {CopilotTooltip} from '../components/CopilotTooltip';
 
 const {Navigator, Screen} = createBottomTabNavigator();
@@ -75,7 +75,11 @@ export const MainLayout: React.FC = () => {
                   {route.name === 'home' ? (
                     <View style={Theme.Styles.tabBarIconCopilot}>
                       {SvgImage[`${route.name}`](focused)}
-                      <Text margin="6 0 0 0">{t(route.name)}</Text>
+                      <Text
+                        color={focused && Theme.Colors.Icon}
+                        margin="6 0 0 0">
+                        {t(route.name)}
+                      </Text>
                     </View>
                   ) : (
                     <CopilotStep
@@ -85,7 +89,11 @@ export const MainLayout: React.FC = () => {
                       name={t(route.name + 'Title')}>
                       <CopilotView style={Theme.Styles.tabBarIconCopilot}>
                         {SvgImage[`${route.name}`](focused)}
-                        <Text margin="6 0 0 0">{t(route.name)}</Text>
+                        <Text
+                          color={focused && Theme.Colors.Icon}
+                          margin="6 0 0 0">
+                          {t(route.name)}
+                        </Text>
                       </CopilotView>
                     </CopilotStep>
                   )}

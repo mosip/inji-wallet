@@ -49,9 +49,9 @@ export const HomeScreenLayout: React.FC<RootRouteProps> = props => {
       source={'Inji'}
       triggerComponent={
         <CopilotStep
-          text="Find answers to common questions and access helpful resources in our FAQ section, ensuring you have the support whenever you need it."
+          text={t('copilot:helpMessage')}
           order={1}
-          name="Help/FAQs">
+          name={t('copilot:helpTitle')}>
           <CopilotView testID="help" style={Theme.HelpScreenStyle.viewStyle}>
             <Row crossAlign="center" style={Theme.HelpScreenStyle.rowStyle}>
               <View testID="helpIcon" style={Theme.HelpScreenStyle.iconStyle}>
