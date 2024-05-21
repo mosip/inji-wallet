@@ -369,19 +369,30 @@ export const appMachine = model.createMachine(
         const blurHandler = () => callback({type: 'INACTIVE'});
         const focusHandler = () => callback({type: 'ACTIVE'});
 
+        let changeEventSubscription = AppState.addEventListener(
+          'change',
+          changeHandler,
+        );
         AppState.addEventListener('change', changeHandler);
 
+        let blurEventSubscription, focusEventSubscription;
+
         if (isAndroid()) {
-          AppState.addEventListener('blur', blurHandler);
-          AppState.addEventListener('focus', focusHandler);
+          blurEventSubscription = AppState.addEventListener(
+            'blur',
+            blurHandler,
+          );
+          focusEventSubscription = AppState.addEventListener(
+            'focus',
+            focusHandler,
+          );
         }
 
         return () => {
-          AppState.removeEventListener('change', changeHandler);
-
+          changeEventSubscription.remove();
           if (isAndroid()) {
-            AppState.removeEventListener('blur', blurHandler);
-            AppState.removeEventListener('focus', focusHandler);
+            blurEventSubscription.remove();
+            focusEventSubscription.remove();
           }
         };
       },
