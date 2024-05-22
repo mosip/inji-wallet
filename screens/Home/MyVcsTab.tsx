@@ -207,7 +207,7 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = props => {
   const CopilotView = walkthroughable(View);
 
   return (
-    <Column
+    <View
       onLayout={controller.isOnboarding ? () => start() : undefined}
       style={{
         height: Dimensions.get('screen').height * 0.78,
@@ -271,30 +271,26 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = props => {
                 </Row>
                 {showPinVc &&
                   vcMetadataOrderedByPinStatus.map((vcMetadata, index) => {
-                    return index === 0 || controller.isInitialDownloading ? (
+                    return index === 0 ? (
                       <CopilotStep
+                        key={index}
                         text={t('copilot:cardMessage')}
                         order={6}
                         name={t('copilot:cardTitle')}>
-                        <CopilotView
-                          onLayout={
-                            controller.isInitialDownloading
-                              ? () => {
-                                  start();
-                                  goToNth(6);
-                                }
-                              : undefined
-                          }>
-                          <VcItemContainer
-                            key={vcMetadata.getVcKey()}
-                            vcMetadata={vcMetadata}
-                            margin="0 2 8 2"
-                            onPress={controller.VIEW_VC}
-                            isDownloading={controller.inProgressVcDownloads?.has(
-                              vcMetadata.getVcKey(),
-                            )}
-                            isPinned={vcMetadata.isPinned}
-                          />
+                        <CopilotView>
+                          <Column>
+                            <VcItemContainer
+                              key={vcMetadata.getVcKey()}
+                              vcMetadata={vcMetadata}
+                              margin="0 2 8 2"
+                              onPress={controller.VIEW_VC}
+                              isDownloading={controller.inProgressVcDownloads?.has(
+                                vcMetadata.getVcKey(),
+                              )}
+                              isPinned={vcMetadata.isPinned}
+                              isInitialLaunch={controller.isInitialDownloading}
+                            />
+                          </Column>
                         </CopilotView>
                       </CopilotStep>
                     ) : (
@@ -481,6 +477,6 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = props => {
           primaryButtonTestID="tryAgain"
         />
       )}
-    </Column>
+    </View>
   );
 };
