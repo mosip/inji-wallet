@@ -15,6 +15,7 @@ import {
   VCItemEvents,
   VCItemMachine,
 } from '../../../machines/VerifiableCredential/VCItemMachine/VCItemMachine';
+import {useCopilot} from 'react-native-copilot';
 
 export const VCCardView: React.FC<VCItemProps> = props => {
   let {
@@ -57,9 +58,18 @@ export const VCCardView: React.FC<VCItemProps> = props => {
   if (!isVCLoaded(credential, fields)) {
     return <VCCardSkeleton />;
   }
+  const {start, goToNth} = useCopilot();
 
   return (
-    <React.Fragment>
+    <View
+      onLayout={
+        props.isInitialLaunch
+          ? () => {
+              start();
+              goToNth(6);
+            }
+          : undefined
+      }>
       <Pressable
         accessible={false}
         onPress={() => props.onPress(service)}
@@ -96,7 +106,7 @@ export const VCCardView: React.FC<VCItemProps> = props => {
         onDismiss={DISMISS}
         translationPath={'VcDetails'}
       />
-    </React.Fragment>
+    </View>
   );
 };
 
@@ -110,4 +120,5 @@ export interface VCItemProps {
   isDownloading?: boolean;
   isPinned?: boolean;
   flow?: string;
+  isInitialLaunch: boolean;
 }
