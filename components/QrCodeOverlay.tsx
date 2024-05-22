@@ -26,19 +26,31 @@ export const QrCodeOverlay: React.FC<QrCodeOverlayProps> = props => {
     try {
       qrData = await RNSecureKeyStore.get(props.meta.id);
     } catch {
-      RNPixelpassModule.generateQRData(
+      try {
+        const result = await RNPixelpassModule.generateQRData(
+          JSON.stringify(props.verifiableCredential),
+          '',
+        );
+        qrData = result;
+        await RNSecureKeyStore.set(props.meta.id, qrData, {
+          accessible: ACCESSIBLE.ALWAYS_THIS_DEVICE_ONLY,
+        });
+      } catch (error) {
+        console.error('testwa ' + error);
+        /**Error handling */
+        // throw error;
+      }
+      /* RNPixelpassModule.generateQRData(
         JSON.stringify(props.verifiableCredential),
         '',
       )
         .then(result => {
-          console.log('testwa2 ' + result);
+          qrData = result;
+          console.log('testwa2 in qroverlay ' + result);
         })
         .catch(error => {
           console.error('testwa ' + error);
-        });
-      await RNSecureKeyStore.set(props.meta.id, qrData, {
-        accessible: ACCESSIBLE.ALWAYS_THIS_DEVICE_ONLY,
-      });
+        }); */
     }
     return qrData;
   }
@@ -51,9 +63,10 @@ export const QrCodeOverlay: React.FC<QrCodeOverlayProps> = props => {
   useEffect(() => {
     (async () => {
       const qrString = await getQRData();
-      setQrString(qrString);
+      if (!!qrString) setQrString(qrString);
     })();
   }, [qrString]);
+
   const [isQrOverlayVisible, setIsQrOverlayVisible] = useState(false);
   const toggleQrOverlay = () => setIsQrOverlayVisible(!isQrOverlayVisible);
   return (

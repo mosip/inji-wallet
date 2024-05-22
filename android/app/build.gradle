@@ -6,6 +6,10 @@ apply plugin: "com.android.application"
 apply plugin: "com.facebook.react"
 apply plugin: "org.sonarqube"
 
+configurations.all {
+  resolutionStrategy.force 'androidx.activity:activity-ktx:1.7.0','androidx.activity:activity:1.7.0'
+}
+
 react {
     /* Folders */
     //   The root of your project, i.e. where "package.json" lives. Default is '..'
@@ -250,7 +254,7 @@ android {
 dependencies {
     implementation("com.facebook.react:react-android")
     implementation 'com.facebook.soloader:soloader:0.10.1+'
-    implementation("io.mosip:pixelpass:1.0-SNAPSHOT")
+    implementation("io.mosip:pixelpass:1.1-SNAPSHOT")
 
     def isGifEnabled = (findProperty('expo.gif.enabled') ?: "") == "true";
     def isWebpEnabled = (findProperty('expo.webp.enabled') ?: "") == "true";
