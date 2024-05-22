@@ -34,7 +34,7 @@ const getProfileImage = (face: any) => {
 };
 
 export const VCDetailView: React.FC<VCItemDetailsProps> = props => {
-  const {t} = useTranslation('VcDetails');
+  const {t, i18n} = useTranslation('VcDetails');
   const logo = props.verifiableCredentialData.issuerLogo;
   const face = props.verifiableCredentialData.face;
   const verifiableCredential = props.credential;
