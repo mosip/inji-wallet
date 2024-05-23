@@ -12,7 +12,7 @@ import {VerifiableCredential} from '../machines/VerifiableCredential/VCMetaMachi
 import RNSecureKeyStore, {ACCESSIBLE} from 'react-native-secure-key-store';
 import {DEFAULT_ECL} from '../shared/constants';
 import {VCMetadata} from '../shared/VCMetadata';
-import {errorPlatform} from 'xstate/lib/actionTypes';
+
 
 export const QrCodeOverlay: React.FC<QrCodeOverlayProps> = props => {
   const {RNPixelpassModule} = NativeModules;
