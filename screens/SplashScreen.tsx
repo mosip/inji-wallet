@@ -11,18 +11,16 @@ export const SplashScreen: React.FC<RootRouteProps> = props => {
     APPLICATION_THEME?.toLowerCase() === 'purple'
       ? require('../assets/purpleSplashScreen.png')
       : require('../assets/orangeSplashScreen.png');
-const controller = useAppLayout();
-useEffect(() => {
+  const controller = useAppLayout();
+  useEffect(() => {
     setTimeout(() => {
-        if(controller.isLanguagesetup){
-            props.navigation.navigate('Language');
-        }
-        else if(controller.isUnAuthorized){
-            props.navigation.navigate('Welcome');
-        }
-        else{
-            props.navigation.navigate('IntroSliders');
-        }
+      if (controller.isLanguagesetup) {
+        props.navigation.navigate('Language');
+      } else if (controller.isUnAuthorized) {
+        props.navigation.navigate('Welcome');
+      } else {
+        props.navigation.navigate('IntroSliders');
+      }
     }, 3000);
   }, []);
 
@@ -37,7 +35,7 @@ useEffect(() => {
       }}>
       <Image
         resizeMode="stretch"
-        style={{width: 250, height: 100}}
+        style={{width: 250, height: 150}}
         source={imageResource}
       />
     </Column>

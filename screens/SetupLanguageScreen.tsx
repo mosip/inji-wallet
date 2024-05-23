@@ -8,7 +8,7 @@ import {Icon} from 'react-native-elements';
 import {RootRouteProps} from '../routes';
 import {useWelcomeScreen} from './WelcomeScreenController';
 import {changeLanguage} from '../components/LanguageSelector';
-import {Dimensions} from 'react-native';
+import {BackHandler, Dimensions} from 'react-native';
 import {useBackupRestoreScreen} from './Settings/BackupRestoreController';
 
 export const SetupLanguageScreen: React.FC<RootRouteProps> = props => {
@@ -21,6 +21,20 @@ export const SetupLanguageScreen: React.FC<RootRouteProps> = props => {
 
   useEffect(() => {
     backupRestoreController.DOWNLOAD_UNSYNCED_BACKUP_FILES();
+  }, []);
+
+  useEffect(() => {
+    const backAction = () => {
+      BackHandler.exitApp();
+      return true;
+    };
+
+    const backHandler = BackHandler.addEventListener(
+      'hardwareBackPress',
+      backAction,
+    );
+
+    return () => backHandler.remove();
   }, []);
 
   return (
