@@ -90,21 +90,82 @@ export interface Typegen0 {
     verifyCredential: 'done.invoke.issuersMachine.verifyingCredential:invocation[0]';
   };
   missingImplementations: {
-    actions: never;
+    actions:
+      | 'getKeyPairFromStore'
+      | 'loadKeyPair'
+      | 'logDownloaded'
+      | 'resetError'
+      | 'resetIsVerified'
+      | 'resetLoadingReason'
+      | 'resetVerificationErrorMessage'
+      | 'sendBackupEvent'
+      | 'sendDownloadingFailedToVcMeta'
+      | 'sendErrorEndEvent'
+      | 'sendImpressionEvent'
+      | 'sendSuccessEndEvent'
+      | 'setCredentialTypes'
+      | 'setCredentialWrapper'
+      | 'setError'
+      | 'setIsVerified'
+      | 'setIssuers'
+      | 'setLoadingReasonAsDisplayIssuers'
+      | 'setLoadingReasonAsDownloadingCredentials'
+      | 'setLoadingReasonAsSettingUp'
+      | 'setMetadataInCredentialData'
+      | 'setNoInternet'
+      | 'setOIDCConfigError'
+      | 'setPrivateKey'
+      | 'setPublicKey'
+      | 'setSelectedCredentialType'
+      | 'setSelectedIssuerId'
+      | 'setSelectedIssuers'
+      | 'setTokenResponse'
+      | 'setVCMetadata'
+      | 'setVerifiableCredential'
+      | 'storeKeyPair'
+      | 'storeVcMetaContext'
+      | 'storeVcsContext'
+      | 'storeVerifiableCredentialData'
+      | 'storeVerifiableCredentialMeta'
+      | 'updateVerificationErrorMessage';
     delays: never;
-    guards: never;
-    services: never;
+    guards:
+      | 'canSelectIssuerAgain'
+      | 'hasKeyPair'
+      | 'hasUserCancelledBiometric'
+      | 'isCustomSecureKeystore'
+      | 'isGenericError'
+      | 'isInternetConnected'
+      | 'isMultipleCredentialsSupported'
+      | 'isOIDCConfigError'
+      | 'isOIDCflowCancelled'
+      | 'isSignedIn'
+      | 'isVerificationPendingBecauseOfNetworkIssue'
+      | 'shouldFetchIssuersAgain';
+    services:
+      | 'checkInternet'
+      | 'downloadCredential'
+      | 'downloadCredentialTypes'
+      | 'downloadIssuerConfig'
+      | 'downloadIssuersList'
+      | 'generateKeyPair'
+      | 'invokeAuthorization'
+      | 'isUserSignedAlready'
+      | 'verifyCredential';
   };
   eventsCausingActions: {
     getKeyPairFromStore:
       | 'TRY_AGAIN'
       | 'done.invoke.issuersMachine.performAuthorization:invocation[0]';
     loadKeyPair: 'STORE_RESPONSE';
-    logDownloaded: 'done.invoke.issuersMachine.verifyingCredential:invocation[0]';
+    logDownloaded:
+      | 'done.invoke.issuersMachine.verifyingCredential:invocation[0]'
+      | 'error.platform.issuersMachine.verifyingCredential:invocation[0]';
     resetError:
       | 'RESET_ERROR'
       | 'TRY_AGAIN'
       | 'error.platform.issuersMachine.performAuthorization:invocation[0]';
+    resetIsVerified: 'error.platform.issuersMachine.verifyingCredential:invocation[0]';
     resetLoadingReason:
       | 'RESET_ERROR'
       | 'done.invoke.checkInternet'
@@ -116,6 +177,7 @@ export interface Typegen0 {
       | 'error.platform.issuersMachine.verifyingCredential:invocation[0]';
     resetVerificationErrorMessage: 'RESET_VERIFY_ERROR';
     sendBackupEvent: 'done.invoke.issuersMachine.storing:invocation[0]';
+    sendDownloadingFailedToVcMeta: 'error.platform.issuersMachine.downloadCredentials:invocation[0]';
     sendErrorEndEvent: 'error.platform.issuersMachine.verifyingCredential:invocation[0]';
     sendImpressionEvent: 'done.invoke.issuersMachine.displayIssuers:invocation[0]';
     sendSuccessEndEvent: 'done.invoke.issuersMachine.verifyingCredential:invocation[0]';
@@ -127,6 +189,7 @@ export interface Typegen0 {
       | 'error.platform.issuersMachine.downloadCredentials:invocation[0]'
       | 'error.platform.issuersMachine.downloadIssuerConfig:invocation[0]'
       | 'error.platform.issuersMachine.performAuthorization:invocation[0]';
+    setIsVerified: 'done.invoke.issuersMachine.verifyingCredential:invocation[0]';
     setIssuers: 'done.invoke.issuersMachine.displayIssuers:invocation[0]';
     setLoadingReasonAsDisplayIssuers: 'TRY_AGAIN';
     setLoadingReasonAsDownloadingCredentials:
@@ -138,7 +201,9 @@ export interface Typegen0 {
       | 'SELECTED_ISSUER'
       | 'TRY_AGAIN'
       | 'done.invoke.issuersMachine.performAuthorization:invocation[0]';
-    setMetadataInCredentialData: 'done.invoke.issuersMachine.verifyingCredential:invocation[0]';
+    setMetadataInCredentialData:
+      | 'done.invoke.issuersMachine.verifyingCredential:invocation[0]'
+      | 'error.platform.issuersMachine.verifyingCredential:invocation[0]';
     setNoInternet: 'done.invoke.checkInternet';
     setOIDCConfigError: 'error.platform.issuersMachine.performAuthorization:invocation[0]';
     setPrivateKey: 'done.invoke.issuersMachine.generateKeyPair:invocation[0]';
@@ -147,13 +212,23 @@ export interface Typegen0 {
     setSelectedIssuerId: 'SELECTED_ISSUER';
     setSelectedIssuers: 'done.invoke.issuersMachine.downloadIssuerConfig:invocation[0]';
     setTokenResponse: 'done.invoke.issuersMachine.performAuthorization:invocation[0]';
-    setVCMetadata: 'done.invoke.issuersMachine.verifyingCredential:invocation[0]';
+    setVCMetadata:
+      | 'done.invoke.issuersMachine.verifyingCredential:invocation[0]'
+      | 'error.platform.issuersMachine.verifyingCredential:invocation[0]';
     setVerifiableCredential: 'done.invoke.issuersMachine.downloadCredentials:invocation[0]';
     storeKeyPair: 'done.invoke.issuersMachine.generateKeyPair:invocation[0]';
-    storeVcMetaContext: 'done.invoke.issuersMachine.verifyingCredential:invocation[0]';
-    storeVcsContext: 'done.invoke.issuersMachine.verifyingCredential:invocation[0]';
-    storeVerifiableCredentialData: 'done.invoke.issuersMachine.verifyingCredential:invocation[0]';
-    storeVerifiableCredentialMeta: 'done.invoke.issuersMachine.verifyingCredential:invocation[0]';
+    storeVcMetaContext:
+      | 'done.invoke.issuersMachine.verifyingCredential:invocation[0]'
+      | 'error.platform.issuersMachine.verifyingCredential:invocation[0]';
+    storeVcsContext:
+      | 'done.invoke.issuersMachine.verifyingCredential:invocation[0]'
+      | 'error.platform.issuersMachine.verifyingCredential:invocation[0]';
+    storeVerifiableCredentialData:
+      | 'done.invoke.issuersMachine.verifyingCredential:invocation[0]'
+      | 'error.platform.issuersMachine.verifyingCredential:invocation[0]';
+    storeVerifiableCredentialMeta:
+      | 'done.invoke.issuersMachine.verifyingCredential:invocation[0]'
+      | 'error.platform.issuersMachine.verifyingCredential:invocation[0]';
     updateVerificationErrorMessage: 'error.platform.issuersMachine.verifyingCredential:invocation[0]';
   };
   eventsCausingDelays: {};
@@ -162,11 +237,13 @@ export interface Typegen0 {
     hasKeyPair: 'CHECK_KEY_PAIR';
     hasUserCancelledBiometric: 'error.platform.issuersMachine.downloadCredentials:invocation[0]';
     isCustomSecureKeystore: 'done.invoke.issuersMachine.generateKeyPair:invocation[0]';
+    isGenericError: 'error.platform.issuersMachine.downloadCredentials:invocation[0]';
     isInternetConnected: 'done.invoke.checkInternet';
     isMultipleCredentialsSupported: 'done.invoke.issuersMachine.downloadCredentialTypes:invocation[0]';
     isOIDCConfigError: 'error.platform.issuersMachine.performAuthorization:invocation[0]';
     isOIDCflowCancelled: 'error.platform.issuersMachine.performAuthorization:invocation[0]';
     isSignedIn: 'done.invoke.issuersMachine.storing:invocation[0]';
+    isVerificationPendingBecauseOfNetworkIssue: 'error.platform.issuersMachine.verifyingCredential:invocation[0]';
     shouldFetchIssuersAgain: 'TRY_AGAIN';
   };
   eventsCausingServices: {
@@ -181,7 +258,9 @@ export interface Typegen0 {
     downloadIssuersList: 'CANCEL' | 'TRY_AGAIN' | 'xstate.init';
     generateKeyPair: 'CHECK_KEY_PAIR';
     invokeAuthorization: 'done.invoke.checkInternet';
-    isUserSignedAlready: 'done.invoke.issuersMachine.verifyingCredential:invocation[0]';
+    isUserSignedAlready:
+      | 'done.invoke.issuersMachine.verifyingCredential:invocation[0]'
+      | 'error.platform.issuersMachine.verifyingCredential:invocation[0]';
     verifyCredential: 'done.invoke.issuersMachine.downloadCredentials:invocation[0]';
   };
   matchesStates:

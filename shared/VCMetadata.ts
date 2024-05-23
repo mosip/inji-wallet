@@ -99,7 +99,7 @@ export const getVCMetadata = (context: object) => {
       id: context.verifiableCredential?.credential.credentialSubject
         .policyNumber,
       timestamp: context.timestamp ?? '',
-      isVerified: context.isVerified ?? false,
+      isVerified: context.vcMetadata.isVerified ?? false,
     });
   }
   return VCMetadata.fromVC({
@@ -110,6 +110,6 @@ export const getVCMetadata = (context: object) => {
       context.verifiableCredential?.credential.credentialSubject,
     ),
     timestamp: context.timestamp ?? '',
-    isVerified: context.isVerified ?? false,
+    isVerified: context.vcMetadata.isVerified ?? false,
   });
 };

@@ -11,6 +11,7 @@ import {
 import {getErrorEventData, sendErrorEvent} from '../telemetry/TelemetryUtils';
 import {TelemetryConstants} from '../telemetry/TelemetryConstants';
 import {getMosipIdentifier} from '../commonUtil';
+import {VCMetadata} from '../VCMetadata';
 
 // FIXME: Ed25519Signature2018 not fully supported yet.
 // Ed25519Signature2018 proof type check is not tested with its real credential
@@ -25,11 +26,12 @@ const ProofPurpose = {
 };
 
 export async function verifyCredential(
-  verifiableCredential: VerifiableCredential | Credential,
+  verifiableCredential: Credential,
 ): Promise<VerificationResult> {
   try {
     let purpose: PublicKeyProofPurpose | AssertionProofPurpose;
-    switch (verifiableCredential.proof.proofPurpose) {
+    const proof = verifiableCredential.proof;
+    switch (proof.proofPurpose) {
       case ProofPurpose.PublicKey:
         purpose = new PublicKeyProofPurpose();
         break;
@@ -40,10 +42,10 @@ export async function verifyCredential(
 
     let suite: Ed25519Signature2018 | RsaSignature2018;
     const suiteOptions = {
-      verificationMethod: verifiableCredential.proof.verificationMethod,
-      date: verifiableCredential.proof.created,
+      verificationMethod: proof.verificationMethod,
+      date: proof.created,
     };
-    switch (verifiableCredential.proof.type) {
+    switch (proof.type) {
       case ProofType.ED25519: {
         suite = new Ed25519Signature2018(suiteOptions);
         break;
@@ -67,6 +69,18 @@ export async function verifyCredential(
 
     //ToDo Handle Expiration error message
   } catch (error) {
+    console.error('Error occured while verifying the VC:', error);
+    const stacktrace = __DEV__ ? verifiableCredential : {};
+    sendErrorEvent(
+      getErrorEventData(
+        TelemetryConstants.FlowType.vcVerification,
+        TelemetryConstants.ErrorId.vcVerificationFailed,
+        error +
+          '-' +
+          getMosipIdentifier(verifiableCredential.credentialSubject),
+        stacktrace,
+      ),
+    );
     return {
       isVerified: false,
       errorMessage: VerificationErrorType.TECHNICAL_ERROR,
