@@ -224,7 +224,6 @@ android {
             resValue "string", "app_name", "Inji Wallet Mec"
         }
     }
-    
 
     android.applicationVariants.all { variant ->
         variant.outputs.all { output ->
@@ -242,13 +241,6 @@ android {
                 }
             }
         }
-    }
-
-    packagingOptions {
-      pickFirst 'lib/arm64-v8a/liblog.so'    
-      pickFirst 'lib/armeabi-v7a/liblog.so'  
-      pickFirst 'lib/x86/liblog.so'
-      pickFirst 'lib/x86_64/liblog.so'
     }
 }
 
