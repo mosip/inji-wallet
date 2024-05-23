@@ -7,7 +7,7 @@ apply plugin: "com.facebook.react"
 apply plugin: "org.sonarqube"
 
 configurations.all {
-    resolutionStrategy.force 'androidx.activity:activity-ktx:1.7.1','androidx.activity:activity:1.7.0', 'com.fasterxml.jackson.core:jackson-core:2.14.0'
+  resolutionStrategy.force 'androidx.activity:activity-ktx:1.7.0','androidx.activity:activity:1.7.0'
 }
 
 react {
@@ -98,7 +98,10 @@ androidGitVersion {
 android {
     ndkVersion rootProject.ext.ndkVersion
     compileSdkVersion rootProject.ext.compileSdkVersion
-
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17 
+        targetCompatibility JavaVersion.VERSION_17
+    }
     ext {
         APP_NAME = "@string/app_name"
     }
@@ -250,7 +253,7 @@ android {
 dependencies {
     implementation("com.facebook.react:react-android")
     implementation 'com.facebook.soloader:soloader:0.10.1+'
-    implementation("io.mosip:pixelpass:1.0-SNAPSHOT")
+    implementation("io.mosip:pixelpass:1.1-SNAPSHOT")
 
     def isGifEnabled = (findProperty('expo.gif.enabled') ?: "") == "true";
     def isWebpEnabled = (findProperty('expo.webp.enabled') ?: "") == "true";

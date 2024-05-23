@@ -8,7 +8,8 @@ RCT_EXTERN_METHOD(decode:(NSString *)parameter
                         resolve:(RCTPromiseResolveBlock)resolve
                          reject:(RCTPromiseRejectBlock)reject)
 
-RCT_EXTERN_METHOD(generateQRCode:(NSString *)data ecc:(NSString *)ecc header:(NSString *)header resolver:(RCTPromiseResolveBlock)resolve rejecter:(RCTPromiseRejectBlock)reject)
+RCT_EXTERN_METHOD(generateQRData:(NSString *)data
+                  header:(NSString *)header resolve:(RCTPromiseResolveBlock)resolve reject:(RCTPromiseRejectBlock)reject)
 
 
 
