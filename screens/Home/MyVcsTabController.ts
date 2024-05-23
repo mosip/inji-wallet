@@ -107,7 +107,6 @@ export function useMyVcsTab(props: HomeScreenTabProps) {
       vcMetaService?.send(VcMetaEvents.RESET_VERIFY_ERROR());
     },
     isOnboarding: authService && useSelector(authService, selectIsOnboarding),
-    isInitialDownloading:
-      authService && useSelector(authService, selectIsInitialDownload),
+    isInitialDownloading: useSelector(authService, selectIsInitialDownload),
   };
 }

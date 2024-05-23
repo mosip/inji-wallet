@@ -15,7 +15,8 @@ import {
   VCItemEvents,
   VCItemMachine,
 } from '../../../machines/VerifiableCredential/VCItemMachine/VCItemMachine';
-import {useCopilot} from 'react-native-copilot';
+import {CopilotStep, walkthroughable} from 'react-native-copilot';
+import {useTranslation} from 'react-i18next';
 
 export const VCCardView: React.FC<VCItemProps> = props => {
   let {
@@ -31,6 +32,9 @@ export const VCCardView: React.FC<VCItemProps> = props => {
     DISMISS,
     KEBAB_POPUP,
   } = useVcItemController(props);
+
+  const CopilotView = walkthroughable(View);
+  const {t} = useTranslation();
 
   let formattedDate =
     generatedOn && format(new Date(generatedOn), 'MM/dd/yyyy');
@@ -58,18 +62,8 @@ export const VCCardView: React.FC<VCItemProps> = props => {
   if (!isVCLoaded(credential, fields)) {
     return <VCCardSkeleton />;
   }
-  const {start, goToNth} = useCopilot();
-
   return (
-    <View
-      onLayout={
-        props.isInitialLaunch
-          ? () => {
-              start();
-              goToNth(6);
-            }
-          : undefined
-      }>
+    <React.Fragment>
       <Pressable
         accessible={false}
         onPress={() => props.onPress(service)}
@@ -78,27 +72,60 @@ export const VCCardView: React.FC<VCItemProps> = props => {
             ? Theme.Styles.selectedBindedVc
             : Theme.Styles.closeCardBgContainer
         }>
-        <VCCardViewContent
-          vcMetadata={props.vcMetadata}
-          context={context}
-          walletBindingResponse={walletBindingResponse}
-          credential={vc}
-          verifiableCredentialData={verifiableCredentialData}
-          fields={fields}
-          wellknown={wellknown}
-          generatedOn={formattedDate}
-          selectable={props.selectable}
-          selected={props.selected}
-          service={service}
-          isPinned={props.isPinned}
-          onPress={() => props.onPress(service)}
-          isDownloading={props.isDownloading}
-          flow={props.flow}
-          isKebabPopUp={isKebabPopUp}
-          DISMISS={DISMISS}
-          KEBAB_POPUP={KEBAB_POPUP}
-          isVerified={props.vcMetadata.isVerified}
-        />
+        {props.isTopCard ? (
+          <CopilotStep
+            text={t('copilot:cardMessage')}
+            order={6}
+            name={t('copilot:cardTitle')}>
+            <CopilotView>
+              <VCCardViewContent
+                vcMetadata={props.vcMetadata}
+                context={context}
+                walletBindingResponse={walletBindingResponse}
+                credential={vc}
+                verifiableCredentialData={verifiableCredentialData}
+                fields={fields}
+                wellknown={wellknown}
+                generatedOn={formattedDate}
+                selectable={props.selectable}
+                selected={props.selected}
+                service={service}
+                isPinned={props.isPinned}
+                onPress={() => props.onPress(service)}
+                isDownloading={props.isDownloading}
+                flow={props.flow}
+                isKebabPopUp={isKebabPopUp}
+                DISMISS={DISMISS}
+                KEBAB_POPUP={KEBAB_POPUP}
+                isVerified={props.vcMetadata.isVerified}
+                isInitialLaunch={props.isInitialLaunch}
+              />
+            </CopilotView>
+          </CopilotStep>
+        ) : (
+          <VCCardViewContent
+            vcMetadata={props.vcMetadata}
+            context={context}
+            walletBindingResponse={walletBindingResponse}
+            credential={vc}
+            verifiableCredentialData={verifiableCredentialData}
+            fields={fields}
+            wellknown={wellknown}
+            generatedOn={formattedDate}
+            selectable={props.selectable}
+            selected={props.selected}
+            service={service}
+            isPinned={props.isPinned}
+            onPress={() => props.onPress(service)}
+            isDownloading={props.isDownloading}
+            flow={props.flow}
+            isKebabPopUp={isKebabPopUp}
+            DISMISS={DISMISS}
+            KEBAB_POPUP={KEBAB_POPUP}
+            isVerified={props.vcMetadata.isVerified}
+            isInitialLaunch={props.isInitialLaunch}
+          />
+        )}
       </Pressable>
       <ErrorMessageOverlay
         isVisible={isSavingFailedInIdle}
@@ -106,7 +133,7 @@ export const VCCardView: React.FC<VCItemProps> = props => {
         onDismiss={DISMISS}
         translationPath={'VcDetails'}
       />
-    </View>
+    </React.Fragment>
   );
 };
 
@@ -121,4 +148,5 @@ export interface VCItemProps {
   isPinned?: boolean;
   flow?: string;
   isInitialLaunch: boolean;
+  isTopCard: boolean;
 }
