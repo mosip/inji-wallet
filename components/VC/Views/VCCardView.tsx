@@ -103,7 +103,7 @@ export const VCCardView: React.FC<VCItemProps> = props => {
         onDismiss={controller.DISMISS}
         translationPath={'VcDetails'}
       />
-    </View>
+    </React.Fragment>
   );
 };
 
