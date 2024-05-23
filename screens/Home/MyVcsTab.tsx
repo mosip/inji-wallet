@@ -204,14 +204,8 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = props => {
       ? numberOfCardsAvailable + ' ' + t('common:cards')
       : numberOfCardsAvailable + ' ' + t('common:card');
 
-  const CopilotView = walkthroughable(View);
-
   return (
-    <View
-      onLayout={controller.isOnboarding ? () => start() : undefined}
-      style={{
-        height: Dimensions.get('screen').height * 0.78,
-      }}>
+    <React.Fragment>
       <Column fill style={{display: props.isVisible ? 'flex' : 'none'}}>
         {controller.isRequestSuccessful && (
           <BannerNotification
@@ -271,29 +265,7 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = props => {
                 </Row>
                 {showPinVc &&
                   vcMetadataOrderedByPinStatus.map((vcMetadata, index) => {
-                    return index === 0 ? (
-                      <CopilotStep
-                        key={index}
-                        text={t('copilot:cardMessage')}
-                        order={6}
-                        name={t('copilot:cardTitle')}>
-                        <CopilotView>
-                          <Column>
-                            <VcItemContainer
-                              key={vcMetadata.getVcKey()}
-                              vcMetadata={vcMetadata}
-                              margin="0 2 8 2"
-                              onPress={controller.VIEW_VC}
-                              isDownloading={controller.inProgressVcDownloads?.has(
-                                vcMetadata.getVcKey(),
-                              )}
-                              isPinned={vcMetadata.isPinned}
-                              isInitialLaunch={controller.isInitialDownloading}
-                            />
-                          </Column>
-                        </CopilotView>
-                      </CopilotStep>
-                    ) : (
+                    return (
                       <VcItemContainer
                         key={vcMetadata.getVcKey()}
                         vcMetadata={vcMetadata}
@@ -303,6 +275,8 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = props => {
                           vcMetadata.getVcKey(),
                         )}
                         isPinned={vcMetadata.isPinned}
+                        isInitialLaunch={controller.isInitialDownloading}
+                        isTopCard={index === 0}
                       />
                     );
                   })}
@@ -369,26 +343,32 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = props => {
                     onRefresh={controller.REFRESH}
                   />
                 }>
-                {SvgImage.DigitalIdentity()}
-                <Text
-                  testID="bringYourDigitalID"
-                  style={{paddingTop: 3}}
-                  align="center"
-                  weight="bold"
-                  margin="33 0 6 0"
-                  lineHeight={1}>
-                  {t('bringYourDigitalID')}
-                </Text>
-                <Text
+                <View
+                  onLayout={controller.isOnboarding ? () => start() : undefined}
                   style={{
-                    ...Theme.TextStyles.bold,
-                    paddingTop: 3,
-                  }}
-                  color={Theme.Colors.textLabel}
-                  align="center"
-                  margin="0 12 30 12">
-                  {t('generateVcFABDescription')}
-                </Text>
+                    alignItems: 'center',
+                  }}>
+                  {SvgImage.DigitalIdentity()}
+                  <Text
+                    testID="bringYourDigitalID"
+                    style={{paddingTop: 3}}
+                    align="center"
+                    weight="bold"
+                    margin="33 0 6 0"
+                    lineHeight={1}>
+                    {t('bringYourDigitalID')}
+                  </Text>
+                  <Text
+                    style={{
+                      ...Theme.TextStyles.bold,
+                      paddingTop: 3,
+                    }}
+                    color={Theme.Colors.textLabel}
+                    align="center"
+                    margin="0 12 30 12">
+                    {t('generateVcFABDescription')}
+                  </Text>
+                </View>
               </Column>
             </React.Fragment>
           )}
@@ -477,6 +457,6 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = props => {
           primaryButtonTestID="tryAgain"
         />
       )}
-    </View>
+    </React.Fragment>
   );
 };
