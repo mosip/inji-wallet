@@ -16,7 +16,6 @@ import {
 import {CredentialDownloadResponse, request} from '../../../shared/request';
 import {WalletBindingResponse} from '../VCMetaMachine/vc';
 import {verifyCredential} from '../../../shared/vcjs/verifyCredential';
-import {getMosipIdentifier} from '../../../shared/commonUtil';
 import {getVerifiableCredential} from './VCItemSelectors';
 
 export const VCItemServices = model => {

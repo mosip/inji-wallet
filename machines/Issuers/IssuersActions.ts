@@ -62,7 +62,7 @@ export const IssuersActions = (model: any) => {
       selectedCredentialType: (_: any, event: any) => event.credType,
     }),
     setCredentialTypes: model.assign({
-      credentialTypes: (_: any, event: any) => event.data.supportedCredentials,
+      credentialTypes: (_: any, event: any) => event.data,
     }),
     setError: model.assign({
       errorMessage: (_: any, event: any) => {

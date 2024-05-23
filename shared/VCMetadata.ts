@@ -87,28 +87,18 @@ export function parseMetadatas(metadataStrings: object[]) {
 }
 
 export const getVCMetadata = (context: object) => {
-  const [issuer, protocol, requestId] =
+  const [issuer, protocol, credentialId] =
     context.credentialWrapper?.identifier.split(':');
-  // TODO(temp-solution): This is a temporary solution and will not work for every issuer
-  // This should be re-written in a more standards compliant way later.
-  if (issuer === Issuers.Sunbird) {
-    return VCMetadata.fromVC({
-      requestId: requestId ? requestId : null,
-      issuer: issuer,
-      protocol: protocol,
-      id: context.verifiableCredential?.credential.credentialSubject
-        .policyNumber,
-      timestamp: context.timestamp ?? '',
-      isVerified: context.vcMetadata.isVerified ?? false,
-    });
-  }
+
   return VCMetadata.fromVC({
-    requestId: requestId ? requestId : null,
+    requestId: credentialId ?? null,
     issuer: issuer,
     protocol: protocol,
-    id: getMosipIdentifier(
-      context.verifiableCredential?.credential.credentialSubject,
-    ),
+    id:
+      context.verifiableCredential?.credential.credentialSubject.policyNumber ??
+      getMosipIdentifier(
+        context.verifiableCredential?.credential.credentialSubject,
+      ),
     timestamp: context.timestamp ?? '',
     isVerified: context.vcMetadata.isVerified ?? false,
   });

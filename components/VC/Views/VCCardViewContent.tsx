@@ -13,7 +13,7 @@ import {isVCLoaded, getBackgroundColour} from '../common/VCUtils';
 import {VCItemFieldValue} from '../common/VCItemField';
 import {WalletBinding} from '../../../screens/Home/MyVcs/WalletBinding';
 import {VCVerification} from '../../VCVerification';
-import {Issuers} from '../../../shared/openId4VCI/Utils';
+import {isActivationNeeded} from '../../../shared/openId4VCI/Utils';
 import {VCItemContainerFlowType} from '../../../shared/Utils';
 import {RemoveVcWarningOverlay} from '../../../screens/Home/MyVcs/RemoveVcWarningOverlay';
 import {HistoryTab} from '../../../screens/Home/MyVcs/HistoryTab';
@@ -78,10 +78,10 @@ export const VCCardViewContent: React.FC<VCItemContentProps> = props => {
 
           {!Object.values(VCItemContainerFlowType).includes(props.flow) && (
             <>
-              {props.vcMetadata.issuer === Issuers.Sunbird ||
-              props.walletBindingResponse
-                ? SvgImage.walletActivatedIcon()
-                : SvgImage.walletUnActivatedIcon()}
+              {!props.walletBindingResponse &&
+              isActivationNeeded(props.verifiableCredentialData?.issuer)
+                ? SvgImage.walletUnActivatedIcon()
+                : SvgImage.walletActivatedIcon()}
               <Pressable
                 onPress={props.KEBAB_POPUP}
                 accessible={false}

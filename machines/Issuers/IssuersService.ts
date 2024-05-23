@@ -1,11 +1,10 @@
 import Cloud from '../../shared/CloudBackupAndRestoreUtils';
-import {API_URLS, CACHED_API} from '../../shared/api';
+import {CACHED_API} from '../../shared/api';
 import NetInfo from '@react-native-community/netinfo';
 import {request} from '../../shared/request';
 import {
   constructAuthorizationConfiguration,
   getBody,
-  Issuers,
   Issuers_Key_Ref,
   updateCredentialInformation,
   vcDownloadTimeout,
@@ -26,6 +25,7 @@ import {
   sendImpressionEvent,
 } from '../../shared/telemetry/TelemetryUtils';
 import {TelemetryConstants} from '../../shared/telemetry/TelemetryConstants';
+import {isMosipVC} from '../../shared/Utils';
 
 export const IssuersService = () => {
   return {
@@ -40,20 +40,18 @@ export const IssuersService = () => {
       let issuersConfig = await CACHED_API.fetchIssuerConfig(
         context.selectedIssuerId,
       );
-      if (context.selectedIssuer['.well-known']) {
-        await CACHED_API.fetchIssuerWellknownConfig(
-          context.selectedIssuerId,
-          context.selectedIssuer['.well-known'],
-        );
-      }
+      const wellknownResponse = await CACHED_API.fetchIssuerWellknownConfig(
+        context.selectedIssuerId,
+        issuersConfig['.well-known'],
+      );
+      issuersConfig.credential_endpoint =
+        wellknownResponse?.credential_endpoint;
+      issuersConfig.credential_audience = wellknownResponse?.credential_issuer;
+      issuersConfig.credentialTypes = wellknownResponse?.credentials_supported;
       return issuersConfig;
     },
     downloadCredentialTypes: async (context: any) => {
-      const response = await request(
-        API_URLS.credentialTypes.method,
-        API_URLS.credentialTypes.buildURL(context.selectedIssuerId),
-      );
-      return response?.response;
+      return context.selectedIssuer.credentialTypes;
     },
     downloadCredential: async (context: any) => {
       const body = await getBody(context);
@@ -81,16 +79,10 @@ export const IssuersService = () => {
             TelemetryConstants.Screens.webViewPage,
         ),
       );
-      let supportedScopes: [string];
-      if (Object.keys(context.selectedCredentialType).length === 0) {
-        supportedScopes = context.selectedIssuer.scopes_supported;
-      } else {
-        supportedScopes = [context.selectedCredentialType['scope']];
-      }
       return await authorize(
         constructAuthorizationConfiguration(
           context.selectedIssuer,
-          supportedScopes,
+          context.selectedCredentialType.scope,
         ),
       );
     },
@@ -107,20 +99,18 @@ export const IssuersService = () => {
     },
     verifyCredential: async (context: any) => {
       //this issuer specific check has to be removed once vc validation is done.
-      if (
-        VCMetadata.fromVcMetadataString(getVCMetadata(context)).issuer ===
-        Issuers.Sunbird
-      ) {
+      if (isMosipVC(getVCMetadata(context).issuer)) {
+        const verificationResult = await verifyCredential(
+          context.verifiableCredential?.credential,
+        );
+        if (!verificationResult.isVerified) {
+          throw new Error(verificationResult.errorMessage);
+        }
+      } else {
         return {
           isVerified: true,
           errorMessage: VerificationErrorType.NO_ERROR,
         };
-      }
-      const verificationResult = await verifyCredential(
-        context.verifiableCredential?.credential,
-      );
-      if (!verificationResult.isVerified) {
-        throw new Error(verificationResult.errorMessage);
       }
     },
   };

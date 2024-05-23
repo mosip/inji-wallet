@@ -1,4 +1,5 @@
 import {
+  Credential,
   CredentialSubject,
   VerifiableCredential,
 } from '../../../machines/VerifiableCredential/VCMetaMachine/vc';
@@ -8,10 +9,10 @@ import {VCItemField} from './VCItemField';
 import React from 'react';
 import {Theme} from '../../ui/styleUtils';
 import {CREDENTIAL_REGISTRY_EDIT} from 'react-native-dotenv';
-import {getIDType} from '../../../shared/openId4VCI/Utils';
 import {VCVerification} from '../../VCVerification';
 import {MIMOTO_BASE_URL} from '../../../shared/constants';
 import {useTranslation} from 'react-i18next';
+import {VCItemDetailsProps} from '../Views/VCDetailView';
 
 export const CARD_VIEW_DEFAULT_FIELDS = ['fullName'];
 export const DETAIL_VIEW_DEFAULT_FIELDS = [
@@ -26,8 +27,6 @@ export const DETAIL_VIEW_DEFAULT_FIELDS = [
 //todo UIN & VID to be removed once we get the fields in the wellknown endpoint
 export const CARD_VIEW_ADD_ON_FIELDS = ['UIN', 'VID'];
 export const DETAIL_VIEW_ADD_ON_FIELDS = [
-  'UIN',
-  'VID',
   'status',
   'credentialRegistry',
   'idType',
@@ -46,7 +45,7 @@ export const BOTTOM_SECTION_FIELDS_WITH_DETAILED_ADDRESS_FIELDS = [
 ];
 
 export const getFieldValue = (
-  verifiableCredential: VerifiableCredential,
+  verifiableCredential: Credential,
   field: string,
   wellknown: any,
   props: any,
@@ -67,7 +66,7 @@ export const getFieldValue = (
         />
       );
     case 'idType':
-      return t(`VcDetails:${getIDType(verifiableCredential)}`);
+      return getIdType(wellknown);
     case 'credentialRegistry':
       return props?.vc?.credentialRegistry;
     case 'address':
@@ -77,51 +76,22 @@ export const getFieldValue = (
     default: {
       const fieldValue = verifiableCredential?.credentialSubject[field];
       if (Array.isArray(fieldValue) && typeof fieldValue[0] !== 'object') {
-        return fieldValue;
+        return fieldValue.join(', ');
       }
       return getLocalizedField(fieldValue);
     }
   }
 };
 
-export const getCredentialDefinition = (
-  wellknown: any,
-  vcCredentialTypes: Object[],
-) => {
-  if (Array.isArray(wellknown.credentials_supported)) {
-    return wellknown.credentials_supported[0].credential_definition;
-  } else {
-    for (const supportedCredential in wellknown.credentials_supported) {
-      const credentialDefinition =
-        wellknown.credentials_supported[supportedCredential]
-          .credential_definition;
-      if (
-        JSON.stringify(credentialDefinition.type) ===
-        JSON.stringify(vcCredentialTypes)
-      ) {
-        return credentialDefinition;
-      }
-    }
-    return null;
-  }
-};
-
-export const getFieldName = (
-  field: string,
-  wellknown: any,
-  vcCredentialTypes: Object[],
-) => {
-  if (wellknown && wellknown.credentials_supported) {
-    const credentialDefinition = getCredentialDefinition(
-      wellknown,
-      vcCredentialTypes,
-    );
+export const getFieldName = (field: string, wellknown: any) => {
+  if (wellknown) {
+    const credentialDefinition = wellknown.credential_definition;
     if (!credentialDefinition) {
       console.error(
         'Credential definition is not available for the selected credential type',
       );
     }
-    let fieldObj = credentialDefinition.credentialSubject[field];
+    let fieldObj = credentialDefinition?.credentialSubject[field];
     if (fieldObj) {
       const newFieldObj = fieldObj.display.map(obj => {
         return {language: obj.locale, value: obj.name};
@@ -133,20 +103,11 @@ export const getFieldName = (
 };
 
 export const getBackgroundColour = (wellknown: any) => {
-  if (wellknown && wellknown.credentials_supported[0]?.display) {
-    return {
-      backgroundColor: wellknown.credentials_supported[0].display[0]
-        ?.background_color
-        ? wellknown.credentials_supported[0].display[0].background_color
-        : Theme.Colors.textValue,
-    };
-  }
+  return wellknown?.display[0]?.background_color ?? Theme.Colors.textValue;
 };
 
 export const getTextColor = (wellknown: any, defaultColor: string) => {
-  return (
-    wellknown?.credentials_supported[0]?.display[0]?.text_color ?? defaultColor
-  );
+  return wellknown?.display[0]?.text_color ?? defaultColor;
 };
 
 export function getAddressFields() {
@@ -184,16 +145,12 @@ function formattedDateTime(timeStamp: any) {
 
 export const fieldItemIterator = (
   fields: any[],
-  verifiableCredential: any,
+  verifiableCredential: VerifiableCredential | Credential,
   wellknown: any,
-  props: any,
+  props: VCItemDetailsProps,
 ) => {
   return fields.map(field => {
-    const fieldName = getFieldName(
-      field,
-      wellknown,
-      props.verifiableCredentialData.vcCredentialTypes,
-    );
+    const fieldName = getFieldName(field, wellknown);
     const fieldValue = getFieldValue(
       verifiableCredential,
       field,
@@ -234,4 +191,13 @@ export const getMosipLogo = () => {
     url: `${MIMOTO_BASE_URL}/inji/mosip-logo.png`,
     alt_text: 'a square logo of mosip',
   };
+};
+
+export const getIdType = (wellknown: any) => {
+  if (wellknown && wellknown?.display) {
+    const idTypeObj = wellknown.display.map((displayProps: any) => {
+      return {language: displayProps.locale, value: displayProps.name};
+    });
+    return getLocalizedField(idTypeObj);
+  }
 };

@@ -4,6 +4,7 @@ import {IssuersModel} from './IssuersModel';
 import {IssuersActions} from './IssuersActions';
 import {IssuersService} from './IssuersService';
 import {IssuersGuards} from './IssuersGuards';
+import {CredentialTypes} from '../VerifiableCredential/VCMetaMachine/vc';
 
 const model = IssuersModel;
 
@@ -104,7 +105,6 @@ export const IssuersMachine = model.createMachine(
           onDone: [
             {
               actions: 'setCredentialTypes',
-              cond: 'isMultipleCredentialsSupported',
               target: 'selectingCredentialType',
             },
             {
@@ -123,10 +123,7 @@ export const IssuersMachine = model.createMachine(
             target: 'displayIssuers',
           },
           SELECTED_CREDENTIAL_TYPE: {
-            actions: [
-              (_, event) => console.log('>>>>> event', event),
-              'setSelectedCredentialType',
-            ],
+            actions: 'setSelectedCredentialType',
             target: 'checkInternet',
           },
         },
@@ -404,9 +401,11 @@ export interface logoType {
 
 export interface displayType {
   name: string;
-  logo: logoType;
-  language: string;
   locale: string;
+  language: string;
+  logo: logoType;
+  background_color: string;
+  text_color: string;
   title: string;
   description: string;
 }
@@ -417,14 +416,12 @@ export interface issuerType {
   client_id: string;
   '.well-known': string;
   redirect_uri: string;
-  scopes_supported: [string];
   additional_headers: object;
   authorization_endpoint: string;
-  authorization_alias: string;
   token_endpoint: string;
   proxy_token_endpoint: string;
   credential_endpoint: string;
-  credential_type: [string];
   credential_audience: string;
   display: [displayType];
+  credentialTypes: [CredentialTypes];
 }

@@ -15,7 +15,6 @@ import {
 import {
   BOTTOM_SECTION_FIELDS_WITH_DETAILED_ADDRESS_FIELDS,
   DETAIL_VIEW_ADD_ON_FIELDS,
-  getCredentialDefinition,
 } from '../../components/VC/common/VCUtils';
 import {getVerifiableCredential} from '../../machines/VerifiableCredential/VCItemMachine/VCItemSelectors';
 import {vcVerificationBannerDetails} from '../../components/BannerNotificationContainer';
@@ -51,22 +50,27 @@ export function getVcVerificationDetails(
 ): vcVerificationBannerDetails {
   return {
     statusType: statusType,
-    vcType: getIDType(
-      getVerifiableCredential(vcMetadata, verifiableCredential),
+    vcType: getIDTypeTranslations(
+      getVerifiableCredential(vcMetadata, verifiableCredential).type[1],
     ),
     vcNumber: vcMetadata.id,
   };
 }
 
-export const ID_TYPE = {
-  MOSIPVerifiableCredential: 'nationalCard',
-  InsuranceCredential: 'insuranceCard',
-  OpenG2PBeneficiaryVerifiableCredential: 'beneficiaryCard',
-  OpenG2PRegistryVerifiableCredential: 'socialRegistryCard',
-};
-
-export const getIDType = (verifiableCredential: VerifiableCredential) => {
-  return ID_TYPE[verifiableCredential.type[1]];
+export const getIDTypeTranslations = (idType: string) => {
+  switch (idType) {
+    case 'MOSIPVerifiableCredential':
+      return i18n.t('VcDetails:nationalCard');
+    case 'InsuranceCredential':
+      return i18n.t('VcDetails:insuranceCard');
+    case 'OpenG2PBeneficiaryVerifiableCredential':
+      return i18n.t('VcDetails:beneficiaryCard');
+    case 'OpenG2PRegistryVerifiableCredential':
+      return i18n.t('VcDetails:socialRegistryCard');
+    default: {
+      return i18n.t('VcDetails:digitalCard');
+    }
+  }
 };
 
 export const ACTIVATION_NEEDED = [Issuers.Mosip, Issuers.MosipOtp];
@@ -77,7 +81,7 @@ export const isActivationNeeded = (issuer: string) => {
 
 export const Issuers_Key_Ref = 'OpenId4VCI_KeyPair';
 
-export const getIdentifier = (context, credential) => {
+export const getIdentifier = (context, credential: VerifiableCredential) => {
   const credentialIdentifier = credential.credential.id;
   const credId = credentialIdentifier.startsWith('did')
     ? credentialIdentifier.split(':')
@@ -126,26 +130,30 @@ export const getBody = async context => {
 };
 
 export const getCredentialType = (context: any) => {
-  return context.selectedCredentialType?.credential_definition?.type
-    ? context.selectedCredentialType.credential_definition.type
-    : context.selectedIssuer?.credential_type
-    ? context.selectedIssuer.credential_type
-    : ['VerifiableCredential', 'MOSIPVerifiableCredential'];
+  return (
+    context.selectedCredentialType?.credential_definition?.type ?? [
+      'VerifiableCredential',
+    ]
+  );
 };
 
-export const updateCredentialInformation = (context, credential) => {
-  let credentialWrapper: CredentialWrapper = {};
-  credentialWrapper.verifiableCredential = credential;
-  credentialWrapper.identifier = getIdentifier(context, credential);
-  credentialWrapper.generatedOn = new Date();
-  credentialWrapper.verifiableCredential.wellKnown =
-    context.selectedIssuer['.well-known'];
-  credentialWrapper.verifiableCredential.credentialTypes =
-    context.selectedIssuer['credential_type'];
-  credentialWrapper.verifiableCredential.issuerLogo =
-    getDisplayObjectForCurrentLanguage(context.selectedIssuer.display)?.logo;
-  credentialWrapper.vcMetadata = context.vcMetadata || {};
-  return credentialWrapper;
+export const updateCredentialInformation = (
+  context,
+  credential: VerifiableCredential,
+): CredentialWrapper => {
+  return {
+    verifiableCredential: {
+      ...credential,
+      wellKnown: context.selectedIssuer['.well-known'],
+      credentialTypes: getCredentialType(context),
+      issuerLogo: getDisplayObjectForCurrentLanguage(
+        context.selectedIssuer.display,
+      )?.logo,
+    },
+    identifier: getIdentifier(context, credential),
+    generatedOn: new Date(),
+    vcMetadata: context.vcMetadata || {},
+  };
 };
 
 export const updateVCmetadataOfCredentialWrapper = (
@@ -174,11 +182,12 @@ export const getDisplayObjectForCurrentLanguage = (
 
 export const constructAuthorizationConfiguration = (
   selectedIssuer: issuerType,
-  supportedScopes: string,
+  supportedScope: string,
 ) => {
   return {
+    issuer: selectedIssuer.credential_issuer,
     clientId: selectedIssuer.client_id,
-    scopes: supportedScopes,
+    scopes: [supportedScope],
     additionalHeaders: selectedIssuer.additional_headers,
     redirectUrl: selectedIssuer.redirect_uri,
     additionalParameters: {ui_locales: i18n.language},
@@ -214,37 +223,55 @@ export const getJWK = async publicKey => {
   }
 };
 
+export const getSelectedCredentialTypeDetails = (
+  wellknown: any,
+  vcCredentialTypes: Object[],
+) => {
+  for (let credential in wellknown.credentials_supported) {
+    const credentialDetails = wellknown.credentials_supported[credential];
+
+    if (
+      JSON.stringify(credentialDetails.credential_definition.type) ===
+      JSON.stringify(vcCredentialTypes)
+    ) {
+      return credentialDetails;
+    }
+  }
+
+  console.error(
+    'Selected credential type is not available in wellknown config supported credentials list',
+  );
+};
+
 export const getCredentialIssuersWellKnownConfig = async (
   issuer: string,
   wellknown: string,
   vcCredentialTypes: Object[],
   defaultFields: string[],
 ) => {
-  let fields: string[] = [];
-  let response = null;
-  if (issuer === Issuers.MosipOtp) {
-    fields = defaultFields;
-  } else if (wellknown) {
-    response = await CACHED_API.fetchIssuerWellknownConfig(issuer, wellknown);
+  let fields: string[] = defaultFields;
+  let credentialDetails: any;
+  if (wellknown) {
+    const response = await CACHED_API.fetchIssuerWellknownConfig(
+      issuer,
+      wellknown,
+    );
     if (response) {
-      if (
-        Array.isArray(response.credentials_supported) &&
-        response?.credentials_supported[0].order
-      ) {
-        fields = response?.credentials_supported[0].order;
+      credentialDetails = getSelectedCredentialTypeDetails(
+        response,
+        vcCredentialTypes,
+      );
+      if (Object.keys(credentialDetails).includes('order')) {
+        fields = credentialDetails.order;
       } else {
-        const credentialDefinition = getCredentialDefinition(
-          response,
-          vcCredentialTypes,
+        fields = Object.keys(
+          credentialDetails.credential_definition.credentialSubject,
         );
-        fields = credentialDefinition
-          ? Object.keys(credentialDefinition.credentialSubject)
-          : [];
       }
     }
   }
   return {
-    wellknown: response,
+    wellknown: credentialDetails,
     fields: fields,
   };
 };
@@ -252,13 +279,13 @@ export const getCredentialIssuersWellKnownConfig = async (
 export const getDetailedViewFields = async (
   issuer: string,
   wellknown: string,
-  credentialTypes: Object[],
+  vcCredentialTypes: Object[],
   defaultFields: string[],
 ) => {
   let response = await getCredentialIssuersWellKnownConfig(
     issuer,
     wellknown,
-    credentialTypes,
+    vcCredentialTypes,
     defaultFields,
   );
 

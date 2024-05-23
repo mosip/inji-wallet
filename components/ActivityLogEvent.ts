@@ -1,3 +1,5 @@
+import {getIDTypeTranslations} from '../shared/openId4VCI/Utils';
+
 export type ActivityLogType =
   | '' // replacement for undefined
   | 'VC_SHARED'
@@ -56,7 +58,7 @@ export class ActivityLog {
 
 export function getActionText(activity: ActivityLog, t) {
   if (activity.idType && activity.idType !== '') {
-    let cardType = t(`VcDetails:${activity.idType}`);
+    let cardType = getIDTypeTranslations(activity.idType);
     return `${t(activity.type, {idType: cardType, id: activity.id})}`;
   }
   return `${t(activity.type, {idType: '', id: activity.id})}`;

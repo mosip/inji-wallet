@@ -17,9 +17,9 @@ import {
 import {TelemetryConstants} from '../../shared/telemetry/TelemetryConstants';
 import {
   getVCsOrderedByPinStatus,
+  isMosipVC,
   VCItemContainerFlowType,
 } from '../../shared/Utils';
-import {Issuers} from '../../shared/openId4VCI/Utils';
 import {FaceVerificationAlertOverlay} from './FaceVerificationAlertOverlay';
 import {Error} from '../../components/ui/Error';
 import {SvgImage} from '../../components/ui/svg';
@@ -101,9 +101,7 @@ export const SendVcScreen: React.FC = () => {
         <Column
           style={Theme.SendVcScreenStyles.shareOptionButtonsContainer}
           backgroundColor={Theme.Colors.whiteBackgroundColor}>
-          {[Issuers.MosipOtp, Issuers.Mosip].indexOf(
-            controller.verifiableCredentialData.issuer,
-          ) !== -1 && (
+          {isMosipVC(controller.verifiableCredentialData.issuer) && (
             <Button
               type="gradient"
               title={t('acceptRequestAndVerify')}
