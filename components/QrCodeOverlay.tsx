@@ -7,13 +7,12 @@ import {Theme} from './ui/styleUtils';
 import {useTranslation} from 'react-i18next';
 import testIDProps from '../shared/commonUtil';
 import {SvgImage} from './ui/svg';
-// @ts-ignore
-//import {generateQRData} from '@mosip/pixelpass';
 import {NativeModules} from 'react-native';
 import {VerifiableCredential} from '../machines/VerifiableCredential/VCMetaMachine/vc';
 import RNSecureKeyStore, {ACCESSIBLE} from 'react-native-secure-key-store';
 import {DEFAULT_ECL} from '../shared/constants';
 import {VCMetadata} from '../shared/VCMetadata';
+import {errorPlatform} from 'xstate/lib/actionTypes';
 
 export const QrCodeOverlay: React.FC<QrCodeOverlayProps> = props => {
   const {RNPixelpassModule} = NativeModules;
@@ -26,31 +25,13 @@ export const QrCodeOverlay: React.FC<QrCodeOverlayProps> = props => {
     try {
       qrData = await RNSecureKeyStore.get(props.meta.id);
     } catch {
-      try {
-        const result = await RNPixelpassModule.generateQRData(
-          JSON.stringify(props.verifiableCredential),
-          '',
-        );
-        qrData = result;
-        await RNSecureKeyStore.set(props.meta.id, qrData, {
-          accessible: ACCESSIBLE.ALWAYS_THIS_DEVICE_ONLY,
-        });
-      } catch (error) {
-        console.error('testwa ' + error);
-        /**Error handling */
-        // throw error;
-      }
-      /* RNPixelpassModule.generateQRData(
+      qrData = await RNPixelpassModule.generateQRData(
         JSON.stringify(props.verifiableCredential),
         '',
-      )
-        .then(result => {
-          qrData = result;
-          console.log('testwa2 in qroverlay ' + result);
-        })
-        .catch(error => {
-          console.error('testwa ' + error);
-        }); */
+      );
+      await RNSecureKeyStore.set(props.meta.id, qrData, {
+        accessible: ACCESSIBLE.ALWAYS_THIS_DEVICE_ONLY,
+      });
     }
     return qrData;
   }
@@ -62,11 +43,10 @@ export const QrCodeOverlay: React.FC<QrCodeOverlayProps> = props => {
 
   useEffect(() => {
     (async () => {
-      const qrString = await getQRData();
-      if (!!qrString) setQrString(qrString);
+      const qrData = await getQRData();
+      setQrString(qrData);
     })();
-  }, [qrString]);
-
+  }, []);
   const [isQrOverlayVisible, setIsQrOverlayVisible] = useState(false);
   const toggleQrOverlay = () => setIsQrOverlayVisible(!isQrOverlayVisible);
   return (

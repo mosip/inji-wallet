@@ -8,7 +8,6 @@ import {ReceivedVcsTab} from './ReceivedVcsTab';
 import {ViewVcModal} from './ViewVcModal';
 import {useHomeScreen} from './HomeScreenController';
 import {TabRef} from './HomeScreenMachine';
-import {useTranslation} from 'react-i18next';
 import {ActorRefFrom} from 'xstate';
 import LinearGradient from 'react-native-linear-gradient';
 import {ErrorMessageOverlay} from '../../components/MessageOverlay';
@@ -17,18 +16,9 @@ import testIDProps from '../../shared/commonUtil';
 import {BannerNotificationContainer} from '../../components/BannerNotificationContainer';
 import {VCItemMachine} from '../../machines/VerifiableCredential/VCItemMachine/VCItemMachine';
 import {VerifiableCredential} from '../../machines/VerifiableCredential/VCMetaMachine/vc';
-import {NativeModules} from 'react-native';
-const {RNPixelpassModule} = NativeModules;
 
 export const HomeScreen: React.FC<HomeRouteProps> = props => {
   const controller = useHomeScreen(props);
-  RNPixelpassModule.generateQRData('hello', '')
-    .then(result => {
-      console.log('testwa2 ' + result);
-    })
-    .catch(error => {
-      console.error('testwa ' + error);
-    });
   useEffect(() => {
     if (controller.IssuersService) {
       navigateToIssuers();
