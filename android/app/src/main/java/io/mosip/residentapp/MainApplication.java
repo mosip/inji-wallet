@@ -3,15 +3,10 @@ import expo.modules.ApplicationLifecycleDispatcher;
 import expo.modules.ReactNativeHostWrapper;
 
 import android.app.Application;
-import android.content.Context;
 import android.content.res.Configuration;
-import android.util.Log;
-
-import androidx.annotation.NonNull;
 
 import com.facebook.react.PackageList;
 import com.facebook.react.ReactApplication;
-import com.facebook.react.ReactInstanceManager;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.defaults.DefaultNewArchitectureEntryPoint;
@@ -20,9 +15,6 @@ import com.facebook.soloader.SoLoader;
 
 import timber.log.Timber;
 
-import com.facebook.react.bridge.JSIModulePackage;
-
-import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
 public class MainApplication extends Application implements ReactApplication {
@@ -39,7 +31,7 @@ public class MainApplication extends Application implements ReactApplication {
       List<ReactPackage> packages = new PackageList(this).getPackages();
       // Packages that cannot be autolinked yet can be added manually here, for example:
       // packages.add(new MyReactNativePackage());
-      packages.add(new MyInjiPackage());
+      packages.add(new InjiPackage());
       return packages;
     }
 

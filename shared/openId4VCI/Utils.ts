@@ -189,7 +189,7 @@ export const getJWK = async publicKey => {
     };
   } catch (e) {
     console.error(
-      'Exception occured while constructing JWK from PEM : ' +
+      'Exception occurred while constructing JWK from PEM : ' +
         publicKey +
         '  Exception is ',
       e,
@@ -284,4 +284,27 @@ export enum ErrorMessage {
   GENERIC = 'generic',
   REQUEST_TIMEDOUT = 'requestTimedOut',
   BIOMETRIC_CANCELLED = 'biometricCancelled',
+}
+
+export async function constructProofJWT(
+  publicKey: string,
+  privateKey: string,
+  accessToken: string,
+  selectedIssuer: issuerType,
+): Promise<string> {
+  const jwtHeader = {
+    alg: 'RS256',
+    jwk: await getJWK(publicKey),
+    typ: 'openid4vci-proof+jwt',
+  };
+  const decodedToken = jwtDecode(accessToken);
+  const jwtPayload = {
+    iss: selectedIssuer.client_id,
+    nonce: decodedToken.c_nonce,
+    aud: selectedIssuer.credential_audience,
+    iat: Math.floor(new Date().getTime() / 1000),
+    exp: Math.floor(new Date().getTime() / 1000) + 18000,
+  };
+
+  return await getJWT(jwtHeader, jwtPayload, Issuers_Key_Ref, privateKey);
 }
