@@ -5,6 +5,8 @@ import {Theme} from '../components/ui/styleUtils';
 import {VerifiableCredential} from '../machines/VerifiableCredential/VCMetaMachine/vc';
 import {Modal} from '../components/ui/Modal';
 import {useTranslation} from 'react-i18next';
+import {Error} from '../components/ui/Error';
+import {SvgImage} from '../components/ui/svg';
 
 export const VerifyIdentityOverlay: React.FC<
   VerifyIdentityOverlayProps
@@ -33,6 +35,25 @@ export const VerifyIdentityOverlay: React.FC<
           )}
         </Column>
       </Modal>
+
+      <Error
+        isModal
+        alignActionsOnEnd
+        showClose={false}
+        isVisible={props.isInvalidIdentity}
+        title={t('ScanScreen:postFaceCapture.captureFailureTitle')}
+        message={t('ScanScreen:postFaceCapture.captureFailureMessage')}
+        image={SvgImage.PermissionDenied()}
+        primaryButtonTestID={'retry'}
+        primaryButtonText={t('ScanScreen:status.retry')}
+        primaryButtonEvent={props.onRetryVerification}
+        textButtonTestID={'home'}
+        textButtonText={t('ScanScreen:status.accepted.home')}
+        textButtonEvent={props.onNavigateHome}
+        customImageStyles={{paddingBottom: 0, marginBottom: -6}}
+        customStyles={{marginTop: '20%'}}
+        testID={'shareWithSelfieError'}
+      />
     </>
   );
 };
@@ -44,4 +65,7 @@ export interface VerifyIdentityOverlayProps {
   onCancel: () => void;
   onFaceValid: () => void;
   onFaceInvalid: () => void;
+  isInvalidIdentity: boolean;
+  onNavigateHome: () => void;
+  onRetryVerification: () => void;
 }

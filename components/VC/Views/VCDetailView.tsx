@@ -219,7 +219,7 @@ export interface VCItemDetailsProps {
   wellknown: any;
   credential: VerifiableCredential | Credential;
   verifiableCredentialData: any;
-  walletBindingResponse: WalletBindingResponse;
+  walletBindingResponse?: WalletBindingResponse;
   onBinding?: () => void;
   activeTab?: Number;
   vcHasImage: boolean;
