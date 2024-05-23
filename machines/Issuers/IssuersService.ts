@@ -4,7 +4,8 @@ import NetInfo from '@react-native-community/netinfo';
 import {request} from '../../shared/request';
 import {
   constructAuthorizationConfiguration,
-  getBody,
+  getCredentialType,
+  getJWK,
   Issuers,
   Issuers_Key_Ref,
   updateCredentialInformation,
@@ -13,6 +14,7 @@ import {
 import {authorize} from 'react-native-app-auth';
 import {
   generateKeys,
+  getJWT,
   isHardwareKeystoreExists,
 } from '../../shared/cryptoutil/cryptoUtil';
 import SecureKeystore from '@mosip/secure-keystore';
@@ -26,6 +28,8 @@ import {
   sendImpressionEvent,
 } from '../../shared/telemetry/TelemetryUtils';
 import {TelemetryConstants} from '../../shared/telemetry/TelemetryConstants';
+import {VciClient} from '../../shared/vciClient/VciClient';
+import jwtDecode from 'jwt-decode';
 
 export const IssuersService = () => {
   return {
@@ -56,20 +60,42 @@ export const IssuersService = () => {
       return response?.response;
     },
     downloadCredential: async (context: any) => {
-      const body = await getBody(context);
       const downloadTimeout = await vcDownloadTimeout();
-      let credential = await request(
-        'POST',
-        context.selectedIssuer.credential_endpoint,
-        body,
-        '',
-        {
-          'Content-Type': 'application/json',
-          Authorization: 'Bearer ' + context.tokenResponse?.accessToken,
-        },
-        downloadTimeout,
+      const accessToken: string = context.tokenResponse?.accessToken;
+      const issuerMeta: Object = {
+        credentialAudience: context.selectedIssuer.credential_audience,
+        credentialEndpoint: context.selectedIssuer.credential_endpoint,
+        downloadTimeoutInMilliSeconds: downloadTimeout,
+        credentialType: getCredentialType(context),
+        credentialFormat: 'ldp_vc',
+      };
+      const jwtHeader = {
+        alg: 'RS256',
+        jwk: await getJWK(context.publicKey),
+        typ: 'openid4vci-proof+jwt',
+      };
+      const decodedToken = jwtDecode(context.tokenResponse.accessToken);
+      const jwtPayload = {
+        iss: context.selectedIssuer.client_id,
+        nonce: decodedToken.c_nonce,
+        aud: context.selectedIssuer.credential_audience,
+        iat: Math.floor(new Date().getTime() / 1000),
+        exp: Math.floor(new Date().getTime() / 1000) + 18000,
+      };
+
+      const proofJWT = await getJWT(
+        jwtHeader,
+        jwtPayload,
+        Issuers_Key_Ref,
+        context.privateKey,
       );
-      console.info(`VC download via ${context.selectedIssuerId} is succesfull`);
+      let credential = await VciClient.downloadCredential(
+        issuerMeta,
+        proofJWT,
+        accessToken,
+      );
+
+      console.info(`VC download via ${context.selectedIssuerId} is successful`);
       credential = updateCredentialInformation(context, credential);
       return credential;
     },

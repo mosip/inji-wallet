@@ -91,32 +91,15 @@ export const getIdentifier = (context, credential) => {
   );
 };
 
-export const getBody = async context => {
-  const header = {
-    alg: 'RS256',
-    jwk: await getJWK(context.publicKey),
-    typ: 'openid4vci-proof+jwt',
-  };
-  const decodedToken = jwtDecode(context.tokenResponse.accessToken);
-  const payload = {
-    iss: context.selectedIssuer.client_id,
-    nonce: decodedToken.c_nonce,
-    aud: context.selectedIssuer.credential_audience,
-    iat: Math.floor(new Date().getTime() / 1000),
-    exp: Math.floor(new Date().getTime() / 1000) + 18000,
-  };
-
-  const proofJWT = await getJWT(
-    header,
-    payload,
-    Issuers_Key_Ref,
-    context.privateKey,
-  );
+export const getCredentialRequestBody = async (
+  proofJWT: string,
+  credentialType: Array<string>,
+) => {
   return {
     format: 'ldp_vc',
     credential_definition: {
       '@context': ['https://www.w3.org/2018/credentials/v1'],
-      type: getCredentialType(context),
+      type: credentialType,
     },
     proof: {
       proof_type: 'jwt',

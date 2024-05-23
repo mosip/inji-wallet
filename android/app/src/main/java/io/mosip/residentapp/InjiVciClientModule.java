@@ -1,5 +1,7 @@
 package io.mosip.residentapp;
 
+import android.util.Log;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
@@ -7,10 +9,14 @@ import com.facebook.react.bridge.Promise;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
+import com.facebook.react.bridge.ReadableArray;
+import com.facebook.react.bridge.ReadableMap;
 
 import io.mosip.vciclient.VCIClient;
+import io.mosip.vciclient.constants.CredentialFormat;
+import io.mosip.vciclient.credentialResponse.CredentialResponse;
 import io.mosip.vciclient.dto.IssuerMetaData;
-import kotlin.jvm.functions.Function1;
+import io.mosip.vciclient.proof.jwt.JWTProof;
 
 
 public class InjiVciClientModule extends ReactContextBaseJavaModule {
@@ -20,22 +26,39 @@ public class InjiVciClientModule extends ReactContextBaseJavaModule {
         super(reactContext);
     }
 
-    public void init( String appId) {
-        vciClient = new VCIClient(appId);
-    }
-
     @ReactMethod
-    public void requestCredential(IssuerMetaData issuerMetaData, Function1 signer, String accessToken, String publicKeyPem, Promise promise) {
-        try {
-            vciClient.requestCredential(issuerMetaData, signer, accessToken, publicKeyPem);
-        } catch (Exception exception) {
-            promise.reject(exception);
-        }
+    public void init(String appId) {
+        Log.d("InjiVciClientModule", "Initializing with " + appId);
+        vciClient = new VCIClient(appId);
     }
 
     @NonNull
     @Override
     public String getName() {
-        return "RNINJIVCIClient";
+        return "InjiVciClient";
+    }
+
+    @ReactMethod
+    public void requestCredential(ReadableMap issuerMetaData, String jwtProofValue, String accessToken, Promise promise) {
+        try {
+            CredentialResponse response = vciClient.requestCredential(new IssuerMetaData(
+                            issuerMetaData.getString("credentialAudience"),
+                            issuerMetaData.getString("credentialEndpoint"),
+                            issuerMetaData.getInt("downloadTimeoutInMilliSeconds"),
+                            convertReadableArrayToStringArray(issuerMetaData.getArray("credentialType")),
+                            CredentialFormat.LDP_VC), new JWTProof(jwtProofValue)
+                    , accessToken);
+            promise.resolve(response.toJsonString());
+        } catch (Exception exception) {
+            promise.reject(exception);
+        }
+    }
+
+    private String[] convertReadableArrayToStringArray(ReadableArray readableArray) {
+        String[] stringArray = new String[readableArray.size()];
+        for (int i = 0; i < readableArray.size(); i++) {
+            stringArray[i] = readableArray.getString(i);
+        }
+        return stringArray;
     }
 }
