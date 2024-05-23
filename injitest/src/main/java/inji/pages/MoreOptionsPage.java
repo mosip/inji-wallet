@@ -1,5 +1,6 @@
 package inji.pages;
 
+import inji.utils.IosUtil;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.pagefactory.AndroidFindBy;
 import io.appium.java_client.pagefactory.iOSXCUITFindBy;
@@ -51,6 +52,9 @@ public class MoreOptionsPage extends BasePage {
     @iOSXCUITFindBy(accessibility = "enableVerification")
     private WebElement enableVerification;
 
+    @AndroidFindBy(accessibility = "shareVcWithSelfieFromKebab")
+    @iOSXCUITFindBy(accessibility = "shareVcWithSelfieFromKebab")
+    private WebElement shareVcWithSelfieFromKebab;
 
 
     public MoreOptionsPage(AppiumDriver driver) {
@@ -62,6 +66,7 @@ public class MoreOptionsPage extends BasePage {
     }
 
     public PleaseConfirmPopupPage clickOnRemoveFromWallet() {
+        IosUtil.scrollToElement(driver, 59, 755, 119, 20);
         clickOnElement(removeFromWalletButton);
         return new PleaseConfirmPopupPage(driver);
     }
@@ -100,5 +105,9 @@ public class MoreOptionsPage extends BasePage {
 
     public void clickOnActivationButton() {
         clickOnElement(enableVerification);
+    }
+
+    public void clickOnShareVcWithSelfieFromKebabButton() {
+        clickOnElement(shareVcWithSelfieFromKebab);
     }
 }

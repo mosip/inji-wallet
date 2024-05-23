@@ -96,6 +96,7 @@
                 <methods>
                     <include name="noCardsAvailableToShare"/>
                     <include name="verifyReceivedCardTabPresent"/>
+                    <include name="verifyPopupsForShareWithSelfi"/>
                 </methods>
             </class>
             <class name="androidTestCases.UnlockWithPasscodeTest">

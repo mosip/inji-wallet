@@ -1,5 +1,6 @@
 package inji.pages;
 
+import inji.utils.UpdateNetworkSettings;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.HidesKeyboard;
 import io.appium.java_client.pagefactory.AndroidFindBy;
@@ -23,7 +24,7 @@ public class EsignetLoginPage extends BasePage {
     @iOSXCUITFindBy(xpath = "//*[contains(@text,'Login with e-Signet')]")
     private WebElement esignetLoginHeader;
 
-    @AndroidFindBy(xpath = "//*[contains(@text,'Enter Your VID')]")
+    @AndroidFindBy(xpath = "//*[contains(@text,'Please enter your UIN/VID')]")
     @iOSXCUITFindBy(xpath = "//*[contains(@text,'Enter Your VID')]")
     private WebElement enterYourVidTextHeader;
 
@@ -58,6 +59,9 @@ public class EsignetLoginPage extends BasePage {
 
     @AndroidFindBy(accessibility = "loaderSubTitle")
     private WebElement settingUpTextOrDownloadingCredentials;
+
+    @AndroidFindBy(xpath = "//*[@text=\"OTP is invalid\"]")
+    private WebElement invalidOtpText;
 
     public EsignetLoginPage(AppiumDriver driver) {
         super(driver);
@@ -112,12 +116,17 @@ public class EsignetLoginPage extends BasePage {
     }
 
     public void clickOnVerifyButton() {
+        String sessionId  = driver.getSessionId().toString();
     	((HidesKeyboard) driver).hideKeyboard();
         clickOnElement(verifyButton);
+        UpdateNetworkSettings.setNoNetworkProfile(sessionId);
     }
 
     public void clickOnVerifyButtonIos() {
         clickOnElement(verifyButton);
     }
 
+    public boolean isInvalidOtpMessageDisplayed() {
+        return this.isElementDisplayed(invalidOtpText);
+    }
 }
