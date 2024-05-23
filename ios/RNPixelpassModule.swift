@@ -20,11 +20,11 @@ class RNPixelpassModule: NSObject, RCTBridgeModule {
 
     @objc
     func generateQRData(_ data: String, header: String = "", resolve: @escaping RCTPromiseResolveBlock, reject: @escaping RCTPromiseRejectBlock) {
-      if let imageData = PixelPass().generateQRCode(data: data, ecc: .L, header: header) {
-            let base64Image = imageData.base64EncodedString(options: [])
-            resolve(base64Image)
+      if let encodedData = PixelPass().generateQRData(data) {
+            let qrData=encodedData+header
+            resolve(qrData)
         } else {
-            reject("E_NO_IMAGE", "Unable to generate QR code", nil)
+            reject("E_NO_IMAGE", "Unable to generate QR data", nil)
         }
     }
    

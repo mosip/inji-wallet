@@ -15,7 +15,7 @@
 		96905EF65AED1B983A6B3ABC /* libPods-Inji.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 58EEBF8E8E6FB1BC6CAF49B5 /* libPods-Inji.a */; };
 		9C0E86B52BEE357A00E9F9F6 /* RNPixelpassModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C0E86B42BEE357A00E9F9F6 /* RNPixelpassModule.swift */; };
 		9C0E86BB2BEE36C300E9F9F6 /* RNPixelpassModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C0E86BA2BEE36C300E9F9F6 /* RNPixelpassModule.m */; };
-		9C58131B2BFB7DED00D69E02 /* pixelpass in Frameworks */ = {isa = PBXBuildFile; productRef = 9C58131A2BFB7DED00D69E02 /* pixelpass */; };
+		9CE34B1F2BFE03E4001AF414 /* pixelpass in Frameworks */ = {isa = PBXBuildFile; productRef = 9CE34B1E2BFE03E4001AF414 /* pixelpass */; };
 		B18059E884C0ABDD17F3DC3D /* ExpoModulesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAC715A2D49A985799AEE119 /* ExpoModulesProvider.swift */; };
 		BB2F792D24A3F905000567C9 /* Expo.plist in Resources */ = {isa = PBXBuildFile; fileRef = BB2F792C24A3F905000567C9 /* Expo.plist */; };
 		FD8D20B92BBAACDF009AD01C /* Fontisto.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FD8D20A62BBAACDF009AD01C /* Fontisto.ttf */; };
@@ -84,7 +84,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9C58131B2BFB7DED00D69E02 /* pixelpass in Frameworks */,
+				9CE34B1F2BFE03E4001AF414 /* pixelpass in Frameworks */,
 				96905EF65AED1B983A6B3ABC /* libPods-Inji.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -235,7 +235,7 @@
 			);
 			name = Inji;
 			packageProductDependencies = (
-				9C58131A2BFB7DED00D69E02 /* pixelpass */,
+				9CE34B1E2BFE03E4001AF414 /* pixelpass */,
 			);
 			productName = Inji;
 			productReference = 13B07F961A680F5B00A75B9A /* Inji.app */;
@@ -264,7 +264,7 @@
 			);
 			mainGroup = 83CBB9F61A601CBA00E9B192;
 			packageReferences = (
-				9C5813192BFB7DED00D69E02 /* XCRemoteSwiftPackageReference "pixelpass-ios-swift" */,
+				9CE34B1D2BFE03E4001AF414 /* XCRemoteSwiftPackageReference "pixelpass-ios-swift" */,
 			);
 			productRefGroup = 83CBBA001A601CBA00E9B192 /* Products */;
 			projectDirPath = "";
@@ -661,7 +661,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		9C5813192BFB7DED00D69E02 /* XCRemoteSwiftPackageReference "pixelpass-ios-swift" */ = {
+		9CE34B1D2BFE03E4001AF414 /* XCRemoteSwiftPackageReference "pixelpass-ios-swift" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/mosip/pixelpass-ios-swift/";
 			requirement = {
@@ -672,9 +672,9 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		9C58131A2BFB7DED00D69E02 /* pixelpass */ = {
+		9CE34B1E2BFE03E4001AF414 /* pixelpass */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 9C5813192BFB7DED00D69E02 /* XCRemoteSwiftPackageReference "pixelpass-ios-swift" */;
+			package = 9CE34B1D2BFE03E4001AF414 /* XCRemoteSwiftPackageReference "pixelpass-ios-swift" */;
 			productName = pixelpass;
 		};
 /* End XCSwiftPackageProductDependency section */
