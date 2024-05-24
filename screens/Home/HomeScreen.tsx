@@ -8,7 +8,6 @@ import {ReceivedVcsTab} from './ReceivedVcsTab';
 import {ViewVcModal} from './ViewVcModal';
 import {useHomeScreen} from './HomeScreenController';
 import {TabRef} from './HomeScreenMachine';
-import {useTranslation} from 'react-i18next';
 import {ActorRefFrom} from 'xstate';
 import LinearGradient from 'react-native-linear-gradient';
 import {ErrorMessageOverlay} from '../../components/MessageOverlay';
@@ -20,7 +19,6 @@ import {VerifiableCredential} from '../../machines/VerifiableCredential/VCMetaMa
 
 export const HomeScreen: React.FC<HomeRouteProps> = props => {
   const controller = useHomeScreen(props);
-
   useEffect(() => {
     if (controller.IssuersService) {
       navigateToIssuers();
