@@ -19,6 +19,7 @@ import {RemoveVcWarningOverlay} from '../../../screens/Home/MyVcs/RemoveVcWarnin
 import {HistoryTab} from '../../../screens/Home/MyVcs/HistoryTab';
 import {getTextColor} from '../common/VCUtils';
 import {useCopilot} from 'react-native-copilot';
+import {COPILOT_FINAL_STEP} from '../../../shared/constants';
 
 export const VCCardViewContent: React.FC<VCItemContentProps> = props => {
   const isVCSelectable = props.selectable && (
@@ -53,7 +54,7 @@ export const VCCardViewContent: React.FC<VCItemContentProps> = props => {
           props.isInitialLaunch
             ? () => {
                 start();
-                goToNth(6);
+                goToNth(COPILOT_FINAL_STEP);
               }
             : undefined
         }>

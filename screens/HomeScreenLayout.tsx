@@ -12,7 +12,7 @@ import {SvgImage} from '../components/ui/svg';
 import {HelpScreen} from '../components/HelpScreen';
 import {I18nManager, View} from 'react-native';
 import {isIOS} from '../shared/constants';
-import {CopilotStep, walkthroughable} from 'react-native-copilot';
+import {Copilot} from '../components/ui/Copilot';
 
 export const HomeScreenLayout: React.FC<RootRouteProps> = props => {
   const {t} = useTranslation('IssuersScreen');
@@ -42,17 +42,17 @@ export const HomeScreenLayout: React.FC<RootRouteProps> = props => {
     }
   }, [props.navigation, props.route]);
 
-  const CopilotView = walkthroughable(View);
-
   const screenOptions = (
     <HelpScreen
       source={'Inji'}
       triggerComponent={
-        <CopilotStep
-          text={t('copilot:helpMessage')}
+        <Copilot
+          key={t('copilot:helpTitle')}
+          title={t('copilot:helpTitle')}
+          description={t('copilot:helpMessage')}
           order={1}
-          name={t('copilot:helpTitle')}>
-          <CopilotView testID="help" style={Theme.HelpScreenStyle.viewStyle}>
+          targetStyle={Theme.HelpScreenStyle.viewStyle}
+          children={
             <Row crossAlign="center" style={Theme.HelpScreenStyle.rowStyle}>
               <View testID="helpIcon" style={Theme.HelpScreenStyle.iconStyle}>
                 {SvgImage.coloredInfo()}
@@ -61,8 +61,8 @@ export const HomeScreenLayout: React.FC<RootRouteProps> = props => {
                 {t('help')}
               </Text>
             </Row>
-          </CopilotView>
-        </CopilotStep>
+          }
+        />
       }
     />
   );

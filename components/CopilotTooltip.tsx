@@ -1,93 +1,58 @@
-import React, {useContext} from 'react';
-import {useCopilot} from 'react-native-copilot';
+import React from 'react';
 import {Text, Button, Row, Column} from './../components/ui';
 import {useTranslation} from 'react-i18next';
-import {GlobalContext} from '../shared/GlobalContext';
-import {AuthEvents, selectIsInitialDownload} from '../machines/auth';
-import {useSelector} from '@xstate/react';
+import {UseCopilotTooltip} from './CopilotTooltipController';
+import {Theme} from './ui/styleUtils';
 
 export const CopilotTooltip = () => {
   const {t} = useTranslation('copilot');
-  const {
-    goToNext,
-    goToPrev,
-    stop,
-    currentStep,
-    isFirstStep,
-    isLastStep,
-    totalStepsNumber,
-    copilotEvents,
-  } = useCopilot();
-
-  const {appService} = useContext(GlobalContext);
-  const authService = appService.children.get('auth');
-  const ONBOARDING_DONE = () => authService?.send(AuthEvents.ONBOARDING_DONE());
-  const INITIAL_DOWNLOAD_DONE = () =>
-    authService?.send(AuthEvents.INITIAL_DOWNLOAD_DONE());
-  const isInitialDownloading = useSelector(
-    authService,
-    selectIsInitialDownload,
-  );
-  const handleStop = async () => {
-    stop();
-  };
-
-  const handleNext = () => {
-    void goToNext();
-  };
-
-  const handlePrev = () => {
-    void goToPrev();
-  };
-
-  copilotEvents.on('stop', () => {
-    if (currentStep?.order <= 5) {
-      ONBOARDING_DONE();
-    }
-    if (currentStep?.order === 6) {
-      INITIAL_DOWNLOAD_DONE();
-    }
-  });
+  const controller = UseCopilotTooltip();
 
   return (
     <Column>
-      <Text testID="stepTitle" weight="bold" margin="0 0 10 0">
-        {currentStep?.name}
+      <Text
+        testID={controller.currentStepTitle}
+        weight="bold"
+        margin="0 0 10 0">
+        {controller.currentStepTitle}
       </Text>
-      <Text testID="stepDescription">{currentStep?.text}</Text>
+      <Text testID={`${controller.currentStepTitle}Description`}>
+        {controller.currentStepDescription}
+      </Text>
       <Row
         align="center"
         crossAlign="center"
         margin="25 0 0 0"
         style={{justifyContent: 'space-between'}}>
-        <Text weight="bold">
-          {currentStep?.order === 6 && isInitialDownloading
-            ? '1 of 1'
-            : currentStep?.order + ' of ' + totalStepsNumber}
+        <Text testID={`${controller.CURRENT_STEP}stepCount`} weight="bold">
+          {controller.stepCount}
         </Text>
         <Row>
-          {isFirstStep ||
-          (currentStep?.order === 6 && isInitialDownloading) ? null : (
+          {controller.isFirstStep ||
+          (controller.isFinalStep && controller.isInitialDownloading) ? null : (
             <Button
+              testID={`${controller.CURRENT_STEP}previous`}
               title={t('previous')}
               type="outline"
-              styles={{width: 104, height: 40}}
-              onPress={handlePrev}
+              styles={Theme.Styles.copilotButton}
+              onPress={controller.goToPrev}
             />
           )}
-          {!isLastStep ? (
+          {controller.isLastStep ? (
             <Button
-              title={t('next')}
+              testID={`${controller.CURRENT_STEP}done`}
+              title={t('done')}
               type="solid"
-              styles={{width: 104, height: 40, marginLeft: 10}}
-              onPress={handleNext}
+              styles={Theme.Styles.copilotButton}
+              onPress={controller.stop}
             />
           ) : (
             <Button
-              title={t('done')}
+              testID={`${controller.CURRENT_STEP}next`}
+              title={t('next')}
               type="solid"
-              styles={{width: 104, height: 40, marginLeft: 10}}
-              onPress={handleStop}
+              styles={Theme.Styles.copilotButton}
+              onPress={controller.goToNext}
             />
           )}
         </Row>

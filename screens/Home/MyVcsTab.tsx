@@ -359,6 +359,7 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = props => {
                     {t('bringYourDigitalID')}
                   </Text>
                   <Text
+                    testID="generateVcFABDescription"
                     style={{
                       ...Theme.TextStyles.bold,
                       paddingTop: 3,
