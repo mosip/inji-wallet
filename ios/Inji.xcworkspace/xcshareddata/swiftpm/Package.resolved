@@ -16,9 +16,9 @@
       "location" : "https://github.com/mosip/pixelpass-ios-swift/",
       "state" : {
         "branch" : "develop",
-        "revision" : "a5914ade8b7c071dc0ba5479e6d05d3ded9005ae"
+        "revision" : "0b716d5f6545b10de84c69edbf59565e66776ccd"
       }
     }
   ],
-  "version" : 2
+  "version" : 3
 }
