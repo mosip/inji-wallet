@@ -30,7 +30,6 @@ export const QrCodeOverlay: React.FC<QrCodeOverlayProps> = props => {
         accessible: ACCESSIBLE.ALWAYS_THIS_DEVICE_ONLY,
       });
     }
-    console.log('balaggg-->qrData', qrData);
     return qrData;
   }
 
@@ -61,7 +60,6 @@ export const QrCodeOverlay: React.FC<QrCodeOverlayProps> = props => {
   useEffect(() => {
     (async () => {
       const qrString = await getQRData();
-      console.log('balaggg-->qrString', qrString);
       setQrString(qrString);
     })();
   }, [qrString]);

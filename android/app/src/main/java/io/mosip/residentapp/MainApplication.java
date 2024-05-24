@@ -25,10 +25,7 @@ import com.facebook.react.bridge.JSIModulePackage;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
-import cl.json.RNSharePackage;
-import cl.json.ShareApplication;
-
-public class MainApplication extends Application implements ReactApplication, ShareApplication {
+public class MainApplication extends Application implements ReactApplication {
   private final ReactNativeHost mReactNativeHost =
     new ReactNativeHostWrapper(this, new DefaultReactNativeHost(this) {
     @Override
@@ -85,10 +82,5 @@ public class MainApplication extends Application implements ReactApplication, Sh
   public void onConfigurationChanged(Configuration newConfig) {
     super.onConfigurationChanged(newConfig);
     ApplicationLifecycleDispatcher.onConfigurationChanged(this, newConfig);
-  }
-
-  @Override
-  public String getFileProviderAuthority() {
-    return BuildConfig.APPLICATION_ID + ".provider";
   }
 }

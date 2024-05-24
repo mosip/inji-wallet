@@ -2,7 +2,7 @@ fileignoreconfig:
   - filename: package.json
     checksum: 5b4fcb5ddc7cc96cc2d1733b544d56ea66e88cdab995a1052fbf9ac0e9c2dc21
   - filename: package-lock.json
-    checksum: 2a85120b444e292a418e007b963bee897ef2d45d3c631b99055b2089963507c1
+    checksum: 93a87652f1343d9f7a0440b451b3dd140e53f8b5db159acc039bc207918adfe5
   - filename: lib/jsonld-signatures/suites/ed255192018/ed25519.ts
     checksum: 493b6e31144116cb612c24d98b97d8adcad5609c0a52c865a6847ced0a0ddc3a
   - filename: components/PasscodeVerify.tsx
@@ -246,7 +246,7 @@ fileignoreconfig:
   - filename: screens/Issuers/CredentialTypeSelectionScreen.tsx
     checksum: 144bbf59e86a89bf580ac7931645ca3eaed69a9409de36f6ce9f88a14091a9d3
   - filename: components/QrCodeOverlay.tsx
-    checksum: b49a3f53dd4a522f8ce47f2af72ade33e337ddbd40068911458bb3ad54197b63
+    checksum: 68758cbddafe575c7f53294327963112a0780d30fd23cd0b6bf82d7dcfd856fe
   - filename: machines/Issuers/IssuersEvents.ts
     checksum: fd8c30e0cf43a784be883c9d79a3bff0d2bcd9075e937d225939040542998b10
   - filename: machines/Issuers/IssuersGuards.ts
