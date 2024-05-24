@@ -380,7 +380,7 @@ class Cloud {
         });
       }
     } catch (error) {
-      console.log(
+      console.error(
         `Error occurred while cloud upload.. retrying ${retryCounter} : Error : ${error}`,
       );
       if (this.isNetworkError(error)) {

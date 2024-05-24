@@ -596,7 +596,7 @@ export async function getVCsData(key: string, encryptionKey: string) {
         const vc = await getItem(vcKey, null, encryptionKey);
         vcsData[vcKey] = vc;
       } catch (e) {
-        console.log('error: ', e);
+        console.error(`error occurred while getting vc's data - ${vcKey}`, e);
         if (
           e.message.includes(tamperedErrorMessageString) ||
           e.message.includes(ENOENT)
@@ -863,7 +863,7 @@ export async function removeTamperedVcMetaData(
 
 export async function clear() {
   try {
-    console.log('clearing entire storage');
+    console.warn('clearing entire storage');
     if (isHardwareKeystoreExists) {
       SecureKeystore.clearKeys();
     }
