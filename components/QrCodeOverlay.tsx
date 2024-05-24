@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {Pressable, View} from 'react-native';
 import {Icon, Overlay} from 'react-native-elements';
-import {Centered, Column, Row, Text} from './ui';
+import {Centered, Column, Row, Text, Button} from './ui';
 import QRCode from 'react-native-qrcode-svg';
 import {Theme} from './ui/styleUtils';
 import {useTranslation} from 'react-i18next';
@@ -13,6 +13,7 @@ import {VerifiableCredential} from '../machines/VerifiableCredential/VCMetaMachi
 import RNSecureKeyStore, {ACCESSIBLE} from 'react-native-secure-key-store';
 import {DEFAULT_ECL} from '../shared/constants';
 import {VCMetadata} from '../shared/VCMetadata';
+import Share from 'react-native-share';
 
 export const QrCodeOverlay: React.FC<QrCodeOverlayProps> = props => {
   const {t} = useTranslation('VcDetails');
@@ -29,8 +30,28 @@ export const QrCodeOverlay: React.FC<QrCodeOverlayProps> = props => {
         accessible: ACCESSIBLE.ALWAYS_THIS_DEVICE_ONLY,
       });
     }
+    console.log('balaggg-->qrData', qrData);
     return qrData;
   }
+
+  const shareImages = async () => {
+    try {
+      const options = {
+        title: 'Title',
+        message: 'Message',
+        url: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAIAQMAAAD+wSzIAAAABlBMVEX///+/v7+jQ3Y5AAAADklEQVQI12P4AIX8EAgALgAD/aNpbtEAAAAASUVORK5CYII',
+      };
+      await Share.open(options)
+        .then(res => {
+          console.log('Share Result-->', res);
+        })
+        .catch(err => {
+          err && console.log('Share Error-->', err);
+        });
+    } catch (err) {
+      console.log('Share Exception-->', err);
+    }
+  };
 
   function onQRError() {
     console.warn('Data is too big');
@@ -40,6 +61,7 @@ export const QrCodeOverlay: React.FC<QrCodeOverlayProps> = props => {
   useEffect(() => {
     (async () => {
       const qrString = await getQRData();
+      console.log('balaggg-->qrString', qrString);
       setQrString(qrString);
     })();
   }, [qrString]);
@@ -99,6 +121,13 @@ export const QrCodeOverlay: React.FC<QrCodeOverlayProps> = props => {
                 backgroundColor={Theme.Colors.QRCodeBackgroundColor}
                 ecl={DEFAULT_ECL}
                 onError={onQRError}
+              />
+              <Button
+                testID="proceed"
+                margin="30 0 0 0"
+                title="Share QR Code"
+                type="gradient"
+                onPress={shareImages}
               />
             </Centered>
           </Column>
