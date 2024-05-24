@@ -13,13 +13,10 @@ import {ScanEvents} from '../machines/bleShare/scan/scanMachine';
 import testIDProps from '../shared/commonUtil';
 import {SvgImage} from '../components/ui/svg';
 import {isIOS} from '../shared/constants';
-import {
-  CopilotProvider,
-  CopilotStep,
-  walkthroughable,
-} from 'react-native-copilot';
+import {CopilotProvider} from 'react-native-copilot';
 import {View} from 'react-native';
 import {CopilotTooltip} from '../components/CopilotTooltip';
+import {Copilot} from '../components/ui/Copilot';
 
 const {Navigator, Screen} = createBottomTabNavigator();
 
@@ -34,8 +31,6 @@ export const MainLayout: React.FC = () => {
     tabBarActiveTintColor: Theme.Colors.IconBg,
     ...Theme.BottomTabBarStyle,
   };
-
-  const CopilotView = walkthroughable(View);
 
   return (
     <CopilotProvider
@@ -82,20 +77,23 @@ export const MainLayout: React.FC = () => {
                       </Text>
                     </View>
                   ) : (
-                    <CopilotStep
+                    <Copilot
                       key={t(route.name)}
-                      text={t(`copilot:${route.name}Message`)}
+                      title={t(`copilot:${route.name}Title`)}
+                      description={t(`copilot:${route.name}Message`)}
                       order={2 + index}
-                      name={t(`copilot:${route.name}Title`)}>
-                      <CopilotView style={Theme.Styles.tabBarIconCopilot}>
-                        {SvgImage[`${route.name}`](focused)}
-                        <Text
-                          color={focused && Theme.Colors.Icon}
-                          margin="6 0 0 0">
-                          {t(route.name)}
-                        </Text>
-                      </CopilotView>
-                    </CopilotStep>
+                      targetStyle={Theme.Styles.tabBarIconCopilot}
+                      children={
+                        <>
+                          {SvgImage[`${route.name}`](focused)}
+                          <Text
+                            color={focused && Theme.Colors.Icon}
+                            margin="6 0 0 0">
+                            {t(route.name)}
+                          </Text>
+                        </>
+                      }
+                    />
                   )}
                 </Column>
               ),

@@ -714,6 +714,11 @@ export const DefaultTheme = {
       maxWidth: Dimensions.get('screen').width,
       minHeight: Dimensions.get('screen').height * 0.22,
     },
+    copilotButton: {
+      width: 104,
+      height: 40,
+      marginLeft: 10,
+    },
   }),
   BannerStyles: StyleSheet.create({
     container: {

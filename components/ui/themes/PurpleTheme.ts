@@ -717,6 +717,11 @@ export const PurpleTheme = {
       maxWidth: Dimensions.get('screen').width,
       height: Dimensions.get('screen').height * 0.2,
     },
+    copilotButton: {
+      width: 104,
+      height: 40,
+      marginLeft: 10,
+    },
   }),
   BannerStyles: StyleSheet.create({
     container: {

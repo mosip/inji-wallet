@@ -11,13 +11,13 @@ import {TabRef} from './HomeScreenMachine';
 import {ActorRefFrom} from 'xstate';
 import LinearGradient from 'react-native-linear-gradient';
 import {ErrorMessageOverlay} from '../../components/MessageOverlay';
-import {Pressable, View} from 'react-native';
+import {Pressable} from 'react-native';
 import testIDProps from '../../shared/commonUtil';
 import {BannerNotificationContainer} from '../../components/BannerNotificationContainer';
 import {VCItemMachine} from '../../machines/VerifiableCredential/VCItemMachine/VCItemMachine';
 import {VerifiableCredential} from '../../machines/VerifiableCredential/VCMetaMachine/vc';
-import {CopilotStep, walkthroughable} from 'react-native-copilot';
 import {useTranslation} from 'react-i18next';
+import {Copilot} from '../../components/ui/Copilot';
 
 export const HomeScreen: React.FC<HomeRouteProps> = props => {
   const controller = useHomeScreen(props);
@@ -34,7 +34,6 @@ export const HomeScreen: React.FC<HomeRouteProps> = props => {
       service: controller.IssuersService,
     });
   };
-  const CopilotView = walkthroughable(View);
 
   const DownloadFABIcon: React.FC = () => {
     const plusIcon = (
@@ -88,14 +87,14 @@ export const HomeScreen: React.FC<HomeRouteProps> = props => {
         )}
       </Column>
 
-      <CopilotStep
-        name={t('copilot:downloadTitle')}
-        text={t('copilot:downloadMessage')}
-        order={2}>
-        <CopilotView style={Theme.Styles.downloadFabIconCopilotContainer}>
-          <DownloadFABIcon />
-        </CopilotView>
-      </CopilotStep>
+      <Copilot
+        key={t('copilot:downloadTitle')}
+        title={t('copilot:downloadTitle')}
+        description={t('copilot:downloadMessage')}
+        order={2}
+        targetStyle={Theme.Styles.downloadFabIconCopilotContainer}
+        children={<DownloadFABIcon />}
+      />
 
       <ErrorMessageOverlay
         translationPath={'MyVcsTab'}
