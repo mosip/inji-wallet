@@ -1,4 +1,4 @@
-package com.reactlibrary;
+package io.mosip.residentapp;
 import io.mosip.pixelpass.PixelPass;
 import io.mosip.pixelpass.types.ECC;
 import com.facebook.react.bridge.ReactApplicationContext;
