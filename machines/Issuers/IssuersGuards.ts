@@ -45,7 +45,9 @@ export const IssuersGuards = () => {
     isCustomSecureKeystore: () => isHardwareKeystoreExists,
     hasUserCancelledBiometric: (_: any, event: any) =>
       event.data instanceof BiometricCancellationError,
-    isGenericError: (_: any, event: any) =>
-      event.data.message !== (NETWORK_REQUEST_FAILED || REQUEST_TIMEOUT),
+    isGenericError: (_: any, event: any) => {
+      const errorMessage = event.data.message;
+      return !errorMessage.includes(NETWORK_REQUEST_FAILED);
+    },
   };
 };

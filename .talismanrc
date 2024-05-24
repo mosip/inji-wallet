@@ -38,7 +38,7 @@ fileignoreconfig:
   - filename: screens/Home/MyVcs/GetIdInputModal.tsx
     checksum: 5c736ed79a372d0ffa7c02eb33d0dc06edbbb08d120978ff287f5f06cd6c7746
   - filename: shared/openId4VCI/Utils.ts
-    checksum: 56e6e62b24f0d61dec63a26c141a3e50c53bdbe3e387a0a04e38397bb087ecf9
+    checksum: f8b53de9c07074dc3a73f9443ba140c7e86300b4a2beac1a84bfccafb55ecd6a
   - filename: shared/cryptoutil/cryptoUtil.ts
     checksum: adbc2ff6df1df412e891c988c9ba03fc82f66c2f6c64339f87d513fc835d14cc
   - filename: shared/telemetry/TelemetryConstants.js
@@ -317,4 +317,7 @@ fileignoreconfig:
     checksum: 0816d4b9440da5384fd867d13555986d223124b9609280350226510a06ae96fa
   - filename: machines/VerifiableCredential/VCItemMachine/VCItemMachine.ts
     checksum: fdc0c23a7107eb713d20f60fda675f9e9fe8ef29c981d798d90e581dfee340c8
+    checksum: 8ac74d2e5c6de179e460b86899eb048ad4c5bd67abc3d28c015e92335b8afe24
+  - filename: android/app/src/main/java/io/mosip/residentapp/InjiVciClientModule.java
+    checksum: 17f55840bab193bc353034445ba4fce53e1ce466e95f616c15a1351f8d2f23bc
     version: ""
