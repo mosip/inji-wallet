@@ -1499,6 +1499,7 @@ export const DefaultTheme = {
     },
     bannerTextContainer: {
       justifyContent: 'space-between',
+      width: '99%',
     },
     bannerTitle: {
       fontFamily: 'Inter_600SemiBold',

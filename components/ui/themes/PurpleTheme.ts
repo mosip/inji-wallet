@@ -1500,6 +1500,7 @@ export const PurpleTheme = {
     },
     bannerTextContainer: {
       justifyContent: 'space-between',
+      width: '99%',
     },
     bannerTitle: {
       fontFamily: 'Inter_600SemiBold',
