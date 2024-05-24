@@ -126,3 +126,6 @@ export const APPLE = 'Apple';
 export const ICLOUD_DRIVE_NAME = 'iCloud';
 export const DEFAULT_ECL = 'M';
 export const DEFAULT_QR_HEADER = 'INJIQUICKSHARE://';
+
+export const COPILOT_PRE_FINAL_STEP: number = 5;
+export const COPILOT_FINAL_STEP: number = 6;

@@ -317,4 +317,12 @@ fileignoreconfig:
     checksum: 0816d4b9440da5384fd867d13555986d223124b9609280350226510a06ae96fa
   - filename: machines/VerifiableCredential/VCItemMachine/VCItemMachine.ts
     checksum: fdc0c23a7107eb713d20f60fda675f9e9fe8ef29c981d798d90e581dfee340c8
+  - filename: screens/HomeScreenLayout.tsx
+    checksum: 4bf5a896dcbe74afbef3b66a2ab13fa620a3e1d23de5271a795d75a26821e893 
+  - filename: screens/Home/HomeScreen.tsx
+    checksum: 4cb4e516acecd5607c675b8d1bb184678fbd86a39255ddd217417f3a037f3090     
+  - filename: components/ui/Copilot.tsx
+    checksum: d9f22b5c75112518bf6216605be6ae8a72abfb5a4827cf0a3df773b4866ba290     
+  - filename: components/VC/Views/VCCardView.tsx
+    checksum: 0444e4b854ade3ff6f4ca6964a1453b76c31e170748f219599effaa70837f086 
     version: ""
