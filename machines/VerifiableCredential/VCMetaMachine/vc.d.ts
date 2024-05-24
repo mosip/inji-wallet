@@ -37,6 +37,7 @@ export interface CredentialSubject {
   id: string;
   phone: string;
   face: string;
+  QR?: string;
 }
 
 type VCContext = (string | Record<string, unknown>)[];

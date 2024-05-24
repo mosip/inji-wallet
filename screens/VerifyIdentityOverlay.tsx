@@ -2,7 +2,7 @@ import React from 'react';
 import {FaceScanner} from '../components/FaceScanner';
 import {Column} from '../components/ui';
 import {Theme} from '../components/ui/styleUtils';
-import {VerifiableCredential} from '../machines/VerifiableCredential/VCMetaMachine/vc';
+import {Credential} from '../machines/VerifiableCredential/VCMetaMachine/vc';
 import {Modal} from '../components/ui/Modal';
 import {useTranslation} from 'react-i18next';
 import {Error} from '../components/ui/Error';
@@ -59,7 +59,7 @@ export const VerifyIdentityOverlay: React.FC<
 };
 
 export interface VerifyIdentityOverlayProps {
-  credential?: VerifiableCredential | Credential;
+  credential?: Credential;
   verifiableCredentialData: any;
   isVerifyingIdentity: boolean;
   onCancel: () => void;

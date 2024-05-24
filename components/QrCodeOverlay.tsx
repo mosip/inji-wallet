@@ -9,7 +9,7 @@ import testIDProps from '../shared/commonUtil';
 import {SvgImage} from './ui/svg';
 // @ts-ignore
 import {generateQRData} from '@mosip/pixelpass';
-import {VerifiableCredential} from '../machines/VerifiableCredential/VCMetaMachine/vc';
+import {Credential} from '../machines/VerifiableCredential/VCMetaMachine/vc';
 import RNSecureKeyStore, {ACCESSIBLE} from 'react-native-secure-key-store';
 import {DEFAULT_ECL} from '../shared/constants';
 import {VCMetadata} from '../shared/VCMetadata';
@@ -21,6 +21,10 @@ export const QrCodeOverlay: React.FC<QrCodeOverlayProps> = props => {
 
   async function getQRData(): Promise<string> {
     let qrData: string;
+
+    if (props.verifiableCredential.credentialSubject.QR)
+      return props.verifiableCredential.credentialSubject.QR;
+
     try {
       qrData = await RNSecureKeyStore.get(props.meta.id);
     } catch {
@@ -109,6 +113,6 @@ export const QrCodeOverlay: React.FC<QrCodeOverlayProps> = props => {
 };
 
 interface QrCodeOverlayProps {
-  verifiableCredential: VerifiableCredential;
+  verifiableCredential: Credential;
   meta: VCMetadata;
 }
