@@ -124,8 +124,8 @@ export const getAccountType = () => (isAndroid() ? GMAIL : APPLE);
 export const getDriveName = () =>
   isAndroid() ? GOOGLE_DRIVE_NAME : ICLOUD_DRIVE_NAME;
 
-export function sleep(time = 1000) {
-  return new Promise(resolve => setTimeout(resolve, time));
+export function sleep(timeInMillSeconds = 1000) {
+  return new Promise(resolve => setTimeout(resolve, timeInMillSeconds));
 }
 
 export const getScreenHeight = () => {
