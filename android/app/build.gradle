@@ -7,7 +7,7 @@ apply plugin: "com.facebook.react"
 apply plugin: "org.sonarqube"
 
 configurations.all {
-  resolutionStrategy.force 'androidx.activity:activity-ktx:1.7.0','androidx.activity:activity:1.7.0'
+    resolutionStrategy.force 'androidx.activity:activity-ktx:1.7.1','androidx.activity:activity:1.7.0', 'com.fasterxml.jackson.core:jackson-core:2.14.0'
 }
 
 react {
