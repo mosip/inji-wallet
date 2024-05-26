@@ -689,6 +689,11 @@
 		E86208022C0323F1007C3E24 /* XCRemoteSwiftPackageReference "inji-vci-client-ios-swift" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/mosip/inji-vci-client-ios-swift.git";
+						requirement = {
+						branch = develop;
+						kind = branch;
+			};
+		};
 
 		9CE34B1D2BFE03E4001AF414 /* XCRemoteSwiftPackageReference "pixelpass-ios-swift" */ = {
 			isa = XCRemoteSwiftPackageReference;
