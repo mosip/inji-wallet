@@ -14,7 +14,7 @@ import {VerifyIdentityOverlay} from '../VerifyIdentityOverlay';
 import {SvgImage} from '../../components/ui/svg';
 import {View, I18nManager} from 'react-native';
 import {Text} from './../../components/ui';
-import { BannerStatusType } from '../../components/BannerNotification';
+import {BannerStatusType} from '../../components/BannerNotification';
 
 const ScanStack = createNativeStackNavigator();
 
@@ -58,10 +58,9 @@ export const ScanLayout: React.FC = () => {
         onFaceValid={controller.FACE_VALID}
         onFaceInvalid={controller.FACE_INVALID}
         isInvalidIdentity={controller.isInvalidIdentity}
-        onDismiss={controller.DISMISS}
+        onNavigateHome={controller.GOTO_HOME}
         onRetryVerification={controller.RETRY_VERIFICATION}
       />
-
       <ScanStack.Navigator initialRouteName="ScanScreen">
         {controller.isReviewing &&
           controller.flowType === VCShareFlowType.SIMPLE_SHARE && (

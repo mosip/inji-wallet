@@ -483,6 +483,9 @@
       }
     }
   },
+  "Permissions": {
+    "enablePermission": "Paganahin ang Pahintulot"
+  },
   "RequestScreen": {
     "receiveCard": "Tumanggap ng Card",
     "bluetoothDenied": "Mangyaring paganahin ang Bluetooth upang makahiling ng card",
