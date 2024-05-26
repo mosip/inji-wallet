@@ -15,6 +15,12 @@
 		96905EF65AED1B983A6B3ABC /* libPods-Inji.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 58EEBF8E8E6FB1BC6CAF49B5 /* libPods-Inji.a */; };
 		B18059E884C0ABDD17F3DC3D /* ExpoModulesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAC715A2D49A985799AEE119 /* ExpoModulesProvider.swift */; };
 		BB2F792D24A3F905000567C9 /* Expo.plist in Resources */ = {isa = PBXBuildFile; fileRef = BB2F792C24A3F905000567C9 /* Expo.plist */; };
+		E86207FE2C01EDBF007C3E24 /* VCIClient in Frameworks */ = {isa = PBXBuildFile; productRef = E86207FD2C01EDBF007C3E24 /* VCIClient */; };
+		E86208042C0323F1007C3E24 /* VCIClient in Frameworks */ = {isa = PBXBuildFile; productRef = E86208032C0323F1007C3E24 /* VCIClient */; };
+		E88DC9AC2C00A82F0091750D /* RNVCIClientModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = E88DC9AB2C00A82F0091750D /* RNVCIClientModule.swift */; };
+		E88DC9B12C00A9830091750D /* RNVCIClientModule.m in Sources */ = {isa = PBXBuildFile; fileRef = E88DC9B02C00A9830091750D /* RNVCIClientModule.m */; };
+		E88DC9B32C00A9CA0091750D /* Inji-Bridging-Header.h in Sources */ = {isa = PBXBuildFile; fileRef = E88DC9B22C00A9CA0091750D /* Inji-Bridging-Header.h */; };
+		E88DC9B62C019CD70091750D /* VCIClient in Frameworks */ = {isa = PBXBuildFile; productRef = E88DC9B52C019CD70091750D /* VCIClient */; };
 		FD8D20B92BBAACDF009AD01C /* Fontisto.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FD8D20A62BBAACDF009AD01C /* Fontisto.ttf */; };
 		FD8D20BA2BBAACDF009AD01C /* Octicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FD8D20A72BBAACDF009AD01C /* Octicons.ttf */; };
 		FD8D20BB2BBAACDF009AD01C /* Feather.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FD8D20A82BBAACDF009AD01C /* Feather.ttf */; };
@@ -50,6 +56,9 @@
 		AA286B85B6C04FC6940260E9 /* SplashScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = SplashScreen.storyboard; path = Inji/SplashScreen.storyboard; sourceTree = "<group>"; };
 		BB2F792C24A3F905000567C9 /* Expo.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Expo.plist; sourceTree = "<group>"; };
 		D98B96A488E54CBDB286B26F /* noop-file.swift */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.swift; name = "noop-file.swift"; path = "Inji/noop-file.swift"; sourceTree = "<group>"; };
+		E88DC9AB2C00A82F0091750D /* RNVCIClientModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RNVCIClientModule.swift; sourceTree = "<group>"; };
+		E88DC9B02C00A9830091750D /* RNVCIClientModule.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RNVCIClientModule.m; sourceTree = "<group>"; };
+		E88DC9B22C00A9CA0091750D /* Inji-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Inji-Bridging-Header.h"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		FAC715A2D49A985799AEE119 /* ExpoModulesProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ExpoModulesProvider.swift; path = "Pods/Target Support Files/Pods-Inji/ExpoModulesProvider.swift"; sourceTree = "<group>"; };
 		FD8D20A62BBAACDF009AD01C /* Fontisto.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Fontisto.ttf; sourceTree = "<group>"; };
@@ -78,6 +87,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E86207FE2C01EDBF007C3E24 /* VCIClient in Frameworks */,
+				E88DC9B62C019CD70091750D /* VCIClient in Frameworks */,
+				E86208042C0323F1007C3E24 /* VCIClient in Frameworks */,
 				96905EF65AED1B983A6B3ABC /* libPods-Inji.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -97,6 +109,9 @@
 				13B07FB71A68108700A75B9A /* main.m */,
 				AA286B85B6C04FC6940260E9 /* SplashScreen.storyboard */,
 				D98B96A488E54CBDB286B26F /* noop-file.swift */,
+				E88DC9AB2C00A82F0091750D /* RNVCIClientModule.swift */,
+				E88DC9B02C00A9830091750D /* RNVCIClientModule.m */,
+				E88DC9B22C00A9CA0091750D /* Inji-Bridging-Header.h */,
 			);
 			name = Inji;
 			sourceTree = "<group>";
@@ -224,6 +239,11 @@
 			dependencies = (
 			);
 			name = Inji;
+			packageProductDependencies = (
+				E88DC9B52C019CD70091750D /* VCIClient */,
+				E86207FD2C01EDBF007C3E24 /* VCIClient */,
+				E86208032C0323F1007C3E24 /* VCIClient */,
+			);
 			productName = Inji;
 			productReference = 13B07F961A680F5B00A75B9A /* Inji.app */;
 			productType = "com.apple.product-type.application";
@@ -250,6 +270,9 @@
 				Base,
 			);
 			mainGroup = 83CBB9F61A601CBA00E9B192;
+			packageReferences = (
+				E86208022C0323F1007C3E24 /* XCRemoteSwiftPackageReference "inji-vci-client-ios-swift" */,
+			);
 			productRefGroup = 83CBBA001A601CBA00E9B192 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -415,6 +438,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E88DC9AC2C00A82F0091750D /* RNVCIClientModule.swift in Sources */,
+				E88DC9B12C00A9830091750D /* RNVCIClientModule.m in Sources */,
+				E88DC9B32C00A9CA0091750D /* Inji-Bridging-Header.h in Sources */,
 				13B07FBC1A68108700A75B9A /* AppDelegate.mm in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
 				B18059E884C0ABDD17F3DC3D /* ExpoModulesProvider.swift in Sources */,
@@ -458,6 +484,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = io.mosip.inji.wallet.mobileid;
 				PRODUCT_NAME = Inji;
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "Inji-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -493,6 +520,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = io.mosip.inji.wallet.mobileid;
 				PRODUCT_NAME = Inji;
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "Inji-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
@@ -639,6 +667,33 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		E86208022C0323F1007C3E24 /* XCRemoteSwiftPackageReference "inji-vci-client-ios-swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/mosip/inji-vci-client-ios-swift.git";
+			requirement = {
+				branch = develop;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		E86207FD2C01EDBF007C3E24 /* VCIClient */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = VCIClient;
+		};
+		E86208032C0323F1007C3E24 /* VCIClient */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E86208022C0323F1007C3E24 /* XCRemoteSwiftPackageReference "inji-vci-client-ios-swift" */;
+			productName = VCIClient;
+		};
+		E88DC9B52C019CD70091750D /* VCIClient */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = VCIClient;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 83CBB9F71A601CBA00E9B192 /* Project object */;
 }
