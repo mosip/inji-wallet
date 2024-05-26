@@ -1,8 +1,6 @@
 import {NativeModules} from 'react-native';
 import {__AppId} from '../GlobalVariables';
 import {isAndroid} from '../constants';
-import {request} from '../request';
-import {getCredentialRequestBody} from '../openId4VCI/Utils';
 
 export class VciClient {
   static async downloadCredential(
@@ -20,21 +18,13 @@ export class VciClient {
       );
       return JSON.parse(credentialResponse);
     } else {
-      const body = await getCredentialRequestBody(
+      const {InjiVciClient} = NativeModules;
+      const credentialResponse = await InjiVciClient.requestCredential(
+        accessToken,
         jwtProof,
-        issuerMetaData['credentialType'],
+        issuerMetaData,
       );
-      return await request(
-        'POST',
-        issuerMetaData['credentialEndpoint'],
-        body,
-        '',
-        {
-          'Content-Type': 'application/json',
-          Authorization: 'Bearer ' + accessToken,
-        },
-        issuerMetaData['downloadTimeoutInMilliSeconds'],
-      );
+      return JSON.parse(credentialResponse);
     }
   }
 }

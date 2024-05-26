@@ -1,0 +1,14 @@
+{
+  "pins" : [
+    {
+      "identity" : "inji-vci-client-ios-swift",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/mosip/inji-vci-client-ios-swift.git",
+      "state" : {
+        "branch" : "develop",
+        "revision" : "923cce148a4e40c13d32df40fa482047487d4392"
+      }
+    }
+  ],
+  "version" : 2
+}
