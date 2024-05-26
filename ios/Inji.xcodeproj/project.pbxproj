@@ -13,6 +13,9 @@
 		3E461D99554A48A4959DE609 /* SplashScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AA286B85B6C04FC6940260E9 /* SplashScreen.storyboard */; };
 		73295844242A4AD3AA52D0BE /* noop-file.swift in Sources */ = {isa = PBXBuildFile; fileRef = D98B96A488E54CBDB286B26F /* noop-file.swift */; };
 		96905EF65AED1B983A6B3ABC /* libPods-Inji.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 58EEBF8E8E6FB1BC6CAF49B5 /* libPods-Inji.a */; };
+		9C0E86B52BEE357A00E9F9F6 /* RNPixelpassModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C0E86B42BEE357A00E9F9F6 /* RNPixelpassModule.swift */; };
+		9C0E86BB2BEE36C300E9F9F6 /* RNPixelpassModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C0E86BA2BEE36C300E9F9F6 /* RNPixelpassModule.m */; };
+		9CE34B1F2BFE03E4001AF414 /* pixelpass in Frameworks */ = {isa = PBXBuildFile; productRef = 9CE34B1E2BFE03E4001AF414 /* pixelpass */; };
 		B18059E884C0ABDD17F3DC3D /* ExpoModulesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAC715A2D49A985799AEE119 /* ExpoModulesProvider.swift */; };
 		BB2F792D24A3F905000567C9 /* Expo.plist in Resources */ = {isa = PBXBuildFile; fileRef = BB2F792C24A3F905000567C9 /* Expo.plist */; };
 		E86207FE2C01EDBF007C3E24 /* VCIClient in Frameworks */ = {isa = PBXBuildFile; productRef = E86207FD2C01EDBF007C3E24 /* VCIClient */; };
@@ -53,6 +56,9 @@
 		58EEBF8E8E6FB1BC6CAF49B5 /* libPods-Inji.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Inji.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		6C2E3173556A471DD304B334 /* Pods-Inji.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Inji.debug.xcconfig"; path = "Target Support Files/Pods-Inji/Pods-Inji.debug.xcconfig"; sourceTree = "<group>"; };
 		7A4D352CD337FB3A3BF06240 /* Pods-Inji.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Inji.release.xcconfig"; path = "Target Support Files/Pods-Inji/Pods-Inji.release.xcconfig"; sourceTree = "<group>"; };
+		9C0E86B42BEE357A00E9F9F6 /* RNPixelpassModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RNPixelpassModule.swift; sourceTree = "<group>"; };
+		9C0E86B92BEE367F00E9F9F6 /* Inji-bridging-header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Inji-bridging-header.h"; sourceTree = "<group>"; };
+		9C0E86BA2BEE36C300E9F9F6 /* RNPixelpassModule.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RNPixelpassModule.m; sourceTree = "<group>"; };
 		AA286B85B6C04FC6940260E9 /* SplashScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = SplashScreen.storyboard; path = Inji/SplashScreen.storyboard; sourceTree = "<group>"; };
 		BB2F792C24A3F905000567C9 /* Expo.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Expo.plist; sourceTree = "<group>"; };
 		D98B96A488E54CBDB286B26F /* noop-file.swift */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.swift; name = "noop-file.swift"; path = "Inji/noop-file.swift"; sourceTree = "<group>"; };
@@ -90,6 +96,7 @@
 				E86207FE2C01EDBF007C3E24 /* VCIClient in Frameworks */,
 				E88DC9B62C019CD70091750D /* VCIClient in Frameworks */,
 				E86208042C0323F1007C3E24 /* VCIClient in Frameworks */,
+				9CE34B1F2BFE03E4001AF414 /* pixelpass in Frameworks */,
 				96905EF65AED1B983A6B3ABC /* libPods-Inji.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -104,6 +111,9 @@
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.mm */,
+				9C0E86B42BEE357A00E9F9F6 /* RNPixelpassModule.swift */,
+				9C0E86BA2BEE36C300E9F9F6 /* RNPixelpassModule.m */,
+				9C0E86B92BEE367F00E9F9F6 /* Inji-bridging-header.h */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				13B07FB71A68108700A75B9A /* main.m */,
@@ -243,6 +253,7 @@
 				E88DC9B52C019CD70091750D /* VCIClient */,
 				E86207FD2C01EDBF007C3E24 /* VCIClient */,
 				E86208032C0323F1007C3E24 /* VCIClient */,
+				9CE34B1E2BFE03E4001AF414 /* pixelpass */,
 			);
 			productName = Inji;
 			productReference = 13B07F961A680F5B00A75B9A /* Inji.app */;
@@ -272,6 +283,8 @@
 			mainGroup = 83CBB9F61A601CBA00E9B192;
 			packageReferences = (
 				E86208022C0323F1007C3E24 /* XCRemoteSwiftPackageReference "inji-vci-client-ios-swift" */,
+
+				9CE34B1D2BFE03E4001AF414 /* XCRemoteSwiftPackageReference "pixelpass-ios-swift" */,
 			);
 			productRefGroup = 83CBBA001A601CBA00E9B192 /* Products */;
 			projectDirPath = "";
@@ -442,6 +455,8 @@
 				E88DC9B12C00A9830091750D /* RNVCIClientModule.m in Sources */,
 				E88DC9B32C00A9CA0091750D /* Inji-Bridging-Header.h in Sources */,
 				13B07FBC1A68108700A75B9A /* AppDelegate.mm in Sources */,
+				9C0E86BB2BEE36C300E9F9F6 /* RNPixelpassModule.m in Sources */,
+				9C0E86B52BEE357A00E9F9F6 /* RNPixelpassModule.swift in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
 				B18059E884C0ABDD17F3DC3D /* ExpoModulesProvider.swift in Sources */,
 				73295844242A4AD3AA52D0BE /* noop-file.swift in Sources */,
@@ -521,6 +536,7 @@
 				PRODUCT_NAME = Inji;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Inji-Bridging-Header.h";
+
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
@@ -669,9 +685,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+
 		E86208022C0323F1007C3E24 /* XCRemoteSwiftPackageReference "inji-vci-client-ios-swift" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/mosip/inji-vci-client-ios-swift.git";
+
+		9CE34B1D2BFE03E4001AF414 /* XCRemoteSwiftPackageReference "pixelpass-ios-swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/mosip/pixelpass-ios-swift/";
 			requirement = {
 				branch = develop;
 				kind = branch;
@@ -692,6 +713,12 @@
 		E88DC9B52C019CD70091750D /* VCIClient */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = VCIClient;
+
+		9CE34B1E2BFE03E4001AF414 /* pixelpass */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 9CE34B1D2BFE03E4001AF414 /* XCRemoteSwiftPackageReference "pixelpass-ios-swift" */;
+			productName = pixelpass;
+
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
