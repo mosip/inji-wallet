@@ -4,11 +4,13 @@
 
 @interface RCT_EXTERN_MODULE(InjiVciClient, NSObject)
 
-RCT_EXTERN_METHOD(requestCredential:(NSString *)accessToken
+RCT_EXTERN_METHOD(init:(NSString *)appId)
+
+RCT_EXTERN_METHOD(requestCredential:(id)issuerMeta
                   proof:(NSString *)proof
-                  issuerMeta: AnyObject
+                  accessToken:(NSString *)accessToken
                   resolver:(RCTPromiseResolveBlock)resolve
-                  rejecter:(RCTPromiseRejectBlock)reject)
+                  rejecter:(RCTPromiseRejectBlock)reject);
 
 RCT_EXTERN_METHOD(requiresMainQueueSetup:(BOOL))
 

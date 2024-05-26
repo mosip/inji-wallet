@@ -12,10 +12,14 @@ class RNVCIClientModule: NSObject, RCTBridgeModule {
   }
   
   @objc
-  func requestCredential(_ accessToken: String, proof: String, issuerMeta: AnyObject, resolver resolve: @escaping RCTPromiseResolveBlock, rejecter reject: @escaping RCTPromiseRejectBlock) {
+  func `init`(_ traceabilityId: String) {
+      vciClient = VCIClient(traceabilityId: traceabilityId)
+    }
+  
+  @objc
+  func requestCredential(_ issuerMeta: AnyObject, proof: String, accessToken: String, resolver resolve: @escaping RCTPromiseResolveBlock, rejecter reject: @escaping RCTPromiseRejectBlock) {
     Task {
       do {
-        let vciClient = VCIClient(traceabilityId: "INJI-module")
         if let issuerMetaDict = issuerMeta as? [String: Any],
            let credentialAudience = issuerMetaDict["credentialAudience"] as? String,
            let credentialEndpoint = issuerMetaDict["credentialEndpoint"] as? String,
@@ -32,11 +36,10 @@ class RNVCIClientModule: NSObject, RCTBridgeModule {
             credentialFormat: credentialFormat
           )
           
-          let response = try await vciClient.requestCredential(issuerMeta: issuerMetaObject, proof: JWTProof(jwt: proof), accessToken: accessToken)!
+          let response = try await vciClient!.requestCredential(issuerMeta: issuerMetaObject, proof: JWTProof(jwt: proof), accessToken: accessToken)!
           let responseString = try response.toJSONString()
           resolve(responseString)
         } else {
-
           reject("E_INVALID_FORMAT", "Invalid issuerMeta format", nil)
         }
       } catch {

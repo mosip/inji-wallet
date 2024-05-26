@@ -19,10 +19,11 @@ export class VciClient {
       return JSON.parse(credentialResponse);
     } else {
       const {InjiVciClient} = NativeModules;
+      InjiVciClient.init(__AppId.getValue());
       const credentialResponse = await InjiVciClient.requestCredential(
-        accessToken,
-        jwtProof,
         issuerMetaData,
+        jwtProof,
+        accessToken,
       );
       return JSON.parse(credentialResponse);
     }
