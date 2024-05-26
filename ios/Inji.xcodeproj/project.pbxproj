@@ -20,7 +20,7 @@
 		BB2F792D24A3F905000567C9 /* Expo.plist in Resources */ = {isa = PBXBuildFile; fileRef = BB2F792C24A3F905000567C9 /* Expo.plist */; };
 		E86208152C0335C5007C3E24 /* RNVCIClientModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = E86208142C0335C5007C3E24 /* RNVCIClientModule.swift */; };
 		E86208172C0335EC007C3E24 /* RNVCIClientModule.m in Sources */ = {isa = PBXBuildFile; fileRef = E86208162C0335EC007C3E24 /* RNVCIClientModule.m */; };
-		E86208232C03591B007C3E24 /* VCIClient in Frameworks */ = {isa = PBXBuildFile; productRef = E86208222C03591B007C3E24 /* VCIClient */; };
+		E86208262C039895007C3E24 /* VCIClient in Frameworks */ = {isa = PBXBuildFile; productRef = E86208252C039895007C3E24 /* VCIClient */; };
 		FD8D20B92BBAACDF009AD01C /* Fontisto.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FD8D20A62BBAACDF009AD01C /* Fontisto.ttf */; };
 		FD8D20BA2BBAACDF009AD01C /* Octicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FD8D20A72BBAACDF009AD01C /* Octicons.ttf */; };
 		FD8D20BB2BBAACDF009AD01C /* Feather.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FD8D20A82BBAACDF009AD01C /* Feather.ttf */; };
@@ -89,7 +89,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E86208232C03591B007C3E24 /* VCIClient in Frameworks */,
+				E86208262C039895007C3E24 /* VCIClient in Frameworks */,
 				9CE34B1F2BFE03E4001AF414 /* pixelpass in Frameworks */,
 				96905EF65AED1B983A6B3ABC /* libPods-Inji.a in Frameworks */,
 			);
@@ -244,7 +244,7 @@
 			name = Inji;
 			packageProductDependencies = (
 				9CE34B1E2BFE03E4001AF414 /* pixelpass */,
-				E86208222C03591B007C3E24 /* VCIClient */,
+				E86208252C039895007C3E24 /* VCIClient */,
 			);
 			productName = Inji;
 			productReference = 13B07F961A680F5B00A75B9A /* Inji.app */;
@@ -274,7 +274,7 @@
 			mainGroup = 83CBB9F61A601CBA00E9B192;
 			packageReferences = (
 				9CE34B1D2BFE03E4001AF414 /* XCRemoteSwiftPackageReference "pixelpass-ios-swift" */,
-				E86208212C03591B007C3E24 /* XCRemoteSwiftPackageReference "inji-vci-client-ios-swift" */,
+				E86208242C039895007C3E24 /* XCRemoteSwiftPackageReference "inji-vci-client-ios-swift" */,
 			);
 			productRefGroup = 83CBBA001A601CBA00E9B192 /* Products */;
 			projectDirPath = "";
@@ -681,11 +681,11 @@
 				kind = branch;
 			};
 		};
-		E86208212C03591B007C3E24 /* XCRemoteSwiftPackageReference "inji-vci-client-ios-swift" */ = {
+		E86208242C039895007C3E24 /* XCRemoteSwiftPackageReference "inji-vci-client-ios-swift" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/tw-mosip/inji-vci-client-ios-swift.git";
+			repositoryURL = "https://github.com/mosip/inji-vci-client-ios-swift.git";
 			requirement = {
-				branch = "injimob-1313-fix";
+				branch = develop;
 				kind = branch;
 			};
 		};
@@ -697,9 +697,9 @@
 			package = 9CE34B1D2BFE03E4001AF414 /* XCRemoteSwiftPackageReference "pixelpass-ios-swift" */;
 			productName = pixelpass;
 		};
-		E86208222C03591B007C3E24 /* VCIClient */ = {
+		E86208252C039895007C3E24 /* VCIClient */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = E86208212C03591B007C3E24 /* XCRemoteSwiftPackageReference "inji-vci-client-ios-swift" */;
+			package = E86208242C039895007C3E24 /* XCRemoteSwiftPackageReference "inji-vci-client-ios-swift" */;
 			productName = VCIClient;
 		};
 /* End XCSwiftPackageProductDependency section */

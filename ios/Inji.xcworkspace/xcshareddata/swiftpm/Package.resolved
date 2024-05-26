@@ -12,10 +12,10 @@
     {
       "identity" : "inji-vci-client-ios-swift",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/tw-mosip/inji-vci-client-ios-swift.git",
+      "location" : "https://github.com/mosip/inji-vci-client-ios-swift.git",
       "state" : {
-        "branch" : "injimob-1313-fix",
-        "revision" : "5baca457f1482eec70b0ef3e6091adcd6e365e94"
+        "branch" : "develop",
+        "revision" : "e1a08fbd259a1135d067ad52f2d2ce9370061054"
       }
     },
     {
