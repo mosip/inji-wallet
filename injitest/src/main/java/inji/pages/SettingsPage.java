@@ -60,7 +60,7 @@ public class SettingsPage extends BasePage {
     private WebElement aboutInji;
 
     @AndroidFindBy(xpath = "//*[contains(@text,'Tuvali-version:')]")
-    @iOSXCUITFindBy(xpath = "//*[contains(@name,'Tuvali-version: 0.')]")
+    @iOSXCUITFindBy(xpath = "//*[contains(@name,'Tuvali-version:')]")
     private WebElement tuvaliVersion;
 
     @AndroidFindBy(accessibility = "injiTourGuide")
