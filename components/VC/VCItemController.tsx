@@ -24,22 +24,30 @@ export function useVcItemController(props: VCItemProps) {
       props.vcMetadata,
     ),
   );
-  const service = useInterpret(machine.current, {devTools: __DEV__});
+  const VCItemService = useInterpret(machine.current, {devTools: __DEV__});
 
   return {
-    service,
-    context: useSelector(service, selectContext),
-    credential: useSelector(service, selectCredential),
+    VCItemService,
+    context: useSelector(VCItemService, selectContext),
+    credential: useSelector(VCItemService, selectCredential),
     verifiableCredentialData: useSelector(
-      service,
+      VCItemService,
       selectVerifiableCredentialData,
     ),
-    walletBindingResponse: useSelector(service, selectWalletBindingResponse),
-    isKebabPopUp: useSelector(service, selectKebabPopUp),
-    DISMISS: () => service.send(VCItemEvents.DISMISS()),
-    KEBAB_POPUP: () => service.send(VCItemEvents.KEBAB_POPUP()),
-    isSavingFailedInIdle: useSelector(service, selectIsSavingFailedInIdle),
+    walletBindingResponse: useSelector(
+      VCItemService,
+      selectWalletBindingResponse,
+    ),
+    isKebabPopUp: useSelector(VCItemService, selectKebabPopUp),
+    DISMISS: () => VCItemService.send(VCItemEvents.DISMISS()),
+    KEBAB_POPUP: () => VCItemService.send(VCItemEvents.KEBAB_POPUP()),
+    UPDATE_VC_METADATA: vcMetadata =>
+      VCItemService.send(VCItemEvents.UPDATE_VC_METADATA(vcMetadata)),
+    isSavingFailedInIdle: useSelector(
+      VCItemService,
+      selectIsSavingFailedInIdle,
+    ),
     storeErrorTranslationPath: 'errors.savingFailed',
-    generatedOn: useSelector(service, selectGeneratedOn),
+    generatedOn: useSelector(VCItemService, selectGeneratedOn),
   };
 }

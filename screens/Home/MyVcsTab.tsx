@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {Button, Column, Row, Text} from '../../components/ui';
 import {Theme} from '../../components/ui/styleUtils';
-import {Dimensions, Pressable, RefreshControl, View} from 'react-native';
+import {Pressable, RefreshControl, View} from 'react-native';
 import {useMyVcsTab} from './MyVcsTabController';
 import {HomeScreenTabProps} from './HomeScreen';
 import {AddVcModal} from './MyVcs/AddVcModal';
@@ -26,7 +26,7 @@ import {SvgImage} from '../../components/ui/svg';
 import {SearchBar} from '../../components/ui/SearchBar';
 import {Icon} from 'react-native-elements';
 import {VCMetadata} from '../../shared/VCMetadata';
-import {CopilotStep, useCopilot, walkthroughable} from 'react-native-copilot';
+import {useCopilot} from 'react-native-copilot';
 
 export const MyVcsTab: React.FC<HomeScreenTabProps> = props => {
   const {t} = useTranslation('MyVcsTab');
