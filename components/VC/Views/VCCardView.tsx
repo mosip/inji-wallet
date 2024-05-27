@@ -117,6 +117,11 @@ export interface VCItemProps {
   isDownloading?: boolean;
   isPinned?: boolean;
   flow?: string;
-  isInitialLaunch: boolean;
-  isTopCard: boolean;
+  isInitialLaunch?: boolean;
+  isTopCard?: boolean;
 }
+
+VCCardView.defaultProps = {
+  isInitialLaunch: false,
+  isTopCard: false,
+};
