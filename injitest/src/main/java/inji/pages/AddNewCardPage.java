@@ -11,16 +11,16 @@ public class AddNewCardPage extends BasePage{
     @iOSXCUITFindBy(accessibility = "title")
     private WebElement addNewCardHeader;
 
-    @AndroidFindBy(accessibility = "issuerHeading-Mosip")
-    @iOSXCUITFindBy(accessibility = "issuerHeading-Mosip")
+    @AndroidFindBy(accessibility = "issuerHeading-MosipOtp")
+    @iOSXCUITFindBy(accessibility = "issuerHeading-MosipOtp")
     private WebElement downloadViaUin;
     
     @AndroidFindBy(accessibility = "goBack")
     @iOSXCUITFindBy(accessibility = "goBack")
     private WebElement backButton;
     
-    @AndroidFindBy(accessibility = "issuerHeading-ESignet")
-    @iOSXCUITFindBy(accessibility = "issuerHeading-ESignet")
+    @AndroidFindBy(accessibility = "issuerHeading-Mosip")
+    @iOSXCUITFindBy(accessibility = "issuerHeading-Mosip")
     private WebElement downloadViaEsignet;
 
     @iOSXCUITFindBy(accessibility = "Continue")
@@ -33,12 +33,12 @@ public class AddNewCardPage extends BasePage{
     @iOSXCUITFindBy(accessibility = "issuersScreenDescription")
     private WebElement addNewCardGuideMessage;
     
-    @AndroidFindBy(accessibility = "issuerDescription-Mosip")
-    @iOSXCUITFindBy(accessibility = "issuerDescription-Mosip")
+    @AndroidFindBy(accessibility = "issuerDescription-MosipOtp")
+    @iOSXCUITFindBy(accessibility = "issuerDescription-MosipOtp")
     private WebElement issuerDescriptionMosip;
     
-    @AndroidFindBy(accessibility = "issuerDescription-ESignet")
-    @iOSXCUITFindBy(accessibility = "issuerDescription-ESignet")
+    @AndroidFindBy(accessibility = "issuerDescription-Mosip")
+    @iOSXCUITFindBy(accessibility = "issuerDescription-Mosip")
     private WebElement issuerDescriptionEsignet;
     
     @AndroidFindBy(className = "android.widget.EditText")

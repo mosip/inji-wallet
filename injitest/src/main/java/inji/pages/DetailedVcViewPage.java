@@ -95,11 +95,6 @@ public class DetailedVcViewPage extends BasePage{
     @iOSXCUITFindBy(accessibility = "KebabIcon")
     public WebElement moreOptionsButton;
 
-    @AndroidFindBy(accessibility = "reVerificationInProgressText")
-    @iOSXCUITFindBy(accessibility = "reVerificationInProgressText")
-    public WebElement reVerificationInProgressText;
-
-
     public DetailedVcViewPage(AppiumDriver driver) {
         super(driver);
     }
@@ -214,9 +209,6 @@ public class DetailedVcViewPage extends BasePage{
         }
         clickOnElement(moreOptionsButton);
     }
-    public boolean reVerificationInProgressText(String name) {
-        By fullName = By.xpath("//*[contains(@text,'" + name + "is verified successfully and now available for activation.')]");
-        return isElementDisplayed(fullName,50);
-    }
+
 
 }
