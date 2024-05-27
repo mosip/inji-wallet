@@ -3,10 +3,20 @@ import {Text, Button, Row, Column} from './../components/ui';
 import {useTranslation} from 'react-i18next';
 import {UseCopilotTooltip} from './CopilotTooltipController';
 import {Theme} from './ui/styleUtils';
+import {COPILOT_FINAL_STEP, COPILOT_PRE_FINAL_STEP} from '../shared/constants';
 
 export const CopilotTooltip = () => {
   const {t} = useTranslation('copilot');
   const controller = UseCopilotTooltip();
+
+  controller.copilotEvents.on('stop', () => {
+    if (controller.CURRENT_STEP <= COPILOT_PRE_FINAL_STEP) {
+      controller.ONBOARDING_DONE();
+    }
+    if (controller.CURRENT_STEP === COPILOT_FINAL_STEP) {
+      controller.INITIAL_DOWNLOAD_DONE();
+    }
+  });
 
   return (
     <Column>
