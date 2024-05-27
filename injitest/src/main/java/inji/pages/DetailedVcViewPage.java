@@ -95,7 +95,6 @@ public class DetailedVcViewPage extends BasePage{
     @iOSXCUITFindBy(accessibility = "KebabIcon")
     public WebElement moreOptionsButton;
 
-
     public DetailedVcViewPage(AppiumDriver driver) {
         super(driver);
     }
@@ -203,7 +202,13 @@ public class DetailedVcViewPage extends BasePage{
     }
 
     public void clickOnMoreOptionsInDetails() {
-            clickOnElement(moreOptionsButton);
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        clickOnElement(moreOptionsButton);
     }
+
 
 }

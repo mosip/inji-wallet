@@ -254,7 +254,7 @@ public class ChangeLanguageTest extends IosBaseTest {
         
         homePage.downloadCard();
         
-        addNewCardPage.sendTextInIssuerSearchBar("MOSIP क्रेडेंशियल डाउनलोड करेंं");
+        addNewCardPage.sendTextInIssuerSearchBar("राष्ट्रीय पहचान विभाग");
         assertTrue(addNewCardPage.isDownloadViaEsignetDisplayedInHindi(),"verify if download via e-signet is displayed");
     }
     

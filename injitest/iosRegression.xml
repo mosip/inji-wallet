@@ -2,7 +2,7 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite name="All Test Suite">
 	<listeners>
-		<listener class-name="inji.listeners.Listeners" />
+        <listener class-name="inji.utils.SuiteListener" />
 	</listeners>
 	<test verbose="2" preserve-order="true" name="android">
 		<classes>

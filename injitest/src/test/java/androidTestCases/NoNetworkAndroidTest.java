@@ -441,7 +441,7 @@ public class NoNetworkAndroidTest extends AndroidBaseTest {
         esignetLoginPage.clickOnVerifyButton();
 
         String sessionId  = driver.getSessionId().toString();
-        UpdateNetworkSettings.setNoNetworkProfile(sessionId);
+//        UpdateNetworkSettings.setNoNetworkProfile(sessionId);
         
         assertTrue(homePage.verifyLanguageForNoInternetConnectionDisplayed("English"), "Verify if no internet connection is displayed");
         addNewCardPage.clickOnBack();
