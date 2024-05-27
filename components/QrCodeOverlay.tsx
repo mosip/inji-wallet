@@ -39,26 +39,7 @@ export const QrCodeOverlay: React.FC<QrCodeOverlayProps> = props => {
   const imageURL =
     'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQAAAAEACAIAAADTED8xAAADMElEQVR4nOzVwQnAIBQFQYXff81RUkQCOyDj1YOPnbXWPmeTRef+/3O/OyBjzh3CD95BfqICMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMO0TAAD//2Anhf4QtqobAAAAAElFTkSuQmCC';
 
-  const shareImageIOS = async () => {
-    console.log('Share Image IOS');
-    try {
-      await Share.share({
-        title: 'Title',
-        message: 'Message',
-        url: imageURL,
-      })
-        .then(result => {
-          console.log('Share Result iOS-->', result);
-        })
-        .catch(error => {
-          console.log('Share Error iOS-->', error);
-        });
-    } catch (err) {
-      console.log('Error', err);
-    }
-  };
-
-  const shareImageAndroid = async () => {
+  const shareImage = async () => {
     try {
       const options = {
         title: 'Title',
@@ -67,13 +48,13 @@ export const QrCodeOverlay: React.FC<QrCodeOverlayProps> = props => {
       };
       await RNShare.open(options)
         .then(res => {
-          console.log('Share Result Android-->', res);
+          console.log('Share Result -->', res);
         })
         .catch(err => {
-          err && console.log('Share Error Android-->', err);
+          err && console.log('Share Error -->', err);
         });
     } catch (err) {
-      console.log('Share Exception Android-->', err);
+      console.log('Share Exception -->', err);
     }
   };
 
@@ -150,9 +131,7 @@ export const QrCodeOverlay: React.FC<QrCodeOverlayProps> = props => {
                 margin="30 0 0 0"
                 title="Share QR Code"
                 type="gradient"
-                onPress={
-                  Platform.OS === 'ios' ? shareImageIOS : shareImageAndroid
-                }
+                onPress={shareImage}
               />
             </Centered>
           </Column>
