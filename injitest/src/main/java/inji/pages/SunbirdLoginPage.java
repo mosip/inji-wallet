@@ -64,7 +64,7 @@ public class SunbirdLoginPage extends BasePage {
     private WebElement activatedStatus;
 
     @AndroidFindBy(accessibility = "a Veridonia logo")
-    @iOSXCUITFindBy(accessibility = "a square logo of a Sunbird")
+    @iOSXCUITFindBy(accessibility = "a Veridonia logo")
     private WebElement sunbirdLogo;
 
     @AndroidFindBy(accessibility = "fullNameValue")

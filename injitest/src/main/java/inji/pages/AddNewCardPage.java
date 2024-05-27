@@ -19,8 +19,8 @@ public class AddNewCardPage extends BasePage{
     @iOSXCUITFindBy(accessibility = "goBack")
     private WebElement backButton;
     
-    @AndroidFindBy(accessibility = "issuer-ESignet")
-    @iOSXCUITFindBy(accessibility = "issuer-ESignet")
+    @AndroidFindBy(accessibility = "issuerHeading-ESignet")
+    @iOSXCUITFindBy(accessibility = "issuerHeading-ESignet")
     private WebElement downloadViaEsignet;
 
     @iOSXCUITFindBy(accessibility = "Continue")

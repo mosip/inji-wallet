@@ -116,10 +116,8 @@ public class EsignetLoginPage extends BasePage {
     }
 
     public void clickOnVerifyButton() {
-        String sessionId  = driver.getSessionId().toString();
     	((HidesKeyboard) driver).hideKeyboard();
         clickOnElement(verifyButton);
-        UpdateNetworkSettings.setNoNetworkProfile(sessionId);
     }
 
     public void clickOnVerifyButtonIos() {
