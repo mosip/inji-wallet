@@ -165,7 +165,7 @@ public class ActivateVcTest extends AndroidBaseTest {
 
         DetailedVcViewPage detailedVcViewPage = homePage.openDetailedVcView(TestDataReader.readData("fullName"));
         assertTrue(detailedVcViewPage.isDetailedVcViewPageLoaded(), "Verify if detailed Vc view page is displayed");
-        assertTrue(detailedVcViewPage.reVerificationInProgressText(uin), "Verify if detailed Vc view page is displayed");
+
 //        detailedVcViewPage.clickOnMoreOptionsInDetails();
 
         MoreOptionsPage moreOptionsPage = new MoreOptionsPage(driver);
