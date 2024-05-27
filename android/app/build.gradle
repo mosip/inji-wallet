@@ -98,7 +98,6 @@ androidGitVersion {
 android {
     ndkVersion rootProject.ext.ndkVersion
     compileSdkVersion rootProject.ext.compileSdkVersion
-
     ext {
         APP_NAME = "@string/app_name"
     }
@@ -248,13 +247,9 @@ android {
 }
 
 dependencies {
-
-    // The version of react-native is set by the React Native Gradle Plugin
     implementation("com.facebook.react:react-android")
-
-
-
     implementation 'com.facebook.soloader:soloader:0.10.1+'
+    implementation("io.mosip:pixelpass:1.2-SNAPSHOT")
 
     def isGifEnabled = (findProperty('expo.gif.enabled') ?: "") == "true";
     def isWebpEnabled = (findProperty('expo.webp.enabled') ?: "") == "true";
