@@ -64,7 +64,7 @@ fileignoreconfig:
   - filename: assets/Finger_Print_Icon.svg
     checksum: 776d4fe4fc4b54d185ccf97daf0511b9fe2c0e0f7c1a809047020e5e8a100db6
   - filename: android/app/build.gradle
-    checksum: 2c1a2619caf08aa8306af3f8f0158ccd512ec0b0f37434311d009d3d79d1b230
+    checksum: f75b43cc78c44fe3aa77167f573f1561b4076280c1afb45afcb65828556648db
   - filename: .github/workflows/push-triggers.yml
     checksum: abc19ea38c8d7b79f15695d015709cc88a34a995181aaf12bc8344f940f3cbc4
   - filename: android/fastlane/Fastfile
@@ -219,6 +219,8 @@ fileignoreconfig:
     checksum: 4ca5983bb133f8f02bfd52fd0cc49ce37b24b164f3ca78a03ad97bb353ed00a4
   - filename: __mocks__/en.mock.json
     checksum: b34340a3f40c691f06698f7758b8c068a09ed7215098a0d11baed191c0972e04
+  - filename: ios/Inji.xcodeproj/project.pbxproj
+    checksum: 7d5715630125addbd2346fc61288beb04f66cf6c36716296bb7663bc188dba5b
   - filename: ios/Inji/Info.plist
     checksum: 9237e54ac8bbc0a4ad4c5d82ffe5b1ae4ccadfce6745f59cee1260c469212701
   - filename: machines/backupAndRestore/backupRestore.ts
@@ -244,7 +246,7 @@ fileignoreconfig:
   - filename: screens/Issuers/CredentialTypeSelectionScreen.tsx
     checksum: 144bbf59e86a89bf580ac7931645ca3eaed69a9409de36f6ce9f88a14091a9d3
   - filename: components/QrCodeOverlay.tsx
-    checksum: b49a3f53dd4a522f8ce47f2af72ade33e337ddbd40068911458bb3ad54197b63
+    checksum: 47220a4ebd8af702afe622a29b689f651eb23387bac1c623f241839beb413d25
   - filename: machines/Issuers/IssuersEvents.ts
     checksum: fd8c30e0cf43a784be883c9d79a3bff0d2bcd9075e937d225939040542998b10
   - filename: machines/Issuers/IssuersGuards.ts
@@ -282,7 +284,7 @@ fileignoreconfig:
   - filename: machines/QrLogin/QrLoginServices.ts
     checksum: b20d0caa6d23078b4010ea5185f01270356422dd216edd7834b069cdedd3383d
   - filename: machines/bleShare/scan/scanActions.ts
-    checksum: 1be68caa29937d5f724fc45f8164ee607e556aae008c00ac89b83968030ed7ed
+    checksum: 7b1c55e1913622d142433a296f1c75ec831441670d9b84cfaabb4863af2c1fe6
   - filename: injitest/src/test/java/iosTestCases/ActivateVcTest.java
     checksum: 280fcbfa6e7b26baa41aa9e60e8be857a16fd409f2dcc5b31d53ced7d1b26dec
   - filename: injitest/src/test/java/iosTestCases/GenerateUinOrVidTest.java
@@ -330,10 +332,6 @@ fileignoreconfig:
     checksum: 0a8e851803f826cc392d95d2f88b8c304948697863a528ef756e34c76614940d
   - filename: ios/Inji.xcworkspace/xcshareddata/swiftpm/Package.resolved
     checksum: 31f1365526ceaa0f1aae6f2b8cab4e1ab4e798322fc3d6e6a1a74c861ae73850
-  - filename: ios/Inji.xcodeproj/project.pbxproj
-    checksum: 0a8e851803f826cc392d95d2f88b8c304948697863a528ef756e34c76614940d
-  - filename: ios/Inji.xcworkspace/xcshareddata/swiftpm/Package.resolved
-    checksum: 31f1365526ceaa0f1aae6f2b8cab4e1ab4e798322fc3d6e6a1a74c861ae73850
   - filename: screens/HomeScreenLayout.tsx
     checksum: 4bf5a896dcbe74afbef3b66a2ab13fa620a3e1d23de5271a795d75a26821e893 
   - filename: screens/Home/HomeScreen.tsx
@@ -342,4 +340,12 @@ fileignoreconfig:
     checksum: d9f22b5c75112518bf6216605be6ae8a72abfb5a4827cf0a3df773b4866ba290     
   - filename: components/VC/Views/VCCardView.tsx
     checksum: 0444e4b854ade3ff6f4ca6964a1453b76c31e170748f219599effaa70837f086 
+  - filename: ios/Inji.xcworkspace/xcshareddata/swiftpm/Package.resolved
+    checksum: 9c1f2304857ed1a8f81660e8f43ef42996175c129a5111554d08d06fa1433265 
+  - filename: ios/RNPixelpassModule.m
+    checksum: c91348eceec5edbffa03ba03f3f52a8e90ff7f942816c9609080d1647052fd66     
+  - filename: ios/RNPixelpassModule.swift
+    checksum: 822a2421798d5c0669f4ab1b983194eb770cbef2aa30bf212d06bd959738c4ca 
+  - filename: android/app/src/main/java/io/mosip/residentapp/RNPixelpassModule.java
+    checksum: cef9be4bfafb54e2c885b2459f2819554cad6448b5dc372976706894df704e5d
     version: ""
