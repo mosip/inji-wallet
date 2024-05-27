@@ -82,6 +82,8 @@ public class TestDataReader {
                 return "1234567890";
             case "idTypeSunbird":
                 return "Insurance Card";
+            case "idTypeSunbirdHindi":
+                return "बीमा कार्ड";
             case "phoneNumberSunbird":
                 return "8220255752";
             case "dateOfBirthSunbird":
@@ -91,6 +93,10 @@ public class TestDataReader {
             case "emailIdValueSunbird":
                 return "santhosdss14@gmail.com";
             case "statusValueSunbird":
+                return "Valid";
+            case "statusValueSunbirdForVaild":
+                return "Valid";
+            case "statusForEsignet":
                 return "Valid";
             case "isDeviceFarmRun":
                 return "true";
