@@ -32,20 +32,11 @@ export const UseCopilotTooltip = () => {
   const currentStepDescription = currentStep?.text;
 
   const stepCount =
-    isLastStep && isInitialDownloading
+    CURRENT_STEP === COPILOT_FINAL_STEP && isInitialDownloading
       ? '1 of 1'
       : CURRENT_STEP + ' of ' + totalStepsNumber;
 
   const isFinalStep = CURRENT_STEP === COPILOT_FINAL_STEP;
-
-  copilotEvents.on('stop', () => {
-    if (CURRENT_STEP <= COPILOT_PRE_FINAL_STEP) {
-      ONBOARDING_DONE;
-    }
-    if (CURRENT_STEP === COPILOT_FINAL_STEP) {
-      INITIAL_DOWNLOAD_DONE;
-    }
-  });
 
   return {
     goToNext,
