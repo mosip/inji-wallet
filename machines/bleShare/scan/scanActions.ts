@@ -30,7 +30,6 @@ import tuvali from '@mosip/tuvali';
 import BluetoothStateManager from 'react-native-bluetooth-state-manager';
 
 import {decodeData} from '@mosip/pixelpass';
-import {getIdType} from '../../../shared/openId4VCI/Utils';
 
 const {wallet, EventTypes, VerificationStatus} = tuvali;
 export const ScanActions = (model: any, QR_LOGIN_REF_ID: any) => {
@@ -198,7 +197,7 @@ export const ScanActions = (model: any, QR_LOGIN_REF_ID: any) => {
             ? context.shareLogType
             : 'VC_SHARED_WITH_VERIFICATION_CONSENT',
           id: vcMetadata.id,
-          idType: getIdType(vcMetadata.issuer),
+          idType: vcMetadata.credentialType,
           timestamp: Date.now(),
           deviceName:
             context.receiverInfo.name || context.receiverInfo.deviceName,
@@ -215,7 +214,7 @@ export const ScanActions = (model: any, QR_LOGIN_REF_ID: any) => {
           _vcKey: vcMetadata.getVcKey(),
           type: 'PRESENCE_VERIFICATION_FAILED',
           timestamp: Date.now(),
-          idType: getIdType(vcMetadata.issuer),
+          idType: vcMetadata.credentialType,
           id: vcMetadata.id,
           deviceName:
             context.receiverInfo.name || context.receiverInfo.deviceName,
@@ -269,7 +268,7 @@ export const ScanActions = (model: any, QR_LOGIN_REF_ID: any) => {
         return ActivityLogEvents.LOG_ACTIVITY({
           _vcKey: '',
           id: vcMetadata.id,
-          idType: getIdType(vcMetadata.issuer),
+          idType: vcMetadata.credentialType,
           type: 'QRLOGIN_SUCCESFULL',
           timestamp: Date.now(),
           deviceName: '',

@@ -31,19 +31,6 @@ export const Issuers = {
   Mosip: 'Mosip',
 };
 
-/**
- * @param issuer of the VC as per the VC metadata in MMKV
- * @returns the ID-type to be used for further translation
- *
- * NOTE: This might be replaced by a more standards compliant way later.
- */
-export function getIdType(issuer: string | undefined): string {
-  if (issuer === Issuers.MosipOtp || issuer === Issuers.Mosip) {
-    return 'nationalCard';
-  }
-  return 'insuranceCard';
-}
-
 export function getVcVerificationDetails(
   statusType,
   vcMetadata,
@@ -322,3 +309,8 @@ export enum ErrorMessage {
   REQUEST_TIMEDOUT = 'requestTimedOut',
   BIOMETRIC_CANCELLED = 'biometricCancelled',
 }
+
+export const getSelectedCredentialType = (credential: Credential): string => {
+  console.log('####getter credential.type[1]: ', credential.type[1]);
+  return credential.type[1];
+};

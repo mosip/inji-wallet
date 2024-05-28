@@ -1,8 +1,4 @@
-import {
-  ErrorMessage,
-  getIdType,
-  Issuers_Key_Ref,
-} from '../../shared/openId4VCI/Utils';
+import {ErrorMessage, Issuers_Key_Ref} from '../../shared/openId4VCI/Utils';
 import {
   MY_VCS_STORE_KEY,
   NETWORK_REQUEST_FAILED,
@@ -205,7 +201,7 @@ export const IssuersActions = (model: any) => {
           _vcKey: vcMetadata.getVcKey(),
           type: 'VC_DOWNLOADED',
           id: vcMetadata.id,
-          idType: getIdType(vcMetadata.issuer),
+          idType: vcMetadata.credentialType,
           timestamp: Date.now(),
           deviceName: '',
           vcLabel: vcMetadata.id,

@@ -9,10 +9,7 @@ import {getHomeMachineService} from '../../../screens/Home/HomeScreenController'
 import {DownloadProps} from '../../../shared/api';
 import {isHardwareKeystoreExists} from '../../../shared/cryptoutil/cryptoUtil';
 import {getBindingCertificateConstant} from '../../../shared/keystore/SecureKeystore';
-import {
-  getIdType,
-  getVcVerificationDetails,
-} from '../../../shared/openId4VCI/Utils';
+import {getVcVerificationDetails} from '../../../shared/openId4VCI/Utils';
 import {TelemetryConstants} from '../../../shared/telemetry/TelemetryConstants';
 import {
   sendStartEvent,
@@ -124,10 +121,12 @@ export const VCItemActions = model => {
     ),
 
     setContext: model.assign((context, event) => {
+      const vcMetadata = context.vcMetadata;
+      vcMetadata.credentialType = event.response.verifiableCredential.type[1];
       return {
         ...context,
         ...event.response,
-        vcMetadata: context.vcMetadata,
+        vcMetadata: VCMetadata.fromVC(vcMetadata),
       };
     }),
     storeContext: send(
@@ -442,7 +441,7 @@ export const VCItemActions = model => {
           _vcKey: context.vcMetadata.getVcKey(),
           type: 'VC_DOWNLOADED',
           id: context.vcMetadata.id,
-          idType: getIdType(context.vcMetadata.issuer),
+          idType: context.vcMetadata.credentialType,
           timestamp: Date.now(),
           deviceName: '',
           vcLabel: data.id,
@@ -456,7 +455,7 @@ export const VCItemActions = model => {
       (context: any, _) => {
         const vcMetadata = VCMetadata.fromVC(context.vcMetadata);
         return ActivityLogEvents.LOG_ACTIVITY({
-          idType: getIdType(vcMetadata.issuer),
+          idType: vcMetadata.credentialType,
           id: vcMetadata.id,
           _vcKey: vcMetadata.getVcKey(),
           type: 'VC_REMOVED',
@@ -475,7 +474,7 @@ export const VCItemActions = model => {
         return ActivityLogEvents.LOG_ACTIVITY({
           _vcKey: vcMetadata.getVcKey(),
           type: 'WALLET_BINDING_SUCCESSFULL',
-          idType: getIdType(vcMetadata.issuer),
+          idType: vcMetadata.credentialType,
           id: vcMetadata.id,
           timestamp: Date.now(),
           deviceName: '',
@@ -494,7 +493,7 @@ export const VCItemActions = model => {
           _vcKey: vcMetadata.getVcKey(),
           type: 'WALLET_BINDING_FAILURE',
           id: vcMetadata.id,
-          idType: getIdType(vcMetadata.issuer),
+          idType: vcMetadata.credentialType,
           timestamp: Date.now(),
           deviceName: '',
           vcLabel: vcMetadata.id,

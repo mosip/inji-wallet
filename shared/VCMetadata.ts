@@ -1,6 +1,12 @@
 import {VC, VcIdType} from '../machines/VerifiableCredential/VCMetaMachine/vc';
-import {Issuers, Protocols} from './openId4VCI/Utils';
+import {
+  getCredentialType,
+  getSelectedCredentialType,
+  Issuers,
+  Protocols,
+} from './openId4VCI/Utils';
 import {getMosipIdentifier} from './commonUtil';
+import {getVerifiableCredential} from '../machines/VerifiableCredential/VCItemMachine/VCItemSelectors';
 
 const VC_KEY_PREFIX = 'VC';
 const VC_ITEM_STORE_KEY_REGEX = '^VC_[a-zA-Z0-9_-]+$';
@@ -15,6 +21,7 @@ export class VCMetadata {
   protocol?: string = '';
   timestamp?: string = '';
   isVerified: boolean = false;
+  credentialType: string = '';
 
   constructor({
     idType = '',
@@ -25,6 +32,7 @@ export class VCMetadata {
     protocol = '',
     timestamp = '',
     isVerified = false,
+    credentialType = '',
   } = {}) {
     this.idType = idType;
     this.requestId = requestId;
@@ -34,6 +42,7 @@ export class VCMetadata {
     this.issuer = issuer;
     this.timestamp = timestamp;
     this.isVerified = isVerified;
+    this.credentialType = credentialType;
   }
 
   //TODO: Remove any typing and use appropriate typing
@@ -47,6 +56,9 @@ export class VCMetadata {
       issuer: vc.issuer,
       timestamp: vc.vcMetadata ? vc.vcMetadata.timestamp : vc.timestamp,
       isVerified: vc.isVerified,
+      credentialType: vc.vcMetadata
+        ? vc.vcMetadata.credentialType
+        : getVerifiableCredential(vc.verifiableCredential).type[1],
     });
   }
 
@@ -90,6 +102,14 @@ export const getVCMetadata = (context: object) => {
   const [issuer, protocol, credentialId] =
     context.credentialWrapper?.identifier.split(':');
 
+  console.log(
+    '#####context.verifiableCredential?.credential: ',
+    context.verifiableCredential?.credential,
+  );
+  console.log(
+    '#####context.verifiableCredential?.type: ',
+    context.verifiableCredential?.credential.type,
+  );
   return VCMetadata.fromVC({
     requestId: credentialId ?? null,
     issuer: issuer,
@@ -101,5 +121,8 @@ export const getVCMetadata = (context: object) => {
       ),
     timestamp: context.timestamp ?? '',
     isVerified: context.vcMetadata.isVerified ?? false,
+    credentialType: getSelectedCredentialType(
+      context.verifiableCredential?.credential,
+    ),
   });
 };
