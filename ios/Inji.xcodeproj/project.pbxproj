@@ -54,7 +54,6 @@
 		6C2E3173556A471DD304B334 /* Pods-Inji.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Inji.debug.xcconfig"; path = "Target Support Files/Pods-Inji/Pods-Inji.debug.xcconfig"; sourceTree = "<group>"; };
 		7A4D352CD337FB3A3BF06240 /* Pods-Inji.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Inji.release.xcconfig"; path = "Target Support Files/Pods-Inji/Pods-Inji.release.xcconfig"; sourceTree = "<group>"; };
 		9C0E86B42BEE357A00E9F9F6 /* RNPixelpassModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RNPixelpassModule.swift; sourceTree = "<group>"; };
-		9C0E86B92BEE367F00E9F9F6 /* Inji-bridging-header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Inji-bridging-header.h"; sourceTree = "<group>"; };
 		9C0E86BA2BEE36C300E9F9F6 /* RNPixelpassModule.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RNPixelpassModule.m; sourceTree = "<group>"; };
 		AA286B85B6C04FC6940260E9 /* SplashScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = SplashScreen.storyboard; path = Inji/SplashScreen.storyboard; sourceTree = "<group>"; };
 		BB2F792C24A3F905000567C9 /* Expo.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Expo.plist; sourceTree = "<group>"; };
@@ -107,7 +106,6 @@
 				13B07FB01A68108700A75B9A /* AppDelegate.mm */,
 				9C0E86B42BEE357A00E9F9F6 /* RNPixelpassModule.swift */,
 				9C0E86BA2BEE36C300E9F9F6 /* RNPixelpassModule.m */,
-				9C0E86B92BEE367F00E9F9F6 /* Inji-bridging-header.h */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				13B07FB71A68108700A75B9A /* main.m */,
@@ -488,7 +486,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = io.mosip.inji.wallet.mobileid;
 				PRODUCT_NAME = Inji;
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				SWIFT_OBJC_BRIDGING_HEADER = "Inji-bridging-header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -524,7 +522,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = io.mosip.inji.wallet.mobileid;
 				PRODUCT_NAME = Inji;
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				SWIFT_OBJC_BRIDGING_HEADER = "Inji-bridging-header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
