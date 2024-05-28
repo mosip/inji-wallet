@@ -97,6 +97,7 @@ export const Button: React.FC<ButtonProps> = props => {
       raised={props.raised}
       title={
         <Text
+          style={props.icon ? {paddingLeft: 10} : {paddingLeft: 0}}
           weight="bold"
           color={
             type === 'solid' || type === 'gradient' || type === 'radius'
