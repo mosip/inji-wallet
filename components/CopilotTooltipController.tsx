@@ -2,7 +2,11 @@ import {useCopilot} from 'react-native-copilot';
 import {COPILOT_FINAL_STEP} from '../shared/constants';
 import {useContext} from 'react';
 import {GlobalContext} from '../shared/GlobalContext';
-import {AuthEvents, selectIsInitialDownload} from '../machines/auth';
+import {
+  AuthEvents,
+  selectIsInitialDownload,
+  selectIsOnboarding,
+} from '../machines/auth';
 import {useSelector} from '@xstate/react';
 
 export const UseCopilotTooltip = () => {
@@ -22,6 +26,7 @@ export const UseCopilotTooltip = () => {
   const ONBOARDING_DONE = () => authService?.send(AuthEvents.ONBOARDING_DONE());
   const INITIAL_DOWNLOAD_DONE = () =>
     authService?.send(AuthEvents.INITIAL_DOWNLOAD_DONE());
+  const isOnboarding = useSelector(authService, selectIsOnboarding);
   const isInitialDownloading = useSelector(
     authService,
     selectIsInitialDownload,
@@ -51,6 +56,7 @@ export const UseCopilotTooltip = () => {
     totalStepsNumber,
     copilotEvents,
     stepCount,
+    isOnboarding,
     isInitialDownloading,
     INITIAL_DOWNLOAD_DONE,
     ONBOARDING_DONE,

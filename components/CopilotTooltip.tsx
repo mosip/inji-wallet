@@ -10,10 +10,16 @@ export const CopilotTooltip = () => {
   const controller = UseCopilotTooltip();
 
   controller.copilotEvents.on('stop', () => {
-    if (controller.CURRENT_STEP <= COPILOT_PRE_FINAL_STEP) {
+    if (
+      controller.CURRENT_STEP <= COPILOT_PRE_FINAL_STEP &&
+      controller.isOnboarding
+    ) {
       controller.ONBOARDING_DONE();
     }
-    if (controller.CURRENT_STEP === COPILOT_FINAL_STEP) {
+    if (
+      controller.CURRENT_STEP === COPILOT_FINAL_STEP &&
+      controller.isInitialDownloading
+    ) {
       controller.INITIAL_DOWNLOAD_DONE();
     }
   });
