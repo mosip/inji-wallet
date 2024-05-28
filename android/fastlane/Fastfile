@@ -1,0 +1,122 @@
+default_platform(:android)
+
+MIMOTO_HOST = ENV["MIMOTO_HOST"]
+ESIGNET_HOST = ENV["ESIGNET_HOST"]
+APPLICATION_THEME = ENV["APPLICATION_THEME"]
+RELEASE_KEYSTORE_ALIAS = ENV["RELEASE_KEYSTORE_ALIAS"]
+RELEASE_KEYSTORE_PASSWORD = ENV["RELEASE_KEYSTORE_PASSWORD"]
+PLAY_CONSOLE_RELEASE_DESCRIPTION = ENV["BUILD_DESCRIPTION"]
+SLACK_URL = ENV["SLACK_WEBHOOK_URL"]
+CREDENTIAL_REGISTRY_EDIT = ENV["CREDENTIAL_REGISTRY_EDIT"]
+APP_FLAVOR = ENV["APP_FLAVOR"]
+GOOGLE_ANDROID_CLIENT_ID = ENV["GOOGLE_ANDROID_CLIENT_ID"]
+
+def generate_app_bundle_id()
+  flavor = APP_FLAVOR
+  case flavor
+  when "residentapp"
+    return "io.mosip.residentapp"
+  when "inji"
+    return "io.mosip.inji.wallet"
+  when "collab"
+    return "io.mosip.inji.collab"
+  when "synergy"
+    return "io.mosip.inji.synergy"
+  when "mec"
+    return "io.mosip.inji.mec"
+  end
+end
+
+def generate_app_name()
+  flavor = APP_FLAVOR
+  case flavor
+  when "residentapp"
+    return "Inji"
+  when "inji"
+    return "Inji Wallet"
+  when "collab"
+    return "Inji Wallet Collab"
+  when "synergy"
+    return "Inji Wallet Synergy"
+  when "mec"
+    return "Inji Wallet Mec"
+  end
+end
+
+desc "Verify Build for Android"
+lane :android_build do
+  gradle(task: "assembleResidentappRelease")
+end
+
+desc "Deploy an Internal testing version to the Google Play"
+lane :android_build_internal do
+
+  previous_build_number = google_play_track_version_codes(
+    package_name: generate_app_bundle_id,
+    track: "internal",
+    json_key: "play_config.json",
+  )[0]
+  
+  current_build_number = previous_build_number + 1
+  
+  increment_version_code(
+    gradle_file_path: "app/build.gradle",
+    version_code: current_build_number
+  )
+  
+  git_commit = sh('git rev-parse --short HEAD').strip
+  git_branch = sh('git rev-parse --abbrev-ref HEAD').strip
+
+  versionName = "#{git_commit}-#{git_branch}"
+
+  gradle(task: "clean bundle#{APP_FLAVOR}Release")
+  upload_to_play_store(
+  track: 'internal',
+  release_status: 'completed',
+  version_name: versionName,
+  package_name: generate_app_bundle_id,
+  )
+
+  slack(
+      message: "#{generate_app_name} #{versionName} (#{current_build_number}) is uploaded to Play store. Description : #{PLAY_CONSOLE_RELEASE_DESCRIPTION}.", 
+      success: true,
+      slack_url: "#{SLACK_URL}",
+      default_payloads: [:git_branch, :last_git_commit]
+    )
+end
+
+desc "Deploy an Beta version to the Google Play"
+lane :android_build_beta do
+
+  git_tag = sh('git describe --abbrev=0 --tags --exact-match HEAD').strip
+
+  def convert_tag_to_code(version)
+    parts = version.split('.')
+    version_code = parts[0].to_i * 1000000 + parts[1].to_i * 1000 + parts[2].to_i
+    return version_code
+  end
+
+  versionCode = convert_tag_to_code(git_tag)
+
+  increment_version_code(
+    gradle_file_path: "app/build.gradle",
+    version_code: versionCode
+  )
+
+  versionName = "#{generate_app_name} #{git_tag}"
+
+  gradle(task: "clean bundle#{APP_FLAVOR}Release")
+  upload_to_play_store(
+  track: 'alpha',
+  release_status: 'completed',
+  version_name: versionName,
+  package_name: generate_app_bundle_id,
+  )
+
+  slack(
+      message: "#{generate_app_name} #{versionName} is uploaded to Play store. Description : #{PLAY_CONSOLE_RELEASE_DESCRIPTION}.", 
+      success: true,
+      slack_url: "#{SLACK_URL}",
+      default_payloads: [:git_branch, :last_git_commit]
+    )
+end

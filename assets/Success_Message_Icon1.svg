@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="153" height="153" viewBox="0 0 153 153">
+  <defs>
+    <filter id="Rectangle_6853" x="0" y="0" width="153" height="153" filterUnits="userSpaceOnUse">
+      <feOffset dy="3" input="SourceAlpha"/>
+      <feGaussianBlur stdDeviation="7.5" result="blur"/>
+      <feFlood flood-opacity="0.059"/>
+      <feComposite operator="in" in2="blur"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+  </defs>
+  <g id="success_message_icon" transform="translate(22 19.5)">
+    <g transform="matrix(1, 0, 0, 1, -22, -19.5)" filter="url(#Rectangle_6853)">
+      <rect id="Rectangle_6853-2" data-name="Rectangle 6853" width="108" height="108" rx="54" transform="translate(22.5 19.5)" fill="#fff"/>
+    </g>
+    <rect id="Rectangle_6846" data-name="Rectangle 6846" width="96" height="96" rx="48" transform="translate(6.5 6)" fill="rgba(75,157,32,0.08)"/>
+    <g id="success_icon" transform="translate(37.905 33.202)">
+      <g id="Group_57086" data-name="Group 57086">
+        <path id="gpp_maybe_FILL0_wght400_GRAD0_opsz48" d="M24.6,45.546A20.366,20.366,0,0,1,12.667,37.1,24.7,24.7,0,0,1,8,22.564V10.189L24.6,3.95l16.6,6.239V22.564A24.7,24.7,0,0,1,36.523,37.1,20.366,20.366,0,0,1,24.6,45.546Z" transform="translate(-8 -3.95)" fill="#4b9d20"/>
+        <path id="check_circle_FILL0_wght400_GRAD0_opsz48" d="M11.739,18.056l9.094-9.094L19.355,7.516l-7.616,7.616L7.883,11.276,6.437,12.722ZM13.635,12.208Z" transform="translate(3.037 7.682)" fill="#fff"/>
+      </g>
+    </g>
+  </g>
+</svg>

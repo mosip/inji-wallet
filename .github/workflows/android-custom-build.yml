@@ -1,0 +1,56 @@
+name: Android Custom Build
+run-name: ${{ inputs.buildName }}
+
+on:
+  workflow_dispatch:
+    inputs:
+      buildName:
+        description: 'Run name'
+        required: true
+        default: 'Edit this name'
+        type: string
+      mimotoBackendServiceUrl:
+        description: 'Mimoto backend service URL'
+        required: true
+        default: 'https://api.sandbox.mosip.net'
+        type: string
+      esignetBackendServiceUrl:
+        description: 'Esignet backend service URL'
+        required: true
+        default: 'https://api.sandbox.mosip.net'
+        type: string
+      allow_env_edit:
+        description: 'Edit ENV'
+        required: true
+        default: 'true'
+        type: choice
+        options:
+          - false
+          - true
+      theme:
+        description: 'Application Theme'
+        required: true
+        default: 'orange'
+        type: choice
+        options:
+          - orange
+          - purple
+
+jobs:
+  build-android:
+    uses: mosip/kattu/.github/workflows/android-build.yml@master
+    with:
+        NODE_VERSION: "16.x"
+        MIMOTO_HOST: ${{ inputs.mimotoBackendServiceUrl }}
+        ESIGNET_HOST: ${{ inputs.esignetBackendServiceUrl }}
+        APPLICATION_THEME: ${{ inputs.theme }}
+        ALLOW_ENV_EDIT: ${{ inputs.allow_env_edit }}
+        KEYSTORE_ALIAS: androidbuildkey
+        KEYSTORE_PASSWORD: 'password'
+        SERVICE_LOCATION: '.'
+        ANDROID_SERVICE_LOCATION: 'android'
+        BUILD_SCRIPT_LOCATION: 'scripts'
+        SCRIPT_NAME: './android-build.sh'
+        UPLOAD_TO_ACTIONS: 'true'
+        ANDROID_ARTIFACT_NAME: ${{ inputs.buildName }}
+        ANDROID_ARTIFACT_PATH: "android/app/build/outputs/apk/residentapp/release/Inji_universal.apk"

@@ -1,0 +1,160 @@
+name: UI - Automation
+run-name: ${{ inputs.runName }}
+
+on:
+  workflow_dispatch:
+    inputs:
+      runName:
+        description: 'Name the run for Actions'
+        default: 'Ex: Sanity/Regression[ENV]'
+        type: string
+      buildFor:
+        description: 'Trigger test case run for'
+        required: true
+        type: choice
+        options:
+          - Android
+          - IOS
+      testType:
+        description: 'Test type Sanity/Regression'
+        required: true
+        default: 'Sanity'
+        type: choice
+        options:
+          - Sanity
+          - Regression
+      backendServiceUrlMimoto:
+        description: 'Mimoto backend service URL'
+        required: true
+        default: 'https://api.sandbox.mosip.net'
+        type: string
+      backendServiceUrlEsiget:
+        description: 'Esignet backend service URL'
+        required: true
+        default: 'https://api.sandbox.mosip.net'
+        type: string
+
+jobs:
+  android-ui-automation:
+    if: ${{ github.event.inputs.buildFor == 'Android' }}
+    name: Trigger android run
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3.1.0
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '18.x'
+
+      - name: Cache npm dependencies
+        uses: actions/cache@v3.3.1
+        with:
+          path: '~/.npm'
+          key: ${{ runner.os }}-npm-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-npm-
+    
+      - name: Install npm dependencies
+        run: |
+          npm ci
+
+      - name: Generate Android keystore
+        run: |
+          echo "$ANDROID_KEYSTORE_FILE" > release.keystore.b64
+          base64 -d -i release.keystore.b64 > android/app/release.keystore
+        env:
+          ANDROID_KEYSTORE_FILE: ${{ secrets.INJI_ANDROID_RELEASE_KEYSTORE }}
+
+      - name: Create Android Build
+        run: |
+          npx jetify
+          cd android/scripts
+          ./android-build.sh
+        env:
+          MIMOTO_HOST: ${{ github.event.inputs.backendServiceUrlMimoto }}
+          ESIGNET_HOST: ${{ github.event.inputs.backendServiceUrlEsignet }}
+          APPLICATION_THEME: 'orange'
+          CREDENTIAL_REGISTRY_EDIT: 'false'
+          RELEASE_KEYSTORE_ALIAS: 'androidreleasekey'
+          RELEASE_KEYSTORE_PASSWORD: "${{ secrets.INJI_ANDROID_RELEASE_STOREPASS }}"
+      - name: Upload Artifact to Actions
+        uses: actions/upload-artifact@v3.1.1
+        with:
+          name: residentapp
+          path: android/app/build/outputs/apk/residentapp/release/Inji_universal.apk
+          retention-days: 10
+  
+      - name: Run UI Automation Tests on BrowserStack
+        run: |
+          chmod +x injitest/automation_trigger.sh
+          ./injitest/automation_trigger.sh "$BROWSERSTACK_USERNAME" "$BROWSERSTACK_ACCESS_KEY" "$TEST_TYPE" "$PLATFORM_NAME"
+        env:
+          PLATFORM_NAME: ${{ github.event.inputs.buildFor }}
+          TEST_TYPE: ${{ github.event.inputs.testType }}
+          BROWSERSTACK_USERNAME: ${{ secrets.BROWSERSTACK_USERNAME }}
+          BROWSERSTACK_ACCESS_KEY: ${{ secrets.BROWSERSTACK_ACCESS_KEY }}
+      - name: Save test reports
+        uses: actions/upload-artifact@v3
+        if: success() || failure()
+        with:
+          name: test-reports
+          path: injitest/target/surefire-reports
+
+  ios-ui-automation:
+    if: ${{ github.event.inputs.buildFor == 'IOS' }}
+    name: Trigger ios run
+    runs-on: macos-13
+
+    steps:
+      - uses: actions/checkout@v3.1.0
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '18.x'
+
+      - name: Cache npm dependencies
+        uses: actions/cache@v3.3.1
+        with:
+          path: '~/.npm'
+          key: ${{ runner.os }}-npm-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-npm-
+    
+      - name: Install npm dependencies
+        run: |
+          npm ci
+
+      - name: Create iOS Build
+        run: |
+          cd ios
+          pod install && pod install
+          fastlane ios_ui_automation_build 
+        env:
+          MIMOTO_HOST: ${{ github.event.inputs.backendServiceUrlMimoto }}
+          ESIGNET_HOST: ${{ github.event.inputs.backendServiceUrlEsignet }}
+          APPLICATION_THEME: 'orange'
+          APP_FLAVOR: 'residentapp'
+          CREDENTIAL_REGISTRY_EDIT: 'false'
+          INJI_IOS_TEMP_KEYCHAIN_PASSWORD: '${{ secrets.INJI_IOS_TEMP_KEYCHAIN_PASSWORD }}'
+          INJI_IOS_TEMP_KEYCHAIN_USER: '${{ secrets.INJI_IOS_TEMP_KEYCHAIN_USER }}'
+          GIT_AUTHORIZATION: '${{ secrets.GIT_AUTHORIZATION }}'
+          APPLE_KEY_ID: '${{ secrets.APPLE_KEY_ID }}'
+          APPLE_ISSUER_ID: '${{ secrets.APPLE_ISSUER_ID }}'
+          APPLE_KEY_CONTENT: '${{ secrets.APPLE_KEY_CONTENT }}'
+          MATCH_PASSWORD: '${{ secrets.INJI_IOS_MATCH_PASSWORD }}'
+
+      - name: Upload Artifact to Actions
+        uses: actions/upload-artifact@v3.1.1
+        with:
+          name: residentapp
+          path: ios/fastlane/Inji_artifacts/Inji.ipa
+          retention-days: 10
+
+      - name: Run UI Automation Tests on BrowserStack
+        run: |
+          chmod +x injitest/automation_trigger.sh
+          ./injitest/automation_trigger.sh "$BROWSERSTACK_USERNAME" "$BROWSERSTACK_ACCESS_KEY" "$TEST_TYPE" "$PLATFORM_NAME"
+        env:
+          PLATFORM_NAME: ${{ github.event.inputs.buildFor }}
+          TEST_TYPE: ${{ github.event.inputs.testType }}
+          BROWSERSTACK_USERNAME: ${{ secrets.BROWSERSTACK_USERNAME }}
+          BROWSERSTACK_ACCESS_KEY: ${{ secrets.BROWSERSTACK_ACCESS_KEY }}

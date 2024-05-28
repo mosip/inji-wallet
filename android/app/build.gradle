@@ -1,0 +1,310 @@
+plugins {
+    id 'com.gladed.androidgitversion' version '0.4.14'
+}
+
+apply plugin: "com.android.application"
+apply plugin: "com.facebook.react"
+apply plugin: "org.sonarqube"
+
+configurations.all {
+    resolutionStrategy.force 'androidx.activity:activity-ktx:1.7.1','androidx.activity:activity:1.7.0', 'com.fasterxml.jackson.core:jackson-core:2.14.0'
+}
+
+react {
+    /* Folders */
+    //   The root of your project, i.e. where "package.json" lives. Default is '..'
+    // root = file("../")
+    //   The folder where the react-native NPM package is. Default is ../node_modules/react-native
+    // reactNativeDir = file("../node_modules/react-native")
+    //   The folder where the react-native Codegen package is. Default is ../node_modules/@react-native/codegen
+    // codegenDir = file("../node_modules/@react-native/codegen")
+    //   The cli.js file which is the React Native CLI entrypoint. Default is ../node_modules/react-native/cli.js
+    // cliFile = file("../node_modules/react-native/cli.js")
+    /* Variants */
+    //   The list of variants to that are debuggable. For those we're going to
+    //   skip the bundling of the JS bundle and the assets. By default is just 'debug'.
+    //   If you add flavors like lite, prod, etc. you'll have to list your debuggableVariants.
+    // debuggableVariants = ["liteDebug", "prodDebug"]
+    /* Bundling */
+    //   A list containing the node command and its flags. Default is just 'node'.
+    // nodeExecutableAndArgs = ["node"]
+    //
+    //   The command to run when bundling. By default is 'bundle'
+    // bundleCommand = "ram-bundle"
+    //
+    //   The path to the CLI configuration file. Default is empty.
+    // bundleConfig = file(../rn-cli.config.js)
+    //
+    //   The name of the generated asset file containing your JS bundle
+    // bundleAssetName = "MyApplication.android.bundle"
+    //
+    //   The entry file for bundle generation. Default is 'index.android.js' or 'index.js'
+    // entryFile = file("../js/MyApplication.android.js")
+    entryFile = file("../../index.js")
+    //
+    //   A list of extra flags to pass to the 'bundle' commands.
+    //   See https://github.com/react-native-community/cli/blob/main/docs/commands.md#bundle
+    // extraPackagerArgs = []
+    /* Hermes Commands */
+    //   The hermes compiler command to run. By default it is 'hermesc'
+    // hermesCommand = "$rootDir/my-custom-hermesc/bin/hermesc"
+    //
+    //   The list of flags to pass to the Hermes compiler. By default is "-O", "-output-source-map"
+    //    hermesFlags = ["-O", "-output-source-map"]
+}
+
+/**
+ * Set this to true to create four separate APKs instead of one,
+ * one for each native architecture. This is useful if you don't
+ * use App Bundles (https://developer.android.com/guide/app-bundle/)
+ * and want to have separate APKs to upload to the Play Store.
+ */
+def enableSeparateBuildPerCPUArchitecture = true
+
+/**
+ * Set this to true to Run Proguard on Release builds to minify the Java bytecode.
+ */
+def enableProguardInReleaseBuilds = false
+
+/**
+ * The preferred build flavor of JavaScriptCore (JSC)
+ *
+ * For example, to use the international variant, you can use:
+ * `def jscFlavor = 'org.webkit:android-jsc-intl:+'`
+ *
+ * The international variant includes ICU i18n library and necessary data
+ * allowing to use e.g. `Date.toLocaleString` and `String.localeCompare` that
+ * give correct results when using with locales other than en-US. Note that
+ * this variant is about 6MiB larger per architecture than default.
+ */
+def jscFlavor = 'org.webkit:android-jsc:+'
+
+/**
+ * Private function to get the list of Native Architectures you want to build.
+ * This reads the value from reactNativeArchitectures in your gradle.properties
+ * file and works together with the --active-arch-only flag of react-native run-android.
+ */
+def reactNativeArchitectures() {
+    def value = project.getProperties().get("reactNativeArchitectures")
+    return value ? value.split(",") : ["armeabi-v7a", "x86", "x86_64", "arm64-v8a"]
+}
+
+androidGitVersion {
+    baseCode 0
+    codeFormat 'MXXNXXPXX'
+    format '%tag_%%commit_%%branch%'
+}
+
+android {
+    ndkVersion rootProject.ext.ndkVersion
+    compileSdkVersion rootProject.ext.compileSdkVersion
+    ext {
+        APP_NAME = "@string/app_name"
+    }
+
+    namespace 'io.mosip.residentapp'
+
+    defaultConfig {
+        applicationId 'io.mosip.residentapp'
+        minSdkVersion rootProject.ext.minSdkVersion
+        targetSdkVersion rootProject.ext.targetSdkVersion
+        versionName androidGitVersion.name()
+        versionCode 1
+
+        manifestPlaceholders = [
+                APP_NAME             : APP_NAME,
+                appAuthRedirectScheme: 'io.mosip.residentapp.inji'
+        ]
+    }
+
+    splits {
+        abi {
+            reset()
+            enable enableSeparateBuildPerCPUArchitecture
+            universalApk true  // If true, also generate a universal APK
+            include "armeabi-v7a", "x86", "arm64-v8a", "x86_64"
+        }
+    }
+
+    signingConfigs {
+        release {
+            // for sonarqube job we will generate dummy release keystore to sign the app as we are not doing it in workflow
+            def hasSonarqube = System.properties.containsKey("sonarqube")
+            def keystore = file('release.keystore').exists() ? file('release.keystore') : file('dummyrelease.keystore')
+            storeFile file("$keystore")
+            if (hasSonarqube && !keystore.exists()) {
+                exec {
+                    commandLine 'keytool',
+                            '-genkey',
+                            '-v',
+                            '-storetype', 'PKCS12',
+                            '-keyalg', 'RSA',
+                            '-keysize', '2048',
+                            '-validity', '10000',
+                            '-storepass', 'password',
+                            '-keypass', 'password',
+                            '-alias', 'androidreleasekey',
+                            '-keystore', 'dummyrelease.keystore',
+                            '-dname', 'CN=,OU=,O=,L=,S=,C=US'
+                }
+                storePassword "password"
+                keyAlias "androidreleasekey"
+                keyPassword "password"
+            } else {
+                def keystoreAlias = System.getenv("RELEASE_KEYSTORE_ALIAS")
+                def keystorePass = System.getenv("RELEASE_KEYSTORE_PASSWORD")
+                storePassword "$keystorePass"
+                keyAlias "$keystoreAlias"
+                keyPassword "$keystorePass"
+            }
+            v2SigningEnabled true
+            v1SigningEnabled false
+        }
+        debug {
+            def keystore = file('debug.keystore')
+            if (keystore.exists()) {
+                def keystoreAlias = System.getenv("DEBUG_KEYSTORE_ALIAS")
+                def keystorePass = System.getenv("DEBUG_KEYSTORE_PASSWORD")
+                storeFile file("$keystore")
+                storePassword "$keystorePass"
+                keyAlias "$keystoreAlias"
+                keyPassword "$keystorePass"
+                v2SigningEnabled true
+                v1SigningEnabled false
+            } else {
+                android.buildTypes.debug.signingConfig = null
+            }
+        }
+    }
+    buildTypes {
+        debug {
+            signingConfig signingConfigs.debug
+        }
+        release {
+            lintOptions {
+                checkReleaseBuilds false
+                abortOnError false
+            }
+            // Caution! In production, you need to generate your own keystore file.
+            // see https://reactnative.dev/docs/signed-apk-android.
+            signingConfig signingConfigs.release
+            minifyEnabled enableProguardInReleaseBuilds
+            proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
+        }
+    }
+
+    flavorDimensions "inji"
+
+    productFlavors {
+        residentapp {
+            versionName defaultConfig.versionName
+            dimension "inji"
+            resValue "string", "app_name", "Inji"
+        }
+        inji {
+            applicationId "io.mosip.inji.wallet"
+            versionName defaultConfig.versionName
+            dimension "inji"
+            resValue "string", "app_name", "Inji Wallet"
+        }
+        collab {
+            applicationId "io.mosip.inji.collab"
+            versionName defaultConfig.versionName
+            dimension "inji"
+            resValue "string", "app_name", "Inji Wallet Collab"
+        }
+        synergy {
+            applicationId "io.mosip.inji.synergy"
+            versionName defaultConfig.versionName
+            dimension "inji"
+            resValue "string", "app_name", "Inji Wallet Synergy"
+        }
+        mec {
+            applicationId "io.mosip.inji.mec"
+            versionName defaultConfig.versionName
+            dimension "inji"
+            resValue "string", "app_name", "Inji Wallet Mec"
+        }
+    }
+
+    android.applicationVariants.all { variant ->
+        variant.outputs.all { output ->
+            def datetime = new Date().format('yyyyMMdd_HHmm')
+            def architecture = output.getFilter(com.android.build.OutputFile.ABI) ?: "universal"
+            outputFileName = "Inji_${architecture}.apk"
+        }
+    }
+
+    android.applicationVariants.all { variant ->
+        variant.outputs.all { output ->
+            if (variant.flavorName == "collab") {
+                sonarqube {
+                    androidVariant variant.name
+                }
+            }
+        }
+    }
+
+    packagingOptions {
+      pickFirst 'lib/arm64-v8a/liblog.so'    
+      pickFirst 'lib/armeabi-v7a/liblog.so'  
+      pickFirst 'lib/x86/liblog.so'
+      pickFirst 'lib/x86_64/liblog.so'
+    }
+}
+
+dependencies {
+    implementation("com.facebook.react:react-android")
+    implementation 'com.facebook.soloader:soloader:0.10.1+'
+    implementation("io.mosip:pixelpass:1.2-SNAPSHOT")
+
+    def isGifEnabled = (findProperty('expo.gif.enabled') ?: "") == "true";
+    def isWebpEnabled = (findProperty('expo.webp.enabled') ?: "") == "true";
+    def isWebpAnimatedEnabled = (findProperty('expo.webp.animated') ?: "") == "true";
+
+    // If your app supports Android versions before Ice Cream Sandwich (API level 14)
+    // All fresco packages should use the same version
+    if (isGifEnabled || isWebpEnabled) {
+        implementation 'com.facebook.fresco:fresco:2.0.0'
+        implementation 'com.facebook.fresco:imagepipeline-okhttp3:2.0.0'
+        implementation 'com.squareup.okhttp3:okhttp-urlconnection:4.4.1'
+    }
+
+    if (isGifEnabled) {
+        // For animated gif support
+        implementation 'com.facebook.fresco:animated-gif:2.0.0'
+    }
+
+    if (isWebpEnabled) {
+        // For webp support
+        implementation 'com.facebook.fresco:webpsupport:2.0.0'
+        if (isWebpAnimatedEnabled) {
+            // Animated webp support
+            implementation 'com.facebook.fresco:animated-webp:2.0.0'
+        }
+    }
+    compileOnly project(':react-native-android-location-services-dialog-box')
+    implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.0.0"
+    implementation "io.mosip:inji-vci-client:1.2-SNAPSHOT"
+    debugImplementation("com.facebook.flipper:flipper:${FLIPPER_VERSION}")
+    debugImplementation("com.facebook.flipper:flipper-network-plugin:${FLIPPER_VERSION}") {
+        exclude group: 'com.facebook.flipper'
+        exclude group: 'com.squareup.okhttp3', module: 'okhttp'
+    }
+    debugImplementation("com.facebook.flipper:flipper-fresco-plugin:${FLIPPER_VERSION}") {
+        exclude group: 'com.facebook.flipper'
+    }
+
+    if (hermesEnabled.toBoolean()) {
+        implementation("com.facebook.react:hermes-android")
+    } else {
+        implementation jscFlavor
+    }
+    implementation 'com.jakewharton.timber:timber:4.7.1'
+}
+
+apply from: file("../../node_modules/@react-native-community/cli-platform-android/native_modules.gradle"); applyNativeModulesAppBuildGradle(project)
+
+// https://github.com/oblador/react-native-vector-icons?tab=readme-ov-file#android-setup
+apply from: file("../../node_modules/react-native-vector-icons/fonts.gradle")
+apply from: "./eas-build.gradle"
