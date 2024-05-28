@@ -2,7 +2,6 @@ import {
   ErrorMessage,
   getIdType,
   Issuers_Key_Ref,
-  updateVCmetadataOfCredentialWrapper,
 } from '../../shared/openId4VCI/Utils';
 import {
   MY_VCS_STORE_KEY,
@@ -117,10 +116,10 @@ export const IssuersActions = (model: any) => {
     ),
 
     setMetadataInCredentialData: (context: any) => {
-      return updateVCmetadataOfCredentialWrapper(
-        context,
-        context.credentialWrapper,
-      );
+      context.credentialWrapper = {
+        ...context.credentialWrapper,
+        vcMetadata: context.vcMetadata,
+      };
     },
 
     setVCMetadata: assign({
@@ -130,11 +129,13 @@ export const IssuersActions = (model: any) => {
     }),
 
     storeVerifiableCredentialData: send(
-      (context: any) =>
-        StoreEvents.SET(getVCMetadata(context).getVcKey(), {
+      (context: any) => {
+        const vcMeatadata = getVCMetadata(context);
+        return StoreEvents.SET(vcMeatadata.getVcKey(), {
           ...context.credentialWrapper,
-          vcMetadata: getVCMetadata(context),
-        }),
+          vcMetadata: vcMeatadata,
+        });
+      },
       {
         to: (context: any) => context.serviceRefs.store,
       },
@@ -199,14 +200,15 @@ export const IssuersActions = (model: any) => {
 
     logDownloaded: send(
       context => {
+        const vcMetadata = getVCMetadata(context);
         return ActivityLogEvents.LOG_ACTIVITY({
-          _vcKey: getVCMetadata(context).getVcKey(),
+          _vcKey: vcMetadata.getVcKey(),
           type: 'VC_DOWNLOADED',
-          id: getVCMetadata(context).id,
-          idType: getIdType(getVCMetadata(context).issuer),
+          id: vcMetadata.id,
+          idType: getIdType(vcMetadata.issuer),
           timestamp: Date.now(),
           deviceName: '',
-          vcLabel: getVCMetadata(context).id,
+          vcLabel: vcMetadata.id,
         });
       },
       {

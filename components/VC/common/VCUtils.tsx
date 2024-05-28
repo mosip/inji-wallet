@@ -50,13 +50,6 @@ export const getFieldValue = (
   wellknown: any,
   props: any,
 ) => {
-  const {t} = useTranslation();
-  const date = new Date(
-    getLocalizedField(verifiableCredential?.credentialSubject[field]),
-  ).toString();
-  if (date !== 'Invalid Date') {
-    return formattedDateTime(date);
-  }
   switch (field) {
     case 'status':
       return (
@@ -182,7 +175,10 @@ export const fieldItemIterator = (
   });
 };
 
-export const isVCLoaded = (verifiableCredential: any, fields: string[]) => {
+export const isVCLoaded = (
+  verifiableCredential: Credential,
+  fields: string[],
+) => {
   return verifiableCredential != null && fields.length > 0;
 };
 
@@ -199,5 +195,7 @@ export const getIdType = (wellknown: any) => {
       return {language: displayProps.locale, value: displayProps.name};
     });
     return getLocalizedField(idTypeObj);
+  } else {
+    return i18n.t('VcDetails:nationalCard');
   }
 };

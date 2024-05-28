@@ -15,7 +15,6 @@ import {
   isHardwareKeystoreExists,
 } from '../../shared/cryptoutil/cryptoUtil';
 import SecureKeystore from '@mosip/secure-keystore';
-import {getVCMetadata, VCMetadata} from '../../shared/VCMetadata';
 import {
   VerificationErrorType,
   verifyCredential,
@@ -26,6 +25,7 @@ import {
 } from '../../shared/telemetry/TelemetryUtils';
 import {TelemetryConstants} from '../../shared/telemetry/TelemetryConstants';
 import {isMosipVC} from '../../shared/Utils';
+import {CredentialWrapper} from '../VerifiableCredential/VCMetaMachine/vc';
 
 export const IssuersService = () => {
   return {
@@ -53,7 +53,7 @@ export const IssuersService = () => {
     downloadCredentialTypes: async (context: any) => {
       return context.selectedIssuer.credentialTypes;
     },
-    downloadCredential: async (context: any) => {
+    downloadCredential: async (context: any): Promise<CredentialWrapper> => {
       const body = await getBody(context);
       const downloadTimeout = await vcDownloadTimeout();
       let credential = await request(
@@ -67,9 +67,8 @@ export const IssuersService = () => {
         },
         downloadTimeout,
       );
-      console.info(`VC download via ${context.selectedIssuerId} is succesfull`);
-      credential = updateCredentialInformation(context, credential);
-      return credential;
+      console.info(`VC download via ${context.selectedIssuerId} is successful`);
+      return updateCredentialInformation(context, credential);
     },
     invokeAuthorization: async (context: any) => {
       sendImpressionEvent(
@@ -99,7 +98,7 @@ export const IssuersService = () => {
     },
     verifyCredential: async (context: any) => {
       //this issuer specific check has to be removed once vc validation is done.
-      if (isMosipVC(getVCMetadata(context).issuer)) {
+      if (isMosipVC(context.vcMetadata.issuer)) {
         const verificationResult = await verifyCredential(
           context.verifiableCredential?.credential,
         );

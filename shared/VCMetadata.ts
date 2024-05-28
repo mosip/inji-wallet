@@ -95,7 +95,7 @@ export const getVCMetadata = (context: object) => {
     issuer: issuer,
     protocol: protocol,
     id:
-      context.verifiableCredential?.credential.credentialSubject.policyNumber ??
+      context.verifiableCredential?.credential.credentialSubject.policyNumber ||
       getMosipIdentifier(
         context.verifiableCredential?.credential.credentialSubject,
       ),

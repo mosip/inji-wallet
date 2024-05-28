@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {Pressable, View} from 'react-native';
+import {Pressable} from 'react-native';
 import {ActorRefFrom} from 'xstate';
 import {ErrorMessageOverlay} from '../../MessageOverlay';
 import {Theme} from '../../ui/styleUtils';

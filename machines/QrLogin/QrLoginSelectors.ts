@@ -2,6 +2,7 @@ import {StateFrom} from 'xstate';
 import {getMosipLogo} from '../../components/VC/common/VCUtils';
 import {VCMetadata} from '../../shared/VCMetadata';
 import {qrLoginMachine} from './QrLoginMachine';
+import {Credential} from '../VerifiableCredential/VCMetaMachine/vc';
 
 type State = StateFrom<typeof qrLoginMachine>;
 
@@ -57,31 +58,29 @@ export function selectIsVerifyingSuccesful(state: State) {
   return state.matches('success');
 }
 
-export function selectCredential(state: State) {
-  return new VCMetadata(state.context.selectedVc?.vcMetadata).isFromOpenId4VCI()
-    ? state.context.selectedVc?.verifiableCredential?.credential
-    : state.context.selectedVc?.credential;
+export function selectCredential(state: State): Credential {
+  return (
+    state.context.selectedVc?.verifiableCredential?.credential ||
+    state.context.selectedVc?.credential
+  );
 }
 
 export function selectVerifiableCredentialData(state: State) {
   const vcMetadata = new VCMetadata(state.context.selectedVc?.vcMetadata);
-  return vcMetadata.isFromOpenId4VCI()
-    ? {
-        vcMetadata: vcMetadata,
-        face: state.context.selectedVc?.verifiableCredential?.credential
-          ?.credentialSubject?.face,
-        issuerLogo: state.context.selectedVc?.verifiableCredential?.issuerLogo,
-        wellKnown: state.context.selectedVc?.verifiableCredential?.wellKnown,
-        credentialTypes:
-          state.context.selectedVc?.verifiableCredential?.credentialTypes,
-        issuer: vcMetadata.issuer,
-      }
-    : {
-        vcMetadata: vcMetadata,
-        issuer: vcMetadata.issuer,
-        face: state.context.selectedVc?.credential?.biometrics?.face,
-        issuerLogo: getMosipLogo(),
-      };
+  return {
+    vcMetadata: vcMetadata,
+    issuer: vcMetadata.issuer,
+    issuerLogo:
+      state.context.selectedVc?.verifiableCredential?.issuerLogo ||
+      getMosipLogo(),
+    face:
+      state.context.selectedVc?.verifiableCredential?.credential
+        ?.credentialSubject?.face ||
+      state.context.selectedVc?.credential?.biometrics?.face,
+    wellKnown: state.context.selectedVc?.verifiableCredential?.wellKnown,
+    credentialTypes:
+      state.context.selectedVc?.verifiableCredential?.credentialTypes,
+  };
 }
 
 export function selectLinkTransactionResponse(state: State) {

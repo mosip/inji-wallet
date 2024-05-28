@@ -103,9 +103,7 @@ export const VCItemServices = model => {
       );
     },
     requestBindingOTP: async context => {
-      const vc = VCMetadata.fromVC(context.vcMetadata).isFromOpenId4VCI()
-        ? context.verifiableCredential.credential
-        : context.verifiableCredential;
+      const vc = getVerifiableCredential(context.verifiableCredential);
       const response = await request(
         API_URLS.bindingOtp.method,
         API_URLS.bindingOtp.buildURL(),
@@ -197,10 +195,7 @@ export const VCItemServices = model => {
     verifyCredential: async context => {
       if (context.verifiableCredential) {
         const verificationResult = await verifyCredential(
-          getVerifiableCredential(
-            context.vcMetadata,
-            context.verifiableCredential,
-          ),
+          getVerifiableCredential(context.verifiableCredential),
         );
         if (!verificationResult.isVerified) {
           throw new Error(verificationResult.errorMessage);

@@ -6,7 +6,7 @@ export const VCItemGaurds = () => {
   return {
     hasCredential: (_, event) => {
       const vc = event.response;
-      return vc?.credential != null || vc?.verifiableCredential != null;
+      return vc?.verifiableCredential != null;
     },
     isSignedIn: (_context, event) =>
       (event.data as isSignedInResult).isSignedIn,

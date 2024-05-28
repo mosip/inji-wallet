@@ -314,7 +314,6 @@ class Storage {
           encryptionKey,
           JSON.stringify(vc),
         );
-        const tmp = VCMetadata.fromVC(key);
         // Save the VC to disk
         await this.setItem(updatedVcKey, encryptedVC, encryptionKey);
       });

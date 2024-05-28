@@ -1,7 +1,12 @@
 import {createModel} from 'xstate/lib/model';
 import {AppServices} from '../../../shared/GlobalContext';
 import {VCMetadata} from '../../../shared/VCMetadata';
-import {VerifiableCredential, WalletBindingResponse} from '../VCMetaMachine/vc';
+import {
+  Credential,
+  DecodedCredential,
+  VerifiableCredential,
+  WalletBindingResponse,
+} from '../VCMetaMachine/vc';
 import {CommunicationDetails} from '../../../shared/Utils';
 import {VCItemEvents} from './VCItemEvents';
 import {vcVerificationBannerDetails} from '../../../components/BannerNotificationContainer';
@@ -11,7 +16,8 @@ export const VCItemModel = createModel(
     serviceRefs: {} as AppServices,
     vcMetadata: {} as VCMetadata,
     generatedOn: new Date() as Date,
-    verifiableCredential: null as unknown as VerifiableCredential,
+    credential: null as unknown as DecodedCredential,
+    verifiableCredential: null as unknown as Credential,
     hashedId: '',
     publicKey: '',
     privateKey: '',

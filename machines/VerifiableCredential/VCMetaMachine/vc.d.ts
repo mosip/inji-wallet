@@ -5,12 +5,13 @@ export interface VC {
   id?: string;
   idType?: VcIdType;
   credential?: DecodedCredential;
-  verifiableCredential: VerifiableCredential;
+  verifiableCredential: VerifiableCredential | Credential;
   requestId?: string;
   isVerified?: boolean;
   lastVerifiedOn: number;
   walletBindingResponse?: WalletBindingResponse;
   hashedId?: string;
+  vcMetadata: VCMetadata;
 }
 
 export type VcIdType = 'UIN' | 'VID';
@@ -55,7 +56,7 @@ export interface Credential {
     type: 'RsaSignature2018' | string;
     verificationMethod: string;
   };
-  type: VerifiableCredentialType[];
+  type: string[];
 }
 
 export interface VerifiableCredential {
@@ -93,11 +94,6 @@ export interface CredentialTypes {
     credentialSubject: CredentialSubject;
   };
 }
-
-export type VerifiableCredentialType =
-  | 'VerifiableCredential'
-  | 'MOSIPVerfiableCredential'
-  | string;
 
 export interface VCLabel {
   singular: string;

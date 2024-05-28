@@ -9,6 +9,7 @@ import i18next from 'i18next';
 import {getJWT} from '../cryptoutil/cryptoUtil';
 import i18n from '../../i18n';
 import {
+  Credential,
   CredentialWrapper,
   VerifiableCredential,
 } from '../../machines/VerifiableCredential/VCMetaMachine/vc';
@@ -51,7 +52,7 @@ export function getVcVerificationDetails(
   return {
     statusType: statusType,
     vcType: getIDTypeTranslations(
-      getVerifiableCredential(vcMetadata, verifiableCredential).type[1],
+      getVerifiableCredential(verifiableCredential).type[1],
     ),
     vcNumber: vcMetadata.id,
   };
@@ -145,7 +146,7 @@ export const updateCredentialInformation = (
     verifiableCredential: {
       ...credential,
       wellKnown: context.selectedIssuer['.well-known'],
-      credentialTypes: getCredentialType(context),
+      credentialTypes: getCredentialType(credential.credential),
       issuerLogo: getDisplayObjectForCurrentLanguage(
         context.selectedIssuer.display,
       )?.logo,
@@ -154,14 +155,6 @@ export const updateCredentialInformation = (
     generatedOn: new Date(),
     vcMetadata: context.vcMetadata || {},
   };
-};
-
-export const updateVCmetadataOfCredentialWrapper = (
-  context,
-  credentialWrapper: CredentialWrapper,
-) => {
-  credentialWrapper.vcMetadata = context.vcMetadata;
-  return credentialWrapper;
 };
 
 export const getDisplayObjectForCurrentLanguage = (
