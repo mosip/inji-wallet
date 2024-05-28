@@ -122,7 +122,6 @@ export async function decryptJson(
   encryptionKey: string,
   encryptedData: string,
 ): Promise<string> {
-  //const{RNSecureKeystoreModule}=NativeModules
   try {
     if (encryptedData === null || encryptedData === undefined) {
       // to avoid crash in case of null or undefined
