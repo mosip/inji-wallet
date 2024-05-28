@@ -315,23 +315,7 @@ fileignoreconfig:
     checksum: 0816d4b9440da5384fd867d13555986d223124b9609280350226510a06ae96fa
   - filename: machines/VerifiableCredential/VCItemMachine/VCItemMachine.ts
     checksum: fdc0c23a7107eb713d20f60fda675f9e9fe8ef29c981d798d90e581dfee340c8
-    checksum: 6164156146b0474943237d1e1a69ec05ba66d89ced06508353b6cffe582237b5
-  - filename: machines/backupAndRestore/backupWithEncryption.typegen.ts
-    checksum: 19ccac58df42ce0b6e36c66592e53441d709713fb1bff64454e0039dd3b0ac97
-  - filename: injitest/src/main/java/inji/utils/TestDataReader.java
-    checksum: 02d9ff0873d2f9685c4db6ad41d56eb91a59966feda20d7072ec32da6c2e22fe
-  - filename: injitest/src/test/java/iosTestCases/UnlockWithPasscodeTest.java
-    checksum: a44dab1127143fa303824068f81a8ee3e7697ace4c38460d5400a0a56fe9ba7d
-  - filename: injitest/src/test/java/iosTestCases/VcDownloadAndVerifyUsingEsignetTest.java
-    checksum: 23bcfd393abb1802d3ecf913dd535e2487a23db7afded1fa0a1fe284513c0fa8
-  - filename: injitest/src/test/java/iosTestCases/VcDownloadAndVerifyUsingUinTest.java
-    checksum: fdf6e7b3fc04af16c0c47d2d1d7e051d7cb03e0891d4697e40997932362d06e0
-  - filename: machines/Issuers/IssuersMachine.typegen.ts
-    checksum: 08fd5e4eff836c219a0f16f6d4178a3511ec2581507076d3f9d32dcadbc01351
-  - filename: injitest/src/test/java/iosTestCases/DeletingVcTest.java
-    checksum: 0816d4b9440da5384fd867d13555986d223124b9609280350226510a06ae96fa
-  - filename: machines/VerifiableCredential/VCItemMachine/VCItemMachine.ts
-    checksum: fdc0c23a7107eb713d20f60fda675f9e9fe8ef29c981d798d90e581dfee340c8
+    checksum: 8ac74d2e5c6de179e460b86899eb048ad4c5bd67abc3d28c015e92335b8afe24
   - filename: android/app/src/main/java/io/mosip/residentapp/InjiVciClientModule.java
     checksum: 17f55840bab193bc353034445ba4fce53e1ce466e95f616c15a1351f8d2f23bc
   - filename: ios/Inji.xcodeproj/project.pbxproj
