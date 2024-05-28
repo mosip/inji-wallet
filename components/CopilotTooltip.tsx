@@ -29,11 +29,7 @@ export const CopilotTooltip = () => {
       <Text testID={`${controller.currentStepTitle}Description`}>
         {controller.currentStepDescription}
       </Text>
-      <Row
-        align="center"
-        crossAlign="center"
-        margin="25 0 0 0"
-        style={{justifyContent: 'space-between'}}>
+      <Row align="space-between" crossAlign="center" margin="25 0 0 0">
         <Text testID={`${controller.CURRENT_STEP}stepCount`} weight="bold">
           {controller.stepCount}
         </Text>

@@ -51,7 +51,7 @@ export const VCCardView: React.FC<VCItemProps> = props => {
     return <VCCardSkeleton />;
   }
 
-  const VCCardViewContentFn = props => (
+  const CardViewContent = props => (
     <VCCardViewContent
       vcMetadata={props.vcMetadata}
       context={controller.context}
@@ -91,10 +91,10 @@ export const VCCardView: React.FC<VCItemProps> = props => {
             description={t('copilot:cardMessage')}
             order={6}
             title={t('copilot:cardTitle')}
-            children={VCCardViewContentFn(props)}
+            children={CardViewContent(props)}
           />
         ) : (
-          VCCardViewContentFn(props)
+          CardViewContent(props)
         )}
       </Pressable>
       <ErrorMessageOverlay
