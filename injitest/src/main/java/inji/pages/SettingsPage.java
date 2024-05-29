@@ -33,6 +33,10 @@ public class SettingsPage extends BasePage {
     @AndroidFindBy(accessibility = "fil")
     @iOSXCUITFindBy(accessibility = "fil")
     private WebElement filipinoLanguageButton;
+
+    @AndroidFindBy(accessibility = "en")
+    @iOSXCUITFindBy(accessibility = "en")
+    private WebElement englishLanguageButton;
     
     @AndroidFindBy(accessibility = "hi")
     @iOSXCUITFindBy(accessibility = "hi")
@@ -119,7 +123,9 @@ public class SettingsPage extends BasePage {
         return this;
     }
 
-
+    public void clickOnEnglishLanguage() {
+        clickOnElement(englishLanguageButton);
+    }
 
     public void clickOnFilipinoLanguage() {
         clickOnElement(filipinoLanguageButton);
