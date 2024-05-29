@@ -1,4 +1,5 @@
 {
+  "originHash" : "d01056e90451bce7952dbc76948d3026497a31374959581b2fdf485b17f6b992",
   "pins" : [
     {
       "identity" : "base45-swift",
