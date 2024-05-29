@@ -60,6 +60,7 @@ export const ScanLayout: React.FC = () => {
         isInvalidIdentity={controller.isInvalidIdentity}
         onNavigateHome={controller.GOTO_HOME}
         onRetryVerification={controller.RETRY_VERIFICATION}
+        isLivenessEnabled={controller.isLivenessEnabled}
       />
       <ScanStack.Navigator initialRouteName="ScanScreen">
         {controller.isReviewing &&

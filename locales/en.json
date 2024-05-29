@@ -25,8 +25,12 @@
     "Wallet": "Wallet"
   },
   "FaceScanner": {
+    "livenessCaptureGuide": "Hold the phone steady, keep your face focused in the centre.",
+    "faceOutGuide": "Keep your face inside the oval!",
+    "faceInGuide": "Capturing in progress!",
     "imageCaptureGuide": "Hold the phone steady, keep your face focused in the centre and click on Capture.",
     "capture": "Capture",
+    "cancel": "Cancel",
     "flipCamera": "Flip Camera"
   },
   "OIDcAuth": {

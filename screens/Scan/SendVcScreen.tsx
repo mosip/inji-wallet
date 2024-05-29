@@ -140,6 +140,7 @@ export const SendVcScreen: React.FC = () => {
         isInvalidIdentity={controller.isInvalidIdentity}
         onNavigateHome={controller.GO_TO_HOME}
         onRetryVerification={controller.RETRY_VERIFICATION}
+        isLivenessEnabled={controller.isLivenessEnabled}
       />
 
       <FaceVerificationAlertOverlay

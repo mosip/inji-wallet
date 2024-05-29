@@ -33,6 +33,7 @@ import {NavigationProp, useNavigation} from '@react-navigation/native';
 import {RootRouteProps} from '../../routes';
 import {BOTTOM_TAB_ROUTES} from '../../routes/routesConstants';
 import {VCItemMachine} from '../../machines/VerifiableCredential/VCItemMachine/VCItemMachine';
+import { selectIsLivenessEnabled } from '../../machines/settings';
 
 type MyVcsTabNavigation = NavigationProp<RootRouteProps>;
 
@@ -41,6 +42,7 @@ export function useQrLogin({service}: QrLoginProps) {
   const navigation = useNavigation<MyVcsTabNavigation>();
 
   const vcMetaService = appService.children.get('vcMeta')!!;
+  const settingsService = appService.children.get('settings')!!;
   const [selectedIndex, setSelectedIndex] = useState<number>(null);
   return {
     isFaceVerificationConsent: useSelector(
@@ -56,6 +58,7 @@ export function useQrLogin({service}: QrLoginProps) {
       service,
       selectVerifiableCredentialData,
     ),
+    isLivenessEnabled: useSelector(settingsService, selectIsLivenessEnabled),
     domainName: useSelector(service, selectDomainName),
     logoUrl: useSelector(service, selectLogoUrl),
     essentialClaims: useSelector(service, selectEssentialClaims),

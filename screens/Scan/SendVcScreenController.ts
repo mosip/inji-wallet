@@ -23,6 +23,7 @@ import {RootRouteProps} from '../../routes';
 import {BOTTOM_TAB_ROUTES} from '../../routes/routesConstants';
 import {VCItemMachine} from '../../machines/VerifiableCredential/VCItemMachine/VCItemMachine';
 import {Theme} from '../../components/ui/styleUtils';
+import { selectIsLivenessEnabled } from '../../machines/settings';
 
 type MyVcsTabNavigation = NavigationProp<RootRouteProps>;
 
@@ -33,6 +34,7 @@ const changeTabBarVisible = (visible: string) => {
 export function useSendVcScreen() {
   const {appService} = useContext(GlobalContext);
   const scanService = appService.children.get('scan')!!;
+  const settingsService = appService.children.get('settings')!!;
   const vcMetaService = appService.children.get('vcMeta')!!;
   const navigation = useNavigation<MyVcsTabNavigation>();
 
@@ -50,6 +52,7 @@ export function useSendVcScreen() {
     isVerifyingIdentity: useSelector(scanService, selectIsVerifyingIdentity),
     isInvalidIdentity: useSelector(scanService, selectIsInvalidIdentity),
     isCancelling: useSelector(scanService, selectIsCancelling),
+    isLivenessEnabled: useSelector(settingsService, selectIsLivenessEnabled),
     isFaceVerificationConsent: useSelector(
       scanService,
       selectIsFaceVerificationConsent,
