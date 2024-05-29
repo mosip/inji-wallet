@@ -125,8 +125,6 @@ public class EsignetLoginPage extends BasePage {
         return new OtpVerificationPage(driver);
     }
 
-
-
     public boolean isEnterYourVidTextDisplayed() {
         return this.isElementDisplayed(enterYourVidTextHeader);
     }

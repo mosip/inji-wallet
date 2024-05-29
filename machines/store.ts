@@ -20,7 +20,7 @@ import {
   SHOW_FACE_AUTH_CONSENT_SHARE_FLOW,
   ENOENT,
 } from '../shared/constants';
-import SecureKeystore from '@mosip/secure-keystore';
+import { NativeModules } from 'react-native';
 import {
   AUTH_TIMEOUT,
   decryptJson,
@@ -45,6 +45,7 @@ export const keyinvalidatedString =
   'Key Invalidated due to biometric enrollment';
 export const tamperedErrorMessageString = 'Data is tampered';
 
+const{RNSecureKeystoreModule}=NativeModules
 const model = createModel(
   {
     encryptionKey: '',
@@ -294,12 +295,12 @@ export const storeMachine =
       services: {
         clear: () => clear(),
         hasAndroidEncryptionKey: () => async callback => {
-          const hasSetCredentials = SecureKeystore.hasAlias(ENCRYPTION_ID);
+          const hasSetCredentials = RNSecureKeystoreModule.hasAlias(ENCRYPTION_ID);
           if (hasSetCredentials) {
             try {
               const base64EncodedString =
                 Buffer.from('Dummy').toString('base64');
-              await SecureKeystore.encryptData(
+              await RNSecureKeystoreModule.encryptData(
                 DUMMY_KEY_FOR_BIOMETRIC_ALIAS,
                 base64EncodedString,
               );
@@ -525,14 +526,14 @@ export const storeMachine =
               );
             }
           } else {
-            const isBiometricsEnabled = SecureKeystore.hasBiometricsEnabled();
-            await SecureKeystore.generateKey(
+            const isBiometricsEnabled = RNSecureKeystoreModule.hasBiometricsEnabled();
+            await RNSecureKeystoreModule.generateKey(
               ENCRYPTION_ID,
               isBiometricsEnabled,
               AUTH_TIMEOUT,
             );
-            SecureKeystore.generateHmacshaKey(HMAC_ALIAS);
-            SecureKeystore.generateKey(
+            RNSecureKeystoreModule.generateHmacshaKey(HMAC_ALIAS);
+            RNSecureKeystoreModule.generateKey(
               DUMMY_KEY_FOR_BIOMETRIC_ALIAS,
               isBiometricsEnabled,
               0,
@@ -865,7 +866,7 @@ export async function clear() {
   try {
     console.warn('clearing entire storage');
     if (isHardwareKeystoreExists) {
-      SecureKeystore.clearKeys();
+      RNSecureKeystoreModule.clearKeys();
     }
     await Storage.clear();
   } catch (e) {

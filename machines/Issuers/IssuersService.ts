@@ -16,7 +16,7 @@ import {
   generateKeys,
   isHardwareKeystoreExists,
 } from '../../shared/cryptoutil/cryptoUtil';
-import SecureKeystore from '@mosip/secure-keystore';
+import { NativeModules } from 'react-native';
 import {getVCMetadata, VCMetadata} from '../../shared/VCMetadata';
 import {
   VerificationErrorType,
@@ -29,6 +29,7 @@ import {
 import {TelemetryConstants} from '../../shared/telemetry/TelemetryConstants';
 import {VciClient} from '../../shared/vciClient/VciClient';
 
+const{RNSecureKeystoreModule}=NativeModules
 export const IssuersService = () => {
   return {
     isUserSignedAlready: () => async () => {
@@ -108,8 +109,8 @@ export const IssuersService = () => {
       if (!isHardwareKeystoreExists) {
         return await generateKeys();
       }
-      const isBiometricsEnabled = SecureKeystore.hasBiometricsEnabled();
-      return SecureKeystore.generateKeyPair(
+      const isBiometricsEnabled = RNSecureKeystoreModule.hasBiometricsEnabled();
+      return RNSecureKeystoreModule.generateKeyPair(
         Issuers_Key_Ref,
         isBiometricsEnabled,
         0,

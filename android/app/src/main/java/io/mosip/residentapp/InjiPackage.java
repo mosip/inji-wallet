@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+  
 public class InjiPackage implements ReactPackage {
     @NonNull
     @Override
@@ -18,7 +19,7 @@ public class InjiPackage implements ReactPackage {
 
         modules.add(new InjiVciClientModule(reactApplicationContext));
         modules.add(new RNPixelpassModule(reactApplicationContext));
-
+        modules.add(new RNSecureKeystoreModule(reactApplicationContext));
         return modules;
     }
 
