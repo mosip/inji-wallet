@@ -47,7 +47,6 @@ export const HomeScreenLayout: React.FC<RootRouteProps> = props => {
       source={'Inji'}
       triggerComponent={
         <Copilot
-          key={t('copilot:helpTitle')}
           title={t('copilot:helpTitle')}
           description={t('copilot:helpMessage')}
           order={1}

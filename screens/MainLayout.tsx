@@ -78,7 +78,6 @@ export const MainLayout: React.FC = () => {
                     </View>
                   ) : (
                     <Copilot
-                      key={t(route.name)}
                       title={t(`copilot:${route.name}Title`)}
                       description={t(`copilot:${route.name}Message`)}
                       order={2 + index}

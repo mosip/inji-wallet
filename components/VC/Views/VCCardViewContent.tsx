@@ -19,7 +19,7 @@ import {RemoveVcWarningOverlay} from '../../../screens/Home/MyVcs/RemoveVcWarnin
 import {HistoryTab} from '../../../screens/Home/MyVcs/HistoryTab';
 import {getTextColor} from '../common/VCUtils';
 import {useCopilot} from 'react-native-copilot';
-import {COPILOT_FINAL_STEP} from '../../../shared/constants';
+import {useTranslation} from 'react-i18next';
 
 export const VCCardViewContent: React.FC<VCItemContentProps> = props => {
   const isVCSelectable = props.selectable && (
@@ -39,7 +39,8 @@ export const VCCardViewContent: React.FC<VCItemContentProps> = props => {
   );
   const issuerLogo = props.verifiableCredentialData.issuerLogo;
   const faceImage = props.verifiableCredentialData.face;
-  const {start, goToNth} = useCopilot();
+  const {start} = useCopilot();
+  const {t} = useTranslation();
 
   return (
     <ImageBackground
@@ -52,10 +53,7 @@ export const VCCardViewContent: React.FC<VCItemContentProps> = props => {
       <View
         onLayout={
           props.isInitialLaunch
-            ? () => {
-                start();
-                goToNth(COPILOT_FINAL_STEP);
-              }
+            ? () => start(t('copilot:cardTitle'))
             : undefined
         }>
         <Row crossAlign="center" padding="3 0 0 3">

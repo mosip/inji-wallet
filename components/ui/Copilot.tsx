@@ -4,10 +4,8 @@ import {CopilotStep, walkthroughable} from 'react-native-copilot';
 
 export const Copilot: React.FC<CopilotProps> = (props: CopilotProps) => {
   const CopilotView = walkthroughable(View);
-
   return (
     <CopilotStep
-      key={props.key}
       name={props.title}
       text={props.description}
       order={props.order}>
@@ -19,7 +17,6 @@ export const Copilot: React.FC<CopilotProps> = (props: CopilotProps) => {
 };
 
 interface CopilotProps {
-  key: any;
   title: string;
   description: string;
   order: number;

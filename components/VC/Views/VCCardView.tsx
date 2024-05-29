@@ -87,7 +87,6 @@ export const VCCardView: React.FC<VCItemProps> = props => {
         }>
         {props.isTopCard ? (
           <Copilot
-            key={t('copilot:cardTitle')}
             description={t('copilot:cardMessage')}
             order={6}
             title={t('copilot:cardTitle')}

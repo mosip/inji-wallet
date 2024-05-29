@@ -88,7 +88,6 @@ export const HomeScreen: React.FC<HomeRouteProps> = props => {
       </Column>
 
       <Copilot
-        key={t('copilot:downloadTitle')}
         title={t('copilot:downloadTitle')}
         description={t('copilot:downloadMessage')}
         order={2}
