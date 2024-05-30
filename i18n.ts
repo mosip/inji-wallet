@@ -44,6 +44,7 @@ i18next
       null,
       existingCredentials.password,
     );
+
     if (language !== i18next.language) {
       i18next.changeLanguage(language);
       populateLanguageCodeMap();

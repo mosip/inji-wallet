@@ -826,11 +826,31 @@ export const requestMachine =
               event.type === EventTypes.onError &&
               event.code.includes(verifierErrorCodePrefix)
             ) {
+              let errorMessage = event.message;
+              if (event.message.includes('CRCFailureCount')) {
+                const eventMessageList = event.message.split(' ');
+                const crcFailureCount = parseInt(
+                  eventMessageList[0].split(':')[1],
+                );
+                const totalChunkCount = parseInt(
+                  eventMessageList[1].split(':')[1],
+                );
+                if (crcFailureCount > 0) {
+                  sendErrorEvent(
+                    getErrorEventData(
+                      TelemetryConstants.FlowType.receiverVcShare,
+                      TelemetryConstants.ErrorId.crcFailure,
+                      `Total Chunk Count: ${totalChunkCount} CRC Failure count: ${crcFailureCount}`,
+                    ),
+                  );
+                }
+                errorMessage = event.message.split('-')[1];
+              }
               callback({
                 type: 'BLE_ERROR',
-                bleError: {message: event.message, code: event.code},
+                bleError: {message: errorMessage, code: event.code},
               });
-              console.error('BLE Exception: ' + event.message);
+              console.error('BLE Exception: ' + errorMessage);
             }
           });
 
@@ -840,6 +860,15 @@ export const requestMachine =
         receiveVc: () => callback => {
           const statusCallback = (event: VerifierDataEvent) => {
             if (event.type === EventTypes.onDataReceived) {
+              if (event.crcFailureCount > 0) {
+                sendErrorEvent(
+                  getErrorEventData(
+                    TelemetryConstants.FlowType.receiverVcShare,
+                    TelemetryConstants.ErrorId.crcFailure,
+                    `Total Chunk Count: ${event.totalChunkCount} CRC Failure count: ${event.crcFailureCount}`,
+                  ),
+                );
+              }
               callback({type: 'VC_RECEIVED', vc: JSON.parse(event.data)});
             }
           };

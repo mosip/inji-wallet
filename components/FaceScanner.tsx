@@ -1,6 +1,6 @@
 import React, {useCallback, useContext, useEffect, useRef} from 'react';
 import {Camera} from 'expo-camera';
-import {TouchableOpacity, View, Image} from 'react-native';
+import {TouchableOpacity, View} from 'react-native';
 import {Button, Centered, Column, Row, Text} from './ui';
 import {useInterpret, useSelector} from '@xstate/react';
 import {useTranslation} from 'react-i18next';
@@ -21,6 +21,7 @@ import {selectIsActive} from '../machines/app';
 import {RotatingIcon} from './RotatingIcon';
 import {Theme} from './ui/styleUtils';
 import {SvgImage} from './ui/svg';
+import testIDProps from '../shared/commonUtil';
 
 export const FaceScanner: React.FC<FaceScannerProps> = props => {
   const {t} = useTranslation('FaceScanner');
@@ -81,14 +82,16 @@ export const FaceScanner: React.FC<FaceScannerProps> = props => {
 
   return (
     <Column fill align="space-between">
-      <View style={Theme.Styles.scannerContainer}>
+      <View style={Theme.CameraEnabledStyles.scannerContainer}>
         <Camera
-          style={Theme.Styles.scanner}
+          {...testIDProps('camera')}
+          style={Theme.CameraEnabledStyles.scanner}
           type={whichCamera}
           ref={setCameraRef}
         />
       </View>
       <Text
+        testID="imageCaptureGuide"
         align="center"
         weight="semibold"
         style={Theme.TextStyles.base}
@@ -105,7 +108,9 @@ export const FaceScanner: React.FC<FaceScannerProps> = props => {
                 onPress={() => service.send(FaceScannerEvents.CAPTURE())}>
                 {SvgImage.CameraCaptureIcon()}
               </TouchableOpacity>
-              <Text size="small" weight="semibold" margin="8">
+              <Text
+                testID="captureText"
+                style={Theme.CameraEnabledStyles.iconText}>
                 {t('capture')}
               </Text>
             </Centered>
@@ -115,7 +120,9 @@ export const FaceScanner: React.FC<FaceScannerProps> = props => {
                 onPress={() => service.send(FaceScannerEvents.FLIP_CAMERA())}>
                 {SvgImage.FlipCameraIcon()}
               </TouchableOpacity>
-              <Text size="smaller" weight="semibold" margin="8">
+              <Text
+                testID="flipCameraText"
+                style={Theme.CameraEnabledStyles.iconText}>
                 {t('flipCamera')}
               </Text>
             </Centered>

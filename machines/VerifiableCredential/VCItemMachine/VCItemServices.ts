@@ -1,4 +1,4 @@
-import SecureKeystore from '@mosip/secure-keystore';
+import {NativeModules} from 'react-native';
 import Cloud from '../../../shared/CloudBackupAndRestoreUtils';
 import {VCMetadata} from '../../../shared/VCMetadata';
 import getAllConfigurations, {
@@ -17,7 +17,9 @@ import {CredentialDownloadResponse, request} from '../../../shared/request';
 import {WalletBindingResponse} from '../VCMetaMachine/vc';
 import {verifyCredential} from '../../../shared/vcjs/verifyCredential';
 import {getMosipIdentifier} from '../../../shared/commonUtil';
+import {getVerifiableCredential} from './VCItemSelectors';
 
+const {RNSecureKeystoreModule} = NativeModules;
 export const VCItemServices = model => {
   return {
     isUserSignedAlready: () => async () => {
@@ -95,8 +97,8 @@ export const VCItemServices = model => {
       if (!isHardwareKeystoreExists) {
         return await generateKeys();
       }
-      const isBiometricsEnabled = SecureKeystore.hasBiometricsEnabled();
-      return SecureKeystore.generateKeyPair(
+      const isBiometricsEnabled = RNSecureKeystoreModule.hasBiometricsEnabled();
+      return RNSecureKeystoreModule.generateKeyPair(
         VCMetadata.fromVC(context.vcMetadata).id,
         isBiometricsEnabled,
         0,
@@ -112,7 +114,7 @@ export const VCItemServices = model => {
         {
           requestTime: String(new Date().toISOString()),
           request: {
-            individualId: getMosipIdentifier(vc.credentialSubject),
+            individualId: VCMetadata.fromVC(context.vcMetadata).id,
             otpChannels: ['EMAIL', 'PHONE'],
           },
         },
@@ -197,7 +199,10 @@ export const VCItemServices = model => {
     verifyCredential: async context => {
       if (context.verifiableCredential) {
         const verificationResult = await verifyCredential(
-          context.verifiableCredential,
+          getVerifiableCredential(
+            context.vcMetadata,
+            context.verifiableCredential,
+          ),
         );
         if (!verificationResult.isVerified) {
           throw new Error(verificationResult.errorMessage);

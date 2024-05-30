@@ -1,6 +1,7 @@
 package inji.pages;
 
 import inji.constants.Target;
+import inji.utils.IosUtil;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.pagefactory.AndroidFindBy;
 import io.appium.java_client.pagefactory.iOSXCUITFindBy;
@@ -32,6 +33,10 @@ public class SettingsPage extends BasePage {
     @AndroidFindBy(accessibility = "fil")
     @iOSXCUITFindBy(accessibility = "fil")
     private WebElement filipinoLanguageButton;
+
+    @AndroidFindBy(accessibility = "en")
+    @iOSXCUITFindBy(accessibility = "en")
+    private WebElement englishLanguageButton;
     
     @AndroidFindBy(accessibility = "hi")
     @iOSXCUITFindBy(accessibility = "hi")
@@ -59,7 +64,7 @@ public class SettingsPage extends BasePage {
     private WebElement aboutInji;
 
     @AndroidFindBy(xpath = "//*[contains(@text,'Tuvali-version:')]")
-    @iOSXCUITFindBy(xpath = "//*[contains(@name,'Tuvali-version: 0.')]")
+    @iOSXCUITFindBy(xpath = "//*[contains(@name,'Tuvali-version:')]")
     private WebElement tuvaliVersion;
 
     @AndroidFindBy(accessibility = "injiTourGuide")
@@ -89,11 +94,9 @@ public class SettingsPage extends BasePage {
     private WebElement backButton;
 
     @AndroidFindBy(accessibility = "dataBackupAndRestore")
-    @iOSXCUITFindBy(xpath = "//XCUIElementTypeStaticText[@name=\"dataBackupAndRestoreText\" and @label=\"Backup & Restore\"]")
     private WebElement dataBackupAndRestore;
 
     @AndroidFindBy(accessibility = "newLabel")
-    @iOSXCUITFindBy(accessibility = "newLabel")
     private WebElement newlable;
 
 
@@ -110,6 +113,7 @@ public class SettingsPage extends BasePage {
     }
 
     public UnlockApplicationPage clickOnLogoutButton() {
+        IosUtil.scrollToElement(driver,100,800,100,200);
         clickOnElement(logoutButton);
         return new UnlockApplicationPage(driver);
     }
@@ -119,7 +123,9 @@ public class SettingsPage extends BasePage {
         return this;
     }
 
-
+    public void clickOnEnglishLanguage() {
+        clickOnElement(englishLanguageButton);
+    }
 
     public void clickOnFilipinoLanguage() {
         clickOnElement(filipinoLanguageButton);
@@ -233,6 +239,10 @@ public class SettingsPage extends BasePage {
     }
     public String  getDataBackupAndRestoreText(){
         return getTextFromLocator(dataBackupAndRestore);
+    }
+
+    public String getreceiveCardText(){
+        return getTextFromLocator(receiveCardText);
     }
 
 }

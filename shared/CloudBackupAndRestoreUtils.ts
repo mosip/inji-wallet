@@ -380,7 +380,7 @@ class Cloud {
         });
       }
     } catch (error) {
-      console.log(
+      console.error(
         `Error occurred while cloud upload.. retrying ${retryCounter} : Error : ${error}`,
       );
       if (this.isNetworkError(error)) {
@@ -476,7 +476,7 @@ export default Cloud;
 
 export type ProfileInfo = {
   email: string;
-  picture: string|undefined;
+  picture: string | undefined;
 };
 
 export type SignInResult = {

@@ -11,16 +11,16 @@ public class AddNewCardPage extends BasePage{
     @iOSXCUITFindBy(accessibility = "title")
     private WebElement addNewCardHeader;
 
-    @AndroidFindBy(accessibility = "issuerHeading-Mosip")
-    @iOSXCUITFindBy(accessibility = "issuerHeading-Mosip")
+    @AndroidFindBy(accessibility = "issuerHeading-MosipOtp")
+    @iOSXCUITFindBy(accessibility = "issuerHeading-MosipOtp")
     private WebElement downloadViaUin;
     
     @AndroidFindBy(accessibility = "goBack")
     @iOSXCUITFindBy(accessibility = "goBack")
     private WebElement backButton;
     
-    @AndroidFindBy(accessibility = "issuer-ESignet")
-    @iOSXCUITFindBy(accessibility = "issuer-ESignet")
+    @AndroidFindBy(accessibility = "issuerHeading-Mosip")
+    @iOSXCUITFindBy(accessibility = "issuerHeading-Mosip")
     private WebElement downloadViaEsignet;
 
     @iOSXCUITFindBy(accessibility = "Continue")
@@ -33,12 +33,12 @@ public class AddNewCardPage extends BasePage{
     @iOSXCUITFindBy(accessibility = "issuersScreenDescription")
     private WebElement addNewCardGuideMessage;
     
-    @AndroidFindBy(accessibility = "issuerDescription-Mosip")
-    @iOSXCUITFindBy(accessibility = "issuerDescription-Mosip")
+    @AndroidFindBy(accessibility = "issuerDescription-MosipOtp")
+    @iOSXCUITFindBy(accessibility = "issuerDescription-MosipOtp")
     private WebElement issuerDescriptionMosip;
     
-    @AndroidFindBy(accessibility = "issuerDescription-ESignet")
-    @iOSXCUITFindBy(accessibility = "issuerDescription-ESignet")
+    @AndroidFindBy(accessibility = "issuerDescription-Mosip")
+    @iOSXCUITFindBy(accessibility = "issuerDescription-Mosip")
     private WebElement issuerDescriptionEsignet;
     
     @AndroidFindBy(className = "android.widget.EditText")
@@ -48,6 +48,10 @@ public class AddNewCardPage extends BasePage{
     @AndroidFindBy(accessibility = "issuerHeading-Sunbird")
     @iOSXCUITFindBy(accessibility = "issuerHeading-Sunbird")
     private WebElement downloadViaSunbird;
+
+    @AndroidFindBy(accessibility = "credentialTypeHeading-InsuranceCredential")
+    @iOSXCUITFindBy(accessibility = "credentialTypeHeading-InsuranceCredential")
+    private WebElement credentialTypeHeadingInsuranceCredential;
     
     public AddNewCardPage(AppiumDriver driver) {
         super(driver);
@@ -152,6 +156,9 @@ public class AddNewCardPage extends BasePage{
     public SunbirdLoginPage clickOnDownloadViaSunbird(){
         clickOnElement(downloadViaSunbird);
         return new SunbirdLoginPage(driver);
+    }
+    public void clickOnInsuranceCredential(){
+        clickOnElement(credentialTypeHeadingInsuranceCredential);
     }
 }
 

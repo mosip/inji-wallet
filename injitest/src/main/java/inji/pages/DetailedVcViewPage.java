@@ -12,24 +12,24 @@ public class DetailedVcViewPage extends BasePage{
     @iOSXCUITFindBy(accessibility = "idDetailsHeader")
     private WebElement detailedVcViewPageTitle;
 
-    @AndroidFindBy(accessibility = "Full NameValue")
-    @iOSXCUITFindBy(accessibility = "Full NameValue")
+    @AndroidFindBy(accessibility = "fullNameValue")
+    @iOSXCUITFindBy(accessibility = "fullNameValue")
     private WebElement fullNameValue;
 
-    @AndroidFindBy(accessibility = "GenderValue")
-    @iOSXCUITFindBy(accessibility = "GenderValue")
+    @AndroidFindBy(accessibility = "genderValue")
+    @iOSXCUITFindBy(accessibility = "genderValue")
     private WebElement genderValue;
 
-    @AndroidFindBy(accessibility = "Date of BirthValue")
-    @iOSXCUITFindBy(accessibility = "Date of BirthValue")
+    @AndroidFindBy(accessibility = "dateOfBirthValue")
+    @iOSXCUITFindBy(accessibility = "dateOfBirthValue")
     private WebElement dateOfBirthValue;
 
-    @AndroidFindBy(accessibility = "ID TypeValue")
-    @iOSXCUITFindBy(accessibility = "ID TypeValue")
+    @AndroidFindBy(accessibility = "idTypeValue")
+    @iOSXCUITFindBy(accessibility = "idTypeValue")
     private WebElement idTypeValue;
 
-    @AndroidFindBy(accessibility = "valid")
-    @iOSXCUITFindBy(accessibility = "valid")
+    @AndroidFindBy(accessibility = "verificationStatus")
+    @iOSXCUITFindBy(accessibility = "verificationStatus")
     private WebElement statusValue;
 
     @AndroidFindBy(accessibility = "UINValue")
@@ -44,8 +44,8 @@ public class DetailedVcViewPage extends BasePage{
     @iOSXCUITFindBy(accessibility = "phoneValue")
     private WebElement phoneNumberValue;
 
-    @AndroidFindBy(accessibility = "EmailValue")
-    @iOSXCUITFindBy(accessibility = "EmailValue")
+    @AndroidFindBy(accessibility = "emailValue")
+    @iOSXCUITFindBy(accessibility = "emailValue")
     private WebElement emailIdValue;
 
     @AndroidFindBy(accessibility = "enableVerification")
@@ -83,13 +83,17 @@ public class DetailedVcViewPage extends BasePage{
     @iOSXCUITFindBy(accessibility = "credentialRegistryValue")
     private WebElement credentialRegistryValue;
 
-    @AndroidFindBy(accessibility = "esignetLogo")
-    @iOSXCUITFindBy(accessibility = "esignetLogo")
+    @AndroidFindBy(accessibility = "mosip-logo")
+    @iOSXCUITFindBy(accessibility = "mosip-logo")
     private WebElement esignetLogo;
     
-    @AndroidFindBy(accessibility = "arrowLeft")
-    @iOSXCUITFindBy(accessibility = "arrowLeft")
+    @AndroidFindBy(accessibility = "goBack")
+    @iOSXCUITFindBy(accessibility = "goBack")
     public WebElement backArrow;
+
+    @AndroidFindBy(accessibility = "KebabIcon")
+    @iOSXCUITFindBy(accessibility = "KebabIcon")
+    public WebElement moreOptionsButton;
 
     public DetailedVcViewPage(AppiumDriver driver) {
         super(driver);
@@ -140,7 +144,7 @@ public class DetailedVcViewPage extends BasePage{
     }
 
     public PleaseConfirmPopupPage clickOnActivateButtonAndroid(){
-        IosUtil.scrollToElement(driver,58,712,160,129);
+//        IosUtil.scrollToElement(driver,58,712,160,129);
         clickOnElement(activateButton);
         return new PleaseConfirmPopupPage(driver);
     }
@@ -161,17 +165,23 @@ public class DetailedVcViewPage extends BasePage{
     }
 
     public HomePage clickOnQrCrossIcon() {
+        if (isElementDisplayed(qrCloseIcon)){
         clickOnElement(qrCloseIcon);
+        }
         return new HomePage(driver);
     }
 
     public HomePage clickOnCrossIcon() {
-        clickOnElement(crossIcon);
+       if(isElementDisplayed(crossIcon)) {
+            clickOnElement(crossIcon);
+        }
         return new HomePage(driver);
     }
 
     public void clickOnQrCodeButton() {
-        clickOnElement(detailedVcViewPageQr);
+        if(isElementDisplayed(detailedVcViewPageQr)) {
+            clickOnElement(detailedVcViewPageQr);
+        }
         new PleaseConfirmPopupPage(driver);
     }
 
@@ -190,4 +200,15 @@ public class DetailedVcViewPage extends BasePage{
     public boolean isEsignetLogoDisplayed() {
         return isElementDisplayed(esignetLogo);
     }
+
+    public void clickOnMoreOptionsInDetails() {
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        clickOnElement(moreOptionsButton);
+    }
+
+
 }

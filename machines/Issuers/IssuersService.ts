@@ -4,7 +4,8 @@ import NetInfo from '@react-native-community/netinfo';
 import {request} from '../../shared/request';
 import {
   constructAuthorizationConfiguration,
-  getBody,
+  constructProofJWT,
+  getCredentialType,
   Issuers,
   Issuers_Key_Ref,
   updateCredentialInformation,
@@ -15,15 +16,20 @@ import {
   generateKeys,
   isHardwareKeystoreExists,
 } from '../../shared/cryptoutil/cryptoUtil';
-import SecureKeystore from '@mosip/secure-keystore';
+import {NativeModules} from 'react-native';
 import {getVCMetadata, VCMetadata} from '../../shared/VCMetadata';
-import {verifyCredential} from '../../shared/vcjs/verifyCredential';
+import {
+  VerificationErrorType,
+  verifyCredential,
+} from '../../shared/vcjs/verifyCredential';
 import {
   getImpressionEventData,
   sendImpressionEvent,
 } from '../../shared/telemetry/TelemetryUtils';
 import {TelemetryConstants} from '../../shared/telemetry/TelemetryConstants';
+import {VciClient} from '../../shared/vciClient/VciClient';
 
+const {RNSecureKeystoreModule} = NativeModules;
 export const IssuersService = () => {
   return {
     isUserSignedAlready: () => async () => {
@@ -53,20 +59,28 @@ export const IssuersService = () => {
       return response?.response;
     },
     downloadCredential: async (context: any) => {
-      const body = await getBody(context);
       const downloadTimeout = await vcDownloadTimeout();
-      let credential = await request(
-        'POST',
-        context.selectedIssuer.credential_endpoint,
-        body,
-        '',
-        {
-          'Content-Type': 'application/json',
-          Authorization: 'Bearer ' + context.tokenResponse?.accessToken,
-        },
-        downloadTimeout,
+      const accessToken: string = context.tokenResponse?.accessToken;
+      const issuerMeta: Object = {
+        credentialAudience: context.selectedIssuer.credential_audience,
+        credentialEndpoint: context.selectedIssuer.credential_endpoint,
+        downloadTimeoutInMilliSeconds: downloadTimeout,
+        credentialType: getCredentialType(context),
+        credentialFormat: 'ldp_vc',
+      };
+      const proofJWT = await constructProofJWT(
+        context.publicKey,
+        context.privateKey,
+        accessToken,
+        context.selectedIssuer,
       );
-      console.info(`VC download via ${context.selectedIssuerId} is succesfull`);
+      let credential = await VciClient.downloadCredential(
+        issuerMeta,
+        proofJWT,
+        accessToken,
+      );
+
+      console.info(`VC download via ${context.selectedIssuerId} is successful`);
       credential = updateCredentialInformation(context, credential);
       return credential;
     },
@@ -78,16 +92,25 @@ export const IssuersService = () => {
             TelemetryConstants.Screens.webViewPage,
         ),
       );
+      let supportedScopes: [string];
+      if (Object.keys(context.selectedCredentialType).length === 0) {
+        supportedScopes = context.selectedIssuer.scopes_supported;
+      } else {
+        supportedScopes = [context.selectedCredentialType['scope']];
+      }
       return await authorize(
-        constructAuthorizationConfiguration(context.selectedIssuer),
+        constructAuthorizationConfiguration(
+          context.selectedIssuer,
+          supportedScopes,
+        ),
       );
     },
     generateKeyPair: async () => {
       if (!isHardwareKeystoreExists) {
         return await generateKeys();
       }
-      const isBiometricsEnabled = SecureKeystore.hasBiometricsEnabled();
-      return SecureKeystore.generateKeyPair(
+      const isBiometricsEnabled = RNSecureKeystoreModule.hasBiometricsEnabled();
+      return RNSecureKeystoreModule.generateKeyPair(
         Issuers_Key_Ref,
         isBiometricsEnabled,
         0,
@@ -99,7 +122,10 @@ export const IssuersService = () => {
         VCMetadata.fromVcMetadataString(getVCMetadata(context)).issuer ===
         Issuers.Sunbird
       ) {
-        return true;
+        return {
+          isVerified: true,
+          errorMessage: VerificationErrorType.NO_ERROR,
+        };
       }
       const verificationResult = await verifyCredential(
         context.verifiableCredential?.credential,

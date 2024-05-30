@@ -7,21 +7,20 @@ import {HomeScreenTabProps} from './HomeScreen';
 import {AddVcModal} from './MyVcs/AddVcModal';
 import {GetVcModal} from './MyVcs/GetVcModal';
 import {useTranslation} from 'react-i18next';
-import {
-  BANNER_TYPE_ERROR,
-  BANNER_TYPE_SUCCESS,
-  GET_INDIVIDUAL_ID,
-} from '../../shared/constants';
+import {BANNER_TYPE_SUCCESS, GET_INDIVIDUAL_ID} from '../../shared/constants';
 import {MessageOverlay} from '../../components/MessageOverlay';
 import {VcItemContainer} from '../../components/VC/VcItemContainer';
-import {BannerNotification} from '../../components/BannerNotification';
+import {
+  BannerNotification,
+  BannerStatusType,
+} from '../../components/BannerNotification';
 import {
   getErrorEventData,
   sendErrorEvent,
 } from '../../shared/telemetry/TelemetryUtils';
 import {TelemetryConstants} from '../../shared/telemetry/TelemetryConstants';
 import {Error} from '../../components/ui/Error';
-import {useIsFocused} from '@react-navigation/native';
+import {useFocusEffect, useIsFocused} from '@react-navigation/native';
 import {getVCsOrderedByPinStatus} from '../../shared/Utils';
 import {SvgImage} from '../../components/ui/svg';
 import {SearchBar} from '../../components/ui/SearchBar';
@@ -34,7 +33,6 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = props => {
   const vcMetadataOrderedByPinStatus = getVCsOrderedByPinStatus(
     controller.vcMetadatas,
   );
-  const vcData = controller.vcData;
   const [clearSearchIcon, setClearSearchIcon] = useState(false);
   const [search, setSearch] = useState('');
   const [filteredSearchData, setFilteredSearchData] = useState<
@@ -61,27 +59,33 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = props => {
     setShowPinVc(true);
   };
 
+  useEffect(() => {
+    filterVcs(search);
+  }, [controller.vcData]);
+
   const filterVcs = (searchText: string) => {
     setSearch(searchText);
     setFilteredSearchData([]);
     const searchTextLower = searchText.toLowerCase();
     const filteredData: Array<Record<string, VCMetadata>> = [];
+    for (const [vcKey, vc] of Object.entries(controller.vcData)) {
+      const isDownloading = vc === null;
+      if (!isDownloading) {
+        let isVcFound = false;
+        const credentialSubject =
+          vc.verifiableCredential.credentialSubject ||
+          vc.verifiableCredential.credential.credentialSubject;
 
-    for (const [vcKey, vc] of Object.entries(vcData)) {
-      let isVcFound = false;
-      const credentialSubject =
-        vc.verifiableCredential.credentialSubject ||
-        vc.verifiableCredential.credential.credentialSubject;
+        if (credentialSubject) {
+          isVcFound = searchNestedCredentialFields(
+            searchTextLower,
+            credentialSubject,
+          );
+        }
 
-      if (credentialSubject) {
-        isVcFound = searchNestedCredentialFields(
-          searchTextLower,
-          credentialSubject,
-        );
-      }
-
-      if (isVcFound) {
-        filteredData.push({[vcKey]: vc['vcMetadata']});
+        if (isVcFound) {
+          filteredData.push({[vcKey]: vc['vcMetadata']});
+        }
       }
     }
 
@@ -163,6 +167,12 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = props => {
     controller.isTampered,
   ]);
 
+  useFocusEffect(
+    React.useCallback(() => {
+      filterVcs('');
+    }, []),
+  );
+
   let failedVCsList = [];
   controller.downloadFailedVcs.forEach(vc => {
     failedVCsList.push(`\n${vc.idType}:${vc.id}`);
@@ -196,7 +206,7 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = props => {
       <Column fill style={{display: props.isVisible ? 'flex' : 'none'}}>
         {controller.isRequestSuccessful && (
           <BannerNotification
-            type={BANNER_TYPE_SUCCESS}
+            type={BannerStatusType.SUCCESS}
             message={t('downloadingYourCard')}
             onClosePress={() => {
               controller.RESET_STORE_VC_ITEM_STATUS();
@@ -204,15 +214,6 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = props => {
             }}
             key={'downloadingVcPopup'}
             testId={'downloadingVcPopup'}
-          />
-        )}
-        {controller.isSavingFailedInIdle && (
-          <BannerNotification
-            type={BANNER_TYPE_ERROR}
-            message={t('downloadingVcFailed')}
-            onClosePress={controller.DISMISS}
-            key={'downloadingVcFailedPopup'}
-            testId={'downloadingVcFailedPopup'}
           />
         )}
         <Column fill pY={2} pX={8}>
@@ -327,7 +328,16 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = props => {
           )}
           {controller.vcMetadatas.length === 0 && (
             <React.Fragment>
-              <Column fill style={Theme.Styles.homeScreenContainer}>
+              <Column
+                scroll
+                fill
+                style={Theme.Styles.homeScreenContainer}
+                refreshControl={
+                  <RefreshControl
+                    refreshing={controller.isRefreshingVcs}
+                    onRefresh={controller.REFRESH}
+                  />
+                }>
                 {SvgImage.DigitalIdentity()}
                 <Text
                   testID="bringYourDigitalID"

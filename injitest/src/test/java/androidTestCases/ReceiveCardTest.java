@@ -6,6 +6,7 @@ import inji.pages.*;
 import inji.utils.TestDataReader;
 import org.testng.annotations.Test;
 
+import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
 public class ReceiveCardTest extends AndroidBaseTest {
@@ -31,7 +32,8 @@ public class ReceiveCardTest extends AndroidBaseTest {
 
 	        assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
 	        SettingsPage settingsPage = homePage.clickOnSettingIcon();
-	        
+
+			assertEquals(settingsPage.getreceiveCardText(), "Receive Card");
 	        ReceiveCardPage receiveCardPage = settingsPage.clickOnReceiveCard();
 	        
 	        receiveCardPage.clickOnAllowButton();
@@ -70,4 +72,5 @@ public class ReceiveCardTest extends AndroidBaseTest {
 	        
 	        assertTrue(receiveCardPage.isReceiveCardHeaderInFilipinoLanguageDisplayed(), "Verify if QR code  header is displayed filipino");
 	 }
+
 }

@@ -23,8 +23,13 @@ on:
         options:
           - Sanity
           - Regression
-      backendServiceUrl:
-        description: 'Mimoto and Esignet backend service URL'
+      backendServiceUrlMimoto:
+        description: 'Mimoto backend service URL'
+        required: true
+        default: 'https://api.sandbox.mosip.net'
+        type: string
+      backendServiceUrlEsiget:
+        description: 'Esignet backend service URL'
         required: true
         default: 'https://api.sandbox.mosip.net'
         type: string
@@ -66,8 +71,8 @@ jobs:
           cd android/scripts
           ./android-build.sh
         env:
-          MIMOTO_HOST: ${{ github.event.inputs.backendServiceUrl }}
-          ESIGNET_HOST: ${{ github.event.inputs.backendServiceUrl }}
+          MIMOTO_HOST: ${{ github.event.inputs.backendServiceUrlMimoto }}
+          ESIGNET_HOST: ${{ github.event.inputs.backendServiceUrlEsignet }}
           APPLICATION_THEME: 'orange'
           CREDENTIAL_REGISTRY_EDIT: 'false'
           RELEASE_KEYSTORE_ALIAS: 'androidreleasekey'
@@ -124,8 +129,8 @@ jobs:
           pod install && pod install
           fastlane ios_ui_automation_build 
         env:
-          MIMOTO_HOST: ${{ github.event.inputs.backendServiceUrl }}
-          ESIGNET_HOST: ${{ github.event.inputs.backendServiceUrl }}
+          MIMOTO_HOST: ${{ github.event.inputs.backendServiceUrlMimoto }}
+          ESIGNET_HOST: ${{ github.event.inputs.backendServiceUrlEsignet }}
           APPLICATION_THEME: 'orange'
           APP_FLAVOR: 'residentapp'
           CREDENTIAL_REGISTRY_EDIT: 'false'

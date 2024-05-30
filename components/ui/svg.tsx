@@ -49,6 +49,7 @@ import OutlinedDeleteIcon from '../../assets/Outlined_Delete_Icon.svg';
 import OutlinedScheduleIcon from '../../assets/Outlined_Schedule_Icon.svg';
 import OutlinedShareWithSelfieIcon from '../../assets/Outlined_Share_With_Selfie_Icon.svg';
 import OutlinedShareIcon from '../../assets/Outlined_Share_Icon.svg';
+import ColoredInfo from '../../assets/Colored_Info.svg';
 import Info from '../../assets/Info.svg';
 import Search from '../../assets/Search.svg';
 import CloudUploadDoneIcon from '../../assets/Cloud_Upload_Done_Icon.svg';
@@ -324,7 +325,7 @@ export class SvgImage {
   }
 
   static FlipCameraIcon() {
-    const {width, height} = Theme.Styles.cameraFlipIcon;
+    const {width, height} = Theme.CameraEnabledStyles.cameraFlipIcon;
     return (
       <FlipCameraIcon
         {...testIDProps('flipCameraIcon')}
@@ -339,6 +340,7 @@ export class SvgImage {
   static CameraCaptureIcon() {
     return (
       <CameraCaptureIcon
+        {...testIDProps('CameraCaptureIcon')}
         color1={Theme.Colors.linearGradientStart}
         color2={Theme.Colors.linearGradientEnd}
       />
@@ -418,12 +420,22 @@ export class SvgImage {
     return <MagnifierZoom />;
   }
 
-  static infoIcon() {
+  static coloredInfo() {
     return (
-      <Info
+      <ColoredInfo
         color1={Theme.Colors.linearGradientStart}
         color2={Theme.Colors.linearGradientEnd}
-        style={Theme.Styles.infoIcon}
+        {...testIDProps('coloredInfoIcon')}
+      />
+    );
+  }
+
+  static info() {
+    return (
+      <Info
+        color1={Theme.Colors.tooltipIcon}
+        width={16}
+        height={16}
         {...testIDProps('infoIcon')}
       />
     );

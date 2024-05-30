@@ -63,6 +63,7 @@ const Colors = {
   toolTipContent: '#4B4B4B',
   toolTipPointer: '#E0E0E0',
   Mercury: '#E6E6E6',
+  Yellow: '#E8A94F',
 };
 
 export type ElevationLevel = 0 | 1 | 2 | 3 | 4 | 5 | 6;
@@ -141,6 +142,7 @@ export const PurpleTheme = {
     toolTipPointerColor: Colors.toolTipPointer,
     urlLink: Colors.Purple,
     warningText: Colors.Red,
+    PendingIcon: Colors.Yellow,
   },
   Styles: StyleSheet.create({
     title: {
@@ -171,9 +173,9 @@ export const PurpleTheme = {
       backgroundColor: Colors.Grey,
       borderRadius: 4,
     },
-    detailsValue: {
-      color: Colors.Black,
+    verificationStatus: {
       fontSize: 12,
+      fontFamily: 'Inter_600SemiBold',
     },
     statusLabel: {
       color: Colors.Gray30,
@@ -199,10 +201,10 @@ export const PurpleTheme = {
       justifyContent: 'center',
       width: '15%',
     },
-    verifiedIconContainer: {
+    verificationStatusIconContainer: {
       marginRight: 3,
     },
-    verifiedIconInner: {
+    verificationStatusIconInner: {
       backgroundColor: 'white',
       borderRadius: 10,
     },
@@ -461,10 +463,6 @@ export const PurpleTheme = {
       borderRadius: 10,
       backgroundColor: Colors.LightPurple,
     },
-    cameraFlipIcon: {
-      width: 42,
-      height: 42,
-    },
     imageCaptureButton: {
       marginLeft: 130,
       marginRight: 50,
@@ -537,41 +535,6 @@ export const PurpleTheme = {
     iconContainer: {
       flexDirection: 'row',
       alignItems: 'flex-end',
-    },
-    scannerContainer: {
-      borderRadius: 24,
-      alignSelf: 'center',
-      height: 350,
-      width: 320,
-      overflow: 'hidden',
-    },
-    scanner: {
-      height: 400,
-      width: '100%',
-      margin: 'auto',
-    },
-    disabledScannerContainer: {
-      borderRadius: 24,
-      height: 350,
-      width: '100%',
-      margin: 'auto',
-      backgroundColor: Colors.White,
-      borderWidth: 1,
-      borderColor: Colors.Gray89,
-    },
-    cameraDisabledPopupContainer: {
-      position: 'absolute',
-      top: 0,
-      left: 0,
-      right: 0,
-    },
-    cameraDisabledPopUp: {
-      justifyContent: 'space-between',
-      backgroundColor: Colors.Red,
-      position: 'relative',
-      padding: 20,
-      paddingHorizontal: 15,
-      marginTop: -24,
     },
     photoConsentLabel: {
       backgroundColor: Colors.White,
@@ -759,8 +722,12 @@ export const PurpleTheme = {
       padding: 1,
       fontFamily: 'Inter_600SemiBold',
     },
+    topBanner: {
+      marginTop: 10,
+      marginBottom: 10,
+    },
     dismiss: {paddingLeft: 9},
-    info: {
+    inProgress: {
       backgroundColor: Colors.OrangeBrown,
     },
     success: {
@@ -1262,7 +1229,9 @@ export const PurpleTheme = {
       borderTopLeftRadius: 15,
       borderTopRightRadius: 15,
       width: Dimensions.get('screen').width,
-      marginTop: Dimensions.get('screen').height * 0.55,
+      maxHeight: 300,
+      position: 'absolute',
+      bottom: 0,
     },
     kebabHeaderStyle: {
       justifyContent: 'space-between',
@@ -1500,26 +1469,91 @@ export const PurpleTheme = {
   }),
   HelpScreenStyle: StyleSheet.create({
     viewStyle: {
-      width: 100,
-      padding: 7,
       borderRadius: 8,
       backgroundColor: Colors.LightPurple,
+      justifyContent: 'center',
+      alignItems: 'center',
+      paddingLeft: 16,
+      paddingRight: 16,
+      paddingBottom: 10,
+      paddingTop: 10,
     },
     rowStyle: {
       justifyContent: 'space-between',
       alignItems: 'center',
-      width: 45,
       display: 'flex',
     },
     iconStyle: {
-      paddingTop: 7,
-      paddingLeft: 20,
-      paddingRight: 3,
+      paddingRight: 5,
     },
     labelStyle: {
-      width: 70,
       fontWeight: 'bold',
     },
+  }),
+  CameraDisabledStyles: StyleSheet.create({
+    container: {
+      position: 'absolute',
+      width: Dimensions.get('screen').width,
+    },
+    banner: {
+      justifyContent: 'space-between',
+      backgroundColor: Colors.Red,
+      padding: 20,
+      paddingHorizontal: 15,
+      marginTop: -24,
+    },
+    bannerTextContainer: {
+      justifyContent: 'space-between',
+    },
+    bannerTitle: {
+      fontFamily: 'Inter_600SemiBold',
+    },
+    bannerGuide: {
+      opacity: 0.8,
+      fontFamily: 'Inter_400Regular',
+    },
+    bannerEnablePermissionContainer: {
+      marginTop: 15,
+    },
+    bannerEnablePermission: {
+      borderBottomWidth: 1.5,
+      borderBottomColor: Colors.White,
+      fontFamily: 'Inter_600SemiBold',
+    },
+    scannerContainer: {
+      borderRadius: 24,
+      height: 320,
+      width: 300,
+      marginTop: 40,
+      backgroundColor: Colors.White,
+      borderWidth: 1,
+      borderColor: Colors.Gray89,
+    },
+  }),
+  CameraEnabledStyles: StyleSheet.create({
+    container: {marginTop: 20, marginBottom: 20},
+    scannerContainer: {
+      borderRadius: 24,
+      alignSelf: 'center',
+      height: 320,
+      width: 300,
+      overflow: 'hidden',
+    },
+    scanner: {
+      height: '100%',
+      width: '100%',
+      margin: 'auto',
+    },
+    holdPhoneSteadyText: {
+      color: Colors.Black,
+      fontFamily: 'Inter_600SemiBold',
+      fontSize: 15,
+    },
+    cameraFlipIcon: {
+      height: 50,
+      width: 50,
+    },
+    iconText: {fontFamily: 'Inter_600SemiBold', fontSize: 12, marginTop: 6},
   }),
   BottomTabBarStyle: StyleSheet.create({
     headerRightContainerStyle: {paddingEnd: 13},

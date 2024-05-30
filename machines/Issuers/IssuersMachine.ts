@@ -1,6 +1,5 @@
 import {EventFrom, send, sendParent} from 'xstate';
 import {log} from 'xstate/lib/actions';
-import {verifyCredential} from '../../shared/vcjs/verifyCredential';
 import {IssuersModel} from './IssuersModel';
 import {IssuersActions} from './IssuersActions';
 import {IssuersService} from './IssuersService';
@@ -55,12 +54,15 @@ export const IssuersMachine = model.createMachine(
               target: 'displayIssuers',
             },
             {
+              description:
+                'error is OIDC_CONFIG_ERROR_PREFIX or REQUEST_TIMEDOUT',
               cond: 'canSelectIssuerAgain',
               actions: 'resetError',
               target: 'selectingIssuer',
             },
             {
-              description: 'not fetched issuers config yet',
+              description:
+                'issuers config is available and downloading credentials is retriable',
               actions: ['setLoadingReasonAsSettingUp', 'resetError'],
               target: 'downloadIssuerConfig',
             },
@@ -282,6 +284,15 @@ export const IssuersMachine = model.createMachine(
               target: '.userCancelledBiometric',
             },
             {
+              cond: 'isGenericError',
+              target: 'selectingIssuer',
+              actions: [
+                'setError',
+                'resetLoadingReason',
+                'sendDownloadingFailedToVcMeta',
+              ],
+            },
+            {
               actions: ['setError', 'resetLoadingReason'],
               target: 'error',
             },
@@ -318,19 +329,22 @@ export const IssuersMachine = model.createMachine(
           src: 'verifyCredential',
           onDone: [
             {
-              actions: ['sendSuccessEndEvent'],
+              actions: ['sendSuccessEndEvent', 'setIsVerified'],
               target: 'storing',
             },
           ],
           onError: [
             {
+              cond: 'isVerificationPendingBecauseOfNetworkIssue',
+              actions: ['resetLoadingReason', 'resetIsVerified'],
+              target: 'storing',
+            },
+            {
               actions: [
-                log('Verification Error.'),
                 'resetLoadingReason',
-                'updateVerificationErrorMessage',
                 'sendErrorEndEvent',
+                'updateVerificationErrorMessage',
               ],
-              //TODO: Move to state according to the required flow when verification of VC fails
               target: 'handleVCVerificationFailure',
             },
           ],

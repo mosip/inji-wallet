@@ -15,7 +15,10 @@ import {
 import {
   BOTTOM_SECTION_FIELDS_WITH_DETAILED_ADDRESS_FIELDS,
   DETAIL_VIEW_ADD_ON_FIELDS,
+  getCredentialDefinition,
 } from '../../components/VC/common/VCUtils';
+import {getVerifiableCredential} from '../../machines/VerifiableCredential/VCItemMachine/VCItemSelectors';
+import {vcVerificationBannerDetails} from '../../components/BannerNotificationContainer';
 
 export const Protocols = {
   OpenId4VCI: 'OpenId4VCI',
@@ -23,9 +26,9 @@ export const Protocols = {
 };
 
 export const Issuers = {
-  Mosip: '',
+  MosipOtp: '',
   Sunbird: 'Sunbird',
-  ESignet: 'ESignet',
+  Mosip: 'Mosip',
 };
 
 /**
@@ -35,24 +38,38 @@ export const Issuers = {
  * NOTE: This might be replaced by a more standards compliant way later.
  */
 export function getIdType(issuer: string | undefined): string {
-  if (issuer === '' || issuer === Issuers.ESignet) {
+  if (issuer === Issuers.MosipOtp || issuer === Issuers.Mosip) {
     return 'nationalCard';
   }
   return 'insuranceCard';
 }
 
+export function getVcVerificationDetails(
+  statusType,
+  vcMetadata,
+  verifiableCredential,
+): vcVerificationBannerDetails {
+  return {
+    statusType: statusType,
+    vcType: getIDType(
+      getVerifiableCredential(vcMetadata, verifiableCredential),
+    ),
+    vcNumber: vcMetadata.id,
+  };
+}
+
 export const ID_TYPE = {
-  MOSIPVerifiableCredential: i18n.t('VcDetails:nationalCard'),
-  InsuranceCredential: i18n.t('VcDetails:insuranceCard'),
-  OpenG2PBeneficiaryVerifiableCredential: i18n.t('VcDetails:beneficiaryCard'),
-  OpenG2PRegistryVerifiableCredential: i18n.t('VcDetails:socialRegistryCard'),
+  MOSIPVerifiableCredential: 'nationalCard',
+  InsuranceCredential: 'insuranceCard',
+  OpenG2PBeneficiaryVerifiableCredential: 'beneficiaryCard',
+  OpenG2PRegistryVerifiableCredential: 'socialRegistryCard',
 };
 
 export const getIDType = (verifiableCredential: VerifiableCredential) => {
   return ID_TYPE[verifiableCredential.type[1]];
 };
 
-export const ACTIVATION_NEEDED = [Issuers.ESignet, Issuers.Mosip];
+export const ACTIVATION_NEEDED = [Issuers.Mosip, Issuers.MosipOtp];
 
 export const isActivationNeeded = (issuer: string) => {
   return ACTIVATION_NEEDED.indexOf(issuer) !== -1;
@@ -74,32 +91,15 @@ export const getIdentifier = (context, credential) => {
   );
 };
 
-export const getBody = async context => {
-  const header = {
-    alg: 'RS256',
-    jwk: await getJWK(context.publicKey),
-    typ: 'openid4vci-proof+jwt',
-  };
-  const decodedToken = jwtDecode(context.tokenResponse.accessToken);
-  const payload = {
-    iss: context.selectedIssuer.client_id,
-    nonce: decodedToken.c_nonce,
-    aud: context.selectedIssuer.credential_audience,
-    iat: Math.floor(new Date().getTime() / 1000),
-    exp: Math.floor(new Date().getTime() / 1000) + 18000,
-  };
-
-  const proofJWT = await getJWT(
-    header,
-    payload,
-    Issuers_Key_Ref,
-    context.privateKey,
-  );
+export const getCredentialRequestBody = async (
+  proofJWT: string,
+  credentialType: Array<string>,
+) => {
   return {
     format: 'ldp_vc',
     credential_definition: {
       '@context': ['https://www.w3.org/2018/credentials/v1'],
-      type: getCredentialType(context),
+      type: credentialType,
     },
     proof: {
       proof_type: 'jwt',
@@ -125,8 +125,6 @@ export const updateCredentialInformation = (context, credential) => {
     context.selectedIssuer['.well-known'];
   credentialWrapper.verifiableCredential.credentialTypes =
     context.selectedIssuer['credential_type'];
-  // credentialWrapper.verifiableCredential.wellKnown =
-  //   'https://esignet.collab.mosip.net/.well-known/openid-credential-issuer';
   credentialWrapper.verifiableCredential.issuerLogo =
     getDisplayObjectForCurrentLanguage(context.selectedIssuer.display)?.logo;
   credentialWrapper.vcMetadata = context.vcMetadata || {};
@@ -145,24 +143,28 @@ export const getDisplayObjectForCurrentLanguage = (
   display: [displayType],
 ): displayType => {
   const currentLanguage = i18next.language;
-  let displayType = display.filter(obj => obj.language == currentLanguage)[0];
+  const languageKey = Object.keys(display[0]).includes('language')
+    ? 'language'
+    : 'locale';
+  let displayType = display.filter(
+    obj => obj[languageKey] == currentLanguage,
+  )[0];
   if (!displayType) {
-    displayType = display.filter(obj => obj.language == 'en')[0];
-  }
-  if (!displayType) {
-    displayType = display.filter(obj => obj.locale == currentLanguage)[0];
+    displayType = display.filter(obj => obj[languageKey] === 'en')[0];
   }
   return displayType;
 };
 
 export const constructAuthorizationConfiguration = (
   selectedIssuer: issuerType,
+  supportedScopes: string,
 ) => {
   return {
     clientId: selectedIssuer.client_id,
-    scopes: selectedIssuer.scopes_supported,
+    scopes: supportedScopes,
     additionalHeaders: selectedIssuer.additional_headers,
     redirectUrl: selectedIssuer.redirect_uri,
+    additionalParameters: {ui_locales: i18n.language},
     serviceConfiguration: {
       authorizationEndpoint: selectedIssuer.authorization_endpoint,
       tokenEndpoint: selectedIssuer.token_endpoint,
@@ -187,7 +189,7 @@ export const getJWK = async publicKey => {
     };
   } catch (e) {
     console.error(
-      'Exception occured while constructing JWK from PEM : ' +
+      'Exception occurred while constructing JWK from PEM : ' +
         publicKey +
         '  Exception is ',
       e,
@@ -198,30 +200,30 @@ export const getJWK = async publicKey => {
 export const getCredentialIssuersWellKnownConfig = async (
   issuer: string,
   wellknown: string,
-  credentialTypes: Object[],
+  vcCredentialTypes: Object[],
   defaultFields: string[],
 ) => {
-  let fields: string[] = defaultFields;
+  let fields: string[] = [];
   let response = null;
-  if (wellknown) {
+  if (issuer === Issuers.MosipOtp) {
+    fields = defaultFields;
+  } else if (wellknown) {
     response = await CACHED_API.fetchIssuerWellknownConfig(issuer, wellknown);
-    if (!response) {
-      fields = [];
-    } else if (response?.credentials_supported[0].order) {
-      fields = response?.credentials_supported[0].order;
-    } else {
-      const supportedCredentialTypes = credentialTypes.filter(
-        type => type !== 'VerifiableCredential',
-      );
-      const selectedCredentialType = supportedCredentialTypes[0];
-
-      response?.credentials_supported.filter(credential => {
-        if (credential.id === selectedCredentialType) {
-          fields = Object.keys(
-            credential.credential_definition.credentialSubject,
-          );
-        }
-      });
+    if (response) {
+      if (
+        Array.isArray(response.credentials_supported) &&
+        response?.credentials_supported[0].order
+      ) {
+        fields = response?.credentials_supported[0].order;
+      } else {
+        const credentialDefinition = getCredentialDefinition(
+          response,
+          vcCredentialTypes,
+        );
+        fields = credentialDefinition
+          ? Object.keys(credentialDefinition.credentialSubject)
+          : [];
+      }
     }
   }
   return {
@@ -282,4 +284,27 @@ export enum ErrorMessage {
   GENERIC = 'generic',
   REQUEST_TIMEDOUT = 'requestTimedOut',
   BIOMETRIC_CANCELLED = 'biometricCancelled',
+}
+
+export async function constructProofJWT(
+  publicKey: string,
+  privateKey: string,
+  accessToken: string,
+  selectedIssuer: issuerType,
+): Promise<string> {
+  const jwtHeader = {
+    alg: 'RS256',
+    jwk: await getJWK(publicKey),
+    typ: 'openid4vci-proof+jwt',
+  };
+  const decodedToken = jwtDecode(accessToken);
+  const jwtPayload = {
+    iss: selectedIssuer.client_id,
+    nonce: decodedToken.c_nonce,
+    aud: selectedIssuer.credential_audience,
+    iat: Math.floor(new Date().getTime() / 1000),
+    exp: Math.floor(new Date().getTime() / 1000) + 18000,
+  };
+
+  return await getJWT(jwtHeader, jwtPayload, Issuers_Key_Ref, privateKey);
 }

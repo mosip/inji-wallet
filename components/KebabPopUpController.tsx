@@ -21,7 +21,7 @@ import {ScanEvents} from '../machines/bleShare/scan/scanMachine';
 import {BOTTOM_TAB_ROUTES, ScanStackParamList} from '../routes/routesConstants';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
 import {MainBottomTabParamList} from '../routes/main';
-import {selectIsScanning} from '../machines/bleShare/scan/selectors';
+import {selectIsScanning} from '../machines/bleShare/scan/scanSelectors';
 import {
   VCItemEvents,
   VCItemMachine,

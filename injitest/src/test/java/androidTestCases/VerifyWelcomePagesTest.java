@@ -38,7 +38,7 @@ public class VerifyWelcomePagesTest extends AndroidBaseTest {
         quickAccessPage.clickOnNextButton();
 
         BackupDataTourPage backupDataPage = new BackupDataTourPage(driver);
-        assertEquals(backupDataPage.verifyLanguageforBackupDataPageLoaded(), "Backup Data");
+        assertEquals(backupDataPage.verifyLanguageforBackupDataPageLoaded(), "Backup & Restore");
         assertEquals(backupDataPage.getBackupDataPageDescription(), "Protect your data with ease using our Backup & Restore feature. Safely store your VCs against loss or accidents by creating regular backups and recover it effortlessly whenever needed for seamless continuity.");
     }
     @Test
@@ -86,7 +86,7 @@ public class VerifyWelcomePagesTest extends AndroidBaseTest {
         quickAccessPage.clickOnNextButton();
 
         BackupDataTourPage backupDataPage = new BackupDataTourPage(driver);
-        assertEquals(backupDataPage.verifyLanguageforBackupDataPageLoaded(), "Backup Data");
+        assertEquals(backupDataPage.verifyLanguageforBackupDataPageLoaded(), "Backup & Restore");
         assertEquals(backupDataPage.getBackupDataPageDescription(), "Protect your data with ease using our Backup & Restore feature. Safely store your VCs against loss or accidents by creating regular backups and recover it effortlessly whenever needed for seamless continuity.");
     }
 
@@ -135,7 +135,7 @@ public class VerifyWelcomePagesTest extends AndroidBaseTest {
         quickAccessPage.clickOnNextButton();
 
         BackupDataTourPage backupDataPage = new BackupDataTourPage(driver);
-        assertEquals(backupDataPage.verifyLanguageforBackupDataPageLoaded(), "Backup Data");
+        assertEquals(backupDataPage.verifyLanguageforBackupDataPageLoaded(), "Backup & Restore");
         assertEquals(backupDataPage.getBackupDataPageDescription(), "Protect your data with ease using our Backup & Restore feature. Safely store your VCs against loss or accidents by creating regular backups and recover it effortlessly whenever needed for seamless continuity.");
 
         backupDataPage.clickOnGoBack();

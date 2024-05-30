@@ -52,6 +52,13 @@ export function selectIsScanning(state: State) {
   return state.matches('findingConnection');
 }
 
+export function selectIsQuickShareDone(state: State) {
+  return state.matches('loadVCS.navigatingToHome');
+}
+
+export function selectShowQuickShareSuccessBanner(state: State) {
+  return state.context.showQuickShareSuccessBanner;
+}
 export function selectIsConnecting(state: State) {
   return state.matches('connecting.inProgress');
 }
@@ -109,4 +116,14 @@ export function selectIsQrLoginStoring(state: State) {
 
 export function selectIsDone(state: State) {
   return state.matches('reviewing.disconnect');
+}
+
+export function selectIsMinimumStorageRequiredForAuditEntryLimitReached(
+  state: State,
+) {
+  return state.matches('restrictSharingVc');
+}
+
+export function selectIsFaceVerificationConsent(state: State) {
+  return state.matches('reviewing.faceVerificationConsent');
 }

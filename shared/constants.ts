@@ -41,14 +41,10 @@ export const SETTINGS_STORE_KEY = 'settings';
 
 export const APP_ID_LENGTH = 12;
 
-export const FACE_AUTH_CONSENT = 'faceAuthConsent';
+export const SHOW_FACE_AUTH_CONSENT_SHARE_FLOW = 'showFaceAuthConsentShareFlow';
 
-//Banner Status
-export const BANNER_TYPE_SUCCESS = 'success';
-
-export const BANNER_TYPE_ERROR = 'error';
-
-export const BANNER_TYPE_INFO = 'info';
+export const SHOW_FACE_AUTH_CONSENT_QR_LOGIN_FLOW =
+  'showFaceAuthConsentQrLoginFlow';
 
 // Numbers and Upper case Alphabets without confusing characters like 0, 1, 2, I, O, Z
 // prettier-ignore
@@ -122,9 +118,11 @@ export type IndividualId = {
 export const TECHNICAL_ERROR = 'Technical error';
 export const NETWORK_REQUEST_FAILED = 'Network request failed';
 export const IOS_SIGNIN_FAILED = 'iCloud not available';
-export const REQUEST_TIMEOUT = 'request timedout';
+export const REQUEST_TIMEOUT = 'request timeout';
 export const BIOMETRIC_CANCELLED = 'User has cancelled biometric';
 export const GOOGLE_DRIVE_NAME = 'Google Drive';
 export const GMAIL = 'gmail';
 export const APPLE = 'Apple';
 export const ICLOUD_DRIVE_NAME = 'iCloud';
+export const DEFAULT_ECL = 'M';
+export const DEFAULT_QR_HEADER = 'INJIQUICKSHARE://';
