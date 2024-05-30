@@ -90,6 +90,8 @@ export const FaceScanner: React.FC<FaceScannerProps> = props => {
   const offsetY = 350;
   const captureInterval = 1000;
   const eyeOpenProbability = 0.85;
+  const BLINK_THRESHOLD = 0.4;
+  const BLINK_TIME_WINDOW = 900;
   const eyeCropHeightConst = 50;
   const XAndYBoundsMax = 280;
   const XAndYBoundsMin = 300;
@@ -287,7 +289,36 @@ export const FaceScanner: React.FC<FaceScannerProps> = props => {
     }
   }
 
+  // let blinkCount = 0;
+  // let leftEyeWasClosed = false;
+  // let rightEyeWasClosed = false;
+  // let lastBlinkTimestamp = 0;
+
   async function handleFacesDetected({faces}) {
+
+    // const leftEyeOpenProbability = faces[0].leftEyeOpenProbability;
+    // const rightEyeOpenProbability = faces[0].rightEyeOpenProbability;
+
+    // const currentTime = new Date().getTime();
+
+    // const leftEyeClosed = leftEyeOpenProbability < BLINK_THRESHOLD;
+    // const rightEyeClosed = rightEyeOpenProbability < BLINK_THRESHOLD;
+
+    // if (leftEyeClosed && rightEyeClosed) {
+    //   leftEyeWasClosed = true;
+    //   rightEyeWasClosed = true;
+    // }
+
+    // if (leftEyeWasClosed && rightEyeWasClosed && !leftEyeClosed && !rightEyeClosed) {
+    //   // if (lastBlinkTimestamp === 0 || (currentTime - lastBlinkTimestamp) > BLINK_TIME_WINDOW) {
+    //     blinkCount += 1;
+    //     lastBlinkTimestamp = currentTime;
+    //     console.log(`Blink detected! Total blinks: ${blinkCount}`);
+    //   // }
+    //   leftEyeWasClosed = false;
+    //   rightEyeWasClosed = false;
+    // }
+
     if (!livenessEnabled) {
       return;
     }
@@ -296,6 +327,7 @@ export const FaceScanner: React.FC<FaceScannerProps> = props => {
       setCounter(counter + 1);
       cameraRef.pausePreview();
       setScreenColor('#ffffff');
+      setInfoText(t('faceProcessingInfo'));
       await cropEyeAreaFromFace();
       return;
     } else if (faces.length > 0) {
