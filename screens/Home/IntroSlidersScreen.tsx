@@ -9,6 +9,7 @@ import {useWelcomeScreen} from '../WelcomeScreenController';
 import LinearGradient from 'react-native-linear-gradient';
 import {SvgImage} from '../../components/ui/svg';
 import testIDProps from '../../shared/commonUtil';
+import {INTRO_SLIDER_LOGO_MARGIN} from '../../shared/constants';
 
 export const IntroSlidersScreen: React.FC<RootRouteProps> = props => {
   const slider = useRef<AppIntroSlider>();
@@ -56,7 +57,7 @@ export const IntroSlidersScreen: React.FC<RootRouteProps> = props => {
       <LinearGradient colors={Theme.Colors.gradientBtn}>
         <Centered>
           <Row align="space-between" style={Theme.Styles.introSliderHeader}>
-            <Column style={{marginLeft: Dimensions.get('screen').width * 0.4}}>
+            <Column style={{marginLeft: INTRO_SLIDER_LOGO_MARGIN}}>
               {SvgImage.InjiSmallLogo()}
             </Column>
 

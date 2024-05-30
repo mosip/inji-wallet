@@ -12,9 +12,17 @@ import {NotificationsScreen} from '../screens/NotificationsScreen';
 import {SetupLanguageScreen} from '../screens/SetupLanguageScreen';
 import {IntroSlidersScreen} from '../screens/Home/IntroSlidersScreen';
 import {RequestLayout} from '../screens/Request/RequestLayout';
-import {RequestStackParamList} from './routesConstants';
+import {RequestStackParamList} from '../screens/Request/RequestLayoutController';
+import {SplashScreen} from '../screens/SplashScreen';
 
 export const baseRoutes: Screen[] = [
+  {
+    name: 'SplashScreen',
+    component: SplashScreen,
+    options: {
+      headerShown: false,
+    },
+  },
   {
     name: 'Language',
     component: SetupLanguageScreen,

@@ -389,8 +389,12 @@ export const DefaultTheme = {
       justifyContent: 'space-between',
     },
     welcomeLogo: {
-      width: 160.441,
-      height: 173.276,
+      width: 185,
+      height: 71,
+    },
+    injiLogo: {
+      width: 105,
+      height: 40,
     },
     logo: {
       height: 35,

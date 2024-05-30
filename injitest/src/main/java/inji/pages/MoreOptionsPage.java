@@ -91,7 +91,9 @@ public class MoreOptionsPage extends BasePage {
     }
 
     public HomePage clickOnCloseButton() {
-        clickOnElement(closeButton);
+        if(isElementDisplayed(closeButton)) {
+            clickOnElement(closeButton);
+        }
         return new HomePage(driver);
     }
 
