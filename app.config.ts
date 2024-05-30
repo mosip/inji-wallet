@@ -1,7 +1,7 @@
-import { APPLICATION_THEME } from 'react-native-dotenv';
+import {APPLICATION_THEME} from 'react-native-dotenv';
 
 const adaptiveImage =
-APPLICATION_THEME?.toLowerCase() === 'purple'
+  APPLICATION_THEME?.toLowerCase() === 'purple'
     ? '../assets/purpleSplashScreen.png'
     : './assets/orangeSplashScreen.png';
 

@@ -16,13 +16,13 @@ import {RequestStackParamList} from '../screens/Request/RequestLayoutController'
 import {SplashScreen} from '../screens/SplashScreen';
 
 export const baseRoutes: Screen[] = [
-    {
+  {
     name: 'SplashScreen',
     component: SplashScreen,
     options: {
-    headerShown: false,
+      headerShown: false,
     },
-},
+  },
   {
     name: 'Language',
     component: SetupLanguageScreen,

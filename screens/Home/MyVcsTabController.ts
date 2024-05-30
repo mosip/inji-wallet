@@ -32,12 +32,18 @@ import {
 } from '../../machines/settings';
 import {VCItemMachine} from '../../machines/VerifiableCredential/VCItemMachine/VCItemMachine';
 import {VcMetaEvents} from '../../machines/VerifiableCredential/VCMetaMachine/VCMetaMachine';
+import {
+  AuthEvents,
+  selectIsInitialDownload,
+  selectIsOnboarding,
+} from '../../machines/auth';
 
 export function useMyVcsTab(props: HomeScreenTabProps) {
   const service = props.service as ActorRefFrom<typeof MyVcsTabMachine>;
   const {appService} = useContext(GlobalContext);
   const vcMetaService = appService.children.get('vcMeta')!!;
   const settingsService = appService.children.get('settings')!!;
+  const authService = appService.children.get('auth');
 
   return {
     service,
@@ -104,5 +110,11 @@ export function useMyVcsTab(props: HomeScreenTabProps) {
     RESET_VERIFY_ERROR: () => {
       vcMetaService?.send(VcMetaEvents.RESET_VERIFY_ERROR());
     },
+    SET_TOUR_GUIDE: set => {
+      authService?.send(AuthEvents.SET_TOUR_GUIDE(set));
+    },
+    isOnboarding: authService && useSelector(authService, selectIsOnboarding),
+    isInitialDownloading:
+      authService && useSelector(authService, selectIsInitialDownload),
   };
 }

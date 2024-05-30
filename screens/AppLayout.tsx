@@ -28,11 +28,7 @@ export const AppLayout: React.FC = () => {
   return (
     <NavigationContainer ref={navigationRef}>
       <StatusBar animated={true} barStyle="dark-content" />
-      <Navigator
-        initialRouteName={
-          baseRoutes[0].name
-        }
-        screenOptions={options}>
+      <Navigator initialRouteName={baseRoutes[0].name} screenOptions={options}>
         {baseRoutes.map(route => (
           <Screen key={route.name} {...route} />
         ))}
