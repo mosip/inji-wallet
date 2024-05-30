@@ -30,8 +30,6 @@ import tuvali from '@mosip/tuvali';
 import BluetoothStateManager from 'react-native-bluetooth-state-manager';
 import {NativeModules} from 'react-native';
 
-import {decodeData} from '@mosip/pixelpass';
-
 const {wallet, EventTypes, VerificationStatus} = tuvali;
 export const ScanActions = (model: any, QR_LOGIN_REF_ID: any) => {
   const {RNPixelpassModule} = NativeModules;

@@ -15,13 +15,13 @@ import WalletUnActivatedIcon from '../../assets/Wallet_UnActivated_Icon.svg';
 import WalletUnActivatedLargeIcon from '../../assets/Wallet_UnActivated_Large_Icon.svg';
 import InjiSmallLogo from '../../assets/Inji_Logo.svg';
 import LockIcon from '../../assets/Lock_Icon1.svg';
-import InjiLogo from '../../assets/Inji_Home_Logo1.svg';
+import InjiLogo from '../../assets/Inji_Home_Logo.svg';
 import DigitalIdentity from '../../assets/Digital_Identity_Icon1.svg';
 import ReceiveCard from '../../assets/Receive_Card.svg';
 import ReceivedCards from '../../assets/Received_Cards.svg';
 import ProgressIcon from '../../assets/Progress_Icon1.svg';
 import testIDProps from '../../shared/commonUtil';
-import Logo from '../../assets/Mosip_Logo1.svg';
+import Logo from '../../assets/Inji_Logo';
 import WarningLogo from '../../assets/Warning_Icon.svg';
 import OtpVerificationIcon from '../../assets/Otp_Verification_Icon.svg';
 import FlipCameraIcon from '../../assets/Flip_Camera_Icon.svg';
@@ -253,11 +253,13 @@ export class SvgImage {
     );
   }
 
-  static InjiLogo() {
+  static InjiLogo(props: LogoProps) {
     return (
       <InjiLogo
         color1={Theme.Colors.linearGradientStart}
         color2={Theme.Colors.linearGradientEnd}
+        width={props.width}
+        height={props.height}
       />
     );
   }
