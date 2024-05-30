@@ -55,12 +55,15 @@ export const IssuersMachine = model.createMachine(
               target: 'displayIssuers',
             },
             {
+              description:
+                'error is OIDC_CONFIG_ERROR_PREFIX or REQUEST_TIMEDOUT',
               cond: 'canSelectIssuerAgain',
               actions: 'resetError',
               target: 'selectingIssuer',
             },
             {
-              description: 'not fetched issuers config yet',
+              description:
+                'issuers config is available and downloading credentials is retriable',
               actions: ['setLoadingReasonAsSettingUp', 'resetError'],
               target: 'downloadIssuerConfig',
             },

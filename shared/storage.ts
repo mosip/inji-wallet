@@ -4,7 +4,7 @@ import {
   getFreeDiskStorageOldSync,
   getFreeDiskStorageSync,
 } from 'react-native-device-info';
-import SecureKeystore from '@mosip/secure-keystore';
+import {NativeModules} from 'react-native';
 import {
   decryptJson,
   encryptJson,
@@ -33,6 +33,7 @@ import fileStorage from './fileStorage';
 import {DocumentDirectoryPath, ReadDirItem} from 'react-native-fs';
 
 export const MMKV = new MMKVLoader().initialize();
+const {RNSecureKeystoreModule} = NativeModules;
 
 async function generateHmac(
   encryptionKey: string,
@@ -41,7 +42,7 @@ async function generateHmac(
   if (!isHardwareKeystoreExists) {
     return hmacSHA(encryptionKey, data);
   }
-  return await SecureKeystore.generateHmacSha(HMAC_ALIAS, data);
+  return await RNSecureKeystoreModule.generateHmacSha(HMAC_ALIAS, data);
 }
 
 class Storage {
@@ -476,7 +477,6 @@ class Storage {
       isAndroid() && androidVersion < 29
         ? getFreeDiskStorageOldSync()
         : getFreeDiskStorageSync();
-
 
     return freeDiskStorageInBytes <= minimumStorageLimitInBytes;
   };

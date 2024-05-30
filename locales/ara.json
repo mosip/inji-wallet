@@ -485,6 +485,9 @@
       }
     }
   },
+  "Permissions": {
+    "enablePermission": "تمكين الإذن"
+  },
   "RequestScreen": {
     "receiveCard": "البطاقة المستلمة",
     "bluetoothDenied": "يرجى تمكين بلوتوث لتتمكن من طلب البطاقة",

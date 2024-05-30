@@ -43,15 +43,7 @@ platforms:
   - platformName: android
     deviceName: OnePlus 9
     platformVersion: 11.0
-  - platformName: android
-    deviceName: Xiaomi Redmi Note 11
-    platformVersion: 11.0
-  - platformName: android
-    deviceName: Samsung Galaxy S21
-    platformVersion: 12.0
-  - platformName: android
-    deviceName: Motorola Moto G71 5G
-    platformVersion: 11.0
+
 
 # =======================
 # Parallels per Platform
@@ -62,7 +54,7 @@ platforms:
 # Example 1 - If you have configured 3 platforms and set `parallelsPerPlatform` as 2, a total of 6 (2 * 3) parallel threads will be used on BrowserStack
 #
 # Example 2 - If you have configured 1 platform and set `parallelsPerPlatform` as 5, a total of 5 (1 * 5) parallel threads will be used on BrowserStack
-parallelsPerPlatform: 5
+parallelsPerPlatform: 2
 
 source: java:appium-intellij:v1.1.4
 

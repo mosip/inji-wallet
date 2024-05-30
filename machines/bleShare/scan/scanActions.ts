@@ -28,11 +28,13 @@ import {ActivityLogEvents} from '../../activityLog';
 import {StoreEvents} from '../../store';
 import tuvali from '@mosip/tuvali';
 import BluetoothStateManager from 'react-native-bluetooth-state-manager';
+import {NativeModules} from 'react-native';
 
 import {decodeData} from '@mosip/pixelpass';
 
 const {wallet, EventTypes, VerificationStatus} = tuvali;
 export const ScanActions = (model: any, QR_LOGIN_REF_ID: any) => {
+  const {RNPixelpassModule} = NativeModules;
   return {
     setChildRef: assign({
       QrLoginRef: (context: any) => {
@@ -230,7 +232,9 @@ export const ScanActions = (model: any, QR_LOGIN_REF_ID: any) => {
     }),
     setQuickShareData: assign({
       quickShareData: (_, event) =>
-        JSON.parse(decodeData(event.params.split(DEFAULT_QR_HEADER)[1])),
+        JSON.parse(
+          RNPixelpassModule.decode(event.params.split(DEFAULT_QR_HEADER)[1]),
+        ),
     }),
     loadMetaDataToMemory: send(
       (context: any) => {

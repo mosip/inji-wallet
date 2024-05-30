@@ -63,14 +63,13 @@ export const IssuersActions = (model: any) => {
       errorMessage: (_: any, event: any) => {
         console.error('Error occurred ', event.data.message);
         const error = event.data.message;
-        switch (error) {
-          case NETWORK_REQUEST_FAILED:
-            return ErrorMessage.NO_INTERNET;
-          case REQUEST_TIMEOUT:
-            return ErrorMessage.REQUEST_TIMEDOUT;
-          default:
-            return ErrorMessage.GENERIC;
+        if (error.includes(NETWORK_REQUEST_FAILED)) {
+          return ErrorMessage.NO_INTERNET;
         }
+        if (error.includes(REQUEST_TIMEOUT)) {
+          return ErrorMessage.REQUEST_TIMEDOUT;
+        }
+        return ErrorMessage.GENERIC;
       },
     }),
     setOIDCConfigError: model.assign({

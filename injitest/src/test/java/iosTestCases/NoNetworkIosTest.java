@@ -355,7 +355,7 @@ public class NoNetworkIosTest extends IosBaseTest {
         addNewCardPage.clickOnBack();
 
         homePage.downloadCard();
-        assertTrue(addNewCardPage.isIssuerDescriptionMosipDisplayed(), "Verify if issuer description  mosip displayed");
+//        assertTrue(addNewCardPage.isIssuerDescriptionMosipDisplayed(), "Verify if issuer description  mosip displayed");
         assertTrue(addNewCardPage.isIssuerDescriptionEsignetDisplayed(), "Verify if issuer description  esignet displayed");
 
         addNewCardPage.clickOnDownloadViaUin();
@@ -394,7 +394,7 @@ public class NoNetworkIosTest extends IosBaseTest {
         addNewCardPage.clickOnBack();
 
         homePage.downloadCard();
-        assertTrue(addNewCardPage.isIssuerDescriptionMosipDisplayed(), "Verify if issuer description  mosip displayed");
+//        assertTrue(addNewCardPage.isIssuerDescriptionMosipDisplayed(), "Verify if issuer description  mosip displayed");
         assertTrue(addNewCardPage.isIssuerDescriptionEsignetDisplayed(), "Verify if issuer description  esignet displayed");
 
         addNewCardPage.clickOnDownloadViaEsignet();

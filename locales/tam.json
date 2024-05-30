@@ -485,6 +485,9 @@
       }
     }
   },
+  "Permissions": {
+    "enablePermission": "அனுமதியை இயக்கு"
+  },
   "RequestScreen": {
     "receiveCard": "பெற்ற அட்டை",
     "bluetoothDenied": "அட்டைஐக் கோர புளூடூத்தை இயக்கவும்",

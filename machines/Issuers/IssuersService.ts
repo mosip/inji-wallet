@@ -1,10 +1,10 @@
 import Cloud from '../../shared/CloudBackupAndRestoreUtils';
 import {CACHED_API} from '../../shared/api';
 import NetInfo from '@react-native-community/netinfo';
-import {request} from '../../shared/request';
 import {
   constructAuthorizationConfiguration,
-  getBody,
+  constructProofJWT,
+  getCredentialType,
   Issuers_Key_Ref,
   updateCredentialInformation,
   vcDownloadTimeout,
@@ -14,7 +14,7 @@ import {
   generateKeys,
   isHardwareKeystoreExists,
 } from '../../shared/cryptoutil/cryptoUtil';
-import SecureKeystore from '@mosip/secure-keystore';
+import {NativeModules} from 'react-native';
 import {
   VerificationErrorType,
   verifyCredential,
@@ -25,8 +25,9 @@ import {
 } from '../../shared/telemetry/TelemetryUtils';
 import {TelemetryConstants} from '../../shared/telemetry/TelemetryConstants';
 import {isMosipVC} from '../../shared/Utils';
-import {CredentialWrapper} from '../VerifiableCredential/VCMetaMachine/vc';
+import {VciClient} from '../../shared/vciClient/VciClient';
 
+const {RNSecureKeystoreModule} = NativeModules;
 export const IssuersService = () => {
   return {
     isUserSignedAlready: () => async () => {
@@ -53,20 +54,30 @@ export const IssuersService = () => {
     downloadCredentialTypes: async (context: any) => {
       return context.selectedIssuer.credentialTypes;
     },
-    downloadCredential: async (context: any): Promise<CredentialWrapper> => {
-      const body = await getBody(context);
+    downloadCredential: async (context: any) => {
       const downloadTimeout = await vcDownloadTimeout();
-      let credential = await request(
-        'POST',
-        context.selectedIssuer.credential_endpoint,
-        body,
-        '',
-        {
-          'Content-Type': 'application/json',
-          Authorization: 'Bearer ' + context.tokenResponse?.accessToken,
-        },
-        downloadTimeout,
+      const accessToken: string = context.tokenResponse?.accessToken;
+      const issuerMeta: Object = {
+        credentialAudience: context.selectedIssuer.credential_audience,
+        credentialEndpoint: context.selectedIssuer.credential_endpoint,
+        downloadTimeoutInMilliSeconds: downloadTimeout,
+        credentialType: getCredentialType(
+          context.selectedCredentialType?.credential_definition.type,
+        ),
+        credentialFormat: 'ldp_vc',
+      };
+      const proofJWT = await constructProofJWT(
+        context.publicKey,
+        context.privateKey,
+        accessToken,
+        context.selectedIssuer,
       );
+      let credential = await VciClient.downloadCredential(
+        issuerMeta,
+        proofJWT,
+        accessToken,
+      );
+
       console.info(`VC download via ${context.selectedIssuerId} is successful`);
       return updateCredentialInformation(context, credential);
     },
@@ -89,8 +100,8 @@ export const IssuersService = () => {
       if (!isHardwareKeystoreExists) {
         return await generateKeys();
       }
-      const isBiometricsEnabled = SecureKeystore.hasBiometricsEnabled();
-      return SecureKeystore.generateKeyPair(
+      const isBiometricsEnabled = RNSecureKeystoreModule.hasBiometricsEnabled();
+      return RNSecureKeystoreModule.generateKeyPair(
         Issuers_Key_Ref,
         isBiometricsEnabled,
         0,
