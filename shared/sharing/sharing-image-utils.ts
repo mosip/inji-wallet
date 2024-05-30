@@ -5,10 +5,8 @@ export async function shareImageToAllSupportedApps(
 ): Promise<Boolean> {
   try {
     const shareStatusResult = await RNShare.open(sharingOptions);
-    console.log('Image shared suuccessfully::');
     return shareStatusResult['success'];
   } catch (err) {
-    console.log('Exception while sharing Image::', err);
     return false;
   }
 }

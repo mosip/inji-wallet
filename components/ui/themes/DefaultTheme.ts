@@ -781,6 +781,9 @@ export const DefaultTheme = {
       shadowRadius: 3,
       marginTop: 14,
     },
+    shareQrCodeButton: {
+      marginTop: 30,
+    },
   }),
   PinInputStyle: StyleSheet.create({
     input: {

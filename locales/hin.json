@@ -84,7 +84,7 @@
         "message": "स्टोर में कार्ड सहेजते समय कोई गड़बड़ी हुई।"
       }
     },
-    "share_qr_code": "QR कोड साझा करें"
+    "shareQRCode": "QR कोड साझा करें"
   },
   "HomeScreenKebabPopUp": {
     "title": "अधिक विकल्प",

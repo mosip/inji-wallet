@@ -137,8 +137,8 @@ export const QrCodeOverlay: React.FC<QrCodeOverlayProps> = props => {
               />
               <Button
                 testID="share"
-                margin="30 0 0 0"
-                title={t('share_qr_code')}
+                styles={Theme.QrCodeStyles.shareQrCodeButton}
+                title={t('shareQRCode')}
                 type="gradient"
                 icon={
                   <Icon
