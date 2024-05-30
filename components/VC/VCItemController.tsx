@@ -15,6 +15,7 @@ import {
   VCItemEvents,
 } from '../../machines/VerifiableCredential/VCItemMachine/VCItemMachine';
 import {selectIsSavingFailedInIdle} from '../../screens/Home/MyVcsTabMachine';
+import {selectIsTourGuide} from '../../machines/auth';
 
 export function useVcItemController(props: VCItemProps) {
   const {appService} = useContext(GlobalContext);
@@ -25,6 +26,7 @@ export function useVcItemController(props: VCItemProps) {
     ),
   );
   const VCItemService = useInterpret(machine.current, {devTools: __DEV__});
+  const authService = appService.children.get('auth');
 
   return {
     VCItemService,
@@ -49,5 +51,6 @@ export function useVcItemController(props: VCItemProps) {
     ),
     storeErrorTranslationPath: 'errors.savingFailed',
     generatedOn: useSelector(VCItemService, selectGeneratedOn),
+    isTourGuide: useSelector(authService, selectIsTourGuide),
   };
 }

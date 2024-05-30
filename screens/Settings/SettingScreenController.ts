@@ -173,6 +173,7 @@ export function useSettingsScreen(props: RootRouteProps & RequestRouteProps) {
       settingsService.send(SettingsEvents.INJI_TOUR_GUIDE());
       props.navigation.navigate(BOTTOM_TAB_ROUTES.home);
       setIsVisible(false);
+      authService.send(AuthEvents.SET_TOUR_GUIDE(true));
       start();
     },
 

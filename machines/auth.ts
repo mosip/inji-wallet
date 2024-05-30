@@ -17,6 +17,7 @@ const model = createModel(
     toggleFromSettings: false,
     isOnboarding: true,
     isInitialDownload: true,
+    isTourGuide: false,
   },
   {
     events: {
@@ -32,6 +33,7 @@ const model = createModel(
       NEXT: () => ({}),
       ONBOARDING_DONE: () => ({}),
       INITIAL_DOWNLOAD_DONE: () => ({}),
+      SET_TOUR_GUIDE: (set: boolean) => ({set}),
     },
   },
 );
@@ -57,6 +59,9 @@ export const authMachine = model.createMachine(
       },
       INITIAL_DOWNLOAD_DONE: {
         actions: ['setInitialDownloadDone', 'storeContext'],
+      },
+      SET_TOUR_GUIDE: {
+        actions: 'setTourGuide',
       },
     },
     states: {
@@ -194,6 +199,10 @@ export const authMachine = model.createMachine(
       setInitialDownloadDone: assign({
         isInitialDownload: context => false,
       }),
+
+      setTourGuide: model.assign({
+        isTourGuide: (_, event) => event.set,
+      }),
     },
 
     services: {
@@ -253,6 +262,10 @@ export function selectIsOnboarding(state: State) {
 
 export function selectIsInitialDownload(state: State) {
   return state?.context?.isInitialDownload;
+}
+
+export function selectIsTourGuide(state: State) {
+  return state?.context?.isTourGuide;
 }
 
 export function selectAuthorized(state: State) {

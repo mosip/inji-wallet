@@ -26,6 +26,8 @@ export const UseCopilotTooltip = () => {
   const ONBOARDING_DONE = () => authService?.send(AuthEvents.ONBOARDING_DONE());
   const INITIAL_DOWNLOAD_DONE = () =>
     authService?.send(AuthEvents.INITIAL_DOWNLOAD_DONE());
+  const SET_TOUR_GUIDE = set =>
+    authService?.send(AuthEvents.SET_TOUR_GUIDE(set));
   const isOnboarding = useSelector(authService, selectIsOnboarding);
   const isInitialDownloading = useSelector(
     authService,
@@ -60,5 +62,6 @@ export const UseCopilotTooltip = () => {
     isInitialDownloading,
     INITIAL_DOWNLOAD_DONE,
     ONBOARDING_DONE,
+    SET_TOUR_GUIDE,
   };
 };

@@ -75,6 +75,19 @@ export const VCCardView: React.FC<VCItemProps> = props => {
       isInitialLaunch={props.isInitialLaunch}
     />
   );
+
+  const wrapTopCard = props =>
+    props.isTopCard ? (
+      <Copilot
+        description={t('copilot:cardMessage')}
+        order={6}
+        title={t('copilot:cardTitle')}
+        children={CardViewContent(props)}
+      />
+    ) : (
+      CardViewContent(props)
+    );
+
   return (
     <React.Fragment>
       <Pressable
@@ -85,16 +98,9 @@ export const VCCardView: React.FC<VCItemProps> = props => {
             ? Theme.Styles.selectedBindedVc
             : Theme.Styles.closeCardBgContainer
         }>
-        {props.isTopCard ? (
-          <Copilot
-            description={t('copilot:cardMessage')}
-            order={6}
-            title={t('copilot:cardTitle')}
-            children={CardViewContent(props)}
-          />
-        ) : (
-          CardViewContent(props)
-        )}
+        {props.isInitialLaunch || controller.isTourGuide
+          ? wrapTopCard(props)
+          : CardViewContent(props)}
       </Pressable>
       <ErrorMessageOverlay
         isVisible={controller.isSavingFailedInIdle}

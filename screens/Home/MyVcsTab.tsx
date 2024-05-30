@@ -59,7 +59,13 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = props => {
     setClearSearchIcon(false);
     setShowPinVc(true);
   };
-  const {start, goToNth} = useCopilot();
+  const {start} = useCopilot();
+
+  useEffect(() => {
+    if (controller.isInitialDownloading) {
+      controller.SET_TOUR_GUIDE(true);
+    }
+  }, []);
 
   useEffect(() => {
     filterVcs(search);
