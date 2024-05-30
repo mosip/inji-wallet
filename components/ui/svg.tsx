@@ -254,13 +254,12 @@ export class SvgImage {
   }
 
   static InjiLogo(props: LogoProps) {
-    const {width, height} = props;
     return (
       <InjiLogo
         color1={Theme.Colors.linearGradientStart}
         color2={Theme.Colors.linearGradientEnd}
-        width={width}
-        height={height}
+        width={props.width}
+        height={props.height}
       />
     );
   }
