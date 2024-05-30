@@ -107,7 +107,7 @@ export const IssuersMachine = model.createMachine(
           src: 'downloadCredentialTypes',
           onDone: [
             {
-              actions: 'setCredentialTypes',
+              actions: 'setSupportedCredentialTypes',
               target: 'selectingCredentialType',
             },
             {

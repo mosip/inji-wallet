@@ -27,6 +27,7 @@ export const API_URLS: ApiUrls = {
     buildURL: (issuerId: string): `/${string}` =>
       `/residentmobileapp/issuers/${issuerId}`,
   },
+  // TODO: Remove unused api
   credentialTypes: {
     method: 'GET',
     buildURL: (issuerId: string): `/${string}` =>
