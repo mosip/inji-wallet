@@ -289,36 +289,7 @@ export const FaceScanner: React.FC<FaceScannerProps> = props => {
     }
   }
 
-  // let blinkCount = 0;
-  // let leftEyeWasClosed = false;
-  // let rightEyeWasClosed = false;
-  // let lastBlinkTimestamp = 0;
-
   async function handleFacesDetected({faces}) {
-
-    // const leftEyeOpenProbability = faces[0].leftEyeOpenProbability;
-    // const rightEyeOpenProbability = faces[0].rightEyeOpenProbability;
-
-    // const currentTime = new Date().getTime();
-
-    // const leftEyeClosed = leftEyeOpenProbability < BLINK_THRESHOLD;
-    // const rightEyeClosed = rightEyeOpenProbability < BLINK_THRESHOLD;
-
-    // if (leftEyeClosed && rightEyeClosed) {
-    //   leftEyeWasClosed = true;
-    //   rightEyeWasClosed = true;
-    // }
-
-    // if (leftEyeWasClosed && rightEyeWasClosed && !leftEyeClosed && !rightEyeClosed) {
-    //   // if (lastBlinkTimestamp === 0 || (currentTime - lastBlinkTimestamp) > BLINK_TIME_WINDOW) {
-    //     blinkCount += 1;
-    //     lastBlinkTimestamp = currentTime;
-    //     console.log(`Blink detected! Total blinks: ${blinkCount}`);
-    //   // }
-    //   leftEyeWasClosed = false;
-    //   rightEyeWasClosed = false;
-    // }
-
     if (!livenessEnabled) {
       return;
     }
@@ -403,17 +374,8 @@ export const FaceScanner: React.FC<FaceScannerProps> = props => {
       {...(!livenessEnabled && {align: 'space-between'})}
       style={{backgroundColor: livenessEnabled ? screenColor : '#ffffff'}}>
       {livenessEnabled && (
-        <View
-          style={{flex: 1, justifyContent: 'flex-start', alignItems: 'center'}}>
-          <View
-            style={{
-              backgroundColor: '#ffffff',
-              borderRadius: 9,
-              width: Dimensions.get('window').width * 0.85,
-              alignItems: 'center',
-              marginTop: Dimensions.get('window').height * 0.15,
-              padding: 3,
-            }}>
+        <View style={Theme.CameraEnabledStyles.guideContainer}>
+          <View style={Theme.CameraEnabledStyles.guideContentContainer}>
             <Spinner type="ThreeBounce" color={Theme.Colors.Loading} />
             <Text size="small" weight="bold" color="black" align="center">
               {infoText}
@@ -460,70 +422,67 @@ export const FaceScanner: React.FC<FaceScannerProps> = props => {
             )}
           </View>
         </View>
-        { !livenessEnabled && (<Text
+        {!livenessEnabled && (
+          <Text
             testID="imageCaptureGuide"
             align="center"
             weight="semibold"
             style={Theme.TextStyles.base}
             margin="80 57">
             {t('imageCaptureGuide')}
-          </Text>) }
+          </Text>
+        )}
       </View>
       {livenessEnabled ? (
-        <View
-          style={{flex: 1, justifyContent: 'flex-end', alignItems: 'center'}}>
+        <View style={Theme.CameraEnabledStyles.buttonContainer}>
           <TouchableOpacity
-            style={{
-              backgroundColor: '#ffffff',
-              borderRadius: 9,
-              width: Dimensions.get('window').width * 0.3,
-              alignSelf: 'center',
-              alignItems: 'center',
-              height: 40,
-              marginBottom: Dimensions.get('window').height * 0.1,
-              opacity: opacity,
-            }}
+            style={[Theme.CameraEnabledStyles.cancelButton, {opacity: opacity}]}
             onPressIn={() => setOpacity(0.5)}
             onPressOut={() => setOpacity(1)}
             onPress={handleOnCancel}>
             <Text size="small" weight="bold" margin="8" color="black">
-            {t('cancel')}
+              {t('cancel')}
             </Text>
           </TouchableOpacity>
         </View>
       ) : (
         <>
           <Centered>
-              {isCapturing || isVerifying ? (
-                <RotatingIcon name="sync" size={64} />
-              ) : (
-                <Row align="center">
-                  <Centered style={Theme.Styles.imageCaptureButton}>
-                    <TouchableOpacity
-                      onPress={() => {
-                        service.send(FaceScannerEvents.CAPTURE());
-                      } }>
-                      {SvgImage.CameraCaptureIcon()}
-                    </TouchableOpacity>
-                    <Text  testID="captureText"
-                style={Theme.CameraEnabledStyles.iconText}>
-                      {t('capture')}
-                    </Text>
-                  </Centered>
+            {isCapturing || isVerifying ? (
+              <RotatingIcon name="sync" size={64} />
+            ) : (
+              <Row align="center">
+                <Centered style={Theme.Styles.imageCaptureButton}>
+                  <TouchableOpacity
+                    onPress={() => {
+                      service.send(FaceScannerEvents.CAPTURE());
+                    }}>
+                    {SvgImage.CameraCaptureIcon()}
+                  </TouchableOpacity>
+                  <Text
+                    testID="captureText"
+                    style={Theme.CameraEnabledStyles.iconText}>
+                    {t('capture')}
+                  </Text>
+                </Centered>
 
-                  <Centered>
-                    <TouchableOpacity
-                      onPress={() => service.send(FaceScannerEvents.FLIP_CAMERA())}>
-                      {SvgImage.FlipCameraIcon()}
-                    </TouchableOpacity>
-                    <Text  testID="flipCameraText"
-                style={Theme.CameraEnabledStyles.iconText}>
-                      {t('flipCamera')}
-                    </Text>
-                  </Centered>
-                </Row>
-              )}
-            </Centered></>
+                <Centered>
+                  <TouchableOpacity
+                    onPress={() =>
+                      service.send(FaceScannerEvents.FLIP_CAMERA())
+                    }>
+                    {SvgImage.FlipCameraIcon()}
+                  </TouchableOpacity>
+                  <Text
+                    testID="flipCameraText"
+                    style={Theme.CameraEnabledStyles.iconText}>
+                    {t('flipCamera')}
+                  </Text>
+                </Centered>
+              </Row>
+            )}
+          </Centered>
+        </>
       )}
     </Column>
   );

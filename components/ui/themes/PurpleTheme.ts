@@ -1571,6 +1571,33 @@ export const PurpleTheme = {
       width: '100%',
       margin: 'auto',
     },
+    guideContainer: {
+      flex: 1,
+      justifyContent: 'flex-start',
+      alignItems: 'center',
+    },
+    guideContentContainer: {
+      backgroundColor: '#ffffff',
+      borderRadius: 9,
+      width: Dimensions.get('window').width * 0.85,
+      alignItems: 'center',
+      marginTop: Dimensions.get('window').height * 0.12,
+      padding: 3,
+    },
+    buttonContainer: {
+      flex: 1,
+      justifyContent: 'flex-end',
+      alignItems: 'center',
+    },
+    cancelButton: {
+      backgroundColor: '#ffffff',
+      borderRadius: 9,
+      width: Dimensions.get('window').width * 0.3,
+      alignSelf: 'center',
+      alignItems: 'center',
+      height: 40,
+      marginBottom: Dimensions.get('window').height * 0.1,
+    },
     holdPhoneSteadyText: {
       color: Colors.Black,
       fontFamily: 'Inter_600SemiBold',
