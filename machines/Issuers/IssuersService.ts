@@ -16,7 +16,7 @@ import {
   generateKeys,
   isHardwareKeystoreExists,
 } from '../../shared/cryptoutil/cryptoUtil';
-import { NativeModules } from 'react-native';
+import {NativeModules} from 'react-native';
 import {getVCMetadata, VCMetadata} from '../../shared/VCMetadata';
 import {
   VerificationErrorType,
@@ -29,7 +29,7 @@ import {
 import {TelemetryConstants} from '../../shared/telemetry/TelemetryConstants';
 import {VciClient} from '../../shared/vciClient/VciClient';
 
-const{RNSecureKeystoreModule}=NativeModules
+const {RNSecureKeystoreModule} = NativeModules;
 export const IssuersService = () => {
   return {
     isUserSignedAlready: () => async () => {

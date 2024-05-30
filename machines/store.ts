@@ -20,7 +20,7 @@ import {
   SHOW_FACE_AUTH_CONSENT_SHARE_FLOW,
   ENOENT,
 } from '../shared/constants';
-import { NativeModules } from 'react-native';
+import {NativeModules} from 'react-native';
 import {
   AUTH_TIMEOUT,
   decryptJson,
@@ -45,7 +45,7 @@ export const keyinvalidatedString =
   'Key Invalidated due to biometric enrollment';
 export const tamperedErrorMessageString = 'Data is tampered';
 
-const{RNSecureKeystoreModule}=NativeModules
+const {RNSecureKeystoreModule} = NativeModules;
 const model = createModel(
   {
     encryptionKey: '',
@@ -295,7 +295,8 @@ export const storeMachine =
       services: {
         clear: () => clear(),
         hasAndroidEncryptionKey: () => async callback => {
-          const hasSetCredentials = RNSecureKeystoreModule.hasAlias(ENCRYPTION_ID);
+          const hasSetCredentials =
+            RNSecureKeystoreModule.hasAlias(ENCRYPTION_ID);
           if (hasSetCredentials) {
             try {
               const base64EncodedString =
@@ -526,7 +527,8 @@ export const storeMachine =
               );
             }
           } else {
-            const isBiometricsEnabled = RNSecureKeystoreModule.hasBiometricsEnabled();
+            const isBiometricsEnabled =
+              RNSecureKeystoreModule.hasBiometricsEnabled();
             await RNSecureKeystoreModule.generateKey(
               ENCRYPTION_ID,
               isBiometricsEnabled,

@@ -1,7 +1,7 @@
 import {KeyPair, RSA} from 'react-native-rsa-native';
 import forge from 'node-forge';
 import {BIOMETRIC_CANCELLED, DEBUG_MODE_ENABLED, isIOS} from '../constants';
-import { NativeModules } from 'react-native';
+import {NativeModules} from 'react-native';
 import {BiometricCancellationError} from '../error/BiometricCancellationError';
 import {EncryptedOutput} from './encryptedOutput';
 import {Buffer} from 'buffer';
@@ -21,7 +21,7 @@ export function generateKeys(): Promise<KeyPair> {
 /**
  * isCustomKeystore is a cached check of existence of a hardware keystore.
  */
-const{RNSecureKeystoreModule}=NativeModules
+const {RNSecureKeystoreModule} = NativeModules;
 export const isHardwareKeystoreExists = isCustomSecureKeystore();
 
 export async function getJWT(
@@ -108,7 +108,10 @@ export async function encryptJson(
       return encryptWithForge(data, encryptionKey).toString();
     }
     const base64EncodedString = Buffer.from(data).toString('base64');
-    return await RNSecureKeystoreModule.encryptData(ENCRYPTION_ID, base64EncodedString);
+    return await RNSecureKeystoreModule.encryptData(
+      ENCRYPTION_ID,
+      base64EncodedString,
+    );
   } catch (error) {
     console.error('error while encrypting:', error);
     if (error.toString().includes(BIOMETRIC_CANCELLED)) {
@@ -136,7 +139,10 @@ export async function decryptJson(
       return decryptWithForge(encryptedData, encryptionKey);
     }
 
-    return await RNSecureKeystoreModule.decryptData(ENCRYPTION_ID, encryptedData);
+    return await RNSecureKeystoreModule.decryptData(
+      ENCRYPTION_ID,
+      encryptedData,
+    );
   } catch (e) {
     console.error('error decryptJson:', e);
 

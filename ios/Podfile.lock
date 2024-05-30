@@ -61,10 +61,6 @@ PODS:
     - ReactCommon/turbomodule/core
   - ExpoWebBrowser (12.5.0):
     - ExpoModulesCore
-  - EXSplashScreen (0.22.0):
-    - ExpoModulesCore
-    - RCT-Folly (= 2021.07.22.00)
-    - React-Core
   - EXStructuredHeaders (3.3.0)
   - EXUpdates (0.18.17):
     - ASN1Decoder (~> 1.8)
@@ -556,7 +552,6 @@ DEPENDENCIES:
   - ExpoLocalization (from `../node_modules/expo-localization/ios`)
   - ExpoModulesCore (from `../node_modules/expo-modules-core`)
   - ExpoWebBrowser (from `../node_modules/expo-web-browser/ios`)
-  - EXSplashScreen (from `../node_modules/expo-splash-screen/ios`)
   - EXStructuredHeaders (from `../node_modules/expo-structured-headers/ios`)
   - EXUpdates (from `../node_modules/expo-updates/ios`)
   - EXUpdatesInterface (from `../node_modules/expo-updates-interface/ios`)
@@ -692,8 +687,6 @@ EXTERNAL SOURCES:
     :path: "../node_modules/expo-modules-core"
   ExpoWebBrowser:
     :path: "../node_modules/expo-web-browser/ios"
-  EXSplashScreen:
-    :path: "../node_modules/expo-splash-screen/ios"
   EXStructuredHeaders:
     :path: "../node_modules/expo-structured-headers/ios"
   EXUpdates:
@@ -855,7 +848,6 @@ SPEC CHECKSUMS:
   ExpoLocalization: f26cd431ad9ea3533c5b08c4fabd879176a794bb
   ExpoModulesCore: f0581cd745335dd7a68117f6fedd22b98e2c73f0
   ExpoWebBrowser: b6e56949734089d75f758f21cfe93fad02bd828c
-  EXSplashScreen: 5ed09ea490155ef603d007d9f194c9e04a4b7980
   EXStructuredHeaders: 324cc3130571d2696357fafd8be7fd9a0b5fdf6e
   EXUpdates: 8f03b362414e8f9f0998f8a6d6c9fc00f2a9d2f2
   EXUpdatesInterface: 82ed48d417cdcd376c12ca1c2ce390d35500bed6

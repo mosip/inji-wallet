@@ -1,4 +1,4 @@
-import { NativeModules } from 'react-native';
+import {NativeModules} from 'react-native';
 import Cloud from '../../../shared/CloudBackupAndRestoreUtils';
 import {VCMetadata} from '../../../shared/VCMetadata';
 import getAllConfigurations, {
@@ -19,7 +19,7 @@ import {verifyCredential} from '../../../shared/vcjs/verifyCredential';
 import {getMosipIdentifier} from '../../../shared/commonUtil';
 import {getVerifiableCredential} from './VCItemSelectors';
 
-const{RNSecureKeystoreModule}=NativeModules
+const {RNSecureKeystoreModule} = NativeModules;
 export const VCItemServices = model => {
   return {
     isUserSignedAlready: () => async () => {
