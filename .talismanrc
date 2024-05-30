@@ -3,6 +3,7 @@ fileignoreconfig:
     checksum: 5b4fcb5ddc7cc96cc2d1733b544d56ea66e88cdab995a1052fbf9ac0e9c2dc21
   - filename: package-lock.json
     checksum: 93a87652f1343d9f7a0440b451b3dd140e53f8b5db159acc039bc207918adfe5
+    checksum: 039a6c9f516b16824b6694db32e57ef763e8799a096141e49f33a0ca4e5832c4
   - filename: lib/jsonld-signatures/suites/ed255192018/ed25519.ts
     checksum: 493b6e31144116cb612c24d98b97d8adcad5609c0a52c865a6847ced0a0ddc3a
   - filename: components/PasscodeVerify.tsx
@@ -40,7 +41,7 @@ fileignoreconfig:
   - filename: shared/openId4VCI/Utils.ts
     checksum: f8b53de9c07074dc3a73f9443ba140c7e86300b4a2beac1a84bfccafb55ecd6a
   - filename: shared/cryptoutil/cryptoUtil.ts
-    checksum: adbc2ff6df1df412e891c988c9ba03fc82f66c2f6c64339f87d513fc835d14cc
+    checksum: 2efef1baca1eee0da60420c8d966a6d58589bc3ac74169ab1cdc19423b630dba
   - filename: shared/telemetry/TelemetryConstants.js
     checksum: fd8dc3a69cdef68855dc5f0531d8e634bfa2621bb4dc22f85b8247512a349c4c
   - filename: shared/telemetry/TelemetryUtils.js
@@ -64,7 +65,7 @@ fileignoreconfig:
   - filename: assets/Finger_Print_Icon.svg
     checksum: 776d4fe4fc4b54d185ccf97daf0511b9fe2c0e0f7c1a809047020e5e8a100db6
   - filename: android/app/build.gradle
-    checksum: 2c1a2619caf08aa8306af3f8f0158ccd512ec0b0f37434311d009d3d79d1b230
+    checksum: 9f9cdcd2ffb37338760d741694486cf5418a38834c3ca1bd9c573098ee10d997
   - filename: .github/workflows/push-triggers.yml
     checksum: abc19ea38c8d7b79f15695d015709cc88a34a995181aaf12bc8344f940f3cbc4
   - filename: android/fastlane/Fastfile
@@ -108,7 +109,7 @@ fileignoreconfig:
   - filename: injitest/src/test/java/androidTestCases/CredentialRegistryTest.java
     checksum: 126ad4f513d5e417fdc3ccbace187315b8aae4399806d3259421f8bca7d41254
   - filename: injitest/src/test/java/iosTestCases/NoNetworkIosTest.java
-    checksum: e4ce65bb37f3c6a2a36b327afdec2e25747c4a7d4a6f5c7f369306848a319dd8
+    checksum: 07bd2bf9f7917f8f15a1ead7717f9c24489aacc91516c69c68857cdf7b3b3cc2
   - filename: ios/fastlane/Fastfile
     checksum: a4e3772dc67a07ecbcfc58be0d6d4f7fa799cec7ac25bd269ac29459c8669ca4
   - filename: injitest/src/test/java/iosTestCases/CredentialRegistryTest.java
@@ -144,13 +145,13 @@ fileignoreconfig:
   - filename: shared/VCMetadata.ts
     checksum: e93f988415bf91064e2cf5fbc09ff6c7226798baa5da721fa0715d5d0d6afddf
   - filename: ios/Podfile.lock
-    checksum: e29b6cd09b56959ecf7747e3a9a67676e521856162af1ad2da91a2c13daad908
+    checksum: d4084b7d5e04ee4199014c561a8ae228471bfed38751239acf9232fd2f57c045
   - filename: components/BackupAndRestoreBannerNotification.tsx
     checksum: e465a9947727687d784d0cb9d8db1e28f765b0659bf4a3aa6d75643aa7b14102
   - filename: components/ActivityLogEvent.ts
     checksum: e7c8617cd9c510d5b6a053bc5c6164f02c48e85125aa925e0c4cf55cd1f29d22
   - filename: shared/storage.ts
-    checksum: 357f6b6b41cb80e2df749ba6ea020404ff70d3991f56e19f6ce5e1be47ad6115
+    checksum: c9a8e60ea2dd03cb2a9e300d6e6b4d9a1b293e85ef4ce1065fadc614c03214d7
   - filename: shared/constants.ts
     checksum: 69aa79ed25fee2162de7c8e065930e18168551377420a520092bdf6a86c7712d
   - filename: machines/backupAndRestore/backup.ts
@@ -168,13 +169,13 @@ fileignoreconfig:
   - filename: injitest/src/main/java/inji/api/ConfigManager.java
     checksum: 880e066743f5979929cbfa90ef3a28bf4eb7147c9dba425b2abb035025d21aa7
   - filename: injitest/src/test/java/androidTestCases/VcDownloadAndVerifyUsingEsignetTest.java
-    checksum: 6d40247474a1d1dcfb86f5d7e904b14b53ab1f786ea464a59bef39d5775a762b
+    checksum: 12a3b4d1350373a964313c0f272ccceb0b71e2f9f6c0f4baf7b1dcb4be6c2608
   - filename: injitest/src/test/java/androidTestCases/ChangeLanguageTest.java
-    checksum: 381f1ac3d03fa524aabd38904efa5031bd5c07717b1d51dcd2465cea58076362
+    checksum: 2c318055f0567a01b60204e00747d24bd757b73ffed12505787c61b033f45036
   - filename: ios/Inji/Inji.entitlements
     checksum: b2d643f91a929933747b539b9d6a87fcac17317716dbb9ccfb399e7c53d8cd52
   - filename: injitest/src/test/java/iosTestCases/ChangeLanguageTest.java
-    checksum: d94cbf47726c3650b4b623e6aa76e113edf553616319450d01f05294163572e9
+    checksum: 600e8cd0167d51511be6b9f91c6de19adf49d0c1d300aa41d2ecd050c8c2952f
   - filename: screens/Home/MyVcs/IdInputModal.tsx
     checksum: c18e8bbcf1c8de3327c0920fddcf1b6df54b74d894e3f04677f498712c680fe9
   - filename: screens/Home/MyVcs/OtpVerificationModal.tsx
@@ -214,7 +215,7 @@ fileignoreconfig:
   - filename: machines/auth.ts
     checksum: 46195ee93f9b7ac6794a06eeef5dee5ea242047a557af8bf95df04e1343d7b9e
   - filename: machines/auth.typegen.ts
-    checksum: 53be3eb5ec658fccc2764a5e8b0a9992c5c2b86f70ccb122c6cf6fba50f0d0f8
+    checksum: f93996f750549f6de91c2a35c5817cfa85ad7b255ef36dea85224a0a154db188
   - filename: shared/commonUtil.generated.test.ts
     checksum: 4ca5983bb133f8f02bfd52fd0cc49ce37b24b164f3ca78a03ad97bb353ed00a4
   - filename: __mocks__/en.mock.json
@@ -245,6 +246,7 @@ fileignoreconfig:
     checksum: 144bbf59e86a89bf580ac7931645ca3eaed69a9409de36f6ce9f88a14091a9d3
   - filename: components/QrCodeOverlay.tsx
     checksum: 68758cbddafe575c7f53294327963112a0780d30fd23cd0b6bf82d7dcfd856fe
+    checksum: 47220a4ebd8af702afe622a29b689f651eb23387bac1c623f241839beb413d25
   - filename: machines/Issuers/IssuersEvents.ts
     checksum: fd8c30e0cf43a784be883c9d79a3bff0d2bcd9075e937d225939040542998b10
   - filename: machines/Issuers/IssuersGuards.ts
@@ -254,17 +256,17 @@ fileignoreconfig:
   - filename: injitest/automation_trigger.sh
     checksum: f2f34839c99cb1b871dde17aed8508a071345d22738796e005ff709d2dab8644
   - filename: machines/Issuers/IssuersService.ts
-    checksum: ee7622a03c23705b4c4dea218ccbe6504a51a5a68170a9059a2cde3b4c6a9984
+    checksum: 1b54b0249488fc496e3582588c644034865fd50386757789baaaf1c3821464d5
   - filename: screens/Home/ViewVcModal.tsx
     checksum: cfb25d562185488432b76287c4ef93359c1c64d8e29f5755d4c0a726c1485442
   - filename: injitest/src/main/resources/TestData.json
     checksum: 1b5af14c96b456898259b4cb7a5607b006404cf0360274bdc204d7d065698e3c
   - filename: injitest/src/test/java/androidTestCases/ActivateVcTest.java
-    checksum: a9abd8c0478e9f5d7db8b8289002104107d26c2d08af8959219267f71f4a7a0b
+    checksum: ef35bd00dfa77e62018f11fa5ae8864720b1abdfa5da04dc429c046c72bab7c8
   - filename: machines/VerifiableCredential/VCMetaMachine/VCMetaActions.ts
     checksum: 5ff9b2a0ad8b7f38b95ad84ec2006b8aecf119c678fadebb18de4ffffd966da8
   - filename: injitest/src/test/java/androidTestCases/DeletingVcTest.java
-    checksum: e4c92989937c203ca6371cf6cb3920ceaf61ad53b38d667ff2606044dc5ce469
+    checksum: 8ce5adb75377348b48613c06fa759a63b9f0f9dc20d51218bbe13c4bf1f93d5d
   - filename: injitest/src/test/java/androidTestCases/GenerateUinOrVidTest.java
     checksum: 3dec3f9d8b28467af89f574e868058446beff12d5dfba13892a2d2f3033b6894
   - filename: machines/VerifiableCredential/VCMetaMachine/VCMetaSelectors.ts
@@ -272,7 +274,7 @@ fileignoreconfig:
   - filename: injitest/src/test/java/androidTestCases/UnlockWithPasscodeTest.java
     checksum: efe21ba6b9e1b760cee02f0d6c5c776722142feeff7417cfdb7536ab80be3476
   - filename: injitest/src/test/java/androidTestCases/VerifyHistoryTest.java
-    checksum: c2787a9adffade8310bd2245d8ea295f01e5528ae8dd156bc68ccda5321f150d
+    checksum: dffc4741b251b42c81d5bdac7d649c02b37bb9045285590b29f86c2d5f526fd1
   - filename: injitest/src/test/java/androidTestCases/VcDownloadAndVerifyUsingUinTest.java
     checksum: ca06dd901386edcd914bd39b301629589d82269b79e80fad5e3562968532b590
   - filename: machines/bleShare/scan/scanGuards.ts
@@ -282,15 +284,15 @@ fileignoreconfig:
   - filename: machines/QrLogin/QrLoginServices.ts
     checksum: b20d0caa6d23078b4010ea5185f01270356422dd216edd7834b069cdedd3383d
   - filename: machines/bleShare/scan/scanActions.ts
-    checksum: 1be68caa29937d5f724fc45f8164ee607e556aae008c00ac89b83968030ed7ed
+    checksum: 7b1c55e1913622d142433a296f1c75ec831441670d9b84cfaabb4863af2c1fe6
   - filename: injitest/src/test/java/iosTestCases/ActivateVcTest.java
     checksum: 280fcbfa6e7b26baa41aa9e60e8be857a16fd409f2dcc5b31d53ced7d1b26dec
   - filename: injitest/src/test/java/iosTestCases/GenerateUinOrVidTest.java
     checksum: c2a97d691bad5e07ff04b2da0487ffeb86884e14d1489657276a3e003e954735
   - filename: injitest/src/test/java/iosTestCases/VerifyHistoryTest.java
-    checksum: ff7f467874f8fa6284150359f81cf1f9f00bf979f58aeda608460fc026d6c79b
+    checksum: 8a00278af4c8744c713c57328991bbca438eb5d5d89b492a7f5234c47362f44b
   - filename: machines/store.ts
-    checksum: fa2330002fc3f638a09a816a37a8ef26268ae6ab65c23aacee846244ebb1cb4e
+    checksum: 8c54719e45c1784f0c21b04f18db2c6ee87d9df08f9dfee5e4050f96eaa07592
   - filename: components/BannerNotificationContainer.tsx
     checksum: 9e5b4a61b87e86666f0bee550d410df2b8576dfe5ec374de0ab139a468a234f7
   - filename: injitest/src/test/java/iosTestCases/PinVcTest.java
@@ -302,13 +304,13 @@ fileignoreconfig:
   - filename: machines/backupAndRestore/backupWithEncryption.typegen.ts
     checksum: 19ccac58df42ce0b6e36c66592e53441d709713fb1bff64454e0039dd3b0ac97
   - filename: injitest/src/main/java/inji/utils/TestDataReader.java
-    checksum: 02d9ff0873d2f9685c4db6ad41d56eb91a59966feda20d7072ec32da6c2e22fe
+    checksum: 002870c5c4d400c6d0f63001cd308fea6972a57ad7fef7e21f9ac17909d57a96
   - filename: injitest/src/test/java/iosTestCases/UnlockWithPasscodeTest.java
     checksum: a44dab1127143fa303824068f81a8ee3e7697ace4c38460d5400a0a56fe9ba7d
   - filename: injitest/src/test/java/iosTestCases/VcDownloadAndVerifyUsingEsignetTest.java
-    checksum: 23bcfd393abb1802d3ecf913dd535e2487a23db7afded1fa0a1fe284513c0fa8
+    checksum: 3d9e317d4463e3df61ce135ae9ed2acaef8074cf60d12f672140ab45d59c3df7
   - filename: injitest/src/test/java/iosTestCases/VcDownloadAndVerifyUsingUinTest.java
-    checksum: fdf6e7b3fc04af16c0c47d2d1d7e051d7cb03e0891d4697e40997932362d06e0
+    checksum: a6feabb768e2d97dfb0a1693f09d839686ce6be686523cf273b2d3ce614b34fd
   - filename: machines/Issuers/IssuersMachine.typegen.ts
     checksum: 08fd5e4eff836c219a0f16f6d4178a3511ec2581507076d3f9d32dcadbc01351
   - filename: injitest/src/test/java/iosTestCases/DeletingVcTest.java
@@ -319,7 +321,29 @@ fileignoreconfig:
   - filename: android/app/src/main/java/io/mosip/residentapp/InjiVciClientModule.java
     checksum: 17f55840bab193bc353034445ba4fce53e1ce466e95f616c15a1351f8d2f23bc
   - filename: ios/Inji.xcodeproj/project.pbxproj
-    checksum: 0a8e851803f826cc392d95d2f88b8c304948697863a528ef756e34c76614940d
+    checksum: d4ae3df6731b4019fb1fc821c4a886ed378c90151c0e78ad67608bc2067df304
   - filename: ios/Inji.xcworkspace/xcshareddata/swiftpm/Package.resolved
-    checksum: 31f1365526ceaa0f1aae6f2b8cab4e1ab4e798322fc3d6e6a1a74c861ae73850
+    checksum: ca94b7893a0a9e7f4025675be1adec9e0e28ccc389c2f30a2a0723dec9a8b460
+  - filename: injitest/src/main/resources/Vids.json
+    checksum: 8bcffed7a6dd565ae695e1b29de0655e10bd5c5420af2718defd593a687b8817
+  - filename: injitest/src/main/java/inji/utils/UpdateNetworkSettings.java     
+    checksum: e249ce3e6b7f47abc183fe5a3637bb39ccb06900ef75b9b2f08426d1535e22aa
+  - filename: App.tsx
+    checksum: d16d4a40b246abe25a5d2da7ec65163b5756fe8ba9390608a7fc7f8e721b2ed1
+  - filename: machines/VerifiableCredential/VCItemMachine/VCItemServices.ts    
+    checksum: 46f5b7ad6e6dcd9de9f9872c79d2c07addcd228324a43cca18525f6b1f4ff7cb 
+  - filename: injitest/src/test/java/iosTestCases/ShareVcTest.java
+    checksum: 1cf9b61d3fcea9b63b2b9f7dffe9b5a1848e196c39f77790b6c9d83f201c6197
+  - filename: android/app/src/main/java/io/mosip/residentapp/RNSecureKeystoreModule.java
+    checksum: f307f8273f72ec70b991baf799ae71f93c785c76e3e15847004f567558340e32
+  - filename: injitest/src/test/java/androidTestCases/ShareVcTest.java
+    checksum: a7e3e579b6ac05f95932638b61272142774d0690c13717c890e87374782ea509
+  - filename: ios/RNPixelpassModule.m
+    checksum: c91348eceec5edbffa03ba03f3f52a8e90ff7f942816c9609080d1647052fd66
+  - filename: ios/RNPixelpassModule.swift
+    checksum: 822a2421798d5c0669f4ab1b983194eb770cbef2aa30bf212d06bd959738c4ca
+  - filename: injitest/src/test/java/androidTestCases/VerifyHistoryTest.java   
+    checksum: dffc4741b251b42c81d5bdac7d649c02b37bb9045285590b29f86c2d5f526fd1 
+  - filename: android/app/src/main/java/io/mosip/residentapp/RNPixelpassModule.java
+    checksum: cef9be4bfafb54e2c885b2459f2819554cad6448b5dc372976706894df704e5d
     version: ""
