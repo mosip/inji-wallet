@@ -57,6 +57,7 @@ export interface Credential {
     verificationMethod: string;
   };
   type: string[];
+  credentialTypes: string[];
 }
 
 export interface VerifiableCredential {
@@ -121,4 +122,17 @@ export interface WalletBindingResponse {
   keyId: string;
   thumbprint: string;
   expireDateTime: string;
+}
+
+//TODO: Check if Type word is needed in the naming
+export interface VCMetadataType {
+  //TODO: requestId is not null at any point as its used for file names and all
+  isPinned: boolean;
+  requestId: string | null;
+  issuer: string;
+  protocol: string;
+  id: string;
+  timestamp: string;
+  isVerified: boolean;
+  credentialType: string;
 }

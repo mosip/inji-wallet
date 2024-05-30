@@ -122,7 +122,7 @@ export const VCItemActions = model => {
 
     setContext: model.assign((context, event) => {
       const vcMetadata = context.vcMetadata;
-      vcMetadata.credentialType = event.response.verifiableCredential.type[1];
+      // vcMetadata.credentialType = event.response.verifiableCredential.type;
       return {
         ...context,
         ...event.response,

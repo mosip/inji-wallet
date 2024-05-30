@@ -108,7 +108,9 @@ export const getBody = async context => {
     format: 'ldp_vc',
     credential_definition: {
       '@context': ['https://www.w3.org/2018/credentials/v1'],
-      type: getCredentialType(context),
+      type: getCredentialType(
+        context.selectedCredentialType?.credential_definition.type,
+      ),
     },
     proof: {
       proof_type: 'jwt',
@@ -117,12 +119,8 @@ export const getBody = async context => {
   };
 };
 
-export const getCredentialType = (context: any) => {
-  return (
-    context.selectedCredentialType?.credential_definition?.type ?? [
-      'VerifiableCredential',
-    ]
-  );
+export const getCredentialType = (type: any) => {
+  return type ?? ['VerifiableCredential'];
 };
 
 export const updateCredentialInformation = (
@@ -133,7 +131,7 @@ export const updateCredentialInformation = (
     verifiableCredential: {
       ...credential,
       wellKnown: context.selectedIssuer['.well-known'],
-      credentialTypes: getCredentialType(credential.credential),
+      credentialTypes: getCredentialType(credential.credential.type),
       issuerLogo: getDisplayObjectForCurrentLanguage(
         context.selectedIssuer.display,
       )?.logo,
@@ -310,7 +308,7 @@ export enum ErrorMessage {
   BIOMETRIC_CANCELLED = 'biometricCancelled',
 }
 
-export const getSelectedCredentialType = (credential: Credential): string => {
+export const getSelectedCredentialType = (credential: Credential): string[] => {
   console.log('####getter credential.type[1]: ', credential.type[1]);
-  return credential.type[1];
+  return credential.type;
 };

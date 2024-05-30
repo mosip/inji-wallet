@@ -1,6 +1,9 @@
-import {VC, VcIdType} from '../machines/VerifiableCredential/VCMetaMachine/vc';
 import {
-  getCredentialType,
+  VC,
+  VcIdType,
+  VCMetadataType,
+} from '../machines/VerifiableCredential/VCMetaMachine/vc';
+import {
   getSelectedCredentialType,
   Issuers,
   Protocols,
@@ -21,7 +24,7 @@ export class VCMetadata {
   protocol?: string = '';
   timestamp?: string = '';
   isVerified: boolean = false;
-  credentialType: string = '';
+  credentialType: string[] = [];
 
   constructor({
     idType = '',
@@ -32,7 +35,7 @@ export class VCMetadata {
     protocol = '',
     timestamp = '',
     isVerified = false,
-    credentialType = '',
+    credentialType = [],
   } = {}) {
     this.idType = idType;
     this.requestId = requestId;
@@ -58,6 +61,8 @@ export class VCMetadata {
       isVerified: vc.isVerified,
       credentialType: vc.vcMetadata
         ? vc.vcMetadata.credentialType
+        : vc.credentialType
+        ? vc.credentialType
         : getVerifiableCredential(vc.verifiableCredential).type[1],
     });
   }
