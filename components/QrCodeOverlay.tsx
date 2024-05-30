@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {Pressable, View} from 'react-native';
 import {Icon, Overlay} from 'react-native-elements';
 import {Centered, Column, Row, Text, Button} from './ui';
@@ -37,17 +37,31 @@ export const QrCodeOverlay: React.FC<QrCodeOverlayProps> = props => {
     return qrData;
   }
 
-  const base64URL =
-    'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQAAAAEACAIAAADTED8xAAADMElEQVR4nOzVwQnAIBQFQYXff81RUkQCOyDj1YOPnbXWPmeTRef+/3O/OyBjzh3CD95BfqICMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMO0TAAD//2Anhf4QtqobAAAAAElFTkSuQmCC';
+  const [base64String, setBase64String] = useState('');
+
+  let qrRef = useRef(null);
+
+  function updateBase64() {
+    qrRef.current.toDataURL(dataURL => {
+      setBase64String(`data:image/png;base64,${dataURL}`);
+    });
+    shareQRCode();
+  }
+
+  useEffect(() => {
+    shareQRCode();
+  }, [base64String]);
 
   async function shareQRCode() {
-    const options: ShareOptions = {
-      message: 'Scan to view credentials',
-      url: base64URL,
-    };
-    let shareStatus = await shareImageToAllSupportedApps(options);
-    if (!shareStatus) {
-      console.log('Error while sharing QR code::');
+    if (base64String != '') {
+      const options: ShareOptions = {
+        message: 'Scan to view credentials',
+        url: base64String,
+      };
+      let shareStatus = await shareImageToAllSupportedApps(options);
+      if (!shareStatus) {
+        console.log('Error while sharing QR code::');
+      }
     }
   }
 
@@ -63,6 +77,7 @@ export const QrCodeOverlay: React.FC<QrCodeOverlayProps> = props => {
     })();
   }, []);
   const [isQrOverlayVisible, setIsQrOverlayVisible] = useState(false);
+
   const toggleQrOverlay = () => setIsQrOverlayVisible(!isQrOverlayVisible);
   return (
     qrString != '' &&
@@ -118,12 +133,11 @@ export const QrCodeOverlay: React.FC<QrCodeOverlayProps> = props => {
                 backgroundColor={Theme.Colors.QRCodeBackgroundColor}
                 ecl={DEFAULT_ECL}
                 onError={onQRError}
+                getRef={data => (qrRef.current = data)}
               />
               <Button
                 testID="share"
-                testID="share"
                 margin="30 0 0 0"
-                title={t('share_qr_code')}
                 title={t('share_qr_code')}
                 type="gradient"
                 icon={
@@ -134,7 +148,7 @@ export const QrCodeOverlay: React.FC<QrCodeOverlayProps> = props => {
                     color="white"
                   />
                 }
-                onPress={shareQRCode}
+                onPress={updateBase64}
               />
             </Centered>
           </Column>
