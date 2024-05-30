@@ -542,7 +542,7 @@ public class ChangeLanguageTest extends AndroidBaseTest {
         assertEquals(sunbirdLoginPage.getEmailIdValueForSunbirdCard(),TestDataReader.readData("emailIdValueSunbird"));
         assertEquals(sunbirdLoginPage.getStatusValueForSunbirdCard(),"वैध");
         assertTrue(sunbirdLoginPage.isPolicyExpiresOnValueDisplayed(), "Verify if policy expireson value displayed");
-        assertEquals(sunbirdLoginPage.getIdTypeValueForSunbirdCard(),TestDataReader.readData("idTypeSunbird"));
+        assertEquals(sunbirdLoginPage.getIdTypeValueForSunbirdCard(),TestDataReader.readData("idTypeSunbirdHindi"));
         sunbirdLoginPage.clickOnBackArrow();
 
         homePage.clickOnSettingIcon();

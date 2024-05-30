@@ -219,8 +219,6 @@ fileignoreconfig:
     checksum: 4ca5983bb133f8f02bfd52fd0cc49ce37b24b164f3ca78a03ad97bb353ed00a4
   - filename: __mocks__/en.mock.json
     checksum: b34340a3f40c691f06698f7758b8c068a09ed7215098a0d11baed191c0972e04
-  - filename: ios/Inji.xcodeproj/project.pbxproj
-    checksum: 766e3dcb299f52ea75e87a1e6e7ce106872bb2f2481d54700995ca02b742b60f
   - filename: ios/Inji/Info.plist
     checksum: 9237e54ac8bbc0a4ad4c5d82ffe5b1ae4ccadfce6745f59cee1260c469212701
   - filename: machines/backupAndRestore/backupRestore.ts
@@ -320,4 +318,8 @@ fileignoreconfig:
     checksum: 8ac74d2e5c6de179e460b86899eb048ad4c5bd67abc3d28c015e92335b8afe24
   - filename: android/app/src/main/java/io/mosip/residentapp/InjiVciClientModule.java
     checksum: 17f55840bab193bc353034445ba4fce53e1ce466e95f616c15a1351f8d2f23bc
+  - filename: ios/Inji.xcodeproj/project.pbxproj
+    checksum: 0a8e851803f826cc392d95d2f88b8c304948697863a528ef756e34c76614940d
+  - filename: ios/Inji.xcworkspace/xcshareddata/swiftpm/Package.resolved
+    checksum: 31f1365526ceaa0f1aae6f2b8cab4e1ab4e798322fc3d6e6a1a74c861ae73850
     version: ""

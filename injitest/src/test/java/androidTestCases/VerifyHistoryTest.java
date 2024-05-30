@@ -207,7 +207,7 @@ public class VerifyHistoryTest extends AndroidBaseTest {
         otpVerificationPage.enterOtp(TestDataReader.readData("passcode"), Target.ANDROID);
 
         assertTrue(moreOptionsPage.isVcActivatedForOnlineLogin(), "Verify if VC is activated");
-        HistoryPage historyPage = moreOptionsPage.clickOnCloseButton().clickOnHistoryButton();
+        HistoryPage historyPage = homePage.clickOnHistoryButton();
         assertTrue(historyPage.isHistoryPageLoaded(), "Verify if history page is displayed");
         assertTrue(historyPage.verifyActivationSuccessfulRecordInHistory(uin, Target.ANDROID));
 
@@ -254,7 +254,6 @@ public class VerifyHistoryTest extends AndroidBaseTest {
         DetailedVcViewPage detailedVcViewPage = homePage.openDetailedVcView(TestDataReader.readData("fullName"));
         
         assertTrue(detailedVcViewPage.isActivateButtonDisplayed(), "Verify if activate vc button displayed");
-
 
         PleaseConfirmPopupPage pleaseConfirmPopupPage  =detailedVcViewPage.clickOnActivateButtonAndroid();
         assertTrue(pleaseConfirmPopupPage.isPleaseConfirmPopupPageLoaded(), "Verify if confirm popup page is displayed");
