@@ -69,6 +69,22 @@ public class SharePage extends BasePage {
     @AndroidFindBy(xpath = "//android.widget.TextView[@resource-id=\"close\"]")
     private WebElement closePopupButton;
 
+    @AndroidFindBy(xpath = "//android.widget.Button[@resource-id=\"com.android.permissioncontroller:id/permission_deny_button\"]")
+    @iOSXCUITFindBy(accessibility = "Don’t Allow")
+    private WebElement cameraDontAllAccessPopup;
+
+    @AndroidFindBy(accessibility = "holdPhoneSteadyMessage")
+    @iOSXCUITFindBy(accessibility = "cameraAccessDisabled")
+    private WebElement CameraDisabledToaster;
+
+    @AndroidFindBy(xpath = "//android.widget.TextView[@resource-id=\"close\"]")
+    @iOSXCUITFindBy(accessibility = "close")
+    private WebElement CameraDisabledToasterClose;
+
+    @AndroidFindBy(accessibility = "sharingStatusTitle")
+    @iOSXCUITFindBy(accessibility = "sharingStatusTitle")
+    private WebElement CameraAccessLostPage;
+
 
     public SharePage(AppiumDriver driver) {
         super(driver);
@@ -170,4 +186,21 @@ public class SharePage extends BasePage {
         clickOnElement(gallaryAccessPopup);
     }
 
+    public boolean isCameraDisabledToasterLoaded() {
+        return isElementDisplayed(CameraDisabledToaster);
+    }
+
+    public void clickOnCameraDisabledToasterClose(){
+        if(isElementDisplayed(CameraDisabledToasterClose))
+            clickOnElement(CameraDisabledToasterClose);
+    }
+
+    public void clickOnDontAllowCameraAccessButton(){
+        if(isElementDisplayed(cameraDontAllAccessPopup))
+            clickOnElement(cameraDontAllAccessPopup);
+    }
+
+    public boolean isCameraAccessLostPageLoaded() {
+        return isElementDisplayed(CameraAccessLostPage);
+    }
 }
