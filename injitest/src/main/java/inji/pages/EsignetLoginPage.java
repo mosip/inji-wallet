@@ -29,7 +29,7 @@ public class EsignetLoginPage extends BasePage {
     private WebElement enterYourVidTextHeader;
 
     @AndroidFindBy(uiAutomator = "UiSelector().className(\"android.widget.EditText\").instance(0)")
-    @iOSXCUITFindBy(accessibility = "Please fill in this field")
+    @iOSXCUITFindBy(className = "XCUIElementTypeTextField")
     private WebElement enterIdTextBox;
 
     @AndroidFindBy(xpath = "//android.widget.Button[@text=\"Get OTP\"]")
@@ -64,16 +64,24 @@ public class EsignetLoginPage extends BasePage {
     private WebElement invalidOtpText;
 
     @AndroidFindBy(uiAutomator = "UiSelector().className(\"android.widget.TextView\").instance(1)")
+    @iOSXCUITFindBy(xpath = "(//XCUIElementTypeStaticText)[5]")
     private WebElement loginTextHeader;
 
     @AndroidFindBy(uiAutomator = "UiSelector().className(\"android.widget.TextView\").instance(2)")
+    @iOSXCUITFindBy(xpath = "(//XCUIElementTypeStaticText)[6]")
     private WebElement pleaseEnterUinHeaderText;
 
     @AndroidFindBy(uiAutomator = "UiSelector().className(\"android.widget.TextView\").instance(5)")
+    @iOSXCUITFindBy(xpath = "(//XCUIElementTypeStaticText)[9]")
     private WebElement dontHaveAccountText;
 
     @AndroidFindBy(uiAutomator = "UiSelector().className(\"android.widget.TextView\").instance(6)")
+    @iOSXCUITFindBy(xpath = "(//XCUIElementTypeStaticText)[10]")
     private WebElement signUpwithUnifiedLoginText;
+
+    @AndroidFindBy(accessibility = "Close tab")
+    @iOSXCUITFindBy(xpath ="//XCUIElementTypeButton[@name=\"Cancel\"]")
+    private WebElement CloseTab;
 
 
 
@@ -117,8 +125,6 @@ public class EsignetLoginPage extends BasePage {
         return new OtpVerificationPage(driver);
     }
 
-
-
     public boolean isEnterYourVidTextDisplayed() {
         return this.isElementDisplayed(enterYourVidTextHeader);
     }
@@ -151,18 +157,34 @@ public class EsignetLoginPage extends BasePage {
             case "English":
                 boolean isEnglishMatch  = (actualText.equalsIgnoreCase("Please fill in this field")==true) ? true : false;
                 return isEnglishMatch ;
+            case "EnglishIos":
+                boolean isEnglishMatchIos  = (actualText.equalsIgnoreCase("Enter Your UIN or VID")==true) ? true : false;
+                return isEnglishMatchIos ;
             case "Tamil":
                 boolean isTamilMatch  = (actualText.equalsIgnoreCase("இந்த புலத்தை நிரப்பவும்")==true) ? true : false;
                 return isTamilMatch ;
+            case "TamilIos":
+                boolean isTamilMatchIos  = (actualText.equalsIgnoreCase("உங்கள் UIN அல்லது VID ஐ உள்ளிடவும்")==true) ? true : false;
+                System.out.println(actualText);
+                return isTamilMatchIos;
             case "Kannada":
                 boolean isKannadaMatch  = (actualText.equalsIgnoreCase("ದಯವಿಟ್ಟು ಈ ಕ್ಷೇತ್ರವನ್ನು ಭರ್ತಿ ಮಾಡಿ")==true) ? true : false;
                 return isKannadaMatch ;
+            case "KannadaIos":
+                boolean isKannadaMatchIos  = (actualText.equalsIgnoreCase("ನಿಮ್ಮ UIN ಅಥವಾ VID ನಮೂದಿಸಿ")==true) ? true : false;
+                return isKannadaMatchIos ;
             case "Hindi":
                 boolean isHindiMatch  = (actualText.equalsIgnoreCase("कृपया इस क्षेत्र को भरें")==true) ? true : false;
                 return isHindiMatch ;
+            case "HindiIos":
+                boolean isHindiMatchIos  = (actualText.equalsIgnoreCase("अपना यूआईएन या वीआईडी \u200B\u200Bदर्ज करें")==true) ? true : false;
+                return isHindiMatchIos ;
             case "Arabic":
                 boolean isArabicMatch  = (actualText.equalsIgnoreCase("يرجى ملء هذا الحقل")==true) ? true : false;
                 return isArabicMatch ;
+            case "ArabicIos":
+                boolean isArabicMatchIos  = (actualText.equalsIgnoreCase("أدخل رقم UIN أو VID الخاص بك")==true) ? true : false;
+                return isArabicMatchIos ;
 
         }
         return false;
@@ -182,10 +204,13 @@ public class EsignetLoginPage extends BasePage {
                 boolean isKannadaMatch  = (actualText.equalsIgnoreCase("ಇಸಿಗ್ನೆಟ್ ಮೂಲಕ ಲಾಗಿನ್ ಮಾಡಿ")==true) ? true : false;
                 return isKannadaMatch ;
             case "Hindi":
-                boolean isHindiMatch  = (actualText.equalsIgnoreCase("कृपया इस क्षेत्र को भरें")==true) ? true : false;
+                boolean isHindiMatch  = (actualText.equalsIgnoreCase("ईसिग्नेट से लॉगिन करें")==true) ? true : false;
                 return isHindiMatch ;
+            case "HindiIos":
+                boolean isHindiMatchIos  = (actualText.equalsIgnoreCase("ईसिग्नेट से लॉगिन करें")==true) ? true : false;
+                return isHindiMatchIos ;
             case "Arabic":
-                boolean isArabicMatch  = (actualText.equalsIgnoreCase("يرجى ملء هذا الحقل")==true) ? true : false;
+                boolean isArabicMatch  = (actualText.equalsIgnoreCase("تسجيل الدخول باستخدام eSignet")==true) ? true : false;
                 return isArabicMatch ;
         }
         return false;
@@ -201,14 +226,20 @@ public class EsignetLoginPage extends BasePage {
             case "Tamil":
                 boolean isTamilMatch  = (actualText.equalsIgnoreCase("உங்கள் UIN/VIDஐ உள்ளிடவும்")==true) ? true : false;
                 return isTamilMatch ;
+            case "TamilIos":
+                boolean isTamilMatchIos  = (actualText.equalsIgnoreCase("உங்கள் UIN/VIDஐ உள்ளிடவும்")==true) ? true : false;
+                return isTamilMatchIos ;
             case "Kannada":
                 boolean isKannadaMatch  = (actualText.equalsIgnoreCase("ದಯವಿಟ್ಟು ನಿಮ್ಮ UIN/VID ಅನ್ನು ನಮೂದಿಸಿ")==true) ? true : false;
                 return isKannadaMatch ;
             case "Hindi":
                 boolean isHindiMatch  = (actualText.equalsIgnoreCase("कृपया अपना यूआईएन/वीआईडी \u200B\u200Bदर्ज करें")==true) ? true : false;
                 return isHindiMatch ;
+            case "HindiIos":
+                boolean isHindiMatchIos  = (actualText.equalsIgnoreCase("अपना यूआईएन या वीआईडी \u200B\u200Bदर्ज करें")==true) ? true : false;
+                return isHindiMatchIos ;
             case "Arabic":
-                boolean isArabicMatch  = (actualText.equalsIgnoreCase("يرجى ملء هذا الحقل")==true) ? true : false;
+                boolean isArabicMatch  = (actualText.equalsIgnoreCase("الرجاء إدخال UIN/VID الخاص بك")==true) ? true : false;
                 return isArabicMatch ;
         }
         return false;
@@ -258,5 +289,14 @@ public class EsignetLoginPage extends BasePage {
                 return isArabicMatch ;
         }
         return false;
+    }
+
+    public void clickOnCloseButton() {
+        clickOnElement(CloseTab);
+    }
+
+    public String getText(){
+    System.out.println(getTextFromLocator(enterIdTextBox));
+        return getTextFromLocator(enterIdTextBox);
     }
 }

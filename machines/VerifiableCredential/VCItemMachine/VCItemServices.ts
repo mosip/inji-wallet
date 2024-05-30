@@ -1,4 +1,4 @@
-import SecureKeystore from '@mosip/secure-keystore';
+import {NativeModules} from 'react-native';
 import Cloud from '../../../shared/CloudBackupAndRestoreUtils';
 import {VCMetadata} from '../../../shared/VCMetadata';
 import getAllConfigurations, {
@@ -19,6 +19,7 @@ import {verifyCredential} from '../../../shared/vcjs/verifyCredential';
 import {getMosipIdentifier} from '../../../shared/commonUtil';
 import {getVerifiableCredential} from './VCItemSelectors';
 
+const {RNSecureKeystoreModule} = NativeModules;
 export const VCItemServices = model => {
   return {
     isUserSignedAlready: () => async () => {
@@ -96,8 +97,8 @@ export const VCItemServices = model => {
       if (!isHardwareKeystoreExists) {
         return await generateKeys();
       }
-      const isBiometricsEnabled = SecureKeystore.hasBiometricsEnabled();
-      return SecureKeystore.generateKeyPair(
+      const isBiometricsEnabled = RNSecureKeystoreModule.hasBiometricsEnabled();
+      return RNSecureKeystoreModule.generateKeyPair(
         VCMetadata.fromVC(context.vcMetadata).id,
         isBiometricsEnabled,
         0,
