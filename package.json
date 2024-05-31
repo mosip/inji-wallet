@@ -23,7 +23,7 @@
     "@iriscan/biometric-sdk-react-native": "0.2.6",
     "@mosip/pixelpass": "^0.1.5",
     "@mosip/secure-keystore": "^0.1.7",
-    "@mosip/tuvali": "git://github.com/mosip/tuvali.git#develop",
+    "@mosip/tuvali": "^0.4.9",
     "@react-native-clipboard/clipboard": "^1.10.0",
     "@react-native-community/netinfo": "9.3.7",
     "@react-native-google-signin/google-signin": "^10.1.1",
