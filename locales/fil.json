@@ -82,7 +82,9 @@
         "title": "Nabigong i-save ang Card",
         "message": "Nagkaproblema habang sine-save ang Card sa tindahan."
       }
-    }
+    },
+    "shareQRCode": "Ibahagi ang QR Code",
+    "scanToViewCredential": "I-scan para tingnan ang kredensyal"
   },
   "HomeScreenKebabPopUp": {
     "title": "Higit pang mga Opsyon",

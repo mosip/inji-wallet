@@ -82,7 +82,9 @@
         "title": "Failed to save the Card",
         "message": "Something went wrong while saving Card to the store."
       }
-    }
+    },
+    "shareQRCode": "Share QR Code",
+    "scanToViewCredential": "Scan to view credential"
   },
   "HomeScreenKebabPopUp": {
     "title": "More Options",

@@ -1,7 +1,7 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {Pressable, View} from 'react-native';
 import {Icon, Overlay} from 'react-native-elements';
-import {Centered, Column, Row, Text} from './ui';
+import {Centered, Column, Row, Text, Button} from './ui';
 import QRCode from 'react-native-qrcode-svg';
 import {Theme} from './ui/styleUtils';
 import {useTranslation} from 'react-i18next';
@@ -12,6 +12,8 @@ import {VerifiableCredential} from '../machines/VerifiableCredential/VCMetaMachi
 import RNSecureKeyStore, {ACCESSIBLE} from 'react-native-secure-key-store';
 import {DEFAULT_ECL} from '../shared/constants';
 import {VCMetadata} from '../shared/VCMetadata';
+import {shareImageToAllSupportedApps} from '../shared/sharing/sharing-image-utils';
+import {ShareOptions} from 'react-native-share';
 
 export const QrCodeOverlay: React.FC<QrCodeOverlayProps> = props => {
   const {RNPixelpassModule} = NativeModules;
@@ -35,6 +37,34 @@ export const QrCodeOverlay: React.FC<QrCodeOverlayProps> = props => {
     return qrData;
   }
 
+  const [base64String, setBase64String] = useState('');
+
+  let qrRef = useRef(null);
+
+  function updateBase64() {
+    qrRef.current.toDataURL(dataURL => {
+      setBase64String(`data:image/png;base64,${dataURL}`);
+    });
+    shareQRCode();
+  }
+
+  useEffect(() => {
+    shareQRCode();
+  }, [base64String]);
+
+  async function shareQRCode() {
+    if (base64String != '') {
+      const options: ShareOptions = {
+        message: t('scanToViewCredential'),
+        url: base64String,
+      };
+      let shareStatus = await shareImageToAllSupportedApps(options);
+      if (!shareStatus) {
+        console.log('Error while sharing QR code::');
+      }
+    }
+  }
+
   function onQRError() {
     console.warn('Data is too big');
     setQrError(true);
@@ -47,6 +77,7 @@ export const QrCodeOverlay: React.FC<QrCodeOverlayProps> = props => {
     })();
   }, []);
   const [isQrOverlayVisible, setIsQrOverlayVisible] = useState(false);
+
   const toggleQrOverlay = () => setIsQrOverlayVisible(!isQrOverlayVisible);
   return (
     qrString != '' &&
@@ -102,6 +133,22 @@ export const QrCodeOverlay: React.FC<QrCodeOverlayProps> = props => {
                 backgroundColor={Theme.Colors.QRCodeBackgroundColor}
                 ecl={DEFAULT_ECL}
                 onError={onQRError}
+                getRef={data => (qrRef.current = data)}
+              />
+              <Button
+                testID="share"
+                styles={Theme.QrCodeStyles.shareQrCodeButton}
+                title={t('shareQRCode')}
+                type="gradient"
+                icon={
+                  <Icon
+                    name="share-variant-outline"
+                    type="material-community"
+                    size={24}
+                    color="white"
+                  />
+                }
+                onPress={updateBase64}
               />
             </Centered>
           </Column>

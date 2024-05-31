@@ -2,7 +2,7 @@ fileignoreconfig:
   - filename: package.json
     checksum: 5b4fcb5ddc7cc96cc2d1733b544d56ea66e88cdab995a1052fbf9ac0e9c2dc21
   - filename: package-lock.json
-    checksum: 039a6c9f516b16824b6694db32e57ef763e8799a096141e49f33a0ca4e5832c4
+    checksum: a67d97b91ebdc0dd132a6a38835e9ca36449e3acff8a0fdc05d1948061951240
   - filename: lib/jsonld-signatures/suites/ed255192018/ed25519.ts
     checksum: 493b6e31144116cb612c24d98b97d8adcad5609c0a52c865a6847ced0a0ddc3a
   - filename: components/PasscodeVerify.tsx
@@ -144,7 +144,7 @@ fileignoreconfig:
   - filename: shared/VCMetadata.ts
     checksum: e93f988415bf91064e2cf5fbc09ff6c7226798baa5da721fa0715d5d0d6afddf
   - filename: ios/Podfile.lock
-    checksum: d4084b7d5e04ee4199014c561a8ae228471bfed38751239acf9232fd2f57c045
+    checksum: 0b4ed806e0fbecf60fb1135072d0a629666723fedcd960b6470bac0bb42a3e68
   - filename: components/BackupAndRestoreBannerNotification.tsx
     checksum: e465a9947727687d784d0cb9d8db1e28f765b0659bf4a3aa6d75643aa7b14102
   - filename: components/ActivityLogEvent.ts
@@ -244,6 +244,7 @@ fileignoreconfig:
   - filename: screens/Issuers/CredentialTypeSelectionScreen.tsx
     checksum: 144bbf59e86a89bf580ac7931645ca3eaed69a9409de36f6ce9f88a14091a9d3
   - filename: components/QrCodeOverlay.tsx
+    checksum: 68758cbddafe575c7f53294327963112a0780d30fd23cd0b6bf82d7dcfd856fe
     checksum: 47220a4ebd8af702afe622a29b689f651eb23387bac1c623f241839beb413d25
   - filename: machines/Issuers/IssuersEvents.ts
     checksum: fd8c30e0cf43a784be883c9d79a3bff0d2bcd9075e937d225939040542998b10

@@ -501,6 +501,8 @@ PODS:
     - React-RCTImage
   - RNSecureRandom (1.0.1):
     - React
+  - RNShare (10.2.1):
+    - React-Core
   - RNSVG (13.4.0):
     - React-Core
   - RNZipArchive (6.1.0):
@@ -616,6 +618,7 @@ DEPENDENCIES:
   - RNPermissions (from `../node_modules/react-native-permissions`)
   - RNScreens (from `../node_modules/react-native-screens`)
   - RNSecureRandom (from `../node_modules/react-native-securerandom`)
+  - RNShare (from `../node_modules/react-native-share`)
   - RNSVG (from `../node_modules/react-native-svg`)
   - RNZipArchive (from `../node_modules/react-native-zip-archive`)
   - "tuvali (from `../node_modules/@mosip/tuvali`)"
@@ -811,6 +814,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-screens"
   RNSecureRandom:
     :path: "../node_modules/react-native-securerandom"
+  RNShare:
+    :path: "../node_modules/react-native-share"
   RNSVG:
     :path: "../node_modules/react-native-svg"
   RNZipArchive:
@@ -919,6 +924,7 @@ SPEC CHECKSUMS:
   RNPermissions: f1b49dd05fa9b83993cd05a9ee115247944d8f1a
   RNScreens: 218801c16a2782546d30bd2026bb625c0302d70f
   RNSecureRandom: 07efbdf2cd99efe13497433668e54acd7df49fef
+  RNShare: 0fad69ae2d71de9d1f7b9a43acf876886a6cb99c
   RNSVG: 07dbd870b0dcdecc99b3a202fa37c8ca163caec2
   RNZipArchive: ef9451b849c45a29509bf44e65b788829ab07801
   SSZipArchive: fe6a26b2a54d5a0890f2567b5cc6de5caa600aef
