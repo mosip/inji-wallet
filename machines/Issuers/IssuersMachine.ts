@@ -171,7 +171,11 @@ export const IssuersMachine = model.createMachine(
           onError: [
             {
               cond: 'isOIDCflowCancelled',
-              actions: ['resetError', 'resetLoadingReason'],
+              actions: [
+                'resetSelectedCredentialType',
+                'resetError',
+                'resetLoadingReason',
+              ],
               target: 'selectingIssuer',
             },
             {
@@ -287,6 +291,7 @@ export const IssuersMachine = model.createMachine(
               cond: 'isGenericError',
               target: 'selectingIssuer',
               actions: [
+                'resetSelectedCredentialType',
                 'setError',
                 'resetLoadingReason',
                 'sendDownloadingFailedToVcMeta',
@@ -301,6 +306,7 @@ export const IssuersMachine = model.createMachine(
         on: {
           CANCEL: {
             target: 'selectingIssuer',
+            actions: 'resetSelectedCredentialType',
           },
         },
         initial: 'idle',
