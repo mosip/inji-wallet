@@ -1,4 +1,3 @@
-import {getIdentifier, getIDTypeTranslations} from '../shared/openId4VCI/Utils';
 import {getIdType} from './VC/common/VCUtils';
 
 export type ActivityLogType =

@@ -195,13 +195,14 @@ export const ScanActions = (model: any, QR_LOGIN_REF_ID: any) => {
           'Scan machine logShared',
           JSON.stringify(context.selectedVc, null, 2),
         );
+        const selectedVc = context.QrLoginRef.getSnapshot().context.selectedVc;
         return ActivityLogEvents.LOG_ACTIVITY({
           _vcKey: vcMetadata.getVcKey(),
           type: context.shareLogType
             ? context.shareLogType
             : 'VC_SHARED_WITH_VERIFICATION_CONSENT',
           id: vcMetadata.id,
-          idType: context.selectedVc.credentialTypes,
+          idType: selectedVc.verifiableCredential.credentialTypes,
           issuer: vcMetadata.issuer!!,
           timestamp: Date.now(),
           deviceName:
@@ -219,11 +220,12 @@ export const ScanActions = (model: any, QR_LOGIN_REF_ID: any) => {
           'Scan machine logFailedVerification',
           JSON.stringify(context.selectedVc, null, 2),
         );
+        const selectedVc = context.QrLoginRef.getSnapshot().context.selectedVc;
         return ActivityLogEvents.LOG_ACTIVITY({
           _vcKey: vcMetadata.getVcKey(),
           type: 'PRESENCE_VERIFICATION_FAILED',
           timestamp: Date.now(),
-          idType: context.selectedVc.credentialTypes,
+          idType: selectedVc.verifiableCredential.credentialTypes,
           id: vcMetadata.id,
           issuer: vcMetadata.issuer!!,
           deviceName:
@@ -281,11 +283,14 @@ export const ScanActions = (model: any, QR_LOGIN_REF_ID: any) => {
           'Scan machine storingActivityLog',
           JSON.stringify(context.selectedVc, null, 2),
         );
+
+        const selectedVc = context.QrLoginRef.getSnapshot().context.selectedVc;
+
         return ActivityLogEvents.LOG_ACTIVITY({
           _vcKey: '',
           id: vcMetadata.id,
           issuer: vcMetadata.issuer!!,
-          idType: context.selectedVc.credentialTypes,
+          idType: selectedVc.verifiableCredential.credentialTypes,
           type: 'QRLOGIN_SUCCESFULL',
           timestamp: Date.now(),
           deviceName: '',
