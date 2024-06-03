@@ -1,4 +1,4 @@
-import {Platform} from 'react-native';
+import {Dimensions, Platform} from 'react-native';
 import {DEBUG_MODE, ESIGNET_HOST, MIMOTO_HOST, LIVENESS_DETECTION} from 'react-native-dotenv';
 import {Argon2iConfig} from './commonUtil';
 import {VcIdType} from '../machines/VerifiableCredential/VCMetaMachine/vc';

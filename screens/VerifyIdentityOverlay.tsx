@@ -1,5 +1,5 @@
 import React from 'react';
-import {FaceScanner} from '../components/FaceScanner';
+import {FaceScanner} from '../components/FaceScanner/FaceScanner';
 import {Column} from '../components/ui';
 import {Theme} from '../components/ui/styleUtils';
 import {VerifiableCredential} from '../machines/VerifiableCredential/VCMetaMachine/vc';
