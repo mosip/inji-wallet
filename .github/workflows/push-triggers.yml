@@ -21,7 +21,7 @@ jobs:
   build-android:
     uses: mosip/kattu/.github/workflows/android-build.yml@master
     with:
-      NODE_VERSION: "16.x"
+      NODE_VERSION: "18.x"
       KEYSTORE_ALIAS: androidbuildkey
       KEYSTORE_PASSWORD: 'password'
       SERVICE_LOCATION: '.'
