@@ -6,11 +6,9 @@ import React, {
   useState,
 } from 'react';
 import {Camera} from 'expo-camera';
-import {TouchableOpacity, View} from 'react-native';
-import {Centered, Column, Row, Text, Button} from '.././ui';
+import {Column, Text, Button} from '.././ui';
 import {useInterpret, useSelector} from '@xstate/react';
 import {useTranslation} from 'react-i18next';
-import {Ellipse, Defs, Mask, Rect, Svg} from 'react-native-svg';
 import {
   FaceScannerEvents,
   selectIsCheckingPermission,
@@ -27,25 +25,17 @@ import {
 import {selectIsLivenessEnabled} from '../../machines/settings';
 import {GlobalContext} from '../../shared/GlobalContext';
 import {selectIsActive} from '../../machines/app';
-import {RotatingIcon} from '.././RotatingIcon';
 import {Theme} from '.././ui/styleUtils';
-import {SvgImage} from '.././ui/svg';
-import Spinner from 'react-native-spinkit';
 import {getRandomInt} from '../../shared/commonUtil';
-import testIDProps from '../../shared/commonUtil';
 import {
   checkBlink,
   cropEyeAreaFromFace,
   faceDetectorConfig,
   getFaceBounds,
   imageCaptureConfig,
-  screenFlashColors,
 } from './FaceScannerHelper';
-import LivenessEnabled from './LivenessEnabled';
-import LivenessDisabled from './LivenessDisabled';
-
-
-export let faceToCompare;
+import LivenessDetection from './LivenessDetection';
+import FaceCompare from './FaceCompare';
 
 export const FaceScanner: React.FC<FaceScannerProps> = props => {
   const {t} = useTranslation('FaceScanner');
@@ -70,9 +60,11 @@ export const FaceScanner: React.FC<FaceScannerProps> = props => {
 
   const [counter, setCounter] = useState(0);
   const [screenColor, setScreenColor] = useState('#0000ff');
+  const [faceToCompare, setFaceToCompare] = useState(null);
   const [opacity, setOpacity] = useState(1);
   const [picArray, setPicArray] = useState([]);
 
+  const screenFlashColors = ['#0000FF', '#00FF00', '#FF0000'];
   const MAX_COUNTER = 15;
 
   const randomNumToFaceCompare = getRandomInt(counter, MAX_COUNTER - 1);
@@ -101,7 +93,7 @@ export const FaceScanner: React.FC<FaceScannerProps> = props => {
         setPicArray([...picArray, {color: screenColor, image: capturedImage}]);
 
         if (counter === randomNumToFaceCompare) {
-          faceToCompare = capturedImage;
+          setFaceToCompare(capturedImage);
         }
       }
     } catch (error) {
@@ -110,7 +102,6 @@ export const FaceScanner: React.FC<FaceScannerProps> = props => {
   }
 
   async function handleFacesDetected({faces}) {
-
     checkBlink(faces[0]);
 
     if (!livenessEnabled) {
@@ -124,9 +115,11 @@ export const FaceScanner: React.FC<FaceScannerProps> = props => {
       setScreenColor('#ffffff');
       setInfoText(t('faceProcessingInfo'));
 
-      console.log("I am here-->", picArray.length);
-      const result = await cropEyeAreaFromFace(picArray, props.vcImage);
-
+      const result = await cropEyeAreaFromFace(
+        picArray,
+        props.vcImage,
+        faceToCompare,
+      );
       return result ? props.onValid() : props.onInvalid();
     } else if (faces.length > 0) {
       const [withinXBounds, withinYBounds, withinYawAngle, withinRollAngle] =
@@ -187,7 +180,7 @@ export const FaceScanner: React.FC<FaceScannerProps> = props => {
 
   if (livenessEnabled) {
     return (
-      <LivenessEnabled
+      <LivenessDetection
         screenColor={screenColor}
         infoText={infoText}
         whichCamera={whichCamera}
@@ -202,7 +195,7 @@ export const FaceScanner: React.FC<FaceScannerProps> = props => {
     );
   } else {
     return (
-      <LivenessDisabled
+      <FaceCompare
         whichCamera={whichCamera}
         setCameraRef={setCameraRef}
         isCapturing={isCapturing}

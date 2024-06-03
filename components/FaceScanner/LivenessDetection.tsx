@@ -7,7 +7,7 @@ import { Theme } from '.././ui/styleUtils';
 import Svg, { Defs, Mask, Rect, Ellipse } from 'react-native-svg';
 import testIDProps from '../../shared/commonUtil';
 
-const LivenessEnabled: React.FC<LivenessEnabledProps> = ({
+const LivenessDetection: React.FC<LivenessDetectionProps> = ({
   screenColor,
   infoText,
   whichCamera,
@@ -68,9 +68,9 @@ const LivenessEnabled: React.FC<LivenessEnabledProps> = ({
   );
 };
 
-export default LivenessEnabled;
+export default LivenessDetection;
 
-interface LivenessEnabledProps {
+interface LivenessDetectionProps {
     screenColor: string;
     infoText: string;
     whichCamera: any;

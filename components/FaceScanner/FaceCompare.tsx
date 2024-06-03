@@ -1,13 +1,13 @@
 import React from 'react';
 import { Camera } from 'expo-camera';
 import { View, TouchableOpacity } from 'react-native';
-import {SvgImage} from '.././ui/svg';
-import { Text, Column, Row, Centered } from '.././ui';
-import {RotatingIcon} from '.././RotatingIcon';
-import { Theme } from '.././ui/styleUtils';
+import {SvgImage} from '../ui/svg';
+import { Text, Column, Row, Centered } from '../ui';
+import {RotatingIcon} from '../RotatingIcon';
+import { Theme } from '../ui/styleUtils';
 import testIDProps from '../../shared/commonUtil';
 
-const LivenessDisabled: React.FC<LivenessDisabledProps> = ({
+const FaceCompare: React.FC<FaceCompareProps> = ({
   whichCamera,
   setCameraRef,
   isCapturing,
@@ -66,9 +66,9 @@ const LivenessDisabled: React.FC<LivenessDisabledProps> = ({
   );
 };
 
-export default LivenessDisabled;
+export default FaceCompare;
 
-interface LivenessDisabledProps {
+interface FaceCompareProps {
     whichCamera: any;
     setCameraRef: any;
     isCapturing: boolean;
