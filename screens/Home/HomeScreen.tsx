@@ -16,9 +16,13 @@ import testIDProps from '../../shared/commonUtil';
 import {BannerNotificationContainer} from '../../components/BannerNotificationContainer';
 import {VCItemMachine} from '../../machines/VerifiableCredential/VCItemMachine/VCItemMachine';
 import {VerifiableCredential} from '../../machines/VerifiableCredential/VCMetaMachine/vc';
+import {useTranslation} from 'react-i18next';
+import {Copilot} from '../../components/ui/Copilot';
 
 export const HomeScreen: React.FC<HomeRouteProps> = props => {
   const controller = useHomeScreen(props);
+  const {t} = useTranslation();
+
   useEffect(() => {
     if (controller.IssuersService) {
       navigateToIssuers();
@@ -82,7 +86,15 @@ export const HomeScreen: React.FC<HomeRouteProps> = props => {
           </Column>
         )}
       </Column>
-      <DownloadFABIcon />
+
+      <Copilot
+        title={t('copilot:downloadTitle')}
+        description={t('copilot:downloadMessage')}
+        order={2}
+        targetStyle={Theme.Styles.downloadFabIconCopilotContainer}
+        children={<DownloadFABIcon />}
+      />
+
       <ErrorMessageOverlay
         translationPath={'MyVcsTab'}
         isVisible={controller.isMinimumStorageLimitReached}

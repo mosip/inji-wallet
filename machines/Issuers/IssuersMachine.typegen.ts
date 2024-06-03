@@ -97,6 +97,7 @@ export interface Typegen0 {
       | 'resetError'
       | 'resetIsVerified'
       | 'resetLoadingReason'
+      | 'resetSelectedCredentialType'
       | 'resetVerificationErrorMessage'
       | 'sendBackupEvent'
       | 'sendDownloadingFailedToVcMeta'
@@ -174,6 +175,10 @@ export interface Typegen0 {
       | 'error.platform.issuersMachine.downloadIssuerConfig:invocation[0]'
       | 'error.platform.issuersMachine.performAuthorization:invocation[0]'
       | 'error.platform.issuersMachine.verifyingCredential:invocation[0]';
+    resetSelectedCredentialType:
+      | 'CANCEL'
+      | 'error.platform.issuersMachine.downloadCredentials:invocation[0]'
+      | 'error.platform.issuersMachine.performAuthorization:invocation[0]';
     resetVerificationErrorMessage: 'RESET_VERIFY_ERROR';
     sendBackupEvent: 'done.invoke.issuersMachine.storing:invocation[0]';
     sendDownloadingFailedToVcMeta: 'error.platform.issuersMachine.downloadCredentials:invocation[0]';

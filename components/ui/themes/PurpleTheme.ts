@@ -603,17 +603,21 @@ export const PurpleTheme = {
       borderBottomColor: Colors.platinumGrey,
       borderBottomWidth: 1.3,
     },
+    downloadFabIconCopilotContainer: {
+      height: 70,
+      width: 70,
+      borderRadius: 200,
+      position: 'absolute',
+      bottom: Dimensions.get('window').width * 0.1,
+      right: Dimensions.get('window').width * 0.1,
+    },
     downloadFabIconContainer: {
       height: 70,
       width: 70,
       borderRadius: 200,
-      padding: 10,
       shadowColor: '#000',
       shadowOpacity: 0.4,
       elevation: 5,
-      position: 'absolute',
-      bottom: Dimensions.get('window').width * 0.1,
-      right: Dimensions.get('window').width * 0.1,
     },
     downloadFabIconNormal: {
       borderRadius: 200,
@@ -702,6 +706,26 @@ export const PurpleTheme = {
       fontFamily: 'Inter_600SemiBold',
       marginTop: isIOS() ? 5 : 15,
     },
+    tabBarIconCopilot: {
+      flex: 1,
+      justifyContent: 'flex-end',
+      alignItems: 'center',
+      minWidth: 70,
+      minHeight: 70,
+      marginBottom: -5,
+    },
+    copilotStyle: {
+      position: 'absolute',
+      left: 10,
+      right: 10,
+      maxWidth: Dimensions.get('screen').width,
+      height: Dimensions.get('screen').height * 0.2,
+    },
+    copilotButton: {
+      width: 104,
+      height: 40,
+      marginLeft: 10,
+    },
   }),
   BannerStyles: StyleSheet.create({
     container: {
@@ -784,6 +808,9 @@ export const PurpleTheme = {
       shadowOpacity: 0.4,
       shadowRadius: 3,
       marginTop: 14,
+    },
+    shareQrCodeButton: {
+      marginTop: 30,
     },
   }),
   PinInputStyle: StyleSheet.create({

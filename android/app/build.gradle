@@ -244,13 +244,20 @@ android {
             }
         }
     }
+
+    packagingOptions {
+      pickFirst 'lib/arm64-v8a/liblog.so'    
+      pickFirst 'lib/armeabi-v7a/liblog.so'  
+      pickFirst 'lib/x86/liblog.so'
+      pickFirst 'lib/x86_64/liblog.so'
+    }
 }
 
 dependencies {
     implementation("com.facebook.react:react-android")
     implementation 'com.facebook.soloader:soloader:0.10.1+'
     implementation("io.mosip:pixelpass:1.2-SNAPSHOT")
-    implementation("io.mosip:secure-keystore:1.1-SNAPSHOT")
+    implementation("io.mosip:secure-keystore:1.2-SNAPSHOT")
 
     def isGifEnabled = (findProperty('expo.gif.enabled') ?: "") == "true";
     def isWebpEnabled = (findProperty('expo.webp.enabled') ?: "") == "true";

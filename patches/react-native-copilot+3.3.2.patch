@@ -1,0 +1,19 @@
+diff --git a/node_modules/react-native-copilot/dist/index.js b/node_modules/react-native-copilot/dist/index.js
+index b9127da..509b57a 100644
+--- a/node_modules/react-native-copilot/dist/index.js
++++ b/node_modules/react-native-copilot/dist/index.js
+@@ -188,12 +188,12 @@ var init_SvgMask = __esm({
+       position,
+       canvasSize
+     }) => {
++      const cornerRadius = 10;
+       const positionX = position.x._value;
+       const positionY = position.y._value;
+       const sizeX = size.x._value;
+       const sizeY = size.y._value;
+-      return `M0,0H${canvasSize.x}V${canvasSize.y}H0V0ZM${positionX},${positionY}H${positionX + sizeX}V${positionY + sizeY}H${positionX}V${positionY}Z`;
+-    };
++      return `M0,0H${canvasSize.x}V${canvasSize.y}H0V0ZM${positionX + cornerRadius}, ${positionY}H${positionX + sizeX - cornerRadius}Q${positionX + sizeX}, ${positionY} ${positionX + sizeX}, ${positionY + cornerRadius}V${positionY + sizeY - cornerRadius}Q${positionX + sizeX}, ${positionY + sizeY} ${positionX + sizeX - cornerRadius}, ${positionY + sizeY}H${positionX + cornerRadius}Q${positionX}, ${positionY + sizeY} ${positionX}, ${positionY + sizeY - cornerRadius}V${positionY + cornerRadius}Q${positionX}, ${positionY} ${positionX + cornerRadius}, ${positionY}Z`}
+     SvgMask = ({
+       size,
+       position,

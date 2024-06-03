@@ -83,7 +83,9 @@
         "title": "Failed to save the Card",
         "message": "Something went wrong while saving Card to the store."
       }
-    }
+    },
+    "shareQRCode": "Share QR Code",
+    "scanToViewCredential": "Scan to view credential"
   },
   "HomeScreenKebabPopUp": {
     "title": "More Options",
@@ -893,5 +895,23 @@
       "title": "Unlock App",
       "description": "Please use fingerprint to unlock the app"
     }
+  },
+  "copilot": {
+    "helpTitle": "Help/FAQs",
+    "helpMessage": "Find answers to common questions and access helpful resources in our FAQ section, ensuring you have the support whenever you need it.",
+    "downloadTitle": "Download Card",
+    "downloadMessage": "Easily download and securely store your card in the app for convenient access whenever you need them.",
+    "shareTitle": "Share Card",
+    "shareMessage": "Share your card with ease in offline mode using bluetooth, empowering you to provide verified information whenever required.",
+    "historyTitle": "Access to History",
+    "historyMessage": "View your activity history to track your interactions and stay informed about your past actions within the app.",
+    "settingsTitle": "App Settings",
+    "settingsMessage": "Customize your app experience with personalized settings as per your preferences.",
+    "cardTitle": "Card",
+    "cardMessage": "Your card displays your verified identity information. Tap for a detailed view or click on … for additional options.",
+    "next": "Next",
+    "previous": "Previous",
+    "skip": "Skip",
+    "done": "Done"
   }
 }

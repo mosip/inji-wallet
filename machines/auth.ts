@@ -15,6 +15,9 @@ const model = createModel(
     canUseBiometrics: false,
     selectLanguage: false,
     toggleFromSettings: false,
+    isOnboarding: true,
+    isInitialDownload: true,
+    isTourGuide: false,
   },
   {
     events: {
@@ -28,6 +31,9 @@ const model = createModel(
       STORE_RESPONSE: (response?: unknown) => ({response}),
       SELECT: () => ({}),
       NEXT: () => ({}),
+      ONBOARDING_DONE: () => ({}),
+      INITIAL_DOWNLOAD_DONE: () => ({}),
+      SET_TOUR_GUIDE: (set: boolean) => ({set}),
     },
   },
 );
@@ -47,6 +53,17 @@ export const authMachine = model.createMachine(
     },
     id: 'auth',
     initial: 'init',
+    on: {
+      ONBOARDING_DONE: {
+        actions: ['setOnboardingDone', 'storeContext'],
+      },
+      INITIAL_DOWNLOAD_DONE: {
+        actions: ['setInitialDownloadDone', 'storeContext'],
+      },
+      SET_TOUR_GUIDE: {
+        actions: 'setTourGuide',
+      },
+    },
     states: {
       init: {
         entry: ['requestStoredContext'],
@@ -174,6 +191,18 @@ export const authMachine = model.createMachine(
           return event.data as string;
         },
       }),
+
+      setOnboardingDone: assign({
+        isOnboarding: context => false,
+      }),
+
+      setInitialDownloadDone: assign({
+        isInitialDownload: context => false,
+      }),
+
+      setTourGuide: model.assign({
+        isTourGuide: (_, event) => event.set,
+      }),
     },
 
     services: {
@@ -225,6 +254,18 @@ export function selectBiometrics(state: State) {
 
 export function selectCanUseBiometrics(state: State) {
   return state?.context?.canUseBiometrics;
+}
+
+export function selectIsOnboarding(state: State) {
+  return state?.context?.isOnboarding;
+}
+
+export function selectIsInitialDownload(state: State) {
+  return state?.context?.isInitialDownload;
+}
+
+export function selectIsTourGuide(state: State) {
+  return state?.context?.isTourGuide;
 }
 
 export function selectAuthorized(state: State) {

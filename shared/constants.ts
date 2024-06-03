@@ -128,3 +128,6 @@ export const DEFAULT_ECL = 'M';
 export const DEFAULT_QR_HEADER = 'INJIQUICKSHARE://';
 
 export const INTRO_SLIDER_LOGO_MARGIN = Dimensions.get('screen').width * 0.45;
+
+export const COPILOT_PRE_FINAL_STEP: number = 5;
+export const COPILOT_FINAL_STEP: number = 6;
