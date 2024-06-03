@@ -13,6 +13,7 @@ import {VCVerification} from '../../VCVerification';
 import {MIMOTO_BASE_URL} from '../../../shared/constants';
 import {useTranslation} from 'react-i18next';
 import {VCItemDetailsProps} from '../Views/VCDetailView';
+import {getSelectedCredentialTypeDetails} from '../../../shared/openId4VCI/Utils';
 
 export const CARD_VIEW_DEFAULT_FIELDS = ['fullName'];
 export const DETAIL_VIEW_DEFAULT_FIELDS = [
@@ -189,12 +190,29 @@ export const getMosipLogo = () => {
   };
 };
 
-export const getIdType = (wellknown: any) => {
+export const getIdType = (wellknown: any, idType: string = '') => {
+  console.log('getIdType fn ', wellknown);
   if (wellknown && wellknown?.display) {
+    console.log('If case');
+
     const idTypeObj = wellknown.display.map((displayProps: any) => {
       return {language: displayProps.locale, value: displayProps.name};
     });
+    console.log('idTypeObj ', idTypeObj);
     return getLocalizedField(idTypeObj);
+  } else if (wellknown && idType !== '') {
+    let supportedCredentialsWellknown;
+    wellknown = JSON.parse(wellknown) as Object[];
+    for (let credential in wellknown['credentials_supported']) {
+      const credentialDetails = wellknown.credentials_supported[credential];
+      if (
+        JSON.stringify(credentialDetails.credential_definition.type) ===
+        JSON.stringify(idType)
+      ) {
+        supportedCredentialsWellknown = credentialDetails;
+      }
+    }
+    return getIdType(supportedCredentialsWellknown);
   } else {
     return i18n.t('VcDetails:nationalCard');
   }

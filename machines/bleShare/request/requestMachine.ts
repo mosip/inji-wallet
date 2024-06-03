@@ -615,11 +615,16 @@ export const requestMachine =
             const vcMetadata = VCMetadata.fromVC(
               context.incomingVc?.vcMetadata,
             );
+            console.log(
+              'REqMachine logReceived ',
+              JSON.stringify(context.incomingVc, null, 2),
+            );
             return ActivityLogEvents.LOG_ACTIVITY({
               _vcKey: vcMetadata.getVcKey(),
               type: context.receiveLogType,
               id: vcMetadata.id,
-              idType: vcMetadata.credentialType,
+              idType: context.incomingVc.verifiableCredential.credentialTypes,
+              issuer: vcMetadata.issuer!!,
               timestamp: Date.now(),
               deviceName:
                 context.senderInfo.name || context.senderInfo.deviceName,

@@ -196,15 +196,20 @@ export const IssuersActions = (model: any) => {
     logDownloaded: send(
       context => {
         const vcMetadata = getVCMetadata(context);
-        return ActivityLogEvents.LOG_ACTIVITY({
-          _vcKey: vcMetadata.getVcKey(),
-          type: 'VC_DOWNLOADED',
-          id: vcMetadata.id,
-          idType: vcMetadata.credentialType,
-          timestamp: Date.now(),
-          deviceName: '',
-          vcLabel: vcMetadata.id,
-        });
+        return ActivityLogEvents.LOG_ACTIVITY(
+          {
+            _vcKey: vcMetadata.getVcKey(),
+            type: 'VC_DOWNLOADED',
+            id: vcMetadata.id,
+            idType:
+              context.credentialWrapper.verifiableCredential.credentialTypes,
+            timestamp: Date.now(),
+            deviceName: '',
+            vcLabel: vcMetadata.id,
+            issuer: context.selectedIssuerId,
+          },
+          context.selectedCredentialType,
+        );
       },
       {
         to: (context: any) => context.serviceRefs.activityLog,

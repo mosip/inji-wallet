@@ -1,4 +1,5 @@
-import {getIDTypeTranslations} from '../shared/openId4VCI/Utils';
+import {getIdentifier, getIDTypeTranslations} from '../shared/openId4VCI/Utils';
+import {getIdType} from './VC/common/VCUtils';
 
 export type ActivityLogType =
   | '' // replacement for undefined
@@ -26,6 +27,7 @@ export class ActivityLog {
   deviceName: string;
   vcLabel: string;
   type: ActivityLogType;
+  issuer: string;
 
   constructor({
     id = '',
@@ -35,6 +37,7 @@ export class ActivityLog {
     timestamp = Date.now(),
     deviceName = '',
     vcLabel = '',
+    issuer = '',
   } = {}) {
     this.id = id;
     this.idType = idType;
@@ -43,6 +46,7 @@ export class ActivityLog {
     this.timestamp = timestamp;
     this.deviceName = deviceName;
     this.vcLabel = vcLabel;
+    this.issuer = issuer;
   }
 
   static logTamperedVCs() {
@@ -52,13 +56,15 @@ export class ActivityLog {
       timestamp: Date.now(),
       deviceName: '',
       vcLabel: '',
+      issuer: '',
     };
   }
 }
 
-export function getActionText(activity: ActivityLog, t) {
+export function getActionText(activity: ActivityLog, t, wellknown: Object) {
   if (activity.idType && activity.idType !== '') {
-    let cardType = getIDTypeTranslations(activity.idType);
+    let cardType = getIdType(wellknown, activity.idType);
+    console.log('cardType ', cardType);
     return `${t(activity.type, {idType: cardType, id: activity.id})}`;
   }
   return `${t(activity.type, {idType: '', id: activity.id})}`;

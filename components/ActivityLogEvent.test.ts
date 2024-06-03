@@ -38,7 +38,7 @@ describe('getActionText', () => {
         return 'National ID';
       }
     });
-    getActionText(activityLog, mockIl18nfn);
+    getActionText(activityLog, mockIl18nfn, {});
     expect(mockIl18nfn).toHaveBeenCalledWith(`VcDetails:mockIDtype`);
     expect(mockIl18nfn).toHaveBeenCalledWith('mockType', {
       idType: 'National ID',
@@ -49,7 +49,7 @@ describe('getActionText', () => {
   });
   it('should not fetch id type from translation file mock', () => {
     activityLog.idType = undefined;
-    getActionText(activityLog, mockIl18nfn);
+    getActionText(activityLog, mockIl18nfn, {});
     expect(mockIl18nfn).toHaveBeenCalledWith('mockType', {
       idType: '',
       id: 'mockId',

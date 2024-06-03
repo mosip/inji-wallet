@@ -5,15 +5,21 @@ import {useTranslation} from 'react-i18next';
 import * as DateFnsLocale from 'date-fns/locale';
 import {TextItem} from './ui/TextItem';
 import {ActivityLog, getActionText} from './ActivityLogEvent';
+import {useHistoryTab} from '../screens/History/HistoryScreenController';
 
 export const ActivityLogText: React.FC<{activity: ActivityLog}> = props => {
   const {t, i18n} = useTranslation('ActivityLogText');
+  const historyController = useHistoryTab();
   const {activity} = props;
 
   return (
     <TextItem
       label={getActionLabel(activity, i18n.language)}
-      text={getActionText(activity, t)}
+      text={getActionText(
+        activity,
+        t,
+        historyController.getWellKnownIssuerMap(activity.issuer),
+      )}
       divider
     />
   );

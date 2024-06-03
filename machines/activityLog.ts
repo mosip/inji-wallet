@@ -9,11 +9,15 @@ const model = createModel(
   {
     serviceRefs: {} as AppServices,
     activities: [] as ActivityLog[],
+    wellKnownIssuerMap: {} as Record<string, Object>,
   },
   {
     events: {
       STORE_RESPONSE: (response: unknown) => ({response}),
-      LOG_ACTIVITY: (log: ActivityLog | ActivityLog[]) => ({log}),
+      LOG_ACTIVITY: (log: ActivityLog | ActivityLog[], wellknown?: any) => ({
+        log,
+        wellknown,
+      }),
       REFRESH: () => ({}),
     },
   },
@@ -40,6 +44,18 @@ export const activityLogMachine =
           on: {
             STORE_RESPONSE: {
               actions: ['setActivities', sendParent('READY')],
+              target: 'loadWellknownConfig',
+            },
+          },
+        },
+        loadWellknownConfig: {
+          entry: 'fetchAllWellKnownConfigResponse',
+          on: {
+            STORE_RESPONSE: {
+              actions: [
+                () => console.log('config list:::'),
+                'setAllWellknownConfigResponse',
+              ],
               target: 'ready',
             },
           },
@@ -58,7 +74,7 @@ export const activityLogMachine =
               },
             },
             logging: {
-              entry: 'storeActivity',
+              entry: ['loadWellknownIntoContext', 'storeActivity'],
               on: {
                 STORE_RESPONSE: {
                   actions: 'prependActivity',
@@ -94,11 +110,46 @@ export const activityLogMachine =
           {to: context => context.serviceRefs.store},
         ),
 
+        loadWellknownIntoContext: model.assign({
+          wellKnownIssuerMap: (context, event) => {
+            if (!!event.wellknown) {
+              const updatedWellKnownIssuerMap = {
+                ...context.wellKnownIssuerMap,
+              };
+              updatedWellKnownIssuerMap[event.log.issuer] = event.wellknown;
+              return updatedWellKnownIssuerMap as unknown as Record<
+                string,
+                Object
+              >;
+            }
+            return context.wellKnownIssuerMap;
+          },
+        }),
+
         prependActivity: model.assign({
-          activities: (context, event) =>
-            (Array.isArray(event.response)
-              ? [...event.response, ...context.activities]
-              : [event.response, ...context.activities]) as ActivityLog[],
+          activities: (context, event) => {
+            console.log('activities in prependActivity', event.response);
+            return (
+              Array.isArray(event.response)
+                ? [...event.response, ...context.activities]
+                : [event.response, ...context.activities]
+            ) as ActivityLog[];
+          },
+        }),
+
+        fetchAllWellKnownConfigResponse: send(
+          () => {
+            console.log('fetching::');
+            return StoreEvents.FETCH_ALL_WELLKNOWN_CONFIG();
+          },
+          {to: context => context.serviceRefs.store},
+        ),
+
+        setAllWellknownConfigResponse: model.assign({
+          wellKnownIssuerMap: (_, event) => {
+            console.log('config response::', event.response);
+            return event.response as Record<string, Object>;
+          },
         }),
       },
     },
@@ -132,6 +183,10 @@ type State = StateFrom<typeof activityLogMachine>;
 
 export function selectActivities(state: State) {
   return state.context.activities;
+}
+
+export function selectWellknownIssuerMap(state: State) {
+  return state.context.wellKnownIssuerMap;
 }
 
 export function selectIsRefreshing(state: State) {

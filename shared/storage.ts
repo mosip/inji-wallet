@@ -19,6 +19,7 @@ import {
   MY_VCS_STORE_KEY,
   SETTINGS_STORE_KEY,
   ENOENT,
+  API_CACHED_STORAGE_KEYS,
 } from './constants';
 import FileStorage, {
   getFilePath,
@@ -147,9 +148,33 @@ class Storage {
         return true;
       });
     } catch (error) {
+      console.error('Error while loading backup data ', error);
       return error;
     }
   };
+
+  static fetchAllWellknownConfig = async (encryptionKey: string) => {
+    console.log('inside wellknown config::');
+    let wellknownConfigData: Record<string, Object> = {};
+    const allKeysInDB = await MMKV.indexer.strings.getKeys();
+    const wellknownConfigCacheKey =
+      API_CACHED_STORAGE_KEYS.fetchIssuerWellknownConfig('');
+    const wellknownKeys = allKeysInDB.filter(key =>
+      key.includes(wellknownConfigCacheKey),
+    );
+
+    console.log('wellknown config keys::', wellknownKeys);
+    for (const wellknownKey of wellknownKeys) {
+      const configData = await this.getItem(wellknownKey, encryptionKey);
+      const decryptedConfigData = await decryptJson(encryptionKey, configData);
+      wellknownConfigData[
+        wellknownKey.substring(wellknownConfigCacheKey.length)
+      ] = JSON.parse(JSON.stringify(decryptedConfigData));
+    }
+    console.log('data::', wellknownConfigData);
+    return wellknownConfigData;
+  };
+
   static isVCStorageInitialised = async (): Promise<boolean> => {
     try {
       const res = await FileStorage.getInfo(vcDirectoryPath);

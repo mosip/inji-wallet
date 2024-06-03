@@ -191,13 +191,18 @@ export const ScanActions = (model: any, QR_LOGIN_REF_ID: any) => {
     logShared: send(
       (context: any) => {
         const vcMetadata = VCMetadata.fromVC(context.selectedVc?.vcMetadata);
+        console.log(
+          'Scan machine logShared',
+          JSON.stringify(context.selectedVc, null, 2),
+        );
         return ActivityLogEvents.LOG_ACTIVITY({
           _vcKey: vcMetadata.getVcKey(),
           type: context.shareLogType
             ? context.shareLogType
             : 'VC_SHARED_WITH_VERIFICATION_CONSENT',
           id: vcMetadata.id,
-          idType: vcMetadata.credentialType,
+          idType: context.selectedVc.credentialTypes,
+          issuer: vcMetadata.issuer!!,
           timestamp: Date.now(),
           deviceName:
             context.receiverInfo.name || context.receiverInfo.deviceName,
@@ -210,12 +215,17 @@ export const ScanActions = (model: any, QR_LOGIN_REF_ID: any) => {
     logFailedVerification: send(
       context => {
         const vcMetadata = VCMetadata.fromVC(context.selectedVc);
+        console.log(
+          'Scan machine logFailedVerification',
+          JSON.stringify(context.selectedVc, null, 2),
+        );
         return ActivityLogEvents.LOG_ACTIVITY({
           _vcKey: vcMetadata.getVcKey(),
           type: 'PRESENCE_VERIFICATION_FAILED',
           timestamp: Date.now(),
-          idType: vcMetadata.credentialType,
+          idType: context.selectedVc.credentialTypes,
           id: vcMetadata.id,
+          issuer: vcMetadata.issuer!!,
           deviceName:
             context.receiverInfo.name || context.receiverInfo.deviceName,
           vcLabel: vcMetadata.id,
@@ -265,12 +275,17 @@ export const ScanActions = (model: any, QR_LOGIN_REF_ID: any) => {
     ),
 
     storingActivityLog: send(
-      (_, event) => {
+      (context, event) => {
         const vcMetadata = event.response.selectedVc.vcMetadata;
+        console.log(
+          'Scan machine storingActivityLog',
+          JSON.stringify(context.selectedVc, null, 2),
+        );
         return ActivityLogEvents.LOG_ACTIVITY({
           _vcKey: '',
           id: vcMetadata.id,
-          idType: vcMetadata.credentialType,
+          issuer: vcMetadata.issuer!!,
+          idType: context.selectedVc.credentialTypes,
           type: 'QRLOGIN_SUCCESFULL',
           timestamp: Date.now(),
           deviceName: '',

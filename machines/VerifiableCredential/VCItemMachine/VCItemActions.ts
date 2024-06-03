@@ -122,7 +122,6 @@ export const VCItemActions = model => {
 
     setContext: model.assign((context, event) => {
       const vcMetadata = context.vcMetadata;
-      // vcMetadata.credentialType = event.response.verifiableCredential.type;
       return {
         ...context,
         ...event.response,
@@ -441,7 +440,8 @@ export const VCItemActions = model => {
           _vcKey: context.vcMetadata.getVcKey(),
           type: 'VC_DOWNLOADED',
           id: context.vcMetadata.id,
-          idType: context.vcMetadata.credentialType,
+          issuer: vcMetadata.issuer!!,
+          idType: context.verifiableCredential.credentialTypes,
           timestamp: Date.now(),
           deviceName: '',
           vcLabel: data.id,
@@ -455,7 +455,8 @@ export const VCItemActions = model => {
       (context: any, _) => {
         const vcMetadata = VCMetadata.fromVC(context.vcMetadata);
         return ActivityLogEvents.LOG_ACTIVITY({
-          idType: vcMetadata.credentialType,
+          idType: context.verifiableCredential.credentialTypes,
+          issuer: vcMetadata.issuer!!,
           id: vcMetadata.id,
           _vcKey: vcMetadata.getVcKey(),
           type: 'VC_REMOVED',
@@ -474,7 +475,8 @@ export const VCItemActions = model => {
         return ActivityLogEvents.LOG_ACTIVITY({
           _vcKey: vcMetadata.getVcKey(),
           type: 'WALLET_BINDING_SUCCESSFULL',
-          idType: vcMetadata.credentialType,
+          idType: context.verifiableCredential.credentialTypes,
+          issuer: vcMetadata.issuer!!,
           id: vcMetadata.id,
           timestamp: Date.now(),
           deviceName: '',
@@ -493,7 +495,8 @@ export const VCItemActions = model => {
           _vcKey: vcMetadata.getVcKey(),
           type: 'WALLET_BINDING_FAILURE',
           id: vcMetadata.id,
-          idType: vcMetadata.credentialType,
+          idType: context.verifiableCredential.credentialTypes,
+          issuer: vcMetadata.issuer!!,
           timestamp: Date.now(),
           deviceName: '',
           vcLabel: vcMetadata.id,
