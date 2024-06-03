@@ -12,7 +12,7 @@ import {VerifiableCredential} from '../machines/VerifiableCredential/VCMetaMachi
 import RNSecureKeyStore, {ACCESSIBLE} from 'react-native-secure-key-store';
 import {DEFAULT_ECL} from '../shared/constants';
 import {VCMetadata} from '../shared/VCMetadata';
-import {shareImageToAllSupportedApps} from '../shared/sharing/sharing-image-utils';
+import {shareImageToAllSupportedApps} from '../shared/sharing/imageUtils';
 import {ShareOptions} from 'react-native-share';
 
 export const QrCodeOverlay: React.FC<QrCodeOverlayProps> = props => {
@@ -20,6 +20,7 @@ export const QrCodeOverlay: React.FC<QrCodeOverlayProps> = props => {
   const {t} = useTranslation('VcDetails');
   const [qrString, setQrString] = useState('');
   const [qrError, setQrError] = useState(false);
+  const base64ImageType = 'data:image/png;base64,';
 
   async function getQRData(): Promise<string> {
     let qrData: string;
@@ -37,31 +38,22 @@ export const QrCodeOverlay: React.FC<QrCodeOverlayProps> = props => {
     return qrData;
   }
 
-  const [base64String, setBase64String] = useState('');
-
   let qrRef = useRef(null);
 
-  function updateBase64() {
+  function handleShareQRCodePress() {
     qrRef.current.toDataURL(dataURL => {
-      setBase64String(`data:image/png;base64,${dataURL}`);
+      shareImage(`${base64ImageType}${dataURL}`);
     });
-    shareQRCode();
   }
 
-  useEffect(() => {
-    shareQRCode();
-  }, [base64String]);
-
-  async function shareQRCode() {
-    if (base64String != '') {
-      const options: ShareOptions = {
-        message: t('scanToViewCredential'),
-        url: base64String,
-      };
-      let shareStatus = await shareImageToAllSupportedApps(options);
-      if (!shareStatus) {
-        console.log('Error while sharing QR code::');
-      }
+  async function shareImage(base64String: string) {
+    const options: ShareOptions = {
+      message: t('scanToViewCredential'),
+      url: base64String,
+    };
+    const shareStatus = await shareImageToAllSupportedApps(options);
+    if (!shareStatus) {
+      console.error('Error while sharing QR code::');
     }
   }
 
@@ -148,7 +140,7 @@ export const QrCodeOverlay: React.FC<QrCodeOverlayProps> = props => {
                     color="white"
                   />
                 }
-                onPress={updateBase64}
+                onPress={handleShareQRCodePress}
               />
             </Centered>
           </Column>
