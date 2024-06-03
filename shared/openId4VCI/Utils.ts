@@ -289,10 +289,6 @@ export enum ErrorMessage {
   BIOMETRIC_CANCELLED = 'biometricCancelled',
 }
 
-export const getSelectedCredentialType = (credential: Credential): string[] => {
-  console.log('####getter credential.type[1]: ', credential.type[1]);
-  return credential.type;
-};
 export async function constructProofJWT(
   publicKey: string,
   privateKey: string,
