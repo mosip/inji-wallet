@@ -27,6 +27,7 @@ import {BackupEvents} from '../../backupAndRestore/backup';
 import {VcMetaEvents} from '../VCMetaMachine/VCMetaMachine';
 import {WalletBindingResponse} from '../VCMetaMachine/vc';
 import {BannerStatusType} from '../../../components/BannerNotification';
+import {getIdTypeForLogging} from '../../../components/VC/common/VCUtils';
 
 export const VCItemActions = model => {
   return {
@@ -440,8 +441,8 @@ export const VCItemActions = model => {
           _vcKey: context.vcMetadata.getVcKey(),
           type: 'VC_DOWNLOADED',
           id: context.vcMetadata.id,
-          issuer: vcMetadata.issuer!!,
-          idType: context.verifiableCredential.credentialTypes,
+          issuer: context.vcMetadata.issuer!!,
+          idType: getIdTypeForLogging(context.verifiableCredential),
           timestamp: Date.now(),
           deviceName: '',
           vcLabel: data.id,
@@ -455,7 +456,7 @@ export const VCItemActions = model => {
       (context: any, _) => {
         const vcMetadata = VCMetadata.fromVC(context.vcMetadata);
         return ActivityLogEvents.LOG_ACTIVITY({
-          idType: context.verifiableCredential.credentialTypes,
+          idType: getIdTypeForLogging(context.verifiableCredential),
           issuer: vcMetadata.issuer!!,
           id: vcMetadata.id,
           _vcKey: vcMetadata.getVcKey(),
@@ -475,7 +476,7 @@ export const VCItemActions = model => {
         return ActivityLogEvents.LOG_ACTIVITY({
           _vcKey: vcMetadata.getVcKey(),
           type: 'WALLET_BINDING_SUCCESSFULL',
-          idType: context.verifiableCredential.credentialTypes,
+          idType: getIdTypeForLogging(context.verifiableCredential),
           issuer: vcMetadata.issuer!!,
           id: vcMetadata.id,
           timestamp: Date.now(),
@@ -495,7 +496,7 @@ export const VCItemActions = model => {
           _vcKey: vcMetadata.getVcKey(),
           type: 'WALLET_BINDING_FAILURE',
           id: vcMetadata.id,
-          idType: context.verifiableCredential.credentialTypes,
+          idType: getIdTypeForLogging(context.verifiableCredential),
           issuer: vcMetadata.issuer!!,
           timestamp: Date.now(),
           deviceName: '',

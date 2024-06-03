@@ -29,6 +29,7 @@ import {StoreEvents} from '../../store';
 import tuvali from '@mosip/tuvali';
 import BluetoothStateManager from 'react-native-bluetooth-state-manager';
 import {NativeModules} from 'react-native';
+import {getIdTypeForLogging} from '../../../components/VC/common/VCUtils';
 
 const {wallet, EventTypes, VerificationStatus} = tuvali;
 export const ScanActions = (model: any, QR_LOGIN_REF_ID: any) => {
@@ -202,7 +203,7 @@ export const ScanActions = (model: any, QR_LOGIN_REF_ID: any) => {
             ? context.shareLogType
             : 'VC_SHARED_WITH_VERIFICATION_CONSENT',
           id: vcMetadata.id,
-          idType: selectedVc.verifiableCredential.credentialTypes,
+          idType: getIdTypeForLogging(selectedVc.verifiableCredential),
           issuer: vcMetadata.issuer!!,
           timestamp: Date.now(),
           deviceName:
@@ -225,7 +226,7 @@ export const ScanActions = (model: any, QR_LOGIN_REF_ID: any) => {
           _vcKey: vcMetadata.getVcKey(),
           type: 'PRESENCE_VERIFICATION_FAILED',
           timestamp: Date.now(),
-          idType: selectedVc.verifiableCredential.credentialTypes,
+          idType: getIdTypeForLogging(selectedVc.verifiableCredential),
           id: vcMetadata.id,
           issuer: vcMetadata.issuer!!,
           deviceName:
@@ -290,7 +291,7 @@ export const ScanActions = (model: any, QR_LOGIN_REF_ID: any) => {
           _vcKey: '',
           id: vcMetadata.id,
           issuer: vcMetadata.issuer!!,
-          idType: selectedVc.verifiableCredential.credentialTypes,
+          idType: getIdTypeForLogging(selectedVc.verifiableCredential),
           type: 'QRLOGIN_SUCCESFULL',
           timestamp: Date.now(),
           deviceName: '',

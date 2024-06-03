@@ -190,7 +190,7 @@ export const getMosipLogo = () => {
   };
 };
 
-export const getIdType = (wellknown: any, idType: string = '') => {
+export const getIdType = (wellknown: any, idType?: string[]) => {
   console.log('getIdType fn ', wellknown);
   if (wellknown && wellknown?.display) {
     console.log('If case');
@@ -200,7 +200,7 @@ export const getIdType = (wellknown: any, idType: string = '') => {
     });
     console.log('idTypeObj ', idTypeObj);
     return getLocalizedField(idTypeObj);
-  } else if (wellknown && idType !== '') {
+  } else if (wellknown && idType !== undefined) {
     let supportedCredentialsWellknown;
     wellknown = JSON.parse(wellknown) as Object[];
     for (let credential in wellknown['credentials_supported']) {
@@ -216,4 +216,10 @@ export const getIdType = (wellknown: any, idType: string = '') => {
   } else {
     return i18n.t('VcDetails:nationalCard');
   }
+};
+
+export const getIdTypeForLogging = (
+  credential: Credential | VerifiableCredential,
+): string[] => {
+  return (credential.credentialTypes as string[]) ?? ['VerifiableCredential'];
 };

@@ -20,7 +20,7 @@ export type ActivityLogType =
 
 export class ActivityLog {
   id: string;
-  idType: string;
+  idType: string[];
   _vcKey: string;
   timestamp: number;
   deviceName: string;
@@ -30,7 +30,7 @@ export class ActivityLog {
 
   constructor({
     id = '',
-    idType = '',
+    idType = [],
     _vcKey = '',
     type = '',
     timestamp = Date.now(),
@@ -61,9 +61,8 @@ export class ActivityLog {
 }
 
 export function getActionText(activity: ActivityLog, t, wellknown: Object) {
-  if (activity.idType && activity.idType !== '') {
-    let cardType = getIdType(wellknown, activity.idType);
-    console.log('cardType ', cardType);
+  if (activity.idType && activity.idType.length !== 0) {
+    const cardType = getIdType(wellknown, activity.idType);
     return `${t(activity.type, {idType: cardType, id: activity.id})}`;
   }
   return `${t(activity.type, {idType: '', id: activity.id})}`;
