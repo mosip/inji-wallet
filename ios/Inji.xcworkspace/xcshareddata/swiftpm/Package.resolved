@@ -1,5 +1,4 @@
 {
-  "originHash" : "d01056e90451bce7952dbc76948d3026497a31374959581b2fdf485b17f6b992",
   "pins" : [
     {
       "identity" : "base45-swift",
@@ -16,7 +15,7 @@
       "location" : "https://github.com/mosip/inji-vci-client-ios-swift.git",
       "state" : {
         "branch" : "develop",
-        "revision" : "e1a08fbd259a1135d067ad52f2d2ce9370061054"
+        "revision" : "2c2a3d2c321e11511f4667e3727587dc0cca61cb"
       }
     },
     {
@@ -29,5 +28,5 @@
       }
     }
   ],
-  "version" : 3
+  "version" : 2
 }
