@@ -21,7 +21,7 @@
     "@expo/metro-config": "~0.10.0",
     "@invertase/react-native-apple-authentication": "^2.3.0",
     "@iriscan/biometric-sdk-react-native": "0.2.6",
-    "@mosip/tuvali": "git://github.com/mosip/tuvali.git#develop",
+    "@mosip/tuvali": "0.4.9",
     "@react-native-clipboard/clipboard": "^1.10.0",
     "@react-native-community/netinfo": "9.3.7",
     "@react-native-google-signin/google-signin": "^10.1.1",
