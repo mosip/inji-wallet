@@ -77,10 +77,6 @@ export const SettingScreen: React.FC<
     }
   };
 
-  const handleLivenessToggle = (livenessToggleState: boolean) => {
-    controller.UPDATE_LIVENESS_TOGGLE(livenessToggleState);
-  };
-
   return (
     <React.Fragment>
       <Pressable accessible={false} onPress={controller.TOGGLE_SETTINGS}>

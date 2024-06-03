@@ -67,6 +67,7 @@ export const FaceScanner: React.FC<FaceScannerProps> = props => {
   const isVerifying = useSelector(service, selectIsVerifying);
 
   const [counter, setCounter] = useState(0);
+  const [blinkCounter, setBlinkCounter] = useState(0);
   const [screenColor, setScreenColor] = useState('#0000ff');
   const [opacity, setOpacity] = useState(1);
   const [faceToCompare, setFaceToCompare] = useState(null);
@@ -83,15 +84,19 @@ export const FaceScanner: React.FC<FaceScannerProps> = props => {
   let calculatedThreshold;
   let faceCompareOuptut;
   let capturedFaceImage;
+  let leftEyeWasClosed = false;
+  let rightEyeWasClosed = false;
+  let lastBlinkTimestamp = 0;
 
   const screenFlashColors = ['#0000FF', '#00FF00', '#FF0000'];
   const colorFiltered = ['background', 'dominant'];
   const offsetX = 200;
   const offsetY = 350;
-  const captureInterval = 1000;
+  const captureInterval = 600;
   const eyeOpenProbability = 0.85;
-  const BLINK_THRESHOLD = 0.4;
-  const BLINK_TIME_WINDOW = 900;
+  const blinkConfidenceScore = 0.1;
+  const blinkThreshold = 0.4;
+  const blinkTimeInterval = 800;
   const eyeCropHeightConst = 50;
   const XAndYBoundsMax = 280;
   const XAndYBoundsMin = 300;
@@ -264,6 +269,11 @@ export const FaceScanner: React.FC<FaceScannerProps> = props => {
 
     console.log('FACE_LIVENESS :: End time-->', Date.now());
 
+    if (blinkCounter > 0) {
+      console.log("Blink is detected, increasing the confidence score");
+      calculatedThreshold = calculatedThreshold + blinkConfidenceScore;
+    }
+
     if (calculatedThreshold > LIVENESS_THRESHOLD && faceCompareOuptut) {
       props.onValid();
     } else {
@@ -290,6 +300,37 @@ export const FaceScanner: React.FC<FaceScannerProps> = props => {
   }
 
   async function handleFacesDetected({faces}) {
+
+    const leftEyeOpenProbability = faces[0].leftEyeOpenProbability;
+    const rightEyeOpenProbability = faces[0].rightEyeOpenProbability;
+
+    const currentTime = new Date().getTime();
+
+    const leftEyeClosed = leftEyeOpenProbability < blinkThreshold;
+    const rightEyeClosed = rightEyeOpenProbability < blinkThreshold;
+
+    if (leftEyeClosed && rightEyeClosed) {
+      leftEyeWasClosed = true;
+      rightEyeWasClosed = true;
+    }
+
+    if (
+      leftEyeWasClosed &&
+      rightEyeWasClosed &&
+      !leftEyeClosed &&
+      !rightEyeClosed
+    ) {
+      if (
+        lastBlinkTimestamp === 0 ||
+        currentTime - lastBlinkTimestamp > blinkTimeInterval
+      ) {
+        setBlinkCounter(blinkCounter + 1);
+        lastBlinkTimestamp = currentTime;
+      }
+      leftEyeWasClosed = false;
+      rightEyeWasClosed = false;
+    }
+
     if (!livenessEnabled) {
       return;
     }
@@ -316,6 +357,7 @@ export const FaceScanner: React.FC<FaceScannerProps> = props => {
         rollAngle > -rollAngleThreshold && rollAngle < rollAngleThreshold;
 
       setInfoText(t('faceOutGuide'));
+
 
       if (
         withinXBounds &&
