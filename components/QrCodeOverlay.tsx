@@ -37,8 +37,6 @@ export const QrCodeOverlay: React.FC<QrCodeOverlayProps> = props => {
     return qrData;
   }
 
-  const [base64String, setBase64String] = useState('');
-
   let qrRef = useRef(null);
 
   function sharedQRCodeTapped() {
