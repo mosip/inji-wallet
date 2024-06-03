@@ -201,8 +201,8 @@ fileignoreconfig:
     checksum: e4254ca79a1269161ac3e9d4870680a8650ac7dbdf61c39c084722a9e8925669
   - filename: machines/VCItemMachine/VCItemMachine.typegen.ts
     checksum: 850b5d02636bef9e286fc0fbc4ffffbd38068f332c319302a906496f4bc1c8a1
-  - filename: machines/VCItemMachine/VCItemEvents.ts
-    checksum: 04e5758d4fa8bc37e8b66f7f51627a9e71ccbca7a046aa64e914f5cf855aa48b
+  - filename: machines/VerifiableCredential/VCItemMachine/VCItemModel.ts
+    checksum: 2a22331fe5f20d44c210b8970be0b934bfdf39bc999009305a9ba8f18e4d5469
   - filename: machines/VCItemMachine/VCItemGaurds.ts
     checksum: 4f32814fc26a0edaa54a42dbc9f9e1d899144eb059ac8da211d1738887871829
   - filename: machines/VCItemMachine/VCItemServices.ts
