@@ -20,6 +20,8 @@ import {
 } from '../../components/VC/common/VCUtils';
 import {getVerifiableCredential} from '../../machines/VerifiableCredential/VCItemMachine/VCItemSelectors';
 import {vcVerificationBannerDetails} from '../../components/BannerNotificationContainer';
+import {getErrorEventData, sendErrorEvent} from '../telemetry/TelemetryUtils';
+import {TelemetryConstants} from '../telemetry/TelemetryConstants';
 
 export const Protocols = {
   OpenId4VCI: 'OpenId4VCI',
@@ -117,7 +119,7 @@ export const updateCredentialInformation = (
     verifiableCredential: {
       ...credential,
       wellKnown: context.selectedIssuer['.well-known'],
-      credentialTypes: getCredentialType(credential.credential.type),
+      credentialTypes: credential.credential.type ?? ['VerifiableCredential'],
       issuerLogo: getDisplayObjectForCurrentLanguage(
         context.selectedIssuer.display,
       )?.logo,
@@ -190,7 +192,7 @@ export const getJWK = async publicKey => {
 export const getSelectedCredentialTypeDetails = (
   wellknown: any,
   vcCredentialTypes: Object[],
-) => {
+): Object => {
   for (let credential in wellknown.credentials_supported) {
     const credentialDetails = wellknown.credentials_supported[credential];
 
@@ -203,6 +205,13 @@ export const getSelectedCredentialTypeDetails = (
   }
   console.error(
     'Selected credential type is not available in wellknown config supported credentials list',
+  );
+  sendErrorEvent(
+    getErrorEventData(
+      TelemetryConstants.FlowType.wellknownConfig,
+      TelemetryConstants.ErrorId.mismatch,
+      TelemetryConstants.ErrorMessage.wellknownConfigMismatch,
+    ),
   );
   return {};
 };

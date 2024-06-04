@@ -1,6 +1,8 @@
 import {
   Credential,
   CredentialSubject,
+  CredentialTypes,
+  IssuerWellknownResponse,
   VerifiableCredential,
 } from '../../../machines/VerifiableCredential/VCMetaMachine/vc';
 import i18n, {getLocalizedField} from '../../../i18n';
@@ -11,7 +13,6 @@ import {Theme} from '../../ui/styleUtils';
 import {CREDENTIAL_REGISTRY_EDIT} from 'react-native-dotenv';
 import {VCVerification} from '../../VCVerification';
 import {MIMOTO_BASE_URL} from '../../../shared/constants';
-import {useTranslation} from 'react-i18next';
 import {VCItemDetailsProps} from '../Views/VCDetailView';
 import {getSelectedCredentialTypeDetails} from '../../../shared/openId4VCI/Utils';
 
@@ -190,7 +191,19 @@ export const getMosipLogo = () => {
   };
 };
 
-export const getIdType = (wellknown: any, idType?: string[]) => {
+/**
+ *
+ * @param wellknown (either supportedCredential's wellknown or whole well known response of issuer)
+ * @param idType
+ * @returns id Type translations (Eg - National ID)
+ *
+ * supportedCredential's wellknown is passed from getActivityText after fresh download
+ * & all other consumers pass whole well known response of issuer
+ */
+export const getIdType = (
+  wellknown: CredentialTypes | IssuerWellknownResponse,
+  idType?: string[],
+) => {
   console.log('getIdType fn ', wellknown);
   if (wellknown && wellknown?.display) {
     console.log('If case');

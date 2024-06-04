@@ -4,7 +4,6 @@ import NetInfo from '@react-native-community/netinfo';
 import {
   constructAuthorizationConfiguration,
   constructProofJWT,
-  getCredentialType,
   Issuers_Key_Ref,
   updateCredentialInformation,
   vcDownloadTimeout,
@@ -61,9 +60,8 @@ export const IssuersService = () => {
         credentialAudience: context.selectedIssuer.credential_audience,
         credentialEndpoint: context.selectedIssuer.credential_endpoint,
         downloadTimeoutInMilliSeconds: downloadTimeout,
-        credentialType: getCredentialType(
-          context.selectedCredentialType?.credential_definition.type,
-        ),
+        credentialType: context.selectedCredentialType?.credential_definition
+          .type ?? ['VerifiableCredential'],
         credentialFormat: 'ldp_vc',
       };
       const proofJWT = await constructProofJWT(

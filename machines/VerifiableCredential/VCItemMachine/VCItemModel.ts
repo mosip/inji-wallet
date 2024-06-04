@@ -38,9 +38,6 @@ const VCItemEvents = {
   RESET_VERIFICATION_STATUS: () => ({}),
   REMOVE_VERIFICATION_STATUS_BANNER: () => ({}),
   SHOW_VERIFICATION_STATUS_BANNER: (response: unknown) => ({response}),
-  UPDATE_WELLKNOWN_RESPONSE: (wellknownResponse: Object) => ({
-    wellknownResponse,
-  }),
 };
 
 export const VCItemModel = createModel(

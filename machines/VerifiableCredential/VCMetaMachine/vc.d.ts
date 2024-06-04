@@ -96,6 +96,12 @@ export interface CredentialTypes {
   };
 }
 
+export interface IssuerWellknownResponse {
+  credential_issuer: string;
+  credential_endpoint: string;
+  credentials_supported: Object[];
+}
+
 export interface VCLabel {
   singular: string;
   plural: string;
