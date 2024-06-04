@@ -134,9 +134,7 @@ export const ViewVcModal: React.FC<ViewVcModalProps> = props => {
         <BannerNotification
           type={verificationStatus?.statusType as BannerStatus}
           message={t(`VcVerificationBanner:${verificationStatus?.statusType}`, {
-            vcDetails: `${t(`VcDetails:${verificationStatus?.vcType}`)} ${
-              verificationStatus?.vcNumber
-            }`,
+            vcDetails: `${verificationStatus.vcType} ${verificationStatus?.vcNumber}`,
           })}
           onClosePress={controller.RESET_VERIFICATION_STATUS}
           key={'reVerificationInProgress'}

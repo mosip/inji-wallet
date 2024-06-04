@@ -45,7 +45,7 @@ export const imageCaptureConfig = {
   imageType: ImageType.jpg,
 };
 
-export const faceDetectorConfig : FaceDetectorConfig= {
+export const faceDetectorConfig: FaceDetectorConfig = {
   mode: FaceDetector.FaceDetectorMode.accurate,
   detectLandmarks: FaceDetector.FaceDetectorLandmarks.all,
   runClassifications: FaceDetector.FaceDetectorClassifications.all,
@@ -258,7 +258,7 @@ export interface FaceDetectorConfig {
   mode: FaceDetector.FaceDetectorMode;
   detectLandmarks: FaceDetector.FaceDetectorLandmarks;
   runClassifications: FaceDetector.FaceDetectorClassifications;
-  contourMode: FaceDetector.FaceDetectorClassifications; 
+  contourMode: FaceDetector.FaceDetectorClassifications;
   minDetectionInterval: number;
   tracking: boolean;
-};
+}

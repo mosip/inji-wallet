@@ -11,7 +11,6 @@ import {
   MY_VCS_STORE_KEY,
   MY_LOGIN_STORE_KEY,
 } from '../../../shared/constants';
-import {getIdType} from '../../../shared/openId4VCI/Utils';
 import {TelemetryConstants} from '../../../shared/telemetry/TelemetryConstants';
 import {
   sendImpressionEvent,
@@ -30,6 +29,7 @@ import {StoreEvents} from '../../store';
 import tuvali from '@mosip/tuvali';
 import BluetoothStateManager from 'react-native-bluetooth-state-manager';
 import {NativeModules} from 'react-native';
+import {getCredentialTypes} from '../../../components/VC/common/VCUtils';
 
 const {wallet, EventTypes, VerificationStatus} = tuvali;
 export const ScanActions = (model: any, QR_LOGIN_REF_ID: any) => {
@@ -191,14 +191,16 @@ export const ScanActions = (model: any, QR_LOGIN_REF_ID: any) => {
 
     logShared: send(
       (context: any) => {
-        const vcMetadata = context.selectedVc?.vcMetadata;
+        const vcMetadata = VCMetadata.fromVC(context.selectedVc?.vcMetadata);
+        const selectedVc = context.QrLoginRef.getSnapshot().context.selectedVc;
         return ActivityLogEvents.LOG_ACTIVITY({
-          _vcKey: VCMetadata.fromVC(vcMetadata).getVcKey(),
+          _vcKey: vcMetadata.getVcKey(),
           type: context.shareLogType
             ? context.shareLogType
             : 'VC_SHARED_WITH_VERIFICATION_CONSENT',
           id: vcMetadata.id,
-          idType: getIdType(vcMetadata.issuer),
+          idType: getCredentialTypes(selectedVc.verifiableCredential),
+          issuer: vcMetadata.issuer!!,
           timestamp: Date.now(),
           deviceName:
             context.receiverInfo.name || context.receiverInfo.deviceName,
@@ -209,17 +211,21 @@ export const ScanActions = (model: any, QR_LOGIN_REF_ID: any) => {
     ),
 
     logFailedVerification: send(
-      context =>
-        ActivityLogEvents.LOG_ACTIVITY({
-          _vcKey: VCMetadata.fromVC(context.selectedVc).getVcKey(),
+      context => {
+        const vcMetadata = VCMetadata.fromVC(context.selectedVc);
+        const selectedVc = context.QrLoginRef.getSnapshot().context.selectedVc;
+        return ActivityLogEvents.LOG_ACTIVITY({
+          _vcKey: vcMetadata.getVcKey(),
           type: 'PRESENCE_VERIFICATION_FAILED',
           timestamp: Date.now(),
-          idType: getIdType(context.selectedVc.vcMetadata.issuer),
-          id: context.selectedVc.vcMetadata.id,
+          idType: getCredentialTypes(selectedVc.verifiableCredential),
+          id: vcMetadata.id,
+          issuer: vcMetadata.issuer!!,
           deviceName:
             context.receiverInfo.name || context.receiverInfo.deviceName,
-          vcLabel: context.selectedVc.vcMetadata.id,
-        }),
+          vcLabel: vcMetadata.id,
+        });
+      },
       {to: context => context.serviceRefs.activityLog},
     ),
 
@@ -242,11 +248,8 @@ export const ScanActions = (model: any, QR_LOGIN_REF_ID: any) => {
     ),
     loadVCDataToMemory: send(
       (context: any) => {
-        let metadata = VCMetadata.fromVC(context.quickShareData?.meta);
-
-        let verifiableCredential = metadata.isFromOpenId4VCI()
-          ? {credential: context.quickShareData?.verifiableCredential}
-          : context.quickShareData?.verifiableCredential;
+        const verifiableCredential =
+          context.quickShareData?.verifiableCredential;
 
         return StoreEvents.SET(metadata.getVcKey(), {
           verifiableCredential: verifiableCredential,
@@ -268,16 +271,22 @@ export const ScanActions = (model: any, QR_LOGIN_REF_ID: any) => {
     ),
 
     storingActivityLog: send(
-      (_, event) =>
-        ActivityLogEvents.LOG_ACTIVITY({
+      (context, event) => {
+        const vcMetadata = event.response.selectedVc.vcMetadata;
+
+        const selectedVc = context.QrLoginRef.getSnapshot().context.selectedVc;
+
+        return ActivityLogEvents.LOG_ACTIVITY({
           _vcKey: '',
-          id: event.response.selectedVc.vcMetadata.id,
-          idType: getIdType(event.response.selectedVc.vcMetadata.issuer),
+          id: vcMetadata.id,
+          issuer: vcMetadata.issuer!!,
+          idType: getCredentialTypes(selectedVc.verifiableCredential),
           type: 'QRLOGIN_SUCCESFULL',
           timestamp: Date.now(),
           deviceName: '',
-          vcLabel: String(event.response.selectedVc.vcMetadata.id),
-        }),
+          vcLabel: String(vcMetadata.id),
+        });
+      },
       {
         to: (context: any) => context.serviceRefs.activityLog,
       },

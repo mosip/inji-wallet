@@ -54,6 +54,6 @@ export function selectSelectingCredentialType(state: State) {
   return state.matches('selectingCredentialType');
 }
 
-export function selectCredentialTypes(state: State) {
-  return state.context.credentialTypes;
+export function selectSupportedCredentialTypes(state: State) {
+  return state.context.supportedCredentialTypes;
 }

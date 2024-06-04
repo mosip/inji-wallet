@@ -15,7 +15,7 @@ import {SvgImage} from '../../components/ui/svg';
 import {View, I18nManager} from 'react-native';
 import {Text} from './../../components/ui';
 import {BannerStatusType} from '../../components/BannerNotification';
-import { LIVENESS_CHECK } from '../../shared/constants';
+import {LIVENESS_CHECK} from '../../shared/constants';
 
 const ScanStack = createNativeStackNavigator();
 

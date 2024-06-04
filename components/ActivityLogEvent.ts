@@ -1,3 +1,5 @@
+import {getIdType} from './VC/common/VCUtils';
+
 export type ActivityLogType =
   | '' // replacement for undefined
   | 'VC_SHARED'
@@ -18,21 +20,23 @@ export type ActivityLogType =
 
 export class ActivityLog {
   id: string;
-  idType: string;
+  idType: string[];
   _vcKey: string;
   timestamp: number;
   deviceName: string;
   vcLabel: string;
   type: ActivityLogType;
+  issuer: string;
 
   constructor({
     id = '',
-    idType = '',
+    idType = [],
     _vcKey = '',
     type = '',
     timestamp = Date.now(),
     deviceName = '',
     vcLabel = '',
+    issuer = '',
   } = {}) {
     this.id = id;
     this.idType = idType;
@@ -41,6 +45,7 @@ export class ActivityLog {
     this.timestamp = timestamp;
     this.deviceName = deviceName;
     this.vcLabel = vcLabel;
+    this.issuer = issuer;
   }
 
   static logTamperedVCs() {
@@ -50,13 +55,14 @@ export class ActivityLog {
       timestamp: Date.now(),
       deviceName: '',
       vcLabel: '',
+      issuer: '',
     };
   }
 }
 
-export function getActionText(activity: ActivityLog, t) {
-  if (activity.idType && activity.idType !== '') {
-    let cardType = t(`VcDetails:${activity.idType}`);
+export function getActionText(activity: ActivityLog, t, wellknown: Object) {
+  if (activity.idType && activity.idType.length !== 0) {
+    const cardType = getIdType(wellknown, activity.idType);
     return `${t(activity.type, {idType: cardType, id: activity.id})}`;
   }
   return `${t(activity.type, {idType: '', id: activity.id})}`;

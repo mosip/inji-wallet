@@ -1,6 +1,6 @@
 import {useSelector} from '@xstate/react';
 import {
-  selectCredentialTypes,
+  selectSupportedCredentialTypes,
   selectErrorMessageType,
   selectIsBiometricCancelled,
   selectIsDone,
@@ -41,7 +41,10 @@ export function useIssuerScreenController({route, navigation}) {
       service,
       selectSelectingCredentialType,
     ),
-    credentialTypes: useSelector(service, selectCredentialTypes),
+    supportedCredentialTypes: useSelector(
+      service,
+      selectSupportedCredentialTypes,
+    ),
     verificationErrorMessage: useSelector(
       service,
       selectVerificationErrorMessage,

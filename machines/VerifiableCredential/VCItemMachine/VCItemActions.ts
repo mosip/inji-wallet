@@ -2,17 +2,18 @@ import {assign, send} from 'xstate';
 import {CommunicationDetails} from '../../../shared/Utils';
 import {StoreEvents} from '../../store';
 import {VCMetadata} from '../../../shared/VCMetadata';
-import {MIMOTO_BASE_URL, MY_VCS_STORE_KEY} from '../../../shared/constants';
+import {
+  API_CACHED_STORAGE_KEYS,
+  MIMOTO_BASE_URL,
+  MY_VCS_STORE_KEY,
+} from '../../../shared/constants';
 import {KeyPair} from 'react-native-rsa-native';
 import i18n from '../../../i18n';
 import {getHomeMachineService} from '../../../screens/Home/HomeScreenController';
 import {DownloadProps} from '../../../shared/api';
 import {isHardwareKeystoreExists} from '../../../shared/cryptoutil/cryptoUtil';
 import {getBindingCertificateConstant} from '../../../shared/keystore/SecureKeystore';
-import {
-  getIdType,
-  getVcVerificationDetails,
-} from '../../../shared/openId4VCI/Utils';
+import {getVcVerificationDetails} from '../../../shared/openId4VCI/Utils';
 import {TelemetryConstants} from '../../../shared/telemetry/TelemetryConstants';
 import {
   sendStartEvent,
@@ -30,6 +31,7 @@ import {BackupEvents} from '../../backupAndRestore/backup';
 import {VcMetaEvents} from '../VCMetaMachine/VCMetaMachine';
 import {WalletBindingResponse} from '../VCMetaMachine/vc';
 import {BannerStatusType} from '../../../components/BannerNotification';
+import {getCredentialTypes} from '../../../components/VC/common/VCUtils';
 
 export const VCItemActions = model => {
   return {
@@ -61,6 +63,7 @@ export const VCItemActions = model => {
           statusType,
           context.vcMetadata,
           context.verifiableCredential,
+          context.wellknownResponse,
         );
       },
     }),
@@ -124,10 +127,11 @@ export const VCItemActions = model => {
     ),
 
     setContext: model.assign((context, event) => {
+      const vcMetadata = context.vcMetadata;
       return {
         ...context,
         ...event.response,
-        vcMetadata: context.vcMetadata,
+        vcMetadata: VCMetadata.fromVC(vcMetadata),
       };
     }),
     storeContext: send(
@@ -149,16 +153,22 @@ export const VCItemActions = model => {
         to: context => context.serviceRefs.store,
       },
     ),
+
     setVcMetadata: assign({
       vcMetadata: (_, event) => event.vcMetadata,
     }),
+
+    updateWellknownResponse: assign({
+      wellknownResponse: (_, event) => event.data,
+    }),
+
     storeVcInContext: send(
       //todo : separate handling done for openid4vci , handle commonly from vc machine
       (context: any) => {
-        const {serviceRefs, ...verifiableCredential} = context;
+        const {serviceRefs, wellknownResponse, ...data} = context;
         return {
           type: 'VC_DOWNLOADED',
-          vc: verifiableCredential,
+          vc: data,
           vcMetadata: context.vcMetadata,
         };
       },
@@ -442,7 +452,8 @@ export const VCItemActions = model => {
           _vcKey: context.vcMetadata.getVcKey(),
           type: 'VC_DOWNLOADED',
           id: context.vcMetadata.id,
-          idType: getIdType(context.vcMetadata.issuer),
+          issuer: context.vcMetadata.issuer!!,
+          idType: getCredentialTypes(context.verifiableCredential),
           timestamp: Date.now(),
           deviceName: '',
           vcLabel: data.id,
@@ -453,47 +464,56 @@ export const VCItemActions = model => {
       },
     ),
     logRemovedVc: send(
-      (context: any, _) =>
-        ActivityLogEvents.LOG_ACTIVITY({
-          idType: getIdType(context.vcMetadata.issuer),
-          id: context.vcMetadata.id,
-          _vcKey: VCMetadata.fromVC(context.vcMetadata).getVcKey(),
+      (context: any, _) => {
+        const vcMetadata = VCMetadata.fromVC(context.vcMetadata);
+        return ActivityLogEvents.LOG_ACTIVITY({
+          idType: getCredentialTypes(context.verifiableCredential),
+          issuer: vcMetadata.issuer!!,
+          id: vcMetadata.id,
+          _vcKey: vcMetadata.getVcKey(),
           type: 'VC_REMOVED',
           timestamp: Date.now(),
           deviceName: '',
-          vcLabel: VCMetadata.fromVC(context.vcMetadata).id,
-        }),
+          vcLabel: vcMetadata.id,
+        });
+      },
       {
         to: context => context.serviceRefs.activityLog,
       },
     ),
     logWalletBindingSuccess: send(
-      (context: any) =>
-        ActivityLogEvents.LOG_ACTIVITY({
-          _vcKey: VCMetadata.fromVC(context.vcMetadata).getVcKey(),
+      (context: any) => {
+        const vcMetadata = VCMetadata.fromVC(context.vcMetadata);
+        return ActivityLogEvents.LOG_ACTIVITY({
+          _vcKey: vcMetadata.getVcKey(),
           type: 'WALLET_BINDING_SUCCESSFULL',
-          idType: getIdType(context.vcMetadata.issuer),
-          id: context.vcMetadata.id,
+          idType: getCredentialTypes(context.verifiableCredential),
+          issuer: vcMetadata.issuer!!,
+          id: vcMetadata.id,
           timestamp: Date.now(),
           deviceName: '',
-          vcLabel: VCMetadata.fromVC(context.vcMetadata).id,
-        }),
+          vcLabel: vcMetadata.id,
+        });
+      },
       {
         to: context => context.serviceRefs.activityLog,
       },
     ),
 
     logWalletBindingFailure: send(
-      (context: any) =>
-        ActivityLogEvents.LOG_ACTIVITY({
-          _vcKey: VCMetadata.fromVC(context.vcMetadata).getVcKey(),
+      (context: any) => {
+        const vcMetadata = VCMetadata.fromVC(context.vcMetadata);
+        return ActivityLogEvents.LOG_ACTIVITY({
+          _vcKey: vcMetadata.getVcKey(),
           type: 'WALLET_BINDING_FAILURE',
-          id: context.vcMetadata.id,
-          idType: getIdType(context.vcMetadata.issuer),
+          id: vcMetadata.id,
+          idType: getCredentialTypes(context.verifiableCredential),
+          issuer: vcMetadata.issuer!!,
           timestamp: Date.now(),
           deviceName: '',
-          vcLabel: VCMetadata.fromVC(context.vcMetadata).id,
-        }),
+          vcLabel: vcMetadata.id,
+        });
+      },
       {
         to: context => context.serviceRefs.activityLog,
       },

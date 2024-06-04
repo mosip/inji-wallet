@@ -2,6 +2,7 @@ import {StateFrom} from 'xstate';
 import {requestMachine} from './requestMachine';
 import {VCMetadata} from '../../../shared/VCMetadata';
 import {getMosipLogo} from '../../../components/VC/common/VCUtils';
+import {Credential} from '../../VerifiableCredential/VCMetaMachine/vc';
 
 type State = StateFrom<typeof requestMachine>;
 
@@ -9,31 +10,29 @@ export function selectSenderInfo(state: State) {
   return state.context.senderInfo;
 }
 
-export function selectCredential(state: State) {
-  return new VCMetadata(state.context.incomingVc?.vcMetadata).isFromOpenId4VCI()
-    ? state.context.incomingVc?.verifiableCredential?.credential
-    : state.context.incomingVc?.verifiableCredential;
+export function selectCredential(state: State): Credential {
+  return (
+    state.context.incomingVc?.verifiableCredential?.credential ||
+    state.context.incomingVc?.verifiableCredential
+  );
 }
 
 export function selectVerifiableCredentialData(state: State) {
   const vcMetadata = new VCMetadata(state.context.incomingVc?.vcMetadata);
-  return vcMetadata.isFromOpenId4VCI()
-    ? {
-        vcMetadata: vcMetadata,
-        face: state.context.incomingVc?.verifiableCredential.credential
-          .credentialSubject.face,
-        issuerLogo: state.context.incomingVc?.verifiableCredential?.issuerLogo,
-        wellKnown: state.context.incomingVc?.verifiableCredential?.wellKnown,
-        credentialTypes:
-          state.context.incomingVc?.verifiableCredential?.credentialTypes,
-        issuer: vcMetadata.issuer,
-      }
-    : {
-        vcMetadata: vcMetadata,
-        issuer: vcMetadata.issuer,
-        face: state.context.incomingVc?.credential?.biometrics?.face,
-        issuerLogo: getMosipLogo(),
-      };
+  return {
+    vcMetadata: vcMetadata,
+    face:
+      state.context.incomingVc?.verifiableCredential.credential
+        ?.credentialSubject?.face ||
+      state.context.incomingVc?.credential?.biometrics?.face,
+    issuerLogo:
+      state.context.incomingVc?.verifiableCredential?.issuerLogo ||
+      getMosipLogo(),
+    issuer: vcMetadata.issuer,
+    wellKnown: state.context.incomingVc?.verifiableCredential?.wellKnown,
+    credentialTypes:
+      state.context.incomingVc?.verifiableCredential?.credentialTypes,
+  };
 }
 
 export function selectIsReviewingInIdle(state: State) {

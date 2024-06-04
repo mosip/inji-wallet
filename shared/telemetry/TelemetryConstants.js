@@ -19,6 +19,7 @@ export const TelemetryConstants = {
     remove: 'remove VC',
     removeVcMetadata: 'VC metadata removed',
     vcVerification: 'VC Verification',
+    wellknownConfig: 'Wellknown config',
   }),
 
   EndEventStatus: Object.freeze({
@@ -45,6 +46,8 @@ export const TelemetryConstants = {
       'Tampered cards detected and removed for security reasons. Please download again',
     privateKeyUpdationFailed: 'Failed to store private key in keystore',
     vcVerificationFailed: 'VC verification Failed with Range Error - ',
+    wellknownConfigMismatch:
+      'Selected credential type is not available in wellknown config supported credentials list',
   }),
 
   ErrorId: Object.freeze({

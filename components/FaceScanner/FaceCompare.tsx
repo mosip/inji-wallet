@@ -1,10 +1,10 @@
 import React from 'react';
-import { Camera, CameraType } from 'expo-camera';
-import { View, TouchableOpacity } from 'react-native';
+import {Camera, CameraType} from 'expo-camera';
+import {View, TouchableOpacity} from 'react-native';
 import {SvgImage} from '../ui/svg';
-import { Text, Column, Row, Centered } from '../ui';
+import {Text, Column, Row, Centered} from '../ui';
 import {RotatingIcon} from '../RotatingIcon';
-import { Theme } from '../ui/styleUtils';
+import {Theme} from '../ui/styleUtils';
 import testIDProps from '../../shared/commonUtil';
 
 const FaceCompare: React.FC<FaceCompareProps> = ({
@@ -13,11 +13,11 @@ const FaceCompare: React.FC<FaceCompareProps> = ({
   isCapturing,
   isVerifying,
   service,
-  t
+  t,
 }) => {
   return (
-    <Column fill align="space-between" style={{ backgroundColor: '#ffffff' }}>
-      <View style={{ flex: 2, marginTop: 15 }}>
+    <Column fill align="space-between" style={{backgroundColor: '#ffffff'}}>
+      <View style={{flex: 2, marginTop: 15}}>
         <View style={Theme.CameraEnabledStyles.scannerContainer}>
           <View>
             <Camera
@@ -33,8 +33,7 @@ const FaceCompare: React.FC<FaceCompareProps> = ({
           align="center"
           weight="semibold"
           style={Theme.TextStyles.base}
-          margin="80 57"
-        >
+          margin="80 57">
           {t('imageCaptureGuide')}
         </Text>
       </View>
@@ -47,7 +46,9 @@ const FaceCompare: React.FC<FaceCompareProps> = ({
               <TouchableOpacity onPress={() => service.send('CAPTURE')}>
                 {SvgImage.CameraCaptureIcon()}
               </TouchableOpacity>
-              <Text testID="captureText" style={Theme.CameraEnabledStyles.iconText}>
+              <Text
+                testID="captureText"
+                style={Theme.CameraEnabledStyles.iconText}>
                 {t('capture')}
               </Text>
             </Centered>
@@ -55,7 +56,9 @@ const FaceCompare: React.FC<FaceCompareProps> = ({
               <TouchableOpacity onPress={() => service.send('FLIP_CAMERA')}>
                 {SvgImage.FlipCameraIcon()}
               </TouchableOpacity>
-              <Text testID="flipCameraText" style={Theme.CameraEnabledStyles.iconText}>
+              <Text
+                testID="flipCameraText"
+                style={Theme.CameraEnabledStyles.iconText}>
                 {t('flipCamera')}
               </Text>
             </Centered>
@@ -69,10 +72,10 @@ const FaceCompare: React.FC<FaceCompareProps> = ({
 export default FaceCompare;
 
 interface FaceCompareProps {
-    whichCamera: CameraType;
-    setCameraRef:(node: Camera) => void;
-    isCapturing: boolean;
-    isVerifying: boolean;
-    service: any;
-    t: (key: string) => string;
-  }
+  whichCamera: CameraType;
+  setCameraRef: (node: Camera) => void;
+  isCapturing: boolean;
+  isVerifying: boolean;
+  service: any;
+  t: (key: string) => string;
+}
