@@ -365,6 +365,8 @@ fileignoreconfig:
     checksum: b168940c6b487dc96fd22f564f2e187dae46f4fa5e4a64cf81c4d810b1c1ae78
   - filename: ios/Inji.xcodeproj/project.pbxproj
     checksum: 4359976ed4d1ac3206d76b87d3458d070027199c8569ba123436c4b5343aba74
+  - filename: screens/Settings/ReceivedCardsModal.tsx
+    checksum: 6dee9153a61009b0252d294154c88d5e1b241a517c76e930b391a39d7bc52392
   - filename: components/FaceScanner/FaceCompare.tsx
     checksum: 947b6d75543e2bf959ca2d95dd7224051e0b4ec2c28f7515f923701e22a932f0
   - filename: components/FaceScanner/LivenessDetection.tsx
