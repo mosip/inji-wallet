@@ -145,12 +145,9 @@ jest.mock('react-native-gesture-handler', () => {
   };
 });
 
-jest.mock('@mosip/secure-keystore', () => ({
-  sign: jest.fn(),
-  encryptData: input => (input ? String(input) : 'mockedString'),
-  decryptData: input => (input ? String(input) : 'mockedString'),
-  deviceSupportsHardware: () => true,
-}));
+jest.mock('@invertase/react-native-apple-authentication', () => {});
+
+jest.mock('react-native-share', () => {});
 
 jest.mock('../machines/store', () => ({
   getItem: jest.fn(),
