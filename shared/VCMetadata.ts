@@ -92,14 +92,6 @@ export const getVCMetadata = (context: object) => {
   const [issuer, protocol, credentialId] =
     context.credentialWrapper?.identifier.split(':');
 
-  console.log(
-    '#####context.verifiableCredential?.credential: ',
-    context.verifiableCredential?.credential,
-  );
-  console.log(
-    '#####context.verifiableCredential?.type: ',
-    context.verifiableCredential?.credential.type,
-  );
   return VCMetadata.fromVC({
     requestId: credentialId ?? null,
     issuer: issuer,

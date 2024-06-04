@@ -4,6 +4,13 @@ import {VerificationErrorType} from '../../../shared/vcjs/verifyCredential';
 
 export const VCItemGaurds = () => {
   return {
+    hasCredentialAndWellknown: (context, event) => {
+      const vc = event.response;
+      return (
+        vc?.verifiableCredential != null &&
+        !!context.verifiableCredential?.wellKnown
+      );
+    },
     hasCredential: (_, event) => {
       const vc = event.response;
       return vc?.verifiableCredential != null;

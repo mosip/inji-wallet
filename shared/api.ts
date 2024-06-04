@@ -146,8 +146,13 @@ export const CACHED_API = {
       cacheKey: API_CACHED_STORAGE_KEYS.fetchIssuerConfig(issuerId),
       fetchCall: API.fetchIssuerConfig.bind(null, issuerId),
     }),
-  fetchIssuerWellknownConfig: (issuerId: string, requestUrl: string) =>
+  fetchIssuerWellknownConfig: (
+    issuerId: string,
+    requestUrl: string,
+    isCachePreferred: boolean = false,
+  ) =>
     generateCacheAPIFunction({
+      isCachePreferred,
       cacheKey: API_CACHED_STORAGE_KEYS.fetchIssuerWellknownConfig(issuerId),
       fetchCall: API.fetchIssuerWellknownConfig.bind(null, requestUrl),
     }),

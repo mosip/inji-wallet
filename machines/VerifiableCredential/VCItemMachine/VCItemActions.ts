@@ -2,7 +2,11 @@ import {assign, send} from 'xstate';
 import {CommunicationDetails} from '../../../shared/Utils';
 import {StoreEvents} from '../../store';
 import {VCMetadata} from '../../../shared/VCMetadata';
-import {MIMOTO_BASE_URL, MY_VCS_STORE_KEY} from '../../../shared/constants';
+import {
+  API_CACHED_STORAGE_KEYS,
+  MIMOTO_BASE_URL,
+  MY_VCS_STORE_KEY,
+} from '../../../shared/constants';
 import {KeyPair} from 'react-native-rsa-native';
 import i18n from '../../../i18n';
 import {getHomeMachineService} from '../../../screens/Home/HomeScreenController';
@@ -59,6 +63,7 @@ export const VCItemActions = model => {
           statusType,
           context.vcMetadata,
           context.verifiableCredential,
+          context.wellknownResponse,
         );
       },
     }),
@@ -148,13 +153,22 @@ export const VCItemActions = model => {
         to: context => context.serviceRefs.store,
       },
     ),
+
     setVcMetadata: assign({
       vcMetadata: (_, event) => event.vcMetadata,
     }),
+
+    updateWellknownResponse: assign({
+      wellknownResponse: (_, event) => {
+        console.log('wellknownResponse ', event.data);
+        return event.data;
+      },
+    }),
+
     storeVcInContext: send(
       //todo : separate handling done for openid4vci , handle commonly from vc machine
       (context: any) => {
-        const {serviceRefs, ...data} = context;
+        const {serviceRefs, wellknownResponse, ...data} = context;
         return {
           type: 'VC_DOWNLOADED',
           vc: data,

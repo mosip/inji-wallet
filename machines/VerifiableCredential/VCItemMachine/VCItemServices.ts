@@ -3,6 +3,7 @@ import Cloud from '../../../shared/CloudBackupAndRestoreUtils';
 import {VCMetadata} from '../../../shared/VCMetadata';
 import getAllConfigurations, {
   API_URLS,
+  CACHED_API,
   DownloadProps,
 } from '../../../shared/api';
 import {
@@ -17,6 +18,8 @@ import {CredentialDownloadResponse, request} from '../../../shared/request';
 import {WalletBindingResponse} from '../VCMetaMachine/vc';
 import {verifyCredential} from '../../../shared/vcjs/verifyCredential';
 import {getVerifiableCredential} from './VCItemSelectors';
+import {getSelectedCredentialTypeDetails} from '../../../shared/openId4VCI/Utils';
+import {getIdTypeForLogging} from '../../../components/VC/common/VCUtils';
 
 const {RNSecureKeystoreModule} = NativeModules;
 export const VCItemServices = model => {
@@ -120,6 +123,18 @@ export const VCItemServices = model => {
         throw new Error('Could not process request');
       }
       return response;
+    },
+    fetchIssuerWellknown: async context => {
+      const wellknownResponse = await CACHED_API.fetchIssuerWellknownConfig(
+        context.vcMetadata.issuer,
+        context.verifiableCredential.wellKnown,
+        true,
+      );
+      const wellknownOfCredential = getSelectedCredentialTypeDetails(
+        wellknownResponse,
+        getIdTypeForLogging(context.verifiableCredential),
+      );
+      return wellknownOfCredential;
     },
     checkStatus: context => (callback, onReceive) => {
       const pollInterval = setInterval(

@@ -199,18 +199,25 @@ export const getIdType = (wellknown: any, idType?: string[]) => {
       return {language: displayProps.locale, value: displayProps.name};
     });
     console.log('idTypeObj ', idTypeObj);
-    return getLocalizedField(idTypeObj);
-  } else if (wellknown && idType !== undefined) {
+    const result = getLocalizedField(idTypeObj);
+    console.log('result ', result);
+    return result;
+  } else if (
+    wellknown &&
+    Object.keys(wellknown).length > 0 &&
+    idType !== undefined
+  ) {
     let supportedCredentialsWellknown;
     wellknown = JSON.parse(wellknown) as Object[];
-    for (let credential in wellknown['credentials_supported']) {
-      const credentialDetails = wellknown.credentials_supported[credential];
-      if (
-        JSON.stringify(credentialDetails.credential_definition.type) ===
-        JSON.stringify(idType)
-      ) {
-        supportedCredentialsWellknown = credentialDetails;
-      }
+    if (!!!wellknown['credentials_supported']) {
+      return i18n.t('VcDetails:nationalCard');
+    }
+    supportedCredentialsWellknown = getSelectedCredentialTypeDetails(
+      wellknown,
+      idType,
+    );
+    if (Object.keys(supportedCredentialsWellknown).length === 0) {
+      return i18n.t('VcDetails:nationalCard');
     }
     return getIdType(supportedCredentialsWellknown);
   } else {

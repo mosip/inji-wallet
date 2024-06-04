@@ -9,13 +9,14 @@ import i18next from 'i18next';
 import {getJWT} from '../cryptoutil/cryptoUtil';
 import i18n from '../../i18n';
 import {
-  Credential,
   CredentialWrapper,
   VerifiableCredential,
 } from '../../machines/VerifiableCredential/VCMetaMachine/vc';
 import {
   BOTTOM_SECTION_FIELDS_WITH_DETAILED_ADDRESS_FIELDS,
   DETAIL_VIEW_ADD_ON_FIELDS,
+  getIdType,
+  getIdTypeForLogging,
 } from '../../components/VC/common/VCUtils';
 import {getVerifiableCredential} from '../../machines/VerifiableCredential/VCItemMachine/VCItemSelectors';
 import {vcVerificationBannerDetails} from '../../components/BannerNotificationContainer';
@@ -35,12 +36,16 @@ export function getVcVerificationDetails(
   statusType,
   vcMetadata,
   verifiableCredential,
+  wellknown: Object,
 ): vcVerificationBannerDetails {
+  const newLocal = getIdType(
+    wellknown,
+    getIdTypeForLogging(getVerifiableCredential(verifiableCredential)),
+  );
+  console.log('getVcVerificationDetails idType res ', newLocal);
   return {
     statusType: statusType,
-    vcType: getIDTypeTranslations(
-      getVerifiableCredential(verifiableCredential).type[1],
-    ),
+    vcType: newLocal,
     vcNumber: vcMetadata.id,
   };
 }
@@ -196,10 +201,10 @@ export const getSelectedCredentialTypeDetails = (
       return credentialDetails;
     }
   }
-
   console.error(
     'Selected credential type is not available in wellknown config supported credentials list',
   );
+  return {};
 };
 
 export const getCredentialIssuersWellKnownConfig = async (

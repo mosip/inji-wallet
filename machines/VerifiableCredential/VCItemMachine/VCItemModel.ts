@@ -65,6 +65,7 @@ export const VCItemModel = createModel(
     communicationDetails: null as unknown as CommunicationDetails,
     verificationStatus: null as vcVerificationBannerDetails | null,
     showVerificationStatusBanner: false as boolean,
+    wellknownResponse: {} as Object,
   },
   {
     events: VCItemEvents,
