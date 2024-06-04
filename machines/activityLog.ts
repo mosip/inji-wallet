@@ -52,10 +52,7 @@ export const activityLogMachine =
           entry: 'fetchAllWellKnownConfigResponse',
           on: {
             STORE_RESPONSE: {
-              actions: [
-                () => console.log('config list:::'),
-                'setAllWellknownConfigResponse',
-              ],
+              actions: ['setAllWellknownConfigResponse'],
               target: 'ready',
             },
           },
@@ -128,7 +125,6 @@ export const activityLogMachine =
 
         prependActivity: model.assign({
           activities: (context, event) => {
-            console.log('activities in prependActivity', event.response);
             return (
               Array.isArray(event.response)
                 ? [...event.response, ...context.activities]
@@ -138,16 +134,12 @@ export const activityLogMachine =
         }),
 
         fetchAllWellKnownConfigResponse: send(
-          () => {
-            console.log('fetching::');
-            return StoreEvents.FETCH_ALL_WELLKNOWN_CONFIG();
-          },
+          () => StoreEvents.FETCH_ALL_WELLKNOWN_CONFIG(),
           {to: context => context.serviceRefs.store},
         ),
 
         setAllWellknownConfigResponse: model.assign({
           wellKnownIssuerMap: (_, event) => {
-            console.log('config response::', event.response);
             return event.response as Record<string, Object>;
           },
         }),

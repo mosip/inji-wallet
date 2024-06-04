@@ -130,14 +130,6 @@ function getFullAddress(credential: CredentialSubject) {
     .join(', ');
 }
 
-function formattedDateTime(timeStamp: any) {
-  if (timeStamp) {
-    const options = {year: 'numeric', month: '2-digit', day: '2-digit'};
-    return new Date(timeStamp).toLocaleDateString('en-US', options);
-  }
-  return timeStamp;
-}
-
 export const fieldItemIterator = (
   fields: any[],
   verifiableCredential: VerifiableCredential | Credential,
@@ -204,17 +196,11 @@ export const getIdType = (
   wellknown: CredentialTypes | IssuerWellknownResponse,
   idType?: string[],
 ) => {
-  console.log('getIdType fn ', wellknown);
   if (wellknown && wellknown?.display) {
-    console.log('If case');
-
     const idTypeObj = wellknown.display.map((displayProps: any) => {
       return {language: displayProps.locale, value: displayProps.name};
     });
-    console.log('idTypeObj ', idTypeObj);
-    const result = getLocalizedField(idTypeObj);
-    console.log('result ', result);
-    return result;
+    return getLocalizedField(idTypeObj);
   } else if (
     wellknown &&
     Object.keys(wellknown).length > 0 &&
@@ -238,8 +224,8 @@ export const getIdType = (
   }
 };
 
-export const getIdTypeForLogging = (
+export const getCredentialTypes = (
   credential: Credential | VerifiableCredential,
 ): string[] => {
-  return (credential.credentialTypes as string[]) ?? ['VerifiableCredential'];
+  return (credential?.credentialTypes as string[]) ?? ['VerifiableCredential'];
 };

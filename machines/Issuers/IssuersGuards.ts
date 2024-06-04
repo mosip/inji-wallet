@@ -2,7 +2,7 @@ import {isSignedInResult} from '../../shared/CloudBackupAndRestoreUtils';
 import {ErrorMessage, OIDCErrors} from '../../shared/openId4VCI/Utils';
 import {isHardwareKeystoreExists} from '../../shared/cryptoutil/cryptoUtil';
 import {BiometricCancellationError} from '../../shared/error/BiometricCancellationError';
-import {NETWORK_REQUEST_FAILED, REQUEST_TIMEOUT} from '../../shared/constants';
+import {NETWORK_REQUEST_FAILED} from '../../shared/constants';
 import {VerificationErrorType} from '../../shared/vcjs/verifyCredential';
 
 export const IssuersGuards = () => {

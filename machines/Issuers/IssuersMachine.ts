@@ -1,5 +1,4 @@
 import {EventFrom, send, sendParent} from 'xstate';
-import {log} from 'xstate/lib/actions';
 import {IssuersModel} from './IssuersModel';
 import {IssuersActions} from './IssuersActions';
 import {IssuersService} from './IssuersService';

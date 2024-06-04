@@ -19,7 +19,7 @@ import {WalletBindingResponse} from '../VCMetaMachine/vc';
 import {verifyCredential} from '../../../shared/vcjs/verifyCredential';
 import {getVerifiableCredential} from './VCItemSelectors';
 import {getSelectedCredentialTypeDetails} from '../../../shared/openId4VCI/Utils';
-import {getIdTypeForLogging} from '../../../components/VC/common/VCUtils';
+import {getCredentialTypes} from '../../../components/VC/common/VCUtils';
 
 const {RNSecureKeystoreModule} = NativeModules;
 export const VCItemServices = model => {
@@ -132,7 +132,7 @@ export const VCItemServices = model => {
       );
       const wellknownOfCredential = getSelectedCredentialTypeDetails(
         wellknownResponse,
-        getIdTypeForLogging(context.verifiableCredential),
+        getCredentialTypes(context.verifiableCredential),
       );
       return wellknownOfCredential;
     },

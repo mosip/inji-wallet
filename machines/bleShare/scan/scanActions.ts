@@ -29,7 +29,7 @@ import {StoreEvents} from '../../store';
 import tuvali from '@mosip/tuvali';
 import BluetoothStateManager from 'react-native-bluetooth-state-manager';
 import {NativeModules} from 'react-native';
-import {getIdTypeForLogging} from '../../../components/VC/common/VCUtils';
+import {getCredentialTypes} from '../../../components/VC/common/VCUtils';
 
 const {wallet, EventTypes, VerificationStatus} = tuvali;
 export const ScanActions = (model: any, QR_LOGIN_REF_ID: any) => {
@@ -192,10 +192,6 @@ export const ScanActions = (model: any, QR_LOGIN_REF_ID: any) => {
     logShared: send(
       (context: any) => {
         const vcMetadata = VCMetadata.fromVC(context.selectedVc?.vcMetadata);
-        console.log(
-          'Scan machine logShared',
-          JSON.stringify(context.selectedVc, null, 2),
-        );
         const selectedVc = context.QrLoginRef.getSnapshot().context.selectedVc;
         return ActivityLogEvents.LOG_ACTIVITY({
           _vcKey: vcMetadata.getVcKey(),
@@ -203,7 +199,7 @@ export const ScanActions = (model: any, QR_LOGIN_REF_ID: any) => {
             ? context.shareLogType
             : 'VC_SHARED_WITH_VERIFICATION_CONSENT',
           id: vcMetadata.id,
-          idType: getIdTypeForLogging(selectedVc.verifiableCredential),
+          idType: getCredentialTypes(selectedVc.verifiableCredential),
           issuer: vcMetadata.issuer!!,
           timestamp: Date.now(),
           deviceName:
@@ -217,16 +213,12 @@ export const ScanActions = (model: any, QR_LOGIN_REF_ID: any) => {
     logFailedVerification: send(
       context => {
         const vcMetadata = VCMetadata.fromVC(context.selectedVc);
-        console.log(
-          'Scan machine logFailedVerification',
-          JSON.stringify(context.selectedVc, null, 2),
-        );
         const selectedVc = context.QrLoginRef.getSnapshot().context.selectedVc;
         return ActivityLogEvents.LOG_ACTIVITY({
           _vcKey: vcMetadata.getVcKey(),
           type: 'PRESENCE_VERIFICATION_FAILED',
           timestamp: Date.now(),
-          idType: getIdTypeForLogging(selectedVc.verifiableCredential),
+          idType: getCredentialTypes(selectedVc.verifiableCredential),
           id: vcMetadata.id,
           issuer: vcMetadata.issuer!!,
           deviceName:
@@ -256,7 +248,8 @@ export const ScanActions = (model: any, QR_LOGIN_REF_ID: any) => {
     ),
     loadVCDataToMemory: send(
       (context: any) => {
-        let verifiableCredential = context.quickShareData?.verifiableCredential;
+        const verifiableCredential =
+          context.quickShareData?.verifiableCredential;
 
         return StoreEvents.SET(metadata.getVcKey(), {
           verifiableCredential: verifiableCredential,
@@ -280,10 +273,6 @@ export const ScanActions = (model: any, QR_LOGIN_REF_ID: any) => {
     storingActivityLog: send(
       (context, event) => {
         const vcMetadata = event.response.selectedVc.vcMetadata;
-        console.log(
-          'Scan machine storingActivityLog',
-          JSON.stringify(context.selectedVc, null, 2),
-        );
 
         const selectedVc = context.QrLoginRef.getSnapshot().context.selectedVc;
 
@@ -291,7 +280,7 @@ export const ScanActions = (model: any, QR_LOGIN_REF_ID: any) => {
           _vcKey: '',
           id: vcMetadata.id,
           issuer: vcMetadata.issuer!!,
-          idType: getIdTypeForLogging(selectedVc.verifiableCredential),
+          idType: getCredentialTypes(selectedVc.verifiableCredential),
           type: 'QRLOGIN_SUCCESFULL',
           timestamp: Date.now(),
           deviceName: '',

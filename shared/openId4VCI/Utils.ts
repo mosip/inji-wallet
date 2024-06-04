@@ -16,7 +16,7 @@ import {
   BOTTOM_SECTION_FIELDS_WITH_DETAILED_ADDRESS_FIELDS,
   DETAIL_VIEW_ADD_ON_FIELDS,
   getIdType,
-  getIdTypeForLogging,
+  getCredentialTypes,
 } from '../../components/VC/common/VCUtils';
 import {getVerifiableCredential} from '../../machines/VerifiableCredential/VCItemMachine/VCItemSelectors';
 import {vcVerificationBannerDetails} from '../../components/BannerNotificationContainer';
@@ -40,33 +40,16 @@ export function getVcVerificationDetails(
   verifiableCredential,
   wellknown: Object,
 ): vcVerificationBannerDetails {
-  const newLocal = getIdType(
+  const idType = getIdType(
     wellknown,
-    getIdTypeForLogging(getVerifiableCredential(verifiableCredential)),
+    getCredentialTypes(getVerifiableCredential(verifiableCredential)),
   );
-  console.log('getVcVerificationDetails idType res ', newLocal);
   return {
     statusType: statusType,
-    vcType: newLocal,
+    vcType: idType,
     vcNumber: vcMetadata.id,
   };
 }
-
-export const getIDTypeTranslations = (idType: string) => {
-  switch (idType) {
-    case 'MOSIPVerifiableCredential':
-      return i18n.t('VcDetails:nationalCard');
-    case 'InsuranceCredential':
-      return i18n.t('VcDetails:insuranceCard');
-    case 'OpenG2PBeneficiaryVerifiableCredential':
-      return i18n.t('VcDetails:beneficiaryCard');
-    case 'OpenG2PRegistryVerifiableCredential':
-      return i18n.t('VcDetails:socialRegistryCard');
-    default: {
-      return i18n.t('VcDetails:digitalCard');
-    }
-  }
-};
 
 export const ACTIVATION_NEEDED = [Issuers.Mosip, Issuers.MosipOtp];
 
@@ -105,10 +88,6 @@ export const getCredentialRequestBody = async (
       jwt: proofJWT,
     },
   };
-};
-
-export const getCredentialType = (type: any) => {
-  return type ?? ['VerifiableCredential'];
 };
 
 export const updateCredentialInformation = (

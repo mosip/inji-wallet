@@ -37,7 +37,7 @@ import {
   sendStartEvent,
 } from '../../../shared/telemetry/TelemetryUtils';
 import {TelemetryConstants} from '../../../shared/telemetry/TelemetryConstants';
-import {getIdTypeForLogging} from '../../../components/VC/common/VCUtils';
+import {getCredentialTypes} from '../../../components/VC/common/VCUtils';
 
 const {verifier, EventTypes, VerificationStatus} = tuvali;
 
@@ -616,15 +616,11 @@ export const requestMachine =
             const vcMetadata = VCMetadata.fromVC(
               context.incomingVc?.vcMetadata,
             );
-            console.log(
-              'REqMachine logReceived ',
-              JSON.stringify(context.incomingVc, null, 2),
-            );
             return ActivityLogEvents.LOG_ACTIVITY({
               _vcKey: vcMetadata.getVcKey(),
               type: context.receiveLogType,
               id: vcMetadata.id,
-              idType: getIdTypeForLogging(
+              idType: getCredentialTypes(
                 context.incomingVc.verifiableCredential,
               ),
               issuer: vcMetadata.issuer!!,

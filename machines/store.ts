@@ -450,7 +450,6 @@ export const storeMachine =
                   response = await fetchAllWellknownConfig(
                     context.encryptionKey,
                   );
-                  console.log('response::', response);
                   break;
                 }
 

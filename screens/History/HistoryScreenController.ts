@@ -7,7 +7,6 @@ import {
   selectWellknownIssuerMap,
 } from '../../machines/activityLog';
 import {GlobalContext} from '../../shared/GlobalContext';
-import {API_CACHED_STORAGE_KEYS} from '../../shared/constants';
 
 export function useHistoryTab() {
   const {appService} = useContext(GlobalContext);
@@ -23,11 +22,7 @@ export function useHistoryTab() {
     isRefreshing: useSelector(activityLogService, selectIsRefreshing),
 
     getWellKnownIssuerMap: (issuerName: string) => {
-      const wellknownIssuerMapElement = wellknownIssuerMap[issuerName];
-      console.log('Cache key ', Object.keys(wellknownIssuerMap));
-      console.log('Cache key map', wellknownIssuerMap);
-      console.log('Cache key map', JSON.stringify(wellknownIssuerMap, null, 2));
-      return wellknownIssuerMapElement ?? null;
+      return wellknownIssuerMap[issuerName] ?? null;
     },
 
     REFRESH: () => activityLogService.send(ActivityLogEvents.REFRESH()),

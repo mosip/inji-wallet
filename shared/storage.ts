@@ -154,7 +154,6 @@ class Storage {
   };
 
   static fetchAllWellknownConfig = async (encryptionKey: string) => {
-    console.log('inside wellknown config::');
     let wellknownConfigData: Record<string, Object> = {};
     const allKeysInDB = await MMKV.indexer.strings.getKeys();
     const wellknownConfigCacheKey =
@@ -163,7 +162,6 @@ class Storage {
       key.includes(wellknownConfigCacheKey),
     );
 
-    console.log('wellknown config keys::', wellknownKeys);
     for (const wellknownKey of wellknownKeys) {
       const configData = await this.getItem(wellknownKey, encryptionKey);
       const decryptedConfigData = await decryptJson(encryptionKey, configData);
@@ -171,7 +169,6 @@ class Storage {
         wellknownKey.substring(wellknownConfigCacheKey.length)
       ] = JSON.parse(JSON.stringify(decryptedConfigData));
     }
-    console.log('data::', wellknownConfigData);
     return wellknownConfigData;
   };
 
