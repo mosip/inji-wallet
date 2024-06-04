@@ -15,7 +15,6 @@ export function selectMyVcsMetadata(state: State): VCMetadata[] {
 export function selectShareableVcsMetadata(state: State): VCMetadata[] {
   return state.context.myVcsMetadata.filter(
     vcMetadata =>
-      state.context.myVcs[vcMetadata.getVcKey()]?.credential != null ||
       state.context.myVcs[vcMetadata.getVcKey()]?.verifiableCredential != null,
   );
 }

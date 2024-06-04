@@ -46,6 +46,11 @@ export const VCItemMachine = model.createMachine(
                   GET_VC_RESPONSE: [
                     {
                       actions: ['setContext'],
+                      cond: 'hasCredentialAndWellknown',
+                      target: '.fetchWellknown',
+                    },
+                    {
+                      actions: ['setContext'],
                       cond: 'hasCredential',
                       target: `#vc-item-machine.vcUtilitiesState.idle`,
                     },
@@ -56,6 +61,20 @@ export const VCItemMachine = model.createMachine(
                   ],
                   TAMPERED_VC: {
                     target: '#vc-item-machine.vcUtilitiesState.idle',
+                  },
+                },
+                initial: 'idle',
+                states: {
+                  idle: {},
+                  fetchWellknown: {
+                    invoke: {
+                      src: 'fetchIssuerWellknown',
+                      onDone: {
+                        actions: 'updateWellknownResponse',
+
+                        target: `#vc-item-machine.vcUtilitiesState.idle`,
+                      },
+                    },
                   },
                 },
               },
@@ -492,10 +511,10 @@ export const VCItemMachine = model.createMachine(
                     {
                       cond: 'isSignedIn',
                       actions: ['sendBackupEvent'],
-                      target: '#vc-item-machine.vcUtilitiesState.idle',
+                      target: `#vc-item-machine.vcUtilitiesState.idle`,
                     },
                     {
-                      target: '#vc-item-machine.vcUtilitiesState.idle',
+                      target: `#vc-item-machine.vcUtilitiesState.idle`,
                     },
                   ],
                 },

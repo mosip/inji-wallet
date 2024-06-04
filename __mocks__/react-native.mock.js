@@ -17,6 +17,12 @@ jest.mock('react-native', () => {
       SecureKeystore: {
         deviceSupportsHardware: jest.fn(),
       },
+      RNSecureKeystoreModule: {
+        sign: jest.fn(),
+        encryptData: input => (input ? String(input) : 'mockedString'),
+        decryptData: input => (input ? String(input) : 'mockedString'),
+        deviceSupportsHardware: () => true,
+      },
     },
   });
 

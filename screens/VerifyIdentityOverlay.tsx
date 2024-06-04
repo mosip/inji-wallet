@@ -21,22 +21,21 @@ export const VerifyIdentityOverlay: React.FC<
     animationType: 'slide',
     arrowLeft: true,
     headerTitle: t('faceAuth'),
-    presentationStyle: "overFullScreen",
+    presentationStyle: 'overFullScreen',
     showClose: true,
     showHeader: true,
   };
-  
+
   if (props.isLivenessEnabled) {
     modalProps.arrowLeft = false;
     modalProps.headerTitle = '';
     modalProps.showClose = false;
     modalProps.showHeader = false;
   }
-  
+
   return (
     <>
-      <Modal
-         {...modalProps}>
+      <Modal {...modalProps}>
         <Column
           fill
           style={Theme.VerifyIdentityOverlayStyles.content}

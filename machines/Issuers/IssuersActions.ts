@@ -1,9 +1,4 @@
-import {
-  ErrorMessage,
-  getIdType,
-  Issuers_Key_Ref,
-  updateVCmetadataOfCredentialWrapper,
-} from '../../shared/openId4VCI/Utils';
+import {ErrorMessage, Issuers_Key_Ref} from '../../shared/openId4VCI/Utils';
 import {
   MY_VCS_STORE_KEY,
   NETWORK_REQUEST_FAILED,
@@ -61,11 +56,11 @@ export const IssuersActions = (model: any) => {
     setSelectedCredentialType: model.assign({
       selectedCredentialType: (_: any, event: any) => event.credType,
     }),
+    setSupportedCredentialTypes: model.assign({
+      supportedCredentialTypes: (_: any, event: any) => event.data,
+    }),
     resetSelectedCredentialType: model.assign({
       selectedCredentialType: {},
-    }),
-    setCredentialTypes: model.assign({
-      credentialTypes: (_: any, event: any) => event.data.supportedCredentials,
     }),
     setError: model.assign({
       errorMessage: (_: any, event: any) => {
@@ -119,10 +114,10 @@ export const IssuersActions = (model: any) => {
     ),
 
     setMetadataInCredentialData: (context: any) => {
-      return updateVCmetadataOfCredentialWrapper(
-        context,
-        context.credentialWrapper,
-      );
+      context.credentialWrapper = {
+        ...context.credentialWrapper,
+        vcMetadata: context.vcMetadata,
+      };
     },
 
     setVCMetadata: assign({
@@ -132,11 +127,13 @@ export const IssuersActions = (model: any) => {
     }),
 
     storeVerifiableCredentialData: send(
-      (context: any) =>
-        StoreEvents.SET(getVCMetadata(context).getVcKey(), {
+      (context: any) => {
+        const vcMeatadata = getVCMetadata(context);
+        return StoreEvents.SET(vcMeatadata.getVcKey(), {
           ...context.credentialWrapper,
-          vcMetadata: getVCMetadata(context),
-        }),
+          vcMetadata: vcMeatadata,
+        });
+      },
       {
         to: (context: any) => context.serviceRefs.store,
       },
@@ -201,15 +198,21 @@ export const IssuersActions = (model: any) => {
 
     logDownloaded: send(
       context => {
-        return ActivityLogEvents.LOG_ACTIVITY({
-          _vcKey: getVCMetadata(context).getVcKey(),
-          type: 'VC_DOWNLOADED',
-          id: getVCMetadata(context).id,
-          idType: getIdType(getVCMetadata(context).issuer),
-          timestamp: Date.now(),
-          deviceName: '',
-          vcLabel: getVCMetadata(context).id,
-        });
+        const vcMetadata = getVCMetadata(context);
+        return ActivityLogEvents.LOG_ACTIVITY(
+          {
+            _vcKey: vcMetadata.getVcKey(),
+            type: 'VC_DOWNLOADED',
+            id: vcMetadata.id,
+            idType:
+              context.credentialWrapper.verifiableCredential.credentialTypes,
+            timestamp: Date.now(),
+            deviceName: '',
+            vcLabel: vcMetadata.id,
+            issuer: context.selectedIssuerId,
+          },
+          context.selectedCredentialType,
+        );
       },
       {
         to: (context: any) => context.serviceRefs.activityLog,
