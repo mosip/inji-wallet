@@ -1,5 +1,5 @@
 import React from 'react';
-import {FaceScanner} from '../components/FaceScanner';
+import {FaceScanner} from '../components/FaceScanner/FaceScanner';
 import {Column} from '../components/ui';
 import {Theme} from '../components/ui/styleUtils';
 import {VerifiableCredential} from '../machines/VerifiableCredential/VCMetaMachine/vc';
@@ -15,13 +15,27 @@ export const VerifyIdentityOverlay: React.FC<
   const credential = props.credential;
   const vcImage = props.verifiableCredentialData.face;
 
+  const modalProps = {
+    isVisible: props.isVerifyingIdentity,
+    onDismiss: props.onCancel,
+    animationType: 'slide',
+    arrowLeft: true,
+    headerTitle: t('faceAuth'),
+    presentationStyle: 'overFullScreen',
+    showClose: true,
+    showHeader: true,
+  };
+
+  if (props.isLivenessEnabled) {
+    modalProps.arrowLeft = false;
+    modalProps.headerTitle = '';
+    modalProps.showClose = false;
+    modalProps.showHeader = false;
+  }
+
   return (
     <>
-      <Modal
-        isVisible={props.isVerifyingIdentity}
-        arrowLeft={true}
-        headerTitle={t('faceAuth')}
-        onDismiss={props.onCancel}>
+      <Modal {...modalProps}>
         <Column
           fill
           style={Theme.VerifyIdentityOverlayStyles.content}
@@ -31,6 +45,8 @@ export const VerifyIdentityOverlay: React.FC<
               vcImage={vcImage}
               onValid={props.onFaceValid}
               onInvalid={props.onFaceInvalid}
+              isLiveness={props.isLivenessEnabled}
+              onCancel={props.onCancel}
             />
           )}
         </Column>
@@ -68,4 +84,5 @@ export interface VerifyIdentityOverlayProps {
   isInvalidIdentity: boolean;
   onNavigateHome: () => void;
   onRetryVerification: () => void;
+  isLivenessEnabled: boolean;
 }

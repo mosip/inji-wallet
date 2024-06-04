@@ -19,63 +19,65 @@ export const Modal: React.FC<ModalProps> = props => {
       visible={props.isVisible}
       onShow={props.onShow}
       onRequestClose={props.onDismiss}>
-      <Column fill safe>
-        <Row elevation={props.headerElevation}>
-          <View style={props.modalStyle}>
-            {props.headerRight && !props.arrowLeft ? (
-              <Icon
-                {...testIDProps('closeModal')}
-                name={I18nManager.isRTL ? 'chevron-right' : 'chevron-left'}
-                onPress={props.onDismiss}
-                color={Theme.Colors.Icon}
-              />
-            ) : null}
-            {props.arrowLeft && props.onDismiss ? (
-              <BackButton onPress={props.onDismiss} />
-            ) : null}
-            <Row
-              fill
-              align={props.headerLeft ? 'flex-start' : 'center'}
-              margin={props.arrowLeft ? '16 0 0 -15' : '16 0 0 10'}>
-              <Column>
-                <Text testID={props.testID} style={Theme.TextStyles.header}>
-                  {props.headerTitle || props.headerLeft}
-                </Text>
-                {!props.requester ? (
-                  <Text
-                    weight="semibold"
-                    style={Theme.TextStyles.small}
-                    color={
-                      props.headerLabelColor
-                        ? props.headerLabelColor
-                        : Theme.Colors.textLabel
-                    }>
-                    {props.headerLabel}
-                  </Text>
-                ) : (
-                  <Text
-                    weight="semibold"
-                    style={Theme.TextStyles.small}
-                    color={Theme.Colors.IconBg}>
-                    <DeviceInfoList deviceInfo={controller.receiverInfo} />
-                  </Text>
-                )}
-              </Column>
-            </Row>
-            {props.headerRight != null ||
-              props.arrowLeft ||
-              (props.showClose && (
+      <Column {...(props.showHeader ? {fill: true, safe: true} : {fill: true})}>
+        {props.showHeader ? (
+          <Row elevation={props.headerElevation}>
+            <View style={props.modalStyle}>
+              {props.headerRight && !props.arrowLeft ? (
                 <Icon
-                  {...testIDProps('close')}
-                  name="close"
+                  {...testIDProps('closeModal')}
+                  name={I18nManager.isRTL ? 'chevron-right' : 'chevron-left'}
                   onPress={props.onDismiss}
-                  color={Theme.Colors.Details}
-                  size={27}
+                  color={Theme.Colors.Icon}
                 />
-              ))}
-            {props.headerRight && props.headerRight}
-          </View>
-        </Row>
+              ) : null}
+              {props.arrowLeft && props.onDismiss ? (
+                <BackButton onPress={props.onDismiss} />
+              ) : null}
+              <Row
+                fill
+                align={props.headerLeft ? 'flex-start' : 'center'}
+                margin={props.arrowLeft ? '16 0 0 -15' : '16 0 0 10'}>
+                <Column>
+                  <Text testID={props.testID} style={Theme.TextStyles.header}>
+                    {props.headerTitle || props.headerLeft}
+                  </Text>
+                  {!props.requester ? (
+                    <Text
+                      weight="semibold"
+                      style={Theme.TextStyles.small}
+                      color={
+                        props.headerLabelColor
+                          ? props.headerLabelColor
+                          : Theme.Colors.textLabel
+                      }>
+                      {props.headerLabel}
+                    </Text>
+                  ) : (
+                    <Text
+                      weight="semibold"
+                      style={Theme.TextStyles.small}
+                      color={Theme.Colors.IconBg}>
+                      <DeviceInfoList deviceInfo={controller.receiverInfo} />
+                    </Text>
+                  )}
+                </Column>
+              </Row>
+              {props.headerRight != null ||
+                props.arrowLeft ||
+                (props.showClose && (
+                  <Icon
+                    {...testIDProps('close')}
+                    name="close"
+                    onPress={props.onDismiss}
+                    color={Theme.Colors.Details}
+                    size={27}
+                  />
+                ))}
+              {props.headerRight && props.headerRight}
+            </View>
+          </Row>
+        ) : null}
         {props.children}
       </Column>
     </RNModal>
@@ -85,6 +87,7 @@ export const Modal: React.FC<ModalProps> = props => {
 Modal.defaultProps = {
   modalStyle: Theme.ModalStyles.defaultModal,
   showClose: true,
+  showHeader: true,
 };
 
 export interface ModalProps {
@@ -92,6 +95,7 @@ export interface ModalProps {
   isVisible: boolean;
   requester?: boolean;
   showClose?: boolean;
+  showHeader?: boolean;
   modalStyle?: Object;
   onDismiss?: () => void;
   headerTitle?: string;

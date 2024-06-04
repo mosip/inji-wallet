@@ -28,6 +28,11 @@
     "passcodeMismatchError": "Hindi tumugma ang passcode."
   },
   "FaceScanner": {
+    "livenessCaptureGuide": "Hawakan nang matatag ang telepono, panatilihing nakatutok ang iyong mukha sa gitna.",
+    "faceProcessingInfo": "Mangyaring maghintay habang pinoproseso namin ang data.",
+    "faceOutGuide": "Panatilihin ang iyong mukha sa loob ng oval!",
+    "faceInGuide": "Kasalukuyang kumukuha!",
+    "cancel": "Kanselahin",
     "imageCaptureGuide": "Hawakan nang matatag ang telepono, panatilihing nakatutok ang iyong mukha sa gitna at mag-click sa Capture.",
     "capture": "Kunin",
     "flipCamera": "I-flip ang Camera"

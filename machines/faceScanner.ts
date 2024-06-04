@@ -240,6 +240,10 @@ export function selectWhichCamera(state: State) {
   return state.context.whichCamera;
 }
 
+export function selectCameraRef(state: State) {
+  return state.context.cameraRef;
+}
+
 export function selectCapturedImage(state: State) {
   return state.context.capturedImage;
 }
