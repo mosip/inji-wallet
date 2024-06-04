@@ -33,6 +33,10 @@ export const ReceiveVcScreen: React.FC = () => {
     ).then(response => {
       setWellknown(response.wellknown);
       setFields(response.fields);
+      controller.STORE_INCOMING_VC_WELLKNOWN_CONFIG(
+        verifiableCredentialData?.issuer,
+        response.wellknown,
+      );
     });
   }, [verifiableCredentialData?.wellKnown]);
 
