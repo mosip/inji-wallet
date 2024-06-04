@@ -25,7 +25,7 @@ const LivenessDetection: React.FC<LivenessDetectionProps> = ({
       <View style={Theme.CameraEnabledStyles.guideContainer}>
         <View style={Theme.CameraEnabledStyles.guideContentContainer}>
           <Spinner type="ThreeBounce" color={Theme.Colors.Loading} />
-          <Text size="small" weight="bold" color="black" align="center">
+          <Text testID="captureInfoText" size="small" weight="bold" color="black" align="center">
             {infoText}
           </Text>
         </View>

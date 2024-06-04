@@ -35,7 +35,7 @@ import {
 } from './FaceScannerHelper';
 import LivenessDetection from './LivenessDetection';
 import FaceCompare from './FaceCompare';
-import { LIVENESS_CHECK } from '../../shared/constants';
+import {LIVENESS_CHECK} from '../../shared/constants';
 
 export const FaceScanner: React.FC<FaceScannerProps> = props => {
   const {t} = useTranslation('FaceScanner');
@@ -157,10 +157,14 @@ export const FaceScanner: React.FC<FaceScannerProps> = props => {
   } else if (isPermissionDenied) {
     return (
       <Column padding="24" fill align="space-between">
-        <Text align="center" color={Theme.Colors.errorMessage}>
+        <Text
+          testID="missingPermissionText"
+          align="center"
+          color={Theme.Colors.errorMessage}>
           {t('missingPermissionText')}
         </Text>
         <Button
+          testID="allowCameraButton"
           title={t('allowCameraButton')}
           onPress={() => service.send(FaceScannerEvents.OPEN_SETTINGS())}
         />

@@ -230,7 +230,7 @@ export const cropEyeAreaFromFace = async (picArray, vcImage, capturedImage) => {
       }),
     );
   } catch (err) {
-    console.log('Unable to crop the images::', err);
+    console.error('Unable to crop the images::', err);
     return false;
   }
 
