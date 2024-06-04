@@ -11,7 +11,6 @@ export class VCMetadata {
   requestId = '';
   isPinned = false;
   id: string = '';
-  displayId: string = '';
   issuer?: string = '';
   protocol?: string = '';
   timestamp?: string = '';
@@ -31,7 +30,6 @@ export class VCMetadata {
     this.requestId = requestId;
     this.isPinned = isPinned;
     this.id = id;
-    this.displayId = id;
     this.protocol = protocol;
     this.issuer = issuer;
     this.timestamp = timestamp;
