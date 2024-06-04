@@ -3,7 +3,7 @@ import {ImageBackground, Pressable, Image, View} from 'react-native';
 import {getLocalizedField} from '../../../i18n';
 import {VCMetadata} from '../../../shared/VCMetadata';
 import {KebabPopUp} from '../../KebabPopUp';
-import {VerifiableCredential} from '../../../machines/VerifiableCredential/VCMetaMachine/vc';
+import {Credential} from '../../../machines/VerifiableCredential/VCMetaMachine/vc';
 import {Column, Row} from '../../ui';
 import {Theme} from '../../ui/styleUtils';
 import {CheckBox, Icon} from 'react-native-elements';
@@ -13,7 +13,7 @@ import {isVCLoaded, getBackgroundColour} from '../common/VCUtils';
 import {VCItemFieldValue} from '../common/VCItemField';
 import {WalletBinding} from '../../../screens/Home/MyVcs/WalletBinding';
 import {VCVerification} from '../../VCVerification';
-import {Issuers} from '../../../shared/openId4VCI/Utils';
+import {isActivationNeeded} from '../../../shared/openId4VCI/Utils';
 import {VCItemContainerFlowType} from '../../../shared/Utils';
 import {RemoveVcWarningOverlay} from '../../../screens/Home/MyVcs/RemoveVcWarningOverlay';
 import {HistoryTab} from '../../../screens/Home/MyVcs/HistoryTab';
@@ -87,10 +87,10 @@ export const VCCardViewContent: React.FC<VCItemContentProps> = props => {
 
           {!Object.values(VCItemContainerFlowType).includes(props.flow) && (
             <>
-              {props.vcMetadata.issuer === Issuers.Sunbird ||
-              props.walletBindingResponse
-                ? SvgImage.walletActivatedIcon()
-                : SvgImage.walletUnActivatedIcon()}
+              {!props.walletBindingResponse &&
+              isActivationNeeded(props.verifiableCredentialData?.issuer)
+                ? SvgImage.walletUnActivatedIcon()
+                : SvgImage.walletActivatedIcon()}
               <Pressable
                 onPress={props.KEBAB_POPUP}
                 accessible={false}
@@ -130,7 +130,7 @@ export const VCCardViewContent: React.FC<VCItemContentProps> = props => {
 
 export interface VCItemContentProps {
   context: any;
-  credential: VerifiableCredential;
+  credential: Credential;
   verifiableCredentialData: any;
   fields: [];
   wellknown: {};

@@ -21,7 +21,7 @@ import ReceiveCard from '../../assets/Receive_Card.svg';
 import ReceivedCards from '../../assets/Received_Cards.svg';
 import ProgressIcon from '../../assets/Progress_Icon1.svg';
 import testIDProps from '../../shared/commonUtil';
-import Logo from '../../assets/Inji_Logo';
+import Logo from '../../assets/Inji_Logo.svg';
 import WarningLogo from '../../assets/Warning_Icon.svg';
 import OtpVerificationIcon from '../../assets/Otp_Verification_Icon.svg';
 import FlipCameraIcon from '../../assets/Flip_Camera_Icon.svg';

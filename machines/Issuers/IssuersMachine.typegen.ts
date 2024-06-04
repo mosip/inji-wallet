@@ -104,7 +104,6 @@ export interface Typegen0 {
       | 'sendErrorEndEvent'
       | 'sendImpressionEvent'
       | 'sendSuccessEndEvent'
-      | 'setCredentialTypes'
       | 'setCredentialWrapper'
       | 'setError'
       | 'setIsVerified'
@@ -120,6 +119,7 @@ export interface Typegen0 {
       | 'setSelectedCredentialType'
       | 'setSelectedIssuerId'
       | 'setSelectedIssuers'
+      | 'setSupportedCredentialTypes'
       | 'setTokenResponse'
       | 'setVCMetadata'
       | 'setVerifiableCredential'
@@ -137,7 +137,6 @@ export interface Typegen0 {
       | 'isCustomSecureKeystore'
       | 'isGenericError'
       | 'isInternetConnected'
-      | 'isMultipleCredentialsSupported'
       | 'isOIDCConfigError'
       | 'isOIDCflowCancelled'
       | 'isSignedIn'
@@ -186,7 +185,6 @@ export interface Typegen0 {
     sendErrorEndEvent: 'error.platform.issuersMachine.verifyingCredential:invocation[0]';
     sendImpressionEvent: 'done.invoke.issuersMachine.displayIssuers:invocation[0]';
     sendSuccessEndEvent: 'done.invoke.issuersMachine.verifyingCredential:invocation[0]';
-    setCredentialTypes: 'done.invoke.issuersMachine.downloadCredentialTypes:invocation[0]';
     setCredentialWrapper: 'done.invoke.issuersMachine.downloadCredentials:invocation[0]';
     setError:
       | 'error.platform.issuersMachine.displayIssuers:invocation[0]'
@@ -216,6 +214,7 @@ export interface Typegen0 {
     setSelectedCredentialType: 'SELECTED_CREDENTIAL_TYPE';
     setSelectedIssuerId: 'SELECTED_ISSUER';
     setSelectedIssuers: 'done.invoke.issuersMachine.downloadIssuerConfig:invocation[0]';
+    setSupportedCredentialTypes: 'done.invoke.issuersMachine.downloadCredentialTypes:invocation[0]';
     setTokenResponse: 'done.invoke.issuersMachine.performAuthorization:invocation[0]';
     setVCMetadata:
       | 'done.invoke.issuersMachine.verifyingCredential:invocation[0]'
@@ -244,7 +243,6 @@ export interface Typegen0 {
     isCustomSecureKeystore: 'done.invoke.issuersMachine.generateKeyPair:invocation[0]';
     isGenericError: 'error.platform.issuersMachine.downloadCredentials:invocation[0]';
     isInternetConnected: 'done.invoke.checkInternet';
-    isMultipleCredentialsSupported: 'done.invoke.issuersMachine.downloadCredentialTypes:invocation[0]';
     isOIDCConfigError: 'error.platform.issuersMachine.performAuthorization:invocation[0]';
     isOIDCflowCancelled: 'error.platform.issuersMachine.performAuthorization:invocation[0]';
     isSignedIn: 'done.invoke.issuersMachine.storing:invocation[0]';

@@ -18,30 +18,28 @@ export function selectVcName(state: State) {
 }
 
 export function selectCredential(state: State) {
-  return new VCMetadata(state.context.selectedVc?.vcMetadata).isFromOpenId4VCI()
-    ? state.context.selectedVc?.verifiableCredential?.credential
-    : state.context.selectedVc?.verifiableCredential;
+  return (
+    state.context.selectedVc?.verifiableCredential?.credential ||
+    state.context.selectedVc?.verifiableCredential
+  );
 }
 
 export function selectVerifiableCredentialData(state: State) {
   const vcMetadata = new VCMetadata(state.context.selectedVc?.vcMetadata);
-  return vcMetadata.isFromOpenId4VCI()
-    ? {
-        vcMetadata: vcMetadata,
-        issuer: vcMetadata.issuer,
-        issuerLogo: state.context.selectedVc?.verifiableCredential?.issuerLogo,
-        wellKnown: state.context.selectedVc?.verifiableCredential?.wellKnown,
-        face: state.context.selectedVc?.verifiableCredential?.credential
-          .credentialSubject?.face,
-        credentialTypes:
-          state.context.selectedVc?.verifiableCredential?.credentialTypes,
-      }
-    : {
-        vcMetadata: vcMetadata,
-        issuer: vcMetadata.issuer,
-        face: state.context.selectedVc?.credential?.biometrics?.face,
-        issuerLogo: getMosipLogo(),
-      };
+  return {
+    vcMetadata: vcMetadata,
+    issuer: vcMetadata.issuer,
+    issuerLogo:
+      state.context.selectedVc?.verifiableCredential?.issuerLogo ||
+      getMosipLogo(),
+    face:
+      state.context.selectedVc?.verifiableCredential?.credential
+        ?.credentialSubject?.face ||
+      state.context.selectedVc?.credential?.biometrics?.face,
+    wellKnown: state.context.selectedVc?.verifiableCredential?.wellKnown,
+    credentialTypes:
+      state.context.selectedVc?.verifiableCredential?.credentialTypes,
+  };
 }
 
 export function selectQrLoginRef(state: State) {

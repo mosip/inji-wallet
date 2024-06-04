@@ -19,6 +19,11 @@ export interface Typegen0 {
       data: unknown;
       __tip: 'See the XState TS docs to learn how to strongly type this.';
     };
+    'done.invoke.vc-item-machine.vcUtilitiesState.loadVc.loadVcFromContext.fetchWellknown:invocation[0]': {
+      type: 'done.invoke.vc-item-machine.vcUtilitiesState.loadVc.loadVcFromContext.fetchWellknown:invocation[0]';
+      data: unknown;
+      __tip: 'See the XState TS docs to learn how to strongly type this.';
+    };
     'done.invoke.vc-item-machine.vcUtilitiesState.loadVc.loadVcFromServer.loadDownloadLimitConfig:invocation[0]': {
       type: 'done.invoke.vc-item-machine.vcUtilitiesState.loadVc.loadVcFromServer.loadDownloadLimitConfig:invocation[0]';
       data: unknown;
@@ -120,6 +125,7 @@ export interface Typegen0 {
     checkDownloadExpiryLimit: 'done.invoke.vc-item-machine.vcUtilitiesState.loadVc.loadVcFromServer.verifyingDownloadLimitExpiry:invocation[0]';
     checkStatus: 'done.invoke.checkStatus';
     downloadCredential: 'done.invoke.downloadCredential';
+    fetchIssuerWellknown: 'done.invoke.vc-item-machine.vcUtilitiesState.loadVc.loadVcFromContext.fetchWellknown:invocation[0]';
     generateKeyPair: 'done.invoke.vc-item-machine.vcUtilitiesState.walletBinding.addKeyPair:invocation[0]';
     isUserSignedAlready:
       | 'done.invoke.vc-item-machine.vcUtilitiesState.kebabPopUp.triggerAutoBackup:invocation[0]'
@@ -186,10 +192,12 @@ export interface Typegen0 {
       | 'unSetBindingTransactionId'
       | 'unSetError'
       | 'unSetOTP'
-      | 'updateVcMetadata';
+      | 'updateVcMetadata'
+      | 'updateWellknownResponse';
     delays: never;
     guards:
       | 'hasCredential'
+      | 'hasCredentialAndWellknown'
       | 'isCustomSecureKeystore'
       | 'isDownloadAllowed'
       | 'isSignedIn'
@@ -199,6 +207,7 @@ export interface Typegen0 {
       | 'checkDownloadExpiryLimit'
       | 'checkStatus'
       | 'downloadCredential'
+      | 'fetchIssuerWellknown'
       | 'generateKeyPair'
       | 'isUserSignedAlready'
       | 'loadDownloadLimitConfig'
@@ -334,10 +343,12 @@ export interface Typegen0 {
       | 'DISMISS'
       | 'done.invoke.vc-item-machine.vcUtilitiesState.walletBinding.requestingBindingOTP:invocation[0]';
     updateVcMetadata: 'PIN_CARD' | 'STORE_RESPONSE';
+    updateWellknownResponse: 'done.invoke.vc-item-machine.vcUtilitiesState.loadVc.loadVcFromContext.fetchWellknown:invocation[0]';
   };
   eventsCausingDelays: {};
   eventsCausingGuards: {
     hasCredential: 'GET_VC_RESPONSE';
+    hasCredentialAndWellknown: 'GET_VC_RESPONSE';
     isCustomSecureKeystore:
       | 'done.invoke.vc-item-machine.vcUtilitiesState.walletBinding.addKeyPair:invocation[0]'
       | 'done.invoke.vc-item-machine.vcUtilitiesState.walletBinding.addingWalletBindingId:invocation[0]';
@@ -356,6 +367,7 @@ export interface Typegen0 {
       | 'done.invoke.vc-item-machine.vcUtilitiesState.loadVc.loadVcFromServer.loadDownloadLimitConfig:invocation[0]';
     checkStatus: 'done.invoke.vc-item-machine.vcUtilitiesState.loadVc.loadVcFromServer.verifyingDownloadLimitExpiry:invocation[0]';
     downloadCredential: 'DOWNLOAD_READY';
+    fetchIssuerWellknown: 'GET_VC_RESPONSE';
     generateKeyPair: 'INPUT_OTP';
     isUserSignedAlready: 'STORE_RESPONSE';
     loadDownloadLimitConfig: 'GET_VC_RESPONSE' | 'STORE_ERROR';
@@ -375,6 +387,8 @@ export interface Typegen0 {
     | 'vcUtilitiesState.kebabPopUp.triggerAutoBackup'
     | 'vcUtilitiesState.loadVc'
     | 'vcUtilitiesState.loadVc.loadVcFromContext'
+    | 'vcUtilitiesState.loadVc.loadVcFromContext.fetchWellknown'
+    | 'vcUtilitiesState.loadVc.loadVcFromContext.idle'
     | 'vcUtilitiesState.loadVc.loadVcFromServer'
     | 'vcUtilitiesState.loadVc.loadVcFromServer.checkingStatus'
     | 'vcUtilitiesState.loadVc.loadVcFromServer.downloadingCredential'
@@ -421,6 +435,7 @@ export interface Typegen0 {
                 | 'loadVcFromContext'
                 | 'loadVcFromServer'
                 | {
+                    loadVcFromContext?: 'fetchWellknown' | 'idle';
                     loadVcFromServer?:
                       | 'checkingStatus'
                       | 'downloadingCredential'

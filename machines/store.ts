@@ -77,6 +77,7 @@ const model = createModel(
         requester,
       }),
       STORE_ERROR: (error: Error, requester?: string) => ({error, requester}),
+      FETCH_ALL_WELLKNOWN_CONFIG: () => ({}),
     },
   },
 );
@@ -231,6 +232,9 @@ export const storeMachine =
               actions: 'forwardStoreRequest',
             },
             CLEAR: {
+              actions: 'forwardStoreRequest',
+            },
+            FETCH_ALL_WELLKNOWN_CONFIG: {
               actions: 'forwardStoreRequest',
             },
             STORE_RESPONSE: {
@@ -442,6 +446,13 @@ export const storeMachine =
                   await clear();
                   break;
                 }
+                case 'FETCH_ALL_WELLKNOWN_CONFIG': {
+                  response = await fetchAllWellknownConfig(
+                    context.encryptionKey,
+                  );
+                  break;
+                }
+
                 default:
                   return;
               }
@@ -584,6 +595,10 @@ export async function exportData(encryptionKey: string) {
 
 export async function loadBackupData(data, encryptionKey) {
   await Storage.loadBackupData(data, encryptionKey);
+}
+
+export async function fetchAllWellknownConfig(encryptionKey: string) {
+  return await Storage.fetchAllWellknownConfig(encryptionKey);
 }
 
 export async function getVCsData(key: string, encryptionKey: string) {

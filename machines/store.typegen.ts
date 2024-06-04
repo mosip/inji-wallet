@@ -35,6 +35,7 @@ export interface Typegen0 {
       | 'APPEND'
       | 'CLEAR'
       | 'EXPORT'
+      | 'FETCH_ALL_WELLKNOWN_CONFIG'
       | 'GET'
       | 'GET_VCS_DATA'
       | 'PREPEND'
