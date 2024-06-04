@@ -23,6 +23,7 @@ import {Issuers} from '../../shared/openId4VCI/Utils';
 import {FaceVerificationAlertOverlay} from './FaceVerificationAlertOverlay';
 import {Error} from '../../components/ui/Error';
 import {SvgImage} from '../../components/ui/svg';
+import { LIVENESS_CHECK } from '../../shared/constants';
 
 export const SendVcScreen: React.FC = () => {
   const {t} = useTranslation('SendVcScreen');
@@ -140,7 +141,7 @@ export const SendVcScreen: React.FC = () => {
         isInvalidIdentity={controller.isInvalidIdentity}
         onNavigateHome={controller.GO_TO_HOME}
         onRetryVerification={controller.RETRY_VERIFICATION}
-        isLivenessEnabled={controller.isLivenessEnabled}
+        isLivenessEnabled={LIVENESS_CHECK}
       />
 
       <FaceVerificationAlertOverlay

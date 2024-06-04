@@ -24,7 +24,7 @@
 "setBackupAndRestoreOptionExplored": "SET_IS_BACKUP_AND_RESTORE_EXPLORED";
 "setContext": "STORE_RESPONSE";
 "setIsBiometricToggled": "TOGGLE_BIOMETRIC_UNLOCK";
-"storeContext": "ACCEPT_HARDWARE_SUPPORT_NOT_EXISTS" | "SET_IS_BACKUP_AND_RESTORE_EXPLORED" | "SHOWN_ACCOUNT_SELECTION_CONFIRMATION" | "STORE_RESPONSE" | "TOGGLE_BIOMETRIC_UNLOCK" | "UPDATE_HOST" | "UPDATE_LIVENESS" | "UPDATE_NAME" | "UPDATE_VC_LABEL" | "done.invoke.settings.resetInjiProps:invocation[0]";
+"storeContext": "ACCEPT_HARDWARE_SUPPORT_NOT_EXISTS" | "SET_IS_BACKUP_AND_RESTORE_EXPLORED" | "SHOWN_ACCOUNT_SELECTION_CONFIRMATION" | "STORE_RESPONSE" | "TOGGLE_BIOMETRIC_UNLOCK" | "UPDATE_HOST" | "UPDATE_NAME" | "UPDATE_VC_LABEL" | "done.invoke.settings.resetInjiProps:invocation[0]";
 "toggleBiometricUnlock": "TOGGLE_BIOMETRIC_UNLOCK";
 "updateCredentialRegistry": "done.invoke.settings.resetInjiProps:invocation[0]";
 "updateCredentialRegistryResponse": "error.platform.settings.resetInjiProps:invocation[0]";
@@ -32,7 +32,6 @@
 "updateDefaults": "STORE_RESPONSE";
 "updateEsignetHostUrl": "UPDATE_HOST";
 "updateIsAccountSelectionConfirmationShown": "SHOWN_ACCOUNT_SELECTION_CONFIRMATION";
-"updateLivenessCheck": "UPDATE_LIVENESS";
 "updateName": "UPDATE_NAME";
 "updatePartialDefaults": "STORE_RESPONSE";
 "updateUserShownWithHardwareKeystoreNotExists": "ACCEPT_HARDWARE_SUPPORT_NOT_EXISTS";

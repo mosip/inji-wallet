@@ -22,7 +22,6 @@ import {
   selectIsVerifying,
   selectCameraRef,
 } from '../../machines/faceScanner';
-import {selectIsLivenessEnabled} from '../../machines/settings';
 import {GlobalContext} from '../../shared/GlobalContext';
 import {selectIsActive} from '../../machines/app';
 import {Theme} from '.././ui/styleUtils';
@@ -36,11 +35,11 @@ import {
 } from './FaceScannerHelper';
 import LivenessDetection from './LivenessDetection';
 import FaceCompare from './FaceCompare';
+import { LIVENESS_CHECK } from '../../shared/constants';
 
 export const FaceScanner: React.FC<FaceScannerProps> = props => {
   const {t} = useTranslation('FaceScanner');
   const {appService} = useContext(GlobalContext);
-  const settingsService = appService?.children?.get('settings') || {};
   const isActive = useSelector(appService, selectIsActive);
 
   const machine = useRef(createFaceScannerMachine(props.vcImage));
@@ -48,7 +47,6 @@ export const FaceScanner: React.FC<FaceScannerProps> = props => {
 
   const whichCamera = useSelector(service, selectWhichCamera);
   const cameraRef = useSelector(service, selectCameraRef);
-  const livenessEnabled = useSelector(settingsService, selectIsLivenessEnabled);
 
   const isPermissionDenied = useSelector(service, selectIsPermissionDenied);
   const isValid = useSelector(service, selectIsValid);
@@ -170,7 +168,7 @@ export const FaceScanner: React.FC<FaceScannerProps> = props => {
     );
   }
 
-  if (livenessEnabled) {
+  if (LIVENESS_CHECK) {
     return (
       <LivenessDetection
         screenColor={screenColor}

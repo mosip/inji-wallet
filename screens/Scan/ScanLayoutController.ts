@@ -8,7 +8,6 @@ import {
 } from '../../components/MessageOverlay';
 import {MainBottomTabParamList} from '../../routes/routeTypes';
 import {GlobalContext} from '../../shared/GlobalContext';
-import { selectIsLivenessEnabled } from  '../../machines/settings';
 import {
   selectIsConnecting,
   selectIsConnectingTimeout,
@@ -59,7 +58,6 @@ export function useScanLayout() {
   const {t} = useTranslation('ScanScreen');
   const {appService} = useContext(GlobalContext);
   const scanService = appService.children.get('scan')!!;
-  const settingsService = appService.children.get('settings')!!;
   const navigation = useNavigation<ScanLayoutNavigation>();
 
   const isLocationDisabled = useSelector(scanService, selectIsLocationDisabled);
@@ -67,7 +65,6 @@ export function useScanLayout() {
   const isBleError = useSelector(scanService, selectIsHandlingBleError);
   const isInvalidIdentity = useSelector(scanService, selectIsInvalidIdentity);
   const flowType = useSelector(scanService, selectFlowType);
-  const isLivenessEnabled = useSelector(settingsService, selectIsLivenessEnabled);
   const isVerifyingIdentity = useSelector(
     scanService,
     selectIsVerifyingIdentity,
@@ -294,7 +291,6 @@ export function useScanLayout() {
     verifiableCredentialData,
     isInvalid,
     isReviewing,
-    isLivenessEnabled,
     isDone,
     GOTO_HOME,
     GOTO_HISTORY,

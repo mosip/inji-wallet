@@ -18,7 +18,6 @@ import {
   selectAppId,
   selectIsResetInjiProps,
   selectEsignetHostUrl,
-  selectIsLivenessEnabled,
 } from '../../machines/settings';
 
 import {
@@ -112,7 +111,6 @@ export function useSettingsScreen(props: RootRouteProps & RequestRouteProps) {
     hideAlert,
     isPasscodeSet,
     isSettingUp,
-    livenessEnabled: useSelector(settingsService || {}, selectIsLivenessEnabled),
     appId: useSelector(settingsService || {}, selectAppId),
     name: useSelector(settingsService || {}, selectName),
     vcLabel: useSelector(settingsService || {}, selectVcLabel),
@@ -183,10 +181,6 @@ export function useSettingsScreen(props: RootRouteProps & RequestRouteProps) {
       settingsService.send(
         SettingsEvents.TOGGLE_BIOMETRIC_UNLOCK(enable, true),
       );
-    },
-
-    UPDATE_LIVENESS_TOGGLE: (value: boolean) => {
-      settingsService.send(SettingsEvents.UPDATE_LIVENESS(value));
     },
 
     LOGOUT: () => {
