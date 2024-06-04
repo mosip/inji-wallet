@@ -104,10 +104,6 @@ export const FaceScanner: React.FC<FaceScannerProps> = props => {
   async function handleFacesDetected({faces}) {
     checkBlink(faces[0]);
 
-    if (!livenessEnabled) {
-      return;
-    }
-
     if (counter == MAX_COUNTER) {
       setCounter(counter + 1);
       cameraRef.pausePreview();
@@ -134,10 +130,6 @@ export const FaceScanner: React.FC<FaceScannerProps> = props => {
         withinYawAngle &&
         counter < MAX_COUNTER
       ) {
-        if (counter == 0) {
-          console.log('FACE_LIVENESS :: Start time-->', Date.now());
-        }
-
         const randomNum = getRandomInt(0, 2);
         const randomColor = screenFlashColors[randomNum];
         setScreenColor(randomColor);

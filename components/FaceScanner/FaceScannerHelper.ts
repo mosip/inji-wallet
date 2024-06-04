@@ -45,7 +45,7 @@ export const imageCaptureConfig = {
   imageType: ImageType.jpg,
 };
 
-export const faceDetectorConfig = {
+export const faceDetectorConfig : FaceDetectorConfig= {
   mode: FaceDetector.FaceDetectorMode.accurate,
   detectLandmarks: FaceDetector.FaceDetectorLandmarks.all,
   runClassifications: FaceDetector.FaceDetectorClassifications.all,
@@ -238,19 +238,12 @@ export const cropEyeAreaFromFace = async (picArray, vcImage, capturedImage) => {
     predictedColorResults.filter(element => element).length /
     predictedColorResults.length;
 
-  console.log('FACE_LIVENESS :: Threshold is ->', calculatedThreshold);
-
   const matches = rxDataURI.exec(vcImage).groups;
   const vcFace = matches.data;
 
   faceCompareOuptut = await faceCompare(vcFace, capturedImage.base64);
 
-  console.log('FACE_LIVENESS :: face compare result is-->', faceCompareOuptut);
-
-  console.log('FACE_LIVENESS :: End time-->', Date.now());
-
   if (blinkCounter > 0) {
-    console.log('Blink is detected, increasing the confidence score');
     calculatedThreshold = calculatedThreshold + blinkConfidenceScore;
   }
 
@@ -259,4 +252,13 @@ export const cropEyeAreaFromFace = async (picArray, vcImage, capturedImage) => {
   } else {
     return false;
   }
+};
+
+export interface FaceDetectorConfig {
+  mode: FaceDetector.FaceDetectorMode;
+  detectLandmarks: FaceDetector.FaceDetectorLandmarks;
+  runClassifications: FaceDetector.FaceDetectorClassifications;
+  contourMode: FaceDetector.FaceDetectorClassifications; 
+  minDetectionInterval: number;
+  tracking: boolean;
 };

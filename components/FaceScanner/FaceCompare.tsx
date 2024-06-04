@@ -1,5 +1,5 @@
 import React from 'react';
-import { Camera } from 'expo-camera';
+import { Camera, CameraType } from 'expo-camera';
 import { View, TouchableOpacity } from 'react-native';
 import {SvgImage} from '../ui/svg';
 import { Text, Column, Row, Centered } from '../ui';
@@ -69,8 +69,8 @@ const FaceCompare: React.FC<FaceCompareProps> = ({
 export default FaceCompare;
 
 interface FaceCompareProps {
-    whichCamera: any;
-    setCameraRef: any;
+    whichCamera: CameraType;
+    setCameraRef:(node: Camera) => void;
     isCapturing: boolean;
     isVerifying: boolean;
     service: any;

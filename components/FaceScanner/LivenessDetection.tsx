@@ -1,11 +1,12 @@
 import React from 'react';
-import { Camera } from 'expo-camera';
+import { Camera, CameraType } from 'expo-camera';
 import { View, TouchableOpacity } from 'react-native';
 import Spinner from 'react-native-spinkit';
 import { Column, Text } from '.././ui';
 import { Theme } from '.././ui/styleUtils';
 import Svg, { Defs, Mask, Rect, Ellipse } from 'react-native-svg';
 import testIDProps from '../../shared/commonUtil';
+import { FaceDetectorConfig } from './FaceScannerHelper';
 
 const LivenessDetection: React.FC<LivenessDetectionProps> = ({
   screenColor,
@@ -54,12 +55,13 @@ const LivenessDetection: React.FC<LivenessDetectionProps> = ({
       </View>
       <View style={Theme.CameraEnabledStyles.buttonContainer}>
         <TouchableOpacity
+          {...testIDProps('cancel')}
           style={[Theme.CameraEnabledStyles.cancelButton, { opacity }]}
           onPressIn={() => setOpacity(0.5)}
           onPressOut={() => setOpacity(1)}
           onPress={handleOnCancel}
         >
-          <Text size="small" weight="bold" margin="8" color="black">
+          <Text testID="cancelText" size="small" weight="bold" margin="8" color="black">
             {t('cancel')}
           </Text>
         </TouchableOpacity>
@@ -73,11 +75,11 @@ export default LivenessDetection;
 interface LivenessDetectionProps {
     screenColor: string;
     infoText: string;
-    whichCamera: any;
-    setCameraRef: any;
-    handleFacesDetected: any;
-    faceDetectorConfig: any;
-    handleOnCancel: any;
+    whichCamera: CameraType;
+    setCameraRef: (node: Camera) => void;
+    handleFacesDetected: (faces: any) => Promise<void>;
+    faceDetectorConfig: FaceDetectorConfig;
+    handleOnCancel: () => void;
     opacity: number;
     setOpacity: (opacity: number) => void;
     t: (key: string) => string;
