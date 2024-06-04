@@ -39,4 +39,9 @@ declare module 'react-native-dotenv' {
    */
   export const DEBUG_MODE: string;
   export const GOOGLE_ANDROID_CLIENT_ID: string;
+
+  /**
+   * Flag for Toggling for Liveness Detection
+   */
+  export const LIVENESS_DETECTION: string;
 }

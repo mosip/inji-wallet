@@ -15,6 +15,7 @@ import {SvgImage} from '../../components/ui/svg';
 import {View, I18nManager} from 'react-native';
 import {Text} from './../../components/ui';
 import {BannerStatusType} from '../../components/BannerNotification';
+import { LIVENESS_CHECK } from '../../shared/constants';
 
 const ScanStack = createNativeStackNavigator();
 
@@ -60,6 +61,7 @@ export const ScanLayout: React.FC = () => {
         isInvalidIdentity={controller.isInvalidIdentity}
         onNavigateHome={controller.GOTO_HOME}
         onRetryVerification={controller.RETRY_VERIFICATION}
+        isLivenessEnabled={LIVENESS_CHECK}
       />
       <ScanStack.Navigator initialRouteName="ScanScreen">
         {controller.isReviewing &&

@@ -24,7 +24,7 @@ on:
       buildName:
         description: 'Build App For'
         required: true
-        default: 'Sprint-x/Collab/release-x.x.x'
+        default: 'Sprint-x/QA-Inji/Release-x.x.x'
         type: string
       mimotoBackendServiceUrl:
         description: 'Mimoto backend service URL'
@@ -66,13 +66,16 @@ on:
         options:
           - orange
           - purple
-      buildDescription:
-        description: 'What to test'
-        required: true
-        default: 'QA-Triple environment'
-        type: string
       allow_env_edit:
         description: 'Edit ENV'
+        required: true
+        default: 'true'
+        type: choice
+        options:
+          - false
+          - true
+      liveness_detection:
+        description: 'Detect Liveness'
         required: true
         default: 'true'
         type: choice
@@ -106,8 +109,9 @@ jobs:
       MIMOTO_HOST: ${{ inputs.mimotoBackendServiceUrl }}
       ESIGNET_HOST: ${{ inputs.esignetBackendServiceUrl }}
       APPLICATION_THEME: ${{ inputs.theme }}
-      BUILD_DESCRIPTION: ${{ inputs.buildDescription }}
+      BUILD_DESCRIPTION: ${{ inputs.buildName }}
       ALLOW_ENV_EDIT: ${{ inputs.allow_env_edit }}
+      LIVENESS_DETECTION: ${{ inputs.liveness_detection }}
       APP_FLAVOR: ${{ inputs.injiFlavor }}
       SERVICE_LOCATION: '.'
       ANDROID_SERVICE_LOCATION: 'android'
@@ -132,8 +136,9 @@ jobs:
       MIMOTO_HOST: ${{ inputs.mimotoBackendServiceUrl }}
       ESIGNET_HOST: ${{ inputs.esignetBackendServiceUrl }}
       APPLICATION_THEME: ${{ inputs.theme }}
-      BUILD_DESCRIPTION: ${{ inputs.buildDescription }}
+      BUILD_DESCRIPTION: ${{ inputs.buildName }}
       ALLOW_ENV_EDIT: ${{ inputs.allow_env_edit }}
+      LIVENESS_DETECTION: ${{ inputs.liveness_detection }}
       APP_FLAVOR: ${{ inputs.injiFlavor }}
       SERVICE_LOCATION: '.'
       ANDROID_SERVICE_LOCATION: 'android'
@@ -156,8 +161,9 @@ jobs:
       MIMOTO_HOST: ${{ inputs.mimotoBackendServiceUrl }}
       ESIGNET_HOST: ${{ inputs.esignetBackendServiceUrl }}
       APPLICATION_THEME: ${{ inputs.theme }}
-      TESTFLIGHT_BETA_APP_DESCRIPTION: ${{ inputs.buildDescription }}
+      TESTFLIGHT_BETA_APP_DESCRIPTION: ${{ inputs.buildName }}
       ALLOW_ENV_EDIT: ${{ inputs.allow_env_edit }}
+      LIVENESS_DETECTION: ${{ inputs.liveness_detection }}
       TESTFLIGHT_INTERNAL_TESTERS_GROUP: ${{ inputs.internal-testers }}
       APP_FLAVOR: ${{ inputs.injiFlavor }}
       SERVICE_LOCATION: '.'
