@@ -2,7 +2,7 @@ fileignoreconfig:
   - filename: package.json
     checksum: 5b4fcb5ddc7cc96cc2d1733b544d56ea66e88cdab995a1052fbf9ac0e9c2dc21
   - filename: package-lock.json
-    checksum: a67d97b91ebdc0dd132a6a38835e9ca36449e3acff8a0fdc05d1948061951240
+    checksum: 50254c7e3e84d59dceb77cde95ce71cb5d0625cb5ec84971a28b6fc4f95db7f1
   - filename: lib/jsonld-signatures/suites/ed255192018/ed25519.ts
     checksum: 493b6e31144116cb612c24d98b97d8adcad5609c0a52c865a6847ced0a0ddc3a
   - filename: components/PasscodeVerify.tsx
@@ -346,5 +346,5 @@ fileignoreconfig:
   - filename: ios/Inji.xcworkspace/xcshareddata/swiftpm/Package.resolved
     checksum: b168940c6b487dc96fd22f564f2e187dae46f4fa5e4a64cf81c4d810b1c1ae78
   - filename: ios/Inji.xcodeproj/project.pbxproj
-    checksum: e86064dc53172114fab4fbad7508889ea47c2ecd7d60ccc4d1f71cf32ea9169c
+    checksum: 4359976ed4d1ac3206d76b87d3458d070027199c8569ba123436c4b5343aba74
     version: ""
