@@ -15,10 +15,12 @@ import {
   selectIsVerifyingIdentity,
 } from '../../machines/bleShare/commonSelectors';
 import {RequestEvents} from '../../machines/bleShare/request/requestMachine';
+import {ActivityLogEvents} from '../../machines/activityLog';
 
 export function useReceiveVcScreen() {
   const {appService} = useContext(GlobalContext);
   const requestService = appService.children.get('request')!!;
+  const activityService = appService.children.get('activityLog')!!;
 
   return {
     senderInfo: useSelector(requestService, selectSenderInfo),
@@ -53,5 +55,9 @@ export function useReceiveVcScreen() {
     FACE_VALID: () => requestService.send(RequestEvents.FACE_VALID()),
     FACE_INVALID: () => requestService.send(RequestEvents.FACE_INVALID()),
     RESET: () => requestService.send(RequestEvents.RESET()),
+    STORE_INCOMING_VC_WELLKNOWN_CONFIG: (issuer, wellknown) =>
+      activityService.send(
+        ActivityLogEvents.STORE_INCOMING_VC_WELLKNOWN_CONFIG(issuer, wellknown),
+      ),
   };
 }

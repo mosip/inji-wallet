@@ -4,6 +4,7 @@ import {AppServices} from '../shared/GlobalContext';
 import {ACTIVITY_LOG_STORE_KEY} from '../shared/constants';
 import {StoreEvents} from './store';
 import {ActivityLog} from '../components/ActivityLogEvent';
+import {IssuerWellknownResponse} from './VerifiableCredential/VCMetaMachine/vc';
 
 const model = createModel(
   {
@@ -19,6 +20,13 @@ const model = createModel(
         wellknown,
       }),
       REFRESH: () => ({}),
+      STORE_INCOMING_VC_WELLKNOWN_CONFIG: (
+        issuer: string,
+        wellknown: IssuerWellknownResponse,
+      ) => ({
+        issuer,
+        wellknown,
+      }),
     },
   },
 );
@@ -67,6 +75,9 @@ export const activityLogMachine =
                 },
                 REFRESH: {
                   target: 'refreshing',
+                },
+                STORE_INCOMING_VC_WELLKNOWN_CONFIG: {
+                  actions: 'storeWellknownConfig',
                 },
               },
             },
@@ -141,6 +152,13 @@ export const activityLogMachine =
         setAllWellknownConfigResponse: model.assign({
           wellKnownIssuerMap: (_, event) => {
             return event.response as Record<string, Object>;
+          },
+        }),
+
+        storeWellknownConfig: model.assign({
+          wellKnownIssuerMap: (context, event) => {
+            context.wellKnownIssuerMap[event.issuer] = event.wellknown;
+            return context.wellKnownIssuerMap;
           },
         }),
       },

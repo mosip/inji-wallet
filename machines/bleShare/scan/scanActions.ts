@@ -192,14 +192,14 @@ export const ScanActions = (model: any, QR_LOGIN_REF_ID: any) => {
     logShared: send(
       (context: any) => {
         const vcMetadata = VCMetadata.fromVC(context.selectedVc?.vcMetadata);
-        const selectedVc = context.QrLoginRef.getSnapshot().context.selectedVc;
+
         return ActivityLogEvents.LOG_ACTIVITY({
           _vcKey: vcMetadata.getVcKey(),
           type: context.shareLogType
             ? context.shareLogType
             : 'VC_SHARED_WITH_VERIFICATION_CONSENT',
           id: vcMetadata.id,
-          idType: getCredentialTypes(selectedVc.verifiableCredential),
+          idType: getCredentialTypes(context.selectedVc.verifiableCredential),
           issuer: vcMetadata.issuer!!,
           timestamp: Date.now(),
           deviceName:
@@ -211,14 +211,13 @@ export const ScanActions = (model: any, QR_LOGIN_REF_ID: any) => {
     ),
 
     logFailedVerification: send(
-      context => {
+      (context: any) => {
         const vcMetadata = VCMetadata.fromVC(context.selectedVc);
-        const selectedVc = context.QrLoginRef.getSnapshot().context.selectedVc;
         return ActivityLogEvents.LOG_ACTIVITY({
           _vcKey: vcMetadata.getVcKey(),
           type: 'PRESENCE_VERIFICATION_FAILED',
           timestamp: Date.now(),
-          idType: getCredentialTypes(selectedVc.verifiableCredential),
+          idType: getCredentialTypes(context.selectedVc.verifiableCredential),
           id: vcMetadata.id,
           issuer: vcMetadata.issuer!!,
           deviceName:

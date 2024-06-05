@@ -20,6 +20,7 @@ export interface Typegen0 {
     setActivities: 'STORE_RESPONSE';
     setAllWellknownConfigResponse: 'STORE_RESPONSE';
     storeActivity: 'LOG_ACTIVITY';
+    storeWellknownConfig: 'STORE_INCOMING_VC_WELLKNOWN_CONFIG';
   };
   eventsCausingDelays: {};
   eventsCausingGuards: {};
