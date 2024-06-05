@@ -10,7 +10,7 @@ import {SvgImage} from './ui/svg';
 import {NativeModules} from 'react-native';
 import {VerifiableCredential} from '../machines/VerifiableCredential/VCMetaMachine/vc';
 import RNSecureKeyStore, {ACCESSIBLE} from 'react-native-secure-key-store';
-import {DEFAULT_ECL} from '../shared/constants';
+import {DEFAULT_ECL, MAX_QR_DATA_LENGTH} from '../shared/constants';
 import {VCMetadata} from '../shared/VCMetadata';
 import {shareImageToAllSupportedApps} from '../shared/sharing/imageUtils';
 import {ShareOptions} from 'react-native-share';
@@ -65,7 +65,11 @@ export const QrCodeOverlay: React.FC<QrCodeOverlayProps> = props => {
   useEffect(() => {
     (async () => {
       const qrData = await getQRData();
-      setQrString(qrData);
+      if (qrData?.length < MAX_QR_DATA_LENGTH) {
+        setQrString(qrData);
+      } else {
+        setQrError(true);
+      }
     })();
   }, []);
   const [isQrOverlayVisible, setIsQrOverlayVisible] = useState(false);
