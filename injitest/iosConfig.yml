@@ -38,20 +38,12 @@ app: bs://0e29daf05319be0da00ca11b0acdd385cacaae78 # BrowserStack Sample App
 # Entire list available here -> (https://www.browserstack.com/list-of-browsers-and-platforms/automate)
 platforms:
     - platformName: ios
-      deviceName: iPhone 14 Pro Max
-      platformVersion: 16
-    - platformName: ios
       deviceName: iPhone 13 Pro
       platformVersion: 15
     - platformName: ios
       deviceName: iPhone 11
       platformVersion: 14
-    - platformName: ios
-      deviceName: iPhone 15 Pro
-      platformVersion: 17
-    - platformName: ios
-      deviceName: iPhone 12 Pro Max
-      platformVersion: 14
+    -
 # =======================
 # Parallels per Platform
 # =======================
@@ -61,7 +53,7 @@ platforms:
 # Example 1 - If you have configured 3 platforms and set `parallelsPerPlatform` as 2, a total of 6 (2 * 3) parallel threads will be used on BrowserStack
 #
 # Example 2 - If you have configured 1 platform and set `parallelsPerPlatform` as 5, a total of 5 (1 * 5) parallel threads will be used on BrowserStack
-parallelsPerPlatform: 1
+parallelsPerPlatform: 2
 
 source: java:appium-intellij:v1.1.4
 

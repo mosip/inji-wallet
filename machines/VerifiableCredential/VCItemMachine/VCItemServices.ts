@@ -1,8 +1,9 @@
-import SecureKeystore from '@mosip/secure-keystore';
+import {NativeModules} from 'react-native';
 import Cloud from '../../../shared/CloudBackupAndRestoreUtils';
 import {VCMetadata} from '../../../shared/VCMetadata';
 import getAllConfigurations, {
   API_URLS,
+  CACHED_API,
   DownloadProps,
 } from '../../../shared/api';
 import {
@@ -16,9 +17,11 @@ import {
 import {CredentialDownloadResponse, request} from '../../../shared/request';
 import {WalletBindingResponse} from '../VCMetaMachine/vc';
 import {verifyCredential} from '../../../shared/vcjs/verifyCredential';
-import {getMosipIdentifier} from '../../../shared/commonUtil';
 import {getVerifiableCredential} from './VCItemSelectors';
+import {getSelectedCredentialTypeDetails} from '../../../shared/openId4VCI/Utils';
+import {getCredentialTypes} from '../../../components/VC/common/VCUtils';
 
+const {RNSecureKeystoreModule} = NativeModules;
 export const VCItemServices = model => {
   return {
     isUserSignedAlready: () => async () => {
@@ -96,17 +99,15 @@ export const VCItemServices = model => {
       if (!isHardwareKeystoreExists) {
         return await generateKeys();
       }
-      const isBiometricsEnabled = SecureKeystore.hasBiometricsEnabled();
-      return SecureKeystore.generateKeyPair(
+      const isBiometricsEnabled = RNSecureKeystoreModule.hasBiometricsEnabled();
+      return RNSecureKeystoreModule.generateKeyPair(
         VCMetadata.fromVC(context.vcMetadata).id,
         isBiometricsEnabled,
         0,
       );
     },
     requestBindingOTP: async context => {
-      const vc = VCMetadata.fromVC(context.vcMetadata).isFromOpenId4VCI()
-        ? context.verifiableCredential.credential
-        : context.verifiableCredential;
+      const vc = getVerifiableCredential(context.verifiableCredential);
       const response = await request(
         API_URLS.bindingOtp.method,
         API_URLS.bindingOtp.buildURL(),
@@ -122,6 +123,18 @@ export const VCItemServices = model => {
         throw new Error('Could not process request');
       }
       return response;
+    },
+    fetchIssuerWellknown: async context => {
+      const wellknownResponse = await CACHED_API.fetchIssuerWellknownConfig(
+        context.vcMetadata.issuer,
+        context.verifiableCredential.wellKnown,
+        true,
+      );
+      const wellknownOfCredential = getSelectedCredentialTypeDetails(
+        wellknownResponse,
+        getCredentialTypes(context.verifiableCredential),
+      );
+      return wellknownOfCredential;
     },
     checkStatus: context => (callback, onReceive) => {
       const pollInterval = setInterval(
@@ -198,10 +211,7 @@ export const VCItemServices = model => {
     verifyCredential: async context => {
       if (context.verifiableCredential) {
         const verificationResult = await verifyCredential(
-          getVerifiableCredential(
-            context.vcMetadata,
-            context.verifiableCredential,
-          ),
+          getVerifiableCredential(context.verifiableCredential),
         );
         if (!verificationResult.isVerified) {
           throw new Error(verificationResult.errorMessage);

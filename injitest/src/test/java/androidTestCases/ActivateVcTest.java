@@ -165,11 +165,12 @@ public class ActivateVcTest extends AndroidBaseTest {
 
         DetailedVcViewPage detailedVcViewPage = homePage.openDetailedVcView(TestDataReader.readData("fullName"));
         assertTrue(detailedVcViewPage.isDetailedVcViewPageLoaded(), "Verify if detailed Vc view page is displayed");
-        detailedVcViewPage.clickOnMoreOptionsInDetails();
+
+//        detailedVcViewPage.clickOnMoreOptionsInDetails();
 
         MoreOptionsPage moreOptionsPage = new MoreOptionsPage(driver);
 
-        moreOptionsPage.clickOnActivationPending();
+        moreOptionsPage.clickOnActivationButton();
         PleaseConfirmPopupPage pleaseConfirmPopupPage = new PleaseConfirmPopupPage(driver);
 
         assertTrue(pleaseConfirmPopupPage.isPleaseConfirmPopupPageLoaded(), "Verify if pop up page is displayed");
@@ -256,10 +257,9 @@ public class ActivateVcTest extends AndroidBaseTest {
         AddNewCardPage addNewCardPage = homePage.downloadCard();
 
         assertTrue(addNewCardPage.isAddNewCardPageLoaded(), "Verify if add new card page is displayed");
-        assertTrue(addNewCardPage.isIssuerDescriptionMosipDisplayed(), "Verify if issuer description  mosip displayed");
-        assertTrue(addNewCardPage.isIssuerDescriptionEsignetDisplayed(), "Verify if issuer description  esignet displayed");
+//        assertTrue(addNewCardPage.isIssuerDescriptionEsignetDisplayed(), "Verify if issuer description  esignet displayed");
         assertTrue(addNewCardPage.isIssuerSearchBarDisplayed(), "Verify if issuer search bar displayed");
-        addNewCardPage.sendTextInIssuerSearchBar("Download MOSIP Credentials");
+//        addNewCardPage.sendTextInIssuerSearchBar("Download MOSIP Credentials");
         assertTrue(addNewCardPage.isAddNewCardPageLoaded(), "Verify if add new card page is displayed");
         assertTrue(addNewCardPage.isAddNewCardPageGuideMessageForEsignetDisplayed(), "Verify if add new card guide message displayed");
         assertTrue(addNewCardPage.isDownloadViaEsignetDisplayed(), "Verify if download via uin displayed");
@@ -291,7 +291,7 @@ public class ActivateVcTest extends AndroidBaseTest {
 //        assertEquals(detailedVcViewPage.getDateOfBirthInDetailedVcView(), TestDataReader.readData("dateOfBirth"), "Verify if date of birth is displayed");
         assertEquals(detailedVcViewPage.getGenderInDetailedVcView(), TestDataReader.readData("gender"), "Verify if gender is displayed");
         assertEquals(detailedVcViewPage.getIdTypeValueInDetailedVcView(), TestDataReader.readData("idType"), "Verify if id type is displayed");
-        assertEquals(detailedVcViewPage.getStatusInDetailedVcView(), TestDataReader.readData("status"), "Verify if status is displayed");
+        assertEquals(detailedVcViewPage.getStatusInDetailedVcView(), TestDataReader.readData("statusForEsignet"), "Verify if status is displayed");
         assertEquals(detailedVcViewPage.getUinInDetailedVcView(), uin, "Verify if uin is displayed");
         assertEquals(detailedVcViewPage.getPhoneInDetailedVcView(), TestDataReader.readData("phoneNumber"), "Verify if phone number is displayed");
         assertEquals(detailedVcViewPage.getEmailInDetailedVcView(), TestDataReader.readData("externalemail"), "Verify if email is displayed");

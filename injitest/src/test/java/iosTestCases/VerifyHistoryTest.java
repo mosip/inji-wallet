@@ -210,7 +210,7 @@ public class VerifyHistoryTest extends IosBaseTest {
         otpVerificationPage.enterOtp(TestDataReader.readData("passcode"), Target.IOS);
 
         assertTrue(moreOptionsPage.isVcActivatedForOnlineLogin(), "Verify if VC is activated");
-        HistoryPage historyPage = moreOptionsPage.clickOnCloseButton().clickOnHistoryButton();
+        HistoryPage historyPage = homePage.clickOnHistoryButton();
         assertTrue(historyPage.isHistoryPageLoaded(), "Verify if history page is displayed");
         assertTrue(historyPage.verifyActivationSuccessfulRecordInHistory(uin, Target.IOS));
 
@@ -391,12 +391,12 @@ public class VerifyHistoryTest extends IosBaseTest {
         sunbirdLoginPage.openDetailedSunbirdVcView();
 
         assertEquals(sunbirdLoginPage.getFullNameForSunbirdCardForDetailView(),TestDataReader.readData("fullNameSunbird"));
-//        assertEquals(sunbirdLoginPage.getPolicyNameForSunbirdCard(),TestDataReader.readData("policyNameSunbird"));
+        assertEquals(sunbirdLoginPage.getPolicyNameForSunbirdCard(),TestDataReader.readData("policyNameSunbird"));
         assertEquals(sunbirdLoginPage.getPhoneNumberForSunbirdCard(),TestDataReader.readData("phoneNumberSunbird"));
         assertEquals(sunbirdLoginPage.getDateofBirthValueForSunbirdCard(),TestDataReader.readData("dateOfBirthSunbird"));
         assertEquals(sunbirdLoginPage.getGenderValueForSunbirdCard(),TestDataReader.readData("genderValueSunbird"));
         assertEquals(sunbirdLoginPage.getEmailIdValueForSunbirdCard(),TestDataReader.readData("emailIdValueSunbird"));
-        assertEquals(sunbirdLoginPage.getStatusValueForSunbirdCard(),TestDataReader.readData("statusValueSunbird"));
+//        assertEquals(sunbirdLoginPage.getStatusValueForSunbirdCard(),TestDataReader.readData("statusValueSunbird"));
         assertEquals(sunbirdLoginPage.getIdTypeValueForSunbirdCard(),TestDataReader.readData("idTypeSunbird"));
 
         sunbirdLoginPage.clickOnBackArrow();

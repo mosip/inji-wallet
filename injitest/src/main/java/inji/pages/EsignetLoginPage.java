@@ -1,5 +1,6 @@
 package inji.pages;
 
+import inji.utils.UpdateNetworkSettings;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.HidesKeyboard;
 import io.appium.java_client.pagefactory.AndroidFindBy;
@@ -23,12 +24,12 @@ public class EsignetLoginPage extends BasePage {
     @iOSXCUITFindBy(xpath = "//*[contains(@text,'Login with e-Signet')]")
     private WebElement esignetLoginHeader;
 
-    @AndroidFindBy(xpath = "//*[contains(@text,'Enter Your VID')]")
+    @AndroidFindBy(xpath = "//*[contains(@text,'Please enter your UIN/VID')]")
     @iOSXCUITFindBy(xpath = "//*[contains(@text,'Enter Your VID')]")
     private WebElement enterYourVidTextHeader;
 
     @AndroidFindBy(uiAutomator = "UiSelector().className(\"android.widget.EditText\").instance(0)")
-    @iOSXCUITFindBy(accessibility = "Please fill in this field")
+    @iOSXCUITFindBy(className = "XCUIElementTypeTextField")
     private WebElement enterIdTextBox;
 
     @AndroidFindBy(xpath = "//android.widget.Button[@text=\"Get OTP\"]")
@@ -58,6 +59,31 @@ public class EsignetLoginPage extends BasePage {
 
     @AndroidFindBy(accessibility = "loaderSubTitle")
     private WebElement settingUpTextOrDownloadingCredentials;
+
+    @AndroidFindBy(xpath = "//*[@text=\"OTP is invalid\"]")
+    private WebElement invalidOtpText;
+
+    @AndroidFindBy(uiAutomator = "UiSelector().className(\"android.widget.TextView\").instance(1)")
+    @iOSXCUITFindBy(xpath = "(//XCUIElementTypeStaticText)[5]")
+    private WebElement loginTextHeader;
+
+    @AndroidFindBy(uiAutomator = "UiSelector().className(\"android.widget.TextView\").instance(2)")
+    @iOSXCUITFindBy(xpath = "(//XCUIElementTypeStaticText)[6]")
+    private WebElement pleaseEnterUinHeaderText;
+
+    @AndroidFindBy(uiAutomator = "UiSelector().className(\"android.widget.TextView\").instance(5)")
+    @iOSXCUITFindBy(xpath = "(//XCUIElementTypeStaticText)[9]")
+    private WebElement dontHaveAccountText;
+
+    @AndroidFindBy(uiAutomator = "UiSelector().className(\"android.widget.TextView\").instance(6)")
+    @iOSXCUITFindBy(xpath = "(//XCUIElementTypeStaticText)[10]")
+    private WebElement signUpwithUnifiedLoginText;
+
+    @AndroidFindBy(accessibility = "Close tab")
+    @iOSXCUITFindBy(xpath ="//XCUIElementTypeButton[@name=\"Cancel\"]")
+    private WebElement CloseTab;
+
+
 
     public EsignetLoginPage(AppiumDriver driver) {
         super(driver);
@@ -120,4 +146,157 @@ public class EsignetLoginPage extends BasePage {
         clickOnElement(verifyButton);
     }
 
+    public boolean isInvalidOtpMessageDisplayed() {
+        return this.isElementDisplayed(invalidOtpText);
+    }
+
+    public boolean  verifyLanguageEnterUinOrVidBoxTextDisplayed(String language){
+        String actualText = getTextFromLocator(enterIdTextBox);
+
+        switch (language) {
+            case "English":
+                boolean isEnglishMatch  = (actualText.equalsIgnoreCase("Please fill in this field")==true) ? true : false;
+                return isEnglishMatch ;
+            case "EnglishIos":
+                boolean isEnglishMatchIos  = (actualText.equalsIgnoreCase("Enter Your UIN or VID")==true) ? true : false;
+                return isEnglishMatchIos ;
+            case "Tamil":
+                boolean isTamilMatch  = (actualText.equalsIgnoreCase("இந்த புலத்தை நிரப்பவும்")==true) ? true : false;
+                return isTamilMatch ;
+            case "TamilIos":
+                boolean isTamilMatchIos  = (actualText.equalsIgnoreCase("உங்கள் UIN அல்லது VID ஐ உள்ளிடவும்")==true) ? true : false;
+                System.out.println(actualText);
+                return isTamilMatchIos;
+            case "Kannada":
+                boolean isKannadaMatch  = (actualText.equalsIgnoreCase("ದಯವಿಟ್ಟು ಈ ಕ್ಷೇತ್ರವನ್ನು ಭರ್ತಿ ಮಾಡಿ")==true) ? true : false;
+                return isKannadaMatch ;
+            case "KannadaIos":
+                boolean isKannadaMatchIos  = (actualText.equalsIgnoreCase("ನಿಮ್ಮ UIN ಅಥವಾ VID ನಮೂದಿಸಿ")==true) ? true : false;
+                return isKannadaMatchIos ;
+            case "Hindi":
+                boolean isHindiMatch  = (actualText.equalsIgnoreCase("कृपया इस क्षेत्र को भरें")==true) ? true : false;
+                return isHindiMatch ;
+            case "HindiIos":
+                boolean isHindiMatchIos  = (actualText.equalsIgnoreCase("अपना यूआईएन या वीआईडी \u200B\u200Bदर्ज करें")==true) ? true : false;
+                return isHindiMatchIos ;
+            case "Arabic":
+                boolean isArabicMatch  = (actualText.equalsIgnoreCase("يرجى ملء هذا الحقل")==true) ? true : false;
+                return isArabicMatch ;
+            case "ArabicIos":
+                boolean isArabicMatchIos  = (actualText.equalsIgnoreCase("أدخل رقم UIN أو VID الخاص بك")==true) ? true : false;
+                return isArabicMatchIos ;
+
+        }
+        return false;
+    }
+
+    public boolean  verifyLanguageLoginHeaderTextDisplayed(String language){
+        String actualText = getTextFromLocator(loginTextHeader);
+
+        switch (language) {
+            case "English":
+                boolean isEnglishMatch  = (actualText.equalsIgnoreCase("Login")==true) ? true : false;
+                return isEnglishMatch ;
+            case "Tamil":
+                boolean isTamilMatch  = (actualText.equalsIgnoreCase("eSignet மூலம் உள்நுழையவும்")==true) ? true : false;
+                return isTamilMatch ;
+            case "Kannada":
+                boolean isKannadaMatch  = (actualText.equalsIgnoreCase("ಇಸಿಗ್ನೆಟ್ ಮೂಲಕ ಲಾಗಿನ್ ಮಾಡಿ")==true) ? true : false;
+                return isKannadaMatch ;
+            case "Hindi":
+                boolean isHindiMatch  = (actualText.equalsIgnoreCase("ईसिग्नेट से लॉगिन करें")==true) ? true : false;
+                return isHindiMatch ;
+            case "HindiIos":
+                boolean isHindiMatchIos  = (actualText.equalsIgnoreCase("ईसिग्नेट से लॉगिन करें")==true) ? true : false;
+                return isHindiMatchIos ;
+            case "Arabic":
+                boolean isArabicMatch  = (actualText.equalsIgnoreCase("تسجيل الدخول باستخدام eSignet")==true) ? true : false;
+                return isArabicMatch ;
+        }
+        return false;
+    }
+
+    public boolean  verifyLanguagePleaseEnterUinHeaderTextDisplayed(String language){
+        String actualText = getTextFromLocator(pleaseEnterUinHeaderText);
+
+        switch (language) {
+            case "English":
+                boolean isEnglishMatch  = (actualText.equalsIgnoreCase("Please enter your UIN/VID")==true) ? true : false;
+                return isEnglishMatch ;
+            case "Tamil":
+                boolean isTamilMatch  = (actualText.equalsIgnoreCase("உங்கள் UIN/VIDஐ உள்ளிடவும்")==true) ? true : false;
+                return isTamilMatch ;
+            case "TamilIos":
+                boolean isTamilMatchIos  = (actualText.equalsIgnoreCase("உங்கள் UIN/VIDஐ உள்ளிடவும்")==true) ? true : false;
+                return isTamilMatchIos ;
+            case "Kannada":
+                boolean isKannadaMatch  = (actualText.equalsIgnoreCase("ದಯವಿಟ್ಟು ನಿಮ್ಮ UIN/VID ಅನ್ನು ನಮೂದಿಸಿ")==true) ? true : false;
+                return isKannadaMatch ;
+            case "Hindi":
+                boolean isHindiMatch  = (actualText.equalsIgnoreCase("कृपया अपना यूआईएन/वीआईडी \u200B\u200Bदर्ज करें")==true) ? true : false;
+                return isHindiMatch ;
+            case "HindiIos":
+                boolean isHindiMatchIos  = (actualText.equalsIgnoreCase("अपना यूआईएन या वीआईडी \u200B\u200Bदर्ज करें")==true) ? true : false;
+                return isHindiMatchIos ;
+            case "Arabic":
+                boolean isArabicMatch  = (actualText.equalsIgnoreCase("الرجاء إدخال UIN/VID الخاص بك")==true) ? true : false;
+                return isArabicMatch ;
+        }
+        return false;
+    }
+
+    public boolean  verifyLanguageForDontHaveAccountTextDisplayed(String language){
+        String actualText = getTextFromLocator(dontHaveAccountText);
+
+        switch (language) {
+            case "English":
+                boolean isEnglishMatch  = (actualText.equalsIgnoreCase("Don't have an account?")==true) ? true : false;
+                return isEnglishMatch ;
+            case "Tamil":
+                boolean isTamilMatch  = (actualText.equalsIgnoreCase("கணக்கு இல்லையா?")==true) ? true : false;
+                return isTamilMatch ;
+            case "Kannada":
+                boolean isKannadaMatch  = (actualText.equalsIgnoreCase("ಖಾತೆ ಇಲ್ಲವೇ?")==true) ? true : false;
+                return isKannadaMatch ;
+            case "Hindi":
+                boolean isHindiMatch  = (actualText.equalsIgnoreCase("कोई खाता नहीं है?")==true) ? true : false;
+                return isHindiMatch ;
+            case "Arabic":
+                boolean isArabicMatch  = (actualText.equalsIgnoreCase("ليس لديك حساب؟")==true) ? true : false;
+                return isArabicMatch ;
+        }
+        return false;
+    }
+
+    public boolean  verifyLanguageForSignUpwithUnifiedLoginTextDisplayed(String language){
+        String actualText = getTextFromLocator(signUpwithUnifiedLoginText);
+
+        switch (language) {
+            case "English":
+                boolean isEnglishMatch  = (actualText.equalsIgnoreCase("Sign Up with Unified Login")==true) ? true : false;
+                return isEnglishMatch ;
+            case "Tamil":
+                boolean isTamilMatch  = (actualText.equalsIgnoreCase("ஒருங்கிணைந்த உள்நுழைவுடன் பதிவு செய்யவும்")==true) ? true : false;
+                return isTamilMatch ;
+            case "Kannada":
+                boolean isKannadaMatch  = (actualText.equalsIgnoreCase("ಏಕೀಕೃತ ಲಾಗಿನ್\u200Cನೊಂದಿಗೆ ಸೈನ್ ಅಪ್ ಮಾಡಿ")==true) ? true : false;
+                return isKannadaMatch ;
+            case "Hindi":
+                boolean isHindiMatch  = (actualText.equalsIgnoreCase("एकीकृत लॉगिन के साथ साइन अप करें")==true) ? true : false;
+                return isHindiMatch ;
+            case "Arabic":
+                boolean isArabicMatch  = (actualText.equalsIgnoreCase("قم بالتسجيل باستخدام تسجيل الدخول الموحد")==true) ? true : false;
+                return isArabicMatch ;
+        }
+        return false;
+    }
+
+    public void clickOnCloseButton() {
+        clickOnElement(CloseTab);
+    }
+
+    public String getText(){
+    System.out.println(getTextFromLocator(enterIdTextBox));
+        return getTextFromLocator(enterIdTextBox);
+    }
 }

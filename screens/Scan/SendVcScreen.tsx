@@ -17,12 +17,13 @@ import {
 import {TelemetryConstants} from '../../shared/telemetry/TelemetryConstants';
 import {
   getVCsOrderedByPinStatus,
+  isMosipVC,
   VCItemContainerFlowType,
 } from '../../shared/Utils';
-import {Issuers} from '../../shared/openId4VCI/Utils';
 import {FaceVerificationAlertOverlay} from './FaceVerificationAlertOverlay';
 import {Error} from '../../components/ui/Error';
 import {SvgImage} from '../../components/ui/svg';
+import {LIVENESS_CHECK} from '../../shared/constants';
 
 export const SendVcScreen: React.FC = () => {
   const {t} = useTranslation('SendVcScreen');
@@ -101,9 +102,7 @@ export const SendVcScreen: React.FC = () => {
         <Column
           style={Theme.SendVcScreenStyles.shareOptionButtonsContainer}
           backgroundColor={Theme.Colors.whiteBackgroundColor}>
-          {[Issuers.MosipOtp, Issuers.Mosip].indexOf(
-            controller.verifiableCredentialData.issuer,
-          ) !== -1 && (
+          {isMosipVC(controller.verifiableCredentialData.issuer) && (
             <Button
               type="gradient"
               title={t('acceptRequestAndVerify')}
@@ -140,6 +139,7 @@ export const SendVcScreen: React.FC = () => {
         isInvalidIdentity={controller.isInvalidIdentity}
         onNavigateHome={controller.GO_TO_HOME}
         onRetryVerification={controller.RETRY_VERIFICATION}
+        isLivenessEnabled={LIVENESS_CHECK}
       />
 
       <FaceVerificationAlertOverlay

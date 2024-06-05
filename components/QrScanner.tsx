@@ -101,7 +101,7 @@ export const QrScanner: React.FC<QrScannerProps> = props => {
               <Text
                 testID="EnablePermissionText"
                 color={Theme.Colors.whiteText}>
-                {t('Permissions:enablePermission')}
+                {t('EnablePermission')}
               </Text>
             </Pressable>
           </Row>

@@ -31,6 +31,11 @@ export const generateRandomString = async () => {
   );
   return randomString;
 };
+export const getRandomInt = (min, max) => {
+  min = Math.ceil(min);
+  max = Math.floor(max);
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+};
 export const generateBackupEncryptionKey = (
   password: string,
   salt: string,
@@ -124,8 +129,8 @@ export const getAccountType = () => (isAndroid() ? GMAIL : APPLE);
 export const getDriveName = () =>
   isAndroid() ? GOOGLE_DRIVE_NAME : ICLOUD_DRIVE_NAME;
 
-export function sleep(time = 1000) {
-  return new Promise(resolve => setTimeout(resolve, time));
+export function sleep(timeInMillSeconds = 1000) {
+  return new Promise(resolve => setTimeout(resolve, timeInMillSeconds));
 }
 
 export const getScreenHeight = () => {

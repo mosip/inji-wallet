@@ -33,6 +33,10 @@ public class SettingsPage extends BasePage {
     @AndroidFindBy(accessibility = "fil")
     @iOSXCUITFindBy(accessibility = "fil")
     private WebElement filipinoLanguageButton;
+
+    @AndroidFindBy(accessibility = "en")
+    @iOSXCUITFindBy(accessibility = "en")
+    private WebElement englishLanguageButton;
     
     @AndroidFindBy(accessibility = "hi")
     @iOSXCUITFindBy(accessibility = "hi")
@@ -60,7 +64,7 @@ public class SettingsPage extends BasePage {
     private WebElement aboutInji;
 
     @AndroidFindBy(xpath = "//*[contains(@text,'Tuvali-version:')]")
-    @iOSXCUITFindBy(xpath = "//*[contains(@name,'Tuvali-version: 0.')]")
+    @iOSXCUITFindBy(xpath = "//*[contains(@name,'Tuvali-version:')]")
     private WebElement tuvaliVersion;
 
     @AndroidFindBy(accessibility = "injiTourGuide")
@@ -119,7 +123,9 @@ public class SettingsPage extends BasePage {
         return this;
     }
 
-
+    public void clickOnEnglishLanguage() {
+        clickOnElement(englishLanguageButton);
+    }
 
     public void clickOnFilipinoLanguage() {
         clickOnElement(filipinoLanguageButton);

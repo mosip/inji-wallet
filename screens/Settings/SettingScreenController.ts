@@ -29,7 +29,8 @@ import {
 import {GlobalContext} from '../../shared/GlobalContext';
 import {useTranslation} from 'react-i18next';
 import {RequestRouteProps, RootRouteProps} from '../../routes';
-import {REQUEST_ROUTES} from '../../routes/routesConstants';
+import {BOTTOM_TAB_ROUTES, REQUEST_ROUTES} from '../../routes/routesConstants';
+import {useCopilot} from 'react-native-copilot';
 
 export function useSettingsScreen(props: RootRouteProps & RequestRouteProps) {
   const {appService} = useContext(GlobalContext);
@@ -102,6 +103,8 @@ export function useSettingsScreen(props: RootRouteProps & RequestRouteProps) {
     setHasAlertMsg('');
   };
 
+  const {start} = useCopilot();
+
   return {
     isVisible,
     alertMsg,
@@ -167,9 +170,11 @@ export function useSettingsScreen(props: RootRouteProps & RequestRouteProps) {
     },
 
     INJI_TOUR_GUIDE: () => {
-      settingsService.send(SettingsEvents.INJI_TOUR_GUIDE()),
-        props.navigation.navigate('IntroSliders'),
-        setIsVisible(false);
+      settingsService.send(SettingsEvents.INJI_TOUR_GUIDE());
+      props.navigation.navigate(BOTTOM_TAB_ROUTES.home);
+      setIsVisible(false);
+      authService.send(AuthEvents.SET_TOUR_GUIDE(true));
+      start();
     },
 
     TOGGLE_BIOMETRIC: (enable: boolean) => {

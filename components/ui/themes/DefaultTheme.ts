@@ -389,8 +389,12 @@ export const DefaultTheme = {
       justifyContent: 'space-between',
     },
     welcomeLogo: {
-      width: 160.441,
-      height: 173.276,
+      width: 185,
+      height: 71,
+    },
+    injiLogo: {
+      width: 105,
+      height: 40,
     },
     logo: {
       height: 35,
@@ -594,17 +598,21 @@ export const DefaultTheme = {
       borderBottomColor: Colors.platinumGrey,
       borderBottomWidth: 1.3,
     },
+    downloadFabIconCopilotContainer: {
+      height: 70,
+      width: 70,
+      borderRadius: 200,
+      position: 'absolute',
+      bottom: Dimensions.get('window').width * 0.1,
+      right: Dimensions.get('window').width * 0.1,
+    },
     downloadFabIconContainer: {
       height: 70,
       width: 70,
       borderRadius: 200,
-      padding: 10,
       shadowColor: '#000',
       shadowOpacity: 0.4,
       elevation: 5,
-      position: 'absolute',
-      bottom: Dimensions.get('window').width * 0.1,
-      right: Dimensions.get('window').width * 0.1,
     },
     downloadFabIconNormal: {
       borderRadius: 200,
@@ -694,6 +702,27 @@ export const DefaultTheme = {
       fontFamily: 'Inter_600SemiBold',
       marginTop: isIOS() ? 5 : 15,
     },
+    tabBarIconCopilot: {
+      flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center',
+      minWidth: 70,
+      minHeight: 65,
+      marginBottom: -5,
+    },
+    copilotStyle: {
+      position: 'absolute',
+      left: 10,
+      right: 10,
+      borderRadius: 8,
+      maxWidth: Dimensions.get('screen').width,
+      minHeight: Dimensions.get('screen').height * 0.22,
+    },
+    copilotButton: {
+      width: 104,
+      height: 40,
+      marginLeft: 10,
+    },
   }),
   BannerStyles: StyleSheet.create({
     container: {
@@ -776,6 +805,9 @@ export const DefaultTheme = {
       shadowOpacity: 0.4,
       shadowRadius: 3,
       marginTop: 14,
+    },
+    shareQrCodeButton: {
+      marginTop: 30,
     },
   }),
   PinInputStyle: StyleSheet.create({
@@ -1499,7 +1531,6 @@ export const DefaultTheme = {
     },
     bannerTextContainer: {
       justifyContent: 'space-between',
-      width: '99%',
     },
     bannerTitle: {
       fontFamily: 'Inter_600SemiBold',
@@ -1518,8 +1549,8 @@ export const DefaultTheme = {
     },
     scannerContainer: {
       borderRadius: 24,
-      height: 320,
-      width: 300,
+      height: 350,
+      width: 320,
       marginTop: 40,
       backgroundColor: Colors.White,
       borderWidth: 1,
@@ -1528,18 +1559,44 @@ export const DefaultTheme = {
   }),
 
   CameraEnabledStyles: StyleSheet.create({
-    container: {marginTop: 20, marginBottom: 20},
     scannerContainer: {
       borderRadius: 24,
       alignSelf: 'center',
-      height: 320,
-      width: 300,
+      height: 350,
+      width: 320,
       overflow: 'hidden',
     },
     scanner: {
       height: '100%',
       width: '100%',
       margin: 'auto',
+    },
+    guideContainer: {
+      flex: 1,
+      justifyContent: 'flex-start',
+      alignItems: 'center',
+    },
+    guideContentContainer: {
+      backgroundColor: '#ffffff',
+      borderRadius: 9,
+      width: Dimensions.get('window').width * 0.85,
+      alignItems: 'center',
+      marginTop: Dimensions.get('window').height * 0.12,
+      padding: 3,
+    },
+    buttonContainer: {
+      flex: 1,
+      justifyContent: 'flex-end',
+      alignItems: 'center',
+    },
+    cancelButton: {
+      backgroundColor: '#ffffff',
+      borderRadius: 9,
+      width: Dimensions.get('window').width * 0.3,
+      alignSelf: 'center',
+      alignItems: 'center',
+      height: 40,
+      marginBottom: Dimensions.get('window').height * 0.1,
     },
     holdPhoneSteadyText: {
       color: Colors.Black,

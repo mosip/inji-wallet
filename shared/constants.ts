@@ -1,11 +1,19 @@
-import {Platform} from 'react-native';
-import {DEBUG_MODE, ESIGNET_HOST, MIMOTO_HOST} from 'react-native-dotenv';
+import {Dimensions, Platform} from 'react-native';
+import {
+  DEBUG_MODE,
+  ESIGNET_HOST,
+  MIMOTO_HOST,
+  LIVENESS_DETECTION,
+} from 'react-native-dotenv';
 import {Argon2iConfig} from './commonUtil';
 import {VcIdType} from '../machines/VerifiableCredential/VCMetaMachine/vc';
 
 export let MIMOTO_BASE_URL = MIMOTO_HOST;
 export let ESIGNET_BASE_URL = ESIGNET_HOST;
 export let DEBUG_MODE_ENABLED = DEBUG_MODE === 'true';
+
+export const LIVENESS_CHECK = LIVENESS_DETECTION === 'true';
+export const LIVENESS_THRESHOLD = 0.4;
 
 export const changeCrendetialRegistry = (host: string) =>
   (MIMOTO_BASE_URL = host);
@@ -118,7 +126,7 @@ export type IndividualId = {
 export const TECHNICAL_ERROR = 'Technical error';
 export const NETWORK_REQUEST_FAILED = 'Network request failed';
 export const IOS_SIGNIN_FAILED = 'iCloud not available';
-export const REQUEST_TIMEOUT = 'request timedout';
+export const REQUEST_TIMEOUT = 'request timeout';
 export const BIOMETRIC_CANCELLED = 'User has cancelled biometric';
 export const GOOGLE_DRIVE_NAME = 'Google Drive';
 export const GMAIL = 'gmail';
@@ -126,3 +134,9 @@ export const APPLE = 'Apple';
 export const ICLOUD_DRIVE_NAME = 'iCloud';
 export const DEFAULT_ECL = 'M';
 export const DEFAULT_QR_HEADER = 'INJIQUICKSHARE://';
+export const MAX_QR_DATA_LENGTH=4296
+
+export const INTRO_SLIDER_LOGO_MARGIN = Dimensions.get('screen').width * 0.45;
+
+export const COPILOT_PRE_FINAL_STEP: number = 5;
+export const COPILOT_FINAL_STEP: number = 6;

@@ -1,7 +1,7 @@
 import {KeyPair, RSA} from 'react-native-rsa-native';
 import forge from 'node-forge';
 import {BIOMETRIC_CANCELLED, DEBUG_MODE_ENABLED, isIOS} from '../constants';
-import SecureKeystore from '@mosip/secure-keystore';
+import {NativeModules} from 'react-native';
 import {BiometricCancellationError} from '../error/BiometricCancellationError';
 import {EncryptedOutput} from './encryptedOutput';
 import {Buffer} from 'buffer';
@@ -15,12 +15,13 @@ export const DUMMY_KEY_FOR_BIOMETRIC_ALIAS =
   '9a6cfc0e-4248-11ee-be56-0242ac120002';
 
 export function generateKeys(): Promise<KeyPair> {
-  return Promise.resolve(RSA.generateKeys(4096));
+  return Promise.resolve(RSA.generateKeys(2048));
 }
 
 /**
  * isCustomKeystore is a cached check of existence of a hardware keystore.
  */
+const {RNSecureKeystoreModule} = NativeModules;
 export const isHardwareKeystoreExists = isCustomSecureKeystore();
 
 export async function getJWT(
@@ -61,7 +62,7 @@ export async function createSignature(
     return encodeB64(signature);
   } else {
     try {
-      signature64 = await SecureKeystore.sign(individualId, preHash);
+      signature64 = await RNSecureKeystoreModule.sign(individualId, preHash);
     } catch (error) {
       console.error('Error in creating signature:', error);
       if (error.toString().includes(BIOMETRIC_CANCELLED)) {
@@ -90,7 +91,7 @@ export function encodeB64(str: string) {
  *  use the isCustomKeystore constant in the app lifeycle instead.
  */
 function isCustomSecureKeystore() {
-  return !isIOS() ? SecureKeystore.deviceSupportsHardware() : false;
+  return !isIOS() ? RNSecureKeystoreModule.deviceSupportsHardware() : false;
 }
 
 export async function encryptJson(
@@ -107,7 +108,10 @@ export async function encryptJson(
       return encryptWithForge(data, encryptionKey).toString();
     }
     const base64EncodedString = Buffer.from(data).toString('base64');
-    return await SecureKeystore.encryptData(ENCRYPTION_ID, base64EncodedString);
+    return await RNSecureKeystoreModule.encryptData(
+      ENCRYPTION_ID,
+      base64EncodedString,
+    );
   } catch (error) {
     console.error('error while encrypting:', error);
     if (error.toString().includes(BIOMETRIC_CANCELLED)) {
@@ -135,7 +139,10 @@ export async function decryptJson(
       return decryptWithForge(encryptedData, encryptionKey);
     }
 
-    return await SecureKeystore.decryptData(ENCRYPTION_ID, encryptedData);
+    return await RNSecureKeystoreModule.decryptData(
+      ENCRYPTION_ID,
+      encryptedData,
+    );
   } catch (e) {
     console.error('error decryptJson:', e);
 

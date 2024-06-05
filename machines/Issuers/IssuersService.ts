@@ -1,11 +1,9 @@
 import Cloud from '../../shared/CloudBackupAndRestoreUtils';
-import {API_URLS, CACHED_API} from '../../shared/api';
+import {CACHED_API} from '../../shared/api';
 import NetInfo from '@react-native-community/netinfo';
-import {request} from '../../shared/request';
 import {
   constructAuthorizationConfiguration,
-  getBody,
-  Issuers,
+  constructProofJWT,
   Issuers_Key_Ref,
   updateCredentialInformation,
   vcDownloadTimeout,
@@ -15,8 +13,7 @@ import {
   generateKeys,
   isHardwareKeystoreExists,
 } from '../../shared/cryptoutil/cryptoUtil';
-import SecureKeystore from '@mosip/secure-keystore';
-import {getVCMetadata, VCMetadata} from '../../shared/VCMetadata';
+import {NativeModules} from 'react-native';
 import {
   VerificationErrorType,
   verifyCredential,
@@ -26,7 +23,10 @@ import {
   sendImpressionEvent,
 } from '../../shared/telemetry/TelemetryUtils';
 import {TelemetryConstants} from '../../shared/telemetry/TelemetryConstants';
+import {isMosipVC} from '../../shared/Utils';
+import {VciClient} from '../../shared/vciClient/VciClient';
 
+const {RNSecureKeystoreModule} = NativeModules;
 export const IssuersService = () => {
   return {
     isUserSignedAlready: () => async () => {
@@ -40,38 +40,44 @@ export const IssuersService = () => {
       let issuersConfig = await CACHED_API.fetchIssuerConfig(
         context.selectedIssuerId,
       );
-      if (context.selectedIssuer['.well-known']) {
-        await CACHED_API.fetchIssuerWellknownConfig(
-          context.selectedIssuerId,
-          context.selectedIssuer['.well-known'],
-        );
-      }
+      const wellknownResponse = await CACHED_API.fetchIssuerWellknownConfig(
+        context.selectedIssuerId,
+        issuersConfig['.well-known'],
+      );
+      issuersConfig.credential_endpoint =
+        wellknownResponse?.credential_endpoint;
+      issuersConfig.credential_audience = wellknownResponse?.credential_issuer;
+      issuersConfig.credentialTypes = wellknownResponse?.credentials_supported;
       return issuersConfig;
     },
     downloadCredentialTypes: async (context: any) => {
-      const response = await request(
-        API_URLS.credentialTypes.method,
-        API_URLS.credentialTypes.buildURL(context.selectedIssuerId),
-      );
-      return response?.response;
+      return context.selectedIssuer.credentialTypes;
     },
     downloadCredential: async (context: any) => {
-      const body = await getBody(context);
       const downloadTimeout = await vcDownloadTimeout();
-      let credential = await request(
-        'POST',
-        context.selectedIssuer.credential_endpoint,
-        body,
-        '',
-        {
-          'Content-Type': 'application/json',
-          Authorization: 'Bearer ' + context.tokenResponse?.accessToken,
-        },
-        downloadTimeout,
+      const accessToken: string = context.tokenResponse?.accessToken;
+      const issuerMeta: Object = {
+        credentialAudience: context.selectedIssuer.credential_audience,
+        credentialEndpoint: context.selectedIssuer.credential_endpoint,
+        downloadTimeoutInMilliSeconds: downloadTimeout,
+        credentialType: context.selectedCredentialType?.credential_definition
+          .type ?? ['VerifiableCredential'],
+        credentialFormat: 'ldp_vc',
+      };
+      const proofJWT = await constructProofJWT(
+        context.publicKey,
+        context.privateKey,
+        accessToken,
+        context.selectedIssuer,
       );
-      console.info(`VC download via ${context.selectedIssuerId} is succesfull`);
-      credential = updateCredentialInformation(context, credential);
-      return credential;
+      let credential = await VciClient.downloadCredential(
+        issuerMeta,
+        proofJWT,
+        accessToken,
+      );
+
+      console.info(`VC download via ${context.selectedIssuerId} is successful`);
+      return updateCredentialInformation(context, credential);
     },
     invokeAuthorization: async (context: any) => {
       sendImpressionEvent(
@@ -81,16 +87,10 @@ export const IssuersService = () => {
             TelemetryConstants.Screens.webViewPage,
         ),
       );
-      let supportedScopes: [string];
-      if (Object.keys(context.selectedCredentialType).length === 0) {
-        supportedScopes = context.selectedIssuer.scopes_supported;
-      } else {
-        supportedScopes = [context.selectedCredentialType['scope']];
-      }
       return await authorize(
         constructAuthorizationConfiguration(
           context.selectedIssuer,
-          supportedScopes,
+          context.selectedCredentialType.scope,
         ),
       );
     },
@@ -98,8 +98,8 @@ export const IssuersService = () => {
       if (!isHardwareKeystoreExists) {
         return await generateKeys();
       }
-      const isBiometricsEnabled = SecureKeystore.hasBiometricsEnabled();
-      return SecureKeystore.generateKeyPair(
+      const isBiometricsEnabled = RNSecureKeystoreModule.hasBiometricsEnabled();
+      return RNSecureKeystoreModule.generateKeyPair(
         Issuers_Key_Ref,
         isBiometricsEnabled,
         0,
@@ -107,20 +107,18 @@ export const IssuersService = () => {
     },
     verifyCredential: async (context: any) => {
       //this issuer specific check has to be removed once vc validation is done.
-      if (
-        VCMetadata.fromVcMetadataString(getVCMetadata(context)).issuer ===
-        Issuers.Sunbird
-      ) {
+      if (isMosipVC(context.vcMetadata.issuer)) {
+        const verificationResult = await verifyCredential(
+          context.verifiableCredential?.credential,
+        );
+        if (!verificationResult.isVerified) {
+          throw new Error(verificationResult.errorMessage);
+        }
+      } else {
         return {
           isVerified: true,
           errorMessage: VerificationErrorType.NO_ERROR,
         };
-      }
-      const verificationResult = await verifyCredential(
-        context.verifiableCredential?.credential,
-      );
-      if (!verificationResult.isVerified) {
-        throw new Error(verificationResult.errorMessage);
       }
     },
   };

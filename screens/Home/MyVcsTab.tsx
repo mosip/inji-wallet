@@ -1,13 +1,13 @@
 import React, {useEffect, useState} from 'react';
 import {Button, Column, Row, Text} from '../../components/ui';
 import {Theme} from '../../components/ui/styleUtils';
-import {Pressable, RefreshControl} from 'react-native';
+import {Pressable, RefreshControl, View} from 'react-native';
 import {useMyVcsTab} from './MyVcsTabController';
 import {HomeScreenTabProps} from './HomeScreen';
 import {AddVcModal} from './MyVcs/AddVcModal';
 import {GetVcModal} from './MyVcs/GetVcModal';
 import {useTranslation} from 'react-i18next';
-import {BANNER_TYPE_SUCCESS, GET_INDIVIDUAL_ID} from '../../shared/constants';
+import {GET_INDIVIDUAL_ID} from '../../shared/constants';
 import {MessageOverlay} from '../../components/MessageOverlay';
 import {VcItemContainer} from '../../components/VC/VcItemContainer';
 import {
@@ -26,6 +26,7 @@ import {SvgImage} from '../../components/ui/svg';
 import {SearchBar} from '../../components/ui/SearchBar';
 import {Icon} from 'react-native-elements';
 import {VCMetadata} from '../../shared/VCMetadata';
+import {useCopilot} from 'react-native-copilot';
 
 export const MyVcsTab: React.FC<HomeScreenTabProps> = props => {
   const {t} = useTranslation('MyVcsTab');
@@ -58,6 +59,13 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = props => {
     setClearSearchIcon(false);
     setShowPinVc(true);
   };
+  const {start} = useCopilot();
+
+  useEffect(() => {
+    if (controller.isInitialDownloading) {
+      controller.SET_TOUR_GUIDE(true);
+    }
+  }, []);
 
   useEffect(() => {
     filterVcs(search);
@@ -201,6 +209,7 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = props => {
     numberOfCardsAvailable > 1
       ? numberOfCardsAvailable + ' ' + t('common:cards')
       : numberOfCardsAvailable + ' ' + t('common:card');
+
   return (
     <React.Fragment>
       <Column fill style={{display: props.isVisible ? 'flex' : 'none'}}>
@@ -261,7 +270,7 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = props => {
                   )}
                 </Row>
                 {showPinVc &&
-                  vcMetadataOrderedByPinStatus.map(vcMetadata => {
+                  vcMetadataOrderedByPinStatus.map((vcMetadata, index) => {
                     return (
                       <VcItemContainer
                         key={vcMetadata.getVcKey()}
@@ -272,6 +281,8 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = props => {
                           vcMetadata.getVcKey(),
                         )}
                         isPinned={vcMetadata.isPinned}
+                        isInitialLaunch={controller.isInitialDownloading}
+                        isTopCard={index === 0}
                       />
                     );
                   })}
@@ -338,26 +349,33 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = props => {
                     onRefresh={controller.REFRESH}
                   />
                 }>
-                {SvgImage.DigitalIdentity()}
-                <Text
-                  testID="bringYourDigitalID"
-                  style={{paddingTop: 3}}
-                  align="center"
-                  weight="bold"
-                  margin="33 0 6 0"
-                  lineHeight={1}>
-                  {t('bringYourDigitalID')}
-                </Text>
-                <Text
+                <View
+                  onLayout={controller.isOnboarding ? () => start() : undefined}
                   style={{
-                    ...Theme.TextStyles.bold,
-                    paddingTop: 3,
-                  }}
-                  color={Theme.Colors.textLabel}
-                  align="center"
-                  margin="0 12 30 12">
-                  {t('generateVcFABDescription')}
-                </Text>
+                    alignItems: 'center',
+                  }}>
+                  {SvgImage.DigitalIdentity()}
+                  <Text
+                    testID="bringYourDigitalID"
+                    style={{paddingTop: 3}}
+                    align="center"
+                    weight="bold"
+                    margin="33 0 6 0"
+                    lineHeight={1}>
+                    {t('bringYourDigitalID')}
+                  </Text>
+                  <Text
+                    testID="generateVcFABDescription"
+                    style={{
+                      ...Theme.TextStyles.bold,
+                      paddingTop: 3,
+                    }}
+                    color={Theme.Colors.textLabel}
+                    align="center"
+                    margin="0 12 30 12">
+                    {t('generateVcFABDescription')}
+                  </Text>
+                </View>
               </Column>
             </React.Fragment>
           )}

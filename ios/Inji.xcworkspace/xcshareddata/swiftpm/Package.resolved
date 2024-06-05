@@ -1,0 +1,32 @@
+{
+  "pins" : [
+    {
+      "identity" : "base45-swift",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/ehn-dcc-development/base45-swift",
+      "state" : {
+        "revision" : "c1db97d793d02a1c3d56d50a738c8fd8c34372f8",
+        "version" : "1.1.0"
+      }
+    },
+    {
+      "identity" : "inji-vci-client-ios-swift",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/mosip/inji-vci-client-ios-swift.git",
+      "state" : {
+        "branch" : "develop",
+        "revision" : "2c2a3d2c321e11511f4667e3727587dc0cca61cb"
+      }
+    },
+    {
+      "identity" : "pixelpass-ios-swift",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/mosip/pixelpass-ios-swift/",
+      "state" : {
+        "branch" : "develop",
+        "revision" : "0b716d5f6545b10de84c69edbf59565e66776ccd"
+      }
+    }
+  ],
+  "version" : 2
+}

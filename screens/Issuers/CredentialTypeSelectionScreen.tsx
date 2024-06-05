@@ -39,7 +39,7 @@ export const CredentialTypeSelectionScreen: React.FC<
         </Text>
         <View style={Theme.IssuersScreenStyles.issuersContainer}>
           <FlatList
-            data={controller.credentialTypes}
+            data={controller.supportedCredentialTypes}
             numColumns={1}
             keyExtractor={item => item.id}
             renderItem={({item}) => {
