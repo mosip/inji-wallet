@@ -203,7 +203,6 @@ platform :ios do
       workspace: "Inji.xcworkspace",
       scheme: "Inji",
       export_method: "app-store",
-      export_xcargs: "-allowProvisioningUpdates",
       export_options: {
         provisioningProfiles: {
           "#{generate_app_bundle_id}" => "match AppStore #{generate_app_bundle_id}"
