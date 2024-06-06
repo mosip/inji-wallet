@@ -513,7 +513,7 @@ public class ChangeLanguageTest extends AndroidBaseTest {
         assertTrue(addNewCardPage.isAddNewCardPageGuideMessageForEsignetDisplayed(), "Verify if add new card guide message displayed");
         assertTrue(addNewCardPage.isDownloadViaSunbirdDisplayed(), "Verify if download sunbird displayed");
         SunbirdLoginPage sunbirdLoginPage =  addNewCardPage.clickOnDownloadViaSunbird();
-        addNewCardPage.clickOnInsuranceCredential();
+        addNewCardPage.clickOnCredentialTypeHeadingInsuranceCredential();
 
         sunbirdLoginPage.enterPolicyNumberTextBox(TestDataReader.readData("policyNumberSunbird"));
         sunbirdLoginPage.enterFullNameTextBox(TestDataReader.readData("fullNameSunbird"));
@@ -670,6 +670,7 @@ public class ChangeLanguageTest extends AndroidBaseTest {
 
         AddNewCardPage addNewCardPage = homePage.downloadCard();
         EsignetLoginPage esignetLoginPage = addNewCardPage.clickOnDownloadViaEsignet();
+        addNewCardPage.clickOnCredentialTypeHeadingInsuranceCredential();
         assertTrue(esignetLoginPage.verifyLanguageEnterUinOrVidBoxTextDisplayed("Tamil"),"verify if search bar is displayed in tamil");
         assertTrue(esignetLoginPage.verifyLanguageLoginHeaderTextDisplayed("Tamil"),"verify if search bar is displayed in tamil");
         assertTrue(esignetLoginPage.verifyLanguagePleaseEnterUinHeaderTextDisplayed("Tamil"),"verify if search bar is displayed in tamil");
@@ -707,6 +708,7 @@ public class ChangeLanguageTest extends AndroidBaseTest {
 
         AddNewCardPage addNewCardPage = homePage.downloadCard();
         EsignetLoginPage esignetLoginPage = addNewCardPage.clickOnDownloadViaEsignet();
+        addNewCardPage.clickOnCredentialTypeHeadingInsuranceCredential();
         assertTrue(esignetLoginPage.verifyLanguageEnterUinOrVidBoxTextDisplayed("Kannada"),"verify if search bar is displayed in Kannada");
         assertTrue(esignetLoginPage.verifyLanguageLoginHeaderTextDisplayed("Kannada"),"verify if search bar is displayed in Kannada");
         assertTrue(esignetLoginPage.verifyLanguagePleaseEnterUinHeaderTextDisplayed("Kannada"),"verify if search bar is displayed in Kannada");
@@ -784,6 +786,7 @@ public class ChangeLanguageTest extends AndroidBaseTest {
 
         AddNewCardPage addNewCardPage = homePage.downloadCard();
         EsignetLoginPage esignetLoginPage = addNewCardPage.clickOnDownloadViaEsignet();
+        addNewCardPage.clickOnCredentialTypeHeadingInsuranceCredential();
         assertTrue(esignetLoginPage.verifyLanguageEnterUinOrVidBoxTextDisplayed("Kannada"),"verify if search bar is displayed in Kannada");
         assertTrue(esignetLoginPage.verifyLanguageLoginHeaderTextDisplayed("Kannada"),"verify if search bar is displayed in Kannada");
         assertTrue(esignetLoginPage.verifyLanguagePleaseEnterUinHeaderTextDisplayed("Kannada"),"verify if search bar is displayed in Kannada");

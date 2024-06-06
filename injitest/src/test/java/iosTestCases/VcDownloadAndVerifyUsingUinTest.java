@@ -324,7 +324,7 @@ public class VcDownloadAndVerifyUsingUinTest extends IosBaseTest {
 
         homePage.downloadCard();
         SunbirdLoginPage sunbirdLoginPage =  addNewCardPage.clickOnDownloadViaSunbird();
-        addNewCardPage.clickOnInsuranceCredential();
+        addNewCardPage.clickOnCredentialTypeHeadingInsuranceCredential();
 
         addNewCardPage.clickOnContinueButtonInSigninPopupIos();
         sunbirdLoginPage.enterPolicyNumberTextBox(TestDataReader.readData("policyNumberSunbird"));

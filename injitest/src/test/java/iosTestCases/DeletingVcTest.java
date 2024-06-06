@@ -256,7 +256,7 @@ public class DeletingVcTest extends IosBaseTest {
         assertTrue(addNewCardPage.isAddNewCardPageLoaded(), "Verify if add new card page is displayed");
         SunbirdLoginPage sunbirdLoginPage =  addNewCardPage.clickOnDownloadViaSunbird();
 
-        addNewCardPage.clickOnInsuranceCredential();
+        addNewCardPage.clickOnCredentialTypeHeadingInsuranceCredential();
         addNewCardPage.clickOnContinueButtonInSigninPopupIos();
 
         sunbirdLoginPage.enterPolicyNumberTextBox(TestDataReader.readData("policyNumberSunbird"));
