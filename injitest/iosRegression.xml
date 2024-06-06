@@ -107,6 +107,22 @@
                     <include name="verifyClickOnBackFromInjiTourGuide"/>
                 </methods>
             </class>
+            <class name="iosTestCases.MosipOtpAlternativeFlow">
+                <methods>
+                    <include name="verifyInvalidOtpMessage" />
+                    <include name="activateVcFromDetailedViewPage" />
+                    <include name="verifyActiveVcAndWaitForOtpTimeOut" />
+                    <include name="cancelDeleteVc" />
+                    <include name="DownloadingDeletedVc" />
+                    <include name="deleteDownloadedVcInOfflineMode" />
+                    <include name="openQrOffline" />
+                    <include name="verifyVcIssuerListWithoutNetwork" />
+                    <include name="VerifyCameraOpenAfterPinVc" />
+                    <include name="pinVcInDetailedVcView" />
+                    <include name="verifyActivationFailedRecordInHistory" />
+                    <include name="verifyActivationFailedRecordInHistoryFromDetailedView" />
+                </methods>
+            </class>
 		</classes>
 	</test>
 </suite>

@@ -157,7 +157,7 @@ public class AddNewCardPage extends BasePage{
         clickOnElement(downloadViaSunbird);
         return new SunbirdLoginPage(driver);
     }
-    public void clickOnInsuranceCredential(){
+    public void clickOnCredentialTypeHeadingInsuranceCredential(){
         clickOnElement(credentialTypeHeadingInsuranceCredential);
     }
 }

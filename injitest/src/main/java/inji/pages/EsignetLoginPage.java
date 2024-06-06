@@ -83,6 +83,9 @@ public class EsignetLoginPage extends BasePage {
     @iOSXCUITFindBy(xpath ="//XCUIElementTypeButton[@name=\"Cancel\"]")
     private WebElement CloseTab;
 
+    @AndroidFindBy(accessibility = "credentialTypeHeading-MOSIPVerifiableCredential")
+    @iOSXCUITFindBy(accessibility = "credentialTypeHeading-MOSIPVerifiableCredential")
+    private WebElement credentialTypeHeadingMOSIPVerifiableCredential;
 
 
     public EsignetLoginPage(AppiumDriver driver) {
@@ -113,6 +116,11 @@ public class EsignetLoginPage extends BasePage {
         if(isElementDisplayed(esignetLoginButton)) {
             clickOnElement(esignetLoginButton);
         }
+        if(isElementDisplayed(credentialTypeHeadingMOSIPVerifiableCredential)) {
+            clickOnElement(credentialTypeHeadingMOSIPVerifiableCredential);
+        }
+
+
     }
 
     public OtpVerificationPage setEnterIdTextBox(String uinOrVid) {
