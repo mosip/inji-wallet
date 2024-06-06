@@ -2,6 +2,7 @@ import React from 'react';
 import {useTranslation} from 'react-i18next';
 import {Image, ImageBackground, View} from 'react-native';
 import {
+  Credential,
   VerifiableCredential,
   WalletBindingResponse,
 } from '../../../machines/VerifiableCredential/VCMetaMachine/vc';

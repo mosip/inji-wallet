@@ -20,7 +20,7 @@
 		BB2F792D24A3F905000567C9 /* Expo.plist in Resources */ = {isa = PBXBuildFile; fileRef = BB2F792C24A3F905000567C9 /* Expo.plist */; };
 		E86208152C0335C5007C3E24 /* RNVCIClientModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = E86208142C0335C5007C3E24 /* RNVCIClientModule.swift */; };
 		E86208172C0335EC007C3E24 /* RNVCIClientModule.m in Sources */ = {isa = PBXBuildFile; fileRef = E86208162C0335EC007C3E24 /* RNVCIClientModule.m */; };
-		E86208262C039895007C3E24 /* VCIClient in Frameworks */ = {isa = PBXBuildFile; productRef = E86208252C039895007C3E24 /* VCIClient */; };
+		E8AF2B9D2C0D93E800E775F6 /* VCIClient in Frameworks */ = {isa = PBXBuildFile; productRef = E8AF2B9C2C0D93E800E775F6 /* VCIClient */; };
 		FD8D20B92BBAACDF009AD01C /* Fontisto.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FD8D20A62BBAACDF009AD01C /* Fontisto.ttf */; };
 		FD8D20BA2BBAACDF009AD01C /* Octicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FD8D20A72BBAACDF009AD01C /* Octicons.ttf */; };
 		FD8D20BB2BBAACDF009AD01C /* Feather.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FD8D20A82BBAACDF009AD01C /* Feather.ttf */; };
@@ -88,7 +88,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E86208262C039895007C3E24 /* VCIClient in Frameworks */,
+				E8AF2B9D2C0D93E800E775F6 /* VCIClient in Frameworks */,
 				9CE34B1F2BFE03E4001AF414 /* pixelpass in Frameworks */,
 				96905EF65AED1B983A6B3ABC /* libPods-Inji.a in Frameworks */,
 			);
@@ -242,7 +242,7 @@
 			name = Inji;
 			packageProductDependencies = (
 				9CE34B1E2BFE03E4001AF414 /* pixelpass */,
-				E86208252C039895007C3E24 /* VCIClient */,
+				E8AF2B9C2C0D93E800E775F6 /* VCIClient */,
 			);
 			productName = Inji;
 			productReference = 13B07F961A680F5B00A75B9A /* Inji.app */;
@@ -380,15 +380,27 @@
 				"${PODS_ROOT}/Target Support Files/Pods-Inji/Pods-Inji-resources.sh",
 				"${PODS_CONFIGURATION_BUILD_DIR}/EXConstants/EXConstants.bundle",
 				"${PODS_CONFIGURATION_BUILD_DIR}/EXUpdates/EXUpdates.bundle",
+				"${PODS_CONFIGURATION_BUILD_DIR}/GoogleDataTransport/GoogleDataTransport_Privacy.bundle",
 				"${PODS_CONFIGURATION_BUILD_DIR}/GoogleSignIn/GoogleSignIn.bundle",
+				"${PODS_CONFIGURATION_BUILD_DIR}/GoogleUtilities/GoogleUtilities_Privacy.bundle",
+				"${PODS_CONFIGURATION_BUILD_DIR}/MLKitFaceDetection/GoogleMVFaceDetectorResources.bundle",
+				"${PODS_CONFIGURATION_BUILD_DIR}/PromisesObjC/FBLPromises_Privacy.bundle",
+				"${PODS_CONFIGURATION_BUILD_DIR}/Protobuf/Protobuf_Privacy.bundle",
 				"${PODS_CONFIGURATION_BUILD_DIR}/React-Core/AccessibilityResources.bundle",
+				"${PODS_CONFIGURATION_BUILD_DIR}/nanopb/nanopb_Privacy.bundle",
 			);
 			name = "[CP] Copy Pods Resources";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/EXConstants.bundle",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/EXUpdates.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GoogleDataTransport_Privacy.bundle",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GoogleSignIn.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GoogleUtilities_Privacy.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GoogleMVFaceDetectorResources.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/FBLPromises_Privacy.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Protobuf_Privacy.bundle",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/AccessibilityResources.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/nanopb_Privacy.bundle",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -695,7 +707,7 @@
 			package = 9CE34B1D2BFE03E4001AF414 /* XCRemoteSwiftPackageReference "pixelpass-ios-swift" */;
 			productName = pixelpass;
 		};
-		E86208252C039895007C3E24 /* VCIClient */ = {
+		E8AF2B9C2C0D93E800E775F6 /* VCIClient */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = E86208242C039895007C3E24 /* XCRemoteSwiftPackageReference "inji-vci-client-ios-swift" */;
 			productName = VCIClient;

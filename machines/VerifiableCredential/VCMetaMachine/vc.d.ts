@@ -1,15 +1,17 @@
 import {displayType, logoType} from '../../Issuers/IssuersMachine';
+import {VCMetadata} from '../../../shared/VCMetadata';
 
 export interface VC {
   id?: string;
   idType?: VcIdType;
   credential?: DecodedCredential;
-  verifiableCredential: VerifiableCredential;
+  verifiableCredential: VerifiableCredential | Credential;
   requestId?: string;
   isVerified?: boolean;
   lastVerifiedOn: number;
   walletBindingResponse?: WalletBindingResponse;
   hashedId?: string;
+  vcMetadata: VCMetadata;
 }
 
 export type VcIdType = 'UIN' | 'VID';
@@ -54,7 +56,8 @@ export interface Credential {
     type: 'RsaSignature2018' | string;
     verificationMethod: string;
   };
-  type: VerifiableCredentialType[];
+  type: string[];
+  credentialTypes: string[];
 }
 
 export interface VerifiableCredential {
@@ -65,11 +68,20 @@ export interface VerifiableCredential {
   credentialTypes: Object[];
 }
 
+export interface VerifiableCredentialData {
+  vcMetadata: VCMetadata;
+  face: string;
+  issuerLogo: logoType;
+  wellKnown?: string;
+  credentialTypes?: Object[];
+  issuer?: string;
+}
+
 export interface CredentialWrapper {
   verifiableCredential: VerifiableCredential;
   identifier: string;
   generatedOn: Date;
-  issuerLogo: string;
+  vcMetadata: VCMetadata;
 }
 
 export interface CredentialTypes {
@@ -84,10 +96,11 @@ export interface CredentialTypes {
   };
 }
 
-export type VerifiableCredentialType =
-  | 'VerifiableCredential'
-  | 'MOSIPVerfiableCredential'
-  | string;
+export interface IssuerWellknownResponse {
+  credential_issuer: string;
+  credential_endpoint: string;
+  credentials_supported: Object[];
+}
 
 export interface VCLabel {
   singular: string;
@@ -115,4 +128,17 @@ export interface WalletBindingResponse {
   keyId: string;
   thumbprint: string;
   expireDateTime: string;
+}
+
+//TODO: Check if Type word is needed in the naming
+export interface VCMetadataType {
+  //TODO: requestId is not null at any point as its used for file names and all
+  isPinned: boolean;
+  requestId: string | null;
+  issuer: string;
+  protocol: string;
+  id: string;
+  timestamp: string;
+  isVerified: boolean;
+  credentialType: string;
 }

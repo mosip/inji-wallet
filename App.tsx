@@ -22,19 +22,16 @@ import {
 } from './shared/telemetry/TelemetryUtils';
 import {TelemetryConstants} from './shared/telemetry/TelemetryConstants';
 import {MessageOverlay} from './components/MessageOverlay';
-import { NativeModules } from 'react-native';
+import {NativeModules} from 'react-native';
 import {isHardwareKeystoreExists} from './shared/cryptoutil/cryptoUtil';
 import i18n from './i18n';
 import './shared/flipperConfig';
-import * as SplashScreen from 'expo-splash-screen';
 
-SplashScreen.preventAutoHideAsync();
-const {RNSecureKeystoreModule}=NativeModules;
+const {RNSecureKeystoreModule} = NativeModules;
 // kludge: this is a bad practice but has been done temporarily to surface
 //  an occurrence of a bug with minimal residual code changes, this should
 //  be removed once the bug cause is determined & fixed, ref: INJI-222
 const DecryptErrorAlert = (controller, t) => {
-  
   const heading = t('errors.decryptionFailed');
   const desc = t('errors.decryptionFailed');
   const ignoreBtnTxt = t('ignore');
@@ -52,13 +49,6 @@ const AppLayoutWrapper: React.FC = () => {
   const isDecryptError = useSelector(appService, selectIsDecryptError);
   const controller = useApp();
   const {t} = useTranslation('WelcomeScreen');
-
-  useEffect(() => {
-    async function hideAppLoading() {
-      await SplashScreen.hideAsync();
-    }
-    hideAppLoading();
-  }, []);
 
   useEffect(() => {
     if (AppState.currentState === 'active') {

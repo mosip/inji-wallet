@@ -2,6 +2,11 @@ import {StateFrom} from 'xstate';
 import {VCMetadata} from '../../../shared/VCMetadata';
 import {VCItemMachine} from './VCItemMachine';
 import {getMosipLogo} from '../../../components/VC/common/VCUtils';
+import {
+  Credential,
+  VerifiableCredential,
+  VerifiableCredentialData,
+} from '../VCMetaMachine/vc';
 
 type State = StateFrom<typeof VCItemMachine>;
 
@@ -26,39 +31,31 @@ export function selectVerifiableCredential(state: State) {
 }
 
 export function getVerifiableCredential(
-  vcMetadata: VCMetadata,
-  verifiableCredential,
-) {
-  return VCMetadata.fromVC(vcMetadata).isFromOpenId4VCI()
-    ? verifiableCredential?.credential
-    : verifiableCredential;
+  verifiableCredential: VerifiableCredential | Credential,
+): Credential {
+  return verifiableCredential?.credential || verifiableCredential;
 }
 
-export function selectCredential(state: State) {
-  return getVerifiableCredential(
-    state.context.vcMetadata,
-    state.context.verifiableCredential,
-  );
+export function selectCredential(state: State): Credential {
+  return getVerifiableCredential(state.context.verifiableCredential);
 }
 
-export function selectVerifiableCredentialData(state: State) {
+export function selectVerifiableCredentialData(
+  state: State,
+): VerifiableCredentialData {
   const vcMetadata = new VCMetadata(state.context.vcMetadata);
-  return vcMetadata.isFromOpenId4VCI()
-    ? {
-        vcMetadata: vcMetadata,
-        face: state.context.verifiableCredential?.credential?.credentialSubject
-          .face,
-        issuerLogo: state.context.verifiableCredential?.issuerLogo,
-        wellKnown: state.context.verifiableCredential?.wellKnown,
-        credentialTypes: state.context.verifiableCredential?.credentialTypes,
-        issuer: vcMetadata.issuer,
-      }
-    : {
-        vcMetadata: vcMetadata,
-        issuer: vcMetadata.issuer,
-        face: state.context.credential?.biometrics?.face,
-        issuerLogo: getMosipLogo(),
-      };
+
+  return {
+    vcMetadata: vcMetadata,
+    face:
+      state.context.verifiableCredential?.credential?.credentialSubject?.face ??
+      state.context.credential?.biometrics?.face,
+    issuerLogo:
+      state.context.verifiableCredential?.issuerLogo ?? getMosipLogo(),
+    wellKnown: state.context.verifiableCredential?.wellKnown,
+    credentialTypes: state.context.verifiableCredential?.credentialTypes,
+    issuer: vcMetadata.issuer,
+  };
 }
 
 export function selectKebabPopUp(state: State) {

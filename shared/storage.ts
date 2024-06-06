@@ -4,7 +4,7 @@ import {
   getFreeDiskStorageOldSync,
   getFreeDiskStorageSync,
 } from 'react-native-device-info';
-import { NativeModules } from 'react-native';
+import {NativeModules} from 'react-native';
 import {
   decryptJson,
   encryptJson,
@@ -19,6 +19,7 @@ import {
   MY_VCS_STORE_KEY,
   SETTINGS_STORE_KEY,
   ENOENT,
+  API_CACHED_STORAGE_KEYS,
 } from './constants';
 import FileStorage, {
   getFilePath,
@@ -33,7 +34,7 @@ import fileStorage from './fileStorage';
 import {DocumentDirectoryPath, ReadDirItem} from 'react-native-fs';
 
 export const MMKV = new MMKVLoader().initialize();
-const{RNSecureKeystoreModule}=NativeModules
+const {RNSecureKeystoreModule} = NativeModules;
 
 async function generateHmac(
   encryptionKey: string,
@@ -147,9 +148,30 @@ class Storage {
         return true;
       });
     } catch (error) {
+      console.error('Error while loading backup data ', error);
       return error;
     }
   };
+
+  static fetchAllWellknownConfig = async (encryptionKey: string) => {
+    let wellknownConfigData: Record<string, Object> = {};
+    const allKeysInDB = await MMKV.indexer.strings.getKeys();
+    const wellknownConfigCacheKey =
+      API_CACHED_STORAGE_KEYS.fetchIssuerWellknownConfig('');
+    const wellknownKeys = allKeysInDB.filter(key =>
+      key.includes(wellknownConfigCacheKey),
+    );
+
+    for (const wellknownKey of wellknownKeys) {
+      const configData = await this.getItem(wellknownKey, encryptionKey);
+      const decryptedConfigData = await decryptJson(encryptionKey, configData);
+      wellknownConfigData[
+        wellknownKey.substring(wellknownConfigCacheKey.length)
+      ] = JSON.parse(JSON.stringify(decryptedConfigData));
+    }
+    return wellknownConfigData;
+  };
+
   static isVCStorageInitialised = async (): Promise<boolean> => {
     try {
       const res = await FileStorage.getInfo(vcDirectoryPath);
@@ -315,7 +337,6 @@ class Storage {
           encryptionKey,
           JSON.stringify(vc),
         );
-        const tmp = VCMetadata.fromVC(key);
         // Save the VC to disk
         await this.setItem(updatedVcKey, encryptedVC, encryptionKey);
       });
@@ -478,7 +499,6 @@ class Storage {
       isAndroid() && androidVersion < 29
         ? getFreeDiskStorageOldSync()
         : getFreeDiskStorageSync();
-
 
     return freeDiskStorageInBytes <= minimumStorageLimitInBytes;
   };

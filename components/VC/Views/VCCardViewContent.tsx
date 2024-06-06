@@ -1,9 +1,9 @@
 import React from 'react';
-import {ImageBackground, Pressable, Image} from 'react-native';
+import {ImageBackground, Pressable, Image, View} from 'react-native';
 import {getLocalizedField} from '../../../i18n';
 import {VCMetadata} from '../../../shared/VCMetadata';
 import {KebabPopUp} from '../../KebabPopUp';
-import {VerifiableCredential} from '../../../machines/VerifiableCredential/VCMetaMachine/vc';
+import {Credential} from '../../../machines/VerifiableCredential/VCMetaMachine/vc';
 import {Column, Row} from '../../ui';
 import {Theme} from '../../ui/styleUtils';
 import {CheckBox, Icon} from 'react-native-elements';
@@ -13,11 +13,13 @@ import {isVCLoaded, getBackgroundColour} from '../common/VCUtils';
 import {VCItemFieldValue} from '../common/VCItemField';
 import {WalletBinding} from '../../../screens/Home/MyVcs/WalletBinding';
 import {VCVerification} from '../../VCVerification';
-import {Issuers} from '../../../shared/openId4VCI/Utils';
+import {isActivationNeeded} from '../../../shared/openId4VCI/Utils';
 import {VCItemContainerFlowType} from '../../../shared/Utils';
 import {RemoveVcWarningOverlay} from '../../../screens/Home/MyVcs/RemoveVcWarningOverlay';
 import {HistoryTab} from '../../../screens/Home/MyVcs/HistoryTab';
 import {getTextColor} from '../common/VCUtils';
+import {useCopilot} from 'react-native-copilot';
+import {useTranslation} from 'react-i18next';
 
 export const VCCardViewContent: React.FC<VCItemContentProps> = props => {
   const isVCSelectable = props.selectable && (
@@ -37,6 +39,8 @@ export const VCCardViewContent: React.FC<VCItemContentProps> = props => {
   );
   const issuerLogo = props.verifiableCredentialData.issuerLogo;
   const faceImage = props.verifiableCredentialData.face;
+  const {start} = useCopilot();
+  const {t} = useTranslation();
 
   return (
     <ImageBackground
@@ -46,7 +50,12 @@ export const VCCardViewContent: React.FC<VCItemContentProps> = props => {
         Theme.Styles.backgroundImageContainer,
         getBackgroundColour(props.wellknown),
       ]}>
-      <Column>
+      <View
+        onLayout={
+          props.isInitialLaunch
+            ? () => start(t('copilot:cardTitle'))
+            : undefined
+        }>
         <Row crossAlign="center" padding="3 0 0 3">
           {VcItemContainerProfileImage(props)}
           <Column fill align={'space-around'} margin="0 10 0 10">
@@ -78,10 +87,10 @@ export const VCCardViewContent: React.FC<VCItemContentProps> = props => {
 
           {!Object.values(VCItemContainerFlowType).includes(props.flow) && (
             <>
-              {props.vcMetadata.issuer === Issuers.Sunbird ||
-              props.walletBindingResponse
-                ? SvgImage.walletActivatedIcon()
-                : SvgImage.walletUnActivatedIcon()}
+              {!props.walletBindingResponse &&
+              isActivationNeeded(props.verifiableCredentialData?.issuer)
+                ? SvgImage.walletUnActivatedIcon()
+                : SvgImage.walletActivatedIcon()}
               <Pressable
                 onPress={props.KEBAB_POPUP}
                 accessible={false}
@@ -114,14 +123,14 @@ export const VCCardViewContent: React.FC<VCItemContentProps> = props => {
         />
 
         <HistoryTab service={props.service} vcMetadata={props.vcMetadata} />
-      </Column>
+      </View>
     </ImageBackground>
   );
 };
 
 export interface VCItemContentProps {
   context: any;
-  credential: VerifiableCredential;
+  credential: Credential;
   verifiableCredentialData: any;
   fields: [];
   wellknown: {};
@@ -139,6 +148,7 @@ export interface VCItemContentProps {
   isKebabPopUp: boolean;
   vcMetadata: VCMetadata;
   isVerified?: boolean;
+  isInitialLaunch?: boolean;
 }
 
 VCCardViewContent.defaultProps = {

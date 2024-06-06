@@ -506,6 +506,7 @@ public class ChangeLanguageTest extends AndroidBaseTest {
         AddNewCardPage addNewCardPage = homePage.downloadCard();
 
         assertTrue(addNewCardPage.isAddNewCardPageLoaded(), "Verify if add new card page is displayed");
+        assertTrue(addNewCardPage.isIssuerDescriptionMosipDisplayed(), "Verify if issuer description  mosip displayed");
         assertTrue(addNewCardPage.isIssuerDescriptionEsignetDisplayed(), "Verify if issuer description  esignet displayed");
         assertTrue(addNewCardPage.isIssuerSearchBarDisplayed(), "Verify if issuer search bar displayed");
         //addNewCardPage.sendTextInIssuerSearchBar("Download Sunbird Credentials");
@@ -594,7 +595,6 @@ public class ChangeLanguageTest extends AndroidBaseTest {
 
         DetailedVcViewPage detailedVcViewPage = homePage.openDetailedVcView(TestDataReader.readData("fullName"));
         assertEquals(homePage.getFullNameValue(), "TEST_FULLNAMEara");
-//        assertEquals(homePage.GetIdTypeText(), "البطاقة الوطنية");
         assertEquals(homePage.GetActivationPendingHeaderText(), "التنشيط معلق لتسجيل الدخول عبر الإنترنت!");
     }
 

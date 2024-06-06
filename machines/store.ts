@@ -20,7 +20,7 @@ import {
   SHOW_FACE_AUTH_CONSENT_SHARE_FLOW,
   ENOENT,
 } from '../shared/constants';
-import { NativeModules } from 'react-native';
+import {NativeModules} from 'react-native';
 import {
   AUTH_TIMEOUT,
   decryptJson,
@@ -45,7 +45,7 @@ export const keyinvalidatedString =
   'Key Invalidated due to biometric enrollment';
 export const tamperedErrorMessageString = 'Data is tampered';
 
-const{RNSecureKeystoreModule}=NativeModules
+const {RNSecureKeystoreModule} = NativeModules;
 const model = createModel(
   {
     encryptionKey: '',
@@ -77,6 +77,7 @@ const model = createModel(
         requester,
       }),
       STORE_ERROR: (error: Error, requester?: string) => ({error, requester}),
+      FETCH_ALL_WELLKNOWN_CONFIG: () => ({}),
     },
   },
 );
@@ -233,6 +234,9 @@ export const storeMachine =
             CLEAR: {
               actions: 'forwardStoreRequest',
             },
+            FETCH_ALL_WELLKNOWN_CONFIG: {
+              actions: 'forwardStoreRequest',
+            },
             STORE_RESPONSE: {
               actions: [
                 send(
@@ -295,7 +299,8 @@ export const storeMachine =
       services: {
         clear: () => clear(),
         hasAndroidEncryptionKey: () => async callback => {
-          const hasSetCredentials = RNSecureKeystoreModule.hasAlias(ENCRYPTION_ID);
+          const hasSetCredentials =
+            RNSecureKeystoreModule.hasAlias(ENCRYPTION_ID);
           if (hasSetCredentials) {
             try {
               const base64EncodedString =
@@ -441,6 +446,13 @@ export const storeMachine =
                   await clear();
                   break;
                 }
+                case 'FETCH_ALL_WELLKNOWN_CONFIG': {
+                  response = await fetchAllWellknownConfig(
+                    context.encryptionKey,
+                  );
+                  break;
+                }
+
                 default:
                   return;
               }
@@ -526,7 +538,8 @@ export const storeMachine =
               );
             }
           } else {
-            const isBiometricsEnabled = RNSecureKeystoreModule.hasBiometricsEnabled();
+            const isBiometricsEnabled =
+              RNSecureKeystoreModule.hasBiometricsEnabled();
             await RNSecureKeystoreModule.generateKey(
               ENCRYPTION_ID,
               isBiometricsEnabled,
@@ -582,6 +595,10 @@ export async function exportData(encryptionKey: string) {
 
 export async function loadBackupData(data, encryptionKey) {
   await Storage.loadBackupData(data, encryptionKey);
+}
+
+export async function fetchAllWellknownConfig(encryptionKey: string) {
+  return await Storage.fetchAllWellknownConfig(encryptionKey);
 }
 
 export async function getVCsData(key: string, encryptionKey: string) {

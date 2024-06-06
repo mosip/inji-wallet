@@ -72,6 +72,7 @@
                     <include name="noCardsAvailableToShare"/>
                     <include name="verifyReceivedCardTabPresent"/>
                     <include name="verifyPopupsForShareWithSelfie"/>
+                    <include name="rejectingCameraAccessesOnShareScreen"/>
                 </methods>
             </class>
             <class name="androidTestCases.UnlockWithPasscodeTest">

@@ -78,9 +78,7 @@ export const BannerNotificationContainer: React.FC<
         <BannerNotification
           type={verificationStatus.statusType}
           message={t(`VcVerificationBanner:${verificationStatus?.statusType}`, {
-            vcDetails: `${t(`VcDetails:${verificationStatus.vcType}`)} ${
-              verificationStatus.vcNumber
-            }`,
+            vcDetails: `${verificationStatus.vcType} ${verificationStatus.vcNumber}`,
           })}
           onClosePress={bannerNotificationController.RESET_VERIFICATION_STATUS}
           key={'reVerificationInProgress'}

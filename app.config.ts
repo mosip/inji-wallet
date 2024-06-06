@@ -1,3 +1,10 @@
+import {APPLICATION_THEME} from 'react-native-dotenv';
+
+const adaptiveImage =
+  APPLICATION_THEME?.toLowerCase() === 'purple'
+    ? '../assets/purpleSplashScreen.png'
+    : './assets/orangeSplashScreen.png';
+
 export default {
   name: 'Inji',
   slug: 'inji',
@@ -5,7 +12,7 @@ export default {
   orientation: 'portrait',
   icon: './assets/icon.png',
   splash: {
-    image: './assets/splash.png',
+    image: adaptiveImage,
     resizeMode: 'cover',
     backgroundColor: '#ffffff',
   },
@@ -22,7 +29,7 @@ export default {
     package: 'io.mosip.residentapp',
     versionCode: 1,
     adaptiveIcon: {
-      foregroundImage: './assets/Adaptive_Icon.png',
+      foregroundImage: adaptiveImage,
       backgroundColor: '#FFFFFF',
     },
   },
