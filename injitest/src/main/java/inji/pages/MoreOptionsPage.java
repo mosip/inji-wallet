@@ -109,6 +109,10 @@ public class MoreOptionsPage extends BasePage {
         clickOnElement(enableVerification);
     }
 
+    public void clickOnDetailsViewActivationButton() {
+        clickOnElement(activationPending);
+    }
+
     public void clickOnShareVcWithSelfieFromKebabButton() {
         clickOnElement(shareVcWithSelfieFromKebab);
     }

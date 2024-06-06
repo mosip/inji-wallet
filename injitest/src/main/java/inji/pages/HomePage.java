@@ -149,6 +149,32 @@ public class HomePage extends BasePage {
     @iOSXCUITFindBy(accessibility = "verificationStatus")
     private WebElement verificationStatus;
 
+    @AndroidFindBy(accessibility = "1next")
+    @iOSXCUITFindBy(accessibility = "1next")
+    private WebElement firstNextButton;
+
+    @AndroidFindBy(accessibility = "2next")
+    @iOSXCUITFindBy(accessibility = "2next")
+    private WebElement secondNextButton;
+
+    @AndroidFindBy(accessibility = "3next")
+    @iOSXCUITFindBy(accessibility = "3next")
+    private WebElement thirdNextButton;
+
+    @AndroidFindBy(accessibility = "4next")
+    @iOSXCUITFindBy(accessibility = "4next")
+    private WebElement forthNextButton;
+
+    @AndroidFindBy(accessibility = "5done")
+    @iOSXCUITFindBy(accessibility = "5done")
+    private WebElement fifthNextButton;
+
+    @AndroidFindBy(accessibility = "6done")
+    @iOSXCUITFindBy(accessibility = "6done")
+    private WebElement doneButton;
+
+
+
 
     public HomePage(AppiumDriver driver) {
         super(driver);
@@ -162,6 +188,13 @@ public class HomePage extends BasePage {
 //        if (isElementDisplayed(securityFeatureUnavailablePopup, "security features will be unavailable popup")) {
 //            clickOnElement(okButton);
 //        }
+        if(isElementDisplayed(firstNextButton)) {
+            clickOnElement(firstNextButton);
+            clickOnElement(secondNextButton);
+            clickOnElement(thirdNextButton);
+            clickOnElement(forthNextButton);
+            clickOnElement(fifthNextButton);
+        }
         return this.isElementDisplayed(homeButton);
     }
 
@@ -171,8 +204,12 @@ public class HomePage extends BasePage {
     }
 
     public boolean isNameDisplayed(String name) {
+
+        if(isElementDisplayed(doneButton)){
+            clickOnElement(doneButton);
+        }
         By fullName = By.xpath("//*[contains(@value,'" + name + "') or contains(@text,'" + name + "')]");
-        return this.isElementDisplayed(fullName, 220);
+        return this.isElementDisplayed(fullName, 150);
     }
 
     public boolean isSecondNameDisplayed(String name) {

@@ -35,7 +35,7 @@ public class TestDataReader {
             case "fullName":
                 return "TEST_FULLNAMEeng";
             case "idType":
-                return "National ID";
+                return "MOSIP National ID";
             case "gender":
                 return "MLEeng";
             case "genderVidEsignet":
