@@ -37,6 +37,7 @@ public class MosipOtpAlternativeFlow extends IosBaseTest {
         AddNewCardPage addNewCardPage = homePage.downloadCard();
 
         EsignetLoginPage esignetLoginPage =  addNewCardPage.clickOnDownloadViaEsignet();
+        esignetLoginPage.clickOnCredentialTypeHeadingMOSIPVerifiableCredential();
         addNewCardPage.clickOnContinueButtonInSigninPopupIos();
 
         esignetLoginPage.clickOnEsignetLoginWithOtpButton();
@@ -75,6 +76,7 @@ public class MosipOtpAlternativeFlow extends IosBaseTest {
         AddNewCardPage addNewCardPage = homePage.downloadCard();
 
         EsignetLoginPage esignetLoginPage =  addNewCardPage.clickOnDownloadViaEsignet();
+        esignetLoginPage.clickOnCredentialTypeHeadingMOSIPVerifiableCredential();
         addNewCardPage.clickOnContinueButtonInSigninPopupIos();
 
         esignetLoginPage.clickOnEsignetLoginWithOtpButton();
@@ -126,6 +128,7 @@ public class MosipOtpAlternativeFlow extends IosBaseTest {
         AddNewCardPage addNewCardPage = homePage.downloadCard();
 
         EsignetLoginPage esignetLoginPage =  addNewCardPage.clickOnDownloadViaEsignet();
+        esignetLoginPage.clickOnCredentialTypeHeadingMOSIPVerifiableCredential();
         addNewCardPage.clickOnContinueButtonInSigninPopupIos();
 
         esignetLoginPage.clickOnEsignetLoginWithOtpButton();
@@ -178,6 +181,7 @@ public class MosipOtpAlternativeFlow extends IosBaseTest {
         AddNewCardPage addNewCardPage = homePage.downloadCard();
 
         EsignetLoginPage esignetLoginPage =  addNewCardPage.clickOnDownloadViaEsignet();
+        esignetLoginPage.clickOnCredentialTypeHeadingMOSIPVerifiableCredential();
         addNewCardPage.clickOnContinueButtonInSigninPopupIos();
 
         esignetLoginPage.clickOnEsignetLoginWithOtpButton();
@@ -227,6 +231,7 @@ public class MosipOtpAlternativeFlow extends IosBaseTest {
         AddNewCardPage addNewCardPage = homePage.downloadCard();
 
         EsignetLoginPage esignetLoginPage =  addNewCardPage.clickOnDownloadViaEsignet();
+        esignetLoginPage.clickOnCredentialTypeHeadingMOSIPVerifiableCredential();
         addNewCardPage.clickOnContinueButtonInSigninPopupIos();
 
         esignetLoginPage.clickOnEsignetLoginWithOtpButton();
@@ -251,13 +256,14 @@ public class MosipOtpAlternativeFlow extends IosBaseTest {
 
         homePage.downloadCard();
 
-         addNewCardPage.clickOnDownloadViaEsignet();
+        addNewCardPage.clickOnDownloadViaEsignet();
+        esignetLoginPage.clickOnCredentialTypeHeadingMOSIPVerifiableCredential();
         addNewCardPage.clickOnContinueButtonInSigninPopupIos();
 
         esignetLoginPage.clickOnEsignetLoginWithOtpButton();
         Thread.sleep(2000);
-         TestDataReader.readData("uin");
-         esignetLoginPage.setEnterIdTextBox(uin);
+        TestDataReader.readData("uin");
+        esignetLoginPage.setEnterIdTextBox(uin);
 
         esignetLoginPage.clickOnGetOtpButton();
         otpVerification.enterOtpForEsignet(TestDataReader.readData("otp"), Target.IOS);
@@ -297,6 +303,7 @@ public class MosipOtpAlternativeFlow extends IosBaseTest {
         AddNewCardPage addNewCardPage = homePage.downloadCard();
 
         EsignetLoginPage esignetLoginPage =  addNewCardPage.clickOnDownloadViaEsignet();
+        esignetLoginPage.clickOnCredentialTypeHeadingMOSIPVerifiableCredential();
         addNewCardPage.clickOnContinueButtonInSigninPopupIos();
 
         esignetLoginPage.clickOnEsignetLoginWithOtpButton();
@@ -347,6 +354,7 @@ public class MosipOtpAlternativeFlow extends IosBaseTest {
         AddNewCardPage addNewCardPage = homePage.downloadCard();
 
         EsignetLoginPage esignetLoginPage =  addNewCardPage.clickOnDownloadViaEsignet();
+        esignetLoginPage.clickOnCredentialTypeHeadingMOSIPVerifiableCredential();
         addNewCardPage.clickOnContinueButtonInSigninPopupIos();
 
         esignetLoginPage.clickOnEsignetLoginWithOtpButton();
@@ -427,6 +435,7 @@ public class MosipOtpAlternativeFlow extends IosBaseTest {
         AddNewCardPage addNewCardPage = homePage.downloadCard();
 
         EsignetLoginPage esignetLoginPage =  addNewCardPage.clickOnDownloadViaEsignet();
+        esignetLoginPage.clickOnCredentialTypeHeadingMOSIPVerifiableCredential();
         addNewCardPage.clickOnContinueButtonInSigninPopupIos();
 
         esignetLoginPage.clickOnEsignetLoginWithOtpButton();
@@ -477,6 +486,7 @@ public class MosipOtpAlternativeFlow extends IosBaseTest {
         AddNewCardPage addNewCardPage = homePage.downloadCard();
 
         EsignetLoginPage esignetLoginPage =  addNewCardPage.clickOnDownloadViaEsignet();
+        esignetLoginPage.clickOnCredentialTypeHeadingMOSIPVerifiableCredential();
         addNewCardPage.clickOnContinueButtonInSigninPopupIos();
 
         esignetLoginPage.clickOnEsignetLoginWithOtpButton();
@@ -536,6 +546,7 @@ public class MosipOtpAlternativeFlow extends IosBaseTest {
         AddNewCardPage addNewCardPage = homePage.downloadCard();
 
         EsignetLoginPage esignetLoginPage =  addNewCardPage.clickOnDownloadViaEsignet();
+        esignetLoginPage.clickOnCredentialTypeHeadingMOSIPVerifiableCredential();
         addNewCardPage.clickOnContinueButtonInSigninPopupIos();
 
         esignetLoginPage.clickOnEsignetLoginWithOtpButton();
@@ -593,6 +604,7 @@ public class MosipOtpAlternativeFlow extends IosBaseTest {
         AddNewCardPage addNewCardPage = homePage.downloadCard();
 
         EsignetLoginPage esignetLoginPage =  addNewCardPage.clickOnDownloadViaEsignet();
+        esignetLoginPage.clickOnCredentialTypeHeadingMOSIPVerifiableCredential();
         addNewCardPage.clickOnContinueButtonInSigninPopupIos();
 
         esignetLoginPage.clickOnEsignetLoginWithOtpButton();

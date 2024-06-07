@@ -188,7 +188,7 @@ public class HistoryPage extends BasePage {
     }
 
     private boolean verifyActivationSuccessfulRecordIos(String vcNumber) {
-        By locator = By.xpath("//*[contains(@name,'Activation of National ID " + vcNumber + " is successful.')]");
+        By locator = By.xpath("//*[contains(@name,'Activation of MOSIP National ID " + vcNumber + " is successful.')]");
         return this.isElementDisplayed(locator);
     }
 
