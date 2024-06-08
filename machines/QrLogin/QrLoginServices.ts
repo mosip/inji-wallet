@@ -25,7 +25,7 @@ export const QrLoginServices = {
 
   sendAuthenticate: async context => {
     let privateKey;
-    const individualId = context.selectedVc.vcMetadata.id;
+    const individualId = context.selectedVc.vcMetadata.displayId;
     if (!isHardwareKeystoreExists) {
       privateKey = await getPrivateKey(
         context.selectedVc.walletBindingResponse?.walletBindingId,
@@ -72,7 +72,7 @@ export const QrLoginServices = {
 
   sendConsent: async context => {
     let privateKey;
-    const individualId = context.selectedVc.vcMetadata.id;
+    const individualId = context.selectedVc.vcMetadata.displayId;
     if (!isHardwareKeystoreExists) {
       privateKey = await getPrivateKey(
         context.selectedVc.walletBindingResponse?.walletBindingId,

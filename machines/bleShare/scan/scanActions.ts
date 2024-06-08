@@ -198,13 +198,12 @@ export const ScanActions = (model: any, QR_LOGIN_REF_ID: any) => {
           type: context.shareLogType
             ? context.shareLogType
             : 'VC_SHARED_WITH_VERIFICATION_CONSENT',
-          id: vcMetadata.id,
+          id: vcMetadata.displayId,
           idType: getCredentialTypes(context.selectedVc.verifiableCredential),
           issuer: vcMetadata.issuer!!,
           timestamp: Date.now(),
           deviceName:
             context.receiverInfo.name || context.receiverInfo.deviceName,
-          vcLabel: vcMetadata.id,
         });
       },
       {to: context => context.serviceRefs.activityLog},
@@ -218,11 +217,10 @@ export const ScanActions = (model: any, QR_LOGIN_REF_ID: any) => {
           type: 'PRESENCE_VERIFICATION_FAILED',
           timestamp: Date.now(),
           idType: getCredentialTypes(context.selectedVc.verifiableCredential),
-          id: vcMetadata.id,
+          id: vcMetadata.displayId,
           issuer: vcMetadata.issuer!!,
           deviceName:
             context.receiverInfo.name || context.receiverInfo.deviceName,
-          vcLabel: vcMetadata.id,
         });
       },
       {to: context => context.serviceRefs.activityLog},
@@ -277,13 +275,12 @@ export const ScanActions = (model: any, QR_LOGIN_REF_ID: any) => {
 
         return ActivityLogEvents.LOG_ACTIVITY({
           _vcKey: '',
-          id: vcMetadata.id,
+          id: vcMetadata.display,
           issuer: vcMetadata.issuer!!,
           idType: getCredentialTypes(selectedVc.verifiableCredential),
           type: 'QRLOGIN_SUCCESFULL',
           timestamp: Date.now(),
           deviceName: '',
-          vcLabel: String(vcMetadata.id),
         });
       },
       {
