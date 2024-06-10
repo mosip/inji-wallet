@@ -80,11 +80,6 @@ export const VCItemServices = model => {
           },
         },
       );
-      const certificate = response.response.certificate;
-      await savePrivateKey(
-        getBindingCertificateConstant(VCMetadata.fromVC(context.vcMetadata).id),
-        certificate,
-      );
 
       const walletResponse: WalletBindingResponse = {
         walletBindingId: response.response.encryptedWalletBindingId,
