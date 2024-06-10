@@ -60,7 +60,7 @@ export const MainLayout: React.FC = () => {
             }}
             options={{
               ...route.options,
-              title: '',
+              title: t(route.name),
               tabBarIcon: ({focused}) => (
                 <Column
                   {...testIDProps(route.name + 'Icon')}
@@ -68,30 +68,14 @@ export const MainLayout: React.FC = () => {
                   crossAlign="center"
                   style={focused ? Theme.Styles.bottomTabIconStyle : null}>
                   {route.name === 'home' ? (
-                    <View style={Theme.Styles.tabBarIconCopilot}>
-                      {SvgImage[`${route.name}`](focused)}
-                      <Text
-                        color={focused && Theme.Colors.Icon}
-                        margin="6 0 0 0">
-                        {t(route.name)}
-                      </Text>
-                    </View>
+                    <View>{SvgImage[`${route.name}`](focused)}</View>
                   ) : (
                     <Copilot
                       title={t(`copilot:${route.name}Title`)}
                       description={t(`copilot:${route.name}Message`)}
                       order={2 + index}
                       targetStyle={Theme.Styles.tabBarIconCopilot}
-                      children={
-                        <>
-                          {SvgImage[`${route.name}`](focused)}
-                          <Text
-                            color={focused && Theme.Colors.Icon}
-                            margin="6 0 0 0">
-                            {t(route.name)}
-                          </Text>
-                        </>
-                      }
+                      children={<>{SvgImage[`${route.name}`](focused)}</>}
                     />
                   )}
                 </Column>

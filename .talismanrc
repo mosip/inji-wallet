@@ -100,7 +100,7 @@ fileignoreconfig:
   - filename: screens/Settings/BackupController.tsx
     checksum: 4a031b46646aa982c8f40e4c7fe0bd3e05a76a6af1ff1c2de7350ba6ebf9a839
   - filename: machines/settings.typegen.ts
-    checksum: e4ae05822f1b1c23f3f70d03dd46fd8f29ba6b52d40f2f24c121f536fbb5f2c4
+    checksum: c10bead6d0cc0cd8f7539d12cfecd6cd24770ed9b55a9a7c55fda8883a677d52
   - filename: .github/workflows/ui-automation.yml
     checksum: 85993a912fb873a3a2a11adde702918aedff56494e6d45c2d70f272497bf9a27
   - filename: injitest/src/test/java/androidTestCases/PinVcTest.java
@@ -162,7 +162,7 @@ fileignoreconfig:
   - filename: components/ActivityLogEvent.ts
     checksum: e7c8617cd9c510d5b6a053bc5c6164f02c48e85125aa925e0c4cf55cd1f29d22
   - filename: shared/storage.ts
-    checksum: c9a8e60ea2dd03cb2a9e300d6e6b4d9a1b293e85ef4ce1065fadc614c03214d7
+    checksum: 181bbdfe1f4a7daa82c7e8ea1050028c4c50f72200ab2a5eff5bfe1915c7de68
   - filename: shared/constants.ts
     checksum: 69aa79ed25fee2162de7c8e065930e18168551377420a520092bdf6a86c7712d
   - filename: machines/backupAndRestore/backup.ts
@@ -202,7 +202,7 @@ fileignoreconfig:
   - filename: machines/VCItemMachine/VCItemMachine.typegen.ts
     checksum: 850b5d02636bef9e286fc0fbc4ffffbd38068f332c319302a906496f4bc1c8a1
   - filename: machines/VerifiableCredential/VCItemMachine/VCItemModel.ts
-    checksum: 2a22331fe5f20d44c210b8970be0b934bfdf39bc999009305a9ba8f18e4d5469
+    checksum: 4b08ee05c9c6fe9154ed3cdc9d23324e4d9cfac8a7028686f2b22903424d4cef
   - filename: machines/VCItemMachine/VCItemGaurds.ts
     checksum: 4f32814fc26a0edaa54a42dbc9f9e1d899144eb059ac8da211d1738887871829
   - filename: machines/VCItemMachine/VCItemServices.ts
@@ -263,7 +263,7 @@ fileignoreconfig:
   - filename: machines/Issuers/IssuersGuards.ts
     checksum: d87b6f4277c4be68f1884efa5c73e1b1d02a1afaefb276417b95a312f599578a
   - filename: machines/Issuers/IssuersActions.ts
-    checksum: 63cbedfbedbe3ef7d5553e44df04d105a8b171d23bf46d1d85daff45e54bcf78
+    checksum: e865a33dcecfe185eff5ac06208f0f2e8ff6574f778e31da74d6ba74c67e285d
   - filename: injitest/automation_trigger.sh
     checksum: f2f34839c99cb1b871dde17aed8508a071345d22738796e005ff709d2dab8644
   - filename: machines/Issuers/IssuersService.ts
@@ -295,7 +295,7 @@ fileignoreconfig:
   - filename: machines/QrLogin/QrLoginServices.ts
     checksum: b20d0caa6d23078b4010ea5185f01270356422dd216edd7834b069cdedd3383d
   - filename: machines/bleShare/scan/scanActions.ts
-    checksum: 7b1c55e1913622d142433a296f1c75ec831441670d9b84cfaabb4863af2c1fe6
+    checksum: e32e1be4a02f9247844771293e5fc285bd6e1bfd3f0451a6bbc5bd171931b6f2
   - filename: injitest/src/test/java/iosTestCases/ActivateVcTest.java
     checksum: 280fcbfa6e7b26baa41aa9e60e8be857a16fd409f2dcc5b31d53ced7d1b26dec
   - filename: injitest/src/test/java/iosTestCases/GenerateUinOrVidTest.java
@@ -303,7 +303,7 @@ fileignoreconfig:
   - filename: injitest/src/test/java/iosTestCases/VerifyHistoryTest.java
     checksum: 8a00278af4c8744c713c57328991bbca438eb5d5d89b492a7f5234c47362f44b
   - filename: machines/store.ts
-    checksum: 8c54719e45c1784f0c21b04f18db2c6ee87d9df08f9dfee5e4050f96eaa07592
+    checksum: 93ffa32067d698ecc9b7c1eec3b58ce1b3bee44d53c0e7daded0467393e3f0d6
   - filename: components/BannerNotificationContainer.tsx
     checksum: 9e5b4a61b87e86666f0bee550d410df2b8576dfe5ec374de0ab139a468a234f7
   - filename: injitest/src/test/java/iosTestCases/PinVcTest.java
@@ -371,4 +371,6 @@ fileignoreconfig:
     checksum: 947b6d75543e2bf959ca2d95dd7224051e0b4ec2c28f7515f923701e22a932f0
   - filename: components/FaceScanner/LivenessDetection.tsx
     checksum: d4140a42ee9ca0f7c90e490f762d181a723fd9dd20db891cbbe53bfbd8f81632
+  - filename: machines/VerifiableCredential/VCItemMachine/VCItemActions.ts       
+    checksum: 9b68ccc45681459d164197f73a1875e6f8bdf473acede18c811f4a784fca00e0 
     version: ""

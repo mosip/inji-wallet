@@ -398,6 +398,8 @@ public class NoNetworkIosTest extends IosBaseTest {
         assertTrue(addNewCardPage.isIssuerDescriptionEsignetDisplayed(), "Verify if issuer description  esignet displayed");
 
         addNewCardPage.clickOnDownloadViaEsignet();
+        EsignetLoginPage esignetLoginPage = new EsignetLoginPage(driver);
+        esignetLoginPage.clickOnCredentialTypeHeadingMOSIPVerifiableCredential();
         assertTrue(homePage.verifyLanguageForTryAgainButtonDisplayed("English"), "Verify if Try again button displayed");
         homePage.clickOnTryAgainButton();
 

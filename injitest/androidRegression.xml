@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite name="All Test Suite">
-	<listeners>
+	<!--<listeners>
         <listener class-name="inji.utils.SuiteListener" />
-	</listeners>
+	</listeners>-->
 	<test verbose="2" preserve-order="true" name="android">
 		<classes>
             <class name="androidTestCases.AboutInjiTest">
@@ -136,6 +136,22 @@
                     <include name="copyAppId"/>
                     <include name="verifyAppId"/>
                     <include name="verifyTuvaliVersion"/>
+            <class name="androidTestCases.MosipOtpAlternativeFlow">
+                <methods>
+                    <include name="verifyInvalidOtpMessage" />
+                    <include name="activateVcFromDetailedViewPage" />
+                    <include name="verifyActiveVcAndWaitForOtpTimeOut" />
+                    <include name="cancelDeleteVc" />
+                    <include name="DownloadingDeletedVc" />
+                    <include name="deleteDownloadedVcInOfflineMode" />
+                    <include name="openQrOffline" />
+                    <include name="verifyVcIssuerListWithoutNetwork" />
+                    <include name="verifyMessageAfterDenyBluetoothPopup" />
+                    <include name="pinVcInDetailedVcView" />
+                    <include name="pinEsignetVcMultipleTimes" />
+                    <include name="pinSubirdVcMultipleTimes" />
+                    <include name="verifyActivationFailedRecordInHistory"/>
+                    <include name="verifyActivationFailedRecordInHistoryFromDetailedView"/>
                 </methods>
             </class>
 		</classes>

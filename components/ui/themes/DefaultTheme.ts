@@ -704,10 +704,10 @@ export const DefaultTheme = {
     },
     tabBarIconCopilot: {
       flex: 1,
-      justifyContent: 'flex-end',
+      justifyContent: 'center',
       alignItems: 'center',
       minWidth: 70,
-      minHeight: 70,
+      minHeight: 65,
       marginBottom: -5,
     },
     copilotStyle: {

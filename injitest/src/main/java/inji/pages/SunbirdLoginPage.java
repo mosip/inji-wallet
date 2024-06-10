@@ -149,6 +149,10 @@ public class SunbirdLoginPage extends BasePage {
     @AndroidFindBy(xpath = "//android.view.ViewGroup[@resource-id=\"statusIcon\"]")
     private WebElement statusIcon;
 
+    @AndroidFindBy(accessibility = "6done")
+    @iOSXCUITFindBy(accessibility = "6done")
+    private WebElement doneButton;
+
     public SunbirdLoginPage(AppiumDriver driver) {
         super(driver);
     }
@@ -214,6 +218,8 @@ public class SunbirdLoginPage extends BasePage {
     }
 
     public boolean isSunbirdCardIsActive() {
+        if(isElementDisplayed(doneButton))
+       clickOnElement(doneButton);
         basePage.retrieToGetElement(activatedStatus);
         return this.isElementDisplayed(activatedStatus);
     }

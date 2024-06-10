@@ -94,7 +94,7 @@ public class ChangeLanguageTest extends IosBaseTest {
         assertTrue(settingsPage.isSettingPageLoaded(), "Verify if setting page is displayed");
         assertTrue(settingsPage.clickOnAboutInji().isTuvaliVersionPresent());
     }
-    
+
     @Test
     public void changeLanguageToArabic() {
         ChooseLanguagePage chooseLanguagePage = new ChooseLanguagePage(driver);
@@ -124,10 +124,10 @@ public class ChangeLanguageTest extends IosBaseTest {
         unlockApplicationPage.clickOnUnlockApplicationButton();
         setPasscode.enterPasscode(TestDataReader.readData("passcode"), Target.IOS);
         HistoryPage historyPage = homePage.clickOnHistoryButton();
-        
+
         assertTrue(historyPage.noHistoryAvailable(),"verify no history available in arabic");
     }
-    
+
     @Test
     public void changeLanguageToFilipionAndSearchIssuer() {
         ChooseLanguagePage chooseLanguagePage = new ChooseLanguagePage(driver);
@@ -155,22 +155,22 @@ public class ChangeLanguageTest extends IosBaseTest {
 
         assertTrue(settingsPage.verifyFilipinoLanguage(), "Verify if language is changed to filipino");
         homePage.clickOnHomeButton();
-        
+
         assertEquals(homePage.verifyLanguageForNoVCDownloadedPageLoaded(),"Dalhin ang Iyong Digital ID");
         AddNewCardPage addNewCardPage = homePage.downloadCard();
 
         assertEquals(addNewCardPage.verifyLanguageForAddNewCardGuideMessage(),"Mangyaring piliin ang iyong gustong tagabigay mula sa mga opsyon sa ibaba upang magdagdag ng bagong card.");
         assertTrue(addNewCardPage.isIssuerSearchBarDisplayedInFilipino(),"verify if search bar is displayed in filipino");
         addNewCardPage.sendTextInIssuerSearchBar("I-download ang Mga Kredensyal ng MOSIP ");
-        
+
 //        assertTrue(addNewCardPage.isDownloadViaUinDisplayed(),"verify if download via uin vid aid");
         addNewCardPage.clickOnBack();
-        
+
         homePage.downloadCard();
         addNewCardPage.sendTextInIssuerSearchBar("I-download ang Mga Kredensyal ng MOSIP");
         assertTrue(addNewCardPage.isDownloadViaEsignetDisplayed(),"verify if download via e-signet is displayed");
     }
-    
+
     @Test
     public void changeLanguageToFilipionAndSearchIssuerEnterIncompleteName() {
         ChooseLanguagePage chooseLanguagePage = new ChooseLanguagePage(driver);
@@ -198,22 +198,22 @@ public class ChangeLanguageTest extends IosBaseTest {
 
         assertTrue(settingsPage.verifyFilipinoLanguage(), "Verify if language is changed to filipino");
         homePage.clickOnHomeButton();
-        
+
         assertEquals(homePage.verifyLanguageForNoVCDownloadedPageLoaded(),"Dalhin ang Iyong Digital ID");
         AddNewCardPage addNewCardPage = homePage.downloadCard();
 
         assertEquals(addNewCardPage.verifyLanguageForAddNewCardGuideMessage(),"Mangyaring piliin ang iyong gustong tagabigay mula sa mga opsyon sa ibaba upang magdagdag ng bagong card.");
         assertTrue(addNewCardPage.isIssuerSearchBarDisplayedInFilipino(),"verify if search bar is displayed in filipino");
         addNewCardPage.sendTextInIssuerSearchBar("otp");
-        
+
         assertTrue(addNewCardPage.isDownloadViaUinDisplayed(),"verify if download via uin vid aid");
         addNewCardPage.clickOnBack();
-        
+
         homePage.downloadCard();
         addNewCardPage.sendTextInIssuerSearchBar("I-download ang");
         assertTrue(addNewCardPage.isDownloadViaEsignetDisplayed(),"verify if download via e-signet is displayed");
     }
-    
+
     @Test
     public void changeLanguageToHindiAndSearchIssuer() {
         ChooseLanguagePage chooseLanguagePage = new ChooseLanguagePage(driver);
@@ -241,23 +241,23 @@ public class ChangeLanguageTest extends IosBaseTest {
 
         assertTrue(settingsPage.verifyHindiLanguage(), "Verify if language is changed to hindi");
         homePage.clickOnHomeButton();
-        
+
         assertEquals(homePage.verifyLanguageForNoVCDownloadedPageLoaded(),"अपनी डिजिटल आईडी लाओ");
         AddNewCardPage addNewCardPage = homePage.downloadCard();
-        
+
         assertEquals(addNewCardPage.verifyLanguageForAddNewCardGuideMessage(),"नया कार्ड जोड़ने के लिए कृपया नीचे दिए गए विकल्पों में से अपना पसंदीदा जारीकर्ता चुनें।");
         assertTrue(addNewCardPage.isIssuerSearchBarDisplayedInHindi(),"verify if search bar is displayed in hindi");
         addNewCardPage.sendTextInIssuerSearchBar("OTP के माध्यम से MOSIP क्रेडेंशियल डाउनलोड करें");
-        
+
         assertTrue(addNewCardPage.isDownloadViaUinDisplayedInHindi(),"verify if download via uin vid aid displayed in hindi");
         addNewCardPage.clickOnBack();
-        
+
         homePage.downloadCard();
-        
+
         addNewCardPage.sendTextInIssuerSearchBar("राष्ट्रीय पहचान विभाग");
         assertTrue(addNewCardPage.isDownloadViaEsignetDisplayedInHindi(),"verify if download via e-signet is displayed");
     }
-    
+
     @Test
     public void changeLanguageToFilipionAndcheckInjiTour() {
         ChooseLanguagePage chooseLanguagePage = new ChooseLanguagePage(driver);
@@ -312,7 +312,7 @@ public class ChangeLanguageTest extends IosBaseTest {
         backupDataPage.clickOnGoBack();
         assertEquals(homePage.getShareButton(), "Ibahagi");
     }
-    
+
     @Test
     public void changeLanguageToHindiAndcheckInjiTour() {
         ChooseLanguagePage chooseLanguagePage = new ChooseLanguagePage(driver);
@@ -339,7 +339,7 @@ public class ChangeLanguageTest extends IosBaseTest {
         settingsPage.clickOnLanguage().clickOnHindiLanguage();
 
         assertTrue(settingsPage.verifyHindiLanguage(), "Verify if language is changed to hindi");
-        
+
         settingsPage.clickOnInjiTourGuide();
 
         assertEquals(welcomePage.verifyLanguageforWelcomePageLoaded(), "स्वागत!");
@@ -367,7 +367,7 @@ public class ChangeLanguageTest extends IosBaseTest {
         backupDataPage.clickOnGoBack();
         assertEquals(homePage.getShareButton(), "शेयर करना");
     }
-    
+
     @Test
     public void changeLanguageToTamilAndcheckInjiTour() {
         ChooseLanguagePage chooseLanguagePage = new ChooseLanguagePage(driver);
@@ -394,7 +394,7 @@ public class ChangeLanguageTest extends IosBaseTest {
         settingsPage.clickOnLanguage().clickOnTamilLanguage();
 
         assertTrue(settingsPage.verifyTamilLanguage(), "Verify if language is changed to tamil");
-        
+
         settingsPage.clickOnInjiTourGuide();
 
         assertEquals(welcomePage.verifyLanguageforWelcomePageLoaded(), "வரவேற்பு!");
@@ -424,7 +424,7 @@ public class ChangeLanguageTest extends IosBaseTest {
         assertEquals(homePage.getShareButton(), "பகிர்");
 
     }
-    
+
     @Test
     public void changeLanguageToKannadAndcheckInjiTour() {
         ChooseLanguagePage chooseLanguagePage = new ChooseLanguagePage(driver);
@@ -451,7 +451,7 @@ public class ChangeLanguageTest extends IosBaseTest {
         settingsPage.clickOnLanguage().clickOnKannadaLanguage();
 
         assertTrue(settingsPage.verifyKannadaLanguage(), "Verify if language is changed to kannada");
-        
+
         settingsPage.clickOnInjiTourGuide();
 
         assertEquals(welcomePage.verifyLanguageforWelcomePageLoaded(), "ಸ್ವಾಗತ!");
@@ -599,7 +599,7 @@ public class ChangeLanguageTest extends IosBaseTest {
 
         assertTrue(addNewCardPage.isDownloadViaSunbirdDisplayed(), "Verify if download sunbird displayed");
         SunbirdLoginPage sunbirdLoginPage =  addNewCardPage.clickOnDownloadViaSunbird();
-        addNewCardPage.clickOnInsuranceCredential();
+        addNewCardPage.clickOnCredentialTypeHeadingInsuranceCredential();
         addNewCardPage.clickOnContinueButtonInSigninPopupIos();
         sunbirdLoginPage.enterPolicyNumberTextBox(TestDataReader.readData("policyNumberSunbird"));
         sunbirdLoginPage.enterFullNameTextBox(TestDataReader.readData("fullNameSunbird"));
@@ -668,6 +668,7 @@ public class ChangeLanguageTest extends IosBaseTest {
         assertTrue(addNewCardPage.isIssuerSearchBarDisplayedInHindi(),"verify if search bar is displayed in hindi");
 
         EsignetLoginPage esignetLoginPage =  addNewCardPage.clickOnDownloadViaEsignet();
+        esignetLoginPage.clickOnCredentialTypeHeadingMOSIPVerifiableCredential();
         addNewCardPage.clickOnContinueButtonInSigninPopupIos();
 
         assertTrue(esignetLoginPage.verifyLanguageEnterUinOrVidBoxTextDisplayed("HindiIos"),"verify if enter uin or vid text hindi");
@@ -709,6 +710,8 @@ public class ChangeLanguageTest extends IosBaseTest {
         AddNewCardPage addNewCardPage = homePage.downloadCard();
 
         EsignetLoginPage esignetLoginPage =  addNewCardPage.clickOnDownloadViaEsignet();
+        esignetLoginPage.clickOnCredentialTypeHeadingMOSIPVerifiableCredential();
+        addNewCardPage.clickOnCredentialTypeHeadingInsuranceCredential();
         addNewCardPage.clickOnContinueButtonInSigninPopupIos();
 
 //        assertTrue(esignetLoginPage.verifyLanguageEnterUinOrVidBoxTextDisplayed("TamilIos"),"verify if enter uin or vid text tamil");
@@ -750,6 +753,7 @@ public class ChangeLanguageTest extends IosBaseTest {
         AddNewCardPage addNewCardPage = homePage.downloadCard();
 
         EsignetLoginPage esignetLoginPage =  addNewCardPage.clickOnDownloadViaEsignet();
+        esignetLoginPage.clickOnCredentialTypeHeadingMOSIPVerifiableCredential();
         addNewCardPage.clickOnContinueButtonInSigninPopupIos();
 
         assertTrue(esignetLoginPage.verifyLanguageEnterUinOrVidBoxTextDisplayed("KannadaIos"),"verify if enter uin or vid text kannada");
@@ -794,6 +798,7 @@ public class ChangeLanguageTest extends IosBaseTest {
         AddNewCardPage addNewCardPage = homePage.downloadCard();
 
         EsignetLoginPage esignetLoginPage =  addNewCardPage.clickOnDownloadViaEsignet();
+        esignetLoginPage.clickOnCredentialTypeHeadingMOSIPVerifiableCredential();
         addNewCardPage.clickOnContinueButtonInSigninPopupIos();
 
         assertTrue(esignetLoginPage.verifyLanguageEnterUinOrVidBoxTextDisplayed("ArabicIos"),"verify if enter uin or vid text Arabic");
@@ -835,6 +840,7 @@ public class ChangeLanguageTest extends IosBaseTest {
         AddNewCardPage addNewCardPage = homePage.downloadCard();
 
         EsignetLoginPage esignetLoginPage =  addNewCardPage.clickOnDownloadViaEsignet();
+        esignetLoginPage.clickOnCredentialTypeHeadingMOSIPVerifiableCredential();
         addNewCardPage.clickOnContinueButtonInSigninPopupIos();
 
         assertTrue(esignetLoginPage.verifyLanguageEnterUinOrVidBoxTextDisplayed("KannadaIos"),"verify if enter uin or vid text kannada");
@@ -854,6 +860,7 @@ public class ChangeLanguageTest extends IosBaseTest {
         homePage.clickOnHomeButton();
         homePage.downloadCard();
         addNewCardPage.clickOnDownloadViaEsignet();
+        esignetLoginPage.clickOnCredentialTypeHeadingMOSIPVerifiableCredential();
         addNewCardPage.clickOnContinueButtonInSigninPopupIos();
         assertTrue(esignetLoginPage.verifyLanguageEnterUinOrVidBoxTextDisplayed("KannadaIos"),"verify if search bar is displayed in Kannada");
         assertTrue(esignetLoginPage.verifyLanguageLoginHeaderTextDisplayed("Kannada"),"verify if search bar is displayed in Kannada");
@@ -894,6 +901,7 @@ public class ChangeLanguageTest extends IosBaseTest {
         AddNewCardPage addNewCardPage = homePage.downloadCard();
 
         EsignetLoginPage esignetLoginPage =  addNewCardPage.clickOnDownloadViaEsignet();
+        addNewCardPage.clickOnCredentialTypeHeadingInsuranceCredential();
         addNewCardPage.clickOnContinueButtonInSigninPopupIos();
 
         assertTrue(esignetLoginPage.verifyLanguageEnterUinOrVidBoxTextDisplayed("KannadaIos"),"verify if enter uin or vid text kannada");
