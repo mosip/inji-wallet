@@ -15,6 +15,7 @@ import {VCVerification} from '../../VCVerification';
 import {MIMOTO_BASE_URL} from '../../../shared/constants';
 import {VCItemDetailsProps} from '../Views/VCDetailView';
 import {getSelectedCredentialTypeDetails} from '../../../shared/openId4VCI/Utils';
+import {parseJSON} from '../../../shared/Utils';
 
 export const CARD_VIEW_DEFAULT_FIELDS = ['fullName'];
 export const DETAIL_VIEW_DEFAULT_FIELDS = [
@@ -207,7 +208,7 @@ export const getIdType = (
     idType !== undefined
   ) {
     let supportedCredentialsWellknown;
-    wellknown = JSON.parse(wellknown) as Object[];
+    wellknown = parseJSON(wellknown) as unknown as Object[];
     if (!!!wellknown['credentials_supported']) {
       return i18n.t('VcDetails:nationalCard');
     }

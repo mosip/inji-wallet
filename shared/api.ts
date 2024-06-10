@@ -27,12 +27,6 @@ export const API_URLS: ApiUrls = {
     buildURL: (issuerId: string): `/${string}` =>
       `/residentmobileapp/issuers/${issuerId}`,
   },
-  // TODO: Remove unused api
-  credentialTypes: {
-    method: 'GET',
-    buildURL: (issuerId: string): `/${string}` =>
-      `/residentmobileapp/issuers/${issuerId}/credentialTypes`,
-  },
   issuerWellknownConfig: {
     method: 'GET',
     buildURL: (requestUrl: `/${string}`): `/${string}` => requestUrl,
@@ -334,7 +328,6 @@ type Api_Params = {
 type ApiUrls = {
   issuersList: Api_Params;
   issuerConfig: Api_Params;
-  credentialTypes: Api_Params;
   issuerWellknownConfig: Api_Params;
   allProperties: Api_Params;
   getIndividualId: Api_Params;
