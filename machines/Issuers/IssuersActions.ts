@@ -203,12 +203,11 @@ export const IssuersActions = (model: any) => {
           {
             _vcKey: vcMetadata.getVcKey(),
             type: 'VC_DOWNLOADED',
-            id: vcMetadata.id,
+            id: vcMetadata.displayId,
             idType:
               context.credentialWrapper.verifiableCredential.credentialTypes,
             timestamp: Date.now(),
             deviceName: '',
-            vcLabel: vcMetadata.id,
             issuer: context.selectedIssuerId,
           },
           context.selectedCredentialType,

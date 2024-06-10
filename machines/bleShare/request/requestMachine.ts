@@ -619,7 +619,7 @@ export const requestMachine =
             return ActivityLogEvents.LOG_ACTIVITY({
               _vcKey: vcMetadata.getVcKey(),
               type: context.receiveLogType,
-              id: vcMetadata.id,
+              id: vcMetadata.displayId,
               idType: getCredentialTypes(
                 context.incomingVc.verifiableCredential,
               ),
@@ -627,7 +627,6 @@ export const requestMachine =
               timestamp: Date.now(),
               deviceName:
                 context.senderInfo.name || context.senderInfo.deviceName,
-              vcLabel: vcMetadata.id,
             });
           },
           {to: context => context.serviceRefs.activityLog},

@@ -67,7 +67,7 @@ export const VCItemServices = model => {
           request: {
             authFactorType: 'WLA',
             format: 'jwt',
-            individualId: VCMetadata.fromVC(context.vcMetadata).id,
+            individualId: context.vcMetadata.displayId,
             transactionId: context.bindingTransactionId,
             publicKey: context.publicKey,
             challengeList: [
@@ -107,14 +107,13 @@ export const VCItemServices = model => {
       );
     },
     requestBindingOTP: async context => {
-      const vc = getVerifiableCredential(context.verifiableCredential);
       const response = await request(
         API_URLS.bindingOtp.method,
         API_URLS.bindingOtp.buildURL(),
         {
           requestTime: String(new Date().toISOString()),
           request: {
-            individualId: VCMetadata.fromVC(context.vcMetadata).id,
+            individualId: context.vcMetadata.displayId,
             otpChannels: ['EMAIL', 'PHONE'],
           },
         },
@@ -184,7 +183,7 @@ export const VCItemServices = model => {
             API_URLS.credentialDownload.method,
             API_URLS.credentialDownload.buildURL(),
             {
-              individualId: context.vcMetadata.id,
+              individualId: context.vcMetadata.displayId,
               requestId: context.vcMetadata.requestId,
             },
           );
@@ -194,7 +193,6 @@ export const VCItemServices = model => {
               credential: response.credential,
               verifiableCredential: response.verifiableCredential,
               generatedOn: new Date(),
-              id: context.vcMetadata.id,
               idType: context.vcMetadata.idType,
               requestId: context.vcMetadata.requestId,
               lastVerifiedOn: null,

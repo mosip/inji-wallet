@@ -9,9 +9,10 @@ import {getDisplayObjectForCurrentLanguage} from '../../shared/openId4VCI/Utils'
 import {CredentialTypes} from '../../machines/VerifiableCredential/VCMetaMachine/vc';
 
 export const CredentialType: React.FC<CredentialTypeProps> = props => {
-  const selectedIssuerDisplayObject = getDisplayObjectForCurrentLanguage(
-    props.item.display,
-  );
+  const selectedIssuerDisplayObject = props.item.display
+    ? getDisplayObjectForCurrentLanguage(props.item.display)
+    : {};
+
   return (
     <Pressable
       accessible={false}
@@ -29,10 +30,11 @@ export const CredentialType: React.FC<CredentialTypeProps> = props => {
             ]
       }>
       <View style={Theme.IssuersScreenStyles.issuerBoxIconContainer}>
-        {SvgImage.IssuerIcon({
-          ...props,
-          displayDetails: selectedIssuerDisplayObject,
-        })}
+        {selectedIssuerDisplayObject?.logo &&
+          SvgImage.IssuerIcon({
+            ...props,
+            displayDetails: selectedIssuerDisplayObject,
+          })}
       </View>
       <View style={Theme.IssuersScreenStyles.issuerBoxContent}>
         <Text

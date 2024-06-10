@@ -41,12 +41,20 @@ public class InjiVciClientModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public void requestCredential(ReadableMap issuerMetaData, String jwtProofValue, String accessToken, Promise promise) {
         try {
+            CredentialFormat credentialFormat;
+            switch (issuerMetaData.getString("credentialFormat")) {
+                case "ldp_vc":
+                    credentialFormat = CredentialFormat.LDP_VC;
+                    break;
+                default:
+                    credentialFormat = CredentialFormat.LDP_VC;
+            }
             CredentialResponse response = vciClient.requestCredential(new IssuerMetaData(
                             issuerMetaData.getString("credentialAudience"),
                             issuerMetaData.getString("credentialEndpoint"),
                             issuerMetaData.getInt("downloadTimeoutInMilliSeconds"),
                             convertReadableArrayToStringArray(issuerMetaData.getArray("credentialType")),
-                            CredentialFormat.LDP_VC), new JWTProof(jwtProofValue)
+                            credentialFormat), new JWTProof(jwtProofValue)
                     , accessToken);
             promise.resolve(response.toJsonString());
         } catch (Exception exception) {

@@ -30,3 +30,14 @@ export interface CommunicationDetails {
 export const isMosipVC = (issuer: string) => {
   return issuer === Issuers.Mosip || issuer === Issuers.MosipOtp;
 };
+
+export const parseJSON = (input: any) => {
+  let result = null;
+  try {
+    result = JSON.parse(input);
+  } catch (e) {
+    console.warn('Error occurred while parsing JSON ', e);
+    result = JSON.parse(JSON.stringify(input));
+  }
+  return result;
+};
