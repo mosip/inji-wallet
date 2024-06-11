@@ -288,7 +288,6 @@ public class PinVcTest extends IosBaseTest {
 
         //second pinned vc
         assertTrue(homePage.isPinIconDisplayed(), "Verify if pin icon on vc is displayed");
-
     }
 
     @Test

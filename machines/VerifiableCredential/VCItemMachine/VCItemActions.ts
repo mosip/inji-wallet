@@ -127,11 +127,18 @@ export const VCItemActions = model => {
     ),
 
     setContext: model.assign((context, event) => {
-      const vcMetadata = context.vcMetadata;
+      const vcMetadata = VCMetadata.fromVC(context.vcMetadata);
+      if (!vcMetadata.id) {
+        const verifiableCredentialId = event.response.verifiableCredential.id;
+        const credId = verifiableCredentialId.startsWith('did')
+          ? verifiableCredentialId.split(':')
+          : verifiableCredentialId.split('/');
+        vcMetadata.id = `${credId[credId.length - 1]} - ${vcMetadata.issuer}`;
+      }
       return {
         ...context,
         ...event.response,
-        vcMetadata: VCMetadata.fromVC(vcMetadata),
+        vcMetadata: vcMetadata,
       };
     }),
     storeContext: send(
@@ -451,12 +458,11 @@ export const VCItemActions = model => {
         return ActivityLogEvents.LOG_ACTIVITY({
           _vcKey: context.vcMetadata.getVcKey(),
           type: 'VC_DOWNLOADED',
-          id: context.vcMetadata.id,
+          id: context.vcMetadata.displayId,
           issuer: context.vcMetadata.issuer!!,
           idType: getCredentialTypes(context.verifiableCredential),
           timestamp: Date.now(),
           deviceName: '',
-          vcLabel: data.id,
         });
       },
       {
@@ -469,12 +475,11 @@ export const VCItemActions = model => {
         return ActivityLogEvents.LOG_ACTIVITY({
           idType: getCredentialTypes(context.verifiableCredential),
           issuer: vcMetadata.issuer!!,
-          id: vcMetadata.id,
+          id: vcMetadata.displayId,
           _vcKey: vcMetadata.getVcKey(),
           type: 'VC_REMOVED',
           timestamp: Date.now(),
           deviceName: '',
-          vcLabel: vcMetadata.id,
         });
       },
       {
@@ -489,10 +494,9 @@ export const VCItemActions = model => {
           type: 'WALLET_BINDING_SUCCESSFULL',
           idType: getCredentialTypes(context.verifiableCredential),
           issuer: vcMetadata.issuer!!,
-          id: vcMetadata.id,
+          id: vcMetadata.displayId,
           timestamp: Date.now(),
           deviceName: '',
-          vcLabel: vcMetadata.id,
         });
       },
       {
@@ -506,12 +510,11 @@ export const VCItemActions = model => {
         return ActivityLogEvents.LOG_ACTIVITY({
           _vcKey: vcMetadata.getVcKey(),
           type: 'WALLET_BINDING_FAILURE',
-          id: vcMetadata.id,
+          id: vcMetadata.displayId,
           idType: getCredentialTypes(context.verifiableCredential),
           issuer: vcMetadata.issuer!!,
           timestamp: Date.now(),
           deviceName: '',
-          vcLabel: vcMetadata.id,
         });
       },
       {
