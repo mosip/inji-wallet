@@ -46,12 +46,12 @@ public class HistoryPage extends BasePage {
     }
 
     private boolean verifyHistoryAndroidforInsuranceCard(String vcNumber) {
-        By locator = By.xpath("//*[contains(@text,'Insurance Card " + vcNumber + " is downloaded.')]");
+        By locator = By.xpath("//*[contains(@text,'Health Insurance " + vcNumber + " is downloaded.')]");
         return this.isElementDisplayed(locator);
     }
 
     private boolean verifyHistoryIosInsuranceCard(String vcNumber) {
-        By locator = By.xpath("//*[@name=\"Insurance Card " + vcNumber + " is downloaded.\"]");
+        By locator = By.xpath("//*[@name=\"Health Insurance " + vcNumber + " is downloaded.\"]");
         return this.isElementDisplayed(locator);
     }
 
@@ -61,22 +61,22 @@ public class HistoryPage extends BasePage {
     }
 
     private boolean verifyDeleteHistoryAndroid(String vcNumber) {
-        By locator = By.xpath("//*[contains(@text,'National ID " + vcNumber + " is removed from wallet.')]");
+        By locator = By.xpath("//*[contains(@text,'MOSIP National ID " + vcNumber + " is removed from wallet.')]");
         return this.isElementDisplayed(locator);
     }
 
     private boolean verifyDeletedHistoryIos(String vcNumber) {
-        By locator = By.xpath("//*[contains(@name,'National ID " + vcNumber + " is removed from wallet.')]");
+        By locator = By.xpath("//*[contains(@name,'MOSIP National ID " + vcNumber + " is removed from wallet.')]");
         return this.isElementDisplayed(locator);
     }
 
     private boolean verifyDeleteHistoryAndroidInsuranceCard(String vcNumber) {
-        By locator = By.xpath("//*[contains(@text,'Insurance Card " + vcNumber + " is removed from wallet.')]");
+        By locator = By.xpath("//*[contains(@text,'Health Insurance " + vcNumber + " is removed from wallet.')]");
         return this.isElementDisplayed(locator);
     }
 
     private boolean verifyDeletedHistoryIosInsuranceCard(String vcNumber) {
-        By locator = By.xpath("//*[contains(@name,'Insurance Card " + vcNumber + " is removed from wallet.')]");
+        By locator = By.xpath("//*[contains(@name,'Health Insurance " + vcNumber + " is removed from wallet.')]");
         return this.isElementDisplayed(locator);
     }
 
@@ -195,7 +195,7 @@ public class HistoryPage extends BasePage {
 
 
     private boolean verifyActivationSuccessfulRecordAndroid(String vcNumber) {
-        By locator = By.xpath("//*[contains(@text,'Activation of National ID " + vcNumber + " is successful.')]");
+        By locator = By.xpath("//*[contains(@text,'Activation of MOSIP National ID " + vcNumber + " is successful.')]");
         return this.isElementDisplayed(locator);
     }
 }

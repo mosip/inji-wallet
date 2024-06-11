@@ -81,13 +81,13 @@ public class TestDataReader {
             case "policyNumberSunbird":
                 return "1234567890";
             case "idTypeSunbird":
-                return "Insurance Card";
+                return "Health Insurance";
             case "idTypeSunbirdHindi":
                 return "बीमा कार्ड";
             case "phoneNumberSunbird":
                 return "8220255752";
             case "dateOfBirthSunbird":
-                return "01/01/2024";
+                return "2024-01-01";
             case "genderValueSunbird":
                 return "Female";
             case "emailIdValueSunbird":

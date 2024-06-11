@@ -133,7 +133,3 @@ export function selectVc(state: State) {
   const {serviceRefs, ...data} = state.context;
   return data;
 }
-
-export function selectId(state: State) {
-  return state.context.vcMetadata.id;
-}

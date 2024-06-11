@@ -24,7 +24,6 @@ export class ActivityLog {
   _vcKey: string;
   timestamp: number;
   deviceName: string;
-  vcLabel: string;
   type: ActivityLogType;
   issuer: string;
 
@@ -35,7 +34,6 @@ export class ActivityLog {
     type = '',
     timestamp = Date.now(),
     deviceName = '',
-    vcLabel = '',
     issuer = '',
   } = {}) {
     this.id = id;
@@ -44,7 +42,6 @@ export class ActivityLog {
     this.type = type;
     this.timestamp = timestamp;
     this.deviceName = deviceName;
-    this.vcLabel = vcLabel;
     this.issuer = issuer;
   }
 
