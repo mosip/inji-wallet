@@ -71,19 +71,19 @@ public class SharePage extends BasePage {
 
     @AndroidFindBy(xpath = "//android.widget.Button[@resource-id=\"com.android.permissioncontroller:id/permission_deny_button\"]")
     @iOSXCUITFindBy(accessibility = "Don’t Allow")
-    private WebElement cameraDontAllAccessPopup;
+    private WebElement cameraDontAllowAccessPopup;
 
     @AndroidFindBy(accessibility = "holdPhoneSteadyMessage")
     @iOSXCUITFindBy(accessibility = "cameraAccessDisabled")
-    private WebElement CameraDisabledToaster;
+    private WebElement cameraDisabledToaster;
 
     @AndroidFindBy(xpath = "//android.widget.TextView[@resource-id=\"close\"]")
     @iOSXCUITFindBy(accessibility = "close")
-    private WebElement CameraDisabledToasterClose;
+    private WebElement cameraDisabledToasterClose;
 
     @AndroidFindBy(accessibility = "sharingStatusTitle")
     @iOSXCUITFindBy(accessibility = "sharingStatusTitle")
-    private WebElement CameraAccessLostPage;
+    private WebElement cameraAccessLostPage;
 
 
     public SharePage(AppiumDriver driver) {
@@ -187,20 +187,20 @@ public class SharePage extends BasePage {
     }
 
     public boolean isCameraDisabledToasterLoaded() {
-        return isElementDisplayed(CameraDisabledToaster);
+        return isElementDisplayed(cameraDisabledToaster);
     }
 
     public void clickOnCameraDisabledToasterClose(){
-        if(isElementDisplayed(CameraDisabledToasterClose))
-            clickOnElement(CameraDisabledToasterClose);
+        if(isElementDisplayed(cameraDisabledToasterClose))
+            clickOnElement(cameraDisabledToasterClose);
     }
 
     public void clickOnDontAllowCameraAccessButton(){
-        if(isElementDisplayed(cameraDontAllAccessPopup))
-            clickOnElement(cameraDontAllAccessPopup);
+        if(isElementDisplayed(cameraDontAllowAccessPopup))
+            clickOnElement(cameraDontAllowAccessPopup);
     }
 
     public boolean isCameraAccessLostPageLoaded() {
-        return isElementDisplayed(CameraAccessLostPage);
+        return isElementDisplayed(cameraAccessLostPage);
     }
 }
