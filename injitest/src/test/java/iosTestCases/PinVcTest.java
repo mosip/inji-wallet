@@ -33,6 +33,7 @@ public class PinVcTest extends IosBaseTest {
         assertTrue(confirmPasscode.isConfirmPassCodePageLoaded(), "Verify if confirm passcode page is displayed");
         HomePage homePage = confirmPasscode.enterPasscodeInConfirmPasscodePage(TestDataReader.readData("passcode"), Target.IOS);
 
+        homePage.clickOnNextButtonForInjiTour();
         assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
         AddNewCardPage addNewCardPage = homePage.downloadCard();
 
@@ -78,6 +79,7 @@ public class PinVcTest extends IosBaseTest {
         assertTrue(confirmPasscode.isConfirmPassCodePageLoaded(), "Verify if confirm passcode page is displayed");
         HomePage homePage = confirmPasscode.enterPasscodeInConfirmPasscodePage(TestDataReader.readData("passcode"), Target.IOS);
 
+        homePage.clickOnNextButtonForInjiTour();
         assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
         AddNewCardPage addNewCardPage = homePage.downloadCard();
 
@@ -126,6 +128,7 @@ public class PinVcTest extends IosBaseTest {
         assertTrue(confirmPasscode.isConfirmPassCodePageLoaded(), "Verify if confirm passcode page is displayed");
         HomePage homePage = confirmPasscode.enterPasscodeInConfirmPasscodePage(TestDataReader.readData("passcode"), Target.IOS);
 
+        homePage.clickOnNextButtonForInjiTour();
         assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
         AddNewCardPage addNewCardPage = homePage.downloadCard();
 
@@ -148,6 +151,7 @@ public class PinVcTest extends IosBaseTest {
         assertTrue(moreOptionsPage.isMoreOptionsPageLoaded(), "Verify if more options page is displayed");
         moreOptionsPage.clickOnPinOrUnPinCard();
 
+        homePage.clickOnNextButtonForInjiTour();
         assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
         homePage.downloadCard();
 
@@ -185,6 +189,7 @@ public class PinVcTest extends IosBaseTest {
         assertTrue(confirmPasscode.isConfirmPassCodePageLoaded(), "Verify if confirm passcode page is displayed");
         HomePage homePage = confirmPasscode.enterPasscodeInConfirmPasscodePage(TestDataReader.readData("passcode"), Target.IOS);
 
+        homePage.clickOnNextButtonForInjiTour();
         assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
         AddNewCardPage addNewCardPage = homePage.downloadCard();
 
@@ -231,6 +236,7 @@ public class PinVcTest extends IosBaseTest {
         assertTrue(confirmPasscode.isConfirmPassCodePageLoaded(), "Verify if confirm passcode page is displayed");
         HomePage homePage = confirmPasscode.enterPasscodeInConfirmPasscodePage(TestDataReader.readData("passcode"), Target.IOS);
 
+        homePage.clickOnNextButtonForInjiTour();
         assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
         AddNewCardPage addNewCardPage = homePage.downloadCard();
 

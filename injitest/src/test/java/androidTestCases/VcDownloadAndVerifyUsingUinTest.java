@@ -45,6 +45,7 @@ public class VcDownloadAndVerifyUsingUinTest extends AndroidBaseTest {
         assertTrue(confirmPasscode.isConfirmPassCodePageLoaded(), "Verify if confirm passcode page is displayed");
         HomePage homePage = confirmPasscode.enterPasscodeInConfirmPasscodePage(TestDataReader.readData("passcode"), Target.ANDROID);
 
+        homePage.clickOnNextButtonForInjiTour();
         assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
         AddNewCardPage addNewCardPage = homePage.downloadCard();
         
@@ -106,6 +107,7 @@ public class VcDownloadAndVerifyUsingUinTest extends AndroidBaseTest {
         assertTrue(confirmPasscode.isConfirmPassCodePageLoaded(), "Verify if confirm passcode page is displayed");
         HomePage homePage = confirmPasscode.enterPasscodeInConfirmPasscodePage(TestDataReader.readData("passcode"), Target.ANDROID);
 
+        homePage.clickOnNextButtonForInjiTour();
         assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
         AddNewCardPage addNewCardPage = homePage.downloadCard();
 
@@ -156,6 +158,7 @@ public class VcDownloadAndVerifyUsingUinTest extends AndroidBaseTest {
         assertTrue(confirmPasscode.isConfirmPassCodePageLoaded(), "Verify if confirm passcode page is displayed");
         HomePage homePage = confirmPasscode.enterPasscodeInConfirmPasscodePage(TestDataReader.readData("passcode"), Target.ANDROID);
 
+        homePage.clickOnNextButtonForInjiTour();
         assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
         AddNewCardPage addNewCardPage = homePage.downloadCard();
 
@@ -187,6 +190,7 @@ public class VcDownloadAndVerifyUsingUinTest extends AndroidBaseTest {
         assertTrue(confirmPasscode.isConfirmPassCodePageLoaded(), "Verify if confirm passcode page is displayed");
         HomePage homePage = confirmPasscode.enterPasscodeInConfirmPasscodePage(TestDataReader.readData("passcode"), Target.ANDROID);
 
+        homePage.clickOnNextButtonForInjiTour();
         assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
         AddNewCardPage addNewCardPage = homePage.downloadCard();
 
@@ -241,6 +245,7 @@ public class VcDownloadAndVerifyUsingUinTest extends AndroidBaseTest {
         assertTrue(confirmPasscode.isConfirmPassCodePageLoaded(), "Verify if confirm passcode page is displayed");
         HomePage homePage = confirmPasscode.enterPasscodeInConfirmPasscodePage(TestDataReader.readData("passcode"), Target.ANDROID);
 
+        homePage.clickOnNextButtonForInjiTour();
         assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
 
         AddNewCardPage addNewCardPage = homePage.downloadCard();
@@ -273,6 +278,7 @@ public class VcDownloadAndVerifyUsingUinTest extends AndroidBaseTest {
         assertTrue(confirmPasscode.isConfirmPassCodePageLoaded(), "Verify if confirm passcode page is displayed");
         HomePage homePage = confirmPasscode.enterPasscodeInConfirmPasscodePage(TestDataReader.readData("passcode"), Target.ANDROID);
 
+        homePage.clickOnNextButtonForInjiTour();
         assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
         AddNewCardPage addNewCardPage = homePage.downloadCard();
 
@@ -316,6 +322,7 @@ public class VcDownloadAndVerifyUsingUinTest extends AndroidBaseTest {
         assertTrue(confirmPasscode.isConfirmPassCodePageLoaded(), "Verify if confirm passcode page is displayed");
         HomePage homePage = confirmPasscode.enterPasscodeInConfirmPasscodePage(TestDataReader.readData("passcode"), Target.ANDROID);
 
+        homePage.clickOnNextButtonForInjiTour();
         assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
         AddNewCardPage addNewCardPage = homePage.downloadCard();
 
@@ -454,6 +461,7 @@ public class VcDownloadAndVerifyUsingUinTest extends AndroidBaseTest {
         assertFalse(homePage.isIssuerSearchBarDisplayed(), "Verify if card search not present");
         assertFalse(homePage.isCardCountDisplayed(), "Verify if card count not present");
 
+        homePage.clickOnNextButtonForInjiTour();
         assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
         AddNewCardPage addNewCardPage = homePage.downloadCard();
 
@@ -553,6 +561,7 @@ public class VcDownloadAndVerifyUsingUinTest extends AndroidBaseTest {
         assertFalse(homePage.isIssuerSearchBarDisplayed(), "Verify if card search not present");
         assertFalse(homePage.isCardCountDisplayed(), "Verify if card count not present");
 
+        homePage.clickOnNextButtonForInjiTour();
         assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
         AddNewCardPage addNewCardPage = homePage.downloadCard();
 

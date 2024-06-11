@@ -38,6 +38,7 @@ public class NoNetworkIosTest extends IosBaseTest {
         assertTrue(confirmPasscode.isConfirmPassCodePageLoaded(), "Verify if confirm passcode page is displayed");
         HomePage homePage = confirmPasscode.enterPasscodeInConfirmPasscodePage(TestDataReader.readData("passcode"), Target.IOS);
 
+        homePage.clickOnNextButtonForInjiTour();
         assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
         AddNewCardPage addNewCardPage = homePage.downloadCard();
 
@@ -70,6 +71,7 @@ public class NoNetworkIosTest extends IosBaseTest {
         assertTrue(confirmPasscode.isConfirmPassCodePageLoaded(), "Verify if confirm passcode page is displayed");
         HomePage homePage = confirmPasscode.enterPasscodeInConfirmPasscodePage(TestDataReader.readData("passcode"), Target.IOS);
 
+        homePage.clickOnNextButtonForInjiTour();
         assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
         AddNewCardPage addNewCardPage = homePage.downloadCard();
 
@@ -108,6 +110,7 @@ public class NoNetworkIosTest extends IosBaseTest {
         assertTrue(confirmPasscode.isConfirmPassCodePageLoaded(), "Verify if confirm passcode page is displayed");
         HomePage homePage = confirmPasscode.enterPasscodeInConfirmPasscodePage(TestDataReader.readData("passcode"), Target.IOS);
 
+        homePage.clickOnNextButtonForInjiTour();
         assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
 
         AddNewCardPage addNewCardPage = homePage.downloadCard();
@@ -158,6 +161,7 @@ public class NoNetworkIosTest extends IosBaseTest {
         assertTrue(confirmPasscode.isConfirmPassCodePageLoaded(), "Verify if confirm passcode page is displayed");
         HomePage homePage = confirmPasscode.enterPasscodeInConfirmPasscodePage(TestDataReader.readData("passcode"), Target.IOS);
 
+        homePage.clickOnNextButtonForInjiTour();
         assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
         SettingsPage settingsPage = homePage.clickOnSettingIcon();
 
@@ -189,12 +193,14 @@ public class NoNetworkIosTest extends IosBaseTest {
         assertTrue(confirmPasscode.isConfirmPassCodePageLoaded(), "Verify if confirm passcode page is displayed");
         HomePage homePage = confirmPasscode.enterPasscodeInConfirmPasscodePage(TestDataReader.readData("passcode"), Target.IOS);
 
+        homePage.clickOnNextButtonForInjiTour();
         assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
         HelpPage helpPage = homePage.clickOnHelpIcon();
 
         assertTrue(helpPage.isHelpPageLoaded(), "Verify if help page is displayed");
         helpPage.exitHelpPage();
 
+        homePage.clickOnNextButtonForInjiTour();
         assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
     }
 
@@ -217,6 +223,7 @@ public class NoNetworkIosTest extends IosBaseTest {
         assertTrue(confirmPasscode.isConfirmPassCodePageLoaded(), "Verify if confirm passcode page is displayed");
         HomePage homePage = confirmPasscode.enterPasscodeInConfirmPasscodePage(TestDataReader.readData("passcode"), Target.IOS);
 
+        homePage.clickOnNextButtonForInjiTour();
         assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
         AddNewCardPage addNewCardPage = homePage.downloadCard();
 
@@ -265,6 +272,7 @@ public class NoNetworkIosTest extends IosBaseTest {
         assertTrue(confirmPasscode.isConfirmPassCodePageLoaded(), "Verify if confirm passcode page is displayed");
         HomePage homePage = confirmPasscode.enterPasscodeInConfirmPasscodePage(TestDataReader.readData("passcode"), Target.IOS);
 
+        homePage.clickOnNextButtonForInjiTour();
         assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
 
         AddNewCardPage addNewCardPage = homePage.downloadCard();
@@ -313,6 +321,7 @@ public class NoNetworkIosTest extends IosBaseTest {
         assertTrue(confirmPasscode.isConfirmPassCodePageLoaded(), "Verify if confirm passcode page is displayed");
         HomePage homePage = confirmPasscode.enterPasscodeInConfirmPasscodePage(TestDataReader.readData("passcode"), Target.IOS);
 
+        homePage.clickOnNextButtonForInjiTour();
         assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
         AddNewCardPage addNewCardPage = homePage.downloadCard();
 
@@ -345,6 +354,7 @@ public class NoNetworkIosTest extends IosBaseTest {
         assertTrue(confirmPasscode.isConfirmPassCodePageLoaded(), "Verify if confirm passcode page is displayed");
         HomePage homePage = confirmPasscode.enterPasscodeInConfirmPasscodePage(TestDataReader.readData("passcode"), Target.IOS);
 
+        homePage.clickOnNextButtonForInjiTour();
         assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
 
         AddNewCardPage addNewCardPage = homePage.downloadCard();
@@ -384,6 +394,7 @@ public class NoNetworkIosTest extends IosBaseTest {
         assertTrue(confirmPasscode.isConfirmPassCodePageLoaded(), "Verify if confirm passcode page is displayed");
         HomePage homePage = confirmPasscode.enterPasscodeInConfirmPasscodePage(TestDataReader.readData("passcode"), Target.IOS);
 
+        homePage.clickOnNextButtonForInjiTour();
         assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
 
         AddNewCardPage addNewCardPage = homePage.downloadCard();
@@ -425,6 +436,7 @@ public class NoNetworkIosTest extends IosBaseTest {
         assertTrue(confirmPasscode.isConfirmPassCodePageLoaded(), "Verify if confirm passcode page is displayed");
         HomePage homePage = confirmPasscode.enterPasscodeInConfirmPasscodePage(TestDataReader.readData("passcode"), Target.IOS);
 
+        homePage.clickOnNextButtonForInjiTour();
         assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
         AddNewCardPage addNewCardPage = homePage.downloadCard();
 

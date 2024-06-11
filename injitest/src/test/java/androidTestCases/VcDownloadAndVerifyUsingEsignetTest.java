@@ -30,6 +30,7 @@ public class VcDownloadAndVerifyUsingEsignetTest extends AndroidBaseTest {
         assertTrue(confirmPasscode.isConfirmPassCodePageLoaded(), "Verify if confirm passcode page is displayed");
         HomePage homePage = confirmPasscode.enterPasscodeInConfirmPasscodePage(TestDataReader.readData("passcode"), Target.ANDROID);
 
+        homePage.clickOnNextButtonForInjiTour();
         assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
         AddNewCardPage addNewCardPage = homePage.downloadCard();
 
@@ -106,6 +107,7 @@ public class VcDownloadAndVerifyUsingEsignetTest extends AndroidBaseTest {
         assertTrue(confirmPasscode.isConfirmPassCodePageLoaded(), "Verify if confirm passcode page is displayed");
         HomePage homePage = confirmPasscode.enterPasscodeInConfirmPasscodePage(TestDataReader.readData("passcode"), Target.ANDROID);
 
+        homePage.clickOnNextButtonForInjiTour();
         assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
         AddNewCardPage addNewCardPage = homePage.downloadCard();
 
@@ -117,9 +119,11 @@ public class VcDownloadAndVerifyUsingEsignetTest extends AndroidBaseTest {
         String vid = TestDataReader.readData("vid");
         OtpVerificationPage otpVerification= esignetLoginPage.setEnterIdTextBox(vid);
         esignetLoginPage.clickOnGetOtpButton();
-        Thread.sleep(3000);
+        Thread.sleep(2000);
         otpVerification.enterOtpForEsignet(TestDataReader.readData("otp"), Target.ANDROID);
         esignetLoginPage.clickOnVerifyButton();
+        Thread.sleep(2000);
+        homePage.clickOnDoneButton();
         DetailedVcViewPage detailedVcViewPage = homePage.openDetailedVcView(TestDataReader.readData("fullName"));
         detailedVcViewPage.clickOnQrCodeButton();
         SoftAssert softAssert = new SoftAssert();
