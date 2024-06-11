@@ -275,7 +275,7 @@ export const ScanActions = (model: any, QR_LOGIN_REF_ID: any) => {
 
         return ActivityLogEvents.LOG_ACTIVITY({
           _vcKey: '',
-          id: vcMetadata.display,
+          id: vcMetadata.displayId,
           issuer: vcMetadata.issuer!!,
           idType: getCredentialTypes(selectedVc.verifiableCredential),
           type: 'QRLOGIN_SUCCESFULL',

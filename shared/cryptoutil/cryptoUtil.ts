@@ -27,18 +27,14 @@ export const isHardwareKeystoreExists = isCustomSecureKeystore();
 export async function getJWT(
   header: object,
   payLoad: object,
-  individualId: string,
+  alias: string,
   privateKey: string,
 ) {
   try {
     const header64 = encodeB64(JSON.stringify(header));
     const payLoad64 = encodeB64(JSON.stringify(payLoad));
     const preHash = header64 + '.' + payLoad64;
-    const signature64 = await createSignature(
-      privateKey,
-      preHash,
-      individualId,
-    );
+    const signature64 = await createSignature(privateKey, preHash, alias);
     return header64 + '.' + payLoad64 + '.' + signature64;
   } catch (e) {
     console.error('Exception Occurred While Constructing JWT ', e);
@@ -49,7 +45,7 @@ export async function getJWT(
 export async function createSignature(
   privateKey: string,
   preHash: string,
-  individualId: string,
+  alias: string,
 ) {
   let signature64;
 
@@ -62,7 +58,7 @@ export async function createSignature(
     return encodeB64(signature);
   } else {
     try {
-      signature64 = await RNSecureKeystoreModule.sign(individualId, preHash);
+      signature64 = await RNSecureKeystoreModule.sign(alias, preHash);
     } catch (error) {
       console.error('Error in creating signature:', error);
       if (error.toString().includes(BIOMETRIC_CANCELLED)) {
