@@ -309,6 +309,11 @@ public class EsignetLoginPage extends BasePage {
     }
 
     public void clickOnCredentialTypeHeadingMOSIPVerifiableCredential() {
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
         if (isElementDisplayed(credentialTypeHeadingMOSIPVerifiableCredential)) {
             clickOnElement(credentialTypeHeadingMOSIPVerifiableCredential);
         }
