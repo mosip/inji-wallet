@@ -183,7 +183,7 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = props => {
 
   let failedVCsList = [];
   controller.downloadFailedVcs.forEach(vc => {
-    failedVCsList.push(`\n${vc.idType}:${vc.id}`);
+    failedVCsList.push(`\n${vc.idType}:${vc.displayId}`);
   });
 
   const isVerificationFailed = controller.verificationErrorMessage !== '';

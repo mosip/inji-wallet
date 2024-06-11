@@ -40,18 +40,24 @@ export const IssuersService = () => {
       let issuersConfig = await CACHED_API.fetchIssuerConfig(
         context.selectedIssuerId,
       );
-      const wellknownResponse = await CACHED_API.fetchIssuerWellknownConfig(
-        context.selectedIssuerId,
-        issuersConfig['.well-known'],
-      );
-      issuersConfig.credential_endpoint =
-        wellknownResponse?.credential_endpoint;
-      issuersConfig.credential_audience = wellknownResponse?.credential_issuer;
-      issuersConfig.credentialTypes = wellknownResponse?.credentials_supported;
+      if (issuersConfig['.well-known']) {
+        const wellknownResponse = await CACHED_API.fetchIssuerWellknownConfig(
+          context.selectedIssuerId,
+          issuersConfig['.well-known'],
+        );
+        if (wellknownResponse) {
+          issuersConfig.credential_audience =
+            wellknownResponse.credential_issuer;
+          issuersConfig.credential_endpoint =
+            wellknownResponse.credential_endpoint;
+          issuersConfig.credentials_supported =
+            wellknownResponse.credentials_supported;
+        }
+      }
       return issuersConfig;
     },
     downloadCredentialTypes: async (context: any) => {
-      return context.selectedIssuer.credentialTypes;
+      return context.selectedIssuer.credentials_supported;
     },
     downloadCredential: async (context: any) => {
       const downloadTimeout = await vcDownloadTimeout();
@@ -61,8 +67,8 @@ export const IssuersService = () => {
         credentialEndpoint: context.selectedIssuer.credential_endpoint,
         downloadTimeoutInMilliSeconds: downloadTimeout,
         credentialType: context.selectedCredentialType?.credential_definition
-          .type ?? ['VerifiableCredential'],
-        credentialFormat: 'ldp_vc',
+          ?.type ?? ['VerifiableCredential'],
+        credentialFormat: context.selectedCredentialType.format,
       };
       const proofJWT = await constructProofJWT(
         context.publicKey,
