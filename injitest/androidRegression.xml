@@ -9,6 +9,8 @@
             <class name="androidTestCases.AboutInjiTest">
                 <methods>
                     <include name="copyAppId"/>
+                    <include name="verifyAppId"/>
+                    <include name="verifyTuvaliVersion"/>
                 </methods>
             </class>
             <class name="androidTestCases.ActivateVcTest">
@@ -129,6 +131,11 @@
                     <include name="verifyClickOnBackFromInjiTourGuide"/>
                 </methods>
             </class>
+            <class name="androidTestCases.AboutInjiTest">
+                <methods>
+                    <include name="copyAppId"/>
+                    <include name="verifyAppId"/>
+                    <include name="verifyTuvaliVersion"/>
             <class name="androidTestCases.MosipOtpAlternativeFlow">
                 <methods>
                     <include name="verifyInvalidOtpMessage" />

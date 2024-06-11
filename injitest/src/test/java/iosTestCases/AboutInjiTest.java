@@ -46,6 +46,7 @@ public class AboutInjiTest extends IosBaseTest {
         aboutInjiPage.clickOnClickHereButton();
         assertTrue(aboutInjiPage.isMosipUrlIsDisplayedInChrome(),"verify if mosip url is displayed in chrome");
     }
+
     @Test
     public void verifyAppId() throws InterruptedException {
         ChooseLanguagePage chooseLanguagePage = new ChooseLanguagePage(driver);

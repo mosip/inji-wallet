@@ -79,11 +79,11 @@ public class SharePage extends BasePage {
 
     @AndroidFindBy(xpath = "//android.widget.TextView[@resource-id=\"close\"]")
     @iOSXCUITFindBy(accessibility = "close")
-    private WebElement CameraDisabledToasterClose;
+    private WebElement cameraDisabledToasterClose;
 
     @AndroidFindBy(accessibility = "sharingStatusTitle")
     @iOSXCUITFindBy(accessibility = "sharingStatusTitle")
-    private WebElement CameraAccessLostPage;
+    private WebElement cameraAccessLostPage;
 
 
     public SharePage(AppiumDriver driver) {
@@ -191,8 +191,8 @@ public class SharePage extends BasePage {
     }
 
     public void clickOnCameraDisabledToasterClose(){
-        if(isElementDisplayed(CameraDisabledToasterClose))
-            clickOnElement(CameraDisabledToasterClose);
+        if(isElementDisplayed(cameraDisabledToasterClose))
+            clickOnElement(cameraDisabledToasterClose);
     }
 
     public void clickOnDontAllowCameraAccessButton(){
@@ -201,6 +201,6 @@ public class SharePage extends BasePage {
     }
 
     public boolean isCameraAccessLostPageLoaded() {
-        return isElementDisplayed(CameraAccessLostPage);
+        return isElementDisplayed(cameraAccessLostPage);
     }
 }

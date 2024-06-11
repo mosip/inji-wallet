@@ -26,6 +26,7 @@ public class AboutInjiPage extends BasePage {
     @iOSXCUITFindBy(accessibility = "clickHere")
     public WebElement clickHereButton;
 
+
     @AndroidFindBy(xpath = "(//android.widget.TextView)[5]")
     @iOSXCUITFindBy(xpath = "(//XCUIElementTypeStaticText)[4]")
     public WebElement appID;
@@ -33,6 +34,7 @@ public class AboutInjiPage extends BasePage {
     @AndroidFindBy(xpath = "(//android.widget.TextView)[13]")
     @iOSXCUITFindBy(xpath = "(//XCUIElementTypeStaticText)[12]")
     public WebElement tuvaliVesion;
+
 
     public boolean isAppIdVisible() {
         String appId = getTextFromLocator(appID);
@@ -51,6 +53,7 @@ public class AboutInjiPage extends BasePage {
     public boolean isAboutInjiHeaderDisplayed() {
         return this.isElementDisplayed(aboutInjiHeader);
     }
+
 
     public boolean isAppIdCopiedTextDisplayed() {
         return this.isElementDisplayed(copied);
