@@ -25,7 +25,25 @@ public class AboutInjiPage extends BasePage {
     @AndroidFindBy(accessibility = "clickHere")
     @iOSXCUITFindBy(accessibility = "clickHere")
     public WebElement clickHereButton;
-    
+
+    @AndroidFindBy(xpath = "(//android.widget.TextView)[5]")
+    @iOSXCUITFindBy(xpath = "(//XCUIElementTypeStaticText)[4]")
+    public WebElement appID;
+
+    @AndroidFindBy(xpath = "(//android.widget.TextView)[13]")
+    @iOSXCUITFindBy(xpath = "(//XCUIElementTypeStaticText)[12]")
+    public WebElement tuvaliVesion;
+
+    public boolean isAppIdVisible() {
+        String appId = getTextFromLocator(appID);
+        return appId.length() == 15;
+    }
+
+    public boolean isTuvaliVesionVisible() {
+        String tuvaliVersion = getTextFromLocator(tuvaliVesion);
+        return tuvaliVersion.length() == 21;
+    }
+
     public AboutInjiPage(AppiumDriver driver) {
         super(driver);
     }

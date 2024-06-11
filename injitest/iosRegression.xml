@@ -123,6 +123,13 @@
                     <include name="verifyActivationFailedRecordInHistoryFromDetailedView" />
                 </methods>
             </class>
+            <class name="iosTestCases.AboutInjiTest">
+                <methods>
+                    <include name="copyAppId"/>
+                    <include name="verifyAppId"/>
+                    <include name="verifyTuvaliVersion"/>
+                </methods>
+            </class>
 		</classes>
 	</test>
 </suite>
@@ -132,12 +139,6 @@
     <listener class-name="inji.utils.SuiteListener" />
 </listeners>&ndash;&gt;
 <test verbose="2" preserve-order="true" name="android">
-    <classes>
-        <class name="iosTestCases.AboutInjiTest">
-            <methods>
-                <include name="copyAppId"/>
-            </methods>
-        </class>
         <class name="iosTestCases.ActivateVcTest">
             <methods>
                 <include name="activateVc"/>
