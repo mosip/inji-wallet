@@ -28,6 +28,12 @@
 					<include name="downloadVcViaEsignetAndPinUnpin" />
 				</methods>
 			</class>
+			<class name="androidTestCases.AboutInjiTest">
+			    <methods>
+			    	<include name="verifyAppId"/>
+			    	<include name="verifyTuvaliVersion"/>
+		    	</methods>
+			</class>
 		</classes>
 	</test>
 </suite>

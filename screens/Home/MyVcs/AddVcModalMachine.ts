@@ -36,12 +36,13 @@ const model = createModel(
     phoneNumber: '' as string,
     email: '' as string,
     isPinned: false,
+    displayId: '',
   },
   {
     events: {
       SET_INDIVIDUAL_ID: (individualId: IndividualId) => ({
-        id: individualId.id,
         idType: individualId.idType,
+        displayId: individualId.id,
       }),
       INPUT_ID: (id: string) => ({id}),
       INPUT_OTP: (otp: string) => ({otp}),
@@ -73,7 +74,12 @@ export const AddVcModalMachine =
       initial: 'acceptingIdInput',
       on: {
         SET_INDIVIDUAL_ID: {
-          actions: ['clearIdError', 'clearId', 'setIdType', 'setId'],
+          actions: [
+            'clearIdError',
+            'clearDisplayId',
+            'setIdType',
+            'setDisplayId',
+          ],
           target: '#AddVcModal.acceptingIdInput.idle',
         },
       },
@@ -103,10 +109,15 @@ export const AddVcModalMachine =
               entry: 'focusInput',
               on: {
                 SET_INDIVIDUAL_ID: {
-                  actions: ['clearIdError', 'clearId', 'setIdType', 'setId'],
+                  actions: [
+                    'clearIdError',
+                    'clearDisplayId',
+                    'setIdType',
+                    'setDisplayId',
+                  ],
                 },
                 INPUT_ID: {
-                  actions: 'setId',
+                  actions: 'setDisplayId',
                 },
                 VALIDATE_INPUT: [
                   {
@@ -123,7 +134,7 @@ export const AddVcModalMachine =
                   },
                 ],
                 SELECT_ID_TYPE: {
-                  actions: ['clearIdError', 'setIdType', 'clearId'],
+                  actions: ['clearIdError', 'setIdType', 'clearDisplayId'],
                 },
               },
             },
@@ -140,7 +151,7 @@ export const AddVcModalMachine =
               },
               on: {
                 INPUT_ID: {
-                  actions: ['setId', 'clearIdError'],
+                  actions: ['setDisplayId', 'clearIdError'],
                   target: 'idle',
                 },
                 VALIDATE_INPUT: [
@@ -158,7 +169,7 @@ export const AddVcModalMachine =
                   },
                 ],
                 SELECT_ID_TYPE: {
-                  actions: ['clearIdError', 'setIdType', 'clearId'],
+                  actions: ['clearIdError', 'setIdType', 'clearDisplayId'],
                   target: 'idle',
                 },
               },
@@ -226,7 +237,7 @@ export const AddVcModalMachine =
         cancelDownload: {
           on: {
             CANCEL: {
-              actions: ['clearId', 'resetIdInputRef', 'forwardToParent'],
+              actions: ['clearDisplayId', 'resetIdInputRef', 'forwardToParent'],
             },
             WAIT: {
               target: 'acceptingOtpInput',
@@ -265,8 +276,8 @@ export const AddVcModalMachine =
       actions: {
         forwardToParent: sendParent('DISMISS'),
 
-        setId: model.assign({
-          id: (_context, event) => event.id,
+        setDisplayId: model.assign({
+          displayId: (_context, event) => event.id,
         }),
 
         setIdType: model.assign({
@@ -328,7 +339,7 @@ export const AddVcModalMachine =
           },
         }),
 
-        clearId: model.assign({id: ''}),
+        clearDisplayId: model.assign({displayId: ''}),
 
         clearIdError: model.assign({idError: ''}),
 
@@ -391,7 +402,7 @@ export const AddVcModalMachine =
             API_URLS.requestOtp.buildURL(),
             {
               id: 'mosip.identity.otp.internal',
-              individualId: context.id,
+              individualId: context.displayId,
               metadata: {},
               otpChannel: ['PHONE', 'EMAIL'],
               requestTime: String(new Date().toISOString()),
@@ -408,7 +419,7 @@ export const AddVcModalMachine =
             API_URLS.credentialRequest.method,
             API_URLS.credentialRequest.buildURL(),
             {
-              individualId: context.id,
+              individualId: context.displayId,
               individualIdType: context.idType,
               otp: context.otp,
               transactionID: context.transactionId,
@@ -419,12 +430,14 @@ export const AddVcModalMachine =
       },
 
       guards: {
-        isEmptyId: ({id}) => id?.trim() === '',
+        isEmptyId: ({displayId}) => displayId?.trim() === '',
 
-        isWrongIdFormat: ({idType, id}) => {
+        isWrongIdFormat: ({idType, displayId}) => {
           const validIdType =
-            idType === 'UIN' ? id.length === 10 : id.length === 16;
-          return !(/^\d{10,16}$/.test(id) && validIdType);
+            idType === 'UIN'
+              ? displayId.length === 10
+              : displayId.length === 16;
+          return !(/^\d{10,16}$/.test(displayId) && validIdType);
         },
 
         isIdInvalid: (_context, event: unknown) =>
@@ -438,7 +451,7 @@ export const AddVcModalMachine =
 type State = StateFrom<typeof AddVcModalMachine>;
 
 export function selectId(state: State) {
-  return state.context.id;
+  return state.context.displayId;
 }
 
 export function selectIdType(state: State) {

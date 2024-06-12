@@ -27,6 +27,12 @@
 					<include name="downloadVcViaEsignetAndPinUnpin" />
 				</methods>
 			</class>
+			<class name="iosTestCases.AboutInjiTest">
+				<methods>
+					<include name="verifyAppId"/>
+					<include name="verifyTuvaliVersion"/>
+				</methods>
+			</class>
 		</classes>
 	</test>
 </suite>

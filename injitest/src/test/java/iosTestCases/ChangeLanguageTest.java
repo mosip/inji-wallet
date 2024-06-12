@@ -32,6 +32,7 @@ public class ChangeLanguageTest extends IosBaseTest {
         assertTrue(confirmPasscode.isConfirmPassCodePageLoaded(), "Verify if confirm passcode page is displayed");
         HomePage homePage = confirmPasscode.enterPasscodeInConfirmPasscodePage(TestDataReader.readData("passcode"), Target.IOS);
 
+        homePage.clickOnNextButtonForInjiTour();
         assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
         SettingsPage settingsPage = homePage.clickOnSettingIcon();
 
@@ -60,6 +61,7 @@ public class ChangeLanguageTest extends IosBaseTest {
         assertTrue(confirmPasscode.isConfirmPassCodePageLoaded(), "Verify if confirm passcode page is displayed");
         HomePage homePage = confirmPasscode.enterPasscodeInConfirmPasscodePage(TestDataReader.readData("passcode"), Target.IOS);
 
+        homePage.clickOnNextButtonForInjiTour();
         assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
         SettingsPage settingsPage = homePage.clickOnSettingIcon();
 
@@ -88,13 +90,14 @@ public class ChangeLanguageTest extends IosBaseTest {
         assertTrue(confirmPasscode.isConfirmPassCodePageLoaded(), "Verify if confirm passcode page is displayed");
         HomePage homePage = confirmPasscode.enterPasscodeInConfirmPasscodePage(TestDataReader.readData("passcode"), Target.IOS);
 
+        homePage.clickOnNextButtonForInjiTour();
         assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
         SettingsPage settingsPage = homePage.clickOnSettingIcon();
 
         assertTrue(settingsPage.isSettingPageLoaded(), "Verify if setting page is displayed");
         assertTrue(settingsPage.clickOnAboutInji().isTuvaliVersionPresent());
     }
-    
+
     @Test
     public void changeLanguageToArabic() {
         ChooseLanguagePage chooseLanguagePage = new ChooseLanguagePage(driver);
@@ -114,6 +117,7 @@ public class ChangeLanguageTest extends IosBaseTest {
         assertTrue(confirmPasscode.isConfirmPassCodePageLoaded(), "Verify if confirm passcode page is displayed");
         HomePage homePage = confirmPasscode.enterPasscodeInConfirmPasscodePage(TestDataReader.readData("passcode"), Target.IOS);
 
+        homePage.clickOnNextButtonForInjiTour();
         assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
         SettingsPage settingsPage = homePage.clickOnSettingIcon();
 
@@ -124,10 +128,10 @@ public class ChangeLanguageTest extends IosBaseTest {
         unlockApplicationPage.clickOnUnlockApplicationButton();
         setPasscode.enterPasscode(TestDataReader.readData("passcode"), Target.IOS);
         HistoryPage historyPage = homePage.clickOnHistoryButton();
-        
+
         assertTrue(historyPage.noHistoryAvailable(),"verify no history available in arabic");
     }
-    
+
     @Test
     public void changeLanguageToFilipionAndSearchIssuer() {
         ChooseLanguagePage chooseLanguagePage = new ChooseLanguagePage(driver);
@@ -147,6 +151,7 @@ public class ChangeLanguageTest extends IosBaseTest {
         assertTrue(confirmPasscode.isConfirmPassCodePageLoaded(), "Verify if confirm passcode page is displayed");
         HomePage homePage = confirmPasscode.enterPasscodeInConfirmPasscodePage(TestDataReader.readData("passcode"), Target.IOS);
 
+        homePage.clickOnNextButtonForInjiTour();
         assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
         SettingsPage settingsPage = homePage.clickOnSettingIcon();
 
@@ -155,22 +160,22 @@ public class ChangeLanguageTest extends IosBaseTest {
 
         assertTrue(settingsPage.verifyFilipinoLanguage(), "Verify if language is changed to filipino");
         homePage.clickOnHomeButton();
-        
+
         assertEquals(homePage.verifyLanguageForNoVCDownloadedPageLoaded(),"Dalhin ang Iyong Digital ID");
         AddNewCardPage addNewCardPage = homePage.downloadCard();
 
         assertEquals(addNewCardPage.verifyLanguageForAddNewCardGuideMessage(),"Mangyaring piliin ang iyong gustong tagabigay mula sa mga opsyon sa ibaba upang magdagdag ng bagong card.");
         assertTrue(addNewCardPage.isIssuerSearchBarDisplayedInFilipino(),"verify if search bar is displayed in filipino");
         addNewCardPage.sendTextInIssuerSearchBar("I-download ang Mga Kredensyal ng MOSIP ");
-        
+
 //        assertTrue(addNewCardPage.isDownloadViaUinDisplayed(),"verify if download via uin vid aid");
         addNewCardPage.clickOnBack();
-        
+
         homePage.downloadCard();
         addNewCardPage.sendTextInIssuerSearchBar("I-download ang Mga Kredensyal ng MOSIP");
         assertTrue(addNewCardPage.isDownloadViaEsignetDisplayed(),"verify if download via e-signet is displayed");
     }
-    
+
     @Test
     public void changeLanguageToFilipionAndSearchIssuerEnterIncompleteName() {
         ChooseLanguagePage chooseLanguagePage = new ChooseLanguagePage(driver);
@@ -190,6 +195,7 @@ public class ChangeLanguageTest extends IosBaseTest {
         assertTrue(confirmPasscode.isConfirmPassCodePageLoaded(), "Verify if confirm passcode page is displayed");
         HomePage homePage = confirmPasscode.enterPasscodeInConfirmPasscodePage(TestDataReader.readData("passcode"), Target.IOS);
 
+        homePage.clickOnNextButtonForInjiTour();
         assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
         SettingsPage settingsPage = homePage.clickOnSettingIcon();
 
@@ -198,22 +204,22 @@ public class ChangeLanguageTest extends IosBaseTest {
 
         assertTrue(settingsPage.verifyFilipinoLanguage(), "Verify if language is changed to filipino");
         homePage.clickOnHomeButton();
-        
+
         assertEquals(homePage.verifyLanguageForNoVCDownloadedPageLoaded(),"Dalhin ang Iyong Digital ID");
         AddNewCardPage addNewCardPage = homePage.downloadCard();
 
         assertEquals(addNewCardPage.verifyLanguageForAddNewCardGuideMessage(),"Mangyaring piliin ang iyong gustong tagabigay mula sa mga opsyon sa ibaba upang magdagdag ng bagong card.");
         assertTrue(addNewCardPage.isIssuerSearchBarDisplayedInFilipino(),"verify if search bar is displayed in filipino");
         addNewCardPage.sendTextInIssuerSearchBar("otp");
-        
+
         assertTrue(addNewCardPage.isDownloadViaUinDisplayed(),"verify if download via uin vid aid");
         addNewCardPage.clickOnBack();
-        
+
         homePage.downloadCard();
         addNewCardPage.sendTextInIssuerSearchBar("I-download ang");
         assertTrue(addNewCardPage.isDownloadViaEsignetDisplayed(),"verify if download via e-signet is displayed");
     }
-    
+
     @Test
     public void changeLanguageToHindiAndSearchIssuer() {
         ChooseLanguagePage chooseLanguagePage = new ChooseLanguagePage(driver);
@@ -233,6 +239,7 @@ public class ChangeLanguageTest extends IosBaseTest {
         assertTrue(confirmPasscode.isConfirmPassCodePageLoaded(), "Verify if confirm passcode page is displayed");
         HomePage homePage = confirmPasscode.enterPasscodeInConfirmPasscodePage(TestDataReader.readData("passcode"), Target.IOS);
 
+        homePage.clickOnNextButtonForInjiTour();
         assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
         SettingsPage settingsPage = homePage.clickOnSettingIcon();
 
@@ -241,23 +248,23 @@ public class ChangeLanguageTest extends IosBaseTest {
 
         assertTrue(settingsPage.verifyHindiLanguage(), "Verify if language is changed to hindi");
         homePage.clickOnHomeButton();
-        
+
         assertEquals(homePage.verifyLanguageForNoVCDownloadedPageLoaded(),"अपनी डिजिटल आईडी लाओ");
         AddNewCardPage addNewCardPage = homePage.downloadCard();
-        
+
         assertEquals(addNewCardPage.verifyLanguageForAddNewCardGuideMessage(),"नया कार्ड जोड़ने के लिए कृपया नीचे दिए गए विकल्पों में से अपना पसंदीदा जारीकर्ता चुनें।");
         assertTrue(addNewCardPage.isIssuerSearchBarDisplayedInHindi(),"verify if search bar is displayed in hindi");
         addNewCardPage.sendTextInIssuerSearchBar("OTP के माध्यम से MOSIP क्रेडेंशियल डाउनलोड करें");
-        
+
         assertTrue(addNewCardPage.isDownloadViaUinDisplayedInHindi(),"verify if download via uin vid aid displayed in hindi");
         addNewCardPage.clickOnBack();
-        
+
         homePage.downloadCard();
-        
+
         addNewCardPage.sendTextInIssuerSearchBar("राष्ट्रीय पहचान विभाग");
         assertTrue(addNewCardPage.isDownloadViaEsignetDisplayedInHindi(),"verify if download via e-signet is displayed");
     }
-    
+
     @Test
     public void changeLanguageToFilipionAndcheckInjiTour() {
         ChooseLanguagePage chooseLanguagePage = new ChooseLanguagePage(driver);
@@ -277,6 +284,7 @@ public class ChangeLanguageTest extends IosBaseTest {
         assertTrue(confirmPasscode.isConfirmPassCodePageLoaded(), "Verify if confirm passcode page is displayed");
         HomePage homePage = confirmPasscode.enterPasscodeInConfirmPasscodePage(TestDataReader.readData("passcode"), Target.IOS);
 
+        homePage.clickOnNextButtonForInjiTour();
         assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
         SettingsPage settingsPage = homePage.clickOnSettingIcon();
 
@@ -287,32 +295,28 @@ public class ChangeLanguageTest extends IosBaseTest {
 
         settingsPage.clickOnInjiTourGuide();
 
-        assertEquals(welcomePage.verifyLanguageforWelcomePageLoaded(), "Maligayang pagdating!");
-        assertEquals(welcomePage.getWelcomeDescription(), "Panatilihin ang iyong digital na kredensyal sa iyo sa lahat ng oras. ");
-        welcomePage.clickOnNextButton();
+        assertTrue(homePage.verifyLanguageForHelpAndFrequentlyAskedQuationsHeaderDisplayed("Filipino"), "Verify if help and frequently asked quations header displayed");
+        assertTrue(homePage.verifyLanguageForHelpAndFrequentlyAskedQuationsDescriptionDisplayed("Filipino"), "Verify if help and frequently asked quations description displayed");
+        homePage.clickOnFirstNextButton();
 
-        SecureSharingPage secureSharingPage = new SecureSharingPage(driver);
-        assertEquals(secureSharingPage.verifyLanguageforSecureSharingPageLoaded(), "Ligtas na Pagbabahagi");
-        assertEquals(secureSharingPage.getSecureSharingDescription(), "Ibahagi ang iyong mga card nang ligtas sa isang walang problemang paraan at mag-avail ng iba't ibang serbisyo.");
-        secureSharingPage.clickOnNextButton();
+        assertTrue(homePage.verifyLanguageForDownloadCardHeaderDisplayed("Filipino"), "Verify if download card header text displayed");
+        assertTrue(homePage.verifyLanguageForDownloadCardDescriptionDisplayed("Filipino"), "Verify if download card description displayed");
+        homePage.clickOnSecondNextButton();
 
-        TrustedDigitalWalletPage trustedDigitalWalletPage = new TrustedDigitalWalletPage(driver);
-        assertEquals(trustedDigitalWalletPage.verifyLanguageforTrustedDigitalWalletPageLoaded(), "Pinagkakatiwalaang Digital Wallet");
-        assertEquals(trustedDigitalWalletPage.getTrustedDigitalWalletDescription(), "Itabi at dalhin ang lahat ng iyong mahahalagang card sa isang pinagkakatiwalaang wallet.");
-        trustedDigitalWalletPage.clickOnNextButton();
+        assertTrue(homePage.verifyLanguageForShareCardHeaderDisplayed("Filipino"), "Verify if share card header text displayed");
+        assertTrue(homePage.verifyLanguageForShareCardDescriptionDisplayed("Filipino"), "Verify if share card description displayed");
+        homePage.clickOnThirdNextButton();
 
-        QuickAccessPage quickAccessPage = new QuickAccessPage(driver);
-        assertEquals(quickAccessPage.verifyLanguageforQuickAccessTextPageLoaded(), "Mabilis na pagpasok");
-        assertEquals(quickAccessPage.getQuickAccessDescription(), "I-authenticate ang iyong sarili nang madali gamit ang nakaimbak na digital na kredensyal.");
-        quickAccessPage.clickOnNextButton();
+        assertTrue(homePage.verifyLanguageForAccesstoHistoryHeaderDisplayed("Filipino"), "Verify if access to history header text displayed");
+        assertTrue(homePage.verifyLanguageForaccesstoHistoryDescriptionDisplayed("Filipino"), "Verify if access to history description displayed");
+        homePage.clickOnForthNextButton();
 
-        BackupDataTourPage backupDataPage = new BackupDataTourPage(driver);
-        assertEquals(backupDataPage.verifyLanguageforBackupDataPageLoaded(), "Backup & Ibalik");
-        assertEquals(backupDataPage.getBackupDataPageDescription(), "Protektahan ang iyong data nang madali gamit ang aming Backup");
-        backupDataPage.clickOnGoBack();
+        assertTrue(homePage.verifyLanguageForAppSettingsHeaderDisplayed("Filipino"), "Verify if app settings header text displayed");
+        assertTrue(homePage.verifyLanguageForAppSettingsDescriptionDisplayed("Filipino"), "Verify if app settings description displayed");
+        homePage.clickOnFifthNextButton();
         assertEquals(homePage.getShareButton(), "Ibahagi");
     }
-    
+
     @Test
     public void changeLanguageToHindiAndcheckInjiTour() {
         ChooseLanguagePage chooseLanguagePage = new ChooseLanguagePage(driver);
@@ -332,6 +336,7 @@ public class ChangeLanguageTest extends IosBaseTest {
         assertTrue(confirmPasscode.isConfirmPassCodePageLoaded(), "Verify if confirm passcode page is displayed");
         HomePage homePage = confirmPasscode.enterPasscodeInConfirmPasscodePage(TestDataReader.readData("passcode"), Target.IOS);
 
+        homePage.clickOnNextButtonForInjiTour();
         assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
         SettingsPage settingsPage = homePage.clickOnSettingIcon();
 
@@ -339,35 +344,31 @@ public class ChangeLanguageTest extends IosBaseTest {
         settingsPage.clickOnLanguage().clickOnHindiLanguage();
 
         assertTrue(settingsPage.verifyHindiLanguage(), "Verify if language is changed to hindi");
-        
+
         settingsPage.clickOnInjiTourGuide();
 
-        assertEquals(welcomePage.verifyLanguageforWelcomePageLoaded(), "स्वागत!");
-        assertEquals(welcomePage.getWelcomeDescription(), "अपना डिजिटल क्रेडेंशियल हर समय अपने पास रखें। ");
-        welcomePage.clickOnNextButton();
+        assertTrue(homePage.verifyLanguageForHelpAndFrequentlyAskedQuationsHeaderDisplayed("Hindi"), "Verify if help and frequently asked quations header displayed");
+        assertTrue(homePage.verifyLanguageForHelpAndFrequentlyAskedQuationsDescriptionDisplayed("Hindi"), "Verify if help and frequently asked quations description displayed");
+        homePage.clickOnFirstNextButton();
 
-        SecureSharingPage secureSharingPage = new SecureSharingPage(driver);
-        assertEquals(secureSharingPage.verifyLanguageforSecureSharingPageLoaded(), "सुरक्षित साझाकरण");
-        assertEquals(secureSharingPage.getSecureSharingDescription(), "परेशानी मुक्त तरीके से अपने कार्ड सुरक्षित रूप से साझा करें और विभिन्न सेवाओं का लाभ उठाएं।");
-        secureSharingPage.clickOnNextButton();
+        assertTrue(homePage.verifyLanguageForDownloadCardHeaderDisplayed("Hindi"), "Verify if download card header text displayed");
+        assertTrue(homePage.verifyLanguageForDownloadCardDescriptionDisplayed("Hindi"), "Verify if download card description displayed");
+        homePage.clickOnSecondNextButton();
 
-        TrustedDigitalWalletPage trustedDigitalWalletPage = new TrustedDigitalWalletPage(driver);
-        assertEquals(trustedDigitalWalletPage.verifyLanguageforTrustedDigitalWalletPageLoaded(), "विश्वसनीय डिजिटल वॉलेट");
-        assertEquals(trustedDigitalWalletPage.getTrustedDigitalWalletDescription(), "अपने सभी महत्वपूर्ण कार्डों को एक ही विश्वसनीय वॉलेट में रखें और रखें।");
-        trustedDigitalWalletPage.clickOnNextButton();
+        assertTrue(homePage.verifyLanguageForShareCardHeaderDisplayed("Hindi"), "Verify if share card header text displayed");
+        assertTrue(homePage.verifyLanguageForShareCardDescriptionDisplayed("Hindi"), "Verify if share card description displayed");
+        homePage.clickOnThirdNextButton();
 
-        QuickAccessPage quickAccessPage = new QuickAccessPage(driver);
-        assertEquals(quickAccessPage.verifyLanguageforQuickAccessTextPageLoaded(), "त्वरित ऐक्सेस");
-        assertEquals(quickAccessPage.getQuickAccessDescription(), "संग्रहीत डिजिटल क्रेडेंशियल का उपयोग करके आसानी से स्वयं को प्रमाणित करें।");
-        quickAccessPage.clickOnNextButton();
+        assertTrue(homePage.verifyLanguageForAccesstoHistoryHeaderDisplayed("Hindi"), "Verify if access to history header text displayed");
+        assertTrue(homePage.verifyLanguageForaccesstoHistoryDescriptionDisplayed("Hindi"), "Verify if access to history description displayed");
+        homePage.clickOnForthNextButton();
 
-        BackupDataTourPage backupDataPage = new BackupDataTourPage(driver);
-        assertEquals(backupDataPage.verifyLanguageforBackupDataPageLoaded(), "बैकअप & पुनर्स्थापित करना");
-        assertEquals(backupDataPage.getBackupDataPageDescription(), "हमारे बैकअप का उपयोग करके आसानी से अपने डेटा को सुरक्षित रखें");
-        backupDataPage.clickOnGoBack();
+        assertTrue(homePage.verifyLanguageForAppSettingsHeaderDisplayed("Hindi"), "Verify if app settings header text displayed");
+        assertTrue(homePage.verifyLanguageForAppSettingsDescriptionDisplayed("Hindi"), "Verify if app settings description displayed");
+        homePage.clickOnFifthNextButton();
         assertEquals(homePage.getShareButton(), "शेयर करना");
     }
-    
+
     @Test
     public void changeLanguageToTamilAndcheckInjiTour() {
         ChooseLanguagePage chooseLanguagePage = new ChooseLanguagePage(driver);
@@ -387,6 +388,7 @@ public class ChangeLanguageTest extends IosBaseTest {
         assertTrue(confirmPasscode.isConfirmPassCodePageLoaded(), "Verify if confirm passcode page is displayed");
         HomePage homePage = confirmPasscode.enterPasscodeInConfirmPasscodePage(TestDataReader.readData("passcode"), Target.IOS);
 
+        homePage.clickOnNextButtonForInjiTour();
         assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
         SettingsPage settingsPage = homePage.clickOnSettingIcon();
 
@@ -394,37 +396,32 @@ public class ChangeLanguageTest extends IosBaseTest {
         settingsPage.clickOnLanguage().clickOnTamilLanguage();
 
         assertTrue(settingsPage.verifyTamilLanguage(), "Verify if language is changed to tamil");
-        
+
         settingsPage.clickOnInjiTourGuide();
 
-        assertEquals(welcomePage.verifyLanguageforWelcomePageLoaded(), "வரவேற்பு!");
-        assertEquals(welcomePage.getWelcomeDescription(), "உங்கள் டிஜிட்டல் நற்சான்றிதழை எப்போதும் உங்களுடன் வைத்திருக்கவும். ");
-        welcomePage.clickOnNextButton();
+        assertTrue(homePage.verifyLanguageForHelpAndFrequentlyAskedQuationsHeaderDisplayed("Tamil"), "Verify if help and frequently asked quations header displayed");
+        assertTrue(homePage.verifyLanguageForHelpAndFrequentlyAskedQuationsDescriptionDisplayed("Tamil"), "Verify if help and frequently asked quations description displayed");
+        homePage.clickOnFirstNextButton();
 
-        SecureSharingPage secureSharingPage = new SecureSharingPage(driver);
-        assertEquals(secureSharingPage.verifyLanguageforSecureSharingPageLoaded(), "பாதுகாப்பான பகிர்வு");
-        assertEquals(secureSharingPage.getSecureSharingDescription(), "தொந்தரவு இல்லாத வகையில் உங்கள் கார்டுகளைப் பாதுகாப்பாகப் பகிர்ந்து, பல்வேறு சேவைகளைப் பெறுங்கள்.");
-        secureSharingPage.clickOnNextButton();
+        assertTrue(homePage.verifyLanguageForDownloadCardHeaderDisplayed("Tamil"), "Verify if download card header text displayed");
+        assertTrue(homePage.verifyLanguageForDownloadCardDescriptionDisplayed("Tamil"), "Verify if download card description displayed");
+        homePage.clickOnSecondNextButton();
 
-        TrustedDigitalWalletPage trustedDigitalWalletPage = new TrustedDigitalWalletPage(driver);
-        assertEquals(trustedDigitalWalletPage.verifyLanguageforTrustedDigitalWalletPageLoaded(), "நம்பகமான டிஜிட்டல் வாலட்");
-        assertEquals(trustedDigitalWalletPage.getTrustedDigitalWalletDescription(), "உங்கள் முக்கியமான கார்டுகளை ஒரே நம்பகமான பணப்பையில் சேமித்து எடுத்துச் செல்லுங்கள்.");
-        trustedDigitalWalletPage.clickOnNextButton();
+        assertTrue(homePage.verifyLanguageForShareCardHeaderDisplayed("Tamil"), "Verify if share card header text displayed");
+        assertTrue(homePage.verifyLanguageForShareCardDescriptionDisplayed("Tamil"), "Verify if share card description displayed");
+        homePage.clickOnThirdNextButton();
 
-        QuickAccessPage quickAccessPage = new QuickAccessPage(driver);
-        assertEquals(quickAccessPage.verifyLanguageforQuickAccessTextPageLoaded(), "விரைவான அணுகல்");
-        assertEquals(quickAccessPage.getQuickAccessDescription(), "சேமிக்கப்பட்ட டிஜிட்டல் நற்சான்றிதழைப் பயன்படுத்தி உங்களை எளிதாக அங்கீகரிக்கவும்.");
-        quickAccessPage.clickOnNextButton();
+        assertTrue(homePage.verifyLanguageForAccesstoHistoryHeaderDisplayed("Tamil"), "Verify if access to history header text displayed");
+        assertTrue(homePage.verifyLanguageForaccesstoHistoryDescriptionDisplayed("Tamil"), "Verify if access to history description displayed");
+        homePage.clickOnForthNextButton();
 
-        BackupDataTourPage backupDataPage = new BackupDataTourPage(driver);
-        assertEquals(backupDataPage.verifyLanguageforBackupDataPageLoaded(), "காப்புப்பிரதி & மீட்டமை");
-        assertEquals(backupDataPage.getBackupDataPageDescription(), "எங்கள் காப்புப்பிரதியைப் பயன்படுத்தி உங்கள் தரவை எளிதாகப் பாதுகாக்கவும்");
-
-        backupDataPage.clickOnGoBack();
+        assertTrue(homePage.verifyLanguageForAppSettingsHeaderDisplayed("Tamil"), "Verify if app settings header text displayed");
+        assertTrue(homePage.verifyLanguageForAppSettingsDescriptionDisplayed("Tamil"), "Verify if app settings description displayed");
+        homePage.clickOnFifthNextButton();
         assertEquals(homePage.getShareButton(), "பகிர்");
 
     }
-    
+
     @Test
     public void changeLanguageToKannadAndcheckInjiTour() {
         ChooseLanguagePage chooseLanguagePage = new ChooseLanguagePage(driver);
@@ -444,6 +441,7 @@ public class ChangeLanguageTest extends IosBaseTest {
         assertTrue(confirmPasscode.isConfirmPassCodePageLoaded(), "Verify if confirm passcode page is displayed");
         HomePage homePage = confirmPasscode.enterPasscodeInConfirmPasscodePage(TestDataReader.readData("passcode"), Target.IOS);
 
+        homePage.clickOnNextButtonForInjiTour();
         assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
         SettingsPage settingsPage = homePage.clickOnSettingIcon();
 
@@ -451,32 +449,28 @@ public class ChangeLanguageTest extends IosBaseTest {
         settingsPage.clickOnLanguage().clickOnKannadaLanguage();
 
         assertTrue(settingsPage.verifyKannadaLanguage(), "Verify if language is changed to kannada");
-        
+
         settingsPage.clickOnInjiTourGuide();
 
-        assertEquals(welcomePage.verifyLanguageforWelcomePageLoaded(), "ಸ್ವಾಗತ!");
-        assertEquals(welcomePage.getWelcomeDescription(), "ನಿಮ್ಮ ಡಿಜಿಟಲ್ ರುಜುವಾತುಗಳನ್ನು ಯಾವಾಗಲೂ ನಿಮ್ಮೊಂದಿಗೆ ಇರಿಸಿಕೊಳ್ಳಿ. ");
-        welcomePage.clickOnNextButton();
+        assertTrue(homePage.verifyLanguageForHelpAndFrequentlyAskedQuationsHeaderDisplayed("Kannada"), "Verify if help and frequently asked quations header displayed");
+        assertTrue(homePage.verifyLanguageForHelpAndFrequentlyAskedQuationsDescriptionDisplayed("Kannada"), "Verify if help and frequently asked quations description displayed");
+        homePage.clickOnFirstNextButton();
 
-        SecureSharingPage secureSharingPage = new SecureSharingPage(driver);
-        assertEquals(secureSharingPage.verifyLanguageforSecureSharingPageLoaded(), "ಸುರಕ್ಷಿತ ಹಂಚಿಕೆ");
-        assertEquals(secureSharingPage.getSecureSharingDescription(), "ನಿಮ್ಮ ಕಾರ್ಡ್‌ಗಳನ್ನು ಜಗಳ ಮುಕ್ತ ರೀತಿಯಲ್ಲಿ ಸುರಕ್ಷಿತವಾಗಿ ಹಂಚಿಕೊಳ್ಳಿ ಮತ್ತು ವಿವಿಧ ಸೇವೆಗಳನ್ನು ಪಡೆದುಕೊಳ್ಳಿ.");
-        secureSharingPage.clickOnNextButton();
+        assertTrue(homePage.verifyLanguageForDownloadCardHeaderDisplayed("Kannada"), "Verify if download card header text displayed");
+        assertTrue(homePage.verifyLanguageForDownloadCardDescriptionDisplayed("Kannada"), "Verify if download card description displayed");
+        homePage.clickOnSecondNextButton();
 
-        TrustedDigitalWalletPage trustedDigitalWalletPage = new TrustedDigitalWalletPage(driver);
-        assertEquals(trustedDigitalWalletPage.verifyLanguageforTrustedDigitalWalletPageLoaded(), "ವಿಶ್ವಾಸಾರ್ಹ ಡಿಜಿಟಲ್ ವಾಲೆಟ್");
-        assertEquals(trustedDigitalWalletPage.getTrustedDigitalWalletDescription(), "ನಿಮ್ಮ ಎಲ್ಲಾ ಪ್ರಮುಖ ಕಾರ್ಡ್‌ಗಳನ್ನು ಒಂದೇ ವಿಶ್ವಾಸಾರ್ಹ ವ್ಯಾಲೆಟ್‌ನಲ್ಲಿ ಸಂಗ್ರಹಿಸಿ ಮತ್ತು ಒಯ್ಯಿರಿ.");
-        trustedDigitalWalletPage.clickOnNextButton();
+        assertTrue(homePage.verifyLanguageForShareCardHeaderDisplayed("Kannada"), "Verify if share card header text displayed");
+        assertTrue(homePage.verifyLanguageForShareCardDescriptionDisplayed("Kannada"), "Verify if share card description displayed");
+        homePage.clickOnThirdNextButton();
 
-        QuickAccessPage quickAccessPage = new QuickAccessPage(driver);
-        assertEquals(quickAccessPage.verifyLanguageforQuickAccessTextPageLoaded(), "ತ್ವರಿತ ಪ್ರವೇಶ");
-        assertEquals(quickAccessPage.getQuickAccessDescription(), "ಸಂಗ್ರಹಿಸಿದ ಡಿಜಿಟಲ್ ರುಜುವಾತುಗಳನ್ನು ಬಳಸಿಕೊಂಡು ಸುಲಭವಾಗಿ ನಿಮ್ಮನ್ನು ದೃಢೀಕರಿಸಿ.");
-        quickAccessPage.clickOnNextButton();
+        assertTrue(homePage.verifyLanguageForAccesstoHistoryHeaderDisplayed("Kannada"), "Verify if access to history header text displayed");
+        assertTrue(homePage.verifyLanguageForaccesstoHistoryDescriptionDisplayed("Kannada"), "Verify if access to history description displayed");
+        homePage.clickOnForthNextButton();
 
-        BackupDataTourPage backupDataPage = new BackupDataTourPage(driver);
-        assertEquals(backupDataPage.verifyLanguageforBackupDataPageLoaded(), "ಬ್ಯಾಕಪ್ & ಮರುಸ್ಥಾಪಿಸಿ");
-        assertEquals(backupDataPage.getBackupDataPageDescription(), "ನಮ್ಮ ಬ್ಯಾಕಪ್ ಅನ್ನು ಬಳಸಿಕೊಂಡು ನಿಮ್ಮ ಡೇಟಾವನ್ನು ಸುಲಭವಾಗಿ ರಕ್ಷಿಸಿ");
-        backupDataPage.clickOnGoBack();
+        assertTrue(homePage.verifyLanguageForAppSettingsHeaderDisplayed("Kannada"), "Verify if app settings header text displayed");
+        assertTrue(homePage.verifyLanguageForAppSettingsDescriptionDisplayed("Kannada"), "Verify if app settings description displayed");
+        homePage.clickOnFifthNextButton();
         assertEquals(homePage.getShareButton(), "ಹಂಚಿಕೊಳ್ಳಿ");
     }
     @Test
@@ -498,6 +492,7 @@ public class ChangeLanguageTest extends IosBaseTest {
         assertTrue(confirmPasscode.isConfirmPassCodePageLoaded(), "Verify if confirm passcode page is displayed");
         HomePage homePage = confirmPasscode.enterPasscodeInConfirmPasscodePage(TestDataReader.readData("passcode"), Target.IOS);
 
+        homePage.clickOnNextButtonForInjiTour();
         assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
         AddNewCardPage addNewCardPage = homePage.downloadCard();
 
@@ -552,6 +547,7 @@ public class ChangeLanguageTest extends IosBaseTest {
         assertTrue(confirmPasscode.isConfirmPassCodePageLoaded(), "Verify if confirm passcode page is displayed");
         HomePage homePage = confirmPasscode.enterPasscodeInConfirmPasscodePage(TestDataReader.readData("passcode"), Target.IOS);
 
+        homePage.clickOnNextButtonForInjiTour();
         assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
         SettingsPage settingsPage = homePage.clickOnSettingIcon();
 
@@ -593,13 +589,14 @@ public class ChangeLanguageTest extends IosBaseTest {
         assertTrue(confirmPasscode.isConfirmPassCodePageLoaded(), "Verify if confirm passcode page is displayed");
         HomePage homePage = confirmPasscode.enterPasscodeInConfirmPasscodePage(TestDataReader.readData("passcode"), Target.IOS);
 
+        homePage.clickOnNextButtonForInjiTour();
         assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
         AddNewCardPage addNewCardPage = homePage.downloadCard();
 
 
         assertTrue(addNewCardPage.isDownloadViaSunbirdDisplayed(), "Verify if download sunbird displayed");
         SunbirdLoginPage sunbirdLoginPage =  addNewCardPage.clickOnDownloadViaSunbird();
-        addNewCardPage.clickOnInsuranceCredential();
+        addNewCardPage.clickOnCredentialTypeHeadingInsuranceCredential();
         addNewCardPage.clickOnContinueButtonInSigninPopupIos();
         sunbirdLoginPage.enterPolicyNumberTextBox(TestDataReader.readData("policyNumberSunbird"));
         sunbirdLoginPage.enterFullNameTextBox(TestDataReader.readData("fullNameSunbird"));
@@ -652,6 +649,7 @@ public class ChangeLanguageTest extends IosBaseTest {
         assertTrue(confirmPasscode.isConfirmPassCodePageLoaded(), "Verify if confirm passcode page is displayed");
         HomePage homePage = confirmPasscode.enterPasscodeInConfirmPasscodePage(TestDataReader.readData("passcode"), Target.IOS);
 
+        homePage.clickOnNextButtonForInjiTour();
         assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
         SettingsPage settingsPage = homePage.clickOnSettingIcon();
 
@@ -668,6 +666,7 @@ public class ChangeLanguageTest extends IosBaseTest {
         assertTrue(addNewCardPage.isIssuerSearchBarDisplayedInHindi(),"verify if search bar is displayed in hindi");
 
         EsignetLoginPage esignetLoginPage =  addNewCardPage.clickOnDownloadViaEsignet();
+        esignetLoginPage.clickOnCredentialTypeHeadingMOSIPVerifiableCredential();
         addNewCardPage.clickOnContinueButtonInSigninPopupIos();
 
         assertTrue(esignetLoginPage.verifyLanguageEnterUinOrVidBoxTextDisplayed("HindiIos"),"verify if enter uin or vid text hindi");
@@ -696,6 +695,7 @@ public class ChangeLanguageTest extends IosBaseTest {
         assertTrue(confirmPasscode.isConfirmPassCodePageLoaded(), "Verify if confirm passcode page is displayed");
         HomePage homePage = confirmPasscode.enterPasscodeInConfirmPasscodePage(TestDataReader.readData("passcode"), Target.IOS);
 
+        homePage.clickOnNextButtonForInjiTour();
         assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
         SettingsPage settingsPage = homePage.clickOnSettingIcon();
 
@@ -705,10 +705,13 @@ public class ChangeLanguageTest extends IosBaseTest {
         assertTrue(settingsPage.verifyTamilLanguage(), "Verify if language is changed to tamil");
         homePage.clickOnHomeButton();
 
+        homePage.clickOnNextButtonForInjiTour();
         assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
         AddNewCardPage addNewCardPage = homePage.downloadCard();
 
         EsignetLoginPage esignetLoginPage =  addNewCardPage.clickOnDownloadViaEsignet();
+        esignetLoginPage.clickOnCredentialTypeHeadingMOSIPVerifiableCredential();
+//        addNewCardPage.clickOnCredentialTypeHeadingInsuranceCredential();
         addNewCardPage.clickOnContinueButtonInSigninPopupIos();
 
 //        assertTrue(esignetLoginPage.verifyLanguageEnterUinOrVidBoxTextDisplayed("TamilIos"),"verify if enter uin or vid text tamil");
@@ -737,6 +740,7 @@ public class ChangeLanguageTest extends IosBaseTest {
         assertTrue(confirmPasscode.isConfirmPassCodePageLoaded(), "Verify if confirm passcode page is displayed");
         HomePage homePage = confirmPasscode.enterPasscodeInConfirmPasscodePage(TestDataReader.readData("passcode"), Target.IOS);
 
+        homePage.clickOnNextButtonForInjiTour();
         assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
         SettingsPage settingsPage = homePage.clickOnSettingIcon();
 
@@ -746,10 +750,12 @@ public class ChangeLanguageTest extends IosBaseTest {
         assertTrue(settingsPage.verifyKannadaLanguage(), "Verify if language is changed to kannada");
         homePage.clickOnHomeButton();
 
+        homePage.clickOnNextButtonForInjiTour();
         assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
         AddNewCardPage addNewCardPage = homePage.downloadCard();
 
         EsignetLoginPage esignetLoginPage =  addNewCardPage.clickOnDownloadViaEsignet();
+        esignetLoginPage.clickOnCredentialTypeHeadingMOSIPVerifiableCredential();
         addNewCardPage.clickOnContinueButtonInSigninPopupIos();
 
         assertTrue(esignetLoginPage.verifyLanguageEnterUinOrVidBoxTextDisplayed("KannadaIos"),"verify if enter uin or vid text kannada");
@@ -778,6 +784,7 @@ public class ChangeLanguageTest extends IosBaseTest {
         assertTrue(confirmPasscode.isConfirmPassCodePageLoaded(), "Verify if confirm passcode page is displayed");
         HomePage homePage = confirmPasscode.enterPasscodeInConfirmPasscodePage(TestDataReader.readData("passcode"), Target.IOS);
 
+        homePage.clickOnNextButtonForInjiTour();
         assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
         SettingsPage settingsPage = homePage.clickOnSettingIcon();
 
@@ -790,10 +797,12 @@ public class ChangeLanguageTest extends IosBaseTest {
         unlockApplicationPage.clickOnUnlockApplicationButton();
         setPasscode.enterPasscode(TestDataReader.readData("passcode"), Target.IOS);
 
+        homePage.clickOnNextButtonForInjiTour();
         assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
         AddNewCardPage addNewCardPage = homePage.downloadCard();
 
         EsignetLoginPage esignetLoginPage =  addNewCardPage.clickOnDownloadViaEsignet();
+        esignetLoginPage.clickOnCredentialTypeHeadingMOSIPVerifiableCredential();
         addNewCardPage.clickOnContinueButtonInSigninPopupIos();
 
         assertTrue(esignetLoginPage.verifyLanguageEnterUinOrVidBoxTextDisplayed("ArabicIos"),"verify if enter uin or vid text Arabic");
@@ -822,6 +831,7 @@ public class ChangeLanguageTest extends IosBaseTest {
         assertTrue(confirmPasscode.isConfirmPassCodePageLoaded(), "Verify if confirm passcode page is displayed");
         HomePage homePage = confirmPasscode.enterPasscodeInConfirmPasscodePage(TestDataReader.readData("passcode"), Target.IOS);
 
+        homePage.clickOnNextButtonForInjiTour();
         assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
         SettingsPage settingsPage = homePage.clickOnSettingIcon();
 
@@ -831,10 +841,12 @@ public class ChangeLanguageTest extends IosBaseTest {
         assertTrue(settingsPage.verifyKannadaLanguage(), "Verify if language is changed to kannada");
         homePage.clickOnHomeButton();
 
+        homePage.clickOnNextButtonForInjiTour();
         assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
         AddNewCardPage addNewCardPage = homePage.downloadCard();
 
         EsignetLoginPage esignetLoginPage =  addNewCardPage.clickOnDownloadViaEsignet();
+        esignetLoginPage.clickOnCredentialTypeHeadingMOSIPVerifiableCredential();
         addNewCardPage.clickOnContinueButtonInSigninPopupIos();
 
         assertTrue(esignetLoginPage.verifyLanguageEnterUinOrVidBoxTextDisplayed("KannadaIos"),"verify if enter uin or vid text kannada");
@@ -845,6 +857,7 @@ public class ChangeLanguageTest extends IosBaseTest {
 
         esignetLoginPage.clickOnCloseButton();
         addNewCardPage.clickOnBack();
+        homePage.clickOnNextButtonForInjiTour();
         assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
 
         homePage.clickOnSettingIcon();
@@ -854,6 +867,7 @@ public class ChangeLanguageTest extends IosBaseTest {
         homePage.clickOnHomeButton();
         homePage.downloadCard();
         addNewCardPage.clickOnDownloadViaEsignet();
+        esignetLoginPage.clickOnCredentialTypeHeadingMOSIPVerifiableCredential();
         addNewCardPage.clickOnContinueButtonInSigninPopupIos();
         assertTrue(esignetLoginPage.verifyLanguageEnterUinOrVidBoxTextDisplayed("KannadaIos"),"verify if search bar is displayed in Kannada");
         assertTrue(esignetLoginPage.verifyLanguageLoginHeaderTextDisplayed("Kannada"),"verify if search bar is displayed in Kannada");
@@ -881,6 +895,7 @@ public class ChangeLanguageTest extends IosBaseTest {
         assertTrue(confirmPasscode.isConfirmPassCodePageLoaded(), "Verify if confirm passcode page is displayed");
         HomePage homePage = confirmPasscode.enterPasscodeInConfirmPasscodePage(TestDataReader.readData("passcode"), Target.IOS);
 
+        homePage.clickOnNextButtonForInjiTour();
         assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
         SettingsPage settingsPage = homePage.clickOnSettingIcon();
 
@@ -890,10 +905,12 @@ public class ChangeLanguageTest extends IosBaseTest {
         assertTrue(settingsPage.verifyKannadaLanguage(), "Verify if language is changed to kannada");
         homePage.clickOnHomeButton();
 
+        homePage.clickOnNextButtonForInjiTour();
         assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
         AddNewCardPage addNewCardPage = homePage.downloadCard();
 
         EsignetLoginPage esignetLoginPage =  addNewCardPage.clickOnDownloadViaEsignet();
+        esignetLoginPage.clickOnCredentialTypeHeadingMOSIPVerifiableCredential();
         addNewCardPage.clickOnContinueButtonInSigninPopupIos();
 
         assertTrue(esignetLoginPage.verifyLanguageEnterUinOrVidBoxTextDisplayed("KannadaIos"),"verify if enter uin or vid text kannada");
@@ -904,6 +921,8 @@ public class ChangeLanguageTest extends IosBaseTest {
 
         esignetLoginPage.clickOnCloseButton();
         addNewCardPage.clickOnBack();
+
+        homePage.clickOnNextButtonForInjiTour();
         assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
 
         homePage.clickOnSettingIcon();
@@ -913,6 +932,7 @@ public class ChangeLanguageTest extends IosBaseTest {
         homePage.clickOnHomeButton();
         homePage.downloadCard();
         addNewCardPage.clickOnDownloadViaEsignet();
+        esignetLoginPage.clickOnCredentialTypeHeadingMOSIPVerifiableCredential();
         addNewCardPage.clickOnContinueButtonInSigninPopupIos();
         assertTrue(esignetLoginPage.verifyLanguageEnterUinOrVidBoxTextDisplayed("EnglishIos"),"verify if search bar is displayed in english");
         assertTrue(esignetLoginPage.verifyLanguageLoginHeaderTextDisplayed("English"),"verify if search bar is displayed in english");
