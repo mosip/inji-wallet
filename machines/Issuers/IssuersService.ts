@@ -67,6 +67,15 @@ export const IssuersService = () => {
         downloadTimeout,
       );
       console.info(`VC download via ${context.selectedIssuerId} is succesfull`);
+      if (credential.credential.credentialSubject.name) {
+        credential.credential.credentialSubject.fullName =
+          credential.credential.credentialSubject.name;
+      }
+      if (credential.credential.id) {
+        credential.credential.id = credential.credential.id
+          .split(':')
+          .reverse()[0];
+      }
       credential = updateCredentialInformation(context, credential);
       return credential;
     },

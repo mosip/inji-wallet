@@ -1,6 +1,13 @@
+import {APPLICATION_THEME} from 'react-native-dotenv';
+
+const adaptiveImage =
+  APPLICATION_THEME?.toLowerCase() === 'purple'
+    ? '../assets/purpleSplashScreen.png'
+    : './assets/orangeSplashScreen.png';
+
 export default {
-  name: 'Inji',
-  slug: 'inji',
+  name: 'Biometric Voters Verification APP',
+  slug: 'Biometric Voters Verification APP',
   version: '1.0.0',
   orientation: 'portrait',
   icon: './assets/icon.png',

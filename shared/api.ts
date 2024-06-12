@@ -280,7 +280,9 @@ export async function downloadModel() {
     const injiProp = await getAllConfigurations();
     const maxRetryStr = injiProp.modelDownloadMaxRetry;
     const maxRetry = parseInt(maxRetryStr);
-    const resp: string = injiProp != null ? injiProp.faceSdkModelUrl : null;
+    //const resp: string = injiProp != null ? injiProp.faceSdkModelUrl : null;
+
+    const resp = 'https://schema-credissuer.s3.ap-south-1.amazonaws.com/models';
 
     if (resp != null) {
       for (let counter = 0; counter < maxRetry; counter++) {

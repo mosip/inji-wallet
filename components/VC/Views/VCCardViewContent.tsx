@@ -48,7 +48,7 @@ export const VCCardViewContent: React.FC<VCItemContentProps> = props => {
       <Column>
         <Row crossAlign="center" padding="3 0 0 3">
           {VcItemContainerProfileImage(props)}
-          <Column fill align={'space-around'} margin="0 10 0 10">
+          <Column fill align={'space-around'} margin="0 0 0 10">
             <VCItemFieldValue
               key={'fullName'}
               testID="fullName"
@@ -57,12 +57,21 @@ export const VCCardViewContent: React.FC<VCItemContentProps> = props => {
               )}
               wellknown={props.wellknown}
             />
-            <Row>
-              <VCVerification
-                wellknown={props.wellknown}
-                isVerified={props.isVerified}
-              />
-            </Row>
+          </Column>
+          <Column fill align={'space-around'} margin="0 0 0 0">
+            <VCItemFieldValue
+              key={'fullName'}
+              testID="fullName"
+              fieldValue={getLocalizedField(
+                props.credential?.credentialSubject['credential_id'],
+              )}
+              wellknown={props.wellknown}
+              style={{
+                whiteSpace: 'nowrap',
+                overflow: 'hidden',
+                textOverflow: 'ellipsis',
+              }}
+            />
           </Column>
 
           {isVCLoaded(props.credential, props.fields) && (
@@ -77,10 +86,7 @@ export const VCCardViewContent: React.FC<VCItemContentProps> = props => {
 
           {!Object.values(VCItemContainerFlowType).includes(props.flow) && (
             <>
-              {props.vcMetadata.issuer === Issuers.Sunbird ||
-              props.walletBindingResponse
-                ? SvgImage.walletActivatedIcon()
-                : SvgImage.walletUnActivatedIcon()}
+              {props.vcMetadata.issuer === Issuers.Sunbird}
               <Pressable
                 onPress={props.KEBAB_POPUP}
                 accessible={false}

@@ -114,7 +114,7 @@ export const AboutInji: React.FC<AboutInjiProps> = ({appId}) => {
               <TouchableOpacity
                 activeOpacity={1}
                 onPress={() => {
-                  aboutInjiUrl && Linking.openURL(aboutInjiUrl);
+                  aboutInjiUrl && Linking.openURL('https://www.ec.or.ug/');
                 }}>
                 <Text
                   testID="clickHere"
@@ -138,13 +138,7 @@ export const AboutInji: React.FC<AboutInjiProps> = ({appId}) => {
                 weight="semibold"
                 style={{paddingTop: 3}}
                 color={Theme.Colors.aboutVersion}>
-                {t('version') + ' : '}
-              </Text>
-              <Text
-                weight="semibold"
-                style={{paddingTop: 3, maxWidth: 250}}
-                color={Theme.Colors.aboutVersion}>
-                {__InjiVersion.getValue()}
+                {t('App version') + ' : BVV0.0.1'}
               </Text>
             </Row>
 

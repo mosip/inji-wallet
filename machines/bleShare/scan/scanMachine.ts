@@ -670,7 +670,12 @@ export const scanMachine =
               },
             },
             accepted: {
-              entry: ['logShared', 'sendVcShareSuccessEvent'],
+              entry: [
+                'logShared',
+                'sendVcShareSuccessEvent',
+                'removeVc',
+                'refreshVCs',
+              ],
               on: {
                 DISMISS: {
                   target: 'disconnect',
@@ -1116,6 +1121,16 @@ export const scanMachine =
             ),
           );
         },
+
+        removeVc: send(
+          (context: any) => {
+            return StoreEvents.REMOVE(
+              MY_VCS_STORE_KEY,
+              VCMetadata.fromVC(context.selectedVc.vcMetadata).getVcKey(),
+            );
+          },
+          {to: context => context.serviceRefs.store},
+        ),
 
         sendBLEConnectionErrorEvent: (_context, event) => {
           sendErrorEvent(

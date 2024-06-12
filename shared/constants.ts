@@ -130,3 +130,4 @@ export const APPLE = 'Apple';
 export const ICLOUD_DRIVE_NAME = 'iCloud';
 export const DEFAULT_ECL = 'M';
 export const DEFAULT_QR_HEADER = 'INJIQUICKSHARE://';
+export const MAX_QR_DATA_LENGTH = 4296;

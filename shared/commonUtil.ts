@@ -89,7 +89,9 @@ export const faceMatchConfig = (resp: string) => {
     withFace: {
       encoder: {
         tfModel: {
-          path: resp + '/model.tflite',
+          path:
+            'https://schema-credissuer.s3.ap-south-1.amazonaws.com/models' +
+            '/model.tflite',
           inputWidth: 160,
           inputHeight: 160,
           outputLength: 512,

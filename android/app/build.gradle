@@ -191,19 +191,19 @@ android {
         }
     }
 
-    flavorDimensions "inji"
+    flavorDimensions "bvvp"
 
     productFlavors {
         residentapp {
             versionName defaultConfig.versionName
-            dimension "inji"
-            resValue "string", "app_name", "Inji"
+            dimension "bvvp"
+            resValue "string", "app_name", "Biometric Voters Verification APP"
         }
-        inji {
-            applicationId "io.mosip.inji.wallet"
+        bvvp {
+            applicationId "io.mosip.bvvp.wallet"
             versionName defaultConfig.versionName
-            dimension "inji"
-            resValue "string", "app_name", "Inji Wallet"
+            dimension "bvvp"
+            resValue "string", "app_name", "Biometric Voters Verification APP"
         }
         collab {
             applicationId "io.mosip.inji.collab"
@@ -229,7 +229,7 @@ android {
         variant.outputs.all { output ->
             def datetime = new Date().format('yyyyMMdd_HHmm')
             def architecture = output.getFilter(com.android.build.OutputFile.ABI) ?: "universal"
-            outputFileName = "Inji_${architecture}.apk"
+            outputFileName = "BVVP_${architecture}.apk"
         }
     }
 

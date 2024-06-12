@@ -194,7 +194,7 @@ export const SettingScreen: React.FC<
             />
           )}
 
-          <ListItem
+          {/* <ListItem
             topDivider
             bottomDivider
             onPress={() => controller.INJI_TOUR_GUIDE()}>
@@ -213,7 +213,7 @@ export const SettingScreen: React.FC<
                 </Text>
               </ListItem.Title>
             </ListItem.Content>
-          </ListItem>
+          </ListItem> */}
 
           <ListItem onPress={controller.LOGOUT}>
             <Icon

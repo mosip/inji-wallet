@@ -134,11 +134,7 @@ export const HelpScreen: React.FC<HelpScreenProps> = props => {
     {
       title: t('questions.inji.three'),
       data: (
-        <React.Fragment>
-          {getTextField(t('answers.inji.three-a'))}
-          {getTextField(t('answers.inji.three-b'))}
-          {getTextField(t('answers.inji.three-c'))}
-        </React.Fragment>
+        <React.Fragment>{getTextField(t('answers.inji.three'))}</React.Fragment>
       ),
     },
     {
@@ -146,7 +142,7 @@ export const HelpScreen: React.FC<HelpScreenProps> = props => {
       data: (
         <React.Fragment>{getTextField(t('answers.inji.four'))}</React.Fragment>
       ),
-    },
+    } /*,
     {
       title: t('questions.inji.five'),
       data: (
@@ -272,7 +268,7 @@ export const HelpScreen: React.FC<HelpScreenProps> = props => {
           {getTextField(t('answers.inji.fifteen'))}
         </React.Fragment>
       ),
-    },
+    }, */,
   ];
 
   return (
@@ -304,7 +300,8 @@ export const HelpScreen: React.FC<HelpScreenProps> = props => {
                   {item.data}
                 </View>
               )}
-              data={[...InjiFaqMap, ...BackupFaqMap]}
+              //data={[...InjiFaqMap, ...BackupFaqMap]}
+              data={[...InjiFaqMap]}
               onScrollToIndexFailed={info => {
                 const wait = new Promise(resolve => setTimeout(resolve, 500));
                 wait.then(() => {

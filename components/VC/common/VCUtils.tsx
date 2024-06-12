@@ -26,7 +26,7 @@ export const DETAIL_VIEW_DEFAULT_FIELDS = [
 export const CARD_VIEW_ADD_ON_FIELDS = ['UIN', 'VID'];
 export const DETAIL_VIEW_ADD_ON_FIELDS = [
   'UIN',
-  'VID',
+  'NIN',
   'status',
   'credentialRegistry',
   'idType',
@@ -72,6 +72,8 @@ export const getFieldValue = (
       return getLocalizedField(
         getFullAddress(verifiableCredential?.credentialSubject),
       );
+    case 'NIN':
+      return props.credential?.credentialSubject['credential_id'];
     default: {
       const fieldValue = verifiableCredential?.credentialSubject[field];
       if (Array.isArray(fieldValue) && typeof fieldValue[0] !== 'object') {

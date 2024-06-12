@@ -42,7 +42,8 @@ const getProfileImage = (face: any) => {
 export const VCDetailView: React.FC<VCItemDetailsProps> = props => {
   const {t, i18n} = useTranslation('VcDetails');
   const logo = props.verifiableCredentialData.issuerLogo;
-  const face = props.verifiableCredentialData.face;
+  const face = props.verifiableCredentialData.face?.[0]?.url;
+  const credentialId = props.credential?.credentialSubject['credential_id'];
   const verifiableCredential = props.credential;
   let [fields, setFields] = useState([]);
   const [wellknown, setWellknown] = useState(null);
@@ -152,7 +153,7 @@ export const VCDetailView: React.FC<VCItemDetailsProps> = props => {
           </Column>
         </Column>
       </Column>
-      {props.vcHasImage && (
+      {/* {props.vcHasImage && (
         <View
           style={{
             position: 'relative',
@@ -228,7 +229,7 @@ export const VCDetailView: React.FC<VCItemDetailsProps> = props => {
               </Column>
             ))}
         </View>
-      )}
+      )} */}
     </>
   );
 };

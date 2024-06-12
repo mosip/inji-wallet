@@ -217,10 +217,20 @@ export const createFaceScannerMachine = (vcImage: string) =>
 
         verifyImage: context => {
           context.cameraRef.pausePreview();
+          const dataURI = vcImage[0].url;
+
           const rxDataURI =
             /data:(?<mime>[\w/\-.]+);(?<encoding>\w+),(?<data>.*)/;
-          const matches = rxDataURI.exec(vcImage).groups;
-          return faceCompare(context.capturedImage.base64, matches.data);
+          const matches = rxDataURI.exec(dataURI);
+          if (matches && matches.groups) {
+            return faceCompare(
+              context.capturedImage.base64,
+              matches.groups.data,
+            );
+          } else {
+            console.error('Invalid Data URI format:', dataURI);
+            throw new Error('Invalid Data URI format');
+          }
         },
       },
 

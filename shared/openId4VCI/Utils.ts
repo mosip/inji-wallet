@@ -164,6 +164,7 @@ export const constructAuthorizationConfiguration = (
     scopes: supportedScopes,
     additionalHeaders: selectedIssuer.additional_headers,
     redirectUrl: selectedIssuer.redirect_uri,
+    dangerouslyAllowInsecureHttpRequests: true,
     serviceConfiguration: {
       authorizationEndpoint: selectedIssuer.authorization_endpoint,
       tokenEndpoint: selectedIssuer.token_endpoint,
