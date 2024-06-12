@@ -34,9 +34,20 @@ export const UseCopilotTooltip = () => {
     selectIsInitialDownload,
   );
 
+  const TestID = {
+    '1': 'help',
+    '2': 'download',
+    '3': 'scan',
+    '4': 'history',
+    '5': 'settings',
+    '6': 'cardView',
+  };
+
   const CURRENT_STEP = currentStep?.order;
   const currentStepTitle = currentStep?.name;
   const currentStepDescription = currentStep?.text;
+  const titleTestID = `${TestID[CURRENT_STEP?.toString()]}Title`;
+  const descriptionTestID = `${TestID[CURRENT_STEP?.toString()]}Description`;
 
   const stepCount =
     CURRENT_STEP === COPILOT_FINAL_STEP && isInitialDownloading
@@ -60,6 +71,8 @@ export const UseCopilotTooltip = () => {
     stepCount,
     isOnboarding,
     isInitialDownloading,
+    titleTestID,
+    descriptionTestID,
     INITIAL_DOWNLOAD_DONE,
     ONBOARDING_DONE,
     SET_TOUR_GUIDE,
