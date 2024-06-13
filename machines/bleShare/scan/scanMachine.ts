@@ -306,6 +306,7 @@ export const scanMachine =
             'registerLoggers',
             'clearUri',
             'setChildRef',
+            'resetFaceCaptureBannerStatus',
           ],
           on: {
             SCAN: [
