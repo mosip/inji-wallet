@@ -1,5 +1,5 @@
 import {useCopilot} from 'react-native-copilot';
-import {COPILOT_FINAL_STEP} from '../shared/constants';
+import {COPILOT_FINAL_STEP, copilotTestID} from '../shared/constants';
 import {useContext} from 'react';
 import {GlobalContext} from '../shared/GlobalContext';
 import {
@@ -8,7 +8,6 @@ import {
   selectIsOnboarding,
 } from '../machines/auth';
 import {useSelector} from '@xstate/react';
-import {copilotTestID} from '../shared/constants';
 
 export const UseCopilotTooltip = () => {
   const {
