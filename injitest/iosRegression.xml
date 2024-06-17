@@ -107,11 +107,6 @@
                     <include name="verifyClickOnBackFromInjiTourGuide"/>
                 </methods>
             </class>
-            <class name="iosTestCases.AboutInjiTest"
-                <methods>
-                    <include name="copyAppId"/>
-                    <include name="verifyAppId"/>
-                    <include name="verifyTuvaliVersion"/>
             <class name="iosTestCases.MosipOtpAlternativeFlow">
                 <methods>
                     <include name="verifyInvalidOtpMessage" />
