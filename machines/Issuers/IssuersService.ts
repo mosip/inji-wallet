@@ -105,7 +105,7 @@ export const IssuersService = () => {
         return await generateKeys();
       }
       const isBiometricsEnabled = RNSecureKeystoreModule.hasBiometricsEnabled();
-      return RNSecureKeystoreModule.generateKeyPair(
+      return RNSecureKeystoreModule.generateKeyPairEC(
         Issuers_Key_Ref,
         isBiometricsEnabled,
         0,

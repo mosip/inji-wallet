@@ -146,15 +146,11 @@ export const getJWK = async publicKey => {
   try {
     let publicKeyJWKString;
     let publicKeyJWK;
-    if (isIOS()) {
-      publicKeyJWKString = await jose.JWK.asKey(publicKey, 'pem');
-      publicKeyJWK = publicKeyJWKString.toJSON();
-    } else {
-      publicKeyJWK = await pem2jwk(publicKey);
-    }
+    publicKeyJWKString = await jose.JWK.asKey(publicKey, 'pem');
+    publicKeyJWK = publicKeyJWKString.toJSON();
     return {
       ...publicKeyJWK,
-      alg: 'RS256',
+      alg: 'ES256',
       use: 'sig',
     };
   } catch (e) {
@@ -288,7 +284,7 @@ export async function constructProofJWT(
   selectedIssuer: issuerType,
 ): Promise<string> {
   const jwtHeader = {
-    alg: 'RS256',
+    alg: 'ES256',
     jwk: await getJWK(publicKey),
     typ: 'openid4vci-proof+jwt',
   };

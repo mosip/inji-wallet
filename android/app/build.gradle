@@ -257,7 +257,7 @@ dependencies {
     implementation("com.facebook.react:react-android")
     implementation 'com.facebook.soloader:soloader:0.10.1+'
     implementation("io.mosip:pixelpass:1.2-SNAPSHOT")
-    implementation("io.mosip:secure-keystore:1.2-SNAPSHOT")
+    implementation("io.mosip:secure-keystore:0.2.1-SNAPSHOT")
 
     def isGifEnabled = (findProperty('expo.gif.enabled') ?: "") == "true";
     def isWebpEnabled = (findProperty('expo.webp.enabled') ?: "") == "true";

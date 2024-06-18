@@ -63,6 +63,11 @@ public class RNSecureKeystoreModule extends ReactContextBaseJavaModule {
   }
 
   @ReactMethod(isBlockingSynchronousMethod = true)
+  public String generateKeyPairEC(String alias, boolean isAuthRequired, Integer authTimeout) {
+    return keystore.generateKeyPairEC(alias, isAuthRequired, authTimeout);
+  }
+
+  @ReactMethod(isBlockingSynchronousMethod = true)
   public void generateHmacshaKey(String alias) {
     keystore.generateHmacSha256Key(alias);
   }
@@ -142,7 +147,7 @@ public class RNSecureKeystoreModule extends ReactContextBaseJavaModule {
   }
 
   @ReactMethod
-  public void sign(String alias, String data, Promise promise) {
+  public void sign(String signAlgorithm, String alias, String data, Promise promise) {
 
     Function1<String, Unit> successLambda = new Function1<String, Unit>() {
         @Override
@@ -161,6 +166,7 @@ public class RNSecureKeystoreModule extends ReactContextBaseJavaModule {
     };
 
     keystore.sign(
+      signAlgorithm,
       alias,
       data,
       successLambda,

@@ -95,7 +95,7 @@ export const VCItemServices = model => {
         return await generateKeys();
       }
       const isBiometricsEnabled = RNSecureKeystoreModule.hasBiometricsEnabled();
-      return RNSecureKeystoreModule.generateKeyPair(
+      return RNSecureKeystoreModule.generateKeyPairEC(
         VCMetadata.fromVC(context.vcMetadata).id,
         isBiometricsEnabled,
         0,

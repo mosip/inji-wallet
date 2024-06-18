@@ -148,3 +148,5 @@ export const copilotTestID = {
   '5': 'settings',
   '6': 'cardView',
 };
+
+export const ECDSA = "SHA256withECDSA";

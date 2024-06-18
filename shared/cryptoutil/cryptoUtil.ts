@@ -1,10 +1,17 @@
 import {KeyPair, RSA} from 'react-native-rsa-native';
 import forge from 'node-forge';
-import {BIOMETRIC_CANCELLED, DEBUG_MODE_ENABLED, isIOS} from '../constants';
+import {
+  BIOMETRIC_CANCELLED,
+  DEBUG_MODE_ENABLED,
+  isIOS,
+  ECDSA,
+} from '../constants';
 import {NativeModules} from 'react-native';
 import {BiometricCancellationError} from '../error/BiometricCancellationError';
 import {EncryptedOutput} from './encryptedOutput';
 import {Buffer} from 'buffer';
+import base64 from 'react-native-base64';
+import convertDerToRsFormat from './signFormatConverter';
 
 // 5min
 export const AUTH_TIMEOUT = 5 * 60;
@@ -34,7 +41,8 @@ export async function getJWT(
     const header64 = encodeB64(JSON.stringify(header));
     const payLoad64 = encodeB64(JSON.stringify(payLoad));
     const preHash = header64 + '.' + payLoad64;
-    const signature64 = await createSignature(privateKey, preHash, alias);
+    var signature64 = await createSignature(privateKey, preHash, alias);
+    signature64 = signature64.replace(/=/g, '');
     return header64 + '.' + payLoad64 + '.' + signature64;
   } catch (e) {
     console.error('Exception Occurred While Constructing JWT ', e);
@@ -58,7 +66,14 @@ export async function createSignature(
     return encodeB64(signature);
   } else {
     try {
-      signature64 = await RNSecureKeystoreModule.sign(alias, preHash);
+      signature64 = await RNSecureKeystoreModule.sign(ECDSA, alias, preHash);
+      const base64DeodedSignature = base64.decode(
+        signature64.replace(/\n/g, ''),
+      );
+      const derSignature = Uint8Array.from(base64DeodedSignature, char =>
+        char.charCodeAt(0),
+      );
+      signature64 = convertDerToRsFormat(derSignature);
     } catch (error) {
       console.error('Error in creating signature:', error);
       if (error.toString().includes(BIOMETRIC_CANCELLED)) {
@@ -72,7 +87,11 @@ export async function createSignature(
 }
 
 function replaceCharactersInB64(encodedB64: string) {
-  return encodedB64.replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+  return encodedB64
+    .replace(/\+/g, '-')
+    .replace(/\//g, '_')
+    .replace(/=+$/, '')
+    .replace(/\n/g, '');
 }
 
 export function encodeB64(str: string) {
