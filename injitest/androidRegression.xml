@@ -9,6 +9,8 @@
             <class name="androidTestCases.AboutInjiTest">
                 <methods>
                     <include name="copyAppId"/>
+                    <include name="verifyAppId"/>
+                    <include name="verifyTuvaliVersion"/>
                 </methods>
             </class>
             <class name="androidTestCases.ActivateVcTest">
@@ -147,6 +149,13 @@
                     <include name="verifyActivationFailedRecordInHistoryFromDetailedView"/>
                 </methods>
             </class>
+            <class name="androidTestCases.AboutInjiTest">
+                <methods>
+                    <include name="copyAppId"/>
+                    <include name="verifyAppId"/>
+                    <include name="verifyTuvaliVersion"/>
+                </methods>
+            </class>
 		</classes>
 	</test>
 </suite>
@@ -157,11 +166,6 @@
 </listeners>
 <test verbose="2" preserve-order="true" name="android">
     <classes>
-        <class name="androidTestCases.AboutInjiTest">
-            <methods>
-                <include name="copyAppId"/>
-            </methods>
-        </class>
         <class name="androidTestCases.ActivateVcTest">
             <methods>
                 <include name="activateVc"/>

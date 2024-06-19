@@ -33,6 +33,7 @@ public class PinVcTest extends IosBaseTest {
         assertTrue(confirmPasscode.isConfirmPassCodePageLoaded(), "Verify if confirm passcode page is displayed");
         HomePage homePage = confirmPasscode.enterPasscodeInConfirmPasscodePage(TestDataReader.readData("passcode"), Target.IOS);
 
+        homePage.clickOnNextButtonForInjiTour();
         assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
         AddNewCardPage addNewCardPage = homePage.downloadCard();
 
@@ -57,11 +58,11 @@ public class PinVcTest extends IosBaseTest {
         HistoryPage historyPage= moreOptionsPage.clickOnViewActivityLog();
         assertTrue(historyPage.verifyHistory(uin, Target.IOS));
     }
-    
+
     //For IOS bluetooth does not support in simulator, so we can't automate
     @Test
     public void VerifyCameraOpenAfterPinVc() throws InterruptedException {
-    	ChooseLanguagePage chooseLanguagePage = new ChooseLanguagePage(driver);
+        ChooseLanguagePage chooseLanguagePage = new ChooseLanguagePage(driver);
 
         assertTrue(chooseLanguagePage.isChooseLanguagePageLoaded(), "Verify if choose language page is displayed");
         WelcomePage welcomePage = chooseLanguagePage.clickOnSavePreference();
@@ -78,6 +79,7 @@ public class PinVcTest extends IosBaseTest {
         assertTrue(confirmPasscode.isConfirmPassCodePageLoaded(), "Verify if confirm passcode page is displayed");
         HomePage homePage = confirmPasscode.enterPasscodeInConfirmPasscodePage(TestDataReader.readData("passcode"), Target.IOS);
 
+        homePage.clickOnNextButtonForInjiTour();
         assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
         AddNewCardPage addNewCardPage = homePage.downloadCard();
 
@@ -101,12 +103,12 @@ public class PinVcTest extends IosBaseTest {
         SharePage scanPage=homePage.clickOnShareButton();
         scanPage.acceptPermissionPopupBluetoothIos();
         scanPage.acceptPermissionPopupCameraIos();
-        
+
         assertTrue(scanPage.isCameraPageLoaded(), "Verify camera page is displayed");
         assertTrue(scanPage.isFlipCameraClickable(),"Verify if flip camera is enabled");
         assertTrue(scanPage.isCameraOpen(),"Verify if camera is displayed");
     }
-    
+
     @Test
     public void downloadVcViaEsignetAndPinUnpin() throws InterruptedException {
         ChooseLanguagePage chooseLanguagePage = new ChooseLanguagePage(driver);
@@ -126,30 +128,32 @@ public class PinVcTest extends IosBaseTest {
         assertTrue(confirmPasscode.isConfirmPassCodePageLoaded(), "Verify if confirm passcode page is displayed");
         HomePage homePage = confirmPasscode.enterPasscodeInConfirmPasscodePage(TestDataReader.readData("passcode"), Target.IOS);
 
+        homePage.clickOnNextButtonForInjiTour();
         assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
         AddNewCardPage addNewCardPage = homePage.downloadCard();
 
         assertTrue(addNewCardPage.isAddNewCardPageLoaded(), "Verify if add new card page is displayed");
         EsignetLoginPage esignetLoginPage =  addNewCardPage.clickOnDownloadViaEsignet();
-
+        esignetLoginPage.clickOnCredentialTypeHeadingMOSIPVerifiableCredential();
         addNewCardPage.clickOnContinueButtonInSigninPopupIos();
 
         esignetLoginPage.clickOnEsignetLoginWithOtpButton();
         String uin = TestDataReader.readData("uin");
         OtpVerificationPage otpVerification= esignetLoginPage.setEnterIdTextBox(uin);
         esignetLoginPage.clickOnGetOtpButton();
-        
+
         otpVerification.enterOtpForEsignet(TestDataReader.readData("otp"), Target.IOS);
         esignetLoginPage.clickOnVerifyButtonIos();
-        
+
         assertTrue(homePage.isNameDisplayed(TestDataReader.readData("fullName")), "Verify if full name is displayed");
         MoreOptionsPage moreOptionsPage = homePage.clickOnMoreOptionsButton();
 
         assertTrue(moreOptionsPage.isMoreOptionsPageLoaded(), "Verify if more options page is displayed");
         moreOptionsPage.clickOnPinOrUnPinCard();
-        
+
+        homePage.clickOnNextButtonForInjiTour();
         assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
-         homePage.downloadCard();
+        homePage.downloadCard();
 
         RetrieveIdPage retrieveIdPage = addNewCardPage.clickOnDownloadViaUin();
         assertTrue(retrieveIdPage.isRetrieveIdPageLoaded(), "Verify if retrieve id page is displayed");
@@ -165,10 +169,10 @@ public class PinVcTest extends IosBaseTest {
         moreOptionsPage.clickOnPinOrUnPinCard();
     }
 
-    
+
     @Test
     public void verifyMessageAfterDenyBluetoothPopup() throws InterruptedException {
-    	ChooseLanguagePage chooseLanguagePage = new ChooseLanguagePage(driver);
+        ChooseLanguagePage chooseLanguagePage = new ChooseLanguagePage(driver);
 
         assertTrue(chooseLanguagePage.isChooseLanguagePageLoaded(), "Verify if choose language page is displayed");
         WelcomePage welcomePage = chooseLanguagePage.clickOnSavePreference();
@@ -185,6 +189,7 @@ public class PinVcTest extends IosBaseTest {
         assertTrue(confirmPasscode.isConfirmPassCodePageLoaded(), "Verify if confirm passcode page is displayed");
         HomePage homePage = confirmPasscode.enterPasscodeInConfirmPasscodePage(TestDataReader.readData("passcode"), Target.IOS);
 
+        homePage.clickOnNextButtonForInjiTour();
         assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
         AddNewCardPage addNewCardPage = homePage.downloadCard();
 
@@ -208,7 +213,7 @@ public class PinVcTest extends IosBaseTest {
         SharePage scanPage=homePage.clickOnShareButton();
         scanPage.denyPermissionPopupBluetoothIos();
         assertEquals(scanPage.isEnableBluetoothButtonButtonDisplayed(),"Allow bluetooth permissions");
-        
+
     }
 
     @Test
@@ -231,6 +236,7 @@ public class PinVcTest extends IosBaseTest {
         assertTrue(confirmPasscode.isConfirmPassCodePageLoaded(), "Verify if confirm passcode page is displayed");
         HomePage homePage = confirmPasscode.enterPasscodeInConfirmPasscodePage(TestDataReader.readData("passcode"), Target.IOS);
 
+        homePage.clickOnNextButtonForInjiTour();
         assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
         AddNewCardPage addNewCardPage = homePage.downloadCard();
 
@@ -282,7 +288,6 @@ public class PinVcTest extends IosBaseTest {
 
         //second pinned vc
         assertTrue(homePage.isPinIconDisplayed(), "Verify if pin icon on vc is displayed");
-
     }
 
     @Test

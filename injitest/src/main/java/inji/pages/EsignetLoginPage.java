@@ -146,7 +146,7 @@ public class EsignetLoginPage extends BasePage {
     }
 
     public void clickOnVerifyButton() {
-    	((HidesKeyboard) driver).hideKeyboard();
+        ((HidesKeyboard) driver).hideKeyboard();
         clickOnElement(verifyButton);
     }
 
@@ -304,7 +304,18 @@ public class EsignetLoginPage extends BasePage {
     }
 
     public String getText(){
-    System.out.println(getTextFromLocator(enterIdTextBox));
+        System.out.println(getTextFromLocator(enterIdTextBox));
         return getTextFromLocator(enterIdTextBox);
+    }
+
+    public void clickOnCredentialTypeHeadingMOSIPVerifiableCredential() {
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        if (isElementDisplayed(credentialTypeHeadingMOSIPVerifiableCredential)) {
+            clickOnElement(credentialTypeHeadingMOSIPVerifiableCredential);
+        }
     }
 }

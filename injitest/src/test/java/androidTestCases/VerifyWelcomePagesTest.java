@@ -3,6 +3,7 @@ package androidTestCases;
 import BaseTest.AndroidBaseTest;
 import inji.constants.Target;
 import inji.pages.*;
+import inji.utils.IosUtil;
 import inji.utils.TestDataReader;
 import org.testng.annotations.Test;
 
@@ -60,34 +61,34 @@ public class VerifyWelcomePagesTest extends AndroidBaseTest {
         assertTrue(confirmPasscode.isConfirmPassCodePageLoaded(), "Verify if confirm passcode page is displayed");
         HomePage homePage = confirmPasscode.enterPasscodeInConfirmPasscodePage(TestDataReader.readData("passcode"), Target.ANDROID);
 
+        homePage.clickOnNextButtonForInjiTour();
         assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
         SettingsPage settingsPage = homePage.clickOnSettingIcon();
 
         assertTrue(settingsPage.isSettingPageLoaded(), "Verify if setting page is displayed");
         settingsPage.clickOnInjiTourGuide();
 
-        assertTrue(welcomePage.isWelcomePageLoaded(), "Verify if welcome page is loaded");
-        assertEquals(welcomePage.getWelcomeDescription(), "Keep your digital credential with you at all times. Inji helps you manage and use them effectively. To get started, add cards to your profile.");
-        welcomePage.clickOnNextButton();
+        assertTrue(homePage.verifyLanguageForHelpAndFrequentlyAskedQuationsHeaderDisplayed("English"), "Verify if help and frequently asked quations header displayed");
+        assertTrue(homePage.verifyLanguageForHelpAndFrequentlyAskedQuationsDescriptionDisplayed("English"), "Verify if help and frequently asked quations description displayed");
+        homePage.clickOnFirstNextButton();
 
-        SecureSharingPage secureSharingPage = new SecureSharingPage(driver);
-        assertEquals(secureSharingPage.verifyLanguageforSecureSharingPageLoaded(), "Secure Sharing");
-        assertEquals(secureSharingPage.getSecureSharingDescription(), "Share your cards securely in a hassle free way and avail various services.");
-        secureSharingPage.clickOnNextButton();
+        assertTrue(homePage.verifyLanguageForDownloadCardHeaderDisplayed("English"), "Verify if download card header text displayed");
+        assertTrue(homePage.verifyLanguageForDownloadCardDescriptionDisplayed("English"), "Verify if download card description displayed");
+        homePage.clickOnSecondNextButton();
 
-        TrustedDigitalWalletPage trustedDigitalWalletPage = new TrustedDigitalWalletPage(driver);
-        assertEquals(trustedDigitalWalletPage.verifyLanguageforTrustedDigitalWalletPageLoaded(), "Trusted Digital Wallet");
-        assertEquals(trustedDigitalWalletPage.getTrustedDigitalWalletDescription(), "Store and carry all your important cards in a single trusted wallet.");
-        trustedDigitalWalletPage.clickOnNextButton();
+        assertTrue(homePage.verifyLanguageForShareCardHeaderDisplayed("English"), "Verify if share card header text displayed");
+        assertTrue(homePage.verifyLanguageForShareCardDescriptionDisplayed("English"), "Verify if share card description displayed");
+        homePage.clickOnThirdNextButton();
 
-        QuickAccessPage quickAccessPage = new QuickAccessPage(driver);
-        assertEquals(quickAccessPage.verifyLanguageforQuickAccessTextPageLoaded(), "Quick Access");
-        assertEquals(quickAccessPage.getQuickAccessDescription(), "Authenticate yourself with ease using the stored digital credential.");
-        quickAccessPage.clickOnNextButton();
+        assertTrue(homePage.verifyLanguageForAccesstoHistoryHeaderDisplayed("English"), "Verify if access to history header text displayed");
+        assertTrue(homePage.verifyLanguageForaccesstoHistoryDescriptionDisplayed("English"), "Verify if access to history description displayed");
+        homePage.clickOnForthNextButton();
 
-        BackupDataTourPage backupDataPage = new BackupDataTourPage(driver);
-        assertEquals(backupDataPage.verifyLanguageforBackupDataPageLoaded(), "Backup & Restore");
-        assertEquals(backupDataPage.getBackupDataPageDescription(), "Protect your data with ease using our Backup & Restore feature. Safely store your VCs against loss or accidents by creating regular backups and recover it effortlessly whenever needed for seamless continuity.");
+        assertTrue(homePage.verifyLanguageForAppSettingsHeaderDisplayed("English"), "Verify if app settings header text displayed");
+        assertTrue(homePage.verifyLanguageForAppSettingsDescriptionDisplayed("English"), "Verify if app settings description displayed");
+        homePage.clickOnFifthNextButton();
+
+        assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
     }
 
     @Test
@@ -109,38 +110,47 @@ public class VerifyWelcomePagesTest extends AndroidBaseTest {
         assertTrue(confirmPasscode.isConfirmPassCodePageLoaded(), "Verify if confirm passcode page is displayed");
         HomePage homePage = confirmPasscode.enterPasscodeInConfirmPasscodePage(TestDataReader.readData("passcode"), Target.ANDROID);
 
+        homePage.clickOnNextButtonForInjiTour();
         assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
         SettingsPage settingsPage = homePage.clickOnSettingIcon();
 
         assertTrue(settingsPage.isSettingPageLoaded(), "Verify if setting page is displayed");
         settingsPage.clickOnInjiTourGuide();
 
-        assertTrue(welcomePage.isWelcomePageLoaded(), "Verify if welcome page is loaded");
-        assertEquals(welcomePage.getWelcomeDescription(), "Keep your digital credential with you at all times. Inji helps you manage and use them effectively. To get started, add cards to your profile.");
-        welcomePage.clickOnNextButton();
+        assertTrue(homePage.verifyLanguageForHelpAndFrequentlyAskedQuationsHeaderDisplayed("English"), "Verify if help and frequently asked quations header displayed");
+        assertTrue(homePage.verifyLanguageForHelpAndFrequentlyAskedQuationsDescriptionDisplayed("English"), "Verify if help and frequently asked quations description displayed");
+        homePage.clickOnFirstNextButton();
 
-        SecureSharingPage secureSharingPage = new SecureSharingPage(driver);
-        assertEquals(secureSharingPage.verifyLanguageforSecureSharingPageLoaded(), "Secure Sharing");
-        assertEquals(secureSharingPage.getSecureSharingDescription(), "Share your cards securely in a hassle free way and avail various services.");
-        secureSharingPage.clickOnNextButton();
+        assertTrue(homePage.verifyLanguageForDownloadCardHeaderDisplayed("English"), "Verify if download card header text displayed");
+        assertTrue(homePage.verifyLanguageForDownloadCardDescriptionDisplayed("English"), "Verify if download card description displayed");
+        homePage.clickOnSecondNextButton();
 
-        TrustedDigitalWalletPage trustedDigitalWalletPage = new TrustedDigitalWalletPage(driver);
-        assertEquals(trustedDigitalWalletPage.verifyLanguageforTrustedDigitalWalletPageLoaded(), "Trusted Digital Wallet");
-        assertEquals(trustedDigitalWalletPage.getTrustedDigitalWalletDescription(), "Store and carry all your important cards in a single trusted wallet.");
-        trustedDigitalWalletPage.clickOnNextButton();
+        assertTrue(homePage.verifyLanguageForShareCardHeaderDisplayed("English"), "Verify if share card header text displayed");
+        assertTrue(homePage.verifyLanguageForShareCardDescriptionDisplayed("English"), "Verify if share card description displayed");
+        homePage.clickOnThirdNextButton();
 
-        QuickAccessPage quickAccessPage = new QuickAccessPage(driver);
-        assertEquals(quickAccessPage.verifyLanguageforQuickAccessTextPageLoaded(), "Quick Access");
-        assertEquals(quickAccessPage.getQuickAccessDescription(), "Authenticate yourself with ease using the stored digital credential.");
-        quickAccessPage.clickOnNextButton();
+        assertTrue(homePage.verifyLanguageForAccesstoHistoryHeaderDisplayed("English"), "Verify if access to history header text displayed");
+        assertTrue(homePage.verifyLanguageForaccesstoHistoryDescriptionDisplayed("English"), "Verify if access to history description displayed");
+        homePage.clickOnForthNextButton();
 
-        BackupDataTourPage backupDataPage = new BackupDataTourPage(driver);
-        assertEquals(backupDataPage.verifyLanguageforBackupDataPageLoaded(), "Backup & Restore");
-        assertEquals(backupDataPage.getBackupDataPageDescription(), "Protect your data with ease using our Backup & Restore feature. Safely store your VCs against loss or accidents by creating regular backups and recover it effortlessly whenever needed for seamless continuity.");
+        assertTrue(homePage.verifyLanguageForAppSettingsHeaderDisplayed("English"), "Verify if app settings header text displayed");
+        assertTrue(homePage.verifyLanguageForAppSettingsDescriptionDisplayed("English"), "Verify if app settings description displayed");
+        homePage.clickOnFifthPreviousButton();
 
-        backupDataPage.clickOnGoBack();
-        homePage.clickOnHomeButton();
-        assertEquals(homePage.verifyLanguageForNoVCDownloadedPageLoaded(), "Bring your digital identity");
+        assertTrue(homePage.verifyLanguageForAccesstoHistoryHeaderDisplayed("English"), "Verify if access to history header text displayed");
+        assertTrue(homePage.verifyLanguageForaccesstoHistoryDescriptionDisplayed("English"), "Verify if access to history description displayed");
+        homePage.clickOnForthPreviousButton();
+
+        assertTrue(homePage.verifyLanguageForShareCardHeaderDisplayed("English"), "Verify if share card header text displayed");
+        assertTrue(homePage.verifyLanguageForShareCardDescriptionDisplayed("English"), "Verify if share card description displayed");
+        homePage.clickOnThirdPreviousButton();
+
+        assertTrue(homePage.verifyLanguageForDownloadCardHeaderDisplayed("English"), "Verify if download card header text displayed");
+        assertTrue(homePage.verifyLanguageForDownloadCardDescriptionDisplayed("English"), "Verify if download card description displayed");
+        homePage.clickOnSecondPreviousButton();
+
+        assertTrue(homePage.verifyLanguageForHelpAndFrequentlyAskedQuationsHeaderDisplayed("English"), "Verify if help and frequently asked quations header displayed");
+        assertTrue(homePage.verifyLanguageForHelpAndFrequentlyAskedQuationsDescriptionDisplayed("English"), "Verify if help and frequently asked quations description displayed");
     }
 
     @Test
@@ -162,17 +172,17 @@ public class VerifyWelcomePagesTest extends AndroidBaseTest {
         assertTrue(confirmPasscode.isConfirmPassCodePageLoaded(), "Verify if confirm passcode page is displayed");
         HomePage homePage = confirmPasscode.enterPasscodeInConfirmPasscodePage(TestDataReader.readData("passcode"), Target.ANDROID);
 
+        homePage.clickOnNextButtonForInjiTour();
         assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
         SettingsPage settingsPage = homePage.clickOnSettingIcon();
 
         assertTrue(settingsPage.isSettingPageLoaded(), "Verify if setting page is displayed");
         settingsPage.clickOnInjiTourGuide();
 
-        assertTrue(welcomePage.isWelcomePageLoaded(), "Verify if welcome page is loaded");
-        assertEquals(welcomePage.getWelcomeDescription(), "Keep your digital credential with you at all times. Inji helps you manage and use them effectively. To get started, add cards to your profile.");
+        assertTrue(homePage.verifyLanguageForHelpAndFrequentlyAskedQuationsHeaderDisplayed("English"), "Verify if help and frequently asked quations header displayed");
+        assertTrue(homePage.verifyLanguageForHelpAndFrequentlyAskedQuationsDescriptionDisplayed("English"), "Verify if help and frequently asked quations description displayed");
 
-        welcomePage.clickOnBackButton();
-        homePage.clickOnHomeButton();
+        IosUtil.scrollToElement(driver,58,712,160,129);
         assertEquals(homePage.verifyLanguageForNoVCDownloadedPageLoaded(), "Bring your digital identity");
     }
 }
