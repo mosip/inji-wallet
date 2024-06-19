@@ -18,7 +18,7 @@ upload_apk_and_get_url() {
         response=$(curl -u "$username:$access_key" \
             -X POST "https://api-cloud.browserstack.com/app-automate/upload" \
             -F "file=@$apk_path")
-        # Add sleep for 5 seconds to allow the response to be processed
+        # Add sleep for 60 seconds to allow the response to be processed
         sleep 60
         app_url=$(echo "$response" | jq -r '.app_url')
         if [[ ! -z "$app_url" ]]; then
@@ -42,7 +42,7 @@ upload_ipa_and_get_url() {
         response=$(curl -u "$username:$access_key" \
             -X POST "https://api-cloud.browserstack.com/app-automate/upload" \
             -F "file=@$ipa_path")
-        # Add sleep for 5 seconds to allow the response to be processed
+        # Add sleep for 60 seconds to allow the response to be processed
         sleep 60
 
         app_url=$(echo "$response" | jq -r '.app_url')
@@ -56,6 +56,24 @@ upload_ipa_and_get_url() {
     fi
 }
 
+# Function to capitalize the first letter of a string
+capitalize() {
+    local string="$1"
+    echo "$(tr '[:lower:]' '[:upper:]' <<< ${string:0:1})${string:1}"
+}
+
+# Function to update config files using sed
+update_config() {
+    local config_file="$1"
+    local app_url="$2"
+    local username="$3"
+    local access_key="$4"
+
+    sed -i "" "s|app:.*|app: $app_url|" "$config_file"
+    sed -i "" "s|userName:.*|userName: $username|" "$config_file"
+    sed -i "" "s|accessKey:.*|accessKey: $access_key|" "$config_file"
+}
+
 # Function to execute Android tests
 execute_android_tests() {
     local app_url="$1"
@@ -66,13 +84,11 @@ execute_android_tests() {
     cd injitest
 
     # Update androidConfig.yml with the app_url obtained from BrowserStack
-    sed -i "s|app:.*|app: $app_url|" androidConfig.yml
-    sed -i "s|userName:.*|userName: $username|" androidConfig.yml
-    sed -i "s|accessKey:.*|accessKey: $access_key|" androidConfig.yml
-
+    update_config "androidConfig.yml" "$app_url" "$username" "$access_key"
 
     # Run UI tests using Maven with the updated androidConfig.yml file and TestNG XML file based on the test type
-    mvn clean test -DtestngXmlFile="android${test_type^}.xml" -Dbrowserstack.config="androidConfig.yml"
+    test_type_capitalized=$(capitalize "$test_type")
+    mvn clean test -DtestngXmlFile="android${test_type_capitalized}.xml" -Dbrowserstack.config="androidConfig.yml"
 }
 
 # Function to execute iOS tests
@@ -84,12 +100,11 @@ execute_ios_tests() {
 
     cd injitest
     # Update iosConfig.yml with the app_url obtained from BrowserStack
-    sed -i "s|app:.*|app: $app_url|" iosConfig.yml
-    sed -i "s|userName:.*|userName: $username|" iosConfig.yml
-    sed -i "s|accessKey:.*|accessKey: $access_key|" iosConfig.yml
+    update_config "iosConfig.yml" "$app_url" "$username" "$access_key"
 
     # Run UI tests using Maven with the updated iosConfig.yml file and TestNG XML file based on the test type
-    mvn clean test -DtestngXmlFile="ios${test_type^}.xml" -Dbrowserstack.config="iosConfig.yml"
+    test_type_capitalized=$(capitalize "$test_type")
+    mvn clean test -DtestngXmlFile="ios${test_type_capitalized}.xml" -Dbrowserstack.config="iosConfig.yml"
 }
 
 # Check if the correct number of arguments are passed
@@ -97,7 +112,6 @@ if [ "$#" -ne 4 ]; then
     echo "Expected arguments: $@"
     handle_error "Usage: $0 <username> <access_key> <test_type> <platform>"
 fi
-
 
 # Assigning parameters to variables
 username=$1
