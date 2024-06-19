@@ -840,7 +840,8 @@
     "driveSettings": "Mga Setting ng Google Drive",
     "successBanner": "Ang iyong backup ay matagumpay!",
     "backupFailed": "Nabigo ang pag-backup",
-    "ok": "OK"
+    "ok": "OK",
+    "help": "Tulong?"
   },
   "WelcomeScreen": {
     "title": "Open Source Identity Solution",
