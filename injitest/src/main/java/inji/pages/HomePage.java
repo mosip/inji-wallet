@@ -755,7 +755,6 @@ public class HomePage extends BasePage {
     }
 
     public void clickOnNextButtonForInjiTour() {
-
         if(isElementDisplayed(firstNextButton)) {
             clickOnElement(firstNextButton);
             clickOnElement(secondNextButton);

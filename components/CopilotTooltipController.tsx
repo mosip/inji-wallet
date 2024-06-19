@@ -8,6 +8,7 @@ import {
   selectIsOnboarding,
 } from '../machines/auth';
 import {useSelector} from '@xstate/react';
+import {copilotTestID} from '../shared/constants';
 
 export const UseCopilotTooltip = () => {
   const {
@@ -37,6 +38,10 @@ export const UseCopilotTooltip = () => {
   const CURRENT_STEP = currentStep?.order;
   const currentStepTitle = currentStep?.name;
   const currentStepDescription = currentStep?.text;
+  const titleTestID = `${copilotTestID[CURRENT_STEP?.toString()]}Title`;
+  const descriptionTestID = `${
+    copilotTestID[CURRENT_STEP?.toString()]
+  }Description`;
 
   const stepCount =
     CURRENT_STEP === COPILOT_FINAL_STEP && isInitialDownloading
@@ -60,6 +65,8 @@ export const UseCopilotTooltip = () => {
     stepCount,
     isOnboarding,
     isInitialDownloading,
+    titleTestID,
+    descriptionTestID,
     INITIAL_DOWNLOAD_DONE,
     ONBOARDING_DONE,
     SET_TOUR_GUIDE,
