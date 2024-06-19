@@ -30,7 +30,6 @@ export const Protocols = {
 
 export const Issuers = {
   MosipOtp: '',
-  Sunbird: 'Sunbird',
   Mosip: 'Mosip',
 };
 
@@ -47,7 +46,7 @@ export function getVcVerificationDetails(
   return {
     statusType: statusType,
     vcType: idType,
-    vcNumber: vcMetadata.id,
+    vcNumber: vcMetadata.displayId,
   };
 }
 

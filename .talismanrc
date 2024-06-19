@@ -40,7 +40,7 @@ fileignoreconfig:
   - filename: shared/openId4VCI/Utils.ts
     checksum: ee4db1768be8d51fac0eb876a7b16fd2ab1806abcc711f01056f672003d11f31
   - filename: shared/cryptoutil/cryptoUtil.ts
-    checksum: 2efef1baca1eee0da60420c8d966a6d58589bc3ac74169ab1cdc19423b630dba
+    checksum: a8edd1047e33bfc9e37b73945b8edcd294b8e29baf380f86cb0f647b355c8e5a
   - filename: shared/telemetry/TelemetryConstants.js
     checksum: fd8dc3a69cdef68855dc5f0531d8e634bfa2621bb4dc22f85b8247512a349c4c
   - filename: shared/telemetry/TelemetryUtils.js
