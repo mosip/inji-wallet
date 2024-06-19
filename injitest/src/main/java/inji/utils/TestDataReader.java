@@ -83,7 +83,7 @@ public class TestDataReader {
             case "idTypeSunbird":
                 return "Health Insurance";
             case "idTypeSunbirdHindi":
-                return "बीमा कार्ड";
+                return "Health Insurance";
             case "phoneNumberSunbird":
                 return "8220255752";
             case "dateOfBirthSunbird":
