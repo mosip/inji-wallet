@@ -203,7 +203,7 @@ public class DetailedVcViewPage extends BasePage{
 
     public void clickOnMoreOptionsInDetails() {
         try {
-            Thread.sleep(1000);
+            Thread.sleep(2000);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }

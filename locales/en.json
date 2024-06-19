@@ -889,7 +889,7 @@
       "allowAccess": "Allow access to the camera"
     },
     "errors": {
-      "genericError": "Something is wrong. Please try again later!"
+      "genericError": "We're sorry! Due to technical error, we are unable to serve your request now. Please try again later!"
     },
     "clipboard": {
       "copy": "Copy",

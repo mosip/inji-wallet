@@ -121,7 +121,7 @@ export const bytesToMB = (bytes: number): string => {
   }
 
   const megabytes = bytes / BYTES_IN_MEGABYTE;
-  return Number(megabytes).toFixed(2);
+  return Number(megabytes).toFixed(3);
 };
 
 export const getAccountType = () => (isAndroid() ? GMAIL : APPLE);

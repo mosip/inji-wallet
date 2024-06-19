@@ -43,7 +43,6 @@ platforms:
     - platformName: ios
       deviceName: iPhone 11
       platformVersion: 14
-    -
 # =======================
 # Parallels per Platform
 # =======================
