@@ -36,7 +36,7 @@ upload_ipa_and_get_url() {
     local username="$1"
     local access_key="$2"
     local project_path=$(pwd)
-    local ipa_path="$project_path/ios/fastlane/Inji_artifacts/Inji.ipa"
+    local ipa_path="$project_path/ios/Inji.ipa"
     
     if [[ -f "$ipa_path" ]]; then
         response=$(curl -u "$username:$access_key" \
