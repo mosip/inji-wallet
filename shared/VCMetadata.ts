@@ -1,5 +1,10 @@
-import {VC, VcIdType} from '../machines/VerifiableCredential/VCMetaMachine/vc';
-import {Issuers, Protocols} from './openId4VCI/Utils';
+import {
+  Credential,
+  VC,
+  VcIdType,
+  VerifiableCredential,
+} from '../machines/VerifiableCredential/VCMetaMachine/vc';
+import {Protocols} from './openId4VCI/Utils';
 import {getMosipIdentifier} from './commonUtil';
 
 const VC_KEY_PREFIX = 'VC';
@@ -14,6 +19,8 @@ export class VCMetadata {
   issuer?: string = '';
   protocol?: string = '';
   timestamp?: string = '';
+  isVerified: boolean = false;
+  displayId: string = '';
 
   constructor({
     idType = '',
@@ -23,6 +30,8 @@ export class VCMetadata {
     issuer = '',
     protocol = '',
     timestamp = '',
+    isVerified = false,
+    displayId = '',
   } = {}) {
     this.idType = idType;
     this.requestId = requestId;
@@ -31,6 +40,8 @@ export class VCMetadata {
     this.protocol = protocol;
     this.issuer = issuer;
     this.timestamp = timestamp;
+    this.isVerified = isVerified;
+    this.displayId = displayId;
   }
 
   //TODO: Remove any typing and use appropriate typing
@@ -43,6 +54,12 @@ export class VCMetadata {
       protocol: vc.protocol,
       issuer: vc.issuer,
       timestamp: vc.vcMetadata ? vc.vcMetadata.timestamp : vc.timestamp,
+      isVerified: vc.isVerified,
+      displayId: vc.displayId
+        ? vc.displayId
+        : vc.vcMetadata
+        ? vc.vcMetadata.displayId
+        : getDisplayId(vc.verifiableCredential),
     });
   }
 
@@ -83,27 +100,31 @@ export function parseMetadatas(metadataStrings: object[]) {
 }
 
 export const getVCMetadata = (context: object) => {
-  const [issuer, protocol, requestId] =
+  const [issuer, protocol, credentialId] =
     context.credentialWrapper?.identifier.split(':');
-  // TODO(temp-solution): This is a temporary solution and will not work for every issuer
-  // This should be re-written in a more standards compliant way later.
-  if (issuer === Issuers.Sunbird) {
-    return VCMetadata.fromVC({
-      requestId: requestId ? requestId : null,
-      issuer: issuer,
-      protocol: protocol,
-      id: context.verifiableCredential?.credential.credentialSubject
-        .policyNumber,
-      timestamp: context.timestamp ?? '',
-    });
-  }
+
   return VCMetadata.fromVC({
-    requestId: requestId ? requestId : null,
+    requestId: credentialId ?? null,
     issuer: issuer,
     protocol: protocol,
-    id: getMosipIdentifier(
-      context.verifiableCredential?.credential.credentialSubject,
-    ),
+    id: `${credentialId} + '_' + ${issuer}`,
     timestamp: context.timestamp ?? '',
+    isVerified: context.vcMetadata.isVerified ?? false,
+    displayId: getDisplayId(context.verifiableCredential),
   });
+};
+
+const getDisplayId = (
+  verifiableCredential: VerifiableCredential | Credential,
+) => {
+  if (verifiableCredential?.credential) {
+    return (
+      verifiableCredential.credential?.credentialSubject?.policyNumber ||
+      getMosipIdentifier(verifiableCredential.credential.credentialSubject)
+    );
+  }
+  return (
+    verifiableCredential?.credentialSubject?.policyNumber ||
+    getMosipIdentifier(verifiableCredential.credentialSubject)
+  );
 };

@@ -11,16 +11,16 @@ public class AddNewCardPage extends BasePage{
     @iOSXCUITFindBy(accessibility = "title")
     private WebElement addNewCardHeader;
 
-    @AndroidFindBy(accessibility = "issuerHeading-Mosip")
-    @iOSXCUITFindBy(accessibility = "issuerHeading-Mosip")
+    @AndroidFindBy(accessibility = "issuerHeading-MosipOtp")
+    @iOSXCUITFindBy(accessibility = "issuerHeading-MosipOtp")
     private WebElement downloadViaUin;
-    
+
     @AndroidFindBy(accessibility = "goBack")
     @iOSXCUITFindBy(accessibility = "goBack")
     private WebElement backButton;
-    
-    @AndroidFindBy(accessibility = "issuer-ESignet")
-    @iOSXCUITFindBy(accessibility = "issuer-ESignet")
+
+    @AndroidFindBy(accessibility = "issuerHeading-Mosip")
+    @iOSXCUITFindBy(accessibility = "issuerHeading-Mosip")
     private WebElement downloadViaEsignet;
 
     @iOSXCUITFindBy(accessibility = "Continue")
@@ -32,15 +32,15 @@ public class AddNewCardPage extends BasePage{
     @AndroidFindBy(accessibility = "issuersScreenDescription")
     @iOSXCUITFindBy(accessibility = "issuersScreenDescription")
     private WebElement addNewCardGuideMessage;
-    
+
+    @AndroidFindBy(accessibility = "issuerDescription-MosipOtp")
+    @iOSXCUITFindBy(accessibility = "issuerDescription-MosipOtp")
+    private WebElement issuerDescriptionMosip;
+
     @AndroidFindBy(accessibility = "issuerDescription-Mosip")
     @iOSXCUITFindBy(accessibility = "issuerDescription-Mosip")
-    private WebElement issuerDescriptionMosip;
-    
-    @AndroidFindBy(accessibility = "issuerDescription-ESignet")
-    @iOSXCUITFindBy(accessibility = "issuerDescription-ESignet")
     private WebElement issuerDescriptionEsignet;
-    
+
     @AndroidFindBy(className = "android.widget.EditText")
     @iOSXCUITFindBy(accessibility = "issuerSearchBar")
     private WebElement issuerSearchBar;
@@ -48,19 +48,23 @@ public class AddNewCardPage extends BasePage{
     @AndroidFindBy(accessibility = "issuerHeading-Sunbird")
     @iOSXCUITFindBy(accessibility = "issuerHeading-Sunbird")
     private WebElement downloadViaSunbird;
-    
+
+    @AndroidFindBy(accessibility = "credentialTypeHeading-InsuranceCredential")
+    @iOSXCUITFindBy(accessibility = "credentialTypeHeading-InsuranceCredential")
+    private WebElement credentialTypeHeadingInsuranceCredential;
+
     public AddNewCardPage(AppiumDriver driver) {
         super(driver);
     }
-    
+
     public String  verifyLanguageForAddNewCardGuideMessage(){
-    	 return getTextFromLocator(addNewCardGuideMessage);
+        return getTextFromLocator(addNewCardGuideMessage);
     }
-    
+
     public boolean isAddNewCardPageGuideMessageForEsignetDisplayed() {
         return this.isElementDisplayed(addNewCardGuideMessage);
     }
-    
+
     public boolean isAddNewCardPageLoaded() {
         return this.isElementDisplayed(addNewCardHeader);
     }
@@ -69,35 +73,35 @@ public class AddNewCardPage extends BasePage{
         clickOnElement(downloadViaUin);
         return new RetrieveIdPage(driver);
     }
-    
+
     public void clickOnBack() {
-    	clickOnElement(backButton);
+        clickOnElement(backButton);
     }
-    
+
     public boolean isAddNewCardGuideMessageDisplayed() {
         return this.isElementDisplayed(addNewCardGuideMessage);
     }
-    
+
     public boolean isDownloadViaUinDisplayed() {
         return this.isElementDisplayed(downloadViaUin);
     }
-    
+
     public boolean isDownloadViaUinDisplayedInHindi() {
         return this.isElementDisplayed(downloadViaUin);
     }
-    
+
     public boolean isDownloadViaEsignetDisplayed() {
         return this.isElementDisplayed(downloadViaEsignet);
     }
-    
+
     public boolean isDownloadViaEsignetDisplayedInHindi() {
         return this.isElementDisplayed(downloadViaEsignet);
     }
-    
+
     public boolean isDownloadViaEsignetDisplayedinFillpino() {
         return this.isElementDisplayed(downloadViaEsignet);
     }
-    
+
     public EsignetLoginPage clickOnDownloadViaEsignet(){
         clickOnElement(downloadViaEsignet);
         return new EsignetLoginPage(driver);
@@ -110,40 +114,40 @@ public class AddNewCardPage extends BasePage{
     public void clickOnCancelButtonInSigninPopupIos(){
         clickOnElement(cancelButton);
     }
-    
+
     public void isBackButtonDisplayed() {
         backButton.isDisplayed();
     }
-    
+
     public boolean isAddNewCardGuideMessageDisplayedInFillopin() {
         return this.isElementDisplayed(addNewCardGuideMessage);
     }
-    
+
     public boolean isAddNewCardGuideMessageDisplayedInHindi() {
         return this.isElementDisplayed(addNewCardGuideMessage);
     }
     public boolean isIssuerDescriptionMosipDisplayed() {
         return this.isElementDisplayed(issuerDescriptionMosip);
     }
-    
+
     public boolean isIssuerDescriptionEsignetDisplayed() {
         return this.isElementDisplayed(issuerDescriptionEsignet);
     }
-    
+
     public boolean isIssuerSearchBarDisplayed() {
-    	return this.isElementDisplayed(issuerSearchBar);
+        return this.isElementDisplayed(issuerSearchBar);
     }
-    
+
     public boolean isIssuerSearchBarDisplayedInFilipino() {
-    	return this.isElementDisplayed(issuerSearchBar);
+        return this.isElementDisplayed(issuerSearchBar);
     }
-    
+
     public boolean isIssuerSearchBarDisplayedInHindi() {
-    	return this.isElementDisplayed(issuerSearchBar);
+        return this.isElementDisplayed(issuerSearchBar);
     }
-    
+
     public void sendTextInIssuerSearchBar(String text) {
-    	clearTextBoxAndSendKeys(issuerSearchBar, text);
+        clearTextBoxAndSendKeys(issuerSearchBar, text);
     }
 
     public boolean isDownloadViaSunbirdDisplayed() {
@@ -152,6 +156,11 @@ public class AddNewCardPage extends BasePage{
     public SunbirdLoginPage clickOnDownloadViaSunbird(){
         clickOnElement(downloadViaSunbird);
         return new SunbirdLoginPage(driver);
+    }
+    public void clickOnCredentialTypeHeadingInsuranceCredential(){
+        if(isElementDisplayed(credentialTypeHeadingInsuranceCredential)) {
+            clickOnElement(credentialTypeHeadingInsuranceCredential);
+        }
     }
 }
 

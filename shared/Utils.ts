@@ -1,5 +1,6 @@
 import {VCMetadata} from './VCMetadata';
 import {groupBy} from './javascript';
+import {Issuers} from './openId4VCI/Utils';
 
 export const getVCsOrderedByPinStatus = (vcMetadatas: VCMetadata[]) => {
   const [pinned, unpinned] = groupBy(
@@ -25,3 +26,18 @@ export interface CommunicationDetails {
   phoneNumber: string;
   emailId: string;
 }
+
+export const isMosipVC = (issuer: string) => {
+  return issuer === Issuers.Mosip || issuer === Issuers.MosipOtp;
+};
+
+export const parseJSON = (input: any) => {
+  let result = null;
+  try {
+    result = JSON.parse(input);
+  } catch (e) {
+    console.warn('Error occurred while parsing JSON ', e);
+    result = JSON.parse(JSON.stringify(input));
+  }
+  return result;
+};

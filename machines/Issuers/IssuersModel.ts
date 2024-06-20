@@ -20,7 +20,7 @@ export const IssuersModel = createModel(
     loadingReason: 'displayIssuers' as string,
     verifiableCredential: null as VerifiableCredential | null,
     selectedCredentialType: {} as CredentialTypes,
-    credentialTypes: [] as CredentialTypes[],
+    supportedCredentialTypes: [] as CredentialTypes[],
     credentialWrapper: {} as CredentialWrapper,
     serviceRefs: {} as AppServices,
     verificationErrorMessage: '',

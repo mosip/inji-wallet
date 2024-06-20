@@ -9,7 +9,6 @@ import {useInterpret} from '@xstate/react';
 import {GlobalContext} from '../../shared/GlobalContext';
 import {useFocusEffect} from '@react-navigation/native';
 import {VcItemContainer} from '../../components/VC/VcItemContainer';
-import {VCMetadata} from '../../shared/VCMetadata';
 import {createVCItemMachine} from '../../machines/VerifiableCredential/VCItemMachine/VCItemMachine';
 import {
   getImpressionEventData,
@@ -18,12 +17,13 @@ import {
 import {TelemetryConstants} from '../../shared/telemetry/TelemetryConstants';
 import {
   getVCsOrderedByPinStatus,
+  isMosipVC,
   VCItemContainerFlowType,
 } from '../../shared/Utils';
-import {Issuers} from '../../shared/openId4VCI/Utils';
 import {FaceVerificationAlertOverlay} from './FaceVerificationAlertOverlay';
 import {Error} from '../../components/ui/Error';
 import {SvgImage} from '../../components/ui/svg';
+import {LIVENESS_CHECK} from '../../shared/constants';
 
 export const SendVcScreen: React.FC = () => {
   const {t} = useTranslation('SendVcScreen');
@@ -102,9 +102,7 @@ export const SendVcScreen: React.FC = () => {
         <Column
           style={Theme.SendVcScreenStyles.shareOptionButtonsContainer}
           backgroundColor={Theme.Colors.whiteBackgroundColor}>
-          {[Issuers.Mosip, Issuers.ESignet].indexOf(
-            controller.verifiableCredentialData.issuer,
-          ) !== -1 && (
+          {isMosipVC(controller.verifiableCredentialData.issuer) && (
             <Button
               type="gradient"
               title={t('acceptRequestAndVerify')}
@@ -138,31 +136,16 @@ export const SendVcScreen: React.FC = () => {
         onCancel={controller.CANCEL}
         onFaceValid={controller.FACE_VALID}
         onFaceInvalid={controller.FACE_INVALID}
+        isInvalidIdentity={controller.isInvalidIdentity}
+        onNavigateHome={controller.GO_TO_HOME}
+        onRetryVerification={controller.RETRY_VERIFICATION}
+        isLivenessEnabled={LIVENESS_CHECK}
       />
 
       <FaceVerificationAlertOverlay
         isVisible={controller.isFaceVerificationConsent}
         onConfirm={controller.FACE_VERIFICATION_CONSENT}
         close={controller.DISMISS}
-      />
-
-      <Error
-        isModal
-        alignActionsOnEnd
-        showClose={false}
-        isVisible={controller.isInvalidIdentity}
-        title={t('ScanScreen:postFaceCapture.captureFailureTitle')}
-        message={t('ScanScreen:postFaceCapture.captureFailureMessage')}
-        image={SvgImage.PermissionDenied()}
-        primaryButtonTestID={'retry'}
-        primaryButtonText={t('ScanScreen:status.retry')}
-        primaryButtonEvent={controller.RETRY_VERIFICATION}
-        textButtonTestID={'home'}
-        textButtonText={t('ScanScreen:status.accepted.home')}
-        textButtonEvent={controller.GO_TO_HOME}
-        customImageStyles={{paddingBottom: 0, marginBottom: -6}}
-        customStyles={{marginTop: '20%'}}
-        testID={'shareWithSelfieError'}
       />
     </React.Fragment>
   );

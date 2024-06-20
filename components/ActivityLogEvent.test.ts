@@ -23,7 +23,7 @@ describe('getActionText', () => {
     mockIl18nfn = jest.fn();
     activityLog = new ActivityLog({
       id: 'mockId',
-      idType: 'mockIDtype',
+      idType: ['mockIDtype'] as string[],
       _vcKey: 'mock_vc_key',
       type: 'mockType',
       timestamp: 1234,
@@ -38,18 +38,17 @@ describe('getActionText', () => {
         return 'National ID';
       }
     });
-    getActionText(activityLog, mockIl18nfn);
-    expect(mockIl18nfn).toHaveBeenCalledWith(`VcDetails:mockIDtype`);
+    getActionText(activityLog, mockIl18nfn, {});
     expect(mockIl18nfn).toHaveBeenCalledWith('mockType', {
-      idType: 'National ID',
+      idType: 'nationalCard',
       id: 'mockId',
     });
-    expect(mockIl18nfn).toHaveBeenCalledTimes(2);
+    expect(mockIl18nfn).toHaveBeenCalledTimes(1);
     // TODO: assert the returned string
   });
   it('should not fetch id type from translation file mock', () => {
     activityLog.idType = undefined;
-    getActionText(activityLog, mockIl18nfn);
+    getActionText(activityLog, mockIl18nfn, {});
     expect(mockIl18nfn).toHaveBeenCalledWith('mockType', {
       idType: '',
       id: 'mockId',

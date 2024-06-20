@@ -8,6 +8,7 @@ import {Modal} from '../../components/ui/Modal';
 import {ViewVcModal} from '../Home/ViewVcModal';
 import {VcItemContainer} from '../../components/VC/VcItemContainer';
 import {VCItemContainerFlowType} from '../../shared/Utils';
+import {CopilotProvider} from 'react-native-copilot';
 
 export const ReceivedCardsModal: React.FC<ReceivedCardsProps> = ({
   isVisible,
@@ -32,15 +33,18 @@ export const ReceivedCardsModal: React.FC<ReceivedCardsProps> = ({
             onRefresh={controller.REFRESH}
           />
         }>
-        {controller.receivedVcsMetadata.map(vcMetadata => (
-          <VcItemContainer
-            key={vcMetadata.getVcKey()}
-            vcMetadata={vcMetadata}
-            margin="0 2 8 2"
-            flow={VCItemContainerFlowType.VC_SHARE}
-            onPress={controller.VIEW_VC}
-          />
-        ))}
+        <CopilotProvider>
+          {controller.receivedVcsMetadata.map(vcMetadata => (
+            <VcItemContainer
+              key={vcMetadata.getVcKey()}
+              vcMetadata={vcMetadata}
+              margin="0 2 8 2"
+              flow={VCItemContainerFlowType.VC_SHARE}
+              onPress={controller.VIEW_VC}
+            />
+          ))}
+        </CopilotProvider>
+
         {controller.receivedVcsMetadata.length === 0 && (
           <React.Fragment>
             <Centered fill>

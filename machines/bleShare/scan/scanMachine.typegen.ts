@@ -40,13 +40,78 @@ export interface Typegen0 {
     startConnection: 'done.invoke.scan.connecting:invocation[0]';
   };
   missingImplementations: {
-    actions: never;
+    actions:
+      | 'clearUri'
+      | 'enableLocation'
+      | 'getFaceAuthConsent'
+      | 'loadMetaDataToMemory'
+      | 'loadVCDataToMemory'
+      | 'logFailedVerification'
+      | 'logShared'
+      | 'openAppPermission'
+      | 'openBluetoothSettings'
+      | 'refreshVCs'
+      | 'registerLoggers'
+      | 'removeLoggers'
+      | 'resetFaceCaptureBannerStatus'
+      | 'resetFlowType'
+      | 'resetSelectedVc'
+      | 'resetShowQuickShareSuccessBanner'
+      | 'sendBLEConnectionErrorEvent'
+      | 'sendScanData'
+      | 'sendVCShareFlowCancelEndEvent'
+      | 'sendVCShareFlowTimeoutEndEvent'
+      | 'sendVcShareSuccessEvent'
+      | 'sendVcSharingStartEvent'
+      | 'setBleError'
+      | 'setChildRef'
+      | 'setFlowType'
+      | 'setLinkCode'
+      | 'setQuickShareData'
+      | 'setReadyForBluetoothStateCheck'
+      | 'setReceiverInfo'
+      | 'setSelectedVc'
+      | 'setSenderInfo'
+      | 'setShareLogTypeUnverified'
+      | 'setShareLogTypeVerified'
+      | 'setShowFaceAuthConsent'
+      | 'setShowQuickShareSuccessBanner'
+      | 'setUri'
+      | 'storeLoginItem'
+      | 'storeShowFaceAuthConsent'
+      | 'storingActivityLog'
+      | 'updateFaceCaptureBannerStatus'
+      | 'updateShowFaceAuthConsent';
     delays: never;
-    guards: never;
-    services: never;
+    guards:
+      | 'isFlowTypeMiniViewShare'
+      | 'isFlowTypeMiniViewShareWithSelfie'
+      | 'isFlowTypeSimpleShare'
+      | 'isIOS'
+      | 'isMinimumStorageRequiredForAuditEntryReached'
+      | 'isOpenIdQr'
+      | 'isQrLogin'
+      | 'isQuickShare'
+      | 'showFaceAuthConsentScreen'
+      | 'uptoAndroid11';
+    services:
+      | 'checkBluetoothPermission'
+      | 'checkBluetoothState'
+      | 'checkLocationPermission'
+      | 'checkLocationStatus'
+      | 'checkNearByDevicesPermission'
+      | 'checkStorageAvailability'
+      | 'disconnect'
+      | 'monitorConnection'
+      | 'requestBluetooth'
+      | 'requestNearByDevicesPermission'
+      | 'requestToEnableLocationPermission'
+      | 'sendVc'
+      | 'startConnection';
   };
   eventsCausingActions: {
     clearUri: 'STORE_RESPONSE';
+    enableLocation: 'ALLOWED' | 'LOCATION_REQUEST';
     getFaceAuthConsent:
       | 'DISCONNECT'
       | 'DISMISS'
@@ -62,6 +127,8 @@ export interface Typegen0 {
     removeLoggers:
       | 'DISCONNECT'
       | 'DISMISS'
+      | 'DISMISS_QUICK_SHARE_BANNER'
+      | 'RESET'
       | 'SCREEN_BLUR'
       | 'STORE_RESPONSE'
       | 'xstate.init';
@@ -69,16 +136,20 @@ export interface Typegen0 {
     resetFlowType:
       | 'DISCONNECT'
       | 'DISMISS'
+      | 'DISMISS_QUICK_SHARE_BANNER'
       | 'GOTO_HISTORY'
+      | 'RESET'
       | 'SCREEN_BLUR'
       | 'xstate.init';
-    resetIsQuickShareDone: 'DISMISS';
     resetSelectedVc:
       | 'DISCONNECT'
       | 'DISMISS'
+      | 'DISMISS_QUICK_SHARE_BANNER'
       | 'GOTO_HISTORY'
+      | 'RESET'
       | 'SCREEN_BLUR'
       | 'xstate.init';
+    resetShowQuickShareSuccessBanner: 'DISMISS' | 'DISMISS_QUICK_SHARE_BANNER';
     sendBLEConnectionErrorEvent: 'BLE_ERROR';
     sendScanData: 'SCAN';
     sendVCShareFlowCancelEndEvent: 'CANCEL';
@@ -97,6 +168,7 @@ export interface Typegen0 {
     setShareLogTypeUnverified: 'ACCEPT_REQUEST' | 'CHECK_FLOW_TYPE';
     setShareLogTypeVerified: 'FACE_VALID';
     setShowFaceAuthConsent: 'FACE_VERIFICATION_CONSENT';
+    setShowQuickShareSuccessBanner: 'STORE_RESPONSE';
     setUri: 'SCAN';
     storeLoginItem: 'done.invoke.QrLogin';
     storeShowFaceAuthConsent: 'FACE_VERIFICATION_CONSENT';
@@ -111,14 +183,14 @@ export interface Typegen0 {
   };
   eventsCausingGuards: {
     isFlowTypeMiniViewShare: 'CHECK_FLOW_TYPE';
-    isFlowTypeMiniViewShareWithSelfie: 'CHECK_FLOW_TYPE';
+    isFlowTypeMiniViewShareWithSelfie: 'CHECK_FLOW_TYPE' | 'DISMISS';
     isFlowTypeSimpleShare: 'CANCEL' | 'CHECK_FLOW_TYPE' | 'DISMISS';
     isIOS: 'BLUETOOTH_STATE_DISABLED' | 'START_PERMISSION_CHECK';
     isMinimumStorageRequiredForAuditEntryReached: 'done.invoke.scan.checkStorage:invocation[0]';
     isOpenIdQr: 'SCAN';
     isQrLogin: 'SCAN';
     isQuickShare: 'SCAN';
-    showFaceAuthConsentScreen: 'VERIFY_AND_ACCEPT_REQUEST';
+    showFaceAuthConsentScreen: '' | 'VERIFY_AND_ACCEPT_REQUEST';
     uptoAndroid11: '' | 'START_PERMISSION_CHECK';
   };
   eventsCausingServices: {
@@ -129,8 +201,8 @@ export interface Typegen0 {
       | 'NEARBY_ENABLED'
       | 'START_PERMISSION_CHECK';
     checkBluetoothState: '' | 'APP_ACTIVE';
-    checkLocationPermission: 'APP_ACTIVE' | 'LOCATION_ENABLED';
-    checkLocationStatus: '' | 'LOCATION_REQUEST';
+    checkLocationPermission: 'LOCATION_ENABLED';
+    checkLocationStatus: '' | 'APP_ACTIVE' | 'LOCATION_REQUEST';
     checkNearByDevicesPermission: 'APP_ACTIVE' | 'START_PERMISSION_CHECK';
     checkStorageAvailability: 'RESET' | 'SCREEN_FOCUS' | 'SELECT_VC';
     disconnect: '' | 'DISMISS' | 'LOCATION_ENABLED' | 'RETRY' | 'SCREEN_BLUR';
@@ -158,6 +230,7 @@ export interface Typegen0 {
     | 'checkNearbyDevicesPermission.requesting'
     | 'checkStorage'
     | 'checkingLocationState'
+    | 'checkingLocationState.LocationPermissionRationale'
     | 'checkingLocationState.checkLocationService'
     | 'checkingLocationState.checkingPermissionStatus'
     | 'checkingLocationState.denied'
@@ -185,6 +258,7 @@ export interface Typegen0 {
     | 'reviewing'
     | 'reviewing.accepted'
     | 'reviewing.cancelling'
+    | 'reviewing.checkFaceAuthConsentForMiniView'
     | 'reviewing.disconnect'
     | 'reviewing.faceVerificationConsent'
     | 'reviewing.idle'
@@ -207,6 +281,7 @@ export interface Typegen0 {
         checkBluetoothState?: 'checking' | 'enabled' | 'requesting';
         checkNearbyDevicesPermission?: 'checking' | 'enabled' | 'requesting';
         checkingLocationState?:
+          | 'LocationPermissionRationale'
           | 'checkLocationService'
           | 'checkingPermissionStatus'
           | 'denied'
@@ -218,6 +293,7 @@ export interface Typegen0 {
         reviewing?:
           | 'accepted'
           | 'cancelling'
+          | 'checkFaceAuthConsentForMiniView'
           | 'disconnect'
           | 'faceVerificationConsent'
           | 'idle'

@@ -6,6 +6,7 @@ import inji.pages.*;
 import inji.utils.TestDataReader;
 import org.testng.annotations.Test;
 
+import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
 public class UnlockWithPasscodeTest extends AndroidBaseTest {
@@ -21,6 +22,11 @@ public class UnlockWithPasscodeTest extends AndroidBaseTest {
         AppUnlockMethodPage appUnlockMethodPage = welcomePage.clickOnSkipButton();
 
         assertTrue(appUnlockMethodPage.isAppUnlockMethodPageLoaded(), "Verify if app unlocked page is displayed");
+        assertEquals(appUnlockMethodPage.getDescriptionText(), "To unlock the app securely, you can set up either biometric authentication, such as fingerprint or facial recognition or opt for a 6-digit Passcode for quick access.");
+        assertEquals(appUnlockMethodPage.getPasswordTypeDescriptionText(), "Choose ‘Use Biometrics’ to enable biometric authentication or ‘I’ll Do Later’ to set up a 6-digit passcode.");
+        assertTrue(appUnlockMethodPage.isUseBiometricsButton(), "Verify if Usebiometrics button is displayed");
+
+
         SetPasscode setPasscode = appUnlockMethodPage.clickOnUsePasscode();
 
         assertTrue(setPasscode.isSetPassCodePageLoaded(), "Verify if set passcode page is displayed");
@@ -29,6 +35,7 @@ public class UnlockWithPasscodeTest extends AndroidBaseTest {
         assertTrue(confirmPasscode.isConfirmPassCodePageLoaded(), "Verify if confirm passcode page is displayed");
         HomePage homePage = confirmPasscode.enterPasscodeInConfirmPasscodePage(TestDataReader.readData("passcode"), Target.ANDROID);
 
+        homePage.clickOnNextButtonForInjiTour();
         assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
         SettingsPage settingsPage = homePage.clickOnSettingIcon();
 
@@ -41,6 +48,7 @@ public class UnlockWithPasscodeTest extends AndroidBaseTest {
         assertTrue(enterYourPasscodePage.isEnterYourPasscodePageLoaded(), "Verify if enter your passcode page is displayed");
         enterYourPasscodePage.enterPasscodeOnPasscodePage(TestDataReader.readData("passcode"), Target.ANDROID);
 
+        homePage.clickOnNextButtonForInjiTour();
         assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
 
     }
@@ -64,6 +72,7 @@ public class UnlockWithPasscodeTest extends AndroidBaseTest {
         assertTrue(confirmPasscode.isConfirmPassCodePageLoaded(), "Verify if confirm passcode page is displayed");
         HomePage homePage = confirmPasscode.enterPasscodeInConfirmPasscodePage(TestDataReader.readData("passcode"), Target.ANDROID);
 
+        homePage.clickOnNextButtonForInjiTour();
         assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
         SettingsPage settingsPage = homePage.clickOnSettingIcon();
 

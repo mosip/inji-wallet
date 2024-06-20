@@ -1,10 +1,9 @@
 import {EventFrom, send, sendParent} from 'xstate';
-import {log} from 'xstate/lib/actions';
-import {verifyCredential} from '../../shared/vcjs/verifyCredential';
 import {IssuersModel} from './IssuersModel';
 import {IssuersActions} from './IssuersActions';
 import {IssuersService} from './IssuersService';
 import {IssuersGuards} from './IssuersGuards';
+import {CredentialTypes} from '../VerifiableCredential/VCMetaMachine/vc';
 
 const model = IssuersModel;
 
@@ -55,12 +54,15 @@ export const IssuersMachine = model.createMachine(
               target: 'displayIssuers',
             },
             {
+              description:
+                'error is OIDC_CONFIG_ERROR_PREFIX or REQUEST_TIMEDOUT',
               cond: 'canSelectIssuerAgain',
               actions: 'resetError',
               target: 'selectingIssuer',
             },
             {
-              description: 'not fetched issuers config yet',
+              description:
+                'issuers config is available and downloading credentials is retriable',
               actions: ['setLoadingReasonAsSettingUp', 'resetError'],
               target: 'downloadIssuerConfig',
             },
@@ -104,8 +106,7 @@ export const IssuersMachine = model.createMachine(
           src: 'downloadCredentialTypes',
           onDone: [
             {
-              actions: 'setCredentialTypes',
-              cond: 'isMultipleCredentialsSupported',
+              actions: 'setSupportedCredentialTypes',
               target: 'selectingCredentialType',
             },
             {
@@ -124,10 +125,7 @@ export const IssuersMachine = model.createMachine(
             target: 'displayIssuers',
           },
           SELECTED_CREDENTIAL_TYPE: {
-            actions: [
-              (_, event) => console.log('>>>>> event', event),
-              'setSelectedCredentialType',
-            ],
+            actions: 'setSelectedCredentialType',
             target: 'checkInternet',
           },
         },
@@ -169,7 +167,11 @@ export const IssuersMachine = model.createMachine(
           onError: [
             {
               cond: 'isOIDCflowCancelled',
-              actions: ['resetError', 'resetLoadingReason'],
+              actions: [
+                'resetSelectedCredentialType',
+                'resetError',
+                'resetLoadingReason',
+              ],
               target: 'selectingIssuer',
             },
             {
@@ -282,6 +284,16 @@ export const IssuersMachine = model.createMachine(
               target: '.userCancelledBiometric',
             },
             {
+              cond: 'isGenericError',
+              target: 'selectingIssuer',
+              actions: [
+                'resetSelectedCredentialType',
+                'setError',
+                'resetLoadingReason',
+                'sendDownloadingFailedToVcMeta',
+              ],
+            },
+            {
               actions: ['setError', 'resetLoadingReason'],
               target: 'error',
             },
@@ -290,6 +302,7 @@ export const IssuersMachine = model.createMachine(
         on: {
           CANCEL: {
             target: 'selectingIssuer',
+            actions: 'resetSelectedCredentialType',
           },
         },
         initial: 'idle',
@@ -318,19 +331,22 @@ export const IssuersMachine = model.createMachine(
           src: 'verifyCredential',
           onDone: [
             {
-              actions: ['sendSuccessEndEvent'],
+              actions: ['sendSuccessEndEvent', 'setIsVerified'],
               target: 'storing',
             },
           ],
           onError: [
             {
+              cond: 'isVerificationPendingBecauseOfNetworkIssue',
+              actions: ['resetLoadingReason', 'resetIsVerified'],
+              target: 'storing',
+            },
+            {
               actions: [
-                log('Verification Error.'),
                 'resetLoadingReason',
-                'updateVerificationErrorMessage',
                 'sendErrorEndEvent',
+                'updateVerificationErrorMessage',
               ],
-              //TODO: Move to state according to the required flow when verification of VC fails
               target: 'handleVCVerificationFailure',
             },
           ],
@@ -393,9 +409,11 @@ export interface logoType {
 
 export interface displayType {
   name: string;
-  logo: logoType;
-  language: string;
   locale: string;
+  language: string;
+  logo: logoType;
+  background_color: string;
+  text_color: string;
   title: string;
   description: string;
 }
@@ -406,14 +424,12 @@ export interface issuerType {
   client_id: string;
   '.well-known': string;
   redirect_uri: string;
-  scopes_supported: [string];
   additional_headers: object;
   authorization_endpoint: string;
-  authorization_alias: string;
   token_endpoint: string;
   proxy_token_endpoint: string;
   credential_endpoint: string;
-  credential_type: [string];
   credential_audience: string;
   display: [displayType];
+  credentialTypes: [CredentialTypes];
 }

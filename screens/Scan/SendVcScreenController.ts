@@ -1,7 +1,7 @@
 import {useSelector} from '@xstate/react';
 import {useContext, useState} from 'react';
 import {ActorRefFrom} from 'xstate';
-import {selectShareableVcsMetadata} from '../../machines/VerifiableCredential/VCMetaMachine/VCMetaMachine';
+import {selectShareableVcsMetadata} from '../../machines/VerifiableCredential/VCMetaMachine/VCMetaSelectors';
 import {GlobalContext} from '../../shared/GlobalContext';
 import {
   selectCredential,
@@ -9,23 +9,26 @@ import {
   selectReceiverInfo,
   selectVcName,
   selectVerifiableCredentialData,
-} from '../../machines/bleShare/scan/selectors';
+} from '../../machines/bleShare/scan/scanSelectors';
 import {
   selectIsCancelling,
   selectIsInvalidIdentity,
   selectIsVerifyingIdentity,
 } from '../../machines/bleShare/commonSelectors';
-import {
-  ScanEvents,
-  selectIsFaceVerificationConsent,
-} from '../../machines/bleShare/scan/scanMachine';
+import {ScanEvents} from '../../machines/bleShare/scan/scanMachine';
+import {selectIsFaceVerificationConsent} from '../../machines/bleShare/scan/scanSelectors';
 import {VCShareFlowType} from '../../shared/Utils';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
 import {RootRouteProps} from '../../routes';
 import {BOTTOM_TAB_ROUTES} from '../../routes/routesConstants';
 import {VCItemMachine} from '../../machines/VerifiableCredential/VCItemMachine/VCItemMachine';
+import {Theme} from '../../components/ui/styleUtils';
 
 type MyVcsTabNavigation = NavigationProp<RootRouteProps>;
+
+const changeTabBarVisible = (visible: string) => {
+  Theme.BottomTabBarStyle.tabBarStyle.display = visible;
+};
 
 export function useSendVcScreen() {
   const {appService} = useContext(GlobalContext);
@@ -58,8 +61,10 @@ export function useSendVcScreen() {
     ),
     CANCEL: () => scanService.send(ScanEvents.CANCEL()),
     ACCEPT_REQUEST: () => scanService.send(ScanEvents.ACCEPT_REQUEST()),
-    FACE_VERIFICATION_CONSENT: (isConsentGiven: boolean) =>
-      scanService.send(ScanEvents.FACE_VERIFICATION_CONSENT(isConsentGiven)),
+    FACE_VERIFICATION_CONSENT: (isDoNotAskAgainChecked: boolean) =>
+      scanService.send(
+        ScanEvents.FACE_VERIFICATION_CONSENT(isDoNotAskAgainChecked),
+      ),
     VERIFY_AND_ACCEPT_REQUEST: () =>
       scanService.send(ScanEvents.VERIFY_AND_ACCEPT_REQUEST()),
     DISMISS: () => scanService.send(ScanEvents.DISMISS()),
@@ -70,11 +75,13 @@ export function useSendVcScreen() {
     RETRY_VERIFICATION: () => scanService.send(ScanEvents.RETRY_VERIFICATION()),
     GO_TO_HOME: () => {
       navigation.navigate(BOTTOM_TAB_ROUTES.home, {screen: 'HomeScreen'});
+      changeTabBarVisible('flex');
     },
     SELECT_VC_ITEM:
       (index: number) => (vcRef: ActorRefFrom<typeof VCItemMachine>) => {
         setSelectedIndex(index);
-        const {serviceRefs, ...vcData} = vcRef.getSnapshot().context;
+        const {serviceRefs, wellknownResponse, ...vcData} =
+          vcRef.getSnapshot().context;
         scanService.send(
           ScanEvents.SELECT_VC(vcData, VCShareFlowType.SIMPLE_SHARE),
         );

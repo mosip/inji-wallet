@@ -8,7 +8,7 @@
     "VC_SHARED_WITH_VERIFICATION_CONSENT": "Shared {{idType}} {{id}} with consent for presence verification.",
     "VC_RECEIVED_WITH_PRESENCE_VERIFIED": "Received {{idType}} {{id}} and presence verification is successful.",
     "VC_RECEIVED_BUT_PRESENCE_VERIFICATION_FAILED": "Received {{idType}} {{id}} and presence verification failed.",
-    "PRESENCE_VERIFIED_AND_VC_SHARED": "Face verification is successful and {{idType}} {{id}} and shared.",
+    "PRESENCE_VERIFIED_AND_VC_SHARED": "Face verification is successful and {{idType}} {{id}} is shared.",
     "PRESENCE_VERIFICATION_FAILED": "Face verification has failed while trying to share {{idType}} {{id}}.",
     "QRLOGIN_SUCCESFULL": "QRLogin using {{idType}} {{id}} is successful.",
     "WALLET_BINDING_SUCCESSFULL": "Activation of {{idType}} {{id}} is successful.",
@@ -25,8 +25,13 @@
     "Wallet": "Wallet"
   },
   "FaceScanner": {
+    "livenessCaptureGuide": "Hold the phone steady, keep your face focused in the centre.",
+    "faceProcessingInfo": "Please wait while we process the data.",
+    "faceOutGuide": "Keep your face inside the oval!",
+    "faceInGuide": "Capturing in progress!",
     "imageCaptureGuide": "Hold the phone steady, keep your face focused in the centre and click on Capture.",
     "capture": "Capture",
+    "cancel": "Cancel",
     "flipCamera": "Flip Camera"
   },
   "OIDcAuth": {
@@ -46,6 +51,7 @@
     "generatedOn": "Generated On",
     "status": "Status",
     "valid": "Valid",
+    "pending": "Pending",
     "photo": "Photo",
     "fullName": "Full Name",
     "gender": "Gender",
@@ -57,7 +63,7 @@
     "idType": "ID Type",
     "id": "ID",
     "qrCodeHeader": "QR Code",
-    "nationalCard": "National Card",
+    "nationalCard": "National ID",
     "insuranceCard": "Insurance Card",
     "beneficiaryCard": "Beneficiary Card",
     "socialRegistryCard": "Social Registry Card",
@@ -81,7 +87,9 @@
         "title": "Failed to save the Card",
         "message": "Something went wrong while saving Card to the store."
       }
-    }
+    },
+    "shareQRCode": "Share QR Code",
+    "scanToViewCredential": "Scan to view credential"
   },
   "HomeScreenKebabPopUp": {
     "title": "More Options",
@@ -273,8 +281,8 @@
       "backend": {
         "invalidOtp": "OTP is invalid",
         "expiredOtp": "OTP has expired",
-        "invalidUin": "UIN invalid",
-        "invalidVid": "VID invalid",
+        "invalidUin": "Please enter valid UIN",
+        "invalidVid": "Please enter valid VID",
         "missingUin": "The entered UIN is deactivated/blocked. Please enter a valid UIN to proceed",
         "missingVid": "VID not available in database",
         "noMessageAvailable": "Try after sometime",
@@ -297,7 +305,7 @@
         "applicationProcessing": "AID is not ready yet",
         "noMessageAvailable": "Try after sometime",
         "networkRequestFailed": "Network request failed",
-        "invalidAid": "AID entered is not available. Please check your AID before entering",
+        "invalidAid": "Please enter valid AID",
         "timeout": "Timeout"
       }
     }
@@ -395,7 +403,7 @@
     "stepThreeText": "Store and carry all your important cards in a single trusted wallet.",
     "stepFourTitle": "Quick Access",
     "stepFourText": "Authenticate yourself with ease using the stored digital credential.",
-    "stepFiveTitle": "Backup Data",
+    "stepFiveTitle": "Backup & Restore",
     "stepFiveText": "Protect your data with ease using our Backup & Restore feature. Safely store your VCs against loss or accidents by creating regular backups and recover it effortlessly whenever needed for seamless continuity.",
     "getStarted": "Get Started",
     "goBack": "Go Back",
@@ -409,9 +417,24 @@
     "noReceivedVcsTitle": "No card available yet",
     "noReceivedVcsText": "Tap on Request below to receive card"
   },
+  "VcVerificationBanner": {
+    "inProgress": "We are validating your card, this may take sometime. Once verified, you’ll be able to activate your card.",
+    "success": "{{vcDetails}} is verified successfully and now available for activation.",
+    "error": "Sorry, we are unable to verify the {{vcDetails}} right now. Please try again later. Until then, you won't be able to activate or share your card."
+  },
   "ViewVcModal": {
     "title": "ID Details",
-    "inProgress": "In Progress"
+    "inProgress": "In Progress",
+    "statusToolTipContent": {
+      "valid": {
+        "title": "Valid Status:",
+        "description": "The credential has been successfully verified."
+      },
+      "pending": {
+        "title": "Pending Status:",
+        "description": "Verification is currently pending due to technical issues."
+      }
+    }
   },
   "MainLayout": {
     "home": "Home",
@@ -471,6 +494,9 @@
         "message": "Due to technical error, we were unable to save the card. Please request the sender to transfer again."
       }
     }
+  },
+  "Permissions": {
+    "enablePermission": "Enable Permission"
   },
   "RequestScreen": {
     "receiveCard": "Receive Card",
@@ -580,7 +606,9 @@
   },
   "ScanScreen": {
     "shareWithSelfie": "Share with Selfie",
+    "shareWithSelfieQrLogin": "QR Code Login",
     "shareWithSelfieMessage": "To share your Verifiable Credentials, we’ll securely verify your identity using face verification. By continuing, you consent to INJI using your camera for this purpose. \n\n Your facial data will only be used for verification and will not be shared with any third parties.",
+    "shareWithSelfieMessageQrLogin": "In order to access the portal, you’ll need to share your Verifiable Credentials and verify your identity securely using face verification. By continuing, you consent to Inji using your camera for this purpose. \n\n Your facial data will only be used for verification and will not be shared. After successful verification, you can choose which details to share.",
     "ConfirmButton": "I Understand",
     "doNotAskMessage": "Don't ask me again",
     "noShareableVcs": "No shareable cards are available.",
@@ -709,6 +737,12 @@
       "captureSuccessMessage": "Face Verification is successful! Credential sharing is initiated.",
       "captureFailureTitle": "Face verification failed!",
       "captureFailureMessage": "Please ensure that your face is clearly visible and try taking selfie again."
+    },
+    "rational": {
+      "title": "Turn on your location",
+      "message": "This app needs your location to search for nearby systems to receive your data.",
+      "accept": "OK",
+      "cancel": "Cancel"
     }
   },
   "SelectVcOverlay": {
@@ -815,7 +849,8 @@
     "driveSettings": "Google Drive Settings",
     "successBanner": "Your backup was successful!",
     "backupFailed": "Backup Failed",
-    "ok": "OK"
+    "ok": "OK",
+    "help": "Help?"
   },
   "WelcomeScreen": {
     "title": "Open Source Identity Solution",
@@ -855,7 +890,7 @@
       "allowAccess": "Allow access to the camera"
     },
     "errors": {
-      "genericError": "Something is wrong. Please try again later!"
+      "genericError": "We're sorry! Due to technical error, we are unable to serve your request now. Please try again later!"
     },
     "clipboard": {
       "copy": "Copy",
@@ -865,5 +900,23 @@
       "title": "Unlock App",
       "description": "Please use fingerprint to unlock the app"
     }
+  },
+  "copilot": {
+    "helpTitle": "Help/FAQs",
+    "helpMessage": "Find answers to common questions and access helpful resources in our FAQ section, ensuring you have the support whenever you need it.",
+    "downloadTitle": "Download Card",
+    "downloadMessage": "Easily download and securely store your card in the app for convenient access whenever you need them.",
+    "shareTitle": "Share Card",
+    "shareMessage": "Share your card with ease in offline mode using bluetooth, empowering you to provide verified information whenever required.",
+    "historyTitle": "Access to History",
+    "historyMessage": "View your activity history to track your interactions and stay informed about your past actions within the app.",
+    "settingsTitle": "App Settings",
+    "settingsMessage": "Customize your app experience with personalized settings as per your preferences.",
+    "cardTitle": "Card",
+    "cardMessage": "Your card displays your verified identity information. Tap for a detailed view or click on … for additional options.",
+    "next": "Next",
+    "previous": "Previous",
+    "skip": "Skip",
+    "done": "Done"
   }
 }

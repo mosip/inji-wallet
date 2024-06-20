@@ -12,9 +12,10 @@ import {Loader} from '../../components/ui/Loader';
 import {VCShareFlowType} from '../../shared/Utils';
 import {VerifyIdentityOverlay} from '../VerifyIdentityOverlay';
 import {SvgImage} from '../../components/ui/svg';
-import {BANNER_TYPE_SUCCESS} from '../../shared/constants';
 import {View, I18nManager} from 'react-native';
 import {Text} from './../../components/ui';
+import {BannerStatusType} from '../../components/BannerNotification';
+import {LIVENESS_CHECK} from '../../shared/constants';
 
 const ScanStack = createNativeStackNavigator();
 
@@ -42,7 +43,7 @@ export const ScanLayout: React.FC = () => {
         showBanner={controller.isFaceIdentityVerified}
         bannerMessage={t('ScanScreen:postFaceCapture:captureSuccessMessage')}
         onBannerClose={controller.CLOSE_BANNER}
-        bannerType={BANNER_TYPE_SUCCESS}
+        bannerType={BannerStatusType.SUCCESS}
         bannerTestID={'faceVerificationSuccess'}
       />
     );
@@ -58,10 +59,10 @@ export const ScanLayout: React.FC = () => {
         onFaceValid={controller.FACE_VALID}
         onFaceInvalid={controller.FACE_INVALID}
         isInvalidIdentity={controller.isInvalidIdentity}
-        onDismiss={controller.DISMISS}
+        onNavigateHome={controller.GOTO_HOME}
         onRetryVerification={controller.RETRY_VERIFICATION}
+        isLivenessEnabled={LIVENESS_CHECK}
       />
-
       <ScanStack.Navigator initialRouteName="ScanScreen">
         {controller.isReviewing &&
           controller.flowType === VCShareFlowType.SIMPLE_SHARE && (

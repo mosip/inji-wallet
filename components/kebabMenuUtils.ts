@@ -26,12 +26,6 @@ export const getKebabMenuOptions = props => {
       testID: 'pinOrUnPinCard',
     },
     {
-      label: t('share'),
-      icon: SvgImage.OutlinedShareIcon(),
-      onPress: loadScanScreen(VCShareFlowType.MINI_VIEW_SHARE),
-      testID: 'shareVcFromKebab',
-    },
-    {
       label: t('viewActivityLog'),
       icon: SvgImage.OutlinedScheduleIcon(),
       onPress: controller.SHOW_ACTIVITY,
@@ -44,6 +38,13 @@ export const getKebabMenuOptions = props => {
       testID: 'removeFromWallet',
     },
   ];
+
+  const share = {
+    label: t('share'),
+    icon: SvgImage.OutlinedShareIcon(),
+    onPress: loadScanScreen(VCShareFlowType.MINI_VIEW_SHARE),
+    testID: 'shareVcFromKebab',
+  };
 
   const shareWithSelfieOption = {
     label: t('shareWithSelfie'),
@@ -65,8 +66,11 @@ export const getKebabMenuOptions = props => {
     testID: 'pendingActivationOrActivated',
   };
 
-  if (props.vcHasImage) {
-    vcActionsList.splice(2, 0, shareWithSelfieOption, VCActivationOption);
+  if (props.vcMetadata.isVerified) {
+    vcActionsList.splice(1, 0, share);
+    if (props.vcHasImage) {
+      vcActionsList.splice(2, 0, shareWithSelfieOption, VCActivationOption);
+    }
   }
 
   return vcActionsList;

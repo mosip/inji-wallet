@@ -4,7 +4,7 @@ import {ActorRefFrom} from 'xstate';
 import {
   selectIsRefreshingReceivedVcs,
   selectReceivedVcsMetadata,
-} from '../../machines/VerifiableCredential/VCMetaMachine/VCMetaMachine';
+} from '../../machines/VerifiableCredential/VCMetaMachine/VCMetaSelectors';
 import {GlobalContext} from '../../shared/GlobalContext';
 import {
   ReceivedVcsTabEvents,

@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {Pressable, View} from 'react-native';
+import {Pressable} from 'react-native';
 import {ActorRefFrom} from 'xstate';
 import {ErrorMessageOverlay} from '../../MessageOverlay';
 import {Theme} from '../../ui/styleUtils';
@@ -11,37 +11,30 @@ import {VCCardViewContent} from './VCCardViewContent';
 import {useVcItemController} from '../VCItemController';
 import {getCredentialIssuersWellKnownConfig} from '../../../shared/openId4VCI/Utils';
 import {CARD_VIEW_DEFAULT_FIELDS, isVCLoaded} from '../common/VCUtils';
-import {
-  VCItemEvents,
-  VCItemMachine,
-} from '../../../machines/VerifiableCredential/VCItemMachine/VCItemMachine';
+import {VCItemMachine} from '../../../machines/VerifiableCredential/VCItemMachine/VCItemMachine';
+import {useTranslation} from 'react-i18next';
+import {Copilot} from '../../ui/Copilot';
 
 export const VCCardView: React.FC<VCItemProps> = props => {
-  let {
-    service,
-    context,
-    credential,
-    verifiableCredentialData,
-    walletBindingResponse,
-    isKebabPopUp,
-    isSavingFailedInIdle,
-    storeErrorTranslationPath,
-    generatedOn,
-    DISMISS,
-    KEBAB_POPUP,
-  } = useVcItemController(props);
+  const controller = useVcItemController(props);
+  const {t} = useTranslation();
+
+  const service = controller.VCItemService;
+  const verifiableCredentialData = controller.verifiableCredentialData;
+  const generatedOn = -controller.generatedOn;
 
   let formattedDate =
     generatedOn && format(new Date(generatedOn), 'MM/dd/yyyy');
 
   useEffect(() => {
-    service.send(VCItemEvents.UPDATE_VC_METADATA(props.vcMetadata));
+    controller.UPDATE_VC_METADATA(props.vcMetadata);
   }, [props.vcMetadata]);
 
-  const vc = props.isDownloading ? null : credential;
+  const vc = props.isDownloading ? null : controller.credential;
 
   const [fields, setFields] = useState([]);
   const [wellknown, setWellknown] = useState(null);
+
   useEffect(() => {
     getCredentialIssuersWellKnownConfig(
       verifiableCredentialData?.issuer,
@@ -54,9 +47,43 @@ export const VCCardView: React.FC<VCItemProps> = props => {
     });
   }, [verifiableCredentialData?.wellKnown]);
 
-  if (!isVCLoaded(credential, fields)) {
+  if (!isVCLoaded(controller.credential, fields)) {
     return <VCCardSkeleton />;
   }
+
+  const CardViewContent = props => (
+    <VCCardViewContent
+      vcMetadata={props.vcMetadata}
+      context={controller.context}
+      walletBindingResponse={controller.walletBindingResponse}
+      credential={vc}
+      verifiableCredentialData={verifiableCredentialData}
+      fields={fields}
+      wellknown={wellknown}
+      generatedOn={formattedDate}
+      selectable={props.selectable}
+      selected={props.selected}
+      service={service}
+      isPinned={props.isPinned}
+      onPress={() => props.onPress(service)}
+      isDownloading={props.isDownloading}
+      flow={props.flow}
+      isKebabPopUp={controller.isKebabPopUp}
+      DISMISS={controller.DISMISS}
+      KEBAB_POPUP={controller.KEBAB_POPUP}
+      isVerified={props.vcMetadata.isVerified}
+      isInitialLaunch={props.isInitialLaunch}
+    />
+  );
+
+  const wrapTopCard = props => (
+    <Copilot
+      description={t('copilot:cardMessage')}
+      order={6}
+      title={t('copilot:cardTitle')}
+      children={CardViewContent(props)}
+    />
+  );
 
   return (
     <React.Fragment>
@@ -68,32 +95,14 @@ export const VCCardView: React.FC<VCItemProps> = props => {
             ? Theme.Styles.selectedBindedVc
             : Theme.Styles.closeCardBgContainer
         }>
-        <VCCardViewContent
-          vcMetadata={props.vcMetadata}
-          context={context}
-          walletBindingResponse={walletBindingResponse}
-          credential={vc}
-          verifiableCredentialData={verifiableCredentialData}
-          fields={fields}
-          wellknown={wellknown}
-          generatedOn={formattedDate}
-          selectable={props.selectable}
-          selected={props.selected}
-          service={service}
-          isPinned={props.isPinned}
-          onPress={() => props.onPress(service)}
-          isDownloading={props.isDownloading}
-          flow={props.flow}
-          isKebabPopUp={isKebabPopUp}
-          DISMISS={DISMISS}
-          KEBAB_POPUP={KEBAB_POPUP}
-          isVerified={credential !== null}
-        />
+        {(props.isInitialLaunch || controller.isTourGuide) && props.isTopCard
+          ? wrapTopCard(props)
+          : CardViewContent(props)}
       </Pressable>
       <ErrorMessageOverlay
-        isVisible={isSavingFailedInIdle}
-        error={storeErrorTranslationPath}
-        onDismiss={DISMISS}
+        isVisible={controller.isSavingFailedInIdle}
+        error={controller.storeErrorTranslationPath}
+        onDismiss={controller.DISMISS}
         translationPath={'VcDetails'}
       />
     </React.Fragment>
@@ -110,4 +119,11 @@ export interface VCItemProps {
   isDownloading?: boolean;
   isPinned?: boolean;
   flow?: string;
+  isInitialLaunch?: boolean;
+  isTopCard?: boolean;
 }
+
+VCCardView.defaultProps = {
+  isInitialLaunch: false,
+  isTopCard: false,
+};

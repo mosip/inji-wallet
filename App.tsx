@@ -6,6 +6,7 @@ import {GlobalContext} from './shared/GlobalContext';
 import {useSelector} from '@xstate/react';
 import {useTranslation} from 'react-i18next';
 import {
+  APP_EVENTS,
   selectIsDecryptError,
   selectIsKeyInvalidateError,
   selectIsReadError,
@@ -13,7 +14,7 @@ import {
 } from './machines/app';
 import {DualMessageOverlay} from './components/DualMessageOverlay';
 import {useApp} from './screens/AppController';
-import {Alert} from 'react-native';
+import {Alert, AppState} from 'react-native';
 import {
   configureTelemetry,
   getErrorEventData,
@@ -21,14 +22,12 @@ import {
 } from './shared/telemetry/TelemetryUtils';
 import {TelemetryConstants} from './shared/telemetry/TelemetryConstants';
 import {MessageOverlay} from './components/MessageOverlay';
-import SecureKeystore from '@mosip/secure-keystore';
+import {NativeModules} from 'react-native';
 import {isHardwareKeystoreExists} from './shared/cryptoutil/cryptoUtil';
 import i18n from './i18n';
 import './shared/flipperConfig';
-import * as SplashScreen from 'expo-splash-screen';
 
-SplashScreen.preventAutoHideAsync();
-
+const {RNSecureKeystoreModule} = NativeModules;
 // kludge: this is a bad practice but has been done temporarily to surface
 //  an occurrence of a bug with minimal residual code changes, this should
 //  be removed once the bug cause is determined & fixed, ref: INJI-222
@@ -52,10 +51,11 @@ const AppLayoutWrapper: React.FC = () => {
   const {t} = useTranslation('WelcomeScreen');
 
   useEffect(() => {
-    async function hideAppLoading() {
-      await SplashScreen.hideAsync();
+    if (AppState.currentState === 'active') {
+      appService.send(APP_EVENTS.ACTIVE());
+    } else {
+      appService.send(APP_EVENTS.INACTIVE());
     }
-    hideAppLoading();
   }, []);
 
   if (isDecryptError) {
@@ -118,7 +118,7 @@ const AppInitialization: React.FC = () => {
 
   useEffect(() => {
     if (isHardwareKeystoreExists) {
-      SecureKeystore.updatePopup(
+      RNSecureKeystoreModule.updatePopup(
         t('biometricPopup.title'),
         t('biometricPopup.description'),
       );

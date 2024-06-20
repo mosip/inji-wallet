@@ -16,7 +16,7 @@ export const WelcomeScreen: React.FC<RootRouteProps> = props => {
       padding="32 32 0"
       backgroundColor={Theme.Colors.whiteBackgroundColor}>
       <HorizontallyCentered fill>
-        {SvgImage.MosipLogo(Theme.Styles.welcomeLogo)}
+        {SvgImage.InjiLogo(Theme.Styles.welcomeLogo)}
       </HorizontallyCentered>
       <Button
         testID="unlockApplication"

@@ -6,6 +6,7 @@ import inji.pages.*;
 import inji.utils.TestDataReader;
 import org.testng.annotations.Test;
 
+import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
 public class ReceiveCardTest extends AndroidBaseTest {
@@ -29,9 +30,11 @@ public class ReceiveCardTest extends AndroidBaseTest {
 	        assertTrue(confirmPasscode.isConfirmPassCodePageLoaded(), "Verify if confirm passcode page is displayed");
 	        HomePage homePage = confirmPasscode.enterPasscodeInConfirmPasscodePage(TestDataReader.readData("passcode"), Target.ANDROID);
 
+		 	homePage.clickOnNextButtonForInjiTour();
 	        assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
 	        SettingsPage settingsPage = homePage.clickOnSettingIcon();
-	        
+
+			assertEquals(settingsPage.getreceiveCardText(), "Receive Card");
 	        ReceiveCardPage receiveCardPage = settingsPage.clickOnReceiveCard();
 	        
 	        receiveCardPage.clickOnAllowButton();
@@ -58,6 +61,7 @@ public class ReceiveCardTest extends AndroidBaseTest {
 	        assertTrue(confirmPasscode.isConfirmPassCodePageLoaded(), "Verify if confirm passcode page is displayed");
 	        HomePage homePage = confirmPasscode.enterPasscodeInConfirmPasscodePage(TestDataReader.readData("passcode"), Target.ANDROID);
 
+		 	homePage.clickOnNextButtonForInjiTour();
 	        assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
 	        SettingsPage settingsPage = homePage.clickOnSettingIcon();
 
@@ -70,4 +74,5 @@ public class ReceiveCardTest extends AndroidBaseTest {
 	        
 	        assertTrue(receiveCardPage.isReceiveCardHeaderInFilipinoLanguageDisplayed(), "Verify if QR code  header is displayed filipino");
 	 }
+
 }

@@ -13,6 +13,10 @@ public class OtpVerificationPage extends BasePage {
     @iOSXCUITFindBy(accessibility = "otpVerificationHeader")
     private WebElement otpVerificationText;
 
+    @AndroidFindBy(accessibility = "otpVerificationDescription")
+    @iOSXCUITFindBy(accessibility = "otpVerificationDescription")
+    private WebElement otpVerificationDescription;
+
     @AndroidFindBy(accessibility = "otpVerificationError")
     @iOSXCUITFindBy(accessibility = "otpVerificationError")
     private WebElement invalidOtpMessage;
@@ -49,14 +53,17 @@ public class OtpVerificationPage extends BasePage {
     @iOSXCUITFindBy(accessibility = "resendCode")
     private WebElement resendCodeButton;
 
+    @AndroidFindBy(accessibility = "resendCode")
+    private WebElement resendCode;
+
     @AndroidFindBy(accessibility = "wait")
     @iOSXCUITFindBy(accessibility = "wait")
     private WebElement waitPopupButton;
 
-    @AndroidFindBy(accessibility = "otpVerificationDescription")
-    @iOSXCUITFindBy(accessibility = "otpVerificationDescription")
-    private WebElement otpVerificationDescription;
 
+    @AndroidFindBy(uiAutomator = "new UiSelector().textContains(\"OTP is invalid\")")
+    @iOSXCUITFindBy(accessibility = "OTP is invalid")
+    private WebElement invalidOtpMessageforEsignet;
 
     public OtpVerificationPage(AppiumDriver driver) {
         super(driver);
@@ -85,6 +92,15 @@ public class OtpVerificationPage extends BasePage {
             throw new RuntimeException(e);
         }
         return this.isElementDisplayed(invalidOtpMessage);
+    }
+
+    public boolean invalidOtpMessageForEsignetDisplayed() {
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        return this.isElementDisplayed(invalidOtpMessageforEsignet);
     }
 
     public boolean somethingWetWrongInVcActivationDisplayed() {
@@ -117,14 +133,15 @@ public class OtpVerificationPage extends BasePage {
     }
     
     public void clickOnResendButton() {
-//        ((HidesKeyboard) driver).hideKeyboard();
-//        clickIfVisible(waitPopupButton);
         try {
             Thread.sleep(2000);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
-        retrieClickOnElemet(resendCodeButton);
+        if(isElementEnabled(resendCodeButton,30)) {
+//            ((HidesKeyboard) driver).hideKeyboard();
+            clickOnElement(resendCode);
+        }
     }
 
     public boolean confirmPopupHeaderDisplayed() {

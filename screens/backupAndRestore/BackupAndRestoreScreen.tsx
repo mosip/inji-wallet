@@ -214,12 +214,12 @@ const BackupAndRestoreScreen: React.FC<BackupAndRestoreProps> = props => {
             <View testID="help" style={Theme.HelpScreenStyle.viewStyle}>
               <Row crossAlign="center" style={Theme.HelpScreenStyle.rowStyle}>
                 <View testID="helpIcon" style={Theme.HelpScreenStyle.iconStyle}>
-                  {SvgImage.infoIcon()}
+                  {SvgImage.info()}
                 </View>
                 <Text
                   testID="helpText"
                   style={Theme.HelpScreenStyle.labelStyle}>
-                  {t('Help?')}
+                  {t('help')}
                 </Text>
               </Row>
             </View>
