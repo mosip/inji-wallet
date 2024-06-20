@@ -849,7 +849,8 @@
     "driveSettings": "Google Drive Settings",
     "successBanner": "Your backup was successful!",
     "backupFailed": "Backup Failed",
-    "ok": "OK"
+    "ok": "OK",
+    "help": "Help?"
   },
   "WelcomeScreen": {
     "title": "Open Source Identity Solution",

@@ -219,7 +219,7 @@ const BackupAndRestoreScreen: React.FC<BackupAndRestoreProps> = props => {
                 <Text
                   testID="helpText"
                   style={Theme.HelpScreenStyle.labelStyle}>
-                  {t('Help?')}
+                  {t('help')}
                 </Text>
               </Row>
             </View>

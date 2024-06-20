@@ -843,7 +843,8 @@
     "driveSettings": "Google ड्राइव सेटिंग्स",
     "successBanner": "आपका बैकअप सफल रहा!",
     "backupFailed": "बैकअप विफल",
-    "ok": "ठीक है"
+    "ok": "ठीक है",
+    "help": "मदद करना?"
   },
   "WelcomeScreen": {
     "title": "ओपन सोर्स आइडेंटिटी सॉल्यूशन",
