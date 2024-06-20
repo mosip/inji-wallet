@@ -146,7 +146,7 @@ jobs:
         uses: actions/upload-artifact@v3.1.1
         with:
           name: residentapp
-          path: ios/fastlane/Inji_artifacts/Inji.ipa
+          path: ios/ios/Inji.ipa
           retention-days: 10
 
       - name: Run UI Automation Tests on BrowserStack
