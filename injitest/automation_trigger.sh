@@ -36,7 +36,7 @@ upload_ipa_and_get_url() {
     local username="$1"
     local access_key="$2"
     local project_path=$(pwd)
-    local ipa_path="$project_path/ios/fastlane/Inji_artifacts/Inji.ipa"
+    local ipa_path="$project_path/ios/Inji.ipa"
     
     if [[ -f "$ipa_path" ]]; then
         response=$(curl -u "$username:$access_key" \
@@ -72,7 +72,7 @@ execute_android_tests() {
 
 
     # Run UI tests using Maven with the updated androidConfig.yml file and TestNG XML file based on the test type
-    mvn clean test -DtestngXmlFile="android${test_type^}.xml" -Dbrowserstack.config="androidConfig.yml"
+    mvn clean test -DtestngXmlFile="android${test_type}.xml" -Dbrowserstack.config="androidConfig.yml"
 }
 
 # Function to execute iOS tests
@@ -89,7 +89,7 @@ execute_ios_tests() {
     sed -i "s|accessKey:.*|accessKey: $access_key|" iosConfig.yml
 
     # Run UI tests using Maven with the updated iosConfig.yml file and TestNG XML file based on the test type
-    mvn clean test -DtestngXmlFile="ios${test_type^}.xml" -Dbrowserstack.config="iosConfig.yml"
+    mvn clean test -DtestngXmlFile="ios${test_type}.xml" -Dbrowserstack.config="iosConfig.yml"
 }
 
 # Check if the correct number of arguments are passed
