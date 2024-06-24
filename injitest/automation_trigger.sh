@@ -84,12 +84,13 @@ execute_ios_tests() {
 
     cd injitest
     # Update iosConfig.yml with the app_url obtained from BrowserStack
-    sed -i "s|app:.*|app: $app_url|" iosConfig.yml
-    sed -i "s|userName:.*|userName: $username|" iosConfig.yml
-    sed -i "s|accessKey:.*|accessKey: $access_key|" iosConfig.yml
+    sed -i.bak '' "s|app:.*|app: $app_url|" iosConfig.yml
+    sed -i.bak '' "s|userName:.*|userName: $username|" iosConfig.yml
+    sed -i.bak '' "s|accessKey:.*|accessKey: $access_key|" iosConfig.yml
 
     # Run UI tests using Maven with the updated iosConfig.yml file and TestNG XML file based on the test type
     mvn clean test -DtestngXmlFile="ios${test_type}.xml" -Dbrowserstack.config="iosConfig.yml"
+    rm iosConfig.yml.bak
 }
 
 # Check if the correct number of arguments are passed
