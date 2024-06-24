@@ -339,7 +339,7 @@ class Storage {
 
       await Promise.all(
         allVCKeys.map(async key => {
-          let vc = allVCs[key];
+          const vc = allVCs[key];
           const ts = Date.now();
           const prevUnixTimeStamp = vc.vcMetadata.timestamp;
 
@@ -347,8 +347,6 @@ class Storage {
             vc.verifiableCredential?.credential || vc.verifiableCredential,
             vc.vcMetadata.issuer,
           );
-          console.log('isVerified: ', isVerified);
-
           vc.vcMetadata.timestamp = ts;
           vc.vcMetadata.isVerified = isVerified;
 
