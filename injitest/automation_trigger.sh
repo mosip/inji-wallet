@@ -83,22 +83,19 @@ execute_ios_tests() {
     local test_type="$4"
 
     cd injitest
-    # Update iosConfig.yml with the app_url obtained from BrowserStack
-    sed -i.bak '' "s|app:.*|app: $app_url|" iosConfig.yml
-    sed -i.bak '' "s|userName:.*|userName: $username|" iosConfig.yml
-    sed -i.bak '' "s|accessKey:.*|accessKey: $access_key|" iosConfig.yml
+    #Use the macOS-compatible commands with '' for sed commands
+    sed -i '' "s|app:.*|app: $app_url|" "iosConfig.yml"
+    sed -i '' "s|userName:.*|userName: $username|" "iosConfig.yml"
+    sed -i '' "s|accessKey:.*|accessKey: $access_key|" "iosConfig.yml"
 
     # Run UI tests using Maven with the updated iosConfig.yml file and TestNG XML file based on the test type
     mvn clean test -DtestngXmlFile="ios${test_type}.xml" -Dbrowserstack.config="iosConfig.yml"
-    rm iosConfig.yml.bak
 }
-
 # Check if the correct number of arguments are passed
 if [ "$#" -ne 4 ]; then
     echo "Expected arguments: $@"
     handle_error "Usage: $0 <username> <access_key> <test_type> <platform>"
 fi
-
 
 # Assigning parameters to variables
 username=$1
