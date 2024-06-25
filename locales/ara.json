@@ -88,8 +88,7 @@
         "message": "حدث خطأ أثناء حفظ البطاقة في المتجر."
       }
     },
-    "shareQRCode": "مشاركة رمز الاستجابة السريعة",
-    "scanToViewCredential": "مسح لعرض بيانات الاعتماد"
+    "shareQRCode": "مشاركة رمز الاستجابة السريعة"
   },
   "HomeScreenKebabPopUp": {
     "title": "المزيد من الخيارات",
