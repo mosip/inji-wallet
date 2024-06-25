@@ -107,6 +107,11 @@ execute_ios_tests() {
     mvn clean test -DtestngXmlFile="ios${test_type}.xml" -Dbrowserstack.config="$config_file"
 }
 
+# Check if the correct number of arguments are passed
+if [ "$#" -ne 4 ]; then
+    echo "Expected arguments: $@"
+    handle_error "Usage: $0 <username> <access_key> <test_type> <platform>"
+fi
 
 # Assigning parameters to variables
 username=$1
