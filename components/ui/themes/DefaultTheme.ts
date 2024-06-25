@@ -723,6 +723,10 @@ export const DefaultTheme = {
       height: 40,
       marginLeft: 10,
     },
+    copilotButtonsContainer: {
+      marginTop: 25,
+      marginBottom: isIOS() ? 10 : 0,
+    },
   }),
   BannerStyles: StyleSheet.create({
     container: {
