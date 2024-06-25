@@ -81,32 +81,16 @@ execute_ios_tests() {
     local username="$2"
     local access_key="$3"
     local test_type="$4"
-    local config_file="./iosConfig.yml"
 
-    # Check if the configuration file exists
-    if [ ! -f "$config_file" ]; then
-        echo "Configuration file $config_file not found!"
-        exit 1
-    fi
-
-    # Update iosConfig.yml with the app_url, username, and access_key obtained from BrowserStack using awk
-    awk -v app_url="$app_url" -v username="$username" -v access_key="$access_key" '
-    BEGIN { updated = 0 }
-    /^app:/ { $0 = "app: " app_url; updated++ }
-    /^userName:/ { $0 = "userName: " username; updated++ }
-    /^accessKey:/ { $0 = "accessKey: " access_key; updated++ }
-    { print }
-    END { if (updated < 3) exit 1 }
-    ' "$config_file" > "${config_file}.tmp" || { echo "Failed to update configuration file"; exit 1; }
-
-    mv "${config_file}.tmp" "$config_file"
-    
-    echo "Configuration file updated:"
+    cd injitest
+    #Use the macOS-compatible commands with '' for sed commands
+    sed -i '' "s|app:.*|app: $app_url|" "iosConfig.yml"
+    sed -i '' "s|userName:.*|userName: $username|" "iosConfig.yml"
+    sed -i '' "s|accessKey:.*|accessKey: $access_key|" "iosConfig.yml"
 
     # Run UI tests using Maven with the updated iosConfig.yml file and TestNG XML file based on the test type
-    mvn clean test -DtestngXmlFile="ios${test_type}.xml" -Dbrowserstack.config="$config_file"
+    mvn clean test -DtestngXmlFile="ios${test_type}.xml" -Dbrowserstack.config="iosConfig.yml"
 }
-
 # Check if the correct number of arguments are passed
 if [ "$#" -ne 4 ]; then
     echo "Expected arguments: $@"
