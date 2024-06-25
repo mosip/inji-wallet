@@ -34,9 +34,9 @@ def generate_app_bundle_id()
     # io.mosip.inji is not available in iOS
     return "io.mosip.inji.wallet"
   when "collab"
-    return "io.mosip.inji.collab"
+    return "io.mosip.inji.mobile.collab"
   when "synergy"
-    return "io.mosip.inji.synergy"
+    return "io.mosip.inji.mobile.synergy"
   when "mec"
     return "io.mosip.inji.mec"
   end
