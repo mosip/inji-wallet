@@ -25,6 +25,10 @@ import {
 import {TelemetryConstants} from '../../shared/telemetry/TelemetryConstants';
 import {isMosipVC} from '../../shared/Utils';
 import {VciClient} from '../../shared/vciClient/VciClient';
+import {
+  removeParamFromURL,
+  removePathSegmentFromURL,
+} from '../../shared/openId4VCI/temp-utils';
 
 const {RNSecureKeystoreModule} = NativeModules;
 export const IssuersService = () => {
@@ -40,6 +44,11 @@ export const IssuersService = () => {
       let issuersConfig = await CACHED_API.fetchIssuerConfig(
         context.selectedIssuerId,
       );
+      //To-Do => Remove removeParamFromURL and removePathSegmentFromURL once draft-13 is adapted in InjiWeb
+      issuersConfig['.well-known'] = removeParamFromURL(
+        issuersConfig['.well-known'],
+        'version',
+      );
       if (issuersConfig['.well-known']) {
         const wellknownResponse = await CACHED_API.fetchIssuerWellknownConfig(
           context.selectedIssuerId,
@@ -48,16 +57,25 @@ export const IssuersService = () => {
         if (wellknownResponse) {
           issuersConfig.credential_audience =
             wellknownResponse.credential_issuer;
-          issuersConfig.credential_endpoint =
-            wellknownResponse.credential_endpoint;
-          issuersConfig.credentials_supported =
-            wellknownResponse.credentials_supported;
+          issuersConfig.credential_endpoint = removePathSegmentFromURL(
+            wellknownResponse.credential_endpoint,
+            'vd11',
+          );
+          issuersConfig.credential_configurations_supported =
+            wellknownResponse.credential_configurations_supported;
         }
       }
       return issuersConfig;
     },
     downloadCredentialTypes: async (context: any) => {
-      return context.selectedIssuer.credentials_supported;
+      const credentialTypes = [];
+      for (const key in context.selectedIssuer
+        .credential_configurations_supported) {
+        credentialTypes.push(
+          context.selectedIssuer.credential_configurations_supported[key],
+        );
+      }
+      return credentialTypes;
     },
     downloadCredential: async (context: any) => {
       const downloadTimeout = await vcDownloadTimeout();
