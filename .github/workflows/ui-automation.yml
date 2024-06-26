@@ -146,7 +146,7 @@ jobs:
         uses: actions/upload-artifact@v3.1.1
         with:
           name: residentapp
-          path: ios/fastlane/Inji_artifacts/Inji.ipa
+          path: ios/Inji.ipa
           retention-days: 10
 
       - name: Run UI Automation Tests on BrowserStack
@@ -158,3 +158,9 @@ jobs:
           TEST_TYPE: ${{ github.event.inputs.testType }}
           BROWSERSTACK_USERNAME: ${{ secrets.BROWSERSTACK_USERNAME }}
           BROWSERSTACK_ACCESS_KEY: ${{ secrets.BROWSERSTACK_ACCESS_KEY }}
+      - name: Save test reports
+        uses: actions/upload-artifact@v3
+        if: success() || failure()
+        with:
+          name: test-reports
+          path: injitest/target/surefire-reports
