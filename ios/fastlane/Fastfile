@@ -49,6 +49,12 @@ def map_flavour_tosuffix()
     return "wallet.mobileid"
   when "inji"
     return "wallet"
+  when "collab"
+    return "mobile.collab"
+  when "synergy"
+    return "mobile.synergy"
+  when "mec"
+    return "mec"
   end
   return flavor
 end
@@ -169,8 +175,8 @@ platform :ios do
       plist_path: "Inji/Info.plist"
     )
     # replace bundle ID
-    # s = "s/mobileid/#{map_flavour_tosuffix}/g"
-    # sh("sed -i '' -e #{s} ../Inji.xcodeproj/project.pbxproj")
+    s = "s/wallet.mobileid/#{map_flavour_tosuffix}/g"
+    sh("sed -i '' -e #{s} ../Inji.xcodeproj/project.pbxproj")
 
     # replace Product name
     p = "s|PRODUCT_NAME = Inji|PRODUCT_NAME = \"#{generate_app_name}\"|"
