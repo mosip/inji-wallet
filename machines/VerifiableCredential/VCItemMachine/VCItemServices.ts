@@ -20,7 +20,6 @@ import {verifyCredential} from '../../../shared/vcjs/verifyCredential';
 import {getVerifiableCredential} from './VCItemSelectors';
 import {getSelectedCredentialTypeDetails} from '../../../shared/openId4VCI/Utils';
 import {getCredentialTypes} from '../../../components/VC/common/VCUtils';
-import {removeParamFromURL} from '../../../shared/openId4VCI/temp-utils';
 
 const {RNSecureKeystoreModule} = NativeModules;
 export const VCItemServices = model => {
@@ -120,10 +119,9 @@ export const VCItemServices = model => {
       return response;
     },
     fetchIssuerWellknown: async context => {
-      //To-Do => Remove removeParamFromURL once draft-13 is adapted in InjiWeb
       const wellknownResponse = await CACHED_API.fetchIssuerWellknownConfig(
         context.vcMetadata.issuer,
-        removeParamFromURL(context.verifiableCredential.wellKnown, 'version'),
+        context.verifiableCredential.wellKnown,
         true,
       );
       const wellknownOfCredential = getSelectedCredentialTypeDetails(

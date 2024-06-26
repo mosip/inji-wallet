@@ -22,7 +22,6 @@ import {getVerifiableCredential} from '../../machines/VerifiableCredential/VCIte
 import {vcVerificationBannerDetails} from '../../components/BannerNotificationContainer';
 import {getErrorEventData, sendErrorEvent} from '../telemetry/TelemetryUtils';
 import {TelemetryConstants} from '../telemetry/TelemetryConstants';
-import {removeParamFromURL} from './temp-utils';
 
 export const Protocols = {
   OpenId4VCI: 'OpenId4VCI',
@@ -205,10 +204,9 @@ export const getCredentialIssuersWellKnownConfig = async (
   let fields: string[] = defaultFields;
   let credentialDetails: any;
   if (wellknown) {
-    //To-Do: Remove removeParamFromURL once Draft-13 changes adapted in InjiWeb
     const response = await CACHED_API.fetchIssuerWellknownConfig(
       issuer,
-      removeParamFromURL(wellknown, 'version'),
+      wellknown,
     );
     if (response) {
       credentialDetails = getSelectedCredentialTypeDetails(

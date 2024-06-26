@@ -25,10 +25,6 @@ import {
 import {TelemetryConstants} from '../../shared/telemetry/TelemetryConstants';
 import {isMosipVC} from '../../shared/Utils';
 import {VciClient} from '../../shared/vciClient/VciClient';
-import {
-  removeParamFromURL,
-  removePathSegmentFromURL,
-} from '../../shared/openId4VCI/temp-utils';
 
 const {RNSecureKeystoreModule} = NativeModules;
 export const IssuersService = () => {
@@ -44,11 +40,6 @@ export const IssuersService = () => {
       let issuersConfig = await CACHED_API.fetchIssuerConfig(
         context.selectedIssuerId,
       );
-      //To-Do => Remove removeParamFromURL and removePathSegmentFromURL once draft-13 is adapted in InjiWeb
-      issuersConfig['.well-known'] = removeParamFromURL(
-        issuersConfig['.well-known'],
-        'version',
-      );
       if (issuersConfig['.well-known']) {
         const wellknownResponse = await CACHED_API.fetchIssuerWellknownConfig(
           context.selectedIssuerId,
@@ -57,10 +48,8 @@ export const IssuersService = () => {
         if (wellknownResponse) {
           issuersConfig.credential_audience =
             wellknownResponse.credential_issuer;
-          issuersConfig.credential_endpoint = removePathSegmentFromURL(
-            wellknownResponse.credential_endpoint,
-            'vd11',
-          );
+          issuersConfig.credential_endpoint =
+            wellknownResponse.credential_endpoint;
           issuersConfig.credential_configurations_supported =
             wellknownResponse.credential_configurations_supported;
         }
