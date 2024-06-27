@@ -88,8 +88,7 @@
         "message": "ಸ್ಟೋರ್‌ನಲ್ಲಿ ಕಾರ್ಡ್ ಉಳಿಸುವಾಗ ಏನೋ ತಪ್ಪಾಗಿದೆ."
       }
     },
-    "shareQRCode": "QR ಕೋಡ್ ಹಂಚಿಕೊಳ್ಳಿ",
-    "scanToViewCredential": "ರುಜುವಾತುಗಳನ್ನು ವೀಕ್ಷಿಸಲು ಸ್ಕ್ಯಾನ್ ಮಾಡಿ"
+    "shareQRCode": "QR ಕೋಡ್ ಹಂಚಿಕೊಳ್ಳಿ"
   },
   "HomeScreenKebabPopUp": {
     "title": "ಇನ್ನಷ್ಟು ಆಯ್ಕೆಗಳು",
@@ -838,10 +837,11 @@
     "restore": "ಮರುಸ್ಥಾಪಿಸು",
     "restoreInProgress": "ನಾವು ನಿಮ್ಮ ಡೇಟಾವನ್ನು ಮರುಸ್ಥಾಪಿಸುತ್ತಿದ್ದೇವೆ, ದಯವಿಟ್ಟು ಅಪ್ಲಿಕೇಶನ್ ಅನ್ನು ಮುಚ್ಚಬೇಡಿ. ನೀವು ಅಪ್ಲಿಕೇಶನ್ ಅನ್ನು ಬಳಸುವುದನ್ನು ಮುಂದುವರಿಸಬಹುದು.",
     "restoreInfo": "{{driveName}} ನಿಂದ ನಿಮ್ಮ ಡೇಟಾವನ್ನು ಮರುಸ್ಥಾಪಿಸಿ",
-    "driveSettings": "Google Drive Settings",
+    "driveSettings": "Google Drive ಸಂಯೋಜನೆಗಳು",
     "successBanner": "ನಿಮ್ಮ ಬ್ಯಾಕಪ್ ಯಶಸ್ವಿಯಾಗಿದೆ!",
     "backupFailed": "ಬ್ಯಾಕಪ್ ವಿಫಲವಾಗಿದೆ",
-    "ok": "ಸರಿ"
+    "ok": "ಸರಿ",
+    "help": "ಸಹಾಯ ಮಾಡುವುದೇ?"
   },
   "WelcomeScreen": {
     "title": "ಓಪನ್ ಸೋರ್ಸ್ ಐಡೆಂಟಿಟಿ ಸೊಲ್ಯೂಷನ್",

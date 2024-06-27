@@ -88,8 +88,7 @@
         "message": "Nagkaproblema habang sine-save ang Card sa tindahan."
       }
     },
-    "shareQRCode": "Ibahagi ang QR Code",
-    "scanToViewCredential": "I-scan para tingnan ang kredensyal"
+    "shareQRCode": "Ibahagi ang QR Code"
   },
   "HomeScreenKebabPopUp": {
     "title": "Higit pang mga Opsyon",
@@ -840,7 +839,8 @@
     "driveSettings": "Mga Setting ng Google Drive",
     "successBanner": "Ang iyong backup ay matagumpay!",
     "backupFailed": "Nabigo ang pag-backup",
-    "ok": "OK"
+    "ok": "OK",
+    "help": "Tulong?"
   },
   "WelcomeScreen": {
     "title": "Open Source Identity Solution",

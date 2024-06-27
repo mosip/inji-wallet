@@ -48,7 +48,6 @@ export const QrCodeOverlay: React.FC<QrCodeOverlayProps> = props => {
 
   async function shareImage(base64String: string) {
     const options: ShareOptions = {
-      message: t('scanToViewCredential'),
       url: base64String,
     };
     const shareStatus = await shareImageToAllSupportedApps(options);
