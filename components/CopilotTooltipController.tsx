@@ -1,5 +1,5 @@
 import {useCopilot} from 'react-native-copilot';
-import {COPILOT_FINAL_STEP} from '../shared/constants';
+import {COPILOT_FINAL_STEP, copilotTestID} from '../shared/constants';
 import {useContext} from 'react';
 import {GlobalContext} from '../shared/GlobalContext';
 import {
@@ -37,6 +37,10 @@ export const UseCopilotTooltip = () => {
   const CURRENT_STEP = currentStep?.order;
   const currentStepTitle = currentStep?.name;
   const currentStepDescription = currentStep?.text;
+  const titleTestID = `${copilotTestID[CURRENT_STEP?.toString()]}Title`;
+  const descriptionTestID = `${
+    copilotTestID[CURRENT_STEP?.toString()]
+  }Description`;
 
   const stepCount =
     CURRENT_STEP === COPILOT_FINAL_STEP && isInitialDownloading
@@ -60,6 +64,8 @@ export const UseCopilotTooltip = () => {
     stepCount,
     isOnboarding,
     isInitialDownloading,
+    titleTestID,
+    descriptionTestID,
     INITIAL_DOWNLOAD_DONE,
     ONBOARDING_DONE,
     SET_TOUR_GUIDE,
