@@ -32,6 +32,9 @@ import {TelemetryConstants} from './telemetry/TelemetryConstants';
 import {BYTES_IN_MEGABYTE} from './commonUtil';
 import fileStorage from './fileStorage';
 import {DocumentDirectoryPath, ReadDirItem} from 'react-native-fs';
+import {verifyCredential} from './vcjs/verifyCredential';
+import {Credential} from '../machines/VerifiableCredential/VCMetaMachine/vc';
+import {isMosipVC} from './Utils';
 
 export const MMKV = new MMKVLoader().initialize();
 const {RNSecureKeystoreModule} = NativeModules;
@@ -312,34 +315,60 @@ class Storage {
     }
   }
 
+  private static async verifyCredential(
+    verifiableCredential: Credential,
+    issuer: string,
+  ) {
+    let isVerified = true;
+    if (isMosipVC(issuer)) {
+      const verificationResult = await verifyCredential(verifiableCredential);
+      isVerified = verificationResult.isVerified;
+    }
+    return isVerified;
+  }
+
   private static async loadVCs(completeBackupData: {}, encryptionKey: any) {
     try {
       const allVCs = completeBackupData['VC_Records'];
       const allVCKeys = Object.keys(allVCs);
       const dataFromDB = completeBackupData['dataFromDB'];
+
       // 0. Check for VC presense in the store
       // 1. store the VCs and the HMAC
-      allVCKeys.forEach(async key => {
-        let vc = allVCs[key];
-        const ts = Date.now();
-        const prevUnixTimeStamp = vc.vcMetadata.timestamp;
-        vc.vcMetadata.timestamp = ts;
-        dataFromDB.myVCs.forEach(myVcMetadata => {
-          if (
-            myVcMetadata.requestId === vc.vcMetadata.requestId &&
-            myVcMetadata.timestamp === prevUnixTimeStamp
-          ) {
-            myVcMetadata.timestamp = ts;
-          }
-        });
-        const updatedVcKey = new VCMetadata(vc.vcMetadata).getVcKey();
-        const encryptedVC = await encryptJson(
-          encryptionKey,
-          JSON.stringify(vc),
-        );
-        // Save the VC to disk
-        await this.setItem(updatedVcKey, encryptedVC, encryptionKey);
-      });
+      // 2. Verify the VC and update the result
+
+      await Promise.all(
+        allVCKeys.map(async key => {
+          const vc = allVCs[key];
+          const ts = Date.now();
+          const prevUnixTimeStamp = vc.vcMetadata.timestamp;
+
+          const isVerified = await Storage.verifyCredential(
+            vc.verifiableCredential?.credential || vc.verifiableCredential,
+            vc.vcMetadata.issuer,
+          );
+          vc.vcMetadata.timestamp = ts;
+          vc.vcMetadata.isVerified = isVerified;
+
+          dataFromDB.myVCs.forEach(myVcMetadata => {
+            if (
+              myVcMetadata.requestId === vc.vcMetadata.requestId &&
+              myVcMetadata.timestamp === prevUnixTimeStamp
+            ) {
+              myVcMetadata.isVerified = isVerified;
+              myVcMetadata.timestamp = ts;
+            }
+          });
+          const updatedVcKey = new VCMetadata(vc.vcMetadata).getVcKey();
+
+          const encryptedVC = await encryptJson(
+            encryptionKey,
+            JSON.stringify(vc),
+          );
+          // Save the VC to disk
+          await this.setItem(updatedVcKey, encryptedVC, encryptionKey);
+        }),
+      );
       // 2. Update myVCsKey
       const dataFromMyVCKey = dataFromDB[MY_VCS_STORE_KEY];
       const encryptedMyVCKeyFromMMKV = await MMKV.getItem(MY_VCS_STORE_KEY);

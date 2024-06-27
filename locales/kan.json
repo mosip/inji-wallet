@@ -88,8 +88,7 @@
         "message": "ಸ್ಟೋರ್‌ನಲ್ಲಿ ಕಾರ್ಡ್ ಉಳಿಸುವಾಗ ಏನೋ ತಪ್ಪಾಗಿದೆ."
       }
     },
-    "shareQRCode": "QR ಕೋಡ್ ಹಂಚಿಕೊಳ್ಳಿ",
-    "scanToViewCredential": "ರುಜುವಾತುಗಳನ್ನು ವೀಕ್ಷಿಸಲು ಸ್ಕ್ಯಾನ್ ಮಾಡಿ"
+    "shareQRCode": "QR ಕೋಡ್ ಹಂಚಿಕೊಳ್ಳಿ"
   },
   "HomeScreenKebabPopUp": {
     "title": "ಇನ್ನಷ್ಟು ಆಯ್ಕೆಗಳು",
