@@ -30,6 +30,7 @@ public class VerifyHelpPageTest extends AndroidBaseTest {
         assertTrue(confirmPasscode.isConfirmPassCodePageLoaded(), "Verify if confirm passcode page is displayed");
         HomePage homePage = confirmPasscode.enterPasscodeInConfirmPasscodePage(TestDataReader.readData("passcode"), Target.ANDROID);
 
+        homePage.clickOnNextButtonForInjiTour();
         assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
         HelpPage helpPage = homePage.clickOnHelpIcon();
 
@@ -43,6 +44,7 @@ public class VerifyHelpPageTest extends AndroidBaseTest {
         assertTrue(helpPage.isWhatIsShareWithSelfieTextdHeader(),"verify if share with selfie text displayed");
         helpPage.exitHelpPage();
 
+        homePage.clickOnNextButtonForInjiTour();
         assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
     }
 
