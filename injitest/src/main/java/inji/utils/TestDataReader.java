@@ -35,7 +35,7 @@ public class TestDataReader {
             case "fullName":
                 return "TEST_FULLNAMEeng";
             case "idType":
-                return "National ID";
+                return "MOSIP National ID";
             case "gender":
                 return "MLEeng";
             case "genderVidEsignet":
@@ -81,13 +81,13 @@ public class TestDataReader {
             case "policyNumberSunbird":
                 return "1234567890";
             case "idTypeSunbird":
-                return "Insurance Card";
+                return "Health Insurance";
             case "idTypeSunbirdHindi":
-                return "बीमा कार्ड";
+                return "Health Insurance";
             case "phoneNumberSunbird":
                 return "8220255752";
             case "dateOfBirthSunbird":
-                return "01/01/2024";
+                return "2024-01-01";
             case "genderValueSunbird":
                 return "Female";
             case "emailIdValueSunbird":
