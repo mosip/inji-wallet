@@ -127,6 +127,7 @@ export const QrCodeOverlay: React.FC<QrCodeOverlayProps> = props => {
                 value={qrString}
                 backgroundColor={Theme.Colors.QRCodeBackgroundColor}
                 ecl={DEFAULT_ECL}
+                quietZone={10}
                 onError={onQRError}
                 getRef={data => (qrRef.current = data)}
               />
