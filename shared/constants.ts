@@ -134,9 +134,17 @@ export const APPLE = 'Apple';
 export const ICLOUD_DRIVE_NAME = 'iCloud';
 export const DEFAULT_ECL = 'M';
 export const DEFAULT_QR_HEADER = 'INJIQUICKSHARE://';
-export const MAX_QR_DATA_LENGTH=4296
+export const MAX_QR_DATA_LENGTH = 4296;
 
 export const INTRO_SLIDER_LOGO_MARGIN = Dimensions.get('screen').width * 0.45;
 
 export const COPILOT_PRE_FINAL_STEP: number = 5;
 export const COPILOT_FINAL_STEP: number = 6;
+export const copilotTestID = {
+  '1': 'help',
+  '2': 'download',
+  '3': 'scan',
+  '4': 'history',
+  '5': 'settings',
+  '6': 'cardView',
+};

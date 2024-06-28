@@ -27,13 +27,10 @@ export const CopilotTooltip = () => {
 
   return (
     <Column>
-      <Text
-        testID={controller.currentStepTitle}
-        weight="bold"
-        margin="0 0 10 0">
+      <Text testID={controller.titleTestID} weight="bold" margin="0 0 10 0">
         {controller.currentStepTitle}
       </Text>
-      <Text testID={`${controller.currentStepTitle}Description`}>
+      <Text testID={controller.descriptionTestID}>
         {controller.currentStepDescription}
       </Text>
       <Row align="space-between" crossAlign="center" margin="25 0 0 0">
