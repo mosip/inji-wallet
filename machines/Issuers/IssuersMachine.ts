@@ -181,15 +181,17 @@ export const IssuersMachine = model.createMachine(
             },
             {
               actions: [
+                'resetSelectedCredentialType',
                 'setError',
                 'resetLoadingReason',
+                'sendDownloadingFailedToVcMeta',
                 (_, event) =>
                   console.error(
                     'Error Occurred while invoking Auth - ',
                     event.data,
                   ),
               ],
-              target: 'error',
+              target: 'selectingIssuer',
             },
           ],
         },
