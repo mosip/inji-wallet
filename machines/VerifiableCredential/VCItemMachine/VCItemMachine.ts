@@ -455,12 +455,11 @@ export const VCItemMachine = model.createMachine(
                       actions: [
                         'sendBackupEvent',
                         'refreshAllVcs',
-                        'logRemovedVc',
                       ],
                       target: '#vc-item-machine.vcUtilitiesState.idle',
                     },
                     {
-                      actions: ['refreshAllVcs', 'logRemovedVc'],
+                      actions: ['refreshAllVcs'],
                       target: '#vc-item-machine.vcUtilitiesState.idle',
                     },
                   ],
