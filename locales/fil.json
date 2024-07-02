@@ -725,8 +725,8 @@
     },
     "postFaceCapture": {
       "captureSuccessMessage": "Matagumpay ang Face Verification! Sinisimulan ang pagbabahagi ng kredensyal.",
-      "captureFailureTitle": "Nabigo ang pag-verify ng mukha!",
-      "captureFailureMessage": "Pakitiyak na malinaw na nakikita ang iyong mukha at subukang mag-selfie muli."
+      "captureFailureTitle": "Nabigo ang Pag-verify ng Mukha!",
+      "captureFailureMessage": "Hindi namin naibahagi ang iyong card dahil sa pagkabigo sa liveness detection. Paki-click ang Subukang muli upang subukang ibahagi muli ang iyong card, o i-click ang Home upang lumabas sa pagbabahagi."
     },
     "rational": {
       "title": "I-on ang iyong lokasyon",

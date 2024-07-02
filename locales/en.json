@@ -734,8 +734,8 @@
     },
     "postFaceCapture": {
       "captureSuccessMessage": "Face Verification is successful! Credential sharing is initiated.",
-      "captureFailureTitle": "Face verification failed!",
-      "captureFailureMessage": "Please ensure that your face is clearly visible and try taking selfie again."
+      "captureFailureTitle": "Face Verification Failed!",
+      "captureFailureMessage": "We were unable to share your card due to a failure in liveness detection. Please click Retry to attempt sharing your card again, or click Home to exit sharing."
     },
     "rational": {
       "title": "Turn on your location",
