@@ -41,7 +41,7 @@ export const ScanLayout: React.FC = () => {
         }
         onRetry={controller.statusOverlay?.onRetry}
         showBanner={controller.isFaceIdentityVerified}
-        bannerMessage={t('ScanScreen:postFaceCapture:captureSuccessMessage')}
+        bannerMessage={t('ScanScreen:postFaceCapture:successMessage')}
         onBannerClose={controller.CLOSE_BANNER}
         bannerType={BannerStatusType.SUCCESS}
         bannerTestID={'faceVerificationSuccess'}

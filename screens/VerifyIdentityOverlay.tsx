@@ -40,6 +40,12 @@ export const VerifyIdentityOverlay: React.FC<
     props.onRetryVerification();
   };
 
+  const faceDetectionFailureMessage = props.isLivenessEnabled
+    ? retryCount < LIVENESS_CHECK_RETRY_LIMIT
+      ? t('ScanScreen:postFaceCapture.LivenessDetection.retryFailureMessage')
+      : t('ScanScreen:postFaceCapture.LivenessDetection.maxRetryFailureMessage')
+    : t('ScanScreen:postFaceCapture.failureMessage');
+
   return (
     <>
       <Modal {...modalProps}>
@@ -64,8 +70,8 @@ export const VerifyIdentityOverlay: React.FC<
         alignActionsOnEnd
         showClose={false}
         isVisible={props.isInvalidIdentity}
-        title={t('ScanScreen:postFaceCapture.captureFailureTitle')}
-        message={t('ScanScreen:postFaceCapture.captureFailureMessage')}
+        title={t('ScanScreen:postFaceCapture.failureTitle')}
+        message={faceDetectionFailureMessage}
         image={SvgImage.PermissionDenied()}
         primaryButtonTestID={'retry'}
         primaryButtonText={
