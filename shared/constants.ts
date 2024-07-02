@@ -14,6 +14,7 @@ export let DEBUG_MODE_ENABLED = DEBUG_MODE === 'true';
 
 export const LIVENESS_CHECK = LIVENESS_DETECTION === 'true';
 export const LIVENESS_THRESHOLD = 0.4;
+export const LIVENESS_CHECK_RETRY_LIMIT = 3;
 
 export const changeCrendetialRegistry = (host: string) =>
   (MIMOTO_BASE_URL = host);
