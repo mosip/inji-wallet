@@ -105,12 +105,10 @@ export const FaceScanner: React.FC<FaceScannerProps> = props => {
         setInfoText(t('multipleFacesDetectedGuide'));
         return;
       }
-
+      setInfoText(t('livenessCaptureGuide'));
       checkBlink(faces[0]);
       const [withinXBounds, withinYBounds, withinYawAngle, withinRollAngle] =
         getFaceBounds(faces[0]);
-
-      setInfoText(t('faceOutGuide'));
 
       if (
         withinXBounds &&
