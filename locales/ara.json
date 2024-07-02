@@ -32,7 +32,8 @@
     "cancel": "يلغي",
     "imageCaptureGuide": "أمسك الهاتف بثبات، وحافظ على تركيز وجهك في المنتصف وانقر على ‘التقاط'",
     "capture": "يأسر",
-    "flipCamera": "فليب الكاميرا"
+    "flipCamera": "فليب الكاميرا",
+    "multipleFacesDetectedGuide": "تم اكتشاف وجوه متعددة. تأكد من أنك وحدك في إطار التحقق."
   },
   "OIDcAuth": {
     "title": "مصادقة OIDC",

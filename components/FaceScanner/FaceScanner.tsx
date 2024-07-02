@@ -100,22 +100,13 @@ export const FaceScanner: React.FC<FaceScannerProps> = props => {
   }
 
   async function handleFacesDetected({faces}) {
-    checkBlink(faces[0]);
+    if (counter < MAX_COUNTER) {
+      if (faces.length > 1) {
+        setInfoText(t('multipleFacesDetectedGuide'));
+        return;
+      }
 
-    if (counter == MAX_COUNTER) {
-      setCounter(counter + 1);
-      cameraRef.pausePreview();
-
-      setScreenColor('#ffffff');
-      setInfoText(t('faceProcessingInfo'));
-
-      const result = await cropEyeAreaFromFace(
-        picArray,
-        props.vcImage,
-        faceToCompare,
-      );
-      return result ? props.onValid() : props.onInvalid();
-    } else if (faces.length > 0) {
+      checkBlink(faces[0]);
       const [withinXBounds, withinYBounds, withinYawAngle, withinRollAngle] =
         getFaceBounds(faces[0]);
 
@@ -135,6 +126,18 @@ export const FaceScanner: React.FC<FaceScannerProps> = props => {
         setInfoText(t('faceInGuide'));
         await captureImage(screenColor);
       }
+    } else {
+      cameraRef.pausePreview();
+
+      setScreenColor('#ffffff');
+      setInfoText(t('faceProcessingInfo'));
+
+      const result = await cropEyeAreaFromFace(
+        picArray,
+        props.vcImage,
+        faceToCompare,
+      );
+      return result ? props.onValid() : props.onInvalid();
     }
   }
 

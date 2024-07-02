@@ -32,7 +32,8 @@
     "imageCaptureGuide": "Hold the phone steady, keep your face focused in the centre and click on Capture.",
     "capture": "Capture",
     "cancel": "Cancel",
-    "flipCamera": "Flip Camera"
+    "flipCamera": "Flip Camera",
+    "multipleFacesDetectedGuide": "Multiple faces detected. Make sure only you are in the frame for verification."
   },
   "OIDcAuth": {
     "title": "OIDC Authentication",

@@ -35,7 +35,8 @@
     "cancel": "Kanselahin",
     "imageCaptureGuide": "Hawakan nang matatag ang telepono, panatilihing nakatutok ang iyong mukha sa gitna at mag-click sa Capture.",
     "capture": "Kunin",
-    "flipCamera": "I-flip ang Camera"
+    "flipCamera": "I-flip ang Camera",
+    "multipleFacesDetectedGuide": "Maramihang mukha ang nakita. Tiyaking ikaw lang ang nasa frame para sa pag-verify."
   },
   "OIDcAuth": {
     "title": "OIDC Authentication",
