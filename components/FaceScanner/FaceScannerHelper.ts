@@ -6,6 +6,7 @@ import ImageEditor from '@react-native-community/image-editor';
 import {ImageType} from 'expo-camera';
 import {getColors} from 'react-native-image-colors';
 import {faceCompare} from '@iriscan/biometric-sdk-react-native';
+import fileStorage from '../../shared/fileStorage';
 
 let FaceCropPicArray: any[] = new Array();
 let EyeCropPicArray: any[] = new Array();
@@ -173,6 +174,7 @@ export const cropEyeAreaFromFace = async (picArray, vcImage, capturedImage) => {
 
           FaceCropPicArray.push({color: pic.color, image: capturedFaceImage});
         }
+        await fileStorage.removeItemIfExist(pic.image.uri);
       }),
     );
 
@@ -208,6 +210,7 @@ export const cropEyeAreaFromFace = async (picArray, vcImage, capturedImage) => {
           leftEye: leftCroppedImage,
           rightEye: rightCroppedImage,
         });
+        await fileStorage.removeItemIfExist(pic.image.uri);
       }),
     );
 
@@ -227,6 +230,8 @@ export const cropEyeAreaFromFace = async (picArray, vcImage, capturedImage) => {
         const rgbColor = hexRgb(pic.color);
         await getEyeColorPredictionResult(leftRGBAColors, rgbColor);
         await getEyeColorPredictionResult(rightRGBAColors, rgbColor);
+        await fileStorage.removeItemIfExist(pic.leftEye.uri);
+        await fileStorage.removeItemIfExist(pic.rightEye.uri);
       }),
     );
   } catch (err) {
