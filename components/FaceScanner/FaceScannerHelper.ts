@@ -8,13 +8,13 @@ import {getColors} from 'react-native-image-colors';
 import {faceCompare} from '@iriscan/biometric-sdk-react-native';
 import fileStorage from '../../shared/fileStorage';
 
-let FaceCropPicArray: any[] = new Array();
-let EyeCropPicArray: any[] = new Array();
+let croppedFaceImages: any[] = new Array();
+let croppedEyeImages: any[] = new Array();
 let predictedColorResults: any[] = new Array();
 let facePoints;
 let calculatedThreshold;
 let faceCompareOuptut;
-let capturedFaceImage;
+let croppedFaceImage;
 let leftEyeWasClosed = false;
 let rightEyeWasClosed = false;
 let lastBlinkTimestamp = 0;
@@ -149,96 +149,97 @@ export const getEyeColorPredictionResult = async (
   });
 };
 
-export const cropEyeAreaFromFace = async (picArray, vcImage, capturedImage) => {
-  try {
-    await Promise.all(
-      picArray.map(async pic => {
-        facePoints = (
-          await FaceDetector.detectFacesAsync(pic.image.uri, faceDetectorConfig)
-        ).faces[0];
+const cropFacePortionFromCapturedImage = async ({
+  screenColor,
+  capturedImageUri,
+}) => {
+  facePoints = (
+    await FaceDetector.detectFacesAsync(capturedImageUri, faceDetectorConfig)
+  ).faces[0];
 
-        if (
-          facePoints.leftEyeOpenProbability > eyeOpenProbability &&
-          facePoints.rightEyeOpenProbability > eyeOpenProbability
-        ) {
-          capturedFaceImage = await ImageEditor.cropImage(pic.image.uri, {
-            offset: {
-              x: facePoints.bounds.origin.x,
-              y: facePoints.bounds.origin.y,
-            },
-            size: {
-              width: facePoints.bounds.size.width,
-              height: facePoints.bounds.size.height,
-            },
-          });
-
-          FaceCropPicArray.push({color: pic.color, image: capturedFaceImage});
-        }
-        await fileStorage.removeItemIfExist(pic.image.uri);
-      }),
-    );
-
-    await Promise.all(
-      FaceCropPicArray.map(async pic => {
-        let [leftEyeX, leftEyeY, rightEyeX, rightEyeY] =
-          getNormalizedFacePoints(facePoints);
-
-        const leftCroppedImage = await ImageEditor.cropImage(pic.image.uri, {
-          offset: {
-            x: leftEyeX - offsetX,
-            y: leftEyeY - offsetY,
-          },
-          size: {
-            width: offsetX * 2,
-            height: offsetY / 2 - eyeCropHeightConst,
-          },
-        });
-
-        const rightCroppedImage = await ImageEditor.cropImage(pic.image.uri, {
-          offset: {
-            x: rightEyeX - offsetX,
-            y: rightEyeY - offsetY,
-          },
-          size: {
-            width: offsetX * 2,
-            height: offsetY / 2 - eyeCropHeightConst,
-          },
-        });
-
-        EyeCropPicArray.push({
-          color: pic.color,
-          leftEye: leftCroppedImage,
-          rightEye: rightCroppedImage,
-        });
-        await fileStorage.removeItemIfExist(pic.image.uri);
-      }),
-    );
-
-    await Promise.all(
-      EyeCropPicArray.map(async pic => {
-        const leftEyeColors = await getColors(pic.leftEye.uri);
-        const rightEyeColors = await getColors(pic.rightEye.uri);
-
-        const leftRGBAColors = Object.values(leftEyeColors)
-          .filter(filterColor)
-          .map(color => hexRgb(color));
-
-        const rightRGBAColors = Object.values(rightEyeColors)
-          .filter(filterColor)
-          .map(color => hexRgb(color));
-
-        const rgbColor = hexRgb(pic.color);
-        await getEyeColorPredictionResult(leftRGBAColors, rgbColor);
-        await getEyeColorPredictionResult(rightRGBAColors, rgbColor);
-        await fileStorage.removeItemIfExist(pic.leftEye.uri);
-        await fileStorage.removeItemIfExist(pic.rightEye.uri);
-      }),
-    );
-  } catch (err) {
-    console.error('Unable to crop the images::', err);
-    return false;
+  if (
+    facePoints.leftEyeOpenProbability > eyeOpenProbability &&
+    facePoints.rightEyeOpenProbability > eyeOpenProbability
+  ) {
+    croppedFaceImage = await ImageEditor.cropImage(capturedImageUri, {
+      offset: {
+        x: facePoints.bounds.origin.x,
+        y: facePoints.bounds.origin.y,
+      },
+      size: {
+        width: facePoints.bounds.size.width,
+        height: facePoints.bounds.size.height,
+      },
+    });
+    croppedFaceImages.push({screenColor, faceImageUri: croppedFaceImage.uri});
+    await fileStorage.removeItemIfExist(capturedImageUri);
   }
+};
 
+const cropEyePortionsFromCroppedFaceImages = async ({
+  screenColor,
+  faceImageUri,
+}) => {
+  let [leftEyeX, leftEyeY, rightEyeX, rightEyeY] =
+    getNormalizedFacePoints(facePoints);
+
+  const leftCroppedImage = await ImageEditor.cropImage(faceImageUri, {
+    offset: {
+      x: leftEyeX - offsetX,
+      y: leftEyeY - offsetY,
+    },
+    size: {
+      width: offsetX * 2,
+      height: offsetY / 2 - eyeCropHeightConst,
+    },
+  });
+
+  const rightCroppedImage = await ImageEditor.cropImage(faceImageUri, {
+    offset: {
+      x: rightEyeX - offsetX,
+      y: rightEyeY - offsetY,
+    },
+    size: {
+      width: offsetX * 2,
+      height: offsetY / 2 - eyeCropHeightConst,
+    },
+  });
+
+  croppedEyeImages.push({
+    screenColor: screenColor,
+    leftEyeUri: leftCroppedImage.uri,
+    rightEyeUri: rightCroppedImage.uri,
+  });
+  await fileStorage.removeItemIfExist(faceImageUri);
+};
+
+const compareEyeColorsWithScreenColor = async ({
+  screenColor,
+  leftEyeUri,
+  rightEyeUri,
+}) => {
+  const leftEyeColors = await getColors(leftEyeUri);
+  const rightEyeColors = await getColors(rightEyeUri);
+
+  const leftRGBAColors = Object.values(leftEyeColors)
+    .filter(filterColor)
+    .map(color => hexRgb(color));
+
+  const rightRGBAColors = Object.values(rightEyeColors)
+    .filter(filterColor)
+    .map(color => hexRgb(color));
+
+  const rgbColor = hexRgb(screenColor);
+  await getEyeColorPredictionResult(leftRGBAColors, rgbColor);
+  await getEyeColorPredictionResult(rightRGBAColors, rgbColor);
+  await fileStorage.removeItemIfExist(leftEyeUri);
+  await fileStorage.removeItemIfExist(rightEyeUri);
+};
+
+const calculateThresholdAndDetectFaceLiveness = async (
+  vcImage,
+  randomCapturedImage,
+) => {
   calculatedThreshold =
     predictedColorResults.filter(element => element).length /
     predictedColorResults.length;
@@ -246,17 +247,53 @@ export const cropEyeAreaFromFace = async (picArray, vcImage, capturedImage) => {
   const matches = rxDataURI.exec(vcImage).groups;
   const vcFace = matches.data;
 
-  faceCompareOuptut = await faceCompare(vcFace, capturedImage.base64);
+  faceCompareOuptut = await faceCompare(vcFace, randomCapturedImage.base64);
 
   if (blinkCounter > 0) {
     calculatedThreshold = calculatedThreshold + blinkConfidenceScore;
   }
 
-  if (calculatedThreshold > LIVENESS_THRESHOLD && faceCompareOuptut) {
-    return true;
-  } else {
+  return calculatedThreshold > LIVENESS_THRESHOLD && faceCompareOuptut
+    ? true
+    : false;
+};
+
+export const validateLiveness = async (
+  capturedImages,
+  vcImage,
+  randomCapturedImage,
+) => {
+  try {
+    await Promise.all(
+      capturedImages.map(async capturedImage => {
+        await cropFacePortionFromCapturedImage(capturedImage);
+      }),
+    );
+
+    await Promise.all(
+      croppedFaceImages.map(async croppedFaceImage => {
+        await cropEyePortionsFromCroppedFaceImages(croppedFaceImage);
+      }),
+    );
+  } catch (err) {
+    console.error('Unable to crop the images::', err);
     return false;
   }
+
+  try {
+    await Promise.all(
+      croppedEyeImages.map(async croppedEyeImage => {
+        compareEyeColorsWithScreenColor(croppedEyeImage);
+      }),
+    );
+  } catch (err) {
+    console.error(
+      'Error occured when extracting the colors from eyes and comparing them with screen color::',
+      err,
+    );
+    return false;
+  }
+  return calculateThresholdAndDetectFaceLiveness(vcImage, randomCapturedImage);
 };
 
 export interface FaceDetectorConfig {
