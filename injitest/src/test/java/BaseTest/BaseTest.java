@@ -1,6 +1,7 @@
 package BaseTest;
 
 
+import inji.api.BaseTestCase;
 import io.appium.java_client.AppiumDriver;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeSuite;
@@ -10,7 +11,7 @@ public class BaseTest {
 
     @BeforeSuite(alwaysRun = true)
     public void beforeSuite() {
-        //  BaseTestCase.intiateUINGenration();
+//          BaseTestCase.intiateUINGenration();
     }
 
     @AfterSuite(alwaysRun = true)

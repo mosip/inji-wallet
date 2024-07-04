@@ -84,7 +84,7 @@ public class AdminTestUtil extends BaseTestCase {
 
 		requestJson.put("id", propsMap.getProperty("id"));
 		requestJson.put("request", new HashMap<>());
-		requestJson.getJSONObject("request").put("registrationId", rid);		
+		requestJson.getJSONObject("request").put("registrationId", rid);
 		JSONObject identityJson = new JSONObject();
 		identityJson.put("UIN", uin);
 
@@ -131,7 +131,7 @@ public class AdminTestUtil extends BaseTestCase {
 					if (eachRequiredProp.equals("phone")) {
 						uinPhone = propsMap.getProperty(eachRequiredProp);
 					}
-				}				
+				}
 			}
 		}
 
@@ -159,7 +159,7 @@ public class AdminTestUtil extends BaseTestCase {
 			Response response = null;
 			JSONObject responseJson = null;
 			JSONArray responseArray = null;
-			String url = ApplnURI + propsKernel.getProperty("actuatorIDAEndpoint");
+			String url = "https://api-internal.qa-inji.mosip.net" + propsKernel.getProperty("actuatorIDAEndpoint");
 			try {
 				response = RestClient.getRequest(url, MediaType.APPLICATION_JSON, MediaType.APPLICATION_JSON);
 
@@ -168,14 +168,15 @@ public class AdminTestUtil extends BaseTestCase {
 
 				for (int i = 0, size = responseArray.length(); i < size; i++) {
 					JSONObject eachJson = responseArray.getJSONObject(i);
+					System.out.println("eachJson is :" +eachJson.toString());
 					logger.info("eachJson is :" + eachJson.toString());
 					if (eachJson.get("name").toString().contains(section)) {
 
 						JSONObject otpExpiryTime = (JSONObject) eachJson
 								.getJSONObject(GlobalConstants.PROPERTIES).get("mosip.kernel.otp.expiry-time");
 						otpExpTime = otpExpiryTime.getString(GlobalConstants.VALUE);
-						if (ConfigManager.IsDebugEnabled())
-							logger.info("Actuator: " +url +" otpExpTime: "+otpExpTime);
+//						if (ConfigManager.IsDebugEnabled())
+//							logger.info("Actuator: " +url +" otpExpTime: "+otpExpTime);
 						break;
 					}
 				}
@@ -211,7 +212,7 @@ public class AdminTestUtil extends BaseTestCase {
 		if (!AdminTestUtil.activateUIN(requestjson, tokenRoleIdRepo)) {
 			// UIN activation failed
 			return "";
-		}		
+		}
 
 		return uin;
 	}

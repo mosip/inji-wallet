@@ -292,7 +292,7 @@ public class BackupAndRestorePage extends BasePage {
     }
 
     public boolean  isBackupFQADisplayed() throws InterruptedException {
-        Thread.sleep(5000);
+        Thread.sleep(2000);
         String context= driver.getPageSource();
         return context.contains("Why should I take a backup?") && context.contains("What is data backup? ") && context.contains("How to backup to your google account?");
     }

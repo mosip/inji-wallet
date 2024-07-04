@@ -182,7 +182,7 @@ public class VerifyWelcomePagesTest extends AndroidBaseTest {
         assertTrue(homePage.verifyLanguageForHelpAndFrequentlyAskedQuationsHeaderDisplayed("English"), "Verify if help and frequently asked quations header displayed");
         assertTrue(homePage.verifyLanguageForHelpAndFrequentlyAskedQuationsDescriptionDisplayed("English"), "Verify if help and frequently asked quations description displayed");
 
-        IosUtil.scrollToElement(driver,58,712,160,129);
+        IosUtil.scrollToElement(driver,100,800,100,200);
         assertEquals(homePage.verifyLanguageForNoVCDownloadedPageLoaded(), "Bring your digital identity");
     }
 }

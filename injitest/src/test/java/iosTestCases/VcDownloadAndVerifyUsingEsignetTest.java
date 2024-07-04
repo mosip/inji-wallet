@@ -1,6 +1,7 @@
 package iosTestCases;
 
 import BaseTest.IosBaseTest;
+import inji.api.BaseTestCase;
 import inji.constants.Target;
 import inji.pages.*;
 import inji.utils.TestDataReader;
@@ -46,7 +47,7 @@ public class VcDownloadAndVerifyUsingEsignetTest extends IosBaseTest {
 
         esignetLoginPage.clickOnGetOtpButton();
 
-        otpVerification.enterOtpForEsignet(TestDataReader.readData("otp"), Target.IOS);
+        otpVerification.enterOtpForEsignet(BaseTestCase.getOtp(), Target.IOS);
         esignetLoginPage.clickOnVerifyButtonIos();
 
         assertTrue(homePage.isNameDisplayed(TestDataReader.readData("fullName")), "Verify if full name is displayed");
@@ -118,7 +119,7 @@ public class VcDownloadAndVerifyUsingEsignetTest extends IosBaseTest {
         OtpVerificationPage otpVerification= esignetLoginPage.setEnterIdTextBox(vid);
         esignetLoginPage.clickOnGetOtpButton();
 
-        otpVerification.enterOtpForEsignet(TestDataReader.readData("otp"), Target.IOS);
+        otpVerification.enterOtpForEsignet(BaseTestCase.getOtp(), Target.IOS);
         esignetLoginPage.clickOnVerifyButtonIos();
 
         assertTrue(homePage.isNameDisplayed(TestDataReader.readData("fullName")), "Verify if full name is displayed");
@@ -220,7 +221,7 @@ public class VcDownloadAndVerifyUsingEsignetTest extends IosBaseTest {
 
         esignetLoginPage.clickOnGetOtpButton();
 
-        otpVerification.enterOtpForEsignet(TestDataReader.readData("otp"), Target.IOS);
+        otpVerification.enterOtpForEsignet(BaseTestCase.getOtp(), Target.IOS);
         esignetLoginPage.clickOnVerifyButtonIos();
 
         assertTrue(homePage.isNameDisplayed(TestDataReader.readData("fullName")), "Verify if full name is displayed");
@@ -265,7 +266,7 @@ public class VcDownloadAndVerifyUsingEsignetTest extends IosBaseTest {
         esignetLoginPage.setEnterIdTextBox(uin);
 
         esignetLoginPage.clickOnGetOtpButton();
-        otpVerification.enterOtpForEsignet(TestDataReader.readData("otp"), Target.IOS);
+        otpVerification.enterOtpForEsignet(BaseTestCase.getOtp(), Target.IOS);
         esignetLoginPage.clickOnVerifyButtonIos();
 
         assertTrue(homePage.isNameDisplayed(TestDataReader.readData("fullName")), "Verify if full name is displayed");
