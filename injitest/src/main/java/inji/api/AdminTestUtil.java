@@ -159,7 +159,7 @@ public class AdminTestUtil extends BaseTestCase {
 			Response response = null;
 			JSONObject responseJson = null;
 			JSONArray responseArray = null;
-			String url = "https://api-internal.qa-inji.mosip.net" + propsKernel.getProperty("actuatorIDAEndpoint");
+			String url = ApplnURI + propsKernel.getProperty("actuatorIDAEndpoint");
 			try {
 				response = RestClient.getRequest(url, MediaType.APPLICATION_JSON, MediaType.APPLICATION_JSON);
 

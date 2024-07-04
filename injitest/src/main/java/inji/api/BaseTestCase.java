@@ -151,7 +151,7 @@ public class BaseTestCase {
 
 			Response response = null;
 			org.json.JSONObject responseJson = null;
-			String url = "https://api-internal.qa-inji.mosip.net" + "/v1/auditmanager/actuator/info";
+			String url = ApplnURI + "/v1/auditmanager/actuator/info";
 			try {
 				response = RestClient.getRequest(url, MediaType.APPLICATION_JSON, MediaType.APPLICATION_JSON);
 				GlobalMethods.reportResponse(response.getHeaders().asList().toString(), url, response);
