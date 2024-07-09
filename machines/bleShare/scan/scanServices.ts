@@ -1,8 +1,7 @@
-import {WalletDataEvent} from '@mosip/tuvali/lib/typescript/types/events';
 import {isLocationEnabled} from 'react-native-device-info';
 import Storage from '../../../shared/storage';
 import BluetoothStateManager from 'react-native-bluetooth-state-manager';
-import tuvali from '@mosip/tuvali';
+
 import {
   check,
   checkMultiple,
@@ -18,7 +17,9 @@ import {
 } from '../../../shared/location';
 import {isIOS} from '../../../shared/constants';
 
-const {wallet, EventTypes, VerificationStatus} = tuvali;
+import {wallet} from '../../../shared/tuvali/tuvali';
+import {EventTypes, WalletDataEvent} from '../../../shared/tuvali/types/events';
+import {VerificationStatus} from '../../../shared/tuvali/types/events';
 
 export const ScanServices = (model: any) => {
   return {
