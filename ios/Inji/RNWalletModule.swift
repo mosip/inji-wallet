@@ -48,7 +48,7 @@ class WalletModule: RCTEventEmitter {
             rejecter("SEND_DATA_ERROR", "Failed to send data", error)
         }
     }
-
+  
   @objc override func supportedEvents() -> [String]! {
       return RNEventEmitter.sharedInstance.allEvents
   }

@@ -1,16 +1,17 @@
 import {NativeEventEmitter, NativeModules, Platform} from 'react-native';
-import type {Verifier, Wallet} from './types/interface';
+import type {Verifier, VersionModule, Wallet} from './types/interface';
+import {EventTypes, VerificationStatus} from './types/events';
+import {isAndroid, isIOS} from '../constants';
 
 const LINKING_ERROR =
-  `The package '@mosip/tuvali' doesn't seem to be linked. Make sure: \n\n` +
+  `The package 'tuvali' doesn't seem to be linked. Make sure: \n\n` +
   Platform.select({ios: "- You have run 'pod install'\n", default: ''}) +
   '- You rebuilt the app after installing the package\n' +
   '- You are not using Expo Go\n';
 
 const VERIFIER_NOT_IMPLEMENTATED_ERROR = `Verifier is not yet implemented on IOS. Please remove Verifier usage on IOS Platform`;
-const isIOS = Platform.OS === 'ios';
 
-export const wallet: Wallet = NativeModules.WalletModule
+const wallet: Wallet = NativeModules.WalletModule
   ? NativeModules.WalletModule
   : new Proxy(
       {},
@@ -21,35 +22,37 @@ export const wallet: Wallet = NativeModules.WalletModule
       },
     );
 
-export let verifier: Verifier = NativeModules.VerifierModule
-  ? NativeModules.VerifierModule
-  : new Proxy(
+// TODO: Use Actual Verifier module on IOS once Verifier is implemented
+let verifier: Verifier = NativeModules.VerifierModule;
+
+if (!isIOS()) {
+  if (verifier) setupModule(verifier);
+  else
+    new Proxy(
       {},
       {
         get() {
-          throw new Error(
-            isIOS ? VERIFIER_NOT_IMPLEMENTATED_ERROR : LINKING_ERROR,
-          );
+          throw new Error(VERIFIER_NOT_IMPLEMENTATED_ERROR);
         },
       },
     );
-
-if (!isIOS) {
-  setupModule(verifier);
 }
 
 setupModule(wallet);
 
+
 function setupModule(module: any) {
-  if (Platform.OS === 'android') {
+  if (isAndroid()) {
     const eventEmitter = new NativeEventEmitter();
     module.handleDataEvents = (callback: (event: any) => void) =>
       eventEmitter.addListener('DATA_EVENT', callback);
   }
 
-  if (isIOS) {
+  if (isIOS()) {
     const eventEmitter = new NativeEventEmitter(module);
     module.handleDataEvents = (callback: (event: any) => void) =>
       eventEmitter.addListener('DATA_EVENT', callback);
   }
 }
+
+export {verifier, wallet, EventTypes, VerificationStatus};

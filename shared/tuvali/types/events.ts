@@ -1,3 +1,8 @@
+/* This file redefines the types from Native Modules to allow auto complete to the consumer applications,
+  However this means, if the native module type definition changes, such changes needs to be applied here as well
+  to avoid mismatch of type information
+*/
+
 export type CommonDataEvent =
   | ConnectedEvent
   | DisconnectedEvent
