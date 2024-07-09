@@ -15,7 +15,6 @@ PODS:
   - BVLinearGradient (2.8.3):
     - React-Core
   - CatCrypto (0.3.2)
-  - CrcSwift (0.0.3)
   - DoubleConversion (1.1.6)
   - EASClient (0.6.0):
     - ExpoModulesCore
@@ -130,7 +129,6 @@ PODS:
     - AppAuth/Core (~> 1.6)
     - GTMSessionFetcher/Core (< 4.0, >= 1.5)
   - GTMSessionFetcher/Core (1.7.2)
-  - GzipSwift (5.1.1)
   - hermes-engine (0.71.8):
     - hermes-engine/Pre-built (= 0.71.8)
   - hermes-engine/Pre-built (0.71.8)
@@ -592,10 +590,6 @@ PODS:
     - TensorFlowLiteObjC/Core (= 2.12.0)
   - TensorFlowLiteObjC/Core (2.12.0):
     - TensorFlowLiteC (= 2.12.0)
-  - tuvali (0.4.9):
-    - CrcSwift (~> 0.0.3)
-    - GzipSwift
-    - React-Core
   - Yoga (1.14.0)
   - ZXingObjC/Core (3.6.5)
   - ZXingObjC/OneD (3.6.5):
@@ -696,7 +690,6 @@ DEPENDENCIES:
   - RNShare (from `../node_modules/react-native-share`)
   - RNSVG (from `../node_modules/react-native-svg`)
   - RNZipArchive (from `../node_modules/react-native-zip-archive`)
-  - "tuvali (from `../node_modules/@mosip/tuvali`)"
   - Yoga (from `../node_modules/react-native/ReactCommon/yoga`)
 
 SPEC REPOS:
@@ -705,7 +698,6 @@ SPEC REPOS:
     - ASN1Decoder
     - BiometricSdk
     - CatCrypto
-    - CrcSwift
     - fmt
     - GoogleDataTransport
     - GoogleMLKit
@@ -715,7 +707,6 @@ SPEC REPOS:
     - GoogleUtilitiesComponents
     - GTMAppAuth
     - GTMSessionFetcher
-    - GzipSwift
     - libevent
     - MLImage
     - MLKitCommon
@@ -913,8 +904,6 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-svg"
   RNZipArchive:
     :path: "../node_modules/react-native-zip-archive"
-  tuvali:
-    :path: "../node_modules/@mosip/tuvali"
   Yoga:
     :path: "../node_modules/react-native/ReactCommon/yoga"
 
@@ -923,10 +912,9 @@ SPEC CHECKSUMS:
   ASN1Decoder: 6110fdeacfdb41559b1481457a1645be716610aa
   biometric-sdk-react-native: d2a3a1279013cc4a7514a1b43fe557eb76e4e4c1
   BiometricSdk: 303e7329404ea4d922dc14108449d10d21574f77
-  boost: 57d2868c099736d80fcd648bf211b4431e51a558
+  boost: 64032b9e9b938fda23325e68a3771f0fabf414dc
   BVLinearGradient: 880f91a7854faff2df62518f0281afb1c60d49a3
   CatCrypto: a477899b6be4954e75be4897e732da098cc0a5a8
-  CrcSwift: f85dea6b41dddb5f98bb3743fd777ce58b77bc2e
   DoubleConversion: 5189b271737e1565bdce30deb4a08d647e3f5f54
   EASClient: 49f8ea858204eb4844d9fb386e5fb7920aee2e30
   EXApplication: 042aa2e3f05258a16962ea1a9914bf288db9c9a1
@@ -962,7 +950,6 @@ SPEC CHECKSUMS:
   GoogleUtilitiesComponents: 679b2c881db3b615a2777504623df6122dd20afe
   GTMAppAuth: 99fb010047ba3973b7026e45393f51f27ab965ae
   GTMSessionFetcher: 5595ec75acf5be50814f81e9189490412bad82ba
-  GzipSwift: 893f3e48e597a1a4f62fafcb6514220fcf8287fa
   hermes-engine: 47986d26692ae75ee7a17ab049caee8864f855de
   ImageColors: 88be684570585c07ae2750bff34eb7b78bfc53b4
   libevent: 4049cae6c81cdb3654a443be001fb9bdceff7913
@@ -1038,7 +1025,6 @@ SPEC CHECKSUMS:
   SSZipArchive: fe6a26b2a54d5a0890f2567b5cc6de5caa600aef
   TensorFlowLiteC: 20785a69299185a379ba9852b6625f00afd7984a
   TensorFlowLiteObjC: 9a46a29a76661c513172cfffd3bf712b11ef25c3
-  tuvali: 9c3aad61844f6fcbd48ec7967cd6805418c3f8da
   Yoga: 065f0b74dba4832d6e328238de46eb72c5de9556
   ZXingObjC: fdbb269f25dd2032da343e06f10224d62f537bdb
 
