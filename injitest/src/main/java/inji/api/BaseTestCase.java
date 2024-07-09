@@ -1,5 +1,6 @@
 package inji.api;
 
+import inji.utils.TestDataReader;
 import inji.utils.UinGenerationUtil;
 import io.restassured.response.Response;
 import org.apache.log4j.PropertyConfigurator;
@@ -27,6 +28,8 @@ public class BaseTestCase {
 			UinGenerationUtil.getResourcePath() + "/config/application.properties");
 	public static Properties propsKernel = getproperty(
 			UinGenerationUtil.getResourcePath() + "/config/"+ UinGenerationUtil.getKernalFilename());
+
+
 	public static Properties propsMap = getproperty(
 			UinGenerationUtil.getResourcePath() + "/config/valueMapping.properties");
 	public static Properties propsBio = getproperty(
@@ -179,10 +182,13 @@ public class BaseTestCase {
 
 	//ToDo - Need to address this
 	 public static String getOtp() {
-	  	  /*String otp="";
+		 ConfigManager.init();
+		 mockSMTPListener = new MockSMTPListener();
+		 mockSMTPListener.run();
+	  	  String otp="";
 	  	  String externalemail = TestDataReader.readData("externalemail");
-	  	  otp = MockSMTPListener.getOtp(externalemail);*/
-	  	  return "111111";
+	  	  otp = MockSMTPListener.getOtp(externalemail);
+	  	  return otp;
 	    }
 
 	public static JSONObject getRequestJson(String filepath) {

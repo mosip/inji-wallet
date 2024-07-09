@@ -1,6 +1,7 @@
 package androidTestCases;
 
 import BaseTest.AndroidBaseTest;
+import inji.api.BaseTestCase;
 import inji.constants.Target;
 import inji.pages.*;
 import inji.utils.TestDataReader;
@@ -52,7 +53,7 @@ public class VcDownloadAndVerifyUsingEsignetTest extends AndroidBaseTest {
         esignetLoginPage.clickOnGetOtpButton();
         assertTrue(esignetLoginPage.isOtpHasSendMessageDisplayed(),"verify if otp page is displayed");
         
-        otpVerification.enterOtpForEsignet(TestDataReader.readData("otp"), Target.ANDROID);
+        otpVerification.enterOtpForEsignet(BaseTestCase.getOtp(), Target.ANDROID);
         esignetLoginPage.clickOnVerifyButton();
         
         assertTrue(homePage.isNameDisplayed(TestDataReader.readData("fullName")), "Verify if full name is displayed");
@@ -120,7 +121,7 @@ public class VcDownloadAndVerifyUsingEsignetTest extends AndroidBaseTest {
         OtpVerificationPage otpVerification= esignetLoginPage.setEnterIdTextBox(vid);
         esignetLoginPage.clickOnGetOtpButton();
         Thread.sleep(2000);
-        otpVerification.enterOtpForEsignet(TestDataReader.readData("otp"), Target.ANDROID);
+        otpVerification.enterOtpForEsignet(BaseTestCase.getOtp(), Target.ANDROID);
         esignetLoginPage.clickOnVerifyButton();
         Thread.sleep(2000);
         homePage.clickOnDoneButton();
@@ -194,7 +195,7 @@ public class VcDownloadAndVerifyUsingEsignetTest extends AndroidBaseTest {
         esignetLoginPage.clickOnGetOtpButton();
         assertTrue(esignetLoginPage.isOtpHasSendMessageDisplayed(),"verify if otp page is displayed");
 
-        otpVerification.enterOtpForEsignet(TestDataReader.readData("otp"), Target.ANDROID);
+        otpVerification.enterOtpForEsignet(BaseTestCase.getOtp(), Target.ANDROID);
         esignetLoginPage.clickOnVerifyButton();
 
         assertTrue(homePage.isNameDisplayed(TestDataReader.readData("fullName")), "Verify if full name is displayed");
@@ -226,7 +227,7 @@ public class VcDownloadAndVerifyUsingEsignetTest extends AndroidBaseTest {
         esignetLoginPage.clickOnGetOtpButton();
         assertTrue(esignetLoginPage.isOtpHasSendMessageDisplayed(),"verify if otp page is displayed");
 
-        otpVerification.enterOtpForEsignet(TestDataReader.readData("otp"), Target.ANDROID);
+        otpVerification.enterOtpForEsignet(BaseTestCase.getOtp(), Target.ANDROID);
         esignetLoginPage.clickOnVerifyButton();
 
         assertTrue(homePage.isNameDisplayed(TestDataReader.readData("fullName")), "Verify if full name is displayed");
