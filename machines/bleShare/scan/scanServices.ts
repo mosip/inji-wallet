@@ -1,7 +1,6 @@
 import {isLocationEnabled} from 'react-native-device-info';
 import Storage from '../../../shared/storage';
 import BluetoothStateManager from 'react-native-bluetooth-state-manager';
-
 import {
   check,
   checkMultiple,
@@ -17,9 +16,7 @@ import {
 } from '../../../shared/location';
 import {isIOS} from '../../../shared/constants';
 
-import {wallet} from '../../../shared/tuvali/tuvali';
-import {EventTypes, WalletDataEvent} from '../../../shared/tuvali/types/events';
-import {VerificationStatus} from '../../../shared/tuvali/types/events';
+import {wallet, EventTypes, VerificationStatus} from '../../../tuvali';
 
 export const ScanServices = (model: any) => {
   return {

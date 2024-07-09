@@ -21,6 +21,7 @@ import {
 import {ActivityLogEvents, ActivityLogType} from '../../activityLog';
 import {VcMetaEvents} from '../../VerifiableCredential/VCMetaMachine/VCMetaMachine';
 import {subscribe} from '../../../shared/openIdBLE/verifierEventHandler';
+import {VerifierDataEvent} from '../../../tuvali/types/events';
 import {BLEError} from '../types';
 import Storage from '../../../shared/storage';
 import {VCMetadata} from '../../../shared/VCMetadata';
@@ -37,12 +38,7 @@ import {
 import {TelemetryConstants} from '../../../shared/telemetry/TelemetryConstants';
 import {getCredentialTypes} from '../../../components/VC/common/VCUtils';
 
-import {verifier} from '../../../shared/tuvali/tuvali';
-import {
-  EventTypes,
-  VerifierDataEvent,
-} from '../../../shared/tuvali/types/events';
-import {VerificationStatus} from '../../../shared/tuvali/types/events';
+import {EventTypes, VerificationStatus} from '../../../tuvali';
 
 const model = createModel(
   {
