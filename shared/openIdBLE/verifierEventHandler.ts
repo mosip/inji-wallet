@@ -1,7 +1,5 @@
-import tuvali from '@mosip/tuvali';
-import {VerifierDataEvent} from '@mosip/tuvali/src/types/events';
-
-const {verifier} = tuvali;
+import {VerifierDataEvent} from '../../tuvali/types/events';
+import {verifier} from '../../tuvali';
 export function subscribe(callback: (event: VerifierDataEvent) => void) {
   return verifier.handleDataEvents(e => {
     callback(e);
