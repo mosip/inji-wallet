@@ -1,7 +1,7 @@
 import {NativeEventEmitter, NativeModules, Platform} from 'react-native';
 import type {Verifier, VersionModule, Wallet} from './types/interface';
 import {EventTypes, VerificationStatus} from './types/events';
-import {isIOS} from '../shared/constants';
+import {isAndroid, isIOS} from '../shared/constants';
 import {tuvaliVersion} from './tuvaliVersion';
 
 const LINKING_ERROR =
@@ -71,7 +71,7 @@ setupModule(wallet);
 // });
 
 function setupModule(module: any) {
-  if (Platform.OS === 'android') {
+  if (isAndroid()) {
     const eventEmitter = new NativeEventEmitter();
     module.handleDataEvents = (callback: (event: any) => void) =>
       eventEmitter.addListener('DATA_EVENT', callback);

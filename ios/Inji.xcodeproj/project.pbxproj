@@ -16,11 +16,11 @@
 		9C0E86B52BEE357A00E9F9F6 /* RNPixelpassModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C0E86B42BEE357A00E9F9F6 /* RNPixelpassModule.swift */; };
 		9C0E86BB2BEE36C300E9F9F6 /* RNPixelpassModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C0E86BA2BEE36C300E9F9F6 /* RNPixelpassModule.m */; };
 		9C9008082C3D04A20041AF07 /* ios-tuvali-library in Frameworks */ = {isa = PBXBuildFile; productRef = 9C9008072C3D04A20041AF07 /* ios-tuvali-library */; };
-		9CB598972C3BD800008BD9F8 /* RNEventMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CB598922C3BD800008BD9F8 /* RNEventMapper.swift */; };
-		9CB598982C3BD800008BD9F8 /* RNWalletModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CB598932C3BD800008BD9F8 /* RNWalletModule.swift */; };
-		9CB598992C3BD800008BD9F8 /* RNEventEmitterProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CB598942C3BD800008BD9F8 /* RNEventEmitterProtocol.swift */; };
-		9CB5989A2C3BD800008BD9F8 /* RNEventEmitter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CB598952C3BD800008BD9F8 /* RNEventEmitter.swift */; };
-		9CB5989B2C3BD800008BD9F8 /* RNVersionModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CB598962C3BD800008BD9F8 /* RNVersionModule.swift */; };
+		9C9008112C3D4E170041AF07 /* RNEventEmitter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C90080C2C3D4E170041AF07 /* RNEventEmitter.swift */; };
+		9C9008122C3D4E170041AF07 /* RNEventEmitterProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C90080D2C3D4E170041AF07 /* RNEventEmitterProtocol.swift */; };
+		9C9008132C3D4E170041AF07 /* RNVersionModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C90080E2C3D4E170041AF07 /* RNVersionModule.swift */; };
+		9C9008142C3D4E170041AF07 /* RNWalletModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C90080F2C3D4E170041AF07 /* RNWalletModule.swift */; };
+		9C9008152C3D4E170041AF07 /* RNEventMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C9008102C3D4E170041AF07 /* RNEventMapper.swift */; };
 		9CB5989D2C3BEAE4008BD9F8 /* RNWalletModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CB5989C2C3BEAE4008BD9F8 /* RNWalletModule.m */; };
 		9CB637FD2C3BF0ED00B547F1 /* RNVersionModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CB637FC2C3BF0ED00B547F1 /* RNVersionModule.m */; };
 		9CB638052C3BF60100B547F1 /* VCIClient in Frameworks */ = {isa = PBXBuildFile; productRef = 9CB638042C3BF60100B547F1 /* VCIClient */; };
@@ -64,11 +64,11 @@
 		7A4D352CD337FB3A3BF06240 /* Pods-Inji.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Inji.release.xcconfig"; path = "Target Support Files/Pods-Inji/Pods-Inji.release.xcconfig"; sourceTree = "<group>"; };
 		9C0E86B42BEE357A00E9F9F6 /* RNPixelpassModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RNPixelpassModule.swift; sourceTree = "<group>"; };
 		9C0E86BA2BEE36C300E9F9F6 /* RNPixelpassModule.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RNPixelpassModule.m; sourceTree = "<group>"; };
-		9CB598922C3BD800008BD9F8 /* RNEventMapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RNEventMapper.swift; path = "../../Downloads/tuvali-develop-4/ios/RNModules/RNEventMapper.swift"; sourceTree = "<group>"; };
-		9CB598932C3BD800008BD9F8 /* RNWalletModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RNWalletModule.swift; path = "../../Downloads/tuvali-develop-4/ios/RNModules/RNWalletModule.swift"; sourceTree = "<group>"; };
-		9CB598942C3BD800008BD9F8 /* RNEventEmitterProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RNEventEmitterProtocol.swift; path = "../../Downloads/tuvali-develop-4/ios/RNModules/RNEventEmitterProtocol.swift"; sourceTree = "<group>"; };
-		9CB598952C3BD800008BD9F8 /* RNEventEmitter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RNEventEmitter.swift; path = "../../Downloads/tuvali-develop-4/ios/RNModules/RNEventEmitter.swift"; sourceTree = "<group>"; };
-		9CB598962C3BD800008BD9F8 /* RNVersionModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RNVersionModule.swift; path = "../../Downloads/tuvali-develop-4/ios/RNModules/RNVersionModule.swift"; sourceTree = "<group>"; };
+		9C90080C2C3D4E170041AF07 /* RNEventEmitter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RNEventEmitter.swift; path = Inji/RNEventEmitter.swift; sourceTree = "<group>"; };
+		9C90080D2C3D4E170041AF07 /* RNEventEmitterProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RNEventEmitterProtocol.swift; path = Inji/RNEventEmitterProtocol.swift; sourceTree = "<group>"; };
+		9C90080E2C3D4E170041AF07 /* RNVersionModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RNVersionModule.swift; path = Inji/RNVersionModule.swift; sourceTree = "<group>"; };
+		9C90080F2C3D4E170041AF07 /* RNWalletModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RNWalletModule.swift; path = Inji/RNWalletModule.swift; sourceTree = "<group>"; };
+		9C9008102C3D4E170041AF07 /* RNEventMapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RNEventMapper.swift; path = Inji/RNEventMapper.swift; sourceTree = "<group>"; };
 		9CB5989C2C3BEAE4008BD9F8 /* RNWalletModule.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = RNWalletModule.m; path = Inji/RNWalletModule.m; sourceTree = "<group>"; };
 		9CB637FC2C3BF0ED00B547F1 /* RNVersionModule.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = RNVersionModule.m; path = Inji/RNVersionModule.m; sourceTree = "<group>"; };
 		AA286B85B6C04FC6940260E9 /* SplashScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = SplashScreen.storyboard; path = Inji/SplashScreen.storyboard; sourceTree = "<group>"; };
@@ -125,12 +125,7 @@
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.mm */,
 				9C0E86B42BEE357A00E9F9F6 /* RNPixelpassModule.swift */,
-				9CB598952C3BD800008BD9F8 /* RNEventEmitter.swift */,
-				9CB598942C3BD800008BD9F8 /* RNEventEmitterProtocol.swift */,
-				9CB598922C3BD800008BD9F8 /* RNEventMapper.swift */,
-				9CB598962C3BD800008BD9F8 /* RNVersionModule.swift */,
 				9CB637FC2C3BF0ED00B547F1 /* RNVersionModule.m */,
-				9CB598932C3BD800008BD9F8 /* RNWalletModule.swift */,
 				9CB5989C2C3BEAE4008BD9F8 /* RNWalletModule.m */,
 				9C0E86BA2BEE36C300E9F9F6 /* RNPixelpassModule.m */,
 				9C90080C2C3D4E170041AF07 /* RNEventEmitter.swift */,
@@ -485,9 +480,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9CB5989B2C3BD800008BD9F8 /* RNVersionModule.swift in Sources */,
-				9CB598982C3BD800008BD9F8 /* RNWalletModule.swift in Sources */,
-				9CB598992C3BD800008BD9F8 /* RNEventEmitterProtocol.swift in Sources */,
+				9C9008132C3D4E170041AF07 /* RNVersionModule.swift in Sources */,
 				13B07FBC1A68108700A75B9A /* AppDelegate.mm in Sources */,
 				9C0E86BB2BEE36C300E9F9F6 /* RNPixelpassModule.m in Sources */,
 				E86208152C0335C5007C3E24 /* RNVCIClientModule.swift in Sources */,
@@ -495,12 +488,12 @@
 				9C0E86B52BEE357A00E9F9F6 /* RNPixelpassModule.swift in Sources */,
 				9C9008122C3D4E170041AF07 /* RNEventEmitterProtocol.swift in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
-				9CB5989A2C3BD800008BD9F8 /* RNEventEmitter.swift in Sources */,
+				9C9008112C3D4E170041AF07 /* RNEventEmitter.swift in Sources */,
 				E86208172C0335EC007C3E24 /* RNVCIClientModule.m in Sources */,
 				9C9008152C3D4E170041AF07 /* RNEventMapper.swift in Sources */,
 				B18059E884C0ABDD17F3DC3D /* ExpoModulesProvider.swift in Sources */,
-				9CB598972C3BD800008BD9F8 /* RNEventMapper.swift in Sources */,
 				9CB637FD2C3BF0ED00B547F1 /* RNVersionModule.m in Sources */,
+				9C9008142C3D4E170041AF07 /* RNWalletModule.swift in Sources */,
 				73295844242A4AD3AA52D0BE /* noop-file.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
