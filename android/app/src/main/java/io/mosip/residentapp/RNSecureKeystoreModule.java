@@ -10,7 +10,6 @@ import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
 import com.reactnativesecurekeystore.biometrics.Biometrics;
 import com.reactnativesecurekeystore.common.Util;
-import com.facebook.react.bridge.Callback;
 import kotlin.Unit;
 import kotlin.jvm.functions.Function1;
 import kotlin.jvm.functions.Function2;

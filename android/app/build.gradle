@@ -305,7 +305,7 @@ dependencies {
     implementation 'com.jakewharton.timber:timber:4.7.1'
 }
 
-task CaptureLibraryVersion {
+task CaptureTuvaliLibraryVersion {
     def libDef = project.configurations.getByName('implementation').allDependencies.matching {
         it.group.equals("io.mosip") && it.name.equals("tuvali")
     }

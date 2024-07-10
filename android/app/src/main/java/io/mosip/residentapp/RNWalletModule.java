@@ -7,7 +7,6 @@ import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
 import com.facebook.react.bridge.WritableMap;
 
-import io.mosip.residentapp.RNEventEmitter;
 import io.mosip.tuvali.common.BluetoothStateChangeReceiver;
 import io.mosip.tuvali.wallet.Wallet;
 import kotlin.Unit;
