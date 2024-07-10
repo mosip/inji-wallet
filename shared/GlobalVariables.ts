@@ -1,20 +1,10 @@
 import {getVersion} from 'react-native-device-info';
 import ShortUniqueId from 'short-unique-id';
-import {APP_ID_LENGTH} from './constants';
-/* eslint-disable @typescript-eslint/no-var-requires */
-const dependencies = require('../package-lock.json').dependencies;
+import {APP_ID_LENGTH, isIOS} from './constants';
+import {NativeModules} from 'react-native';
 
 function getTuvaliPackageDetails() {
-  let packageVersion;
-  Object.keys(dependencies).forEach(dependencyName => {
-    const dependencyData = dependencies[dependencyName];
-    if (dependencyName == '@mosip/tuvali') {
-      packageVersion = dependencyData?.version
-        ? dependencyData.version
-        : 'unknown';
-    }
-  });
-  return {packageVersion};
+  return isIOS() ? 'unknown' : NativeModules.VersionModule.getVersion();
 }
 export class __AppId {
   private static value: string;
@@ -31,7 +21,7 @@ export class __TuvaliVersion {
   private static packageDetails = getTuvaliPackageDetails();
 
   public static getpackageVersion(): string {
-    return __TuvaliVersion.packageDetails.packageVersion;
+    return __TuvaliVersion.packageDetails;
   }
 
   public static getValue(): string {
