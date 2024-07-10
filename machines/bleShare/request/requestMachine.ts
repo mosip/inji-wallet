@@ -38,11 +38,7 @@ import {
 import {TelemetryConstants} from '../../../shared/telemetry/TelemetryConstants';
 import {getCredentialTypes} from '../../../components/VC/common/VCUtils';
 
-import {
-  EventTypes,
-  VerificationStatus,
-  verifier,
-} from '../../../shared/tuvali/setup';
+import {EventTypes, VerificationStatus, verifier} from '../../../shared/tuvali';
 
 const model = createModel(
   {

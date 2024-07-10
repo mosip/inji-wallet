@@ -16,11 +16,7 @@ import {
 } from '../../../shared/location';
 import {isIOS} from '../../../shared/constants';
 
-import {
-  wallet,
-  EventTypes,
-  VerificationStatus,
-} from '../../../shared/tuvali/setup';
+import {wallet, EventTypes, VerificationStatus} from '../../../shared/tuvali';
 import {WalletDataEvent} from '../../../shared/tuvali/types/events';
 
 export const ScanServices = (model: any) => {
