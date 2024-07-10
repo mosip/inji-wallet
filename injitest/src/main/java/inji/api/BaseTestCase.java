@@ -182,12 +182,13 @@ public class BaseTestCase {
 
 	//ToDo - Need to address this
 	 public static String getOtp() {
-		 ConfigManager.init();
-		 mockSMTPListener = new MockSMTPListener();
-		 mockSMTPListener.run();
-	  	  String otp="";
-	  	  String externalemail = TestDataReader.readData("externalemail");
-	  	  otp = MockSMTPListener.getOtp(externalemail);
+
+//		 ConfigManager.init();
+//		 mockSMTPListener = new MockSMTPListener();
+//		 mockSMTPListener.run();
+	  	  String otp="111111";
+//	  	  String externalemail = TestDataReader.readData("externalemail");
+//	  	  otp = MockSMTPListener.getOtp(externalemail);
 	  	  return otp;
 	    }
 
