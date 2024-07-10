@@ -1,6 +1,5 @@
 package inji.api;
 
-import inji.utils.TestDataReader;
 import inji.utils.UinGenerationUtil;
 import io.restassured.response.Response;
 import org.apache.log4j.PropertyConfigurator;
@@ -182,7 +181,6 @@ public class BaseTestCase {
 
 	//ToDo - Need to address this
 	 public static String getOtp() {
-
 //		 ConfigManager.init();
 //		 mockSMTPListener = new MockSMTPListener();
 //		 mockSMTPListener.run();
