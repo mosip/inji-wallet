@@ -26,12 +26,12 @@ import {createQrLoginMachine} from '../../QrLogin/QrLoginMachine';
 import {VcMetaEvents} from '../../VerifiableCredential/VCMetaMachine/VCMetaEvents';
 import {ActivityLogEvents} from '../../activityLog';
 import {StoreEvents} from '../../store';
-import tuvali from '@mosip/tuvali';
 import BluetoothStateManager from 'react-native-bluetooth-state-manager';
 import {NativeModules} from 'react-native';
 import {getCredentialTypes} from '../../../components/VC/common/VCUtils';
 
-const {wallet, EventTypes, VerificationStatus} = tuvali;
+import {wallet} from '../../../shared/tuvali';
+
 export const ScanActions = (model: any, QR_LOGIN_REF_ID: any) => {
   const {RNPixelpassModule} = NativeModules;
   return {

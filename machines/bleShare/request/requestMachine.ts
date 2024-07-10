@@ -1,4 +1,3 @@
-import tuvali from '@mosip/tuvali';
 import BluetoothStateManager from 'react-native-bluetooth-state-manager';
 import {EmitterSubscription, Linking} from 'react-native';
 import {
@@ -22,7 +21,7 @@ import {
 import {ActivityLogEvents, ActivityLogType} from '../../activityLog';
 import {VcMetaEvents} from '../../VerifiableCredential/VCMetaMachine/VCMetaMachine';
 import {subscribe} from '../../../shared/openIdBLE/verifierEventHandler';
-import {VerifierDataEvent} from '@mosip/tuvali/src/types/events';
+import {VerifierDataEvent} from '../../../shared/tuvali/types/events';
 import {BLEError} from '../types';
 import Storage from '../../../shared/storage';
 import {VCMetadata} from '../../../shared/VCMetadata';
@@ -39,7 +38,7 @@ import {
 import {TelemetryConstants} from '../../../shared/telemetry/TelemetryConstants';
 import {getCredentialTypes} from '../../../components/VC/common/VCUtils';
 
-const {verifier, EventTypes, VerificationStatus} = tuvali;
+import {EventTypes, VerificationStatus, verifier} from '../../../shared/tuvali';
 
 const model = createModel(
   {
