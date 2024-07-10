@@ -1,5 +1,5 @@
 import {NativeEventEmitter, NativeModules, Platform} from 'react-native';
-import type {Verifier, VersionModule, Wallet} from './types/interface';
+import type {Verifier, Wallet} from './types/interface';
 import {EventTypes, VerificationStatus} from './types/events';
 import {isAndroid, isIOS} from '../constants';
 
@@ -39,22 +39,6 @@ if (!isIOS()) {
 }
 
 setupModule(wallet);
-
-//
-// ErrorUtils.setGlobalHandler((error, isFatal) => {
-//   const eventEmitter = new NativeEventEmitter(NativeModules.Openid4vpBle);
-//
-//   console.error(
-//     `Exception in Tuvali: isFatal: ${isFatal}, error: ${JSON.stringify(
-//       error,
-//       null,
-//       4
-//     )}`
-//   );
-//
-//   eventEmitter.emit('EVENT_NEARBY', { type: 'onError', message: '' });
-//   Openid4vpBle.destroyConnection(() => {});
-// });
 
 function setupModule(module: any) {
   if (isAndroid()) {

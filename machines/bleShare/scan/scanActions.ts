@@ -30,7 +30,7 @@ import BluetoothStateManager from 'react-native-bluetooth-state-manager';
 import {NativeModules} from 'react-native';
 import {getCredentialTypes} from '../../../components/VC/common/VCUtils';
 
-import {wallet} from '../../../shared/tuvali';
+import {wallet} from '../../../shared/tuvali/setup';
 
 export const ScanActions = (model: any, QR_LOGIN_REF_ID: any) => {
   const {RNPixelpassModule} = NativeModules;
