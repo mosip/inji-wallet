@@ -106,8 +106,6 @@
 			files = (
 				9CB638052C3BF60100B547F1 /* VCIClient in Frameworks */,
 				9C9008082C3D04A20041AF07 /* ios-tuvali-library in Frameworks */,
-				9CB638052C3BF60100B547F1 /* VCIClient in Frameworks */,
-				9C9008082C3D04A20041AF07 /* ios-tuvali-library in Frameworks */,
 				96905EF65AED1B983A6B3ABC /* libPods-Inji.a in Frameworks */,
 				9CB638082C3BF61500B547F1 /* pixelpass in Frameworks */,
 			);
@@ -520,7 +518,7 @@
 					"FB_SONARKIT_ENABLED=1",
 				);
 				INFOPLIST_FILE = Inji/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -559,7 +557,7 @@
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = V2ABX7953Z;
 				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
 				INFOPLIST_FILE = Inji/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

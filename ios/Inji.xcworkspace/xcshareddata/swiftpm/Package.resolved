@@ -47,23 +47,14 @@
       }
     },
     {
-      "identity" : "crcswift",
+      "identity" : "tuvali-ios-swift",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/ivanesik/CrcSwift.git",
+      "location" : "https://github.com/mosip/tuvali-ios-swift/",
       "state" : {
-        "revision" : "bb2fff7fb79815fad0528da71c9168d570bfc76c",
-        "version" : "0.0.3"
+        "branch" : "develop",
+        "revision" : "96bc662cd07df051cf2357691469bba57b0217e8"
       }
-    },
-    {
-      "identity" : "gzipswift",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/1024jp/GzipSwift",
-      "state" : {
-        "revision" : "7a7f17761c76a932662ab77028a4329f67d645a4",
-        "version" : "5.2.0"
-      }
-    },
+    }
   ],
   "version" : 2
 }
