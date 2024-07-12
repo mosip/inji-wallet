@@ -173,7 +173,7 @@ public class HistoryPage extends BasePage {
     }
 
     private boolean verifyActivationFailedRecordAndroid(String vcNumber) {
-        By locator = By.xpath("//*[contains(@text,'Activation of National ID" + vcNumber + " has failed.')]");
+        By locator = By.xpath("//*[contains(@text,'National ID " + vcNumber + " has failed.')]");
         return this.isElementDisplayed(locator);
     }
 
