@@ -164,6 +164,11 @@ public class DetailedVcViewPage extends BasePage{
     }
 
     public HomePage clickOnBackArrow() {
+        clickOnElement(backArrow);
+        return new HomePage(driver);
+    }
+
+    public HomePage clickOnArrowleft() {
         clickOnElement(arrowleft);
         return new HomePage(driver);
     }

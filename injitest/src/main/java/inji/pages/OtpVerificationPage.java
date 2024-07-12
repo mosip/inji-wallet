@@ -22,7 +22,7 @@ public class OtpVerificationPage extends BasePage {
     private WebElement invalidOtpMessage;
 
     @AndroidFindBy(accessibility = "walletBindingErrorTitle")
-    @iOSXCUITFindBy(iOSClassChain = "**/XCUIElementTypeStaticText[`label == \"Something is wrong. Please try again later!\"`]")
+    @iOSXCUITFindBy(accessibility = "walletBindingErrorTitle")
     private WebElement invalidOtpMessageInVcActivation;
 
     @AndroidFindBy(xpath = "//*[@text=\"Cancel\"]")

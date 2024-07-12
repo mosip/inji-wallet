@@ -896,7 +896,7 @@ public class MosipOtpAlternativeFlow extends AndroidBaseTest {
         assertTrue(otpVerificationPage.isCancelButtonDisplayed(), "Verify if cancel button is displayed");
 
         otpVerificationPage.clickOnCancelButton();
-        HistoryPage historyPage = detailedVcViewPage.clickOnBackArrow().clickOnHistoryButton();
+        HistoryPage historyPage = detailedVcViewPage.clickOnArrowleft().clickOnHistoryButton();
         assertTrue(historyPage.isHistoryPageLoaded(), "Verify if history page is displayed");
         assertTrue(historyPage.verifyActivationFailedRecordInHistory(uin, Target.ANDROID));
     }
