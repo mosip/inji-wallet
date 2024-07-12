@@ -1,4 +1,5 @@
 {
+  "originHash" : "37844cf80fe1416dd9922e75c396bd616f0723f347f5649a1c0355a3ba3f3a82",
   "pins" : [
     {
       "identity" : "base45-swift",
@@ -10,9 +11,27 @@
       }
     },
     {
+      "identity" : "crcswift",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/ivanesik/CrcSwift.git",
+      "state" : {
+        "revision" : "bb2fff7fb79815fad0528da71c9168d570bfc76c",
+        "version" : "0.0.3"
+      }
+    },
+    {
+      "identity" : "gzipswift",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/1024jp/GzipSwift",
+      "state" : {
+        "revision" : "7a7f17761c76a932662ab77028a4329f67d645a4",
+        "version" : "5.2.0"
+      }
+    },
+    {
       "identity" : "inji-vci-client-ios-swift",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/mosip/inji-vci-client-ios-swift.git",
+      "location" : "https://github.com/mosip/inji-vci-client-ios-swift/",
       "state" : {
         "branch" : "develop",
         "revision" : "2c2a3d2c321e11511f4667e3727587dc0cca61cb"
@@ -25,6 +44,15 @@
       "state" : {
         "branch" : "develop",
         "revision" : "0b716d5f6545b10de84c69edbf59565e66776ccd"
+      }
+    },
+    {
+      "identity" : "tuvali-ios-swift",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/mosip/tuvali-ios-swift/",
+      "state" : {
+        "branch" : "develop",
+        "revision" : "96bc662cd07df051cf2357691469bba57b0217e8"
       }
     }
   ],

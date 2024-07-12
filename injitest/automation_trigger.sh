@@ -103,6 +103,7 @@ access_key=$2
 test_type=$3
 platform=$4
 
+
 # Upload APK/IPA to BrowserStack and get app_url based on platform
 if [ "$platform" = "Android" ]; then
     app_url=$(upload_apk_and_get_url "$username" "$access_key")

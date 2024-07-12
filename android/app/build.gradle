@@ -258,6 +258,7 @@ dependencies {
     implementation 'com.facebook.soloader:soloader:0.10.1+'
     implementation("io.mosip:pixelpass:1.2-SNAPSHOT")
     implementation("io.mosip:secure-keystore:1.2-SNAPSHOT")
+    implementation("io.mosip:tuvali:0.5.0-SNAPSHOT")
 
     def isGifEnabled = (findProperty('expo.gif.enabled') ?: "") == "true";
     def isWebpEnabled = (findProperty('expo.webp.enabled') ?: "") == "true";
@@ -302,6 +303,17 @@ dependencies {
         implementation jscFlavor
     }
     implementation 'com.jakewharton.timber:timber:4.7.1'
+}
+
+task CaptureLibraryVersion {
+    def libDef = project.configurations.getByName('implementation').allDependencies.matching {
+        it.group.equals("io.mosip") && it.name.equals("tuvali")
+    }
+    if (libDef.size() > 0) {
+        android.buildTypes.each {
+            it.buildConfigField 'String', 'TUVALI_LIB_VERSION', "\"${libDef[0].version}\""
+        }
+    }
 }
 
 apply from: file("../../node_modules/@react-native-community/cli-platform-android/native_modules.gradle"); applyNativeModulesAppBuildGradle(project)
