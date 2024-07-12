@@ -76,16 +76,13 @@ export const FaceScanner: React.FC<FaceScannerProps> = props => {
     [isScanning],
   );
 
-  const whichCamera = () =>  {
-    return cameraType;
-  };
-
   const flipCamera = () => {
-    setCameraType(prevType => 
-      prevType === Camera.Constants.Type.front ? Camera.Constants.Type.back : Camera.Constants.Type.front
+    setCameraType(prevType =>
+      prevType === Camera.Constants.Type.front
+        ? Camera.Constants.Type.back
+        : Camera.Constants.Type.front,
     );
   };
-
 
   function handleOnCancel() {
     props.onCancel();
@@ -187,7 +184,7 @@ export const FaceScanner: React.FC<FaceScannerProps> = props => {
       <LivenessDetection
         screenColor={screenColor}
         infoText={infoText}
-        whichCamera={whichCamera}
+        whichCamera={cameraType}
         setCameraRef={setCameraRef}
         handleFacesDetected={handleFacesDetected}
         faceDetectorConfig={faceDetectorConfig}
@@ -200,7 +197,7 @@ export const FaceScanner: React.FC<FaceScannerProps> = props => {
   } else {
     return (
       <FaceCompare
-        whichCamera={whichCamera}
+        whichCamera={cameraType}
         setCameraRef={setCameraRef}
         flipCamera={flipCamera}
         isCapturing={isCapturing}
