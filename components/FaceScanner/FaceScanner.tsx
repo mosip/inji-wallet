@@ -15,7 +15,6 @@ import {
   selectIsValid,
   selectIsPermissionDenied,
   selectIsScanning,
-  selectWhichCamera,
   createFaceScannerMachine,
   selectIsInvalid,
   selectIsCapturing,
@@ -45,7 +44,7 @@ export const FaceScanner: React.FC<FaceScannerProps> = props => {
   const machine = useRef(createFaceScannerMachine(props.vcImage));
   const service = useInterpret(machine.current);
 
-  const whichCamera = useSelector(service, selectWhichCamera);
+  const [cameraType, setCameraType] = useState(Camera.Constants.Type.front);
   const cameraRef = useSelector(service, selectCameraRef);
 
   const isPermissionDenied = useSelector(service, selectIsPermissionDenied);
@@ -76,6 +75,17 @@ export const FaceScanner: React.FC<FaceScannerProps> = props => {
     },
     [isScanning],
   );
+
+  const whichCamera = () =>  {
+    return cameraType;
+  };
+
+  const flipCamera = () => {
+    setCameraType(prevType => 
+      prevType === Camera.Constants.Type.front ? Camera.Constants.Type.back : Camera.Constants.Type.front
+    );
+  };
+
 
   function handleOnCancel() {
     props.onCancel();
@@ -192,6 +202,7 @@ export const FaceScanner: React.FC<FaceScannerProps> = props => {
       <FaceCompare
         whichCamera={whichCamera}
         setCameraRef={setCameraRef}
+        flipCamera={flipCamera}
         isCapturing={isCapturing}
         isVerifying={isVerifying}
         service={service}

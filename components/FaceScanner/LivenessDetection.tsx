@@ -41,7 +41,7 @@ const LivenessDetection: React.FC<LivenessDetectionProps> = ({
             <Camera
               {...testIDProps('camera')}
               style={Theme.CameraEnabledStyles.scanner}
-              type={whichCamera}
+              type={whichCamera()}
               ref={setCameraRef}
               onFacesDetected={handleFacesDetected}
               faceDetectorSettings={faceDetectorConfig}
@@ -89,7 +89,7 @@ export default LivenessDetection;
 interface LivenessDetectionProps {
   screenColor: string;
   infoText: string;
-  whichCamera: CameraType;
+  whichCamera: () => CameraType;
   setCameraRef: (node: Camera) => void;
   handleFacesDetected: (faces: any) => Promise<void>;
   faceDetectorConfig: FaceDetectorConfig;
