@@ -24,7 +24,7 @@ const FaceCompare: React.FC<FaceCompareProps> = ({
             <Camera
               {...testIDProps('camera')}
               style={Theme.CameraEnabledStyles.scanner}
-              type={whichCamera()}
+              type={whichCamera}
               ref={setCameraRef}
             />
           </View>
@@ -73,7 +73,7 @@ const FaceCompare: React.FC<FaceCompareProps> = ({
 export default FaceCompare;
 
 interface FaceCompareProps {
-  whichCamera: () => CameraType;
+  whichCamera: CameraType;
   setCameraRef: (node: Camera) => void;
   isCapturing: boolean;
   isVerifying: boolean;
