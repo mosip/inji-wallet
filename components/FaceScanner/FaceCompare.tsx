@@ -10,6 +10,7 @@ import testIDProps from '../../shared/commonUtil';
 const FaceCompare: React.FC<FaceCompareProps> = ({
   whichCamera,
   setCameraRef,
+  flipCamera,
   isCapturing,
   isVerifying,
   service,
@@ -53,7 +54,7 @@ const FaceCompare: React.FC<FaceCompareProps> = ({
               </Text>
             </Centered>
             <Centered>
-              <TouchableOpacity onPress={() => service.send('FLIP_CAMERA')}>
+              <TouchableOpacity onPress={flipCamera}>
                 {SvgImage.FlipCameraIcon()}
               </TouchableOpacity>
               <Text
@@ -74,6 +75,7 @@ export default FaceCompare;
 interface FaceCompareProps {
   whichCamera: CameraType;
   setCameraRef: (node: Camera) => void;
+  flipCamera: () => void;
   isCapturing: boolean;
   isVerifying: boolean;
   service: any;
