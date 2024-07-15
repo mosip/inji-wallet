@@ -1,5 +1,5 @@
 import {Camera, CameraCapturedPicture, PermissionResponse} from 'expo-camera';
-import {CameraType, Face, ImageType} from 'expo-camera/build/Camera.types';
+import {ImageType} from 'expo-camera/build/Camera.types';
 import {Linking} from 'react-native';
 import {assign, EventFrom, StateFrom} from 'xstate';
 import {createModel} from 'xstate/lib/model';
@@ -13,14 +13,12 @@ const model = createModel(
       minWidth: 280,
       minHeight: 280,
     },
-    whichCamera: Camera.Constants.Type.front as CameraType,
     capturedImage: {} as CameraCapturedPicture,
     captureError: '',
   },
   {
     events: {
       READY: (cameraRef: Camera) => ({cameraRef}),
-      FLIP_CAMERA: () => ({}),
       CAPTURE: () => ({}),
       DENIED: (response: PermissionResponse) => ({response}),
       GRANTED: () => ({}),
@@ -31,11 +29,6 @@ const model = createModel(
 );
 
 export const FaceScannerEvents = model.events;
-
-export interface FaceScanResult {
-  metadata: Face;
-  image: CameraCapturedPicture;
-}
 
 export const createFaceScannerMachine = (vcImage: string) =>
   /** @xstate-layout N4IgpgJg5mDOIC5QDMCGBjMBldqB2eYATgHQCWeZALiegBZjoDWFUACsQLZmyxkD2eAMQARAKIA5AJJiRiUAAd+fKgLzyQAD0QBaAIwAmAyQMBWAJwBmABzWADHoAslywfOOANCACeu0wHYANhJ-R389SzC3QJjLAF84rzRMHHxCUgpqWgZmVg4ibl41IQBxACUAQQkAFVkNJRU1DW0EHUc7YxtA6z09c2sza3NzQK9fVtdjO0s7fqHrAL1-U0CEpIxsXAJickoaBS4ePkERMEpIIQB5NkkAfSwxauqpCRKseuVqJqQtXW6Q6aGbrWGymIzWMa6AwzEiOCwrZwzbp6QL+NYgZKbNI7TL7Q5FE5nMgXCpsNi3ABilwAwgBVB5yH4NL6CZpQ-zGazhQKmUwdSIGVGQiZGEjTWahIYGOx2azOdGY1LbDJ7EhEMAARwArnBVHh2PjjsJylVaozFJ9VKyfi03I4TJFHI4YqYFkEucL9JY9LC9GDxX7zAYQQqNkr0rssurtbq8obiuJpHUmZbvqAWkt7Y5g45ek7A4EnZ7JmLvQ4ZbKrI5zGjEhiw1sI7ihGUxBURABND6Na3pvzBfwclzWQs80y9CE+RBTexcwWy8eFlyhlKNnawRusEiYin8LV4CBCCCCMC7ABu-CYp8Va9IG7SW53e4PCAoF9wVrwAG07ABdbssuoNq6JY5gkN6gSGCiIJ6HYoTLMKrrGMssH2P4lj+HYzp6CuWLKiQ94EI+Gy7vuh7EEQ-CkAoAA2qBUMgVGcNuDbYnem76ixmCkS+b78B+ag-v+KY9kBfYINKpgkCMrpOg42auIEljCu0PqymEMyyoEBi5qsdY3mxBEcVAQgUgAMlI5LUhUACyYiVABn5sggegLCE-gDCCBiDjWIL+MKM6yhygQLiiiK4eG67GaZFTUmItziLU1Jmo5aa-BMIUkNpMzOOYQUYaMU4SWY0lBiM3qWK6qKOAkdZ4PwEBwBoBn4bi2SMCw+r5IURqpb26VtHYwQYUOSlWEYNieiF1ghGEhg1g47jLvprGtaqBwFEcainOcEB9WJA3mD6fIVQYfozNKLjFsGJCmDMIxLTl47xCtq6GW1G09WoJREPgVCQPtzmDfaGEYQMvJOpYSmehE-jSX6rmQdM7gRNYEW3pGNDRjqsB6gam0EgdzJOcBLkeSE0odIO-go3B-lFTorqWCYc2RA4yxBAY6PvXsgOk20MIjdCY2TJNDPIrN4TBpB0puOY3P4YRlCcU+ZF8+JjMzbYjhcjW7TmHyQTCjYM2yehMojjpKIKxGSvEZgEj8FQPF7SJgFA5l2aonK4Rgk43mmAF2awmVmGVa5zpwjbUUPvq6sDTY9rZVhoH5UbRVOHYpXRNmZgebMXOvXhTacKgMDUqgChUFq6quxaolA+0YoxAjbgjrYRjCuhUlmO0Osophzq1usb3KvHLRtKYIODsLoGi5O4w6Ms9rwYYyxGL0ha1XEQA */
@@ -118,9 +111,6 @@ export const createFaceScannerMachine = (vcImage: string) =>
             CAPTURE: {
               target: 'capturing',
             },
-            FLIP_CAMERA: {
-              actions: 'flipWhichCamera',
-            },
           },
         },
         capturing: {
@@ -173,13 +163,6 @@ export const createFaceScannerMachine = (vcImage: string) =>
 
         setCapturedImage: assign({
           capturedImage: (_context, event) => event.data,
-        }),
-
-        flipWhichCamera: model.assign({
-          whichCamera: context =>
-            context.whichCamera === Camera.Constants.Type.front
-              ? Camera.Constants.Type.back
-              : Camera.Constants.Type.front,
         }),
 
         setCaptureError: assign({
@@ -235,10 +218,6 @@ export const createFaceScannerMachine = (vcImage: string) =>
   );
 
 type State = StateFrom<ReturnType<typeof createFaceScannerMachine>>;
-
-export function selectWhichCamera(state: State) {
-  return state.context.whichCamera;
-}
 
 export function selectCameraRef(state: State) {
   return state.context.cameraRef;
