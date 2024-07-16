@@ -12,6 +12,7 @@ const FaceCompare: React.FC<FaceCompareProps> = ({
   setCameraRef,
   isCapturing,
   isVerifying,
+  flipCamera,
   service,
   t,
 }) => {
@@ -53,7 +54,7 @@ const FaceCompare: React.FC<FaceCompareProps> = ({
               </Text>
             </Centered>
             <Centered>
-              <TouchableOpacity onPress={() => service.send('FLIP_CAMERA')}>
+              <TouchableOpacity onPress={flipCamera}>
                 {SvgImage.FlipCameraIcon()}
               </TouchableOpacity>
               <Text
@@ -76,6 +77,7 @@ interface FaceCompareProps {
   setCameraRef: (node: Camera) => void;
   isCapturing: boolean;
   isVerifying: boolean;
+  flipCamera: () => void;
   service: any;
   t: (key: string) => string;
 }
