@@ -75,11 +75,11 @@ public class TestDataReader {
             case "invalidenv":
                 return "https://api.dev3.mosip";
             case "fullNameSunbird":
-                return "Aswin";
+                return "PolicyTestName";
             case "policyNameSunbird":
                 return "Talapathy Rasigar Mandram";
             case "policyNumberSunbird":
-                return "1234567890";
+                return "12072024";
             case "idTypeSunbird":
                 return "Health Insurance";
             case "idTypeSunbirdHindi":

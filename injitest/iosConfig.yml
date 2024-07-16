@@ -41,8 +41,8 @@ platforms:
       deviceName: iPhone 13 Pro
       platformVersion: 15
     - platformName: ios
-      deviceName: iPhone 11
-      platformVersion: 14
+      deviceName: iPhone 15 Pro Max
+      platformVersion: 17
 # =======================
 # Parallels per Platform
 # =======================
