@@ -14,7 +14,6 @@ buildscript {
         google()
         jcenter()
         mavenCentral()
-        
     }
     dependencies {
         classpath("com.android.tools.build:gradle:7.3.1")
@@ -28,5 +27,7 @@ buildscript {
 def expoCameraMavenPath = new File(["node", "--print", "require.resolve('expo-camera/package.json')"].execute(null, rootDir).text.trim(), "../android/maven")
 allprojects { repositories { 
     maven{url("https://oss.sonatype.org/content/repositories/snapshots/")}
-    maven { url(expoCameraMavenPath) } } }
+    maven { url(expoCameraMavenPath) }
+    mavenCentral()
+} }
 // @generated end expo-camera-import

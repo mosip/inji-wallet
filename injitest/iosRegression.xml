@@ -127,7 +127,6 @@
                 <methods>
                     <include name="copyAppId"/>
                     <include name="verifyAppId"/>
-                    <include name="verifyTuvaliVersion"/>
                 </methods>
             </class>
 		</classes>

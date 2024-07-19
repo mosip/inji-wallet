@@ -449,7 +449,7 @@ public class NoNetworkAndroidTest extends AndroidBaseTest {
         esignetLoginPage.clickOnGetOtpButton();
         assertTrue(esignetLoginPage.isOtpHasSendMessageDisplayed(),"verify if otp page is displayed");
         
-        otpVerification.enterOtpForEsignet(TestDataReader.readData("otp"), Target.ANDROID);
+        otpVerification.enterOtpForEsignet(BaseTestCase.getOtp(), Target.ANDROID);
         esignetLoginPage.clickOnVerifyButton();
 
         String sessionId  = driver.getSessionId().toString();
@@ -496,7 +496,7 @@ public class NoNetworkAndroidTest extends AndroidBaseTest {
         esignetLoginPage.clickOnGetOtpButton();
         assertTrue(esignetLoginPage.isOtpHasSendMessageDisplayed(),"verify if otp page is displayed");
         
-        otpVerification.enterOtpForEsignet(TestDataReader.readData("otp"), Target.ANDROID);
+        otpVerification.enterOtpForEsignet(BaseTestCase.getOtp(), Target.ANDROID);
         esignetLoginPage.clickOnVerifyButton();
 
 
@@ -550,7 +550,7 @@ public class NoNetworkAndroidTest extends AndroidBaseTest {
         esignetLoginPage.clickOnGetOtpButton();
         assertTrue(esignetLoginPage.isOtpHasSendMessageDisplayed(),"verify if otp page is displayed");
         
-        otpVerification.enterOtpForEsignet(TestDataReader.readData("otp"), Target.ANDROID);
+        otpVerification.enterOtpForEsignet(BaseTestCase.getOtp(), Target.ANDROID);
         esignetLoginPage.clickOnVerifyButton();
         
 //        assertTrue(esignetLoginPage.isProgressingLogoDisplayed(),"verify if Progressing page is displayed");
@@ -616,7 +616,7 @@ public class NoNetworkAndroidTest extends AndroidBaseTest {
        esignetLoginPage.clickOnGetOtpButton();
        assertTrue(esignetLoginPage.isOtpHasSendMessageDisplayed(),"verify if otp page is displayed");
        
-       otpVerification.enterOtpForEsignet(TestDataReader.readData("otp"), Target.ANDROID);
+       otpVerification.enterOtpForEsignet(BaseTestCase.getOtp(), Target.ANDROID);
        esignetLoginPage.clickOnVerifyButton();
        
        assertTrue(homePage.isNameDisplayed(TestDataReader.readData("fullName")), "Verify if full name is displayed");

@@ -142,7 +142,7 @@ public class PinVcTest extends IosBaseTest {
         OtpVerificationPage otpVerification= esignetLoginPage.setEnterIdTextBox(uin);
         esignetLoginPage.clickOnGetOtpButton();
 
-        otpVerification.enterOtpForEsignet(TestDataReader.readData("otp"), Target.IOS);
+        otpVerification.enterOtpForEsignet(BaseTestCase.getOtp(), Target.IOS);
         esignetLoginPage.clickOnVerifyButtonIos();
 
         assertTrue(homePage.isNameDisplayed(TestDataReader.readData("fullName")), "Verify if full name is displayed");

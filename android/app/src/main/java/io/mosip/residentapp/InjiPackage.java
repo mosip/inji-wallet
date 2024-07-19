@@ -10,7 +10,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-  
+import io.mosip.tuvali.verifier.Verifier;
+import io.mosip.tuvali.wallet.Wallet;
+
 public class InjiPackage implements ReactPackage {
     @NonNull
     @Override
@@ -20,6 +22,9 @@ public class InjiPackage implements ReactPackage {
         modules.add(new InjiVciClientModule(reactApplicationContext));
         modules.add(new RNPixelpassModule(reactApplicationContext));
         modules.add(new RNSecureKeystoreModule(reactApplicationContext));
+        modules.add(new RNVersionModule());
+        modules.add(new RNWalletModule(new RNEventEmitter(reactApplicationContext), new Wallet(reactApplicationContext), reactApplicationContext));
+        modules.add(new RNVerifierModule(new RNEventEmitter(reactApplicationContext), new Verifier(reactApplicationContext), reactApplicationContext));
         return modules;
     }
 
