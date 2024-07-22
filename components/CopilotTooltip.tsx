@@ -26,7 +26,7 @@ export const CopilotTooltip = () => {
   });
 
   return (
-    <Column>
+    <Column style={Theme.Styles.copilotBgContainer}>
       <Text testID={controller.titleTestID} weight="bold" margin="0 0 10 0">
         {controller.currentStepTitle}
       </Text>

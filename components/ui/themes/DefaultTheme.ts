@@ -725,7 +725,11 @@ export const DefaultTheme = {
     },
     copilotButtonsContainer: {
       marginTop: 25,
-      marginBottom: isIOS() ? 10 : 0,
+      marginBottom: 15,
+    },
+    copilotBgContainer: {
+      flex: 1,
+      justifyContent: 'space-around',
     },
   }),
   BannerStyles: StyleSheet.create({
