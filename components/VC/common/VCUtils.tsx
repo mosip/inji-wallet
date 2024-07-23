@@ -102,6 +102,10 @@ export const getBackgroundColour = (wellknown: any) => {
   return wellknown?.display[0]?.background_color ?? Theme.Colors.textValue;
 };
 
+export const getBackgroundImage = (wellknown: any, defaultBackground: any) => {
+  return wellknown?.display[0]?.background_image ?? defaultBackground;
+};
+
 export const getTextColor = (wellknown: any, defaultColor: string) => {
   return wellknown?.display[0]?.text_color ?? defaultColor;
 };
@@ -209,7 +213,7 @@ export const getIdType = (
   ) {
     let supportedCredentialsWellknown;
     wellknown = parseJSON(wellknown) as unknown as Object[];
-    if (!!!wellknown['credentials_supported']) {
+    if (!!!wellknown['credential_configurations_supported']) {
       return i18n.t('VcDetails:nationalCard');
     }
     supportedCredentialsWellknown = getSelectedCredentialTypeDetails(

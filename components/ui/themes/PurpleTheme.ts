@@ -216,6 +216,17 @@ export const PurpleTheme = {
       flexDirection: 'row',
       paddingRight: 90,
     },
+    vcDetailBg: {
+      width: '100%',
+      opacity: 0.1,
+    },
+    vcBg: {
+      opacity: 0.1,
+    },
+    shimmer: {
+      borderRadius: 5,
+      marginLeft: 2,
+    },
     loadingContainer: {
       flex: 1,
       flexDirection: 'row',

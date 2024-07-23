@@ -9,7 +9,11 @@ import {Theme} from '../../ui/styleUtils';
 import {CheckBox, Icon} from 'react-native-elements';
 import {SvgImage} from '../../ui/svg';
 import {VcItemContainerProfileImage} from '../../VcItemContainerProfileImage';
-import {isVCLoaded, getBackgroundColour} from '../common/VCUtils';
+import {
+  isVCLoaded,
+  getBackgroundColour,
+  getBackgroundImage,
+} from '../common/VCUtils';
 import {VCItemFieldValue} from '../common/VCItemField';
 import {WalletBinding} from '../../../screens/Home/MyVcs/WalletBinding';
 import {VCVerification} from '../../VCVerification';
@@ -42,10 +46,12 @@ export const VCCardViewContent: React.FC<VCItemContentProps> = props => {
   const {start} = useCopilot();
   const {t} = useTranslation();
 
+
   return (
     <ImageBackground
-      source={Theme.CloseCard}
+      source={getBackgroundImage(props.wellknown, Theme.CloseCard)}
       resizeMode="stretch"
+      imageStyle={Theme.Styles.vcBg}
       style={[
         Theme.Styles.backgroundImageContainer,
         getBackgroundColour(props.wellknown),
