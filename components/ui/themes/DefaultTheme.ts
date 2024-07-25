@@ -7,7 +7,7 @@ import {
   ViewStyle,
 } from 'react-native';
 import {Spacing} from '../styleUtils';
-import {isIOS} from '../../../shared/constants';
+import {COPILOT_HEIGHT, isIOS} from '../../../shared/constants';
 import Constants from 'expo-constants';
 
 const Colors = {
@@ -716,7 +716,7 @@ export const DefaultTheme = {
       right: 10,
       borderRadius: 8,
       maxWidth: Dimensions.get('screen').width,
-      minHeight: Dimensions.get('screen').height * 0.22,
+      minHeight: Dimensions.get('screen').height * COPILOT_HEIGHT,
     },
     copilotButton: {
       width: 104,
