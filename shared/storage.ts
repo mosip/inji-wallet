@@ -350,14 +350,14 @@ class Storage {
           vc.vcMetadata.timestamp = ts;
           vc.vcMetadata.isVerified = isVerified;
 
-          dataFromDB.myVCs.forEach(myVcMetadata => {
+          dataFromDB.myVCs.map(async myVcMetadata => {
             if (
               myVcMetadata.requestId === vc.vcMetadata.requestId &&
               myVcMetadata.timestamp === prevUnixTimeStamp
             ) {
-              myVcMetadata.isVerified = isVerified;
               myVcMetadata.timestamp = ts;
             }
+            myVcMetadata.isVerified = isVerified;
           });
           const updatedVcKey = new VCMetadata(vc.vcMetadata).getVcKey();
 
