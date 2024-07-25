@@ -77,7 +77,7 @@ public class TestDataReader {
             case "fullNameSunbird":
                 return "PolicyTestName";
             case "policyNameSunbird":
-                return "Talapathy Rasigar Mandram";
+                return "PolicyTest";
             case "policyNumberSunbird":
                 return "12072024";
             case "idTypeSunbird":
@@ -85,13 +85,13 @@ public class TestDataReader {
             case "idTypeSunbirdHindi":
                 return "Health Insurance";
             case "phoneNumberSunbird":
-                return "8220255752";
+                return "0123456789";
             case "dateOfBirthSunbird":
                 return "2024-01-01";
             case "genderValueSunbird":
-                return "Female";
+                return "Male";
             case "emailIdValueSunbird":
-                return "santhosdss14@gmail.com";
+                return "abhishek@gmail.com";
             case "statusValueSunbird":
                 return "Valid";
             case "statusValueSunbirdForVaild":

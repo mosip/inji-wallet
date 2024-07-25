@@ -67,6 +67,12 @@ public class SunbirdLoginPage extends BasePage {
     @iOSXCUITFindBy(accessibility = "a Veridonia logo")
     private WebElement sunbirdLogo;
 
+    @AndroidFindBy(accessibility = "a square logo of a Sunbird")
+    @iOSXCUITFindBy(accessibility = "a square logo of a Sunbird")
+    private WebElement sunbirdSquareLogo;
+
+
+
     @AndroidFindBy(accessibility = "fullNameValue")
     @iOSXCUITFindBy(accessibility = "fullNameValue")
     private WebElement fullName;
@@ -225,8 +231,16 @@ public class SunbirdLoginPage extends BasePage {
     }
 
     public boolean isSunbirdCardLogoIsDisplayed() {
-        basePage.retrieToGetElement(sunbirdLogo);
-        return this.isElementDisplayed(sunbirdLogo);
+        if(isElementDisplayed(sunbirdSquareLogo)){
+            basePage.retrieToGetElement(sunbirdSquareLogo);
+            return true;
+        } else if (isElementDisplayed(sunbirdLogo)) {
+            basePage.retrieToGetElement(sunbirdLogo);
+            return true;
+        }
+        else {
+            return false;
+        }
     }
 
     public String getFullNameForSunbirdCard() {
@@ -263,7 +277,7 @@ public class SunbirdLoginPage extends BasePage {
     }
 
     public String getEmailIdValueForSunbirdCard() {
-        IosUtil.scrollToElement(driver, 171, 2149, 625, 1944);
+        IosUtil.scrollToElement(driver,100,800,100,200);
         basePage.retrieToGetElement(emailIdValue);
         return this.getTextFromLocator(emailIdValue);
     }
