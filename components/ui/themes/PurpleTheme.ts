@@ -7,7 +7,7 @@ import {
   ViewStyle,
 } from 'react-native';
 import {Spacing} from '../styleUtils';
-import {isIOS} from '../../../shared/constants';
+import {COPILOT_HEIGHT, isIOS} from '../../../shared/constants';
 import Constants from 'expo-constants';
 
 const Colors = {
@@ -718,8 +718,9 @@ export const PurpleTheme = {
       position: 'absolute',
       left: 10,
       right: 10,
+      borderRadius: 8,
       maxWidth: Dimensions.get('screen').width,
-      height: Dimensions.get('screen').height * 0.2,
+      minHeight: Dimensions.get('screen').height * COPILOT_HEIGHT,
     },
     copilotButton: {
       width: 104,
@@ -728,7 +729,11 @@ export const PurpleTheme = {
     },
     copilotButtonsContainer: {
       marginTop: 25,
-      marginBottom: isIOS() ? 10 : 0,
+      marginBottom: 15,
+    },
+    copilotBgContainer: {
+      flex: 1,
+      justifyContent: 'space-around',
     },
   }),
   BannerStyles: StyleSheet.create({
