@@ -4,12 +4,7 @@ import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.pagefactory.AndroidFindBy;
 import io.appium.java_client.pagefactory.iOSXCUITFindBy;
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.remote.RemoteWebElement;
-
-import com.google.common.collect.ImmutableMap;
 
 public class HomePage extends BasePage {
     @AndroidFindBy(accessibility = "plusIcon")
@@ -374,7 +369,7 @@ public class HomePage extends BasePage {
     }
 
     public boolean isDownloadingVcPopupDisplayed() {
-        return this.retrieIsElementVisible(downloadingVcPopup);
+        return this.retryElementVisible(downloadingVcPopup);
     }
 
     public String getfullNameTitleText() {
@@ -404,7 +399,7 @@ public class HomePage extends BasePage {
     }
 
     public boolean isActivatedVcPopupTextDisplayed() {
-        return this.retrieIsElementVisible(activatedVcPopupText);
+        return this.retryElementVisible(activatedVcPopupText);
     }
 
     public void clickPopupCloseButtonButton() {

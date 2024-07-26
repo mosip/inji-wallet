@@ -7,6 +7,7 @@ import inji.pages.*;
 import inji.utils.IosUtil;
 import inji.utils.TestDataReader;
 import org.testng.annotations.Test;
+import org.testng.asserts.SoftAssert;
 
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
@@ -73,6 +74,7 @@ public class ChangeLanguageTest extends IosBaseTest {
 
     @Test
     public void verifyTuvaliVersion() {
+        SoftAssert softAssert = new SoftAssert();
         ChooseLanguagePage chooseLanguagePage = new ChooseLanguagePage(driver);
 
         assertTrue(chooseLanguagePage.isChooseLanguagePageLoaded(), "Verify if choose language page is displayed");
@@ -95,7 +97,7 @@ public class ChangeLanguageTest extends IosBaseTest {
         SettingsPage settingsPage = homePage.clickOnSettingIcon();
 
         assertTrue(settingsPage.isSettingPageLoaded(), "Verify if setting page is displayed");
-        assertTrue(settingsPage.clickOnAboutInji().isTuvaliVersionPresent());
+        softAssert.assertTrue(settingsPage.clickOnAboutInji().isTuvaliVersionPresent());
     }
 
     @Test
