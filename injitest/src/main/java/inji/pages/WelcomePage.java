@@ -4,7 +4,6 @@ import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.pagefactory.AndroidFindBy;
 import io.appium.java_client.pagefactory.iOSXCUITFindBy;
 import org.openqa.selenium.WebElement;
-import org.testng.Assert;
 
 public class WelcomePage extends BasePage {
 
@@ -38,7 +37,7 @@ public class WelcomePage extends BasePage {
     }
 
     public boolean isWelcomePageLoaded() {
-        basePage.retrieToGetElement(welcomeText);
+        basePage.retryToGetElement(welcomeText);
         return this.isElementDisplayed(welcomeText);
     }
 
@@ -53,7 +52,7 @@ public class WelcomePage extends BasePage {
     }
 
     public String getWelcomeDescription() {
-        basePage.retrieToGetElement(welcomeTextDescription);
+        basePage.retryToGetElement(welcomeTextDescription);
         return this.getTextFromLocator(welcomeTextDescription);
     }
 
