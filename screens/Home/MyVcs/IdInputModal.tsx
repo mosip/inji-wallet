@@ -145,10 +145,10 @@ export const IdInputModal: React.FC<IdInputModalProps> = props => {
           </Row>
           <Column>
             <Button
-              testID="generateVc"
+              testID="downloadID"
               type="gradient"
               margin="0 0 10 0"
-              title={t('generateVc')}
+              title={t('downloadID')}
               disabled={!controller.id}
               onPress={controller.VALIDATE_INPUT}
               loading={controller.isRequestingOtp}
