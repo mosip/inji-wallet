@@ -30,12 +30,12 @@
   "FaceScanner": {
     "livenessCaptureGuide": "Hawakan nang matatag ang telepono, panatilihing nakatutok ang iyong mukha sa gitna.",
     "faceProcessingInfo": "Mangyaring maghintay habang pinoproseso namin ang data.",
-    "faceOutGuide": "Panatilihin ang iyong mukha sa loob ng oval!",
     "faceInGuide": "Kasalukuyang kumukuha!",
     "cancel": "Kanselahin",
     "imageCaptureGuide": "Hawakan nang matatag ang telepono, panatilihing nakatutok ang iyong mukha sa gitna at mag-click sa Capture.",
     "capture": "Kunin",
-    "flipCamera": "I-flip ang Camera"
+    "flipCamera": "I-flip ang Camera",
+    "multipleFacesDetectedGuide": "Maramihang mukha ang nakita. Tiyaking ikaw lang ang nasa frame para sa pag-verify."
   },
   "OIDcAuth": {
     "title": "OIDC Authentication",
@@ -724,9 +724,13 @@
       }
     },
     "postFaceCapture": {
-      "captureSuccessMessage": "Matagumpay ang Face Verification! Sinisimulan ang pagbabahagi ng kredensyal.",
-      "captureFailureTitle": "Nabigo ang pag-verify ng mukha!",
-      "captureFailureMessage": "Pakitiyak na malinaw na nakikita ang iyong mukha at subukang mag-selfie muli."
+      "successMessage": "Matagumpay ang Face Verification! Sinisimulan ang pagbabahagi ng kredensyal.",
+      "failureTitle": "Nabigo ang Pag-verify ng Mukha!",
+      "failureMessage": "Pakitiyak na malinaw na nakikita ang iyong mukha at subukang mag-selfie muli.",
+      "LivenessDetection": {
+        "retryFailureMessage": "Hindi namin naibahagi ang iyong card dahil sa pagkabigo sa liveness detection. Paki-click ang Subukang muli upang subukang ibahagi muli ang iyong card, o i-click ang Home upang lumabas sa pagbabahagi.",
+        "maxRetryFailureMessage": "Paumanhin! Hindi namin naibahagi ang iyong card dahil sa pagkabigo sa liveness detection. Subukang muli mamaya."
+      }
     },
     "rational": {
       "title": "I-on ang iyong lokasyon",

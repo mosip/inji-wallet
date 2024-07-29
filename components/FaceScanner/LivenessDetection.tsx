@@ -4,7 +4,6 @@ import {View, TouchableOpacity} from 'react-native';
 import Spinner from 'react-native-spinkit';
 import {Column, Text} from '.././ui';
 import {Theme} from '.././ui/styleUtils';
-import Svg, {Defs, Mask, Rect, Ellipse} from 'react-native-svg';
 import testIDProps from '../../shared/commonUtil';
 import {FaceDetectorConfig} from './FaceScannerHelper';
 
@@ -46,20 +45,6 @@ const LivenessDetection: React.FC<LivenessDetectionProps> = ({
               onFacesDetected={handleFacesDetected}
               faceDetectorSettings={faceDetectorConfig}
             />
-            <Svg height="100%" width="100%" style={{position: 'absolute'}}>
-              <Defs>
-                <Mask id="mask" x="0" y="0" height="100%" width="100%">
-                  <Rect height="100%" width="100%" fill="#fff" opacity="0.3" />
-                  <Ellipse rx="38%" ry="45%" cx="50%" cy="50%" fill="black" />
-                </Mask>
-              </Defs>
-              <Rect
-                height="100%"
-                width="100%"
-                fill="rgba(0, 0, 0, 0.8)"
-                mask="url(#mask)"
-              />
-            </Svg>
           </View>
         </View>
       </View>

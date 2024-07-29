@@ -27,12 +27,12 @@
   "FaceScanner": {
     "livenessCaptureGuide": "Hold the phone steady, keep your face focused in the centre.",
     "faceProcessingInfo": "Please wait while we process the data.",
-    "faceOutGuide": "Keep your face inside the oval!",
     "faceInGuide": "Capturing in progress!",
     "imageCaptureGuide": "Hold the phone steady, keep your face focused in the centre and click on Capture.",
     "capture": "Capture",
     "cancel": "Cancel",
-    "flipCamera": "Flip Camera"
+    "flipCamera": "Flip Camera",
+    "multipleFacesDetectedGuide": "Multiple faces detected. Make sure only you are in the frame for verification."
   },
   "OIDcAuth": {
     "title": "OIDC Authentication",
@@ -733,9 +733,13 @@
       }
     },
     "postFaceCapture": {
-      "captureSuccessMessage": "Face Verification is successful! Credential sharing is initiated.",
-      "captureFailureTitle": "Face verification failed!",
-      "captureFailureMessage": "Please ensure that your face is clearly visible and try taking selfie again."
+      "successMessage": "Face Verification is successful! Credential sharing is initiated.",
+      "failureTitle": "Face Verification Failed!",
+      "failureMessage": "Please ensure that your face is clearly visible and try taking selfie again.",
+      "LivenessDetection": {
+        "retryFailureMessage": "We were unable to share your card due to a failure in liveness detection. Please click Retry to attempt sharing your card again, or click Home to exit sharing.",
+        "maxRetryFailureMessage": "Sorry! We were unable to share your card due to a failure in liveness detection. Please try again later."
+      }
     },
     "rational": {
       "title": "Turn on your location",

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {FaceScanner} from '../components/FaceScanner/FaceScanner';
 import {Column} from '../components/ui';
 import {Theme} from '../components/ui/styleUtils';
@@ -7,11 +7,13 @@ import {Modal} from '../components/ui/Modal';
 import {useTranslation} from 'react-i18next';
 import {Error} from '../components/ui/Error';
 import {SvgImage} from '../components/ui/svg';
+import {LIVENESS_CHECK_RETRY_LIMIT} from '../shared/constants';
 
 export const VerifyIdentityOverlay: React.FC<
   VerifyIdentityOverlayProps
 > = props => {
   const {t} = useTranslation('VerifyIdentityOverlay');
+  const [retryCount, setRetryCount] = useState(0);
   const credential = props.credential;
   const vcImage = props.verifiableCredentialData.face;
 
@@ -32,6 +34,17 @@ export const VerifyIdentityOverlay: React.FC<
     modalProps.showClose = false;
     modalProps.showHeader = false;
   }
+
+  const handlePrimaryButtonEvent = () => {
+    setRetryCount(retryCount + 1);
+    props.onRetryVerification();
+  };
+
+  const faceDetectionFailureMessage = props.isLivenessEnabled
+    ? retryCount < LIVENESS_CHECK_RETRY_LIMIT
+      ? t('ScanScreen:postFaceCapture.LivenessDetection.retryFailureMessage')
+      : t('ScanScreen:postFaceCapture.LivenessDetection.maxRetryFailureMessage')
+    : t('ScanScreen:postFaceCapture.failureMessage');
 
   return (
     <>
@@ -57,12 +70,18 @@ export const VerifyIdentityOverlay: React.FC<
         alignActionsOnEnd
         showClose={false}
         isVisible={props.isInvalidIdentity}
-        title={t('ScanScreen:postFaceCapture.captureFailureTitle')}
-        message={t('ScanScreen:postFaceCapture.captureFailureMessage')}
+        title={t('ScanScreen:postFaceCapture.failureTitle')}
+        message={faceDetectionFailureMessage}
         image={SvgImage.PermissionDenied()}
         primaryButtonTestID={'retry'}
-        primaryButtonText={t('ScanScreen:status.retry')}
-        primaryButtonEvent={props.onRetryVerification}
+        primaryButtonText={
+          (props.isLivenessEnabled &&
+            retryCount < LIVENESS_CHECK_RETRY_LIMIT) ||
+          !props.isLivenessEnabled
+            ? t('ScanScreen:status.retry')
+            : undefined
+        }
+        primaryButtonEvent={handlePrimaryButtonEvent}
         textButtonTestID={'home'}
         textButtonText={t('ScanScreen:status.accepted.home')}
         textButtonEvent={props.onNavigateHome}

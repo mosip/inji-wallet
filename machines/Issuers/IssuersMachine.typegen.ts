@@ -181,7 +181,9 @@ export interface Typegen0 {
       | 'error.platform.issuersMachine.performAuthorization:invocation[0]';
     resetVerificationErrorMessage: 'RESET_VERIFY_ERROR';
     sendBackupEvent: 'done.invoke.issuersMachine.storing:invocation[0]';
-    sendDownloadingFailedToVcMeta: 'error.platform.issuersMachine.downloadCredentials:invocation[0]';
+    sendDownloadingFailedToVcMeta:
+      | 'error.platform.issuersMachine.downloadCredentials:invocation[0]'
+      | 'error.platform.issuersMachine.performAuthorization:invocation[0]';
     sendErrorEndEvent: 'error.platform.issuersMachine.verifyingCredential:invocation[0]';
     sendImpressionEvent: 'done.invoke.issuersMachine.displayIssuers:invocation[0]';
     sendSuccessEndEvent: 'done.invoke.issuersMachine.verifyingCredential:invocation[0]';

@@ -27,7 +27,7 @@ import {Theme} from '.././ui/styleUtils';
 import {getRandomInt} from '../../shared/commonUtil';
 import {
   checkBlink,
-  cropEyeAreaFromFace,
+  validateLiveness,
   faceDetectorConfig,
   getFaceBounds,
   imageCaptureConfig,
@@ -59,7 +59,7 @@ export const FaceScanner: React.FC<FaceScannerProps> = props => {
   const [screenColor, setScreenColor] = useState('#0000ff');
   const [faceToCompare, setFaceToCompare] = useState(null);
   const [opacity, setOpacity] = useState(1);
-  const [picArray, setPicArray] = useState([]);
+  const [capturedImages, setCapturedImages] = useState([]);
 
   const screenFlashColors = ['#0000FF', '#00FF00', '#FF0000'];
   const MAX_COUNTER = 15;
@@ -95,7 +95,10 @@ export const FaceScanner: React.FC<FaceScannerProps> = props => {
           imageCaptureConfig,
         );
 
-        setPicArray([...picArray, {color: screenColor, image: capturedImage}]);
+        setCapturedImages([
+          ...capturedImages,
+          {screenColor: screenColor, capturedImageUri: capturedImage.uri},
+        ]);
 
         if (counter === randomNumToFaceCompare) {
           setFaceToCompare(capturedImage);
@@ -107,26 +110,15 @@ export const FaceScanner: React.FC<FaceScannerProps> = props => {
   }
 
   async function handleFacesDetected({faces}) {
-    checkBlink(faces[0]);
-
-    if (counter == MAX_COUNTER) {
-      setCounter(counter + 1);
-      cameraRef.pausePreview();
-
-      setScreenColor('#ffffff');
-      setInfoText(t('faceProcessingInfo'));
-
-      const result = await cropEyeAreaFromFace(
-        picArray,
-        props.vcImage,
-        faceToCompare,
-      );
-      return result ? props.onValid() : props.onInvalid();
-    } else if (faces.length > 0) {
+    if (counter < MAX_COUNTER) {
+      if (faces.length > 1) {
+        setInfoText(t('multipleFacesDetectedGuide'));
+        return;
+      }
+      setInfoText(t('livenessCaptureGuide'));
+      checkBlink(faces[0]);
       const [withinXBounds, withinYBounds, withinYawAngle, withinRollAngle] =
         getFaceBounds(faces[0]);
-
-      setInfoText(t('faceOutGuide'));
 
       if (
         withinXBounds &&
@@ -142,6 +134,18 @@ export const FaceScanner: React.FC<FaceScannerProps> = props => {
         setInfoText(t('faceInGuide'));
         await captureImage(screenColor);
       }
+    } else {
+      cameraRef.pausePreview();
+
+      setScreenColor('#ffffff');
+      setInfoText(t('faceProcessingInfo'));
+
+      const isLiveImage = await validateLiveness(
+        capturedImages,
+        props.vcImage,
+        faceToCompare,
+      );
+      return isLiveImage ? props.onValid() : props.onInvalid();
     }
   }
 
