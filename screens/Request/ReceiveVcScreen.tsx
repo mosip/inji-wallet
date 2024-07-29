@@ -1,20 +1,20 @@
-import React, {useEffect, useState} from 'react';
-import {useTranslation} from 'react-i18next';
-import {DeviceInfoList} from '../../components/DeviceInfoList';
-import {Button, Column, Text} from '../../components/ui';
-import {Theme} from '../../components/ui/styleUtils';
-import {useReceiveVcScreen} from './ReceiveVcScreenController';
-import {VerifyIdentityOverlay} from '../VerifyIdentityOverlay';
-import {MessageOverlay} from '../../components/MessageOverlay';
-import {useOverlayVisibleAfterTimeout} from '../../shared/hooks/useOverlayVisibleAfterTimeout';
-import {VcDetailsContainer} from '../../components/VC/VcDetailsContainer';
-import {SharingStatusModal} from '../Scan/SharingStatusModal';
-import {SvgImage} from '../../components/ui/svg';
-import {DETAIL_VIEW_DEFAULT_FIELDS} from '../../components/VC/common/VCUtils';
-import {getDetailedViewFields} from '../../shared/openId4VCI/Utils';
+import React, { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { DeviceInfoList } from '../../components/DeviceInfoList';
+import { Button, Column, Text } from '../../components/ui';
+import { Theme } from '../../components/ui/styleUtils';
+import { useReceiveVcScreen } from './ReceiveVcScreenController';
+import { VerifyIdentityOverlay } from '../VerifyIdentityOverlay';
+import { MessageOverlay } from '../../components/MessageOverlay';
+import { useOverlayVisibleAfterTimeout } from '../../shared/hooks/useOverlayVisibleAfterTimeout';
+import { VcDetailsContainer } from '../../components/VC/VcDetailsContainer';
+import { SharingStatusModal } from '../Scan/SharingStatusModal';
+import { SvgImage } from '../../components/ui/svg';
+import { DETAIL_VIEW_DEFAULT_FIELDS } from '../../components/VC/common/VCUtils';
+import { getDetailedViewFields } from '../../shared/openId4VCI/Utils';
 
 export const ReceiveVcScreen: React.FC = () => {
-  const {t} = useTranslation('ReceiveVcScreen');
+  const { t } = useTranslation('ReceiveVcScreen');
   const [fields, setFields] = useState([]);
   const [wellknown, setWellknown] = useState(null);
   const controller = useReceiveVcScreen();
@@ -27,7 +27,6 @@ export const ReceiveVcScreen: React.FC = () => {
   useEffect(() => {
     getDetailedViewFields(
       verifiableCredentialData?.issuer,
-      verifiableCredentialData?.wellKnown,
       verifiableCredentialData?.credentialTypes,
       DETAIL_VIEW_DEFAULT_FIELDS,
     ).then(response => {

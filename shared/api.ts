@@ -29,7 +29,8 @@ export const API_URLS: ApiUrls = {
   },
   issuerWellknownConfig: {
     method: 'GET',
-    buildURL: (requestUrl: `/${string}`): `/${string}` => requestUrl,
+    buildURL: (issuerId: string): `/${string}` =>
+      `/v1/mimoto/issuers/${issuerId}/.well-known`,
   },
   allProperties: {
     method: 'GET',
@@ -105,10 +106,10 @@ export const API = {
     );
     return response.response;
   },
-  fetchIssuerWellknownConfig: async (requestUrl: string) => {
+  fetchIssuerWellknownConfig: async (issuerId: string) => {
     const response = await request(
       API_URLS.issuerWellknownConfig.method,
-      API_URLS.issuerWellknownConfig.buildURL(requestUrl),
+      API_URLS.issuerWellknownConfig.buildURL(issuerId),
     );
     return response;
   },
@@ -142,13 +143,12 @@ export const CACHED_API = {
     }),
   fetchIssuerWellknownConfig: (
     issuerId: string,
-    requestUrl: string,
     isCachePreferred: boolean = false,
   ) =>
     generateCacheAPIFunction({
       isCachePreferred,
       cacheKey: API_CACHED_STORAGE_KEYS.fetchIssuerWellknownConfig(issuerId),
-      fetchCall: API.fetchIssuerWellknownConfig.bind(null, requestUrl),
+      fetchCall: API.fetchIssuerWellknownConfig.bind(null, issuerId),
     }),
 
   getAllProperties: (isCachePreferred: boolean) =>

@@ -343,6 +343,17 @@ export const DefaultTheme = {
       marginTop: 10,
       alignItems: 'flex-start',
     },
+    vcDetailBg: {
+      width: '100%',
+      opacity: 0.1,
+    },
+    vcBg: {
+      opacity: 0.1,
+    },
+    shimmer: {
+      borderRadius: 5,
+      marginLeft: 2,
+    },
     openCardBgContainer: {
       borderRadius: 10,
       margin: 8,
