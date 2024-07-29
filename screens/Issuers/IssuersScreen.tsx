@@ -258,7 +258,7 @@ export const IssuersScreen: React.FC<
             }}>
             {t('description')}
           </Text>
-          <View style={Theme.IssuersScreenStyles.issuersContainer}>
+          <Column scroll style={Theme.IssuersScreenStyles.issuersContainer}>
             {controller.issuers.length > 0 && (
               <FlatList
                 data={filteredSearchData}
@@ -279,7 +279,7 @@ export const IssuersScreen: React.FC<
                 keyExtractor={item => item.credential_issuer}
               />
             )}
-          </View>
+          </Column>
         </Column>
       )}
     </React.Fragment>
