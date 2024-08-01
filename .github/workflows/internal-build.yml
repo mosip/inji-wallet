@@ -77,7 +77,7 @@ on:
       liveness_detection:
         description: 'Detect Liveness'
         required: true
-        default: 'true'
+        default: 'false'
         type: choice
         options:
           - false
