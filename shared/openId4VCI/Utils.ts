@@ -132,7 +132,6 @@ export const constructAuthorizationConfiguration = (
     issuer: selectedIssuer.credential_issuer,
     clientId: selectedIssuer.client_id,
     scopes: [supportedScope],
-    additionalHeaders: selectedIssuer.additional_headers,
     redirectUrl: selectedIssuer.redirect_uri,
     additionalParameters: {ui_locales: i18n.language},
     serviceConfiguration: {
