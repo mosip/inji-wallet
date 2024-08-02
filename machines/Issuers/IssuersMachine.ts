@@ -432,7 +432,6 @@ export interface issuerType {
   client_id: string;
   '.well-known': string;
   redirect_uri: string;
-  additional_headers: object;
   token_endpoint: string;
   proxy_token_endpoint: string;
   credential_endpoint: string;
