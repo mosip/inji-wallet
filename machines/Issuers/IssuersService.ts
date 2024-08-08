@@ -48,7 +48,7 @@ export const IssuersService = () => {
       for (const key in context.selectedIssuer
         .credential_configurations_supported) {
         credentialTypes.push(
-          context.selectedIssuer.credential_configurations_supported[key],
+          {id:key, ...context.selectedIssuer.credential_configurations_supported[key]},
         );
       }
       return credentialTypes;
