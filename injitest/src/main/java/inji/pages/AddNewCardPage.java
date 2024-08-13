@@ -45,13 +45,17 @@ public class AddNewCardPage extends BasePage{
     @iOSXCUITFindBy(accessibility = "issuerSearchBar")
     private WebElement issuerSearchBar;
 
-    @AndroidFindBy(accessibility = "issuerHeading-Sunbird")
-    @iOSXCUITFindBy(accessibility = "issuerHeading-Sunbird")
+    @AndroidFindBy(accessibility = "issuerHeading-StayProtected")
+    @iOSXCUITFindBy(accessibility = "issuerHeading-StayProtected")
     private WebElement downloadViaSunbird;
 
     @AndroidFindBy(accessibility = "credentialTypeHeading-InsuranceCredential")
     @iOSXCUITFindBy(accessibility = "credentialTypeHeading-InsuranceCredential")
     private WebElement credentialTypeHeadingInsuranceCredential;
+
+    @AndroidFindBy(accessibility = "credentialTypeHeading-MOSIPVerifiableCredential_ldp")
+    @iOSXCUITFindBy(accessibility = "credentialTypeHeading-MOSIPVerifiableCredential_ldp")
+    private WebElement credentialTypeHeadingMOSIPVerifiableCredential;
 
     public AddNewCardPage(AppiumDriver driver) {
         super(driver);
@@ -71,6 +75,9 @@ public class AddNewCardPage extends BasePage{
 
     public RetrieveIdPage clickOnDownloadViaUin(){
         clickOnElement(downloadViaUin);
+        if(isElementDisplayed(credentialTypeHeadingMOSIPVerifiableCredential)){
+            clickOnElement(credentialTypeHeadingMOSIPVerifiableCredential);
+        }
         return new RetrieveIdPage(driver);
     }
 
@@ -104,6 +111,15 @@ public class AddNewCardPage extends BasePage{
 
     public EsignetLoginPage clickOnDownloadViaEsignet(){
         clickOnElement(downloadViaEsignet);
+
+        try {
+            Thread.sleep(3000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        if(isElementDisplayed(credentialTypeHeadingMOSIPVerifiableCredential)) {
+            clickOnElement(credentialTypeHeadingMOSIPVerifiableCredential);
+        }
         return new EsignetLoginPage(driver);
     }
 
