@@ -165,7 +165,19 @@ export const IssuersActions = (model: any) => {
     ),
 
     setSelectedIssuers: model.assign({
-      selectedIssuer: (_: any, event: any) => event.data,
+      selectedIssuer: (context: any, event: any) =>
+        context.issuers.find(issuer => issuer.credential_issuer === event.id),
+    }),
+
+    updateIssuerFromWellknown: model.assign({
+      selectedIssuer: (context: any, event: any) => ({
+        ...context.selectedIssuer,
+        credential_audience: event.data.credential_issuer,
+        credential_endpoint: event.data.credential_endpoint,
+        credential_configurations_supported:
+          event.data.credential_configurations_supported,
+        authorization_servers: event.data.authorization_servers,
+      }),
     }),
     setSelectedIssuerId: model.assign({
       selectedIssuerId: (_: any, event: any) => event.id,

@@ -1,32 +1,32 @@
-import React, {useEffect, useState} from 'react';
-import {Row} from '../../components/ui';
-import {Modal} from '../../components/ui/Modal';
-import {MessageOverlay} from '../../components/MessageOverlay';
-import {ToastItem} from '../../components/ui/ToastItem';
-import {useViewVcModal, ViewVcModalProps} from './ViewVcModalController';
-import {useTranslation} from 'react-i18next';
-import {OtpVerificationModal} from './MyVcs/OtpVerificationModal';
-import {BindingVcWarningOverlay} from './MyVcs/BindingVcWarningOverlay';
-import {VcDetailsContainer} from '../../components/VC/VcDetailsContainer';
-import {TelemetryConstants} from '../../shared/telemetry/TelemetryConstants';
-import {BannerNotificationContainer} from '../../components/BannerNotificationContainer';
-import {Icon} from 'react-native-elements';
-import {Theme} from '../../components/ui/styleUtils';
+import React, { useEffect, useState } from 'react';
+import { Row } from '../../components/ui';
+import { Modal } from '../../components/ui/Modal';
+import { MessageOverlay } from '../../components/MessageOverlay';
+import { ToastItem } from '../../components/ui/ToastItem';
+import { useViewVcModal, ViewVcModalProps } from './ViewVcModalController';
+import { useTranslation } from 'react-i18next';
+import { OtpVerificationModal } from './MyVcs/OtpVerificationModal';
+import { BindingVcWarningOverlay } from './MyVcs/BindingVcWarningOverlay';
+import { VcDetailsContainer } from '../../components/VC/VcDetailsContainer';
+import { TelemetryConstants } from '../../shared/telemetry/TelemetryConstants';
+import { BannerNotificationContainer } from '../../components/BannerNotificationContainer';
+import { Icon } from 'react-native-elements';
+import { Theme } from '../../components/ui/styleUtils';
 import testIDProps from '../../shared/commonUtil';
-import {HelpScreen} from '../../components/HelpScreen';
-import {Pressable} from 'react-native';
-import {KebabPopUp} from '../../components/KebabPopUp';
-import {SvgImage} from '../../components/ui/svg';
-import {VCMetadata} from '../../shared/VCMetadata';
-import {WalletBinding} from './MyVcs/WalletBinding';
-import {RemoveVcWarningOverlay} from './MyVcs/RemoveVcWarningOverlay';
-import {HistoryTab} from './MyVcs/HistoryTab';
-import {getDetailedViewFields} from '../../shared/openId4VCI/Utils';
+import { HelpScreen } from '../../components/HelpScreen';
+import { Pressable } from 'react-native';
+import { KebabPopUp } from '../../components/KebabPopUp';
+import { SvgImage } from '../../components/ui/svg';
+import { VCMetadata } from '../../shared/VCMetadata';
+import { WalletBinding } from './MyVcs/WalletBinding';
+import { RemoveVcWarningOverlay } from './MyVcs/RemoveVcWarningOverlay';
+import { HistoryTab } from './MyVcs/HistoryTab';
+import { getDetailedViewFields } from '../../shared/openId4VCI/Utils';
 import {
   DETAIL_VIEW_DEFAULT_FIELDS,
   isVCLoaded,
 } from '../../components/VC/common/VCUtils';
-import {ActivityIndicator} from '../../components/ui/ActivityIndicator';
+import { ActivityIndicator } from '../../components/ui/ActivityIndicator';
 import ShimmerPlaceholder from 'react-native-shimmer-placeholder';
 import LinearGradient from 'react-native-linear-gradient';
 import {
@@ -35,7 +35,7 @@ import {
 } from '../../components/BannerNotification';
 
 export const ViewVcModal: React.FC<ViewVcModalProps> = props => {
-  const {t} = useTranslation('ViewVcModal');
+  const { t } = useTranslation('ViewVcModal');
   const controller = useViewVcModal(props);
   const profileImage = controller.verifiableCredentialData.face;
   const verificationStatus = controller.verificationStatus;
@@ -47,7 +47,7 @@ export const ViewVcModal: React.FC<ViewVcModalProps> = props => {
       !controller.verifiableCredentialData.vcMetadata.isVerified &&
       !controller.isVerificationInProgress
     ) {
-      props.vcItemActor.send({type: 'VERIFY'});
+      props.vcItemActor.send({ type: 'VERIFY' });
     }
   }, [controller.verifiableCredentialData.vcMetadata.isVerified]);
 
@@ -59,7 +59,6 @@ export const ViewVcModal: React.FC<ViewVcModalProps> = props => {
   useEffect(() => {
     getDetailedViewFields(
       verifiableCredentialData?.issuer,
-      verifiableCredentialData?.wellKnown,
       verifiableCredentialData?.credentialTypes,
       DETAIL_VIEW_DEFAULT_FIELDS,
     ).then(response => {
@@ -105,7 +104,7 @@ export const ViewVcModal: React.FC<ViewVcModalProps> = props => {
             LinearGradient={LinearGradient}
             width={35}
             height={35}
-            style={{borderRadius: 5, marginLeft: 2}}
+            style={Theme.Styles.shimmer}
           />
         )}
       </Row>

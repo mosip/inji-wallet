@@ -132,11 +132,11 @@ export const constructAuthorizationConfiguration = (
     issuer: selectedIssuer.credential_issuer,
     clientId: selectedIssuer.client_id,
     scopes: [supportedScope],
-    additionalHeaders: selectedIssuer.additional_headers,
     redirectUrl: selectedIssuer.redirect_uri,
     additionalParameters: {ui_locales: i18n.language},
     serviceConfiguration: {
-      authorizationEndpoint: selectedIssuer.authorization_endpoint,
+      authorizationEndpoint:
+        selectedIssuer.authorization_servers[0] + '/authorize',
       tokenEndpoint: selectedIssuer.token_endpoint,
     },
   };
@@ -171,9 +171,9 @@ export const getSelectedCredentialTypeDetails = (
   wellknown: any,
   vcCredentialTypes: Object[],
 ): Object => {
-  for (let credential in wellknown.credentials_supported) {
-    const credentialDetails = wellknown.credentials_supported[credential];
-
+  for (let credential in wellknown.credential_configurations_supported) {
+    const credentialDetails =
+      wellknown.credential_configurations_supported[credential];
     if (
       JSON.stringify(credentialDetails.credential_definition.type) ===
       JSON.stringify(vcCredentialTypes)
@@ -195,30 +195,24 @@ export const getSelectedCredentialTypeDetails = (
 };
 
 export const getCredentialIssuersWellKnownConfig = async (
-  issuer: string,
-  wellknown: string,
-  vcCredentialTypes: Object[],
+  issuer: string | undefined,
+  vcCredentialTypes: Object[] | undefined,
   defaultFields: string[],
 ) => {
   let fields: string[] = defaultFields;
   let credentialDetails: any;
-  if (wellknown) {
-    const response = await CACHED_API.fetchIssuerWellknownConfig(
-      issuer,
-      wellknown,
+  const response = await CACHED_API.fetchIssuerWellknownConfig(issuer!);
+  if (response) {
+    credentialDetails = getSelectedCredentialTypeDetails(
+      response,
+      vcCredentialTypes!,
     );
-    if (response) {
-      credentialDetails = getSelectedCredentialTypeDetails(
-        response,
-        vcCredentialTypes,
+    if (Object.keys(credentialDetails).includes('order')) {
+      fields = credentialDetails.order;
+    } else {
+      fields = Object.keys(
+        credentialDetails.credential_definition.credentialSubject,
       );
-      if (Object.keys(credentialDetails).includes('order')) {
-        fields = credentialDetails.order;
-      } else {
-        fields = Object.keys(
-          credentialDetails.credential_definition.credentialSubject,
-        );
-      }
     }
   }
   return {
@@ -229,13 +223,11 @@ export const getCredentialIssuersWellKnownConfig = async (
 
 export const getDetailedViewFields = async (
   issuer: string,
-  wellknown: string,
   vcCredentialTypes: Object[],
   defaultFields: string[],
 ) => {
   let response = await getCredentialIssuersWellKnownConfig(
     issuer,
-    wellknown,
     vcCredentialTypes,
     defaultFields,
   );
