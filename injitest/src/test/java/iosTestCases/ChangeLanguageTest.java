@@ -936,7 +936,7 @@ public class ChangeLanguageTest extends IosBaseTest {
         addNewCardPage.clickOnDownloadViaEsignet();
         esignetLoginPage.clickOnCredentialTypeHeadingMOSIPVerifiableCredential();
         addNewCardPage.clickOnContinueButtonInSigninPopupIos();
-//        assertTrue(esignetLoginPage.verifyLanguageEnterUinOrVidBoxTextDisplayed("English"),"verify if search bar is displayed in Kannada");
+//        assertTrue(esignetLoginPage.verifyLanguageEnterUinOrVidBoxTextDisplayed("English"),"verify if search bar is displayed in english");
         assertTrue(esignetLoginPage.verifyLanguageLoginHeaderTextDisplayed("English"),"verify login text in english");
         assertTrue(esignetLoginPage.verifyLanguagePleaseEnterUinHeaderTextDisplayed("English"),"verify if enter uin/vid header in english");
         assertTrue(esignetLoginPage.verifyLanguageForDontHaveAccountTextDisplayed("English"),"verify if dont have account text in english");
