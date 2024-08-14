@@ -120,6 +120,11 @@ public class BasePage {
     }
 
     protected String getTextFromLocator(WebElement element) {
+        try {
+            Thread.sleep(3000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
         this.waitForElementToBeVisible(element);
         return element.getText();
     }
