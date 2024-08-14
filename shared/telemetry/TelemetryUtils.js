@@ -50,7 +50,7 @@ export function getTelemetryConfigData() {
     sid: __SessionId.getValue(),
     batchsize: 5,
     host: OBSRV_HOST,
-    endpoint: '/obsrv/v1/data/mosip-dataset',
+    endpoint: '/obsrv/v1/data/create/mosip-dataset',
     telemetryDebugEnabled: false,
     enableValidation: true,
     schemaBaseUrl: 'http://mosip.io/telemetry/',
