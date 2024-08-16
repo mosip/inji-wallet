@@ -24,8 +24,7 @@ export async function request(
   },
   timeoutMillis?: undefined | number,
 ) {
-  if (path.includes('residentmobileapp'))
-    headers['X-AppId'] = __AppId.getValue();
+  if (path.includes('v1/mimoto')) headers['X-AppId'] = __AppId.getValue();
   let response;
   const requestUrl = path.indexOf('https://') != -1 ? path : host + path;
   if (timeoutMillis === undefined) {
