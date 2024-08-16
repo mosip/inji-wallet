@@ -9,6 +9,7 @@ import i18next from 'i18next';
 import {getJWT} from '../cryptoutil/cryptoUtil';
 import i18n from '../../i18n';
 import {
+  CredentialTypes,
   CredentialWrapper,
   VerifiableCredential,
 } from '../../machines/VerifiableCredential/VCMetaMachine/vc';
@@ -72,6 +73,7 @@ export const getIdentifier = (context, credential: VerifiableCredential) => {
   );
 };
 
+//TODO: Remove unused function - getCredentialRequestBody
 export const getCredentialRequestBody = async (
   proofJWT: string,
   credentialType: Array<string>,
@@ -295,3 +297,24 @@ export async function constructProofJWT(
 
   return await getJWT(jwtHeader, jwtPayload, Issuers_Key_Ref, privateKey);
 }
+
+export const constructIssuerMetaData = (
+  selectedIssuer: issuerType,
+  selectedCredentialType: CredentialTypes,
+  downloadTimeout: Number,
+): Object => {
+  const issuerMeta: Object = {
+    credentialAudience: selectedIssuer.credential_audience,
+    credentialEndpoint: selectedIssuer.credential_endpoint,
+    downloadTimeoutInMilliSeconds: downloadTimeout,
+    credentialFormat: selectedCredentialType.format,
+  };
+  if (selectedCredentialType.format === 'ldp_vc') {
+    issuerMeta['credentialType'] = selectedCredentialType?.credential_definition
+      ?.type ?? ['VerifiableCredential'];
+  } else if (selectedCredentialType.format === 'mso_mdoc') {
+    issuerMeta['docType'] = selectedCredentialType.doctype;
+    issuerMeta['claims'] = selectedCredentialType.claims;
+  }
+  return issuerMeta;
+};

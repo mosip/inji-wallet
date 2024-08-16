@@ -42,19 +42,33 @@ public class InjiVciClientModule extends ReactContextBaseJavaModule {
     public void requestCredential(ReadableMap issuerMetaData, String jwtProofValue, String accessToken, Promise promise) {
         try {
             CredentialFormat credentialFormat;
+            IssuerMetaData issuerMetaData1 ;
             switch (issuerMetaData.getString("credentialFormat")) {
                 case "ldp_vc":
                     credentialFormat = CredentialFormat.LDP_VC;
-                    break;
-                default:
-                    credentialFormat = CredentialFormat.LDP_VC;
-            }
-            CredentialResponse response = vciClient.requestCredential(new IssuerMetaData(
+                    issuerMetaData1 =  new IssuerMetaData(
                             issuerMetaData.getString("credentialAudience"),
                             issuerMetaData.getString("credentialEndpoint"),
                             issuerMetaData.getInt("downloadTimeoutInMilliSeconds"),
                             convertReadableArrayToStringArray(issuerMetaData.getArray("credentialType")),
-                            credentialFormat), new JWTProof(jwtProofValue)
+                            credentialFormat,null,null);
+                    break;
+                case "mso_mdoc":
+                    credentialFormat = CredentialFormat.MSO_MDOC;
+                    issuerMetaData1 =  new IssuerMetaData(
+                            issuerMetaData.getString("credentialAudience"),
+                            issuerMetaData.getString("credentialEndpoint"),
+                            issuerMetaData.getInt("downloadTimeoutInMilliSeconds"),
+                            null,
+                            credentialFormat, issuerMetaData.getString("doctype"),
+                            issuerMetaData.getMap("claims").toHashMap());
+                    break;
+
+                default:
+                    throw new IllegalStateException("Unexpected value: " + issuerMetaData.getString("credentialFormat"));
+            }
+
+            CredentialResponse response = vciClient.requestCredential(issuerMetaData1, new JWTProof(jwtProofValue)
                     , accessToken);
             promise.resolve(response.toJsonString());
         } catch (Exception exception) {

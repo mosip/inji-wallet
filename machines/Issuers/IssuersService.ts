@@ -3,6 +3,7 @@ import {CACHED_API} from '../../shared/api';
 import NetInfo from '@react-native-community/netinfo';
 import {
   constructAuthorizationConfiguration,
+  constructIssuerMetaData,
   constructProofJWT,
   Issuers_Key_Ref,
   updateCredentialInformation,
@@ -38,32 +39,24 @@ export const IssuersService = () => {
     checkInternet: async () => await NetInfo.fetch(),
     downloadIssuerWellknown: async (context: any) => {
       const wellknownResponse = await CACHED_API.fetchIssuerWellknownConfig(
-          context.selectedIssuerId,
-        );
-        return wellknownResponse;
-      
+        context.selectedIssuerId,
+      );
+      return wellknownResponse;
     },
     downloadCredentialTypes: async (context: any) => {
       const credentialTypes = [];
       for (const key in context.selectedIssuer
         .credential_configurations_supported) {
-        credentialTypes.push(
-          {id:key, ...context.selectedIssuer.credential_configurations_supported[key]},
-        );
+        credentialTypes.push({
+          id: key,
+          ...context.selectedIssuer.credential_configurations_supported[key],
+        });
       }
       return credentialTypes;
     },
     downloadCredential: async (context: any) => {
       const downloadTimeout = await vcDownloadTimeout();
       const accessToken: string = context.tokenResponse?.accessToken;
-      const issuerMeta: Object = {
-        credentialAudience: context.selectedIssuer.credential_audience,
-        credentialEndpoint: context.selectedIssuer.credential_endpoint,
-        downloadTimeoutInMilliSeconds: downloadTimeout,
-        credentialType: context.selectedCredentialType?.credential_definition
-          ?.type ?? ['VerifiableCredential'],
-        credentialFormat: context.selectedCredentialType.format,
-      };
       const proofJWT = await constructProofJWT(
         context.publicKey,
         context.privateKey,
@@ -71,7 +64,11 @@ export const IssuersService = () => {
         context.selectedIssuer,
       );
       let credential = await VciClient.downloadCredential(
-        issuerMeta,
+        constructIssuerMetaData(
+          context.selectedIssuer,
+          context.selectedCredentialType,
+          downloadTimeout,
+        ),
         proofJWT,
         accessToken,
       );
@@ -87,15 +84,14 @@ export const IssuersService = () => {
             TelemetryConstants.Screens.webViewPage,
         ),
       );
-        return await authorize(
-          constructAuthorizationConfiguration(
-            context.selectedIssuer,
-            context.selectedCredentialType.scope,
-          ),
-        );
-      
-      },
-     
+      return await authorize(
+        constructAuthorizationConfiguration(
+          context.selectedIssuer,
+          context.selectedCredentialType.scope,
+        ),
+      );
+    },
+
     generateKeyPair: async () => {
       if (!isHardwareKeystoreExists) {
         return await generateKeys();
@@ -109,7 +105,7 @@ export const IssuersService = () => {
     },
     verifyCredential: async (context: any) => {
       //this issuer specific check has to be removed once vc validation is done.
-      if (isMosipVC(context.vcMetadata.issuer)) {
+      if (isMosipVC(context.selectedIssuerId)) {
         const verificationResult = await verifyCredential(
           context.verifiableCredential?.credential,
         );

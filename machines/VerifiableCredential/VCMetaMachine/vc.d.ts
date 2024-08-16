@@ -93,6 +93,8 @@ export interface CredentialTypes {
     type: Object[];
     credentialSubject: CredentialSubject;
   };
+  doctype: string;
+  claims: Object;
 }
 
 export interface IssuerWellknownResponse {
