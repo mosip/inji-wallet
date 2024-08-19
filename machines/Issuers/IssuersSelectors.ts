@@ -13,10 +13,7 @@ export function selectSelectedIssuer(state: State) {
 }
 
 export function selectErrorMessageType(state: State) {
-  const nonGenericErrors = ['', ErrorMessage.NO_INTERNET];
-  return nonGenericErrors.includes(state.context.errorMessage)
-    ? state.context.errorMessage
-    : null;
+  return state.context.errorMessage;
 }
 
 export function selectLoadingReason(state: State) {
