@@ -216,6 +216,7 @@ export const getIdType = (
     if (!!!wellknown['credential_configurations_supported']) {
       return i18n.t('VcDetails:nationalCard');
     }
+    //TODO: Get supported credentials wellknown based on credentialConfigurationId rather than idType
     supportedCredentialsWellknown = getSelectedCredentialTypeDetails(
       wellknown,
       idType,
@@ -234,3 +235,23 @@ export const getCredentialTypes = (
 ): string[] => {
   return (credential?.credentialTypes as string[]) ?? ['VerifiableCredential'];
 };
+
+export function DisplayName(
+  props: VCItemContentProps,
+):
+  | string
+  | Object
+  | import('/Users/kiruthikajeyashankar/MyWorkspace/Projects/MOSIP/tw-mosip/inji/machines/VerifiableCredential/VCMetaMachine/vc').LocalizedField[] {
+  console.log('display name ', JSON.stringify(props.credential, null, 2));
+  console.log(
+    'props.verifiableCredentialData.format ',
+    props.verifiableCredentialData.format,
+  );
+  if (props.verifiableCredentialData.format === 'mso_mdoc') {
+    return props.credential['issuerSigned']['nameSpaces'][
+      'org.iso.18013.5.1'
+    ].find(element => element.elementIdentifier.content === 'given_name')
+      .elementValue.content;
+  }
+  return props.credential?.credentialSubject['fullName'];
+}

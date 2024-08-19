@@ -142,7 +142,7 @@ export const IssuersMachine = model.createMachine(
           onDone: [
             {
               cond: 'isInternetConnected',
-              target: 'performAuthorization',
+              target: 'downloadCredentials',
             },
             {
               actions: ['setNoInternet', 'resetLoadingReason'],

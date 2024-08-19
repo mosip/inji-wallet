@@ -119,13 +119,17 @@ export const VCItemServices = model => {
       return response;
     },
     fetchIssuerWellknown: async context => {
+      console.log(
+        'VCItemServices fetchIssuerWellknown ',
+        context.vcMetadata.issuer,
+      );
       const wellknownResponse = await CACHED_API.fetchIssuerWellknownConfig(
         context.vcMetadata.issuer,
         true,
       );
-      const wellknownOfCredential = getSelectedCredentialTypeDetails(
+      const wellknownOfCredential = getMatchingCredentialIssuerMetadata(
         wellknownResponse,
-        getCredentialTypes(context.verifiableCredential),
+        context.verifiableCredential.credentialConfigurationId,
       );
       return wellknownOfCredential;
     },
@@ -212,3 +216,9 @@ export const VCItemServices = model => {
     },
   };
 };
+function getMatchingCredentialIssuerMetadata(
+  wellknownResponse: any,
+  arg1: string[],
+) {
+  throw new Error('Function not implemented.');
+}

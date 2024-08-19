@@ -4,8 +4,9 @@ import {
   VcIdType,
   VerifiableCredential,
 } from '../machines/VerifiableCredential/VCMetaMachine/vc';
-import {Protocols} from './openId4VCI/Utils';
+import {CredentialIdForMsoMdoc, Protocols} from './openId4VCI/Utils';
 import {getMosipIdentifier} from './commonUtil';
+import {format} from 'date-fns';
 
 const VC_KEY_PREFIX = 'VC';
 const VC_ITEM_STORE_KEY_REGEX = '^VC_[a-zA-Z0-9_-]+$';
@@ -21,6 +22,7 @@ export class VCMetadata {
   timestamp?: string = '';
   isVerified: boolean = false;
   displayId: string = '';
+  format: string = '';
 
   constructor({
     idType = '',
@@ -32,6 +34,7 @@ export class VCMetadata {
     timestamp = '',
     isVerified = false,
     displayId = '',
+    format = '',
   } = {}) {
     this.idType = idType;
     this.requestId = requestId;
@@ -42,12 +45,14 @@ export class VCMetadata {
     this.timestamp = timestamp;
     this.isVerified = isVerified;
     this.displayId = displayId;
+    this.format = format;
   }
 
   //TODO: Remove any typing and use appropriate typing
   static fromVC(vc: Partial<VC> | VCMetadata | any) {
     return new VCMetadata({
       idType: vc.idType,
+      format: vc.format || 'ldp_vc',
       requestId: vc.requestId,
       isPinned: vc.isPinned || false,
       id: vc.id,
@@ -111,17 +116,23 @@ export const getVCMetadata = (context: object) => {
     timestamp: context.timestamp ?? '',
     isVerified: context.vcMetadata.isVerified ?? false,
     displayId: getDisplayId(context.verifiableCredential),
+    format: context.credentialWrapper.format,
   });
 };
 
 const getDisplayId = (
   verifiableCredential: VerifiableCredential | Credential,
 ) => {
+  console.log('getDisplayId ', JSON.stringify(verifiableCredential, null, 2));
   if (verifiableCredential?.credential) {
-    return (
-      verifiableCredential.credential?.credentialSubject?.policyNumber ||
-      getMosipIdentifier(verifiableCredential.credential.credentialSubject)
-    );
+    if (verifiableCredential.credential?.credentialSubject) {
+      return (
+        verifiableCredential.credential?.credentialSubject?.policyNumber ||
+        getMosipIdentifier(verifiableCredential.credential.credentialSubject)
+      );
+    } else {
+      return CredentialIdForMsoMdoc(verifiableCredential);
+    }
   }
   return (
     verifiableCredential?.credentialSubject?.policyNumber ||

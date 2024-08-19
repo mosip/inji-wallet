@@ -60,17 +60,29 @@ export const isActivationNeeded = (issuer: string) => {
 export const Issuers_Key_Ref = 'OpenId4VCI_KeyPair';
 
 export const getIdentifier = (context, credential: VerifiableCredential) => {
+  //TODO: Format specific
   const credentialIdentifier = credential.credential.id;
-  const credId = credentialIdentifier.startsWith('did')
-    ? credentialIdentifier.split(':')
-    : credentialIdentifier.split('/');
-  return (
-    context.selectedIssuer.credential_issuer +
-    ':' +
-    context.selectedIssuer.protocol +
-    ':' +
-    credId[credId.length - 1]
-  );
+  console.log('credentialIdentifier ', credentialIdentifier);
+  if (credentialIdentifier === undefined) {
+    return (
+      context.selectedIssuer.credential_issuer +
+      ':' +
+      context.selectedIssuer.protocol +
+      ':' +
+      CredentialIdForMsoMdoc(credential)
+    );
+  } else {
+    const credId = credentialIdentifier.startsWith('did')
+      ? credentialIdentifier.split(':')
+      : credentialIdentifier.split('/');
+    return (
+      context.selectedIssuer.credential_issuer +
+      ':' +
+      context.selectedIssuer.protocol +
+      ':' +
+      credId[credId.length - 1]
+    );
+  }
 };
 
 //TODO: Remove unused function - getCredentialRequestBody
@@ -99,14 +111,18 @@ export const updateCredentialInformation = (
     verifiableCredential: {
       ...credential,
       wellKnown: context.selectedIssuer['.well-known'],
+      credentialConfigurationId: context.selectedCredentialType.id,
       credentialTypes: credential.credential.type ?? ['VerifiableCredential'],
       issuerLogo: getDisplayObjectForCurrentLanguage(
         context.selectedIssuer.display,
       )?.logo,
     },
+    format: context.selectedCredentialType.format,
     identifier: getIdentifier(context, credential),
     generatedOn: new Date(),
-    vcMetadata: context.vcMetadata || {},
+    vcMetadata:
+      {...context.vcMetadata, format: context.selectedCredentialType.format} ||
+      {},
   };
 };
 
@@ -173,11 +189,20 @@ export const getSelectedCredentialTypeDetails = (
   wellknown: any,
   vcCredentialTypes: Object[],
 ): Object => {
+  console.log(
+    'getSelectedCredentialTypeDetails wellknown ',
+    JSON.stringify(wellknown, null, 2),
+  );
+  console.log(
+    'getSelectedCredentialTypeDetails vcCredentialTypes',
+    JSON.stringify(vcCredentialTypes, null, 2),
+  );
   for (let credential in wellknown.credential_configurations_supported) {
     const credentialDetails =
       wellknown.credential_configurations_supported[credential];
+    //TODO: What is t
     if (
-      JSON.stringify(credentialDetails.credential_definition.type) ===
+      JSON.stringify(credentialDetails.credential_definition?.type) ===
       JSON.stringify(vcCredentialTypes)
     ) {
       return credentialDetails;
@@ -200,15 +225,24 @@ export const getCredentialIssuersWellKnownConfig = async (
   issuer: string | undefined,
   vcCredentialTypes: Object[] | undefined,
   defaultFields: string[],
+  credentialConfigurationId?: string | undefined,
 ) => {
   let fields: string[] = defaultFields;
   let credentialDetails: any;
+  console.log('getCredentialIssuersWellKnownConfig ', issuer);
   const response = await CACHED_API.fetchIssuerWellknownConfig(issuer!);
   if (response) {
-    credentialDetails = getSelectedCredentialTypeDetails(
-      response,
-      vcCredentialTypes!,
-    );
+    if (credentialConfigurationId) {
+      credentialDetails = getMatchingCredentialIssuerMetadata(
+        response,
+        credentialConfigurationId,
+      );
+    } else {
+      credentialDetails = getSelectedCredentialTypeDetails(
+        response,
+        vcCredentialTypes!,
+      );
+    }
     if (Object.keys(credentialDetails).includes('order')) {
       fields = credentialDetails.order;
     } else {
@@ -275,6 +309,17 @@ export enum ErrorMessage {
   BIOMETRIC_CANCELLED = 'biometricCancelled',
 }
 
+export function CredentialIdForMsoMdoc(credential: VerifiableCredential) {
+  console.log(
+    "JSON.stringify(CredentialIdForMsoMdoc's credential) ",
+    JSON.stringify(credential, null, 2),
+  );
+  return credential.credential['issuerSigned']['nameSpaces'][
+    'org.iso.18013.5.1'
+  ].find(element => element.elementIdentifier.content === 'document_number')
+    .elementValue.content;
+}
+
 export async function constructProofJWT(
   publicKey: string,
   privateKey: string,
@@ -318,3 +363,25 @@ export const constructIssuerMetaData = (
   }
   return issuerMeta;
 };
+
+function getMatchingCredentialIssuerMetadata(
+  wellknown: any,
+  credentialConfigurationId: string,
+): any {
+  for (const credentialTypeKey in wellknown.credential_configurations_supported) {
+    if (credentialTypeKey === credentialConfigurationId) {
+      return wellknown.credential_configurations_supported[credentialTypeKey];
+    }
+  }
+  console.error(
+    'Selected credential type is not available in wellknown config supported credentials list',
+  );
+  sendErrorEvent(
+    getErrorEventData(
+      TelemetryConstants.FlowType.wellknownConfig,
+      TelemetryConstants.ErrorId.mismatch,
+      TelemetryConstants.ErrorMessage.wellknownConfigMismatch,
+    ),
+  );
+  return {};
+}
