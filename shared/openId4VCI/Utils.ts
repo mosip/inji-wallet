@@ -238,6 +238,8 @@ export const getCredentialIssuersWellKnownConfig = async (
         credentialConfigurationId,
       );
     } else {
+      console.log("no credentialConfigurationId is there")
+
       credentialDetails = getSelectedCredentialTypeDetails(
         response,
         vcCredentialTypes!,
@@ -246,6 +248,7 @@ export const getCredentialIssuersWellKnownConfig = async (
     if (Object.keys(credentialDetails).includes('order')) {
       fields = credentialDetails.order;
     } else {
+      console.log("no order is there")
       fields = Object.keys(
         credentialDetails.credential_definition.credentialSubject,
       );
@@ -260,12 +263,14 @@ export const getCredentialIssuersWellKnownConfig = async (
 export const getDetailedViewFields = async (
   issuer: string,
   vcCredentialTypes: Object[],
+  credentialConfigurationId: string,
   defaultFields: string[],
 ) => {
   let response = await getCredentialIssuersWellKnownConfig(
     issuer,
     vcCredentialTypes,
     defaultFields,
+    credentialConfigurationId
   );
 
   let updatedFieldsList = response.fields.concat(DETAIL_VIEW_ADD_ON_FIELDS);
@@ -320,6 +325,20 @@ export function CredentialIdForMsoMdoc(credential: VerifiableCredential) {
     .elementValue.content;
 }
 
+export function iterateMsoMdocFor(credential,namespace:string,element: 'elementIdentifier'|'elementValue', fieldName:string){
+  console.log("iterateMsoMdocFor credential ",JSON.stringify(credential,null,2))
+  const foundItem = credential['issuerSigned']['nameSpaces'][
+      namespace
+      ].find(element => {
+        console.log("element inside find bloack ",JSON.stringify(element,null,2))
+
+        return element.elementIdentifier.content === fieldName
+  });
+  console.log("finded ",foundItem)
+  return foundItem
+      [element].content;
+}
+
 export async function constructProofJWT(
   publicKey: string,
   privateKey: string,
@@ -364,7 +383,7 @@ export const constructIssuerMetaData = (
   return issuerMeta;
 };
 
-function getMatchingCredentialIssuerMetadata(
+export function getMatchingCredentialIssuerMetadata(
   wellknown: any,
   credentialConfigurationId: string,
 ): any {

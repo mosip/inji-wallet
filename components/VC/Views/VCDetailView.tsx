@@ -4,13 +4,14 @@ import {Image, ImageBackground, View} from 'react-native';
 import {
   Credential,
   VerifiableCredential,
+  VerifiableCredentialData,
   WalletBindingResponse,
 } from '../../../machines/VerifiableCredential/VCMetaMachine/vc';
 import {Button, Column, Row, Text} from '../../ui';
 import {Theme} from '../../ui/styleUtils';
 import {QrCodeOverlay} from '../../QrCodeOverlay';
 import {SvgImage} from '../../ui/svg';
-import {isActivationNeeded} from '../../../shared/openId4VCI/Utils';
+import {isActivationNeeded, iterateMsoMdocFor} from '../../../shared/openId4VCI/Utils';
 import {
   BOTTOM_SECTION_FIELDS_WITH_DETAILED_ADDRESS_FIELDS,
   DETAIL_VIEW_BOTTOM_SECTION_FIELDS,
@@ -20,6 +21,7 @@ import {
   getTextColor,
 } from '../common/VCUtils';
 import {ProfileIcon} from '../../ProfileIcon';
+import {getLocalizedField} from "../../../i18n";
 
 const getProfileImage = (face: any) => {
   if (face) {
@@ -42,9 +44,18 @@ export const VCDetailView: React.FC<VCItemDetailsProps> = props => {
   const verifiableCredential = props.credential;
 
   const shouldShowHrLine = verifiableCredential => {
-    const availableFieldNames = Object.keys(
-      verifiableCredential?.credentialSubject,
-    );
+    let availableFieldNames: string[] = {};
+    if(props.verifiableCredentialData.vcMetadata.format === "ldp_vc"){
+      availableFieldNames = Object.keys(
+          verifiableCredential?.credentialSubject,
+      );
+    } else if(props.verifiableCredentialData.vcMetadata.format === "mso_mdoc"){
+      //TODO: get all keys
+      availableFieldNames = Object.keys(
+          {}
+      );
+    }
+
 
     for (const fieldName of availableFieldNames) {
       if (
@@ -220,7 +231,7 @@ export interface VCItemDetailsProps {
   fields: any[];
   wellknown: any;
   credential: VerifiableCredential | Credential;
-  verifiableCredentialData: any;
+  verifiableCredentialData: VerifiableCredentialData;
   walletBindingResponse?: WalletBindingResponse;
   onBinding?: () => void;
   activeTab?: Number;

@@ -18,7 +18,7 @@ import {CredentialDownloadResponse, request} from '../../../shared/request';
 import {WalletBindingResponse} from '../VCMetaMachine/vc';
 import {verifyCredential} from '../../../shared/vcjs/verifyCredential';
 import {getVerifiableCredential} from './VCItemSelectors';
-import {getSelectedCredentialTypeDetails} from '../../../shared/openId4VCI/Utils';
+import {getMatchingCredentialIssuerMetadata, getSelectedCredentialTypeDetails} from '../../../shared/openId4VCI/Utils';
 import {getCredentialTypes} from '../../../components/VC/common/VCUtils';
 
 const {RNSecureKeystoreModule} = NativeModules;
@@ -216,9 +216,3 @@ export const VCItemServices = model => {
     },
   };
 };
-function getMatchingCredentialIssuerMetadata(
-  wellknownResponse: any,
-  arg1: string[],
-) {
-  throw new Error('Function not implemented.');
-}
