@@ -207,7 +207,7 @@ export const getCredentialIssuersWellKnownConfig = async (
       response,
       vcCredentialTypes!,
     );
-    if (Object.keys(credentialDetails).includes('order')) {
+    if (credentialDetails.order !== null && credentialDetails.order.length > 0) {
       fields = credentialDetails.order;
     } else {
       fields = Object.keys(
