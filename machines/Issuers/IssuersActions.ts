@@ -62,6 +62,15 @@ export const IssuersActions = (model: any) => {
     resetSelectedCredentialType: model.assign({
       selectedCredentialType: {},
     }),
+    setFetchWellknownError:model.assign({
+      errorMessage:(_: any, event: any)=>{
+        const error = event.data.message;
+        if (error.includes(NETWORK_REQUEST_FAILED)) {
+          return ErrorMessage.NO_INTERNET;
+        }
+        return ErrorMessage.TECHNICAL_DIFFICULTIES
+      }
+    }),
     setError: model.assign({
       errorMessage: (_: any, event: any) => {
         console.error('Error occurred ', event.data.message);

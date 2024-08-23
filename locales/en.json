@@ -197,6 +197,10 @@
       "generic": {
         "title": "Something went wrong!",
         "message": "We are having some trouble with your request. Please try again."
+      },
+      "technicalDifficulty": {
+        "title": "Something went wrong!",
+        "message": "Currently, we are experiencing technical difficulties. Please try again later."
       }
     }
   },
