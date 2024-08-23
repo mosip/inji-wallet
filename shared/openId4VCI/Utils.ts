@@ -266,11 +266,13 @@ export enum OIDCErrors {
 }
 
 // ErrorMessage is the type of error message shown in the UI
+
 export enum ErrorMessage {
   NO_INTERNET = 'noInternetConnection',
   GENERIC = 'generic',
   REQUEST_TIMEDOUT = 'requestTimedOut',
   BIOMETRIC_CANCELLED = 'biometricCancelled',
+  TECHNICAL_DIFFICULTIES = "technicalDifficulty"
 }
 
 export async function constructProofJWT(

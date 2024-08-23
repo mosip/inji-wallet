@@ -98,7 +98,7 @@ export const IssuersMachine = model.createMachine(
             target: 'downloadCredentialTypes',
           },
           onError: {
-            actions: ['setError', 'resetLoadingReason'],
+            actions: ['setFetchWellknownError', 'resetLoadingReason'],
             target: 'error',
           },
         },
