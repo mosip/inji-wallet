@@ -96,7 +96,11 @@ export const IssuersScreen: React.FC<
   };
 
   function isBackendError(): boolean {
-    return controller.errorMessageType === ErrorMessage.TECHNICAL_DIFFICULTIES
+    return (
+      controller.errorMessageType === ErrorMessage.TECHNICAL_DIFFICULTIES ||
+      controller.errorMessageType ===
+        ErrorMessage.CREDENTIAL_TYPE_DOWNLOAD_FAILURE
+    );
   }
 
   const onFocusSearch = () => {
@@ -289,5 +293,3 @@ export const IssuersScreen: React.FC<
     </React.Fragment>
   );
 };
-
-

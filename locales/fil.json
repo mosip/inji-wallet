@@ -200,6 +200,10 @@
       "technicalDifficulty": {
         "title": "may nangyaring mali!",
         "message": "Sa kasalukuyan, nakakaranas tayo ng mga teknikal na paghihirap. Pakisubukang muli mamaya."
+      },
+      "credentialTypeListDownloadFailure": {
+        "title": "Isang Error ang Naganap!",
+        "message": "Nabigong ma-load ang listahan ng kredensyal. Pakisubukang muli mamaya"
       }
     }
   },
