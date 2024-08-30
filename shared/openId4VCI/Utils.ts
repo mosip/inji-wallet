@@ -273,7 +273,7 @@ export enum OIDCErrors {
 export enum ErrorMessage {
   NO_INTERNET = 'noInternetConnection',
   GENERIC = 'generic',
-  REQUEST_TIMEDOUT = 'requestTimedOut',
+  REQUEST_TIMEDOUT = 'technicalDifficulty',
   BIOMETRIC_CANCELLED = 'biometricCancelled',
   TECHNICAL_DIFFICULTIES = 'technicalDifficulty',
   CREDENTIAL_TYPE_DOWNLOAD_FAILURE = 'credentialTypeListDownloadFailure',
