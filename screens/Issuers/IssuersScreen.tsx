@@ -95,6 +95,14 @@ export const IssuersScreen: React.FC<
     return controller.errorMessageType === ErrorMessage.GENERIC;
   };
 
+  function isBackendError(): boolean {
+    return (
+      controller.errorMessageType === ErrorMessage.TECHNICAL_DIFFICULTIES ||
+      controller.errorMessageType ===
+        ErrorMessage.CREDENTIAL_TYPE_DOWNLOAD_FAILURE
+    );
+  }
+
   const onFocusSearch = () => {
     setTapToSearch(true);
   };
@@ -116,7 +124,7 @@ export const IssuersScreen: React.FC<
   };
 
   const getImage = () => {
-    if (isGenericError()) {
+    if (isGenericError() || isBackendError()) {
       return SvgImage.SomethingWentWrong();
     }
     return SvgImage.NoInternetConnection();

@@ -207,7 +207,10 @@ export const getCredentialIssuersWellKnownConfig = async (
       response,
       vcCredentialTypes!,
     );
-    if (Object.keys(credentialDetails).includes('order')) {
+    if (
+      credentialDetails.order !== null &&
+      credentialDetails.order.length > 0
+    ) {
       fields = credentialDetails.order;
     } else {
       fields = Object.keys(
@@ -266,11 +269,14 @@ export enum OIDCErrors {
 }
 
 // ErrorMessage is the type of error message shown in the UI
+
 export enum ErrorMessage {
   NO_INTERNET = 'noInternetConnection',
   GENERIC = 'generic',
   REQUEST_TIMEDOUT = 'requestTimedOut',
   BIOMETRIC_CANCELLED = 'biometricCancelled',
+  TECHNICAL_DIFFICULTIES = 'technicalDifficulty',
+  CREDENTIAL_TYPE_DOWNLOAD_FAILURE = 'credentialTypeListDownloadFailure',
 }
 
 export async function constructProofJWT(

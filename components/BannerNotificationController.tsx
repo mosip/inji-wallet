@@ -7,10 +7,9 @@ import {
 import {useContext} from 'react';
 import {GlobalContext} from '../shared/GlobalContext';
 import {VcMetaEvents} from '../machines/VerifiableCredential/VCMetaMachine/VCMetaMachine';
-import {selectIsDownloadingFailed} from '../machines/VerifiableCredential/VCMetaMachine/VCMetaSelectors';
+import {selectIsDownloadingFailed, selectWalletBindingSuccess} from '../machines/VerifiableCredential/VCMetaMachine/VCMetaSelectors';
 import {
   selectVerificationStatus,
-  selectWalletBindingSuccess,
 } from '../machines/VerifiableCredential/VCItemMachine/VCItemSelectors';
 
 export const UseBannerNotification = () => {
