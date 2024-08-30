@@ -198,12 +198,8 @@
         "message": "Nagkakaproblema kami sa iyong kahilingan. Pakisubukang muli."
       },
       "technicalDifficulty": {
-        "title": "may nangyaring mali!",
-        "message": "Sa kasalukuyan, nakakaranas tayo ng mga teknikal na paghihirap. Pakisubukang muli mamaya."
-      },
-      "credentialTypeListDownloadFailure": {
-        "title": "Isang Error ang Naganap!",
-        "message": "Nabigong ma-load ang listahan ng kredensyal. Pakisubukang muli mamaya"
+        "title": "May naganap na error!",
+        "message": "Salamat sa iyong pasensya! Nakakaranas kami ng mga teknikal na paghihirap ngayon. Pakisubukang muli mamaya o makipag-ugnayan sa admin para sa karagdagang tulong!"
       }
     }
   },

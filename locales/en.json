@@ -199,12 +199,8 @@
         "message": "We are having some trouble with your request. Please try again."
       },
       "technicalDifficulty": {
-        "title": "Something went wrong!",
-        "message": "Currently, we are experiencing technical difficulties. Please try again later."
-      },
-      "credentialTypeListDownloadFailure": {
-        "title": "An Error Occured!",
-        "message": "The credential list failed to load. Please try again later"
+        "title": "An error occurred!",
+        "message": "Thanks for your patience! We're experiencing technical difficulties right now. Please try again later or contact the admin for further assistance!"
       }
     }
   },
