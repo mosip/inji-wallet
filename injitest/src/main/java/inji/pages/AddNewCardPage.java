@@ -53,7 +53,7 @@ public class AddNewCardPage extends BasePage{
     @iOSXCUITFindBy(accessibility = "credentialTypeHeading-InsuranceCredential")
     private WebElement credentialTypeHeadingInsuranceCredential;
 
-    @AndroidFindBy(accessibility = "credentialTypeHeading-MOSIPVerifiableCredential")
+    @AndroidFindBy(accessibility = "credentialTypeHeading-MosipVerifiableCredential")
     @iOSXCUITFindBy(accessibility = "credentialTypeHeading-MOSIPVerifiableCredential")
     private WebElement credentialTypeHeadingMOSIPVerifiableCredential;
 
