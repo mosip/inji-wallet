@@ -11,7 +11,10 @@ export const IssuersGuards = () => {
       (event.data as Error).message == VerificationErrorType.NETWORK_ERROR,
     isSignedIn: (_: any, event: any) =>
       (event.data as isSignedInResult).isSignedIn,
-    hasKeyPair: (context: any) => !!context.publicKey,
+    hasKeyPair: (context: any) => {
+      console.log("has key pair",  !!context.publicKey)
+      return  !!context.publicKey
+    },
     isInternetConnected: (_: any, event: any) => !!event.data.isConnected,
     isOIDCflowCancelled: (_: any, event: any) => {
       // iOS & Android have different error strings for user cancelled flow

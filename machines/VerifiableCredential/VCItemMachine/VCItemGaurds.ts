@@ -15,6 +15,8 @@ export const VCItemGaurds = () => {
       const vc = event.response;
       return vc?.verifiableCredential != null;
     },
+    hasKeyPair: (_, event) => !!((event?.data)?.publicKey),
+
     isSignedIn: (_context, event) =>
       (event.data as isSignedInResult).isSignedIn,
 

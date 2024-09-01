@@ -375,14 +375,14 @@ export const VCItemActions = model => {
     setPublicKey: assign({
       publicKey: (_context, event) => {
         if (!isHardwareKeystoreExists) {
-          return (event.data as KeyPair).public;
+          return (event.data).publicKey;
         }
-        return event.data as string;
+        return (event.data).publicKey as string;
       },
     }),
 
     setPrivateKey: assign({
-      privateKey: (_context, event) => (event.data as KeyPair).private,
+      privateKey: (_context, event) => (event.data).privateKey as string,
     }),
     resetPrivateKey: assign({
       privateKey: () => '',
@@ -403,7 +403,11 @@ export const VCItemActions = model => {
       },
     ),
     setOTP: model.assign({
-      OTP: (_, event) => event.OTP,
+      OTP: (_, event) => {
+        console.log("otp : ",event.OTP )
+        return event.OTP
+      }
+
     }),
 
     unSetOTP: model.assign({OTP: () => ''}),

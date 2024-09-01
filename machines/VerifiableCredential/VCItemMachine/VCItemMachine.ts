@@ -284,16 +284,36 @@ export const VCItemMachine = model.createMachine(
               },
               addKeyPair: {
                 invoke: {
-                  src: 'generateKeyPair',
+                  src: 'fetchKeyPair',
                   onDone: [
                     {
-                      cond: 'isCustomSecureKeystore',
-                      target: 'addingWalletBindingId',
+                      cond: 'hasKeyPair',
                       actions: ['setPublicKey'],
+                      target: 'addingWalletBindingId',
                     },
                     {
-                      target: 'addingWalletBindingId',
-                      actions: ['setPublicKey', 'setPrivateKey'],
+                      target: 'generateKeyPair',
+                    },
+                  ],
+                  onError: [
+                    {
+                      actions: [
+                        'setErrorAsWalletBindingError',
+                        'sendWalletBindingErrorEvent',
+                        'logWalletBindingFailure',
+                      ],
+                      target: 'showingWalletBindingError',
+                    },
+                  ],
+                },
+              },
+              generateKeyPair: {
+                invoke: {
+                  src: 'generateKeypairAndStore',
+                  onDone: [
+                    {
+                      actions: ['setPublicKey','setPrivateKey'],
+                      target:'addingWalletBindingId'
                     },
                   ],
                   onError: [
@@ -315,11 +335,6 @@ export const VCItemMachine = model.createMachine(
                     {
                       cond: 'isCustomSecureKeystore',
                       target: 'updatingContextVariables',
-                      actions: ['setWalletBindingResponse'],
-                    },
-                    {
-                      target: 'updatingPrivateKey',
-                      /*The walletBindingResponse is used for conditional rendering in wallet binding.                                                                                                                                                                                                                                                                                                                                                                                                                                          response and use it in updatingPrivateKey state*/
                       actions: ['setWalletBindingResponse'],
                     },
                   ],
@@ -452,10 +467,7 @@ export const VCItemMachine = model.createMachine(
                   onDone: [
                     {
                       cond: 'isSignedIn',
-                      actions: [
-                        'sendBackupEvent',
-                        'refreshAllVcs',
-                      ],
+                      actions: ['sendBackupEvent', 'refreshAllVcs'],
                       target: '#vc-item-machine.vcUtilitiesState.idle',
                     },
                     {

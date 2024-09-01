@@ -1,8 +1,14 @@
-import {ErrorMessage, Issuers_Key_Ref} from '../../shared/openId4VCI/Utils';
+import {
+  ErrorMessage,
+  Issuers_Key_Ref,
+  getKeyTypeFromWellknown,
+  selectCredentialRequestKey,
+} from '../../shared/openId4VCI/Utils';
 import {
   MY_VCS_STORE_KEY,
   NETWORK_REQUEST_FAILED,
   REQUEST_TIMEOUT,
+  isIOS,
 } from '../../shared/constants';
 import {assign, send} from 'xstate';
 import {StoreEvents} from '../store';
@@ -18,7 +24,9 @@ import {
 } from '../../shared/telemetry/TelemetryUtils';
 import {TelemetryConstants} from '../../shared/telemetry/TelemetryConstants';
 import {KeyPair} from 'react-native-rsa-native';
+import {NativeModules} from 'react-native';
 
+const {RNSecureKeystoreModule} = NativeModules;
 export const IssuersActions = (model: any) => {
   return {
     setIsVerified: assign({
@@ -55,6 +63,7 @@ export const IssuersActions = (model: any) => {
     }),
     setSelectedCredentialType: model.assign({
       selectedCredentialType: (_: any, event: any) => event.credType,
+      wellknownKeyTypes: (_: any, event: any)=> event.credType.proof_types_supported.jwt as string[]
     }),
     setSupportedCredentialTypes: model.assign({
       supportedCredentialTypes: (_: any, event: any) => event.data,
@@ -102,10 +111,10 @@ export const IssuersActions = (model: any) => {
     }),
 
     loadKeyPair: assign({
-      publicKey: (_, event: any) => event.response?.publicKey,
+      publicKey: (_, event: any) => event.data?.publicKey,
       privateKey: (context: any, event: any) =>
-        event.response?.privateKey
-          ? event.response.privateKey
+        event.data?.privateKey
+          ? event.data.privateKey
           : context.privateKey,
     }),
     getKeyPairFromStore: send(StoreEvents.GET(Issuers_Key_Ref), {
@@ -114,19 +123,28 @@ export const IssuersActions = (model: any) => {
     sendBackupEvent: send(BackupEvents.DATA_BACKUP(true), {
       to: (context: any) => context.serviceRefs.backup,
     }),
-    storeKeyPair: send(
-      (context: any) => {
-        return StoreEvents.SET(Issuers_Key_Ref, {
-          publicKey: context.publicKey,
-          privateKey: context.privateKey,
-        });
+    storeKeyPair: async (context: any) => {
+      const keyType = context.keyType;
+      if ((keyType != 'ES256' && keyType != 'RS256') || isIOS())
+        await RNSecureKeystoreModule.storeGenericKey(
+          context.publicKey,
+          context.privateKey,
+          keyType,
+        );
+    },
+
+    setKeyTypes: assign({
+      keyTypes: (context: any, event: any) => {
+        return getKeyTypeFromWellknown();
       },
-      {
-        to: context => context.serviceRefs.store,
-      },
-    ),
+    }),
+
     storeVerifiableCredentialMeta: send(
-      context => StoreEvents.PREPEND(MY_VCS_STORE_KEY, getVCMetadata(context)),
+      context =>
+        StoreEvents.PREPEND(
+          MY_VCS_STORE_KEY,
+          getVCMetadata(context, context.keyType),
+        ),
       {
         to: (context: any) => context.serviceRefs.store,
       },
@@ -140,14 +158,14 @@ export const IssuersActions = (model: any) => {
     },
 
     setVCMetadata: assign({
-      vcMetadata: context => {
-        return getVCMetadata(context);
+      vcMetadata: (context: any) => {
+        return getVCMetadata(context, context.keyType);
       },
     }),
 
     storeVerifiableCredentialData: send(
       (context: any) => {
-        const vcMeatadata = getVCMetadata(context);
+        const vcMeatadata = getVCMetadata(context, context.keyType);
         return StoreEvents.SET(vcMeatadata.getVcKey(), {
           ...context.credentialWrapper,
           vcMetadata: vcMeatadata,
@@ -162,7 +180,7 @@ export const IssuersActions = (model: any) => {
       context => {
         return {
           type: 'VC_ADDED',
-          vcMetadata: getVCMetadata(context),
+          vcMetadata: getVCMetadata(context, context.keyType),
         };
       },
       {
@@ -174,7 +192,7 @@ export const IssuersActions = (model: any) => {
       (context: any) => {
         return {
           type: 'VC_DOWNLOADED',
-          vcMetadata: getVCMetadata(context),
+          vcMetadata: getVCMetadata(context, context.keyType),
           vc: context.credentialWrapper,
         };
       },
@@ -182,6 +200,13 @@ export const IssuersActions = (model: any) => {
         to: context => context.serviceRefs.vcMeta,
       },
     ),
+
+    setSelectedKey: model.assign({
+      keyType: (context:any) => {
+        const keyType = selectCredentialRequestKey(context.wellknownKeyTypes);
+        return keyType;
+      },
+    }),
 
     setSelectedIssuers: model.assign({
       selectedIssuer: (context: any, event: any) =>
@@ -217,19 +242,19 @@ export const IssuersActions = (model: any) => {
     setPublicKey: assign({
       publicKey: (_, event: any) => {
         if (!isHardwareKeystoreExists) {
-          return (event.data as KeyPair).public;
+          return event.data.publicKey;
         }
-        return event.data as string;
+        return event.data.publicKey as string;
       },
     }),
 
     setPrivateKey: assign({
-      privateKey: (_, event: any) => (event.data as KeyPair).private,
+      privateKey: (_, event: any) => event.data.privateKey as string,
     }),
 
     logDownloaded: send(
       context => {
-        const vcMetadata = getVCMetadata(context);
+        const vcMetadata = getVCMetadata(context, context.keyType);
         return ActivityLogEvents.LOG_ACTIVITY(
           {
             _vcKey: vcMetadata.getVcKey(),

@@ -14,7 +14,7 @@
 "clear": "done.invoke.store.resettingStorage:invocation[0]";
 "generateEncryptionKey": "done.invoke.store.generatingEncryptionKey:invocation[0]";
 "getEncryptionKey": "done.invoke.store.gettingEncryptionKey:invocation[0]";
-"hasAndroidEncryptionKey": "done.invoke.store.checkEncryptionKey:invocation[0]";
+"hasEncryptionKey": "done.invoke.store.checkEncryptionKey:invocation[0]";
 "store": "done.invoke._store";
         };
         missingImplementations: {
@@ -39,7 +39,7 @@
 "clear": "KEY_RECEIVED";
 "generateEncryptionKey": "ERROR" | "IGNORE" | "READY";
 "getEncryptionKey": "TRY_AGAIN";
-"hasAndroidEncryptionKey": never;
+"hasEncryptionKey": never;
 "store": "KEY_RECEIVED" | "READY" | "done.invoke.store.resettingStorage:invocation[0]";
         };
         matchesStates: "checkEncryptionKey" | "checkStorageInitialisation" | "failedReadingKey" | "generatingEncryptionKey" | "gettingEncryptionKey" | "ready" | "resettingStorage";

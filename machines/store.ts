@@ -1,4 +1,3 @@
-import * as Keychain from 'react-native-keychain';
 import Storage, {MMKV} from '../shared/storage';
 import binaryToBase64 from 'react-native/Libraries/Utilities/binaryToBase64';
 import {
@@ -37,7 +36,6 @@ import {
   sendErrorEvent,
   getErrorEventData,
 } from '../shared/telemetry/TelemetryUtils';
-import RNSecureKeyStore from 'react-native-secure-key-store';
 import {Buffer} from 'buffer';
 import {VC} from './VerifiableCredential/VCMetaMachine/vc';
 
@@ -106,7 +104,7 @@ export const storeMachine =
       states: {
         checkEncryptionKey: {
           invoke: {
-            src: 'hasAndroidEncryptionKey',
+            src: 'hasEncryptionKey',
           },
           on: {
             READY: {
@@ -298,15 +296,22 @@ export const storeMachine =
 
       services: {
         clear: () => clear(),
-        hasAndroidEncryptionKey: () => async callback => {
-          const hasSetCredentials =
-            RNSecureKeystoreModule.hasAlias(ENCRYPTION_ID);
+        hasEncryptionKey: () => async callback => {
+          let hasSetCredentials;
+          try {
+            hasSetCredentials = await RNSecureKeystoreModule.hasAlias(
+              ENCRYPTION_ID,
+            );
+          } catch (e) {
+            hasSetCredentials = false;
+          }
+          console.log('has creds', hasSetCredentials);
           if (hasSetCredentials) {
             try {
               const base64EncodedString =
                 Buffer.from('Dummy').toString('base64');
               await RNSecureKeystoreModule.encryptData(
-                DUMMY_KEY_FOR_BIOMETRIC_ALIAS,
+                ENCRYPTION_ID,
                 base64EncodedString,
               );
             } catch (e) {
@@ -492,7 +497,7 @@ export const storeMachine =
           if (isIOS()) {
             RNSecureKeyStore.setResetOnAppUninstallTo(false);
           }
-          const existingCredentials = await Keychain.getGenericPassword();
+          const existingCredentials = '';
           if (existingCredentials) {
             console.log('Credentials successfully loaded for user');
             callback(model.events.KEY_RECEIVED(existingCredentials.password));
@@ -513,32 +518,14 @@ export const storeMachine =
           }
         },
         generateEncryptionKey: () => async callback => {
-          const randomBytes = await generateSecureRandom(32);
-          const randomBytesString = binaryToBase64(randomBytes);
           if (!isHardwareKeystoreExists) {
-            const hasSetCredentials = await Keychain.setGenericPassword(
-              ENCRYPTION_ID,
-              randomBytesString,
+            callback(
+              model.events.ERROR(
+                new Error('Could not generate keychain credentials.'),
+              ),
             );
-
-            if (hasSetCredentials) {
-              callback(model.events.KEY_RECEIVED(randomBytesString));
-            } else {
-              sendErrorEvent(
-                getErrorEventData(
-                  TelemetryConstants.FlowType.fetchData,
-                  '',
-                  'Could not generate keychain credentials',
-                ),
-              );
-              callback(
-                model.events.ERROR(
-                  new Error('Could not generate keychain credentials.'),
-                ),
-              );
-            }
           } else {
-            const isBiometricsEnabled =
+            const isBiometricsEnabled = await
               RNSecureKeystoreModule.hasBiometricsEnabled();
             await RNSecureKeystoreModule.generateKey(
               ENCRYPTION_ID,
@@ -547,7 +534,7 @@ export const storeMachine =
             );
             RNSecureKeystoreModule.generateHmacshaKey(HMAC_ALIAS);
             RNSecureKeystoreModule.generateKey(
-              DUMMY_KEY_FOR_BIOMETRIC_ALIAS,
+              ENCRYPTION_ID,
               isBiometricsEnabled,
               0,
             );

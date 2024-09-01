@@ -4,7 +4,7 @@ import {isIOS} from '../constants';
 import pem2jwk from 'simple-pem2jwk';
 import {displayType, issuerType} from '../../machines/Issuers/IssuersMachine';
 import getAllConfigurations, {CACHED_API} from '../api';
-
+import base64url from 'base64url'; 
 import i18next from 'i18next';
 import {getJWT} from '../cryptoutil/cryptoUtil';
 import i18n from '../../i18n';
@@ -22,7 +22,8 @@ import {getVerifiableCredential} from '../../machines/VerifiableCredential/VCIte
 import {vcVerificationBannerDetails} from '../../components/BannerNotificationContainer';
 import {getErrorEventData, sendErrorEvent} from '../telemetry/TelemetryUtils';
 import {TelemetryConstants} from '../telemetry/TelemetryConstants';
-
+import { NativeModules } from 'react-native';
+import { KeyTypes } from '../cryptoutil/KeyTypes';
 export const Protocols = {
   OpenId4VCI: 'OpenId4VCI',
   OTP: 'OTP',
@@ -32,6 +33,10 @@ export const Issuers = {
   MosipOtp: '',
   Mosip: 'Mosip',
 };
+
+export function getKeyTypeFromWellknown() {
+  return ['RS256','ES256K','ES256'];
+}
 
 export function getVcVerificationDetails(
   statusType,
@@ -142,30 +147,7 @@ export const constructAuthorizationConfiguration = (
   };
 };
 
-export const getJWK = async publicKey => {
-  try {
-    let publicKeyJWKString;
-    let publicKeyJWK;
-    if (isIOS()) {
-      publicKeyJWKString = await jose.JWK.asKey(publicKey, 'pem');
-      publicKeyJWK = publicKeyJWKString.toJSON();
-    } else {
-      publicKeyJWK = await pem2jwk(publicKey);
-    }
-    return {
-      ...publicKeyJWK,
-      alg: 'RS256',
-      use: 'sig',
-    };
-  } catch (e) {
-    console.error(
-      'Exception occurred while constructing JWK from PEM : ' +
-        publicKey +
-        '  Exception is ',
-      e,
-    );
-  }
-};
+
 
 export const getSelectedCredentialTypeDetails = (
   wellknown: any,
@@ -284,10 +266,11 @@ export async function constructProofJWT(
   privateKey: string,
   accessToken: string,
   selectedIssuer: issuerType,
+  keyType: string
 ): Promise<string> {
   const jwtHeader = {
-    alg: 'RS256',
-    jwk: await getJWK(publicKey),
+    alg: keyType ,
+    jwk: await getJWK(publicKey,keyType),
     typ: 'openid4vci-proof+jwt',
   };
   const decodedToken = jwtDecode(accessToken);
@@ -299,5 +282,79 @@ export async function constructProofJWT(
     exp: Math.floor(new Date().getTime() / 1000) + 18000,
   };
 
-  return await getJWT(jwtHeader, jwtPayload, Issuers_Key_Ref, privateKey);
+  return await getJWT(jwtHeader, jwtPayload, Issuers_Key_Ref, privateKey,keyType);
 }
+
+export const getJWK = async (publicKey,keyType) => {
+  try {
+    let publicKeyJWK
+    switch (keyType) {
+      case KeyTypes.RS256:
+        publicKeyJWK= await getJWKRSA(publicKey)
+        break;
+      case KeyTypes.ES256:
+        publicKeyJWK= await getJWKECR1(publicKey)
+        break;
+      case KeyTypes.ES256K:
+        publicKeyJWK= await getJWKECK1(publicKey)
+        break;
+      case KeyTypes.ED25519:
+        publicKeyJWK= await getJWKED(publicKey)
+        break;
+      default:
+        throw Error
+    }      
+    return {
+      ...publicKeyJWK,
+      alg: keyType,
+      use: 'sig',
+    };
+  } catch (e) {
+    console.error(
+      'Exception occurred while constructing JWK from PEM : ' +
+        publicKey +
+        '  Exception is ',
+      e,
+    );
+  }
+};
+async function getJWKRSA(publicKey): Promise<any> {
+  const publicKeyJWKString = await jose.JWK.asKey(publicKey, 'pem');
+  return publicKeyJWKString.toJSON();
+}
+function getJWKECR1(publicKey): any {
+  return JSON.parse(publicKey)
+}
+function getJWKECK1(publicKey): any {
+  const x = base64url(Buffer.from(publicKey.slice(1, 33))); // Skip the first byte (0x04) in the uncompressed public key
+  const y = base64url(Buffer.from(publicKey.slice(33)));
+  const jwk = {
+    kty: 'EC',
+    crv: 'secp256k1',
+    x: x,
+    y: y,
+  };
+  return jwk
+}
+function getJWKED(publicKey): any {
+  throw new Error('Function not implemented.');
+}
+export async function hasKeyPair(keyType: any):Promise<boolean> {
+  const {RNSecureKeystoreModule} = NativeModules;
+  try{
+    return await RNSecureKeystoreModule.hasAlias(keyType)
+  }catch(e){
+    console.warn("key not found")
+    return false
+  }
+}
+
+export function selectCredentialRequestKey(keyTypes: string[]) {
+  const availableKeys=[KeyTypes.RS256,KeyTypes.ES256K,KeyTypes.ES256,KeyTypes.ED25519]
+  for (const key of availableKeys){
+    if(keyTypes.includes(key))
+    return key
+  }
+  throw Error;
+}
+

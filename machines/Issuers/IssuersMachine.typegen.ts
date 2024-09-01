@@ -5,11 +5,13 @@
         '@@xstate/typegen': true;
         internalEvents: {
           "done.invoke.checkInternet": { type: "done.invoke.checkInternet"; data: unknown; __tip: "See the XState TS docs to learn how to strongly type this." };
+"done.invoke.issuersMachine.checkKeyPair:invocation[0]": { type: "done.invoke.issuersMachine.checkKeyPair:invocation[0]"; data: unknown; __tip: "See the XState TS docs to learn how to strongly type this." };
 "done.invoke.issuersMachine.displayIssuers:invocation[0]": { type: "done.invoke.issuersMachine.displayIssuers:invocation[0]"; data: unknown; __tip: "See the XState TS docs to learn how to strongly type this." };
 "done.invoke.issuersMachine.downloadCredentialTypes:invocation[0]": { type: "done.invoke.issuersMachine.downloadCredentialTypes:invocation[0]"; data: unknown; __tip: "See the XState TS docs to learn how to strongly type this." };
 "done.invoke.issuersMachine.downloadCredentials:invocation[0]": { type: "done.invoke.issuersMachine.downloadCredentials:invocation[0]"; data: unknown; __tip: "See the XState TS docs to learn how to strongly type this." };
 "done.invoke.issuersMachine.downloadIssuerWellknown:invocation[0]": { type: "done.invoke.issuersMachine.downloadIssuerWellknown:invocation[0]"; data: unknown; __tip: "See the XState TS docs to learn how to strongly type this." };
 "done.invoke.issuersMachine.generateKeyPair:invocation[0]": { type: "done.invoke.issuersMachine.generateKeyPair:invocation[0]"; data: unknown; __tip: "See the XState TS docs to learn how to strongly type this." };
+"done.invoke.issuersMachine.performAuthorization.getKeyPairFromKeystore:invocation[0]": { type: "done.invoke.issuersMachine.performAuthorization.getKeyPairFromKeystore:invocation[0]"; data: unknown; __tip: "See the XState TS docs to learn how to strongly type this." };
 "done.invoke.issuersMachine.performAuthorization:invocation[0]": { type: "done.invoke.issuersMachine.performAuthorization:invocation[0]"; data: unknown; __tip: "See the XState TS docs to learn how to strongly type this." };
 "done.invoke.issuersMachine.storing:invocation[0]": { type: "done.invoke.issuersMachine.storing:invocation[0]"; data: unknown; __tip: "See the XState TS docs to learn how to strongly type this." };
 "done.invoke.issuersMachine.verifyingCredential:invocation[0]": { type: "done.invoke.issuersMachine.verifyingCredential:invocation[0]"; data: unknown; __tip: "See the XState TS docs to learn how to strongly type this." };
@@ -18,6 +20,7 @@
 "error.platform.issuersMachine.downloadCredentialTypes:invocation[0]": { type: "error.platform.issuersMachine.downloadCredentialTypes:invocation[0]"; data: unknown };
 "error.platform.issuersMachine.downloadCredentials:invocation[0]": { type: "error.platform.issuersMachine.downloadCredentials:invocation[0]"; data: unknown };
 "error.platform.issuersMachine.downloadIssuerWellknown:invocation[0]": { type: "error.platform.issuersMachine.downloadIssuerWellknown:invocation[0]"; data: unknown };
+"error.platform.issuersMachine.performAuthorization.getKeyPairFromKeystore:invocation[0]": { type: "error.platform.issuersMachine.performAuthorization.getKeyPairFromKeystore:invocation[0]"; data: unknown };
 "error.platform.issuersMachine.performAuthorization:invocation[0]": { type: "error.platform.issuersMachine.performAuthorization:invocation[0]"; data: unknown };
 "error.platform.issuersMachine.verifyingCredential:invocation[0]": { type: "error.platform.issuersMachine.verifyingCredential:invocation[0]"; data: unknown };
 "xstate.init": { type: "xstate.init" };
@@ -29,19 +32,21 @@
 "downloadIssuerWellknown": "done.invoke.issuersMachine.downloadIssuerWellknown:invocation[0]";
 "downloadIssuersList": "done.invoke.issuersMachine.displayIssuers:invocation[0]";
 "generateKeyPair": "done.invoke.issuersMachine.generateKeyPair:invocation[0]";
+"getKeyPair": "done.invoke.issuersMachine.performAuthorization.getKeyPairFromKeystore:invocation[0]";
+"getSelectedKey": "done.invoke.issuersMachine.checkKeyPair:invocation[0]";
 "invokeAuthorization": "done.invoke.issuersMachine.performAuthorization:invocation[0]";
 "isUserSignedAlready": "done.invoke.issuersMachine.storing:invocation[0]";
 "verifyCredential": "done.invoke.issuersMachine.verifyingCredential:invocation[0]";
         };
         missingImplementations: {
-          actions: "getKeyPairFromStore" | "loadKeyPair" | "logDownloaded" | "resetError" | "resetIsVerified" | "resetLoadingReason" | "resetSelectedCredentialType" | "resetVerificationErrorMessage" | "sendBackupEvent" | "sendDownloadingFailedToVcMeta" | "sendErrorEndEvent" | "sendImpressionEvent" | "sendSuccessEndEvent" | "setCredentialWrapper" | "setError" | "setFetchWellknownError" | "setIsVerified" | "setIssuers" | "setLoadingReasonAsDisplayIssuers" | "setLoadingReasonAsDownloadingCredentials" | "setLoadingReasonAsSettingUp" | "setMetadataInCredentialData" | "setNoInternet" | "setOIDCConfigError" | "setPrivateKey" | "setPublicKey" | "setSelectedCredentialType" | "setSelectedIssuerId" | "setSelectedIssuers" | "setSupportedCredentialTypes" | "setTokenResponse" | "setVCMetadata" | "setVerifiableCredential" | "storeKeyPair" | "storeVcMetaContext" | "storeVcsContext" | "storeVerifiableCredentialData" | "storeVerifiableCredentialMeta" | "updateIssuerFromWellknown" | "updateVerificationErrorMessage";
+          actions: "downloadIssuerWellknown" | "loadKeyPair" | "logDownloaded" | "resetError" | "resetIsVerified" | "resetLoadingReason" | "resetSelectedCredentialType" | "resetVerificationErrorMessage" | "sendBackupEvent" | "sendDownloadingFailedToVcMeta" | "sendErrorEndEvent" | "sendImpressionEvent" | "sendSuccessEndEvent" | "setCredentialTypeListDownloadFailureError" | "setCredentialWrapper" | "setError" | "setFetchWellknownError" | "setIsVerified" | "setIssuers" | "setLoadingReasonAsDisplayIssuers" | "setLoadingReasonAsDownloadingCredentials" | "setLoadingReasonAsSettingUp" | "setMetadataInCredentialData" | "setNoInternet" | "setOIDCConfigError" | "setPrivateKey" | "setPublicKey" | "setSelectedCredentialType" | "setSelectedIssuerId" | "setSelectedIssuers" | "setSelectedKey" | "setSupportedCredentialTypes" | "setTokenResponse" | "setVCMetadata" | "setVerifiableCredential" | "storeKeyPair" | "storeVcMetaContext" | "storeVcsContext" | "storeVerifiableCredentialData" | "storeVerifiableCredentialMeta" | "updateIssuerFromWellknown" | "updateVerificationErrorMessage";
           delays: never;
-          guards: "canSelectIssuerAgain" | "hasKeyPair" | "hasUserCancelledBiometric" | "isCustomSecureKeystore" | "isGenericError" | "isInternetConnected" | "isOIDCConfigError" | "isOIDCflowCancelled" | "isSignedIn" | "isVerificationPendingBecauseOfNetworkIssue" | "shouldFetchIssuersAgain";
-          services: "checkInternet" | "downloadCredential" | "downloadCredentialTypes" | "downloadIssuerWellknown" | "downloadIssuersList" | "generateKeyPair" | "invokeAuthorization" | "isUserSignedAlready" | "verifyCredential";
+          guards: "canSelectIssuerAgain" | "hasKeyPair" | "hasUserCancelledBiometric" | "isBiometricCancelled" | "isCustomSecureKeystore" | "isGenericError" | "isInternetConnected" | "isOIDCConfigError" | "isOIDCflowCancelled" | "isSignedIn" | "isVerificationPendingBecauseOfNetworkIssue" | "shouldFetchIssuersAgain";
+          services: "checkInternet" | "downloadCredential" | "downloadCredentialTypes" | "downloadIssuerWellknown" | "downloadIssuersList" | "generateKeyPair" | "getKeyPair" | "getSelectedKey" | "invokeAuthorization" | "isUserSignedAlready" | "verifyCredential";
         };
         eventsCausingActions: {
-          "getKeyPairFromStore": "TRY_AGAIN" | "done.invoke.issuersMachine.performAuthorization:invocation[0]";
-"loadKeyPair": "STORE_RESPONSE";
+          "downloadIssuerWellknown": "TRY_AGAIN";
+"loadKeyPair": "done.invoke.issuersMachine.performAuthorization.getKeyPairFromKeystore:invocation[0]";
 "logDownloaded": "done.invoke.issuersMachine.verifyingCredential:invocation[0]" | "error.platform.issuersMachine.verifyingCredential:invocation[0]";
 "resetError": "RESET_ERROR" | "TRY_AGAIN" | "error.platform.issuersMachine.performAuthorization:invocation[0]";
 "resetIsVerified": "error.platform.issuersMachine.verifyingCredential:invocation[0]";
@@ -53,13 +58,14 @@
 "sendErrorEndEvent": "error.platform.issuersMachine.verifyingCredential:invocation[0]";
 "sendImpressionEvent": "done.invoke.issuersMachine.displayIssuers:invocation[0]";
 "sendSuccessEndEvent": "done.invoke.issuersMachine.verifyingCredential:invocation[0]";
+"setCredentialTypeListDownloadFailureError": "error.platform.issuersMachine.downloadCredentialTypes:invocation[0]";
 "setCredentialWrapper": "done.invoke.issuersMachine.downloadCredentials:invocation[0]";
-"setError": "error.platform.issuersMachine.displayIssuers:invocation[0]" | "error.platform.issuersMachine.downloadCredentialTypes:invocation[0]" | "error.platform.issuersMachine.downloadCredentials:invocation[0]" | "error.platform.issuersMachine.performAuthorization:invocation[0]";
+"setError": "error.platform.issuersMachine.displayIssuers:invocation[0]" | "error.platform.issuersMachine.downloadCredentials:invocation[0]" | "error.platform.issuersMachine.performAuthorization:invocation[0]";
 "setFetchWellknownError": "error.platform.issuersMachine.downloadIssuerWellknown:invocation[0]";
 "setIsVerified": "done.invoke.issuersMachine.verifyingCredential:invocation[0]";
 "setIssuers": "done.invoke.issuersMachine.displayIssuers:invocation[0]";
 "setLoadingReasonAsDisplayIssuers": "TRY_AGAIN";
-"setLoadingReasonAsDownloadingCredentials": "STORE_ERROR" | "STORE_RESPONSE" | "TRY_AGAIN" | "done.invoke.issuersMachine.generateKeyPair:invocation[0]";
+"setLoadingReasonAsDownloadingCredentials": "TRY_AGAIN" | "done.invoke.issuersMachine.generateKeyPair:invocation[0]" | "done.invoke.issuersMachine.performAuthorization.getKeyPairFromKeystore:invocation[0]" | "error.platform.issuersMachine.performAuthorization.getKeyPairFromKeystore:invocation[0]";
 "setLoadingReasonAsSettingUp": "SELECTED_ISSUER" | "TRY_AGAIN" | "done.invoke.issuersMachine.performAuthorization:invocation[0]";
 "setMetadataInCredentialData": "done.invoke.issuersMachine.verifyingCredential:invocation[0]" | "error.platform.issuersMachine.verifyingCredential:invocation[0]";
 "setNoInternet": "done.invoke.checkInternet";
@@ -69,6 +75,7 @@
 "setSelectedCredentialType": "SELECTED_CREDENTIAL_TYPE";
 "setSelectedIssuerId": "SELECTED_ISSUER";
 "setSelectedIssuers": "SELECTED_ISSUER";
+"setSelectedKey": "done.invoke.issuersMachine.performAuthorization:invocation[0]";
 "setSupportedCredentialTypes": "done.invoke.issuersMachine.downloadCredentialTypes:invocation[0]";
 "setTokenResponse": "done.invoke.issuersMachine.performAuthorization:invocation[0]";
 "setVCMetadata": "done.invoke.issuersMachine.verifyingCredential:invocation[0]" | "error.platform.issuersMachine.verifyingCredential:invocation[0]";
@@ -86,8 +93,9 @@
         };
         eventsCausingGuards: {
           "canSelectIssuerAgain": "TRY_AGAIN";
-"hasKeyPair": "CHECK_KEY_PAIR";
+"hasKeyPair": "done.invoke.issuersMachine.checkKeyPair:invocation[0]";
 "hasUserCancelledBiometric": "error.platform.issuersMachine.downloadCredentials:invocation[0]";
+"isBiometricCancelled": "error.platform.issuersMachine.performAuthorization.getKeyPairFromKeystore:invocation[0]";
 "isCustomSecureKeystore": "done.invoke.issuersMachine.generateKeyPair:invocation[0]";
 "isGenericError": "error.platform.issuersMachine.downloadCredentials:invocation[0]";
 "isInternetConnected": "done.invoke.checkInternet";
@@ -99,17 +107,19 @@
         };
         eventsCausingServices: {
           "checkInternet": "SELECTED_CREDENTIAL_TYPE" | "done.invoke.issuersMachine.downloadCredentialTypes:invocation[0]";
-"downloadCredential": "CHECK_KEY_PAIR" | "done.invoke.issuersMachine.generateKeyPair:invocation[0]";
+"downloadCredential": "done.invoke.issuersMachine.checkKeyPair:invocation[0]" | "done.invoke.issuersMachine.generateKeyPair:invocation[0]";
 "downloadCredentialTypes": "done.invoke.issuersMachine.downloadIssuerWellknown:invocation[0]";
 "downloadIssuerWellknown": "SELECTED_ISSUER" | "TRY_AGAIN";
 "downloadIssuersList": "CANCEL" | "TRY_AGAIN" | "xstate.init";
-"generateKeyPair": "CHECK_KEY_PAIR";
+"generateKeyPair": "done.invoke.issuersMachine.checkKeyPair:invocation[0]";
+"getKeyPair": "TRY_AGAIN" | "done.invoke.issuersMachine.performAuthorization:invocation[0]";
+"getSelectedKey": "done.invoke.issuersMachine.performAuthorization.getKeyPairFromKeystore:invocation[0]" | "error.platform.issuersMachine.performAuthorization.getKeyPairFromKeystore:invocation[0]";
 "invokeAuthorization": "done.invoke.checkInternet";
 "isUserSignedAlready": "done.invoke.issuersMachine.verifyingCredential:invocation[0]" | "error.platform.issuersMachine.verifyingCredential:invocation[0]";
 "verifyCredential": "done.invoke.issuersMachine.downloadCredentials:invocation[0]";
         };
-        matchesStates: "checkInternet" | "checkKeyPair" | "displayIssuers" | "done" | "downloadCredentialTypes" | "downloadCredentials" | "downloadCredentials.idle" | "downloadCredentials.userCancelledBiometric" | "downloadIssuerWellknown" | "error" | "generateKeyPair" | "handleVCVerificationFailure" | "idle" | "performAuthorization" | "performAuthorization.idle" | "performAuthorization.userCancelledBiometric" | "selectingCredentialType" | "selectingIssuer" | "storing" | "verifyingCredential" | { "downloadCredentials"?: "idle" | "userCancelledBiometric";
-"performAuthorization"?: "idle" | "userCancelledBiometric"; };
+        matchesStates: "checkInternet" | "checkKeyPair" | "displayIssuers" | "done" | "downloadCredentialTypes" | "downloadCredentials" | "downloadCredentials.idle" | "downloadCredentials.userCancelledBiometric" | "downloadIssuerWellknown" | "error" | "generateKeyPair" | "handleVCVerificationFailure" | "idle" | "performAuthorization" | "performAuthorization.getKeyPairFromKeystore" | "performAuthorization.idle" | "performAuthorization.userCancelledBiometric" | "selectingCredentialType" | "selectingIssuer" | "storing" | "verifyingCredential" | { "downloadCredentials"?: "idle" | "userCancelledBiometric";
+"performAuthorization"?: "getKeyPairFromKeystore" | "idle" | "userCancelledBiometric"; };
         tags: never;
       }
   

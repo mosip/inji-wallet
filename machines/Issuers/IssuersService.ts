@@ -4,14 +4,16 @@ import NetInfo from '@react-native-community/netinfo';
 import {
   constructAuthorizationConfiguration,
   constructProofJWT,
-  Issuers_Key_Ref,
+  getKeyTypeFromWellknown,
+  hasKeyPair,
   updateCredentialInformation,
   vcDownloadTimeout,
+  selectCredentialRequestKey
 } from '../../shared/openId4VCI/Utils';
 import {authorize} from 'react-native-app-auth';
 import {
-  generateKeys,
-  isHardwareKeystoreExists,
+  fetchKeyPair,
+  generateKeyPair,
 } from '../../shared/cryptoutil/cryptoUtil';
 import {NativeModules} from 'react-native';
 import {
@@ -26,7 +28,6 @@ import {TelemetryConstants} from '../../shared/telemetry/TelemetryConstants';
 import {isMosipVC} from '../../shared/Utils';
 import {VciClient} from '../../shared/vciClient/VciClient';
 
-const {RNSecureKeystoreModule} = NativeModules;
 export const IssuersService = () => {
   return {
     isUserSignedAlready: () => async () => {
@@ -74,6 +75,7 @@ export const IssuersService = () => {
         context.privateKey,
         accessToken,
         context.selectedIssuer,
+        context.keyType
       );
       let credential = await VciClient.downloadCredential(
         issuerMeta,
@@ -92,25 +94,34 @@ export const IssuersService = () => {
             TelemetryConstants.Screens.webViewPage,
         ),
       );
-      return await authorize(
-        constructAuthorizationConfiguration(
-          context.selectedIssuer,
-          context.selectedCredentialType.scope,
-        ),
-      );
+        return await authorize(
+          constructAuthorizationConfiguration(
+            context.selectedIssuer,
+            context.selectedCredentialType.scope,
+          ),
+        );
+      
+      },
+     
+    generateKeyPair: async (context:any) => {
+      const keypair=await generateKeyPair(context.keyType);
+      console.log(keypair)
+     return keypair
     },
 
-    generateKeyPair: async () => {
-      if (!isHardwareKeystoreExists) {
-        return await generateKeys();
+    getKeyPair: async (context:any) => {
+      console.log("keyset",context.keyType)
+      if (await hasKeyPair(context.keyType)) {
+        return await fetchKeyPair(context.keyType);
       }
-      const isBiometricsEnabled = RNSecureKeystoreModule.hasBiometricsEnabled();
-      return RNSecureKeystoreModule.generateKeyPair(
-        Issuers_Key_Ref,
-        isBiometricsEnabled,
-        0,
-      );
+      console.log("exiting getkeypair")
     },
+
+    getSelectedKey: async (context:any) => {
+      console.log("hola",context.keyType)
+      return context.keyType;
+    },
+
     verifyCredential: async (context: any) => {
       //this issuer specific check has to be removed once vc validation is done.
       if (isMosipVC(context.vcMetadata.issuer)) {
@@ -129,3 +140,4 @@ export const IssuersService = () => {
     },
   };
 };
+

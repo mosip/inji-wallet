@@ -24,9 +24,11 @@ export const IssuersModel = createModel(
     credentialWrapper: {} as CredentialWrapper,
     serviceRefs: {} as AppServices,
     verificationErrorMessage: '',
-    publicKey: ``,
-    privateKey: ``,
+    publicKey: '',
+    privateKey: '',
     vcMetadata: {} as VCMetadata,
+    keyType:'RS256' as string,
+    wellknownKeyTypes: []  as string[]
   },
   {
     events: IssuersEvents,

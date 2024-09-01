@@ -23,6 +23,9 @@
 		9C4850502C3E59B5002ECBD5 /* RNEventMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C4850492C3E59B5002ECBD5 /* RNEventMapper.swift */; };
 		9C4850512C3E59B5002ECBD5 /* RNVersionModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C48504A2C3E59B5002ECBD5 /* RNVersionModule.m */; };
 		9C4850532C3E59E2002ECBD5 /* RNEventEmitterProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C4850522C3E59E2002ECBD5 /* RNEventEmitterProtocol.swift */; };
+		9C7CDF3E2C7CBEDE00243A9A /* RNSecureKeystoreModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C7CDF3D2C7CBEDE00243A9A /* RNSecureKeystoreModule.swift */; };
+		9C7CDF412C7CBFC100243A9A /* securekeystore in Frameworks */ = {isa = PBXBuildFile; productRef = 9C7CDF402C7CBFC100243A9A /* securekeystore */; };
+		9C7CDF432C7CC13500243A9A /* RNSecureKeystoreModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C7CDF422C7CC13500243A9A /* RNSecureKeystoreModule.m */; };
 		9CE34B1F2BFE03E4001AF414 /* pixelpass in Frameworks */ = {isa = PBXBuildFile; productRef = 9CE34B1E2BFE03E4001AF414 /* pixelpass */; };
 		B18059E884C0ABDD17F3DC3D /* ExpoModulesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAC715A2D49A985799AEE119 /* ExpoModulesProvider.swift */; };
 		BB2F792D24A3F905000567C9 /* Expo.plist in Resources */ = {isa = PBXBuildFile; fileRef = BB2F792C24A3F905000567C9 /* Expo.plist */; };
@@ -70,6 +73,8 @@
 		9C4850492C3E59B5002ECBD5 /* RNEventMapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RNEventMapper.swift; path = Inji/RNEventMapper.swift; sourceTree = "<group>"; };
 		9C48504A2C3E59B5002ECBD5 /* RNVersionModule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RNVersionModule.m; path = Inji/RNVersionModule.m; sourceTree = "<group>"; };
 		9C4850522C3E59E2002ECBD5 /* RNEventEmitterProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RNEventEmitterProtocol.swift; path = Inji/RNEventEmitterProtocol.swift; sourceTree = "<group>"; };
+		9C7CDF3D2C7CBEDE00243A9A /* RNSecureKeystoreModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RNSecureKeystoreModule.swift; sourceTree = "<group>"; };
+		9C7CDF422C7CC13500243A9A /* RNSecureKeystoreModule.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RNSecureKeystoreModule.m; sourceTree = "<group>"; };
 		AA286B85B6C04FC6940260E9 /* SplashScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = SplashScreen.storyboard; path = Inji/SplashScreen.storyboard; sourceTree = "<group>"; };
 		BB2F792C24A3F905000567C9 /* Expo.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Expo.plist; sourceTree = "<group>"; };
 		D98B96A488E54CBDB286B26F /* noop-file.swift */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.swift; name = "noop-file.swift"; path = "Inji/noop-file.swift"; sourceTree = "<group>"; };
@@ -106,6 +111,7 @@
 				E8AF2B9D2C0D93E800E775F6 /* VCIClient in Frameworks */,
 				9C4850432C3E5873002ECBD5 /* ios-tuvali-library in Frameworks */,
 				9CE34B1F2BFE03E4001AF414 /* pixelpass in Frameworks */,
+				9C7CDF412C7CBFC100243A9A /* securekeystore in Frameworks */,
 				96905EF65AED1B983A6B3ABC /* libPods-Inji.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -124,10 +130,12 @@
 				9C4850472C3E59B5002ECBD5 /* RNEventEmitter.swift */,
 				9C4850522C3E59E2002ECBD5 /* RNEventEmitterProtocol.swift */,
 				9C4850492C3E59B5002ECBD5 /* RNEventMapper.swift */,
+				9C7CDF3D2C7CBEDE00243A9A /* RNSecureKeystoreModule.swift */,
 				9C48504A2C3E59B5002ECBD5 /* RNVersionModule.m */,
 				9C4850482C3E59B5002ECBD5 /* RNVersionModule.swift */,
 				9C4850462C3E59B5002ECBD5 /* RNWalletModule.m */,
 				9C4850442C3E59B5002ECBD5 /* RNWalletModule.swift */,
+				9C7CDF422C7CC13500243A9A /* RNSecureKeystoreModule.m */,
 				9C0E86BA2BEE36C300E9F9F6 /* RNPixelpassModule.m */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
 				13B07FB61A68108700A75B9A /* Info.plist */,
@@ -267,6 +275,7 @@
 				9CE34B1E2BFE03E4001AF414 /* pixelpass */,
 				E8AF2B9C2C0D93E800E775F6 /* VCIClient */,
 				9C4850422C3E5873002ECBD5 /* ios-tuvali-library */,
+				9C7CDF402C7CBFC100243A9A /* securekeystore */,
 			);
 			productName = Inji;
 			productReference = 13B07F961A680F5B00A75B9A /* Inji.app */;
@@ -298,6 +307,7 @@
 				9CE34B1D2BFE03E4001AF414 /* XCRemoteSwiftPackageReference "pixelpass-ios-swift" */,
 				E86208242C039895007C3E24 /* XCRemoteSwiftPackageReference "inji-vci-client-ios-swift" */,
 				9C4850412C3E5873002ECBD5 /* XCRemoteSwiftPackageReference "tuvali-ios-swift" */,
+				9C7CDF3F2C7CBFC100243A9A /* XCRemoteSwiftPackageReference "secure-keystore-ios-swift" */,
 			);
 			productRefGroup = 83CBBA001A601CBA00E9B192 /* Products */;
 			projectDirPath = "";
@@ -484,8 +494,10 @@
 				9C4850532C3E59E2002ECBD5 /* RNEventEmitterProtocol.swift in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
 				9C4850502C3E59B5002ECBD5 /* RNEventMapper.swift in Sources */,
+				9C7CDF432C7CC13500243A9A /* RNSecureKeystoreModule.m in Sources */,
 				E86208172C0335EC007C3E24 /* RNVCIClientModule.m in Sources */,
 				9C48504E2C3E59B5002ECBD5 /* RNEventEmitter.swift in Sources */,
+				9C7CDF3E2C7CBEDE00243A9A /* RNSecureKeystoreModule.swift in Sources */,
 				9C48504B2C3E59B5002ECBD5 /* RNWalletModule.swift in Sources */,
 				9C48504D2C3E59B5002ECBD5 /* RNWalletModule.m in Sources */,
 				B18059E884C0ABDD17F3DC3D /* ExpoModulesProvider.swift in Sources */,
@@ -728,6 +740,14 @@
 				kind = branch;
 			};
 		};
+		9C7CDF3F2C7CBFC100243A9A /* XCRemoteSwiftPackageReference "secure-keystore-ios-swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/tw-mosip/secure-keystore-ios-swift";
+			requirement = {
+				branch = "inji-1578";
+				kind = branch;
+			};
+		};
 		9CE34B1D2BFE03E4001AF414 /* XCRemoteSwiftPackageReference "pixelpass-ios-swift" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/mosip/pixelpass-ios-swift/";
@@ -751,6 +771,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 9C4850412C3E5873002ECBD5 /* XCRemoteSwiftPackageReference "tuvali-ios-swift" */;
 			productName = "ios-tuvali-library";
+		};
+		9C7CDF402C7CBFC100243A9A /* securekeystore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 9C7CDF3F2C7CBFC100243A9A /* XCRemoteSwiftPackageReference "secure-keystore-ios-swift" */;
+			productName = securekeystore;
 		};
 		9CE34B1E2BFE03E4001AF414 /* pixelpass */ = {
 			isa = XCSwiftPackageProductDependency;
