@@ -1586,7 +1586,7 @@ export const DefaultTheme = {
       overflow: 'hidden',
     },
     scanner: {
-      height: '100%',
+      height: 400,
       width: '100%',
       margin: 'auto',
     },

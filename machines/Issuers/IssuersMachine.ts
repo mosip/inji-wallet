@@ -98,7 +98,7 @@ export const IssuersMachine = model.createMachine(
             target: 'downloadCredentialTypes',
           },
           onError: {
-            actions: ['setError', 'resetLoadingReason'],
+            actions: ['setFetchWellknownError', 'resetLoadingReason'],
             target: 'error',
           },
         },
@@ -106,6 +106,12 @@ export const IssuersMachine = model.createMachine(
       downloadCredentialTypes: {
         description:
           'downloads the credentials supported from the selected issuer',
+        on: {
+          TRY_AGAIN: {
+            actions: ['downloadIssuerWellknown'],
+            target: 'idle',
+          },
+        },
         invoke: {
           src: 'downloadCredentialTypes',
           onDone: [
@@ -118,7 +124,10 @@ export const IssuersMachine = model.createMachine(
             },
           ],
           onError: {
-            actions: ['setError', 'resetLoadingReason'],
+            actions: [
+              'setCredentialTypeListDownloadFailureError',
+              'resetLoadingReason',
+            ],
             target: 'error',
           },
         },

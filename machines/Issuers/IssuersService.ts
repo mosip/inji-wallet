@@ -52,6 +52,11 @@ export const IssuersService = () => {
           ...context.selectedIssuer.credential_configurations_supported[key],
         });
       }
+      if (credentialTypes.length == 0)
+        throw new Error(
+          `No credential type found for issuer ${context.selectedIssuer.credential_issuer}`,
+        );
+
       return credentialTypes;
     },
     downloadCredential: async (context: any) => {

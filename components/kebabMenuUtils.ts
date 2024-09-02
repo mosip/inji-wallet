@@ -2,7 +2,7 @@ import {useTranslation} from 'react-i18next';
 import {SvgImage} from './ui/svg';
 import {useKebabPopUp} from './KebabPopUpController';
 import {isActivationNeeded} from '../shared/openId4VCI/Utils';
-import {VCShareFlowType} from '../shared/Utils';
+import {isMosipVC, VCShareFlowType} from '../shared/Utils';
 
 export const getKebabMenuOptions = props => {
   const controller = useKebabPopUp(props);
@@ -68,7 +68,7 @@ export const getKebabMenuOptions = props => {
 
   if (props.vcMetadata.isVerified) {
     vcActionsList.splice(1, 0, share);
-    if (props.vcHasImage) {
+    if (isMosipVC(props.vcMetadata.issuer)) {
       vcActionsList.splice(2, 0, shareWithSelfieOption, VCActivationOption);
     }
   }

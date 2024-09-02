@@ -238,7 +238,7 @@ export const getCredentialIssuersWellKnownConfig = async (
         credentialConfigurationId,
       );
     } else {
-      console.log("no credentialConfigurationId is there")
+      console.log('no credentialConfigurationId is there');
 
       credentialDetails = getSelectedCredentialTypeDetails(
         response,
@@ -248,7 +248,7 @@ export const getCredentialIssuersWellKnownConfig = async (
     if (Object.keys(credentialDetails).includes('order')) {
       fields = credentialDetails.order;
     } else {
-      console.log("no order is there")
+      console.log('no order is there');
       fields = Object.keys(
         credentialDetails.credential_definition.credentialSubject,
       );
@@ -270,7 +270,7 @@ export const getDetailedViewFields = async (
     issuer,
     vcCredentialTypes,
     defaultFields,
-    credentialConfigurationId
+    credentialConfigurationId,
   );
 
   let updatedFieldsList = response.fields.concat(DETAIL_VIEW_ADD_ON_FIELDS);
@@ -307,11 +307,14 @@ export enum OIDCErrors {
 }
 
 // ErrorMessage is the type of error message shown in the UI
+
 export enum ErrorMessage {
   NO_INTERNET = 'noInternetConnection',
   GENERIC = 'generic',
-  REQUEST_TIMEDOUT = 'requestTimedOut',
+  REQUEST_TIMEDOUT = 'technicalDifficulty',
   BIOMETRIC_CANCELLED = 'biometricCancelled',
+  TECHNICAL_DIFFICULTIES = 'technicalDifficulty',
+  CREDENTIAL_TYPE_DOWNLOAD_FAILURE = 'credentialTypeListDownloadFailure',
 }
 
 export function CredentialIdForMsoMdoc(credential: VerifiableCredential) {
@@ -325,18 +328,28 @@ export function CredentialIdForMsoMdoc(credential: VerifiableCredential) {
     .elementValue.content;
 }
 
-export function iterateMsoMdocFor(credential,namespace:string,element: 'elementIdentifier'|'elementValue', fieldName:string){
-  console.log("iterateMsoMdocFor credential ",JSON.stringify(credential,null,2))
-  const foundItem = credential['issuerSigned']['nameSpaces'][
-      namespace
-      ].find(element => {
-        console.log("element inside find bloack ",JSON.stringify(element,null,2))
+export function iterateMsoMdocFor(
+  credential,
+  namespace: string,
+  element: 'elementIdentifier' | 'elementValue',
+  fieldName: string,
+) {
+  console.log(
+    'iterateMsoMdocFor credential ',
+    JSON.stringify(credential, null, 2),
+  );
+  const foundItem = credential['issuerSigned']['nameSpaces'][namespace].find(
+    element => {
+      console.log(
+        'element inside find bloack ',
+        JSON.stringify(element, null, 2),
+      );
 
-        return element.elementIdentifier.content === fieldName
-  });
-  console.log("finded ",foundItem)
-  return foundItem
-      [element].content;
+      return element.elementIdentifier.content === fieldName;
+    },
+  );
+  console.log('finded ', foundItem);
+  return foundItem[element].content;
 }
 
 export async function constructProofJWT(

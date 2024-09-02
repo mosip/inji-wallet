@@ -95,6 +95,14 @@ export const IssuersScreen: React.FC<
     return controller.errorMessageType === ErrorMessage.GENERIC;
   };
 
+  function isBackendError(): boolean {
+    return (
+      controller.errorMessageType === ErrorMessage.TECHNICAL_DIFFICULTIES ||
+      controller.errorMessageType ===
+        ErrorMessage.CREDENTIAL_TYPE_DOWNLOAD_FAILURE
+    );
+  }
+
   const onFocusSearch = () => {
     setTapToSearch(true);
   };
@@ -119,6 +127,7 @@ export const IssuersScreen: React.FC<
     if (isGenericError()) {
       return SvgImage.SomethingWentWrong();
     }
+    if (isBackendError()) return SvgImage.ErrorOccurred();
     return SvgImage.NoInternetConnection();
   };
 
@@ -202,7 +211,11 @@ export const IssuersScreen: React.FC<
         image={getImage()}
         showClose
         primaryButtonTestID="tryAgain"
-        primaryButtonText="tryAgain"
+        primaryButtonText={
+          controller.errorMessageType != ErrorMessage.TECHNICAL_DIFFICULTIES
+            ? 'tryAgain'
+            : undefined
+        }
         primaryButtonEvent={controller.TRY_AGAIN}
         onDismiss={goBack}
       />

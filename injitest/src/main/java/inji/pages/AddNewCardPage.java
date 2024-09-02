@@ -53,8 +53,8 @@ public class AddNewCardPage extends BasePage{
     @iOSXCUITFindBy(accessibility = "credentialTypeHeading-InsuranceCredential")
     private WebElement credentialTypeHeadingInsuranceCredential;
 
-    @AndroidFindBy(accessibility = "credentialTypeHeading-MOSIPVerifiableCredential")
-    @iOSXCUITFindBy(accessibility = "credentialTypeHeading-MOSIPVerifiableCredential")
+    @AndroidFindBy(accessibility = "credentialTypeHeading-MosipVerifiableCredential")
+    @iOSXCUITFindBy(accessibility = "credentialTypeHeading-MosipVerifiableCredential")
     private WebElement credentialTypeHeadingMOSIPVerifiableCredential;
 
     public AddNewCardPage(AppiumDriver driver) {

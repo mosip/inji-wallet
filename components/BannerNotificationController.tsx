@@ -7,11 +7,11 @@ import {
 import {useContext} from 'react';
 import {GlobalContext} from '../shared/GlobalContext';
 import {VcMetaEvents} from '../machines/VerifiableCredential/VCMetaMachine/VCMetaMachine';
-import {selectIsDownloadingFailed} from '../machines/VerifiableCredential/VCMetaMachine/VCMetaSelectors';
 import {
-  selectVerificationStatus,
+  selectIsDownloadingFailed,
   selectWalletBindingSuccess,
-} from '../machines/VerifiableCredential/VCItemMachine/VCItemSelectors';
+} from '../machines/VerifiableCredential/VCMetaMachine/VCMetaSelectors';
+import {selectVerificationStatus} from '../machines/VerifiableCredential/VCItemMachine/VCItemSelectors';
 
 export const UseBannerNotification = () => {
   const {appService} = useContext(GlobalContext);
