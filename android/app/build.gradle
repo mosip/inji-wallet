@@ -256,9 +256,10 @@ android {
 dependencies {
     implementation("com.facebook.react:react-android")
     implementation 'com.facebook.soloader:soloader:0.10.1+'
-    implementation("io.mosip:pixelpass:0.2.0-SNAPSHOT")
-    implementation("io.mosip:secure-keystore:0.2.0-SNAPSHOT")
-    implementation("io.mosip:tuvali:0.5.0-SNAPSHOT")
+    implementation("io.mosip:pixelpass:0.2.0")
+    implementation("io.mosip:secure-keystore:0.2.0")
+    implementation("io.mosip:tuvali:0.5.0")
+    implementation("io.mosip:inji-vci-client:0.1.0")
 
     def isGifEnabled = (findProperty('expo.gif.enabled') ?: "") == "true";
     def isWebpEnabled = (findProperty('expo.webp.enabled') ?: "") == "true";
@@ -287,7 +288,6 @@ dependencies {
     }
     compileOnly project(':react-native-android-location-services-dialog-box')
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.0.0"
-    implementation "io.mosip:inji-vci-client:0.2.0-SNAPSHOT"
     debugImplementation("com.facebook.flipper:flipper:${FLIPPER_VERSION}")
     debugImplementation("com.facebook.flipper:flipper-network-plugin:${FLIPPER_VERSION}") {
         exclude group: 'com.facebook.flipper'
