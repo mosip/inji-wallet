@@ -8,7 +8,7 @@ import {
   hasKeyPair,
   updateCredentialInformation,
   vcDownloadTimeout,
-  selectCredentialRequestKey
+  selectCredentialRequestKey,
 } from '../../shared/openId4VCI/Utils';
 import {authorize} from 'react-native-app-auth';
 import {
@@ -75,7 +75,7 @@ export const IssuersService = () => {
         context.privateKey,
         accessToken,
         context.selectedIssuer,
-        context.keyType
+        context.keyType,
       );
       let credential = await VciClient.downloadCredential(
         issuerMeta,
@@ -94,31 +94,26 @@ export const IssuersService = () => {
             TelemetryConstants.Screens.webViewPage,
         ),
       );
-        return await authorize(
-          constructAuthorizationConfiguration(
-            context.selectedIssuer,
-            context.selectedCredentialType.scope,
-          ),
-        );
-      
-      },
-     
-    generateKeyPair: async (context:any) => {
-      const keypair=await generateKeyPair(context.keyType);
-      console.log(keypair)
-     return keypair
+      return await authorize(
+        constructAuthorizationConfiguration(
+          context.selectedIssuer,
+          context.selectedCredentialType.scope,
+        ),
+      );
     },
 
-    getKeyPair: async (context:any) => {
-      console.log("keyset",context.keyType)
-      if (await hasKeyPair(context.keyType)) {
+    generateKeyPair: async (context: any) => {
+      const keypair = await generateKeyPair(context.keyType);
+      return keypair;
+    },
+
+    getKeyPair: async (context: any) => {
+      if (!!(await fetchKeyPair(context.keyType)).publicKey) {
         return await fetchKeyPair(context.keyType);
       }
-      console.log("exiting getkeypair")
     },
 
-    getSelectedKey: async (context:any) => {
-      console.log("hola",context.keyType)
+    getSelectedKey: async (context: any) => {
       return context.keyType;
     },
 
@@ -140,4 +135,3 @@ export const IssuersService = () => {
     },
   };
 };
-

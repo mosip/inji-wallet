@@ -105,11 +105,24 @@ class RNSecureKeystoreModule: NSObject,RCTBridgeModule {
     
     secureKeystore.storeGenericKey(publicKey: publickKey, privateKey: privateKey, account: account, onSuccess: successLambda, onFailure: failureLambda)
   }
+
+  @objc
+  func storeData(_ key:String,value:String,resolver resolve: @escaping RCTPromiseResolveBlock, rejecter reject: @escaping RCTPromiseRejectBlock) {
+    let successLambda: (Bool) -> Void = { success in
+      resolve(success)
+    }
+    
+    let failureLambda: (String, String) -> Void = { code, message in
+      reject(code, message, nil)
+    }
+    
+    secureKeystore.storeGenericKey(publicKey: value, privateKey: "", account: key, onSuccess: successLambda, onFailure: failureLambda)
+  }
   
   @objc
   func retrieveGenericKey(_ account: String, resolver resolve: @escaping RCTPromiseResolveBlock, rejecter reject: @escaping RCTPromiseRejectBlock) {
-    let successLambda: (String?,String?) -> Void = { publickey,privatekey in
-      let keyPair=[privatekey,publickey]
+    let successLambda: (String?,String?) -> Void = { privateKey,publicKey in
+      let keyPair=[privateKey,publicKey]
       resolve(keyPair)
       
     }
@@ -119,6 +132,22 @@ class RNSecureKeystoreModule: NSObject,RCTBridgeModule {
     }
     
     secureKeystore.retrieveGenericKey(account: account,onSuccess: successLambda,onFailure: failureLambda)
+  }
+
+  @objc
+  func getData(_ key: String, resolver resolve: @escaping RCTPromiseResolveBlock, rejecter reject: @escaping RCTPromiseRejectBlock)
+  {
+     let successLambda: (String?,String?) -> Void = { privateKey,publicKey in
+      let keyPair=[privateKey,publicKey]
+      resolve(keyPair)
+      
+    }
+    
+    let failureLambda: (String, String) -> Void = { code, message in
+      reject(code, message, nil)
+    }
+    
+    secureKeystore.retrieveGenericKey(account: key,onSuccess: successLambda,onFailure: failureLambda)
   }
 
   @objc
@@ -200,7 +229,7 @@ class RNSecureKeystoreModule: NSObject,RCTBridgeModule {
     }
     
     @objc
-    func clearKeys(resolver resolve: @escaping RCTPromiseResolveBlock, rejecter reject: @escaping RCTPromiseRejectBlock) {
+    func clearKeys(_ resolve: @escaping RCTPromiseResolveBlock, rejecter reject: @escaping RCTPromiseRejectBlock) {
         let successLambda: (Bool) -> Void = { success in
             resolve(success)
         }

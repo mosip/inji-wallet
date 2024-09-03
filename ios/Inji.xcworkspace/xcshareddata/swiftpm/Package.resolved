@@ -1,0 +1,78 @@
+{
+  "originHash" : "23605762247a1c453627ce326361ce9a41806d86fd97ebda599994901cc7610b",
+  "pins" : [
+    {
+      "identity" : "base45-swift",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/ehn-dcc-development/base45-swift",
+      "state" : {
+        "revision" : "c1db97d793d02a1c3d56d50a738c8fd8c34372f8",
+        "version" : "1.1.0"
+      }
+    },
+    {
+      "identity" : "crcswift",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/ivanesik/CrcSwift.git",
+      "state" : {
+        "revision" : "bb2fff7fb79815fad0528da71c9168d570bfc76c",
+        "version" : "0.0.3"
+      }
+    },
+    {
+      "identity" : "gzipswift",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/1024jp/GzipSwift",
+      "state" : {
+        "revision" : "7a7f17761c76a932662ab77028a4329f67d645a4",
+        "version" : "5.2.0"
+      }
+    },
+    {
+      "identity" : "inji-vci-client-ios-swift",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/mosip/inji-vci-client-ios-swift.git",
+      "state" : {
+        "branch" : "develop",
+        "revision" : "ee5f6ed432f12cb7dc339cdf0e01ec39ae27b530"
+      }
+    },
+    {
+      "identity" : "pixelpass-ios-swift",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/mosip/pixelpass-ios-swift/",
+      "state" : {
+        "branch" : "develop",
+        "revision" : "170f3489e77940212f471ee1cb9f3ab392039a45"
+      }
+    },
+    {
+      "identity" : "secure-keystore-ios-swift",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/mosip/secure-keystore-ios-swift",
+      "state" : {
+        "branch" : "develop",
+        "revision" : "497a8a3dc4a8658665c84bc8a36fa0e6bf252c09"
+      }
+    },
+    {
+      "identity" : "swiftcbor",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/valpackett/SwiftCBOR",
+      "state" : {
+        "branch" : "master",
+        "revision" : "ec24382864e5ffc6d3915c0818745d5ab12545a8"
+      }
+    },
+    {
+      "identity" : "tuvali-ios-swift",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/mosip/tuvali-ios-swift/",
+      "state" : {
+        "branch" : "develop",
+        "revision" : "96bc662cd07df051cf2357691469bba57b0217e8"
+      }
+    }
+  ],
+  "version" : 2
+}

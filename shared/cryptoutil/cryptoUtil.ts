@@ -19,7 +19,6 @@ import * as secp from '@noble/secp256k1';
 import base64 from 'react-native-base64';
 import {KeyTypes} from './KeyTypes';
 import convertDerToRsFormat from './signFormatConverter';
-import { hasKeyPair } from '../openId4VCI/Utils';
 
 //polyfills setup
 secp.etc.hmacSha256Sync = (k, ...m) =>
@@ -29,7 +28,7 @@ secp.etc.hmacSha256Async = (k, ...m) =>
 const {RNSecureKeystoreModule} = NativeModules;
 // 5min
 export const AUTH_TIMEOUT = 5 * 60;
-export const ENCRYPTION_ID = 'c7c22a6c-9759-4605-ac88-46f4041d863o';
+export const ENCRYPTION_ID = 'c7c22a6c-9759-4605-ac88-46f4041d863k';
 export const HMAC_ALIAS = '860cc320-4248-11ee-be56-0242ac120002';
 //This key is used to request biometric at app open to reset auth timeout which is used by encryption key
 export const DUMMY_KEY_FOR_BIOMETRIC_ALIAS =
@@ -37,8 +36,8 @@ export const DUMMY_KEY_FOR_BIOMETRIC_ALIAS =
 
 export async function generateKeyPairRSA() {
   if (isAndroid() && isHardwareKeystoreExists) {
-    console.log("inside rsa")
-    const isBiometricsEnabled=await RNSecureKeystoreModule.hasBiometricsEnabled()
+    const isBiometricsEnabled =
+      await RNSecureKeystoreModule.hasBiometricsEnabled();
     return {
       publicKey: await RNSecureKeystoreModule.generateKeyPair(
         KeyTypes.RS256,
@@ -49,7 +48,6 @@ export async function generateKeyPairRSA() {
       privateKey: '',
     };
   }
-  console.log('key generation rsa');
   const keyPair = await Promise.resolve(RSA.generateKeys(2048));
   return {
     publicKey: keyPair.public,
@@ -59,14 +57,18 @@ export async function generateKeyPairRSA() {
 
 export function generateKeyPairECK1() {
   const privKey = secp.utils.randomPrivateKey();
+  const decoder = new TextDecoder();
   const pubKey = secp.getPublicKey(privKey, false);
-  console.log('pub-priv keys' + privKey + ' \n' + pubKey);
-  return {publicKey: pubKey, privateKey: privKey};
+  return {
+    publicKey: Buffer.from(pubKey).toString('base64'),
+    privateKey: Buffer.from(privKey).toString('base64'),
+  };
 }
 
 export async function generateKeyPairECR1() {
   if (isAndroid()) {
-    const isBiometricsEnabled=await RNSecureKeystoreModule.hasBiometricsEnabled()
+    const isBiometricsEnabled =
+      await RNSecureKeystoreModule.hasBiometricsEnabled();
     return {
       publicKey: await RNSecureKeystoreModule.generateKeyPair(
         KeyTypes.ES256,
@@ -81,18 +83,20 @@ export async function generateKeyPairECR1() {
   const key = await keystore.generate('EC', 'P-256');
   const jwkPublicKey = key.toJSON(); // Public key JWK
   const jwkPrivateKey = key.toJSON(true); // Private key JWK (include private part)
-  console.log('JWK Public Key:', jwkPublicKey);
-  console.log('JWK Private Key:', jwkPrivateKey);
   return {
     publicKey: JSON.stringify(jwkPublicKey),
     privateKey: JSON.stringify(jwkPrivateKey),
   };
 }
 
-export async function generateKeyPairED() {}
+export async function generateKeyPairED() {
+  return {
+    privateKey: '',
+    publicKey: '',
+  };
+}
 
-export async function generateKeyPair(keyType: any) {
-  console.log('keytype prob ');
+export async function generateKeyPair(keyType: any): Promise<any> {
   switch (keyType) {
     case KeyTypes.RS256:
       return generateKeyPairRSA();
@@ -108,11 +112,18 @@ export async function generateKeyPair(keyType: any) {
 }
 
 export async function checkAllKeyPairs() {
-  const isRSAKeyhasKeyPair = await hasKeyPair(KeyTypes.RS256);
-  const isECR1Keypair = await hasKeyPair(KeyTypes.ES256);
-  const isECK1KeyPair = await hasKeyPair(KeyTypes.ES256K);
-  const isEDKeyPair = await hasKeyPair(KeyTypes.ED25519);
-  if (!(isRSAKeyhasKeyPair && isECK1KeyPair && isECK1KeyPair && isEDKeyPair))
+  const RSAKey = await fetchKeyPair(KeyTypes.RS256);
+  const ECR1Key = await fetchKeyPair(KeyTypes.ES256);
+  const ECK1Key = await fetchKeyPair(KeyTypes.ES256K);
+  const EDKey = 'key';
+  if (
+    !(
+      !!RSAKey.publicKey &&
+      !!ECR1Key.publicKey &&
+      !!ECK1Key.publicKey &&
+      !!EDKey
+    )
+  )
     throw Error('Keys not present');
 }
 
@@ -120,21 +131,20 @@ export async function generateKeyPairsAndStore() {
   const {RNSecureKeystoreModule} = NativeModules;
   const RSAKeyPair = await generateKeyPair(KeyTypes.RS256);
   const ECR1KeyPair = await generateKeyPair(KeyTypes.ES256);
-  const ECK1KeyPair = generateKeyPair(KeyTypes.ES256K);
-  const EDKeyPair = generateKeyPair(KeyTypes.ED25519);
-
+  const ECK1KeyPair = await generateKeyPair(KeyTypes.ES256K);
+  //const EDKeyPair = generateKeyPair(KeyTypes.ED25519);
   await RNSecureKeystoreModule.storeGenericKey(
     ECK1KeyPair.publicKey,
     ECK1KeyPair.privateKey,
     KeyTypes.ES256K,
   );
-  await RNSecureKeystoreModule.storeGenericKey(
-    EDKeyPair.publicKey,
-    EDKeyPair.privateKey,
-    KeyTypes.ED25519,
-  );
+  // await RNSecureKeystoreModule.storeGenericKey(
+  //   EDKeyPair.publicKey,
+  //   EDKeyPair.privateKey,
+  //   KeyTypes.ED25519,
+  // );
 
-  if(isIOS()){
+  if (isIOS()) {
     await RNSecureKeystoreModule.storeGenericKey(
       RSAKeyPair.publicKey,
       RSAKeyPair.privateKey,
@@ -173,9 +183,7 @@ export async function getJWT(
       header,
       payLoad,
     );
-    console.log("sign hereL "+header64 + '.' + payLoad64 + '.' + signature64)
-    if(keyType==KeyTypes.ES256 && isIOS())
-      return signature64
+    if (keyType == KeyTypes.ES256 && isIOS()) return signature64;
     return header64 + '.' + payLoad64 + '.' + signature64;
   } catch (e) {
     console.error('Exception Occurred While Constructing JWT ', e);
@@ -195,7 +203,7 @@ export async function createSignature(
     case KeyTypes.RS256:
       return createSignatureRSA(privateKey, preHash);
     case KeyTypes.ES256:
-      return createSignatureECR1(privateKey, header, payload,preHash);
+      return createSignatureECR1(privateKey, header, payload, preHash);
     case KeyTypes.ES256K:
       return createSignatureECK1(privateKey, preHash);
     case KeyTypes.ED25519:
@@ -230,9 +238,8 @@ export async function createSignatureRSA(privateKey: string, preHash: string) {
 }
 
 export async function createSignatureECK1(privateKey, prehash) {
-  console.log("heyyyyy")
   const sha = sha256(prehash);
-  const sign = await secp.signAsync(sha, privateKey,{lowS:false});
+  const sign = await secp.signAsync(sha, privateKey, {lowS: false});
   return base64url(Buffer.from(sign.toCompactRawBytes()));
 }
 
@@ -242,15 +249,21 @@ export async function createSignatureED(privateKey, prehash) {
   return base64url(Buffer.from(sign.toCompactRawBytes()));
 }
 
-export async function createSignatureECR1(privateKey, header, payload,preHash) {
-
-  if(!isHardwareKeystoreExists){
-    throw Error
-  }
-  else{
-    if(isAndroid())
-    {
-      let signature64=RNSecureKeystoreModule.sign(KeyTypes.ES256,KeyTypes.ES256,preHash)
+export async function createSignatureECR1(
+  privateKey,
+  header,
+  payload,
+  preHash,
+) {
+  if (!isHardwareKeystoreExists) {
+    throw Error;
+  } else {
+    if (isAndroid()) {
+      let signature64 = RNSecureKeystoreModule.sign(
+        KeyTypes.ES256,
+        KeyTypes.ES256,
+        preHash,
+      );
       const base64DeodedSignature = base64.decode(
         signature64.replace(/\n/g, ''),
       );
@@ -258,7 +271,7 @@ export async function createSignatureECR1(privateKey, header, payload,preHash) {
         char.charCodeAt(0),
       );
       signature64 = convertDerToRsFormat(derSignature);
-      return replaceCharactersInB64(signature64)
+      return replaceCharactersInB64(signature64);
     }
   }
 
@@ -269,7 +282,6 @@ export async function createSignatureECR1(privateKey, header, payload,preHash) {
     {key, reference: false},
   );
   const jws = await signer.update(JSON.stringify(payload)).final();
-  console.log('JWS:', jws);
   return jws;
 }
 
@@ -289,7 +301,7 @@ export function encodeB64(str: string) {
  *  use the isCustomKeystore constant in the app lifeycle instead.
  */
 function isCustomSecureKeystore() {
-  return !isIOS() ? RNSecureKeystoreModule.deviceSupportsHardware() : true;
+  return isAndroid() ? RNSecureKeystoreModule.deviceSupportsHardware() : true;
 }
 
 export async function encryptJson(
@@ -392,38 +404,40 @@ export function hmacSHA(encryptionKey: string, data: string) {
 }
 
 export async function fetchKeyPair(keyType: any) {
-  try{
+  try {
     const {RNSecureKeystoreModule} = NativeModules;
-  console.warn('retrieving key');
-  if (keyType == KeyTypes.RS256 || keyType == KeyTypes.ES256) {
-    if (isAndroid()) {
-      const publicKey=await RNSecureKeystoreModule.retrieveKey(keyType);
-      console.log("pem key",publicKey)
-      return {
-        publicKey:publicKey,
-        privateKey:''
+    if (keyType == KeyTypes.RS256 || keyType == KeyTypes.ES256) {
+      if (isAndroid()) {
+        const publicKey = await RNSecureKeystoreModule.retrieveKey(keyType);
+        return {
+          publicKey: publicKey,
+          privateKey: '',
+        };
+      } else {
+        const keyPair = await RNSecureKeystoreModule.retrieveGenericKey(
+          keyType,
+        );
+        const publicKey = keyPair[0];
+        const privateKey = keyPair[1];
+        return {
+          publicKey: publicKey,
+          privateKey: privateKey,
+        };
       }
-    } 
-    else {
-      return await RNSecureKeystoreModule.retrieveGenericKey(keyType);
+    } else {
+      const keyPair = await RNSecureKeystoreModule.retrieveGenericKey(keyType);
+      const publicKey = Buffer.from(keyPair[0], 'base64');
+      const privateKey = Buffer.from(keyPair[1], 'base64');
+      return {
+        publicKey: publicKey,
+        privateKey: privateKey,
+      };
     }
-  } else {
-    const keyPair = await RNSecureKeystoreModule.retrieveGenericKey(keyType);
-    console.log("keyPair",keyPair[0])
-    const publicKey = keyPair.publicKey;
-    const privateKey = keyPair.privateKey;
+  } catch (e) {
+    console.error('error getting key', e);
     return {
-      publicKey: publicKey,
-      privateKey: privateKey,
+      publicKey: '',
+      privateKey: '',
     };
   }
-  }
-  catch(e){
-   console.log("error getting key")
-    return {
-    publicKey: "",
-    privateKey: "",
-  };
-  }
-  
 }

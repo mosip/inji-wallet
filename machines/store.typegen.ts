@@ -10,8 +10,10 @@
 "xstate.init": { type: "xstate.init" };
         };
         invokeSrcNameMap: {
-          "checkStorageInitialisedOrNot": "done.invoke.store.checkStorageInitialisation:invocation[0]";
+          "checkFreshInstall": "done.invoke.store.checkFreshInstall:invocation[0]";
+"checkStorageInitialisedOrNot": "done.invoke.store.checkStorageInitialisation:invocation[0]";
 "clear": "done.invoke.store.resettingStorage:invocation[0]";
+"clearKeys": "done.invoke.store.clearIosKeys:invocation[0]";
 "generateEncryptionKey": "done.invoke.store.generatingEncryptionKey:invocation[0]";
 "getEncryptionKey": "done.invoke.store.gettingEncryptionKey:invocation[0]";
 "hasEncryptionKey": "done.invoke.store.checkEncryptionKey:invocation[0]";
@@ -32,17 +34,20 @@
           
         };
         eventsCausingGuards: {
-          "isCustomSecureKeystore": "KEY_RECEIVED";
+          "hasData": "READY";
+"isCustomSecureKeystore": "KEY_RECEIVED";
         };
         eventsCausingServices: {
-          "checkStorageInitialisedOrNot": "ERROR";
+          "checkFreshInstall": "xstate.init";
+"checkStorageInitialisedOrNot": "ERROR";
 "clear": "KEY_RECEIVED";
+"clearKeys": "READY";
 "generateEncryptionKey": "ERROR" | "IGNORE" | "READY";
 "getEncryptionKey": "TRY_AGAIN";
 "hasEncryptionKey": never;
 "store": "KEY_RECEIVED" | "READY" | "done.invoke.store.resettingStorage:invocation[0]";
         };
-        matchesStates: "checkEncryptionKey" | "checkStorageInitialisation" | "failedReadingKey" | "generatingEncryptionKey" | "gettingEncryptionKey" | "ready" | "resettingStorage";
+        matchesStates: "checkEncryptionKey" | "checkFreshInstall" | "checkStorageInitialisation" | "clearIosKeys" | "failedReadingKey" | "generatingEncryptionKey" | "gettingEncryptionKey" | "ready" | "resettingStorage";
         tags: never;
       }
   

@@ -33,7 +33,8 @@ import {
   createVcMetaMachine,
   vcMetaMachine,
 } from './VerifiableCredential/VCMetaMachine/VCMetaMachine';
-import {NativeModules} from 'react-native';
+import { checkAllKeyPairs, generateKeyPairsAndStore } from '../shared/cryptoutil/cryptoUtil';
+
 
 const QrLoginIntent = NativeModules.QrLoginIntent;
 
@@ -461,7 +462,7 @@ export const appMachine = model.createMachine(
         };
       },
 
-      checkKeypairs: async () => {
+      checkKeyPairs: async () => {
         return await checkAllKeyPairs();
       },
 

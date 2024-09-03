@@ -32,7 +32,7 @@ export class VCMetadata {
     timestamp = '',
     isVerified = false,
     displayId = '',
-    downloadKeyType='',
+    downloadKeyType = '',
   } = {}) {
     this.idType = idType;
     this.requestId = requestId;
@@ -43,7 +43,7 @@ export class VCMetadata {
     this.timestamp = timestamp;
     this.isVerified = isVerified;
     this.displayId = displayId;
-    this.downloadKeyType=downloadKeyType
+    this.downloadKeyType = downloadKeyType;
   }
 
   //TODO: Remove any typing and use appropriate typing
@@ -62,7 +62,7 @@ export class VCMetadata {
         : vc.vcMetadata
         ? vc.vcMetadata.displayId
         : getDisplayId(vc.verifiableCredential),
-      downloadKeyType:vc.downloadKeyType
+      downloadKeyType: vc.downloadKeyType,
     });
   }
 
@@ -114,7 +114,7 @@ export const getVCMetadata = (context: object, keyType: string) => {
     timestamp: context.timestamp ?? '',
     isVerified: context.vcMetadata.isVerified ?? false,
     displayId: getDisplayId(context.verifiableCredential),
-    downloadKeyType:keyType
+    downloadKeyType: keyType,
   });
 };
 

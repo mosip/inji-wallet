@@ -23,8 +23,8 @@ import {
   sendImpressionEvent,
 } from '../../shared/telemetry/TelemetryUtils';
 import {TelemetryConstants} from '../../shared/telemetry/TelemetryConstants';
-import {KeyPair} from 'react-native-rsa-native';
 import {NativeModules} from 'react-native';
+import {KeyTypes} from '../../shared/cryptoutil/KeyTypes';
 
 const {RNSecureKeystoreModule} = NativeModules;
 export const IssuersActions = (model: any) => {
@@ -63,7 +63,15 @@ export const IssuersActions = (model: any) => {
     }),
     setSelectedCredentialType: model.assign({
       selectedCredentialType: (_: any, event: any) => event.credType,
-      wellknownKeyTypes: (_: any, event: any)=> event.credType.proof_types_supported.jwt as string[]
+      wellknownKeyTypes: (_: any, event: any) => {
+        const proofTypesSupported = event.credType.proof_types_supported;
+        if (proofTypesSupported?.jwt) {
+          return proofTypesSupported.jwt
+            .proof_signing_alg_values_supported as string[];
+        } else {
+          return [KeyTypes.RS256] as string[];
+        }
+      },
     }),
     setSupportedCredentialTypes: model.assign({
       supportedCredentialTypes: (_: any, event: any) => event.data,
@@ -111,11 +119,11 @@ export const IssuersActions = (model: any) => {
     }),
 
     loadKeyPair: assign({
-      publicKey: (_, event: any) => event.data?.publicKey,
+      publicKey: (_, event: any) => event.data?.publicKey as string,
       privateKey: (context: any, event: any) =>
         event.data?.privateKey
           ? event.data.privateKey
-          : context.privateKey,
+          : (context.privateKey as string),
     }),
     getKeyPairFromStore: send(StoreEvents.GET(Issuers_Key_Ref), {
       to: (context: any) => context.serviceRefs.store,
@@ -132,12 +140,6 @@ export const IssuersActions = (model: any) => {
           keyType,
         );
     },
-
-    setKeyTypes: assign({
-      keyTypes: (context: any, event: any) => {
-        return getKeyTypeFromWellknown();
-      },
-    }),
 
     storeVerifiableCredentialMeta: send(
       context =>
@@ -202,7 +204,7 @@ export const IssuersActions = (model: any) => {
     ),
 
     setSelectedKey: model.assign({
-      keyType: (context:any) => {
+      keyType: (context: any) => {
         const keyType = selectCredentialRequestKey(context.wellknownKeyTypes);
         return keyType;
       },
@@ -242,7 +244,7 @@ export const IssuersActions = (model: any) => {
     setPublicKey: assign({
       publicKey: (_, event: any) => {
         if (!isHardwareKeystoreExists) {
-          return event.data.publicKey;
+          return event.data.publicKey as string;
         }
         return event.data.publicKey as string;
       },

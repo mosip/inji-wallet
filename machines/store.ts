@@ -9,8 +9,7 @@ import {
   StateFrom,
 } from 'xstate';
 import {createModel} from 'xstate/lib/model';
-import {generateSecureRandom} from 'react-native-securerandom';
-import {error, log} from 'xstate/lib/actions';
+import {log} from 'xstate/lib/actions';
 import {
   isIOS,
   MY_VCS_STORE_KEY,
@@ -98,10 +97,38 @@ export const storeMachine =
         events: {} as EventFrom<typeof model>,
       },
       id: 'store',
-      initial: !isHardwareKeystoreExists
-        ? 'gettingEncryptionKey'
-        : 'checkEncryptionKey',
+      initial: 'checkFreshInstall',
       states: {
+        checkFreshInstall: {
+          invoke: {
+            src: 'checkFreshInstall',
+          },
+          on: {
+            READY: [
+              {
+                cond: 'hasData',
+                target: !isHardwareKeystoreExists
+                  ? 'gettingEncryptionKey'
+                  : 'checkEncryptionKey',
+              },
+              {
+                target: 'clearIosKeys',
+              },
+            ],
+          },
+        },
+        clearIosKeys: {
+          invoke: {
+            src: 'clearKeys',
+            onDone: [
+              {
+                target: !isHardwareKeystoreExists
+                  ? 'gettingEncryptionKey'
+                  : 'checkEncryptionKey',
+              },
+            ],
+          },
+        },
         checkEncryptionKey: {
           invoke: {
             src: 'hasEncryptionKey',
@@ -296,6 +323,17 @@ export const storeMachine =
 
       services: {
         clear: () => clear(),
+        clearKeys: () => async _ => {
+          if (isIOS()) {
+            const {RNSecureKeystoreModule} = NativeModules;
+            await RNSecureKeystoreModule.clearKeys();
+          }
+          return;
+        },
+        checkFreshInstall: () => async callback => {
+          const response = await getItem('auth', null, '');
+          callback(model.events.READY());
+        },
         hasEncryptionKey: () => async callback => {
           let hasSetCredentials;
           try {
@@ -305,7 +343,6 @@ export const storeMachine =
           } catch (e) {
             hasSetCredentials = false;
           }
-          console.log('has creds', hasSetCredentials);
           if (hasSetCredentials) {
             try {
               const base64EncodedString =
@@ -525,25 +562,23 @@ export const storeMachine =
               ),
             );
           } else {
-            const isBiometricsEnabled = await
-              RNSecureKeystoreModule.hasBiometricsEnabled();
+            const isBiometricsEnabled =
+              await RNSecureKeystoreModule.hasBiometricsEnabled();
             await RNSecureKeystoreModule.generateKey(
               ENCRYPTION_ID,
               isBiometricsEnabled,
               AUTH_TIMEOUT,
             );
             RNSecureKeystoreModule.generateHmacshaKey(HMAC_ALIAS);
-            RNSecureKeystoreModule.generateKey(
-              ENCRYPTION_ID,
-              isBiometricsEnabled,
-              0,
-            );
             callback(model.events.KEY_RECEIVED(''));
           }
         },
       },
 
       guards: {
+        hasData: (_, event: any) => {
+          return event.data !== null;
+        },
         isCustomSecureKeystore: () => isHardwareKeystoreExists,
       },
     },

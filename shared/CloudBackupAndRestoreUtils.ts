@@ -142,10 +142,9 @@ class Cloud {
         const {email, nonce, identityToken, realUserStatus /* etc */} =
           appleAuthRequestResponse;
         profileInfo = {email: email, picture: null};
-        await RNSecureKeystoreModule.storeGenericKey(
-          JSON.stringify(appleAuthRequestResponse),
-          '',
+        await RNSecureKeystoreModule.storeData(
           'userIdentifier',
+          JSON.stringify(appleAuthRequestResponse),
         );
 
         return {status: this.status.SUCCESS, profileInfo: profileInfo};
@@ -205,7 +204,7 @@ class Cloud {
       if (isIOS()) {
         const isSignedIn = await CloudStorage.isCloudAvailable();
 
-        const userIdentifier = await RNSecureKeystoreModule.retrieveGenericKey(
+        const userIdentifier = await RNSecureKeystoreModule.getData(
           'userIdentifier',
         )[0];
         const userToken = JSON.parse(userIdentifier + '');

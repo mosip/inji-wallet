@@ -25,18 +25,18 @@ export const QrCodeOverlay: React.FC<QrCodeOverlayProps> = props => {
   async function getQRData(): Promise<string> {
     let qrData: string;
     try {
-      const keyData = await RNSecureKeystoreModule.retrieveGenericKey(props.meta.id);
-      if (keyData && keyData.length > 0) {
-        qrData = keyData[0];
+      const keyData = await RNSecureKeystoreModule.getData(props.meta.id);
+      if (keyData[1] && keyData.length > 0) {
+        qrData = keyData[1];
       } else {
-        throw new Error("No key data ound");
+        throw new Error("No key data found");
       }
     } catch {
       qrData = await RNPixelpassModule.generateQRData(
         JSON.stringify(props.verifiableCredential),
         '',
       );
-      await RNSecureKeystoreModule.storeGenericKey(qrData,"",props.meta.id);
+      await RNSecureKeystoreModule.storeData(props.meta.id, qrData);
     }
     return qrData;
   }

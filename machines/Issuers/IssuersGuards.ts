@@ -12,7 +12,6 @@ export const IssuersGuards = () => {
     isSignedIn: (_: any, event: any) =>
       (event.data as isSignedInResult).isSignedIn,
     hasKeyPair: (context: any) => {
-      console.log("has key pair",  !!context.publicKey)
       return  !!context.publicKey
     },
     isInternetConnected: (_: any, event: any) => !!event.data.isConnected,

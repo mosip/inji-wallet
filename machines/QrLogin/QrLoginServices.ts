@@ -27,18 +27,17 @@ export const QrLoginServices = {
   sendAuthenticate: async context => {
     let privateKey;
     const individualId = context.selectedVc.vcMetadata.displayId;
-    const alias = context.selectedVc.vcMetadata.downloadKeyType;
+    const keyType = context.selectedVc.vcMetadata.downloadKeyType;
     if (!isHardwareKeystoreExists) {
       privateKey = await getPrivateKey(
         context.selectedVc.walletBindingResponse?.walletBindingId,
       );
     }
-    console.log(alias)
-    const keyPair=await fetchKeyPair(alias)
-    privateKey=keyPair[1]
+    const keyPair = await fetchKeyPair(keyType);
+    privateKey = keyPair.privateKey;
     var config = await getAllConfigurations();
     const jwtHeader = {
-      alg: alias,
+      alg: keyType,
       'x5t#S256': context.thumbprint,
     };
 
@@ -50,7 +49,13 @@ export const QrLoginServices = {
       exp: Math.floor(new Date().getTime() / 1000) + 18000,
     };
 
-    const jwt = await getJWT(jwtHeader, jwtPayload, alias, privateKey,alias);
+    const jwt = await getJWT(
+      jwtHeader,
+      jwtPayload,
+      keyType,
+      privateKey,
+      keyType,
+    );
 
     const response = await request(
       API_URLS.authenticate.method,
@@ -76,17 +81,17 @@ export const QrLoginServices = {
 
   sendConsent: async context => {
     let privateKey;
-    const alias = context.selectedVc.vcMetadata.downloadKeyType;
+    const keyType = context.selectedVc.vcMetadata.downloadKeyType;
     if (!isHardwareKeystoreExists) {
       privateKey = await getPrivateKey(
         context.selectedVc.walletBindingResponse?.walletBindingId,
       );
     }
-    const keyPair=await fetchKeyPair(alias)
-    privateKey=keyPair[1]
+    const keyPair = await fetchKeyPair(keyType);
+    privateKey = keyPair.privateKey;
 
     const header = {
-      alg: alias,
+      alg: keyType,
       'x5t#S256': context.thumbprint,
     };
     const payload = {
@@ -96,7 +101,7 @@ export const QrLoginServices = {
       permitted_authorized_scopes: context.authorizeScopes,
     };
 
-    const JWT = await getJWT(header, payload, alias, privateKey,alias);
+    const JWT = await getJWT(header, payload, keyType, privateKey, keyType);
     const jwtComponents = JWT.split('.');
     const detachedSignature = jwtComponents[0] + '.' + jwtComponents[2];
 
