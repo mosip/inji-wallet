@@ -166,6 +166,12 @@ jobs:
           name: residentapp
           path: ios/Inji.ipa
           retention-days: 10
+  
+      - name: Set up JDK 21
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '21'
 
       - name: Run UI Automation Tests on BrowserStack
         run: |
