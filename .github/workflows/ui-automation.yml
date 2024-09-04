@@ -50,10 +50,11 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: '18.x'
-          
+      - name: work dir
+        run: pwd
       - name: Compile with Maven
         run: mvn clean compile -X
-        working-directory: /injitest/
+        working-directory: injitest/
         
       - name: Cache npm dependencies
         uses: actions/cache@v3.3.1
