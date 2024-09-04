@@ -53,6 +53,7 @@ jobs:
           
       - name: Compile with Maven
         run: mvn clean compile -X
+        working-directory: /injitest/
         
       - name: Cache npm dependencies
         uses: actions/cache@v3.3.1
