@@ -20,53 +20,54 @@ import {TelemetryConstants} from './telemetry/TelemetryConstants';
 export const API_URLS: ApiUrls = {
   issuersList: {
     method: 'GET',
-    buildURL: (): `/${string}` => '/residentmobileapp/issuers',
+    buildURL: (): `/${string}` => '/v1/mimoto/issuers',
   },
   issuerConfig: {
     method: 'GET',
     buildURL: (issuerId: string): `/${string}` =>
-      `/residentmobileapp/issuers/${issuerId}`,
+      `/v1/mimoto/issuers/${issuerId}`,
   },
   issuerWellknownConfig: {
     method: 'GET',
-    buildURL: (requestUrl: `/${string}`): `/${string}` => requestUrl,
+    buildURL: (issuerId: string): `/${string}` =>
+      `/v1/mimoto/issuers/${issuerId}/.well-known`,
   },
   allProperties: {
     method: 'GET',
-    buildURL: (): `/${string}` => '/residentmobileapp/allProperties',
+    buildURL: (): `/${string}` => '/v1/mimoto/allProperties',
   },
   getIndividualId: {
     method: 'POST',
-    buildURL: (): `/${string}` => '/residentmobileapp/aid/get-individual-id',
+    buildURL: (): `/${string}` => '/v1/mimoto/aid/get-individual-id',
   },
   reqIndividualOTP: {
     method: 'POST',
-    buildURL: (): `/${string}` => '/residentmobileapp/req/individualId/otp',
+    buildURL: (): `/${string}` => '/v1/mimoto/req/individualId/otp',
   },
   walletBinding: {
     method: 'POST',
-    buildURL: (): `/${string}` => '/residentmobileapp/wallet-binding',
+    buildURL: (): `/${string}` => '/v1/mimoto/wallet-binding',
   },
   bindingOtp: {
     method: 'POST',
-    buildURL: (): `/${string}` => '/residentmobileapp/binding-otp',
+    buildURL: (): `/${string}` => '/v1/mimoto/binding-otp',
   },
   requestOtp: {
     method: 'POST',
-    buildURL: (): `/${string}` => '/residentmobileapp/req/otp',
+    buildURL: (): `/${string}` => '/v1/mimoto/req/otp',
   },
   credentialRequest: {
     method: 'POST',
-    buildURL: (): `/${string}` => '/residentmobileapp/credentialshare/request',
+    buildURL: (): `/${string}` => '/v1/mimoto/credentialshare/request',
   },
   credentialStatus: {
     method: 'GET',
     buildURL: (id: string): `/${string}` =>
-      `/residentmobileapp/credentialshare/request/status/${id}`,
+      `/v1/mimoto/credentialshare/request/status/${id}`,
   },
   credentialDownload: {
     method: 'POST',
-    buildURL: (): `/${string}` => '/residentmobileapp/credentialshare/download',
+    buildURL: (): `/${string}` => '/v1/mimoto/credentialshare/download',
   },
   linkTransaction: {
     method: 'POST',
@@ -105,10 +106,10 @@ export const API = {
     );
     return response.response;
   },
-  fetchIssuerWellknownConfig: async (requestUrl: string) => {
+  fetchIssuerWellknownConfig: async (issuerId: string) => {
     const response = await request(
       API_URLS.issuerWellknownConfig.method,
-      API_URLS.issuerWellknownConfig.buildURL(requestUrl),
+      API_URLS.issuerWellknownConfig.buildURL(issuerId),
     );
     return response;
   },
@@ -142,13 +143,12 @@ export const CACHED_API = {
     }),
   fetchIssuerWellknownConfig: (
     issuerId: string,
-    requestUrl: string,
     isCachePreferred: boolean = false,
   ) =>
     generateCacheAPIFunction({
       isCachePreferred,
       cacheKey: API_CACHED_STORAGE_KEYS.fetchIssuerWellknownConfig(issuerId),
-      fetchCall: API.fetchIssuerWellknownConfig.bind(null, requestUrl),
+      fetchCall: API.fetchIssuerWellknownConfig.bind(null, issuerId),
     }),
 
   getAllProperties: (isCachePreferred: boolean) =>

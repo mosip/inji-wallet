@@ -29,7 +29,7 @@ buildIdentifier: '#${BUILD_NUMBER}' # Supports strings along with either/both ${
 # OR
 # app: 'bs://<app-id>' # App URL returned when uploading the app to BrowserStack manually
 # Visit https://www.browserstack.com/docs/app-automate/appium/set-up-tests/specify-app for more options
-app: bs://0e29daf05319be0da00ca11b0acdd385cacaae78 # BrowserStack Sample App
+app: bs://296e4801c21dcb8e77034a366587e0c39642c373 # BrowserStack Sample App
 
 # =======================================
 # Platforms (Browsers / Devices to test)
@@ -41,8 +41,9 @@ platforms:
       deviceName: iPhone 13 Pro
       platformVersion: 15
     - platformName: ios
-      deviceName: iPhone 11
-      platformVersion: 14
+      deviceName: iPhone 15 Pro Max
+      platformVersion: 17
+
 # =======================
 # Parallels per Platform
 # =======================

@@ -7,7 +7,7 @@ import {
   ViewStyle,
 } from 'react-native';
 import {Spacing} from '../styleUtils';
-import {isIOS} from '../../../shared/constants';
+import {COPILOT_HEIGHT, isIOS} from '../../../shared/constants';
 import Constants from 'expo-constants';
 
 const Colors = {
@@ -215,6 +215,17 @@ export const PurpleTheme = {
       flex: 1,
       flexDirection: 'row',
       paddingRight: 90,
+    },
+    vcDetailBg: {
+      width: '100%',
+      opacity: 0.1,
+    },
+    vcBg: {
+      opacity: 0.1,
+    },
+    shimmer: {
+      borderRadius: 5,
+      marginLeft: 2,
     },
     loadingContainer: {
       flex: 1,
@@ -718,13 +729,22 @@ export const PurpleTheme = {
       position: 'absolute',
       left: 10,
       right: 10,
+      borderRadius: 8,
       maxWidth: Dimensions.get('screen').width,
-      height: Dimensions.get('screen').height * 0.2,
+      minHeight: Dimensions.get('screen').height * COPILOT_HEIGHT,
     },
     copilotButton: {
       width: 104,
       height: 40,
       marginLeft: 10,
+    },
+    copilotButtonsContainer: {
+      marginTop: 25,
+      marginBottom: 15,
+    },
+    copilotBgContainer: {
+      flex: 1,
+      justifyContent: 'space-around',
     },
   }),
   BannerStyles: StyleSheet.create({
@@ -1566,7 +1586,7 @@ export const PurpleTheme = {
       overflow: 'hidden',
     },
     scanner: {
-      height: '100%',
+      height: 400,
       width: '100%',
       margin: 'auto',
     },

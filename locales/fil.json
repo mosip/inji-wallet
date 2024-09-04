@@ -88,8 +88,7 @@
         "message": "Nagkaproblema habang sine-save ang Card sa tindahan."
       }
     },
-    "shareQRCode": "Ibahagi ang QR Code",
-    "scanToViewCredential": "I-scan para tingnan ang kredensyal"
+    "shareQRCode": "Ibahagi ang QR Code"
   },
   "HomeScreenKebabPopUp": {
     "title": "Higit pang mga Opsyon",
@@ -197,6 +196,10 @@
       "generic": {
         "title": "may nangyaring mali!",
         "message": "Nagkakaproblema kami sa iyong kahilingan. Pakisubukang muli."
+      },
+      "technicalDifficulty": {
+        "title": "May naganap na error!",
+        "message": "Salamat sa iyong pasensya! Nakakaranas kami ng mga teknikal na paghihirap ngayon. Pakisubukang muli mamaya o makipag-ugnayan sa admin para sa karagdagang tulong!"
       }
     }
   },

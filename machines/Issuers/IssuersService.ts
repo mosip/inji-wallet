@@ -36,28 +36,27 @@ export const IssuersService = () => {
       return await CACHED_API.fetchIssuers();
     },
     checkInternet: async () => await NetInfo.fetch(),
-    downloadIssuerConfig: async (context: any) => {
-      let issuersConfig = await CACHED_API.fetchIssuerConfig(
+    downloadIssuerWellknown: async (context: any) => {
+      const wellknownResponse = await CACHED_API.fetchIssuerWellknownConfig(
         context.selectedIssuerId,
       );
-      if (issuersConfig['.well-known']) {
-        const wellknownResponse = await CACHED_API.fetchIssuerWellknownConfig(
-          context.selectedIssuerId,
-          issuersConfig['.well-known'],
-        );
-        if (wellknownResponse) {
-          issuersConfig.credential_audience =
-            wellknownResponse.credential_issuer;
-          issuersConfig.credential_endpoint =
-            wellknownResponse.credential_endpoint;
-          issuersConfig.credentials_supported =
-            wellknownResponse.credentials_supported;
-        }
-      }
-      return issuersConfig;
+      return wellknownResponse;
     },
     downloadCredentialTypes: async (context: any) => {
-      return context.selectedIssuer.credentials_supported;
+      const credentialTypes = [];
+      for (const key in context.selectedIssuer
+        .credential_configurations_supported) {
+        credentialTypes.push({
+          id: key,
+          ...context.selectedIssuer.credential_configurations_supported[key],
+        });
+      }
+      if (credentialTypes.length == 0)
+        throw new Error(
+          `No credential type found for issuer ${context.selectedIssuer.credential_issuer}`,
+        );
+
+      return credentialTypes;
     },
     downloadCredential: async (context: any) => {
       const downloadTimeout = await vcDownloadTimeout();
@@ -100,6 +99,7 @@ export const IssuersService = () => {
         ),
       );
     },
+
     generateKeyPair: async () => {
       if (!isHardwareKeystoreExists) {
         return await generateKeys();

@@ -64,7 +64,7 @@ export const IssuersMachine = model.createMachine(
               description:
                 'issuers config is available and downloading credentials is retriable',
               actions: ['setLoadingReasonAsSettingUp', 'resetError'],
-              target: 'downloadIssuerConfig',
+              target: 'downloadIssuerWellknown',
             },
           ],
           RESET_ERROR: {
@@ -80,21 +80,25 @@ export const IssuersMachine = model.createMachine(
             actions: sendParent('DOWNLOAD_ID'),
           },
           SELECTED_ISSUER: {
-            actions: ['setSelectedIssuerId', 'setLoadingReasonAsSettingUp'],
-            target: 'downloadIssuerConfig',
+            actions: [
+              'setSelectedIssuerId',
+              'setLoadingReasonAsSettingUp',
+              'setSelectedIssuers',
+            ],
+            target: 'downloadIssuerWellknown',
           },
         },
       },
-      downloadIssuerConfig: {
-        description: 'downloads the configuration of the selected issuer',
+      downloadIssuerWellknown: {
+        description: 'fetches the wellknown of the selected issuer',
         invoke: {
-          src: 'downloadIssuerConfig',
+          src: 'downloadIssuerWellknown',
           onDone: {
-            actions: 'setSelectedIssuers',
+            actions: 'updateIssuerFromWellknown',
             target: 'downloadCredentialTypes',
           },
           onError: {
-            actions: ['setError', 'resetLoadingReason'],
+            actions: ['setFetchWellknownError', 'resetLoadingReason'],
             target: 'error',
           },
         },
@@ -102,6 +106,12 @@ export const IssuersMachine = model.createMachine(
       downloadCredentialTypes: {
         description:
           'downloads the credentials supported from the selected issuer',
+        on: {
+          TRY_AGAIN: {
+            actions: ['downloadIssuerWellknown'],
+            target: 'idle',
+          },
+        },
         invoke: {
           src: 'downloadCredentialTypes',
           onDone: [
@@ -114,7 +124,10 @@ export const IssuersMachine = model.createMachine(
             },
           ],
           onError: {
-            actions: ['setError', 'resetLoadingReason'],
+            actions: [
+              'setCredentialTypeListDownloadFailureError',
+              'resetLoadingReason',
+            ],
             target: 'error',
           },
         },
@@ -181,15 +194,17 @@ export const IssuersMachine = model.createMachine(
             },
             {
               actions: [
+                'resetSelectedCredentialType',
                 'setError',
                 'resetLoadingReason',
+                'sendDownloadingFailedToVcMeta',
                 (_, event) =>
                   console.error(
                     'Error Occurred while invoking Auth - ',
                     event.data,
                   ),
               ],
-              target: 'error',
+              target: 'selectingIssuer',
             },
           ],
         },
@@ -413,23 +428,24 @@ export interface displayType {
   language: string;
   logo: logoType;
   background_color: string;
+  background_image: string;
   text_color: string;
   title: string;
   description: string;
 }
 
 export interface issuerType {
+  authorization_servers: [string];
   credential_issuer: string;
   protocol: string;
   client_id: string;
   '.well-known': string;
   redirect_uri: string;
-  additional_headers: object;
-  authorization_endpoint: string;
   token_endpoint: string;
   proxy_token_endpoint: string;
   credential_endpoint: string;
   credential_audience: string;
+  credential_configurations_supported: object;
   display: [displayType];
   credentialTypes: [CredentialTypes];
 }

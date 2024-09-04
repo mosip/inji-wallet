@@ -4,12 +4,7 @@ import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.pagefactory.AndroidFindBy;
 import io.appium.java_client.pagefactory.iOSXCUITFindBy;
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.remote.RemoteWebElement;
-
-import com.google.common.collect.ImmutableMap;
 
 public class HomePage extends BasePage {
     @AndroidFindBy(accessibility = "plusIcon")
@@ -190,44 +185,44 @@ public class HomePage extends BasePage {
     @iOSXCUITFindBy(accessibility = "6done")
     private WebElement doneButton;
 
-    @AndroidFindBy(accessibility = "Help/FAQs")
-    @iOSXCUITFindBy(accessibility = "Help/FAQs")
+    @AndroidFindBy(accessibility = "helpTitle")
+    @iOSXCUITFindBy(accessibility = "helpTitle")
     private WebElement HelpFAQsHeader;
 
-    @AndroidFindBy(accessibility = "Help/FAQsDescription")
-    @iOSXCUITFindBy(accessibility = "Help/FAQsDescription")
+    @AndroidFindBy(accessibility = "helpDescription")
+    @iOSXCUITFindBy(accessibility = "helpDescription")
     private WebElement HelpFAQsDescription;
 
-    @AndroidFindBy(accessibility = "Download Card")
-    @iOSXCUITFindBy(accessibility = "Download Card")
+    @AndroidFindBy(accessibility = "downloadTitle")
+    @iOSXCUITFindBy(accessibility = "downloadTitle")
     private WebElement downloadCardHeader;
 
-    @AndroidFindBy(accessibility = "Download CardDescription")
-    @iOSXCUITFindBy(accessibility = "Download CardDescription")
+    @AndroidFindBy(accessibility = "downloadDescription")
+    @iOSXCUITFindBy(accessibility = "downloadDescription")
     private WebElement downloadCardDescription;
 
-    @AndroidFindBy(accessibility = "Share Card")
-    @iOSXCUITFindBy(accessibility = "Share Card")
+    @AndroidFindBy(accessibility = "scanTitle")
+    @iOSXCUITFindBy(accessibility = "scanTitle")
     private WebElement shareCardHeader;
 
-    @AndroidFindBy(accessibility = "Share CardDescription")
-    @iOSXCUITFindBy(accessibility = "Share CardDescription")
+    @AndroidFindBy(accessibility = "scanDescription")
+    @iOSXCUITFindBy(accessibility = "scanDescription")
     private WebElement shareCardDescription;
 
-    @AndroidFindBy(accessibility = "Access to History")
-    @iOSXCUITFindBy(accessibility = "Access to History")
+    @AndroidFindBy(accessibility = "historyTitle")
+    @iOSXCUITFindBy(accessibility = "historyTitle")
     private WebElement accesstoHistoryHeader;
 
-    @AndroidFindBy(accessibility = "Access to HistoryDescription")
-    @iOSXCUITFindBy(accessibility = "Access to HistoryDescription")
+    @AndroidFindBy(accessibility = "historyDescription")
+    @iOSXCUITFindBy(accessibility = "historyDescription")
     private WebElement accesstoHistoryDescription;
 
-    @AndroidFindBy(accessibility = "App Settings")
-    @iOSXCUITFindBy(accessibility = "App Settings")
+    @AndroidFindBy(accessibility = "settingsTitle")
+    @iOSXCUITFindBy(accessibility = "settingsTitle")
     private WebElement appSettingsHeader;
 
-    @AndroidFindBy(accessibility = "App SettingsDescription")
-    @iOSXCUITFindBy(accessibility = "App SettingsDescription")
+    @AndroidFindBy(accessibility = "settingsDescription")
+    @iOSXCUITFindBy(accessibility = "settingsDescription")
     private WebElement appSettingsDescription;
 
 
@@ -260,12 +255,12 @@ public class HomePage extends BasePage {
             clickOnElement(doneButton);
         }
         By fullName = By.xpath("//*[contains(@value,'" + name + "') or contains(@text,'" + name + "')]");
-        return this.isElementDisplayed(fullName, 150);
+        return this.isElementDisplayed(fullName, 80);
     }
 
     public boolean isSecondNameDisplayed(String name) {
         By fullName = By.xpath("(//*[contains(@value,'" + name + "') or contains(@text,'" + name + "')])[2]");
-        return this.isElementDisplayed(fullName, 150);
+        return this.isElementDisplayed(fullName, 80);
 
     }
 
@@ -374,7 +369,7 @@ public class HomePage extends BasePage {
     }
 
     public boolean isDownloadingVcPopupDisplayed() {
-        return this.retrieIsElementVisible(downloadingVcPopup);
+        return this.retryElementVisible(downloadingVcPopup);
     }
 
     public String getfullNameTitleText() {
@@ -404,7 +399,7 @@ public class HomePage extends BasePage {
     }
 
     public boolean isActivatedVcPopupTextDisplayed() {
-        return this.retrieIsElementVisible(activatedVcPopupText);
+        return this.retryElementVisible(activatedVcPopupText);
     }
 
     public void clickPopupCloseButtonButton() {
@@ -755,7 +750,6 @@ public class HomePage extends BasePage {
     }
 
     public void clickOnNextButtonForInjiTour() {
-
         if(isElementDisplayed(firstNextButton)) {
             clickOnElement(firstNextButton);
             clickOnElement(secondNextButton);

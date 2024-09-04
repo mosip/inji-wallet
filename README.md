@@ -101,8 +101,8 @@ export DEBUG_KEYSTORE_PASSWORD=android
 export RELEASE_KEYSTORE_ALIAS=androidreleasekey
 export RELEASE_KEYSTORE_PASSWORD=<USE-YOUR-RELEASE-PASSWORD-HERE>
 
-# https://hostname/residentmobileapp is the Mimoto service url
-export BACKEND_SERVICE_URL=https://hostname/residentmobileapp
+# https://hostname/mimoto is the Mimoto service url
+export BACKEND_SERVICE_URL=https://hostname/v1/mimoto
 
 # Build for MOSIP test
 npm run build:android:mosip

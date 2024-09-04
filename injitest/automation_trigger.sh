@@ -37,7 +37,7 @@ upload_ipa_and_get_url() {
     local access_key="$2"
     local project_path=$(pwd)
     local ipa_path="$project_path/ios/Inji.ipa"
-    
+
     if [[ -f "$ipa_path" ]]; then
         response=$(curl -u "$username:$access_key" \
             -X POST "https://api-cloud.browserstack.com/app-automate/upload" \
@@ -102,6 +102,7 @@ username=$1
 access_key=$2
 test_type=$3
 platform=$4
+
 
 # Upload APK/IPA to BrowserStack and get app_url based on platform
 if [ "$platform" = "Android" ]; then

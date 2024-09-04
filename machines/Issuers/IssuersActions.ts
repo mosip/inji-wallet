@@ -62,6 +62,25 @@ export const IssuersActions = (model: any) => {
     resetSelectedCredentialType: model.assign({
       selectedCredentialType: {},
     }),
+    setFetchWellknownError: model.assign({
+      errorMessage: (_: any, event: any) => {
+        const error = event.data.message;
+        if (error.includes(NETWORK_REQUEST_FAILED)) {
+          return ErrorMessage.NO_INTERNET;
+        }
+        return ErrorMessage.TECHNICAL_DIFFICULTIES;
+      },
+    }),
+    setCredentialTypeListDownloadFailureError: model.assign({
+      errorMessage: (_: any, event: any) => {
+        const error = event.data.message;
+        if (error.includes(NETWORK_REQUEST_FAILED)) {
+          return ErrorMessage.NO_INTERNET;
+        }
+        return ErrorMessage.CREDENTIAL_TYPE_DOWNLOAD_FAILURE;
+      },
+    }),
+
     setError: model.assign({
       errorMessage: (_: any, event: any) => {
         console.error('Error occurred ', event.data.message);
@@ -165,7 +184,19 @@ export const IssuersActions = (model: any) => {
     ),
 
     setSelectedIssuers: model.assign({
-      selectedIssuer: (_: any, event: any) => event.data,
+      selectedIssuer: (context: any, event: any) =>
+        context.issuers.find(issuer => issuer.credential_issuer === event.id),
+    }),
+
+    updateIssuerFromWellknown: model.assign({
+      selectedIssuer: (context: any, event: any) => ({
+        ...context.selectedIssuer,
+        credential_audience: event.data.credential_issuer,
+        credential_endpoint: event.data.credential_endpoint,
+        credential_configurations_supported:
+          event.data.credential_configurations_supported,
+        authorization_servers: event.data.authorization_servers,
+      }),
     }),
     setSelectedIssuerId: model.assign({
       selectedIssuerId: (_: any, event: any) => event.id,

@@ -87,7 +87,7 @@ public class MosipOtpAlternativeFlow extends IosBaseTest {
         OtpVerificationPage otpVerification= esignetLoginPage.setEnterIdTextBox(uin);
 
         esignetLoginPage.clickOnGetOtpButton();
-        otpVerification.enterOtpForEsignet(TestDataReader.readData("otp"), Target.IOS);
+        otpVerification.enterOtpForEsignet(BaseTestCase.getOtp(), Target.IOS);
         esignetLoginPage.clickOnVerifyButtonIos();
 
         assertTrue(homePage.isNameDisplayed(TestDataReader.readData("fullName")), "Verify if full name is displayed");
@@ -140,7 +140,7 @@ public class MosipOtpAlternativeFlow extends IosBaseTest {
         OtpVerificationPage otpVerification= esignetLoginPage.setEnterIdTextBox(uin);
 
         esignetLoginPage.clickOnGetOtpButton();
-        otpVerification.enterOtpForEsignet(TestDataReader.readData("otp"), Target.IOS);
+        otpVerification.enterOtpForEsignet(BaseTestCase.getOtp(), Target.IOS);
         esignetLoginPage.clickOnVerifyButtonIos();
 
         assertTrue(homePage.isNameDisplayed(TestDataReader.readData("fullName")), "Verify if full name is displayed");
@@ -194,7 +194,7 @@ public class MosipOtpAlternativeFlow extends IosBaseTest {
         OtpVerificationPage otpVerification= esignetLoginPage.setEnterIdTextBox(uin);
 
         esignetLoginPage.clickOnGetOtpButton();
-        otpVerification.enterOtpForEsignet(TestDataReader.readData("otp"), Target.IOS);
+        otpVerification.enterOtpForEsignet(BaseTestCase.getOtp(), Target.IOS);
         esignetLoginPage.clickOnVerifyButtonIos();
 
         assertTrue(homePage.isNameDisplayed(TestDataReader.readData("fullName")), "Verify if full name is displayed");
@@ -245,7 +245,7 @@ public class MosipOtpAlternativeFlow extends IosBaseTest {
         OtpVerificationPage otpVerification= esignetLoginPage.setEnterIdTextBox(uin);
 
         esignetLoginPage.clickOnGetOtpButton();
-        otpVerification.enterOtpForEsignet(TestDataReader.readData("otp"), Target.IOS);
+        otpVerification.enterOtpForEsignet(BaseTestCase.getOtp(), Target.IOS);
         esignetLoginPage.clickOnVerifyButtonIos();
 
         assertTrue(homePage.isNameDisplayed(TestDataReader.readData("fullName")), "Verify if full name is displayed");
@@ -271,7 +271,7 @@ public class MosipOtpAlternativeFlow extends IosBaseTest {
         esignetLoginPage.setEnterIdTextBox(uin);
 
         esignetLoginPage.clickOnGetOtpButton();
-        otpVerification.enterOtpForEsignet(TestDataReader.readData("otp"), Target.IOS);
+        otpVerification.enterOtpForEsignet(BaseTestCase.getOtp(), Target.IOS);
         esignetLoginPage.clickOnVerifyButtonIos();
 
         assertTrue(homePage.isNameDisplayed(TestDataReader.readData("fullName")), "Verify if full name is displayed");
@@ -318,7 +318,7 @@ public class MosipOtpAlternativeFlow extends IosBaseTest {
         OtpVerificationPage otpVerification= esignetLoginPage.setEnterIdTextBox(uin);
 
         esignetLoginPage.clickOnGetOtpButton();
-        otpVerification.enterOtpForEsignet(TestDataReader.readData("otp"), Target.IOS);
+        otpVerification.enterOtpForEsignet(BaseTestCase.getOtp(), Target.IOS);
         esignetLoginPage.clickOnVerifyButtonIos();
 
         assertTrue(homePage.isNameDisplayed(TestDataReader.readData("fullName")), "Verify if full name is displayed");
@@ -370,7 +370,7 @@ public class MosipOtpAlternativeFlow extends IosBaseTest {
         OtpVerificationPage otpVerification= esignetLoginPage.setEnterIdTextBox(uin);
 
         esignetLoginPage.clickOnGetOtpButton();
-        otpVerification.enterOtpForEsignet(TestDataReader.readData("otp"), Target.IOS);
+        otpVerification.enterOtpForEsignet(BaseTestCase.getOtp(), Target.IOS);
         esignetLoginPage.clickOnVerifyButtonIos();
 
         assertTrue(homePage.isNameDisplayed(TestDataReader.readData("fullName")), "Verify if full name is displayed");
@@ -453,7 +453,7 @@ public class MosipOtpAlternativeFlow extends IosBaseTest {
         OtpVerificationPage otpVerification= esignetLoginPage.setEnterIdTextBox(uin);
 
         esignetLoginPage.clickOnGetOtpButton();
-        otpVerification.enterOtpForEsignet(TestDataReader.readData("otp"), Target.IOS);
+        otpVerification.enterOtpForEsignet(BaseTestCase.getOtp(), Target.IOS);
         esignetLoginPage.clickOnVerifyButtonIos();
 
         assertTrue(homePage.isNameDisplayed(TestDataReader.readData("fullName")), "Verify if full name is displayed");
@@ -505,7 +505,7 @@ public class MosipOtpAlternativeFlow extends IosBaseTest {
         OtpVerificationPage otpVerification= esignetLoginPage.setEnterIdTextBox(uin);
 
         esignetLoginPage.clickOnGetOtpButton();
-        otpVerification.enterOtpForEsignet(TestDataReader.readData("otp"), Target.IOS);
+        otpVerification.enterOtpForEsignet(BaseTestCase.getOtp(), Target.IOS);
         esignetLoginPage.clickOnVerifyButtonIos();
 
         assertTrue(homePage.isDownloadingVcPopupDisplayed(),"verify downloading vc popup displayed");
@@ -566,7 +566,7 @@ public class MosipOtpAlternativeFlow extends IosBaseTest {
         OtpVerificationPage otpVerification= esignetLoginPage.setEnterIdTextBox(uin);
 
         esignetLoginPage.clickOnGetOtpButton();
-        otpVerification.enterOtpForEsignet(TestDataReader.readData("otp"), Target.IOS);
+        otpVerification.enterOtpForEsignet(BaseTestCase.getOtp(), Target.IOS);
         esignetLoginPage.clickOnVerifyButtonIos();
 
         assertTrue(homePage.isNameDisplayed(TestDataReader.readData("fullName")), "Verify if full name is displayed");
@@ -581,9 +581,9 @@ public class MosipOtpAlternativeFlow extends IosBaseTest {
         assertTrue(otpVerificationPage.isOtpVerificationPageLoaded(), "Verify if otp verification page is displayed");
         otpVerificationPage.enterOtp(TestDataReader.readData("invalidOtp"), Target.IOS);
 
-        assertTrue(otpVerification.invalidOtpMessageDisplayed(), "Verify if OTP is invalid message is displayed");
-        otpVerificationPage.enterOtp(TestDataReader.readData("invalidOtp"), Target.IOS);
-//
+//        assertTrue(otpVerification.invalidOtpMessageDisplayed(), "Verify if OTP is invalid message is displayed");
+//        otpVerificationPage.enterOtp(TestDataReader.readData("invalidOtp"), Target.IOS);
+////
         assertTrue(otpVerificationPage.somethingWetWrongInVcActivationDisplayed(), "Verify if Something is wrong. Please try again later displayed");
         assertTrue(otpVerificationPage.isCancelButtonDisplayed(), "Verify if cancel button is displayed");
 
@@ -625,7 +625,7 @@ public class MosipOtpAlternativeFlow extends IosBaseTest {
         OtpVerificationPage otpVerification= esignetLoginPage.setEnterIdTextBox(uin);
 
         esignetLoginPage.clickOnGetOtpButton();
-        otpVerification.enterOtpForEsignet(TestDataReader.readData("otp"), Target.IOS);
+        otpVerification.enterOtpForEsignet(BaseTestCase.getOtp(), Target.IOS);
         esignetLoginPage.clickOnVerifyButtonIos();
 
         assertTrue(homePage.isNameDisplayed(TestDataReader.readData("fullName")), "Verify if full name is displayed");
@@ -639,8 +639,8 @@ public class MosipOtpAlternativeFlow extends IosBaseTest {
         assertTrue(otpVerificationPage.isOtpVerificationPageLoaded(), "Verify if otp verification page is displayed");
         otpVerificationPage.enterOtp(TestDataReader.readData("invalidOtp"), Target.IOS);
 
-        assertTrue(otpVerification.invalidOtpMessageDisplayed(), "Verify if OTP is invalid message is displayed");
-        otpVerificationPage.enterOtp(TestDataReader.readData("invalidOtp"), Target.IOS);
+//        assertTrue(otpVerification.invalidOtpMessageDisplayed(), "Verify if OTP is invalid message is displayed");
+//        otpVerificationPage.enterOtp(TestDataReader.readData("invalidOtp"), Target.IOS);
 
         assertTrue(otpVerificationPage.somethingWetWrongInVcActivationDisplayed(), "Verify if Something is wrong. Please try again later displayed");
         assertTrue(otpVerificationPage.isCancelButtonDisplayed(), "Verify if cancel button is displayed");

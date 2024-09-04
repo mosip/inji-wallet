@@ -7,7 +7,7 @@ import {
   ViewStyle,
 } from 'react-native';
 import {Spacing} from '../styleUtils';
-import {isIOS} from '../../../shared/constants';
+import {COPILOT_HEIGHT, isIOS} from '../../../shared/constants';
 import Constants from 'expo-constants';
 
 const Colors = {
@@ -342,6 +342,17 @@ export const DefaultTheme = {
     labelPart: {
       marginTop: 10,
       alignItems: 'flex-start',
+    },
+    vcDetailBg: {
+      width: '100%',
+      opacity: 0.1,
+    },
+    vcBg: {
+      opacity: 0.1,
+    },
+    shimmer: {
+      borderRadius: 5,
+      marginLeft: 2,
     },
     openCardBgContainer: {
       borderRadius: 10,
@@ -716,12 +727,20 @@ export const DefaultTheme = {
       right: 10,
       borderRadius: 8,
       maxWidth: Dimensions.get('screen').width,
-      minHeight: Dimensions.get('screen').height * 0.22,
+      minHeight: Dimensions.get('screen').height * COPILOT_HEIGHT,
     },
     copilotButton: {
       width: 104,
       height: 40,
       marginLeft: 10,
+    },
+    copilotButtonsContainer: {
+      marginTop: 25,
+      marginBottom: 15,
+    },
+    copilotBgContainer: {
+      flex: 1,
+      justifyContent: 'space-around',
     },
   }),
   BannerStyles: StyleSheet.create({
@@ -1567,7 +1586,7 @@ export const DefaultTheme = {
       overflow: 'hidden',
     },
     scanner: {
-      height: '100%',
+      height: 400,
       width: '100%',
       margin: 'auto',
     },

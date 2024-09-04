@@ -2,7 +2,6 @@ package inji.pages;
 
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.pagefactory.AndroidFindBy;
-import io.appium.java_client.pagefactory.iOSXCUITFindBy;
 import org.openqa.selenium.WebElement;
 
 public class BackupAndRestorePage extends BasePage {
@@ -155,12 +154,12 @@ public class BackupAndRestorePage extends BasePage {
 
     public void enterPasswordTextBox(String fullname) {
         try {
-            basePage.retrieToGetElement(enterPassword);
+            basePage.retryToGetElement(enterPassword);
             Thread.sleep(1000);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
-        basePage.retrieToGetElement(enterPassword);
+        basePage.retryToGetElement(enterPassword);
         sendKeysToTextBox(enterPassword, fullname);
     }
 
@@ -181,7 +180,7 @@ public class BackupAndRestorePage extends BasePage {
     }
 
     public boolean isDataBackupSuccessPopupDisplayed() {
-        return this.retrieIsElementVisible(dataBackupSuccessPopup);
+        return this.retryElementVisible(dataBackupSuccessPopup);
     }
 
     public void clickOnCloseButton() {
@@ -189,7 +188,7 @@ public class BackupAndRestorePage extends BasePage {
     }
 
     public void clickOnArrowLeftButton() {
-        basePage.retrieToGetElement(arrowLeftButton);
+        basePage.retryToGetElement(arrowLeftButton);
         clickOnElement(arrowLeftButton);
     }
 
@@ -206,7 +205,7 @@ public class BackupAndRestorePage extends BasePage {
     }
 
     public boolean isRestoreBackupSuccessPopUpDisplayed() {
-        return this.retrieIsElementVisible(restoreBackupSuccessPopUp);
+        return this.retryElementVisible(restoreBackupSuccessPopUp);
     }
 
     public boolean isPermissionDeniedHeaderDisplayed() {
@@ -292,7 +291,7 @@ public class BackupAndRestorePage extends BasePage {
     }
 
     public boolean  isBackupFQADisplayed() throws InterruptedException {
-        Thread.sleep(5000);
+        Thread.sleep(2000);
         String context= driver.getPageSource();
         return context.contains("Why should I take a backup?") && context.contains("What is data backup? ") && context.contains("How to backup to your google account?");
     }

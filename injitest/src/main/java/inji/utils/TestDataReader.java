@@ -75,23 +75,23 @@ public class TestDataReader {
             case "invalidenv":
                 return "https://api.dev3.mosip";
             case "fullNameSunbird":
-                return "Aswin";
+                return "PolicyTestAutomation";
             case "policyNameSunbird":
-                return "Talapathy Rasigar Mandram";
+                return "Start Insurance Gold Premium";
             case "policyNumberSunbird":
-                return "1234567890";
+                return "120-720-24";
             case "idTypeSunbird":
                 return "Health Insurance";
             case "idTypeSunbirdHindi":
-                return "बीमा कार्ड";
+                return "Health Insurance";
             case "phoneNumberSunbird":
-                return "8220255752";
+                return "0123456789";
             case "dateOfBirthSunbird":
                 return "2024-01-01";
             case "genderValueSunbird":
-                return "Female";
+                return "Male";
             case "emailIdValueSunbird":
-                return "santhosdss14@gmail.com";
+                return "abhishek@gmail.com";
             case "statusValueSunbird":
                 return "Valid";
             case "statusValueSunbirdForVaild":

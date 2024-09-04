@@ -1,13 +1,9 @@
 package io.mosip.residentapp;
 import io.mosip.pixelpass.PixelPass;
-import io.mosip.pixelpass.types.ECC;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
 import com.facebook.react.bridge.Promise;
-import java.io.ByteArrayOutputStream;  
-import android.util.Base64;           
-import android.graphics.Bitmap;
 
 public class RNPixelpassModule extends ReactContextBaseJavaModule {
      private PixelPass pixelPass;

@@ -26,14 +26,17 @@ export const CopilotTooltip = () => {
   });
 
   return (
-    <Column>
+    <Column style={Theme.Styles.copilotBgContainer}>
       <Text testID={controller.titleTestID} weight="bold" margin="0 0 10 0">
         {controller.currentStepTitle}
       </Text>
       <Text testID={controller.descriptionTestID}>
         {controller.currentStepDescription}
       </Text>
-      <Row align="space-between" crossAlign="center" margin="25 0 0 0">
+      <Row
+        align="space-between"
+        crossAlign="center"
+        style={Theme.Styles.copilotButtonsContainer}>
         <Text testID={`${controller.CURRENT_STEP}stepCount`} weight="bold">
           {controller.stepCount}
         </Text>

@@ -2,20 +2,12 @@ package inji.pages;
 
 import inji.utils.IosUtil;
 import io.appium.java_client.AppiumDriver;
-import io.appium.java_client.HidesKeyboard;
 import io.appium.java_client.pagefactory.AndroidFindBy;
 import io.appium.java_client.pagefactory.iOSXCUITFindBy;
 
-import java.util.List;
-import java.util.concurrent.TimeUnit;
-
-import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.WebDriverWait;
-
-import inji.constants.Target;
 
 public class SunbirdLoginPage extends BasePage {
 
@@ -66,6 +58,12 @@ public class SunbirdLoginPage extends BasePage {
     @AndroidFindBy(accessibility = "a Veridonia logo")
     @iOSXCUITFindBy(accessibility = "a Veridonia logo")
     private WebElement sunbirdLogo;
+
+    @AndroidFindBy(accessibility = "a square logo of a Sunbird")
+    @iOSXCUITFindBy(accessibility = "a square logo of a Sunbird")
+    private WebElement sunbirdSquareLogo;
+
+
 
     @AndroidFindBy(accessibility = "fullNameValue")
     @iOSXCUITFindBy(accessibility = "fullNameValue")
@@ -220,61 +218,69 @@ public class SunbirdLoginPage extends BasePage {
     public boolean isSunbirdCardIsActive() {
         if(isElementDisplayed(doneButton))
        clickOnElement(doneButton);
-        basePage.retrieToGetElement(activatedStatus);
+        basePage.retryToGetElement(activatedStatus);
         return this.isElementDisplayed(activatedStatus);
     }
 
     public boolean isSunbirdCardLogoIsDisplayed() {
-        basePage.retrieToGetElement(sunbirdLogo);
-        return this.isElementDisplayed(sunbirdLogo);
+        if(isElementDisplayed(sunbirdSquareLogo)){
+            basePage.retryToGetElement(sunbirdSquareLogo);
+            return true;
+        } else if (isElementDisplayed(sunbirdLogo)) {
+            basePage.retryToGetElement(sunbirdLogo);
+            return true;
+        }
+        else {
+            return false;
+        }
     }
 
     public String getFullNameForSunbirdCard() {
-        basePage.retrieToGetElement(fullName);
+        basePage.retryToGetElement(fullName);
         return this.getTextFromLocator(fullName);
     }
     public String getFullNameForSunbirdCardForDetailView() {
-        basePage.retrieToGetElement(fullNameInDetailView);
+        basePage.retryToGetElement(fullNameInDetailView);
         return this.getTextFromLocator(fullNameInDetailView);
     }
     public String getPolicyNameForSunbirdCard() {
-        basePage.retrieToGetElement(policyName);
+        basePage.retryToGetElement(policyName);
         return this.getTextFromLocator(policyName);
     }
 
     public String getPolicyNumberForSunbirdCard() {
-        basePage.retrieToGetElement(policyNumber);
+        basePage.retryToGetElement(policyNumber);
         return this.getTextFromLocator(policyNumber);
     }
 
     public String getPhoneNumberForSunbirdCard() {
-        basePage.retrieToGetElement(phoneNumber);
+        basePage.retryToGetElement(phoneNumber);
         return this.getTextFromLocator(phoneNumber);
     }
 
     public String getDateofBirthValueForSunbirdCard() {
-        basePage.retrieToGetElement(dateofBirthValue);
+        basePage.retryToGetElement(dateofBirthValue);
         return this.getTextFromLocator(dateofBirthValue);
     }
 
     public String getGenderValueForSunbirdCard() {
-        basePage.retrieToGetElement(gender);
+        basePage.retryToGetElement(gender);
         return this.getTextFromLocator(gender);
     }
 
     public String getEmailIdValueForSunbirdCard() {
-        IosUtil.scrollToElement(driver, 171, 2149, 625, 1944);
-        basePage.retrieToGetElement(emailIdValue);
+        IosUtil.scrollToElement(driver,100,800,100,200);
+        basePage.retryToGetElement(emailIdValue);
         return this.getTextFromLocator(emailIdValue);
     }
 
     public String getStatusValueForSunbirdCard() {
-        basePage.retrieToGetElement(status);
+        basePage.retryToGetElement(status);
         return this.getTextFromLocator(status);
     }
 
     public String getIdTypeValueForSunbirdCard() {
-        basePage.retrieToGetElement(idType);
+        basePage.retryToGetElement(idType);
         return this.getTextFromLocator(idType);
     }
 
@@ -283,17 +289,17 @@ public class SunbirdLoginPage extends BasePage {
     }
 
     public void openDetailedSunbirdVcView() {
-        basePage.retrieToGetElement(fullName);
+        basePage.retryToGetElement(fullName);
         clickOnElement(fullName);
     }
 
     public boolean isSunbirdRCInsuranceVerifiableCredentialHeaderDisplayed() {
-        basePage.retrieToGetElement(credentialTypeSelectionScreen);
+        basePage.retryToGetElement(credentialTypeSelectionScreen);
         return this.isElementDisplayed(credentialTypeSelectionScreen);
     }
 
     public boolean isMosipInsuranceDisplayed() {
-        basePage.retrieToGetElement(credentialTypeItemInsuranceCredential);
+        basePage.retryToGetElement(credentialTypeItemInsuranceCredential);
         return this.isElementDisplayed(credentialTypeItemInsuranceCredential);
     }
 
