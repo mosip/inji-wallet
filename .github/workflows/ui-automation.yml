@@ -63,7 +63,9 @@ jobs:
       - name: Install npm dependencies
         run: |
           npm ci
-
+      - name: Check Java Version
+        run: |
+          java -version
       - name: Generate Android keystore
         run: |
           echo "$ANDROID_KEYSTORE_FILE" > release.keystore.b64
