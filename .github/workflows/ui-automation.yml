@@ -92,7 +92,11 @@ jobs:
           name: residentapp
           path: android/app/build/outputs/apk/residentapp/release/Inji_universal.apk
           retention-days: 10
-  
+      - name: Set up JDK 21
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '21'
       - name: Run UI Automation Tests on BrowserStack
         run: |
           chmod +x injitest/automation_trigger.sh
