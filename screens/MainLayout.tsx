@@ -1,4 +1,4 @@
-import React, {useContext} from 'react';
+import React, {useContext, useEffect} from 'react';
 import {
   BottomTabNavigationOptions,
   createBottomTabNavigator,
@@ -17,8 +17,17 @@ import {CopilotProvider} from 'react-native-copilot';
 import {View} from 'react-native';
 import {CopilotTooltip} from '../components/CopilotTooltip';
 import {Copilot} from '../components/ui/Copilot';
+import {useSelector} from '@xstate/react';
+import {selectIsLinkCode} from '../machines/app';
+import {NavigationProp, useNavigation} from '@react-navigation/native';
+import {BOTTOM_TAB_ROUTES, ScanStackParamList} from '../routes/routesConstants';
+import {MainBottomTabParamList} from '../routes/routeTypes';
 
 const {Navigator, Screen} = createBottomTabNavigator();
+
+type ScanLayoutNavigation = NavigationProp<
+  ScanStackParamList & MainBottomTabParamList
+>;
 
 export const MainLayout: React.FC = () => {
   const {t} = useTranslation('MainLayout');
@@ -31,6 +40,15 @@ export const MainLayout: React.FC = () => {
     tabBarActiveTintColor: Theme.Colors.IconBg,
     ...Theme.BottomTabBarStyle,
   };
+  const navigation = useNavigation<ScanLayoutNavigation>();
+
+  const linkCode = useSelector(appService, selectIsLinkCode);
+
+  useEffect(() => {
+    if (linkCode != '') {
+      navigation.navigate(BOTTOM_TAB_ROUTES.share);
+    }
+  }, [linkCode]);
 
   return (
     <CopilotProvider

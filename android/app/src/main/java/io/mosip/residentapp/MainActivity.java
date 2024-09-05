@@ -3,20 +3,19 @@ import expo.modules.ReactActivityDelegateWrapper;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
-import androidx.annotation.CallSuper;
-import androidx.annotation.NonNull;
+
 import androidx.annotation.RequiresApi;
 import com.facebook.react.ReactActivity;
 import com.facebook.react.ReactActivityDelegate;
-import com.facebook.react.ReactRootView;
-import com.facebook.react.ReactActivityDelegate;
 import com.facebook.react.defaults.DefaultNewArchitectureEntryPoint;
 import com.facebook.react.defaults.DefaultReactActivityDelegate;
-import expo.modules.ReactActivityDelegateWrapper;
+
+import java.util.Objects;
 
 /**
  * IMPORTANT NOTE: The Android permission flow here works
@@ -43,6 +42,22 @@ public class MainActivity extends ReactActivity {
     // This is required for expo-splash-screen.
     setTheme(R.style.AppTheme);
     super.onCreate(null);
+    Intent intent = getIntent();
+    Uri data = intent.getData();
+    if(data != null && Objects.equals(data.getScheme(), "io.mosip.residentapp.inji")){
+      IntentData intentData = IntentData.getInstance();
+      intentData.setQrData(String.valueOf(data));
+    }
+  }
+
+  @Override
+  public void onNewIntent(Intent intent) {
+    super.onNewIntent(intent);
+    Uri data = intent.getData();
+    if(data != null && Objects.equals(data.getScheme(), "io.mosip.residentapp.inji")){
+      IntentData intentData = IntentData.getInstance();
+      intentData.setQrData(String.valueOf(data));
+    }
   }
 
   /**
