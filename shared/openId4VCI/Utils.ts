@@ -300,8 +300,8 @@ export function CredentialIdForMsoMdoc(credential: VerifiableCredential) {
   );
   return credential.credential['issuerSigned']['nameSpaces'][
     'org.iso.18013.5.1'
-  ].find(element => element.elementIdentifier.content === 'document_number')
-    .elementValue.content;
+  ].find(element => element.elementIdentifier === 'document_number')
+    .elementValue;
 }
 
 export function iterateMsoMdocFor(
@@ -321,11 +321,11 @@ export function iterateMsoMdocFor(
         JSON.stringify(element, null, 2),
       );
 
-      return element.elementIdentifier.content === fieldName;
+      return element.elementIdentifier === fieldName;
     },
   );
   console.log('finded ', foundItem);
-  return foundItem[element].content;
+  return foundItem[element];
 }
 
 export async function constructProofJWT(

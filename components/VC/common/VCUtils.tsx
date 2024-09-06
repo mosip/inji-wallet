@@ -304,8 +304,8 @@ export function DisplayName(
   if (props.verifiableCredentialData.format === 'mso_mdoc') {
     return props.credential['issuerSigned']['nameSpaces'][
       'org.iso.18013.5.1'
-    ].find(element => element.elementIdentifier.content === 'given_name')
-      .elementValue.content;
+    ].find(element => element.elementIdentifier === 'given_name')
+      .elementValue;
   }
   return props.credential?.credentialSubject['fullName'];
 }
