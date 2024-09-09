@@ -2,11 +2,11 @@ package io.mosip.residentapp;
 
 public class IntentData {
     private String qrData = "";
-    private static final IntentData intentData = new IntentData();
+    private static IntentData intentData;
     public static IntentData getInstance() {
+        if(intentData == null)
+            intentData = new IntentData();
         return intentData;
-    }
-    private IntentData() {
     }
     public String getQrData() {
         return qrData;

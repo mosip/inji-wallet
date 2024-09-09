@@ -73,7 +73,6 @@
                 <category android:name="android.intent.category.BROWSABLE" />
 
                 <data
-                    android:host="landing-page-name"
                     android:scheme="io.mosip.residentapp.inji" />
             </intent-filter>
 
