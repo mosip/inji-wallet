@@ -24,24 +24,52 @@ class RNVCIClientModule: NSObject, RCTBridgeModule {
                   reject(nil, "Invalid issuerMeta format", nil)
                   return
               }
+              
 
               guard let credentialAudience = issuerMetaDict["credentialAudience"] as? String,
                     let credentialEndpoint = issuerMetaDict["credentialEndpoint"] as? String,
                     let downloadTimeoutInMilliseconds = issuerMetaDict["downloadTimeoutInMilliSeconds"] as? Int,
-                    let credentialType = issuerMetaDict["credentialType"] as? [String],
                     let credentialFormatString = issuerMetaDict["credentialFormat"] as? String,
                     let credentialFormat = CredentialFormat(rawValue: credentialFormatString) else {
                   reject(nil, "Invalid issuerMeta format", nil)
                   return
               }
-
-              let issuerMetaObject = IssuerMeta(
+            
+            var issuerMetaObject : IssuerMeta
+            
+            switch credentialFormat {
+            case .ldp_vc:{
+              guard let credentialType = issuerMetaDict["credentialType"] as? [String] else {
+                reject(nil, "Invalid issuerMeta format", nil)
+                return
+              }
+              issuerMetaObject = IssuerMeta(
                   credentialAudience: credentialAudience,
                   credentialEndpoint: credentialEndpoint,
                   downloadTimeoutInMilliseconds: downloadTimeoutInMilliseconds,
                   credentialType: credentialType,
                   credentialFormat: credentialFormat
               )
+            }
+            case .mso_mdoc {
+              guard let doctype = issuerMetaDict["doctype"] as? String,
+                    let claims = issuerMetaDict["claims"] as? [String:Any] else {
+                  reject(nil, "Invalid issuerMeta format", nil)
+                  return
+              }
+              issuerMetaObject = IssuerMeta(
+                  credentialAudience: credentialAudience,
+                  credentialEndpoint: credentialEndpoint,
+                  downloadTimeoutInMilliseconds: downloadTimeoutInMilliseconds,
+                  doctype: doctype,
+                  claims: claims,
+                  credentialFormat: credentialFormat
+              )
+            }
+            }
+            
+
+              
 
               let response = try await vciClient!.requestCredential(issuerMeta: issuerMetaObject, proof: JWTProof(jwt: proof), accessToken: accessToken)!
               let responseString = try response.toJSONString()
