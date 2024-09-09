@@ -60,7 +60,7 @@ public class InjiVciClientModule extends ReactContextBaseJavaModule {
                             issuerMetaData.getString("credentialEndpoint"),
                             issuerMetaData.getInt("downloadTimeoutInMilliSeconds"),
                             null,
-                            credentialFormat, issuerMetaData.getString("docType"),
+                            credentialFormat, issuerMetaData.getString("doctype"),
                             issuerMetaData.getMap("claims").toHashMap());
                     break;
 

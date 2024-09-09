@@ -450,7 +450,7 @@ export const constructIssuerMetaData = (
     issuerMeta['credentialType'] = selectedCredentialType?.credential_definition
       ?.type ?? ['VerifiableCredential'];
   } else if (selectedCredentialType.format === 'mso_mdoc') {
-    issuerMeta['docType'] = selectedCredentialType.doctype;
+    issuerMeta['doctype'] = selectedCredentialType.doctype;
     issuerMeta['claims'] = selectedCredentialType.claims;
   }
   return issuerMeta;
