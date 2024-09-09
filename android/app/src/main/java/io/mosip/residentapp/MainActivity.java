@@ -43,16 +43,16 @@ public class MainActivity extends ReactActivity {
     setTheme(R.style.AppTheme);
     super.onCreate(null);
     Intent intent = getIntent();
-    Uri data = intent.getData();
-    if(data != null && Objects.equals(data.getScheme(), "io.mosip.residentapp.inji")){
-      IntentData intentData = IntentData.getInstance();
-      intentData.setQrData(String.valueOf(data));
-    }
+    readAndSetQRLoginIntentData(intent);
   }
 
   @Override
   public void onNewIntent(Intent intent) {
     super.onNewIntent(intent);
+    readAndSetQRLoginIntentData(intent);
+  }
+
+  private void readAndSetQRLoginIntentData(Intent intent){
     Uri data = intent.getData();
     if(data != null && Objects.equals(data.getScheme(), "io.mosip.residentapp.inji")){
       IntentData intentData = IntentData.getInstance();
