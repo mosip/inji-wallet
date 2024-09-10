@@ -1042,7 +1042,7 @@ export const DefaultTheme = {
       width: Dimensions.get('window').width * 0.75,
     },
     clearSearch: {
-      padding: 20,
+      padding: 10,
     },
   }),
   ButtonStyles: StyleSheet.create({
