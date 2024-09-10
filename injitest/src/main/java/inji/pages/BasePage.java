@@ -1,17 +1,13 @@
 package inji.pages;
 
-import inji.utils.UinGenerationUtil;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.pagefactory.AppiumFieldDecorator;
 import org.openqa.selenium.By;
 import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.remote.SessionId;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-
-import java.io.IOException;
 
 import static java.time.Duration.ofSeconds;
 
@@ -124,11 +120,16 @@ public class BasePage {
     }
 
     protected String getTextFromLocator(WebElement element) {
+        try {
+            Thread.sleep(3000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
         this.waitForElementToBeVisible(element);
         return element.getText();
     }
     
-    protected  String retrieToGetElement(WebElement element) {
+    protected  String retryToGetElement(WebElement element) {
     	int maxRetries = 3; 
     	String text = null;
     	for (int i = 0; i < maxRetries; i++) {
@@ -144,7 +145,7 @@ public class BasePage {
     	return text;
     	
     }
-    public boolean retrieIsElementVisible(WebElement element) {
+    public boolean retryElementVisible(WebElement element) {
         int maxRetries = 3;
         for (int i = 0; i < maxRetries; i++) {
             try {
@@ -156,7 +157,7 @@ public class BasePage {
         return false;
     }
 
-    public void retrieClickOnElemet(WebElement element) {
+    public void retryClickOnElemet(WebElement element) {
         int maxRetries = 3;
         for (int i = 0; i < maxRetries; i++) {
             try {

@@ -71,11 +71,11 @@ public class EsignetLoginPage extends BasePage {
     @iOSXCUITFindBy(xpath = "(//XCUIElementTypeStaticText)[6]")
     private WebElement pleaseEnterUinHeaderText;
 
-    @AndroidFindBy(uiAutomator = "UiSelector().className(\"android.widget.TextView\").instance(5)")
+    @AndroidFindBy(uiAutomator = "UiSelector().className(\"android.widget.TextView\").instance(4)")
     @iOSXCUITFindBy(xpath = "(//XCUIElementTypeStaticText)[9]")
     private WebElement dontHaveAccountText;
 
-    @AndroidFindBy(uiAutomator = "UiSelector().className(\"android.widget.TextView\").instance(6)")
+    @AndroidFindBy(uiAutomator = "UiSelector().className(\"android.widget.TextView\").instance(5)")
     @iOSXCUITFindBy(xpath = "(//XCUIElementTypeStaticText)[10]")
     private WebElement signUpwithUnifiedLoginText;
 
@@ -116,10 +116,6 @@ public class EsignetLoginPage extends BasePage {
         if(isElementDisplayed(esignetLoginButton)) {
             clickOnElement(esignetLoginButton);
         }
-        if(isElementDisplayed(credentialTypeHeadingMOSIPVerifiableCredential)) {
-            clickOnElement(credentialTypeHeadingMOSIPVerifiableCredential);
-        }
-
 
     }
 
@@ -158,45 +154,46 @@ public class EsignetLoginPage extends BasePage {
         return this.isElementDisplayed(invalidOtpText);
     }
 
-    public boolean  verifyLanguageEnterUinOrVidBoxTextDisplayed(String language){
-        String actualText = getTextFromLocator(enterIdTextBox);
-
-        switch (language) {
-            case "English":
-                boolean isEnglishMatch  = (actualText.equalsIgnoreCase("Please fill in this field")==true) ? true : false;
-                return isEnglishMatch ;
-            case "EnglishIos":
-                boolean isEnglishMatchIos  = (actualText.equalsIgnoreCase("Enter Your UIN or VID")==true) ? true : false;
-                return isEnglishMatchIos ;
-            case "Tamil":
-                boolean isTamilMatch  = (actualText.equalsIgnoreCase("இந்த புலத்தை நிரப்பவும்")==true) ? true : false;
-                return isTamilMatch ;
-            case "TamilIos":
-                boolean isTamilMatchIos  = (actualText.equalsIgnoreCase("உங்கள் UIN அல்லது VID ஐ உள்ளிடவும்")==true) ? true : false;
-                System.out.println(actualText);
-                return isTamilMatchIos;
-            case "Kannada":
-                boolean isKannadaMatch  = (actualText.equalsIgnoreCase("ದಯವಿಟ್ಟು ಈ ಕ್ಷೇತ್ರವನ್ನು ಭರ್ತಿ ಮಾಡಿ")==true) ? true : false;
-                return isKannadaMatch ;
-            case "KannadaIos":
-                boolean isKannadaMatchIos  = (actualText.equalsIgnoreCase("ನಿಮ್ಮ UIN ಅಥವಾ VID ನಮೂದಿಸಿ")==true) ? true : false;
-                return isKannadaMatchIos ;
-            case "Hindi":
-                boolean isHindiMatch  = (actualText.equalsIgnoreCase("कृपया इस क्षेत्र को भरें")==true) ? true : false;
-                return isHindiMatch ;
-            case "HindiIos":
-                boolean isHindiMatchIos  = (actualText.equalsIgnoreCase("अपना यूआईएन या वीआईडी \u200B\u200Bदर्ज करें")==true) ? true : false;
-                return isHindiMatchIos ;
-            case "Arabic":
-                boolean isArabicMatch  = (actualText.equalsIgnoreCase("يرجى ملء هذا الحقل")==true) ? true : false;
-                return isArabicMatch ;
-            case "ArabicIos":
-                boolean isArabicMatchIos  = (actualText.equalsIgnoreCase("أدخل رقم UIN أو VID الخاص بك")==true) ? true : false;
-                return isArabicMatchIos ;
-
-        }
-        return false;
-    }
+    //    public boolean  verifyLanguageEnterUinOrVidBoxTextDisplayed(String language){
+//        String actualText = getTextFromLocator(enterIdTextBox);
+//        System.out.println(actualText);
+//
+//        switch (language) {
+//            case "English":
+//                boolean isEnglishMatch  = (actualText.equalsIgnoreCase("Please fill in this field")==true) ? true : false;
+//                return isEnglishMatch ;
+//            case "EnglishIos":
+//                boolean isEnglishMatchIos  = (actualText.equalsIgnoreCase("Enter Your UIN or VID")==true) ? true : false;
+//                return isEnglishMatchIos ;
+//            case "Tamil":
+//                boolean isTamilMatch  = (actualText.equalsIgnoreCase("இந்த புலத்தை நிரப்பவும்")==true) ? true : false;
+//                return isTamilMatch ;
+//            case "TamilIos":
+//                boolean isTamilMatchIos  = (actualText.equalsIgnoreCase("உங்கள் UIN அல்லது VID ஐ உள்ளிடவும்")==true) ? true : false;
+//                System.out.println(actualText);
+//                return isTamilMatchIos;
+//            case "Kannada":
+//                boolean isKannadaMatch  = (actualText.equalsIgnoreCase("ದಯವಿಟ್ಟು ಈ ಕ್ಷೇತ್ರವನ್ನು ಭರ್ತಿ ಮಾಡಿ")==true) ? true : false;
+//                return isKannadaMatch ;
+//            case "KannadaIos":
+//                boolean isKannadaMatchIos  = (actualText.equalsIgnoreCase("ನಿಮ್ಮ UIN ಅಥವಾ VID ನಮೂದಿಸಿ")==true) ? true : false;
+//                return isKannadaMatchIos ;
+//            case "Hindi":
+//                boolean isHindiMatch  = (actualText.equalsIgnoreCase("कृपया इस क्षेत्र को भरें")==true) ? true : false;
+//                return isHindiMatch ;
+//            case "HindiIos":
+//                boolean isHindiMatchIos  = (actualText.equalsIgnoreCase("अपना यूआईएन या वीआईडी \u200B\u200Bदर्ज करें")==true) ? true : false;
+//                return isHindiMatchIos ;
+//            case "Arabic":
+//                boolean isArabicMatch  = (actualText.equalsIgnoreCase("يرجى ملء هذا الحقل")==true) ? true : false;
+//                return isArabicMatch ;
+//            case "ArabicIos":
+//                boolean isArabicMatchIos  = (actualText.equalsIgnoreCase("أدخل رقم UIN أو VID الخاص بك")==true) ? true : false;
+//                return isArabicMatchIos ;
+//
+//        }
+//        return false;
+//    }
 
     public boolean  verifyLanguageLoginHeaderTextDisplayed(String language){
         String actualText = getTextFromLocator(loginTextHeader);

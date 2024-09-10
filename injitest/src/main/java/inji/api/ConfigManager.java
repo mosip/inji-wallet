@@ -180,6 +180,7 @@ public class ConfigManager {
 		// Loading Kernel property
 		//LOGGER.info("file location"+TestRunner.getResourcePath() + "/config/));
 		propsKernel = getproperty(UinGenerationUtil.getResourcePath() + "/config/"+ UinGenerationUtil.getKernalFilename());
+		System.out.println(propsKernel);
 
 		idrepo_client_secret = getValueForKey(MOSIP_IDREPO_CLIENT_SECRET);
 		idrepo_client_id = getValueForKey(MOSIP_IDREPO_CLIENT_ID);

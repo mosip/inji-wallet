@@ -22,10 +22,10 @@ public class OtpVerificationPage extends BasePage {
     private WebElement invalidOtpMessage;
 
     @AndroidFindBy(accessibility = "walletBindingErrorTitle")
-    @iOSXCUITFindBy(iOSClassChain = "**/XCUIElementTypeStaticText[`label == \"Something is wrong. Please try again later!\"`]")
+    @iOSXCUITFindBy(accessibility = "walletBindingErrorTitle")
     private WebElement invalidOtpMessageInVcActivation;
 
-    @AndroidFindBy(xpath = "cancel")
+    @AndroidFindBy(xpath = "//*[@text=\"Cancel\"]")
     @iOSXCUITFindBy(accessibility = "cancel")
     private WebElement cancelButton;
 
@@ -104,7 +104,7 @@ public class OtpVerificationPage extends BasePage {
     }
 
     public boolean somethingWetWrongInVcActivationDisplayed() {
-        return this.isElementDisplayed(invalidOtpMessageInVcActivation);
+        return this.isElementDisplayed(invalidOtpMessageInVcActivation,40);
     }
 
     public boolean isCancelButtonDisplayed() {

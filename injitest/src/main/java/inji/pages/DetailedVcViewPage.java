@@ -91,6 +91,10 @@ public class DetailedVcViewPage extends BasePage{
     @iOSXCUITFindBy(accessibility = "goBack")
     public WebElement backArrow;
 
+    @AndroidFindBy(accessibility = "arrow-left")
+    @iOSXCUITFindBy(accessibility = "arrow-left")
+    public WebElement arrowleft;
+
     @AndroidFindBy(accessibility = "KebabIcon")
     @iOSXCUITFindBy(accessibility = "KebabIcon")
     public WebElement moreOptionsButton;
@@ -161,6 +165,11 @@ public class DetailedVcViewPage extends BasePage{
 
     public HomePage clickOnBackArrow() {
         clickOnElement(backArrow);
+        return new HomePage(driver);
+    }
+
+    public HomePage clickOnArrowleft() {
+        clickOnElement(arrowleft);
         return new HomePage(driver);
     }
 

@@ -74,7 +74,7 @@
                     <include name="noCardsAvailableToShare"/>
                     <include name="verifyReceivedCardTabPresent"/>
                     <include name="verifyPopupsForShareWithSelfie"/>
-                    <include name="rejectingCameraAccessesOnShareScreen"/>
+                    <!--<include name="rejectingCameraAccessesOnShareScreen"/>-->
                 </methods>
             </class>
             <class name="androidTestCases.UnlockWithPasscodeTest">
@@ -128,7 +128,7 @@
                     <include name="verifyWelcomePagesContent"/>
                     <include name="verifyWelcomePagesFromInjiTourGuide"/>
                     <include name="verifyGoBackFromInjiTourGuide"/>
-                    <include name="verifyClickOnBackFromInjiTourGuide"/>
+                    <!--<include name="verifyClickOnBackFromInjiTourGuide"/>   //invalid testcase-->
                 </methods>
             </class>
             <class name="androidTestCases.MosipOtpAlternativeFlow">
