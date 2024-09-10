@@ -38,7 +38,7 @@ class RNVCIClientModule: NSObject, RCTBridgeModule {
             var issuerMetaObject : IssuerMeta
             
             switch credentialFormat {
-            case .ldp_vc:{
+            case .ldp_vc:
               guard let credentialType = issuerMetaDict["credentialType"] as? [String] else {
                 reject(nil, "Invalid issuerMeta format", nil)
                 return
@@ -50,22 +50,21 @@ class RNVCIClientModule: NSObject, RCTBridgeModule {
                   credentialType: credentialType,
                   credentialFormat: credentialFormat
               )
-            }
-            case .mso_mdoc {
+            
+            case .mso_mdoc:
               guard let doctype = issuerMetaDict["doctype"] as? String,
                     let claims = issuerMetaDict["claims"] as? [String:Any] else {
                   reject(nil, "Invalid issuerMeta format", nil)
                   return
               }
               issuerMetaObject = IssuerMeta(
-                  credentialAudience: credentialAudience,
-                  credentialEndpoint: credentialEndpoint,
-                  downloadTimeoutInMilliseconds: downloadTimeoutInMilliseconds,
-                  doctype: doctype,
-                  claims: claims,
-                  credentialFormat: credentialFormat
+                credentialAudience: credentialAudience,
+                credentialEndpoint: credentialEndpoint,
+                downloadTimeoutInMilliseconds: downloadTimeoutInMilliseconds,
+                credentialFormat: .mso_mdoc,
+                docType: doctype,
+                claims: claims
               )
-            }
             }
             
 
