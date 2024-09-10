@@ -395,8 +395,9 @@ async function getJWKRSA(publicKey): Promise<any> {
   const publicKeyJWKString = await jose.JWK.asKey(publicKey, 'pem');
   return publicKeyJWKString.toJSON();
 }
-function getJWKECR1(publicKey): any {
-  return JSON.parse(publicKey);
+async function getJWKECR1(publicKey): Promise<any> {
+  const publicKeyJWKString = await jose.JWK.asKey(publicKey, 'pem');
+  return publicKeyJWKString.toJSON();
 }
 function getJWKECK1(publicKey): any {
   const x = base64url(Buffer.from(publicKey.slice(1, 33))); // Skip the first byte (0x04) in the uncompressed public key

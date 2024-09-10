@@ -259,7 +259,7 @@ export async function createSignatureECR1(
     throw Error;
   } else {
     if (isAndroid()) {
-      let signature64 = RNSecureKeystoreModule.sign(
+      let signature64 = await RNSecureKeystoreModule.sign(
         KeyTypes.ES256,
         KeyTypes.ES256,
         preHash,
