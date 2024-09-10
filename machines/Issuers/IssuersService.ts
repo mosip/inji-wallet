@@ -4,14 +4,16 @@ import NetInfo from '@react-native-community/netinfo';
 import {
   constructAuthorizationConfiguration,
   constructProofJWT,
-  Issuers_Key_Ref,
+  getKeyTypeFromWellknown,
+  hasKeyPair,
   updateCredentialInformation,
   vcDownloadTimeout,
+  selectCredentialRequestKey,
 } from '../../shared/openId4VCI/Utils';
 import {authorize} from 'react-native-app-auth';
 import {
-  generateKeys,
-  isHardwareKeystoreExists,
+  fetchKeyPair,
+  generateKeyPair,
 } from '../../shared/cryptoutil/cryptoUtil';
 import {NativeModules} from 'react-native';
 import {
@@ -26,7 +28,6 @@ import {TelemetryConstants} from '../../shared/telemetry/TelemetryConstants';
 import {isMosipVC} from '../../shared/Utils';
 import {VciClient} from '../../shared/vciClient/VciClient';
 
-const {RNSecureKeystoreModule} = NativeModules;
 export const IssuersService = () => {
   return {
     isUserSignedAlready: () => async () => {
@@ -74,6 +75,7 @@ export const IssuersService = () => {
         context.privateKey,
         accessToken,
         context.selectedIssuer,
+        context.keyType,
       );
       let credential = await VciClient.downloadCredential(
         issuerMeta,
@@ -100,17 +102,21 @@ export const IssuersService = () => {
       );
     },
 
-    generateKeyPair: async () => {
-      if (!isHardwareKeystoreExists) {
-        return await generateKeys();
-      }
-      const isBiometricsEnabled = RNSecureKeystoreModule.hasBiometricsEnabled();
-      return RNSecureKeystoreModule.generateKeyPair(
-        Issuers_Key_Ref,
-        isBiometricsEnabled,
-        0,
-      );
+    generateKeyPair: async (context: any) => {
+      const keypair = await generateKeyPair(context.keyType);
+      return keypair;
     },
+
+    getKeyPair: async (context: any) => {
+      if (!!(await fetchKeyPair(context.keyType)).publicKey) {
+        return await fetchKeyPair(context.keyType);
+      }
+    },
+
+    getSelectedKey: async (context: any) => {
+      return context.keyType;
+    },
+
     verifyCredential: async (context: any) => {
       //this issuer specific check has to be removed once vc validation is done.
       if (isMosipVC(context.vcMetadata.issuer)) {

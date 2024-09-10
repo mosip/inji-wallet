@@ -6,7 +6,6 @@ import {useTranslation} from 'react-i18next';
 import i18next, {i18n} from 'i18next';
 import RNRestart from 'react-native-restart';
 import {setItem} from '../machines/store';
-import Keychain from 'react-native-keychain';
 
 export const LanguageSelector: React.FC<LanguageSelectorProps> = props => {
   const {i18n} = useTranslation();
@@ -30,8 +29,7 @@ export const LanguageSelector: React.FC<LanguageSelectorProps> = props => {
 export const changeLanguage = async (i18n: i18n, language: string) => {
   if (language !== i18n.language) {
     await i18n.changeLanguage(language).then(async () => {
-      const existingCredentials = await Keychain.getGenericPassword();
-      await setItem('language', i18n.language, existingCredentials.password);
+      await setItem('language', i18n.language,"");
       const isRTL = i18next.dir(language) === 'rtl';
       if (isRTL !== I18nManager.isRTL) {
         try {
