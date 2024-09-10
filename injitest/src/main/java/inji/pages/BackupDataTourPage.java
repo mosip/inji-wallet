@@ -25,13 +25,13 @@ public class BackupDataTourPage extends BasePage {
     BasePage basePage = new BasePage(driver);
 
     public String  verifyLanguageforBackupDataPageLoaded(){
-        basePage.retrieToGetElement(backupDataText);
+        basePage.retryToGetElement(backupDataText);
         return getTextFromLocator(backupDataText);
     }
 
     public String getBackupDataPageDescription() {
 
-        basePage.retrieToGetElement(backupDataDescription);
+        basePage.retryToGetElement(backupDataDescription);
         return this.getTextFromLocator(backupDataDescription);
     }
 

@@ -25,13 +25,13 @@ public class SecureSharingPage extends BasePage {
     BasePage basePage = new BasePage(driver);
 
     public String  verifyLanguageforSecureSharingPageLoaded(){
-        basePage.retrieToGetElement(secureSharingText);
+        basePage.retryToGetElement(secureSharingText);
         return getTextFromLocator(secureSharingText);
 
     }
 
     public String getSecureSharingDescription() {
-        basePage.retrieToGetElement(secureSharingDescription);
+        basePage.retryToGetElement(secureSharingDescription);
         return this.getTextFromLocator(secureSharingDescription);
     }
 

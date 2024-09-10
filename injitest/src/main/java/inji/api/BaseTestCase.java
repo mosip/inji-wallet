@@ -27,6 +27,8 @@ public class BaseTestCase {
 			UinGenerationUtil.getResourcePath() + "/config/application.properties");
 	public static Properties propsKernel = getproperty(
 			UinGenerationUtil.getResourcePath() + "/config/"+ UinGenerationUtil.getKernalFilename());
+
+
 	public static Properties propsMap = getproperty(
 			UinGenerationUtil.getResourcePath() + "/config/valueMapping.properties");
 	public static Properties propsBio = getproperty(
@@ -179,10 +181,13 @@ public class BaseTestCase {
 
 	//ToDo - Need to address this
 	 public static String getOtp() {
-	  	  /*String otp="";
-	  	  String externalemail = TestDataReader.readData("externalemail");
-	  	  otp = MockSMTPListener.getOtp(externalemail);*/
-	  	  return "111111";
+//		 ConfigManager.init();
+//		 mockSMTPListener = new MockSMTPListener();
+//		 mockSMTPListener.run();
+	  	  String otp="111111";
+//	  	  String externalemail = TestDataReader.readData("externalemail");
+//	  	  otp = MockSMTPListener.getOtp(externalemail);
+	  	  return otp;
 	    }
 
 	public static JSONObject getRequestJson(String filepath) {

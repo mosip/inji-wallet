@@ -43,7 +43,13 @@ public class AboutInjiPage extends BasePage {
 
     public boolean isTuvaliVesionVisible() {
         String tuvaliVersion = getTextFromLocator(tuvaliVesion);
-        return tuvaliVersion.length() == 21;
+     if(tuvaliVersion.contains("0.5.0")){
+         return true;
+     }
+        else if(tuvaliVersion.contains("0.5.1")){
+            return true;
+        }else
+         return false;
     }
 
     public AboutInjiPage(AppiumDriver driver) {
