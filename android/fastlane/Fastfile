@@ -43,9 +43,14 @@ def generate_app_name()
   end
 end
 
-desc "Verify Build for Android"
-lane :android_build do
+desc "Verify Release Build for Android"
+lane :android_build_release do
   gradle(task: "assembleResidentappRelease")
+end
+
+desc "Verify Debug Build for Android"
+lane :android_build_debug do
+  gradle(task: "assembleResidentappDebug")
 end
 
 desc "Deploy an Internal testing version to the Google Play"
