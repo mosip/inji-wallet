@@ -8,6 +8,11 @@ export interface Typegen0 {
       data: unknown;
       __tip: 'See the XState TS docs to learn how to strongly type this.';
     };
+    'done.invoke.issuersMachine.checkKeyPair:invocation[0]': {
+      type: 'done.invoke.issuersMachine.checkKeyPair:invocation[0]';
+      data: unknown;
+      __tip: 'See the XState TS docs to learn how to strongly type this.';
+    };
     'done.invoke.issuersMachine.displayIssuers:invocation[0]': {
       type: 'done.invoke.issuersMachine.displayIssuers:invocation[0]';
       data: unknown;
@@ -30,6 +35,11 @@ export interface Typegen0 {
     };
     'done.invoke.issuersMachine.generateKeyPair:invocation[0]': {
       type: 'done.invoke.issuersMachine.generateKeyPair:invocation[0]';
+      data: unknown;
+      __tip: 'See the XState TS docs to learn how to strongly type this.';
+    };
+    'done.invoke.issuersMachine.performAuthorization.getKeyPairFromKeystore:invocation[0]': {
+      type: 'done.invoke.issuersMachine.performAuthorization.getKeyPairFromKeystore:invocation[0]';
       data: unknown;
       __tip: 'See the XState TS docs to learn how to strongly type this.';
     };
@@ -68,6 +78,10 @@ export interface Typegen0 {
       type: 'error.platform.issuersMachine.downloadIssuerWellknown:invocation[0]';
       data: unknown;
     };
+    'error.platform.issuersMachine.performAuthorization.getKeyPairFromKeystore:invocation[0]': {
+      type: 'error.platform.issuersMachine.performAuthorization.getKeyPairFromKeystore:invocation[0]';
+      data: unknown;
+    };
     'error.platform.issuersMachine.performAuthorization:invocation[0]': {
       type: 'error.platform.issuersMachine.performAuthorization:invocation[0]';
       data: unknown;
@@ -85,13 +99,15 @@ export interface Typegen0 {
     downloadIssuerWellknown: 'done.invoke.issuersMachine.downloadIssuerWellknown:invocation[0]';
     downloadIssuersList: 'done.invoke.issuersMachine.displayIssuers:invocation[0]';
     generateKeyPair: 'done.invoke.issuersMachine.generateKeyPair:invocation[0]';
+    getKeyPair: 'done.invoke.issuersMachine.performAuthorization.getKeyPairFromKeystore:invocation[0]';
+    getSelectedKey: 'done.invoke.issuersMachine.checkKeyPair:invocation[0]';
     invokeAuthorization: 'done.invoke.issuersMachine.performAuthorization:invocation[0]';
     isUserSignedAlready: 'done.invoke.issuersMachine.storing:invocation[0]';
     verifyCredential: 'done.invoke.issuersMachine.verifyingCredential:invocation[0]';
   };
   missingImplementations: {
     actions:
-      | 'getKeyPairFromStore'
+      | 'downloadIssuerWellknown'
       | 'loadKeyPair'
       | 'logDownloaded'
       | 'resetError'
@@ -104,6 +120,7 @@ export interface Typegen0 {
       | 'sendErrorEndEvent'
       | 'sendImpressionEvent'
       | 'sendSuccessEndEvent'
+      | 'setCredentialTypeListDownloadFailureError'
       | 'setCredentialWrapper'
       | 'setError'
       | 'setFetchWellknownError'
@@ -120,6 +137,7 @@ export interface Typegen0 {
       | 'setSelectedCredentialType'
       | 'setSelectedIssuerId'
       | 'setSelectedIssuers'
+      | 'setSelectedKey'
       | 'setSupportedCredentialTypes'
       | 'setTokenResponse'
       | 'setVCMetadata'
@@ -136,6 +154,7 @@ export interface Typegen0 {
       | 'canSelectIssuerAgain'
       | 'hasKeyPair'
       | 'hasUserCancelledBiometric'
+      | 'isBiometricCancelled'
       | 'isCustomSecureKeystore'
       | 'isGenericError'
       | 'isInternetConnected'
@@ -151,15 +170,15 @@ export interface Typegen0 {
       | 'downloadIssuerWellknown'
       | 'downloadIssuersList'
       | 'generateKeyPair'
+      | 'getKeyPair'
+      | 'getSelectedKey'
       | 'invokeAuthorization'
       | 'isUserSignedAlready'
       | 'verifyCredential';
   };
   eventsCausingActions: {
-    getKeyPairFromStore:
-      | 'TRY_AGAIN'
-      | 'done.invoke.issuersMachine.performAuthorization:invocation[0]';
-    loadKeyPair: 'STORE_RESPONSE';
+    downloadIssuerWellknown: 'TRY_AGAIN';
+    loadKeyPair: 'done.invoke.issuersMachine.performAuthorization.getKeyPairFromKeystore:invocation[0]';
     logDownloaded:
       | 'done.invoke.issuersMachine.verifyingCredential:invocation[0]'
       | 'error.platform.issuersMachine.verifyingCredential:invocation[0]';
@@ -189,10 +208,10 @@ export interface Typegen0 {
     sendErrorEndEvent: 'error.platform.issuersMachine.verifyingCredential:invocation[0]';
     sendImpressionEvent: 'done.invoke.issuersMachine.displayIssuers:invocation[0]';
     sendSuccessEndEvent: 'done.invoke.issuersMachine.verifyingCredential:invocation[0]';
+    setCredentialTypeListDownloadFailureError: 'error.platform.issuersMachine.downloadCredentialTypes:invocation[0]';
     setCredentialWrapper: 'done.invoke.issuersMachine.downloadCredentials:invocation[0]';
     setError:
       | 'error.platform.issuersMachine.displayIssuers:invocation[0]'
-      | 'error.platform.issuersMachine.downloadCredentialTypes:invocation[0]'
       | 'error.platform.issuersMachine.downloadCredentials:invocation[0]'
       | 'error.platform.issuersMachine.performAuthorization:invocation[0]';
     setFetchWellknownError: 'error.platform.issuersMachine.downloadIssuerWellknown:invocation[0]';
@@ -200,10 +219,10 @@ export interface Typegen0 {
     setIssuers: 'done.invoke.issuersMachine.displayIssuers:invocation[0]';
     setLoadingReasonAsDisplayIssuers: 'TRY_AGAIN';
     setLoadingReasonAsDownloadingCredentials:
-      | 'STORE_ERROR'
-      | 'STORE_RESPONSE'
       | 'TRY_AGAIN'
-      | 'done.invoke.issuersMachine.generateKeyPair:invocation[0]';
+      | 'done.invoke.issuersMachine.generateKeyPair:invocation[0]'
+      | 'done.invoke.issuersMachine.performAuthorization.getKeyPairFromKeystore:invocation[0]'
+      | 'error.platform.issuersMachine.performAuthorization.getKeyPairFromKeystore:invocation[0]';
     setLoadingReasonAsSettingUp:
       | 'SELECTED_ISSUER'
       | 'TRY_AGAIN'
@@ -218,6 +237,7 @@ export interface Typegen0 {
     setSelectedCredentialType: 'SELECTED_CREDENTIAL_TYPE';
     setSelectedIssuerId: 'SELECTED_ISSUER';
     setSelectedIssuers: 'SELECTED_ISSUER';
+    setSelectedKey: 'done.invoke.issuersMachine.performAuthorization:invocation[0]';
     setSupportedCredentialTypes: 'done.invoke.issuersMachine.downloadCredentialTypes:invocation[0]';
     setTokenResponse: 'done.invoke.issuersMachine.performAuthorization:invocation[0]';
     setVCMetadata:
@@ -243,8 +263,9 @@ export interface Typegen0 {
   eventsCausingDelays: {};
   eventsCausingGuards: {
     canSelectIssuerAgain: 'TRY_AGAIN';
-    hasKeyPair: 'CHECK_KEY_PAIR';
+    hasKeyPair: 'done.invoke.issuersMachine.checkKeyPair:invocation[0]';
     hasUserCancelledBiometric: 'error.platform.issuersMachine.downloadCredentials:invocation[0]';
+    isBiometricCancelled: 'error.platform.issuersMachine.performAuthorization.getKeyPairFromKeystore:invocation[0]';
     isCustomSecureKeystore: 'done.invoke.issuersMachine.generateKeyPair:invocation[0]';
     isGenericError: 'error.platform.issuersMachine.downloadCredentials:invocation[0]';
     isInternetConnected: 'done.invoke.checkInternet';
@@ -259,12 +280,18 @@ export interface Typegen0 {
       | 'SELECTED_CREDENTIAL_TYPE'
       | 'done.invoke.issuersMachine.downloadCredentialTypes:invocation[0]';
     downloadCredential:
-      | 'CHECK_KEY_PAIR'
+      | 'done.invoke.issuersMachine.checkKeyPair:invocation[0]'
       | 'done.invoke.issuersMachine.generateKeyPair:invocation[0]';
     downloadCredentialTypes: 'done.invoke.issuersMachine.downloadIssuerWellknown:invocation[0]';
     downloadIssuerWellknown: 'SELECTED_ISSUER' | 'TRY_AGAIN';
     downloadIssuersList: 'CANCEL' | 'TRY_AGAIN' | 'xstate.init';
-    generateKeyPair: 'CHECK_KEY_PAIR';
+    generateKeyPair: 'done.invoke.issuersMachine.checkKeyPair:invocation[0]';
+    getKeyPair:
+      | 'TRY_AGAIN'
+      | 'done.invoke.issuersMachine.performAuthorization:invocation[0]';
+    getSelectedKey:
+      | 'done.invoke.issuersMachine.performAuthorization.getKeyPairFromKeystore:invocation[0]'
+      | 'error.platform.issuersMachine.performAuthorization.getKeyPairFromKeystore:invocation[0]';
     invokeAuthorization: 'done.invoke.checkInternet';
     isUserSignedAlready:
       | 'done.invoke.issuersMachine.verifyingCredential:invocation[0]'
@@ -286,6 +313,7 @@ export interface Typegen0 {
     | 'handleVCVerificationFailure'
     | 'idle'
     | 'performAuthorization'
+    | 'performAuthorization.getKeyPairFromKeystore'
     | 'performAuthorization.idle'
     | 'performAuthorization.userCancelledBiometric'
     | 'selectingCredentialType'
@@ -294,7 +322,10 @@ export interface Typegen0 {
     | 'verifyingCredential'
     | {
         downloadCredentials?: 'idle' | 'userCancelledBiometric';
-        performAuthorization?: 'idle' | 'userCancelledBiometric';
+        performAuthorization?:
+          | 'getKeyPairFromKeystore'
+          | 'idle'
+          | 'userCancelledBiometric';
       };
   tags: never;
 }

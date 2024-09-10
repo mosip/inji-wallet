@@ -24,6 +24,7 @@ export class VCMetadata {
   displayId: string = '';
   format: string = '';
 
+  downloadKeyType: string = '';
   constructor({
     idType = '',
     requestId = '',
@@ -35,6 +36,7 @@ export class VCMetadata {
     isVerified = false,
     displayId = '',
     format = '',
+    downloadKeyType = '',
   } = {}) {
     this.idType = idType;
     this.requestId = requestId;
@@ -46,6 +48,7 @@ export class VCMetadata {
     this.isVerified = isVerified;
     this.displayId = displayId;
     this.format = format;
+    this.downloadKeyType = downloadKeyType;
   }
 
   //TODO: Remove any typing and use appropriate typing
@@ -65,6 +68,7 @@ export class VCMetadata {
         : vc.vcMetadata
         ? vc.vcMetadata.displayId
         : getDisplayId(vc.verifiableCredential),
+      downloadKeyType: vc.downloadKeyType,
     });
   }
 
@@ -104,7 +108,7 @@ export function parseMetadatas(metadataStrings: object[]) {
   return metadataStrings.map(o => new VCMetadata(o));
 }
 
-export const getVCMetadata = (context: object) => {
+export const getVCMetadata = (context: object, keyType: string) => {
   const [issuer, protocol, credentialId] =
     context.credentialWrapper?.identifier.split(':');
 
@@ -117,6 +121,7 @@ export const getVCMetadata = (context: object) => {
     isVerified: context.vcMetadata.isVerified ?? false,
     displayId: getDisplayId(context.verifiableCredential),
     format: context.credentialWrapper.format,
+    downloadKeyType: keyType,
   });
 };
 

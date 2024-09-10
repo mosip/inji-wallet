@@ -265,9 +265,11 @@ android {
 dependencies {
     implementation("com.facebook.react:react-android")
     implementation 'com.facebook.soloader:soloader:0.10.1+'
-    implementation("io.mosip:pixelpass:0.2.0-SNAPSHOT")
-    implementation("io.mosip:secure-keystore:0.2.0-SNAPSHOT")
-    implementation("io.mosip:tuvali:0.5.0-SNAPSHOT")
+    implementation("io.mosip:pixelpass:0.2.1")
+    implementation("io.mosip:secure-keystore:0.3.0-SNAPSHOT")
+    implementation("io.mosip:tuvali:0.5.1")
+    implementation("io.mosip:inji-vci-client:0.3.3-SNAPSHOT")
+
 
     def isGifEnabled = (findProperty('expo.gif.enabled') ?: "") == "true";
     def isWebpEnabled = (findProperty('expo.webp.enabled') ?: "") == "true";
@@ -296,7 +298,6 @@ dependencies {
     }
     compileOnly project(':react-native-android-location-services-dialog-box')
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.0.0"
-    implementation("io.mosip:inji-vci-client:0.3.3-SNAPSHOT")
 //            {
 //        exclude group: "androidx.annotation", module: "annotation"
 //    }

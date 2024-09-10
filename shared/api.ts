@@ -5,7 +5,6 @@ import {
   COMMON_PROPS_KEY,
 } from './constants';
 import {INITIAL_CONFIG} from './InitialConfig';
-import Keychain from 'react-native-keychain';
 import {getItem, setItem} from '../machines/store';
 import {faceMatchConfig} from './commonUtil';
 import {configure} from '@iriscan/biometric-sdk-react-native';
@@ -193,19 +192,14 @@ async function generateCacheAPIFunctionWithCachePreference(
   fetchCall: (...props: any[]) => any,
   onErrorHardCodedValue?: any,
 ) {
-  const existingCredentials = await Keychain.getGenericPassword();
   try {
-    const response = await getItem(
-      cacheKey,
-      null,
-      existingCredentials?.password,
-    );
+    const response = await getItem(cacheKey, null, '');
 
     if (response) {
       return response;
     } else {
       const response = await fetchCall();
-      setItem(cacheKey, response, existingCredentials?.password).then(() =>
+      setItem(cacheKey, response, '').then(() =>
         console.log('Cached response for ' + cacheKey),
       );
 
@@ -231,10 +225,9 @@ async function generateCacheAPIFunctionWithAPIPreference(
   fetchCall: (...props: any[]) => any,
   onErrorHardCodedValue?: any,
 ) {
-  const existingCredentials = await Keychain.getGenericPassword();
   try {
     const response = await fetchCall();
-    setItem(cacheKey, response, existingCredentials.password).then(() =>
+    setItem(cacheKey, response, '').then(() =>
       console.log('Cached response for ' + cacheKey),
     );
     return response;
@@ -246,11 +239,7 @@ async function generateCacheAPIFunctionWithAPIPreference(
 
     console.log(error);
 
-    const response = await getItem(
-      cacheKey,
-      null,
-      existingCredentials.password,
-    );
+    const response = await getItem(cacheKey, null, '');
 
     if (response) {
       return response;

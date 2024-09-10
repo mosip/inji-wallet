@@ -1,3 +1,5 @@
+// This file was automatically generated. Edits will be overwritten
+
 export interface Typegen0 {
   '@@xstate/typegen': true;
   internalEvents: {
@@ -28,11 +30,16 @@ export interface Typegen0 {
     requestStoredContext: 'xstate.init';
     setBiometrics: 'SETUP_BIOMETRICS';
     setContext: 'STORE_RESPONSE';
+    setInitialDownloadDone: 'INITIAL_DOWNLOAD_DONE';
     setIsToggleFromSettings: 'CHANGE_METHOD';
     setLanguage: 'SETUP_BIOMETRICS' | 'SETUP_PASSCODE';
+    setOnboardingDone: 'ONBOARDING_DONE';
     setPasscode: 'SETUP_PASSCODE';
     setPasscodeSalt: 'done.invoke.auth.introSlider:invocation[0]';
+    setTourGuide: 'SET_TOUR_GUIDE';
     storeContext:
+      | 'INITIAL_DOWNLOAD_DONE'
+      | 'ONBOARDING_DONE'
       | 'SETUP_BIOMETRICS'
       | 'SETUP_PASSCODE'
       | 'STORE_RESPONSE'
