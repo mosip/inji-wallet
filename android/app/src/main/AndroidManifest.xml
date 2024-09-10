@@ -73,6 +73,7 @@
                 <category android:name="android.intent.category.BROWSABLE" />
 
                 <data
+                    android:host="wla-auth"
                     android:scheme="io.mosip.residentapp.inji" />
             </intent-filter>
 
