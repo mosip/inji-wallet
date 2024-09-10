@@ -18,6 +18,7 @@ export interface Typegen0 {
       type: 'xstate.after(DESTROY_TIMEOUT)#scan.clearingConnection';
     };
     'xstate.init': {type: 'xstate.init'};
+    'xstate.stop': {type: 'xstate.stop'};
   };
   invokeSrcNameMap: {
     checkBluetoothPermission: 'done.invoke.scan.checkBluetoothPermission.checking:invocation[0]';
@@ -55,6 +56,7 @@ export interface Typegen0 {
       | 'removeLoggers'
       | 'resetFaceCaptureBannerStatus'
       | 'resetFlowType'
+      | 'resetLinkCode'
       | 'resetSelectedVc'
       | 'resetShowQuickShareSuccessBanner'
       | 'sendBLEConnectionErrorEvent'
@@ -67,6 +69,7 @@ export interface Typegen0 {
       | 'setChildRef'
       | 'setFlowType'
       | 'setLinkCode'
+      | 'setLinkCodeFromDeepLink'
       | 'setQuickShareData'
       | 'setReadyForBluetoothStateCheck'
       | 'setReceiverInfo'
@@ -132,7 +135,10 @@ export interface Typegen0 {
       | 'SCREEN_BLUR'
       | 'STORE_RESPONSE'
       | 'xstate.init';
-    resetFaceCaptureBannerStatus: 'ACCEPT_REQUEST' | 'CLOSE_BANNER';
+    resetFaceCaptureBannerStatus:
+      | 'ACCEPT_REQUEST'
+      | 'CLOSE_BANNER'
+      | 'STORE_RESPONSE';
     resetFlowType:
       | 'DISCONNECT'
       | 'DISMISS'
@@ -141,6 +147,15 @@ export interface Typegen0 {
       | 'RESET'
       | 'SCREEN_BLUR'
       | 'xstate.init';
+    resetLinkCode:
+      | 'BLE_ERROR'
+      | 'DISMISS'
+      | 'DISMISS_QUICK_SHARE_BANNER'
+      | 'RESET'
+      | 'SCREEN_BLUR'
+      | 'SCREEN_FOCUS'
+      | 'SELECT_VC'
+      | 'xstate.stop';
     resetSelectedVc:
       | 'DISCONNECT'
       | 'DISMISS'
@@ -151,15 +166,16 @@ export interface Typegen0 {
       | 'xstate.init';
     resetShowQuickShareSuccessBanner: 'DISMISS' | 'DISMISS_QUICK_SHARE_BANNER';
     sendBLEConnectionErrorEvent: 'BLE_ERROR';
-    sendScanData: 'SCAN';
+    sendScanData: 'QRLOGIN_VIA_DEEP_LINK' | 'SCAN';
     sendVCShareFlowCancelEndEvent: 'CANCEL';
     sendVCShareFlowTimeoutEndEvent: 'CANCEL' | 'RETRY';
     sendVcShareSuccessEvent: 'VC_ACCEPTED';
     sendVcSharingStartEvent: 'SCAN';
     setBleError: 'BLE_ERROR';
-    setChildRef: 'STORE_RESPONSE';
+    setChildRef: 'QRLOGIN_VIA_DEEP_LINK' | 'STORE_RESPONSE';
     setFlowType: 'SELECT_VC';
     setLinkCode: 'SCAN';
+    setLinkCodeFromDeepLink: 'QRLOGIN_VIA_DEEP_LINK';
     setQuickShareData: 'SCAN';
     setReadyForBluetoothStateCheck: 'BLUETOOTH_PERMISSION_ENABLED';
     setReceiverInfo: 'CONNECTED';
@@ -194,7 +210,7 @@ export interface Typegen0 {
     uptoAndroid11: '' | 'START_PERMISSION_CHECK';
   };
   eventsCausingServices: {
-    QrLogin: 'SCAN';
+    QrLogin: 'QRLOGIN_VIA_DEEP_LINK' | 'SCAN';
     checkBluetoothPermission:
       | ''
       | 'BLUETOOTH_STATE_DISABLED'
@@ -251,6 +267,7 @@ export interface Typegen0 {
     | 'loadVCS.idle'
     | 'loadVCS.navigatingToHome'
     | 'nearByDevicesPermissionDenied'
+    | 'qrLoginViaDeepLink'
     | 'recheckBluetoothState'
     | 'recheckBluetoothState.checking'
     | 'recheckBluetoothState.enabled'

@@ -46,12 +46,14 @@ export const ScanActions = (model: any, QR_LOGIN_REF_ID: any) => {
       },
     }),
 
+    resetLinkCode: model.assign({
+      linkcode: '',
+    }),
     updateShowFaceAuthConsent: model.assign({
       showFaceAuthConsent: (_, event) => {
         return event.response || event.response === null;
       },
     }),
-
     setShowFaceAuthConsent: model.assign({
       showFaceAuthConsent: (_, event) => {
         return !event.isDoNotAskAgainChecked;
@@ -229,6 +231,10 @@ export const ScanActions = (model: any, QR_LOGIN_REF_ID: any) => {
     setLinkCode: assign({
       linkCode: (_, event) =>
         new URL(event.params).searchParams.get('linkCode'),
+    }),
+
+    setLinkCodeFromDeepLink: assign({
+      linkCode: (_, event) => event.linkCode,
     }),
     setQuickShareData: assign({
       quickShareData: (_, event) =>

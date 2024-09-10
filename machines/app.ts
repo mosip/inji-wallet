@@ -32,6 +32,9 @@ import {
   createVcMetaMachine,
   vcMetaMachine,
 } from './VerifiableCredential/VCMetaMachine/VCMetaMachine';
+import {NativeModules} from 'react-native';
+
+const QrLoginIntent = NativeModules.QrLoginIntent;
 
 const model = createModel(
   {
@@ -40,6 +43,7 @@ const model = createModel(
     isReadError: false,
     isDecryptError: false,
     isKeyInvalidateError: false,
+    linkCode: '',
   },
   {
     events: {
@@ -56,6 +60,7 @@ const model = createModel(
       APP_INFO_RECEIVED: (info: AppInfo) => ({info}),
       STORE_RESPONSE: (response: unknown) => ({response}),
       RESET_KEY_INVALIDATE_ERROR_DISMISS: () => ({}),
+      RESET_LINKCODE: () => ({}),
     },
   },
 );
@@ -77,6 +82,9 @@ export const appMachine = model.createMachine(
     on: {
       DECRYPT_ERROR: {
         actions: ['setIsDecryptError'],
+      },
+      RESET_LINKCODE: {
+        actions: ['resetLinkCode'],
       },
       DECRYPT_ERROR_DISMISS: {
         actions: ['unsetIsDecryptError'],
@@ -166,6 +174,17 @@ export const appMachine = model.createMachine(
               checking: {},
               active: {
                 entry: ['forwardToServices'],
+                invoke: [
+                  {
+                    src: 'isQrLoginByDeepLink',
+                    onDone: {
+                      actions: ['setLinkCode'],
+                    },
+                  },
+                  {
+                    src: 'resetQRLoginDeepLinkData',
+                  },
+                ],
               },
               inactive: {
                 entry: ['forwardToServices'],
@@ -198,7 +217,17 @@ export const appMachine = model.createMachine(
   },
   {
     actions: {
-      forwardToServices: pure((context, event) =>
+      setLinkCode: assign({
+        linkCode: (_, event) => {
+          if (event.data != '')
+            return new URL(event.data).searchParams.get('linkCode')!!;
+          return '';
+        },
+      }),
+      resetLinkCode: assign({
+        linkCode: '',
+      }),
+      forwardToSerices: pure((context, event) =>
         Object.values(context.serviceRefs).map(serviceRef =>
           send({...event, type: `APP_${event.type}`}, {to: serviceRef}),
         ),
@@ -345,6 +374,15 @@ export const appMachine = model.createMachine(
     },
 
     services: {
+      isQrLoginByDeepLink: () => async () => {
+        const data = await QrLoginIntent.isQrLoginByDeepLink();
+        //console.log('DeepLink: ', data);
+        return data;
+      },
+      resetQRLoginDeepLinkData: () => async () => {
+        return await QrLoginIntent.resetQRLoginDeepLinkData();
+      },
+
       getAppInfo: () => async callback => {
         const appInfo = {
           deviceId: getDeviceId(),
@@ -446,4 +484,8 @@ export function selectIsDecryptError(state: State) {
 
 export function selectIsKeyInvalidateError(state: State) {
   return state.context.isKeyInvalidateError;
+}
+
+export function selectIsLinkCode(state: State) {
+  return state.context.linkCode;
 }
