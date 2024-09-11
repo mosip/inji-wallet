@@ -417,8 +417,8 @@ export async function fetchKeyPair(keyType: any) {
         const keyPair = await RNSecureKeystoreModule.retrieveGenericKey(
           keyType,
         );
-        const publicKey = keyPair[0];
-        const privateKey = keyPair[1];
+        const publicKey = keyPair[1];
+        const privateKey = keyPair[0];
         return {
           publicKey: publicKey,
           privateKey: privateKey,
@@ -426,8 +426,8 @@ export async function fetchKeyPair(keyType: any) {
       }
     } else {
       const keyPair = await RNSecureKeystoreModule.retrieveGenericKey(keyType);
-      const publicKey = Buffer.from(keyPair[0], 'base64');
-      const privateKey = Buffer.from(keyPair[1], 'base64');
+      const publicKey = Buffer.from(keyPair[1], 'base64');
+      const privateKey = Buffer.from(keyPair[0], 'base64');
       return {
         publicKey: publicKey,
         privateKey: privateKey,
