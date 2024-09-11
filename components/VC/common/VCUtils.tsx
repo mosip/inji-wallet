@@ -14,7 +14,11 @@ import {CREDENTIAL_REGISTRY_EDIT} from 'react-native-dotenv';
 import {VCVerification} from '../../VCVerification';
 import {MIMOTO_BASE_URL} from '../../../shared/constants';
 import {VCItemDetailsProps} from '../Views/VCDetailView';
-import {getSelectedCredentialTypeDetails, iterateMsoMdocFor} from '../../../shared/openId4VCI/Utils';
+import {
+  getMatchingCredentialIssuerMetadata,
+  getSelectedCredentialTypeDetails,
+  iterateMsoMdocFor,
+} from '../../../shared/openId4VCI/Utils';
 import {parseJSON} from '../../../shared/Utils';
 
 export const CARD_VIEW_DEFAULT_FIELDS = ['fullName'];
@@ -71,20 +75,25 @@ export const getFieldValue = (
         getFullAddress(verifiableCredential?.credentialSubject),
       );
     default: {
-      if(format === "ldp_vc"){
+      if (format === 'ldp_vc') {
         const fieldValue = verifiableCredential?.credentialSubject[field];
         if (Array.isArray(fieldValue) && typeof fieldValue[0] !== 'object') {
           return fieldValue.join(', ');
         }
         return getLocalizedField(fieldValue);
-      } else if(format === "mso_mdoc"){
-        const splitField = field.split("~");
-        if(splitField.length>1){
-          console.log("splitField ",splitField)
-          const [namespace, fieldName] = splitField
-          const iterateMsoMdocFor1 = iterateMsoMdocFor(verifiableCredential,namespace,"elementValue",fieldName);
-          console.log("iterateMsoMdocFor1 ",iterateMsoMdocFor1)
-          return iterateMsoMdocFor1
+      } else if (format === 'mso_mdoc') {
+        const splitField = field.split('~');
+        if (splitField.length > 1) {
+          console.log('splitField ', splitField);
+          const [namespace, fieldName] = splitField;
+          const iterateMsoMdocFor1 = iterateMsoMdocFor(
+            verifiableCredential,
+            namespace,
+            'elementValue',
+            fieldName,
+          );
+          console.log('iterateMsoMdocFor1 ', iterateMsoMdocFor1);
+          return iterateMsoMdocFor1;
         }
       }
     }
@@ -114,10 +123,10 @@ export const getFieldName = (
         return getLocalizedField(newFieldObj);
       }
     } else if (format === 'mso_mdoc') {
-      const splitField = field.split("~");
-      if(splitField.length>1){
-        console.log("splitField ",splitField)
-        const [namespace, fieldName] = splitField
+      const splitField = field.split('~');
+      if (splitField.length > 1) {
+        console.log('splitField ', splitField);
+        const [namespace, fieldName] = splitField;
         const fieldObj = wellknown.claims[namespace][fieldName];
         if (fieldObj) {
           const newFieldObj = fieldObj.display.map(obj => {
@@ -174,14 +183,17 @@ export const fieldItemIterator = (
   wellknown: any,
   props: VCItemDetailsProps,
 ) => {
-  console.log("fields to be shown in VC detail view ",JSON.stringify(fields,null,2))
+  console.log(
+    'fields to be shown in VC detail view ',
+    JSON.stringify(fields, null, 2),
+  );
   return fields.map(field => {
     const fieldName = getFieldName(
       field,
       wellknown,
       props.verifiableCredentialData.vcMetadata.format,
     );
-    console.log("fieldName ",fieldName)
+    console.log('fieldName ', fieldName);
     /**
      * fields - [
   "org.iso.18013.5.1~family_name",
@@ -253,8 +265,11 @@ export const getMosipLogo = () => {
 export const getIdType = (
   wellknown: CredentialTypes | IssuerWellknownResponse,
   idType?: string[],
+  credentialConfigurationId: string | undefined = undefined,
 ) => {
   if (wellknown && wellknown?.display) {
+    console.log('getIdType if case');
+
     const idTypeObj = wellknown.display.map((displayProps: any) => {
       return {language: displayProps.locale, value: displayProps.name};
     });
@@ -266,20 +281,26 @@ export const getIdType = (
   ) {
     let supportedCredentialsWellknown;
     wellknown = parseJSON(wellknown) as unknown as Object[];
+    
     if (!!!wellknown['credential_configurations_supported']) {
       return i18n.t('VcDetails:nationalCard');
     }
-    console.log('getIdType else case');
+    console.log('getIdType else if case');
     //TODO: Get supported credentials wellknown based on credentialConfigurationId rather than idType
-    supportedCredentialsWellknown = getSelectedCredentialTypeDetails(
-      wellknown,
-      idType,
-    );
+    if (credentialConfigurationId) {
+      supportedCredentialsWellknown = getMatchingCredentialIssuerMetadata(wellknown,credentialConfigurationId)
+    } else {
+      supportedCredentialsWellknown = getSelectedCredentialTypeDetails(
+        wellknown,
+        idType,
+      );
+    }
     if (Object.keys(supportedCredentialsWellknown).length === 0) {
       return i18n.t('VcDetails:nationalCard');
     }
     return getIdType(supportedCredentialsWellknown);
   } else {
+    console.log('getIdType else case');
     return i18n.t('VcDetails:nationalCard');
   }
 };
@@ -304,8 +325,7 @@ export function DisplayName(
   if (props.verifiableCredentialData.format === 'mso_mdoc') {
     return props.credential['issuerSigned']['nameSpaces'][
       'org.iso.18013.5.1'
-    ].find(element => element.elementIdentifier === 'given_name')
-      .elementValue;
+    ].find(element => element.elementIdentifier === 'given_name').elementValue;
   }
   return props.credential?.credentialSubject['fullName'];
 }

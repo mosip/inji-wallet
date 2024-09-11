@@ -35,12 +35,14 @@ export const Issuers = {
   Mosip: 'Mosip',
 };
 
+//
 export function getVcVerificationDetails(
   statusType,
   vcMetadata,
   verifiableCredential,
   wellknown: Object,
 ): vcVerificationBannerDetails {
+  //TODO: get id type from configId rather than credential types
   const idType = getIdType(
     wellknown,
     getCredentialTypes(getVerifiableCredential(verifiableCredential)),
