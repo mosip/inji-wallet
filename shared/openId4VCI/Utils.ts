@@ -322,8 +322,10 @@ async function getJWKRSA(publicKey): Promise<any> {
   const publicKeyJWKString = await jose.JWK.asKey(publicKey, 'pem');
   return publicKeyJWKString.toJSON();
 }
-function getJWKECR1(publicKey): any {
-  return JSON.parse(publicKey);
+async function getJWKECR1(publicKey): Promise<any> {
+  if (isIOS()) return JSON.parse(publicKey);
+  const publicKeyJWKString = await jose.JWK.asKey(publicKey, 'pem');
+  return publicKeyJWKString.toJSON();
 }
 function getJWKECK1(publicKey): any {
   const x = base64url(Buffer.from(publicKey.slice(1, 33))); // Skip the first byte (0x04) in the uncompressed public key
@@ -351,10 +353,10 @@ export async function hasKeyPair(keyType: any): Promise<boolean> {
 
 export function selectCredentialRequestKey(keyTypes: string[]) {
   const availableKeys = [
-    KeyTypes.ED25519,
-    KeyTypes.ES256K,
     KeyTypes.ES256,
     KeyTypes.RS256,
+    KeyTypes.ED25519,
+    KeyTypes.ES256K,
   ];
   for (const key of availableKeys) {
     if (keyTypes.includes(key)) return key;
