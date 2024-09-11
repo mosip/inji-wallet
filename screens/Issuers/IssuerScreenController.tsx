@@ -7,6 +7,7 @@ import {
   selectIsDownloadCredentials,
   selectIsIdle,
   selectIssuers,
+  selectIsError,
   selectLoadingReason,
   selectSelectedIssuer,
   selectSelectingCredentialType,
@@ -35,6 +36,8 @@ export function useIssuerScreenController({route, navigation}) {
     isBiometricsCancelled: useSelector(service, selectIsBiometricCancelled),
     isDone: useSelector(service, selectIsDone),
     isIdle: useSelector(service, selectIsIdle),
+    isError: useSelector(service, selectIsError),
+    isNonGenericError: useSelector(service, selectIsError) && !!!useSelector(service, selectErrorMessageType),
     loadingReason: useSelector(service, selectLoadingReason),
     isStoring: useSelector(service, selectStoring),
     isSelectingCredentialType: useSelector(

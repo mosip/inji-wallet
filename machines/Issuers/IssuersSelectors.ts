@@ -43,6 +43,10 @@ export function selectStoring(state: State) {
   return state.matches('storing');
 }
 
+export function selectIsError(state: State) {
+  return state.matches('error');
+}
+
 export function selectVerificationErrorMessage(state: State) {
   return state.context.verificationErrorMessage;
 }
