@@ -102,9 +102,7 @@ export const storeMachine =
         checkFreshInstall: {
           invoke: {
             src: 'checkFreshInstall',
-          },
-          on: {
-            READY: [
+            onDone: [
               {
                 cond: 'hasData',
                 target: !isHardwareKeystoreExists
@@ -330,9 +328,9 @@ export const storeMachine =
           }
           return;
         },
-        checkFreshInstall: () => async callback => {
+        checkFreshInstall: () => async _ => {
           const response = await getItem('auth', null, '');
-          callback(model.events.READY());
+          return response;
         },
         hasEncryptionKey: () => async callback => {
           let hasSetCredentials;
