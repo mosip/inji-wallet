@@ -66,7 +66,7 @@ export const Button: React.FC<ButtonProps> = props => {
             type === 'solid' || type === 'addId' || type === 'radius'
               ? Theme.Colors.whiteText
               : type === 'plain'
-              ? Theme.Colors.plainText
+              ? Theme.Colors.SkipButton
               : type === 'outline' && props.disabled
               ? Theme.Colors.textLabel
               : Theme.Colors.AddIdBtnTxt
@@ -88,6 +88,8 @@ export const Button: React.FC<ButtonProps> = props => {
         colors: !props.disabled
           ? Theme.Colors.GradientColors
           : Theme.Colors.DisabledColors,
+          start: { x: 0, y: 0.5 },
+          end: { x: 1, y: 0.5 },
       }}
       containerStyle={[
         props.fill ? Theme.ButtonStyles.fill : null,
