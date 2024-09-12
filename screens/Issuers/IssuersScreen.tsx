@@ -49,7 +49,7 @@ export const IssuersScreen: React.FC<
   );
 
   useLayoutEffect(() => {
-    if (controller.loadingReason || controller.errorMessageType) {
+    if (controller.loadingReason || controller.isNonGenericError) {
       props.navigation.setOptions({
         headerShown: false,
       });
@@ -200,7 +200,7 @@ export const IssuersScreen: React.FC<
     );
   }
 
-  if (controller.errorMessageType) {
+  if (controller.errorMessageType && controller.isNonGenericError) {
     return (
       <Error
         testID={`${controller.errorMessageType}Error`}
