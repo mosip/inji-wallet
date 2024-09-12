@@ -113,7 +113,9 @@ export const IntroSlidersScreen: React.FC<RootRouteProps> = props => {
       <View {...testIDProps('nextButton')}>
         <LinearGradient
           colors={Theme.Colors.gradientBtn}
-          style={Theme.Styles.introSliderButton}>
+          style={Theme.Styles.introSliderButton}
+          start={{ x: 0, y: 0 }}
+          end={{ x: 1, y: 1 }}>
           <Text
             testID="next"
             style={{paddingTop: 3}}
@@ -135,7 +137,9 @@ export const IntroSlidersScreen: React.FC<RootRouteProps> = props => {
       <View {...testIDProps(testId)}>
         <LinearGradient
           colors={Theme.Colors.gradientBtn}
-          style={Theme.Styles.introSliderButton}>
+          style={Theme.Styles.introSliderButton}
+          start={{ x: 0, y: 0 }}
+          end={{ x: 1, y: 1 }}>
           <Text
             style={{paddingTop: 3}}
             weight="semibold"

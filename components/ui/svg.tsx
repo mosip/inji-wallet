@@ -15,7 +15,7 @@ import WalletUnActivatedIcon from '../../assets/Wallet_UnActivated_Icon.svg';
 import WalletUnActivatedLargeIcon from '../../assets/Wallet_UnActivated_Large_Icon.svg';
 import InjiSmallLogo from '../../assets/Inji_Logo.svg';
 import LockIcon from '../../assets/Lock_Icon1.svg';
-import InjiLogo from '../../assets/Inji_Home_Logo.svg';
+import InjiLogo from '../../assets/inji_wallet_logo_ new_theme.svg';
 import DigitalIdentity from '../../assets/Digital_Identity_Icon1.svg';
 import ReceiveCard from '../../assets/Receive_Card.svg';
 import ReceivedCards from '../../assets/Received_Cards.svg';
@@ -26,6 +26,7 @@ import WarningLogo from '../../assets/Warning_Icon.svg';
 import OtpVerificationIcon from '../../assets/Otp_Verification_Icon.svg';
 import FlipCameraIcon from '../../assets/Flip_Camera_Icon.svg';
 import CameraCaptureIcon from '../../assets/Camera_Capture_Icon.svg';
+import LanguageIcon from '../../assets/language_icon.svg';
 import SuccessLogo from '../../assets/Success_Message_Icon1.svg';
 import ErrorLogo from '../../assets/Error_Message_Icon.svg';
 import SuccessHomeIcon from '../../assets/Success_home_iocn.svg';
@@ -37,7 +38,7 @@ import MagnifierZoom from '../../assets/Magnifier_Zoom.svg';
 import GoogleDriveIcon from '../../assets/Gdrive_Logo.svg';
 import GoogleDriveIconSmall from '../../assets/google-drive-28.svg';
 import ICloudLogo from '../../assets/Icloud-Logo.svg';
-import KebabIcon from '../../assets/Detailed_view_kebab_icon.svg';
+import KebabIcon from '../../assets/kebab_icon_new_theme.svg';
 import {displayType} from '../../machines/Issuers/IssuersMachine';
 import {IssuerProps} from '../openId4VCI/Issuer';
 import Backup from '../../assets/Backup.svg';
@@ -57,11 +58,15 @@ import CloudUploadDoneIcon from '../../assets/Cloud_Upload_Done_Icon.svg';
 export class SvgImage {
   static MosipLogo(props: LogoProps) {
     const {width, height} = props;
-    return <Logo width={width} height={height} />;
+    return <Logo 
+    color1={Theme.Colors.linearGradientStart}
+    color2={Theme.Colors.linearGradientEnd}
+    width={width} height={height} />;
   }
 
   static kebabIcon(testId) {
-    return <KebabIcon {...testIDProps(testId)} />;
+    return <KebabIcon
+    {...testIDProps(testId)} />;
   }
 
   static walletActivatedIcon() {
@@ -229,7 +234,10 @@ export class SvgImage {
   }
 
   static InjiSmallLogo() {
-    return <InjiSmallLogo {...testIDProps('injiSmallLogo')} />;
+    return <InjiSmallLogo 
+    color1={Theme.Colors.linearGradientStart}
+    color2={Theme.Colors.linearGradientEnd} 
+    {...testIDProps('injiSmallLogo')} />;
   }
 
   static ProgressIcon() {
@@ -390,25 +398,40 @@ export class SvgImage {
   }
 
   static ErrorLogo() {
-    return <ErrorLogo {...testIDProps('ErrorLogo')} />;
+    return <ErrorLogo 
+    color1={Theme.Colors.linearGradientStart}
+    color2={Theme.Colors.linearGradientEnd} 
+    {...testIDProps('ErrorLogo')} />;
   }
 
   static PermissionDenied() {
-    return <PermissionDenied {...testIDProps('permissionDeniedImage')} />;
+    return <PermissionDenied 
+    color1={Theme.Colors.linearGradientStart}
+    color2={Theme.Colors.linearGradientEnd}
+    {...testIDProps('permissionDeniedImage')} />;
   }
 
   static CloudUploadDoneIcon() {
-    return <CloudUploadDoneIcon {...testIDProps('cloudUploadDoneIcon')} />;
+    return <CloudUploadDoneIcon 
+    color1={Theme.Colors.linearGradientStart}
+    color2={Theme.Colors.linearGradientEnd}
+    {...testIDProps('cloudUploadDoneIcon')} />;
   }
 
   static NoInternetConnection() {
     return (
-      <NoInternetConnection {...testIDProps('noInternetConnectionImage')} />
+      <NoInternetConnection 
+      color1={Theme.Colors.linearGradientStart}
+      color2={Theme.Colors.linearGradientEnd}
+      {...testIDProps('noInternetConnectionImage')} />
     );
   }
 
   static SomethingWentWrong() {
-    return <SomethingWentWrong {...testIDProps('somethingWentWrongImage')} />;
+    return <SomethingWentWrong 
+    color1={Theme.Colors.linearGradientStart}
+    color2={Theme.Colors.linearGradientEnd}
+    {...testIDProps('somethingWentWrongImage')} />;
   }
 
   static ErrorOccurred() {
@@ -432,7 +455,8 @@ export class SvgImage {
   static info() {
     return (
       <Info
-        color1={Theme.Colors.tooltipIcon}
+       color1={Theme.Colors.linearGradientStart}
+        color2={Theme.Colors.linearGradientEnd}
         width={16}
         height={16}
         {...testIDProps('infoIcon')}
