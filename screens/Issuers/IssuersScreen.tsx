@@ -49,7 +49,7 @@ export const IssuersScreen: React.FC<
   );
 
   useLayoutEffect(() => {
-    if (controller.loadingReason || controller.errorMessageType) {
+    if (controller.loadingReason || controller.isNonGenericError) {
       props.navigation.setOptions({
         headerShown: false,
       });
@@ -199,7 +199,7 @@ export const IssuersScreen: React.FC<
     );
   }
 
-  if (controller.errorMessageType) {
+  if (controller.errorMessageType && controller.isNonGenericError) {
     return (
       <Error
         testID={`${controller.errorMessageType}Error`}
@@ -252,12 +252,14 @@ export const IssuersScreen: React.FC<
               onLayout={() => filterIssuers('')}
             />
             {clearSearchIcon && (
-              <Pressable onPress={clearSearchText}>
+              <Pressable
+                onPress={clearSearchText}
+                style={Theme.SearchBarStyles.clearSearch}>
                 <Icon
                   testID="clearingIssuerSearchIcon"
                   name="circle-with-cross"
                   type="entypo"
-                  size={15}
+                  size={18}
                   color={Theme.Colors.DetailsLabel}
                 />
               </Pressable>

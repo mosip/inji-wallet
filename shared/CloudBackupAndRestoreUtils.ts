@@ -206,7 +206,7 @@ class Cloud {
 
         const userIdentifier = await RNSecureKeystoreModule.getData(
           'userIdentifier',
-        )[0];
+        )[1];
         const userToken = JSON.parse(userIdentifier + '');
         const user = userToken.user;
         const email = userToken.email;

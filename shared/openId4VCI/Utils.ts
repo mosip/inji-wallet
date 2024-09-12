@@ -398,6 +398,7 @@ async function getJWKRSA(publicKey): Promise<any> {
   return publicKeyJWKString.toJSON();
 }
 async function getJWKECR1(publicKey): Promise<any> {
+  if (isIOS()) return JSON.parse(publicKey);
   const publicKeyJWKString = await jose.JWK.asKey(publicKey, 'pem');
   return publicKeyJWKString.toJSON();
 }
@@ -427,10 +428,10 @@ export async function hasKeyPair(keyType: any): Promise<boolean> {
 
 export function selectCredentialRequestKey(keyTypes: string[]) {
   const availableKeys = [
-    KeyTypes.RS256,
-    KeyTypes.ES256K,
     KeyTypes.ES256,
+    KeyTypes.RS256,
     KeyTypes.ED25519,
+    KeyTypes.ES256K,
   ];
   for (const key of availableKeys) {
     if (keyTypes.includes(key)) return key;
