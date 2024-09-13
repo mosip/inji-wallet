@@ -83,8 +83,8 @@ public class EsignetLoginPage extends BasePage {
     @iOSXCUITFindBy(xpath ="//XCUIElementTypeButton[@name=\"Cancel\"]")
     private WebElement CloseTab;
 
-    @AndroidFindBy(accessibility = "credentialTypeHeading-MOSIPVerifiableCredential")
-    @iOSXCUITFindBy(accessibility = "credentialTypeHeading-MOSIPVerifiableCredential")
+    @AndroidFindBy(accessibility = "credentialTypeHeading-MosipVerifiableCredential")
+    @iOSXCUITFindBy(accessibility = "credentialTypeHeading-MosipVerifiableCredential")
     private WebElement credentialTypeHeadingMOSIPVerifiableCredential;
 
 
