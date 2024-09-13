@@ -16,10 +16,10 @@ import {MIMOTO_BASE_URL} from '../../../shared/constants';
 import {VCItemDetailsProps} from '../Views/VCDetailView';
 import {
   getMatchingCredentialIssuerMetadata,
-  getSelectedCredentialTypeDetails,
   iterateMsoMdocFor,
 } from '../../../shared/openId4VCI/Utils';
 import {parseJSON} from '../../../shared/Utils';
+import {VCItemContentProps} from '../Views/VCCardViewContent';
 
 export const CARD_VIEW_DEFAULT_FIELDS = ['fullName'];
 export const DETAIL_VIEW_DEFAULT_FIELDS = [
@@ -37,6 +37,7 @@ export const DETAIL_VIEW_ADD_ON_FIELDS = [
   'status',
   'credentialRegistry',
   'idType',
+  'issuing_country',
 ];
 
 export const DETAIL_VIEW_BOTTOM_SECTION_FIELDS = [
@@ -264,9 +265,8 @@ export const getMosipLogo = () => {
  */
 export const getIdType = (
   wellknown: CredentialTypes | IssuerWellknownResponse,
-  idType?: string[],
   credentialConfigurationId: string | undefined = undefined,
-) => {
+): string => {
   if (wellknown && wellknown?.display) {
     console.log('getIdType if case');
 
@@ -274,27 +274,37 @@ export const getIdType = (
       return {language: displayProps.locale, value: displayProps.name};
     });
     return getLocalizedField(idTypeObj);
-  } else if (
-    wellknown &&
-    Object.keys(wellknown).length > 0 &&
-    idType !== undefined
-  ) {
+  } else if (wellknown && Object.keys(wellknown).length > 0) {
     let supportedCredentialsWellknown;
     wellknown = parseJSON(wellknown) as unknown as Object[];
-    
+
     if (!!!wellknown['credential_configurations_supported']) {
       return i18n.t('VcDetails:nationalCard');
     }
     console.log('getIdType else if case');
-    //TODO: Get supported credentials wellknown based on credentialConfigurationId rather than idType
-    if (credentialConfigurationId) {
-      supportedCredentialsWellknown = getMatchingCredentialIssuerMetadata(wellknown,credentialConfigurationId)
-    } else {
-      supportedCredentialsWellknown = getSelectedCredentialTypeDetails(
-        wellknown,
-        idType,
+    try {
+      if (!!credentialConfigurationId) {
+        console.log('credentialConfigurationId avl');
+        supportedCredentialsWellknown = getMatchingCredentialIssuerMetadata(
+          wellknown,
+          credentialConfigurationId,
+        );
+      } else {
+        console.error('credentialConfigurationId not available for fetching the ID type');
+        throw new Error(
+          `invalid credential credentialConfigurationId - ${credentialConfigurationId} passed`,
+        );
+      }
+    } catch (error) {
+      console.error(
+        `error occurred while getting supported credential's ${credentialConfigurationId} wellknown`,
       );
+      return i18n.t('VcDetails:nationalCard');
     }
+    console.log(
+      'supportedCredentialsWellknown ',
+      supportedCredentialsWellknown,
+    );
     if (Object.keys(supportedCredentialsWellknown).length === 0) {
       return i18n.t('VcDetails:nationalCard');
     }
@@ -305,18 +315,7 @@ export const getIdType = (
   }
 };
 
-export const getCredentialTypes = (
-  credential: Credential | VerifiableCredential,
-): string[] => {
-  return (credential?.credentialTypes as string[]) ?? ['VerifiableCredential'];
-};
-
-export function DisplayName(
-  props: VCItemContentProps,
-):
-  | string
-  | Object
-  | import('/Users/kiruthikajeyashankar/MyWorkspace/Projects/MOSIP/tw-mosip/inji/machines/VerifiableCredential/VCMetaMachine/vc').LocalizedField[] {
+export function DisplayName(props: VCItemContentProps): string | Object {
   console.log('display name ', JSON.stringify(props.credential, null, 2));
   console.log(
     'props.verifiableCredentialData.format ',

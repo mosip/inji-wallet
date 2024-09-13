@@ -94,7 +94,7 @@ export const IssuersMachine = model.createMachine(
         invoke: {
           src: 'downloadIssuerWellknown',
           onDone: {
-            actions: ['updateIssuerFromWellknown'],
+            actions: ['updateIssuerFromWellknown','updateSelectedIssuerWellknownResponse'],
             target: 'downloadCredentialTypes',
           },
           onError: {

@@ -1,7 +1,6 @@
 import jwtDecode from 'jwt-decode';
 import jose from 'node-jose';
 import {isIOS} from '../constants';
-import pem2jwk from 'simple-pem2jwk';
 import {displayType, issuerType} from '../../machines/Issuers/IssuersMachine';
 import getAllConfigurations, {CACHED_API} from '../api';
 import base64url from 'base64url';
@@ -17,7 +16,6 @@ import {
   BOTTOM_SECTION_FIELDS_WITH_DETAILED_ADDRESS_FIELDS,
   DETAIL_VIEW_ADD_ON_FIELDS,
   getIdType,
-  getCredentialTypes,
 } from '../../components/VC/common/VCUtils';
 import {getVerifiableCredential} from '../../machines/VerifiableCredential/VCItemMachine/VCItemSelectors';
 import {vcVerificationBannerDetails} from '../../components/BannerNotificationContainer';
@@ -25,6 +23,10 @@ import {getErrorEventData, sendErrorEvent} from '../telemetry/TelemetryUtils';
 import {TelemetryConstants} from '../telemetry/TelemetryConstants';
 import {NativeModules} from 'react-native';
 import {KeyTypes} from '../cryptoutil/KeyTypes';
+import {VCFormat} from '../VCFormat';
+import {UnsupportedVcFormat} from '../error/UnsupportedVCFormat';
+import {VCMetadata} from '../VCMetadata';
+
 export const Protocols = {
   OpenId4VCI: 'OpenId4VCI',
   OTP: 'OTP',
@@ -38,14 +40,14 @@ export const Issuers = {
 //
 export function getVcVerificationDetails(
   statusType,
-  vcMetadata,
+  vcMetadata: VCMetadata,
   verifiableCredential,
   wellknown: Object,
 ): vcVerificationBannerDetails {
   //TODO: get id type from configId rather than credential types
   const idType = getIdType(
     wellknown,
-    getCredentialTypes(getVerifiableCredential(verifiableCredential)),
+    getVerifiableCredential(verifiableCredential).credentialConfigurationId,
   );
   return {
     statusType: statusType,
@@ -115,7 +117,6 @@ export const updateCredentialInformation = (
       ...credential,
       wellKnown: context.selectedIssuer['.well-known'],
       credentialConfigurationId: context.selectedCredentialType.id,
-      credentialTypes: credential.credential.type ?? ['VerifiableCredential'],
       issuerLogo: getDisplayObjectForCurrentLanguage(
         context.selectedIssuer.display,
       )?.logo,
@@ -163,75 +164,56 @@ export const constructAuthorizationConfiguration = (
   };
 };
 
-export const getSelectedCredentialTypeDetails = (
-  wellknown: any,
-  vcCredentialTypes: Object[],
-): Object => {
-  console.log(
-    'getSelectedCredentialTypeDetails wellknown ',
-    JSON.stringify(wellknown, null, 2),
-  );
-  console.log(
-    'getSelectedCredentialTypeDetails vcCredentialTypes',
-    JSON.stringify(vcCredentialTypes, null, 2),
-  );
-  for (let credential in wellknown.credential_configurations_supported) {
-    const credentialDetails =
-      wellknown.credential_configurations_supported[credential];
-    //TODO: What is t
-    if (
-      JSON.stringify(credentialDetails.credential_definition?.type) ===
-      JSON.stringify(vcCredentialTypes)
-    ) {
-      return credentialDetails;
-    }
-  }
-  console.error(
-    'Selected credential type is not available in wellknown config supported credentials list',
-  );
-  sendErrorEvent(
-    getErrorEventData(
-      TelemetryConstants.FlowType.wellknownConfig,
-      TelemetryConstants.ErrorId.mismatch,
-      TelemetryConstants.ErrorMessage.wellknownConfigMismatch,
-    ),
-  );
-  return {};
-};
-
 export const getCredentialIssuersWellKnownConfig = async (
   issuer: string | undefined,
-  vcCredentialTypes: Object[] | undefined,
   defaultFields: string[],
-  credentialConfigurationId?: string | undefined,
+  credentialConfigurationId: string,
+  format: string,
 ) => {
   let fields: string[] = defaultFields;
   let credentialDetails: any;
   console.log('getCredentialIssuersWellKnownConfig ', issuer);
   const response = await CACHED_API.fetchIssuerWellknownConfig(issuer!);
-  if (response) {
-    if (credentialConfigurationId) {
+  try {
+    if (response) {
       credentialDetails = getMatchingCredentialIssuerMetadata(
         response,
         credentialConfigurationId,
       );
-    } else {
-      console.log('no credentialConfigurationId is there');
-
-      credentialDetails = getSelectedCredentialTypeDetails(
-        response,
-        vcCredentialTypes!,
-      );
+      if (Object.keys(credentialDetails).includes('order')) {
+        fields = credentialDetails.order;
+      } else {
+        console.log('no order is there');
+        if (format === VCFormat.mso_mdoc) {
+          fields = []
+          Object.keys(credentialDetails.claims).forEach(namespace => {
+            Object.keys(credentialDetails.claims[namespace]).forEach(claim => {
+              fields.concat(`${namespace}~${claim}`);
+            });
+          });
+        } else if (format === VCFormat.ldp_vc) {
+          fields = Object.keys(
+            credentialDetails.credential_definition.credentialSubject,
+          );
+        } else {
+          console.error(`Unsupported credential format - ${format} found`);
+          throw new UnsupportedVcFormat(format);
+        }
+      }
     }
-    if (Object.keys(credentialDetails).includes('order')) {
-      fields = credentialDetails.order;
-    } else {
-      console.log('no order is there');
-      fields = Object.keys(
-        credentialDetails.credential_definition.credentialSubject,
-      );
-    }
+  } catch (error) {
+    console.error(
+      `Error occurred while parsing well-known response of credential type - ${credentialConfigurationId} so returning default fields only. Error is `,
+      error.toString(),
+    );
+    return {
+      wellknown: credentialDetails,
+      fields: fields,
+    };
   }
+  console.warn(
+    'Well-known response is not available for this credential so returning default fields only.',
+  );
   return {
     wellknown: credentialDetails,
     fields: fields,
@@ -240,15 +222,15 @@ export const getCredentialIssuersWellKnownConfig = async (
 
 export const getDetailedViewFields = async (
   issuer: string,
-  vcCredentialTypes: Object[],
   credentialConfigurationId: string,
   defaultFields: string[],
+  format: string,
 ) => {
   let response = await getCredentialIssuersWellKnownConfig(
     issuer,
-    vcCredentialTypes,
     defaultFields,
     credentialConfigurationId,
+    format,
   );
 
   let updatedFieldsList = response.fields.concat(DETAIL_VIEW_ADD_ON_FIELDS);
@@ -479,5 +461,7 @@ export function getMatchingCredentialIssuerMetadata(
       TelemetryConstants.ErrorMessage.wellknownConfigMismatch,
     ),
   );
-  return {};
+  throw new Error(
+    `Selected credential type - ${credentialConfigurationId} is not available in wellknown config supported credentials list`,
+  );
 }

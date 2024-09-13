@@ -148,6 +148,7 @@ export interface Typegen0 {
       | 'storeVerifiableCredentialData'
       | 'storeVerifiableCredentialMeta'
       | 'updateIssuerFromWellknown'
+      | 'updateSelectedIssuerWellknownResponse'
       | 'updateVerificationErrorMessage';
     delays: never;
     guards:
@@ -258,6 +259,7 @@ export interface Typegen0 {
       | 'done.invoke.issuersMachine.verifyingCredential:invocation[0]'
       | 'error.platform.issuersMachine.verifyingCredential:invocation[0]';
     updateIssuerFromWellknown: 'done.invoke.issuersMachine.downloadIssuerWellknown:invocation[0]';
+    updateSelectedIssuerWellknownResponse: 'done.invoke.issuersMachine.downloadIssuerWellknown:invocation[0]';
     updateVerificationErrorMessage: 'error.platform.issuersMachine.verifyingCredential:invocation[0]';
   };
   eventsCausingDelays: {};

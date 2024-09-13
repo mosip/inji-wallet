@@ -27,8 +27,9 @@ export const ReceiveVcScreen: React.FC = () => {
   useEffect(() => {
     getDetailedViewFields(
       verifiableCredentialData?.issuer,
-      verifiableCredentialData?.credentialTypes,
+      verifiableCredentialData.credentialConfigurationId,
       DETAIL_VIEW_DEFAULT_FIELDS,
+      verifiableCredentialData.vcMetadata.format
     ).then(response => {
       setWellknown(response.wellknown);
       setFields(response.fields);

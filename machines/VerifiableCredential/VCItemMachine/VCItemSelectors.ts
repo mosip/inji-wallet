@@ -56,7 +56,6 @@ export function selectVerifiableCredentialData(
     wellKnown: state.context.verifiableCredential?.wellKnown,
     credentialConfigurationId:
       state.context.verifiableCredential?.credentialConfigurationId,
-    credentialTypes: state.context.verifiableCredential?.credentialTypes,
     issuer: vcMetadata.issuer,
   };
 }

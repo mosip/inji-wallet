@@ -6,7 +6,6 @@ import {
 } from '../machines/VerifiableCredential/VCMetaMachine/vc';
 import {CredentialIdForMsoMdoc, Protocols} from './openId4VCI/Utils';
 import {getMosipIdentifier} from './commonUtil';
-import {format} from 'date-fns';
 
 const VC_KEY_PREFIX = 'VC';
 const VC_ITEM_STORE_KEY_REGEX = '^VC_[a-zA-Z0-9_-]+$';

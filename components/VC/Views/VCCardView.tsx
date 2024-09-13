@@ -36,15 +36,15 @@ export const VCCardView: React.FC<VCItemProps> = props => {
   const [wellknown, setWellknown] = useState(null);
 
   useEffect(() => {
-    const {issuer, wellKnown, credentialTypes, credentialConfigurationId} =
+    const {issuer, wellKnown, credentialConfigurationId, vcMetadata: {format}} =
       verifiableCredentialData;
     console.log('issuer ', issuer);
     if (wellKnown) {
       getCredentialIssuersWellKnownConfig(
         issuer,
-        credentialTypes,
         CARD_VIEW_DEFAULT_FIELDS,
         credentialConfigurationId,
+        format
       )
         .then(response => {
           setWellknown(response.wellknown);
