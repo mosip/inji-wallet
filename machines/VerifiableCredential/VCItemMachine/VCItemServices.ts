@@ -100,10 +100,6 @@ export const VCItemServices = model => {
       return response;
     },
     fetchIssuerWellknown: async context => {
-      console.log(
-        'VCItemServices fetchIssuerWellknown ',
-        context.vcMetadata.issuer,
-      );
       const wellknownResponse = await CACHED_API.fetchIssuerWellknownConfig(
         context.vcMetadata.issuer,
         true,

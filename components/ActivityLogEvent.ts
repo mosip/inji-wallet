@@ -60,8 +60,6 @@ export class ActivityLog {
 }
 
 export function getActionText(activity: ActivityLog, t, wellknown: Object) {
-  console.log('getActionText ', JSON.stringify(activity, null, 2));
-  console.log('getActionText ', JSON.stringify(wellknown, null, 2));
   if (!!activity.credentialConfigurationId) {
     const cardType = getIdType(
       wellknown,

@@ -128,7 +128,6 @@ export const getVCMetadata = (context: object, keyType: string) => {
 const getDisplayId = (
   verifiableCredential: VerifiableCredential | Credential,
 ) => {
-  console.log('getDisplayId ', JSON.stringify(verifiableCredential, null, 2));
   if (verifiableCredential?.credential) {
     if (verifiableCredential.credential?.credentialSubject) {
       return (

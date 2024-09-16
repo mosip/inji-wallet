@@ -405,7 +405,6 @@ export const appMachine = model.createMachine(
     services: {
       isQrLoginByDeepLink: () => async () => {
         const data = await QrLoginIntent.isQrLoginByDeepLink();
-        //console.log('DeepLink: ', data);
         return data;
       },
       resetQRLoginDeepLinkData: () => async () => {

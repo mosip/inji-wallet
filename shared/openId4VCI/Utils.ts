@@ -65,9 +65,7 @@ export const isActivationNeeded = (issuer: string) => {
 export const Issuers_Key_Ref = 'OpenId4VCI_KeyPair';
 
 export const getIdentifier = (context, credential: VerifiableCredential) => {
-  //TODO: Format specific
   const credentialIdentifier = credential.credential.id;
-  console.log('credentialIdentifier ', credentialIdentifier);
   if (credentialIdentifier === undefined) {
     return (
       context.selectedIssuer.credential_issuer +
@@ -172,7 +170,6 @@ export const getCredentialIssuersWellKnownConfig = async (
 ) => {
   let fields: string[] = defaultFields;
   let matchingWellknownDetails: any;
-  console.log('getCredentialIssuersWellKnownConfig ', issuer);
   const wellknownResponse = await CACHED_API.fetchIssuerWellknownConfig(issuer!);
   try {
     if (wellknownResponse) {
@@ -183,7 +180,6 @@ export const getCredentialIssuersWellKnownConfig = async (
       if (Object.keys(matchingWellknownDetails).includes('order')) {
         fields = matchingWellknownDetails.order;
       } else {
-        console.log('no order is there');
         if (format === VCFormat.mso_mdoc) {
           fields = []
           Object.keys(matchingWellknownDetails.claims).forEach(namespace => {
@@ -277,38 +273,10 @@ export enum ErrorMessage {
 }
 
 export function CredentialIdForMsoMdoc(credential: VerifiableCredential) {
-  console.log(
-    "JSON.stringify(CredentialIdForMsoMdoc's credential) ",
-    JSON.stringify(credential, null, 2),
-  );
   return credential.credential['issuerSigned']['nameSpaces'][
     'org.iso.18013.5.1'
   ].find(element => element.elementIdentifier === 'document_number')
     .elementValue;
-}
-
-export function iterateMsoMdocFor(
-  credential,
-  namespace: string,
-  element: 'elementIdentifier' | 'elementValue',
-  fieldName: string,
-) {
-  console.log(
-    'iterateMsoMdocFor credential ',
-    JSON.stringify(credential, null, 2),
-  );
-  const foundItem = credential['issuerSigned']['nameSpaces'][namespace].find(
-    element => {
-      console.log(
-        'element inside find bloack ',
-        JSON.stringify(element, null, 2),
-      );
-
-      return element.elementIdentifier === fieldName;
-    },
-  );
-  console.log('finded ', foundItem);
-  return foundItem[element];
 }
 
 export async function constructProofJWT(
