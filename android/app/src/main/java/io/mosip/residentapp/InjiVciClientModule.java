@@ -42,11 +42,11 @@ public class InjiVciClientModule extends ReactContextBaseJavaModule {
     public void requestCredential(ReadableMap issuerMetaData, String jwtProofValue, String accessToken, Promise promise) {
         try {
             CredentialFormat credentialFormat;
-            IssuerMetaData issuerMetaData1 ;
+            IssuerMetaData constructedIssuerMetadata ;
             switch (issuerMetaData.getString("credentialFormat")) {
                 case "ldp_vc":
                     credentialFormat = CredentialFormat.LDP_VC;
-                    issuerMetaData1 =  new IssuerMetaData(
+                    constructedIssuerMetadata =  new IssuerMetaData(
                             issuerMetaData.getString("credentialAudience"),
                             issuerMetaData.getString("credentialEndpoint"),
                             issuerMetaData.getInt("downloadTimeoutInMilliSeconds"),
@@ -55,7 +55,7 @@ public class InjiVciClientModule extends ReactContextBaseJavaModule {
                     break;
                 case "mso_mdoc":
                     credentialFormat = CredentialFormat.MSO_MDOC;
-                    issuerMetaData1 =  new IssuerMetaData(
+                    constructedIssuerMetadata =  new IssuerMetaData(
                             issuerMetaData.getString("credentialAudience"),
                             issuerMetaData.getString("credentialEndpoint"),
                             issuerMetaData.getInt("downloadTimeoutInMilliSeconds"),
@@ -68,7 +68,7 @@ public class InjiVciClientModule extends ReactContextBaseJavaModule {
                     throw new IllegalStateException("Unexpected value: " + issuerMetaData.getString("credentialFormat"));
             }
 
-            CredentialResponse response = vciClient.requestCredential(issuerMetaData1, new JWTProof(jwtProofValue)
+            CredentialResponse response = vciClient.requestCredential(constructedIssuerMetadata, new JWTProof(jwtProofValue)
                     , accessToken);
             promise.resolve(response.toJsonString());
         } catch (Exception exception) {
