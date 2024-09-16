@@ -55,7 +55,7 @@ export class VCMetadata {
   static fromVC(vc: Partial<VC> | VCMetadata | any) {
     return new VCMetadata({
       idType: vc.idType,
-      format: vc.format || VCFormat.ldp_vc
+      format: vc.format || VCFormat.ldp_vc,
       requestId: vc.requestId,
       isPinned: vc.isPinned || false,
       id: vc.id,

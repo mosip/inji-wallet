@@ -44,7 +44,6 @@ export function getVcVerificationDetails(
   verifiableCredential,
   wellknown: Object,
 ): vcVerificationBannerDetails {
-  //TODO: get id type from configId rather than credential types
   const idType = getIdType(
     wellknown,
     getVerifiableCredential(verifiableCredential).credentialConfigurationId,
@@ -86,24 +85,6 @@ export const getIdentifier = (context, credential: VerifiableCredential) => {
       credId[credId.length - 1]
     );
   }
-};
-
-//TODO: Remove unused function - getCredentialRequestBody
-export const getCredentialRequestBody = async (
-  proofJWT: string,
-  credentialType: Array<string>,
-) => {
-  return {
-    format: 'ldp_vc',
-    credential_definition: {
-      '@context': ['https://www.w3.org/2018/credentials/v1'],
-      type: credentialType,
-    },
-    proof: {
-      proof_type: 'jwt',
-      jwt: proofJWT,
-    },
-  };
 };
 
 export const updateCredentialInformation = (

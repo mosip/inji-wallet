@@ -298,11 +298,6 @@ dependencies {
     }
     compileOnly project(':react-native-android-location-services-dialog-box')
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.0.0"
-//            {
-//        exclude group: "androidx.annotation", module: "annotation"
-//    }
-//    exclude group:'androidx.annotation',module: 'annotation', version: '1.6.0'
-//    TODO: Is it really needed to add this dependency here?
     implementation('androidx.annotation:annotation-jvm:1.6.0')
     debugImplementation("com.facebook.flipper:flipper:${FLIPPER_VERSION}")
     debugImplementation("com.facebook.flipper:flipper-network-plugin:${FLIPPER_VERSION}") {
