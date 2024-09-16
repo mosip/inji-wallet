@@ -6,6 +6,7 @@ import {
 } from '../machines/VerifiableCredential/VCMetaMachine/vc';
 import {CredentialIdForMsoMdoc, Protocols} from './openId4VCI/Utils';
 import {getMosipIdentifier} from './commonUtil';
+import { VCFormat } from './VCFormat';
 
 const VC_KEY_PREFIX = 'VC';
 const VC_ITEM_STORE_KEY_REGEX = '^VC_[a-zA-Z0-9_-]+$';
@@ -54,7 +55,7 @@ export class VCMetadata {
   static fromVC(vc: Partial<VC> | VCMetadata | any) {
     return new VCMetadata({
       idType: vc.idType,
-      format: vc.format || 'ldp_vc',
+      format: vc.format || VCFormat.ldp_vc
       requestId: vc.requestId,
       isPinned: vc.isPinned || false,
       id: vc.id,

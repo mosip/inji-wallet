@@ -21,6 +21,7 @@ import {
   getTextColor,
 } from '../common/VCUtils';
 import {ProfileIcon} from '../../ProfileIcon';
+import { VCFormat } from '../../../shared/VCFormat';
 
 const getProfileImage = (face: any) => {
   if (face) {
@@ -44,12 +45,12 @@ export const VCDetailView: React.FC<VCItemDetailsProps> = props => {
 
   const shouldShowHrLine = verifiableCredential => {
     let availableFieldNames: string[] = [];
-    if (props.verifiableCredentialData.vcMetadata.format === 'ldp_vc') {
+    if (props.verifiableCredentialData.vcMetadata.format === VCFormat.ldp_vc) {
       availableFieldNames = Object.keys(
         verifiableCredential?.credentialSubject,
       );
     } else if (
-      props.verifiableCredentialData.vcMetadata.format === 'mso_mdoc'
+      props.verifiableCredentialData.vcMetadata.format === VCFormat.mso_mdoc
     ) {
       const namespaces = verifiableCredential['issuerSigned']['nameSpaces'];
       Object.keys(namespaces).forEach(namespace => {

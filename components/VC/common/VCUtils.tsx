@@ -20,6 +20,7 @@ import {
 } from '../../../shared/openId4VCI/Utils';
 import {parseJSON} from '../../../shared/Utils';
 import {VCItemContentProps} from '../Views/VCCardViewContent';
+import { VCFormat } from '../../../shared/VCFormat';
 
 export const CARD_VIEW_DEFAULT_FIELDS = ['fullName'];
 export const DETAIL_VIEW_DEFAULT_FIELDS = [
@@ -75,13 +76,13 @@ export const getFieldValue = (
         getFullAddress(verifiableCredential?.credentialSubject),
       );
     default: {
-      if (format === 'ldp_vc') {
+      if (format === VCFormat.ldp_vc) {
         const fieldValue = verifiableCredential?.credentialSubject[field];
         if (Array.isArray(fieldValue) && typeof fieldValue[0] !== 'object') {
           return fieldValue.join(', ');
         }
         return getLocalizedField(fieldValue);
-      } else if (format === 'mso_mdoc') {
+      } else if (format === VCFormat.mso_mdoc) {
         const splitField = field.split('~');
         if (splitField.length > 1) {
           console.log('splitField ', splitField);
@@ -107,7 +108,7 @@ export const getFieldName = (
 ): string => {
   //field = org.iso.18013.5.1~family_name
   if (wellknown) {
-    if (format === 'ldp_vc') {
+    if (format === VCFormat.ldp_vc) {
       const credentialDefinition = wellknown.credential_definition;
       if (!credentialDefinition) {
         console.error(
@@ -122,7 +123,7 @@ export const getFieldName = (
         });
         return getLocalizedField(newFieldObj);
       }
-    } else if (format === 'mso_mdoc') {
+    } else if (format === VCFormat.mso_mdoc) {
       const splitField = field.split('~');
       if (splitField.length > 1) {
         console.log('splitField ', splitField);
@@ -320,7 +321,7 @@ export function DisplayName(props: VCItemContentProps): string | Object {
     'props.verifiableCredentialData.format ',
     props.verifiableCredentialData.format,
   );
-  if (props.verifiableCredentialData.format === 'mso_mdoc') {
+  if (props.verifiableCredentialData.format === VCFormat.mso_mdoc) {
     return props.credential['issuerSigned']['nameSpaces'][
       'org.iso.18013.5.1'
     ].find(element => element.elementIdentifier === 'given_name').elementValue;

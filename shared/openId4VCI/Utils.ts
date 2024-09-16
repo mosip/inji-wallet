@@ -431,10 +431,10 @@ export const constructIssuerMetaData = (
     downloadTimeoutInMilliSeconds: downloadTimeout,
     credentialFormat: selectedCredentialType.format,
   };
-  if (selectedCredentialType.format === 'ldp_vc') {
+  if (selectedCredentialType.format === VCFormat.ldp_vc) {
     issuerMeta['credentialType'] = selectedCredentialType?.credential_definition
       ?.type ?? ['VerifiableCredential'];
-  } else if (selectedCredentialType.format === 'mso_mdoc') {
+  } else if (selectedCredentialType.format === VCFormat.mso_mdoc) {
     issuerMeta['doctype'] = selectedCredentialType.doctype;
     issuerMeta['claims'] = selectedCredentialType.claims;
   }
