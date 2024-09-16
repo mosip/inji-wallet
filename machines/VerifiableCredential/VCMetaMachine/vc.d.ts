@@ -58,7 +58,6 @@ export interface Credential {
     verificationMethod: string;
   };
   type: string[];
-  credentialTypes: string[];
 }
 
 export interface VerifiableCredential {
@@ -66,7 +65,6 @@ export interface VerifiableCredential {
   credential: Credential;
   wellKnown: string;
   credentialConfigurationId: string;
-  credentialTypes: Object[];
 }
 
 export interface VerifiableCredentialData {
@@ -76,7 +74,6 @@ export interface VerifiableCredentialData {
   issuerLogo: logoType;
   wellKnown?: string;
   credentialConfigurationId: string;
-  credentialTypes?: Object[];
   issuer?: string;
 }
 
