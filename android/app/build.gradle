@@ -268,7 +268,7 @@ dependencies {
     implementation("io.mosip:pixelpass:0.2.1")
     implementation("io.mosip:secure-keystore:0.3.0-SNAPSHOT")
     implementation("io.mosip:tuvali:0.5.1")
-    implementation("io.mosip:inji-vci-client:0.3.3-SNAPSHOT")
+    implementation("io.mosip:inji-vci-client:0.2.0-SNAPSHOT")
 
 
     def isGifEnabled = (findProperty('expo.gif.enabled') ?: "") == "true";
