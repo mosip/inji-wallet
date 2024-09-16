@@ -114,7 +114,6 @@ export const getFieldName = (
   wellknown: any,
   format: string,
 ): string => {
-  //field = org.iso.18013.5.1~family_name
   if (wellknown) {
     if (format === VCFormat.ldp_vc) {
       const credentialDefinition = wellknown.credential_definition;
@@ -122,7 +121,6 @@ export const getFieldName = (
         console.error(
           'Credential definition is not available for the selected credential type',
         );
-        // return null
       }
       let fieldObj = credentialDefinition?.credentialSubject[field];
       if (fieldObj) {
