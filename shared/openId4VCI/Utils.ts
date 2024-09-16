@@ -171,29 +171,29 @@ export const getCredentialIssuersWellKnownConfig = async (
   format: string,
 ) => {
   let fields: string[] = defaultFields;
-  let credentialDetails: any;
+  let matchingWellknownDetails: any;
   console.log('getCredentialIssuersWellKnownConfig ', issuer);
-  const response = await CACHED_API.fetchIssuerWellknownConfig(issuer!);
+  const wellknownResponse = await CACHED_API.fetchIssuerWellknownConfig(issuer!);
   try {
-    if (response) {
-      credentialDetails = getMatchingCredentialIssuerMetadata(
-        response,
+    if (wellknownResponse) {
+      matchingWellknownDetails = getMatchingCredentialIssuerMetadata(
+        wellknownResponse,
         credentialConfigurationId,
       );
-      if (Object.keys(credentialDetails).includes('order')) {
-        fields = credentialDetails.order;
+      if (Object.keys(matchingWellknownDetails).includes('order')) {
+        fields = matchingWellknownDetails.order;
       } else {
         console.log('no order is there');
         if (format === VCFormat.mso_mdoc) {
           fields = []
-          Object.keys(credentialDetails.claims).forEach(namespace => {
-            Object.keys(credentialDetails.claims[namespace]).forEach(claim => {
+          Object.keys(matchingWellknownDetails.claims).forEach(namespace => {
+            Object.keys(matchingWellknownDetails.claims[namespace]).forEach(claim => {
               fields.concat(`${namespace}~${claim}`);
             });
           });
         } else if (format === VCFormat.ldp_vc) {
           fields = Object.keys(
-            credentialDetails.credential_definition.credentialSubject,
+            matchingWellknownDetails.credential_definition.credentialSubject,
           );
         } else {
           console.error(`Unsupported credential format - ${format} found`);
@@ -207,15 +207,13 @@ export const getCredentialIssuersWellKnownConfig = async (
       error.toString(),
     );
     return {
-      wellknown: credentialDetails,
+      matchingCredentialIssuerMetadata: matchingWellknownDetails,
       fields: fields,
     };
   }
-  console.warn(
-    'Well-known response is not available for this credential so returning default fields only.',
-  );
   return {
-    wellknown: credentialDetails,
+    matchingCredentialIssuerMetadata: matchingWellknownDetails,
+    wellknownResponse,
     fields: fields,
   };
 };
@@ -238,8 +236,9 @@ export const getDetailedViewFields = async (
   updatedFieldsList = removeBottomSectionFields(updatedFieldsList);
 
   return {
-    wellknown: response.wellknown,
+    matchingCredentialIssuerMetadata: response.matchingCredentialIssuerMetadata,
     fields: updatedFieldsList,
+    wellknownResponse: response.wellknownResponse
   };
 };
 

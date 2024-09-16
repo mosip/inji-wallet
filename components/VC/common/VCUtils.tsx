@@ -37,7 +37,6 @@ export const DETAIL_VIEW_ADD_ON_FIELDS = [
   'status',
   'credentialRegistry',
   'idType',
-  'issuing_country',
 ];
 
 export const DETAIL_VIEW_BOTTOM_SECTION_FIELDS = [

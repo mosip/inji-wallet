@@ -47,7 +47,7 @@ export const VCCardView: React.FC<VCItemProps> = props => {
         format
       )
         .then(response => {
-          setWellknown(response.wellknown);
+          setWellknown(response.matchingCredentialIssuerMetadata);
           setFields(response.fields);
         })
         .catch(error => {
