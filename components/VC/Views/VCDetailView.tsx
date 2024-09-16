@@ -11,7 +11,7 @@ import {Button, Column, Row, Text} from '../../ui';
 import {Theme} from '../../ui/styleUtils';
 import {QrCodeOverlay} from '../../QrCodeOverlay';
 import {SvgImage} from '../../ui/svg';
-import {isActivationNeeded, iterateMsoMdocFor} from '../../../shared/openId4VCI/Utils';
+import {isActivationNeeded} from '../../../shared/openId4VCI/Utils';
 import {
   BOTTOM_SECTION_FIELDS_WITH_DETAILED_ADDRESS_FIELDS,
   DETAIL_VIEW_BOTTOM_SECTION_FIELDS,
@@ -21,7 +21,6 @@ import {
   getTextColor,
 } from '../common/VCUtils';
 import {ProfileIcon} from '../../ProfileIcon';
-import {getLocalizedField} from "../../../i18n";
 
 const getProfileImage = (face: any) => {
   if (face) {
@@ -44,19 +43,21 @@ export const VCDetailView: React.FC<VCItemDetailsProps> = props => {
   const verifiableCredential = props.credential;
 
   const shouldShowHrLine = verifiableCredential => {
-    let availableFieldNames: string[] = {};
-    if(props.verifiableCredentialData.vcMetadata.format === "ldp_vc"){
+    let availableFieldNames: string[] = [];
+    if (props.verifiableCredentialData.vcMetadata.format === 'ldp_vc') {
       availableFieldNames = Object.keys(
-          verifiableCredential?.credentialSubject,
+        verifiableCredential?.credentialSubject,
       );
-    } else if(props.verifiableCredentialData.vcMetadata.format === "mso_mdoc"){
-      //TODO: get all keys
-      availableFieldNames = Object.keys(
-          {}
-      );
+    } else if (
+      props.verifiableCredentialData.vcMetadata.format === 'mso_mdoc'
+    ) {
+      const namespaces = verifiableCredential['issuerSigned']['nameSpaces'];
+      Object.keys(namespaces).forEach(namespace => {
+        (namespaces[namespace] as Array<Object>).forEach(element => {
+          availableFieldNames.push(`${namespace}~${element['elementIdentifier']}`);
+        });
+      });
     }
-
-
     for (const fieldName of availableFieldNames) {
       if (
         BOTTOM_SECTION_FIELDS_WITH_DETAILED_ADDRESS_FIELDS.includes(fieldName)
