@@ -3,6 +3,7 @@ export const TelemetryConstants = {
     vcDownload: 'VC Download',
     faceModelInit: 'Face SDK initialize',
     qrLogin: 'QR Login',
+    vpSharing: 'VP Sharing',
     senderVcShare: 'Sender VC Share',
     receiverVcShare: 'Receiver VC Share',
     vcActivation: 'VC Activation',

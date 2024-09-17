@@ -26,26 +26,39 @@ import {useCopilot} from 'react-native-copilot';
 import {useTranslation} from 'react-i18next';
 
 export const VCCardViewContent: React.FC<VCItemContentProps> = props => {
-  const isVCSelectable = props.selectable && (
-    <CheckBox
-      checked={props.selected}
-      checkedIcon={
-        <Icon name="check-circle" type="material" color={Theme.Colors.Icon} />
-      }
-      uncheckedIcon={
-        <Icon
-          name="radio-button-unchecked"
-          color={Theme.Colors.uncheckedIcon}
-        />
-      }
-      onPress={() => props.onPress()}
-    />
-  );
+  const isVCSelectable =
+    props.selectable &&
+    (props.flow === VCItemContainerFlowType.OPENID4VP ? (
+      <CheckBox
+        checked={props.selected}
+        checkedIcon={SvgImage.selectedCheckBox()}
+        uncheckedIcon={
+          <Icon
+            name="check-box-outline-blank"
+            color={Theme.Colors.uncheckedIcon}
+          />
+        }
+        onPress={() => props.onPress()}
+      />
+    ) : (
+      <CheckBox
+        checked={props.selected}
+        checkedIcon={
+          <Icon name="check-circle" type="material" color={Theme.Colors.Icon} />
+        }
+        uncheckedIcon={
+          <Icon
+            name="radio-button-unchecked"
+            color={Theme.Colors.uncheckedIcon}
+          />
+        }
+        onPress={() => props.onPress()}
+      />
+    ));
   const issuerLogo = props.verifiableCredentialData.issuerLogo;
   const faceImage = props.verifiableCredentialData.face;
   const {start} = useCopilot();
   const {t} = useTranslation();
-
 
   return (
     <ImageBackground

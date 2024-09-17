@@ -1,5 +1,5 @@
 /* eslint-disable sonarjs/no-duplicate-string */
-import {EventFrom, send, StateFrom} from 'xstate';
+import {actions, EventFrom, send, StateFrom} from 'xstate';
 import {AppServices} from '../../../shared/GlobalContext';
 import {TelemetryConstants} from '../../../shared/telemetry/TelemetryConstants';
 import {
@@ -12,9 +12,12 @@ import {ScanActions} from './scanActions';
 import {ScanGuards} from './scanGuards';
 import {ScanModel} from './scanModel';
 import {ScanServices} from './scanServices';
+import {openId4VPMachine} from '../../openId4VP/openId4VPMachine';
+import {VCShareFlowType} from '../../../shared/Utils';
 
 const model = ScanModel;
 const QR_LOGIN_REF_ID = 'QrLogin';
+const OPENID4VP_REF_ID = 'OpenId4VP';
 export const ScanEvents = model.events;
 
 export const scanMachine =
@@ -305,7 +308,6 @@ export const scanMachine =
             'removeLoggers',
             'registerLoggers',
             'clearUri',
-            'setChildRef',
             'resetFaceCaptureBannerStatus',
           ],
           on: {
@@ -318,7 +320,21 @@ export const scanMachine =
               {
                 target: 'showQrLogin',
                 cond: 'isQrLogin',
-                actions: ['sendVcSharingStartEvent', 'setLinkCode'],
+                actions: [
+                  'setQrLoginRef',
+                  'sendVcSharingStartEvent',
+                  'setLinkCode',
+                ],
+              },
+              {
+                target: 'startVPSharing',
+                cond: 'isOnlineSharing',
+                actions: [
+                  () => console.log('online sharing cond met::'),
+                  'setOpenId4VPRef',
+                  model.assign({flowType: VCShareFlowType.OPENID4VP}),
+                  'setLinkCode',
+                ],
               },
               {
                 target: 'decodeQuickShareData',
@@ -329,6 +345,25 @@ export const scanMachine =
                 target: 'invalid',
               },
             ],
+          },
+        },
+        startVPSharing: {
+          entry: [
+            'sendVPScanData',
+            () =>
+              sendStartEvent(
+                getStartEventData(TelemetryConstants.FlowType.vpSharing),
+              ),
+          ],
+          invoke: {
+            id: 'OpenId4VP',
+            src: openId4VPMachine,
+            onDone: {},
+          },
+          on: {
+            DISMISS: {
+              target: 'checkStorage',
+            },
           },
         },
         decodeQuickShareData: {
@@ -757,7 +792,7 @@ export const scanMachine =
       },
     },
     {
-      actions: ScanActions(model, QR_LOGIN_REF_ID),
+      actions: ScanActions(model, QR_LOGIN_REF_ID, OPENID4VP_REF_ID),
 
       services: ScanServices(model),
 

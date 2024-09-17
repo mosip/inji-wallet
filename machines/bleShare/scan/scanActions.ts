@@ -31,15 +31,31 @@ import {NativeModules} from 'react-native';
 import {getCredentialTypes} from '../../../components/VC/common/VCUtils';
 
 import {wallet} from '../../../shared/tuvali';
+import {createOpenId4VPMachine} from '../../openId4VP/openId4VPMachine';
 
-export const ScanActions = (model: any, QR_LOGIN_REF_ID: any) => {
+export const ScanActions = (
+  model: any,
+  QR_LOGIN_REF_ID: any,
+  OPENID4VP_REF_ID: any,
+) => {
   const {RNPixelpassModule} = NativeModules;
   return {
-    setChildRef: assign({
+    setQrLoginRef: assign({
       QrLoginRef: (context: any) => {
         const service = spawn(
           createQrLoginMachine(context.serviceRefs),
           QR_LOGIN_REF_ID,
+        );
+        service.subscribe(logState);
+        return service;
+      },
+    }),
+
+    setOpenId4VPRef: assign({
+      OpenId4VPRef: (context: any) => {
+        const service = spawn(
+          createOpenId4VPMachine(context.serviceRefs),
+          OPENID4VP_REF_ID,
         );
         service.subscribe(logState);
         return service;
@@ -82,6 +98,12 @@ export const ScanActions = (model: any, QR_LOGIN_REF_ID: any) => {
         linkCode: context.linkCode,
         flowType: context.flowType,
         selectedVc: context.selectedVc,
+      }),
+
+    sendVPScanData: context =>
+      context.OpenId4VPRef.send({
+        type: 'AUTHENTICATE',
+        authRequest: context.linkCode,
       }),
 
     openBluetoothSettings: () => {
@@ -227,8 +249,11 @@ export const ScanActions = (model: any, QR_LOGIN_REF_ID: any) => {
     ),
 
     setLinkCode: assign({
-      linkCode: (_, event) =>
-        new URL(event.params).searchParams.get('linkCode'),
+      linkCode: (context: any, event) => {
+        return context.flowType === VCShareFlowType.OPENID4VP
+          ? event.params
+          : new URL(event.params).searchParams.get('linkCode');
+      },
     }),
     setQuickShareData: assign({
       quickShareData: (_, event) =>

@@ -16,6 +16,7 @@ import {View, I18nManager} from 'react-native';
 import {Text} from './../../components/ui';
 import {BannerStatusType} from '../../components/BannerNotification';
 import {LIVENESS_CHECK} from '../../shared/constants';
+import {SendVPScreen} from './SendVPScreen';
 
 const ScanStack = createNativeStackNavigator();
 
@@ -113,6 +114,31 @@ export const ScanLayout: React.FC = () => {
             ),
           }}
         />
+        {controller.flowType === VCShareFlowType.OPENID4VP && (
+          <ScanStack.Screen
+            name={SCAN_ROUTES.SendVPScreen}
+            component={SendVPScreen}
+            options={{
+              title: t('SendVPScreen:requester'),
+              headerRight: () =>
+                !I18nManager.isRTL && (
+                  <Icon
+                    name="close"
+                    color={Theme.Colors.blackIcon}
+                    onPress={controller.CANCEL}
+                  />
+                ),
+              headerLeft: () =>
+                I18nManager.isRTL && (
+                  <Icon
+                    name="close"
+                    color={Theme.Colors.blackIcon}
+                    onPress={controller.CANCEL}
+                  />
+                ),
+            }}
+          />
+        )}
       </ScanStack.Navigator>
 
       <SharingStatusModal

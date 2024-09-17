@@ -269,6 +269,9 @@ export function useScanLayout() {
     ) {
       changeTabBarVisible('none');
       navigation.navigate(SCAN_ROUTES.SendVcScreen);
+    } else if (flowType === VCShareFlowType.OPENID4VP) {
+      changeTabBarVisible('none');
+      navigation.navigate(SCAN_ROUTES.SendVPScreen);
     } else if (isScanning) {
       changeTabBarVisible('flex');
       navigation.navigate(SCAN_ROUTES.ScanScreen);

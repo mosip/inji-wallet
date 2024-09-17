@@ -10,6 +10,7 @@ export const BOTTOM_TAB_ROUTES = {
 export const SCAN_ROUTES = {
   ScanScreen: 'ScanScreen' as keyof ScanStackParamList,
   SendVcScreen: 'SendVcScreen' as keyof ScanStackParamList,
+  SendVPScreen: 'SendVPScreen' as keyof ScanStackParamList,
 };
 
 export const REQUEST_ROUTES = {
@@ -21,6 +22,7 @@ export const REQUEST_ROUTES = {
 export type ScanStackParamList = {
   ScanScreen: undefined;
   SendVcScreen: undefined;
+  SendVPScreen: undefined;
 };
 
 export type RequestStackParamList = {

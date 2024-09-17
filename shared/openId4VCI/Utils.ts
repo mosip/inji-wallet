@@ -105,6 +105,7 @@ export const updateCredentialInformation = (
     identifier: getIdentifier(context, credential),
     generatedOn: new Date(),
     vcMetadata: context.vcMetadata || {},
+    scope: context.selectedCredentialType.scope,
   };
 };
 

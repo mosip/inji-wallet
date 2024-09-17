@@ -53,6 +53,7 @@ import ColoredInfo from '../../assets/Colored_Info.svg';
 import Info from '../../assets/Info.svg';
 import Search from '../../assets/Search.svg';
 import CloudUploadDoneIcon from '../../assets/Cloud_Upload_Done_Icon.svg';
+import SelectedCheckBox from '../../assets/Selected_Check_Box.svg';
 
 export class SvgImage {
   static MosipLogo(props: LogoProps) {
@@ -62,6 +63,10 @@ export class SvgImage {
 
   static kebabIcon(testId) {
     return <KebabIcon {...testIDProps(testId)} />;
+  }
+
+  static selectedCheckBox() {
+    return <SelectedCheckBox />;
   }
 
   static walletActivatedIcon() {

@@ -81,6 +81,7 @@ export interface CredentialWrapper {
   identifier: string;
   generatedOn: Date;
   vcMetadata: VCMetadata;
+  scope: String;
 }
 
 export interface CredentialTypes {

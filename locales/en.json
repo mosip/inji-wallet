@@ -777,6 +777,17 @@
       }
     }
   },
+  "SendVPScreen": {
+    "requester": "Requester",
+    "cardsSelected": "cards selected",
+    "cardSelected": "card selected",
+    "unCheck": "Uncheck",
+    "checkAll": "Check All",
+    "consentRequired": "Consent Required",
+    "consentMessage": "We require your consent to share your verifiable credentials. This will enable us to verify your identity and fulfil your service requests. Choose \"Yes, Proceed\" to consent or \"Decline\" if you do not wish to share.",
+    "confirmButton": "Yes, Proceed",
+    "cancelButton": "Decline"
+  },
   "VerifyIdentityOverlay": {
     "faceAuth": "Face Verification",
     "status": {
