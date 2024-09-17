@@ -96,6 +96,7 @@ export const EditableListItem: React.FC<EditableListItemProps> = props => {
               onPress={dismiss}
             />
             <Button
+              type='gradient'
               testID="save"
               fill
               title={t('save')}
