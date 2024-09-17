@@ -137,7 +137,9 @@ export const constructAuthorizationConfiguration = (
     serviceConfiguration: {
       authorizationEndpoint:
         selectedIssuer.authorization_servers[0] + '/authorize',
-      tokenEndpoint: "https://demos-injiweb.collab.mosip.net/v1/mimoto/get-token/Farmer",
+      tokenEndpoint:
+        'https://demos-injiweb.collab.mosip.net/v1/mimoto/get-token/' +
+        selectedIssuer.credential_issuer,
     },
   };
 };
