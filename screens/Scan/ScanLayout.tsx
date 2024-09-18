@@ -38,7 +38,8 @@ export const ScanLayout: React.FC = () => {
         isHintVisible={
           controller.isStayInProgress ||
           controller.isBleError ||
-          controller.isSendingVc
+          controller.isSendingVc ||
+          controller.isSendingVP
         }
         onRetry={controller.statusOverlay?.onRetry}
         showBanner={controller.isFaceIdentityVerified}
@@ -125,7 +126,7 @@ export const ScanLayout: React.FC = () => {
                   <Icon
                     name="close"
                     color={Theme.Colors.blackIcon}
-                    onPress={controller.CANCEL}
+                    onPress={controller.DISMISS}
                   />
                 ),
               headerLeft: () =>
@@ -133,7 +134,7 @@ export const ScanLayout: React.FC = () => {
                   <Icon
                     name="close"
                     color={Theme.Colors.blackIcon}
-                    onPress={controller.CANCEL}
+                    onPress={controller.DISMISS}
                   />
                 ),
             }}

@@ -140,11 +140,13 @@ export interface Typegen0 {
       | 'CLOSE_BANNER'
       | 'STORE_RESPONSE';
     resetFlowType:
+      | 'CANCEL'
       | 'DISCONNECT'
       | 'DISMISS'
       | 'DISMISS_QUICK_SHARE_BANNER'
       | 'GOTO_HISTORY'
       | 'RESET'
+      | 'RETRY'
       | 'SCREEN_BLUR'
       | 'xstate.init';
     resetSelectedVc:
@@ -215,8 +217,10 @@ export interface Typegen0 {
     checkLocationStatus: '' | 'APP_ACTIVE' | 'LOCATION_REQUEST';
     checkNearByDevicesPermission: 'APP_ACTIVE' | 'START_PERMISSION_CHECK';
     checkStorageAvailability:
+      | 'CANCEL'
       | 'DISMISS'
       | 'RESET'
+      | 'RETRY'
       | 'SCREEN_FOCUS'
       | 'SELECT_VC';
     disconnect: '' | 'DISMISS' | 'LOCATION_ENABLED' | 'RETRY' | 'SCREEN_BLUR';
@@ -291,6 +295,8 @@ export interface Typegen0 {
     | 'showQrLogin.storing'
     | 'startPermissionCheck'
     | 'startVPSharing'
+    | 'startVPSharing.inProgress'
+    | 'startVPSharing.timeout'
     | {
         checkBluetoothPermission?: 'checking' | 'enabled';
         checkBluetoothState?: 'checking' | 'enabled' | 'requesting';
@@ -320,6 +326,7 @@ export interface Typegen0 {
           | 'verifyingIdentity'
           | {sendingVc?: 'inProgress' | 'sent' | 'timeout'};
         showQrLogin?: 'idle' | 'navigatingToHistory' | 'storing';
+        startVPSharing?: 'inProgress' | 'timeout';
       };
   tags: never;
 }

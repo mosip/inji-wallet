@@ -56,6 +56,8 @@ const ScanEvents = {
   }),
   ALLOWED: () => ({}),
   DENIED: () => ({}),
+  IN_PROGRESS: () => ({}),
+  TIMEOUT: () => ({}),
 };
 
 export const ScanModel = createModel(

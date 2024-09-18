@@ -361,8 +361,40 @@ export const scanMachine =
             onDone: {},
           },
           on: {
+            IN_PROGRESS: {
+              target: '.inProgress',
+            },
+            TIMEOUT: {
+              target: '.timeout',
+            },
             DISMISS: {
+              actions: 'resetFlowType',
               target: 'checkStorage',
+            },
+          },
+          states: {
+            inProgress: {
+              on: {
+                CANCEL: {
+                  actions: 'resetFlowType',
+                  target: '#scan.checkStorage',
+                },
+              },
+            },
+            timeout: {
+              on: {
+                STAY_IN_PROGRESS: {
+                  target: 'inProgress',
+                },
+                CANCEL: {
+                  actions: 'resetFlowType',
+                  target: '#scan.checkStorage',
+                },
+                RETRY: {
+                  actions: 'resetFlowType',
+                  target: '#scan.checkStorage',
+                },
+              },
             },
           },
         },

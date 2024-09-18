@@ -55,7 +55,9 @@ export interface Typegen0 {
     updateFaceCaptureBannerStatus: 'FACE_VALID';
     updateShowFaceAuthConsent: 'STORE_RESPONSE';
   };
-  eventsCausingDelays: {};
+  eventsCausingDelays: {
+    SHARING_TIMEOUT: 'CONFIRM' | 'FACE_VALID';
+  };
   eventsCausingGuards: {
     isFlowTypeSimpleShare: 'CANCEL' | 'DISMISS';
     isShareWithSelfie: 'CONFIRM';

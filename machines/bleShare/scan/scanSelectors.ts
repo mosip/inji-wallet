@@ -73,6 +73,10 @@ export function selectIsSendingVc(state: State) {
   return state.matches('reviewing.sendingVc.inProgress');
 }
 
+export function selectIsSendingVP(state: State) {
+  return state.matches('startVPSharing.inProgress');
+}
+
 export function selectIsFaceIdentityVerified(state: State) {
   return (
     state.matches('reviewing.sendingVc.inProgress') &&
@@ -82,6 +86,10 @@ export function selectIsFaceIdentityVerified(state: State) {
 
 export function selectIsSendingVcTimeout(state: State) {
   return state.matches('reviewing.sendingVc.timeout');
+}
+
+export function selectIsSendingVPTimeout(state: State) {
+  return state.matches('startVPSharing.timeout');
 }
 
 export function selectIsSent(state: State) {

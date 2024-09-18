@@ -94,6 +94,6 @@ export const openId4VPActions = (model: any) => {
       },
     }),
 
-    forwardToParent: () => sendParent('DISMISS'),
+    forwardToParent: sendParent('DISMISS'),
   };
 };

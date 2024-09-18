@@ -24,6 +24,8 @@ import {
   selectIsFaceIdentityVerified,
   selectCredential,
   selectVerifiableCredentialData,
+  selectIsSendingVPTimeout,
+  selectIsSendingVP,
 } from '../../machines/bleShare/scan/scanSelectors';
 import {
   selectBleError,
@@ -126,9 +128,12 @@ export function useScanLayout() {
   const isSent = useSelector(scanService, selectIsSent);
   const isOffline = useSelector(scanService, selectIsOffline);
   const isSendingVc = useSelector(scanService, selectIsSendingVc);
+  const isSendingVP = useSelector(scanService, selectIsSendingVP);
   const isSendingVcTimeout = useSelector(scanService, selectIsSendingVcTimeout);
+  const isSendingVPTimeout = useSelector(scanService, selectIsSendingVPTimeout);
   const isDisconnected = useSelector(scanService, selectIsDisconnected);
-  const isStayInProgress = isConnectingTimeout || isSendingVcTimeout;
+  const isStayInProgress =
+    isConnectingTimeout || isSendingVcTimeout || isSendingVPTimeout;
   let isFaceIdentityVerified = useSelector(
     scanService,
     selectIsFaceIdentityVerified,
@@ -176,7 +181,7 @@ export function useScanLayout() {
       onButtonPress: CANCEL,
       progress: true,
     };
-  } else if (isSendingVc) {
+  } else if (isSendingVc || isSendingVP) {
     statusOverlay = {
       title: t('status.sharing.title'),
       hint: t('status.sharing.hint'),
@@ -189,7 +194,7 @@ export function useScanLayout() {
       hint: t('status.sharing.hint'),
       progress: true,
     };
-  } else if (isSendingVcTimeout) {
+  } else if (isSendingVcTimeout || isSendingVPTimeout) {
     statusOverlay = {
       title: t('status.sharing.title'),
       hint: t('status.sharing.timeoutHint'),
@@ -309,6 +314,7 @@ export function useScanLayout() {
     onRetry,
     CANCEL,
     isSendingVc,
+    isSendingVP,
     flowType,
     isVerifyingIdentity,
     isInvalidIdentity,

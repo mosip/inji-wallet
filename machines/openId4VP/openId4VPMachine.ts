@@ -3,7 +3,8 @@ import {openId4VPModel} from './openId4VPModel';
 import {openId4VPServices} from './openId4VPServices';
 import {openId4VPActions} from './openId4VPActions';
 import {AppServices} from '../../shared/GlobalContext';
-import {openId4VPGuards, OpenId4VPGuards} from './openId4VPGuards';
+import {openId4VPGuards} from './openId4VPGuards';
+import {sendParent} from 'xstate/lib/actions';
 
 const model = openId4VPModel;
 
@@ -157,9 +158,15 @@ export const openId4VPMachine = model.createMachine(
         },
       },
       sendingVP: {
+        entry: [sendParent('IN_PROGRESS')],
         invoke: {
           src: 'sendVP',
           onDone: {},
+        },
+        after: {
+          SHARING_TIMEOUT: {
+            actions: sendParent('TIMEOUT'),
+          },
         },
       },
     },
@@ -168,6 +175,9 @@ export const openId4VPMachine = model.createMachine(
     actions: openId4VPActions(model),
     services: openId4VPServices(),
     guards: openId4VPGuards(),
+    delays: {
+      SHARING_TIMEOUT: 5 * 1000,
+    },
   },
 );
 
