@@ -216,7 +216,6 @@ public class VerifyWelcomePagesTest extends IosBaseTest {
         addNewCardPage.clickOnContinueButtonInSigninPopupIos();
 
 
-//        assertTrue(esignetLoginPage.isEnterYourVidTextDisplayed(), "Verify if enter your vid text is displayed");
         String uin=TestDataReader.readData("uin");
         OtpVerificationPage otpVerification= esignetLoginPage.setEnterIdTextBox(uin);
 
@@ -338,12 +337,10 @@ public class VerifyWelcomePagesTest extends IosBaseTest {
         esignetLoginPage.clickOnEsignetLoginWithOtpButton();
         addNewCardPage.clickOnContinueButtonInSigninPopupIos();
 
-//        assertTrue(esignetLoginPage.isEnterYourVidTextDisplayed(), "Verify if enter your vid text is displayed");
         String uin=TestDataReader.readData("uin");
         OtpVerificationPage otpVerification= esignetLoginPage.setEnterIdTextBox(uin);
 
         esignetLoginPage.clickOnGetOtpButton();
-//        assertTrue(esignetLoginPage.isOtpHasSendMessageDisplayed(),"verify if otp page is displayed");
 
         otpVerification.enterOtpForEsignet(BaseTestCase.getOtp(), Target.IOS);
         esignetLoginPage.clickOnVerifyButtonIos();
