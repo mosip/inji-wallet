@@ -74,3 +74,7 @@ export function selectVerifiableCredentialsData(state: State) {
   });
   return verifiableCredentialsData;
 }
+
+export function selectPurpose(state: State) {
+  return state.context.purpose;
+}

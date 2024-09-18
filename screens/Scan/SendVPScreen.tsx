@@ -1,7 +1,7 @@
 import {useFocusEffect} from '@react-navigation/native';
 import React, {useEffect} from 'react';
 import {useTranslation} from 'react-i18next';
-import {BackHandler} from 'react-native';
+import {BackHandler, View} from 'react-native';
 import {Button, Column, Row, Text} from '../../components/ui';
 import {Theme} from '../../components/ui/styleUtils';
 import {VcItemContainer} from '../../components/VC/VcItemContainer';
@@ -17,6 +17,7 @@ import {VerifyIdentityOverlay} from '../VerifyIdentityOverlay';
 import {ConsentOverlay} from './ConsentOverlay';
 import {FaceVerificationAlertOverlay} from './FaceVerificationAlertOverlay';
 import {useSendVPScreen} from './SendVPScreenController';
+import LinearGradient from 'react-native-linear-gradient';
 
 export const SendVPScreen: React.FC = () => {
   console.log('inside sendvp screen::');
@@ -80,23 +81,38 @@ export const SendVPScreen: React.FC = () => {
     <React.Fragment>
       {Object.keys(vcsMatchingAuthRequest).length > 0 && (
         <>
+          {controller.purpose !== '' && (
+            <View style={{backgroundColor: Theme.Colors.whiteBackgroundColor}}>
+              <Column
+                padding="14 12 14 12"
+                margin="20 20 20 20"
+                style={Theme.VPSharingStyles.purposeContainer}>
+                <Text
+                  color={Theme.Colors.TimeoutHintText}
+                  style={Theme.VPSharingStyles.purposeText}>
+                  {controller.purpose}
+                </Text>
+              </Column>
+            </View>
+          )}
           <Column fill backgroundColor={Theme.Colors.lightGreyBackgroundColor}>
-            <Column>
-              <Text
-                margin="15 0 13 24"
-                weight="bold"
-                color={Theme.Colors.textValue}
-                style={{position: 'relative'}}>
-                {t('SendVcScreen:pleaseSelectAnId')}
-              </Text>
-            </Column>
+            <LinearGradient colors={Theme.Colors.selectIDTextGradient}>
+              <Column>
+                <Text
+                  margin="15 0 13 24"
+                  color={Theme.Colors.textValue}
+                  style={Theme.VPSharingStyles.selectIDText}>
+                  {t('SendVcScreen:pleaseSelectAnId')}
+                </Text>
+              </Column>
+            </LinearGradient>
             <Row
-              margin="15 24 13 24"
+              padding="11 24 11 24"
               style={{
                 backgroundColor: '#FAFAFA',
                 justifyContent: 'space-between',
               }}>
-              <Text style={{fontFamily: 'Inter_500Medium'}}>
+              <Text style={Theme.VPSharingStyles.cardsSelectedText}>
                 {cardsSelectedText}
               </Text>
               <Text
@@ -109,7 +125,7 @@ export const SendVPScreen: React.FC = () => {
                 {areAllVcsChecked ? t('unCheck') : t('checkAll')}
               </Text>
             </Row>
-            <Column scroll>
+            <Column scroll backgroundColor={Theme.Colors.whiteBackgroundColor}>
               {Object.entries(vcsMatchingAuthRequest).map(
                 ([inputDescriptorId, vcs]) =>
                   vcs.map(vcData => (

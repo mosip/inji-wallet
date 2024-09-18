@@ -20,6 +20,7 @@ import {
   selectIsInvalidIdentity,
   selectIsSharingVP,
   selectIsVerifyingIdentity,
+  selectPurpose,
   selectVCsMatchingAuthRequest,
   selectVerifiableCredentialsData,
 } from '../../machines/openId4VP/openId4VPSelectors';
@@ -97,6 +98,7 @@ export function useSendVPScreen() {
       openId4VPService,
       selectIsVerifyingIdentity,
     ),
+    purpose: useSelector(openId4VPService, selectPurpose),
     isInvalidIdentity: useSelector(openId4VPService, selectIsInvalidIdentity),
     isCancelling: useSelector(scanService, selectIsCancelling),
     isFaceVerificationConsent: useSelector(

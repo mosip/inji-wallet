@@ -36,6 +36,7 @@ export const openId4VPModel = createModel(
     selectedVCs: {} as Record<string, VC[]>,
     isShareWithSelfie: false as boolean,
     showFaceAuthConsent: true as boolean,
+    purpose: '' as string,
   },
   {events: openId4VPEvents},
 );

@@ -121,6 +121,14 @@ export const ScanLayout: React.FC = () => {
             component={SendVPScreen}
             options={{
               title: t('SendVPScreen:requester'),
+              headerTitle: props => (
+                <View style={Theme.Styles.scanLayoutHeaderContainer}>
+                  <Text style={Theme.Styles.scanLayoutHeaderTitle}>
+                    {props.children}
+                  </Text>
+                </View>
+              ),
+              headerBackVisible: false,
               headerRight: () =>
                 !I18nManager.isRTL && (
                   <Icon

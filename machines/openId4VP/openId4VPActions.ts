@@ -54,6 +54,13 @@ export const openId4VPActions = (model: any) => {
         }
         return matchingVCs;
       },
+      purpose: context => {
+        const response = context.authenticationResponse;
+        if ('presentation_definition' in response) {
+          const pd = JSON.parse(response['presentation_definition']);
+          return pd.purpose ?? '';
+        }
+      },
     }),
 
     setSelectedVCs: model.assign({
