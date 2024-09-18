@@ -44,6 +44,7 @@ export interface CredentialSubject {
 type VCContext = (string | Record<string, unknown>)[];
 
 export interface Credential {
+  credentialConfigurationId: any;
   '@context': VCContext;
   credentialSubject: CredentialSubject;
   id: string;
@@ -57,27 +58,28 @@ export interface Credential {
     verificationMethod: string;
   };
   type: string[];
-  credentialTypes: string[];
 }
 
 export interface VerifiableCredential {
   issuerLogo: logoType;
   credential: Credential;
   wellKnown: string;
-  credentialTypes: Object[];
+  credentialConfigurationId: string;
 }
 
 export interface VerifiableCredentialData {
   vcMetadata: VCMetadata;
+  format: string;
   face: string;
   issuerLogo: logoType;
   wellKnown?: string;
-  credentialTypes?: Object[];
+  credentialConfigurationId: string;
   issuer?: string;
 }
 
 export interface CredentialWrapper {
   verifiableCredential: VerifiableCredential;
+  format: string;
   identifier: string;
   generatedOn: Date;
   vcMetadata: VCMetadata;
@@ -93,6 +95,8 @@ export interface CredentialTypes {
     type: Object[];
     credentialSubject: CredentialSubject;
   };
+  doctype: string;
+  claims: Object;
 }
 
 export interface IssuerWellknownResponse {

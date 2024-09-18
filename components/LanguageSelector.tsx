@@ -29,7 +29,7 @@ export const LanguageSelector: React.FC<LanguageSelectorProps> = props => {
 export const changeLanguage = async (i18n: i18n, language: string) => {
   if (language !== i18n.language) {
     await i18n.changeLanguage(language).then(async () => {
-      await setItem('language', i18n.language,"");
+      await setItem('language', i18n.language, '');
       const isRTL = i18next.dir(language) === 'rtl';
       if (isRTL !== I18nManager.isRTL) {
         try {

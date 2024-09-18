@@ -1,5 +1,3 @@
-
-
 const bindingCertificate = '-bindingCertificate';
 
 export async function getPrivateKey(id: string) {

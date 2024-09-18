@@ -3,6 +3,7 @@ import {CACHED_API} from '../../shared/api';
 import NetInfo from '@react-native-community/netinfo';
 import {
   constructAuthorizationConfiguration,
+  constructIssuerMetaData,
   constructProofJWT,
   getKeyTypeFromWellknown,
   hasKeyPair,
@@ -62,14 +63,6 @@ export const IssuersService = () => {
     downloadCredential: async (context: any) => {
       const downloadTimeout = await vcDownloadTimeout();
       const accessToken: string = context.tokenResponse?.accessToken;
-      const issuerMeta: Object = {
-        credentialAudience: context.selectedIssuer.credential_audience,
-        credentialEndpoint: context.selectedIssuer.credential_endpoint,
-        downloadTimeoutInMilliSeconds: downloadTimeout,
-        credentialType: context.selectedCredentialType?.credential_definition
-          ?.type ?? ['VerifiableCredential'],
-        credentialFormat: context.selectedCredentialType.format,
-      };
       const proofJWT = await constructProofJWT(
         context.publicKey,
         context.privateKey,
@@ -78,7 +71,11 @@ export const IssuersService = () => {
         context.keyType,
       );
       let credential = await VciClient.downloadCredential(
-        issuerMeta,
+        constructIssuerMetaData(
+          context.selectedIssuer,
+          context.selectedCredentialType,
+          downloadTimeout,
+        ),
         proofJWT,
         accessToken,
       );
@@ -119,7 +116,7 @@ export const IssuersService = () => {
 
     verifyCredential: async (context: any) => {
       //this issuer specific check has to be removed once vc validation is done.
-      if (isMosipVC(context.vcMetadata.issuer)) {
+      if (isMosipVC(context.selectedIssuerId)) {
         const verificationResult = await verifyCredential(
           context.verifiableCredential?.credential,
         );

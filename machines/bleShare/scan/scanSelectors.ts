@@ -37,8 +37,6 @@ export function selectVerifiableCredentialData(state: State) {
         ?.credentialSubject?.face ||
       state.context.selectedVc?.credential?.biometrics?.face,
     wellKnown: state.context.selectedVc?.verifiableCredential?.wellKnown,
-    credentialTypes:
-      state.context.selectedVc?.verifiableCredential?.credentialTypes,
   };
 }
 

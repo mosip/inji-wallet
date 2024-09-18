@@ -94,7 +94,7 @@ export const IssuersMachine = model.createMachine(
         invoke: {
           src: 'downloadIssuerWellknown',
           onDone: {
-            actions: ['updateIssuerFromWellknown'],
+            actions: ['updateIssuerFromWellknown','updateSelectedIssuerWellknownResponse'],
             target: 'downloadCredentialTypes',
           },
           onError: {
@@ -171,7 +171,11 @@ export const IssuersMachine = model.createMachine(
         invoke: {
           src: 'invokeAuthorization',
           onDone: {
-            actions: ['setTokenResponse', 'setLoadingReasonAsSettingUp', 'setSelectedKey'],
+            actions: [
+              'setTokenResponse',
+              'setLoadingReasonAsSettingUp',
+              'setSelectedKey',
+            ],
             target: '.getKeyPairFromKeystore',
           },
           onError: [
@@ -280,7 +284,8 @@ export const IssuersMachine = model.createMachine(
               target: 'downloadCredentials',
             },
             {
-              actions: [// to be decided
+              actions: [
+                // to be decided
                 'setPublicKey',
                 'setLoadingReasonAsDownloadingCredentials',
                 'setPrivateKey',

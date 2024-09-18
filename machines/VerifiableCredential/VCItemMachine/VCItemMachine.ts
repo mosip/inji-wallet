@@ -312,8 +312,8 @@ export const VCItemMachine = model.createMachine(
                   src: 'generateKeypairAndStore',
                   onDone: [
                     {
-                      actions: ['setPublicKey','setPrivateKey'],
-                      target:'addingWalletBindingId'
+                      actions: ['setPublicKey', 'setPrivateKey'],
+                      target: 'addingWalletBindingId',
                     },
                   ],
                   onError: [

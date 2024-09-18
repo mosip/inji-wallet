@@ -251,7 +251,9 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = props => {
                     onLayout={() => filterVcs('')}
                   />
                   {clearSearchIcon && (
-                    <Pressable onPress={clearSearchText} style={Theme.SearchBarStyles.clearSearch}>
+                    <Pressable
+                      onPress={clearSearchText}
+                      style={Theme.SearchBarStyles.clearSearch}>
                       <Icon
                         testID="clearingIssuerSearchIcon"
                         name="circle-with-cross"

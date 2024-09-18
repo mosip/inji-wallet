@@ -47,13 +47,15 @@ export function selectVerifiableCredentialData(
 
   return {
     vcMetadata: vcMetadata,
+    format: vcMetadata.format,
     face:
       state.context.verifiableCredential?.credential?.credentialSubject?.face ??
       state.context.credential?.biometrics?.face,
     issuerLogo:
       state.context.verifiableCredential?.issuerLogo ?? getMosipLogo(),
     wellKnown: state.context.verifiableCredential?.wellKnown,
-    credentialTypes: state.context.verifiableCredential?.credentialTypes,
+    credentialConfigurationId:
+      state.context.verifiableCredential?.credentialConfigurationId,
     issuer: vcMetadata.issuer,
   };
 }

@@ -33,8 +33,10 @@ import {
   createVcMetaMachine,
   vcMetaMachine,
 } from './VerifiableCredential/VCMetaMachine/VCMetaMachine';
-import { checkAllKeyPairs, generateKeyPairsAndStore } from '../shared/cryptoutil/cryptoUtil';
-
+import {
+  checkAllKeyPairs,
+  generateKeyPairsAndStore,
+} from '../shared/cryptoutil/cryptoUtil';
 
 const QrLoginIntent = NativeModules.QrLoginIntent;
 
@@ -403,7 +405,6 @@ export const appMachine = model.createMachine(
     services: {
       isQrLoginByDeepLink: () => async () => {
         const data = await QrLoginIntent.isQrLoginByDeepLink();
-        //console.log('DeepLink: ', data);
         return data;
       },
       resetQRLoginDeepLinkData: () => async () => {
@@ -466,8 +467,8 @@ export const appMachine = model.createMachine(
         return await checkAllKeyPairs();
       },
 
-      generateKeyPairsAndStore: async ()=>{
-        return await generateKeyPairsAndStore()
+      generateKeyPairsAndStore: async () => {
+        return await generateKeyPairsAndStore();
       },
       checkNetworkState: () => callback => {
         return NetInfo.addEventListener(state => {

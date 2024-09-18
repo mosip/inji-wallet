@@ -37,11 +37,7 @@ i18next
     supportedLngs: Object.keys(SUPPORTED_LANGUAGES),
   })
   .then(async () => {
-    const language = await getItem(
-      'language',
-      null,
-      ""
-    );
+    const language = await getItem('language', null, '');
 
     if (language !== i18next.language) {
       i18next.changeLanguage(language);

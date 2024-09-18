@@ -193,17 +193,13 @@ async function generateCacheAPIFunctionWithCachePreference(
   onErrorHardCodedValue?: any,
 ) {
   try {
-    const response = await getItem(
-      cacheKey,
-      null,
-      ""
-    );
+    const response = await getItem(cacheKey, null, '');
 
     if (response) {
       return response;
     } else {
       const response = await fetchCall();
-      setItem(cacheKey, response, "").then(() =>
+      setItem(cacheKey, response, '').then(() =>
         console.log('Cached response for ' + cacheKey),
       );
 
@@ -229,10 +225,9 @@ async function generateCacheAPIFunctionWithAPIPreference(
   fetchCall: (...props: any[]) => any,
   onErrorHardCodedValue?: any,
 ) {
- 
   try {
     const response = await fetchCall();
-    setItem(cacheKey, response, "").then(() =>
+    setItem(cacheKey, response, '').then(() =>
       console.log('Cached response for ' + cacheKey),
     );
     return response;
@@ -244,11 +239,7 @@ async function generateCacheAPIFunctionWithAPIPreference(
 
     console.log(error);
 
-    const response = await getItem(
-      cacheKey,
-      null,
-      ""
-    );
+    const response = await getItem(cacheKey, null, '');
 
     if (response) {
       return response;

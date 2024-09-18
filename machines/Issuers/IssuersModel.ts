@@ -3,6 +3,7 @@ import {AuthorizeResult} from 'react-native-app-auth';
 import {
   CredentialTypes,
   CredentialWrapper,
+  IssuerWellknownResponse,
   VerifiableCredential,
 } from '../VerifiableCredential/VCMetaMachine/vc';
 import {AppServices} from '../../shared/GlobalContext';
@@ -15,6 +16,7 @@ export const IssuersModel = createModel(
     issuers: [] as issuerType[],
     selectedIssuerId: '' as string,
     selectedIssuer: {} as issuerType,
+    selectedIssuerWellknownResponse: {} as IssuerWellknownResponse,
     tokenResponse: {} as AuthorizeResult,
     errorMessage: '' as string,
     loadingReason: 'displayIssuers' as string,
@@ -27,8 +29,8 @@ export const IssuersModel = createModel(
     publicKey: '',
     privateKey: '',
     vcMetadata: {} as VCMetadata,
-    keyType:'RS256' as string,
-    wellknownKeyTypes: []  as string[]
+    keyType: 'RS256' as string,
+    wellknownKeyTypes: [] as string[],
   },
   {
     events: IssuersEvents,

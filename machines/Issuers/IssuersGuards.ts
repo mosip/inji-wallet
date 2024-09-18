@@ -12,7 +12,7 @@ export const IssuersGuards = () => {
     isSignedIn: (_: any, event: any) =>
       (event.data as isSignedInResult).isSignedIn,
     hasKeyPair: (context: any) => {
-      return  !!context.publicKey
+      return !!context.publicKey;
     },
     isInternetConnected: (_: any, event: any) => !!event.data.isConnected,
     isOIDCflowCancelled: (_: any, event: any) => {

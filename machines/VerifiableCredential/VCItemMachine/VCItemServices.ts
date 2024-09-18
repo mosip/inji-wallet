@@ -1,20 +1,12 @@
 import {NativeModules} from 'react-native';
 import Cloud from '../../../shared/CloudBackupAndRestoreUtils';
-import getAllConfigurations, {
-  API_URLS,
-  CACHED_API,
-  DownloadProps,
-} from '../../../shared/api';
-import {
-  fetchKeyPair,
-  generateKeyPair,
-} from '../../../shared/cryptoutil/cryptoUtil';
+import getAllConfigurations, {API_URLS, CACHED_API, DownloadProps,} from '../../../shared/api';
+import {fetchKeyPair, generateKeyPair,} from '../../../shared/cryptoutil/cryptoUtil';
 import {CredentialDownloadResponse, request} from '../../../shared/request';
 import {WalletBindingResponse} from '../VCMetaMachine/vc';
 import {verifyCredential} from '../../../shared/vcjs/verifyCredential';
 import {getVerifiableCredential} from './VCItemSelectors';
-import {getSelectedCredentialTypeDetails} from '../../../shared/openId4VCI/Utils';
-import {getCredentialTypes} from '../../../components/VC/common/VCUtils';
+import {getMatchingCredentialIssuerMetadata} from '../../../shared/openId4VCI/Utils';
 import {isIOS} from '../../../shared/constants';
 
 const {RNSecureKeystoreModule} = NativeModules;
@@ -112,11 +104,14 @@ export const VCItemServices = model => {
         context.vcMetadata.issuer,
         true,
       );
-      const wellknownOfCredential = getSelectedCredentialTypeDetails(
-        wellknownResponse,
-        getCredentialTypes(context.verifiableCredential),
-      );
-      return wellknownOfCredential;
+      try {
+        return getMatchingCredentialIssuerMetadata(
+            wellknownResponse,
+            context.verifiableCredential.credentialConfigurationId,
+        );
+      } catch (error) {
+        return {};
+      }
     },
     checkStatus: context => (callback, onReceive) => {
       const pollInterval = setInterval(

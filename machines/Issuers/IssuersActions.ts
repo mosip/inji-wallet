@@ -225,6 +225,10 @@ export const IssuersActions = (model: any) => {
         authorization_servers: event.data.authorization_servers,
       }),
     }),
+    
+    updateSelectedIssuerWellknownResponse: model.assign({
+      selectedIssuerWellknownResponse: (_: any, event: any) => event.data,
+    }),
     setSelectedIssuerId: model.assign({
       selectedIssuerId: (_: any, event: any) => event.id,
     }),
@@ -262,13 +266,12 @@ export const IssuersActions = (model: any) => {
             _vcKey: vcMetadata.getVcKey(),
             type: 'VC_DOWNLOADED',
             id: vcMetadata.displayId,
-            idType:
-              context.credentialWrapper.verifiableCredential.credentialTypes,
             timestamp: Date.now(),
             deviceName: '',
             issuer: context.selectedIssuerId,
+            credentialConfigurationId: context.selectedCredentialType.id,
           },
-          context.selectedCredentialType,
+          context.selectedIssuerWellknownResponse,
         );
       },
       {
