@@ -37,7 +37,6 @@ export const Issuers = {
   Mosip: 'Mosip',
 };
 
-//
 export function getVcVerificationDetails(
   statusType,
   vcMetadata: VCMetadata,
