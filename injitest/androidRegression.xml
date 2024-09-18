@@ -10,7 +10,6 @@
                 <methods>
                     <include name="copyAppId"/>
                     <include name="verifyAppId"/>
-                    <include name="verifyTuvaliVersion"/>
                 </methods>
             </class>
             <class name="androidTestCases.ActivateVcTest">
@@ -23,7 +22,6 @@
                 <methods>
                     <include name="changeLanguage"/>
                     <include name="languageShouldBeInNativeLanguages"/>
-                    <include name="verifyTuvaliVersion"/>
                     <include name="changeLanguageToArabic"/>
                     <include name="changeLanguageToFilipionAndcheckInjiTour"/>
                     <include name="changeLanguageToHindiAndcheckInjiTour"/>
@@ -51,7 +49,6 @@
                     <include name="verifyRecivedCardOffline"/>
                     <include name="downloadCardWithoutInternetRetryWithInternet"/>
                     <include name="downloadVcUsingUinViaEsignetWithoutInternet"/>
-                    <!--<include name="downloadVcUsingUinViaEsignetNoInternateWhileDownloading"/> //removed because download proccess is faster than the turning of the network-->
                     <include name="downloadVcViaEsignetAndPinUnpinWithNoNetwork"/>
                     <include name="downloadVcUsingUinViaEsignetNoInternateOpenScan"/>
                     <include name="downloadVcInOtherLanguageViaEsignetWithoutInternet"/>
@@ -74,7 +71,6 @@
                     <include name="noCardsAvailableToShare"/>
                     <include name="verifyReceivedCardTabPresent"/>
                     <include name="verifyPopupsForShareWithSelfie"/>
-                    <include name="rejectingCameraAccessesOnShareScreen"/>
                 </methods>
             </class>
             <class name="androidTestCases.UnlockWithPasscodeTest">
@@ -153,7 +149,7 @@
                 <methods>
                     <include name="copyAppId"/>
                     <include name="verifyAppId"/>
-                    <include name="verifyTuvaliVersion"/>
+                   <!-- <include name="verifyTuvaliVersion"/> invalid testcase-->
                 </methods>
             </class>
 		</classes>

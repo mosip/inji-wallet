@@ -242,13 +242,6 @@ public class HomePage extends BasePage {
 
     BasePage basePage = new BasePage(driver);
     public boolean isHomePageLoaded() {
-        /*if (isElementDisplayed(secureKeyStoragePopup, "secure key storage popup")) {
-            clickOnElement(riskItButton);
-        }*/
-//        if (isElementDisplayed(securityFeatureUnavailablePopup, "security features will be unavailable popup")) {
-//            clickOnElement(okButton);
-//        }
-
         return this.isElementDisplayed(homeButton);
     }
 

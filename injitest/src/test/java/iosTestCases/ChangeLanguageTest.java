@@ -170,7 +170,6 @@ public class ChangeLanguageTest extends IosBaseTest {
         assertTrue(addNewCardPage.isIssuerSearchBarDisplayedInFilipino(),"verify if search bar is displayed in filipino");
         addNewCardPage.sendTextInIssuerSearchBar("I-download ang Mga Kredensyal ng MOSIP ");
 
-//        assertTrue(addNewCardPage.isDownloadViaUinDisplayed(),"verify if download via uin vid aid");
         addNewCardPage.clickOnBack();
 
         homePage.downloadCard();
@@ -570,7 +569,7 @@ public class ChangeLanguageTest extends IosBaseTest {
         otpVerification.enterOtp(BaseTestCase.getOtp(), Target.IOS);
 
         assertEquals(homePage.getFullNameValue(), "TEST_FULLNAMEara");
-//        assertEquals(homePage.GetActivationPendingText(), "التنشيط معلق لتسجيل الدخول عبر الإنترنت!");
+
     }
     @Test
     public void downloadVcAndChnageLangaugeVerifyVcViaSunbird() throws InterruptedException {
@@ -671,7 +670,7 @@ public class ChangeLanguageTest extends IosBaseTest {
         esignetLoginPage.clickOnCredentialTypeHeadingMOSIPVerifiableCredential();
         addNewCardPage.clickOnContinueButtonInSigninPopupIos();
 
-//        assertTrue(esignetLoginPage.verifyLanguageEnterUinOrVidBoxTextDisplayed("HindiIos"),"verify if enter uin or vid text hindi");
+
         assertTrue(esignetLoginPage.verifyLanguageLoginHeaderTextDisplayed("HindiIos"),"verify login text in hindi");
         assertTrue(esignetLoginPage.verifyLanguagePleaseEnterUinHeaderTextDisplayed("Hindi"),"verify if enter uin/vid header in hindi");
     }
@@ -711,10 +710,10 @@ public class ChangeLanguageTest extends IosBaseTest {
 
         EsignetLoginPage esignetLoginPage =  addNewCardPage.clickOnDownloadViaEsignet();
         esignetLoginPage.clickOnCredentialTypeHeadingMOSIPVerifiableCredential();
-//        addNewCardPage.clickOnCredentialTypeHeadingInsuranceCredential();
+
         addNewCardPage.clickOnContinueButtonInSigninPopupIos();
 
-//        assertTrue(esignetLoginPage.verifyLanguageEnterUinOrVidBoxTextDisplayed("TamilIos"),"verify if enter uin or vid text tamil");
+
         assertTrue(esignetLoginPage.verifyLanguageLoginHeaderTextDisplayed("Tamil"),"verify login text in tamil");
         assertTrue(esignetLoginPage.verifyLanguagePleaseEnterUinHeaderTextDisplayed("Tamil"),"verify if enter uin/vid header in tamil");
     }
@@ -756,10 +755,8 @@ public class ChangeLanguageTest extends IosBaseTest {
         esignetLoginPage.clickOnCredentialTypeHeadingMOSIPVerifiableCredential();
         addNewCardPage.clickOnContinueButtonInSigninPopupIos();
 
-//        assertTrue(esignetLoginPage.verifyLanguageEnterUinOrVidBoxTextDisplayed("KannadaIos"),"verify if enter uin or vid text kannada");
         assertTrue(esignetLoginPage.verifyLanguageLoginHeaderTextDisplayed("Kannada"),"verify login text in kannada");
         assertTrue(esignetLoginPage.verifyLanguagePleaseEnterUinHeaderTextDisplayed("Kannada"),"verify if enter uin/vid header in kannada");
-//
     }
 
     @Test
@@ -788,7 +785,6 @@ public class ChangeLanguageTest extends IosBaseTest {
         assertTrue(settingsPage.isSettingPageLoaded(), "Verify if setting page is displayed");
         settingsPage.clickOnLanguage().clickOnArabicLanguageButton();
 
-//        assertTrue(settingsPage.(), "Verify if language is changed to Arabic");
         UnlockApplicationPage unlockApplicationPage = new UnlockApplicationPage(driver);
         assertTrue(unlockApplicationPage.isUnlockApplicationPageLoadedInArabic(), "Verify if language is changed to arabic");
         unlockApplicationPage.clickOnUnlockApplicationButton();
@@ -802,7 +798,6 @@ public class ChangeLanguageTest extends IosBaseTest {
         esignetLoginPage.clickOnCredentialTypeHeadingMOSIPVerifiableCredential();
         addNewCardPage.clickOnContinueButtonInSigninPopupIos();
 
-//        assertTrue(esignetLoginPage.verifyLanguageEnterUinOrVidBoxTextDisplayed("ArabicIos"),"verify if enter uin or vid text Arabic");
         assertTrue(esignetLoginPage.verifyLanguageLoginHeaderTextDisplayed("Arabic"),"verify login text in Arabic");
         assertTrue(esignetLoginPage.verifyLanguagePleaseEnterUinHeaderTextDisplayed("Arabic"),"verify if enter uin/vid header in Arabic");
     }
@@ -844,7 +839,6 @@ public class ChangeLanguageTest extends IosBaseTest {
         esignetLoginPage.clickOnCredentialTypeHeadingMOSIPVerifiableCredential();
         addNewCardPage.clickOnContinueButtonInSigninPopupIos();
 
-//        assertTrue(esignetLoginPage.verifyLanguageEnterUinOrVidBoxTextDisplayed("KannadaIos"),"verify if enter uin or vid text kannada");
         assertTrue(esignetLoginPage.verifyLanguageLoginHeaderTextDisplayed("Kannada"),"verify login text in kannada");
         assertTrue(esignetLoginPage.verifyLanguagePleaseEnterUinHeaderTextDisplayed("Kannada"),"verify if enter uin/vid header in kannada");
 
@@ -862,7 +856,6 @@ public class ChangeLanguageTest extends IosBaseTest {
         addNewCardPage.clickOnDownloadViaEsignet();
         esignetLoginPage.clickOnCredentialTypeHeadingMOSIPVerifiableCredential();
         addNewCardPage.clickOnContinueButtonInSigninPopupIos();
-//        assertTrue(esignetLoginPage.verifyLanguageEnterUinOrVidBoxTextDisplayed("KannadaIos"),"verify if enter uin or vid text kannada");
         assertTrue(esignetLoginPage.verifyLanguageLoginHeaderTextDisplayed("Kannada"),"verify login text in kannada");
         assertTrue(esignetLoginPage.verifyLanguagePleaseEnterUinHeaderTextDisplayed("Kannada"),"verify if enter uin/vid header in kannada");
     }
@@ -904,7 +897,6 @@ public class ChangeLanguageTest extends IosBaseTest {
         esignetLoginPage.clickOnCredentialTypeHeadingMOSIPVerifiableCredential();
         addNewCardPage.clickOnContinueButtonInSigninPopupIos();
 
-//        assertTrue(esignetLoginPage.verifyLanguageEnterUinOrVidBoxTextDisplayed("KannadaIos"),"verify if enter uin or vid text kannada");
         assertTrue(esignetLoginPage.verifyLanguageLoginHeaderTextDisplayed("Kannada"),"verify login text in kannada");
         assertTrue(esignetLoginPage.verifyLanguagePleaseEnterUinHeaderTextDisplayed("Kannada"),"verify if enter uin/vid header in kannada");
 
@@ -923,7 +915,6 @@ public class ChangeLanguageTest extends IosBaseTest {
         addNewCardPage.clickOnDownloadViaEsignet();
         esignetLoginPage.clickOnCredentialTypeHeadingMOSIPVerifiableCredential();
         addNewCardPage.clickOnContinueButtonInSigninPopupIos();
-//        assertTrue(esignetLoginPage.verifyLanguageEnterUinOrVidBoxTextDisplayed("English"),"verify if search bar is displayed in english");
         assertTrue(esignetLoginPage.verifyLanguageLoginHeaderTextDisplayed("English"),"verify login text in english");
         assertTrue(esignetLoginPage.verifyLanguagePleaseEnterUinHeaderTextDisplayed("English"),"verify if enter uin/vid header in english");
     }
