@@ -783,10 +783,18 @@
     "cardSelected": "card selected",
     "unCheck": "Uncheck",
     "checkAll": "Check All",
-    "consentRequired": "Consent Required",
-    "consentMessage": "We require your consent to share your verifiable credentials. This will enable us to verify your identity and fulfil your service requests. Choose \"Yes, Proceed\" to consent or \"Decline\" if you do not wish to share.",
-    "confirmButton": "Yes, Proceed",
-    "cancelButton": "Decline"
+    "consentDialog": {
+      "title": "Consent Required",
+      "message": "We require your consent to share your verifiable credentials. This will enable us to verify your identity and fulfil your service requests. Choose \"Yes, Proceed\" to consent or \"Decline\" if you do not wish to share.",
+      "confirmButton": "Yes, Proceed",
+      "cancelButton": "Decline"
+    },
+    "confirmationDialog": {
+      "title": "Are you sure?",
+      "message": "Declining the consent will prevent you from sharing your verifiable credentials.",
+      "confirmButton": "Yes, Proceed",
+      "cancelButton": "Go Back"
+    }
   },
   "VerifyIdentityOverlay": {
     "faceAuth": "Face Verification",

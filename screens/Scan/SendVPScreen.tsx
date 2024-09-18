@@ -14,7 +14,7 @@ import {
 import {isMosipVC, VCItemContainerFlowType} from '../../shared/Utils';
 import {VCMetadata} from '../../shared/VCMetadata';
 import {VerifyIdentityOverlay} from '../VerifyIdentityOverlay';
-import {ConsentOverlay} from './ConsentOverlay';
+import {VPShareOverlay} from './VPShareOverlay';
 import {FaceVerificationAlertOverlay} from './FaceVerificationAlertOverlay';
 import {useSendVPScreen} from './SendVPScreenController';
 import LinearGradient from 'react-native-linear-gradient';
@@ -81,11 +81,43 @@ export const SendVPScreen: React.FC = () => {
 
   let error = {show: false, title: '', message: '', showRetryButton: true};
 
-  if (Object.keys(vcsMatchingAuthRequest).length === 0) {
+  if (
+    controller.isSelectingVCs &&
+    Object.keys(vcsMatchingAuthRequest).length === 0
+  ) {
     error.show = true;
     error.title = 'No matching credentials found!';
     error.message = 'Retry sharing after downloading the credentials.';
     error.showRetryButton = false;
+  }
+
+  let overlayDetails;
+  if (controller.isVPSharingConsent) {
+    overlayDetails = {
+      primaryButtonTestID: 'confirm',
+      primaryButtonText: t('consentDialog.confirmButton'),
+      primaryButtonEvent: controller.CONFIRM,
+      secondaryButtonTestID: 'cancel',
+      secondaryButtonText: t('consentDialog.cancelButton'),
+      secondaryButtonEvent: controller.CANCEL,
+      title: t('consentDialog.title'),
+      titleTestID: 'consentTitle',
+      message: t('consentDialog.message'),
+      mesageTestID: 'consentMsg',
+    };
+  } else if (controller.showConfirmationPopup) {
+    overlayDetails = {
+      primaryButtonTestID: 'yesProceed',
+      primaryButtonText: t('confirmationDialog.confirmButton'),
+      primaryButtonEvent: controller.CONFIRM,
+      secondaryButtonTestID: 'goBack',
+      secondaryButtonText: t('confirmationDialog.cancelButton'),
+      secondaryButtonEvent: controller.GO_BACK,
+      title: t('confirmationDialog.title'),
+      titleTestID: 'confirmationTitle',
+      message: t('confirmationDialog.message'),
+      mesageTestID: 'confirmationMsg',
+    };
   }
 
   return (
@@ -192,7 +224,6 @@ export const SendVPScreen: React.FC = () => {
               />
             </Column>
           </Column>
-
           <VerifyIdentityOverlay
             credential={controller.credentials}
             verifiableCredentialData={controller.verifiableCredentialsData}
@@ -205,13 +236,25 @@ export const SendVPScreen: React.FC = () => {
             onRetryVerification={controller.RETRY_VERIFICATION}
             isLivenessEnabled={LIVENESS_CHECK}
           />
-
-          <ConsentOverlay
-            isVisible={controller.isVPSharingConsent}
-            onConfirm={controller.CONFIRM}
-            onCancel={controller.CANCEL}
-          />
-
+          {(controller.isVPSharingConsent ||
+            controller.showConfirmationPopup) && (
+            <VPShareOverlay
+              isVisible={
+                controller.isVPSharingConsent ||
+                controller.showConfirmationPopup
+              }
+              title={overlayDetails.title}
+              titleTestID={overlayDetails.titleTestID}
+              message={overlayDetails.message}
+              messageTestID={overlayDetails.messageTestID}
+              primaryButtonTestID={overlayDetails.primaryButtonTestID}
+              primaryButtonText={overlayDetails.primaryButtonText}
+              primaryButtonEvent={overlayDetails.primaryButtonEvent}
+              secondaryButtonTestID={overlayDetails.secondaryButtonTestID}
+              secondaryButtonText={overlayDetails.secondaryButtonText}
+              secondaryButtonEvent={overlayDetails.secondaryButtonEvent}
+            />
+          )}
           <FaceVerificationAlertOverlay
             isVisible={controller.isFaceVerificationConsent}
             onConfirm={controller.FACE_VERIFICATION_CONSENT}
@@ -223,7 +266,7 @@ export const SendVPScreen: React.FC = () => {
         isModal
         alignActionsOnEnd
         showClose={false}
-        isVisible={true}
+        isVisible={error.show}
         title={error.title}
         message={error.message}
         image={SvgImage.PermissionDenied()}

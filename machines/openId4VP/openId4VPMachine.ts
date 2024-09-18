@@ -97,7 +97,17 @@ export const openId4VPMachine = model.createMachine(
             },
           ],
           CANCEL: {
+            target: 'showConfirmationPopup',
+          },
+        },
+      },
+      showConfirmationPopup: {
+        on: {
+          CONFIRM: {
             actions: sendParent('DISMISS'),
+          },
+          GO_BACK: {
+            target: 'getConsentForVPSharing',
           },
         },
       },

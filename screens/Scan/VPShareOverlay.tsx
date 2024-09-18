@@ -5,7 +5,7 @@ import {Overlay} from 'react-native-elements';
 import {Button, Column, Text} from '../../components/ui';
 import {Theme} from '../../components/ui/styleUtils';
 
-export const ConsentOverlay: React.FC<ConsentOverlayProps> = props => {
+export const VPShareOverlay: React.FC<VPShareOverlayProps> = props => {
   const {t} = useTranslation('SendVPScreen');
 
   return (
@@ -21,46 +21,54 @@ export const ConsentOverlay: React.FC<ConsentOverlayProps> = props => {
         height={Dimensions.get('screen').height * 0}>
         <Column crossAlign="center" margin="10 0 15 0" padding="0">
           <Text
-            testID="consentRequired"
+            testID={props.titleTestID}
             weight="bold"
             size="large"
             color="#000000"
             style={{padding: 3}}>
-            {t('consentRequired')}
+            {props.title}
           </Text>
 
           <Text
-            testID="consentMsg"
+            testID={props.messageTestID}
             align="center"
             size="mediumSmall"
             weight="regular"
             margin="10 0 0 0"
             color="#5D5D5D">
-            {t('consentMessage')}
+            {props.message}
           </Text>
         </Column>
 
         <Button
-          testID="confirm"
+          testID={props.primaryButtonTestID}
           margin={'10 0 0 0'}
           type="gradient"
-          title={t('confirmButton')}
-          onPress={() => props.onConfirm()}
+          title={props.primaryButtonText}
+          onPress={() => props.primaryButtonEvent()}
         />
         <Button
-          testID="cancel"
+          testID={props.secondaryButtonTestID}
           margin={'10 0 0 0'}
           type="clear"
-          title={t('cancelButton')}
-          onPress={() => props.onCancel()}
+          title={props.secondaryButtonText}
+          onPress={() => props.secondaryButtonEvent()}
         />
       </Column>
     </Overlay>
   );
 };
 
-interface ConsentOverlayProps {
+interface VPShareOverlayProps {
   isVisible: boolean;
-  onConfirm: () => void;
-  onCancel: () => void;
+  title: string;
+  titleTestID: string;
+  message: string;
+  messageTestID: string;
+  primaryButtonTestID: string;
+  primaryButtonText: string;
+  primaryButtonEvent: () => void;
+  secondaryButtonTestID: string;
+  secondaryButtonText: string;
+  secondaryButtonEvent: () => void;
 }

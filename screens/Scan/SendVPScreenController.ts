@@ -18,9 +18,11 @@ import {
   selectIsGetVCsSatisfyingAuthRequest,
   selectIsGetVPSharingConsent,
   selectIsInvalidIdentity,
+  selectIsSelectingVcs,
   selectIsSharingVP,
   selectIsVerifyingIdentity,
   selectPurpose,
+  selectShowConfirmationPopup,
   selectVCsMatchingAuthRequest,
   selectVerifiableCredentialsData,
 } from '../../machines/openId4VP/openId4VPSelectors';
@@ -85,9 +87,16 @@ export function useSendVPScreen() {
   };
 
   const isSendingVP = useSelector(openId4VPService, selectIsSharingVP);
+  const showConfirmationPopup = useSelector(
+    openId4VPService,
+    selectShowConfirmationPopup,
+  );
+  const isSelectingVCs = useSelector(openId4VPService, selectIsSelectingVcs);
 
   return {
     isSendingVP,
+    showConfirmationPopup,
+    isSelectingVCs,
     vcsMatchingAuthRequest,
     areAllVCsChecked,
     selectedVCKeys,
@@ -175,5 +184,7 @@ export function useSendVPScreen() {
     CONFIRM: () => openId4VPService.send(OpenId4VPEvents.CONFIRM()),
 
     CANCEL: () => openId4VPService.send(OpenId4VPEvents.CANCEL()),
+
+    GO_BACK: () => openId4VPService.send(OpenId4VPEvents.GO_BACK()),
   };
 }

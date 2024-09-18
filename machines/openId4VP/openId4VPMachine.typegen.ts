@@ -76,6 +76,7 @@ export interface Typegen0 {
     | 'invalidIdentity'
     | 'selectingVCs'
     | 'sendingVP'
+    | 'showConfirmationPopup'
     | 'verifyingIdentity'
     | 'waitingForData';
   tags: never;

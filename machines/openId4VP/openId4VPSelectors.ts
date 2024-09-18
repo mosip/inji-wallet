@@ -78,3 +78,11 @@ export function selectVerifiableCredentialsData(state: State) {
 export function selectPurpose(state: State) {
   return state.context.purpose;
 }
+
+export function selectShowConfirmationPopup(state: State) {
+  return state.matches('showConfirmationPopup');
+}
+
+export function selectIsSelectingVcs(state: State) {
+  return state.matches('selectingVCs');
+}

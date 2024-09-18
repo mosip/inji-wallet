@@ -24,6 +24,7 @@ const openId4VPEvents = {
   DISMISS: () => ({}),
   RETRY_VERIFICATION: () => ({}),
   STORE_RESPONSE: (response: any) => ({response}),
+  GO_BACK: () => ({}),
 };
 
 export const openId4VPModel = createModel(
