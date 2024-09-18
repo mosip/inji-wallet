@@ -1,3 +1,5 @@
+import {VCShareFlowType} from '../../shared/Utils';
+
 export const openId4VPGuards = () => {
   return {
     showFaceAuthConsentScreen: (context, event) => {
@@ -5,5 +7,8 @@ export const openId4VPGuards = () => {
     },
 
     isShareWithSelfie: context => context.isShareWithSelfie,
+
+    isFlowTypeSimpleShare: context =>
+      context.flowType === VCShareFlowType.SIMPLE_SHARE,
   };
 };

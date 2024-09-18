@@ -76,7 +76,7 @@ export function useSendVPScreen() {
   const getSelectedVCs = () => {
     var selectedVcsData = {};
     Object.entries(selectedVCKeys).map(([vcKey, inputDescriptorId]) => {
-      const vcData = JSON.stringify(myVcs[vcKey]);
+      const vcData = myVcs[vcKey];
       selectedVcsData[inputDescriptorId] ??= [];
       selectedVcsData[inputDescriptorId].push(vcData);
     });
@@ -119,9 +119,10 @@ export function useSendVPScreen() {
     DISMISS: () => scanService.send(ScanEvents.DISMISS()),
     UPDATE_VC_NAME: (vcName: string) =>
       scanService.send(ScanEvents.UPDATE_VC_NAME(vcName)),
-    FACE_VALID: () => scanService.send(ScanEvents.FACE_VALID()),
-    FACE_INVALID: () => scanService.send(ScanEvents.FACE_INVALID()),
-    RETRY_VERIFICATION: () => scanService.send(ScanEvents.RETRY_VERIFICATION()),
+    FACE_VALID: () => openId4VPService.send(OpenId4VPEvents.FACE_VALID()),
+    FACE_INVALID: () => openId4VPService.send(OpenId4VPEvents.FACE_INVALID()),
+    RETRY_VERIFICATION: () =>
+      openId4VPService.send(OpenId4VPEvents.RETRY_VERIFICATION()),
     GO_TO_HOME: () => {
       navigation.navigate(BOTTOM_TAB_ROUTES.home, {screen: 'HomeScreen'});
       changeTabBarVisible('flex');

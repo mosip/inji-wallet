@@ -96,7 +96,9 @@ export const openId4VPMachine = model.createMachine(
               target: 'sendingVP',
             },
           ],
-          CANCEL: {},
+          CANCEL: {
+            actions: sendParent('DISMISS'),
+          },
         },
       },
       faceVerificationConsent: {
@@ -110,9 +112,9 @@ export const openId4VPMachine = model.createMachine(
             //   cond: 'isFlowTypeMiniViewShareWithSelfie',
             //   target: '#scan.checkFaceAuthConsent',
             // },
-            // {
-            //   target: '#scan.reviewing.selectingVc',
-            // },
+            {
+              target: 'selectingVCs',
+            },
           ],
         },
       },
@@ -135,7 +137,7 @@ export const openId4VPMachine = model.createMachine(
               target: 'selectingVCs',
             },
             {
-              // target: 'cancelling',
+              target: 'selectingVCs',
             },
           ],
         },
@@ -149,7 +151,7 @@ export const openId4VPMachine = model.createMachine(
               target: 'selectingVCs',
             },
             {
-              // target: 'cancelling',
+              actions: sendParent('DISMISS'),
             },
           ],
           RETRY_VERIFICATION: {
@@ -158,7 +160,7 @@ export const openId4VPMachine = model.createMachine(
         },
       },
       sendingVP: {
-        entry: [sendParent('IN_PROGRESS')],
+        entry: sendParent('IN_PROGRESS'),
         invoke: {
           src: 'sendVP',
           onDone: {},
@@ -176,7 +178,7 @@ export const openId4VPMachine = model.createMachine(
     services: openId4VPServices(),
     guards: openId4VPGuards(),
     delays: {
-      SHARING_TIMEOUT: 5 * 1000,
+      SHARING_TIMEOUT: 15 * 1000,
     },
   },
 );
