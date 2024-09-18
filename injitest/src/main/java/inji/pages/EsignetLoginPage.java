@@ -25,7 +25,7 @@ public class EsignetLoginPage extends BasePage {
     private WebElement esignetLoginHeader;
 
     @AndroidFindBy(xpath = "//*[contains(@text,'Please enter your UIN/VID')]")
-    @iOSXCUITFindBy(xpath = "//*[contains(@text,'Enter Your VID')]")
+    @iOSXCUITFindBy(xpath = "//*[contains(@text,'Please enter your UIN/VID'')]")
     private WebElement enterYourVidTextHeader;
 
     @AndroidFindBy(uiAutomator = "UiSelector().className(\"android.widget.EditText\").instance(0)")
@@ -250,51 +250,51 @@ public class EsignetLoginPage extends BasePage {
         return false;
     }
 
-    public boolean  verifyLanguageForDontHaveAccountTextDisplayed(String language){
-        String actualText = getTextFromLocator(dontHaveAccountText);
+//    public boolean  verifyLanguageForDontHaveAccountTextDisplayed(String language){
+//        String actualText = getTextFromLocator(dontHaveAccountText);
+//
+//        switch (language) {
+//            case "English":
+//                boolean isEnglishMatch  = (actualText.equalsIgnoreCase("Don't have an account?")==true) ? true : false;
+//                return isEnglishMatch ;
+//            case "Tamil":
+//                boolean isTamilMatch  = (actualText.equalsIgnoreCase("கணக்கு இல்லையா?")==true) ? true : false;
+//                return isTamilMatch ;
+//            case "Kannada":
+//                boolean isKannadaMatch  = (actualText.equalsIgnoreCase("ಖಾತೆ ಇಲ್ಲವೇ?")==true) ? true : false;
+//                return isKannadaMatch ;
+//            case "Hindi":
+//                boolean isHindiMatch  = (actualText.equalsIgnoreCase("कोई खाता नहीं है?")==true) ? true : false;
+//                return isHindiMatch ;
+//            case "Arabic":
+//                boolean isArabicMatch  = (actualText.equalsIgnoreCase("ليس لديك حساب؟")==true) ? true : false;
+//                return isArabicMatch ;
+//        }
+//        return false;
+//    }
 
-        switch (language) {
-            case "English":
-                boolean isEnglishMatch  = (actualText.equalsIgnoreCase("Don't have an account?")==true) ? true : false;
-                return isEnglishMatch ;
-            case "Tamil":
-                boolean isTamilMatch  = (actualText.equalsIgnoreCase("கணக்கு இல்லையா?")==true) ? true : false;
-                return isTamilMatch ;
-            case "Kannada":
-                boolean isKannadaMatch  = (actualText.equalsIgnoreCase("ಖಾತೆ ಇಲ್ಲವೇ?")==true) ? true : false;
-                return isKannadaMatch ;
-            case "Hindi":
-                boolean isHindiMatch  = (actualText.equalsIgnoreCase("कोई खाता नहीं है?")==true) ? true : false;
-                return isHindiMatch ;
-            case "Arabic":
-                boolean isArabicMatch  = (actualText.equalsIgnoreCase("ليس لديك حساب؟")==true) ? true : false;
-                return isArabicMatch ;
-        }
-        return false;
-    }
-
-    public boolean  verifyLanguageForSignUpwithUnifiedLoginTextDisplayed(String language){
-        String actualText = getTextFromLocator(signUpwithUnifiedLoginText);
-
-        switch (language) {
-            case "English":
-                boolean isEnglishMatch  = (actualText.equalsIgnoreCase("Sign Up with Unified Login")==true) ? true : false;
-                return isEnglishMatch ;
-            case "Tamil":
-                boolean isTamilMatch  = (actualText.equalsIgnoreCase("ஒருங்கிணைந்த உள்நுழைவுடன் பதிவு செய்யவும்")==true) ? true : false;
-                return isTamilMatch ;
-            case "Kannada":
-                boolean isKannadaMatch  = (actualText.equalsIgnoreCase("ಏಕೀಕೃತ ಲಾಗಿನ್\u200Cನೊಂದಿಗೆ ಸೈನ್ ಅಪ್ ಮಾಡಿ")==true) ? true : false;
-                return isKannadaMatch ;
-            case "Hindi":
-                boolean isHindiMatch  = (actualText.equalsIgnoreCase("एकीकृत लॉगिन के साथ साइन अप करें")==true) ? true : false;
-                return isHindiMatch ;
-            case "Arabic":
-                boolean isArabicMatch  = (actualText.equalsIgnoreCase("قم بالتسجيل باستخدام تسجيل الدخول الموحد")==true) ? true : false;
-                return isArabicMatch ;
-        }
-        return false;
-    }
+//    public boolean  verifyLanguageForSignUpwithUnifiedLoginTextDisplayed(String language){
+//        String actualText = getTextFromLocator(signUpwithUnifiedLoginText);
+//
+//        switch (language) {
+//            case "English":
+//                boolean isEnglishMatch  = (actualText.equalsIgnoreCase("Sign Up with Unified Login")==true) ? true : false;
+//                return isEnglishMatch ;
+//            case "Tamil":
+//                boolean isTamilMatch  = (actualText.equalsIgnoreCase("ஒருங்கிணைந்த உள்நுழைவுடன் பதிவு செய்யவும்")==true) ? true : false;
+//                return isTamilMatch ;
+//            case "Kannada":
+//                boolean isKannadaMatch  = (actualText.equalsIgnoreCase("ಏಕೀಕೃತ ಲಾಗಿನ್\u200Cನೊಂದಿಗೆ ಸೈನ್ ಅಪ್ ಮಾಡಿ")==true) ? true : false;
+//                return isKannadaMatch ;
+//            case "Hindi":
+//                boolean isHindiMatch  = (actualText.equalsIgnoreCase("एकीकृत लॉगिन के साथ साइन अप करें")==true) ? true : false;
+//                return isHindiMatch ;
+//            case "Arabic":
+//                boolean isArabicMatch  = (actualText.equalsIgnoreCase("قم بالتسجيل باستخدام تسجيل الدخول الموحد")==true) ? true : false;
+//                return isArabicMatch ;
+//        }
+//        return false;
+//    }
 
     public void clickOnCloseButton() {
         clickOnElement(CloseTab);

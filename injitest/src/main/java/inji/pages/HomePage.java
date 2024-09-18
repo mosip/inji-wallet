@@ -74,14 +74,14 @@ public class HomePage extends BasePage {
     @AndroidFindBy(accessibility = "idTypeValue")
     @iOSXCUITFindBy(accessibility = "idTypeValue")
     private WebElement idTypeValue;
-    
+
     @AndroidFindBy(xpath = "//android.widget.TextView[@text=\"Try again\"]")
     @iOSXCUITFindBy(accessibility = "tryAgain")
     private WebElement tryAgainButton;
 
     @AndroidFindBy(uiAutomator = "new UiSelector().textContains(\"Subukan muli\")")
     private WebElement tryAgainButtonInFillpino;
-    
+
     @AndroidFindBy(accessibility = "downloadingVcPopupText")
     @iOSXCUITFindBy(accessibility = "Downloading your card, this can take upto 5 minutes")
     private WebElement downloadingVcPopup;
@@ -162,6 +162,10 @@ public class HomePage extends BasePage {
 
     @AndroidFindBy(accessibility = "5done")
     @iOSXCUITFindBy(accessibility = "5done")
+    private WebElement fifthDoneButton;
+
+    @AndroidFindBy(accessibility = "5next")
+    @iOSXCUITFindBy(accessibility = "5next")
     private WebElement fifthNextButton;
 
     @AndroidFindBy(accessibility = "2previous")
@@ -179,7 +183,6 @@ public class HomePage extends BasePage {
     @AndroidFindBy(accessibility = "5previous")
     @iOSXCUITFindBy(accessibility = "5previous")
     private WebElement fifthPreviousButton;
-
 
     @AndroidFindBy(accessibility = "6done")
     @iOSXCUITFindBy(accessibility = "6done")
@@ -225,8 +228,13 @@ public class HomePage extends BasePage {
     @iOSXCUITFindBy(accessibility = "settingsDescription")
     private WebElement appSettingsDescription;
 
+    @AndroidFindBy(accessibility = "cardViewTitle")
+    @iOSXCUITFindBy(accessibility = "cardViewTitle")
+    private WebElement cardViewTitle;
 
-
+    @AndroidFindBy(accessibility = "cardViewDescription")
+    @iOSXCUITFindBy(accessibility = "cardViewDescription")
+    private WebElement cardViewDescription;
 
     public HomePage(AppiumDriver driver) {
         super(driver);
@@ -255,7 +263,7 @@ public class HomePage extends BasePage {
             clickOnElement(doneButton);
         }
         By fullName = By.xpath("//*[contains(@value,'" + name + "') or contains(@text,'" + name + "')]");
-        return this.isElementDisplayed(fullName, 80);
+        return this.isElementDisplayed(fullName, 150);
     }
 
     public boolean isSecondNameDisplayed(String name) {
@@ -294,58 +302,58 @@ public class HomePage extends BasePage {
     public boolean isPinIconDisplayed() {
         return this.isElementDisplayed(pinIcon);
     }
-    
+
     public String  verifyLanguageForNoVCDownloadedPageLoaded(){
-    	return getTextFromLocator(bringYourDigitalIdentity); 
+        return getTextFromLocator(bringYourDigitalIdentity);
     }
 
     public boolean  verifyLanguageForNoInternetConnectionDisplayed(String language){
-    	String actualText = getTextFromLocator(noInternetConnection);
+        String actualText = getTextFromLocator(noInternetConnection);
 
-    	switch (language) {
-    	case "English":
-    		boolean isEnglishMatch  = (actualText.equalsIgnoreCase("No internet connection")==true) ? true : false;
-    		return isEnglishMatch ;
-    	case "Tamil":
-    		boolean isTamilMatch  = (actualText.equalsIgnoreCase("இணைய இணைப்பு இல்லை")==true) ? true : false;
-    		return isTamilMatch ;
-    	case "Filipino":
-    		boolean isFilipinoMatch  = (actualText.equalsIgnoreCase("Pakisuri ang iyong koneksyon at subukang muli")==true) ? true : false;
-    		return isFilipinoMatch ;
+        switch (language) {
+            case "English":
+                boolean isEnglishMatch  = (actualText.equalsIgnoreCase("No internet connection")==true) ? true : false;
+                return isEnglishMatch ;
+            case "Tamil":
+                boolean isTamilMatch  = (actualText.equalsIgnoreCase("இணைய இணைப்பு இல்லை")==true) ? true : false;
+                return isTamilMatch ;
+            case "Filipino":
+                boolean isFilipinoMatch  = (actualText.equalsIgnoreCase("Pakisuri ang iyong koneksyon at subukang muli")==true) ? true : false;
+                return isFilipinoMatch ;
 
-    	}
-    	return false;
+        }
+        return false;
     }
 
     public SharePage clickOnShareButton() {
         clickOnElement(shareButton);
         return new SharePage(driver);
     }
-    
+
     public String getShareButton() {
-    	return getTextFromLocator(shareButtonByForText);
+        return getTextFromLocator(shareButtonByForText);
     }
 
     public boolean isIdTypeDisplayed() {
         return this.isElementDisplayed(idTypeValue);
     }
-    
+
     public boolean  verifyLanguageForTryAgainButtonDisplayed(String language){
-    	String actualText = getTextFromLocator(tryAgainButton);
+        String actualText = getTextFromLocator(tryAgainButton);
 
-    	switch (language) {
-    	case "English":
-    		boolean isEnglishMatch  = (actualText.equalsIgnoreCase("Try again")==true) ? true : false;
-    		return isEnglishMatch ;
-    	case "Tamil":
-    		boolean isTamilMatch  = (actualText.equalsIgnoreCase("மீண்டும் முயற்சி செய்")==true) ? true : false;
-    		return isTamilMatch ;
-    	case "Filipino":
-    		boolean isFilipinoMatch  = (actualText.equalsIgnoreCase("Subukan muli")==true) ? true : false;
-    		return isFilipinoMatch ;
+        switch (language) {
+            case "English":
+                boolean isEnglishMatch  = (actualText.equalsIgnoreCase("Try again")==true) ? true : false;
+                return isEnglishMatch ;
+            case "Tamil":
+                boolean isTamilMatch  = (actualText.equalsIgnoreCase("மீண்டும் முயற்சி செய்")==true) ? true : false;
+                return isTamilMatch ;
+            case "Filipino":
+                boolean isFilipinoMatch  = (actualText.equalsIgnoreCase("Subukan muli")==true) ? true : false;
+                return isFilipinoMatch ;
 
-    	}
-    	return false;
+        }
+        return false;
     }
 
     public boolean isTryAgainButtonNotDisplayedInFlillpino() {
@@ -712,6 +720,59 @@ public class HomePage extends BasePage {
         return false;
     }
 
+    public boolean  verifyLanguageForCardViewTitleDisplayed(String language){
+        String actualText = getTextFromLocator(cardViewTitle);
+
+        switch (language) {
+            case "English":
+                boolean isEnglishMatch  = (actualText.equalsIgnoreCase("Card")==true) ? true : false;
+                return isEnglishMatch ;
+            case "Tamil":
+                boolean isTamilMatch  = (actualText.equalsIgnoreCase("உங்கள் விருப்பங்களின்படி தனிப்பயனாக்கப்பட்ட அமைப்புகளுடன் உங்கள் பயன்பாட்டு அனுபவத்தைத் தனிப்பயனாக்கவும்.")==true) ? true : false;
+                return isTamilMatch ;
+            case "Kannada":
+                boolean isKannadaMatch  = (actualText.equalsIgnoreCase("ನಿಮ್ಮ ಆದ್ಯತೆಗಳ ಪ್ರಕಾರ ವೈಯಕ್ತೀಕರಿಸಿದ ಸೆಟ್ಟಿಂಗ್\u200Cಗಳೊಂದಿಗೆ ನಿಮ್ಮ ಅಪ್ಲಿಕೇಶನ್ ಅನುಭವವನ್ನು ಕಸ್ಟಮೈಸ್ ಮಾಡಿ.")==true) ? true : false;
+                return isKannadaMatch ;
+            case "Hindi":
+                boolean isHindiMatch  = (actualText.equalsIgnoreCase("अपनी प्राथमिकताओं के अनुसार वैयक्तिकृत सेटिंग्स के साथ अपने ऐप अनुभव को अनुकूलित करें।")==true) ? true : false;
+                return isHindiMatch ;
+            case "Arabic":
+                boolean isArabicMatch  = (actualText.equalsIgnoreCase("قم بتخصيص تجربة التطبيق الخاص بك من خلال الإعدادات المخصصة وفقًا لتفضيلاتك.")==true) ? true : false;
+                return isArabicMatch ;
+            case "Filipino":
+                boolean isFilipinoMatch  = (actualText.equalsIgnoreCase("I-customize ang iyong karanasan sa app gamit ang mga naka-personalize na setting ayon sa iyong mga kagustuhan.")==true) ? true : false;
+                return isFilipinoMatch ;
+        }
+        return false;
+    }
+
+    public boolean  verifyLanguageForCardViewDescriptionDisplayed(String language){
+        String actualText = getTextFromLocator(cardViewDescription);
+
+        switch (language) {
+            case "English":
+                boolean isEnglishMatch  = (actualText.equalsIgnoreCase("Your card displays your verified identity information. Tap for a detailed view or click on … for additional options.")==true) ? true : false;
+                return isEnglishMatch ;
+            case "Tamil":
+                boolean isTamilMatch  = (actualText.equalsIgnoreCase("உங்கள் விருப்பங்களின்படி தனிப்பயனாக்கப்பட்ட அமைப்புகளுடன் உங்கள் பயன்பாட்டு அனுபவத்தைத் தனிப்பயனாக்கவும்.")==true) ? true : false;
+                return isTamilMatch ;
+            case "Kannada":
+                boolean isKannadaMatch  = (actualText.equalsIgnoreCase("ನಿಮ್ಮ ಆದ್ಯತೆಗಳ ಪ್ರಕಾರ ವೈಯಕ್ತೀಕರಿಸಿದ ಸೆಟ್ಟಿಂಗ್\u200Cಗಳೊಂದಿಗೆ ನಿಮ್ಮ ಅಪ್ಲಿಕೇಶನ್ ಅನುಭವವನ್ನು ಕಸ್ಟಮೈಸ್ ಮಾಡಿ.")==true) ? true : false;
+                return isKannadaMatch ;
+            case "Hindi":
+                boolean isHindiMatch  = (actualText.equalsIgnoreCase("अपनी प्राथमिकताओं के अनुसार वैयक्तिकृत सेटिंग्स के साथ अपने ऐप अनुभव को अनुकूलित करें।")==true) ? true : false;
+                return isHindiMatch ;
+            case "Arabic":
+                boolean isArabicMatch  = (actualText.equalsIgnoreCase("قم بتخصيص تجربة التطبيق الخاص بك من خلال الإعدادات المخصصة وفقًا لتفضيلاتك.")==true) ? true : false;
+                return isArabicMatch ;
+            case "Filipino":
+                boolean isFilipinoMatch  = (actualText.equalsIgnoreCase("I-customize ang iyong karanasan sa app gamit ang mga naka-personalize na setting ayon sa iyong mga kagustuhan.")==true) ? true : false;
+                return isFilipinoMatch ;
+        }
+        return false;
+    }
+
+
     public void clickOnFirstNextButton() {
         clickOnElement(firstNextButton);
     }
@@ -724,6 +785,10 @@ public class HomePage extends BasePage {
 
     public void clickOnForthNextButton() {
         clickOnElement(forthNextButton);
+    }
+
+    public void clickOnFifthDoneButton() {
+        clickOnElement(fifthDoneButton);
     }
 
     public void clickOnFifthNextButton() {
@@ -746,7 +811,7 @@ public class HomePage extends BasePage {
 
     public void clickOnDoneButton() {
         if(isElementDisplayed(doneButton))
-        clickOnElement(doneButton);
+            clickOnElement(doneButton);
     }
 
     public void clickOnNextButtonForInjiTour() {
@@ -755,7 +820,7 @@ public class HomePage extends BasePage {
             clickOnElement(secondNextButton);
             clickOnElement(thirdNextButton);
             clickOnElement(forthNextButton);
-            clickOnElement(fifthNextButton);
+            clickOnElement(fifthDoneButton);
         }
     }
 }

@@ -1,6 +1,7 @@
 package iosTestCases;
 
 import BaseTest.IosBaseTest;
+import inji.api.BaseTestCase;
 import inji.constants.Target;
 import inji.pages.*;
 import inji.utils.IosUtil;
@@ -85,7 +86,7 @@ public class VerifyWelcomePagesTest extends IosBaseTest {
 
         assertTrue(homePage.verifyLanguageForAppSettingsHeaderDisplayed("English"), "Verify if app settings header text displayed");
         assertTrue(homePage.verifyLanguageForAppSettingsDescriptionDisplayed("English"), "Verify if app settings description displayed");
-        homePage.clickOnFifthNextButton();
+        homePage.clickOnFifthDoneButton();
         homePage.clickOnNextButtonForInjiTour();
         assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
 
@@ -184,5 +185,242 @@ public class VerifyWelcomePagesTest extends IosBaseTest {
 
         IosUtil.scrollToElement(driver,58,712,160,129);
         assertEquals(homePage.verifyLanguageForNoVCDownloadedPageLoaded(), "Bring your digital identity");
+    }
+
+    @Test
+    public void verifyWelcomePagesFromInjiTourGuideForFirstCard() {
+        ChooseLanguagePage chooseLanguagePage = new ChooseLanguagePage(driver);
+
+        assertTrue(chooseLanguagePage.isChooseLanguagePageLoaded(), "Verify if choose language page is displayed");
+        WelcomePage welcomePage = chooseLanguagePage.clickOnSavePreference();
+
+        assertTrue(welcomePage.isWelcomePageLoaded(), "Verify if welcome page is loaded");
+        AppUnlockMethodPage appUnlockMethodPage = welcomePage.clickOnSkipButton();
+
+        assertTrue(appUnlockMethodPage.isAppUnlockMethodPageLoaded(), "Verify if app unlocked page is displayed");
+        SetPasscode setPasscode = appUnlockMethodPage.clickOnUsePasscode();
+
+        assertTrue(setPasscode.isSetPassCodePageLoaded(), "Verify if set passcode page is displayed");
+        ConfirmPasscode confirmPasscode = setPasscode.enterPasscode(TestDataReader.readData("passcode"), Target.IOS);
+
+        assertTrue(confirmPasscode.isConfirmPassCodePageLoaded(), "Verify if confirm passcode page is displayed");
+        HomePage homePage = confirmPasscode.enterPasscodeInConfirmPasscodePage(TestDataReader.readData("passcode"), Target.IOS);
+
+        homePage.clickOnNextButtonForInjiTour();
+        assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
+
+        AddNewCardPage addNewCardPage = homePage.downloadCard();
+        EsignetLoginPage esignetLoginPage =  addNewCardPage.clickOnDownloadViaEsignet();
+
+        esignetLoginPage.clickOnEsignetLoginWithOtpButton();
+        addNewCardPage.clickOnContinueButtonInSigninPopupIos();
+
+
+//        assertTrue(esignetLoginPage.isEnterYourVidTextDisplayed(), "Verify if enter your vid text is displayed");
+        String uin=TestDataReader.readData("uin");
+        OtpVerificationPage otpVerification= esignetLoginPage.setEnterIdTextBox(uin);
+
+        esignetLoginPage.clickOnGetOtpButton();
+
+        otpVerification.enterOtpForEsignet(BaseTestCase.getOtp(), Target.IOS);
+        esignetLoginPage.clickOnVerifyButtonIos();
+
+        assertTrue(homePage.isNameDisplayed(TestDataReader.readData("fullName")), "Verify if full name is displayed");
+
+        SettingsPage settingsPage = homePage.clickOnSettingIcon();
+
+        assertTrue(settingsPage.isSettingPageLoaded(), "Verify if setting page is displayed");
+        settingsPage.clickOnInjiTourGuide();
+
+        assertTrue(homePage.verifyLanguageForHelpAndFrequentlyAskedQuationsHeaderDisplayed("English"), "Verify if help and frequently asked quations header displayed");
+        assertTrue(homePage.verifyLanguageForHelpAndFrequentlyAskedQuationsDescriptionDisplayed("English"), "Verify if help and frequently asked quations description displayed");
+        homePage.clickOnFirstNextButton();
+
+        assertTrue(homePage.verifyLanguageForDownloadCardHeaderDisplayed("English"), "Verify if download card header text displayed");
+        assertTrue(homePage.verifyLanguageForDownloadCardDescriptionDisplayed("English"), "Verify if download card description displayed");
+        homePage.clickOnSecondNextButton();
+
+        assertTrue(homePage.verifyLanguageForShareCardHeaderDisplayed("English"), "Verify if share card header text displayed");
+        assertTrue(homePage.verifyLanguageForShareCardDescriptionDisplayed("English"), "Verify if share card description displayed");
+        homePage.clickOnThirdNextButton();
+
+        assertTrue(homePage.verifyLanguageForAccesstoHistoryHeaderDisplayed("English"), "Verify if access to history header text displayed");
+        assertTrue(homePage.verifyLanguageForaccesstoHistoryDescriptionDisplayed("English"), "Verify if access to history description displayed");
+        homePage.clickOnForthNextButton();
+
+        assertTrue(homePage.verifyLanguageForAppSettingsHeaderDisplayed("English"), "Verify if app settings header text displayed");
+        assertTrue(homePage.verifyLanguageForAppSettingsDescriptionDisplayed("English"), "Verify if app settings description displayed");
+        homePage.clickOnFifthNextButton();
+
+        assertTrue(homePage.verifyLanguageForCardViewTitleDisplayed("English"), "Verify if card header text displayed");
+        assertTrue(homePage.verifyLanguageForCardViewDescriptionDisplayed("English"), "Verify if card description displayed");
+        homePage.clickOnDoneButton();
+
+        assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
+
+        homePage.downloadCard();
+        addNewCardPage.clickOnDownloadViaEsignet();
+
+        esignetLoginPage.clickOnEsignetLoginWithOtpButton();
+        addNewCardPage.clickOnContinueButtonInSigninPopupIos();
+
+        esignetLoginPage.setEnterIdTextBox(uin);
+
+        esignetLoginPage.clickOnGetOtpButton();
+
+        otpVerification.enterOtpForEsignet(BaseTestCase.getOtp(), Target.IOS);
+        esignetLoginPage.clickOnVerifyButtonIos();
+
+        assertTrue(homePage.isNameDisplayed(TestDataReader.readData("fullName")), "Verify if full name is displayed");
+
+        assertTrue(homePage.isNameDisplayed(TestDataReader.readData("fullName")), "Verify if full name is displayed");
+
+        homePage.clickOnSettingIcon();
+
+        assertTrue(settingsPage.isSettingPageLoaded(), "Verify if setting page is displayed");
+        settingsPage.clickOnInjiTourGuide();
+
+        assertTrue(homePage.verifyLanguageForHelpAndFrequentlyAskedQuationsHeaderDisplayed("English"), "Verify if help and frequently asked quations header displayed");
+        assertTrue(homePage.verifyLanguageForHelpAndFrequentlyAskedQuationsDescriptionDisplayed("English"), "Verify if help and frequently asked quations description displayed");
+        homePage.clickOnFirstNextButton();
+
+        assertTrue(homePage.verifyLanguageForDownloadCardHeaderDisplayed("English"), "Verify if download card header text displayed");
+        assertTrue(homePage.verifyLanguageForDownloadCardDescriptionDisplayed("English"), "Verify if download card description displayed");
+        homePage.clickOnSecondNextButton();
+
+        assertTrue(homePage.verifyLanguageForShareCardHeaderDisplayed("English"), "Verify if share card header text displayed");
+        assertTrue(homePage.verifyLanguageForShareCardDescriptionDisplayed("English"), "Verify if share card description displayed");
+        homePage.clickOnThirdNextButton();
+
+        assertTrue(homePage.verifyLanguageForAccesstoHistoryHeaderDisplayed("English"), "Verify if access to history header text displayed");
+        assertTrue(homePage.verifyLanguageForaccesstoHistoryDescriptionDisplayed("English"), "Verify if access to history description displayed");
+        homePage.clickOnForthNextButton();
+
+        assertTrue(homePage.verifyLanguageForAppSettingsHeaderDisplayed("English"), "Verify if app settings header text displayed");
+        assertTrue(homePage.verifyLanguageForAppSettingsDescriptionDisplayed("English"), "Verify if app settings description displayed");
+        homePage.clickOnDoneButton();
+
+    }
+
+
+    @Test
+    public void verifyWelcomePagesFromInjiTourGuideAfterDeleteTheCard() throws InterruptedException {
+        ChooseLanguagePage chooseLanguagePage = new ChooseLanguagePage(driver);
+
+        assertTrue(chooseLanguagePage.isChooseLanguagePageLoaded(), "Verify if choose language page is displayed");
+        WelcomePage welcomePage = chooseLanguagePage.clickOnSavePreference();
+
+        assertTrue(welcomePage.isWelcomePageLoaded(), "Verify if welcome page is loaded");
+        AppUnlockMethodPage appUnlockMethodPage = welcomePage.clickOnSkipButton();
+
+        assertTrue(appUnlockMethodPage.isAppUnlockMethodPageLoaded(), "Verify if app unlocked page is displayed");
+        SetPasscode setPasscode = appUnlockMethodPage.clickOnUsePasscode();
+
+        assertTrue(setPasscode.isSetPassCodePageLoaded(), "Verify if set passcode page is displayed");
+        ConfirmPasscode confirmPasscode = setPasscode.enterPasscode(TestDataReader.readData("passcode"), Target.IOS);
+
+        assertTrue(confirmPasscode.isConfirmPassCodePageLoaded(), "Verify if confirm passcode page is displayed");
+        HomePage homePage = confirmPasscode.enterPasscodeInConfirmPasscodePage(TestDataReader.readData("passcode"), Target.IOS);
+
+        homePage.clickOnNextButtonForInjiTour();
+        assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
+
+        AddNewCardPage addNewCardPage = homePage.downloadCard();
+
+        assertTrue(addNewCardPage.isAddNewCardPageLoaded(), "Verify if add new card page is displayed");
+        assertTrue(addNewCardPage.isIssuerDescriptionEsignetDisplayed(), "Verify if issuer description  esignet displayed");
+        assertTrue(addNewCardPage.isIssuerSearchBarDisplayed(), "Verify if issuer search bar displayed");
+        assertTrue(addNewCardPage.isAddNewCardPageLoaded(), "Verify if add new card page is displayed");
+        assertTrue(addNewCardPage.isAddNewCardPageGuideMessageForEsignetDisplayed(), "Verify if add new card guide message displayed");
+        assertTrue(addNewCardPage.isDownloadViaEsignetDisplayed(), "Verify if download via uin displayed");
+        EsignetLoginPage esignetLoginPage =  addNewCardPage.clickOnDownloadViaEsignet();
+
+        esignetLoginPage.clickOnEsignetLoginWithOtpButton();
+        addNewCardPage.clickOnContinueButtonInSigninPopupIos();
+
+//        assertTrue(esignetLoginPage.isEnterYourVidTextDisplayed(), "Verify if enter your vid text is displayed");
+        String uin=TestDataReader.readData("uin");
+        OtpVerificationPage otpVerification= esignetLoginPage.setEnterIdTextBox(uin);
+
+        esignetLoginPage.clickOnGetOtpButton();
+//        assertTrue(esignetLoginPage.isOtpHasSendMessageDisplayed(),"verify if otp page is displayed");
+
+        otpVerification.enterOtpForEsignet(BaseTestCase.getOtp(), Target.IOS);
+        esignetLoginPage.clickOnVerifyButtonIos();
+
+        assertTrue(homePage.isNameDisplayed(TestDataReader.readData("fullName")), "Verify if full name is displayed");
+
+        SettingsPage settingsPage = homePage.clickOnSettingIcon();
+
+        assertTrue(settingsPage.isSettingPageLoaded(), "Verify if setting page is displayed");
+        settingsPage.clickOnInjiTourGuide();
+
+        assertTrue(homePage.verifyLanguageForHelpAndFrequentlyAskedQuationsHeaderDisplayed("English"), "Verify if help and frequently asked quations header displayed");
+        assertTrue(homePage.verifyLanguageForHelpAndFrequentlyAskedQuationsDescriptionDisplayed("English"), "Verify if help and frequently asked quations description displayed");
+        homePage.clickOnFirstNextButton();
+
+        assertTrue(homePage.verifyLanguageForDownloadCardHeaderDisplayed("English"), "Verify if download card header text displayed");
+        assertTrue(homePage.verifyLanguageForDownloadCardDescriptionDisplayed("English"), "Verify if download card description displayed");
+        homePage.clickOnSecondNextButton();
+
+        assertTrue(homePage.verifyLanguageForShareCardHeaderDisplayed("English"), "Verify if share card header text displayed");
+        assertTrue(homePage.verifyLanguageForShareCardDescriptionDisplayed("English"), "Verify if share card description displayed");
+        homePage.clickOnThirdNextButton();
+
+        assertTrue(homePage.verifyLanguageForAccesstoHistoryHeaderDisplayed("English"), "Verify if access to history header text displayed");
+        assertTrue(homePage.verifyLanguageForaccesstoHistoryDescriptionDisplayed("English"), "Verify if access to history description displayed");
+        homePage.clickOnForthNextButton();
+
+        assertTrue(homePage.verifyLanguageForAppSettingsHeaderDisplayed("English"), "Verify if app settings header text displayed");
+        assertTrue(homePage.verifyLanguageForAppSettingsDescriptionDisplayed("English"), "Verify if app settings description displayed");
+        homePage.clickOnFifthNextButton();
+
+        assertTrue(homePage.verifyLanguageForCardViewTitleDisplayed("English"), "Verify if card header text displayed");
+        assertTrue(homePage.verifyLanguageForCardViewDescriptionDisplayed("English"), "Verify if card description displayed");
+        homePage.clickOnDoneButton();
+
+        assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
+
+        MoreOptionsPage moreOptionsPage = homePage.clickOnMoreOptionsButton();
+        assertTrue(moreOptionsPage.isMoreOptionsPageLoaded(), "Verify if more options page is displayed");
+
+        PleaseConfirmPopupPage pleaseConfirmPopupPage = moreOptionsPage.clickOnRemoveFromWallet();
+        assertTrue(pleaseConfirmPopupPage.isPleaseConfirmPopupPageLoaded(), "Verify if pop up page is displayed");
+
+        pleaseConfirmPopupPage.clickOnConfirmButton();
+        assertEquals(homePage.verifyLanguageForNoVCDownloadedPageLoaded(), "Bring your digital identity");
+
+        HistoryPage historyPage = homePage.clickOnHistoryButton();
+        assertTrue(historyPage.isHistoryPageLoaded(), "Verify if history page is displayed");
+        historyPage.verifyHistory(uin + " Removed from wallet", Target.IOS);
+        homePage.clickOnHomeButton();
+
+        assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
+        homePage.clickOnSettingIcon();
+
+        assertTrue(settingsPage.isSettingPageLoaded(), "Verify if setting page is displayed");
+        settingsPage.clickOnInjiTourGuide();
+
+        assertTrue(homePage.verifyLanguageForHelpAndFrequentlyAskedQuationsHeaderDisplayed("English"), "Verify if help and frequently asked quations header displayed");
+        assertTrue(homePage.verifyLanguageForHelpAndFrequentlyAskedQuationsDescriptionDisplayed("English"), "Verify if help and frequently asked quations description displayed");
+        homePage.clickOnFirstNextButton();
+
+        assertTrue(homePage.verifyLanguageForDownloadCardHeaderDisplayed("English"), "Verify if download card header text displayed");
+        assertTrue(homePage.verifyLanguageForDownloadCardDescriptionDisplayed("English"), "Verify if download card description displayed");
+        homePage.clickOnSecondNextButton();
+
+        assertTrue(homePage.verifyLanguageForShareCardHeaderDisplayed("English"), "Verify if share card header text displayed");
+        assertTrue(homePage.verifyLanguageForShareCardDescriptionDisplayed("English"), "Verify if share card description displayed");
+        homePage.clickOnThirdNextButton();
+
+        assertTrue(homePage.verifyLanguageForAccesstoHistoryHeaderDisplayed("English"), "Verify if access to history header text displayed");
+        assertTrue(homePage.verifyLanguageForaccesstoHistoryDescriptionDisplayed("English"), "Verify if access to history description displayed");
+        homePage.clickOnForthNextButton();
+
+        assertTrue(homePage.verifyLanguageForAppSettingsHeaderDisplayed("English"), "Verify if app settings header text displayed");
+        assertTrue(homePage.verifyLanguageForAppSettingsDescriptionDisplayed("English"), "Verify if app settings description displayed");
+        homePage.clickOnFifthDoneButton();
+
+        assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
     }
 }
