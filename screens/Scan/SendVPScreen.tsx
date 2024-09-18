@@ -18,6 +18,8 @@ import {ConsentOverlay} from './ConsentOverlay';
 import {FaceVerificationAlertOverlay} from './FaceVerificationAlertOverlay';
 import {useSendVPScreen} from './SendVPScreenController';
 import LinearGradient from 'react-native-linear-gradient';
+import {Error} from '../../components/ui/Error';
+import {SvgImage} from '../../components/ui/svg';
 
 export const SendVPScreen: React.FC = () => {
   console.log('inside sendvp screen::');
@@ -76,6 +78,15 @@ export const SendVPScreen: React.FC = () => {
       .some(vc => isMosipVC(vc.vcMetadata.issuer));
     return hasImage;
   };
+
+  let error = {show: false, title: '', message: '', showRetryButton: true};
+
+  if (Object.keys(vcsMatchingAuthRequest).length === 0) {
+    error.show = true;
+    error.title = 'No matching credentials found!';
+    error.message = 'Retry sharing after downloading the credentials.';
+    error.showRetryButton = false;
+  }
 
   return (
     <React.Fragment>
@@ -208,6 +219,26 @@ export const SendVPScreen: React.FC = () => {
           />
         </>
       )}
+      <Error
+        isModal
+        alignActionsOnEnd
+        showClose={false}
+        isVisible={true}
+        title={error.title}
+        message={error.message}
+        image={SvgImage.PermissionDenied()}
+        primaryButtonTestID={'retry'}
+        primaryButtonText={
+          error.showRetryButton ? t('ScanScreen:status.retry') : undefined
+        }
+        primaryButtonEvent={undefined}
+        textButtonTestID={'home'}
+        textButtonText={t('ScanScreen:status.accepted.home')}
+        textButtonEvent={controller.GO_TO_HOME}
+        customImageStyles={{paddingBottom: 0, marginBottom: -6}}
+        customStyles={{marginTop: '30%'}}
+        testID={'vpShareError'}
+      />
     </React.Fragment>
   );
 };
