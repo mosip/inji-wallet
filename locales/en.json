@@ -794,6 +794,20 @@
       "message": "Declining the consent will prevent you from sharing your verifiable credentials.",
       "confirmButton": "Yes, Proceed",
       "cancelButton": "Go Back"
+    },
+    "errors": {
+      "noMatchingCredentials": {
+        "title": "No matching credentials found!",
+        "message": "Retry sharing after downloading the credentials."
+      },
+      "invalidVerifier": {
+        "title":"An Error Occured!" ,
+        "message":"The verifier is not recognized. Please obtain a valid QR code from the verifier."
+      },
+      "credentialsMismatch": {
+        "title":"An Error Occured!" ,
+        "message":"Credential mismatch detected. Ensure you have selected the right one and try again."
+      }
     }
   },
   "VerifyIdentityOverlay": {

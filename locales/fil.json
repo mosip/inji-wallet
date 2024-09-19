@@ -785,6 +785,20 @@
       "message": "Ang pagtanggi sa pahintulot ay mapipigilan ka sa pagbabahagi ng iyong mga nabe-verify na kredensyal.",
       "confirmButton": "Oo, Magpatuloy",
       "cancelButton": "Bumalik ka"
+    },
+    "errors": {
+      "noMatchingCredentials": {
+        "title": "Walang nakitang katugmang mga kredensyal!",
+        "message": "Subukang muli ang pagbabahagi pagkatapos i-download ang mga kredensyal."
+      },
+      "invalidVerifier": {
+        "title": "Isang Error ang Naganap!",
+        "message": "Hindi nakikilala ang verifier. Mangyaring kumuha ng wastong QR code mula sa verifier."
+      },
+      "credentialsMismatch": {
+        "title": "Isang Error ang Naganap!",
+        "message": "May nakitang hindi pagkakatugma ng kredensyal. Tiyaking napili mo ang tama at subukang muli."
+      }
     }
   },
   "VerifyIdentityOverlay": {

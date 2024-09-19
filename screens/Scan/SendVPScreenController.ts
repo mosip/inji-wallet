@@ -115,20 +115,18 @@ export function useSendVPScreen() {
 
   if (isSelectingVCs && Object.keys(vcsMatchingAuthRequest).length === 0) {
     errorModal.show = true;
-    errorModal.title = 'No matching credentials found!';
-    errorModal.message = 'Retry sharing after downloading the credentials.';
+    errorModal.title = t('errors.noMatchingCredentials.title');
+    errorModal.message = t('errors.noMatchingCredentials.message');
     errorModal.showRetryButton = false;
   } else if (error.includes('Verifier authentication was unsuccessful')) {
     errorModal.show = true;
-    errorModal.title = 'An Error Occured!';
-    errorModal.message =
-      'The verifier is not recognized. Please obtain a valid QR code from the verifier.';
+    errorModal.title = t('errors.invalidVerifier.title');
+    errorModal.message = t('errors.invalidVerifier.message');
     errorModal.showRetryButton = false;
   } else if (error.includes('credential mismatch detected')) {
     errorModal.show = true;
-    errorModal.title = 'An Error Occured!';
-    errorModal.message =
-      'Credential mismatch detected. Ensure you have selected the right one and try again.';
+    errorModal.title = t('errors.credentialsMismatch.title');
+    errorModal.message = t('errors.credentialsMismatch.message');
     errorModal.showRetryButton = false;
   }
 
