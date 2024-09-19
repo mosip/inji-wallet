@@ -4,7 +4,9 @@ MIMOTO_HOST = ENV["MIMOTO_HOST"]
 ESIGNET_HOST = ENV["ESIGNET_HOST"]
 APPLICATION_THEME = ENV["APPLICATION_THEME"]
 RELEASE_KEYSTORE_ALIAS = ENV["RELEASE_KEYSTORE_ALIAS"]
+DEBUG_KEYSTORE_ALIAS = ENV["DEBUG_KEYSTORE_ALIAS"]
 RELEASE_KEYSTORE_PASSWORD = ENV["RELEASE_KEYSTORE_PASSWORD"]
+DEBUG_KEYSTORE_PASSWORD = ENV["DEBUG_KEYSTORE_PASSWORD"]
 PLAY_CONSOLE_RELEASE_DESCRIPTION = ENV["BUILD_DESCRIPTION"]
 SLACK_URL = ENV["SLACK_WEBHOOK_URL"]
 CREDENTIAL_REGISTRY_EDIT = ENV["CREDENTIAL_REGISTRY_EDIT"]
@@ -43,9 +45,14 @@ def generate_app_name()
   end
 end
 
-desc "Verify Build for Android"
-lane :android_build do
+desc "Verify Release Build for Android"
+lane :android_build_release do
   gradle(task: "assembleResidentappRelease")
+end
+
+desc "Verify Debug Build for Android"
+lane :android_build_debug do
+  gradle(task: "assembleResidentappDebug")
 end
 
 desc "Deploy an Internal testing version to the Google Play"

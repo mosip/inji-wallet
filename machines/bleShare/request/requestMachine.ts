@@ -36,7 +36,6 @@ import {
   sendStartEvent,
 } from '../../../shared/telemetry/TelemetryUtils';
 import {TelemetryConstants} from '../../../shared/telemetry/TelemetryConstants';
-import {getCredentialTypes} from '../../../components/VC/common/VCUtils';
 
 import {EventTypes, VerificationStatus, verifier} from '../../../shared/tuvali';
 
@@ -619,9 +618,9 @@ export const requestMachine =
               _vcKey: vcMetadata.getVcKey(),
               type: context.receiveLogType,
               id: vcMetadata.displayId,
-              idType: getCredentialTypes(
-                context.incomingVc.verifiableCredential,
-              ),
+              credentialConfigurationId:
+                context.incomingVc.verifiableCredential
+                  .credentialConfigurationId,
               issuer: vcMetadata.issuer!!,
               timestamp: Date.now(),
               deviceName:

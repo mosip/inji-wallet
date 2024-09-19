@@ -30,8 +30,8 @@ export function selectVerifiableCredentialData(state: State) {
       getMosipLogo(),
     issuer: vcMetadata.issuer,
     wellKnown: state.context.incomingVc?.verifiableCredential?.wellKnown,
-    credentialTypes:
-      state.context.incomingVc?.verifiableCredential?.credentialTypes,
+    credentialConfigurationId:
+      state.context.incomingVc?.verifiableCredential?.credentialConfigurationId,
   };
 }
 

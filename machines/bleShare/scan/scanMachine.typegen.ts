@@ -18,6 +18,7 @@ export interface Typegen0 {
       type: 'xstate.after(DESTROY_TIMEOUT)#scan.clearingConnection';
     };
     'xstate.init': {type: 'xstate.init'};
+    'xstate.stop': {type: 'xstate.stop'};
   };
   invokeSrcNameMap: {
     checkBluetoothPermission: 'done.invoke.scan.checkBluetoothPermission.checking:invocation[0]';
@@ -55,6 +56,7 @@ export interface Typegen0 {
       | 'removeLoggers'
       | 'resetFaceCaptureBannerStatus'
       | 'resetFlowType'
+      | 'resetLinkCode'
       | 'resetSelectedVc'
       | 'resetShowQuickShareSuccessBanner'
       | 'sendBLEConnectionErrorEvent'
@@ -65,8 +67,10 @@ export interface Typegen0 {
       | 'sendVcShareSuccessEvent'
       | 'sendVcSharingStartEvent'
       | 'setBleError'
+      | 'setChildRef'
       | 'setFlowType'
       | 'setLinkCode'
+      | 'setLinkCodeFromDeepLink'
       | 'setOpenId4VPRef'
       | 'setQrLoginRef'
       | 'setQuickShareData'
@@ -149,6 +153,15 @@ export interface Typegen0 {
       | 'RETRY'
       | 'SCREEN_BLUR'
       | 'xstate.init';
+    resetLinkCode:
+      | 'BLE_ERROR'
+      | 'DISMISS'
+      | 'DISMISS_QUICK_SHARE_BANNER'
+      | 'RESET'
+      | 'SCREEN_BLUR'
+      | 'SCREEN_FOCUS'
+      | 'SELECT_VC'
+      | 'xstate.stop';
     resetSelectedVc:
       | 'DISCONNECT'
       | 'DISMISS'
@@ -159,15 +172,17 @@ export interface Typegen0 {
       | 'xstate.init';
     resetShowQuickShareSuccessBanner: 'DISMISS' | 'DISMISS_QUICK_SHARE_BANNER';
     sendBLEConnectionErrorEvent: 'BLE_ERROR';
-    sendScanData: 'SCAN';
+    sendScanData: 'QRLOGIN_VIA_DEEP_LINK' | 'SCAN';
     sendVCShareFlowCancelEndEvent: 'CANCEL';
     sendVCShareFlowTimeoutEndEvent: 'CANCEL' | 'RETRY';
     sendVPScanData: 'SCAN';
     sendVcShareSuccessEvent: 'VC_ACCEPTED';
     sendVcSharingStartEvent: 'SCAN';
     setBleError: 'BLE_ERROR';
+    setChildRef: 'QRLOGIN_VIA_DEEP_LINK';
     setFlowType: 'SELECT_VC';
     setLinkCode: 'SCAN';
+    setLinkCodeFromDeepLink: 'QRLOGIN_VIA_DEEP_LINK';
     setOpenId4VPRef: 'SCAN';
     setQrLoginRef: 'SCAN';
     setQuickShareData: 'SCAN';
@@ -206,7 +221,7 @@ export interface Typegen0 {
   };
   eventsCausingServices: {
     OpenId4VP: 'SCAN';
-    QrLogin: 'SCAN';
+    QrLogin: 'QRLOGIN_VIA_DEEP_LINK' | 'SCAN';
     checkBluetoothPermission:
       | ''
       | 'BLUETOOTH_STATE_DISABLED'
@@ -269,6 +284,7 @@ export interface Typegen0 {
     | 'loadVCS.idle'
     | 'loadVCS.navigatingToHome'
     | 'nearByDevicesPermissionDenied'
+    | 'qrLoginViaDeepLink'
     | 'recheckBluetoothState'
     | 'recheckBluetoothState.checking'
     | 'recheckBluetoothState.enabled'

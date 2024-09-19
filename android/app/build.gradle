@@ -256,11 +256,12 @@ android {
 dependencies {
     implementation("com.facebook.react:react-android")
     implementation 'com.facebook.soloader:soloader:0.10.1+'
-    implementation("io.mosip:pixelpass:0.2.0")
-    implementation("io.mosip:secure-keystore:0.2.0")
-    implementation("io.mosip:tuvali:0.5.0")
-    implementation("io.mosip:inji-vci-client:0.1.0")
+    implementation("io.mosip:pixelpass:0.2.1")
+    implementation("io.mosip:secure-keystore:0.3.0-SNAPSHOT")
+    implementation("io.mosip:tuvali:0.5.1")
+    implementation("io.mosip:inji-vci-client:0.2.0-SNAPSHOT")
     implementation("com.google.code.gson:gson:2.10.1")
+
 
     def isGifEnabled = (findProperty('expo.gif.enabled') ?: "") == "true";
     def isWebpEnabled = (findProperty('expo.webp.enabled') ?: "") == "true";

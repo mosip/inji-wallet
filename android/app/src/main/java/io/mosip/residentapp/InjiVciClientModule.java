@@ -12,6 +12,8 @@ import com.facebook.react.bridge.ReactMethod;
 import com.facebook.react.bridge.ReadableArray;
 import com.facebook.react.bridge.ReadableMap;
 
+import java.util.Objects;
+
 import io.mosip.vciclient.VCIClient;
 import io.mosip.vciclient.constants.CredentialFormat;
 import io.mosip.vciclient.credentialResponse.CredentialResponse;
@@ -41,20 +43,28 @@ public class InjiVciClientModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public void requestCredential(ReadableMap issuerMetaData, String jwtProofValue, String accessToken, Promise promise) {
         try {
-            CredentialFormat credentialFormat;
-            switch (issuerMetaData.getString("credentialFormat")) {
-                case "ldp_vc":
-                    credentialFormat = CredentialFormat.LDP_VC;
-                    break;
-                default:
-                    credentialFormat = CredentialFormat.LDP_VC;
+            IssuerMetaData constructedIssuerMetadata ;
+            String issuerMetadataCredentialFormat = issuerMetaData.getString("credentialFormat");
+            if(Objects.equals(issuerMetadataCredentialFormat, CredentialFormat.LDP_VC.getValue())){
+                constructedIssuerMetadata =  new IssuerMetaData(
+                        issuerMetaData.getString("credentialAudience"),
+                        issuerMetaData.getString("credentialEndpoint"),
+                        issuerMetaData.getInt("downloadTimeoutInMilliSeconds"),
+                        convertReadableArrayToStringArray(issuerMetaData.getArray("credentialType")),
+                        CredentialFormat.LDP_VC,null,null);
+            } else if (Objects.equals(issuerMetadataCredentialFormat, CredentialFormat.MSO_MDOC.getValue())) {
+                constructedIssuerMetadata =  new IssuerMetaData(
+                        issuerMetaData.getString("credentialAudience"),
+                        issuerMetaData.getString("credentialEndpoint"),
+                        issuerMetaData.getInt("downloadTimeoutInMilliSeconds"),
+                        null,
+                        CredentialFormat.MSO_MDOC, issuerMetaData.getString("doctype"),
+                        issuerMetaData.getMap("claims").toHashMap());
+            } else {
+                throw new IllegalStateException("Unexpected value: " + issuerMetadataCredentialFormat);
             }
-            CredentialResponse response = vciClient.requestCredential(new IssuerMetaData(
-                            issuerMetaData.getString("credentialAudience"),
-                            issuerMetaData.getString("credentialEndpoint"),
-                            issuerMetaData.getInt("downloadTimeoutInMilliSeconds"),
-                            convertReadableArrayToStringArray(issuerMetaData.getArray("credentialType")),
-                            credentialFormat), new JWTProof(jwtProofValue)
+
+            CredentialResponse response = vciClient.requestCredential(constructedIssuerMetadata, new JWTProof(jwtProofValue)
                     , accessToken);
             promise.resolve(response.toJsonString());
         } catch (Exception exception) {

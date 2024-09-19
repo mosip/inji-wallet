@@ -4,6 +4,7 @@ import {Image, ImageBackground, View} from 'react-native';
 import {
   Credential,
   VerifiableCredential,
+  VerifiableCredentialData,
   WalletBindingResponse,
 } from '../../../machines/VerifiableCredential/VCMetaMachine/vc';
 import {Button, Column, Row, Text} from '../../ui';
@@ -20,6 +21,7 @@ import {
   getTextColor,
 } from '../common/VCUtils';
 import {ProfileIcon} from '../../ProfileIcon';
+import {VCFormat} from '../../../shared/VCFormat';
 
 const getProfileImage = (face: any) => {
   if (face) {
@@ -42,10 +44,23 @@ export const VCDetailView: React.FC<VCItemDetailsProps> = props => {
   const verifiableCredential = props.credential;
 
   const shouldShowHrLine = verifiableCredential => {
-    const availableFieldNames = Object.keys(
-      verifiableCredential?.credentialSubject,
-    );
-
+    let availableFieldNames: string[] = [];
+    if (props.verifiableCredentialData.vcMetadata.format === VCFormat.ldp_vc) {
+      availableFieldNames = Object.keys(
+        verifiableCredential?.credentialSubject,
+      );
+    } else if (
+      props.verifiableCredentialData.vcMetadata.format === VCFormat.mso_mdoc
+    ) {
+      const namespaces = verifiableCredential['issuerSigned']['nameSpaces'];
+      Object.keys(namespaces).forEach(namespace => {
+        (namespaces[namespace] as Array<Object>).forEach(element => {
+          availableFieldNames.push(
+            `${namespace}~${element['elementIdentifier']}`,
+          );
+        });
+      });
+    }
     for (const fieldName of availableFieldNames) {
       if (
         BOTTOM_SECTION_FIELDS_WITH_DETAILED_ADDRESS_FIELDS.includes(fieldName)
@@ -220,7 +235,7 @@ export interface VCItemDetailsProps {
   fields: any[];
   wellknown: any;
   credential: VerifiableCredential | Credential;
-  verifiableCredentialData: any;
+  verifiableCredentialData: VerifiableCredentialData;
   walletBindingResponse?: WalletBindingResponse;
   onBinding?: () => void;
   activeTab?: Number;

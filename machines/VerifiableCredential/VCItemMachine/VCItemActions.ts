@@ -2,12 +2,7 @@ import {assign, send} from 'xstate';
 import {CommunicationDetails} from '../../../shared/Utils';
 import {StoreEvents} from '../../store';
 import {VCMetadata} from '../../../shared/VCMetadata';
-import {
-  API_CACHED_STORAGE_KEYS,
-  MIMOTO_BASE_URL,
-  MY_VCS_STORE_KEY,
-} from '../../../shared/constants';
-import {KeyPair} from 'react-native-rsa-native';
+import {MIMOTO_BASE_URL, MY_VCS_STORE_KEY} from '../../../shared/constants';
 import i18n from '../../../i18n';
 import {getHomeMachineService} from '../../../screens/Home/HomeScreenController';
 import {DownloadProps} from '../../../shared/api';
@@ -31,7 +26,6 @@ import {BackupEvents} from '../../backupAndRestore/backup';
 import {VcMetaEvents} from '../VCMetaMachine/VCMetaMachine';
 import {WalletBindingResponse} from '../VCMetaMachine/vc';
 import {BannerStatusType} from '../../../components/BannerNotification';
-import {getCredentialTypes} from '../../../components/VC/common/VCUtils';
 
 export const VCItemActions = model => {
   return {
@@ -375,14 +369,14 @@ export const VCItemActions = model => {
     setPublicKey: assign({
       publicKey: (_context, event) => {
         if (!isHardwareKeystoreExists) {
-          return (event.data as KeyPair).public;
+          return event.data.publicKey as string;
         }
-        return event.data as string;
+        return event.data.publicKey as string;
       },
     }),
 
     setPrivateKey: assign({
-      privateKey: (_context, event) => (event.data as KeyPair).private,
+      privateKey: (_context, event) => event.data.privateKey as string,
     }),
     resetPrivateKey: assign({
       privateKey: () => '',
@@ -403,7 +397,9 @@ export const VCItemActions = model => {
       },
     ),
     setOTP: model.assign({
-      OTP: (_, event) => event.OTP,
+      OTP: (_, event) => {
+        return event.OTP;
+      },
     }),
 
     unSetOTP: model.assign({OTP: () => ''}),
@@ -460,7 +456,8 @@ export const VCItemActions = model => {
           type: 'VC_DOWNLOADED',
           id: context.vcMetadata.displayId,
           issuer: context.vcMetadata.issuer!!,
-          idType: getCredentialTypes(context.verifiableCredential),
+          credentialConfigurationId:
+            context.verifiableCredential.credentialConfigurationId,
           timestamp: Date.now(),
           deviceName: '',
         });
@@ -473,7 +470,8 @@ export const VCItemActions = model => {
       (context: any, _) => {
         const vcMetadata = VCMetadata.fromVC(context.vcMetadata);
         return ActivityLogEvents.LOG_ACTIVITY({
-          idType: getCredentialTypes(context.verifiableCredential),
+          credentialConfigurationId:
+            context.verifiableCredential.credentialConfigurationId,
           issuer: vcMetadata.issuer!!,
           id: vcMetadata.displayId,
           _vcKey: vcMetadata.getVcKey(),
@@ -492,7 +490,8 @@ export const VCItemActions = model => {
         return ActivityLogEvents.LOG_ACTIVITY({
           _vcKey: vcMetadata.getVcKey(),
           type: 'WALLET_BINDING_SUCCESSFULL',
-          idType: getCredentialTypes(context.verifiableCredential),
+          credentialConfigurationId:
+            context.verifiableCredential.credentialConfigurationId,
           issuer: vcMetadata.issuer!!,
           id: vcMetadata.displayId,
           timestamp: Date.now(),
@@ -511,7 +510,8 @@ export const VCItemActions = model => {
           _vcKey: vcMetadata.getVcKey(),
           type: 'WALLET_BINDING_FAILURE',
           id: vcMetadata.displayId,
-          idType: getCredentialTypes(context.verifiableCredential),
+          credentialConfigurationId:
+            context.verifiableCredential.credentialConfigurationId,
           issuer: vcMetadata.issuer!!,
           timestamp: Date.now(),
           deviceName: '',

@@ -38,8 +38,6 @@ export function selectVerifiableCredentialData(state: State) {
           ?.credentialSubject?.face ||
         state.context.selectedVc?.credential?.biometrics?.face,
       wellKnown: state.context.selectedVc?.verifiableCredential?.wellKnown,
-      credentialTypes:
-        state.context.selectedVc?.verifiableCredential?.credentialTypes,
     },
   ];
 }
@@ -134,4 +132,8 @@ export function selectIsMinimumStorageRequiredForAuditEntryLimitReached(
 
 export function selectIsFaceVerificationConsent(state: State) {
   return state.matches('reviewing.faceVerificationConsent');
+}
+
+export function selectIsQrLoginViaDeepLink(state: State) {
+  return state.matches('qrLoginViaDeepLink');
 }

@@ -86,6 +86,20 @@ export const scanMachine =
                 target: 'restrictSharingVc',
               },
               {
+                target: 'qrLoginViaDeepLink',
+              },
+            ],
+          },
+        },
+        qrLoginViaDeepLink: {
+          on: {
+            QRLOGIN_VIA_DEEP_LINK: [
+              {
+                actions: ['setChildRef', 'setLinkCodeFromDeepLink'],
+                cond: (_, event) => event.linkCode != '',
+                target: '#scan.showQrLogin',
+              },
+              {
                 target: 'startPermissionCheck',
               },
             ],
@@ -429,7 +443,10 @@ export const scanMachine =
             },
           },
           on: {
-            DISMISS: '#scan.checkFaceAuthConsent',
+            DISMISS: {
+              target: '#scan.checkFaceAuthConsent',
+              actions: ['resetLinkCode'],
+            },
           },
           initial: 'idle',
           states: {
@@ -452,6 +469,7 @@ export const scanMachine =
                 getStartEventData(TelemetryConstants.FlowType.qrLogin),
               ),
           ],
+          exit: ['resetLinkCode'],
         },
         connecting: {
           invoke: {

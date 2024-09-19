@@ -13,6 +13,7 @@ import {
   isVCLoaded,
   getBackgroundColour,
   getBackgroundImage,
+  DisplayName,
 } from '../common/VCUtils';
 import {VCItemFieldValue} from '../common/VCItemField';
 import {WalletBinding} from '../../../screens/Home/MyVcs/WalletBinding';
@@ -84,9 +85,7 @@ export const VCCardViewContent: React.FC<VCItemContentProps> = props => {
             <VCItemFieldValue
               key={'fullName'}
               testID="fullName"
-              fieldValue={getLocalizedField(
-                props.credential?.credentialSubject['fullName'],
-              )}
+              fieldValue={getLocalizedField(DisplayName(props))}
               wellknown={props.wellknown}
             />
             <Row>

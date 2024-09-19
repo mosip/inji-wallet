@@ -28,7 +28,6 @@ import {ActivityLogEvents} from '../../activityLog';
 import {StoreEvents} from '../../store';
 import BluetoothStateManager from 'react-native-bluetooth-state-manager';
 import {NativeModules} from 'react-native';
-import {getCredentialTypes} from '../../../components/VC/common/VCUtils';
 
 import {wallet} from '../../../shared/tuvali';
 import {createOpenId4VPMachine} from '../../openId4VP/openId4VPMachine';
@@ -62,12 +61,14 @@ export const ScanActions = (
       },
     }),
 
+    resetLinkCode: model.assign({
+      linkcode: '',
+    }),
     updateShowFaceAuthConsent: model.assign({
       showFaceAuthConsent: (_, event) => {
         return event.response || event.response === null;
       },
     }),
-
     setShowFaceAuthConsent: model.assign({
       showFaceAuthConsent: (_, event) => {
         return !event.isDoNotAskAgainChecked;
@@ -221,7 +222,8 @@ export const ScanActions = (
             ? context.shareLogType
             : 'VC_SHARED_WITH_VERIFICATION_CONSENT',
           id: vcMetadata.displayId,
-          idType: getCredentialTypes(context.selectedVc.verifiableCredential),
+          credentialConfigurationId:
+            context.selectedVc.verifiableCredential.credentialConfigurationId,
           issuer: vcMetadata.issuer!!,
           timestamp: Date.now(),
           deviceName:
@@ -238,7 +240,8 @@ export const ScanActions = (
           _vcKey: vcMetadata.getVcKey(),
           type: 'PRESENCE_VERIFICATION_FAILED',
           timestamp: Date.now(),
-          idType: getCredentialTypes(context.selectedVc.verifiableCredential),
+          credentialConfigurationId:
+            context.selectedVc.verifiableCredential.credentialConfigurationId,
           id: vcMetadata.displayId,
           issuer: vcMetadata.issuer!!,
           deviceName:
@@ -254,6 +257,10 @@ export const ScanActions = (
           ? event.params
           : new URL(event.params).searchParams.get('linkCode');
       },
+    }),
+
+    setLinkCodeFromDeepLink: assign({
+      linkCode: (_, event) => event.linkCode,
     }),
     setQuickShareData: assign({
       quickShareData: (_, event) =>
@@ -302,7 +309,8 @@ export const ScanActions = (
           _vcKey: '',
           id: vcMetadata.displayId,
           issuer: vcMetadata.issuer!!,
-          idType: getCredentialTypes(selectedVc.verifiableCredential),
+          credentialConfigurationId:
+            selectedVc.verifiableCredential.credentialConfigurationId,
           type: 'QRLOGIN_SUCCESFULL',
           timestamp: Date.now(),
           deviceName: '',

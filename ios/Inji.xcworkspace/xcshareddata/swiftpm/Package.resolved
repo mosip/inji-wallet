@@ -1,5 +1,5 @@
 {
-  "originHash" : "37844cf80fe1416dd9922e75c396bd616f0723f347f5649a1c0355a3ba3f3a82",
+  "originHash" : "49a583b8d8c1ad3bf3006aa9a32122904813bca4dc5d45481190e148371011c9",
   "pins" : [
     {
       "identity" : "base45-swift",
@@ -31,10 +31,10 @@
     {
       "identity" : "inji-vci-client-ios-swift",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/mosip/inji-vci-client-ios-swift.git",
+      "location" : "https://github.com/mosip/inji-vci-client-ios-swift",
       "state" : {
         "branch" : "develop",
-        "revision" : "ee5f6ed432f12cb7dc339cdf0e01ec39ae27b530"
+        "revision" : "0ff87e2eb1e6f078be8a004214cfaed8aae7fa93"
       }
     },
     {
@@ -43,7 +43,25 @@
       "location" : "https://github.com/mosip/pixelpass-ios-swift/",
       "state" : {
         "branch" : "develop",
-        "revision" : "0b716d5f6545b10de84c69edbf59565e66776ccd"
+        "revision" : "170f3489e77940212f471ee1cb9f3ab392039a45"
+      }
+    },
+    {
+      "identity" : "secure-keystore-ios-swift",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/mosip/secure-keystore-ios-swift",
+      "state" : {
+        "branch" : "develop",
+        "revision" : "9ae89f3dea4fbcf2554f6fb9b16ae49533996373"
+      }
+    },
+    {
+      "identity" : "swiftcbor",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/valpackett/SwiftCBOR",
+      "state" : {
+        "branch" : "master",
+        "revision" : "ec24382864e5ffc6d3915c0818745d5ab12545a8"
       }
     },
     {

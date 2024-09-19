@@ -20,7 +20,7 @@ export type ActivityLogType =
 
 export class ActivityLog {
   id: string;
-  idType: string[];
+  credentialConfigurationId: string;
   _vcKey: string;
   timestamp: number;
   deviceName: string;
@@ -53,13 +53,15 @@ export class ActivityLog {
       deviceName: '',
       vcLabel: '',
       issuer: '',
+      id: '',
+      credentialConfigurationId: '',
     };
   }
 }
 
 export function getActionText(activity: ActivityLog, t, wellknown: Object) {
-  if (activity.idType && activity.idType.length !== 0) {
-    const cardType = getIdType(wellknown, activity.idType);
+  if (!!activity.credentialConfigurationId) {
+    const cardType = getIdType(wellknown, activity.credentialConfigurationId);
     return `${t(activity.type, {idType: cardType, id: activity.id})}`;
   }
   return `${t(activity.type, {idType: '', id: activity.id})}`;

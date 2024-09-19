@@ -94,7 +94,10 @@ export const IssuersMachine = model.createMachine(
         invoke: {
           src: 'downloadIssuerWellknown',
           onDone: {
-            actions: 'updateIssuerFromWellknown',
+            actions: [
+              'updateIssuerFromWellknown',
+              'updateSelectedIssuerWellknownResponse',
+            ],
             target: 'downloadCredentialTypes',
           },
           onError: {
@@ -174,8 +177,9 @@ export const IssuersMachine = model.createMachine(
             actions: [
               'setTokenResponse',
               'setLoadingReasonAsSettingUp',
-              'getKeyPairFromStore',
+              'setSelectedKey',
             ],
+            target: '.getKeyPairFromKeystore',
           },
           onError: [
             {
@@ -210,26 +214,30 @@ export const IssuersMachine = model.createMachine(
         },
         initial: 'idle',
         states: {
-          idle: {
-            on: {
-              STORE_RESPONSE: {
-                actions: 'loadKeyPair',
+          idle: {},
+          getKeyPairFromKeystore: {
+            invoke: {
+              src: 'getKeyPair',
+              onDone: {
+                actions: ['loadKeyPair'],
                 target: '#issuersMachine.checkKeyPair',
               },
-              BIOMETRIC_CANCELLED: {
-                target: 'userCancelledBiometric',
-              },
-              STORE_ERROR: {
-                target: '#issuersMachine.checkKeyPair',
-              },
+              onError: [
+                {
+                  cond: 'isBiometricCancelled',
+                  target: 'userCancelledBiometric',
+                },
+                {
+                  target: '#issuersMachine.checkKeyPair',
+                },
+              ],
             },
           },
           userCancelledBiometric: {
             on: {
               TRY_AGAIN: [
                 {
-                  actions: ['getKeyPairFromStore'],
-                  target: 'idle',
+                  target: 'getKeyPairFromKeystore',
                 },
               ],
               RESET_ERROR: {
@@ -242,18 +250,22 @@ export const IssuersMachine = model.createMachine(
       },
       checkKeyPair: {
         description: 'checks whether key pair is generated',
-        entry: [
-          'setLoadingReasonAsDownloadingCredentials',
-          send('CHECK_KEY_PAIR'),
-        ],
-        on: {
-          CHECK_KEY_PAIR: [
+        entry: ['setLoadingReasonAsDownloadingCredentials'],
+        invoke: {
+          src: 'getSelectedKey',
+          onDone: [
             {
               cond: 'hasKeyPair',
               target: 'downloadCredentials',
             },
             {
               target: 'generateKeyPair',
+            },
+          ],
+
+          onError: [
+            {
+              target: 'selectingIssuer',
             },
           ],
         },
@@ -267,6 +279,7 @@ export const IssuersMachine = model.createMachine(
             {
               actions: [
                 'setPublicKey',
+                'setPrivateKey',
                 'setLoadingReasonAsDownloadingCredentials',
                 'storeKeyPair',
               ],
@@ -275,6 +288,7 @@ export const IssuersMachine = model.createMachine(
             },
             {
               actions: [
+                // to be decided
                 'setPublicKey',
                 'setLoadingReasonAsDownloadingCredentials',
                 'setPrivateKey',
