@@ -18,11 +18,15 @@ import {SvgImage} from '../../components/ui/svg';
 import {LocationPermissionRational} from './LocationPermissionRational';
 import {FaceVerificationAlertOverlay} from './FaceVerificationAlertOverlay';
 import {useSendVcScreen} from './SendVcScreenController';
+import {useSendVPScreen} from './SendVPScreenController';
+import {Error} from '../../components/ui/Error';
+import {VPShareOverlay} from './VPShareOverlay';
 
 export const ScanScreen: React.FC = () => {
   const {t} = useTranslation('ScanScreen');
   const scanScreenController = useScanScreen();
   const sendVcScreenController = useSendVcScreen();
+  const sendVPScreenController = useSendVPScreen();
   const [isBluetoothOn, setIsBluetoothOn] = useState(false);
 
   useEffect(() => {
@@ -252,6 +256,57 @@ export const ScanScreen: React.FC = () => {
         />
       </Centered>
       {displayStorageLimitReachedError()}
+
+      {sendVPScreenController.overlayDetails !== null && (
+        <VPShareOverlay
+          isVisible={sendVPScreenController.overlayDetails !== null}
+          title={sendVPScreenController.overlayDetails.title}
+          titleTestID={sendVPScreenController.overlayDetails.titleTestID}
+          message={sendVPScreenController.overlayDetails.message}
+          messageTestID={sendVPScreenController.overlayDetails.messageTestID}
+          primaryButtonTestID={
+            sendVPScreenController.overlayDetails.primaryButtonTestID
+          }
+          primaryButtonText={
+            sendVPScreenController.overlayDetails.primaryButtonText
+          }
+          primaryButtonEvent={
+            sendVPScreenController.overlayDetails.primaryButtonEvent
+          }
+          secondaryButtonTestID={
+            sendVPScreenController.overlayDetails.secondaryButtonTestID
+          }
+          secondaryButtonText={
+            sendVPScreenController.overlayDetails.secondaryButtonText
+          }
+          secondaryButtonEvent={
+            sendVPScreenController.overlayDetails.secondaryButtonEvent
+          }
+        />
+      )}
+
+      <Error
+        isModal
+        alignActionsOnEnd
+        showClose={false}
+        isVisible={sendVPScreenController.errorModal.show}
+        title={sendVPScreenController.errorModal.title}
+        message={sendVPScreenController.errorModal.message}
+        image={SvgImage.PermissionDenied()}
+        primaryButtonTestID={'retry'}
+        primaryButtonText={
+          sendVPScreenController.errorModal.showRetryButton
+            ? t('ScanScreen:status.retry')
+            : undefined
+        }
+        primaryButtonEvent={undefined}
+        textButtonTestID={'home'}
+        textButtonText={t('ScanScreen:status.accepted.home')}
+        textButtonEvent={sendVPScreenController.GO_TO_HOME}
+        customImageStyles={{paddingBottom: 0, marginBottom: -6}}
+        customStyles={{marginTop: '30%'}}
+        testID={'vpShareError'}
+      />
     </Column>
   );
 };

@@ -8,7 +8,10 @@ export const openId4VPGuards = () => {
 
     isShareWithSelfie: context => context.isShareWithSelfie,
 
-    isFlowTypeSimpleShare: context =>
-      context.flowType === VCShareFlowType.SIMPLE_SHARE,
+    isSimpleOpenID4VPShare: context =>
+      context.flowType === VCShareFlowType.OPENID4VP,
+
+    isSelectedVCMatchingRequest: context =>
+      Object.values(context.selectedVCs).length === 1,
   };
 };

@@ -57,6 +57,7 @@ export interface Typegen0 {
       | 'resetFaceCaptureBannerStatus'
       | 'resetFlowType'
       | 'resetLinkCode'
+      | 'resetOpenID4VPFlowType'
       | 'resetSelectedVc'
       | 'resetShowQuickShareSuccessBanner'
       | 'sendBLEConnectionErrorEvent'
@@ -71,6 +72,7 @@ export interface Typegen0 {
       | 'setFlowType'
       | 'setLinkCode'
       | 'setLinkCodeFromDeepLink'
+      | 'setOpenId4VPFlowType'
       | 'setOpenId4VPRef'
       | 'setQrLoginRef'
       | 'setQuickShareData'
@@ -144,13 +146,11 @@ export interface Typegen0 {
       | 'CLOSE_BANNER'
       | 'STORE_RESPONSE';
     resetFlowType:
-      | 'CANCEL'
       | 'DISCONNECT'
       | 'DISMISS'
       | 'DISMISS_QUICK_SHARE_BANNER'
       | 'GOTO_HISTORY'
       | 'RESET'
-      | 'RETRY'
       | 'SCREEN_BLUR'
       | 'xstate.init';
     resetLinkCode:
@@ -162,6 +162,7 @@ export interface Typegen0 {
       | 'SCREEN_FOCUS'
       | 'SELECT_VC'
       | 'xstate.stop';
+    resetOpenID4VPFlowType: 'CANCEL' | 'DISMISS' | 'RETRY';
     resetSelectedVc:
       | 'DISCONNECT'
       | 'DISMISS'
@@ -183,7 +184,14 @@ export interface Typegen0 {
     setFlowType: 'SELECT_VC';
     setLinkCode: 'SCAN';
     setLinkCodeFromDeepLink: 'QRLOGIN_VIA_DEEP_LINK';
-    setOpenId4VPRef: 'SCAN';
+    setOpenId4VPFlowType: 'SCAN';
+    setOpenId4VPRef:
+      | 'CANCEL'
+      | 'DISMISS'
+      | 'RESET'
+      | 'RETRY'
+      | 'SCREEN_FOCUS'
+      | 'SELECT_VC';
     setQrLoginRef: 'SCAN';
     setQuickShareData: 'SCAN';
     setReadyForBluetoothStateCheck: 'BLUETOOTH_PERMISSION_ENABLED';
@@ -209,7 +217,7 @@ export interface Typegen0 {
   eventsCausingGuards: {
     isFlowTypeMiniViewShare: 'CHECK_FLOW_TYPE';
     isFlowTypeMiniViewShareWithSelfie: 'CHECK_FLOW_TYPE' | 'DISMISS';
-    isFlowTypeSimpleShare: 'CANCEL' | 'CHECK_FLOW_TYPE' | 'DISMISS';
+    isFlowTypeSimpleShare: 'CANCEL' | 'CHECK_FLOW_TYPE' | 'DISMISS' | 'RETRY';
     isIOS: 'BLUETOOTH_STATE_DISABLED' | 'START_PERMISSION_CHECK';
     isMinimumStorageRequiredForAuditEntryReached: 'done.invoke.scan.checkStorage:invocation[0]';
     isOnlineSharing: 'SCAN';

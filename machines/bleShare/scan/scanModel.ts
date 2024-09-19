@@ -71,6 +71,7 @@ export const ScanModel = createModel(
     loggers: [] as EmitterSubscription[],
     vcName: '',
     flowType: VCShareFlowType.SIMPLE_SHARE,
+    openID4VPFlowType: '',
     verificationImage: {} as CameraCapturedPicture,
     openId4VpUri: '',
     shareLogType: '' as ActivityLogType,

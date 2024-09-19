@@ -104,7 +104,9 @@ export const ScanActions = (
     sendVPScanData: context =>
       context.OpenId4VPRef.send({
         type: 'AUTHENTICATE',
-        authRequest: context.linkCode,
+        encodedAuthRequest: context.linkCode,
+        flowType: context.openID4VPFlowType,
+        selectedVc: context.selectedVc,
       }),
 
     openBluetoothSettings: () => {
@@ -167,8 +169,26 @@ export const ScanActions = (
       flowType: (_context, event) => event.flowType,
     }),
 
+    setOpenId4VPFlowType: assign({
+      openID4VPFlowType: (context: any) => {
+        let flowType = VCShareFlowType.OPENID4VP;
+        if (context.flowType === VCShareFlowType.MINI_VIEW_SHARE) {
+          flowType = VCShareFlowType.MINI_VIEW_SHARE_OPENID4VP;
+        } else if (
+          context.flowType === VCShareFlowType.MINI_VIEW_SHARE_WITH_SELFIE
+        ) {
+          flowType = VCShareFlowType.MINI_VIEW_SHARE_WITH_SELFIE_OPENID4VP;
+        }
+        return flowType;
+      },
+    }),
+
     resetFlowType: assign({
       flowType: VCShareFlowType.SIMPLE_SHARE,
+    }),
+
+    resetOpenID4VPFlowType: assign({
+      openID4VPFlowType: '',
     }),
 
     registerLoggers: assign({
@@ -252,11 +272,10 @@ export const ScanActions = (
     ),
 
     setLinkCode: assign({
-      linkCode: (context: any, event) => {
-        return context.flowType === VCShareFlowType.OPENID4VP
+      linkCode: (context: any, event) =>
+        context.openID4VPFlowType.startsWith('OpenID4VP')
           ? event.params
-          : new URL(event.params).searchParams.get('linkCode');
-      },
+          : new URL(event.params).searchParams.get('linkCode'),
     }),
 
     setLinkCodeFromDeepLink: assign({

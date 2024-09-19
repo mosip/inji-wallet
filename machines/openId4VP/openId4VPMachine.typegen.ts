@@ -20,6 +20,7 @@ export interface Typegen0 {
   };
   missingImplementations: {
     actions:
+      | 'compareVCwithMatchingVCs'
       | 'forwardToParent'
       | 'getFaceAuthConsent'
       | 'getVcsMatchingAuthRequest'
@@ -28,8 +29,10 @@ export interface Typegen0 {
       | 'setAuthenticationResponse'
       | 'setEncodedAuthorizationRequest'
       | 'setError'
+      | 'setFlowType'
       | 'setIsShareWithSelfie'
       | 'setSelectedVCs'
+      | 'setSelectedVc'
       | 'setShareLogTypeUnverified'
       | 'setShareLogTypeVerified'
       | 'setShowFaceAuthConsent'
@@ -38,12 +41,14 @@ export interface Typegen0 {
       | 'updateShowFaceAuthConsent';
     delays: never;
     guards:
-      | 'isFlowTypeSimpleShare'
+      | 'isSelectedVCMatchingRequest'
       | 'isShareWithSelfie'
+      | 'isSimpleOpenID4VPShare'
       | 'showFaceAuthConsentScreen';
     services: 'getAuthenticationResponse' | 'sendVP';
   };
   eventsCausingActions: {
+    compareVCwithMatchingVCs: 'SET_SELECTED_VC';
     forwardToParent: 'CANCEL';
     getFaceAuthConsent: 'AUTHENTICATE';
     getVcsMatchingAuthRequest: 'DOWNLOADED_VCS';
@@ -52,8 +57,10 @@ export interface Typegen0 {
     setAuthenticationResponse: 'done.invoke.OpenId4VP.authenticateVerifier:invocation[0]';
     setEncodedAuthorizationRequest: 'AUTHENTICATE';
     setError: 'error.platform.OpenId4VP.authenticateVerifier:invocation[0]';
+    setFlowType: 'AUTHENTICATE';
     setIsShareWithSelfie: 'VERIFY_AND_ACCEPT_REQUEST';
     setSelectedVCs: 'ACCEPT_REQUEST' | 'VERIFY_AND_ACCEPT_REQUEST';
+    setSelectedVc: 'AUTHENTICATE';
     setShareLogTypeUnverified: 'ACCEPT_REQUEST';
     setShareLogTypeVerified: 'FACE_VALID';
     setShowFaceAuthConsent: 'FACE_VERIFICATION_CONSENT';
@@ -65,8 +72,9 @@ export interface Typegen0 {
     SHARING_TIMEOUT: 'CONFIRM' | 'FACE_VALID';
   };
   eventsCausingGuards: {
-    isFlowTypeSimpleShare: 'CANCEL' | 'DISMISS';
+    isSelectedVCMatchingRequest: 'CHECK_SELECTED_VC';
     isShareWithSelfie: 'CONFIRM';
+    isSimpleOpenID4VPShare: 'CANCEL' | 'DISMISS' | 'DOWNLOADED_VCS';
     showFaceAuthConsentScreen: 'CONFIRM';
   };
   eventsCausingServices: {
@@ -76,12 +84,14 @@ export interface Typegen0 {
   matchesStates:
     | 'authenticateVerifier'
     | 'checkFaceAuthConsent'
+    | 'checkIfMatchingVCsHasSelectedVC'
     | 'faceVerificationConsent'
     | 'getConsentForVPSharing'
     | 'getVCsSatisfyingAuthRequest'
     | 'invalidIdentity'
     | 'selectingVCs'
     | 'sendingVP'
+    | 'setSelectedVC'
     | 'showConfirmationPopup'
     | 'verifyingIdentity'
     | 'waitingForData';

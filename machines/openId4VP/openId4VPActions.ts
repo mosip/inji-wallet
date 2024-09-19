@@ -10,7 +10,11 @@ export const openId4VPActions = (model: any) => {
     }),
 
     setEncodedAuthorizationRequest: model.assign({
-      encodedAuthorizationRequest: (_, event) => event.authRequest,
+      encodedAuthorizationRequest: (_, event) => event.encodedAuthRequest,
+    }),
+
+    setFlowType: model.assign({
+      flowType: (_, event) => event.flowType,
     }),
 
     getVcsMatchingAuthRequest: model.assign({
@@ -65,6 +69,28 @@ export const openId4VPActions = (model: any) => {
 
     setSelectedVCs: model.assign({
       selectedVCs: (_, event) => event.selectedVCs,
+    }),
+
+    compareVCwithMatchingVCs: model.assign({
+      selectedVCs: context => {
+        const matchingVcs = {};
+        Object.entries(context.vcsMatchingAuthRequest).map(
+          ([inputDescriptorId, vcs]) =>
+            (vcs as VC[]).map(vcData => {
+              if (
+                vcData.vcMetadata.requestId ===
+                context.selectedVc.vcMetadata.requestId
+              ) {
+                matchingVcs[inputDescriptorId] = [vcData];
+              }
+            }),
+        );
+        return matchingVcs;
+      },
+    }),
+
+    setSelectedVc: model.assign({
+      selectedVc: (_, event) => event.selectedVc,
     }),
 
     setIsShareWithSelfie: model.assign({

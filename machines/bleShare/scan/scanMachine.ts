@@ -78,6 +78,7 @@ export const scanMachine =
           },
         },
         checkStorage: {
+          entry: 'setOpenId4VPRef',
           invoke: {
             src: 'checkStorageAvailability',
             onDone: [
@@ -345,8 +346,7 @@ export const scanMachine =
                 cond: 'isOnlineSharing',
                 actions: [
                   () => console.log('online sharing cond met::'),
-                  'setOpenId4VPRef',
-                  model.assign({flowType: VCShareFlowType.OPENID4VP}),
+                  'setOpenId4VPFlowType',
                   'setLinkCode',
                 ],
               },
@@ -381,18 +381,30 @@ export const scanMachine =
             TIMEOUT: {
               target: '.timeout',
             },
-            DISMISS: {
-              actions: 'resetFlowType',
-              target: 'checkStorage',
-            },
+            DISMISS: [
+              {
+                cond: 'isFlowTypeSimpleShare',
+                actions: 'resetOpenID4VPFlowType',
+                target: 'checkStorage',
+              },
+              {
+                target: 'checkStorage',
+              },
+            ],
           },
           states: {
             inProgress: {
               on: {
-                CANCEL: {
-                  actions: 'resetFlowType',
-                  target: '#scan.checkStorage',
-                },
+                CANCEL: [
+                  {
+                    cond: 'isFlowTypeSimpleShare',
+                    actions: 'resetOpenID4VPFlowType',
+                    target: '#scan.checkStorage',
+                  },
+                  {
+                    target: '#scan.checkStorage',
+                  },
+                ],
               },
             },
             timeout: {
@@ -400,14 +412,26 @@ export const scanMachine =
                 STAY_IN_PROGRESS: {
                   target: 'inProgress',
                 },
-                CANCEL: {
-                  actions: 'resetFlowType',
-                  target: '#scan.checkStorage',
-                },
-                RETRY: {
-                  actions: 'resetFlowType',
-                  target: '#scan.checkStorage',
-                },
+                CANCEL: [
+                  {
+                    cond: 'isFlowTypeSimpleShare',
+                    actions: 'resetOpenID4VPFlowType',
+                    target: '#scan.checkStorage',
+                  },
+                  {
+                    target: '#scan.checkStorage',
+                  },
+                ],
+                RETRY: [
+                  {
+                    cond: 'isFlowTypeSimpleShare',
+                    actions: 'resetOpenID4VPFlowType',
+                    target: '#scan.checkStorage',
+                  },
+                  {
+                    target: '#scan.checkStorage',
+                  },
+                ],
               },
             },
           },

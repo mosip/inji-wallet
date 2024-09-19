@@ -6,6 +6,7 @@ import {Theme} from '../../components/ui/styleUtils';
 import {selectIsCancelling} from '../../machines/bleShare/commonSelectors';
 import {ScanEvents} from '../../machines/bleShare/scan/scanMachine';
 import {
+  selectFlowType,
   selectIsSelectingVc,
   selectReceiverInfo,
   selectVcName,
@@ -123,6 +124,12 @@ export function useSendVPScreen() {
     errorModal.message =
       'The verifier is not recognized. Please obtain a valid QR code from the verifier.';
     errorModal.showRetryButton = false;
+  } else if (error.includes('credential mismatch detected')) {
+    errorModal.show = true;
+    errorModal.title = 'An Error Occured!';
+    errorModal.message =
+      'Credential mismatch detected. Ensure you have selected the right one and try again.';
+    errorModal.showRetryButton = false;
   }
 
   let overlayDetails: Omit<VPShareOverlayProps, 'isVisible'> | null = null;
@@ -156,6 +163,7 @@ export function useSendVPScreen() {
 
   return {
     isSendingVP,
+    flowType: useSelector(openId4VPService, selectFlowType),
     showConfirmationPopup,
     isSelectingVCs,
     error,

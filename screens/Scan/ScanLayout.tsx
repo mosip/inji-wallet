@@ -115,7 +115,7 @@ export const ScanLayout: React.FC = () => {
             ),
           }}
         />
-        {controller.flowType === VCShareFlowType.OPENID4VP && (
+        {controller.openID4VPFlowType === VCShareFlowType.OPENID4VP && (
           <ScanStack.Screen
             name={SCAN_ROUTES.SendVPScreen}
             component={SendVPScreen}

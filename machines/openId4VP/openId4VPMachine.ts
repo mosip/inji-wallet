@@ -4,7 +4,7 @@ import {openId4VPServices} from './openId4VPServices';
 import {openId4VPActions} from './openId4VPActions';
 import {AppServices} from '../../shared/GlobalContext';
 import {openId4VPGuards} from './openId4VPGuards';
-import {sendParent} from 'xstate/lib/actions';
+import {send, sendParent} from 'xstate/lib/actions';
 
 const model = openId4VPModel;
 
@@ -27,8 +27,9 @@ export const openId4VPMachine = model.createMachine(
         on: {
           AUTHENTICATE: {
             actions: [
-              () => console.log('authenticate action::'),
               'setEncodedAuthorizationRequest',
+              'setFlowType',
+              'setSelectedVc',
             ],
             target: 'checkFaceAuthConsent',
           },
@@ -51,16 +52,55 @@ export const openId4VPMachine = model.createMachine(
             target: 'getVCsSatisfyingAuthRequest',
           },
           onError: {
-            actions: 'setError',
+            actions: [
+              (_, event) => console.error('Error:', event.data),
+              'setError',
+            ],
           },
         },
       },
       getVCsSatisfyingAuthRequest: {
         on: {
-          DOWNLOADED_VCS: {
-            actions: 'getVcsMatchingAuthRequest',
-            target: 'selectingVCs',
-          },
+          DOWNLOADED_VCS: [
+            {
+              cond: 'isSimpleOpenID4VPShare',
+              actions: 'getVcsMatchingAuthRequest',
+              target: 'selectingVCs',
+            },
+            {
+              actions: 'getVcsMatchingAuthRequest',
+              target: 'setSelectedVC',
+            },
+          ],
+        },
+      },
+      setSelectedVC: {
+        entry: send('SET_SELECTED_VC'),
+        on: {
+          SET_SELECTED_VC: [
+            {
+              actions: 'compareVCwithMatchingVCs',
+              target: 'checkIfMatchingVCsHasSelectedVC',
+            },
+          ],
+        },
+      },
+      checkIfMatchingVCsHasSelectedVC: {
+        entry: send('CHECK_SELECTED_VC'),
+        on: {
+          CHECK_SELECTED_VC: [
+            {
+              cond: 'isSelectedVCMatchingRequest',
+              target: 'getConsentForVPSharing',
+            },
+            {
+              actions: [
+                model.assign({
+                  error: () => 'credential mismatch detected',
+                }),
+              ],
+            },
+          ],
         },
       },
       selectingVCs: {
@@ -145,7 +185,7 @@ export const openId4VPMachine = model.createMachine(
           },
           CANCEL: [
             {
-              cond: 'isFlowTypeSimpleShare',
+              cond: 'isSimpleOpenID4VPShare',
               target: 'selectingVCs',
             },
             {
@@ -159,7 +199,7 @@ export const openId4VPMachine = model.createMachine(
         on: {
           DISMISS: [
             {
-              cond: 'isFlowTypeSimpleShare',
+              cond: 'isSimpleOpenID4VPShare',
               target: 'selectingVCs',
             },
             {

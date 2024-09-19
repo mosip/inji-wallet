@@ -27,6 +27,7 @@ import {
   selectIsSendingVPTimeout,
   selectIsSendingVP,
   selectIsQrLoginViaDeepLink,
+  selectOpenID4VPFlowType,
 } from '../../machines/bleShare/scan/scanSelectors';
 import {
   selectBleError,
@@ -69,6 +70,7 @@ export function useScanLayout() {
   const isBleError = useSelector(scanService, selectIsHandlingBleError);
   const isInvalidIdentity = useSelector(scanService, selectIsInvalidIdentity);
   const flowType = useSelector(scanService, selectFlowType);
+  const openID4VPFlowType = useSelector(scanService, selectOpenID4VPFlowType);
   const isVerifyingIdentity = useSelector(
     scanService,
     selectIsVerifyingIdentity,
@@ -284,7 +286,7 @@ export function useScanLayout() {
     ) {
       changeTabBarVisible('none');
       navigation.navigate(SCAN_ROUTES.SendVcScreen);
-    } else if (flowType === VCShareFlowType.OPENID4VP) {
+    } else if (openID4VPFlowType === VCShareFlowType.OPENID4VP) {
       changeTabBarVisible('none');
       navigation.navigate(SCAN_ROUTES.SendVPScreen);
     } else if (isScanning) {
@@ -327,6 +329,7 @@ export function useScanLayout() {
     isSendingVc,
     isSendingVP,
     flowType,
+    openID4VPFlowType,
     isVerifyingIdentity,
     isInvalidIdentity,
     FACE_INVALID,

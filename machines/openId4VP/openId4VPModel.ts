@@ -2,7 +2,11 @@ import {createModel} from 'xstate/lib/model';
 import {AppServices} from '../../shared/GlobalContext';
 import {VC} from '../VerifiableCredential/VCMetaMachine/vc';
 const openId4VPEvents = {
-  AUTHENTICATE: (encodedAuthRequest: string) => ({encodedAuthRequest}),
+  AUTHENTICATE: (
+    encodedAuthRequest: string,
+    flowType: string,
+    selectedVc: any,
+  ) => ({encodedAuthRequest, flowType, selectedVc}),
   DOWNLOADED_VCS: (vcs: VC[]) => ({vcs}),
   SELECT_VC: (vcKey: string, inputDescriptorId: any) => ({
     vcKey,
@@ -25,6 +29,8 @@ const openId4VPEvents = {
   RETRY_VERIFICATION: () => ({}),
   STORE_RESPONSE: (response: any) => ({response}),
   GO_BACK: () => ({}),
+  CHECK_SELECTED_VC: () => ({}),
+  SET_SELECTED_VC: () => ({}),
 };
 
 export const openId4VPModel = createModel(
@@ -39,6 +45,7 @@ export const openId4VPModel = createModel(
     showFaceAuthConsent: true as boolean,
     purpose: '' as string,
     error: '' as string,
+    flowType: '' as string,
   },
   {events: openId4VPEvents},
 );

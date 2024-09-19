@@ -9,6 +9,10 @@ export function selectFlowType(state: State) {
   return state.context.flowType;
 }
 
+export function selectOpenID4VPFlowType(state: State) {
+  return state.context.openID4VPFlowType;
+}
+
 export function selectReceiverInfo(state: State) {
   return state.context.receiverInfo;
 }
