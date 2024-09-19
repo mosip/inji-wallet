@@ -768,6 +768,25 @@
       }
     }
   },
+  "SendVPScreen": {
+    "requester": "Humihiling",
+    "cardsSelected": "mga card na napili",
+    "cardSelected": "card pinili",
+    "unCheck": "Alisin ang check",
+    "checkAll": "Suriin Lahat",
+    "consentDialog": {
+      "title": "Kinakailangan ang Pahintulot",
+      "message": "Hinihiling namin ang iyong pahintulot na ibahagi ang iyong mga nabe-verify na kredensyal. Ito ay magbibigay-daan sa amin na i-verify ang iyong pagkakakilanlan at matupad ang iyong mga kahilingan sa serbisyo. Piliin ang \"Oo, Magpatuloy\" sa pagsang-ayon o \"Tanggihan\" kung ayaw mong ibahagi.",
+      "confirmButton": "Oo, Magpatuloy",
+      "cancelButton": "Tanggihan"
+    },
+    "confirmationDialog": {
+      "title": "Sigurado ka ba?",
+      "message": "Ang pagtanggi sa pahintulot ay mapipigilan ka sa pagbabahagi ng iyong mga nabe-verify na kredensyal.",
+      "confirmButton": "Oo, Magpatuloy",
+      "cancelButton": "Bumalik ka"
+    }
+  },
   "VerifyIdentityOverlay": {
     "faceAuth": "Pagpapatunay ng Mukha",
     "status": {
