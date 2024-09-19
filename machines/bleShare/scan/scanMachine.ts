@@ -38,6 +38,7 @@ export const scanMachine =
       initial: 'inactive',
       on: {
         SCREEN_BLUR: {
+          actions: 'resetOpenID4VPFlowType',
           target: '#scan.disconnectDevice',
         },
         SCREEN_FOCUS: {

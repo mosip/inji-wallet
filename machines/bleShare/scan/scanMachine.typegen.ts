@@ -162,7 +162,7 @@ export interface Typegen0 {
       | 'SCREEN_FOCUS'
       | 'SELECT_VC'
       | 'xstate.stop';
-    resetOpenID4VPFlowType: 'CANCEL' | 'DISMISS' | 'RETRY';
+    resetOpenID4VPFlowType: 'CANCEL' | 'DISMISS' | 'RETRY' | 'SCREEN_BLUR';
     resetSelectedVc:
       | 'DISCONNECT'
       | 'DISMISS'
