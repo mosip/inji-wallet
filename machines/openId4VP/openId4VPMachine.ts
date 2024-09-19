@@ -50,7 +50,9 @@ export const openId4VPMachine = model.createMachine(
             actions: 'setAuthenticationResponse',
             target: 'getVCsSatisfyingAuthRequest',
           },
-          onError: {},
+          onError: {
+            actions: 'setError',
+          },
         },
       },
       getVCsSatisfyingAuthRequest: {

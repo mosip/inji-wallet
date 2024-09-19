@@ -86,3 +86,7 @@ export function selectShowConfirmationPopup(state: State) {
 export function selectIsSelectingVcs(state: State) {
   return state.matches('selectingVCs');
 }
+
+export function selectIsError(state: State) {
+  return state.context.error;
+}

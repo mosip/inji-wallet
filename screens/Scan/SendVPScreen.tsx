@@ -66,11 +66,6 @@ export const SendVPScreen: React.FC = () => {
   const areAllVcsChecked =
     noOfCardsSelected ===
     Object.values(controller.vcsMatchingAuthRequest).flatMap(vc => vc).length;
-  console.log('no of vcs selected::', noOfCardsSelected);
-  console.log(
-    'matching vcs length::',
-    Object.values(controller.vcsMatchingAuthRequest).flatMap(vc => vc).length,
-  );
 
   const checkIfAnySelectedVCHasImage = () => {
     const hasImage = Object.values(controller.vcsMatchingAuthRequest)
@@ -88,6 +83,14 @@ export const SendVPScreen: React.FC = () => {
     error.show = true;
     error.title = 'No matching credentials found!';
     error.message = 'Retry sharing after downloading the credentials.';
+    error.showRetryButton = false;
+  } else if (
+    controller.error.includes('Verifier authentication was unsuccessful')
+  ) {
+    error.show = true;
+    error.title = 'An Error Occured!';
+    error.message =
+      'The verifier is not recognized. Please obtain a valid QR code from the verifier.';
     error.showRetryButton = false;
   }
 

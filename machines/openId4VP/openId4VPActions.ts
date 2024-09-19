@@ -102,5 +102,9 @@ export const openId4VPActions = (model: any) => {
     }),
 
     forwardToParent: sendParent('DISMISS'),
+
+    setError: model.assign({
+      error: (_, event) => event.data.message,
+    }),
   };
 };

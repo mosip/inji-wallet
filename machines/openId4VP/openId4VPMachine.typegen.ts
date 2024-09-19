@@ -8,6 +8,10 @@ export interface Typegen0 {
       data: unknown;
       __tip: 'See the XState TS docs to learn how to strongly type this.';
     };
+    'error.platform.OpenId4VP.authenticateVerifier:invocation[0]': {
+      type: 'error.platform.OpenId4VP.authenticateVerifier:invocation[0]';
+      data: unknown;
+    };
     'xstate.init': {type: 'xstate.init'};
   };
   invokeSrcNameMap: {
@@ -23,6 +27,7 @@ export interface Typegen0 {
       | 'resetFaceCaptureBannerStatus'
       | 'setAuthenticationResponse'
       | 'setEncodedAuthorizationRequest'
+      | 'setError'
       | 'setIsShareWithSelfie'
       | 'setSelectedVCs'
       | 'setShareLogTypeUnverified'
@@ -46,6 +51,7 @@ export interface Typegen0 {
     resetFaceCaptureBannerStatus: 'ACCEPT_REQUEST';
     setAuthenticationResponse: 'done.invoke.OpenId4VP.authenticateVerifier:invocation[0]';
     setEncodedAuthorizationRequest: 'AUTHENTICATE';
+    setError: 'error.platform.OpenId4VP.authenticateVerifier:invocation[0]';
     setIsShareWithSelfie: 'VERIFY_AND_ACCEPT_REQUEST';
     setSelectedVCs: 'ACCEPT_REQUEST' | 'VERIFY_AND_ACCEPT_REQUEST';
     setShareLogTypeUnverified: 'ACCEPT_REQUEST';

@@ -38,6 +38,7 @@ export const openId4VPModel = createModel(
     isShareWithSelfie: false as boolean,
     showFaceAuthConsent: true as boolean,
     purpose: '' as string,
+    error: '' as string,
   },
   {events: openId4VPEvents},
 );

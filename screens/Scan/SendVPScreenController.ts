@@ -14,6 +14,7 @@ import {OpenId4VPEvents} from '../../machines/openId4VP/openId4VPMachine';
 import {
   selectAreAllVCsChecked,
   selectCredentials,
+  selectIsError,
   selectIsFaceVerificationConsent,
   selectIsGetVCsSatisfyingAuthRequest,
   selectIsGetVPSharingConsent,
@@ -100,6 +101,7 @@ export function useSendVPScreen() {
     vcsMatchingAuthRequest,
     areAllVCsChecked,
     selectedVCKeys,
+    error: useSelector(openId4VPService, selectIsError),
     receiverInfo: useSelector(scanService, selectReceiverInfo),
     vcName: useSelector(scanService, selectVcName),
     isSelectingVc: useSelector(scanService, selectIsSelectingVc),
