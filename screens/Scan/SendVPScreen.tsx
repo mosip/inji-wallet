@@ -74,55 +74,6 @@ export const SendVPScreen: React.FC = () => {
     return hasImage;
   };
 
-  let error = {show: false, title: '', message: '', showRetryButton: true};
-
-  if (
-    controller.isSelectingVCs &&
-    Object.keys(vcsMatchingAuthRequest).length === 0
-  ) {
-    error.show = true;
-    error.title = 'No matching credentials found!';
-    error.message = 'Retry sharing after downloading the credentials.';
-    error.showRetryButton = false;
-  } else if (
-    controller.error.includes('Verifier authentication was unsuccessful')
-  ) {
-    error.show = true;
-    error.title = 'An Error Occured!';
-    error.message =
-      'The verifier is not recognized. Please obtain a valid QR code from the verifier.';
-    error.showRetryButton = false;
-  }
-
-  let overlayDetails;
-  if (controller.isVPSharingConsent) {
-    overlayDetails = {
-      primaryButtonTestID: 'confirm',
-      primaryButtonText: t('consentDialog.confirmButton'),
-      primaryButtonEvent: controller.CONFIRM,
-      secondaryButtonTestID: 'cancel',
-      secondaryButtonText: t('consentDialog.cancelButton'),
-      secondaryButtonEvent: controller.CANCEL,
-      title: t('consentDialog.title'),
-      titleTestID: 'consentTitle',
-      message: t('consentDialog.message'),
-      mesageTestID: 'consentMsg',
-    };
-  } else if (controller.showConfirmationPopup) {
-    overlayDetails = {
-      primaryButtonTestID: 'yesProceed',
-      primaryButtonText: t('confirmationDialog.confirmButton'),
-      primaryButtonEvent: controller.CONFIRM,
-      secondaryButtonTestID: 'goBack',
-      secondaryButtonText: t('confirmationDialog.cancelButton'),
-      secondaryButtonEvent: controller.GO_BACK,
-      title: t('confirmationDialog.title'),
-      titleTestID: 'confirmationTitle',
-      message: t('confirmationDialog.message'),
-      mesageTestID: 'confirmationMsg',
-    };
-  }
-
   return (
     <React.Fragment>
       {Object.keys(vcsMatchingAuthRequest).length > 0 && (
@@ -239,25 +190,31 @@ export const SendVPScreen: React.FC = () => {
             onRetryVerification={controller.RETRY_VERIFICATION}
             isLivenessEnabled={LIVENESS_CHECK}
           />
-          {(controller.isVPSharingConsent ||
-            controller.showConfirmationPopup) && (
+
+          {controller.overlayDetails !== null && (
             <VPShareOverlay
-              isVisible={
-                controller.isVPSharingConsent ||
-                controller.showConfirmationPopup
+              isVisible={controller.overlayDetails !== null}
+              title={controller.overlayDetails.title}
+              titleTestID={controller.overlayDetails.titleTestID}
+              message={controller.overlayDetails.message}
+              messageTestID={controller.overlayDetails.messageTestID}
+              primaryButtonTestID={
+                controller.overlayDetails.primaryButtonTestID
               }
-              title={overlayDetails.title}
-              titleTestID={overlayDetails.titleTestID}
-              message={overlayDetails.message}
-              messageTestID={overlayDetails.messageTestID}
-              primaryButtonTestID={overlayDetails.primaryButtonTestID}
-              primaryButtonText={overlayDetails.primaryButtonText}
-              primaryButtonEvent={overlayDetails.primaryButtonEvent}
-              secondaryButtonTestID={overlayDetails.secondaryButtonTestID}
-              secondaryButtonText={overlayDetails.secondaryButtonText}
-              secondaryButtonEvent={overlayDetails.secondaryButtonEvent}
+              primaryButtonText={controller.overlayDetails.primaryButtonText}
+              primaryButtonEvent={controller.overlayDetails.primaryButtonEvent}
+              secondaryButtonTestID={
+                controller.overlayDetails.secondaryButtonTestID
+              }
+              secondaryButtonText={
+                controller.overlayDetails.secondaryButtonText
+              }
+              secondaryButtonEvent={
+                controller.overlayDetails.secondaryButtonEvent
+              }
             />
           )}
+
           <FaceVerificationAlertOverlay
             isVisible={controller.isFaceVerificationConsent}
             onConfirm={controller.FACE_VERIFICATION_CONSENT}
@@ -269,13 +226,15 @@ export const SendVPScreen: React.FC = () => {
         isModal
         alignActionsOnEnd
         showClose={false}
-        isVisible={error.show}
-        title={error.title}
-        message={error.message}
+        isVisible={controller.errorModal.show}
+        title={controller.errorModal.title}
+        message={controller.errorModal.message}
         image={SvgImage.PermissionDenied()}
         primaryButtonTestID={'retry'}
         primaryButtonText={
-          error.showRetryButton ? t('ScanScreen:status.retry') : undefined
+          controller.errorModal.showRetryButton
+            ? t('ScanScreen:status.retry')
+            : undefined
         }
         primaryButtonEvent={undefined}
         textButtonTestID={'home'}

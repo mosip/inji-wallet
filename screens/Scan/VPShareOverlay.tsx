@@ -59,7 +59,7 @@ export const VPShareOverlay: React.FC<VPShareOverlayProps> = props => {
   );
 };
 
-interface VPShareOverlayProps {
+export interface VPShareOverlayProps {
   isVisible: boolean;
   title: string;
   titleTestID: string;

@@ -36,6 +36,7 @@ import {GlobalContext} from '../../shared/GlobalContext';
 import {VCMetadata} from '../../shared/VCMetadata';
 import {MessageOverlayProps} from '../../components/MessageOverlay';
 import {useTranslation} from 'react-i18next';
+import {VPShareOverlayProps} from './VPShareOverlay';
 
 type MyVcsTabNavigation = NavigationProp<RootRouteProps>;
 
@@ -46,7 +47,7 @@ const changeTabBarVisible = (visible: string) => {
 export function getVcsForVPSharing(vcMetadatas: VCMetadata[]) {}
 
 export function useSendVPScreen() {
-  const {t} = useTranslation('ScanScreen');
+  const {t} = useTranslation('SendVPScreen');
   const {appService} = useContext(GlobalContext);
   const scanService = appService.children.get('scan')!!;
   const vcMetaService = appService.children.get('vcMeta')!!;
@@ -93,15 +94,76 @@ export function useSendVPScreen() {
     selectShowConfirmationPopup,
   );
   const isSelectingVCs = useSelector(openId4VPService, selectIsSelectingVcs);
+  const error = useSelector(openId4VPService, selectIsError);
+  const isVPSharingConsent = useSelector(
+    openId4VPService,
+    selectIsGetVPSharingConsent,
+  );
+  const CONFIRM = () => openId4VPService.send(OpenId4VPEvents.CONFIRM());
+
+  const CANCEL = () => openId4VPService.send(OpenId4VPEvents.CANCEL());
+
+  const GO_BACK = () => openId4VPService.send(OpenId4VPEvents.GO_BACK());
+
+  let errorModal = {
+    show: false,
+    title: '',
+    message: '',
+    showRetryButton: true,
+  };
+
+  if (isSelectingVCs && Object.keys(vcsMatchingAuthRequest).length === 0) {
+    errorModal.show = true;
+    errorModal.title = 'No matching credentials found!';
+    errorModal.message = 'Retry sharing after downloading the credentials.';
+    errorModal.showRetryButton = false;
+  } else if (error.includes('Verifier authentication was unsuccessful')) {
+    errorModal.show = true;
+    errorModal.title = 'An Error Occured!';
+    errorModal.message =
+      'The verifier is not recognized. Please obtain a valid QR code from the verifier.';
+    errorModal.showRetryButton = false;
+  }
+
+  let overlayDetails: Omit<VPShareOverlayProps, 'isVisible'> | null = null;
+  if (isVPSharingConsent) {
+    overlayDetails = {
+      primaryButtonTestID: 'confirm',
+      primaryButtonText: t('consentDialog.confirmButton'),
+      primaryButtonEvent: CONFIRM,
+      secondaryButtonTestID: 'cancel',
+      secondaryButtonText: t('consentDialog.cancelButton'),
+      secondaryButtonEvent: CANCEL,
+      title: t('consentDialog.title'),
+      titleTestID: 'consentTitle',
+      message: t('consentDialog.message'),
+      messageTestID: 'consentMsg',
+    };
+  } else if (showConfirmationPopup) {
+    overlayDetails = {
+      primaryButtonTestID: 'yesProceed',
+      primaryButtonText: t('confirmationDialog.confirmButton'),
+      primaryButtonEvent: CONFIRM,
+      secondaryButtonTestID: 'goBack',
+      secondaryButtonText: t('confirmationDialog.cancelButton'),
+      secondaryButtonEvent: GO_BACK,
+      title: t('confirmationDialog.title'),
+      titleTestID: 'confirmationTitle',
+      message: t('confirmationDialog.message'),
+      messageTestID: 'confirmationMsg',
+    };
+  }
 
   return {
     isSendingVP,
     showConfirmationPopup,
     isSelectingVCs,
+    error,
+    errorModal,
+    overlayDetails,
     vcsMatchingAuthRequest,
     areAllVCsChecked,
     selectedVCKeys,
-    error: useSelector(openId4VPService, selectIsError),
     receiverInfo: useSelector(scanService, selectReceiverInfo),
     vcName: useSelector(scanService, selectVcName),
     isSelectingVc: useSelector(scanService, selectIsSelectingVc),
@@ -115,10 +177,6 @@ export function useSendVPScreen() {
     isFaceVerificationConsent: useSelector(
       openId4VPService,
       selectIsFaceVerificationConsent,
-    ),
-    isVPSharingConsent: useSelector(
-      openId4VPService,
-      selectIsGetVPSharingConsent,
     ),
     credentials: useSelector(openId4VPService, selectCredentials),
     verifiableCredentialsData: useSelector(
@@ -182,11 +240,5 @@ export function useSendVPScreen() {
         OpenId4VPEvents.VERIFY_AND_ACCEPT_REQUEST(getSelectedVCs()),
       );
     },
-
-    CONFIRM: () => openId4VPService.send(OpenId4VPEvents.CONFIRM()),
-
-    CANCEL: () => openId4VPService.send(OpenId4VPEvents.CANCEL()),
-
-    GO_BACK: () => openId4VPService.send(OpenId4VPEvents.GO_BACK()),
   };
 }
