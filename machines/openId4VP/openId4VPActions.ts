@@ -2,6 +2,7 @@ import {send, sendParent} from 'xstate/lib/actions';
 import {VC} from '../VerifiableCredential/VCMetaMachine/vc';
 import {StoreEvents} from '../store';
 import {SHOW_FACE_AUTH_CONSENT_SHARE_FLOW} from '../../shared/constants';
+import {VCShareFlowType} from '../../shared/Utils';
 
 export const openId4VPActions = (model: any) => {
   return {
@@ -94,7 +95,9 @@ export const openId4VPActions = (model: any) => {
     }),
 
     setIsShareWithSelfie: model.assign({
-      isShareWithSelfie: () => true,
+      isShareWithSelfie: (_, event) =>
+        event.flowType ===
+        VCShareFlowType.MINI_VIEW_SHARE_WITH_SELFIE_OPENID4VP,
     }),
 
     setShowFaceAuthConsent: model.assign({

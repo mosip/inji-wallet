@@ -58,7 +58,7 @@ export interface Typegen0 {
     setEncodedAuthorizationRequest: 'AUTHENTICATE';
     setError: 'error.platform.OpenId4VP.authenticateVerifier:invocation[0]';
     setFlowType: 'AUTHENTICATE';
-    setIsShareWithSelfie: 'VERIFY_AND_ACCEPT_REQUEST';
+    setIsShareWithSelfie: 'AUTHENTICATE';
     setSelectedVCs: 'ACCEPT_REQUEST' | 'VERIFY_AND_ACCEPT_REQUEST';
     setSelectedVc: 'AUTHENTICATE';
     setShareLogTypeUnverified: 'ACCEPT_REQUEST';

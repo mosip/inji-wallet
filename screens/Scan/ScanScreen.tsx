@@ -11,7 +11,7 @@ import {QrLogin} from '../QrLogin/QrLogin';
 import {useScanScreen} from './ScanScreenController';
 import BluetoothStateManager from 'react-native-bluetooth-state-manager';
 import {Linking} from 'react-native';
-import {isIOS} from '../../shared/constants';
+import {isIOS, LIVENESS_CHECK} from '../../shared/constants';
 import {BannerNotificationContainer} from '../../components/BannerNotificationContainer';
 import {SharingStatusModal} from './SharingStatusModal';
 import {SvgImage} from '../../components/ui/svg';
@@ -21,6 +21,7 @@ import {useSendVcScreen} from './SendVcScreenController';
 import {useSendVPScreen} from './SendVPScreenController';
 import {Error} from '../../components/ui/Error';
 import {VPShareOverlay} from './VPShareOverlay';
+import {VerifyIdentityOverlay} from '../VerifyIdentityOverlay';
 
 export const ScanScreen: React.FC = () => {
   const {t} = useTranslation('ScanScreen');
@@ -306,6 +307,27 @@ export const ScanScreen: React.FC = () => {
         customImageStyles={{paddingBottom: 0, marginBottom: -6}}
         customStyles={{marginTop: '30%'}}
         testID={'vpShareError'}
+      />
+
+      <FaceVerificationAlertOverlay
+        isVisible={sendVPScreenController.isFaceVerificationConsent}
+        onConfirm={sendVPScreenController.FACE_VERIFICATION_CONSENT}
+        close={sendVPScreenController.DISMISS}
+      />
+
+      <VerifyIdentityOverlay
+        credential={sendVPScreenController.credentials}
+        verifiableCredentialData={
+          sendVPScreenController.verifiableCredentialsData
+        }
+        isVerifyingIdentity={sendVPScreenController.isVerifyingIdentity}
+        onCancel={sendVPScreenController.CANCEL}
+        onFaceValid={sendVPScreenController.FACE_VALID}
+        onFaceInvalid={sendVPScreenController.FACE_INVALID}
+        isInvalidIdentity={sendVPScreenController.isInvalidIdentity}
+        onNavigateHome={sendVPScreenController.GO_TO_HOME}
+        onRetryVerification={sendVPScreenController.RETRY_VERIFICATION}
+        isLivenessEnabled={LIVENESS_CHECK}
       />
     </Column>
   );

@@ -30,6 +30,7 @@ export const openId4VPMachine = model.createMachine(
               'setEncodedAuthorizationRequest',
               'setFlowType',
               'setSelectedVc',
+              'setIsShareWithSelfie',
             ],
             target: 'checkFaceAuthConsent',
           },
@@ -106,7 +107,10 @@ export const openId4VPMachine = model.createMachine(
       selectingVCs: {
         on: {
           VERIFY_AND_ACCEPT_REQUEST: {
-            actions: ['setSelectedVCs', 'setIsShareWithSelfie'],
+            actions: [
+              'setSelectedVCs',
+              model.assign({isShareWithSelfie: () => true}),
+            ],
             target: 'getConsentForVPSharing',
           },
           ACCEPT_REQUEST: {
@@ -160,12 +164,12 @@ export const openId4VPMachine = model.createMachine(
             target: 'verifyingIdentity',
           },
           DISMISS: [
-            // {
-            //   cond: 'isFlowTypeMiniViewShareWithSelfie',
-            //   target: '#scan.checkFaceAuthConsent',
-            // },
             {
+              cond: 'isSimpleOpenID4VPShare',
               target: 'selectingVCs',
+            },
+            {
+              actions: sendParent('DISMISS'),
             },
           ],
         },
@@ -189,7 +193,7 @@ export const openId4VPMachine = model.createMachine(
               target: 'selectingVCs',
             },
             {
-              target: 'selectingVCs',
+              actions: sendParent('DISMISS'),
             },
           ],
         },
