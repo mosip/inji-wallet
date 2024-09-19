@@ -240,5 +240,6 @@ export function useSendVPScreen() {
         OpenId4VPEvents.VERIFY_AND_ACCEPT_REQUEST(getSelectedVCs()),
       );
     },
+    CANCEL,
   };
 }
