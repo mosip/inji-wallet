@@ -309,11 +309,12 @@ export const ScanScreen: React.FC = () => {
               image={SvgImage.PermissionDenied()}
               primaryButtonTestID={'retry'}
               primaryButtonText={
-                sendVPScreenController.errorModal.showRetryButton
+                sendVPScreenController.errorModal.showRetryButton &&
+                sendVPScreenController.openID4VPRetryCount < 3
                   ? t('ScanScreen:status.retry')
                   : undefined
               }
-              primaryButtonEvent={undefined}
+              primaryButtonEvent={sendVPScreenController.RETRY}
               textButtonTestID={'home'}
               textButtonText={t('ScanScreen:status.accepted.home')}
               textButtonEvent={sendVPScreenController.GO_TO_HOME}

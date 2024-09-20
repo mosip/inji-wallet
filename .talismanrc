@@ -384,4 +384,6 @@ fileignoreconfig:
     checksum: 98784857098e15aca851c6eb79e48016887408ff84bb82afafdc03b38ab2e338
   - filename: machines/Issuers/IssuersModel.ts
     checksum: fe4084d1f5dbf89e71cc3fbe9f845d3f2c9bb32901bd5b95a8addcb13257b414
+  - filename: machines/openId4VP/openId4VPMachine.typegen.ts
+    checksum: 83824dc2101c6f06d77e002e0099fd3495641af690ecb9dfca96274c78c1aed9
     version: ""

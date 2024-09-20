@@ -8,6 +8,7 @@ import {ScanEvents} from '../../machines/bleShare/scan/scanMachine';
 import {
   selectFlowType,
   selectIsSelectingVc,
+  selectOpenID4VPRetryCount,
   selectReceiverInfo,
   selectVcName,
 } from '../../machines/bleShare/scan/scanSelectors';
@@ -132,7 +133,7 @@ export function useSendVPScreen() {
     errorModal.show = true;
     errorModal.title = t('errors.genericError.title');
     errorModal.message = t('errors.genericError.message');
-    errorModal.showRetryButton = false;
+    errorModal.showRetryButton = true;
   }
 
   let overlayDetails: Omit<VPShareOverlayProps, 'isVisible'> | null = null;
@@ -199,6 +200,7 @@ export function useSendVPScreen() {
         OpenId4VPEvents.FACE_VERIFICATION_CONSENT(isDoNotAskAgainChecked),
       ),
     DISMISS: () => scanService.send(ScanEvents.DISMISS()),
+    RETRY: () => scanService.send(ScanEvents.RETRY()),
     UPDATE_VC_NAME: (vcName: string) =>
       scanService.send(ScanEvents.UPDATE_VC_NAME(vcName)),
     FACE_VALID: () => openId4VPService.send(OpenId4VPEvents.FACE_VALID()),
@@ -252,5 +254,6 @@ export function useSendVPScreen() {
       );
     },
     CANCEL,
+    openID4VPRetryCount: useSelector(scanService, selectOpenID4VPRetryCount),
   };
 }

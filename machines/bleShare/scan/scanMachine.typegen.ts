@@ -45,6 +45,7 @@ export interface Typegen0 {
       | 'clearUri'
       | 'enableLocation'
       | 'getFaceAuthConsent'
+      | 'incrementOpenID4VPRetryCount'
       | 'loadMetaDataToMemory'
       | 'loadVCDataToMemory'
       | 'logFailedVerification'
@@ -58,6 +59,7 @@ export interface Typegen0 {
       | 'resetFlowType'
       | 'resetLinkCode'
       | 'resetOpenID4VPFlowType'
+      | 'resetOpenID4VPRetryCount'
       | 'resetSelectedVc'
       | 'resetShowQuickShareSuccessBanner'
       | 'sendBLEConnectionErrorEvent'
@@ -125,6 +127,7 @@ export interface Typegen0 {
       | 'DISCONNECT'
       | 'DISMISS'
       | 'xstate.after(DESTROY_TIMEOUT)#scan.clearingConnection';
+    incrementOpenID4VPRetryCount: 'RETRY';
     loadMetaDataToMemory: 'SCAN';
     loadVCDataToMemory: 'STORE_RESPONSE';
     logFailedVerification: 'FACE_INVALID';
@@ -163,6 +166,7 @@ export interface Typegen0 {
       | 'SELECT_VC'
       | 'xstate.stop';
     resetOpenID4VPFlowType: 'CANCEL' | 'DISMISS' | 'RETRY' | 'SCREEN_BLUR';
+    resetOpenID4VPRetryCount: 'SCREEN_BLUR';
     resetSelectedVc:
       | 'DISCONNECT'
       | 'DISMISS'
