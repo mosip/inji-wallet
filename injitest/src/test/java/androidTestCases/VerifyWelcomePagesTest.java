@@ -86,7 +86,7 @@ public class VerifyWelcomePagesTest extends AndroidBaseTest {
 
         assertTrue(homePage.verifyLanguageForAppSettingsHeaderDisplayed("English"), "Verify if app settings header text displayed");
         assertTrue(homePage.verifyLanguageForAppSettingsDescriptionDisplayed("English"), "Verify if app settings description displayed");
-        homePage.clickOnFifthNextButton();
+        homePage.clickOnFifthDoneButton();
 
         assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
     }
