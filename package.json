@@ -73,6 +73,7 @@
     "react-native-copilot": "^3.3.2",
     "react-native-device-info": "^8.4.8",
     "react-native-dotenv": "^3.3.1",
+    "react-native-draglist": "^3.6.2",
     "react-native-elements": "3.4.3",
     "react-native-fs": "^2.18.0",
     "react-native-gesture-handler": "~2.9.0",

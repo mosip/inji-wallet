@@ -1,0 +1,53 @@
+diff --git a/machines/store.ts b/machines/store.ts
+index 6f7e89f4..bb30c728 100644
+--- a/machines/store.ts
++++ b/machines/store.ts
+@@ -102,19 +102,15 @@ export const storeMachine =
+         checkFreshInstall: {
+           invoke: {
+             src: 'checkFreshInstall',
+-          },
+-          on: {
+-            READY: [
+-              {
+-                cond: 'hasData',
+-                target: !isHardwareKeystoreExists
+-                  ? 'gettingEncryptionKey'
+-                  : 'checkEncryptionKey',
+-              },
+-              {
+-                target: 'clearIosKeys',
+-              },
+-            ],
++            onDone:[{
++              cond: 'hasData',
++              target: !isHardwareKeystoreExists
++                ? 'gettingEncryptionKey'
++                : 'checkEncryptionKey',
++            },
++            {
++              target: 'clearIosKeys',
++            },]
+           },
+         },
+         clearIosKeys: {
+@@ -330,9 +326,9 @@ export const storeMachine =
+           }
+           return;
+         },
+-        checkFreshInstall: () => async callback => {
++        checkFreshInstall: () => async _ => {
+           const response = await getItem('auth', null, '');
+-          callback(model.events.READY());
++          return response
+         },
+         hasEncryptionKey: () => async callback => {
+           let hasSetCredentials;
+@@ -577,6 +573,7 @@ export const storeMachine =
+ 
+       guards: {
+         hasData: (_, event: any) => {
++          console.log("dvdnt.data",event.data !==null)
+           return event.data !== null;
+         },
+         isCustomSecureKeystore: () => isHardwareKeystoreExists,

@@ -13,6 +13,7 @@ import {iso6393To1} from 'iso-639-3';
 
 import {getItem} from './machines/store';
 import {LocalizedField} from './machines/VerifiableCredential/VCMetaMachine/vc';
+import { KeyTypes } from './shared/cryptoutil/KeyTypes';
 
 const resources = {en, fil, ar, hi, kn, ta};
 const locale = Localization.locale;
@@ -26,6 +27,13 @@ export const SUPPORTED_LANGUAGES = {
   kn: 'ಕನ್ನಡ',
   ta: 'தமிழ்',
 };
+
+export const SUPPORTED_KEY_TYPES={
+  "ED25519": KeyTypes.ED25519,
+  "ECC K1": KeyTypes.ES256K,
+  "ECC R1": KeyTypes.ES256,
+  "RSA": KeyTypes.RS256
+}
 
 i18next
   .use(initReactI18next)

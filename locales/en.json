@@ -159,7 +159,9 @@
   "BannerNotification": {
     "alternatePasscodeSuccess": "Success! You can now use passcode to unlock Inji app.",
     "alternateBiometricSuccess": "Success! You can now use biometrics to unlock Inji app.",
-    "activated": "Credentials are enabled for online authentication."
+    "activated": "Credentials are enabled for online authentication.",
+    "keyPreferenceSuccess": "Your key preferences have been saved successfully!",
+    "keyPreferenceError": "Sorry! Error setting your key preferences"
   },
   "AboutInji": {
     "aboutInji": "About Inji",
@@ -236,6 +238,14 @@
         "six": "How can I restore the backup which I have taken?",
         "seven": "Why do I get an error \"no backup file found\"?",
         "eight": "What happens when I Clear Storage of INJI app from device settings?"
+      },
+      "KeyManagement": {
+        "one": "What are the different types of keys?",
+        "two": "How do I know which key type is best for me?",
+        "three": "How does the choice of key type affect my security?",
+        "four": "Can I change my key type later on?",
+        "five": "What is the impact of key priority, and how can I set it?",
+        "six": "What happens if I don’t choose a key type or set a preference?"
       }
     },
     "answers": {
@@ -271,6 +281,14 @@
         "six": "To restore a backup, go to the app settings, choose the restore option, and select the backup file. Follow the on-screen instructions to complete the restoration process.",
         "seven": "This error may occur if there are no backup files associated with the provided email ID or if the backup files are stored in a different location. Ensure you are using the correct email ID and storage location, or consider creating a new backup if none exists.",
         "eight": "Please note this action is taken cautiously as it clears app data which means all your downloaded VCs will be cleared. Ensure to take a backup of the data before triggering clear storage."
+      },
+      "KeyManagement": {
+        "one": "You can choose from Ed25519, ECC K1, ECC R1, and RSA keys. Each type has its own strengths in terms of security and performance.",
+        "two": "If you prioritize speed, efficiency, and relatively higher security, then Ed25519 or ECC K1 might be ideal. If you need widespread compatibility and strong security, RSA or ECC R1 could be better choices.",
+        "three": "Different keys offer different levels of security. For example, Ed25519 and ECC keys are known for their high security with smaller key sizes, while RSA is widely trusted for its robust security in various systems.",
+        "four": "Yes, you can change your key type, but it’s important to note that this might affect how your credentials interact with different systems. Always ensure that your chosen key type is compatible with your use case.",
+        "five": "The order of your keys determines their priority in usage. You can drag and arrange your keys, with the top one being your first choice.",
+        "six": "If you don’t select a specific key type, the app will automatically choose the most suitable one based on what is supported by the credential issuer. This ensures compatibility and security, even if you don't make a manual selection."
       }
     }
   },
@@ -874,6 +892,12 @@
     "description": "Select your preferred language",
     "save": "Save Preference"
   },
+  "SetupKey": {
+    "header": "Key Management",
+    "description": "Choose your preferred keys for generating holder keys. To understand more, head out to help section.",
+    "save": "Save Preference",
+    "skip": "I'll do later"
+  },
   "common": {
     "card": "card",
     "cards": "cards",
@@ -920,6 +944,8 @@
     "next": "Next",
     "previous": "Previous",
     "skip": "Skip",
-    "done": "Done"
+    "done": "Done",
+    "keyManagementTitle": "Key Management",
+    "keyManagementDesc": "Select the key generation method that aligns with your preference, putting you in control of your credential security.\nDrag and arrange the keys, with the top one being your highest priority."
   }
 }

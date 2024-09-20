@@ -1,7 +1,6 @@
 import {
   ErrorMessage,
   Issuers_Key_Ref,
-  getKeyTypeFromWellknown,
   selectCredentialRequestKey,
 } from '../../shared/openId4VCI/Utils';
 import {
@@ -204,8 +203,8 @@ export const IssuersActions = (model: any) => {
     ),
 
     setSelectedKey: model.assign({
-      keyType: (context: any) => {
-        const keyType = selectCredentialRequestKey(context.wellknownKeyTypes);
+      keyType: (context: any, event:any) => {
+        const keyType = selectCredentialRequestKey(context.wellknownKeyTypes,event.data);
         return keyType;
       },
     }),

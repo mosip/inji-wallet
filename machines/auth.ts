@@ -12,6 +12,7 @@ const model = createModel(
     passcode: '',
     passcodeSalt: '',
     biometrics: '',
+    keySetup: false,
     canUseBiometrics: false,
     selectLanguage: false,
     toggleFromSettings: false,
@@ -87,6 +88,7 @@ export const authMachine = model.createMachine(
       checkingAuth: {
         always: [
           {cond: 'hasLanguageset', target: 'languagesetup'},
+          {cond: 'hasKeySetup', target: 'keySetup'},
           {cond: 'hasPasscodeSet', target: 'unauthorized'},
           {cond: 'hasBiometricSet', target: 'unauthorized'},
           {target: 'settingUp'},
@@ -95,9 +97,17 @@ export const authMachine = model.createMachine(
       languagesetup: {
         on: {
           SELECT: {
-            target: 'introSlider',
+            target: 'keySetup',
           },
         },
+      },
+      keySetup: {
+        on:{
+          SELECT:{
+            actions:'setKeySetup',
+            target: 'introSlider',
+          }
+        }
       },
       introSlider: {
         invoke: {
@@ -153,6 +163,10 @@ export const authMachine = model.createMachine(
     actions: {
       requestStoredContext: send(StoreEvents.GET('auth'), {
         to: context => context.serviceRefs.store,
+      }),
+
+      setKeySetup:model.assign({
+        keySetup:true
       }),
 
       setIsToggleFromSettings: assign({
@@ -216,6 +230,7 @@ export const authMachine = model.createMachine(
     },
 
     guards: {
+      hasKeySetup:(context, event:any)=>!context.keySetup,
       hasData: (_, event: StoreResponseEvent) => event.response != null,
 
       hasPasscodeSet: context => {

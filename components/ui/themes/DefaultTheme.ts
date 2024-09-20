@@ -1516,6 +1516,33 @@ export const DefaultTheme = {
       maxHeight: Dimensions.get('window').height,
     },
   }),
+  KeyManagementScreenStyle: StyleSheet.create({
+    columnStyle: {
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      flex: 1,
+    },
+    listItemTitle: {
+      paddingTop: 3,
+    },
+    iconStyle: {
+      marginRight: 15,
+    },
+    textStyle: {
+      paddingRight: 10,
+      paddingTop: 10,
+    },
+    dragViewStyle: {
+      padding: 10,
+      marginBottom: 20,
+      width: Dimensions.get('window').width * 0.8,
+    },
+    dragViewStyleSettingsScreen: {
+      padding: 10,
+      marginBottom: 20,
+      width: Dimensions.get('window').width * 0.95,
+    },
+  }),
   HelpScreenStyle: StyleSheet.create({
     viewStyle: {
       borderRadius: 8,

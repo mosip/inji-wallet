@@ -3,8 +3,7 @@ import {Text, Button, Row, Column} from './../components/ui';
 import {useTranslation} from 'react-i18next';
 import {UseCopilotTooltip} from './CopilotTooltipController';
 import {Theme} from './ui/styleUtils';
-import {COPILOT_FINAL_STEP, COPILOT_PRE_FINAL_STEP} from '../shared/constants';
-import { useSettingsScreen } from '../screens/Settings/SettingScreenController';
+import {COPILOT_FINAL_STEP, COPILOT_PRE_FINAL_STEP, KEY_MANAGEMENT_STEP} from '../shared/constants';
 
 export const CopilotTooltip = () => {
   const {t} = useTranslation('copilot');
@@ -44,7 +43,7 @@ export const CopilotTooltip = () => {
           {controller.stepCount}
         </Text>
         <Row>
-          {controller.isFirstStep ||
+          {controller.isFirstStep || (controller.CURRENT_STEP === KEY_MANAGEMENT_STEP) ||
           (controller.isFinalStep && controller.isInitialDownloading) ? null : (
             <Button
               testID={`${controller.CURRENT_STEP}previous`}
@@ -54,7 +53,7 @@ export const CopilotTooltip = () => {
               onPress={controller.goToPrev}
             />
           )}
-          {controller.isLastStep ? (
+          {(controller.isLastStep) || (controller.CURRENT_STEP === KEY_MANAGEMENT_STEP) ?(
             <Button
               testID={`${controller.CURRENT_STEP}done`}
               title={t('done')}

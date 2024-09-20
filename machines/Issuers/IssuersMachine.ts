@@ -171,12 +171,8 @@ export const IssuersMachine = model.createMachine(
         invoke: {
           src: 'invokeAuthorization',
           onDone: {
-            actions: [
-              'setTokenResponse',
-              'setLoadingReasonAsSettingUp',
-              'setSelectedKey',
-            ],
-            target: '.getKeyPairFromKeystore',
+            actions: ['setTokenResponse', 'setLoadingReasonAsSettingUp'],
+            target: '.setSelectedKey',
           },
           onError: [
             {
@@ -212,6 +208,29 @@ export const IssuersMachine = model.createMachine(
         initial: 'idle',
         states: {
           idle: {},
+          setSelectedKey: {
+            invoke: {
+              src: 'getKeyOrder',
+              onDone: {
+                actions: 'setSelectedKey',
+                target: 'getKeyPairFromKeystore',
+              },
+              onError:{
+                actions: [
+                  'resetSelectedCredentialType',
+                  'setError',
+                  'resetLoadingReason',
+                  'sendDownloadingFailedToVcMeta',
+                  (_, event) =>
+                    console.error(
+                      'Error Occurred while invoking Auth - ',
+                      event.data,
+                    ),
+                ],
+                target: '#issuersMachine.selectingIssuer',
+              }
+            },
+          },
           getKeyPairFromKeystore: {
             invoke: {
               src: 'getKeyPair',

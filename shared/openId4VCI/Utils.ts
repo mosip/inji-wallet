@@ -355,15 +355,10 @@ export async function hasKeyPair(keyType: any): Promise<boolean> {
   }
 }
 
-export function selectCredentialRequestKey(keyTypes: string[]) {
-  const availableKeys = [
-    KeyTypes.ES256,
-    KeyTypes.RS256,
-    KeyTypes.ED25519,
-    KeyTypes.ES256K,
-  ];
-  for (const key of availableKeys) {
-    if (keyTypes.includes(key)) return key;
+export function selectCredentialRequestKey(keyTypes: string[],keyOrder: object) {
+  for(const index in keyOrder){
+    if(keyTypes.includes(keyOrder[index]))
+     return keyOrder[index]
   }
   throw Error;
 }

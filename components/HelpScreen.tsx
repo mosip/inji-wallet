@@ -30,6 +30,17 @@ export const HelpScreen: React.FC<HelpScreenProps> = props => {
         }
       }, 2000);
     }
+    else if(props.source == 'keyManagement')
+    {
+      setTimeout(() => {
+        if (listingRef?.current != null) {
+          listingRef.current.scrollToIndex({
+            index: 31,
+            animated: true,
+          });
+        }
+      }, 2000);
+    }
   }, [showHelpPage]);
 
   const getTextField = (value: string, component?: React.ReactElement) => {
@@ -273,7 +284,53 @@ export const HelpScreen: React.FC<HelpScreenProps> = props => {
         </React.Fragment>
       ),
     },
+    {
+      title: t('questions.inji.fifteen'),
+      data: (
+        <React.Fragment>
+          {getTextField(t('answers.inji.fifteen'))}
+        </React.Fragment>
+      ),
+    },
   ];
+  const KeyManagementFaqMap=[
+    {
+      title: t('questions.KeyManagement.one'),
+      data: (
+        <React.Fragment>{getTextField(t('answers.KeyManagement.one'))}</React.Fragment>
+      ),
+    },
+    {
+      title: t('questions.KeyManagement.two'),
+      data: (
+        <React.Fragment>{getTextField(t('answers.KeyManagement.two'))}</React.Fragment>
+      ),
+    },
+    {
+      title: t('questions.KeyManagement.three'),
+      data: (
+        <React.Fragment>{getTextField(t('answers.KeyManagement.three'))}</React.Fragment>
+      ),
+    },
+    {
+      title: t('questions.KeyManagement.four'),
+      data: (
+        <React.Fragment>{getTextField(t('answers.KeyManagement.four'))}</React.Fragment>
+      ),
+    },
+    {
+      title: t('questions.KeyManagement.five'),
+      data: (
+        <React.Fragment>{getTextField(t('answers.KeyManagement.five'))}</React.Fragment>
+      ),
+    },
+    {
+      title: t('questions.KeyManagement.six'),
+      data: (
+        <React.Fragment>{getTextField(t('answers.KeyManagement.six'))}</React.Fragment>
+      ),
+    },
+  ]
 
   return (
     <React.Fragment>
@@ -304,7 +361,7 @@ export const HelpScreen: React.FC<HelpScreenProps> = props => {
                   {item.data}
                 </View>
               )}
-              data={[...InjiFaqMap, ...BackupFaqMap]}
+              data={[...InjiFaqMap, ...BackupFaqMap, ...KeyManagementFaqMap]}
               onScrollToIndexFailed={info => {
                 const wait = new Promise(resolve => setTimeout(resolve, 500));
                 wait.then(() => {
@@ -323,6 +380,6 @@ export const HelpScreen: React.FC<HelpScreenProps> = props => {
 };
 
 interface HelpScreenProps {
-  source: 'Inji' | 'BackUp';
+  source: 'Inji' | 'BackUp' | 'keyManagement';
   triggerComponent: React.ReactElement;
 }

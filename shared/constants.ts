@@ -141,6 +141,7 @@ export const INTRO_SLIDER_LOGO_MARGIN = Dimensions.get('screen').width * 0.45;
 export const COPILOT_PRE_FINAL_STEP: number = 5;
 export const COPILOT_FINAL_STEP: number = 6;
 export const COPILOT_HEIGHT: number = 0.22;
+export const KEY_MANAGEMENT_STEP = 7;
 export const copilotTestID = {
   '1': 'help',
   '2': 'download',

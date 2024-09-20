@@ -18,6 +18,10 @@ import {
   selectAppId,
   selectIsResetInjiProps,
   selectEsignetHostUrl,
+  selectIsKeymanagementExplored,
+  selectIsKeyOrderingSuccess,
+  selectIsKeyOrderingError,
+  selectIsKeymanagementTourGuideExplored,
 } from '../../machines/settings';
 
 import {
@@ -127,6 +131,22 @@ export function useSettingsScreen(props: RootRouteProps & RequestRouteProps) {
       settingsService || {},
       selectBiometricUnlockEnabled,
     ),
+     isKeyManagementExplored : useSelector(
+      settingsService,
+      selectIsKeymanagementExplored,
+    ),
+    isKeyManagementTourGuideExplored : useSelector(
+      settingsService,
+      selectIsKeymanagementTourGuideExplored,
+    ),
+      isKeyOrderingSuccess: useSelector(
+        settingsService,
+        selectIsKeyOrderingSuccess
+      ),
+      isKeyOrderingError: useSelector(
+        settingsService,
+        selectIsKeyOrderingError
+      ),
     isResetInjiProps: useSelector(
       settingsService || {},
       selectIsResetInjiProps,
@@ -169,6 +189,29 @@ export function useSettingsScreen(props: RootRouteProps & RequestRouteProps) {
       props.navigation.navigate('Passcode', {setup: true});
     },
 
+    SET_KEY_MANAGEMENT_EXPLORED: ()=>{
+      settingsService.send(SettingsEvents.SET_KEY_MANAGEMENT_EXPLORED())
+    },
+
+    SET_KEY_ORDER_SUCCESS: ()=>{
+      settingsService.send(SettingsEvents.SET_KEY_ORDER_SUCCESS())
+    },
+
+    RESET_KEY_ORDER_SUCCESS: ()=>{
+      settingsService.send(SettingsEvents.RESET_KEY_ORDER_SUCCESS())
+    },
+
+    SET_KEY_ORDER_ERROR: ()=>{
+      settingsService.send(SettingsEvents.SET_KEY_ORDER_ERROR())
+    },
+
+    RESET_KEY_ORDER_ERROR: ()=>{
+      settingsService.send(SettingsEvents.RESET_KEY_ORDER_ERROR())
+    },
+
+    SET_KEY_MANAGEMENT_TOUR_GUIDE_EXPLORED:()=>{
+      settingsService.send(SettingsEvents.SET_KEY_MANAGEMENT_TOUR_GUIDE_EXPLORED())
+    },
     INJI_TOUR_GUIDE: () => {
       settingsService.send(SettingsEvents.INJI_TOUR_GUIDE());
       props.navigation.navigate(BOTTOM_TAB_ROUTES.home);
