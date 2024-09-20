@@ -22,11 +22,18 @@ export class OpenID4VP {
   }
 
   static async constructVerifiablePresentationToken(
-    selectedVcs: Record<string, VC[]>,
+    selectedVCs: Record<string, VC[]>,
   ) {
+    const updatedSelectedVCs = Object.keys(selectedVCs).forEach(
+      inputDescriptorId => {
+        updatedSelectedVCs[inputDescriptorId] = selectedVCs[
+          inputDescriptorId
+        ].map(vc => JSON.stringify(vc));
+      },
+    );
     const vpToken =
       await OpenID4VP.InjiOpenId4VP.constructVerifiablePresentationToken(
-        selectedVcs,
+        updatedSelectedVCs,
       );
     return vpToken;
   }
