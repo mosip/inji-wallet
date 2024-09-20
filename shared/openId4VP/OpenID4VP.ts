@@ -1,8 +1,8 @@
 import {NativeModules} from 'react-native';
 import {__AppId} from '../GlobalVariables';
 import {VC} from '../../machines/VerifiableCredential/VCMetaMachine/vc';
-import { getJWT } from '../cryptoutil/cryptoUtil';
-import { getJWK } from '../openId4VCI/Utils';
+import {getJWT} from '../cryptoutil/cryptoUtil';
+import {getJWK} from '../openId4VCI/Utils';
 
 export class OpenID4VP {
   static InjiOpenId4VP = NativeModules.InjiOpenId4VP;
@@ -26,13 +26,13 @@ export class OpenID4VP {
   static async constructVerifiablePresentationToken(
     selectedVCs: Record<string, VC[]>,
   ) {
-    const updatedSelectedVCs = Object.keys(selectedVCs).forEach(
-      inputDescriptorId => {
-        updatedSelectedVCs[inputDescriptorId] = selectedVCs[
-          inputDescriptorId
-        ].map(vc => JSON.stringify(vc));
-      },
-    );
+    let updatedSelectedVCs = {};
+    Object.keys(selectedVCs).forEach(inputDescriptorId => {
+      updatedSelectedVCs[inputDescriptorId] = selectedVCs[
+        inputDescriptorId
+      ].map(vc => JSON.stringify(vc));
+    });
+
     const vpToken =
       await OpenID4VP.InjiOpenId4VP.constructVerifiablePresentationToken(
         updatedSelectedVCs,
@@ -43,7 +43,9 @@ export class OpenID4VP {
   static async shareVerifiablePresentation(
     vpResponseMetadata: Record<string, string>,
   ) {
-     return await OpenID4VP.InjiOpenId4VP.shareVerifiablePresentation(vpResponseMetadata);
+    return await OpenID4VP.InjiOpenId4VP.shareVerifiablePresentation(
+      vpResponseMetadata,
+    );
   }
 
   static async constructProofJWS(
@@ -57,20 +59,20 @@ export class OpenID4VP {
       jwk: await getJWK(publicKey, keyType),
     };
     const jwsPayload = {
-     "@context" : vpToken["@context"],
-     type: vpToken["type"],
-     verifiableCredential: vpToken["verifiableCredential"],
-     id : vpToken["id"],
-     holder: vpToken["holder"]
+      '@context': vpToken['@context'],
+      type: vpToken['type'],
+      verifiableCredential: vpToken['verifiableCredential'],
+      id: vpToken['id'],
+      holder: vpToken['holder'],
     };
-    
-    const jwsis =  await getJWT(
+
+    const jwsis = await getJWT(
       jwtHeader,
       jwsPayload,
-      "OpenId4Vp",
+      'OpenId4Vp',
       privateKey,
       keyType,
     );
     return jwsis;
-};
+  }
 }

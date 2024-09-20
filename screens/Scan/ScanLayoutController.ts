@@ -303,6 +303,7 @@ export function useScanLayout() {
     isQrLoginDone,
     isBleError,
     flowType,
+    openID4VPFlowType,
     isAccepted,
     isQrLoginViaDeepLink,
   ]);

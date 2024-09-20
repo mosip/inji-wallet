@@ -2,8 +2,6 @@ package io.mosip.residentapp;
 
 import android.util.Log;
 
-import java.util.HashMap;
-import java.util.Map;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import com.facebook.react.bridge.Promise;
@@ -17,8 +15,13 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+
 import io.mosip.openID4VP.OpenID4VP;
+import io.mosip.openID4VP.dto.VPResponseMetadata;
 import io.mosip.openID4VP.dto.Verifier;
 
 public class InjiOpenId4VPModule extends ReactContextBaseJavaModule {
@@ -46,13 +49,13 @@ public class InjiOpenId4VPModule extends ReactContextBaseJavaModule {
         try {
             Map<String, String> authenticationResponse = openID4VP.authenticateVerifier(encodedAuthorizationRequest,
                     convertReadableArrayToVerifierArray(trustedVerifiers));
-            Log.d("authenticationResponse$$ ",authenticationResponse.get("presentation_definition"));
+            Log.d("authenticationResponse$$ ", authenticationResponse.get("presentation_definition"));
             Gson gson = new GsonBuilder()
                     .disableHtmlEscaping()
                     .create();
 
-            String jsond = gson.toJson(authenticationResponse,Map.class);
-            Log.d("json::",jsond);
+            String jsond = gson.toJson(authenticationResponse, Map.class);
+            Log.d("json::", jsond);
             promise.resolve(jsond);
         } catch (Exception exception) {
             promise.reject(exception);
@@ -60,27 +63,47 @@ public class InjiOpenId4VPModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public void constructVerifiablePresentationToken(ReadableMap selectedVCs,Promise promise) {
-        Map<String, List<String>> selectedVCsMap = new HashMap<>();
+    public void constructVerifiablePresentationToken(ReadableMap selectedVCs, Promise promise) {
+        try {
+            Map<String, List<String>> selectedVCsMap = new HashMap<>();
 
-        ReadableMapKeySetIterator iterator = selectedVCs.keySetIterator();
-        while (iterator.hasNextKey()) {
-            String key = iterator.nextKey();
-            System.out.println("key::" + key);
-            ReadableArray valueArray = selectedVCs.getArray(key);
+            ReadableMapKeySetIterator iterator = selectedVCs.keySetIterator();
+            while (iterator.hasNextKey()) {
+                String key = iterator.nextKey();
+                System.out.println("key::" + key);
+                ReadableArray valueArray = selectedVCs.getArray(key);
 
-            List<String> valueList = new ArrayList<>();
-            for (int i = 0; i < valueArray.size(); i++) {
-                System.out.println("value::"+valueArray.getString(i));
-                valueList.add(valueArray.getString(i));
+                List<String> valueList = new ArrayList<>();
+                for (int i = 0; i < valueArray.size(); i++) {
+                    System.out.println("value::" + valueArray.getString(i));
+                    valueList.add(valueArray.getString(i));
+                }
+
+                selectedVCsMap.put(key, valueList);
             }
-
-            selectedVCsMap.put(key, valueList);
+            String vpToken = openID4VP.constructVerifiablePresentationToken(selectedVCsMap);
+            promise.resolve(vpToken);
+        } catch (Exception exception) {
+            promise.reject(exception);
         }
-        String vpToken = openID4VP.constructVerifiablePresentationToken(selectedVCsMap);
-        promise.resolve(vpToken);
+
     }
-    
+
+    @ReactMethod
+    public void shareVerifiablePresentation(ReadableMap vpResponseMetadata, Promise promise) {
+        try {
+            VPResponseMetadata vpResMetadata = new VPResponseMetadata(
+                    Objects.requireNonNull(vpResponseMetadata.getString("jws")),
+                    Objects.requireNonNull(vpResponseMetadata.getString("signatureAlgorithm")),
+                    Objects.requireNonNull(vpResponseMetadata.getString("publicKey")),
+                    Objects.requireNonNull(vpResponseMetadata.getString("domain")));
+            String response = openID4VP.shareVerifiablePresentation(vpResMetadata);
+            promise.resolve(response);
+        } catch (Exception exception) {
+            promise.reject(exception);
+        }
+    }
+
     public List<Verifier> convertReadableArrayToVerifierArray(ReadableArray readableArray) {
         List<Verifier> trustedVerifiersList = new ArrayList<>();
         for (int i = 0; i < readableArray.size(); i++) {
@@ -88,7 +111,7 @@ public class InjiOpenId4VPModule extends ReactContextBaseJavaModule {
             String clientId = verifierMap.getString("client_id");
             ReadableArray responseUri = verifierMap.getArray("response_uri");
             List<String> responseUriList = new ArrayList<>();
-            for(int j=0; j< responseUri.size();j++){
+            for (int j = 0; j < responseUri.size(); j++) {
                 responseUriList.add(responseUri.getString(j));
                 System.out.println(responseUriList);
             }

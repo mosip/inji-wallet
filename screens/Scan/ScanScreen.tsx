@@ -30,6 +30,10 @@ export const ScanScreen: React.FC = () => {
   const sendVcScreenController = useSendVcScreen();
   const sendVPScreenController = useSendVPScreen();
   const [isBluetoothOn, setIsBluetoothOn] = useState(false);
+  const showErorModal =
+    sendVPScreenController.showError ||
+    (sendVPScreenController.flowType.startsWith('OpenID4VP') &&
+      sendVPScreenController.flowType !== VCShareFlowType.OPENID4VP);
 
   useEffect(() => {
     (async () => {
@@ -296,49 +300,48 @@ export const ScanScreen: React.FC = () => {
           />
         )}
 
-      {sendVPScreenController.flowType.startsWith('OpenID4VP') &&
-        sendVPScreenController.flowType !== VCShareFlowType.OPENID4VP && (
-          <>
-            <Error
-              isModal
-              alignActionsOnEnd
-              showClose={false}
-              isVisible={sendVPScreenController.errorModal.show}
-              title={sendVPScreenController.errorModal.title}
-              message={sendVPScreenController.errorModal.message}
-              image={SvgImage.PermissionDenied()}
-              primaryButtonTestID={'retry'}
-              primaryButtonText={
-                sendVPScreenController.errorModal.showRetryButton &&
-                sendVPScreenController.openID4VPRetryCount < 3
-                  ? t('ScanScreen:status.retry')
-                  : undefined
-              }
-              primaryButtonEvent={sendVPScreenController.RETRY}
-              textButtonTestID={'home'}
-              textButtonText={t('ScanScreen:status.accepted.home')}
-              textButtonEvent={sendVPScreenController.GO_TO_HOME}
-              customImageStyles={{paddingBottom: 0, marginBottom: -6}}
-              customStyles={{marginTop: '30%'}}
-              testID={'vpShareError'}
-            />
+      {showErorModal && (
+        <>
+          <Error
+            isModal
+            alignActionsOnEnd
+            showClose={false}
+            isVisible={sendVPScreenController.errorModal.show}
+            title={sendVPScreenController.errorModal.title}
+            message={sendVPScreenController.errorModal.message}
+            image={SvgImage.PermissionDenied()}
+            primaryButtonTestID={'retry'}
+            primaryButtonText={
+              sendVPScreenController.errorModal.showRetryButton &&
+              sendVPScreenController.openID4VPRetryCount < 3
+                ? t('ScanScreen:status.retry')
+                : undefined
+            }
+            primaryButtonEvent={sendVPScreenController.RETRY}
+            textButtonTestID={'home'}
+            textButtonText={t('ScanScreen:status.accepted.home')}
+            textButtonEvent={sendVPScreenController.GO_TO_HOME}
+            customImageStyles={{paddingBottom: 0, marginBottom: -6}}
+            customStyles={{marginTop: '30%'}}
+            testID={'vpShareError'}
+          />
 
-            <VerifyIdentityOverlay
-              credential={sendVPScreenController.credentials}
-              verifiableCredentialData={
-                sendVPScreenController.verifiableCredentialsData
-              }
-              isVerifyingIdentity={sendVPScreenController.isVerifyingIdentity}
-              onCancel={sendVPScreenController.CANCEL}
-              onFaceValid={sendVPScreenController.FACE_VALID}
-              onFaceInvalid={sendVPScreenController.FACE_INVALID}
-              isInvalidIdentity={sendVPScreenController.isInvalidIdentity}
-              onNavigateHome={sendVPScreenController.GO_TO_HOME}
-              onRetryVerification={sendVPScreenController.RETRY_VERIFICATION}
-              isLivenessEnabled={LIVENESS_CHECK}
-            />
-          </>
-        )}
+          <VerifyIdentityOverlay
+            credential={sendVPScreenController.credentials}
+            verifiableCredentialData={
+              sendVPScreenController.verifiableCredentialsData
+            }
+            isVerifyingIdentity={sendVPScreenController.isVerifyingIdentity}
+            onCancel={sendVPScreenController.CANCEL}
+            onFaceValid={sendVPScreenController.FACE_VALID}
+            onFaceInvalid={sendVPScreenController.FACE_INVALID}
+            isInvalidIdentity={sendVPScreenController.isInvalidIdentity}
+            onNavigateHome={sendVPScreenController.GO_TO_HOME}
+            onRetryVerification={sendVPScreenController.RETRY_VERIFICATION}
+            isLivenessEnabled={LIVENESS_CHECK}
+          />
+        </>
+      )}
     </Column>
   );
 };

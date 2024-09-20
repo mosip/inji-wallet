@@ -63,14 +63,16 @@ export const openId4VPMachine = model.createMachine(
         description: 'checks whether key pair is generated',
         invoke: {
           src: 'getSelectedKey',
-          onDone:
-            {
-              cond: 'hasKeyPair',
-              target: 'authenticateVerifier',
-            },
+          onDone: {
+            cond: 'hasKeyPair',
+            target: 'authenticateVerifier',
+          },
           onError: [
             {
-              actions: 'setError',
+              actions: [
+                (_, event) => console.log('Error:', event.data.message),
+                'setError',
+              ],
             },
           ],
         },
@@ -84,7 +86,7 @@ export const openId4VPMachine = model.createMachine(
           },
           onError: {
             actions: [
-              (_, event) => console.error('Error:', event.data),
+              (_, event) => console.error('Error:', event.data.message),
               'setError',
             ],
           },
@@ -251,6 +253,14 @@ export const openId4VPMachine = model.createMachine(
         invoke: {
           src: 'sendVP',
           onDone: {},
+          onError: {
+            actions: [
+              (_, event) => console.error('Error:', event.data.message),
+              'setError',
+              sendParent('SHOW_ERROR'),
+            ],
+            target: 'showError',
+          },
         },
         after: {
           SHARING_TIMEOUT: {
@@ -258,6 +268,7 @@ export const openId4VPMachine = model.createMachine(
           },
         },
       },
+      showError: {},
     },
   },
   {

@@ -81,6 +81,10 @@ export function selectIsSendingVP(state: State) {
   return state.matches('startVPSharing.inProgress');
 }
 
+export function selectIsSendingVPError(state: State) {
+  return state.matches('startVPSharing.showError');
+}
+
 export function selectIsFaceIdentityVerified(state: State) {
   return (
     state.matches('reviewing.sendingVc.inProgress') &&

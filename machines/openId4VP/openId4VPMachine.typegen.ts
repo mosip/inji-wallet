@@ -30,6 +30,10 @@ export interface Typegen0 {
       type: 'error.platform.OpenId4VP.getKeyPairFromKeystore:invocation[0]';
       data: unknown;
     };
+    'error.platform.OpenId4VP.sendingVP:invocation[0]': {
+      type: 'error.platform.OpenId4VP.sendingVP:invocation[0]';
+      data: unknown;
+    };
     'xstate.init': {type: 'xstate.init'};
   };
   invokeSrcNameMap: {
@@ -84,7 +88,8 @@ export interface Typegen0 {
     setError:
       | 'error.platform.OpenId4VP.authenticateVerifier:invocation[0]'
       | 'error.platform.OpenId4VP.checkKeyPair:invocation[0]'
-      | 'error.platform.OpenId4VP.getKeyPairFromKeystore:invocation[0]';
+      | 'error.platform.OpenId4VP.getKeyPairFromKeystore:invocation[0]'
+      | 'error.platform.OpenId4VP.sendingVP:invocation[0]';
     setFlowType: 'AUTHENTICATE';
     setIsShareWithSelfie: 'AUTHENTICATE';
     setSelectedVCs: 'ACCEPT_REQUEST' | 'VERIFY_AND_ACCEPT_REQUEST';
@@ -128,6 +133,7 @@ export interface Typegen0 {
     | 'sendingVP'
     | 'setSelectedVC'
     | 'showConfirmationPopup'
+    | 'showError'
     | 'verifyingIdentity'
     | 'waitingForData';
   tags: never;

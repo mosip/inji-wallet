@@ -8,6 +8,7 @@ import {ScanEvents} from '../../machines/bleShare/scan/scanMachine';
 import {
   selectFlowType,
   selectIsSelectingVc,
+  selectIsSendingVPError,
   selectOpenID4VPRetryCount,
   selectReceiverInfo,
   selectVcName,
@@ -166,6 +167,7 @@ export function useSendVPScreen() {
   }
 
   return {
+    showError: useSelector(scanService, selectIsSendingVPError),
     isSendingVP,
     flowType: useSelector(openId4VPService, selectFlowType),
     showConfirmationPopup,

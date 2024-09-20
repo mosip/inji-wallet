@@ -406,8 +406,12 @@ export const scanMachine =
                 target: 'checkStorage',
               },
             ],
+            SHOW_ERROR: {
+              target: '.showError',
+            },
           },
           states: {
+            showError: {},
             inProgress: {
               on: {
                 CANCEL: [
