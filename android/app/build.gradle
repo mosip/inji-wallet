@@ -8,6 +8,11 @@ apply plugin: "org.sonarqube"
 
 configurations.all {
     resolutionStrategy.force 'androidx.activity:activity-ktx:1.7.1','androidx.activity:activity:1.7.0', 'com.fasterxml.jackson.core:jackson-core:2.14.0'
+    all*.exclude module: 'bcprov-jdk15to18'
+    all*.exclude module: 'bcutil-jdk18on'
+    all*.exclude module: 'bcprov-jdk15on'
+    all*.exclude module: 'bcutil-jdk15on'
+    all*.exclude module: 'titanium-json-ld'
 }
 
 react {
@@ -110,7 +115,6 @@ android {
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionName androidGitVersion.name()
         versionCode 1
-
         manifestPlaceholders = [
                 APP_NAME             : APP_NAME,
                 appAuthRedirectScheme: 'io.mosip.residentapp.inji'
@@ -246,10 +250,14 @@ android {
     }
 
     packagingOptions {
-      pickFirst 'lib/arm64-v8a/liblog.so'    
-      pickFirst 'lib/armeabi-v7a/liblog.so'  
-      pickFirst 'lib/x86/liblog.so'
-      pickFirst 'lib/x86_64/liblog.so'
+        pickFirst 'lib/arm64-v8a/liblog.so'    
+        pickFirst 'lib/armeabi-v7a/liblog.so'  
+        pickFirst 'lib/x86/liblog.so'
+        pickFirst 'lib/x86_64/liblog.so'
+        resources {
+            excludes += "META-INF/*"
+            excludes += "META-INF/spring/aot.factories"
+         }
     }
 }
 
@@ -260,6 +268,7 @@ dependencies {
     implementation("io.mosip:secure-keystore:0.3.0-SNAPSHOT")
     implementation("io.mosip:tuvali:0.5.1")
     implementation("io.mosip:inji-vci-client:0.2.0-SNAPSHOT")
+    mplementation("io.mosip:vcverifier-aar:1.2.1235-SNAPSHOT")
 
 
     def isGifEnabled = (findProperty('expo.gif.enabled') ?: "") == "true";

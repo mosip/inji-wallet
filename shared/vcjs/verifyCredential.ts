@@ -11,6 +11,7 @@ import {
 import {getErrorEventData, sendErrorEvent} from '../telemetry/TelemetryUtils';
 import {TelemetryConstants} from '../telemetry/TelemetryConstants';
 import {getMosipIdentifier} from '../commonUtil';
+import {NativeModules} from 'react-native';
 
 // FIXME: Ed25519Signature2018 not fully supported yet.
 // Ed25519Signature2018 proof type check is not tested with its real credential
@@ -24,10 +25,15 @@ const ProofPurpose = {
   PublicKey: 'publicKey',
 };
 
+const vcVerifier = NativeModules.VCVerifierModule;
+
 export async function verifyCredential(
   verifiableCredential: Credential,
 ): Promise<VerificationResult> {
   try {
+    let status = await vcVerifier.verifyCredentials(
+      JSON.stringify(verifiableCredential),
+    );
     let purpose: PublicKeyProofPurpose | AssertionProofPurpose;
     const proof = verifiableCredential.proof;
     switch (proof.proofPurpose) {
