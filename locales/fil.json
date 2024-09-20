@@ -420,10 +420,10 @@
     "noReceivedVcsText": "Pindutin ang Humiling sa ibaba para makatanggap ng card"
   },
   "VcVerificationBanner": {
-      "inProgress": "Pina-validate namin ang iyong card, maaaring magtagal ito. Kapag na-verify na, magagawa mong i-activate ang iyong card.",
-      "success": "Matagumpay na na-verify ang {{vcDetails}} at magagamit na ngayon para sa pag-activate.",
-      "error": "Paumanhin, hindi namin ma-verify ang {{vcDetails}} ngayon. Subukang muli mamaya. Hanggang sa panahong iyon, hindi mo maa-activate o maibabahagi ang iyong card."
-    },
+    "inProgress": "Pina-validate namin ang iyong card, maaaring magtagal ito. Kapag na-verify na, magagawa mong i-activate ang iyong card.",
+    "success": "Matagumpay na na-verify ang {{vcDetails}} at magagamit na ngayon para sa pag-activate.",
+    "error": "Paumanhin, hindi namin ma-verify ang {{vcDetails}} ngayon. Subukang muli mamaya. Hanggang sa panahong iyon, hindi mo maa-activate o maibabahagi ang iyong card."
+  },
   "ViewVcModal": {
     "title": "Mga Detalye ng ID",
     "inProgress": "Isinasagawa",
@@ -798,6 +798,10 @@
       "credentialsMismatch": {
         "title": "Isang Error ang Naganap!",
         "message": "May nakitang hindi pagkakatugma ng kredensyal. Tiyaking napili mo ang tama at subukang muli."
+      },
+      "genericError": {
+        "title": "Oops! Isang Error ang Naganap.",
+        "message": "Dahil sa teknikal na error, hindi namin maibahagi ang card. Mag-click sa subukang muli upang muling ibahagi o mag-click sa Home upang lumabas sa proseso ng pagbabahagi."
       }
     }
   },

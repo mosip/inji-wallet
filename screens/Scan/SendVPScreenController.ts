@@ -128,6 +128,11 @@ export function useSendVPScreen() {
     errorModal.title = t('errors.credentialsMismatch.title');
     errorModal.message = t('errors.credentialsMismatch.message');
     errorModal.showRetryButton = false;
+  } else if (error !== '') {
+    errorModal.show = true;
+    errorModal.title = t('errors.genericError.title');
+    errorModal.message = t('errors.genericError.message');
+    errorModal.showRetryButton = false;
   }
 
   let overlayDetails: Omit<VPShareOverlayProps, 'isVisible'> | null = null;
