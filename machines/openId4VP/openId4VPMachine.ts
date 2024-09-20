@@ -41,8 +41,38 @@ export const openId4VPMachine = model.createMachine(
         on: {
           STORE_RESPONSE: {
             actions: 'updateShowFaceAuthConsent',
-            target: 'authenticateVerifier',
+            target: 'getKeyPairFromKeystore',
           },
+        },
+      },
+      getKeyPairFromKeystore: {
+        invoke: {
+          src: 'getKeyPair',
+          onDone: {
+            actions: ['loadKeyPair'],
+            target: 'checkKeyPair',
+          },
+          onError: [
+            {
+              actions: 'setError',
+            },
+          ],
+        },
+      },
+      checkKeyPair: {
+        description: 'checks whether key pair is generated',
+        invoke: {
+          src: 'getSelectedKey',
+          onDone:
+            {
+              cond: 'hasKeyPair',
+              target: 'authenticateVerifier',
+            },
+          onError: [
+            {
+              actions: 'setError',
+            },
+          ],
         },
       },
       authenticateVerifier: {
@@ -176,13 +206,15 @@ export const openId4VPMachine = model.createMachine(
       },
       verifyingIdentity: {
         on: {
-          FACE_VALID: {
-            target: 'sendingVP',
-            actions: [
-              'setShareLogTypeVerified',
-              'updateFaceCaptureBannerStatus',
-            ],
-          },
+          FACE_VALID: [
+            {
+              cond: 'hasKeyPair',
+              target: 'sendingVP',
+            },
+            {
+              target: 'checkKeyPair',
+            },
+          ],
           FACE_INVALID: {
             target: 'invalidIdentity',
             actions: 'logFailedVerification',
@@ -198,7 +230,6 @@ export const openId4VPMachine = model.createMachine(
           ],
         },
       },
-
       invalidIdentity: {
         on: {
           DISMISS: [

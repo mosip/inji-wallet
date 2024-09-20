@@ -1,6 +1,8 @@
 import {NativeModules} from 'react-native';
 import {__AppId} from '../GlobalVariables';
 import {VC} from '../../machines/VerifiableCredential/VCMetaMachine/vc';
+import { getJWT } from '../cryptoutil/cryptoUtil';
+import { getJWK } from '../openId4VCI/Utils';
 
 export class OpenID4VP {
   static InjiOpenId4VP = NativeModules.InjiOpenId4VP;
@@ -37,4 +39,38 @@ export class OpenID4VP {
       );
     return vpToken;
   }
+
+  static async shareVerifiablePresentation(
+    vpResponseMetadata: Record<string, string>,
+  ) {
+     return await OpenID4VP.InjiOpenId4VP.shareVerifiablePresentation(vpResponseMetadata);
+  }
+
+  static async constructProofJWS(
+    publicKey: string,
+    privateKey: string,
+    vpToken: Object,
+    keyType: string,
+  ): Promise<string> {
+    const jwtHeader = {
+      alg: keyType,
+      jwk: await getJWK(publicKey, keyType),
+    };
+    const jwsPayload = {
+     "@context" : vpToken["@context"],
+     type: vpToken["type"],
+     verifiableCredential: vpToken["verifiableCredential"],
+     id : vpToken["id"],
+     holder: vpToken["holder"]
+    };
+    
+    const jwsis =  await getJWT(
+      jwtHeader,
+      jwsPayload,
+      "OpenId4Vp",
+      privateKey,
+      keyType,
+    );
+    return jwsis;
+};
 }

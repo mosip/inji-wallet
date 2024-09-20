@@ -1,6 +1,7 @@
 import {createModel} from 'xstate/lib/model';
 import {AppServices} from '../../shared/GlobalContext';
 import {VC} from '../VerifiableCredential/VCMetaMachine/vc';
+import { KeyTypes } from '../../shared/cryptoutil/KeyTypes';
 const openId4VPEvents = {
   AUTHENTICATE: (
     encodedAuthRequest: string,
@@ -45,6 +46,9 @@ export const openId4VPModel = createModel(
     showFaceAuthConsent: true as boolean,
     purpose: '' as string,
     error: '' as string,
+    publicKey: '',
+    privateKey: '',
+    keyType: KeyTypes.RS256,
     flowType: '' as string,
   },
   {events: openId4VPEvents},

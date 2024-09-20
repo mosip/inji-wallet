@@ -13,5 +13,12 @@ export const openId4VPGuards = () => {
 
     isSelectedVCMatchingRequest: context =>
       Object.values(context.selectedVCs).length === 1,
+
+    isFlowTypeSimpleShare: context =>
+      context.flowType === VCShareFlowType.SIMPLE_SHARE,
+
+    hasKeyPair: (context: any) => {
+      return !!context.publicKey;
+    },
   };
 };

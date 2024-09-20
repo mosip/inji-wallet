@@ -2,6 +2,8 @@ import {send, sendParent} from 'xstate/lib/actions';
 import {VC} from '../VerifiableCredential/VCMetaMachine/vc';
 import {StoreEvents} from '../store';
 import {SHOW_FACE_AUTH_CONSENT_SHARE_FLOW} from '../../shared/constants';
+import { assign } from 'xstate';
+
 import {VCShareFlowType} from '../../shared/Utils';
 
 export const openId4VPActions = (model: any) => {
@@ -143,6 +145,14 @@ export const openId4VPActions = (model: any) => {
 
     setError: model.assign({
       error: (_, event) => event.data.message,
+    }),
+
+    loadKeyPair: assign({
+      publicKey: (_, event: any) => event.data?.publicKey as string,
+      privateKey: (context: any, event: any) =>
+        event.data?.privateKey
+          ? event.data.privateKey
+          : (context.privateKey as string),
     }),
   };
 };
