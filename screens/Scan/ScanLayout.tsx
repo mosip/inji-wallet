@@ -23,7 +23,7 @@ const ScanStack = createNativeStackNavigator();
 export const ScanLayout: React.FC = () => {
   const {t} = useTranslation('ScanScreen');
   const controller = useScanLayout();
-
+  console.log('!!scan flow type::', controller.openID4VPFlowType);
   if (
     controller.statusOverlay != null &&
     !controller.isAccepted &&
@@ -151,7 +151,7 @@ export const ScanLayout: React.FC = () => {
       </ScanStack.Navigator>
 
       <SharingStatusModal
-        isVisible={controller.isAccepted}
+        isVisible={controller.isAccepted || controller.isVPSharingSuccess}
         testId={'sharingSuccessModal'}
         buttonStatus={'homeAndHistoryIcons'}
         title={t('status.accepted.title')}

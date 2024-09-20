@@ -409,8 +409,12 @@ export const scanMachine =
             SHOW_ERROR: {
               target: '.showError',
             },
+            SUCCESS: {
+              target: '.success',
+            },
           },
           states: {
+            success: {},
             showError: {},
             inProgress: {
               on: {

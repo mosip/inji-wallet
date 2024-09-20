@@ -252,7 +252,10 @@ export const openId4VPMachine = model.createMachine(
         entry: sendParent('IN_PROGRESS'),
         invoke: {
           src: 'sendVP',
-          onDone: {},
+          onDone: {
+            actions: sendParent('SUCCESS'),
+            target: 'success',
+          },
           onError: {
             actions: [
               (_, event) => console.error('Error:', event.data.message),
@@ -269,6 +272,7 @@ export const openId4VPMachine = model.createMachine(
         },
       },
       showError: {},
+      success: {},
     },
   },
   {

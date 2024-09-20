@@ -57,6 +57,7 @@ const ScanEvents = {
   ALLOWED: () => ({}),
   DENIED: () => ({}),
   SHOW_ERROR: () => ({}),
+  SUCCESS: () => ({}),
   IN_PROGRESS: () => ({}),
   TIMEOUT: () => ({}),
   QRLOGIN_VIA_DEEP_LINK: (linkCode: string) => ({linkCode}),

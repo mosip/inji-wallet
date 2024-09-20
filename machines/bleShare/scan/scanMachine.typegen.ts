@@ -325,6 +325,7 @@ export interface Typegen0 {
     | 'startVPSharing'
     | 'startVPSharing.inProgress'
     | 'startVPSharing.showError'
+    | 'startVPSharing.success'
     | 'startVPSharing.timeout'
     | {
         checkBluetoothPermission?: 'checking' | 'enabled';
@@ -355,7 +356,7 @@ export interface Typegen0 {
           | 'verifyingIdentity'
           | {sendingVc?: 'inProgress' | 'sent' | 'timeout'};
         showQrLogin?: 'idle' | 'navigatingToHistory' | 'storing';
-        startVPSharing?: 'inProgress' | 'showError' | 'timeout';
+        startVPSharing?: 'inProgress' | 'showError' | 'success' | 'timeout';
       };
   tags: never;
 }

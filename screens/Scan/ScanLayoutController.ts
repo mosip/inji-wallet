@@ -28,6 +28,7 @@ import {
   selectIsSendingVP,
   selectIsQrLoginViaDeepLink,
   selectOpenID4VPFlowType,
+  selectIsSendingVPSuccess,
 } from '../../machines/bleShare/scan/scanSelectors';
 import {
   selectBleError,
@@ -329,6 +330,7 @@ export function useScanLayout() {
     CANCEL,
     isSendingVc,
     isSendingVP,
+    isVPSharingSuccess: useSelector(scanService, selectIsSendingVPSuccess),
     flowType,
     openID4VPFlowType,
     isVerifyingIdentity,
