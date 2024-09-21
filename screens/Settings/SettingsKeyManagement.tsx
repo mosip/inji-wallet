@@ -1,66 +1,73 @@
-import React, { useState } from "react"
-import { Pressable } from "react-native"
-import { ListItem, Icon } from "react-native-elements"
-import { t } from "xstate"
-import { Row } from "../../components/ui"
-import testIDProps from "../../shared/commonUtil"
-import { Theme } from "../../components/ui/styleUtils"
-import { Text } from "../../components/ui"
-import { KeyManagementScreen } from "./KeyManagementScreen"
+import React, {useTransition} from 'react';
+import {Pressable} from 'react-native';
+import {ListItem, Icon} from 'react-native-elements';
+import {Row} from '../../components/ui';
+import testIDProps from '../../shared/commonUtil';
+import {Theme} from '../../components/ui/styleUtils';
+import {Text} from '../../components/ui';
+import {NavigationProp, useNavigation} from '@react-navigation/native';
+import {
+  SETTINGS_ROUTES,
+  SettingsStackParamList,
+} from '../../routes/routesConstants';
+import {useTranslation} from 'react-i18next';
 
-export const SettingskeyManagementScreen: React.FC<SettingskeyManagementScreenProps> = (props) => {
-    const [pressed, setPressed] = useState(false)
-    return <React.Fragment>
-        <Pressable
-            accessible={false}
-            {...testIDProps('keyManagement')}
-            onPress={() => {
-                console.log("pressed")
-                props.controller.SET_KEY_MANAGEMENT_EXPLORED()
-                setPressed(true)
-            }}>
-            <ListItem topDivider bottomDivider>
-                <Icon name="vpn-key" color={Theme.Colors.Icon} />
-                <ListItem.Content>
-                    <ListItem.Title
-                        accessible={false}
-                        {...testIDProps('keyManagementText')}>
-                        <Row>
-                            <Text
-                                testID="keyManagementText"
-                                weight="semibold"
-                                color={Theme.Colors.settingsLabel}
-                                style={Theme.KeyManagementScreenStyle.textStyle}>
-                                {t('keyManagement')}
-                            </Text>
-                            {!props.isExplored && (
-                                <Text
-                                    testID="newLabel"
-                                    style={Theme.Styles.newLabel}
-                                    color={Theme.Colors.whiteText}>
-                                    {t('NEW')}
-                                </Text>
-                            )}
-                        </Row>
-                    </ListItem.Title>
-                </ListItem.Content>
-                <Icon
-                    name="chevron-right"
-                    size={21}
-                    {...testIDProps('keyManagementChevronRight')}
-                    color={Theme.Colors.chevronRightColor}
-                    style={Theme.KeyManagementScreenStyle.iconStyle}
-                />
-            </ListItem>
-        </Pressable>
-        <KeyManagementScreen controller={props.controller} isVisible={pressed} isClosed={() => {
-            props.controller.SET_KEY_MANAGEMENT_TOUR_GUIDE_EXPLORED()
-            setPressed(false)
-        }} onBackPress={undefined} />
+type SettingsNavigation = NavigationProp<SettingsStackParamList>;
+
+export const SettingsKeyManagementScreen: React.FC<
+  SettingsKeyManagementScreenProps
+> = props => {
+  const navigation = useNavigation<SettingsNavigation>();
+  const {t} = useTranslation('SetupKey');
+  return (
+    <React.Fragment>
+      <Pressable
+        accessible={false}
+        {...testIDProps('keyManagement')}
+        onPress={() => {
+          props.controller.SET_KEY_MANAGEMENT_EXPLORED();
+          navigation.navigate(SETTINGS_ROUTES.KeyManagement, {
+            controller: props.controller,
+          });
+        }}>
+        <ListItem topDivider bottomDivider>
+          <Icon name="vpn-key" color={Theme.Colors.Icon} />
+          <ListItem.Content>
+            <ListItem.Title
+              accessible={false}
+              {...testIDProps('keyManagementText')}>
+              <Row>
+                <Text
+                  testID="keyManagementText"
+                  weight="semibold"
+                  color={Theme.Colors.settingsLabel}
+                  style={Theme.KeyManagementScreenStyle.textStyle}>
+                  {t('header')}
+                </Text>
+                {!props.controller.isKeyManagementExplored && (
+                  <Text
+                    testID="newLabel"
+                    style={Theme.Styles.newLabel}
+                    color={Theme.Colors.whiteText}>
+                    {t('NEW')}
+                  </Text>
+                )}
+              </Row>
+            </ListItem.Title>
+          </ListItem.Content>
+          <Icon
+            name="chevron-right"
+            size={21}
+            {...testIDProps('keyManagementChevronRight')}
+            color={Theme.Colors.chevronRightColor}
+            style={Theme.KeyManagementScreenStyle.iconStyle}
+          />
+        </ListItem>
+      </Pressable>
     </React.Fragment>
-}
+  );
+};
 
-export interface SettingskeyManagementScreenProps {
-    isExplored: boolean
-    controller: any
+export interface SettingsKeyManagementScreenProps {
+  controller: any;
 }

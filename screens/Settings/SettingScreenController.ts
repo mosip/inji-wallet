@@ -16,12 +16,10 @@ import {
   selectCredentialRegistry,
   SettingsEvents,
   selectAppId,
-  selectIsResetInjiProps,
   selectEsignetHostUrl,
   selectIsKeymanagementExplored,
-  selectIsKeyOrderingSuccess,
-  selectIsKeyOrderingError,
   selectIsKeymanagementTourGuideExplored,
+  selectIsKeyOrderSet,
 } from '../../machines/settings';
 
 import {
@@ -131,26 +129,15 @@ export function useSettingsScreen(props: RootRouteProps & RequestRouteProps) {
       settingsService || {},
       selectBiometricUnlockEnabled,
     ),
-     isKeyManagementExplored : useSelector(
+    isKeyManagementExplored: useSelector(
       settingsService,
       selectIsKeymanagementExplored,
     ),
-    isKeyManagementTourGuideExplored : useSelector(
+    isKeyManagementTourGuideExplored: useSelector(
       settingsService,
       selectIsKeymanagementTourGuideExplored,
     ),
-      isKeyOrderingSuccess: useSelector(
-        settingsService,
-        selectIsKeyOrderingSuccess
-      ),
-      isKeyOrderingError: useSelector(
-        settingsService,
-        selectIsKeyOrderingError
-      ),
-    isResetInjiProps: useSelector(
-      settingsService || {},
-      selectIsResetInjiProps,
-    ),
+    isKeyOrderSet: useSelector(settingsService, selectIsKeyOrderSet),
     canUseBiometrics: useSelector(authService || {}, selectCanUseBiometrics),
     useBiometrics,
 
@@ -189,28 +176,22 @@ export function useSettingsScreen(props: RootRouteProps & RequestRouteProps) {
       props.navigation.navigate('Passcode', {setup: true});
     },
 
-    SET_KEY_MANAGEMENT_EXPLORED: ()=>{
-      settingsService.send(SettingsEvents.SET_KEY_MANAGEMENT_EXPLORED())
+    SET_KEY_MANAGEMENT_EXPLORED: () => {
+      settingsService.send(SettingsEvents.SET_KEY_MANAGEMENT_EXPLORED());
     },
 
-    SET_KEY_ORDER_SUCCESS: ()=>{
-      settingsService.send(SettingsEvents.SET_KEY_ORDER_SUCCESS())
+    SET_KEY_ORDER_RESPONSE: (status: boolean) => {
+      settingsService.send(SettingsEvents.SET_KEY_ORDER_RESPONSE(status));
     },
 
-    RESET_KEY_ORDER_SUCCESS: ()=>{
-      settingsService.send(SettingsEvents.RESET_KEY_ORDER_SUCCESS())
+    RESET_KEY_ORDER_RESPONSE: () => {
+      settingsService.send(SettingsEvents.RESET_KEY_ORDER_RESPONSE());
     },
 
-    SET_KEY_ORDER_ERROR: ()=>{
-      settingsService.send(SettingsEvents.SET_KEY_ORDER_ERROR())
-    },
-
-    RESET_KEY_ORDER_ERROR: ()=>{
-      settingsService.send(SettingsEvents.RESET_KEY_ORDER_ERROR())
-    },
-
-    SET_KEY_MANAGEMENT_TOUR_GUIDE_EXPLORED:()=>{
-      settingsService.send(SettingsEvents.SET_KEY_MANAGEMENT_TOUR_GUIDE_EXPLORED())
+    SET_KEY_MANAGEMENT_TOUR_GUIDE_EXPLORED: () => {
+      settingsService.send(
+        SettingsEvents.SET_KEY_MANAGEMENT_TOUR_GUIDE_EXPLORED(),
+      );
     },
     INJI_TOUR_GUIDE: () => {
       settingsService.send(SettingsEvents.INJI_TOUR_GUIDE());

@@ -51,13 +51,6 @@ export const MainLayout: React.FC = () => {
   }, [linkCode]);
 
   return (
-    <CopilotProvider
-      stopOnOutsideClick
-      androidStatusBarVisible
-      tooltipComponent={CopilotTooltip}
-      tooltipStyle={Theme.Styles.copilotStyle}
-      stepNumberComponent={() => null}
-      animated>
       <Navigator
         initialRouteName={mainRoutes[0].name}
         screenOptions={({route}) => ({
@@ -104,6 +97,5 @@ export const MainLayout: React.FC = () => {
           />
         ))}
       </Navigator>
-    </CopilotProvider>
   );
 };

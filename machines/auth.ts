@@ -102,12 +102,12 @@ export const authMachine = model.createMachine(
         },
       },
       keySetup: {
-        on:{
-          SELECT:{
-            actions:'setKeySetup',
+        on: {
+          SELECT: {
+            actions: 'setKeySetup',
             target: 'introSlider',
-          }
-        }
+          },
+        },
       },
       introSlider: {
         invoke: {
@@ -165,8 +165,8 @@ export const authMachine = model.createMachine(
         to: context => context.serviceRefs.store,
       }),
 
-      setKeySetup:model.assign({
-        keySetup:true
+      setKeySetup: model.assign({
+        keySetup: true,
       }),
 
       setIsToggleFromSettings: assign({
@@ -230,7 +230,7 @@ export const authMachine = model.createMachine(
     },
 
     guards: {
-      hasKeySetup:(context, event:any)=>!context.keySetup,
+      hasKeySetup: (context, event: any) => !context.keySetup,
       hasData: (_, event: StoreResponseEvent) => event.response != null,
 
       hasPasscodeSet: context => {

@@ -31,6 +31,10 @@ export function selectIsBiometricCancelled(state: State) {
   );
 }
 
+export function selectIsNonGenericError(state: State) {
+  return state.context.errorMessage!== ErrorMessage.GENERIC
+}
+
 export function selectIsDone(state: State) {
   return state.matches('done');
 }

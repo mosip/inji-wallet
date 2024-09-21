@@ -7,6 +7,7 @@ import {
 } from 'react-native-dotenv';
 import {Argon2iConfig} from './commonUtil';
 import {VcIdType} from '../machines/VerifiableCredential/VCMetaMachine/vc';
+import { KeyTypes } from './cryptoutil/KeyTypes';
 
 export let MIMOTO_BASE_URL = MIMOTO_HOST;
 export let ESIGNET_BASE_URL = ESIGNET_HOST;
@@ -73,6 +74,12 @@ export const API_CACHED_STORAGE_KEYS = {
 export function isIOS(): boolean {
   return Platform.OS === 'ios';
 }
+export const SUPPORTED_KEY_TYPES = {
+  ED25519: KeyTypes.ED25519,
+  'ECC K1': KeyTypes.ES256K,
+  'ECC R1': KeyTypes.ES256,
+  RSA: KeyTypes.RS256,
+};
 
 export function isAndroid(): boolean {
   return Platform.OS === 'android';

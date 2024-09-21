@@ -94,7 +94,10 @@ export const IssuersMachine = model.createMachine(
         invoke: {
           src: 'downloadIssuerWellknown',
           onDone: {
-            actions: ['updateIssuerFromWellknown','updateSelectedIssuerWellknownResponse'],
+            actions: [
+              'updateIssuerFromWellknown',
+              'updateSelectedIssuerWellknownResponse',
+            ],
             target: 'downloadCredentialTypes',
           },
           onError: {
@@ -210,12 +213,12 @@ export const IssuersMachine = model.createMachine(
           idle: {},
           setSelectedKey: {
             invoke: {
-              src: 'getKeyOrder',
+              src: 'getKeyOrderList',
               onDone: {
                 actions: 'setSelectedKey',
                 target: 'getKeyPairFromKeystore',
               },
-              onError:{
+              onError: {
                 actions: [
                   'resetSelectedCredentialType',
                   'setError',
@@ -228,7 +231,7 @@ export const IssuersMachine = model.createMachine(
                     ),
                 ],
                 target: '#issuersMachine.selectingIssuer',
-              }
+              },
             },
           },
           getKeyPairFromKeystore: {
@@ -240,8 +243,23 @@ export const IssuersMachine = model.createMachine(
               },
               onError: [
                 {
-                  cond: 'isBiometricCancelled',
+                  cond: 'hasUserCancelledBiometric',
                   target: 'userCancelledBiometric',
+                },
+                {
+                  cond: 'isKeyTypeNotFound',
+                  actions: [
+                    'resetSelectedCredentialType',
+                    'setError',
+                    'resetLoadingReason',
+                    'sendDownloadingFailedToVcMeta',
+                    (_, event) =>
+                      console.error(
+                        'Error Occurred while invoking Auth - ',
+                        event.data,
+                      ),
+                  ],
+                  target: '#issuersMachine.selectingIssuer',
                 },
                 {
                   target: '#issuersMachine.checkKeyPair',

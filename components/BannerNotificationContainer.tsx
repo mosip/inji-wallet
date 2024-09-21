@@ -31,26 +31,26 @@ export const BannerNotificationContainer: React.FC<
     <>
       <BackupAndRestoreBannerNotification />
 
-      {settingsScreenController.isKeyOrderingSuccess && (
+      {(settingsScreenController.isKeyOrderSet === true) && (
         <View style={Theme.BannerStyles.topBanner}>
           <BannerNotification
             type={BannerStatusType.SUCCESS}
             message={t('keyPreferenceSuccess')}
             onClosePress={
-              settingsScreenController.RESET_KEY_ORDER_SUCCESS
+              settingsScreenController.RESET_KEY_ORDER_RESPONSE
             }
             key={'keyOrderingSuccess'}
             testId={'keyOrderingSuccess'}
           />
         </View>)}
 
-        {settingsScreenController.isKeyOrderingError && (
+        {(settingsScreenController.isKeyOrderSet === false) && (
         <View style={Theme.BannerStyles.topBanner}>
           <BannerNotification
             type={BannerStatusType.ERROR}
             message={t('keyPreferenceError')}
             onClosePress={
-              settingsScreenController.RESET_KEY_ORDER_ERROR
+              settingsScreenController.RESET_KEY_ORDER_RESPONSE
             }
             key={'keyOrderingError'}
             testId={'keyOrderingError'}

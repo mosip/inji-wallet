@@ -3,7 +3,6 @@ import {
   selectIsPasscodeUnlock,
   selectIsBiometricUnlock,
   SettingsEvents,
-  selectIsKeyOrderingSuccess,
 } from '../machines/settings';
 import {useContext} from 'react';
 import {GlobalContext} from '../shared/GlobalContext';
@@ -23,7 +22,6 @@ export const UseBannerNotification = () => {
     isBindingSuccess: useSelector(vcMetaService, selectWalletBindingSuccess),
     verificationStatus: useSelector(vcMetaService, selectVerificationStatus),
     isPasscodeUnlock: useSelector(settingsService, selectIsPasscodeUnlock),
-    isKeyOrderingSuccess: useSelector(settingsService,selectIsKeyOrderingSuccess),
 
     isBiometricUnlock: useSelector(settingsService, selectIsBiometricUnlock),
     isDownloadingFailed: useSelector(vcMetaService, selectIsDownloadingFailed),

@@ -97,13 +97,12 @@ export const IssuersService = () => {
       );
     },
 
-    getKeyOrder:async ()=>{
-      const{RNSecureKeystoreModule}=NativeModules
-      console.log("keyorder: ",await RNSecureKeystoreModule.getData("keyPreference"))
-      console.log("keyorder1: ",(await RNSecureKeystoreModule.getData("keyPreference"))[1])
-      const keyOrder=JSON.parse((await RNSecureKeystoreModule.getData("keyPreference"))[1])
-      console.log("keyyyy",keyOrder)
-      return keyOrder
+    getKeyOrderList: async () => {
+      const {RNSecureKeystoreModule} = NativeModules;
+      const keyOrder = JSON.parse(
+        (await RNSecureKeystoreModule.getData('keyPreference'))[1],
+      );
+      return keyOrder;
     },
 
     generateKeyPair: async (context: any) => {
@@ -112,7 +111,11 @@ export const IssuersService = () => {
     },
 
     getKeyPair: async (context: any) => {
-      if (!!(await fetchKeyPair(context.keyType)).publicKey) {
+      if(context.keyType === "")
+      {
+        throw new Error("key type not found")
+      }
+       else if(!!(await fetchKeyPair(context.keyType)).publicKey) {
         return await fetchKeyPair(context.keyType);
       }
     },

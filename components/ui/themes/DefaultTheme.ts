@@ -1528,6 +1528,32 @@ export const DefaultTheme = {
     iconStyle: {
       marginRight: 15,
     },
+    outerViewStyle: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      paddingHorizontal: 15,
+      paddingBottom: 10,
+      backgroundColor: '#fff',
+      elevation: 5, // For Android
+      shadowColor: '#000', // For iOS
+      shadowOffset: {width: 0, height: 2},
+      shadowOpacity: 0.2,
+      shadowRadius: 4,
+      zIndex: 1,
+    },
+    heading: {
+      color: 'black',
+      fontFamily: 'Inter_700Bold',
+      fontSize: 18,
+      lineHeight: 19,
+      padding: 10,
+    },
+    copilotViewStyle:{
+      flex: 1,
+      paddingTop: 10,
+      backgroundColor: '#fff',
+    },
     textStyle: {
       paddingRight: 10,
       paddingTop: 10,
