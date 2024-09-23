@@ -23,7 +23,6 @@ const ScanStack = createNativeStackNavigator();
 export const ScanLayout: React.FC = () => {
   const {t} = useTranslation('ScanScreen');
   const controller = useScanLayout();
-  console.log('!!scan flow type::', controller.openID4VPFlowType);
   if (
     controller.statusOverlay != null &&
     !controller.isAccepted &&

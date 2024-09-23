@@ -49,13 +49,11 @@ public class InjiOpenId4VPModule extends ReactContextBaseJavaModule {
         try {
             Map<String, String> authenticationResponse = openID4VP.authenticateVerifier(encodedAuthorizationRequest,
                     convertReadableArrayToVerifierArray(trustedVerifiers));
-            Log.d("authenticationResponse$$ ", authenticationResponse.get("presentation_definition"));
             Gson gson = new GsonBuilder()
                     .disableHtmlEscaping()
                     .create();
 
             String jsond = gson.toJson(authenticationResponse, Map.class);
-            Log.d("json::", jsond);
             promise.resolve(jsond);
         } catch (Exception exception) {
             promise.reject(exception);
@@ -70,12 +68,10 @@ public class InjiOpenId4VPModule extends ReactContextBaseJavaModule {
             ReadableMapKeySetIterator iterator = selectedVCs.keySetIterator();
             while (iterator.hasNextKey()) {
                 String key = iterator.nextKey();
-                System.out.println("key::" + key);
                 ReadableArray valueArray = selectedVCs.getArray(key);
 
                 List<String> valueList = new ArrayList<>();
                 for (int i = 0; i < valueArray.size(); i++) {
-                    System.out.println("value::" + valueArray.getString(i));
                     valueList.add(valueArray.getString(i));
                 }
 
