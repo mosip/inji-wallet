@@ -114,7 +114,7 @@ export const openId4VPActions = (model: any) => {
       selectedVCs: (_, event) => event.selectedVCs,
     }),
 
-    compareVCwithMatchingVCs: model.assign({
+    compareAndStoreSelectedVC: model.assign({
       selectedVCs: context => {
         const matchingVcs = {};
         Object.entries(context.vcsMatchingAuthRequest).map(
@@ -122,7 +122,7 @@ export const openId4VPActions = (model: any) => {
             (vcs as VC[]).map(vcData => {
               if (
                 vcData.vcMetadata.requestId ===
-                context.selectedVc.vcMetadata.requestId
+                context.miniViewSelectedVC.vcMetadata.requestId
               ) {
                 matchingVcs[inputDescriptorId] = [vcData];
               }
@@ -132,8 +132,8 @@ export const openId4VPActions = (model: any) => {
       },
     }),
 
-    setSelectedVc: model.assign({
-      selectedVc: (_, event) => event.selectedVc,
+    setMiniViewShareSelectedVC: model.assign({
+      miniViewSelectedVC: (_, event) => event.selectedVC,
     }),
 
     setIsShareWithSelfie: model.assign({
@@ -149,7 +149,7 @@ export const openId4VPActions = (model: any) => {
     }),
 
     storeShowFaceAuthConsent: send(
-      (context, event) =>
+      (_, event) =>
         StoreEvents.SET(
           SHOW_FACE_AUTH_CONSENT_SHARE_FLOW,
           !event.isDoNotAskAgainChecked,

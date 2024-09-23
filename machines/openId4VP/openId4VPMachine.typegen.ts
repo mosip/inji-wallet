@@ -18,6 +18,11 @@ export interface Typegen0 {
       data: unknown;
       __tip: 'See the XState TS docs to learn how to strongly type this.';
     };
+    'done.invoke.OpenId4VP.sendingVP:invocation[0]': {
+      type: 'done.invoke.OpenId4VP.sendingVP:invocation[0]';
+      data: unknown;
+      __tip: 'See the XState TS docs to learn how to strongly type this.';
+    };
     'error.platform.OpenId4VP.authenticateVerifier:invocation[0]': {
       type: 'error.platform.OpenId4VP.authenticateVerifier:invocation[0]';
       data: unknown;
@@ -44,7 +49,7 @@ export interface Typegen0 {
   };
   missingImplementations: {
     actions:
-      | 'compareVCwithMatchingVCs'
+      | 'compareAndStoreSelectedVC'
       | 'forwardToParent'
       | 'getFaceAuthConsent'
       | 'getVcsMatchingAuthRequest'
@@ -56,8 +61,8 @@ export interface Typegen0 {
       | 'setError'
       | 'setFlowType'
       | 'setIsShareWithSelfie'
+      | 'setMiniViewShareSelectedVC'
       | 'setSelectedVCs'
-      | 'setSelectedVc'
       | 'setShareLogTypeUnverified'
       | 'setShowFaceAuthConsent'
       | 'storeShowFaceAuthConsent'
@@ -76,7 +81,7 @@ export interface Typegen0 {
       | 'sendVP';
   };
   eventsCausingActions: {
-    compareVCwithMatchingVCs: 'SET_SELECTED_VC';
+    compareAndStoreSelectedVC: 'SET_SELECTED_VC';
     forwardToParent: 'CANCEL';
     getFaceAuthConsent: 'AUTHENTICATE';
     getVcsMatchingAuthRequest: 'DOWNLOADED_VCS';
@@ -92,8 +97,8 @@ export interface Typegen0 {
       | 'error.platform.OpenId4VP.sendingVP:invocation[0]';
     setFlowType: 'AUTHENTICATE';
     setIsShareWithSelfie: 'AUTHENTICATE';
+    setMiniViewShareSelectedVC: 'AUTHENTICATE';
     setSelectedVCs: 'ACCEPT_REQUEST' | 'VERIFY_AND_ACCEPT_REQUEST';
-    setSelectedVc: 'AUTHENTICATE';
     setShareLogTypeUnverified: 'ACCEPT_REQUEST';
     setShowFaceAuthConsent: 'FACE_VERIFICATION_CONSENT';
     storeShowFaceAuthConsent: 'FACE_VERIFICATION_CONSENT';
@@ -134,6 +139,7 @@ export interface Typegen0 {
     | 'setSelectedVC'
     | 'showConfirmationPopup'
     | 'showError'
+    | 'success'
     | 'verifyingIdentity'
     | 'waitingForData';
   tags: never;

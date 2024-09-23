@@ -1,13 +1,13 @@
 import {createModel} from 'xstate/lib/model';
 import {AppServices} from '../../shared/GlobalContext';
 import {VC} from '../VerifiableCredential/VCMetaMachine/vc';
-import { KeyTypes } from '../../shared/cryptoutil/KeyTypes';
+import {KeyTypes} from '../../shared/cryptoutil/KeyTypes';
 const openId4VPEvents = {
   AUTHENTICATE: (
     encodedAuthRequest: string,
     flowType: string,
-    selectedVc: any,
-  ) => ({encodedAuthRequest, flowType, selectedVc}),
+    selectedVC: any,
+  ) => ({encodedAuthRequest, flowType, selectedVC}),
   DOWNLOADED_VCS: (vcs: VC[]) => ({vcs}),
   SELECT_VC: (vcKey: string, inputDescriptorId: any) => ({
     vcKey,
@@ -50,6 +50,7 @@ export const openId4VPModel = createModel(
     privateKey: '',
     keyType: KeyTypes.RS256,
     flowType: '' as string,
+    miniViewSelectedVC: {} as VC,
   },
   {events: openId4VPEvents},
 );

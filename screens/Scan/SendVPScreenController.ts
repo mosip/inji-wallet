@@ -178,9 +178,6 @@ export function useSendVPScreen() {
     vcsMatchingAuthRequest,
     areAllVCsChecked,
     selectedVCKeys,
-    receiverInfo: useSelector(scanService, selectReceiverInfo),
-    vcName: useSelector(scanService, selectVcName),
-    isSelectingVc: useSelector(scanService, selectIsSelectingVc),
     isVerifyingIdentity: useSelector(
       openId4VPService,
       selectIsVerifyingIdentity,
@@ -203,8 +200,6 @@ export function useSendVPScreen() {
       ),
     DISMISS: () => scanService.send(ScanEvents.DISMISS()),
     RETRY: () => scanService.send(ScanEvents.RETRY()),
-    UPDATE_VC_NAME: (vcName: string) =>
-      scanService.send(ScanEvents.UPDATE_VC_NAME(vcName)),
     FACE_VALID: () => openId4VPService.send(OpenId4VPEvents.FACE_VALID()),
     FACE_INVALID: () => openId4VPService.send(OpenId4VPEvents.FACE_INVALID()),
     RETRY_VERIFICATION: () =>
@@ -217,7 +212,6 @@ export function useSendVPScreen() {
       (vcKey: string, inputDescriptorId: string) =>
       (vcRef: ActorRefFrom<typeof VCItemMachine>) => {
         var selectedVcs = {...selectedVCKeys};
-        console.log('sel vcs%%', selectedVcs);
         var isVCSelected = !!!selectedVcs[vcKey];
         if (isVCSelected) {
           selectedVcs[vcKey] = inputDescriptorId;

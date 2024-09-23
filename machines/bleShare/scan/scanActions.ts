@@ -104,7 +104,7 @@ export const ScanActions = (model: any) => {
         type: 'AUTHENTICATE',
         encodedAuthRequest: context.linkCode,
         flowType: context.openID4VPFlowType,
-        selectedVc: context.selectedVc,
+        selectedVC: context.selectedVc,
       }),
 
     openBluetoothSettings: () => {

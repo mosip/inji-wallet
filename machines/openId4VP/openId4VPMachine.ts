@@ -29,7 +29,7 @@ export const openId4VPMachine = model.createMachine(
             actions: [
               'setEncodedAuthorizationRequest',
               'setFlowType',
-              'setSelectedVc',
+              'setMiniViewShareSelectedVC',
               'setIsShareWithSelfie',
             ],
             target: 'checkFaceAuthConsent',
@@ -112,7 +112,7 @@ export const openId4VPMachine = model.createMachine(
         on: {
           SET_SELECTED_VC: [
             {
-              actions: 'compareVCwithMatchingVCs',
+              actions: 'compareAndStoreSelectedVC',
               target: 'checkIfMatchingVCsHasSelectedVC',
             },
           ],
