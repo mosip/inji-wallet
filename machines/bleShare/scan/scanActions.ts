@@ -28,15 +28,13 @@ import {ActivityLogEvents} from '../../activityLog';
 import {StoreEvents} from '../../store';
 import BluetoothStateManager from 'react-native-bluetooth-state-manager';
 import {NativeModules} from 'react-native';
-
 import {wallet} from '../../../shared/tuvali';
 import {createOpenId4VPMachine} from '../../openId4VP/openId4VPMachine';
 
-export const ScanActions = (
-  model: any,
-  QR_LOGIN_REF_ID: any,
-  OPENID4VP_REF_ID: any,
-) => {
+const QR_LOGIN_REF_ID = 'QrLogin';
+const OPENID4VP_REF_ID = 'OpenId4VP';
+
+export const ScanActions = (model: any) => {
   const {RNPixelpassModule} = NativeModules;
   return {
     setQrLoginRef: assign({

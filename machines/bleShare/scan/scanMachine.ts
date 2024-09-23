@@ -16,8 +16,6 @@ import {openId4VPMachine} from '../../openId4VP/openId4VPMachine';
 import {VCShareFlowType} from '../../../shared/Utils';
 
 const model = ScanModel;
-const QR_LOGIN_REF_ID = 'QrLogin';
-const OPENID4VP_REF_ID = 'OpenId4VP';
 export const ScanEvents = model.events;
 
 export const scanMachine =
@@ -889,10 +887,8 @@ export const scanMachine =
       },
     },
     {
-      actions: ScanActions(model, QR_LOGIN_REF_ID, OPENID4VP_REF_ID),
-
+      actions: ScanActions(model),
       services: ScanServices(model),
-
       guards: ScanGuards(),
       delays: {
         DESTROY_TIMEOUT: 500,
