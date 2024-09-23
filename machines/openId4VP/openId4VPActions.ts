@@ -1,10 +1,34 @@
+import {assign} from 'xstate';
 import {send, sendParent} from 'xstate/lib/actions';
+import {SHOW_FACE_AUTH_CONSENT_SHARE_FLOW} from '../../shared/constants';
 import {VC} from '../VerifiableCredential/VCMetaMachine/vc';
 import {StoreEvents} from '../store';
-import {SHOW_FACE_AUTH_CONSENT_SHARE_FLOW} from '../../shared/constants';
-import { assign } from 'xstate';
 
 import {VCShareFlowType} from '../../shared/Utils';
+
+let predefinedPresentationDefinitions = {
+  sunbird_rc_insurance_vc_ldp: {
+    id: 'vp token example',
+    purpose:
+      'Philippines Govt is requesting your digital ID for the purpose of Self-Authentication',
+    input_descriptors: [
+      {
+        id: 'id card credential',
+        constraints: {
+          fields: [
+            {
+              path: ['$.type'],
+              filter: {
+                type: 'string',
+                pattern: 'InsuranceCredential',
+              },
+            },
+          ],
+        },
+      },
+    ],
+  },
+};
 
 export const openId4VPActions = (model: any) => {
   return {
@@ -24,13 +48,20 @@ export const openId4VPActions = (model: any) => {
       vcsMatchingAuthRequest: (context, event) => {
         let vcs = event.vcs;
         let matchingVCs = {} as Record<string, [VC]>;
+        let presentationDefinition;
         const response = context.authenticationResponse;
         if ('presentation_definition' in response) {
-          const pd = JSON.parse(response['presentation_definition']);
-          vcs.forEach(vc => {
-            pd['input_descriptors'].forEach(inputDescriptor => {
+          presentationDefinition = JSON.parse(
+            response['presentation_definition'],
+          );
+        } else if ('scope' in response) {
+          presentationDefinition =
+            predefinedPresentationDefinitions[response.scope];
+        }
+        vcs.forEach(vc => {
+          presentationDefinition['input_descriptors'].forEach(
+            inputDescriptor => {
               let isMatched = true;
-
               inputDescriptor.constraints.fields?.forEach(field => {
                 field.path.forEach(path => {
                   const pathSegments = path.substring(2).split('.');
@@ -63,11 +94,9 @@ export const openId4VPActions = (model: any) => {
                 matchingVCs[inputDescriptor.id]?.push(vc) ||
                   (matchingVCs[inputDescriptor.id] = [vc]);
               }
-            });
-          });
-        } else if ('scope' in response) {
-          matchingVCs = vcs.filter(vc => vc.scope == response.scope);
-        }
+            },
+          );
+        });
         return matchingVCs;
       },
       purpose: context => {
@@ -75,6 +104,8 @@ export const openId4VPActions = (model: any) => {
         if ('presentation_definition' in response) {
           const pd = JSON.parse(response['presentation_definition']);
           return pd.purpose ?? '';
+        } else if ('scope' in response) {
+          return predefinedPresentationDefinitions[response.scope].purpose;
         }
       },
     }),
