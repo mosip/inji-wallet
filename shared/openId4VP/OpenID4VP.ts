@@ -4,6 +4,10 @@ import {VC} from '../../machines/VerifiableCredential/VCMetaMachine/vc';
 import {getJWT} from '../cryptoutil/cryptoUtil';
 import {getJWK} from '../openId4VCI/Utils';
 
+export const OpenID4VP_Key_Ref = 'OpenId4VP_KeyPair';
+export const OpenID4VP_Proof_Algo_Type = 'RsaSignature2018';
+export const OpenID4VP_Domain = 'OpenId4Vp';
+
 export class OpenID4VP {
   static InjiOpenId4VP = NativeModules.InjiOpenId4VP;
 
@@ -47,32 +51,37 @@ export class OpenID4VP {
       vpResponseMetadata,
     );
   }
+}
 
-  static async constructProofJWS(
-    publicKey: string,
-    privateKey: string,
-    vpToken: Object,
-    keyType: string,
-  ): Promise<string> {
-    const jwtHeader = {
-      alg: keyType,
-      jwk: await getJWK(publicKey, keyType),
-    };
-    const jwsPayload = {
-      '@context': vpToken['@context'],
-      type: vpToken['type'],
-      verifiableCredential: vpToken['verifiableCredential'],
-      id: vpToken['id'],
-      holder: vpToken['holder'],
-    };
+export async function constructProofJWT(
+  publicKey: string,
+  privateKey: string,
+  vpToken: Object,
+  keyType: string,
+): Promise<string> {
+  const jwtHeader = {
+    alg: keyType,
+    jwk: await getJWK(publicKey, keyType),
+  };
 
-    const jwsis = await getJWT(
-      jwtHeader,
-      jwsPayload,
-      'OpenId4Vp',
-      privateKey,
-      keyType,
-    );
-    return jwsis;
-  }
+  const jwtPayload = createJwtPayload(vpToken);
+
+  return await getJWT(
+    jwtHeader,
+    jwtPayload,
+    OpenID4VP_Key_Ref,
+    privateKey,
+    keyType,
+  );
+}
+
+export function createJwtPayload(vpToken: {[key: string]: any}) {
+  const {'@context': context, type, verifiableCredential, id, holder} = vpToken;
+  return {
+    '@context': context,
+    type,
+    verifiableCredential,
+    id,
+    holder,
+  };
 }

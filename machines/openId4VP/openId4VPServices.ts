@@ -1,6 +1,6 @@
 import {fetchKeyPair} from '../../shared/cryptoutil/cryptoUtil';
 import {__AppId} from '../../shared/GlobalVariables';
-import {OpenID4VP} from '../../shared/openId4VP/OpenID4VP';
+import {constructProofJWT, OpenID4VP, OpenID4VP_Domain, OpenID4VP_Proof_Algo_Type} from '../../shared/openId4VP/OpenID4VP';
 
 export const openId4VPServices = () => {
   const trustedVerifiersList = [
@@ -44,7 +44,7 @@ export const openId4VPServices = () => {
         context.selectedVCs,
       );
 
-      const proofJWT = await OpenID4VP.constructProofJWS(
+      const proofJWT = await constructProofJWT(
         context.publicKey,
         context.privateKey,
         JSON.parse(vpToken),
@@ -53,9 +53,9 @@ export const openId4VPServices = () => {
 
       const vpResponseMetadata = {
         jws: proofJWT,
-        signatureAlgorithm: 'RsaSignature2018',
+        signatureAlgorithm: OpenID4VP_Proof_Algo_Type,
         publicKey: context.publicKey,
-        domain: 'OpenId4Vp',
+        domain: OpenID4VP_Domain,
       };
       return await OpenID4VP.shareVerifiablePresentation(
         vpResponseMetadata,
