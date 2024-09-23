@@ -8,6 +8,10 @@ export const OpenID4VP_Key_Ref = 'OpenId4VP_KeyPair';
 export const OpenID4VP_Proof_Algo_Type = 'RsaSignature2018';
 export const OpenID4VP_Domain = 'OpenId4Vp';
 
+export const OpenID4VP_Key_Ref = 'OpenId4VP_KeyPair';
+export const OpenID4VP_Proof_Algo_Type = 'RsaSignature2018';
+export const OpenID4VP_Domain = 'OpenId4Vp';
+
 export class OpenID4VP {
   static InjiOpenId4VP = NativeModules.InjiOpenId4VP;
 
@@ -75,7 +79,7 @@ export async function constructProofJWT(
   );
 }
 
-export function createJwtPayload(vpToken: {[key: string]: any}) {
+function createJwtPayload(vpToken: {[key: string]: any}) {
   const {'@context': context, type, verifiableCredential, id, holder} = vpToken;
   return {
     '@context': context,
