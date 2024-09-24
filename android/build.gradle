@@ -29,7 +29,6 @@ allprojects { repositories {
     maven{url("https://oss.sonatype.org/content/repositories/snapshots/")}
     maven { url(expoCameraMavenPath) }
     mavenCentral()
-    mavenLocal()
     maven {url("https://repo.danubetech.com/repository/maven-public/")}
     configurations.all {
         resolutionStrategy {
