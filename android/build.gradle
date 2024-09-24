@@ -38,10 +38,6 @@ allprojects { repositories {
 
         }
     }
-    // code - end
-    google()
-    jcenter()
-    maven { url("https://www.jitpack.io") }
     }
 } 
 // @generated end expo-camera-import
