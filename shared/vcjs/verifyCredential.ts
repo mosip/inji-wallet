@@ -31,9 +31,6 @@ export async function verifyCredential(
   verifiableCredential: Credential,
 ): Promise<VerificationResult> {
   try {
-    let status = await vcVerifier.verifyCredentials(
-      JSON.stringify(verifiableCredential),
-    );
     let purpose: PublicKeyProofPurpose | AssertionProofPurpose;
     const proof = verifiableCredential.proof;
     switch (proof.proofPurpose) {
@@ -56,8 +53,10 @@ export async function verifyCredential(
         break;
       }
       case ProofType.RSA: {
-        suite = new RsaSignature2018(suiteOptions);
-        break;
+        let vcVerifierResult = await vcVerifier.verifyCredentials(
+          JSON.stringify(verifiableCredential),
+        );
+        return handleVcVerifierResponse(vcVerifierResult, verifiableCredential);
       }
     }
 
@@ -74,18 +73,13 @@ export async function verifyCredential(
 
     //ToDo Handle Expiration error message
   } catch (error) {
-    console.error('Error occured while verifying the VC:', error);
-    const stacktrace = __DEV__ ? verifiableCredential : {};
-    sendErrorEvent(
-      getErrorEventData(
-        TelemetryConstants.FlowType.vcVerification,
-        TelemetryConstants.ErrorId.vcVerificationFailed,
-        error +
-          '-' +
-          getMosipIdentifier(verifiableCredential.credentialSubject),
-        stacktrace,
-      ),
+    console.error(
+      'Error occurred while verifying the VC using digital bazaar:',
+      error,
     );
+    const errorMessage =
+      error + '-' + getMosipIdentifier(verifiableCredential.credentialSubject);
+    sendVerificationErrorEvent(errorMessage, verifiableCredential);
     return {
       isVerified: false,
       errorMessage: VerificationErrorType.TECHNICAL_ERROR,
@@ -112,15 +106,9 @@ function handleResponse(
       const vcIdentifier = getMosipIdentifier(
         verifiableCredential.credentialSubject,
       );
-      const stacktrace = __DEV__ ? verifiableCredential : {};
-      sendErrorEvent(
-        getErrorEventData(
-          TelemetryConstants.FlowType.vcVerification,
-          TelemetryConstants.ErrorId.vcVerificationFailed,
-          TelemetryConstants.ErrorMessage.vcVerificationFailed + vcIdentifier,
-          stacktrace,
-        ),
-      );
+      const errorMessage =
+        TelemetryConstants.ErrorMessage.vcVerificationFailed + vcIdentifier;
+      sendVerificationErrorEvent(errorMessage, verifiableCredential);
       isVerifiedFlag = true;
     }
   }
@@ -130,6 +118,47 @@ function handleResponse(
     errorMessage: errorMessage,
   };
   return verificationResult;
+}
+
+function handleVcVerifierResponse(
+  verificationStatus: boolean,
+  verifiableCredential: VerifiableCredential | Credential,
+): VerificationResult {
+  try {
+    const isVerified = verificationStatus;
+    const errorMessage = verificationStatus
+      ? VerificationErrorType.NO_ERROR
+      : VerificationErrorType.TECHNICAL_ERROR;
+
+    return {isVerified, errorMessage};
+  } catch (error) {
+    console.error(
+      'Error occured while verifying the VC using VcVerifier Library:',
+      error,
+    );
+    const errorMessage =
+      error + '-' + getMosipIdentifier(verifiableCredential.credentialSubject);
+    sendVerificationErrorEvent(errorMessage, verifiableCredential);
+    return {
+      isVerified: false,
+      errorMessage: VerificationErrorType.TECHNICAL_ERROR,
+    };
+  }
+}
+
+function sendVerificationErrorEvent(
+  errorMessage: string,
+  verifiableCredential: any,
+) {
+  const stacktrace = __DEV__ ? verifiableCredential : {};
+  sendErrorEvent(
+    getErrorEventData(
+      TelemetryConstants.FlowType.vcVerification,
+      TelemetryConstants.ErrorId.vcVerificationFailed,
+      errorMessage,
+      stacktrace,
+    ),
+  );
 }
 
 export const VerificationErrorType = {

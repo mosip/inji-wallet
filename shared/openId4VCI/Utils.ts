@@ -35,6 +35,7 @@ export const Protocols = {
 export const Issuers = {
   MosipOtp: '',
   Mosip: 'Mosip',
+  MosipCertify: 'MosipCertify',
 };
 
 export function getVcVerificationDetails(
@@ -150,7 +151,9 @@ export const getCredentialIssuersWellKnownConfig = async (
 ) => {
   let fields: string[] = defaultFields;
   let matchingWellknownDetails: any;
-  const wellknownResponse = await CACHED_API.fetchIssuerWellknownConfig(issuer!);
+  const wellknownResponse = await CACHED_API.fetchIssuerWellknownConfig(
+    issuer!,
+  );
   try {
     if (wellknownResponse) {
       matchingWellknownDetails = getMatchingCredentialIssuerMetadata(
@@ -161,11 +164,13 @@ export const getCredentialIssuersWellKnownConfig = async (
         fields = matchingWellknownDetails.order;
       } else {
         if (format === VCFormat.mso_mdoc) {
-          fields = []
+          fields = [];
           Object.keys(matchingWellknownDetails.claims).forEach(namespace => {
-            Object.keys(matchingWellknownDetails.claims[namespace]).forEach(claim => {
-              fields.concat(`${namespace}~${claim}`);
-            });
+            Object.keys(matchingWellknownDetails.claims[namespace]).forEach(
+              claim => {
+                fields.concat(`${namespace}~${claim}`);
+              },
+            );
           });
         } else if (format === VCFormat.ldp_vc) {
           fields = Object.keys(
@@ -214,7 +219,7 @@ export const getDetailedViewFields = async (
   return {
     matchingCredentialIssuerMetadata: response.matchingCredentialIssuerMetadata,
     fields: updatedFieldsList,
-    wellknownResponse: response.wellknownResponse
+    wellknownResponse: response.wellknownResponse,
   };
 };
 

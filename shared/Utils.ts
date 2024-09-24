@@ -28,7 +28,11 @@ export interface CommunicationDetails {
 }
 
 export const isMosipVC = (issuer: string) => {
-  return issuer === Issuers.Mosip || issuer === Issuers.MosipOtp;
+  return (
+    issuer === Issuers.Mosip ||
+    issuer === Issuers.MosipOtp ||
+    issuer === Issuers.MosipCertify
+  );
 };
 
 export const parseJSON = (input: any) => {
