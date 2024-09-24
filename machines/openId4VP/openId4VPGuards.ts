@@ -20,5 +20,14 @@ export const openId4VPGuards = () => {
     hasKeyPair: (context: any) => {
       return !!context.publicKey;
     },
+
+    isAnyVCHasImage: (context: any) => {
+      const hasImage = Object.values(context.selectedVCs)
+        .flatMap(vc => vc)
+        .some(
+          vc => vc.verifiableCredential?.credential?.credentialSubject.face,
+        );
+      return !!hasImage;
+    },
   };
 };

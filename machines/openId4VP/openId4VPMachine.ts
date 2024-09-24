@@ -222,10 +222,9 @@ export const openId4VPMachine = model.createMachine(
               target: 'verifyingIdentity',
             },
             {
-              actions: () =>
-                model.assign({
-                  error: () => 'none of the selected VC has image',
-                }),
+              actions: model.assign({
+                error: () => 'none of the selected VC has image',
+              }),
             },
           ],
         },
