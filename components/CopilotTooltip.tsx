@@ -4,10 +4,12 @@ import {useTranslation} from 'react-i18next';
 import {UseCopilotTooltip} from './CopilotTooltipController';
 import {Theme} from './ui/styleUtils';
 import {COPILOT_FINAL_STEP, COPILOT_PRE_FINAL_STEP} from '../shared/constants';
+import { useSettingsScreen } from '../screens/Settings/SettingScreenController';
 
 export const CopilotTooltip = () => {
   const {t} = useTranslation('copilot');
   const controller = UseCopilotTooltip();
+  const settingsController= useSettingsScreen();
 
   controller.copilotEvents.on('stop', () => {
     controller.SET_TOUR_GUIDE(false);
@@ -23,6 +25,7 @@ export const CopilotTooltip = () => {
     ) {
       controller.INITIAL_DOWNLOAD_DONE();
     }
+    settingsController.BACK()
   });
 
   return (

@@ -177,6 +177,10 @@ export function useSettingsScreen(props: RootRouteProps & RequestRouteProps) {
       start();
     },
 
+    BACK: () => {
+      settingsService.send(SettingsEvents.BACK());
+    },
+
     TOGGLE_BIOMETRIC: (enable: boolean) => {
       settingsService.send(
         SettingsEvents.TOGGLE_BIOMETRIC_UNLOCK(enable, true),
