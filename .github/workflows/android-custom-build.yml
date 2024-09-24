@@ -49,6 +49,7 @@ jobs:
     uses: mosip/kattu/.github/workflows/android-build.yml@master
     with:
         NODE_VERSION: "16.x"
+        JAVA_VERSION: '17'
         MIMOTO_HOST: ${{ inputs.mimotoBackendServiceUrl }}
         ESIGNET_HOST: ${{ inputs.esignetBackendServiceUrl }}
         APPLICATION_THEME: ${{ inputs.theme }}
