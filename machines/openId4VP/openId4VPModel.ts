@@ -32,6 +32,7 @@ const openId4VPEvents = {
   GO_BACK: () => ({}),
   CHECK_SELECTED_VC: () => ({}),
   SET_SELECTED_VC: () => ({}),
+  CHECK_FOR_IMAGE: () => ({}),
 };
 
 export const openId4VPModel = createModel(

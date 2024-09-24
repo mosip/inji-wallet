@@ -67,13 +67,6 @@ export const SendVPScreen: React.FC = () => {
     noOfCardsSelected ===
     Object.values(controller.vcsMatchingAuthRequest).flatMap(vc => vc).length;
 
-  const checkIfAnySelectedVCHasImage = () => {
-    const hasImage = Object.values(controller.vcsMatchingAuthRequest)
-      .flatMap(vc => vc)
-      .some(vc => isMosipVC(vc.vcMetadata.issuer));
-    return hasImage;
-  };
-
   return (
     <React.Fragment>
       {Object.keys(vcsMatchingAuthRequest).length > 0 && (
@@ -160,7 +153,7 @@ export const SendVPScreen: React.FC = () => {
                 disabled={Object.keys(controller.selectedVCKeys).length === 0}
                 onPress={controller.ACCEPT_REQUEST}
               />
-              {checkIfAnySelectedVCHasImage() && (
+              {controller.checkIfAnyMatchingVCHasImage() && (
                 <Button
                   type="gradient"
                   title={t('SendVcScreen:acceptRequestAndVerify')}

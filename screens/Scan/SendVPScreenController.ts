@@ -1,17 +1,15 @@
 import {NavigationProp, useNavigation} from '@react-navigation/native';
 import {useSelector} from '@xstate/react';
 import {useContext, useState} from 'react';
+import {useTranslation} from 'react-i18next';
 import {ActorRefFrom} from 'xstate';
 import {Theme} from '../../components/ui/styleUtils';
 import {selectIsCancelling} from '../../machines/bleShare/commonSelectors';
 import {ScanEvents} from '../../machines/bleShare/scan/scanMachine';
 import {
   selectFlowType,
-  selectIsSelectingVc,
   selectIsSendingVPError,
   selectOpenID4VPRetryCount,
-  selectReceiverInfo,
-  selectVcName,
 } from '../../machines/bleShare/scan/scanSelectors';
 import {OpenId4VPEvents} from '../../machines/openId4VP/openId4VPMachine';
 import {
@@ -36,9 +34,8 @@ import {selectShareableVcs} from '../../machines/VerifiableCredential/VCMetaMach
 import {RootRouteProps} from '../../routes';
 import {BOTTOM_TAB_ROUTES} from '../../routes/routesConstants';
 import {GlobalContext} from '../../shared/GlobalContext';
+import {isMosipVC} from '../../shared/Utils';
 import {VCMetadata} from '../../shared/VCMetadata';
-import {MessageOverlayProps} from '../../components/MessageOverlay';
-import {useTranslation} from 'react-i18next';
 import {VPShareOverlayProps} from './VPShareOverlay';
 
 type MyVcsTabNavigation = NavigationProp<RootRouteProps>;
@@ -80,6 +77,12 @@ export function useSendVPScreen() {
     openId4VPService,
     selectVCsMatchingAuthRequest,
   );
+  const checkIfAnyMatchingVCHasImage = () => {
+    const hasImage = Object.values(vcsMatchingAuthRequest)
+      .flatMap(vc => vc)
+      .some(vc => isMosipVC(vc.vcMetadata.issuer));
+    return hasImage;
+  };
 
   const getSelectedVCs = () => {
     var selectedVcsData = {};
@@ -130,6 +133,11 @@ export function useSendVPScreen() {
     errorModal.title = t('errors.credentialsMismatch.title');
     errorModal.message = t('errors.credentialsMismatch.message');
     errorModal.showRetryButton = false;
+  } else if (error.includes('none of the selected VC has image')) {
+    errorModal.show = true;
+    errorModal.title = t('errors.noImage.title');
+    errorModal.message = t('errors.noImage.message');
+    errorModal.showRetryButton = false;
   } else if (error !== '') {
     errorModal.show = true;
     errorModal.title = t('errors.genericError.title');
@@ -172,6 +180,7 @@ export function useSendVPScreen() {
     flowType: useSelector(openId4VPService, selectFlowType),
     showConfirmationPopup,
     isSelectingVCs,
+    checkIfAnyMatchingVCHasImage,
     error,
     errorModal,
     overlayDetails,

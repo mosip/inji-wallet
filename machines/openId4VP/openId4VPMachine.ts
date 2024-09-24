@@ -191,10 +191,17 @@ export const openId4VPMachine = model.createMachine(
       },
       faceVerificationConsent: {
         on: {
-          FACE_VERIFICATION_CONSENT: {
-            actions: ['setShowFaceAuthConsent', 'storeShowFaceAuthConsent'],
-            target: 'verifyingIdentity',
-          },
+          FACE_VERIFICATION_CONSENT: [
+            {
+              cond: 'isSimpleOpenID4VPShare',
+              actions: ['setShowFaceAuthConsent', 'storeShowFaceAuthConsent'],
+              target: 'checkIfAnySelectedVCHasImage',
+            },
+            {
+              actions: ['setShowFaceAuthConsent', 'storeShowFaceAuthConsent'],
+              target: 'verifyingIdentity',
+            },
+          ],
           DISMISS: [
             {
               cond: 'isSimpleOpenID4VPShare',
@@ -202,6 +209,23 @@ export const openId4VPMachine = model.createMachine(
             },
             {
               actions: sendParent('DISMISS'),
+            },
+          ],
+        },
+      },
+      checkIfAnySelectedVCHasImage: {
+        entry: send('CHECK_FOR_IMAGE'),
+        on: {
+          CHECK_FOR_IMAGE: [
+            {
+              cond: 'isAnyVCHasImage',
+              target: 'verifyingIdentity',
+            },
+            {
+              actions: () =>
+                model.assign({
+                  error: () => 'none of the selected VC has image',
+                }),
             },
           ],
         },
@@ -253,7 +277,7 @@ export const openId4VPMachine = model.createMachine(
         invoke: {
           src: 'sendVP',
           onDone: {
-            actions: sendParent('SUCCESS'),
+            actions: [() => console.log('success::'), sendParent('SUCCESS')],
             target: 'success',
           },
           onError: {

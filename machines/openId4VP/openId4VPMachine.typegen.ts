@@ -70,6 +70,7 @@ export interface Typegen0 {
     delays: never;
     guards:
       | 'hasKeyPair'
+      | 'isAnyVCHasImage'
       | 'isSelectedVCMatchingRequest'
       | 'isShareWithSelfie'
       | 'isSimpleOpenID4VPShare'
@@ -111,9 +112,14 @@ export interface Typegen0 {
     hasKeyPair:
       | 'FACE_VALID'
       | 'done.invoke.OpenId4VP.checkKeyPair:invocation[0]';
+    isAnyVCHasImage: 'CHECK_FOR_IMAGE';
     isSelectedVCMatchingRequest: 'CHECK_SELECTED_VC';
     isShareWithSelfie: 'CONFIRM';
-    isSimpleOpenID4VPShare: 'CANCEL' | 'DISMISS' | 'DOWNLOADED_VCS';
+    isSimpleOpenID4VPShare:
+      | 'CANCEL'
+      | 'DISMISS'
+      | 'DOWNLOADED_VCS'
+      | 'FACE_VERIFICATION_CONSENT';
     showFaceAuthConsentScreen: 'CONFIRM';
   };
   eventsCausingServices: {
@@ -127,6 +133,7 @@ export interface Typegen0 {
   matchesStates:
     | 'authenticateVerifier'
     | 'checkFaceAuthConsent'
+    | 'checkIfAnySelectedVCHasImage'
     | 'checkIfMatchingVCsHasSelectedVC'
     | 'checkKeyPair'
     | 'faceVerificationConsent'
