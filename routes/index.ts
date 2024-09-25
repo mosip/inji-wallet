@@ -14,6 +14,8 @@ import {IntroSlidersScreen} from '../screens/Home/IntroSlidersScreen';
 import {RequestLayout} from '../screens/Request/RequestLayout';
 import {SplashScreen} from '../screens/SplashScreen';
 import {RequestStackParamList} from './routesConstants';
+import {SetupKeySelectionScreen} from '../screens/SetupKeySelectionScreen';
+import {KeyManagementScreen} from '../screens/Settings/KeyManagementScreen';
 
 export const baseRoutes: Screen[] = [
   {
@@ -24,11 +26,19 @@ export const baseRoutes: Screen[] = [
     },
   },
   {
+    name: 'KeyManagement',
+    component: KeyManagementScreen,
+  },
+  {
     name: 'Language',
     component: SetupLanguageScreen,
     options: {
       headerShown: false,
     },
+  },
+  {
+    name: 'KeySetup',
+    component: SetupKeySelectionScreen,
   },
   {
     name: 'IntroSliders',
@@ -78,6 +88,7 @@ export const authRoutes: Screen[] = [
 
 export type RootStackParamList = {
   Language: undefined;
+  KeySetup: undefined;
   IntroSliders: undefined;
   Welcome: undefined;
   Auth: undefined;

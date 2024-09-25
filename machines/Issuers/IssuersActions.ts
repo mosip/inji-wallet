@@ -1,13 +1,13 @@
 import {
   ErrorMessage,
   Issuers_Key_Ref,
-  getKeyTypeFromWellknown,
   selectCredentialRequestKey,
 } from '../../shared/openId4VCI/Utils';
 import {
   MY_VCS_STORE_KEY,
   NETWORK_REQUEST_FAILED,
   REQUEST_TIMEOUT,
+  TECHNICAL_ERROR,
   isIOS,
 } from '../../shared/constants';
 import {assign, send} from 'xstate';
@@ -204,8 +204,11 @@ export const IssuersActions = (model: any) => {
     ),
 
     setSelectedKey: model.assign({
-      keyType: (context: any) => {
-        const keyType = selectCredentialRequestKey(context.wellknownKeyTypes);
+      keyType: (context: any, event: any) => {
+        const keyType = selectCredentialRequestKey(
+          context.wellknownKeyTypes,
+          event.data,
+        );
         return keyType;
       },
     }),
@@ -225,7 +228,7 @@ export const IssuersActions = (model: any) => {
         authorization_servers: event.data.authorization_servers,
       }),
     }),
-    
+
     updateSelectedIssuerWellknownResponse: model.assign({
       selectedIssuerWellknownResponse: (_: any, event: any) => event.data,
     }),
@@ -278,20 +281,22 @@ export const IssuersActions = (model: any) => {
         to: (context: any) => context.serviceRefs.activityLog,
       },
     ),
-    sendSuccessEndEvent: () => {
+    sendSuccessEndEvent: (context: any) => {
       sendEndEvent(
         getEndEventData(
           TelemetryConstants.FlowType.vcDownload,
           TelemetryConstants.EndEventStatus.success,
+          {'VC Key': context.keyType},
         ),
       );
     },
 
-    sendErrorEndEvent: () => {
+    sendErrorEndEvent: (context: any) => {
       sendEndEvent(
         getEndEventData(
           TelemetryConstants.FlowType.vcDownload,
           TelemetryConstants.EndEventStatus.failure,
+          {'VC Key': context.keyType},
         ),
       );
     },

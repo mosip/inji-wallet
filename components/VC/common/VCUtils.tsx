@@ -43,6 +43,7 @@ export const DETAIL_VIEW_BOTTOM_SECTION_FIELDS = [
   'credentialRegistry',
 ];
 
+export const KEY_TYPE_FIELD = ['keytype'];
 export const BOTTOM_SECTION_FIELDS_WITH_DETAILED_ADDRESS_FIELDS = [
   ...getAddressFields(),
   'email',
@@ -147,7 +148,10 @@ export const getFieldName = (
 };
 
 export const getBackgroundColour = (wellknown: any) => {
-  return wellknown?.display[0]?.background_color ?? Theme.Colors.textValue;
+  return {
+    backgroundColor:
+      wellknown?.display[0]?.background_color ?? Theme.Colors.textValue,
+  };
 };
 
 export const getBackgroundImage = (wellknown: any, defaultBackground: any) => {

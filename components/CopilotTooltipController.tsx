@@ -1,5 +1,5 @@
 import {useCopilot} from 'react-native-copilot';
-import {COPILOT_FINAL_STEP} from '../shared/constants';
+import {COPILOT_FINAL_STEP, KEY_MANAGEMENT_STEP} from '../shared/constants';
 import {useContext} from 'react';
 import {GlobalContext} from '../shared/GlobalContext';
 import {
@@ -44,7 +44,8 @@ export const UseCopilotTooltip = () => {
   }Description`;
 
   const stepCount =
-    CURRENT_STEP === COPILOT_FINAL_STEP && isInitialDownloading
+    (CURRENT_STEP === COPILOT_FINAL_STEP && isInitialDownloading) ||
+    CURRENT_STEP === KEY_MANAGEMENT_STEP
       ? '1 of 1'
       : CURRENT_STEP + ' of ' + totalStepsNumber;
 

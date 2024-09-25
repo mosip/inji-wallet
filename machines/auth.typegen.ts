@@ -32,6 +32,7 @@ export interface Typegen0 {
     setContext: 'STORE_RESPONSE';
     setInitialDownloadDone: 'INITIAL_DOWNLOAD_DONE';
     setIsToggleFromSettings: 'CHANGE_METHOD';
+    setKeySetup: 'SELECT';
     setLanguage: 'SETUP_BIOMETRICS' | 'SETUP_PASSCODE';
     setOnboardingDone: 'ONBOARDING_DONE';
     setPasscode: 'SETUP_PASSCODE';
@@ -50,6 +51,7 @@ export interface Typegen0 {
   eventsCausingGuards: {
     hasBiometricSet: '';
     hasData: 'STORE_RESPONSE';
+    hasKeySetup: '';
     hasLanguageset: '';
     hasPasscodeSet: '';
   };
@@ -62,6 +64,7 @@ export interface Typegen0 {
     | 'checkingAuth'
     | 'init'
     | 'introSlider'
+    | 'keySetup'
     | 'languagesetup'
     | 'savingDefaults'
     | 'settingUp'

@@ -26,6 +26,9 @@ import {NativeModules} from 'react-native';
 import {isHardwareKeystoreExists} from './shared/cryptoutil/cryptoUtil';
 import i18n from './i18n';
 import './shared/flipperConfig';
+import {CopilotProvider} from 'react-native-copilot';
+import {CopilotTooltip} from './components/CopilotTooltip';
+import {Theme} from './components/ui/styleUtils';
 
 const {RNSecureKeystoreModule} = NativeModules;
 // kludge: this is a bad practice but has been done temporarily to surface
@@ -135,7 +138,15 @@ const AppInitialization: React.FC = () => {
 export default function App() {
   return (
     <GlobalContextProvider>
-      <AppInitialization />
+      <CopilotProvider
+        stopOnOutsideClick
+        androidStatusBarVisible
+        tooltipComponent={CopilotTooltip}
+        tooltipStyle={Theme.Styles.copilotStyle}
+        stepNumberComponent={() => null}
+        animated>
+        <AppInitialization />
+      </CopilotProvider>
     </GlobalContextProvider>
   );
 }

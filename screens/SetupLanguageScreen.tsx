@@ -74,7 +74,7 @@ export const SetupLanguageScreen: React.FC<RootRouteProps> = props => {
         type="gradient"
         title={t('save')}
         onPress={() => {
-          controller.SELECT(), controller.unlockPage;
+          controller.SELECT('KeySetup'), controller.unlockPage;
         }}
       />
     </Column>
