@@ -64,6 +64,11 @@ export const ScanScreen: React.FC = () => {
     Linking.openSettings();
   };
 
+  const handleTextButtonEvent = () => {
+    sendVPScreenController.RESET_RETRY_COUNT();
+    sendVPScreenController.GO_TO_HOME();
+  };
+
   function noShareableVcText() {
     return (
       <Text
@@ -320,7 +325,7 @@ export const ScanScreen: React.FC = () => {
             primaryButtonEvent={sendVPScreenController.RETRY}
             textButtonTestID={'home'}
             textButtonText={t('ScanScreen:status.accepted.home')}
-            textButtonEvent={sendVPScreenController.GO_TO_HOME}
+            textButtonEvent={handleTextButtonEvent}
             customImageStyles={{paddingBottom: 0, marginBottom: -6}}
             customStyles={{marginTop: '30%'}}
             testID={'vpShareError'}

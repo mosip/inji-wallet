@@ -33,6 +33,8 @@ const openId4VPEvents = {
   CHECK_SELECTED_VC: () => ({}),
   SET_SELECTED_VC: () => ({}),
   CHECK_FOR_IMAGE: () => ({}),
+  RETRY: () => ({}),
+  RESET_RETRY_COUNT: () => ({}),
 };
 
 export const openId4VPModel = createModel(
@@ -52,6 +54,7 @@ export const openId4VPModel = createModel(
     keyType: KeyTypes.RS256,
     flowType: '' as string,
     miniViewSelectedVC: {} as VC,
+    openID4VPRetryCount: 0,
   },
   {events: openId4VPEvents},
 );

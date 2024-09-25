@@ -400,13 +400,5 @@ export const ScanActions = (model: any) => {
         ),
       );
     },
-
-    incrementOpenID4VPRetryCount: model.assign({
-      openID4VPRetryCount: context => context.openID4VPRetryCount + 1,
-    }),
-
-    resetOpenID4VPRetryCount: model.assign({
-      openID4VPRetryCount: () => 0,
-    }),
   };
 };

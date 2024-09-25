@@ -185,5 +185,13 @@ export const openId4VPActions = (model: any) => {
           ? event.data.privateKey
           : (context.privateKey as string),
     }),
+
+    incrementOpenID4VPRetryCount: model.assign({
+      openID4VPRetryCount: context => context.openID4VPRetryCount + 1,
+    }),
+
+    resetOpenID4VPRetryCount: model.assign({
+      openID4VPRetryCount: () => 0,
+    }),
   };
 };

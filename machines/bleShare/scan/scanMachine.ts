@@ -36,7 +36,7 @@ export const scanMachine =
       initial: 'inactive',
       on: {
         SCREEN_BLUR: {
-          actions: ['resetOpenID4VPFlowType', 'resetOpenID4VPRetryCount'],
+          actions: 'resetOpenID4VPFlowType',
           target: '#scan.disconnectDevice',
         },
         SCREEN_FOCUS: {
@@ -387,20 +387,6 @@ export const scanMachine =
                 target: 'checkStorage',
               },
               {
-                target: 'checkStorage',
-              },
-            ],
-            RETRY: [
-              {
-                cond: 'isFlowTypeSimpleShare',
-                actions: [
-                  'incrementOpenID4VPRetryCount',
-                  'resetOpenID4VPFlowType',
-                ],
-                target: 'checkStorage',
-              },
-              {
-                actions: ['incrementOpenID4VPRetryCount'],
                 target: 'checkStorage',
               },
             ],

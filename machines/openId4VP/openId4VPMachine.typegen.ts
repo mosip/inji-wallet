@@ -53,9 +53,11 @@ export interface Typegen0 {
       | 'forwardToParent'
       | 'getFaceAuthConsent'
       | 'getVcsMatchingAuthRequest'
+      | 'incrementOpenID4VPRetryCount'
       | 'loadKeyPair'
       | 'logFailedVerification'
       | 'resetFaceCaptureBannerStatus'
+      | 'resetOpenID4VPRetryCount'
       | 'setAuthenticationResponse'
       | 'setEncodedAuthorizationRequest'
       | 'setError'
@@ -86,9 +88,11 @@ export interface Typegen0 {
     forwardToParent: 'CANCEL';
     getFaceAuthConsent: 'AUTHENTICATE';
     getVcsMatchingAuthRequest: 'DOWNLOADED_VCS';
+    incrementOpenID4VPRetryCount: 'RETRY';
     loadKeyPair: 'done.invoke.OpenId4VP.getKeyPairFromKeystore:invocation[0]';
     logFailedVerification: 'FACE_INVALID';
     resetFaceCaptureBannerStatus: 'ACCEPT_REQUEST';
+    resetOpenID4VPRetryCount: 'RESET_RETRY_COUNT';
     setAuthenticationResponse: 'done.invoke.OpenId4VP.authenticateVerifier:invocation[0]';
     setEncodedAuthorizationRequest: 'AUTHENTICATE';
     setError:
@@ -106,7 +110,7 @@ export interface Typegen0 {
     updateShowFaceAuthConsent: 'STORE_RESPONSE';
   };
   eventsCausingDelays: {
-    SHARING_TIMEOUT: 'CONFIRM' | 'FACE_VALID';
+    SHARING_TIMEOUT: 'CONFIRM' | 'FACE_VALID' | 'RETRY';
   };
   eventsCausingGuards: {
     hasKeyPair:
@@ -128,7 +132,7 @@ export interface Typegen0 {
     getSelectedKey:
       | 'FACE_VALID'
       | 'done.invoke.OpenId4VP.getKeyPairFromKeystore:invocation[0]';
-    sendVP: 'CONFIRM' | 'FACE_VALID';
+    sendVP: 'CONFIRM' | 'FACE_VALID' | 'RETRY';
   };
   matchesStates:
     | 'authenticateVerifier'

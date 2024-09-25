@@ -9,8 +9,8 @@ import {ScanEvents} from '../../machines/bleShare/scan/scanMachine';
 import {
   selectFlowType,
   selectIsSendingVPError,
-  selectOpenID4VPRetryCount,
 } from '../../machines/bleShare/scan/scanSelectors';
+import {selectOpenID4VPRetryCount} from '../../machines/openId4VP/openId4VPSelectors';
 import {OpenId4VPEvents} from '../../machines/openId4VP/openId4VPMachine';
 import {
   selectAreAllVCsChecked,
@@ -208,7 +208,7 @@ export function useSendVPScreen() {
         OpenId4VPEvents.FACE_VERIFICATION_CONSENT(isDoNotAskAgainChecked),
       ),
     DISMISS: () => scanService.send(ScanEvents.DISMISS()),
-    RETRY: () => scanService.send(ScanEvents.RETRY()),
+    RETRY: () => openId4VPService.send(OpenId4VPEvents.RETRY()),
     FACE_VALID: () => openId4VPService.send(OpenId4VPEvents.FACE_VALID()),
     FACE_INVALID: () => openId4VPService.send(OpenId4VPEvents.FACE_INVALID()),
     RETRY_VERIFICATION: () =>
@@ -259,6 +259,11 @@ export function useSendVPScreen() {
       );
     },
     CANCEL,
-    openID4VPRetryCount: useSelector(scanService, selectOpenID4VPRetryCount),
+    openID4VPRetryCount: useSelector(
+      openId4VPService,
+      selectOpenID4VPRetryCount,
+    ),
+    RESET_RETRY_COUNT: () =>
+      openId4VPService.send(OpenId4VPEvents.RESET_RETRY_COUNT()),
   };
 }

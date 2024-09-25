@@ -50,6 +50,11 @@ export const SendVPScreen: React.FC = () => {
     }, []),
   );
 
+  const handleTextButtonEvent = () => {
+    controller.RESET_RETRY_COUNT();
+    controller.GO_TO_HOME();
+  };
+
   const getVcKey = vcData => {
     return VCMetadata.fromVcMetadataString(vcData.vcMetadata).getVcKey();
   };
@@ -233,7 +238,7 @@ export const SendVPScreen: React.FC = () => {
         primaryButtonEvent={controller.RETRY}
         textButtonTestID={'home'}
         textButtonText={t('ScanScreen:status.accepted.home')}
-        textButtonEvent={controller.GO_TO_HOME}
+        textButtonEvent={handleTextButtonEvent}
         customImageStyles={{paddingBottom: 0, marginBottom: -6}}
         customStyles={{marginTop: '30%'}}
         testID={'vpShareError'}

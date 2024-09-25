@@ -85,7 +85,6 @@ export const ScanModel = createModel(
     showFaceAuthConsent: true as boolean,
     readyForBluetoothStateCheck: false,
     showFaceCaptureSuccessBanner: false,
-    openID4VPRetryCount: 0,
   },
   {
     events: ScanEvents,

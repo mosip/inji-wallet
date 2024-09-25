@@ -90,3 +90,7 @@ export function selectIsSelectingVcs(state: State) {
 export function selectIsError(state: State) {
   return state.context.error;
 }
+
+export function selectOpenID4VPRetryCount(state: State) {
+  return state.context.openID4VPRetryCount;
+}

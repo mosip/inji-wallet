@@ -149,7 +149,3 @@ export function selectIsFaceVerificationConsent(state: State) {
 export function selectIsQrLoginViaDeepLink(state: State) {
   return state.matches('qrLoginViaDeepLink');
 }
-
-export function selectOpenID4VPRetryCount(state: State) {
-  return state.context.openID4VPRetryCount;
-}

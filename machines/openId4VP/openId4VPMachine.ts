@@ -294,7 +294,17 @@ export const openId4VPMachine = model.createMachine(
           },
         },
       },
-      showError: {},
+      showError: {
+        on: {
+          RETRY: {
+            actions: ['incrementOpenID4VPRetryCount'],
+            target: 'sendingVP',
+          },
+          RESET_RETRY_COUNT: {
+            actions: 'resetOpenID4VPRetryCount',
+          },
+        },
+      },
       success: {},
     },
   },
