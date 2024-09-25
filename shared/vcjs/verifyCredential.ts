@@ -11,6 +11,8 @@ import {
 import {getErrorEventData, sendErrorEvent} from '../telemetry/TelemetryUtils';
 import {TelemetryConstants} from '../telemetry/TelemetryConstants';
 import {getMosipIdentifier} from '../commonUtil';
+import {NativeModules} from 'react-native';
+import {isAndroid} from '../constants';
 
 // FIXME: Ed25519Signature2018 not fully supported yet.
 // Ed25519Signature2018 proof type check is not tested with its real credential
@@ -23,6 +25,8 @@ const ProofPurpose = {
   Assertion: 'assertionMethod',
   PublicKey: 'publicKey',
 };
+
+const vcVerifier = NativeModules.VCVerifierModule;
 
 export async function verifyCredential(
   verifiableCredential: Credential,
@@ -50,8 +54,18 @@ export async function verifyCredential(
         break;
       }
       case ProofType.RSA: {
-        suite = new RsaSignature2018(suiteOptions);
-        break;
+        if (isAndroid()) {
+          let vcVerifierResult = await vcVerifier.verifyCredentials(
+            JSON.stringify(verifiableCredential),
+          );
+          return handleVcVerifierResponse(
+            vcVerifierResult,
+            verifiableCredential,
+          );
+        } else {
+          suite = new RsaSignature2018(suiteOptions);
+          break;
+        }
       }
     }
 
@@ -68,18 +82,13 @@ export async function verifyCredential(
 
     //ToDo Handle Expiration error message
   } catch (error) {
-    console.error('Error occured while verifying the VC:', error);
-    const stacktrace = __DEV__ ? verifiableCredential : {};
-    sendErrorEvent(
-      getErrorEventData(
-        TelemetryConstants.FlowType.vcVerification,
-        TelemetryConstants.ErrorId.vcVerificationFailed,
-        error +
-          '-' +
-          getMosipIdentifier(verifiableCredential.credentialSubject),
-        stacktrace,
-      ),
+    console.error(
+      'Error occurred while verifying the VC using digital bazaar:',
+      error,
     );
+    const telemetryErrorMessage =
+      error + '-' + getMosipIdentifier(verifiableCredential.credentialSubject);
+    sendVerificationErrorEvent(telemetryErrorMessage, verifiableCredential);
     return {
       isVerified: false,
       errorMessage: VerificationErrorType.TECHNICAL_ERROR,
@@ -106,15 +115,9 @@ function handleResponse(
       const vcIdentifier = getMosipIdentifier(
         verifiableCredential.credentialSubject,
       );
-      const stacktrace = __DEV__ ? verifiableCredential : {};
-      sendErrorEvent(
-        getErrorEventData(
-          TelemetryConstants.FlowType.vcVerification,
-          TelemetryConstants.ErrorId.vcVerificationFailed,
-          TelemetryConstants.ErrorMessage.vcVerificationFailed + vcIdentifier,
-          stacktrace,
-        ),
-      );
+      let telemetryErrorMessage =
+        TelemetryConstants.ErrorMessage.vcVerificationFailed + vcIdentifier;
+      sendVerificationErrorEvent(telemetryErrorMessage, verifiableCredential);
       isVerifiedFlag = true;
     }
   }
@@ -124,6 +127,47 @@ function handleResponse(
     errorMessage: errorMessage,
   };
   return verificationResult;
+}
+
+function handleVcVerifierResponse(
+  verificationStatus: boolean,
+  verifiableCredential: VerifiableCredential | Credential,
+): VerificationResult {
+  try {
+    const isVerified = verificationStatus;
+    const errorMessage = verificationStatus
+      ? VerificationErrorType.NO_ERROR
+      : VerificationErrorType.TECHNICAL_ERROR;
+
+    return {isVerified, errorMessage};
+  } catch (error) {
+    console.error(
+      'Error occured while verifying the VC using VcVerifier Library:',
+      error,
+    );
+    const telemetryErrorMessage =
+      error + '-' + getMosipIdentifier(verifiableCredential.credentialSubject);
+    sendVerificationErrorEvent(telemetryErrorMessage, verifiableCredential);
+    return {
+      isVerified: false,
+      errorMessage: VerificationErrorType.TECHNICAL_ERROR,
+    };
+  }
+}
+
+function sendVerificationErrorEvent(
+  errorMessage: string,
+  verifiableCredential: any,
+) {
+  const stacktrace = __DEV__ ? verifiableCredential : {};
+  sendErrorEvent(
+    getErrorEventData(
+      TelemetryConstants.FlowType.vcVerification,
+      TelemetryConstants.ErrorId.vcVerificationFailed,
+      errorMessage,
+      stacktrace,
+    ),
+  );
 }
 
 export const VerificationErrorType = {
