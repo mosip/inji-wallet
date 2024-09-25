@@ -158,7 +158,9 @@
   "BannerNotification": {
     "alternatePasscodeSuccess": "Tagumpay! Magagamit mo na ngayon ang passcode upang i-unlock ang Inji app.",
     "alternateBiometricSuccess": "Tagumpay! Maaari ka na ngayong gumamit ng biometrics upang i-unlock ang Inji app.",
-    "activated": "Ang mga kredensyal ay pinagana para sa online na pagpapatunay."
+    "activated": "Ang mga kredensyal ay pinagana para sa online na pagpapatunay.",
+    "keyPreferenceSuccess": "Ang iyong mga kagustuhan sa key ay matagumpay na na-save!",
+    "keyPreferenceError": "Paumanhin! May error sa pagsasaayos ng iyong mga kagustuhan sa key"
   },
   "AboutInji": {
     "aboutInji": "Tungkol kay Inji",
@@ -235,6 +237,14 @@
         "six": "Paano ko maibabalik ang backup na kinuha ko?",
         "seven": "Bakit ako nakakakuha ng error na \"no backup file found\"?",
         "eight": "Ano ang mangyayari kapag I-clear ko ang Storage ng INJI app mula sa mga setting ng device?"
+      },
+      "KeyManagement": {
+        "one": "Ano ang iba't ibang uri ng mga key?",
+        "two": "Paano ko malalaman kung anong uri ng key ang pinakamahusay para sa akin?",
+        "three": "Paano naaapektuhan ng pagpili ng uri ng key ang aking seguridad?",
+        "four": "Maaari ko bang baguhin ang uri ng key ko sa hinaharap?",
+        "five": "Ano ang epekto ng priyoridad ng key, at paano ko ito maisasaayos?",
+        "six": "Ano ang mangyayari kung hindi ako pumili ng uri ng key o mag-set ng kagustuhan?"
       }
     },
     "answers": {
@@ -270,6 +280,14 @@
         "six": "Upang mag-restore ng backup, pumunta sa mga setting ng app, piliin ang opsyon sa pag-restore, at piliin ang backup na file. ",
         "seven": "Maaaring mangyari ang error na ito kung walang mga backup na file na nauugnay sa ibinigay na email ID o kung ang mga backup na file ay nakaimbak sa ibang lokasyon. ",
         "eight": "Pakitandaan na ang pagkilos na ito ay ginagawa nang maingat dahil nililimas nito ang data ng app na nangangahulugan na ang lahat ng iyong na-download na VC ay iki-clear. "
+      },
+      "KeyManagement": {
+        "one": "Maaari kang pumili mula sa Ed25519, ECC K1, ECC R1, at RSA keys. Ang bawat uri ay may kanya-kanyang kalakasan pagdating sa seguridad at pagganap.",
+        "two": "Kung inuuna mo ang bilis, kahusayan, at medyo mataas na seguridad, maaaring angkop ang Ed25519 o ECC K1. Kung kailangan mo ng malawakang pagkakatugma at malakas na seguridad, maaaring mas mabuting pagpipilian ang RSA o ECC R1.",
+        "three": "Iba't ibang mga key ay nag-aalok ng iba't ibang antas ng seguridad. Halimbawa, ang Ed25519 at ECC keys ay kilala para sa mataas na seguridad na may mas maliit na sukat ng key, habang ang RSA ay malawakang pinagkakatiwalaan para sa matibay na seguridad sa iba't ibang mga sistema.",
+        "four": "Oo, maaari mong baguhin ang iyong uri ng key, ngunit mahalagang tandaan na maaaring makaapekto ito sa kung paano nakikipag-ugnayan ang iyong mga kredensyal sa iba't ibang mga sistema. Palaging tiyakin na ang napiling uri ng key ay tugma sa iyong kaso ng paggamit.",
+        "five": "Ang pagkakasunud-sunod ng iyong mga key ang nagtatakda ng kanilang priyoridad sa paggamit. Maaari mong i-drag at ayusin ang iyong mga key, kung saan ang nasa itaas ay ang iyong unang pagpipilian.",
+        "six": "Kung hindi ka pipili ng partikular na uri ng key, awtomatikong pipili ang app ng pinaka-angkop na key base sa kung ano ang sinusuportahan ng issuer ng kredensyal. Tinitiyak nito ang pagkakatugma at seguridad, kahit hindi ka gumawa ng manu-manong pagpili."
       }
     }
   },
@@ -910,6 +928,12 @@
     "description": "Piliin ang iyong gustong wika",
     "save": "I-save ang Kagustuhan"
   },
+  "SetupKey": {
+    "header": "Pamamahala ng Key",
+    "description": "Piliin ang iyong gustong mga key para sa pagbuo ng holder keys. Para mas maintindihan pa, pumunta sa seksyon ng tulong.",
+    "save": "I-save ang Kagustuhan",
+    "skip": "Gagawin ko mamaya"
+  },
   "common": {
     "card": "card",
     "cards": "mga card",
@@ -956,6 +980,8 @@
     "next": "Susunod",
     "previous": "Nakaraang",
     "skip": "Laktawan",
-    "done": "Tapos na"
+    "done": "Tapos na",
+    "keyManagementTitle": "Pamamahala ng Key",
+    "keyManagementDesc": "Piliin ang paraan ng paggawa ng key na naaayon sa iyong kagustuhan, nagbibigay sa iyo ng kontrol sa seguridad ng iyong kredensyal.\nI-drag at ayusin ang mga key, kung saan ang nasa itaas ay ang may pinakamataas na priyoridad."
   }
 }

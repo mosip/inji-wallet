@@ -15,6 +15,7 @@ import {isActivationNeeded} from '../../../shared/openId4VCI/Utils';
 import {
   BOTTOM_SECTION_FIELDS_WITH_DETAILED_ADDRESS_FIELDS,
   DETAIL_VIEW_BOTTOM_SECTION_FIELDS,
+  KEY_TYPE_FIELD,
   fieldItemIterator,
   getBackgroundColour,
   getBackgroundImage,
@@ -22,6 +23,7 @@ import {
 } from '../common/VCUtils';
 import {ProfileIcon} from '../../ProfileIcon';
 import {VCFormat} from '../../../shared/VCFormat';
+import {VCItemField} from '../common/VCItemField';
 
 const getProfileImage = (face: any) => {
   if (face) {
@@ -140,6 +142,13 @@ export const VCDetailView: React.FC<VCItemDetailsProps> = props => {
                       props.wellknown,
                       props,
                     )}
+                    <VCItemField
+                      key={'keyTypeVcDetailView'}
+                      fieldName={KEY_TYPE_FIELD}
+                      fieldValue={props.keyType}
+                      verifiableCredential={verifiableCredential}
+                      testID={'keyTypeVcDetailView'}
+                    />
                   </Column>
                 </>
               )}
@@ -240,4 +249,5 @@ export interface VCItemDetailsProps {
   onBinding?: () => void;
   activeTab?: Number;
   vcHasImage: boolean;
+  keyType: string;
 }

@@ -5,11 +5,9 @@ import {
   constructAuthorizationConfiguration,
   constructIssuerMetaData,
   constructProofJWT,
-  getKeyTypeFromWellknown,
   hasKeyPair,
   updateCredentialInformation,
   vcDownloadTimeout,
-  selectCredentialRequestKey,
 } from '../../shared/openId4VCI/Utils';
 import {authorize} from 'react-native-app-auth';
 import {
@@ -99,13 +97,23 @@ export const IssuersService = () => {
       );
     },
 
+    getKeyOrderList: async () => {
+      const {RNSecureKeystoreModule} = NativeModules;
+      const keyOrder = JSON.parse(
+        (await RNSecureKeystoreModule.getData('keyPreference'))[1],
+      );
+      return keyOrder;
+    },
+
     generateKeyPair: async (context: any) => {
       const keypair = await generateKeyPair(context.keyType);
       return keypair;
     },
 
     getKeyPair: async (context: any) => {
-      if (!!(await fetchKeyPair(context.keyType)).publicKey) {
+      if (context.keyType === '') {
+        throw new Error('key type not found');
+      } else if (!!(await fetchKeyPair(context.keyType)).publicKey) {
         return await fetchKeyPair(context.keyType);
       }
     },

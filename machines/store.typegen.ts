@@ -8,6 +8,11 @@ export interface Typegen0 {
       data: unknown;
       __tip: 'See the XState TS docs to learn how to strongly type this.';
     };
+    'done.invoke.store.checkFreshInstall:invocation[0]': {
+      type: 'done.invoke.store.checkFreshInstall:invocation[0]';
+      data: unknown;
+      __tip: 'See the XState TS docs to learn how to strongly type this.';
+    };
     'done.invoke.store.resettingStorage:invocation[0]': {
       type: 'done.invoke.store.resettingStorage:invocation[0]';
       data: unknown;
@@ -55,14 +60,14 @@ export interface Typegen0 {
   };
   eventsCausingDelays: {};
   eventsCausingGuards: {
-    hasData: 'READY';
+    hasData: 'done.invoke.store.checkFreshInstall:invocation[0]';
     isCustomSecureKeystore: 'KEY_RECEIVED';
   };
   eventsCausingServices: {
     checkFreshInstall: 'xstate.init';
     checkStorageInitialisedOrNot: 'ERROR';
     clear: 'KEY_RECEIVED';
-    clearKeys: 'READY';
+    clearKeys: 'done.invoke.store.checkFreshInstall:invocation[0]';
     generateEncryptionKey: 'ERROR' | 'IGNORE' | 'READY';
     getEncryptionKey: 'TRY_AGAIN';
     hasEncryptionKey: never;
