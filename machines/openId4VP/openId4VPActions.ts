@@ -175,7 +175,10 @@ export const openId4VPActions = (model: any) => {
     forwardToParent: sendParent('DISMISS'),
 
     setError: model.assign({
-      error: (_, event) => event.data.message,
+      error: (_, event) => {
+        console.log('Error:', event.data.message);
+        return event.data.message;
+      },
     }),
 
     loadKeyPair: assign({
@@ -192,6 +195,13 @@ export const openId4VPActions = (model: any) => {
 
     resetOpenID4VPRetryCount: model.assign({
       openID4VPRetryCount: () => 0,
+    }),
+
+    setAuthenticationError: model.assign({
+      error: (_, event) => {
+        console.error('Error:', event.data.message);
+        return 'vc validation - ' + event.data.message;
+      },
     }),
   };
 };

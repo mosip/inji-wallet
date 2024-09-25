@@ -58,6 +58,7 @@ export interface Typegen0 {
       | 'logFailedVerification'
       | 'resetFaceCaptureBannerStatus'
       | 'resetOpenID4VPRetryCount'
+      | 'setAuthenticationError'
       | 'setAuthenticationResponse'
       | 'setEncodedAuthorizationRequest'
       | 'setError'
@@ -93,10 +94,10 @@ export interface Typegen0 {
     logFailedVerification: 'FACE_INVALID';
     resetFaceCaptureBannerStatus: 'ACCEPT_REQUEST';
     resetOpenID4VPRetryCount: 'RESET_RETRY_COUNT';
+    setAuthenticationError: 'error.platform.OpenId4VP.authenticateVerifier:invocation[0]';
     setAuthenticationResponse: 'done.invoke.OpenId4VP.authenticateVerifier:invocation[0]';
     setEncodedAuthorizationRequest: 'AUTHENTICATE';
     setError:
-      | 'error.platform.OpenId4VP.authenticateVerifier:invocation[0]'
       | 'error.platform.OpenId4VP.checkKeyPair:invocation[0]'
       | 'error.platform.OpenId4VP.getKeyPairFromKeystore:invocation[0]'
       | 'error.platform.OpenId4VP.sendingVP:invocation[0]';

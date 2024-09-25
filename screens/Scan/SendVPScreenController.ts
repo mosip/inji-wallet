@@ -115,29 +115,29 @@ export function useSendVPScreen() {
     show: false,
     title: '',
     message: '',
-    showRetryButton: true,
+    showRetryButton: false,
   };
 
   if (isSelectingVCs && Object.keys(vcsMatchingAuthRequest).length === 0) {
     errorModal.show = true;
     errorModal.title = t('errors.noMatchingCredentials.title');
     errorModal.message = t('errors.noMatchingCredentials.message');
-    errorModal.showRetryButton = false;
   } else if (error.includes('Verifier authentication was unsuccessful')) {
     errorModal.show = true;
     errorModal.title = t('errors.invalidVerifier.title');
     errorModal.message = t('errors.invalidVerifier.message');
-    errorModal.showRetryButton = false;
   } else if (error.includes('credential mismatch detected')) {
     errorModal.show = true;
     errorModal.title = t('errors.credentialsMismatch.title');
     errorModal.message = t('errors.credentialsMismatch.message');
-    errorModal.showRetryButton = false;
   } else if (error.includes('none of the selected VC has image')) {
     errorModal.show = true;
     errorModal.title = t('errors.noImage.title');
     errorModal.message = t('errors.noImage.message');
-    errorModal.showRetryButton = false;
+  } else if (error.startsWith('vc validation')) {
+    errorModal.show = true;
+    errorModal.title = t('errors.invalidQrCode.title');
+    errorModal.message = t('errors.invalidQrCode.message');
   } else if (error !== '') {
     errorModal.show = true;
     errorModal.title = t('errors.genericError.title');

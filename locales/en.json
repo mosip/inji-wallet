@@ -812,6 +812,10 @@
         "title": "Oops! An Error Occured.",
         "message": "Due to technical error, we are unable to share the card. Click on retry to re-share or click on Home to exit the sharing process."
       },
+      "invalidQrCode": {
+        "title": "Invalid QR code",
+        "message": "The QR code is invalid because some required information is missing. Please ask the verifier to provide a valid QR code to share your credentials."
+      },
       "noImage": {
         "title": "An Error Occured!",
         "message": "Face verification requires a photo in the selected credential(s). Please use the Share option or select a credential that includes an image."

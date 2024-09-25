@@ -803,6 +803,10 @@
         "title": "Oops! Isang Error ang Naganap.",
         "message": "Dahil sa teknikal na error, hindi namin maibahagi ang card. Mag-click sa subukang muli upang muling ibahagi o mag-click sa Home upang lumabas sa proseso ng pagbabahagi."
       },
+      "invalidQrCode": {
+        "title": "Di-wastong QR code",
+        "message": "Di-wasto ang QR code dahil nawawala ang ilang kinakailangang impormasyon. Mangyaring hilingin sa verifier na magbigay ng wastong QR code upang ibahagi ang iyong mga kredensyal."
+      },
       "noImage": {
         "title": "Isang Error ang Naganap!",
         "message": "Ang pag-verify ng mukha ay nangangailangan ng larawan sa napiling (mga) kredensyal. Pakigamit ang opsyong Ibahagi o pumili ng kredensyal na may kasamang larawan."

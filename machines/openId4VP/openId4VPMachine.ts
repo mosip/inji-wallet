@@ -69,10 +69,7 @@ export const openId4VPMachine = model.createMachine(
           },
           onError: [
             {
-              actions: [
-                (_, event) => console.log('Error:', event.data.message),
-                'setError',
-              ],
+              actions: 'setError',
             },
           ],
         },
@@ -85,10 +82,7 @@ export const openId4VPMachine = model.createMachine(
             target: 'getVCsSatisfyingAuthRequest',
           },
           onError: {
-            actions: [
-              (_, event) => console.error('Error:', event.data.message),
-              'setError',
-            ],
+            actions: 'setAuthenticationError',
           },
         },
       },
@@ -280,11 +274,7 @@ export const openId4VPMachine = model.createMachine(
             target: 'success',
           },
           onError: {
-            actions: [
-              (_, event) => console.error('Error:', event.data.message),
-              'setError',
-              sendParent('SHOW_ERROR'),
-            ],
+            actions: ['setError', sendParent('SHOW_ERROR')],
             target: 'showError',
           },
         },
