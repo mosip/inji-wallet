@@ -20,6 +20,7 @@ export const TelemetryConstants = {
     removeVcMetadata: 'VC metadata removed',
     vcVerification: 'VC Verification',
     wellknownConfig: 'Wellknown config',
+    setKeyPriority: 'Setting user Key priority order'
   }),
 
   EndEventStatus: Object.freeze({

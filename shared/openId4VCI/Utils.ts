@@ -150,7 +150,9 @@ export const getCredentialIssuersWellKnownConfig = async (
 ) => {
   let fields: string[] = defaultFields;
   let matchingWellknownDetails: any;
-  const wellknownResponse = await CACHED_API.fetchIssuerWellknownConfig(issuer!);
+  const wellknownResponse = await CACHED_API.fetchIssuerWellknownConfig(
+    issuer!,
+  );
   try {
     if (wellknownResponse) {
       matchingWellknownDetails = getMatchingCredentialIssuerMetadata(
@@ -161,11 +163,13 @@ export const getCredentialIssuersWellKnownConfig = async (
         fields = matchingWellknownDetails.order;
       } else {
         if (format === VCFormat.mso_mdoc) {
-          fields = []
+          fields = [];
           Object.keys(matchingWellknownDetails.claims).forEach(namespace => {
-            Object.keys(matchingWellknownDetails.claims[namespace]).forEach(claim => {
-              fields.concat(`${namespace}~${claim}`);
-            });
+            Object.keys(matchingWellknownDetails.claims[namespace]).forEach(
+              claim => {
+                fields.concat(`${namespace}~${claim}`);
+              },
+            );
           });
         } else if (format === VCFormat.ldp_vc) {
           fields = Object.keys(
@@ -214,7 +218,7 @@ export const getDetailedViewFields = async (
   return {
     matchingCredentialIssuerMetadata: response.matchingCredentialIssuerMetadata,
     fields: updatedFieldsList,
-    wellknownResponse: response.wellknownResponse
+    wellknownResponse: response.wellknownResponse,
   };
 };
 
@@ -350,22 +354,19 @@ export async function hasKeyPair(keyType: any): Promise<boolean> {
   try {
     return await RNSecureKeystoreModule.hasAlias(keyType);
   } catch (e) {
-    console.warn('key not found');
+    console.error('key not found');
     return false;
   }
 }
 
-export function selectCredentialRequestKey(keyTypes: string[]) {
-  const availableKeys = [
-    KeyTypes.ES256,
-    KeyTypes.RS256,
-    KeyTypes.ED25519,
-    KeyTypes.ES256K,
-  ];
-  for (const key of availableKeys) {
-    if (keyTypes.includes(key)) return key;
+export function selectCredentialRequestKey(
+  keyTypes: string[],
+  keyOrder: object,
+) {
+  for (const index in keyOrder) {
+    if (keyTypes.includes(keyOrder[index])) return keyOrder[index];
   }
-  throw Error;
+  return ""
 }
 
 export const constructIssuerMetaData = (

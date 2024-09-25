@@ -45,9 +45,8 @@ export function useWelcomeScreen(props: RootRouteProps) {
     NEXT: () => {
       authService.send(AuthEvents.NEXT()), props.navigation.navigate('Auth');
     },
-    SELECT: () => {
-      authService.send(AuthEvents.SELECT()),
-        props.navigation.navigate('IntroSliders');
+    SELECT: (screen: any) => {
+      authService.send(AuthEvents.SELECT()), props.navigation.navigate(screen);
     },
     BACK: () => {
       settingsService.send(SettingsEvents.BACK()),

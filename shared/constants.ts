@@ -7,6 +7,7 @@ import {
 } from 'react-native-dotenv';
 import {Argon2iConfig} from './commonUtil';
 import {VcIdType} from '../machines/VerifiableCredential/VCMetaMachine/vc';
+import { KeyTypes } from './cryptoutil/KeyTypes';
 
 export let MIMOTO_BASE_URL = MIMOTO_HOST;
 export let ESIGNET_BASE_URL = ESIGNET_HOST;
@@ -73,6 +74,12 @@ export const API_CACHED_STORAGE_KEYS = {
 export function isIOS(): boolean {
   return Platform.OS === 'ios';
 }
+export const SUPPORTED_KEY_TYPES = {
+  ED25519: KeyTypes.ED25519,
+  'ECC K1': KeyTypes.ES256K,
+  'ECC R1': KeyTypes.ES256,
+  RSA: KeyTypes.RS256,
+};
 
 export function isAndroid(): boolean {
   return Platform.OS === 'android';
@@ -141,6 +148,7 @@ export const INTRO_SLIDER_LOGO_MARGIN = Dimensions.get('screen').width * 0.45;
 export const COPILOT_PRE_FINAL_STEP: number = 5;
 export const COPILOT_FINAL_STEP: number = 6;
 export const COPILOT_HEIGHT: number = 0.22;
+export const KEY_MANAGEMENT_STEP = 7;
 export const copilotTestID = {
   '1': 'help',
   '2': 'download',

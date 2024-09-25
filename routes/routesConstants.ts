@@ -18,6 +18,10 @@ export const REQUEST_ROUTES = {
   ReceiveVcScreen: 'ReceiveVcScreen' as keyof RequestStackParamList,
 };
 
+export const SETTINGS_ROUTES ={
+  KeyManagement: 'KeyManagement' as keyof SettingsStackParamList,
+}
+
 export type ScanStackParamList = {
   ScanScreen: undefined;
   SendVcScreen: undefined;
@@ -28,3 +32,7 @@ export type RequestStackParamList = {
   RequestScreen: undefined;
   ReceiveVcScreen: undefined;
 };
+
+export type SettingsStackParamList = {
+  Keymanagement: undefined
+}
