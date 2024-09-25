@@ -12,6 +12,7 @@ import {getErrorEventData, sendErrorEvent} from '../telemetry/TelemetryUtils';
 import {TelemetryConstants} from '../telemetry/TelemetryConstants';
 import {getMosipIdentifier} from '../commonUtil';
 import {NativeModules} from 'react-native';
+import {isAndroid} from '../constants';
 
 // FIXME: Ed25519Signature2018 not fully supported yet.
 // Ed25519Signature2018 proof type check is not tested with its real credential
@@ -53,10 +54,18 @@ export async function verifyCredential(
         break;
       }
       case ProofType.RSA: {
-        let vcVerifierResult = await vcVerifier.verifyCredentials(
-          JSON.stringify(verifiableCredential),
-        );
-        return handleVcVerifierResponse(vcVerifierResult, verifiableCredential);
+        if (isAndroid()) {
+          let vcVerifierResult = await vcVerifier.verifyCredentials(
+            JSON.stringify(verifiableCredential),
+          );
+          return handleVcVerifierResponse(
+            vcVerifierResult,
+            verifiableCredential,
+          );
+        } else {
+          suite = new RsaSignature2018(suiteOptions);
+          break;
+        }
       }
     }
 
@@ -77,9 +86,9 @@ export async function verifyCredential(
       'Error occurred while verifying the VC using digital bazaar:',
       error,
     );
-    const errorMessage =
+    const telemetryErrorMessage =
       error + '-' + getMosipIdentifier(verifiableCredential.credentialSubject);
-    sendVerificationErrorEvent(errorMessage, verifiableCredential);
+    sendVerificationErrorEvent(telemetryErrorMessage, verifiableCredential);
     return {
       isVerified: false,
       errorMessage: VerificationErrorType.TECHNICAL_ERROR,
@@ -106,9 +115,9 @@ function handleResponse(
       const vcIdentifier = getMosipIdentifier(
         verifiableCredential.credentialSubject,
       );
-      const errorMessage =
+      let telemetryErrorMessage =
         TelemetryConstants.ErrorMessage.vcVerificationFailed + vcIdentifier;
-      sendVerificationErrorEvent(errorMessage, verifiableCredential);
+      sendVerificationErrorEvent(telemetryErrorMessage, verifiableCredential);
       isVerifiedFlag = true;
     }
   }
@@ -136,9 +145,9 @@ function handleVcVerifierResponse(
       'Error occured while verifying the VC using VcVerifier Library:',
       error,
     );
-    const errorMessage =
+    const telemetryErrorMessage =
       error + '-' + getMosipIdentifier(verifiableCredential.credentialSubject);
-    sendVerificationErrorEvent(errorMessage, verifiableCredential);
+    sendVerificationErrorEvent(telemetryErrorMessage, verifiableCredential);
     return {
       isVerified: false,
       errorMessage: VerificationErrorType.TECHNICAL_ERROR,
