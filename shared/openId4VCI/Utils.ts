@@ -35,7 +35,6 @@ export const Protocols = {
 export const Issuers = {
   MosipOtp: '',
   Mosip: 'Mosip',
-  MosipCertify: 'MosipCertify',
 };
 
 export function getVcVerificationDetails(
