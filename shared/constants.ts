@@ -7,7 +7,7 @@ import {
 } from 'react-native-dotenv';
 import {Argon2iConfig} from './commonUtil';
 import {VcIdType} from '../machines/VerifiableCredential/VCMetaMachine/vc';
-import { KeyTypes } from './cryptoutil/KeyTypes';
+import {KeyTypes} from './cryptoutil/KeyTypes';
 
 export let MIMOTO_BASE_URL = MIMOTO_HOST;
 export let ESIGNET_BASE_URL = ESIGNET_HOST;

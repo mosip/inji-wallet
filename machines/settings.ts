@@ -33,7 +33,7 @@ const model = createModel(
     isBackupAndRestoreExplored: false as boolean,
     isKeyManagementExplored: false as boolean,
     isKeyManagementTourGuideExplored: false as boolean,
-    isKeyOrderSet:undefined as unknown as boolean,
+    isKeyOrderSet: undefined as unknown as boolean,
     hasUserShownWithHardwareKeystoreNotExists: false,
     isAccountSelectionConfirmationShown: false,
     credentialRegistryResponse: '' as string,
@@ -68,7 +68,7 @@ const model = createModel(
       SET_IS_BACKUP_AND_RESTORE_EXPLORED: () => ({}),
       SET_KEY_MANAGEMENT_EXPLORED: () => ({}),
       SET_KEY_MANAGEMENT_TOUR_GUIDE_EXPLORED: () => ({}),
-      SET_KEY_ORDER_RESPONSE: (status:boolean) => ({status}),
+      SET_KEY_ORDER_RESPONSE: (status: boolean) => ({status}),
       RESET_KEY_ORDER_RESPONSE: () => ({}),
       SHOWN_ACCOUNT_SELECTION_CONFIRMATION: () => ({}),
       DISMISS: () => ({}),
@@ -271,7 +271,7 @@ export const settingsMachine = model.createMachine(
         isKeyManagementExplored: true,
       }),
       setKeyOrderingResponse: model.assign({
-        isKeyOrderSet: (_,event: any)=>event.status,
+        isKeyOrderSet: (_, event: any) => event.status,
       }),
       resetKeyOrderingResponse: model.assign({
         isKeyOrderSet: undefined,

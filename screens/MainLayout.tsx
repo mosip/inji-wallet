@@ -51,51 +51,51 @@ export const MainLayout: React.FC = () => {
   }, [linkCode]);
 
   return (
-      <Navigator
-        initialRouteName={mainRoutes[0].name}
-        screenOptions={({route}) => ({
-          tabBarAccessibilityLabel: route.name,
-          ...options,
-        })}>
-        {mainRoutes.map((route, index) => (
-          <Screen
-            key={route.name}
-            name={route.name}
-            component={route.component}
-            listeners={{
-              tabPress: e => {
-                if (route.name == share.name) {
-                  scanService?.send(ScanEvents.RESET());
-                }
-              },
-            }}
-            options={{
-              ...route.options,
-              title: t(route.name),
-              tabBarIcon: ({focused}) => (
-                <Column
-                  {...testIDProps(route.name + 'Icon')}
-                  align="center"
-                  crossAlign="center"
-                  style={focused ? Theme.Styles.bottomTabIconStyle : null}>
-                  {route.name === 'home' ? (
-                    <View>{SvgImage[`${route.name}`](focused)}</View>
-                  ) : (
-                    <Copilot
-                      title={t(`copilot:${route.name}Title`)}
-                      description={t(`copilot:${route.name}Message`)}
-                      order={2 + index}
-                      targetStyle={Theme.Styles.tabBarIconCopilot}
-                      children={<>{SvgImage[`${route.name}`](focused)}</>}
-                    />
-                  )}
-                </Column>
-              ),
-              tabBarAccessibilityLabel: isIOS() ? t(route.name) : route.name,
-              tabBarTestID: route.name,
-            }}
-          />
-        ))}
-      </Navigator>
+    <Navigator
+      initialRouteName={mainRoutes[0].name}
+      screenOptions={({route}) => ({
+        tabBarAccessibilityLabel: route.name,
+        ...options,
+      })}>
+      {mainRoutes.map((route, index) => (
+        <Screen
+          key={route.name}
+          name={route.name}
+          component={route.component}
+          listeners={{
+            tabPress: e => {
+              if (route.name == share.name) {
+                scanService?.send(ScanEvents.RESET());
+              }
+            },
+          }}
+          options={{
+            ...route.options,
+            title: t(route.name),
+            tabBarIcon: ({focused}) => (
+              <Column
+                {...testIDProps(route.name + 'Icon')}
+                align="center"
+                crossAlign="center"
+                style={focused ? Theme.Styles.bottomTabIconStyle : null}>
+                {route.name === 'home' ? (
+                  <View>{SvgImage[`${route.name}`](focused)}</View>
+                ) : (
+                  <Copilot
+                    title={t(`copilot:${route.name}Title`)}
+                    description={t(`copilot:${route.name}Message`)}
+                    order={2 + index}
+                    targetStyle={Theme.Styles.tabBarIconCopilot}
+                    children={<>{SvgImage[`${route.name}`](focused)}</>}
+                  />
+                )}
+              </Column>
+            ),
+            tabBarAccessibilityLabel: isIOS() ? t(route.name) : route.name,
+            tabBarTestID: route.name,
+          }}
+        />
+      ))}
+    </Navigator>
   );
 };

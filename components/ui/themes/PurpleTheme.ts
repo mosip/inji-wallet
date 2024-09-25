@@ -1533,7 +1533,7 @@ export const PurpleTheme = {
       paddingRight: 10,
       paddingTop: 10,
     },
-    outerViewStyle:{
+    outerViewStyle: {
       flexDirection: 'row',
       alignItems: 'center',
       justifyContent: 'space-between',
@@ -1553,8 +1553,8 @@ export const PurpleTheme = {
       fontSize: 18,
       lineHeight: 19,
       padding: 10,
-    }, 
-    copilotViewStyle:{
+    },
+    copilotViewStyle: {
       flex: 1,
       paddingTop: 10,
       backgroundColor: '#fff',

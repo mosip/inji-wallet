@@ -1,21 +1,21 @@
 import React from 'react';
-import { View } from 'react-native';
+import {View} from 'react-native';
 import {
   BannerNotification,
   BannerStatus,
   BannerStatusType,
 } from './BannerNotification';
-import { BackupAndRestoreBannerNotification } from './BackupAndRestoreBannerNotification';
-import { UseBannerNotification } from './BannerNotificationController';
-import { useTranslation } from 'react-i18next';
-import { useScanScreen } from '../screens/Scan/ScanScreenController';
-import { Theme } from './ui/styleUtils';
-import { useSettingsScreen } from '../screens/Settings/SettingScreenController';
+import {BackupAndRestoreBannerNotification} from './BackupAndRestoreBannerNotification';
+import {UseBannerNotification} from './BannerNotificationController';
+import {useTranslation} from 'react-i18next';
+import {useScanScreen} from '../screens/Scan/ScanScreenController';
+import {Theme} from './ui/styleUtils';
+import {useSettingsScreen} from '../screens/Settings/SettingScreenController';
 
 export const BannerNotificationContainer: React.FC<
   BannerNotificationContainerProps
 > = props => {
-  const { showVerificationStatusBanner = true } = props
+  const {showVerificationStatusBanner = true} = props;
   const scanScreenController = useScanScreen();
   const settingsScreenController = useSettingsScreen(props);
   const showQuickShareSuccessBanner =
@@ -23,7 +23,7 @@ export const BannerNotificationContainer: React.FC<
 
   const bannerNotificationController = UseBannerNotification();
   const WalletBindingSuccess = bannerNotificationController.isBindingSuccess;
-  const { t } = useTranslation('BannerNotification');
+  const {t} = useTranslation('BannerNotification');
   const rt = useTranslation('RequestScreen').t;
   const verificationStatus = bannerNotificationController.verificationStatus;
 
@@ -31,31 +31,29 @@ export const BannerNotificationContainer: React.FC<
     <>
       <BackupAndRestoreBannerNotification />
 
-      {(settingsScreenController.isKeyOrderSet === true) && (
+      {settingsScreenController.isKeyOrderSet === true && (
         <View style={Theme.BannerStyles.topBanner}>
           <BannerNotification
             type={BannerStatusType.SUCCESS}
             message={t('keyPreferenceSuccess')}
-            onClosePress={
-              settingsScreenController.RESET_KEY_ORDER_RESPONSE
-            }
+            onClosePress={settingsScreenController.RESET_KEY_ORDER_RESPONSE}
             key={'keyOrderingSuccess'}
             testId={'keyOrderingSuccess'}
           />
-        </View>)}
+        </View>
+      )}
 
-        {(settingsScreenController.isKeyOrderSet === false) && (
+      {settingsScreenController.isKeyOrderSet === false && (
         <View style={Theme.BannerStyles.topBanner}>
           <BannerNotification
             type={BannerStatusType.ERROR}
             message={t('keyPreferenceError')}
-            onClosePress={
-              settingsScreenController.RESET_KEY_ORDER_RESPONSE
-            }
+            onClosePress={settingsScreenController.RESET_KEY_ORDER_RESPONSE}
             key={'keyOrderingError'}
             testId={'keyOrderingError'}
           />
-        </View>)}
+        </View>
+      )}
 
       {WalletBindingSuccess && (
         <View style={Theme.BannerStyles.topBanner}>

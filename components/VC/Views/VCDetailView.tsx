@@ -22,8 +22,8 @@ import {
   getTextColor,
 } from '../common/VCUtils';
 import {ProfileIcon} from '../../ProfileIcon';
-import { VCFormat } from '../../../shared/VCFormat';
-import { VCItemField } from '../common/VCItemField';
+import {VCFormat} from '../../../shared/VCFormat';
+import {VCItemField} from '../common/VCItemField';
 
 const getProfileImage = (face: any) => {
   if (face) {
@@ -57,7 +57,9 @@ export const VCDetailView: React.FC<VCItemDetailsProps> = props => {
       const namespaces = verifiableCredential['issuerSigned']['nameSpaces'];
       Object.keys(namespaces).forEach(namespace => {
         (namespaces[namespace] as Array<Object>).forEach(element => {
-          availableFieldNames.push(`${namespace}~${element['elementIdentifier']}`);
+          availableFieldNames.push(
+            `${namespace}~${element['elementIdentifier']}`,
+          );
         });
       });
     }
@@ -141,11 +143,11 @@ export const VCDetailView: React.FC<VCItemDetailsProps> = props => {
                       props,
                     )}
                     <VCItemField
-                    key={"keyTypeVcDetailView"}
-                    fieldName={KEY_TYPE_FIELD}
-                    fieldValue={props.keyType}
-                    verifiableCredential={verifiableCredential}
-                    testID={"keyTypeVcDetailView"}
+                      key={'keyTypeVcDetailView'}
+                      fieldName={KEY_TYPE_FIELD}
+                      fieldValue={props.keyType}
+                      verifiableCredential={verifiableCredential}
+                      testID={'keyTypeVcDetailView'}
                     />
                   </Column>
                 </>

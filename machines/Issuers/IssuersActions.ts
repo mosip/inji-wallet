@@ -205,11 +205,11 @@ export const IssuersActions = (model: any) => {
 
     setSelectedKey: model.assign({
       keyType: (context: any, event: any) => {
-          const keyType = selectCredentialRequestKey(
-            context.wellknownKeyTypes,
-            event.data,
-          );
-          return keyType;
+        const keyType = selectCredentialRequestKey(
+          context.wellknownKeyTypes,
+          event.data,
+        );
+        return keyType;
       },
     }),
 
@@ -281,23 +281,22 @@ export const IssuersActions = (model: any) => {
         to: (context: any) => context.serviceRefs.activityLog,
       },
     ),
-    sendSuccessEndEvent: (context:any) => {
+    sendSuccessEndEvent: (context: any) => {
       sendEndEvent(
         getEndEventData(
           TelemetryConstants.FlowType.vcDownload,
           TelemetryConstants.EndEventStatus.success,
-          {"VC Key" : context.keyType}
+          {'VC Key': context.keyType},
         ),
       );
     },
 
-    sendErrorEndEvent: (context:any) => {
-     
+    sendErrorEndEvent: (context: any) => {
       sendEndEvent(
         getEndEventData(
           TelemetryConstants.FlowType.vcDownload,
           TelemetryConstants.EndEventStatus.failure,
-          {"VC Key" : context.keyType}
+          {'VC Key': context.keyType},
         ),
       );
     },

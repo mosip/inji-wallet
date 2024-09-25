@@ -29,9 +29,7 @@ export const HelpScreen: React.FC<HelpScreenProps> = props => {
           });
         }
       }, 2000);
-    }
-    else if(props.source == 'keyManagement')
-    {
+    } else if (props.source == 'keyManagement') {
       setTimeout(() => {
         if (listingRef?.current != null) {
           listingRef.current.scrollToIndex({
@@ -293,44 +291,56 @@ export const HelpScreen: React.FC<HelpScreenProps> = props => {
       ),
     },
   ];
-  const KeyManagementFaqMap=[
+  const KeyManagementFaqMap = [
     {
       title: t('questions.KeyManagement.one'),
       data: (
-        <React.Fragment>{getTextField(t('answers.KeyManagement.one'))}</React.Fragment>
+        <React.Fragment>
+          {getTextField(t('answers.KeyManagement.one'))}
+        </React.Fragment>
       ),
     },
     {
       title: t('questions.KeyManagement.two'),
       data: (
-        <React.Fragment>{getTextField(t('answers.KeyManagement.two'))}</React.Fragment>
+        <React.Fragment>
+          {getTextField(t('answers.KeyManagement.two'))}
+        </React.Fragment>
       ),
     },
     {
       title: t('questions.KeyManagement.three'),
       data: (
-        <React.Fragment>{getTextField(t('answers.KeyManagement.three'))}</React.Fragment>
+        <React.Fragment>
+          {getTextField(t('answers.KeyManagement.three'))}
+        </React.Fragment>
       ),
     },
     {
       title: t('questions.KeyManagement.four'),
       data: (
-        <React.Fragment>{getTextField(t('answers.KeyManagement.four'))}</React.Fragment>
+        <React.Fragment>
+          {getTextField(t('answers.KeyManagement.four'))}
+        </React.Fragment>
       ),
     },
     {
       title: t('questions.KeyManagement.five'),
       data: (
-        <React.Fragment>{getTextField(t('answers.KeyManagement.five'))}</React.Fragment>
+        <React.Fragment>
+          {getTextField(t('answers.KeyManagement.five'))}
+        </React.Fragment>
       ),
     },
     {
       title: t('questions.KeyManagement.six'),
       data: (
-        <React.Fragment>{getTextField(t('answers.KeyManagement.six'))}</React.Fragment>
+        <React.Fragment>
+          {getTextField(t('answers.KeyManagement.six'))}
+        </React.Fragment>
       ),
     },
-  ]
+  ];
 
   return (
     <React.Fragment>

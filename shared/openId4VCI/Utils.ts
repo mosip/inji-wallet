@@ -366,7 +366,7 @@ export function selectCredentialRequestKey(
   for (const index in keyOrder) {
     if (keyTypes.includes(keyOrder[index])) return keyOrder[index];
   }
-  return ""
+  return '';
 }
 
 export const constructIssuerMetaData = (

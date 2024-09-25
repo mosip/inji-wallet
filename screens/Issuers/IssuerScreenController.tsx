@@ -37,8 +37,7 @@ export function useIssuerScreenController({route, navigation}) {
     isBiometricsCancelled: useSelector(service, selectIsBiometricCancelled),
     isDone: useSelector(service, selectIsDone),
     isIdle: useSelector(service, selectIsIdle),
-    isNonGenericError:
-      useSelector(service, selectIsNonGenericError),
+    isNonGenericError: useSelector(service, selectIsNonGenericError),
     loadingReason: useSelector(service, selectLoadingReason),
     isStoring: useSelector(service, selectStoring),
     isSelectingCredentialType: useSelector(
@@ -85,5 +84,3 @@ export interface IssuerModalProps {
   onPress?: () => void;
   isVisible?: boolean;
 }
-
-

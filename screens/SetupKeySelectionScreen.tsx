@@ -15,9 +15,12 @@ import {
 import {useBackupRestoreScreen} from './Settings/BackupRestoreController';
 import DragList from 'react-native-draglist';
 import {Text} from '../components/ui';
-import { TelemetryConstants } from '../shared/telemetry/TelemetryConstants';
-import { sendEndEvent, getEndEventData } from '../shared/telemetry/TelemetryUtils';
-import { SUPPORTED_KEY_TYPES } from '../shared/constants';
+import {TelemetryConstants} from '../shared/telemetry/TelemetryConstants';
+import {
+  sendEndEvent,
+  getEndEventData,
+} from '../shared/telemetry/TelemetryUtils';
+import {SUPPORTED_KEY_TYPES} from '../shared/constants';
 
 export const SetupKeySelectionScreen: React.FC<RootRouteProps> = props => {
   const {RNSecureKeystoreModule} = NativeModules;
@@ -35,7 +38,9 @@ export const SetupKeySelectionScreen: React.FC<RootRouteProps> = props => {
       <TouchableOpacity onLongPress={onDragStart} onPressOut={onDragEnd}>
         <ListItem bottomDivider topDivider>
           <ListItem.Title style={Theme.KeyManagementScreenStyle.listItemTitle}>
-            <Text testID={item.label}weight="regular">{item.label}</Text>
+            <Text testID={item.label} weight="regular">
+              {item.label}
+            </Text>
           </ListItem.Title>
           <ListItem.Content />
           <Icon name="drag-handle" color={Theme.Colors.GrayIcon} />
@@ -98,7 +103,7 @@ export const SetupKeySelectionScreen: React.FC<RootRouteProps> = props => {
       </Column>
       <View style={Theme.KeyManagementScreenStyle.dragViewStyle}>
         <DragList
-          testID='keyList'
+          testID="keyList"
           scrollEnabled={false}
           data={keyOrder}
           renderItem={renderItem}
@@ -119,9 +124,10 @@ export const SetupKeySelectionScreen: React.FC<RootRouteProps> = props => {
             );
             sendEndEvent(
               getEndEventData(
-              TelemetryConstants.FlowType.setKeyPriority,
-              TelemetryConstants.EndEventStatus.success)
-            )
+                TelemetryConstants.FlowType.setKeyPriority,
+                TelemetryConstants.EndEventStatus.success,
+              ),
+            );
             controller.SELECT('IntroSliders'), controller.unlockPage;
           }}
         />

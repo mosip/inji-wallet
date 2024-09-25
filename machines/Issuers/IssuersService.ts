@@ -111,11 +111,9 @@ export const IssuersService = () => {
     },
 
     getKeyPair: async (context: any) => {
-      if(context.keyType === "")
-      {
-        throw new Error("key type not found")
-      }
-       else if(!!(await fetchKeyPair(context.keyType)).publicKey) {
+      if (context.keyType === '') {
+        throw new Error('key type not found');
+      } else if (!!(await fetchKeyPair(context.keyType)).publicKey) {
         return await fetchKeyPair(context.keyType);
       }
     },

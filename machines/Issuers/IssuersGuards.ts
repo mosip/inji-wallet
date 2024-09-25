@@ -14,8 +14,8 @@ export const IssuersGuards = () => {
     hasKeyPair: (context: any) => {
       return !!context.publicKey;
     },
-    isKeyTypeNotFound:(context: any)=>{
-      return context.keyType == ""
+    isKeyTypeNotFound: (context: any) => {
+      return context.keyType == '';
     },
     isInternetConnected: (_: any, event: any) => !!event.data.isConnected,
     isOIDCflowCancelled: (_: any, event: any) => {

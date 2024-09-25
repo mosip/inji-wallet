@@ -1,11 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import {useTranslation} from 'react-i18next';
-import {
-  NativeModules,
-  TouchableOpacity,
-  BackHandler,
-  View,
-} from 'react-native';
+import {NativeModules, TouchableOpacity, BackHandler, View} from 'react-native';
 import DragList from 'react-native-draglist';
 import {ListItem, Icon} from 'react-native-elements';
 import {Row, Text, Button} from '../../components/ui';
@@ -17,9 +12,12 @@ import {BackButton} from '../../components/ui/backButton/BackButton';
 import {Copilot} from '../../components/ui/Copilot';
 import {useCopilot} from 'react-native-copilot';
 import {useNavigation, useRoute, RouteProp} from '@react-navigation/native';
-import { getEndEventData, sendEndEvent} from '../../shared/telemetry/TelemetryUtils';
-import { TelemetryConstants } from '../../shared/telemetry/TelemetryConstants';
-import { SUPPORTED_KEY_TYPES } from '../../shared/constants';
+import {
+  getEndEventData,
+  sendEndEvent,
+} from '../../shared/telemetry/TelemetryUtils';
+import {TelemetryConstants} from '../../shared/telemetry/TelemetryConstants';
+import {SUPPORTED_KEY_TYPES} from '../../shared/constants';
 
 const {RNSecureKeystoreModule} = NativeModules;
 
@@ -54,8 +52,8 @@ export const KeyManagementScreen: React.FC<KeyManagementScreenProps> = () => {
 
   useEffect(() => {
     const backAction = () => {
-        controller.SET_KEY_MANAGEMENT_TOUR_GUIDE_EXPLORED();
-        navigation.goBack()
+      controller.SET_KEY_MANAGEMENT_TOUR_GUIDE_EXPLORED();
+      navigation.goBack();
       return true;
     };
 
@@ -66,15 +64,17 @@ export const KeyManagementScreen: React.FC<KeyManagementScreenProps> = () => {
 
     return () => backHandler.remove();
   }, []);
-  const keyOrderRendermap= Object.fromEntries(
-    Object.entries(SUPPORTED_KEY_TYPES).map(([key, value]) => [value, key])
+  const keyOrderRendermap = Object.fromEntries(
+    Object.entries(SUPPORTED_KEY_TYPES).map(([key, value]) => [value, key]),
   );
   // Render item for drag list
   const renderItem = ({item, onDragStart, onDragEnd}) => (
     <TouchableOpacity onLongPress={onDragStart} onPressOut={onDragEnd}>
       <ListItem bottomDivider topDivider>
         <ListItem.Title style={Theme.KeyManagementScreenStyle.listItemTitle}>
-          <Text testID={item.label} weight="regular">{keyOrderRendermap[item.value]}</Text>
+          <Text testID={item.label} weight="regular">
+            {keyOrderRendermap[item.value]}
+          </Text>
         </ListItem.Title>
         <ListItem.Content />
         <Icon name="drag-handle" color={Theme.Colors.GrayIcon} />
@@ -111,15 +111,17 @@ export const KeyManagementScreen: React.FC<KeyManagementScreenProps> = () => {
         backgroundColor: '#ffffff',
       }}
       onLayout={startTourGuide}>
-      <View
-        style={Theme.KeyManagementScreenStyle.outerViewStyle}>
+      <View style={Theme.KeyManagementScreenStyle.outerViewStyle}>
         <TouchableOpacity onPress={isClosed}>
-          <BackButton onPress={() => {
-            controller.SET_KEY_MANAGEMENT_TOUR_GUIDE_EXPLORED();
-            navigation.goBack()}} />
+          <BackButton
+            onPress={() => {
+              controller.SET_KEY_MANAGEMENT_TOUR_GUIDE_EXPLORED();
+              navigation.goBack();
+            }}
+          />
         </TouchableOpacity>
         <Text
-          testID='keyManagementHeadingSettingsScreen'
+          testID="keyManagementHeadingSettingsScreen"
           style={Theme.KeyManagementScreenStyle.heading}>
           {t('header')}
         </Text>
@@ -127,7 +129,7 @@ export const KeyManagementScreen: React.FC<KeyManagementScreenProps> = () => {
           source={'keyManagement'}
           triggerComponent={
             <Icon
-              testID='keyManagementHelpIcon'
+              testID="keyManagementHelpIcon"
               accessible={true}
               name="question"
               type="font-awesome"
@@ -139,8 +141,7 @@ export const KeyManagementScreen: React.FC<KeyManagementScreenProps> = () => {
         />
       </View>
       <BannerNotificationContainer />
-      <View
-        style={Theme.KeyManagementScreenStyle.copilotViewStyle}>
+      <View style={Theme.KeyManagementScreenStyle.copilotViewStyle}>
         <Copilot
           title={t('copilot:keyManagementTitle')}
           description={t('copilot:keyManagementDesc')}
@@ -172,17 +173,18 @@ export const KeyManagementScreen: React.FC<KeyManagementScreenProps> = () => {
             controller.SET_KEY_ORDER_RESPONSE(true);
             sendEndEvent(
               getEndEventData(
-              TelemetryConstants.FlowType.setKeyPriority,
-              TelemetryConstants.EndEventStatus.success)
-            )
+                TelemetryConstants.FlowType.setKeyPriority,
+                TelemetryConstants.EndEventStatus.success,
+              ),
+            );
           } catch (e) {
             sendEndEvent(
               getEndEventData(
-              TelemetryConstants.FlowType.setKeyPriority,
-              TelemetryConstants.EndEventStatus.failure)
-            )
+                TelemetryConstants.FlowType.setKeyPriority,
+                TelemetryConstants.EndEventStatus.failure,
+              ),
+            );
             controller.SET_KEY_ORDER_RESPONSE(false);
-            
           }
         }}
         styles={{

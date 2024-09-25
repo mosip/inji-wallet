@@ -1549,7 +1549,7 @@ export const DefaultTheme = {
       lineHeight: 19,
       padding: 10,
     },
-    copilotViewStyle:{
+    copilotViewStyle: {
       flex: 1,
       paddingTop: 10,
       backgroundColor: '#fff',

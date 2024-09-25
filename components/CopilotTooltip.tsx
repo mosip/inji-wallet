@@ -8,12 +8,12 @@ import {
   COPILOT_PRE_FINAL_STEP,
   KEY_MANAGEMENT_STEP,
 } from '../shared/constants';
-import { useSettingsScreen } from '../screens/Settings/SettingScreenController';
+import {useSettingsScreen} from '../screens/Settings/SettingScreenController';
 
 export const CopilotTooltip = () => {
   const {t} = useTranslation('copilot');
   const controller = UseCopilotTooltip();
-  const settingsController= useSettingsScreen();
+  const settingsController = useSettingsScreen();
 
   controller.copilotEvents.on('stop', () => {
     controller.SET_TOUR_GUIDE(false);
@@ -29,7 +29,7 @@ export const CopilotTooltip = () => {
     ) {
       controller.INITIAL_DOWNLOAD_DONE();
     }
-    settingsController.BACK()
+    settingsController.BACK();
   });
 
   return (
