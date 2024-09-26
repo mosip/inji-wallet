@@ -12,8 +12,7 @@ import {ScanActions} from './scanActions';
 import {ScanGuards} from './scanGuards';
 import {ScanModel} from './scanModel';
 import {ScanServices} from './scanServices';
-import {openId4VPMachine} from '../../openId4VP/openId4VPMachine';
-import {VCShareFlowType} from '../../../shared/Utils';
+import {openID4VPMachine} from '../../openID4VP/openID4VPMachine';
 
 const model = ScanModel;
 export const ScanEvents = model.events;
@@ -366,7 +365,7 @@ export const scanMachine =
           ],
           invoke: {
             id: 'OpenId4VP',
-            src: openId4VPMachine,
+            src: openID4VPMachine,
             onDone: {},
           },
           on: {

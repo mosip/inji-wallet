@@ -1,16 +1,16 @@
 import {EventFrom} from 'xstate';
-import {openId4VPModel} from './openId4VPModel';
-import {openId4VPServices} from './openId4VPServices';
-import {openId4VPActions} from './openId4VPActions';
+import {openId4VPModel} from './openID4VPModel';
+import {openId4VPServices} from './openID4VPServices';
+import {openId4VPActions} from './openID4VPActions';
 import {AppServices} from '../../shared/GlobalContext';
-import {openId4VPGuards} from './openId4VPGuards';
+import {openId4VPGuards} from './openID4VPGuards';
 import {send, sendParent} from 'xstate/lib/actions';
 
 const model = openId4VPModel;
 
 export const OpenId4VPEvents = model.events;
 
-export const openId4VPMachine = model.createMachine(
+export const openID4VPMachine = model.createMachine(
   {
     predictableActionArguments: true,
     preserveActionOrder: true,
@@ -320,9 +320,9 @@ export const openId4VPMachine = model.createMachine(
   },
 );
 
-export function createOpenId4VPMachine(serviceRefs: AppServices) {
-  return openId4VPMachine.withContext({
-    ...openId4VPMachine.context,
+export function createOpenID4VPMachine(serviceRefs: AppServices) {
+  return openID4VPMachine.withContext({
+    ...openID4VPMachine.context,
     serviceRefs,
   });
 }

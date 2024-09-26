@@ -29,7 +29,7 @@ import {StoreEvents} from '../../store';
 import BluetoothStateManager from 'react-native-bluetooth-state-manager';
 import {NativeModules} from 'react-native';
 import {wallet} from '../../../shared/tuvali';
-import {createOpenId4VPMachine} from '../../openId4VP/openId4VPMachine';
+import {createOpenID4VPMachine} from '../../openID4VP/openID4VPMachine';
 
 const QR_LOGIN_REF_ID = 'QrLogin';
 const OPENID4VP_REF_ID = 'OpenId4VP';
@@ -51,7 +51,7 @@ export const ScanActions = (model: any) => {
     setOpenId4VPRef: assign({
       OpenId4VPRef: (context: any) => {
         const service = spawn(
-          createOpenId4VPMachine(context.serviceRefs),
+          createOpenID4VPMachine(context.serviceRefs),
           OPENID4VP_REF_ID,
         );
         service.subscribe(logState);

@@ -10,8 +10,8 @@ import {
   selectFlowType,
   selectIsSendingVPError,
 } from '../../machines/bleShare/scan/scanSelectors';
-import {selectOpenID4VPRetryCount} from '../../machines/openId4VP/openId4VPSelectors';
-import {OpenId4VPEvents} from '../../machines/openId4VP/openId4VPMachine';
+import {selectOpenID4VPRetryCount} from '../../machines/openID4VP/openID4VPSelectors';
+import {OpenId4VPEvents} from '../../machines/openID4VP/openID4VPMachine';
 import {
   selectAreAllVCsChecked,
   selectCredentials,
@@ -27,7 +27,7 @@ import {
   selectShowConfirmationPopup,
   selectVCsMatchingAuthRequest,
   selectVerifiableCredentialsData,
-} from '../../machines/openId4VP/openId4VPSelectors';
+} from '../../machines/openID4VP/openID4VPSelectors';
 import {selectMyVcs} from '../../machines/QrLogin/QrLoginSelectors';
 import {VCItemMachine} from '../../machines/VerifiableCredential/VCItemMachine/VCItemMachine';
 import {selectShareableVcs} from '../../machines/VerifiableCredential/VCMetaMachine/VCMetaSelectors';

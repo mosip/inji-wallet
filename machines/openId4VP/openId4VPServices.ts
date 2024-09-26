@@ -6,7 +6,7 @@ import {
   OpenID4VP,
   OpenID4VP_Domain,
   OpenID4VP_Proof_Algo_Type,
-} from '../../shared/openId4VP/OpenID4VP';
+} from '../../shared/openID4VP/OpenID4VP';
 
 export const openId4VPServices = () => {
   return {

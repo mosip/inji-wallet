@@ -1,10 +1,10 @@
 import {StateFrom} from 'xstate';
-import {openId4VPMachine} from './openId4VPMachine';
+import {openID4VPMachine} from './openID4VPMachine';
 import {VCMetadata} from '../../shared/VCMetadata';
 import {getMosipLogo} from '../../components/VC/common/VCUtils';
 import {VerifiableCredentialData} from '../VerifiableCredential/VCMetaMachine/vc';
 
-type State = StateFrom<typeof openId4VPMachine>;
+type State = StateFrom<typeof openID4VPMachine>;
 
 export function selectIsGetVCsSatisfyingAuthRequest(state: State) {
   return state.matches('getVCsSatisfyingAuthRequest');

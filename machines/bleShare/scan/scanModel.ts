@@ -9,7 +9,7 @@ import {qrLoginMachine} from '../../QrLogin/QrLoginMachine';
 import {VC} from '../../VerifiableCredential/VCMetaMachine/vc';
 import {ActivityLogType} from '../../activityLog';
 import {BLEError} from '../types';
-import {openId4VPMachine} from '../../openId4VP/openId4VPMachine';
+import {openID4VPMachine} from '../../openID4VP/openID4VPMachine';
 
 const ScanEvents = {
   SELECT_VC: (vc: VC, flowType: string) => ({vc, flowType}),
@@ -78,7 +78,7 @@ export const ScanModel = createModel(
     openId4VpUri: '',
     shareLogType: '' as ActivityLogType,
     QrLoginRef: {} as ActorRefFrom<typeof qrLoginMachine>,
-    OpenId4VPRef: {} as ActorRefFrom<typeof openId4VPMachine>,
+    OpenId4VPRef: {} as ActorRefFrom<typeof openID4VPMachine>,
     showQuickShareSuccessBanner: false,
     linkCode: '',
     quickShareData: {},
