@@ -387,5 +387,5 @@ fileignoreconfig:
   - filename: machines/openId4VP/openId4VPMachine.typegen.ts
     checksum: d6e8fad81a1a9eee6e99c851894edf700a0708a6b764db108304ccf2b395eda5
   - filename: android/app/src/main/java/io/mosip/residentapp/InjiOpenId4VPModule.java
-    checksum: 184f0eab386b4f4014c3e3c7d7bb5d0bd22e2bcc1629d0b1cfc8a286e5a212c1
+    checksum: 6b315164dca5de95c11e0dc8cbb480207b19c312b1c9135adc39ef74a1ff7e35
     version: ""

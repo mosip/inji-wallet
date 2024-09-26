@@ -22,7 +22,6 @@ import {Error} from '../../components/ui/Error';
 import {SvgImage} from '../../components/ui/svg';
 
 export const SendVPScreen: React.FC = () => {
-  console.log('inside sendvp screen::');
   const {t} = useTranslation('SendVPScreen');
   const controller = useSendVPScreen();
 

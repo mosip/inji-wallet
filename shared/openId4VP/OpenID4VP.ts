@@ -9,10 +9,10 @@ export const OpenID4VP_Proof_Algo_Type = 'RsaSignature2018';
 export const OpenID4VP_Domain = 'OpenId4Vp';
 
 export class OpenID4VP {
-  static InjiOpenId4VP = NativeModules.InjiOpenId4VP;
+  static InjiOpenID4VP = NativeModules.InjiOpenID4VP;
 
   static initialize() {
-    OpenID4VP.InjiOpenId4VP.init(__AppId.getValue());
+    OpenID4VP.InjiOpenID4VP.init(__AppId.getValue());
   }
 
   static async authenticateVerifier(
@@ -20,7 +20,7 @@ export class OpenID4VP {
     trustedVerifiersList: any,
   ) {
     const authenticationResponse =
-      await OpenID4VP.InjiOpenId4VP.authenticateVerifier(
+      await OpenID4VP.InjiOpenID4VP.authenticateVerifier(
         encodedAuthorizationRequest,
         trustedVerifiersList,
       );
@@ -38,7 +38,7 @@ export class OpenID4VP {
     });
 
     const vpToken =
-      await OpenID4VP.InjiOpenId4VP.constructVerifiablePresentationToken(
+      await OpenID4VP.InjiOpenID4VP.constructVerifiablePresentationToken(
         updatedSelectedVCs,
       );
     return vpToken;
@@ -47,7 +47,7 @@ export class OpenID4VP {
   static async shareVerifiablePresentation(
     vpResponseMetadata: Record<string, string>,
   ) {
-    return await OpenID4VP.InjiOpenId4VP.shareVerifiablePresentation(
+    return await OpenID4VP.InjiOpenID4VP.shareVerifiablePresentation(
       vpResponseMetadata,
     );
   }

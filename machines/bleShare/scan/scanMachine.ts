@@ -343,11 +343,7 @@ export const scanMachine =
               {
                 target: 'startVPSharing',
                 cond: 'isOnlineSharing',
-                actions: [
-                  () => console.log('online sharing cond met::'),
-                  'setOpenId4VPFlowType',
-                  'setLinkCode',
-                ],
+                actions: ['setOpenId4VPFlowType', 'setLinkCode'],
               },
               {
                 target: 'decodeQuickShareData',

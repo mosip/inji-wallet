@@ -6,11 +6,14 @@ import {StoreEvents} from '../store';
 
 import {VCShareFlowType} from '../../shared/Utils';
 
+// TODO - get this presentation definition list which are alias for scope param
+// from the verifier end point after the endpoint is created and exposed.
+
 let predefinedPresentationDefinitions = {
   sunbird_rc_insurance_vc_ldp: {
     id: 'vp token example',
     purpose:
-      'Philippines Govt is requesting your digital ID for the purpose of Self-Authentication',
+      'Relying party is requesting your digital ID for the purpose of Self-Authentication',
     input_descriptors: [
       {
         id: 'id card credential',
@@ -176,7 +179,7 @@ export const openId4VPActions = (model: any) => {
 
     setError: model.assign({
       error: (_, event) => {
-        console.log('Error:', event.data.message);
+        console.error('Error:', event.data.message);
         return event.data.message;
       },
     }),
