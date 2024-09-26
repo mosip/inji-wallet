@@ -1,30 +1,24 @@
+import {CACHED_API} from '../../shared/api';
 import {fetchKeyPair} from '../../shared/cryptoutil/cryptoUtil';
 import {__AppId} from '../../shared/GlobalVariables';
-import {constructProofJWT, OpenID4VP, OpenID4VP_Domain, OpenID4VP_Proof_Algo_Type} from '../../shared/openId4VP/OpenID4VP';
+import {
+  constructProofJWT,
+  OpenID4VP,
+  OpenID4VP_Domain,
+  OpenID4VP_Proof_Algo_Type,
+} from '../../shared/openId4VP/OpenID4VP';
 
 export const openId4VPServices = () => {
-  const trustedVerifiersList = [
-    {
-      client_id: 'https://injiverify.dev2.mosip.net',
-      response_uri: [
-        'https://injiverify.qa-inji.mosip.net/redirect',
-        'https://injiverify.dev2.mosip.net/redirect',
-      ],
-    },
-    {
-      client_id: 'https://injiverify.dev1.mosip.net',
-      response_uri: [
-        'https://injiverify.qa-inji.mosip.net/redirect',
-        'https://injiverify.dev1.mosip.net/redirect',
-      ],
-    },
-  ];
   return {
+    fetchTrustedVerifiers: async () => {
+      return await CACHED_API.fetchTrustedVerifiersList();
+    },
+
     getAuthenticationResponse: (context: any) => async () => {
       OpenID4VP.initialize();
       const serviceRes = await OpenID4VP.authenticateVerifier(
         context.encodedAuthorizationRequest,
-        trustedVerifiersList,
+        context.trsutedVerifiers,
       );
       return serviceRes;
     },
@@ -57,9 +51,7 @@ export const openId4VPServices = () => {
         publicKey: context.publicKey,
         domain: OpenID4VP_Domain,
       };
-      return await OpenID4VP.shareVerifiablePresentation(
-        vpResponseMetadata,
-      );
+      return await OpenID4VP.shareVerifiablePresentation(vpResponseMetadata);
     },
   };
 };

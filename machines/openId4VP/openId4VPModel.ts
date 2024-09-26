@@ -55,6 +55,13 @@ export const openId4VPModel = createModel(
     flowType: '' as string,
     miniViewSelectedVC: {} as VC,
     openID4VPRetryCount: 0,
+    trsutedVerifiers: [] as VerifierType[],
   },
   {events: openId4VPEvents},
 );
+
+interface VerifierType {
+  client_id: string;
+  redirect_uri: string;
+  response_uri: string;
+}

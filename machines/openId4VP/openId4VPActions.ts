@@ -206,5 +206,9 @@ export const openId4VPActions = (model: any) => {
         return 'vc validation - ' + event.data.message;
       },
     }),
+
+    setTrustedVerifiers: model.assign({
+      trsutedVerifiers: (_: any, event: any) => event.data,
+    }),
   };
 };

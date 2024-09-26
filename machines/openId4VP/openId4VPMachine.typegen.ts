@@ -18,6 +18,11 @@ export interface Typegen0 {
       data: unknown;
       __tip: 'See the XState TS docs to learn how to strongly type this.';
     };
+    'done.invoke.OpenId4VP.getTrustedVerifiersList:invocation[0]': {
+      type: 'done.invoke.OpenId4VP.getTrustedVerifiersList:invocation[0]';
+      data: unknown;
+      __tip: 'See the XState TS docs to learn how to strongly type this.';
+    };
     'done.invoke.OpenId4VP.sendingVP:invocation[0]': {
       type: 'done.invoke.OpenId4VP.sendingVP:invocation[0]';
       data: unknown;
@@ -35,6 +40,10 @@ export interface Typegen0 {
       type: 'error.platform.OpenId4VP.getKeyPairFromKeystore:invocation[0]';
       data: unknown;
     };
+    'error.platform.OpenId4VP.getTrustedVerifiersList:invocation[0]': {
+      type: 'error.platform.OpenId4VP.getTrustedVerifiersList:invocation[0]';
+      data: unknown;
+    };
     'error.platform.OpenId4VP.sendingVP:invocation[0]': {
       type: 'error.platform.OpenId4VP.sendingVP:invocation[0]';
       data: unknown;
@@ -42,6 +51,7 @@ export interface Typegen0 {
     'xstate.init': {type: 'xstate.init'};
   };
   invokeSrcNameMap: {
+    fetchTrustedVerifiers: 'done.invoke.OpenId4VP.getTrustedVerifiersList:invocation[0]';
     getAuthenticationResponse: 'done.invoke.OpenId4VP.authenticateVerifier:invocation[0]';
     getKeyPair: 'done.invoke.OpenId4VP.getKeyPairFromKeystore:invocation[0]';
     getSelectedKey: 'done.invoke.OpenId4VP.checkKeyPair:invocation[0]';
@@ -68,6 +78,7 @@ export interface Typegen0 {
       | 'setSelectedVCs'
       | 'setShareLogTypeUnverified'
       | 'setShowFaceAuthConsent'
+      | 'setTrustedVerifiers'
       | 'storeShowFaceAuthConsent'
       | 'updateShowFaceAuthConsent';
     delays: never;
@@ -79,6 +90,7 @@ export interface Typegen0 {
       | 'isSimpleOpenID4VPShare'
       | 'showFaceAuthConsentScreen';
     services:
+      | 'fetchTrustedVerifiers'
       | 'getAuthenticationResponse'
       | 'getKeyPair'
       | 'getSelectedKey'
@@ -100,6 +112,7 @@ export interface Typegen0 {
     setError:
       | 'error.platform.OpenId4VP.checkKeyPair:invocation[0]'
       | 'error.platform.OpenId4VP.getKeyPairFromKeystore:invocation[0]'
+      | 'error.platform.OpenId4VP.getTrustedVerifiersList:invocation[0]'
       | 'error.platform.OpenId4VP.sendingVP:invocation[0]';
     setFlowType: 'AUTHENTICATE';
     setIsShareWithSelfie: 'AUTHENTICATE';
@@ -107,6 +120,7 @@ export interface Typegen0 {
     setSelectedVCs: 'ACCEPT_REQUEST' | 'VERIFY_AND_ACCEPT_REQUEST';
     setShareLogTypeUnverified: 'ACCEPT_REQUEST';
     setShowFaceAuthConsent: 'FACE_VERIFICATION_CONSENT';
+    setTrustedVerifiers: 'done.invoke.OpenId4VP.getTrustedVerifiersList:invocation[0]';
     storeShowFaceAuthConsent: 'FACE_VERIFICATION_CONSENT';
     updateShowFaceAuthConsent: 'STORE_RESPONSE';
   };
@@ -128,8 +142,9 @@ export interface Typegen0 {
     showFaceAuthConsentScreen: 'CONFIRM';
   };
   eventsCausingServices: {
+    fetchTrustedVerifiers: 'STORE_RESPONSE';
     getAuthenticationResponse: 'done.invoke.OpenId4VP.checkKeyPair:invocation[0]';
-    getKeyPair: 'STORE_RESPONSE';
+    getKeyPair: 'done.invoke.OpenId4VP.getTrustedVerifiersList:invocation[0]';
     getSelectedKey:
       | 'FACE_VALID'
       | 'done.invoke.OpenId4VP.getKeyPairFromKeystore:invocation[0]';
@@ -144,6 +159,7 @@ export interface Typegen0 {
     | 'faceVerificationConsent'
     | 'getConsentForVPSharing'
     | 'getKeyPairFromKeystore'
+    | 'getTrustedVerifiersList'
     | 'getVCsSatisfyingAuthRequest'
     | 'invalidIdentity'
     | 'selectingVCs'

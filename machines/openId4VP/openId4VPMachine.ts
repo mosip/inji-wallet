@@ -41,7 +41,19 @@ export const openId4VPMachine = model.createMachine(
         on: {
           STORE_RESPONSE: {
             actions: 'updateShowFaceAuthConsent',
+            target: 'getTrustedVerifiersList',
+          },
+        },
+      },
+      getTrustedVerifiersList: {
+        invoke: {
+          src: 'fetchTrustedVerifiers',
+          onDone: {
+            actions: 'setTrustedVerifiers',
             target: 'getKeyPairFromKeystore',
+          },
+          onError: {
+            actions: 'setError',
           },
         },
       },

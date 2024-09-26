@@ -82,7 +82,7 @@ fileignoreconfig:
   - filename: screens/Settings/BackupViaPassword.tsx
     checksum: d2a355356bcaf8f7ef3b53ba93710cec15fefd0fdf31efd779eebd2bfab61c19
   - filename: shared/api.ts
-    checksum: d25e11ca0d526233a8d490f1eae360e33fc1475b76e32cf29170de5d6362f5b8
+    checksum: 05165e469008816a441126f8eed69d54c137d39c3c66e695f8710e8d33a9b038
   - filename: machines/backupWithEncryption.ts
     checksum: 038c12d30b2312fcbd9230a1c6ddb494d2e561fe0d09741335fa80ab67e2c550
   - filename: machines/backupWithEncryption.typegen.ts
@@ -385,7 +385,7 @@ fileignoreconfig:
   - filename: machines/Issuers/IssuersModel.ts
     checksum: fe4084d1f5dbf89e71cc3fbe9f845d3f2c9bb32901bd5b95a8addcb13257b414
   - filename: machines/openId4VP/openId4VPMachine.typegen.ts
-    checksum: d6e8fad81a1a9eee6e99c851894edf700a0708a6b764db108304ccf2b395eda5
+    checksum: 30177efba33fbe13c1821ff5738efb68b1858b4ffce0b293c4879cdc155a1324
   - filename: android/app/src/main/java/io/mosip/residentapp/InjiOpenId4VPModule.java
     checksum: 6b315164dca5de95c11e0dc8cbb480207b19c312b1c9135adc39ef74a1ff7e35
     version: ""

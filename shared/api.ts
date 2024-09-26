@@ -19,7 +19,7 @@ import {TelemetryConstants} from './telemetry/TelemetryConstants';
 export const API_URLS: ApiUrls = {
   trustedVerifiersList: {
     method: 'GET',
-    buildURL: (): `/${string}` => '/v1/mimoto/trustedVerifiers',
+    buildURL: (): `/${string}` => '/v1/mimoto/verifiers',
   },
   issuersList: {
     method: 'GET',
@@ -141,6 +141,12 @@ export const API = {
 };
 
 export const CACHED_API = {
+  fetchTrustedVerifiersList: () =>
+    generateCacheAPIFunction({
+      cacheKey: API_CACHED_STORAGE_KEYS.fetchTrustedVerifiers,
+      fetchCall: API.fetchTrustedVerifiersList,
+    }),
+
   fetchIssuers: () =>
     generateCacheAPIFunction({
       cacheKey: API_CACHED_STORAGE_KEYS.fetchIssuers,
