@@ -1,7 +1,7 @@
 #import <Foundation/Foundation.h>
 #import "React/RCTBridgeModule.h"
 
-@interface RCT_EXTERN_MODULE(InjiOpenId4VP, NSObject)
+@interface RCT_EXTERN_MODULE(InjiOpenID4VP, NSObject)
 
 RCT_EXTERN_METHOD(init:(NSString *)appId)
 

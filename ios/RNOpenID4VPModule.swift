@@ -1,19 +1,19 @@
 import Foundation
-import OpenId4VP
+import OpenID4VP
 import React
 
-@objc(InjiOpenId4VP)
+@objc(InjiOpenID4VP)
 class RNOpenId4VpModule: NSObject, RCTBridgeModule {
   
-  private var openId4Vp: OpenId4VP?
+  private var openID4VP: OpenID4VP?
   
   static func moduleName() -> String {
-    return "InjiOpenId4VP"
+    return "InjiOpenID4VP"
   }
   
   @objc
   func `init`(_ traceabilityId: String) {
-    openId4Vp = OpenId4VP(traceabilityId: traceabilityId)
+    openID4VP = OpenID4VP(traceabilityId: traceabilityId)
   }
   
   @objc
@@ -36,7 +36,7 @@ class RNOpenId4VpModule: NSObject, RCTBridgeModule {
               return Verifier(clientId: clientId, redirectUri: redirectUri)
           }
         
-        let authenticationResponse: AuthenticationResponse = try await openId4Vp!.authenticateVerifier(encodedAuthorizationRequest: encodedAuthorizationRequest, trustedVerifierJSON: trustedVerifiersList)
+        let authenticationResponse: AuthenticationResponse = try await openID4VP!.authenticateVerifier(encodedAuthorizationRequest: encodedAuthorizationRequest, trustedVerifierJSON: trustedVerifiersList)
         let response = try toJsonString(authenticationResponse.response)
         resolve(response)
       } catch {
@@ -54,7 +54,7 @@ class RNOpenId4VpModule: NSObject, RCTBridgeModule {
           return
         }
         
-      let response = try await openId4Vp?.constructVerifiablePresentationToken(credentialsMap: credentialsMap)
+      let response = try await openID4VP?.constructVerifiablePresentationToken(credentialsMap: credentialsMap)
         resolve(response)
         
       } catch {
@@ -83,7 +83,7 @@ class RNOpenId4VpModule: NSObject, RCTBridgeModule {
         
         let vpResponseMeta = VPResponseMetadata(jws: jws, signatureAlgorithm: signatureAlgorithm, publicKey: publicKey, domain: domain)
         
-        let response = try await openId4Vp?.shareVerifiablePresentation(vpResponseMetadata: vpResponseMeta)
+        let response = try await openID4VP?.shareVerifiablePresentation(vpResponseMetadata: vpResponseMeta)
         
         resolve(response)
       } catch {
