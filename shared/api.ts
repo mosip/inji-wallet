@@ -30,7 +30,7 @@ export const API_URLS: ApiUrls = {
   issuerWellknownConfig: {
     method: 'GET',
     buildURL: (issuerId: string): `/${string}` =>
-      `/v1/mimoto/issuers/${issuerId}/.well-known`,
+      `/v1/mimoto/issuers/${issuerId}/well-known-proxy`,
   },
   allProperties: {
     method: 'GET',
