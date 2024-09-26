@@ -4,9 +4,9 @@ import {VC} from '../../machines/VerifiableCredential/VCMetaMachine/vc';
 import {getJWT} from '../cryptoutil/cryptoUtil';
 import {getJWK} from '../openId4VCI/Utils';
 
-export const OpenID4VP_Key_Ref = 'OpenId4VP_KeyPair';
+export const OpenID4VP_Key_Ref = 'OpenID4VP_KeyPair';
 export const OpenID4VP_Proof_Algo_Type = 'RsaSignature2018';
-export const OpenID4VP_Domain = 'OpenId4Vp';
+export const OpenID4VP_Domain = 'OpenID4VP';
 
 export class OpenID4VP {
   static InjiOpenID4VP = NativeModules.InjiOpenID4VP;

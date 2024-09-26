@@ -1,6 +1,5 @@
 import {CACHED_API} from '../../shared/api';
 import {fetchKeyPair} from '../../shared/cryptoutil/cryptoUtil';
-import {__AppId} from '../../shared/GlobalVariables';
 import {
   constructProofJWT,
   OpenID4VP,
@@ -8,7 +7,7 @@ import {
   OpenID4VP_Proof_Algo_Type,
 } from '../../shared/openID4VP/OpenID4VP';
 
-export const openId4VPServices = () => {
+export const openID4VPServices = () => {
   return {
     fetchTrustedVerifiers: async () => {
       return await CACHED_API.fetchTrustedVerifiersList();

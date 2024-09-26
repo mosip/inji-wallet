@@ -1,14 +1,14 @@
 import {EventFrom} from 'xstate';
-import {openId4VPModel} from './openID4VPModel';
-import {openId4VPServices} from './openID4VPServices';
-import {openId4VPActions} from './openID4VPActions';
+import {openID4VPModel} from './openID4VPModel';
+import {openID4VPServices} from './openID4VPServices';
+import {openID4VPActions} from './openID4VPActions';
 import {AppServices} from '../../shared/GlobalContext';
-import {openId4VPGuards} from './openID4VPGuards';
+import {openID4VPGuards} from './openID4VPGuards';
 import {send, sendParent} from 'xstate/lib/actions';
 
-const model = openId4VPModel;
+const model = openID4VPModel;
 
-export const OpenId4VPEvents = model.events;
+export const OpenID4VPEvents = model.events;
 
 export const openID4VPMachine = model.createMachine(
   {
@@ -19,7 +19,7 @@ export const openID4VPMachine = model.createMachine(
       context: model.initialContext,
       events: {} as EventFrom<typeof model>,
     },
-    id: 'OpenId4VP',
+    id: 'OpenID4VP',
     initial: 'waitingForData',
 
     states: {
@@ -53,7 +53,7 @@ export const openID4VPMachine = model.createMachine(
             target: 'getKeyPairFromKeystore',
           },
           onError: {
-            actions: 'setError',
+            actions: 'setTrustedVerifiersApiCallError',
           },
         },
       },
@@ -311,9 +311,9 @@ export const openID4VPMachine = model.createMachine(
     },
   },
   {
-    actions: openId4VPActions(model),
-    services: openId4VPServices(),
-    guards: openId4VPGuards(),
+    actions: openID4VPActions(model),
+    services: openID4VPServices(),
+    guards: openID4VPGuards(),
     delays: {
       SHARING_TIMEOUT: 15 * 1000,
     },

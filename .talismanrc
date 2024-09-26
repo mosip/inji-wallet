@@ -388,4 +388,6 @@ fileignoreconfig:
     checksum: 30177efba33fbe13c1821ff5738efb68b1858b4ffce0b293c4879cdc155a1324
   - filename: android/app/src/main/java/io/mosip/residentapp/InjiOpenId4VPModule.java
     checksum: 6b315164dca5de95c11e0dc8cbb480207b19c312b1c9135adc39ef74a1ff7e35
+  - filename: screens/Scan/SendVPScreenController.ts
+    checksum: f898ac7f1ecfa1df17e33b327d675f57debf2d5bd56052fc047dd03577354590
     version: ""

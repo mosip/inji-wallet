@@ -32,7 +32,7 @@ import {wallet} from '../../../shared/tuvali';
 import {createOpenID4VPMachine} from '../../openID4VP/openID4VPMachine';
 
 const QR_LOGIN_REF_ID = 'QrLogin';
-const OPENID4VP_REF_ID = 'OpenId4VP';
+const OPENID4VP_REF_ID = 'OpenID4VP';
 
 export const ScanActions = (model: any) => {
   const {RNPixelpassModule} = NativeModules;

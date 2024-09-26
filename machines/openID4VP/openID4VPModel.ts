@@ -2,7 +2,7 @@ import {createModel} from 'xstate/lib/model';
 import {AppServices} from '../../shared/GlobalContext';
 import {VC} from '../VerifiableCredential/VCMetaMachine/vc';
 import {KeyTypes} from '../../shared/cryptoutil/KeyTypes';
-const openId4VPEvents = {
+const openID4VPEvents = {
   AUTHENTICATE: (
     encodedAuthRequest: string,
     flowType: string,
@@ -37,7 +37,7 @@ const openId4VPEvents = {
   RESET_RETRY_COUNT: () => ({}),
 };
 
-export const openId4VPModel = createModel(
+export const openID4VPModel = createModel(
   {
     serviceRefs: {} as AppServices,
     encodedAuthorizationRequest: '' as string,
@@ -57,7 +57,7 @@ export const openId4VPModel = createModel(
     openID4VPRetryCount: 0,
     trsutedVerifiers: [] as VerifierType[],
   },
-  {events: openId4VPEvents},
+  {events: openID4VPEvents},
 );
 
 interface VerifierType {

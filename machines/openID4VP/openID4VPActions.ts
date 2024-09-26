@@ -33,7 +33,7 @@ let predefinedPresentationDefinitions = {
   },
 };
 
-export const openId4VPActions = (model: any) => {
+export const openID4VPActions = (model: any) => {
   return {
     setAuthenticationResponse: model.assign({
       authenticationResponse: (_, event) => event.data,
@@ -204,6 +204,13 @@ export const openId4VPActions = (model: any) => {
       error: (_, event) => {
         console.error('Error:', event.data.message);
         return 'vc validation - ' + event.data.message;
+      },
+    }),
+
+    setTrustedVerifiersApiCallError: model.assign({
+      error: (_, event) => {
+        console.error('Error:', event.data.message);
+        return 'api error - ' + event.data.message;
       },
     }),
 

@@ -11,7 +11,7 @@ import {
   selectIsSendingVPError,
 } from '../../machines/bleShare/scan/scanSelectors';
 import {selectOpenID4VPRetryCount} from '../../machines/openID4VP/openID4VPSelectors';
-import {OpenId4VPEvents} from '../../machines/openID4VP/openID4VPMachine';
+import {OpenID4VPEvents} from '../../machines/openID4VP/openID4VPMachine';
 import {
   selectAreAllVCsChecked,
   selectCredentials,
@@ -52,7 +52,7 @@ export function useSendVPScreen() {
   const scanService = appService.children.get('scan')!!;
   const vcMetaService = appService.children.get('vcMeta')!!;
   const navigation = useNavigation<MyVcsTabNavigation>();
-  const openId4VPService = scanService.getSnapshot().context.OpenId4VPRef;
+  const openID4VPService = scanService.getSnapshot().context.OpenId4VPRef;
   const [selectedVCKeys, setSelectedVCKeys] = useState<Record<string, string>>(
     {},
   );
@@ -61,20 +61,20 @@ export function useSendVPScreen() {
   const myVcs = useSelector(vcMetaService, selectMyVcs);
 
   const isGetVCsSatisfyingAuthRequest = useSelector(
-    openId4VPService,
+    openID4VPService,
     selectIsGetVCsSatisfyingAuthRequest,
   );
 
   if (isGetVCsSatisfyingAuthRequest) {
-    openId4VPService.send('DOWNLOADED_VCS', {vcs: shareableVcs});
+    openID4VPService.send('DOWNLOADED_VCS', {vcs: shareableVcs});
   }
 
   const areAllVCsChecked = useSelector(
-    openId4VPService,
+    openID4VPService,
     selectAreAllVCsChecked,
   );
   const vcsMatchingAuthRequest = useSelector(
-    openId4VPService,
+    openID4VPService,
     selectVCsMatchingAuthRequest,
   );
   const checkIfAnyMatchingVCHasImage = () => {
@@ -94,22 +94,22 @@ export function useSendVPScreen() {
     return selectedVcsData;
   };
 
-  const isSendingVP = useSelector(openId4VPService, selectIsSharingVP);
+  const isSendingVP = useSelector(openID4VPService, selectIsSharingVP);
   const showConfirmationPopup = useSelector(
-    openId4VPService,
+    openID4VPService,
     selectShowConfirmationPopup,
   );
-  const isSelectingVCs = useSelector(openId4VPService, selectIsSelectingVcs);
-  const error = useSelector(openId4VPService, selectIsError);
+  const isSelectingVCs = useSelector(openID4VPService, selectIsSelectingVcs);
+  const error = useSelector(openID4VPService, selectIsError);
   const isVPSharingConsent = useSelector(
-    openId4VPService,
+    openID4VPService,
     selectIsGetVPSharingConsent,
   );
-  const CONFIRM = () => openId4VPService.send(OpenId4VPEvents.CONFIRM());
+  const CONFIRM = () => openID4VPService.send(OpenID4VPEvents.CONFIRM());
 
-  const CANCEL = () => openId4VPService.send(OpenId4VPEvents.CANCEL());
+  const CANCEL = () => openID4VPService.send(OpenID4VPEvents.CANCEL());
 
-  const GO_BACK = () => openId4VPService.send(OpenId4VPEvents.GO_BACK());
+  const GO_BACK = () => openID4VPService.send(OpenID4VPEvents.GO_BACK());
 
   let errorModal = {
     show: false,
@@ -122,7 +122,10 @@ export function useSendVPScreen() {
     errorModal.show = true;
     errorModal.title = t('errors.noMatchingCredentials.title');
     errorModal.message = t('errors.noMatchingCredentials.message');
-  } else if (error.includes('Verifier authentication was unsuccessful')) {
+  } else if (
+    error.includes('Verifier authentication was unsuccessful') ||
+    error.startsWith('api error')
+  ) {
     errorModal.show = true;
     errorModal.title = t('errors.invalidVerifier.title');
     errorModal.message = t('errors.invalidVerifier.message');
@@ -177,7 +180,7 @@ export function useSendVPScreen() {
   return {
     showError: useSelector(scanService, selectIsSendingVPError),
     isSendingVP,
-    flowType: useSelector(openId4VPService, selectFlowType),
+    flowType: useSelector(openID4VPService, selectFlowType),
     showConfirmationPopup,
     isSelectingVCs,
     checkIfAnyMatchingVCHasImage,
@@ -188,31 +191,31 @@ export function useSendVPScreen() {
     areAllVCsChecked,
     selectedVCKeys,
     isVerifyingIdentity: useSelector(
-      openId4VPService,
+      openID4VPService,
       selectIsVerifyingIdentity,
     ),
-    purpose: useSelector(openId4VPService, selectPurpose),
-    isInvalidIdentity: useSelector(openId4VPService, selectIsInvalidIdentity),
+    purpose: useSelector(openID4VPService, selectPurpose),
+    isInvalidIdentity: useSelector(openID4VPService, selectIsInvalidIdentity),
     isCancelling: useSelector(scanService, selectIsCancelling),
     isFaceVerificationConsent: useSelector(
-      openId4VPService,
+      openID4VPService,
       selectIsFaceVerificationConsent,
     ),
-    credentials: useSelector(openId4VPService, selectCredentials),
+    credentials: useSelector(openID4VPService, selectCredentials),
     verifiableCredentialsData: useSelector(
-      openId4VPService,
+      openID4VPService,
       selectVerifiableCredentialsData,
     ),
     FACE_VERIFICATION_CONSENT: (isDoNotAskAgainChecked: boolean) =>
-      openId4VPService.send(
-        OpenId4VPEvents.FACE_VERIFICATION_CONSENT(isDoNotAskAgainChecked),
+      openID4VPService.send(
+        OpenID4VPEvents.FACE_VERIFICATION_CONSENT(isDoNotAskAgainChecked),
       ),
     DISMISS: () => scanService.send(ScanEvents.DISMISS()),
-    RETRY: () => openId4VPService.send(OpenId4VPEvents.RETRY()),
-    FACE_VALID: () => openId4VPService.send(OpenId4VPEvents.FACE_VALID()),
-    FACE_INVALID: () => openId4VPService.send(OpenId4VPEvents.FACE_INVALID()),
+    RETRY: () => openID4VPService.send(OpenID4VPEvents.RETRY()),
+    FACE_VALID: () => openID4VPService.send(OpenID4VPEvents.FACE_VALID()),
+    FACE_INVALID: () => openID4VPService.send(OpenID4VPEvents.FACE_INVALID()),
     RETRY_VERIFICATION: () =>
-      openId4VPService.send(OpenId4VPEvents.RETRY_VERIFICATION()),
+      openID4VPService.send(OpenID4VPEvents.RETRY_VERIFICATION()),
     GO_TO_HOME: () => {
       navigation.navigate(BOTTOM_TAB_ROUTES.home, {screen: 'HomeScreen'});
       changeTabBarVisible('flex');
@@ -250,20 +253,20 @@ export function useSendVPScreen() {
     },
 
     ACCEPT_REQUEST: () => {
-      openId4VPService.send(OpenId4VPEvents.ACCEPT_REQUEST(getSelectedVCs()));
+      openID4VPService.send(OpenID4VPEvents.ACCEPT_REQUEST(getSelectedVCs()));
     },
 
     VERIFY_AND_ACCEPT_REQUEST: () => {
-      openId4VPService.send(
-        OpenId4VPEvents.VERIFY_AND_ACCEPT_REQUEST(getSelectedVCs()),
+      openID4VPService.send(
+        OpenID4VPEvents.VERIFY_AND_ACCEPT_REQUEST(getSelectedVCs()),
       );
     },
     CANCEL,
     openID4VPRetryCount: useSelector(
-      openId4VPService,
+      openID4VPService,
       selectOpenID4VPRetryCount,
     ),
     RESET_RETRY_COUNT: () =>
-      openId4VPService.send(OpenId4VPEvents.RESET_RETRY_COUNT()),
+      openID4VPService.send(OpenID4VPEvents.RESET_RETRY_COUNT()),
   };
 }

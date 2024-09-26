@@ -1,6 +1,6 @@
 import {VCShareFlowType} from '../../shared/Utils';
 
-export const openId4VPGuards = () => {
+export const openID4VPGuards = () => {
   return {
     showFaceAuthConsentScreen: (context, event) => {
       return context.showFaceAuthConsent && context.isShareWithSelfie;
