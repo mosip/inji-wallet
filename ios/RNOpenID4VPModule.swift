@@ -13,7 +13,7 @@ class RNOpenId4VpModule: NSObject, RCTBridgeModule {
   
   @objc
   func `init`(_ appId: String) {
-    openId4Vp = OpenId4VP(traceabilityId: appId)
+    openID4VP = OpenID4VP(traceabilityId: appId)
   }
   
   @objc

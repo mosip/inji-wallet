@@ -55,7 +55,7 @@ export const openID4VPModel = createModel(
     flowType: '' as string,
     miniViewSelectedVC: {} as VC,
     openID4VPRetryCount: 0,
-    trsutedVerifiers: [] as VerifierType[],
+    trustedVerifiers: [] as VerifierType[],
   },
   {events: openID4VPEvents},
 );
