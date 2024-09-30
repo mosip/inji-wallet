@@ -35,7 +35,7 @@ import {
 } from './VerifiableCredential/VCMetaMachine/VCMetaMachine';
 import {
   checkAllKeyPairs,
-  generateKeyPairsAndStore,
+  generateKeyPairsAndStoreOrder,
 } from '../shared/cryptoutil/cryptoUtil';
 
 const QrLoginIntent = NativeModules.QrLoginIntent;
@@ -139,7 +139,7 @@ export const appMachine = model.createMachine(
           },
           generateKeyPairs: {
             invoke: {
-              src: 'generateKeyPairsAndStore',
+              src: 'generateKeyPairsAndStoreOrder',
               onDone: [
                 {
                   target: 'checkKeyPairs',
@@ -467,8 +467,8 @@ export const appMachine = model.createMachine(
         return await checkAllKeyPairs();
       },
 
-      generateKeyPairsAndStore: async () => {
-        return await generateKeyPairsAndStore();
+      generateKeyPairsAndStoreOrder: async () => {
+        return await generateKeyPairsAndStoreOrder();
       },
       checkNetworkState: () => callback => {
         return NetInfo.addEventListener(state => {
