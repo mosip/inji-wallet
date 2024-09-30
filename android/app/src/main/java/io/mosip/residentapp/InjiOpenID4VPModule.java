@@ -110,10 +110,10 @@ public class InjiOpenID4VPModule extends ReactContextBaseJavaModule {
         for (int i = 0; i < readableArray.size(); i++) {
             ReadableMap verifierMap = readableArray.getMap(i);
             String clientId = verifierMap.getString("client_id");
-            ReadableArray responseUri = verifierMap.getArray("response_uri");
+            ReadableArray responseUris = verifierMap.getArray("response_uris");
             List<String> responseUriList = new ArrayList<>();
-            for (int j = 0; j < responseUri.size(); j++) {
-                responseUriList.add(responseUri.getString(j));
+            for (int j = 0; j < responseUris.size(); j++) {
+                responseUriList.add(responseUris.getString(j));
             }
             trustedVerifiersList.add(new Verifier(clientId, responseUriList));
         }
