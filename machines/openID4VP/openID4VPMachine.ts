@@ -14,7 +14,7 @@ export const openID4VPMachine = model.createMachine(
   {
     predictableActionArguments: true,
     preserveActionOrder: true,
-    tsTypes: {} as import('./openId4VPMachine.typegen').Typegen0,
+    tsTypes: {} as import('./openID4VPMachine.typegen').Typegen0,
     schema: {
       context: model.initialContext,
       events: {} as EventFrom<typeof model>,
@@ -41,7 +41,7 @@ export const openID4VPMachine = model.createMachine(
         on: {
           STORE_RESPONSE: {
             actions: 'updateShowFaceAuthConsent',
-            target: 'getTrustedVerifiersList',
+            target: 'getKeyPairFromKeystore',
           },
         },
       },

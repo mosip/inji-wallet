@@ -384,10 +384,10 @@ fileignoreconfig:
     checksum: 98784857098e15aca851c6eb79e48016887408ff84bb82afafdc03b38ab2e338
   - filename: machines/Issuers/IssuersModel.ts
     checksum: fe4084d1f5dbf89e71cc3fbe9f845d3f2c9bb32901bd5b95a8addcb13257b414
-  - filename: machines/openId4VP/openId4VPMachine.typegen.ts
-    checksum: 30177efba33fbe13c1821ff5738efb68b1858b4ffce0b293c4879cdc155a1324
   - filename: android/app/src/main/java/io/mosip/residentapp/InjiOpenId4VPModule.java
     checksum: 6b315164dca5de95c11e0dc8cbb480207b19c312b1c9135adc39ef74a1ff7e35
   - filename: screens/Scan/SendVPScreenController.ts
     checksum: f898ac7f1ecfa1df17e33b327d675f57debf2d5bd56052fc047dd03577354590
+  - filename: machines/openID4VP/openID4VPMachine.typegen.ts
+    checksum: ca37886fc3398c0637c708c73899ced5eb1e5ecaf79e5e2066498f5ee153511e
     version: ""
