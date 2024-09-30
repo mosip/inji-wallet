@@ -41,7 +41,7 @@ export const openID4VPMachine = model.createMachine(
         on: {
           STORE_RESPONSE: {
             actions: 'updateShowFaceAuthConsent',
-            target: 'getKeyPairFromKeystore',
+            target: 'getTrustedVerifiersList',
           },
         },
       },
