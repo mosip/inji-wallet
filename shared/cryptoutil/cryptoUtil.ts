@@ -4,6 +4,7 @@ import jose from 'node-jose';
 import {
   BIOMETRIC_CANCELLED,
   DEBUG_MODE_ENABLED,
+  SUPPORTED_KEY_TYPES,
   isAndroid,
   isIOS,
 } from '../constants';
@@ -127,12 +128,21 @@ export async function checkAllKeyPairs() {
     throw Error('Keys not present');
 }
 
-export async function generateKeyPairsAndStore() {
+export async function generateKeyPairsAndStoreOrder() {
   const {RNSecureKeystoreModule} = NativeModules;
   const RSAKeyPair = await generateKeyPair(KeyTypes.RS256);
   const ECR1KeyPair = await generateKeyPair(KeyTypes.ES256);
   const ECK1KeyPair = await generateKeyPair(KeyTypes.ES256K);
   //const EDKeyPair = generateKeyPair(KeyTypes.ED25519);
+  const keys = Object.entries(SUPPORTED_KEY_TYPES).map(([label, value]) => ({
+    label,
+    value,
+  }));
+  const keyOrderMap = convertToKeyValue(keys);
+  await RNSecureKeystoreModule.storeData(
+    'keyPreference',
+    JSON.stringify(keyOrderMap),
+  );
   await RNSecureKeystoreModule.storeGenericKey(
     ECK1KeyPair.publicKey,
     ECK1KeyPair.privateKey,
@@ -441,3 +451,10 @@ export async function fetchKeyPair(keyType: any) {
     };
   }
 }
+ const convertToKeyValue = items => {
+    const result = {};
+    items.forEach((item, index) => {
+      result[index] = item.value;
+    });
+    return result;
+  };
