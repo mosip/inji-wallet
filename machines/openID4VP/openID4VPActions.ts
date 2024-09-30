@@ -9,30 +9,6 @@ import {VCShareFlowType} from '../../shared/Utils';
 // TODO - get this presentation definition list which are alias for scope param
 // from the verifier end point after the endpoint is created and exposed.
 
-let predefinedPresentationDefinitions = {
-  sunbird_rc_insurance_vc_ldp: {
-    id: 'vp token example',
-    purpose:
-      'Relying party is requesting your digital ID for the purpose of Self-Authentication',
-    input_descriptors: [
-      {
-        id: 'id card credential',
-        constraints: {
-          fields: [
-            {
-              path: ['$.type'],
-              filter: {
-                type: 'string',
-                pattern: 'InsuranceCredential',
-              },
-            },
-          ],
-        },
-      },
-    ],
-  },
-};
-
 export const openID4VPActions = (model: any) => {
   return {
     setAuthenticationResponse: model.assign({
@@ -57,9 +33,6 @@ export const openID4VPActions = (model: any) => {
           presentationDefinition = JSON.parse(
             response['presentation_definition'],
           );
-        } else if ('scope' in response) {
-          presentationDefinition =
-            predefinedPresentationDefinitions[response.scope];
         }
         vcs.forEach(vc => {
           presentationDefinition['input_descriptors'].forEach(
@@ -107,8 +80,6 @@ export const openID4VPActions = (model: any) => {
         if ('presentation_definition' in response) {
           const pd = JSON.parse(response['presentation_definition']);
           return pd.purpose ?? '';
-        } else if ('scope' in response) {
-          return predefinedPresentationDefinitions[response.scope].purpose;
         }
       },
     }),
