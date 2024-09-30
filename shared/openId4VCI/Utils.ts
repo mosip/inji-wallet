@@ -105,7 +105,6 @@ export const updateCredentialInformation = (
     vcMetadata:
       {...context.vcMetadata, format: context.selectedCredentialType.format} ||
       {},
-    scope: context.selectedCredentialType.scope,
   };
 };
 

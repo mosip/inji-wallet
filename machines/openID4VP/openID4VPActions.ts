@@ -49,9 +49,6 @@ export const openID4VPActions = (model: any) => {
 
                   if (
                     path === undefined ||
-                    (pathSegments[pathSegments.length - 1] === 'type' &&
-                      (field.filter?.type !== typeof pathData[1] ||
-                        !pathData[1].includes(field.filter?.pattern))) ||
                     (pathSegments[pathSegments.length - 1] !== 'type' &&
                       (field.filter?.type !== typeof pathData ||
                         !pathData.includes(field.filter?.pattern)))
