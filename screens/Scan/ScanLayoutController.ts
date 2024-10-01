@@ -266,7 +266,10 @@ export function useScanLayout() {
   const isQrLoginDone = useSelector(scanService, selectIsQrLoginDone);
 
   useEffect(() => {
-    if (isDone) {
+    if (linkCode != '' && isScanning) {
+      scanService.send(ScanEvents.QRLOGIN_VIA_DEEP_LINK(linkCode));
+      appService.send(APP_EVENTS.RESET_LINKCODE());
+    } else if (isDone) {
       changeTabBarVisible('flex');
       navigation.navigate(BOTTOM_TAB_ROUTES.home);
     } else if (isQrLoginViaDeepLink) {
@@ -295,6 +298,7 @@ export function useScanLayout() {
     flowType,
     isAccepted,
     isQrLoginViaDeepLink,
+    linkCode,
   ]);
 
   return {
