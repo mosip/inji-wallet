@@ -49,7 +49,7 @@ export const IssuersGuards = () => {
       event.data instanceof BiometricCancellationError,
     isGenericError: (_: any, event: any) => {
       const errorMessage = event.data.message;
-      return !errorMessage.includes(NETWORK_REQUEST_FAILED);
+      return errorMessage === ErrorMessage.GENERIC;
     },
   };
 };
