@@ -95,6 +95,7 @@ export const openID4VPMachine = model.createMachine(
           },
           onError: {
             actions: 'setAuthenticationError',
+            target: 'showError',
           },
         },
       },
@@ -138,6 +139,7 @@ export const openID4VPMachine = model.createMachine(
                   error: () => 'credential mismatch detected',
                 }),
               ],
+              target: 'showError',
             },
           ],
         },
@@ -231,6 +233,7 @@ export const openID4VPMachine = model.createMachine(
               actions: model.assign({
                 error: () => 'none of the selected VC has image',
               }),
+              target: 'showError',
             },
           ],
         },
@@ -304,6 +307,9 @@ export const openID4VPMachine = model.createMachine(
           },
           RESET_RETRY_COUNT: {
             actions: 'resetOpenID4VPRetryCount',
+          },
+          RESET_ERROR: {
+            actions: 'resetError',
           },
         },
       },

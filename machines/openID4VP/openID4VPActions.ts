@@ -152,6 +152,10 @@ export const openID4VPActions = (model: any) => {
       },
     }),
 
+    resetError: model.assign({
+      error: () => '',
+    }),
+
     loadKeyPair: assign({
       publicKey: (_, event: any) => event.data?.publicKey as string,
       privateKey: (context: any, event: any) =>

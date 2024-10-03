@@ -35,6 +35,7 @@ const openID4VPEvents = {
   CHECK_FOR_IMAGE: () => ({}),
   RETRY: () => ({}),
   RESET_RETRY_COUNT: () => ({}),
+  RESET_ERROR: () => ({}),
 };
 
 export const openID4VPModel = createModel(

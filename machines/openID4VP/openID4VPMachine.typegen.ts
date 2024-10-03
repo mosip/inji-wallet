@@ -66,6 +66,7 @@ export interface Typegen0 {
       | 'incrementOpenID4VPRetryCount'
       | 'loadKeyPair'
       | 'logFailedVerification'
+      | 'resetError'
       | 'resetFaceCaptureBannerStatus'
       | 'resetOpenID4VPRetryCount'
       | 'setAuthenticationError'
@@ -105,6 +106,7 @@ export interface Typegen0 {
     incrementOpenID4VPRetryCount: 'RETRY';
     loadKeyPair: 'done.invoke.OpenID4VP.getKeyPairFromKeystore:invocation[0]';
     logFailedVerification: 'FACE_INVALID';
+    resetError: 'RESET_ERROR';
     resetFaceCaptureBannerStatus: 'ACCEPT_REQUEST';
     resetOpenID4VPRetryCount: 'RESET_RETRY_COUNT';
     setAuthenticationError: 'error.platform.OpenID4VP.authenticateVerifier:invocation[0]';
@@ -143,11 +145,9 @@ export interface Typegen0 {
     showFaceAuthConsentScreen: 'CONFIRM';
   };
   eventsCausingServices: {
-    fetchTrustedVerifiers: never;
+    fetchTrustedVerifiers: 'STORE_RESPONSE';
     getAuthenticationResponse: 'done.invoke.OpenID4VP.checkKeyPair:invocation[0]';
-    getKeyPair:
-      | 'STORE_RESPONSE'
-      | 'done.invoke.OpenID4VP.getTrustedVerifiersList:invocation[0]';
+    getKeyPair: 'done.invoke.OpenID4VP.getTrustedVerifiersList:invocation[0]';
     getSelectedKey:
       | 'FACE_VALID'
       | 'done.invoke.OpenID4VP.getKeyPairFromKeystore:invocation[0]';

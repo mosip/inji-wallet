@@ -111,38 +111,34 @@ export function useSendVPScreen() {
 
   const GO_BACK = () => openID4VPService.send(OpenID4VPEvents.GO_BACK());
 
+  const noCredentialsMatchingVPRequest =
+    isSelectingVCs && Object.keys(vcsMatchingAuthRequest).length === 0;
   let errorModal = {
-    show: false,
+    show: error !== '' || noCredentialsMatchingVPRequest,
     title: '',
     message: '',
     showRetryButton: false,
   };
 
-  if (isSelectingVCs && Object.keys(vcsMatchingAuthRequest).length === 0) {
-    errorModal.show = true;
+  if (noCredentialsMatchingVPRequest) {
     errorModal.title = t('errors.noMatchingCredentials.title');
     errorModal.message = t('errors.noMatchingCredentials.message');
   } else if (
     error.includes('Verifier authentication was unsuccessful') ||
     error.startsWith('api error')
   ) {
-    errorModal.show = true;
     errorModal.title = t('errors.invalidVerifier.title');
     errorModal.message = t('errors.invalidVerifier.message');
   } else if (error.includes('credential mismatch detected')) {
-    errorModal.show = true;
     errorModal.title = t('errors.credentialsMismatch.title');
     errorModal.message = t('errors.credentialsMismatch.message');
   } else if (error.includes('none of the selected VC has image')) {
-    errorModal.show = true;
     errorModal.title = t('errors.noImage.title');
     errorModal.message = t('errors.noImage.message');
   } else if (error.startsWith('vc validation')) {
-    errorModal.show = true;
     errorModal.title = t('errors.invalidQrCode.title');
     errorModal.message = t('errors.invalidQrCode.message');
   } else if (error !== '') {
-    errorModal.show = true;
     errorModal.title = t('errors.genericError.title');
     errorModal.message = t('errors.genericError.message');
     errorModal.showRetryButton = true;
@@ -178,13 +174,11 @@ export function useSendVPScreen() {
   }
 
   return {
-    showError: useSelector(scanService, selectIsSendingVPError),
     isSendingVP,
     flowType: useSelector(openID4VPService, selectFlowType),
     showConfirmationPopup,
     isSelectingVCs,
     checkIfAnyMatchingVCHasImage,
-    error,
     errorModal,
     overlayDetails,
     vcsMatchingAuthRequest,
@@ -218,6 +212,7 @@ export function useSendVPScreen() {
       openID4VPService.send(OpenID4VPEvents.RETRY_VERIFICATION()),
     GO_TO_HOME: () => {
       navigation.navigate(BOTTOM_TAB_ROUTES.home, {screen: 'HomeScreen'});
+      openID4VPService.send(OpenID4VPEvents.RESET_ERROR());
       changeTabBarVisible('flex');
     },
     SELECT_VC_ITEM:
