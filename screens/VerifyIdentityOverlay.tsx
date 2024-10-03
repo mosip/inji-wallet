@@ -41,7 +41,9 @@ export const VerifyIdentityOverlay: React.FC<
           align="center">
           {credential != null && (
             <FaceScanner
-              vcImages={props.verifiableCredentialData.map(data => data.face)}
+              vcImages={props.verifiableCredentialData
+                .map(data => data.face)
+                .filter(face => face !== undefined)}
               onValid={props.onFaceValid}
               onInvalid={props.onFaceInvalid}
               isLiveness={props.isLivenessEnabled}
