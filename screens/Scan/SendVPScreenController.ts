@@ -181,6 +181,7 @@ export function useSendVPScreen() {
     checkIfAnyMatchingVCHasImage,
     errorModal,
     overlayDetails,
+    scanScreenError: useSelector(scanService, selectIsSendingVPError),
     vcsMatchingAuthRequest,
     areAllVCsChecked,
     selectedVCKeys,

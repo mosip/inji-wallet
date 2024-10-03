@@ -31,11 +31,12 @@ export const ScanScreen: React.FC = () => {
   const sendVPScreenController = useSendVPScreen();
   const [isBluetoothOn, setIsBluetoothOn] = useState(false);
   const showErrorModal =
+    sendVPScreenController.scanScreenError ||
     (sendVPScreenController.errorModal.show &&
-      sendVPScreenController.flowType ===
-        VCShareFlowType.MINI_VIEW_SHARE_OPENID4VP) ||
-    sendVPScreenController.flowType ===
-      VCShareFlowType.MINI_VIEW_SHARE_WITH_SELFIE_OPENID4VP;
+      (sendVPScreenController.flowType ===
+        VCShareFlowType.MINI_VIEW_SHARE_OPENID4VP ||
+        sendVPScreenController.flowType ===
+          VCShareFlowType.MINI_VIEW_SHARE_WITH_SELFIE_OPENID4VP));
 
   useEffect(() => {
     (async () => {
