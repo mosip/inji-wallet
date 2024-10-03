@@ -176,7 +176,7 @@ export const openID4VPMachine = model.createMachine(
             },
             {
               cond: 'isShareWithSelfie',
-              target: 'verifyingIdentity',
+              target: 'checkIfAnySelectedVCHasImage',
             },
             {
               target: 'sendingVP',
@@ -256,6 +256,7 @@ export const openID4VPMachine = model.createMachine(
           CANCEL: [
             {
               cond: 'isSimpleOpenID4VPShare',
+              actions: model.assign({isShareWithSelfie: () => false}),
               target: 'selectingVCs',
             },
             {
