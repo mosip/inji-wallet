@@ -183,7 +183,7 @@ export const openID4VPActions = (model: any) => {
     }),
 
     setTrustedVerifiers: model.assign({
-      trustedVerifiers: (_: any, event: any) => event.data,
+      trustedVerifiers: (_: any, event: any) => event.data.response.verifiers,
     }),
   };
 };

@@ -242,7 +242,7 @@ fileignoreconfig:
   - filename: machines/backupAndRestore/backupRestore.typegen.ts
     checksum: 64a8e42712083e0cbf0d6ce6b1139c62b59a14af17e4132d14f903d4d3bbe6b2
   - filename: machines/app.typegen.ts
-    checksum: c310de13b855b22fe68e8fa954dc3a8a4728284c5904da99986a1f4eac8ea0be
+    checksum: 6e194b5eb5f2ae91627bb1db832e0c9ab959f376593498df839db964fecf4258
   - filename: screens/Home/MyVcsTabMachine.typegen.ts
     checksum: 948efb4d61551e4f3cd9eb9913b927158daa5c3d16f49ad297e7cb63190bc023
   - filename: machines/IssuersMachine.typegen.ts
