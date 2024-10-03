@@ -324,6 +324,12 @@ export const scanMachine =
             'resetFaceCaptureBannerStatus',
           ],
           on: {
+            QRLOGIN_VIA_DEEP_LINK: [
+              {
+                actions: ['setChildRef', 'setLinkCodeFromDeepLink'],
+                target: '#scan.showQrLogin',
+              },
+            ],
             SCAN: [
               {
                 target: 'connecting',
