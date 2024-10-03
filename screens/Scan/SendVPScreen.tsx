@@ -50,8 +50,8 @@ export const SendVPScreen: React.FC = () => {
   );
 
   const handleTextButtonEvent = () => {
-    controller.RESET_RETRY_COUNT();
     controller.GO_TO_HOME();
+    controller.RESET_RETRY_COUNT();
   };
 
   const getVcKey = vcData => {

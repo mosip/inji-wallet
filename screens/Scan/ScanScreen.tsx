@@ -65,8 +65,8 @@ export const ScanScreen: React.FC = () => {
   };
 
   const handleTextButtonEvent = () => {
-    sendVPScreenController.RESET_RETRY_COUNT();
     sendVPScreenController.GO_TO_HOME();
+    sendVPScreenController.RESET_RETRY_COUNT();
   };
 
   function noShareableVcText() {
