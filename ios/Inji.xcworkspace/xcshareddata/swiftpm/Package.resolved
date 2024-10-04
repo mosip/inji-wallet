@@ -1,5 +1,5 @@
 {
-  "originHash" : "49a583b8d8c1ad3bf3006aa9a32122904813bca4dc5d45481190e148371011c9",
+  "originHash" : "f9795fd8da608010a3959d5ff512f9c3efa9ac32efccde3511dfd65f1d22ce33",
   "pins" : [
     {
       "identity" : "base45-swift",
@@ -40,7 +40,7 @@
     {
       "identity" : "inji-vci-client-ios-swift",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/mosip/inji-vci-client-ios-swift",
+      "location" : "https://github.com/mosip/inji-vci-client-ios-swift.git",
       "state" : {
         "branch" : "develop",
         "revision" : "0ff87e2eb1e6f078be8a004214cfaed8aae7fa93"
@@ -61,7 +61,7 @@
       "location" : "https://github.com/mosip/secure-keystore-ios-swift",
       "state" : {
         "branch" : "develop",
-        "revision" : "9ae89f3dea4fbcf2554f6fb9b16ae49533996373"
+        "revision" : "1e28bf21a81d1a53b3c9bb28e83da297fe425683"
       }
     },
     {
