@@ -57,12 +57,14 @@ export interface Typegen0 {
       | 'resetFaceCaptureBannerStatus'
       | 'resetFlowType'
       | 'resetLinkCode'
+      | 'resetOpenID4VPFlowType'
       | 'resetSelectedVc'
       | 'resetShowQuickShareSuccessBanner'
       | 'sendBLEConnectionErrorEvent'
       | 'sendScanData'
       | 'sendVCShareFlowCancelEndEvent'
       | 'sendVCShareFlowTimeoutEndEvent'
+      | 'sendVPScanData'
       | 'sendVcShareSuccessEvent'
       | 'sendVcSharingStartEvent'
       | 'setBleError'
@@ -70,6 +72,9 @@ export interface Typegen0 {
       | 'setFlowType'
       | 'setLinkCode'
       | 'setLinkCodeFromDeepLink'
+      | 'setOpenId4VPFlowType'
+      | 'setOpenId4VPRef'
+      | 'setQrLoginRef'
       | 'setQuickShareData'
       | 'setReadyForBluetoothStateCheck'
       | 'setReceiverInfo'
@@ -92,6 +97,7 @@ export interface Typegen0 {
       | 'isFlowTypeSimpleShare'
       | 'isIOS'
       | 'isMinimumStorageRequiredForAuditEntryReached'
+      | 'isOnlineSharing'
       | 'isOpenIdQr'
       | 'isQrLogin'
       | 'isQuickShare'
@@ -156,6 +162,7 @@ export interface Typegen0 {
       | 'SCREEN_FOCUS'
       | 'SELECT_VC'
       | 'xstate.stop';
+    resetOpenID4VPFlowType: 'CANCEL' | 'DISMISS' | 'RETRY' | 'SCREEN_BLUR';
     resetSelectedVc:
       | 'DISCONNECT'
       | 'DISMISS'
@@ -169,13 +176,23 @@ export interface Typegen0 {
     sendScanData: 'QRLOGIN_VIA_DEEP_LINK' | 'SCAN';
     sendVCShareFlowCancelEndEvent: 'CANCEL';
     sendVCShareFlowTimeoutEndEvent: 'CANCEL' | 'RETRY';
+    sendVPScanData: 'SCAN';
     sendVcShareSuccessEvent: 'VC_ACCEPTED';
     sendVcSharingStartEvent: 'SCAN';
     setBleError: 'BLE_ERROR';
-    setChildRef: 'QRLOGIN_VIA_DEEP_LINK' | 'STORE_RESPONSE';
+    setChildRef: 'QRLOGIN_VIA_DEEP_LINK';
     setFlowType: 'SELECT_VC';
     setLinkCode: 'SCAN';
     setLinkCodeFromDeepLink: 'QRLOGIN_VIA_DEEP_LINK';
+    setOpenId4VPFlowType: 'SCAN';
+    setOpenId4VPRef:
+      | 'CANCEL'
+      | 'DISMISS'
+      | 'RESET'
+      | 'RETRY'
+      | 'SCREEN_FOCUS'
+      | 'SELECT_VC';
+    setQrLoginRef: 'SCAN';
     setQuickShareData: 'SCAN';
     setReadyForBluetoothStateCheck: 'BLUETOOTH_PERMISSION_ENABLED';
     setReceiverInfo: 'CONNECTED';
@@ -200,9 +217,10 @@ export interface Typegen0 {
   eventsCausingGuards: {
     isFlowTypeMiniViewShare: 'CHECK_FLOW_TYPE';
     isFlowTypeMiniViewShareWithSelfie: 'CHECK_FLOW_TYPE' | 'DISMISS';
-    isFlowTypeSimpleShare: 'CANCEL' | 'CHECK_FLOW_TYPE' | 'DISMISS';
+    isFlowTypeSimpleShare: 'CANCEL' | 'CHECK_FLOW_TYPE' | 'DISMISS' | 'RETRY';
     isIOS: 'BLUETOOTH_STATE_DISABLED' | 'START_PERMISSION_CHECK';
     isMinimumStorageRequiredForAuditEntryReached: 'done.invoke.scan.checkStorage:invocation[0]';
+    isOnlineSharing: 'SCAN';
     isOpenIdQr: 'SCAN';
     isQrLogin: 'SCAN';
     isQuickShare: 'SCAN';
@@ -210,6 +228,7 @@ export interface Typegen0 {
     uptoAndroid11: '' | 'START_PERMISSION_CHECK';
   };
   eventsCausingServices: {
+    OpenId4VP: 'SCAN';
     QrLogin: 'QRLOGIN_VIA_DEEP_LINK' | 'SCAN';
     checkBluetoothPermission:
       | ''
@@ -220,7 +239,13 @@ export interface Typegen0 {
     checkLocationPermission: 'LOCATION_ENABLED';
     checkLocationStatus: '' | 'APP_ACTIVE' | 'LOCATION_REQUEST';
     checkNearByDevicesPermission: 'APP_ACTIVE' | 'START_PERMISSION_CHECK';
-    checkStorageAvailability: 'RESET' | 'SCREEN_FOCUS' | 'SELECT_VC';
+    checkStorageAvailability:
+      | 'CANCEL'
+      | 'DISMISS'
+      | 'RESET'
+      | 'RETRY'
+      | 'SCREEN_FOCUS'
+      | 'SELECT_VC';
     disconnect: '' | 'DISMISS' | 'LOCATION_ENABLED' | 'RETRY' | 'SCREEN_BLUR';
     monitorConnection: 'DISMISS' | 'SCREEN_BLUR' | 'xstate.init';
     requestBluetooth: 'BLUETOOTH_STATE_DISABLED';
@@ -293,6 +318,11 @@ export interface Typegen0 {
     | 'showQrLogin.navigatingToHistory'
     | 'showQrLogin.storing'
     | 'startPermissionCheck'
+    | 'startVPSharing'
+    | 'startVPSharing.inProgress'
+    | 'startVPSharing.showError'
+    | 'startVPSharing.success'
+    | 'startVPSharing.timeout'
     | {
         checkBluetoothPermission?: 'checking' | 'enabled';
         checkBluetoothState?: 'checking' | 'enabled' | 'requesting';
@@ -322,6 +352,7 @@ export interface Typegen0 {
           | 'verifyingIdentity'
           | {sendingVc?: 'inProgress' | 'sent' | 'timeout'};
         showQrLogin?: 'idle' | 'navigatingToHistory' | 'storing';
+        startVPSharing?: 'inProgress' | 'showError' | 'success' | 'timeout';
       };
   tags: never;
 }

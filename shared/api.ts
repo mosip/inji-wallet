@@ -17,6 +17,10 @@ import {
 import {TelemetryConstants} from './telemetry/TelemetryConstants';
 
 export const API_URLS: ApiUrls = {
+  trustedVerifiersList: {
+    method: 'GET',
+    buildURL: (): `/${string}` => '/v1/mimoto/verifiers',
+  },
   issuersList: {
     method: 'GET',
     buildURL: (): `/${string}` => '/v1/mimoto/issuers',
@@ -90,6 +94,14 @@ export const API_URLS: ApiUrls = {
 };
 
 export const API = {
+  fetchTrustedVerifiersList: async () => {
+    const response = await request(
+      API_URLS.trustedVerifiersList.method,
+      API_URLS.trustedVerifiersList.buildURL(),
+    );
+    return response;
+  },
+
   fetchIssuers: async () => {
     const response = await request(
       API_URLS.issuersList.method,
@@ -129,6 +141,13 @@ export const API = {
 };
 
 export const CACHED_API = {
+  fetchTrustedVerifiersList: (isCachePreferred: boolean = true) =>
+    generateCacheAPIFunction({
+      isCachePreferred,
+      cacheKey: API_CACHED_STORAGE_KEYS.fetchTrustedVerifiers,
+      fetchCall: API.fetchTrustedVerifiersList,
+    }),
+
   fetchIssuers: () =>
     generateCacheAPIFunction({
       cacheKey: API_CACHED_STORAGE_KEYS.fetchIssuers,
@@ -315,6 +334,7 @@ type Api_Params = {
 };
 
 type ApiUrls = {
+  trustedVerifiersList: Api_Params;
   issuersList: Api_Params;
   issuerConfig: Api_Params;
   issuerWellknownConfig: Api_Params;

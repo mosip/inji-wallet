@@ -795,6 +795,51 @@
       }
     }
   },
+  "SendVPScreen": {
+    "requester": "Requester",
+    "cardsSelected": "cards selected",
+    "cardSelected": "card selected",
+    "unCheck": "Uncheck",
+    "checkAll": "Check All",
+    "consentDialog": {
+      "title": "Consent Required",
+      "message": "We require your consent to share your verifiable credentials. This will enable us to verify your identity and fulfil your service requests. Choose \"Yes, Proceed\" to consent or \"Decline\" if you do not wish to share.",
+      "confirmButton": "Yes, Proceed",
+      "cancelButton": "Decline"
+    },
+    "confirmationDialog": {
+      "title": "Are you sure?",
+      "message": "Declining the consent will prevent you from sharing your verifiable credentials.",
+      "confirmButton": "Yes, Proceed",
+      "cancelButton": "Go Back"
+    },
+    "errors": {
+      "noMatchingCredentials": {
+        "title": "No matching credentials found!",
+        "message": "Retry sharing after downloading the credentials."
+      },
+      "invalidVerifier": {
+        "title": "An Error Occured!",
+        "message": "The verifier is not recognized. Please obtain a valid QR code from the verifier."
+      },
+      "credentialsMismatch": {
+        "title": "An Error Occured!",
+        "message": "Credential mismatch detected. Ensure you have selected the right one and try again."
+      },
+      "genericError": {
+        "title": "Oops! An Error Occured.",
+        "message": "Due to technical error, we are unable to share the card. Click on retry to re-share or click on Home to exit the sharing process."
+      },
+      "invalidQrCode": {
+        "title": "Invalid QR code",
+        "message": "The QR code is invalid because some required information is missing. Please ask the verifier to provide a valid QR code to share your credentials."
+      },
+      "noImage": {
+        "title": "An Error Occured!",
+        "message": "Face verification requires a photo in the selected credential(s). Please use the Share option or select a credential that includes an image."
+      }
+    }
+  },
   "VerifyIdentityOverlay": {
     "faceAuth": "Face Verification",
     "status": {

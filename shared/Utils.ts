@@ -15,11 +15,15 @@ export enum VCShareFlowType {
   MINI_VIEW_SHARE = 'mini view share',
   MINI_VIEW_SHARE_WITH_SELFIE = 'mini view share with selfie',
   MINI_VIEW_QR_LOGIN = 'mini view qr login',
+  OPENID4VP = 'OpenID4VP',
+  MINI_VIEW_SHARE_OPENID4VP = 'OpenID4VP share from mini view',
+  MINI_VIEW_SHARE_WITH_SELFIE_OPENID4VP = 'OpenID4VP share with selfie from mini view',
 }
 
 export enum VCItemContainerFlowType {
   QR_LOGIN = 'qr login',
   VC_SHARE = 'vc share',
+  OPENID4VP = 'openID4VP',
 }
 
 export interface CommunicationDetails {

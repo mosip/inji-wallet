@@ -13,7 +13,6 @@ export const VerifyIdentityOverlay: React.FC<
 > = props => {
   const {t} = useTranslation('VerifyIdentityOverlay');
   const credential = props.credential;
-  const vcImage = props.verifiableCredentialData.face;
 
   const modalProps = {
     isVisible: props.isVerifyingIdentity,
@@ -42,7 +41,9 @@ export const VerifyIdentityOverlay: React.FC<
           align="center">
           {credential != null && (
             <FaceScanner
-              vcImage={vcImage}
+              vcImages={props.verifiableCredentialData
+                .map(data => data.face)
+                .filter(face => face !== undefined)}
               onValid={props.onFaceValid}
               onInvalid={props.onFaceInvalid}
               isLiveness={props.isLivenessEnabled}
@@ -75,7 +76,7 @@ export const VerifyIdentityOverlay: React.FC<
 };
 
 export interface VerifyIdentityOverlayProps {
-  credential?: VerifiableCredential | Credential;
+  credential?: [VerifiableCredential | Credential];
   verifiableCredentialData: any;
   isVerifyingIdentity: boolean;
   onCancel: () => void;

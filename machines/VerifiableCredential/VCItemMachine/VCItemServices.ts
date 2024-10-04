@@ -1,7 +1,14 @@
 import {NativeModules} from 'react-native';
 import Cloud from '../../../shared/CloudBackupAndRestoreUtils';
-import getAllConfigurations, {API_URLS, CACHED_API, DownloadProps,} from '../../../shared/api';
-import {fetchKeyPair, generateKeyPair,} from '../../../shared/cryptoutil/cryptoUtil';
+import getAllConfigurations, {
+  API_URLS,
+  CACHED_API,
+  DownloadProps,
+} from '../../../shared/api';
+import {
+  fetchKeyPair,
+  generateKeyPair,
+} from '../../../shared/cryptoutil/cryptoUtil';
 import {CredentialDownloadResponse, request} from '../../../shared/request';
 import {WalletBindingResponse} from '../VCMetaMachine/vc';
 import {verifyCredential} from '../../../shared/vcjs/verifyCredential';
@@ -106,8 +113,8 @@ export const VCItemServices = model => {
       );
       try {
         return getMatchingCredentialIssuerMetadata(
-            wellknownResponse,
-            context.verifiableCredential.credentialConfigurationId,
+          wellknownResponse,
+          context.verifiableCredential.credentialConfigurationId,
         );
       } catch (error) {
         return {};

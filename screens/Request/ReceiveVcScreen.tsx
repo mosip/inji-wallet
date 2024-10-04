@@ -1,16 +1,16 @@
-import React, { useEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
-import { DeviceInfoList } from '../../components/DeviceInfoList';
-import { Button, Column, Text } from '../../components/ui';
-import { Theme } from '../../components/ui/styleUtils';
-import { useReceiveVcScreen } from './ReceiveVcScreenController';
-import { MessageOverlay } from '../../components/MessageOverlay';
-import { useOverlayVisibleAfterTimeout } from '../../shared/hooks/useOverlayVisibleAfterTimeout';
-import { VcDetailsContainer } from '../../components/VC/VcDetailsContainer';
-import { SharingStatusModal } from '../Scan/SharingStatusModal';
-import { SvgImage } from '../../components/ui/svg';
-import { DETAIL_VIEW_DEFAULT_FIELDS } from '../../components/VC/common/VCUtils';
-import { getDetailedViewFields } from '../../shared/openId4VCI/Utils';
+import React, {useEffect, useState} from 'react';
+import {useTranslation} from 'react-i18next';
+import {DeviceInfoList} from '../../components/DeviceInfoList';
+import {Button, Column, Text} from '../../components/ui';
+import {Theme} from '../../components/ui/styleUtils';
+import {useReceiveVcScreen} from './ReceiveVcScreenController';
+import {MessageOverlay} from '../../components/MessageOverlay';
+import {useOverlayVisibleAfterTimeout} from '../../shared/hooks/useOverlayVisibleAfterTimeout';
+import {VcDetailsContainer} from '../../components/VC/VcDetailsContainer';
+import {SharingStatusModal} from '../Scan/SharingStatusModal';
+import {SvgImage} from '../../components/ui/svg';
+import {DETAIL_VIEW_DEFAULT_FIELDS} from '../../components/VC/common/VCUtils';
+import {getDetailedViewFields} from '../../shared/openId4VCI/Utils';
 
 export const ReceiveVcScreen: React.FC = () => {
   const {t} = useTranslation('ReceiveVcScreen');

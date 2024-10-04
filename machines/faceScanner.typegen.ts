@@ -32,7 +32,6 @@ export interface Typegen0 {
     services: never;
   };
   eventsCausingActions: {
-    flipWhichCamera: 'FLIP_CAMERA';
     openSettings: 'OPEN_SETTINGS';
     setCameraRef: 'READY';
     setCaptureError: 'error.platform.faceScanner.capturing:invocation[0]';

@@ -114,6 +114,7 @@ export const DefaultTheme = {
     GrayText: Colors.GrayText,
     errorGrayText: Colors.mediumDarkGrey,
     gradientBtn: ['#F59B4B', '#E86E04'],
+    selectIDTextGradient: ['#F5F5F5', '#FFFFFF'],
     dotColor: Colors.dorColor,
     plainText: Colors.plainText,
     IconBackground: Colors.LightOrange,
@@ -1590,6 +1591,29 @@ export const DefaultTheme = {
     },
     labelStyle: {
       fontWeight: 'bold',
+    },
+  }),
+  VPSharingStyles: StyleSheet.create({
+    purposeContainer: {
+      backgroundColor: Colors.TimeoutHintBoxColor,
+      borderColor: Colors.TimeoutHintBoxBorder,
+      borderWidth: 1,
+      borderRadius: 5,
+    },
+    purposeText: {
+      fontSize: 13,
+      position: 'relative',
+      fontFamily: 'Inter_500Medium',
+    },
+    cardsSelectedText: {
+      fontFamily: 'Inter_500Medium',
+      color: '#000000',
+      fontSize: 14,
+    },
+    selectIDText: {
+      position: 'relative',
+      fontFamily: 'Inter_600SemiBold',
+      fontSize: 16,
     },
   }),
   CameraDisabledStyles: StyleSheet.create({
