@@ -45,7 +45,12 @@ export const scanMachine =
           actions: ['sendBLEConnectionErrorEvent', 'setBleError'],
         },
         RESET: {
-          actions: ['removeLoggers', 'resetFlowType', 'resetSelectedVc'],
+          actions: [
+            'removeLoggers',
+            'resetFlowType',
+            'resetSelectedVc',
+            'resetIsQrLoginViaDeepLink',
+          ],
           target: '.checkStorage',
         },
         DISMISS: {
@@ -58,6 +63,14 @@ export const scanMachine =
         DISMISS_QUICK_SHARE_BANNER: {
           actions: 'resetShowQuickShareSuccessBanner',
           target: '.inactive',
+        },
+        QRLOGIN_VIA_DEEP_LINK: {
+          actions: [
+            'setChildRef',
+            'setLinkCodeFromDeepLink',
+            'setIsQrLoginViaDeepLink',
+          ],
+          target: '#scan.checkStorage',
         },
       },
       states: {
@@ -81,20 +94,6 @@ export const scanMachine =
               {
                 cond: 'isMinimumStorageRequiredForAuditEntryReached',
                 target: 'restrictSharingVc',
-              },
-              {
-                target: 'qrLoginViaDeepLink',
-              },
-            ],
-          },
-        },
-        qrLoginViaDeepLink: {
-          on: {
-            QRLOGIN_VIA_DEEP_LINK: [
-              {
-                actions: ['setChildRef', 'setLinkCodeFromDeepLink'],
-                cond: (_, event) => event.linkCode != '',
-                target: '#scan.showQrLogin',
               },
               {
                 target: 'startPermissionCheck',
@@ -310,9 +309,20 @@ export const scanMachine =
           on: {
             STORE_RESPONSE: {
               actions: 'updateShowFaceAuthConsent',
-              target: '#scan.findingConnection',
+              target: '#scan.checkQrLoginViaDeepLink',
             },
           },
+        },
+        checkQrLoginViaDeepLink: {
+          always: [
+            {
+              cond: 'isQrLoginViaDeepLinking',
+              target: '#scan.showQrLogin',
+            },
+            {
+              target: '#scan.findingConnection',
+            },
+          ],
         },
         findingConnection: {
           entry: [
@@ -323,12 +333,6 @@ export const scanMachine =
             'resetFaceCaptureBannerStatus',
           ],
           on: {
-            QRLOGIN_VIA_DEEP_LINK: [
-              {
-                actions: ['setChildRef', 'setLinkCodeFromDeepLink'],
-                target: '#scan.showQrLogin',
-              },
-            ],
             SCAN: [
               {
                 target: 'connecting',
@@ -393,13 +397,21 @@ export const scanMachine =
             storing: {
               entry: ['storeLoginItem'],
               on: {
-                STORE_RESPONSE: {
-                  target: 'navigatingToHistory',
-                  actions: ['storingActivityLog'],
-                },
+                STORE_RESPONSE: [
+                  {
+                    cond: 'isQrLoginViaDeepLinking',
+                    target: 'navigatingToHome',
+                    actions: 'storingActivityLog',
+                  },
+                  {
+                    target: 'navigatingToHistory',
+                    actions: ['storingActivityLog'],
+                  },
+                ],
               },
             },
             navigatingToHistory: {},
+            navigatingToHome: {},
           },
           entry: [
             'sendScanData',

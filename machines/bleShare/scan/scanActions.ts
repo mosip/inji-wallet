@@ -83,6 +83,7 @@ export const ScanActions = (model: any, QR_LOGIN_REF_ID: any) => {
         linkCode: context.linkCode,
         flowType: context.flowType,
         selectedVc: context.selectedVc,
+        isQrLoginViaDeepLink: context.isQrLoginViaDeepLink,
       }),
 
     openBluetoothSettings: () => {
@@ -200,7 +201,8 @@ export const ScanActions = (model: any, QR_LOGIN_REF_ID: any) => {
             ? context.shareLogType
             : 'VC_SHARED_WITH_VERIFICATION_CONSENT',
           id: vcMetadata.displayId,
-          credentialConfigurationId: context.selectedVc.verifiableCredential.credentialConfigurationId,
+          credentialConfigurationId:
+            context.selectedVc.verifiableCredential.credentialConfigurationId,
           issuer: vcMetadata.issuer!!,
           timestamp: Date.now(),
           deviceName:
@@ -217,7 +219,8 @@ export const ScanActions = (model: any, QR_LOGIN_REF_ID: any) => {
           _vcKey: vcMetadata.getVcKey(),
           type: 'PRESENCE_VERIFICATION_FAILED',
           timestamp: Date.now(),
-          credentialConfigurationId: context.selectedVc.verifiableCredential.credentialConfigurationId,
+          credentialConfigurationId:
+            context.selectedVc.verifiableCredential.credentialConfigurationId,
           id: vcMetadata.displayId,
           issuer: vcMetadata.issuer!!,
           deviceName:
@@ -235,6 +238,15 @@ export const ScanActions = (model: any, QR_LOGIN_REF_ID: any) => {
     setLinkCodeFromDeepLink: assign({
       linkCode: (_, event) => event.linkCode,
     }),
+
+    setIsQrLoginViaDeepLink: assign({
+      isQrLoginViaDeepLink: true,
+    }),
+
+    resetIsQrLoginViaDeepLink: assign({
+      isQrLoginViaDeepLink: false,
+    }),
+
     setQuickShareData: assign({
       quickShareData: (_, event) =>
         JSON.parse(
@@ -282,7 +294,8 @@ export const ScanActions = (model: any, QR_LOGIN_REF_ID: any) => {
           _vcKey: '',
           id: vcMetadata.displayId,
           issuer: vcMetadata.issuer!!,
-          credentialConfigurationId: selectedVc.verifiableCredential.credentialConfigurationId,
+          credentialConfigurationId:
+            selectedVc.verifiableCredential.credentialConfigurationId,
           type: 'QRLOGIN_SUCCESFULL',
           timestamp: Date.now(),
           deviceName: '',

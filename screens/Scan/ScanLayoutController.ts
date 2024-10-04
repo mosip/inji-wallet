@@ -24,7 +24,7 @@ import {
   selectIsFaceIdentityVerified,
   selectCredential,
   selectVerifiableCredentialData,
-  selectIsQrLoginViaDeepLink,
+  selectIsQrLoginDoneViaDeeplink,
 } from '../../machines/bleShare/scan/scanSelectors';
 import {
   selectBleError,
@@ -76,10 +76,6 @@ export function useScanLayout() {
   const verifiableCredentialData = useSelector(
     scanService,
     selectVerifiableCredentialData,
-  );
-  const isQrLoginViaDeepLink = useSelector(
-    scanService,
-    selectIsQrLoginViaDeepLink,
   );
 
   const locationError = {message: '', button: ''};
@@ -264,17 +260,21 @@ export function useScanLayout() {
   const isReviewing = useSelector(scanService, selectIsReviewing);
   const isScanning = useSelector(scanService, selectIsScanning);
   const isQrLoginDone = useSelector(scanService, selectIsQrLoginDone);
+  const isQrLoginDoneViaDeeplink = useSelector(
+    scanService,
+    selectIsQrLoginDoneViaDeeplink,
+  );
 
   useEffect(() => {
-    if (linkCode != '' && isScanning) {
+    if (linkCode != '') {
       scanService.send(ScanEvents.QRLOGIN_VIA_DEEP_LINK(linkCode));
       appService.send(APP_EVENTS.RESET_LINKCODE());
+    } else if (isQrLoginDoneViaDeeplink) {
+      changeTabBarVisible('flex');
+      navigation.navigate(BOTTOM_TAB_ROUTES.home);
     } else if (isDone) {
       changeTabBarVisible('flex');
       navigation.navigate(BOTTOM_TAB_ROUTES.home);
-    } else if (isQrLoginViaDeepLink) {
-      scanService.send(ScanEvents.QRLOGIN_VIA_DEEP_LINK(linkCode));
-      appService.send(APP_EVENTS.RESET_LINKCODE());
     } else if (
       isReviewing &&
       flowType === VCShareFlowType.SIMPLE_SHARE &&
@@ -297,8 +297,8 @@ export function useScanLayout() {
     isBleError,
     flowType,
     isAccepted,
-    isQrLoginViaDeepLink,
     linkCode,
+    isQrLoginDoneViaDeeplink,
   ]);
 
   return {

@@ -106,6 +106,10 @@ export function selectIsQrLoginDone(state: State) {
   return state.matches('showQrLogin.navigatingToHistory');
 }
 
+export function selectIsQrLoginDoneViaDeeplink(state: State) {
+  return state.matches('showQrLogin.navigatingToHome');
+}
+
 export function selectIsQrLoginStoring(state: State) {
   return state.matches('showQrLogin.storing');
 }
@@ -122,8 +126,4 @@ export function selectIsMinimumStorageRequiredForAuditEntryLimitReached(
 
 export function selectIsFaceVerificationConsent(state: State) {
   return state.matches('reviewing.faceVerificationConsent');
-}
-
-export function selectIsQrLoginViaDeepLink(state: State) {
-  return state.matches('qrLoginViaDeepLink');
 }

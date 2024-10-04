@@ -31,6 +31,8 @@ export const ScanGuards = () => {
     isMinimumStorageRequiredForAuditEntryReached: (_context, event) =>
       Boolean(event.data),
 
+    isQrLoginViaDeepLinking: context => context.isQrLoginViaDeepLink === true,
+
     isFlowTypeMiniViewShareWithSelfie: context =>
       context.flowType === VCShareFlowType.MINI_VIEW_SHARE_WITH_SELFIE,
 

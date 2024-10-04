@@ -38,13 +38,20 @@ export const QrLoginActions = (model: any) => {
       const linkCode = event.linkCode;
       const flowType = event.flowType;
       const selectedVc = event.selectedVc;
+      const isQrLoginViaDeepLink = event.isQrLoginViaDeepLink;
       return {
         ...context,
         linkCode: linkCode,
         flowType: flowType,
         selectedVc: selectedVc,
+        isQrLoginViaDeepLink: isQrLoginViaDeepLink,
       };
     }),
+
+    resetIsQrLoginViaDeepLink: assign({
+      isQrLoginViaDeepLink: false,
+    }),
+
     getFaceAuthConsent: send(
       StoreEvents.GET(SHOW_FACE_AUTH_CONSENT_QR_LOGIN_FLOW),
       {
