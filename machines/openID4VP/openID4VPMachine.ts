@@ -271,6 +271,7 @@ export const openID4VPMachine = model.createMachine(
           FACE_VALID: [
             {
               cond: 'hasKeyPair',
+              actions: 'updateFaceCaptureBannerStatus',
               target: 'sendingVP',
             },
             {
@@ -311,6 +312,11 @@ export const openID4VPMachine = model.createMachine(
       },
       sendingVP: {
         entry: sendParent('IN_PROGRESS'),
+        on: {
+          CLOSE_BANNER: {
+            actions: 'resetFaceCaptureBannerStatus',
+          },
+        },
         invoke: {
           src: 'sendVP',
           onDone: {

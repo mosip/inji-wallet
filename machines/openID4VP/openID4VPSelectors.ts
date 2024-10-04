@@ -94,3 +94,9 @@ export function selectIsError(state: State) {
 export function selectOpenID4VPRetryCount(state: State) {
   return state.context.openID4VPRetryCount;
 }
+
+export function selectIsFaceVerifiedInVPSharing(state: State) {
+  return (
+    state.matches('sendingVP') && state.context.showFaceCaptureSuccessBanner
+  );
+}
