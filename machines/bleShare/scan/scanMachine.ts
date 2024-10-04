@@ -387,8 +387,8 @@ export const scanMachine =
           },
           on: {
             DISMISS: {
+              actions: ['resetLinkCode', 'resetIsQrLoginViaDeepLink'],
               target: '#scan.checkFaceAuthConsent',
-              actions: ['resetLinkCode'],
             },
           },
           initial: 'idle',
@@ -400,8 +400,8 @@ export const scanMachine =
                 STORE_RESPONSE: [
                   {
                     cond: 'isQrLoginViaDeepLinking',
-                    target: 'navigatingToHome',
                     actions: 'storingActivityLog',
+                    target: 'navigatingToHome',
                   },
                   {
                     target: 'navigatingToHistory',

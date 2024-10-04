@@ -149,7 +149,7 @@ export interface Typegen0 {
       | 'RESET'
       | 'SCREEN_BLUR'
       | 'xstate.init';
-    resetIsQrLoginViaDeepLink: 'RESET';
+    resetIsQrLoginViaDeepLink: 'DISMISS' | 'RESET';
     resetLinkCode:
       | 'BLE_ERROR'
       | 'DISMISS'
