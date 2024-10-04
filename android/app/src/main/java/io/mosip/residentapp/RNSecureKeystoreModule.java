@@ -233,7 +233,7 @@ public class RNSecureKeystoreModule extends ReactContextBaseJavaModule {
 
   private void retrieveDataAndResolve(String key, Promise promise) {
     try {
-      List<String> dataList = keystore.retrieveGenericKey(key);
+      List<String> dataList = keystore.retrieveGenericKey(key,getCurrentActivity());
       WritableArray writableArray = Arguments.createArray();
       for (String data : dataList) {
         writableArray.pushString(data);

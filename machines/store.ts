@@ -529,9 +529,6 @@ export const storeMachine =
           });
         },
         getEncryptionKey: () => async callback => {
-          if (isIOS()) {
-            RNSecureKeyStore.setResetOnAppUninstallTo(false);
-          }
           const existingCredentials = '';
           if (existingCredentials) {
             console.log('Credentials successfully loaded for user');
@@ -567,7 +564,7 @@ export const storeMachine =
               isBiometricsEnabled,
               AUTH_TIMEOUT,
             );
-            RNSecureKeystoreModule.generateHmacshaKey(HMAC_ALIAS);
+            await RNSecureKeystoreModule.generateHmacshaKey(HMAC_ALIAS);
             callback(model.events.KEY_RECEIVED(''));
           }
         },

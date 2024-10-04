@@ -20,6 +20,7 @@ import * as secp from '@noble/secp256k1';
 import base64 from 'react-native-base64';
 import {KeyTypes} from './KeyTypes';
 import convertDerToRsFormat from './signFormatConverter';
+import {hasKeyPair} from '../openId4VCI/Utils';
 
 //polyfills setup
 secp.etc.hmacSha256Sync = (k, ...m) =>
@@ -113,18 +114,11 @@ export async function generateKeyPair(keyType: any): Promise<any> {
 }
 
 export async function checkAllKeyPairs() {
-  const RSAKey = await fetchKeyPair(KeyTypes.RS256);
-  const ECR1Key = await fetchKeyPair(KeyTypes.ES256);
-  const ECK1Key = await fetchKeyPair(KeyTypes.ES256K);
-  const EDKey = 'key';
-  if (
-    !(
-      !!RSAKey.publicKey &&
-      !!ECR1Key.publicKey &&
-      !!ECK1Key.publicKey &&
-      !!EDKey
-    )
-  )
+  const RSAKey = await hasKeyPair(KeyTypes.RS256);
+  const ECR1Key = await hasKeyPair(KeyTypes.ES256);
+  const ECK1Key = await hasKeyPair(KeyTypes.ES256K);
+  const EDKey = true;
+  if (!(RSAKey && ECR1Key && ECK1Key && EDKey))
     throw Error('Keys not present');
 }
 
