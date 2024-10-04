@@ -21,7 +21,12 @@ export const openID4VPMachine = model.createMachine(
     },
     id: 'OpenID4VP',
     initial: 'waitingForData',
-
+    on: {
+      RESET: {
+        actions: 'resetError',
+        target: 'waitingForData',
+      },
+    },
     states: {
       waitingForData: {
         on: {
@@ -185,6 +190,17 @@ export const openID4VPMachine = model.createMachine(
           CANCEL: {
             target: 'showConfirmationPopup',
           },
+          DISMISS_POPUP: [
+            {
+              cond: 'isSimpleOpenID4VPShare',
+              actions: 'resetIsShareWithSelfie',
+              target: 'selectingVCs',
+            },
+            {
+              actions: 'forwardToParent',
+              target: 'waitingForData',
+            },
+          ],
         },
       },
       showConfirmationPopup: {
@@ -195,6 +211,17 @@ export const openID4VPMachine = model.createMachine(
           GO_BACK: {
             target: 'getConsentForVPSharing',
           },
+          DISMISS_POPUP: [
+            {
+              cond: 'isSimpleOpenID4VPShare',
+              actions: 'resetIsShareWithSelfie',
+              target: 'selectingVCs',
+            },
+            {
+              actions: 'forwardToParent',
+              target: 'waitingForData',
+            },
+          ],
         },
       },
       faceVerificationConsent: {
@@ -210,13 +237,14 @@ export const openID4VPMachine = model.createMachine(
               target: 'verifyingIdentity',
             },
           ],
-          DISMISS: [
+          DISMISS_POPUP: [
             {
               cond: 'isSimpleOpenID4VPShare',
               target: 'selectingVCs',
             },
             {
-              actions: sendParent('DISMISS'),
+              actions: 'forwardToParent',
+              target: 'waitingForData',
             },
           ],
         },
@@ -256,7 +284,7 @@ export const openID4VPMachine = model.createMachine(
           CANCEL: [
             {
               cond: 'isSimpleOpenID4VPShare',
-              actions: model.assign({isShareWithSelfie: () => false}),
+              actions: 'resetIsShareWithSelfie',
               target: 'selectingVCs',
             },
             {
@@ -308,9 +336,6 @@ export const openID4VPMachine = model.createMachine(
           },
           RESET_RETRY_COUNT: {
             actions: 'resetOpenID4VPRetryCount',
-          },
-          RESET_ERROR: {
-            actions: 'resetError',
           },
         },
       },

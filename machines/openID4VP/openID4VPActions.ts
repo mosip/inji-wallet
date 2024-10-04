@@ -156,6 +156,8 @@ export const openID4VPActions = (model: any) => {
       error: () => '',
     }),
 
+    resetIsShareWithSelfie: model.assign({isShareWithSelfie: () => false}),
+
     loadKeyPair: assign({
       publicKey: (_, event: any) => event.data?.publicKey as string,
       privateKey: (context: any, event: any) =>

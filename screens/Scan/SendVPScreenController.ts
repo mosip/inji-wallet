@@ -111,6 +111,11 @@ export function useSendVPScreen() {
 
   const GO_BACK = () => openID4VPService.send(OpenID4VPEvents.GO_BACK());
 
+  const DISMISS = () => scanService.send(ScanEvents.DISMISS());
+
+  const DISMISS_POPUP = () =>
+    openID4VPService.send(OpenID4VPEvents.DISMISS_POPUP());
+
   const noCredentialsMatchingVPRequest =
     isSelectingVCs && Object.keys(vcsMatchingAuthRequest).length === 0;
   let errorModal = {
@@ -157,6 +162,7 @@ export function useSendVPScreen() {
       titleTestID: 'consentTitle',
       message: t('consentDialog.message'),
       messageTestID: 'consentMsg',
+      onCancel: DISMISS_POPUP,
     };
   } else if (showConfirmationPopup) {
     overlayDetails = {
@@ -170,6 +176,7 @@ export function useSendVPScreen() {
       titleTestID: 'confirmationTitle',
       message: t('confirmationDialog.message'),
       messageTestID: 'confirmationMsg',
+      onCancel: DISMISS_POPUP,
     };
   }
 
@@ -205,7 +212,8 @@ export function useSendVPScreen() {
       openID4VPService.send(
         OpenID4VPEvents.FACE_VERIFICATION_CONSENT(isDoNotAskAgainChecked),
       ),
-    DISMISS: () => scanService.send(ScanEvents.DISMISS()),
+    DISMISS,
+    DISMISS_POPUP,
     RETRY: () => openID4VPService.send(OpenID4VPEvents.RETRY()),
     FACE_VALID: () => openID4VPService.send(OpenID4VPEvents.FACE_VALID()),
     FACE_INVALID: () => openID4VPService.send(OpenID4VPEvents.FACE_INVALID()),
@@ -213,8 +221,6 @@ export function useSendVPScreen() {
       openID4VPService.send(OpenID4VPEvents.RETRY_VERIFICATION()),
     GO_TO_HOME: () => {
       navigation.navigate(BOTTOM_TAB_ROUTES.home, {screen: 'HomeScreen'});
-      openID4VPService.send(OpenID4VPEvents.DISMISS());
-      openID4VPService.send(OpenID4VPEvents.RESET_ERROR());
       changeTabBarVisible('flex');
     },
     SELECT_VC_ITEM:

@@ -27,6 +27,7 @@ const openID4VPEvents = {
   FACE_VALID: () => ({}),
   FACE_INVALID: () => ({}),
   DISMISS: () => ({}),
+  DISMISS_POPUP: () => ({}),
   RETRY_VERIFICATION: () => ({}),
   STORE_RESPONSE: (response: any) => ({response}),
   GO_BACK: () => ({}),
@@ -35,7 +36,7 @@ const openID4VPEvents = {
   CHECK_FOR_IMAGE: () => ({}),
   RETRY: () => ({}),
   RESET_RETRY_COUNT: () => ({}),
-  RESET_ERROR: () => ({}),
+  RESET: () => ({}),
 };
 
 export const openID4VPModel = createModel(

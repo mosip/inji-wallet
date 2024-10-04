@@ -29,7 +29,10 @@ import {StoreEvents} from '../../store';
 import BluetoothStateManager from 'react-native-bluetooth-state-manager';
 import {NativeModules} from 'react-native';
 import {wallet} from '../../../shared/tuvali';
-import {createOpenID4VPMachine} from '../../openID4VP/openID4VPMachine';
+import {
+  createOpenID4VPMachine,
+  OpenID4VPEvents,
+} from '../../openID4VP/openID4VPMachine';
 
 const QR_LOGIN_REF_ID = 'QrLogin';
 const OPENID4VP_REF_ID = 'OpenID4VP';
@@ -57,6 +60,10 @@ export const ScanActions = (model: any) => {
         service.subscribe(logState);
         return service;
       },
+    }),
+
+    resetOpenId4VPMachine: send(OpenID4VPEvents.RESET(), {
+      to: (context: any) => context.OpenId4VPRef,
     }),
 
     resetLinkCode: model.assign({

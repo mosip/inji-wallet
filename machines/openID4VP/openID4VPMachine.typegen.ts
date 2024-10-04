@@ -68,6 +68,7 @@ export interface Typegen0 {
       | 'logFailedVerification'
       | 'resetError'
       | 'resetFaceCaptureBannerStatus'
+      | 'resetIsShareWithSelfie'
       | 'resetOpenID4VPRetryCount'
       | 'setAuthenticationError'
       | 'setAuthenticationResponse'
@@ -100,14 +101,15 @@ export interface Typegen0 {
   };
   eventsCausingActions: {
     compareAndStoreSelectedVC: 'SET_SELECTED_VC';
-    forwardToParent: 'CANCEL';
+    forwardToParent: 'CANCEL' | 'DISMISS_POPUP';
     getFaceAuthConsent: 'AUTHENTICATE';
     getVcsMatchingAuthRequest: 'DOWNLOADED_VCS';
     incrementOpenID4VPRetryCount: 'RETRY';
     loadKeyPair: 'done.invoke.OpenID4VP.getKeyPairFromKeystore:invocation[0]';
     logFailedVerification: 'FACE_INVALID';
-    resetError: 'RESET_ERROR';
+    resetError: 'RESET';
     resetFaceCaptureBannerStatus: 'ACCEPT_REQUEST';
+    resetIsShareWithSelfie: 'CANCEL' | 'DISMISS_POPUP';
     resetOpenID4VPRetryCount: 'RESET_RETRY_COUNT';
     setAuthenticationError: 'error.platform.OpenID4VP.authenticateVerifier:invocation[0]';
     setAuthenticationResponse: 'done.invoke.OpenID4VP.authenticateVerifier:invocation[0]';
@@ -140,6 +142,7 @@ export interface Typegen0 {
     isSimpleOpenID4VPShare:
       | 'CANCEL'
       | 'DISMISS'
+      | 'DISMISS_POPUP'
       | 'DOWNLOADED_VCS'
       | 'FACE_VERIFICATION_CONSENT';
     showFaceAuthConsentScreen: 'CONFIRM';

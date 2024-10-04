@@ -58,6 +58,7 @@ export interface Typegen0 {
       | 'resetFlowType'
       | 'resetLinkCode'
       | 'resetOpenID4VPFlowType'
+      | 'resetOpenId4VPMachine'
       | 'resetSelectedVc'
       | 'resetShowQuickShareSuccessBanner'
       | 'sendBLEConnectionErrorEvent'
@@ -163,6 +164,13 @@ export interface Typegen0 {
       | 'SELECT_VC'
       | 'xstate.stop';
     resetOpenID4VPFlowType: 'CANCEL' | 'DISMISS' | 'RETRY' | 'SCREEN_BLUR';
+    resetOpenId4VPMachine:
+      | 'CANCEL'
+      | 'DISMISS'
+      | 'RESET'
+      | 'RETRY'
+      | 'SCREEN_FOCUS'
+      | 'SELECT_VC';
     resetSelectedVc:
       | 'DISCONNECT'
       | 'DISMISS'
