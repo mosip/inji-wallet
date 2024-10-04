@@ -52,7 +52,7 @@ export function selectCredentials(state: State) {
       selectedCredentials.push(credential);
     });
   });
-  return selectedCredentials;
+  return selectCredentials.length === 0 ? undefined : selectedCredentials;
 }
 
 export function selectVerifiableCredentialsData(state: State) {

@@ -63,7 +63,12 @@ export const scanMachine =
       },
       states: {
         inactive: {
-          entry: ['removeLoggers', 'resetFlowType', 'resetSelectedVc'],
+          entry: [
+            'removeLoggers',
+            'resetFlowType',
+            'resetSelectedVc',
+            'setOpenId4VPRef',
+          ],
         },
         disconnectDevice: {
           invoke: {
@@ -76,7 +81,6 @@ export const scanMachine =
           },
         },
         checkStorage: {
-          entry: 'setOpenId4VPRef',
           invoke: {
             src: 'checkStorageAvailability',
             onDone: [
@@ -94,7 +98,7 @@ export const scanMachine =
           on: {
             QRLOGIN_VIA_DEEP_LINK: [
               {
-                actions: ['setChildRef', 'setLinkCodeFromDeepLink'],
+                actions: ['setQrLoginRef', 'setLinkCodeFromDeepLink'],
                 cond: (_, event) => event.linkCode != '',
                 target: '#scan.showQrLogin',
               },
