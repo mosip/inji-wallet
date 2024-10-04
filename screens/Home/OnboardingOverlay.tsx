@@ -1,15 +1,15 @@
-import React, { useRef } from 'react';
+import React, {useRef} from 'react';
 import AppIntroSlider from 'react-native-app-intro-slider';
-import { SafeAreaView, ScrollView, View } from 'react-native';
-import { Icon, Overlay } from 'react-native-elements';
-import { Button, Column, Text } from '../../components/ui';
-import { Theme } from '../../components/ui/styleUtils';
-import { useTranslation } from 'react-i18next';
+import {SafeAreaView, ScrollView, View} from 'react-native';
+import {Icon, Overlay} from 'react-native-elements';
+import {Button, Column, Text} from '../../components/ui';
+import {Theme} from '../../components/ui/styleUtils';
+import {useTranslation} from 'react-i18next';
 
-export const OnboardingOverlay: React.FC<OnboardingProps> = (props) => {
+export const OnboardingOverlay: React.FC<OnboardingProps> = props => {
   const slider = useRef<AppIntroSlider>();
 
-  const { t } = useTranslation('OnboardingOverlay');
+  const {t} = useTranslation('OnboardingOverlay');
 
   const slides = [
     {
@@ -38,7 +38,7 @@ export const OnboardingOverlay: React.FC<OnboardingProps> = (props) => {
     },
   ];
 
-  const renderItem = ({ item }) => {
+  const renderItem = ({item}) => {
     return (
       <View style={Theme.OnboardingOverlayStyles.slide}>
         <ScrollView showsVerticalScrollIndicator={true}>
@@ -64,7 +64,7 @@ export const OnboardingOverlay: React.FC<OnboardingProps> = (props) => {
                   color={Theme.Colors.OnboardingCircleIcon}
                   size={10}
                   name="circle"
-                  style={{ opacity: i === activeIndex ? 1 : 0.6, margin: 2 }}
+                  style={{opacity: i === activeIndex ? 1 : 0.6, margin: 2}}
                 />
               ))}
           </View>

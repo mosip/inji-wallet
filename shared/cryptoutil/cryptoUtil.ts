@@ -451,10 +451,10 @@ export async function fetchKeyPair(keyType: any) {
     };
   }
 }
- const convertToKeyValue = items => {
-    const result = {};
-    items.forEach((item, index) => {
-      result[index] = item.value;
-    });
-    return result;
-  };
+const convertToKeyValue = items => {
+  const result = {};
+  items.forEach((item, index) => {
+    result[index] = item.value;
+  });
+  return result;
+};

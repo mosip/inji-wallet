@@ -1,8 +1,8 @@
-import { useEffect, useState } from 'react';
+import {useEffect, useState} from 'react';
 
 export const useOverlayVisibleAfterTimeout = (
   visibleStart = false,
-  ms = 1000
+  ms = 1000,
 ) => {
   const [visible, setVisible] = useState(false);
   const [savingTimeout, setSavingTimeout] = useState(null);

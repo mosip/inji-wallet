@@ -1,9 +1,9 @@
 import React from 'react';
-import { useTranslation } from 'react-i18next';
-import { TextItem } from './ui/TextItem';
+import {useTranslation} from 'react-i18next';
+import {TextItem} from './ui/TextItem';
 
-export const DeviceInfoList: React.FC<DeviceInfoProps> = (props) => {
-  const { t } = useTranslation('DeviceInfoList');
+export const DeviceInfoList: React.FC<DeviceInfoProps> = props => {
+  const {t} = useTranslation('DeviceInfoList');
 
   return (
     <React.Fragment>

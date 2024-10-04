@@ -15,7 +15,7 @@ export class ProofPurpose {
    * @param [maxTimestampDelta] {integer} a maximum number of seconds that
    *   the date on the signature can deviate from, defaults to `Infinity`.
    */
-  constructor({ term, date, maxTimestampDelta = Infinity }: any = {}) {
+  constructor({term, date, maxTimestampDelta = Infinity}: any = {}) {
     if (term === undefined) {
       throw new Error('"term" is required.');
     }
@@ -51,7 +51,7 @@ export class ProofPurpose {
     {
       /*document, suite, verificationMethod,
       documentLoader, expansionMap*/
-    }
+    },
   ) {
     try {
       // check expiration
@@ -64,9 +64,9 @@ export class ProofPurpose {
           throw new Error("The proof's created timestamp is out of range.");
         }
       }
-      return { valid: true };
+      return {valid: true};
     } catch (error) {
-      return { valid: false, error };
+      return {valid: false, error};
     }
   }
 
@@ -86,7 +86,7 @@ export class ProofPurpose {
     proof,
     {
       /*document, suite, documentLoader, expansionMap */
-    }
+    },
   ) {
     proof.proofPurpose = this.term;
     return proof;
@@ -105,7 +105,7 @@ export class ProofPurpose {
     proof,
     {
       /* document, documentLoader, expansionMap */
-    }
+    },
   ) {
     return proof.proofPurpose === this.term;
   }

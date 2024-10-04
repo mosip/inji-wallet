@@ -3,8 +3,8 @@
  */
 
 // import { Ed25519KeyPair } from 'crypto-ld';
-import { Ed25519VerificationKey2018 } from './Ed25519VerificationKey2018';
-import { JwsLinkedDataSignature } from '../JwsLinkedDataSignature';
+import {Ed25519VerificationKey2018} from './Ed25519VerificationKey2018';
+import {JwsLinkedDataSignature} from '../JwsLinkedDataSignature';
 
 export class Ed25519Signature2018 extends JwsLinkedDataSignature {
   /**

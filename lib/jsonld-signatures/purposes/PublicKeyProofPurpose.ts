@@ -2,11 +2,11 @@
  * Copyright (c) 2018 Digital Bazaar, Inc. All rights reserved.
  */
 
-import { ControllerProofPurpose } from './ControllerProofPurpose';
+import {ControllerProofPurpose} from './ControllerProofPurpose';
 
 export class PublicKeyProofPurpose extends ControllerProofPurpose {
-  constructor({ controller, date, maxTimestampDelta = Infinity }: any = {}) {
-    super({ term: 'publicKey', controller, date, maxTimestampDelta });
+  constructor({controller, date, maxTimestampDelta = Infinity}: any = {}) {
+    super({term: 'publicKey', controller, date, maxTimestampDelta});
   }
 
   async update(proof) {

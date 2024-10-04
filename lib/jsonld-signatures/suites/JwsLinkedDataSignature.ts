@@ -1,11 +1,11 @@
 /*!
  * Copyright (c) 2020-2021 Digital Bazaar, Inc. All rights reserved.
  */
-import { Buffer } from 'buffer';
+import {Buffer} from 'buffer';
 import 'fast-text-encoding';
 import jsonld from 'jsonld';
 import LinkedDataSignature from 'jsonld-signatures/lib/suites/LinkedDataSignature';
-import { encode } from 'base64url-universal';
+import {encode} from 'base64url-universal';
 
 export interface JwsLinkedDataSignature {
   [key: string]: any;
@@ -45,13 +45,13 @@ export class JwsLinkedDataSignature extends LinkedDataSignature {
     date,
     useNativeCanonize,
   }: any = {}) {
-    super({ type, verificationMethod, proof, date, useNativeCanonize });
+    super({type, verificationMethod, proof, date, useNativeCanonize});
     this.alg = alg;
     this.LDKeyClass = LDKeyClass;
     this.signer = signer;
     if (key) {
       if (verificationMethod === undefined) {
-        const publicKey = key.export({ publicKey: true });
+        const publicKey = key.export({publicKey: true});
         this.verificationMethod = publicKey.id;
       }
       this.key = key;
@@ -70,7 +70,7 @@ export class JwsLinkedDataSignature extends LinkedDataSignature {
    *
    * @returns {Promise<{object}>} the proof containing the signature value.
    */
-  async sign({ verifyData, proof }) {
+  async sign({verifyData, proof}) {
     if (!(this.signer && typeof this.signer.sign === 'function')) {
       throw new Error('A signer API has not been specified.');
     }
@@ -96,9 +96,9 @@ export class JwsLinkedDataSignature extends LinkedDataSignature {
     // create JWS data and sign
     const encodedHeader = encode(JSON.stringify(header));
 
-    const data = _createJws({ encodedHeader, verifyData });
+    const data = _createJws({encodedHeader, verifyData});
 
-    const signature = await this.signer.sign({ data });
+    const signature = await this.signer.sign({data});
 
     // create detached content signature
     const encodedSignature = encode(signature);
@@ -117,7 +117,7 @@ export class JwsLinkedDataSignature extends LinkedDataSignature {
    *
    * @returns {Promise<{boolean}>} Resolves with the verification result.
    */
-  async verifySignature({ verifyData, verificationMethod, proof }) {
+  async verifySignature({verifyData, verificationMethod, proof}) {
     if (
       !(proof.jws && typeof proof.jws === 'string' && proof.jws.includes('.'))
     ) {
@@ -154,38 +154,38 @@ export class JwsLinkedDataSignature extends LinkedDataSignature {
     // do signature verification
     const signature = Buffer.from(encodedSignature, 'base64');
 
-    const data = _createJws({ encodedHeader, verifyData });
+    const data = _createJws({encodedHeader, verifyData});
 
-    let { verifier } = this;
+    let {verifier} = this;
     if (!verifier) {
       const key = await this.LDKeyClass.from(verificationMethod);
       verifier = key.verifier();
     }
-    return verifier.verify({ data, signature });
+    return verifier.verify({data, signature});
   }
 
-  async assertVerificationMethod({ verificationMethod }) {
+  async assertVerificationMethod({verificationMethod}) {
     if (!jsonld.hasValue(verificationMethod, 'type', this.requiredKeyType)) {
       throw new Error(
-        `Invalid key type. Key type must be "${this.requiredKeyType}".`
+        `Invalid key type. Key type must be "${this.requiredKeyType}".`,
       );
     }
   }
 
-  async getVerificationMethod({ proof, documentLoader }) {
+  async getVerificationMethod({proof, documentLoader}) {
     if (this.key) {
-      return this.key.export({ publicKey: true });
+      return this.key.export({publicKey: true});
     }
 
     const verificationMethod = await super.getVerificationMethod({
       proof,
       documentLoader,
     });
-    await this.assertVerificationMethod({ verificationMethod });
+    await this.assertVerificationMethod({verificationMethod});
     return verificationMethod;
   }
 
-  async matchProof({ proof, document, purpose, documentLoader, expansionMap }) {
+  async matchProof({proof, document, purpose, documentLoader, expansionMap}) {
     if (
       !(await super.matchProof({
         proof,
@@ -205,7 +205,7 @@ export class JwsLinkedDataSignature extends LinkedDataSignature {
       return true;
     }
 
-    const { verificationMethod } = proof;
+    const {verificationMethod} = proof;
 
     // only match if the key specified matches the one in the proof
     if (typeof verificationMethod === 'object') {
@@ -222,7 +222,7 @@ export class JwsLinkedDataSignature extends LinkedDataSignature {
  * @param {Uint8Array} verifyData - Payload to sign/verify.
  * @returns {Uint8Array} A combined byte array for signing.
  */
-function _createJws({ encodedHeader, verifyData }) {
+function _createJws({encodedHeader, verifyData}) {
   const encodedHeaderBytes = new TextEncoder().encode(encodedHeader + '.');
 
   // concatenate the two uint8arrays

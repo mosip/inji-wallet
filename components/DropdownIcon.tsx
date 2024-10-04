@@ -1,18 +1,12 @@
-import React, { useRef } from 'react';
-import {
-  FlatList,
-  I18nManager,
-  Pressable,
-  StyleSheet,
-  View,
-} from 'react-native';
-import { Popable } from 'react-native-popable';
-import { Text } from 'react-native-elements';
+import React, {useRef} from 'react';
+import {FlatList, I18nManager, Pressable, StyleSheet, View} from 'react-native';
+import {Popable} from 'react-native-popable';
+import {Text} from 'react-native-elements';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import { Row } from './ui';
-import { Theme } from './ui/styleUtils';
+import {Row} from './ui';
+import {Theme} from './ui/styleUtils';
 
-export const DropdownIcon: React.FC<DropdownProps> = (props) => {
+export const DropdownIcon: React.FC<DropdownProps> = props => {
   const popover = useRef(null);
 
   const handleOnPress = (item: Item) => {
@@ -21,10 +15,10 @@ export const DropdownIcon: React.FC<DropdownProps> = (props) => {
   };
 
   const filteredItems = (idType: string, items: Item[]) => {
-    return items.filter((item) => !item.idType || item.idType === idType);
+    return items.filter(item => !item.idType || item.idType === idType);
   };
 
-  const renderItem = ({ item }) => {
+  const renderItem = ({item}) => {
     return (
       <View
         style={{
@@ -36,13 +30,13 @@ export const DropdownIcon: React.FC<DropdownProps> = (props) => {
         }}>
         <Pressable
           onPress={() => handleOnPress(item)}
-          style={{ paddingTop: 8, paddingBottom: 8 }}>
+          style={{paddingTop: 8, paddingBottom: 8}}>
           <Row>
             <Icon
               name={item.icon}
               color={Theme.Colors.Icon}
               size={20}
-              style={{ marginRight: 8 }}
+              style={{marginRight: 8}}
             />
             <Text>{item.label}</Text>
           </Row>

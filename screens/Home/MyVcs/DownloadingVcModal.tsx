@@ -1,10 +1,10 @@
 import React from 'react';
-import { useTranslation } from 'react-i18next';
-import { Button, Column, Text } from '../../../components/ui';
-import { Modal, ModalProps } from '../../../components/ui/Modal';
+import {useTranslation} from 'react-i18next';
+import {Button, Column, Text} from '../../../components/ui';
+import {Modal, ModalProps} from '../../../components/ui/Modal';
 
-export const DownloadingVcModal: React.FC<ModalProps> = (props) => {
-  const { t } = useTranslation('DownloadingVcModal');
+export const DownloadingVcModal: React.FC<ModalProps> = props => {
+  const {t} = useTranslation('DownloadingVcModal');
 
   return (
     <Modal

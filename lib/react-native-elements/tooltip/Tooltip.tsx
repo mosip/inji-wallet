@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React, {Fragment} from 'react';
 import {
   TouchableOpacity,
   Modal,
@@ -13,8 +13,8 @@ import {
   Platform,
   Keyboard,
 } from 'react-native';
-import { withTheme } from 'react-native-elements/dist/config';
-import { ThemeProps } from 'react-native-elements/dist/config';
+import {withTheme} from 'react-native-elements/dist/config';
+import {ThemeProps} from 'react-native-elements/dist/config';
 import {
   ScreenWidth,
   ScreenHeight,
@@ -87,16 +87,16 @@ class Tooltip extends React.Component<
   renderedElement?: View | null;
 
   toggleTooltip = () => {
-    const { onClose } = this.props;
+    const {onClose} = this.props;
     Keyboard.dismiss();
     setTimeout(() => {
       this.getElementPosition();
       this._isMounted &&
-        this.setState((prevState) => {
+        this.setState(prevState => {
           if (prevState.isVisible) {
             onClose && onClose();
           }
-          return { isVisible: !prevState.isVisible };
+          return {isVisible: !prevState.isVisible};
         });
     }, 100);
   };
@@ -104,12 +104,12 @@ class Tooltip extends React.Component<
   wrapWithPress = (
     toggleOnPress: TooltipProps['toggleOnPress'],
     toggleAction: TooltipProps['toggleAction'],
-    children: React.ReactNode
+    children: React.ReactNode,
   ) => {
     if (toggleOnPress) {
       return (
         <TouchableOpacity
-          {...{ [toggleAction]: this.toggleTooltip }}
+          {...{[toggleAction]: this.toggleTooltip}}
           delayLongPress={250}
           activeOpacity={1}>
           {children}
@@ -127,10 +127,10 @@ class Tooltip extends React.Component<
   };
 
   getTooltipStyle = () => {
-    const { yOffset, xOffset, elementHeight, elementWidth } = this.state;
-    const { height, backgroundColor, width, withPointer, containerStyle } =
+    const {yOffset, xOffset, elementHeight, elementWidth} = this.state;
+    const {height, backgroundColor, width, withPointer, containerStyle} =
       this.props;
-    const { x, y } = getTooltipCoordinate(
+    const {x, y} = getTooltipCoordinate(
       xOffset,
       yOffset,
       elementWidth,
@@ -139,7 +139,7 @@ class Tooltip extends React.Component<
       ScreenHeight,
       width,
       height,
-      withPointer
+      withPointer,
     );
 
     return StyleSheet.flatten([
@@ -163,8 +163,8 @@ class Tooltip extends React.Component<
   };
 
   renderPointer = (tooltipY: FlexStyle['top']) => {
-    const { yOffset, xOffset, elementHeight, elementWidth } = this.state;
-    const { backgroundColor, pointerColor } = this.props;
+    const {yOffset, xOffset, elementHeight, elementWidth} = this.state;
+    const {backgroundColor, pointerColor} = this.props;
     const pastMiddleLine = yOffset > (tooltipY || 0);
 
     return (
@@ -178,7 +178,7 @@ class Tooltip extends React.Component<
             7.5,
         }}>
         <Triangle
-          style={{ borderBottomColor: pointerColor || backgroundColor }}
+          style={{borderBottomColor: pointerColor || backgroundColor}}
           isDown={pastMiddleLine}
         />
       </View>
@@ -186,8 +186,8 @@ class Tooltip extends React.Component<
   };
 
   getTooltipHighlightedButtonStyle = (): ViewStyle => {
-    const { highlightColor } = this.props;
-    const { yOffset, xOffset, elementWidth, elementHeight } = this.state;
+    const {highlightColor} = this.props;
+    const {yOffset, xOffset, elementWidth, elementHeight} = this.state;
 
     return {
       position: 'absolute',
@@ -224,7 +224,7 @@ class Tooltip extends React.Component<
   };
 
   renderHighlightedButton = () => {
-    const { closeOnlyOnBackdropPress } = this.props;
+    const {closeOnlyOnBackdropPress} = this.props;
     if (closeOnlyOnBackdropPress) {
       return this.renderTouchableHighlightedButton();
     } else {
@@ -233,12 +233,12 @@ class Tooltip extends React.Component<
   };
 
   renderContent = (withTooltip: boolean) => {
-    const { popover, withPointer, toggleOnPress, toggleAction } = this.props;
+    const {popover, withPointer, toggleOnPress, toggleAction} = this.props;
     if (!withTooltip) {
       return this.wrapWithPress(
         toggleOnPress,
         toggleAction,
-        this.props.children
+        this.props.children,
       );
     }
 
@@ -265,7 +265,7 @@ class Tooltip extends React.Component<
   }
 
   getElementPosition = () => {
-    const { skipAndroidStatusBar } = this.props;
+    const {skipAndroidStatusBar} = this.props;
     this.renderedElement &&
       this.renderedElement.measure(
         (
@@ -274,7 +274,7 @@ class Tooltip extends React.Component<
           width,
           height,
           pageOffsetX,
-          pageOffsetY
+          pageOffsetY,
         ) => {
           this._isMounted &&
             this.setState({
@@ -291,12 +291,12 @@ class Tooltip extends React.Component<
               elementWidth: width,
               elementHeight: height,
             });
-        }
+        },
       );
   };
 
   renderStaticModalContent = () => {
-    const { withOverlay, overlayColor } = this.props;
+    const {withOverlay, overlayColor} = this.props;
     return (
       <Fragment>
         <TouchableOpacity
@@ -310,7 +310,7 @@ class Tooltip extends React.Component<
   };
 
   renderTogglingModalContent = () => {
-    const { withOverlay, overlayColor } = this.props;
+    const {withOverlay, overlayColor} = this.props;
     return (
       <TouchableOpacity
         style={this.containerStyle(withOverlay, overlayColor)}
@@ -322,7 +322,7 @@ class Tooltip extends React.Component<
   };
 
   renderModalContent = () => {
-    const { closeOnlyOnBackdropPress } = this.props;
+    const {closeOnlyOnBackdropPress} = this.props;
     if (closeOnlyOnBackdropPress) {
       return this.renderStaticModalContent();
     } else {
@@ -331,12 +331,12 @@ class Tooltip extends React.Component<
   };
 
   render() {
-    const { isVisible } = this.state;
-    const { onOpen, ModalComponent } = this.props;
+    const {isVisible} = this.state;
+    const {onOpen, ModalComponent} = this.props;
     return (
       <View
         collapsable={false}
-        ref={(e) => {
+        ref={e => {
           this.renderedElement = e;
         }}>
         {this.renderContent(false)}
@@ -352,5 +352,5 @@ class Tooltip extends React.Component<
   }
 }
 
-export { Tooltip };
+export {Tooltip};
 export default withTheme(Tooltip, 'Tooltip');

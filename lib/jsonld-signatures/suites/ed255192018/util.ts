@@ -27,11 +27,11 @@ export function base58Decode({decode, keyMaterial, type}) {
   let bytes;
   try {
     bytes = decode(keyMaterial);
-  } catch(e) {
+  } catch (e) {
     // do nothing
     // this helper throws when no result is produced
   }
-  if(bytes === undefined) {
+  if (bytes === undefined) {
     throw new TypeError(`The ${type} key material must be Base58 encoded.`);
   }
   return bytes;
