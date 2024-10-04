@@ -1,6 +1,7 @@
 import {StateFrom} from 'xstate';
 import {VCMetadata} from '../../../shared/VCMetadata';
 import {vcMetaMachine} from './VCMetaMachine';
+import {VC} from './vc';
 
 type State = StateFrom<typeof vcMetaMachine>;
 
@@ -16,6 +17,12 @@ export function selectShareableVcsMetadata(state: State): VCMetadata[] {
   return state.context.myVcsMetadata.filter(
     vcMetadata =>
       state.context.myVcs[vcMetadata.getVcKey()]?.verifiableCredential != null,
+  );
+}
+
+export function selectShareableVcs(state: State): VC[] {
+  return Object.values(state.context.myVcs).filter(
+    vc => vc?.verifiableCredential != null,
   );
 }
 

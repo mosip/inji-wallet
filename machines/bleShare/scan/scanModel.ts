@@ -9,6 +9,7 @@ import {qrLoginMachine} from '../../QrLogin/QrLoginMachine';
 import {VC} from '../../VerifiableCredential/VCMetaMachine/vc';
 import {ActivityLogType} from '../../activityLog';
 import {BLEError} from '../types';
+import {openID4VPMachine} from '../../openID4VP/openID4VPMachine';
 
 const ScanEvents = {
   SELECT_VC: (vc: VC, flowType: string) => ({vc, flowType}),
@@ -55,6 +56,10 @@ const ScanEvents = {
   }),
   ALLOWED: () => ({}),
   DENIED: () => ({}),
+  SHOW_ERROR: () => ({}),
+  SUCCESS: () => ({}),
+  IN_PROGRESS: () => ({}),
+  TIMEOUT: () => ({}),
   QRLOGIN_VIA_DEEP_LINK: (linkCode: string) => ({linkCode}),
 };
 
@@ -68,10 +73,12 @@ export const ScanModel = createModel(
     loggers: [] as EmitterSubscription[],
     vcName: '',
     flowType: VCShareFlowType.SIMPLE_SHARE,
+    openID4VPFlowType: '',
     verificationImage: {} as CameraCapturedPicture,
     openId4VpUri: '',
     shareLogType: '' as ActivityLogType,
     QrLoginRef: {} as ActorRefFrom<typeof qrLoginMachine>,
+    OpenId4VPRef: {} as ActorRefFrom<typeof openID4VPMachine>,
     showQuickShareSuccessBanner: false,
     linkCode: '',
     quickShareData: {},

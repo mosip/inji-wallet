@@ -28,17 +28,31 @@ import {ActivityLogEvents} from '../../activityLog';
 import {StoreEvents} from '../../store';
 import BluetoothStateManager from 'react-native-bluetooth-state-manager';
 import {NativeModules} from 'react-native';
-
 import {wallet} from '../../../shared/tuvali';
+import {createOpenID4VPMachine} from '../../openID4VP/openID4VPMachine';
 
-export const ScanActions = (model: any, QR_LOGIN_REF_ID: any) => {
+const QR_LOGIN_REF_ID = 'QrLogin';
+const OPENID4VP_REF_ID = 'OpenID4VP';
+
+export const ScanActions = (model: any) => {
   const {RNPixelpassModule} = NativeModules;
   return {
-    setChildRef: assign({
+    setQrLoginRef: assign({
       QrLoginRef: (context: any) => {
         const service = spawn(
           createQrLoginMachine(context.serviceRefs),
           QR_LOGIN_REF_ID,
+        );
+        service.subscribe(logState);
+        return service;
+      },
+    }),
+
+    setOpenId4VPRef: assign({
+      OpenId4VPRef: (context: any) => {
+        const service = spawn(
+          createOpenID4VPMachine(context.serviceRefs),
+          OPENID4VP_REF_ID,
         );
         service.subscribe(logState);
         return service;
@@ -84,6 +98,14 @@ export const ScanActions = (model: any, QR_LOGIN_REF_ID: any) => {
         flowType: context.flowType,
         selectedVc: context.selectedVc,
         isQrLoginViaDeepLink: context.isQrLoginViaDeepLink,
+      }),
+
+    sendVPScanData: context =>
+      context.OpenId4VPRef.send({
+        type: 'AUTHENTICATE',
+        encodedAuthRequest: context.linkCode,
+        flowType: context.openID4VPFlowType,
+        selectedVC: context.selectedVc,
       }),
 
     openBluetoothSettings: () => {
@@ -146,8 +168,26 @@ export const ScanActions = (model: any, QR_LOGIN_REF_ID: any) => {
       flowType: (_context, event) => event.flowType,
     }),
 
+    setOpenId4VPFlowType: assign({
+      openID4VPFlowType: (context: any) => {
+        let flowType = VCShareFlowType.OPENID4VP;
+        if (context.flowType === VCShareFlowType.MINI_VIEW_SHARE) {
+          flowType = VCShareFlowType.MINI_VIEW_SHARE_OPENID4VP;
+        } else if (
+          context.flowType === VCShareFlowType.MINI_VIEW_SHARE_WITH_SELFIE
+        ) {
+          flowType = VCShareFlowType.MINI_VIEW_SHARE_WITH_SELFIE_OPENID4VP;
+        }
+        return flowType;
+      },
+    }),
+
     resetFlowType: assign({
       flowType: VCShareFlowType.SIMPLE_SHARE,
+    }),
+
+    resetOpenID4VPFlowType: assign({
+      openID4VPFlowType: '',
     }),
 
     registerLoggers: assign({
@@ -231,8 +271,10 @@ export const ScanActions = (model: any, QR_LOGIN_REF_ID: any) => {
     ),
 
     setLinkCode: assign({
-      linkCode: (_, event) =>
-        new URL(event.params).searchParams.get('linkCode'),
+      linkCode: (context: any, event) =>
+        context.openID4VPFlowType.startsWith('OpenID4VP')
+          ? event.params
+          : new URL(event.params).searchParams.get('linkCode'),
     }),
 
     setLinkCodeFromDeepLink: assign({

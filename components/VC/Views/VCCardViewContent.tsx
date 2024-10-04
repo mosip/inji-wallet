@@ -27,21 +27,37 @@ import {useCopilot} from 'react-native-copilot';
 import {useTranslation} from 'react-i18next';
 
 export const VCCardViewContent: React.FC<VCItemContentProps> = props => {
-  const isVCSelectable = props.selectable && (
-    <CheckBox
-      checked={props.selected}
-      checkedIcon={
-        <Icon name="check-circle" type="material" color={Theme.Colors.Icon} />
-      }
-      uncheckedIcon={
-        <Icon
-          name="radio-button-unchecked"
-          color={Theme.Colors.uncheckedIcon}
-        />
-      }
-      onPress={() => props.onPress()}
-    />
-  );
+  const checkBoxForVCSharing = props.selectable &&
+    props.flow !== VCItemContainerFlowType.OPENID4VP && (
+      <CheckBox
+        checked={props.selected}
+        checkedIcon={
+          <Icon name="check-circle" type="material" color={Theme.Colors.Icon} />
+        }
+        uncheckedIcon={
+          <Icon
+            name="radio-button-unchecked"
+            color={Theme.Colors.uncheckedIcon}
+          />
+        }
+        onPress={() => props.onPress()}
+      />
+    );
+  const checkBoxForVPSharing = props.selectable &&
+    props.flow === VCItemContainerFlowType.OPENID4VP && (
+      <CheckBox
+        checked={props.selected}
+        checkedIcon={SvgImage.selectedCheckBox()}
+        uncheckedIcon={
+          <Icon
+            name="check-box-outline-blank"
+            color={Theme.Colors.uncheckedIcon}
+            size={22}
+          />
+        }
+        onPress={() => props.onPress()}
+      />
+    );
   const issuerLogo = props.verifiableCredentialData.issuerLogo;
   const faceImage = props.verifiableCredentialData.face;
   const {start} = useCopilot();
@@ -63,6 +79,7 @@ export const VCCardViewContent: React.FC<VCItemContentProps> = props => {
             : undefined
         }>
         <Row crossAlign="center" padding="3 0 0 3">
+          {checkBoxForVPSharing}
           {VcItemContainerProfileImage(props)}
           <Column fill align={'space-around'} margin="0 10 0 10">
             <VCItemFieldValue
@@ -115,7 +132,7 @@ export const VCCardViewContent: React.FC<VCItemContentProps> = props => {
               </Pressable>
             </>
           )}
-          {isVCSelectable}
+          {checkBoxForVCSharing}
         </Row>
 
         <WalletBinding service={props.service} vcMetadata={props.vcMetadata} />

@@ -2,7 +2,6 @@ import {isSignedInResult} from '../../shared/CloudBackupAndRestoreUtils';
 import {ErrorMessage, OIDCErrors} from '../../shared/openId4VCI/Utils';
 import {isHardwareKeystoreExists} from '../../shared/cryptoutil/cryptoUtil';
 import {BiometricCancellationError} from '../../shared/error/BiometricCancellationError';
-import {NETWORK_REQUEST_FAILED} from '../../shared/constants';
 import {VerificationErrorType} from '../../shared/vcjs/verifyCredential';
 
 export const IssuersGuards = () => {
@@ -49,7 +48,7 @@ export const IssuersGuards = () => {
       event.data instanceof BiometricCancellationError,
     isGenericError: (_: any, event: any) => {
       const errorMessage = event.data.message;
-      return !errorMessage.includes(NETWORK_REQUEST_FAILED);
+      return errorMessage === ErrorMessage.GENERIC;
     },
   };
 };

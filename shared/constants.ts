@@ -69,6 +69,7 @@ export const API_CACHED_STORAGE_KEYS = {
     `CACHE_FETCH_ISSUER_CONFIG_${issuerId}`,
   fetchIssuerWellknownConfig: (issuerId: string) =>
     `CACHE_FETCH_ISSUER_WELLKNOWN_CONFIG_${issuerId}`,
+  fetchTrustedVerifiers: 'CACHE_FETCH_TRUSTED_VERIFIERS',
 };
 
 export function isIOS(): boolean {

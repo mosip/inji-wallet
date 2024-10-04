@@ -159,7 +159,10 @@ export const getCredentialIssuersWellKnownConfig = async (
         wellknownResponse,
         credentialConfigurationId,
       );
-      if (Object.keys(matchingWellknownDetails).includes('order')) {
+      if (
+        matchingWellknownDetails.order != null &&
+        matchingWellknownDetails.order.length > 0
+      ) {
         fields = matchingWellknownDetails.order;
       } else {
         if (format === VCFormat.mso_mdoc) {
