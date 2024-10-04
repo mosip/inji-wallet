@@ -16,13 +16,13 @@ import {View, I18nManager} from 'react-native';
 import {Text} from './../../components/ui';
 import {BannerStatusType} from '../../components/BannerNotification';
 import {LIVENESS_CHECK} from '../../shared/constants';
+import {SendVPScreen} from './SendVPScreen';
 
 const ScanStack = createNativeStackNavigator();
 
 export const ScanLayout: React.FC = () => {
   const {t} = useTranslation('ScanScreen');
   const controller = useScanLayout();
-
   if (
     controller.statusOverlay != null &&
     !controller.isAccepted &&
@@ -37,7 +37,8 @@ export const ScanLayout: React.FC = () => {
         isHintVisible={
           controller.isStayInProgress ||
           controller.isBleError ||
-          controller.isSendingVc
+          controller.isSendingVc ||
+          controller.isSendingVP
         }
         onRetry={controller.statusOverlay?.onRetry}
         showBanner={controller.isFaceIdentityVerified}
@@ -113,10 +114,43 @@ export const ScanLayout: React.FC = () => {
             ),
           }}
         />
+        {controller.openID4VPFlowType === VCShareFlowType.OPENID4VP && (
+          <ScanStack.Screen
+            name={SCAN_ROUTES.SendVPScreen}
+            component={SendVPScreen}
+            options={{
+              title: t('SendVPScreen:requester'),
+              headerTitle: props => (
+                <View style={Theme.Styles.scanLayoutHeaderContainer}>
+                  <Text style={Theme.Styles.scanLayoutHeaderTitle}>
+                    {props.children}
+                  </Text>
+                </View>
+              ),
+              headerBackVisible: false,
+              headerRight: () =>
+                !I18nManager.isRTL && (
+                  <Icon
+                    name="close"
+                    color={Theme.Colors.blackIcon}
+                    onPress={controller.DISMISS}
+                  />
+                ),
+              headerLeft: () =>
+                I18nManager.isRTL && (
+                  <Icon
+                    name="close"
+                    color={Theme.Colors.blackIcon}
+                    onPress={controller.DISMISS}
+                  />
+                ),
+            }}
+          />
+        )}
       </ScanStack.Navigator>
 
       <SharingStatusModal
-        isVisible={controller.isAccepted}
+        isVisible={controller.isAccepted || controller.isVPSharingSuccess}
         testId={'sharingSuccessModal'}
         buttonStatus={'homeAndHistoryIcons'}
         title={t('status.accepted.title')}

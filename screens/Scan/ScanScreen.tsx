@@ -11,19 +11,32 @@ import {QrLogin} from '../QrLogin/QrLogin';
 import {useScanScreen} from './ScanScreenController';
 import BluetoothStateManager from 'react-native-bluetooth-state-manager';
 import {Linking} from 'react-native';
-import {isIOS} from '../../shared/constants';
+import {isIOS, LIVENESS_CHECK} from '../../shared/constants';
 import {BannerNotificationContainer} from '../../components/BannerNotificationContainer';
 import {SharingStatusModal} from './SharingStatusModal';
 import {SvgImage} from '../../components/ui/svg';
 import {LocationPermissionRational} from './LocationPermissionRational';
 import {FaceVerificationAlertOverlay} from './FaceVerificationAlertOverlay';
 import {useSendVcScreen} from './SendVcScreenController';
+import {useSendVPScreen} from './SendVPScreenController';
+import {Error} from '../../components/ui/Error';
+import {VPShareOverlay} from './VPShareOverlay';
+import {VerifyIdentityOverlay} from '../VerifyIdentityOverlay';
+import {VCShareFlowType} from '../../shared/Utils';
 
 export const ScanScreen: React.FC = () => {
   const {t} = useTranslation('ScanScreen');
   const scanScreenController = useScanScreen();
   const sendVcScreenController = useSendVcScreen();
+  const sendVPScreenController = useSendVPScreen();
   const [isBluetoothOn, setIsBluetoothOn] = useState(false);
+  const showErrorModal =
+    sendVPScreenController.scanScreenError ||
+    (sendVPScreenController.errorModal.show &&
+      (sendVPScreenController.flowType ===
+        VCShareFlowType.MINI_VIEW_SHARE_OPENID4VP ||
+        sendVPScreenController.flowType ===
+          VCShareFlowType.MINI_VIEW_SHARE_WITH_SELFIE_OPENID4VP));
 
   useEffect(() => {
     (async () => {
@@ -52,6 +65,11 @@ export const ScanScreen: React.FC = () => {
 
   const openSettings = () => {
     Linking.openSettings();
+  };
+
+  const handleTextButtonEvent = () => {
+    sendVPScreenController.GO_TO_HOME();
+    sendVPScreenController.RESET_RETRY_COUNT();
   };
 
   function noShareableVcText() {
@@ -226,14 +244,21 @@ export const ScanScreen: React.FC = () => {
     );
   }
 
+  const faceVerificationController = sendVPScreenController.flowType.startsWith(
+    'OpenID4VP',
+  )
+    ? sendVPScreenController
+    : sendVcScreenController;
+
   return (
     <Column fill backgroundColor={Theme.Colors.whiteBackgroundColor}>
       <BannerNotificationContainer />
       <FaceVerificationAlertOverlay
-        isVisible={sendVcScreenController.isFaceVerificationConsent}
-        onConfirm={sendVcScreenController.FACE_VERIFICATION_CONSENT}
-        close={sendVcScreenController.DISMISS}
+        isVisible={faceVerificationController.isFaceVerificationConsent}
+        onConfirm={faceVerificationController.FACE_VERIFICATION_CONSENT}
+        close={faceVerificationController.DISMISS}
       />
+
       <Centered
         padding="24 0"
         align="space-evenly"
@@ -252,6 +277,76 @@ export const ScanScreen: React.FC = () => {
         />
       </Centered>
       {displayStorageLimitReachedError()}
+
+      {sendVPScreenController.flowType.startsWith('OpenID4VP') &&
+        sendVPScreenController.flowType !== VCShareFlowType.OPENID4VP &&
+        sendVPScreenController.overlayDetails !== null && (
+          <VPShareOverlay
+            isVisible={sendVPScreenController.overlayDetails !== null}
+            title={sendVPScreenController.overlayDetails.title}
+            titleTestID={sendVPScreenController.overlayDetails.titleTestID}
+            message={sendVPScreenController.overlayDetails.message}
+            messageTestID={sendVPScreenController.overlayDetails.messageTestID}
+            primaryButtonTestID={
+              sendVPScreenController.overlayDetails.primaryButtonTestID
+            }
+            primaryButtonText={
+              sendVPScreenController.overlayDetails.primaryButtonText
+            }
+            primaryButtonEvent={
+              sendVPScreenController.overlayDetails.primaryButtonEvent
+            }
+            secondaryButtonTestID={
+              sendVPScreenController.overlayDetails.secondaryButtonTestID
+            }
+            secondaryButtonText={
+              sendVPScreenController.overlayDetails.secondaryButtonText
+            }
+            secondaryButtonEvent={
+              sendVPScreenController.overlayDetails.secondaryButtonEvent
+            }
+          />
+        )}
+      <>
+        <Error
+          isModal
+          alignActionsOnEnd
+          showClose={false}
+          isVisible={showErrorModal}
+          title={sendVPScreenController.errorModal.title}
+          message={sendVPScreenController.errorModal.message}
+          image={SvgImage.PermissionDenied()}
+          primaryButtonTestID={'retry'}
+          primaryButtonText={
+            sendVPScreenController.errorModal.showRetryButton &&
+            sendVPScreenController.openID4VPRetryCount < 3
+              ? t('ScanScreen:status.retry')
+              : undefined
+          }
+          primaryButtonEvent={sendVPScreenController.RETRY}
+          textButtonTestID={'home'}
+          textButtonText={t('ScanScreen:status.accepted.home')}
+          textButtonEvent={handleTextButtonEvent}
+          customImageStyles={{paddingBottom: 0, marginBottom: -6}}
+          customStyles={{marginTop: '30%'}}
+          testID={'vpShareError'}
+        />
+
+        <VerifyIdentityOverlay
+          credential={sendVPScreenController.credentials}
+          verifiableCredentialData={
+            sendVPScreenController.verifiableCredentialsData
+          }
+          isVerifyingIdentity={sendVPScreenController.isVerifyingIdentity}
+          onCancel={sendVPScreenController.CANCEL}
+          onFaceValid={sendVPScreenController.FACE_VALID}
+          onFaceInvalid={sendVPScreenController.FACE_INVALID}
+          isInvalidIdentity={sendVPScreenController.isInvalidIdentity}
+          onNavigateHome={sendVPScreenController.GO_TO_HOME}
+          onRetryVerification={sendVPScreenController.RETRY_VERIFICATION}
+          isLivenessEnabled={LIVENESS_CHECK}
+        />
+      </>
     </Column>
   );
 };

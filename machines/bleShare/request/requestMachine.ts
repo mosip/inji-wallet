@@ -618,7 +618,9 @@ export const requestMachine =
               _vcKey: vcMetadata.getVcKey(),
               type: context.receiveLogType,
               id: vcMetadata.displayId,
-              credentialConfigurationId: context.incomingVc.verifiableCredential.credentialConfigurationId,
+              credentialConfigurationId:
+                context.incomingVc.verifiableCredential
+                  .credentialConfigurationId,
               issuer: vcMetadata.issuer!!,
               timestamp: Date.now(),
               deviceName:

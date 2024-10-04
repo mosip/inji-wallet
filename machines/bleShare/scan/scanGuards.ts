@@ -24,6 +24,10 @@ export const ScanGuards = () => {
       }
     },
 
+    isOnlineSharing: (_, event) => {
+      return event.params.startsWith('openid4vp://authorize');
+    },
+
     uptoAndroid11: () => isAndroid() && androidVersion < 31,
 
     isIOS: () => isIOS(),

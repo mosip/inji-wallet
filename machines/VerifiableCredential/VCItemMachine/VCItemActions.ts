@@ -2,10 +2,7 @@ import {assign, send} from 'xstate';
 import {CommunicationDetails} from '../../../shared/Utils';
 import {StoreEvents} from '../../store';
 import {VCMetadata} from '../../../shared/VCMetadata';
-import {
-  MIMOTO_BASE_URL,
-  MY_VCS_STORE_KEY,
-} from '../../../shared/constants';
+import {MIMOTO_BASE_URL, MY_VCS_STORE_KEY} from '../../../shared/constants';
 import i18n from '../../../i18n';
 import {getHomeMachineService} from '../../../screens/Home/HomeScreenController';
 import {DownloadProps} from '../../../shared/api';
@@ -459,7 +456,8 @@ export const VCItemActions = model => {
           type: 'VC_DOWNLOADED',
           id: context.vcMetadata.displayId,
           issuer: context.vcMetadata.issuer!!,
-          credentialConfigurationId: context.verifiableCredential.credentialConfigurationId,
+          credentialConfigurationId:
+            context.verifiableCredential.credentialConfigurationId,
           timestamp: Date.now(),
           deviceName: '',
         });
@@ -472,7 +470,8 @@ export const VCItemActions = model => {
       (context: any, _) => {
         const vcMetadata = VCMetadata.fromVC(context.vcMetadata);
         return ActivityLogEvents.LOG_ACTIVITY({
-          credentialConfigurationId: context.verifiableCredential.credentialConfigurationId,
+          credentialConfigurationId:
+            context.verifiableCredential.credentialConfigurationId,
           issuer: vcMetadata.issuer!!,
           id: vcMetadata.displayId,
           _vcKey: vcMetadata.getVcKey(),
@@ -491,7 +490,8 @@ export const VCItemActions = model => {
         return ActivityLogEvents.LOG_ACTIVITY({
           _vcKey: vcMetadata.getVcKey(),
           type: 'WALLET_BINDING_SUCCESSFULL',
-          credentialConfigurationId: context.verifiableCredential.credentialConfigurationId,
+          credentialConfigurationId:
+            context.verifiableCredential.credentialConfigurationId,
           issuer: vcMetadata.issuer!!,
           id: vcMetadata.displayId,
           timestamp: Date.now(),
@@ -510,7 +510,8 @@ export const VCItemActions = model => {
           _vcKey: vcMetadata.getVcKey(),
           type: 'WALLET_BINDING_FAILURE',
           id: vcMetadata.displayId,
-          credentialConfigurationId: context.verifiableCredential.credentialConfigurationId,
+          credentialConfigurationId:
+            context.verifiableCredential.credentialConfigurationId,
           issuer: vcMetadata.issuer!!,
           timestamp: Date.now(),
           deviceName: '',

@@ -61,10 +61,7 @@ export class ActivityLog {
 
 export function getActionText(activity: ActivityLog, t, wellknown: Object) {
   if (!!activity.credentialConfigurationId) {
-    const cardType = getIdType(
-      wellknown,
-      activity.credentialConfigurationId,
-    );
+    const cardType = getIdType(wellknown, activity.credentialConfigurationId);
     return `${t(activity.type, {idType: cardType, id: activity.id})}`;
   }
   return `${t(activity.type, {idType: '', id: activity.id})}`;

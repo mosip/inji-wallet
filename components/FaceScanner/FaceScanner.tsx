@@ -41,7 +41,7 @@ export const FaceScanner: React.FC<FaceScannerProps> = props => {
   const {appService} = useContext(GlobalContext);
   const isActive = useSelector(appService, selectIsActive);
 
-  const machine = useRef(createFaceScannerMachine(props.vcImage));
+  const machine = useRef(createFaceScannerMachine(props.vcImages));
   const service = useInterpret(machine.current);
 
   const [cameraType, setCameraType] = useState(Camera.Constants.Type.front);
@@ -118,7 +118,7 @@ export const FaceScanner: React.FC<FaceScannerProps> = props => {
 
       const result = await cropEyeAreaFromFace(
         picArray,
-        props.vcImage,
+        props.vcImages[0],
         faceToCompare,
       );
       return result ? props.onValid() : props.onInvalid();
@@ -209,7 +209,7 @@ export const FaceScanner: React.FC<FaceScannerProps> = props => {
   }
 };
 interface FaceScannerProps {
-  vcImage: string;
+  vcImages: string[];
   onValid: () => void;
   onInvalid: () => void;
   isLiveness: boolean;
