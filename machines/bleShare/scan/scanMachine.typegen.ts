@@ -58,7 +58,6 @@ export interface Typegen0 {
       | 'resetFlowType'
       | 'resetLinkCode'
       | 'resetOpenID4VPFlowType'
-      | 'resetOpenId4VPMachine'
       | 'resetSelectedVc'
       | 'resetShowQuickShareSuccessBanner'
       | 'sendBLEConnectionErrorEvent'
@@ -164,13 +163,6 @@ export interface Typegen0 {
       | 'SELECT_VC'
       | 'xstate.stop';
     resetOpenID4VPFlowType: 'CANCEL' | 'DISMISS' | 'RETRY' | 'SCREEN_BLUR';
-    resetOpenId4VPMachine:
-      | 'CANCEL'
-      | 'DISMISS'
-      | 'RESET'
-      | 'RETRY'
-      | 'SCREEN_FOCUS'
-      | 'SELECT_VC';
     resetSelectedVc:
       | 'DISCONNECT'
       | 'DISMISS'
@@ -194,10 +186,15 @@ export interface Typegen0 {
     setLinkCodeFromDeepLink: 'QRLOGIN_VIA_DEEP_LINK';
     setOpenId4VPFlowType: 'SCAN';
     setOpenId4VPRef:
+      | 'CANCEL'
       | 'DISCONNECT'
       | 'DISMISS'
       | 'DISMISS_QUICK_SHARE_BANNER'
+      | 'RESET'
+      | 'RETRY'
       | 'SCREEN_BLUR'
+      | 'SCREEN_FOCUS'
+      | 'SELECT_VC'
       | 'xstate.init';
     setQrLoginRef: 'QRLOGIN_VIA_DEEP_LINK' | 'SCAN';
     setQuickShareData: 'SCAN';

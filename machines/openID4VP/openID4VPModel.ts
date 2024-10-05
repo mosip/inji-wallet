@@ -36,7 +36,7 @@ const openID4VPEvents = {
   CHECK_FOR_IMAGE: () => ({}),
   RETRY: () => ({}),
   RESET_RETRY_COUNT: () => ({}),
-  RESET: () => ({}),
+  RESET_ERROR: () => ({}),
   CLOSE_BANNER: () => ({}),
 };
 

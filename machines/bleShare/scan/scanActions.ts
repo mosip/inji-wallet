@@ -62,10 +62,6 @@ export const ScanActions = (model: any) => {
       },
     }),
 
-    resetOpenId4VPMachine: send(OpenID4VPEvents.RESET(), {
-      to: (context: any) => context.OpenId4VPRef,
-    }),
-
     resetLinkCode: model.assign({
       linkcode: '',
     }),

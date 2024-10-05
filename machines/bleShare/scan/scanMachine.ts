@@ -81,7 +81,7 @@ export const scanMachine =
           },
         },
         checkStorage: {
-          entry: 'resetOpenId4VPMachine',
+          entry: 'setOpenId4VPRef',
           invoke: {
             src: 'checkStorageAvailability',
             onDone: [

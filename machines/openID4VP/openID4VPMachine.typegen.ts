@@ -108,7 +108,7 @@ export interface Typegen0 {
     incrementOpenID4VPRetryCount: 'RETRY';
     loadKeyPair: 'done.invoke.OpenID4VP.getKeyPairFromKeystore:invocation[0]';
     logFailedVerification: 'FACE_INVALID';
-    resetError: 'RESET';
+    resetError: 'RESET_ERROR';
     resetFaceCaptureBannerStatus: 'ACCEPT_REQUEST' | 'CLOSE_BANNER';
     resetIsShareWithSelfie: 'CANCEL' | 'DISMISS_POPUP';
     resetOpenID4VPRetryCount: 'RESET_RETRY_COUNT';
