@@ -27,6 +27,7 @@ const openID4VPEvents = {
   FACE_VALID: () => ({}),
   FACE_INVALID: () => ({}),
   DISMISS: () => ({}),
+  DISMISS_POPUP: () => ({}),
   RETRY_VERIFICATION: () => ({}),
   STORE_RESPONSE: (response: any) => ({response}),
   GO_BACK: () => ({}),
@@ -36,6 +37,7 @@ const openID4VPEvents = {
   RETRY: () => ({}),
   RESET_RETRY_COUNT: () => ({}),
   RESET_ERROR: () => ({}),
+  CLOSE_BANNER: () => ({}),
 };
 
 export const openID4VPModel = createModel(
@@ -57,6 +59,7 @@ export const openID4VPModel = createModel(
     miniViewSelectedVC: {} as VC,
     openID4VPRetryCount: 0,
     trustedVerifiers: [] as VerifierType[],
+    showFaceCaptureSuccessBanner: false,
   },
   {events: openID4VPEvents},
 );

@@ -66,6 +66,11 @@ export const qrLoginMachine =
               },
               {
                 cond: 'showFaceAuthConsentScreen',
+                actions: [
+                  'setlinkTransactionResponse',
+                  'expandLinkTransResp',
+                  'setClaims',
+                ],
                 target: 'faceVerificationConsent',
               },
               {

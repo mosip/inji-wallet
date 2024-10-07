@@ -250,13 +250,18 @@ export const ScanScreen: React.FC = () => {
     ? sendVPScreenController
     : sendVcScreenController;
 
+  const faceVerificationConsentOnClose =
+    sendVPScreenController.flowType.startsWith('OpenID4VP')
+      ? sendVPScreenController.DISMISS_POPUP
+      : sendVcScreenController.DISMISS;
+
   return (
     <Column fill backgroundColor={Theme.Colors.whiteBackgroundColor}>
       <BannerNotificationContainer />
       <FaceVerificationAlertOverlay
         isVisible={faceVerificationController.isFaceVerificationConsent}
         onConfirm={faceVerificationController.FACE_VERIFICATION_CONSENT}
-        close={faceVerificationController.DISMISS}
+        close={faceVerificationConsentOnClose}
       />
 
       <Centered
@@ -305,6 +310,7 @@ export const ScanScreen: React.FC = () => {
             secondaryButtonEvent={
               sendVPScreenController.overlayDetails.secondaryButtonEvent
             }
+            onCancel={sendVPScreenController.overlayDetails.onCancel}
           />
         )}
       <>

@@ -209,13 +209,14 @@ export const SendVPScreen: React.FC = () => {
               secondaryButtonEvent={
                 controller.overlayDetails.secondaryButtonEvent
               }
+              onCancel={controller.overlayDetails.onCancel}
             />
           )}
 
           <FaceVerificationAlertOverlay
             isVisible={controller.isFaceVerificationConsent}
             onConfirm={controller.FACE_VERIFICATION_CONSENT}
-            close={controller.DISMISS}
+            close={controller.DISMISS_POPUP}
           />
         </>
       )}
