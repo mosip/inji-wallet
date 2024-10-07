@@ -1,5 +1,6 @@
 import {CACHED_API} from '../../shared/api';
 import {fetchKeyPair} from '../../shared/cryptoutil/cryptoUtil';
+import {hasKeyPair} from '../../shared/openId4VCI/Utils';
 import {
   constructProofJWT,
   OpenID4VP,
@@ -23,7 +24,7 @@ export const openID4VPServices = () => {
     },
 
     getKeyPair: async (context: any) => {
-      if (!!(await fetchKeyPair(context.keyType)).publicKey) {
+      if (!!(await hasKeyPair(context.keyType))) {
         return await fetchKeyPair(context.keyType);
       }
     },

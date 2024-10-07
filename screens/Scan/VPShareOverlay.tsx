@@ -11,7 +11,7 @@ export const VPShareOverlay: React.FC<VPShareOverlayProps> = props => {
   return (
     <Overlay
       isVisible={props.isVisible}
-      // onBackdropPress={props.close}
+      onBackdropPress={props.onCancel}
       overlayStyle={Theme.BindingVcWarningOverlay.overlay}>
       <Column
         align="space-between"
@@ -71,4 +71,5 @@ export interface VPShareOverlayProps {
   secondaryButtonTestID: string;
   secondaryButtonText: string;
   secondaryButtonEvent: () => void;
+  onCancel: () => void;
 }

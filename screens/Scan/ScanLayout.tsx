@@ -28,6 +28,10 @@ export const ScanLayout: React.FC = () => {
     !controller.isAccepted &&
     !controller.isInvalid
   ) {
+    const onClosingBanner = controller.isFaceVerifiedInVPSharing
+      ? controller.VP_SHARE_CLOSE_BANNER
+      : controller.CLOSE_BANNER;
+
     return (
       <Loader
         title={controller.statusOverlay?.title}
@@ -41,9 +45,12 @@ export const ScanLayout: React.FC = () => {
           controller.isSendingVP
         }
         onRetry={controller.statusOverlay?.onRetry}
-        showBanner={controller.isFaceIdentityVerified}
+        showBanner={
+          controller.isFaceIdentityVerified ||
+          controller.isFaceVerifiedInVPSharing
+        }
         bannerMessage={t('ScanScreen:postFaceCapture:captureSuccessMessage')}
-        onBannerClose={controller.CLOSE_BANNER}
+        onBannerClose={onClosingBanner}
         bannerType={BannerStatusType.SUCCESS}
         bannerTestID={'faceVerificationSuccess'}
       />

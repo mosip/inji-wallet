@@ -22,10 +22,10 @@ export function selectVcName(state: State) {
 }
 
 export function selectCredential(state: State) {
-  return [
+  const credential =
     state.context.selectedVc?.verifiableCredential?.credential ||
-      state.context.selectedVc?.verifiableCredential,
-  ];
+    state.context.selectedVc?.verifiableCredential;
+  return credential ? [credential] : credential;
 }
 
 export function selectVerifiableCredentialData(state: State) {

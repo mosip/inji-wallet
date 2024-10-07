@@ -49,6 +49,8 @@ import {ScanStackParamList} from '../../routes/routesConstants';
 import {VCShareFlowType} from '../../shared/Utils';
 import {Theme} from '../../components/ui/styleUtils';
 import {APP_EVENTS, selectIsLinkCode} from '../../machines/app';
+import {selectIsFaceVerifiedInVPSharing} from '../../machines/openID4VP/openID4VPSelectors';
+import {OpenID4VPEvents} from '../../machines/openID4VP/openID4VPMachine';
 
 type ScanLayoutNavigation = NavigationProp<
   ScanStackParamList & MainBottomTabParamList
@@ -64,6 +66,7 @@ export function useScanLayout() {
   const {t} = useTranslation('ScanScreen');
   const {appService} = useContext(GlobalContext);
   const scanService = appService.children.get('scan')!!;
+  const openID4VPService = scanService.getSnapshot().context.OpenId4VPRef;
   const navigation = useNavigation<ScanLayoutNavigation>();
 
   const isLocationDisabled = useSelector(scanService, selectIsLocationDisabled);
@@ -97,6 +100,8 @@ export function useScanLayout() {
   const FACE_VALID = () => scanService.send(ScanEvents.FACE_VALID());
   const FACE_INVALID = () => scanService.send(ScanEvents.FACE_INVALID());
   const CLOSE_BANNER = () => scanService.send(ScanEvents.CLOSE_BANNER());
+  const VP_SHARE_CLOSE_BANNER = () =>
+    openID4VPService.send(OpenID4VPEvents.CLOSE_BANNER());
   const onStayInProgress = () =>
     scanService.send(ScanEvents.STAY_IN_PROGRESS());
   const onRetry = () => scanService.send(ScanEvents.RETRY());
@@ -142,6 +147,10 @@ export function useScanLayout() {
   let isFaceIdentityVerified = useSelector(
     scanService,
     selectIsFaceIdentityVerified,
+  );
+  let isFaceVerifiedInVPSharing = useSelector(
+    openID4VPService,
+    selectIsFaceVerifiedInVPSharing,
   );
 
   let statusOverlay: Pick<
@@ -342,6 +351,8 @@ export function useScanLayout() {
     FACE_VALID,
     RETRY_VERIFICATION,
     isFaceIdentityVerified,
+    isFaceVerifiedInVPSharing,
     CLOSE_BANNER,
+    VP_SHARE_CLOSE_BANNER,
   };
 }

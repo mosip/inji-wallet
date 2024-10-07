@@ -59,26 +59,28 @@ export function selectIsVerifyingSuccesful(state: State) {
 }
 
 export function selectCredential(state: State): Credential {
-  return (
+  const credential =
     state.context.selectedVc?.verifiableCredential?.credential ||
-    state.context.selectedVc?.credential
-  );
+    state.context.selectedVc?.credential;
+  return credential ? [credential] : credential;
 }
 
 export function selectVerifiableCredentialData(state: State) {
   const vcMetadata = new VCMetadata(state.context.selectedVc?.vcMetadata);
-  return {
-    vcMetadata: vcMetadata,
-    issuer: vcMetadata.issuer,
-    issuerLogo:
-      state.context.selectedVc?.verifiableCredential?.issuerLogo ||
-      getMosipLogo(),
-    face:
-      state.context.selectedVc?.verifiableCredential?.credential
-        ?.credentialSubject?.face ||
-      state.context.selectedVc?.credential?.biometrics?.face,
-    wellKnown: state.context.selectedVc?.verifiableCredential?.wellKnown,
-  };
+  return [
+    {
+      vcMetadata: vcMetadata,
+      issuer: vcMetadata.issuer,
+      issuerLogo:
+        state.context.selectedVc?.verifiableCredential?.issuerLogo ||
+        getMosipLogo(),
+      face:
+        state.context.selectedVc?.verifiableCredential?.credential
+          ?.credentialSubject?.face ||
+        state.context.selectedVc?.credential?.biometrics?.face,
+      wellKnown: state.context.selectedVc?.verifiableCredential?.wellKnown,
+    },
+  ];
 }
 
 export function selectLinkTransactionResponse(state: State) {

@@ -52,7 +52,7 @@ export function selectCredentials(state: State) {
       selectedCredentials.push(credential);
     });
   });
-  return selectedCredentials;
+  return selectCredentials.length === 0 ? undefined : selectedCredentials;
 }
 
 export function selectVerifiableCredentialsData(state: State) {
@@ -93,4 +93,10 @@ export function selectIsError(state: State) {
 
 export function selectOpenID4VPRetryCount(state: State) {
   return state.context.openID4VPRetryCount;
+}
+
+export function selectIsFaceVerifiedInVPSharing(state: State) {
+  return (
+    state.matches('sendingVP') && state.context.showFaceCaptureSuccessBanner
+  );
 }
