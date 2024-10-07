@@ -187,12 +187,16 @@ export interface Typegen0 {
     setOpenId4VPFlowType: 'SCAN';
     setOpenId4VPRef:
       | 'CANCEL'
+      | 'DISCONNECT'
       | 'DISMISS'
+      | 'DISMISS_QUICK_SHARE_BANNER'
       | 'RESET'
       | 'RETRY'
+      | 'SCREEN_BLUR'
       | 'SCREEN_FOCUS'
-      | 'SELECT_VC';
-    setQrLoginRef: 'SCAN';
+      | 'SELECT_VC'
+      | 'xstate.init';
+    setQrLoginRef: 'QRLOGIN_VIA_DEEP_LINK' | 'SCAN';
     setQuickShareData: 'SCAN';
     setReadyForBluetoothStateCheck: 'BLUETOOTH_PERMISSION_ENABLED';
     setReceiverInfo: 'CONNECTED';

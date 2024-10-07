@@ -156,6 +156,8 @@ export const openID4VPActions = (model: any) => {
       error: () => '',
     }),
 
+    resetIsShareWithSelfie: model.assign({isShareWithSelfie: () => false}),
+
     loadKeyPair: assign({
       publicKey: (_, event: any) => event.data?.publicKey as string,
       privateKey: (context: any, event: any) =>
@@ -188,6 +190,14 @@ export const openID4VPActions = (model: any) => {
 
     setTrustedVerifiers: model.assign({
       trustedVerifiers: (_: any, event: any) => event.data.response.verifiers,
+    }),
+
+    updateFaceCaptureBannerStatus: model.assign({
+      showFaceCaptureSuccessBanner: () => true,
+    }),
+
+    resetFaceCaptureBannerStatus: model.assign({
+      showFaceCaptureSuccessBanner: false,
     }),
   };
 };

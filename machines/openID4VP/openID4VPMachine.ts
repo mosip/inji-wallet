@@ -21,7 +21,19 @@ export const openID4VPMachine = model.createMachine(
     },
     id: 'OpenID4VP',
     initial: 'waitingForData',
-
+    on: {
+      DISMISS_POPUP: [
+        {
+          cond: 'isSimpleOpenID4VPShare',
+          actions: 'resetIsShareWithSelfie',
+          target: 'selectingVCs',
+        },
+        {
+          actions: 'forwardToParent',
+          target: 'waitingForData',
+        },
+      ],
+    },
     states: {
       waitingForData: {
         on: {
@@ -210,15 +222,6 @@ export const openID4VPMachine = model.createMachine(
               target: 'verifyingIdentity',
             },
           ],
-          DISMISS: [
-            {
-              cond: 'isSimpleOpenID4VPShare',
-              target: 'selectingVCs',
-            },
-            {
-              actions: sendParent('DISMISS'),
-            },
-          ],
         },
       },
       checkIfAnySelectedVCHasImage: {
@@ -243,6 +246,7 @@ export const openID4VPMachine = model.createMachine(
           FACE_VALID: [
             {
               cond: 'hasKeyPair',
+              actions: 'updateFaceCaptureBannerStatus',
               target: 'sendingVP',
             },
             {
@@ -256,7 +260,7 @@ export const openID4VPMachine = model.createMachine(
           CANCEL: [
             {
               cond: 'isSimpleOpenID4VPShare',
-              actions: model.assign({isShareWithSelfie: () => false}),
+              actions: 'resetIsShareWithSelfie',
               target: 'selectingVCs',
             },
             {
@@ -283,6 +287,11 @@ export const openID4VPMachine = model.createMachine(
       },
       sendingVP: {
         entry: sendParent('IN_PROGRESS'),
+        on: {
+          CLOSE_BANNER: {
+            actions: 'resetFaceCaptureBannerStatus',
+          },
+        },
         invoke: {
           src: 'sendVP',
           onDone: {
