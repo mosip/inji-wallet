@@ -25,6 +25,7 @@ import {
   selectVoluntaryClaims,
   selectCredential,
   selectVerifiableCredentialData,
+  selectIsQrLoginViaDeepLink,
 } from '../../machines/QrLogin/QrLoginSelectors';
 import {selectBindedVcsMetadata} from '../../machines/VerifiableCredential/VCMetaMachine/VCMetaSelectors';
 import {GlobalContext} from '../../shared/GlobalContext';
@@ -56,6 +57,7 @@ export function useQrLogin({service}: QrLoginProps) {
       service,
       selectVerifiableCredentialData,
     ),
+    isQrLoginViaDeepLink: useSelector(service, selectIsQrLoginViaDeepLink),
     domainName: useSelector(service, selectDomainName),
     logoUrl: useSelector(service, selectLogoUrl),
     essentialClaims: useSelector(service, selectEssentialClaims),

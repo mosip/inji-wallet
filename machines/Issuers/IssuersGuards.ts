@@ -4,7 +4,6 @@ import {isHardwareKeystoreExists} from '../../shared/cryptoutil/cryptoUtil';
 import {BiometricCancellationError} from '../../shared/error/BiometricCancellationError';
 import {VerificationErrorType} from '../../shared/vcjs/verifyCredential';
 
-
 export const IssuersGuards = () => {
   return {
     isVerificationPendingBecauseOfNetworkIssue: (_context, event) =>
@@ -49,7 +48,7 @@ export const IssuersGuards = () => {
       event.data instanceof BiometricCancellationError,
     isGenericError: (_: any, event: any) => {
       const errorMessage = event.data.message;
-      return errorMessage === ErrorMessage.GENERIC
+      return errorMessage === ErrorMessage.GENERIC;
     },
   };
 };

@@ -82,6 +82,7 @@ export const ScanModel = createModel(
     showQuickShareSuccessBanner: false,
     linkCode: '',
     quickShareData: {},
+    isQrLoginViaDeepLink: false,
     showFaceAuthConsent: true as boolean,
     readyForBluetoothStateCheck: false,
     showFaceCaptureSuccessBanner: false,

@@ -11,7 +11,6 @@ import {QrLoginRef} from '../../machines/QrLogin/QrLoginMachine';
 import {Icon} from 'react-native-elements';
 import {View} from 'react-native';
 import {FaceVerificationAlertOverlay} from '../Scan/FaceVerificationAlertOverlay';
-import {SvgImage} from '../../components/ui/svg';
 import {LIVENESS_CHECK} from '../../shared/constants';
 
 export const QrLogin: React.FC<QrLoginProps> = props => {

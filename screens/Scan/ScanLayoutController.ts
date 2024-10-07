@@ -26,7 +26,7 @@ import {
   selectVerifiableCredentialData,
   selectIsSendingVPTimeout,
   selectIsSendingVP,
-  selectIsQrLoginViaDeepLink,
+  selectIsQrLoginDoneViaDeeplink,
   selectOpenID4VPFlowType,
   selectIsSendingVPSuccess,
 } from '../../machines/bleShare/scan/scanSelectors';
@@ -85,10 +85,6 @@ export function useScanLayout() {
     scanService,
     selectVerifiableCredentialData,
   );
-  const isQrLoginViaDeepLink = useSelector(
-    scanService,
-    selectIsQrLoginViaDeepLink,
-  );
 
   const locationError = {message: '', button: ''};
 
@@ -99,7 +95,6 @@ export function useScanLayout() {
     locationError.message = t('errors.locationDenied.message');
     locationError.button = t('errors.locationDenied.button');
   }
-
   const DISMISS = () => scanService.send(ScanEvents.DISMISS());
   const CANCEL = () => scanService.send(ScanEvents.CANCEL());
   const FACE_VALID = () => scanService.send(ScanEvents.FACE_VALID());
@@ -281,17 +276,21 @@ export function useScanLayout() {
   const isReviewing = useSelector(scanService, selectIsReviewing);
   const isScanning = useSelector(scanService, selectIsScanning);
   const isQrLoginDone = useSelector(scanService, selectIsQrLoginDone);
+  const isQrLoginDoneViaDeeplink = useSelector(
+    scanService,
+    selectIsQrLoginDoneViaDeeplink,
+  );
 
   useEffect(() => {
-    if (linkCode != '' && isScanning) {
+    if (linkCode != '') {
       scanService.send(ScanEvents.QRLOGIN_VIA_DEEP_LINK(linkCode));
       appService.send(APP_EVENTS.RESET_LINKCODE());
+    } else if (isQrLoginDoneViaDeeplink) {
+      changeTabBarVisible('flex');
+      navigation.navigate(BOTTOM_TAB_ROUTES.home);
     } else if (isDone) {
       changeTabBarVisible('flex');
       navigation.navigate(BOTTOM_TAB_ROUTES.home);
-    } else if (isQrLoginViaDeepLink) {
-      scanService.send(ScanEvents.QRLOGIN_VIA_DEEP_LINK(linkCode));
-      appService.send(APP_EVENTS.RESET_LINKCODE());
     } else if (
       isReviewing &&
       flowType === VCShareFlowType.SIMPLE_SHARE &&
@@ -318,8 +317,8 @@ export function useScanLayout() {
     flowType,
     openID4VPFlowType,
     isAccepted,
-    isQrLoginViaDeepLink,
     linkCode,
+    isQrLoginDoneViaDeeplink,
   ]);
 
   return {
