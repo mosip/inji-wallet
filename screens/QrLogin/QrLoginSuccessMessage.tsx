@@ -1,6 +1,6 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {useTranslation} from 'react-i18next';
-import {Image} from 'react-native';
+import {Alert, BackHandler, Image, Linking} from 'react-native';
 import {Icon} from 'react-native-elements';
 import {Modal} from '../../components/ui/Modal';
 import {Centered, Button, Text, Column} from '../../components/ui';
@@ -13,13 +13,19 @@ export const QrLoginSuccess: React.FC<QrLoginSuccessProps> = props => {
   const {t} = useTranslation('QrLogin');
   const controller = useQrLogin(props);
 
+  const okButtonAction = () => {
+    if (controller.isQrLoginViaDeepLink) {
+      BackHandler.exitApp();
+    }
+    props.onPress();
+  };
+
   return (
     <Modal
       isVisible={controller.isVerifyingSuccesful}
       arrowLeft={true}
       headerTitle={t('status')}
-      headerElevation={5}
-      onDismiss={controller.DISMISS}>
+      headerElevation={5}>
       <Column
         fill
         align="space-between"
@@ -47,7 +53,7 @@ export const QrLoginSuccess: React.FC<QrLoginSuccessProps> = props => {
             title={t('ok')}
             margin="0 0 12 0"
             styles={Theme.ButtonStyles.radius}
-            onPress={props.onPress}
+            onPress={okButtonAction}
           />
         </Column>
       </Column>

@@ -111,6 +111,10 @@ export function selectIsSharing(state: State) {
   return state.context.isSharing;
 }
 
+export function selectIsQrLoginViaDeepLink(state: State) {
+  return state.context.isQrLoginViaDeepLink;
+}
+
 export function selectIsFaceVerificationConsent(state: State) {
   return state.matches('faceVerificationConsent');
 }

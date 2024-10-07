@@ -118,8 +118,7 @@ export async function checkAllKeyPairs() {
   const ECR1Key = await hasKeyPair(KeyTypes.ES256);
   const ECK1Key = await hasKeyPair(KeyTypes.ES256K);
   const EDKey = true;
-  if (!(RSAKey && ECR1Key && ECK1Key && EDKey))
-    throw Error('Keys not present');
+  if (!(RSAKey && ECR1Key && ECK1Key && EDKey)) throw Error('Keys not present');
 }
 
 export async function generateKeyPairsAndStoreOrder() {
@@ -445,10 +444,10 @@ export async function fetchKeyPair(keyType: any) {
     };
   }
 }
- const convertToKeyValue = items => {
-    const result = {};
-    items.forEach((item, index) => {
-      result[index] = item.value;
-    });
-    return result;
-  };
+const convertToKeyValue = items => {
+  const result = {};
+  items.forEach((item, index) => {
+    result[index] = item.value;
+  });
+  return result;
+};

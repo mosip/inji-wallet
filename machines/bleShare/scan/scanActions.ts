@@ -97,6 +97,7 @@ export const ScanActions = (model: any) => {
         linkCode: context.linkCode,
         flowType: context.flowType,
         selectedVc: context.selectedVc,
+        isQrLoginViaDeepLink: context.isQrLoginViaDeepLink,
       }),
 
     sendVPScanData: context =>
@@ -279,6 +280,15 @@ export const ScanActions = (model: any) => {
     setLinkCodeFromDeepLink: assign({
       linkCode: (_, event) => event.linkCode,
     }),
+
+    setIsQrLoginViaDeepLink: assign({
+      isQrLoginViaDeepLink: true,
+    }),
+
+    resetIsQrLoginViaDeepLink: assign({
+      isQrLoginViaDeepLink: false,
+    }),
+
     setQuickShareData: assign({
       quickShareData: (_, event) =>
         JSON.parse(

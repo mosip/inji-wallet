@@ -28,7 +28,7 @@ export const qrLoginMachine =
       },
       id: 'QrLogin',
       initial: 'waitingForData',
-      entry: ['resetSelectedVc', 'resetFlowType'],
+      entry: ['resetSelectedVc', 'resetFlowType', 'resetIsQrLoginViaDeepLink'],
       states: {
         waitingForData: {
           on: {
@@ -91,6 +91,7 @@ export const qrLoginMachine =
           },
         },
         ShowError: {
+          entry: 'resetIsQrLoginViaDeepLink',
           on: {
             DISMISS: {
               actions: 'forwardToParent',
