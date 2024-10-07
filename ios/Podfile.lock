@@ -566,7 +566,8 @@ PODS:
     - React-Core
   - RNPermissions (3.8.4):
     - React-Core
-  - RNScreens (3.20.0):
+  - RNScreens (3.32.0):
+    - RCT-Folly (= 2021.07.22.00)
     - React-Core
     - React-RCTImage
   - RNSecureRandom (1.0.1):
@@ -1013,7 +1014,7 @@ SPEC CHECKSUMS:
   RNGoogleSignin: aac5c1ec73422109dec1da770247a1e410dcc620
   RNLocalize: dbea38dcb344bf80ff18a1757b1becf11f70cae4
   RNPermissions: f1b49dd05fa9b83993cd05a9ee115247944d8f1a
-  RNScreens: 218801c16a2782546d30bd2026bb625c0302d70f
+  RNScreens: 0bd9eec783bed1032e02a4db9976dae1664a5c7b
   RNSecureRandom: 07efbdf2cd99efe13497433668e54acd7df49fef
   RNShare: 0fad69ae2d71de9d1f7b9a43acf876886a6cb99c
   RNSVG: 07dbd870b0dcdecc99b3a202fa37c8ca163caec2
