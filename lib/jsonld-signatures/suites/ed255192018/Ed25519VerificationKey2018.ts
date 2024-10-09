@@ -4,7 +4,7 @@
 import * as bs58 from 'base58-universal/main';
 import * as util from './util';
 import ed25519 from './ed25519';
-import { LDKeyPair } from 'crypto-ld';
+import {LDKeyPair} from 'crypto-ld';
 
 const SUITE_ID = 'Ed25519VerificationKey2018';
 
@@ -62,7 +62,7 @@ class Ed25519VerificationKey2018 extends LDKeyPair {
    * @returns {LDKeyPair}
    * @throws Unsupported Fingerprint Type.
    */
-  static fromFingerprint({ fingerprint }: any = {}) {
+  static fromFingerprint({fingerprint}: any = {}) {
     if (
       !fingerprint ||
       !(typeof fingerprint === 'string' && fingerprint[0] === 'z')
@@ -173,14 +173,10 @@ class Ed25519VerificationKey2018 extends LDKeyPair {
    * @returns {object} A public key object
    *   information used in verification methods by signatures.
    */
-  export({
-    publicKey = false,
-    privateKey = false,
-    includeContext = false,
-  } = {}) {
+  export({publicKey = false, privateKey = false, includeContext = false} = {}) {
     if (!(publicKey || privateKey)) {
       throw new TypeError(
-        'Export requires specifying either "publicKey" or "privateKey".'
+        'Export requires specifying either "publicKey" or "privateKey".',
       );
     }
     const exportedKey: any = {
@@ -214,7 +210,7 @@ class Ed25519VerificationKey2018 extends LDKeyPair {
    *
    * @returns {string} The fingerprint.
    */
-  static fingerprintFromPublicKey({ publicKeyBase58 }: any = {}) {
+  static fingerprintFromPublicKey({publicKeyBase58}: any = {}) {
     // ed25519 cryptonyms are multicodec encoded values, specifically:
     // (multicodec ed25519-pub 0xed01 + key bytes)
     const pubkeyBytes = util.base58Decode({
@@ -238,7 +234,7 @@ class Ed25519VerificationKey2018 extends LDKeyPair {
    * @returns {string} The fingerprint.
    */
   fingerprint() {
-    const { publicKeyBase58 } = this;
+    const {publicKeyBase58} = this;
     return Ed25519VerificationKey2018.fingerprintFromPublicKey({
       publicKeyBase58,
     });
@@ -253,7 +249,7 @@ class Ed25519VerificationKey2018 extends LDKeyPair {
    *
    * @returns {object} An object indicating valid is true or false.
    */
-  verifyFingerprint({ fingerprint }: any = {}) {
+  verifyFingerprint({fingerprint}: any = {}) {
     // fingerprint should have `z` prefix indicating
     // that it's multi-base encoded
     if (!(typeof fingerprint === 'string' && fingerprint[0] === 'z')) {
@@ -270,7 +266,7 @@ class Ed25519VerificationKey2018 extends LDKeyPair {
         type: `fingerprint's`,
       });
     } catch (e) {
-      return { error: e, valid: false };
+      return {error: e, valid: false};
     }
     let publicKeyBuffer;
     try {
@@ -280,12 +276,12 @@ class Ed25519VerificationKey2018 extends LDKeyPair {
         type: 'public',
       });
     } catch (e) {
-      return { error: e, valid: false };
+      return {error: e, valid: false};
     }
 
     const buffersEqual = _isEqualBuffer(
       publicKeyBuffer,
-      fingerprintBuffer.slice(2)
+      fingerprintBuffer.slice(2),
     );
 
     // validate the first two multicodec bytes 0xed01
@@ -299,7 +295,7 @@ class Ed25519VerificationKey2018 extends LDKeyPair {
         valid: false,
       };
     }
-    return { valid };
+    return {valid};
   }
 }
 
@@ -330,7 +326,7 @@ function ed25519SignerFactory(key) {
     type: 'private',
   });
   return {
-    async sign({ data }) {
+    async sign({data}) {
       const signature = ed25519.sign(privateKeyBytes, data);
       return signature;
     },
@@ -357,7 +353,7 @@ function ed25519VerifierFactory(key) {
     type: 'public',
   });
   return {
-    async verify({ data, signature }) {
+    async verify({data, signature}) {
       return ed25519.verify(publicKeyBytes, data, signature);
     },
   };
@@ -380,4 +376,4 @@ Ed25519VerificationKey2018['suite'] = SUITE_ID;
 Ed25519VerificationKey2018['SUITE_CONTEXT'] =
   'https://w3id.org/security/suites/ed25519-2018/v1';
 
-export { Ed25519VerificationKey2018 };
+export {Ed25519VerificationKey2018};

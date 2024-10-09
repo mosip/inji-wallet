@@ -40,7 +40,7 @@ fileignoreconfig:
   - filename: shared/openId4VCI/Utils.ts
     checksum: 78473ce25cd52c8d07da9ba98683bdb64ae83a9de8fa907c62f2ebeca7dd21dc
   - filename: shared/cryptoutil/cryptoUtil.ts
-    checksum: 281f061ae6eb722c75c2caf2bdfb5b1bf72f292b471318d972c898c5a972c65f
+    checksum: 9d5274981b08b300fc88201ef9f6eac3aae2310c74f817a1d52ca9fb6b05979e
   - filename: shared/telemetry/TelemetryConstants.js
     checksum: fd8dc3a69cdef68855dc5f0531d8e634bfa2621bb4dc22f85b8247512a349c4c
   - filename: shared/telemetry/TelemetryUtils.js
@@ -100,7 +100,7 @@ fileignoreconfig:
   - filename: screens/Settings/BackupController.tsx
     checksum: 4a031b46646aa982c8f40e4c7fe0bd3e05a76a6af1ff1c2de7350ba6ebf9a839
   - filename: machines/settings.typegen.ts
-    checksum: c10bead6d0cc0cd8f7539d12cfecd6cd24770ed9b55a9a7c55fda8883a677d52
+    checksum: 0bfaea328ab18e23aae4fb3b4aa647ee9ac57982b48bef4ef7e859561b25fe78
   - filename: .github/workflows/ui-automation.yml
     checksum: 85993a912fb873a3a2a11adde702918aedff56494e6d45c2d70f272497bf9a27
   - filename: injitest/src/test/java/androidTestCases/PinVcTest.java
@@ -116,7 +116,7 @@ fileignoreconfig:
   - filename: injitest/src/test/java/iosTestCases/CredentialRegistryTest.java
     checksum: b0808e0c511412cde21fd169a9bbeaf3b77cb48f25418e12d341cc3ce1df5898
   - filename: injitest/src/main/resources/Vids.json
-    checksum: 8bcffed7a6dd565ae695e1b29de0655e10bd5c5420af2718defd593a687b8817
+    checksum: fbf84a62d485ef36501bd84bcf63070015197c2784f1a9865ad4799b9a481ed9
   - filename: injitest/src/main/java/inji/utils/UpdateNetworkSettings.java
     checksum: e249ce3e6b7f47abc183fe5a3637bb39ccb06900ef75b9b2f08426d1535e22aa
   - filename: injitest/src/test/java/androidTestCases/ShareVcTest.java
@@ -230,7 +230,7 @@ fileignoreconfig:
   - filename: machines/auth.ts
     checksum: 46195ee93f9b7ac6794a06eeef5dee5ea242047a557af8bf95df04e1343d7b9e
   - filename: machines/auth.typegen.ts
-    checksum: f93996f750549f6de91c2a35c5817cfa85ad7b255ef36dea85224a0a154db188
+    checksum: 4b5d7f2a37242a81dcb0d9e9f0a90170fcad3a157bec19982e7c52d0f878943f
   - filename: shared/commonUtil.generated.test.ts
     checksum: 4ca5983bb133f8f02bfd52fd0cc49ce37b24b164f3ca78a03ad97bb353ed00a4
   - filename: __mocks__/en.mock.json
@@ -326,7 +326,7 @@ fileignoreconfig:
   - filename: injitest/src/test/java/iosTestCases/VcDownloadAndVerifyUsingUinTest.java
     checksum: a6feabb768e2d97dfb0a1693f09d839686ce6be686523cf273b2d3ce614b34fd
   - filename: machines/Issuers/IssuersMachine.typegen.ts
-    checksum: 581e73b10471735aa6415590b0f01f6c9b503a196d3fca450a4c2a9e647487d3
+    checksum: 010c922f5de5ca4b9d48fd34555eb2dfb834d1ba4e3502fc9019c30a0ba07553
   - filename: injitest/src/test/java/iosTestCases/DeletingVcTest.java
     checksum: 0816d4b9440da5384fd867d13555986d223124b9609280350226510a06ae96fa
   - filename: machines/VerifiableCredential/VCItemMachine/VCItemMachine.ts
@@ -342,7 +342,7 @@ fileignoreconfig:
     checksum: 2d0a5899777bff2ff8412e4931e0b1087e44f63047a2e3525e82eda0dfe8791c
   - filename: injitest/src/main/resources/Vids.json
     checksum: 8bcffed7a6dd565ae695e1b29de0655e10bd5c5420af2718defd593a687b8817
-  - filename: injitest/src/main/java/inji/utils/UpdateNetworkSettings.java     
+  - filename: injitest/src/main/java/inji/utils/UpdateNetworkSettings.java
     checksum: e249ce3e6b7f47abc183fe5a3637bb39ccb06900ef75b9b2f08426d1535e22aa
   - filename: App.tsx
     checksum: d16d4a40b246abe25a5d2da7ec65163b5756fe8ba9390608a7fc7f8e721b2ed1
@@ -356,8 +356,8 @@ fileignoreconfig:
     checksum: c91348eceec5edbffa03ba03f3f52a8e90ff7f942816c9609080d1647052fd66
   - filename: ios/RNPixelpassModule.swift
     checksum: 822a2421798d5c0669f4ab1b983194eb770cbef2aa30bf212d06bd959738c4ca
-  - filename: injitest/src/test/java/androidTestCases/VerifyHistoryTest.java   
-    checksum: dffc4741b251b42c81d5bdac7d649c02b37bb9045285590b29f86c2d5f526fd1 
+  - filename: injitest/src/test/java/androidTestCases/VerifyHistoryTest.java
+    checksum: dffc4741b251b42c81d5bdac7d649c02b37bb9045285590b29f86c2d5f526fd1
   - filename: android/app/src/main/java/io/mosip/residentapp/RNPixelpassModule.java
     checksum: cef9be4bfafb54e2c885b2459f2819554cad6448b5dc372976706894df704e5d
   - filename: android/app/src/main/AndroidManifest.xml
@@ -372,8 +372,8 @@ fileignoreconfig:
     checksum: 947b6d75543e2bf959ca2d95dd7224051e0b4ec2c28f7515f923701e22a932f0
   - filename: components/FaceScanner/LivenessDetection.tsx
     checksum: d4140a42ee9ca0f7c90e490f762d181a723fd9dd20db891cbbe53bfbd8f81632
-  - filename: machines/VerifiableCredential/VCItemMachine/VCItemActions.ts       
-    checksum: 037ddde01479c24f954e87be5088dd0f449f0379bd8bb0b34605ca40be0f3f6c 
+  - filename: machines/VerifiableCredential/VCItemMachine/VCItemActions.ts
+    checksum: 037ddde01479c24f954e87be5088dd0f449f0379bd8bb0b34605ca40be0f3f6c
   - filename: machines/app.ts
     checksum: 5da59bb384d04e29c7745d773108903fa144275c57edc1aca1898fcae7baea84
   - filename: shared/cryptoutil/signFormatConverter.ts
@@ -390,4 +390,12 @@ fileignoreconfig:
     checksum: f898ac7f1ecfa1df17e33b327d675f57debf2d5bd56052fc047dd03577354590
   - filename: machines/openID4VP/openID4VPMachine.typegen.ts
     checksum: 986c2743bba3554068c1cf52e6f3e7b1762699e62dab6f971a6f796e2ea3eb81
+  - filename: lib/jsonld-signatures/purposes/PublicKeyProofPurpose.ts
+    checksum: 1a5e535c15e899a4a7b68266f320ac109835c1d404520c8a4806d191406d2f49
+  - filename: lib/jsonld-signatures/suites/JwsLinkedDataSignature.ts
+    checksum: 1a0bc4666077b4bec40ec038b7664d3d7574e293f37f0e0e460bf21c27156759
+  - filename: machines/pinInput.ts
+    checksum: aacea184f7bde3e25dcc2d6eeb61162d2fa02ef2a58ca3f3e8e404c33abd3aae
+  - filename: lib/jsonld-signatures/suites/ed255192018/Ed25519VerificationKey2018.ts
+    checksum: 0d23b6c0161e33e5613e7cfe3b89469f5b812210decd14f063c344e8c96c8a06
     version: ""

@@ -1,10 +1,10 @@
 import React from 'react';
-import { I18nManager, Modal as RNModal } from 'react-native';
-import { Icon } from 'react-native-elements';
-import { Column, Row } from '.';
-import { Theme, ElevationLevel } from './styleUtils';
+import {I18nManager, Modal as RNModal} from 'react-native';
+import {Icon} from 'react-native-elements';
+import {Column, Row} from '.';
+import {Theme, ElevationLevel} from './styleUtils';
 
-export const Modal: React.FC<ModalProps> = (props) => {
+export const Modal: React.FC<ModalProps> = props => {
   return (
     <RNModal
       animationType="slide"

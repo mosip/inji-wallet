@@ -1,10 +1,10 @@
-import { useContext } from 'react';
-import { GlobalContext } from '../shared/GlobalContext';
-import { StoreEvents } from '../machines/store';
-import { APP_EVENTS } from '../machines/app';
+import {useContext} from 'react';
+import {GlobalContext} from '../shared/GlobalContext';
+import {StoreEvents} from '../machines/store';
+import {APP_EVENTS} from '../machines/app';
 
 export function useApp() {
-  const { appService } = useContext(GlobalContext);
+  const {appService} = useContext(GlobalContext);
   const storeService = appService.children.get('store');
   return {
     ignoreDecrypt: () => appService.send('DECRYPT_ERROR_DISMISS'),

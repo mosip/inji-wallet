@@ -1,12 +1,12 @@
-import React, { useState } from 'react';
-import { Dimensions, View } from 'react-native';
-import { Input } from 'react-native-elements';
-import { Button, Centered, Column, Row, Text } from './ui';
-import { Theme } from './ui/styleUtils';
-import { useTranslation } from 'react-i18next';
+import React, {useState} from 'react';
+import {Dimensions, View} from 'react-native';
+import {Input} from 'react-native-elements';
+import {Button, Centered, Column, Row, Text} from './ui';
+import {Theme} from './ui/styleUtils';
+import {useTranslation} from 'react-i18next';
 
-export const TextEditOverlay: React.FC<EditOverlayProps> = (props) => {
-  const { t } = useTranslation('common');
+export const TextEditOverlay: React.FC<EditOverlayProps> = props => {
+  const {t} = useTranslation('common');
   const [value, setValue] = useState(props.value);
 
   return (

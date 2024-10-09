@@ -1,10 +1,10 @@
-import React, { useEffect, useRef } from 'react';
-import { Animated, Easing } from 'react-native';
-import { Icon } from 'react-native-elements';
+import React, {useEffect, useRef} from 'react';
+import {Animated, Easing} from 'react-native';
+import {Icon} from 'react-native-elements';
 
-export const RotatingIcon: React.FC<RotatingIconProps> = (props) => {
+export const RotatingIcon: React.FC<RotatingIconProps> = props => {
   const rotationValue = useRef(
-    new Animated.Value(props.clockwise ? 0 : 1)
+    new Animated.Value(props.clockwise ? 0 : 1),
   ).current;
 
   const rotation = rotationValue.interpolate({
@@ -19,12 +19,12 @@ export const RotatingIcon: React.FC<RotatingIconProps> = (props) => {
         duration: props.duration || 3000,
         easing: Easing.linear,
         useNativeDriver: true,
-      })
+      }),
     ).start();
   }, []);
 
   return (
-    <Animated.View style={{ transform: [{ rotate: rotation }] }}>
+    <Animated.View style={{transform: [{rotate: rotation}]}}>
       <Icon name={props.name} size={props.size} color={props.color} />
     </Animated.View>
   );

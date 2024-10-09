@@ -1,13 +1,13 @@
 import React from 'react';
-import { useTranslation } from 'react-i18next';
+import {useTranslation} from 'react-i18next';
 
-import { Dimensions, View } from 'react-native';
-import { LinearProgress } from 'react-native-elements';
-import { Button, Centered, Column, Text } from './ui';
-import { Theme } from './ui/styleUtils';
+import {Dimensions, View} from 'react-native';
+import {LinearProgress} from 'react-native-elements';
+import {Button, Centered, Column, Text} from './ui';
+import {Theme} from './ui/styleUtils';
 
-export const Message: React.FC<MessageProps> = (props) => {
-  const { t } = useTranslation('common');
+export const Message: React.FC<MessageProps> = props => {
+  const {t} = useTranslation('common');
   return (
     <View
       style={Theme.MessageStyles.viewContainer}
@@ -46,7 +46,7 @@ export const Message: React.FC<MessageProps> = (props) => {
   );
 };
 
-const Progress: React.FC<Pick<MessageProps, 'progress'>> = (props) => {
+const Progress: React.FC<Pick<MessageProps, 'progress'>> = props => {
   return typeof props.progress === 'boolean' ? (
     props.progress && (
       <LinearProgress variant="indeterminate" color={Theme.Colors.Icon} />

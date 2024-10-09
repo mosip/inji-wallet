@@ -1,9 +1,9 @@
 import React from 'react';
-import { View } from 'react-native';
-import { Text } from './Text';
-import { Theme } from './styleUtils';
+import {View} from 'react-native';
+import {Text} from './Text';
+import {Theme} from './styleUtils';
 
-export const ToastItem: React.FC<ToastProps> = (props) => {
+export const ToastItem: React.FC<ToastProps> = props => {
   return (
     <View style={Theme.ToastItemStyles.toastContainer}>
       <Text

@@ -57,6 +57,12 @@ Telemetry Dashboard = https://druid.obsrv.mosip.net/unified-console.html#workben
 for more information on the backend services
 refer [here](https://docs.mosip.io/inji/inji-mobile-wallet/backend-services).
 
+## Formatting the Code
+
+- Editor Config file with set of formatting rules is added in the root of the project directory
+- Before every commit run `npm run prettier-format` to apply formatting.
+  Note: It will be added to pre-commit hook later.
+
 ## Building & Running for Android
 
 ### Generate keystore
@@ -78,7 +84,7 @@ keytool \
 
 ### Build via Android Studio
 
-The app is available in this repository's `frontend/android` directory. Open this directory in Android Studio (version  
+The app is available in this repository's `frontend/android` directory. Open this directory in Android Studio (version
 4.1 and above) and the app can be built and run from there.
 
 More info here: [Build your app using Android Studio](https://developer.android.com/studio/run)
@@ -159,9 +165,9 @@ To learn more about React Native, take a look at the following resources:
 
 - [React Native Website](https://reactnative.dev) - learn more about React Native.
 - [Getting Started](https://reactnative.dev/docs/environment-setup) - an **overview** of React Native and how setup
-  your  
+  your
   environment.
 - [Learn the Basics](https://reactnative.dev/docs/getting-started) - a **guided tour** of the React Native **basics**.
 - [Blog](https://reactnative.dev/blog) - read the latest official React Native **Blog** posts.
-- [`@facebook/react-native`](https://github.com/facebook/react-native) - the Open Source; GitHub **repository** for  
+- [`@facebook/react-native`](https://github.com/facebook/react-native) - the Open Source; GitHub **repository** for
   React Native.

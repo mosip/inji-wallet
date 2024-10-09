@@ -3,7 +3,7 @@ name: Bug report
 about: Create a report to help us improve
 title: ''
 labels: bug, triage
-assignees: 
+assignees:
 ---
 
 **Describe the bug**
@@ -24,18 +24,20 @@ A clear and concise description of what you expected to happen.
 A clear and concise description of what factually occurred.
 
 **Screenshots**
-If applicable, add screenshots to help explain your problem. 
+If applicable, add screenshots to help explain your problem.
 
 **Add the screenshot of the profile page with commit id**
 
 **Smartphone (please complete the following information):**
 
 - Wallet Device: [e.g. iPhone6]
+
   - Phone make/model: [e.g. :Vivo Y73]
   - OS: [e.g. iOS8.1]
   - BLE version : [e.g. 4.2]
 
 - Verifier Device: [e.g. iPhone6]
+
   - Phone make/model: [e.g. :Vivo Y73]
   - OS: [e.g. iOS8.1]
   - BLE version : [e.g. 4.2]

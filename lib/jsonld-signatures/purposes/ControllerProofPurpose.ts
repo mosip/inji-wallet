@@ -4,7 +4,7 @@
 
 import constants from 'jsonld-signatures/lib/constants';
 import jsonld from 'jsonld';
-import { ProofPurpose } from './ProofPurpose';
+import {ProofPurpose} from './ProofPurpose';
 
 // DID documents can be specially optimized
 const DID_CONTEXT_V1 = 'https://www.w3.org/ns/did/v1';
@@ -15,7 +15,7 @@ const DID_VR_TERMS = [
   'capabilityInvocation',
   'capabilityDelegation',
   'keyAgreement',
-  'verificationMethod'
+  'verificationMethod',
 ];
 
 export class ControllerProofPurpose extends ProofPurpose {
@@ -33,10 +33,15 @@ export class ControllerProofPurpose extends ProofPurpose {
    * @param [maxTimestampDelta] {integer} a maximum number of seconds that
    *   the date on the signature can deviate from, defaults to `Infinity`.
    */
-  constructor({term, controller, date, maxTimestampDelta = Infinity}: any = {}) {
+  constructor({
+    term,
+    controller,
+    date,
+    maxTimestampDelta = Infinity,
+  }: any = {}) {
     super({term, date, maxTimestampDelta});
-    if(controller !== undefined) {
-      if(typeof controller !== 'object') {
+    if (controller !== undefined) {
+      if (typeof controller !== 'object') {
         throw new TypeError('"controller" must be an object.');
       }
       this.controller = controller;
@@ -62,9 +67,12 @@ export class ControllerProofPurpose extends ProofPurpose {
    */
   async validate(proof, {verificationMethod, documentLoader, expansionMap}) {
     try {
-      const result = await super.validate(
-        proof, {verificationMethod, documentLoader, expansionMap});
-      if(!result.valid) {
+      const result = await super.validate(proof, {
+        verificationMethod,
+        documentLoader,
+        expansionMap,
+      });
+      if (!result.valid) {
         throw result.error;
       }
 
@@ -72,17 +80,18 @@ export class ControllerProofPurpose extends ProofPurpose {
       const {term, _termDefinedByDIDContext} = this;
 
       // if no `controller` specified, use verification method's
-      if(this.controller) {
+      if (this.controller) {
         result.controller = this.controller;
       } else {
         const {controller} = verificationMethod;
         let controllerId;
-        if(controller) {
-          if(typeof controller === 'object') {
+        if (controller) {
+          if (typeof controller === 'object') {
             controllerId = controller.id;
-          } else if(typeof controller !== 'string') {
+          } else if (typeof controller !== 'string') {
             throw new TypeError(
-              '"controller" must be a string representing a URL.');
+              '"controller" must be a string representing a URL.',
+            );
           } else {
             controllerId = controller;
           }
@@ -97,41 +106,52 @@ export class ControllerProofPurpose extends ProofPurpose {
           try {
             document = JSON.parse(document);
           } catch (e) {
-            throw new Error(`Controller ${controllerId} document JSON parse error: ` + e);
+            throw new Error(
+              `Controller ${controllerId} document JSON parse error: ` + e,
+            );
           }
         }
-        const mustFrame = !(_termDefinedByDIDContext &&
-          document['@context'] === DID_CONTEXT_V1 ||
+        const mustFrame = !(
+          (_termDefinedByDIDContext &&
+            document['@context'] === DID_CONTEXT_V1) ||
           (Array.isArray(document['@context']) &&
-          document['@context'][0] === DID_CONTEXT_V1));
-        if(mustFrame) {
+            document['@context'][0] === DID_CONTEXT_V1)
+        );
+        if (mustFrame) {
           // Note: `expansionMap` is intentionally not passed; we can safely
           // drop properties here and must allow for it
-          document = await jsonld.frame(document, {
-            '@context': constants.SECURITY_CONTEXT_URL,
-            id: controllerId,
-            // this term must be in the JSON-LD controller document or
-            // verification will fail
-            [term]: {
-              '@embed': '@never',
-              id: verificationId
-            }
-          }, {documentLoader, compactToRelative: false});
+          document = await jsonld.frame(
+            document,
+            {
+              '@context': constants.SECURITY_CONTEXT_URL,
+              id: controllerId,
+              // this term must be in the JSON-LD controller document or
+              // verification will fail
+              [term]: {
+                '@embed': '@never',
+                id: verificationId,
+              },
+            },
+            {documentLoader, compactToRelative: false},
+          );
         }
         result.controller = document;
       }
 
       const verificationMethods = jsonld.getValues(result.controller, term);
-      result.valid = verificationMethods.some(vm =>
-        vm === verificationId ||
-        (typeof vm === 'object' && vm.id === verificationId));
-      if(!result.valid) {
+      result.valid = verificationMethods.some(
+        vm =>
+          vm === verificationId ||
+          (typeof vm === 'object' && vm.id === verificationId),
+      );
+      if (!result.valid) {
         throw new Error(
           `Verification method "${verificationMethod.id}" not authorized ` +
-          `by controller for proof purpose "${this.term}".`);
+            `by controller for proof purpose "${this.term}".`,
+        );
       }
       return result;
-    } catch(error) {
+    } catch (error) {
       return {valid: false, error};
     }
   }

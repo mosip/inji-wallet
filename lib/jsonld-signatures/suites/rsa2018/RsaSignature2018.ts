@@ -3,8 +3,8 @@
  */
 
 // import { RSAKeyPair } from 'crypto-ld';
-import { RsaVerificationKey2018 } from '@digitalbazaar/rsa-verification-key-2018/lib/RsaVerificationKey2018';
-import { JwsLinkedDataSignature } from '../JwsLinkedDataSignature';
+import {RsaVerificationKey2018} from '@digitalbazaar/rsa-verification-key-2018/lib/RsaVerificationKey2018';
+import {JwsLinkedDataSignature} from '../JwsLinkedDataSignature';
 
 export interface RsaSignature2018 {
   [key: string]: any;

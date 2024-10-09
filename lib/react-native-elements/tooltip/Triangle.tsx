@@ -1,15 +1,12 @@
 import React from 'react';
-import { View, StyleSheet, StyleProp, ViewStyle } from 'react-native';
+import {View, StyleSheet, StyleProp, ViewStyle} from 'react-native';
 
 type TriangleProps = {
   style?: StyleProp<ViewStyle>;
   isDown?: boolean;
 };
 
-const Triangle: React.FunctionComponent<TriangleProps> = ({
-  style,
-  isDown,
-}) => (
+const Triangle: React.FunctionComponent<TriangleProps> = ({style, isDown}) => (
   <View
     style={StyleSheet.flatten([
       styles.triangle,
@@ -21,7 +18,7 @@ const Triangle: React.FunctionComponent<TriangleProps> = ({
 
 const styles = StyleSheet.create({
   down: {
-    transform: [{ rotate: '180deg' }],
+    transform: [{rotate: '180deg'}],
   },
   triangle: {
     width: 0,

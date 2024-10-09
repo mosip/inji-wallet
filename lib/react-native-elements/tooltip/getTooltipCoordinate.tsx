@@ -6,7 +6,7 @@ const getPointDistance = (a: number[], b: number[]) =>
 export const getElementVisibleWidth = (
   elementWidth: number,
   xOffset: number,
-  ScreenWidth: number
+  ScreenWidth: number,
 ) => {
   // Element is fully visible OR scrolled right
   if (xOffset >= 0) {
@@ -48,7 +48,7 @@ const getTooltipCoordinate = (
   ScreenHeight: number,
   tooltipWidth: number,
   tooltipHeight: number,
-  withPointer: boolean
+  withPointer: boolean,
 ) => {
   // The following are point coordinates: [x, y]
   const center = [
@@ -74,7 +74,7 @@ const getTooltipCoordinate = (
     getArea(vOne, vTwo),
     getArea(vTwo, vThree),
     getArea(vThree, vFour),
-  ].map((each, index) => ({ area: each, id: index }));
+  ].map((each, index) => ({area: each, id: index}));
   const sortedArea = areas.sort((a, b) => b.area - a.area);
   // deslocated points
   const dX = 0.001;
@@ -116,7 +116,7 @@ const constraintX = (
   qIndex: number,
   x: number,
   ScreenWidth: number,
-  tooltipWidth: number
+  tooltipWidth: number,
 ) => {
   switch (qIndex) {
     // 0 and 3 are the left side quadrants.
