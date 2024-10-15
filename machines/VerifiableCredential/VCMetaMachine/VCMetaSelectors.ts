@@ -87,3 +87,7 @@ export function selectVerificationErrorMessage(state: State) {
 export function selectIsDownloadingFailed(state: State) {
   return state.context.DownloadingCredentialsFailed;
 }
+
+export function selectIsDownloadingSuccess(state: State) {
+  return state.context.DownloadingCredentialsSuccess;
+}
