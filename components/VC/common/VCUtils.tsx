@@ -99,7 +99,10 @@ export const getFieldName = (field: string, wellknown: any) => {
 };
 
 export const getBackgroundColour = (wellknown: any) => {
-  return wellknown?.display[0]?.background_color ?? Theme.Colors.textValue;
+  return {
+    backgroundColor:
+      wellknown?.display[0]?.background_color ?? Theme.Colors.textValue,
+  };
 };
 
 export const getBackgroundImage = (wellknown: any, defaultBackground: any) => {

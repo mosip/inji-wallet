@@ -96,7 +96,7 @@ export const updateCredentialInformation = (
   return {
     verifiableCredential: {
       ...credential,
-      wellKnown: context.selectedIssuer['.well-known'],
+      wellKnown: context.selectedIssuer['wellknown_endpoint'],
       credentialTypes: credential.credential.type ?? ['VerifiableCredential'],
       issuerLogo: getDisplayObjectForCurrentLanguage(
         context.selectedIssuer.display,
