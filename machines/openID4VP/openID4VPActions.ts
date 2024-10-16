@@ -29,11 +29,8 @@ export const openID4VPActions = (model: any) => {
         let matchingVCs = {} as Record<string, [VC]>;
         let presentationDefinition;
         const response = context.authenticationResponse;
-        if ('presentation_definition' in response) {
-          presentationDefinition = JSON.parse(
-            response['presentation_definition'],
-          );
-        }
+        presentationDefinition = response['presentation_definition'];
+
         vcs.forEach(vc => {
           presentationDefinition['input_descriptors'].forEach(
             inputDescriptor => {
@@ -74,10 +71,8 @@ export const openID4VPActions = (model: any) => {
       },
       purpose: context => {
         const response = context.authenticationResponse;
-        if ('presentation_definition' in response) {
-          const pd = JSON.parse(response['presentation_definition']);
-          return pd.purpose ?? '';
-        }
+        const pd = response['presentation_definition'];
+        return pd.purpose ?? '';
       },
     }),
 
