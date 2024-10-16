@@ -35,29 +35,19 @@ export const openID4VPActions = (model: any) => {
         vcs.forEach(vc => {
           presentationDefinition['input_descriptors'].forEach(
             inputDescriptor => {
-              let isMatched = true;
-              inputDescriptor.constraints.fields?.forEach(field => {
-                field.path.forEach(pathValue => {
-                  const pathData = JSONPath({
-                    path: pathValue,
-                    json: vc.verifiableCredential.credential,
-                  });
-
-                  if (
-                    field.filter?.type !== typeof pathData[0] ||
-                    !pathData[0].includes(field.filter?.pattern)
-                  ) {
-                    isMatched = false;
-                    return;
-                  }
-                });
-
-                if (!isMatched) {
-                  return;
-                }
-              });
-
-              if (isMatched) {
+              const format =
+                inputDescriptor.format ?? presentationDefinition.format;
+              if (
+                isVCMatchingRequestConstraints(
+                  inputDescriptor.constraints,
+                  vc.verifiableCredential.credential,
+                ) &&
+                areVCFormatAndProofTypeMatchingRequest(
+                  format,
+                  vc.format,
+                  vc.verifiableCredential.credential.proof.type,
+                )
+              ) {
                 matchingVCs[inputDescriptor.id]?.push(vc) ||
                   (matchingVCs[inputDescriptor.id] = [vc]);
               }
@@ -193,3 +183,36 @@ export const openID4VPActions = (model: any) => {
     }),
   };
 };
+
+function areVCFormatAndProofTypeMatchingRequest(
+  format: Record<string, any>,
+  vcFormatType: string,
+  vcProofType: string,
+): boolean {
+  return Object.entries(format).some(
+    ([type, value]) =>
+      type === vcFormatType && value.proof_type.includes(vcProofType),
+  );
+}
+
+function isVCMatchingRequestConstraints(constraints, credential) {
+  for (const field of constraints.fields) {
+    for (const path of field.path) {
+      const valueMatchingPath = JSONPath({
+        path: path,
+        json: credential,
+      })[0];
+
+      if (valueMatchingPath !== undefined) {
+        const pathValueAsString = String(valueMatchingPath);
+        if (
+          field.filter?.type === typeof valueMatchingPath &&
+          pathValueAsString.includes(field.filter?.pattern)
+        ) {
+          return true;
+        }
+      }
+    }
+  }
+  return false;
+}
