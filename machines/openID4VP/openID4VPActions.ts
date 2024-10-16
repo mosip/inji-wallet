@@ -3,6 +3,7 @@ import {send, sendParent} from 'xstate/lib/actions';
 import {SHOW_FACE_AUTH_CONSENT_SHARE_FLOW} from '../../shared/constants';
 import {VC} from '../VerifiableCredential/VCMetaMachine/vc';
 import {StoreEvents} from '../store';
+import {JSONPath} from 'jsonpath-plus';
 
 import {VCShareFlowType} from '../../shared/Utils';
 
@@ -36,19 +37,15 @@ export const openID4VPActions = (model: any) => {
             inputDescriptor => {
               let isMatched = true;
               inputDescriptor.constraints.fields?.forEach(field => {
-                field.path.forEach(path => {
-                  const pathSegments = path.substring(2).split('.');
-
-                  const pathData = pathSegments.reduce(
-                    (obj, key) => obj?.[key],
-                    vc.verifiableCredential.credential,
-                  );
+                field.path.forEach(pathValue => {
+                  const pathData = JSONPath({
+                    path: pathValue,
+                    json: vc.verifiableCredential.credential,
+                  });
 
                   if (
-                    path === undefined ||
-                    (pathSegments[pathSegments.length - 1] !== 'type' &&
-                      (field.filter?.type !== typeof pathData ||
-                        !pathData.includes(field.filter?.pattern)))
+                    field.filter?.type !== typeof pathData[0] ||
+                    !pathData[0].includes(field.filter?.pattern)
                   ) {
                     isMatched = false;
                     return;
