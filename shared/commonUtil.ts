@@ -7,6 +7,8 @@ import {
   isAndroid,
   GMAIL,
   APPLE,
+  FACE_SDK_MODEL_PATH,
+  FACE_SDK_MODEL_CHECKSUM,
 } from './constants';
 import {generateSecureRandom} from 'react-native-securerandom';
 import forge from 'node-forge';
@@ -89,17 +91,16 @@ export const getMaskedText = (id: string): string => {
   return '*'.repeat(id.length - 4) + id.slice(-4);
 };
 
-export const faceMatchConfig = (resp: string) => {
+export const faceMatchConfig = () => {
   return {
     withFace: {
       encoder: {
         tfModel: {
-          path: resp + '/model.tflite',
+          path: FACE_SDK_MODEL_PATH,
           inputWidth: 160,
           inputHeight: 160,
           outputLength: 512,
-          modelChecksum:
-            '797b4d99794965749635352d55da38d4748c28c659ee1502338badee4614ed06',
+          modelChecksum: FACE_SDK_MODEL_CHECKSUM,
         },
       },
       matcher: {

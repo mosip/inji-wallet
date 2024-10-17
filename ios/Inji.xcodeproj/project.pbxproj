@@ -270,6 +270,7 @@
 				13B07F871A680F5B00A75B9A /* Sources */,
 				13B07F8C1A680F5B00A75B9A /* Frameworks */,
 				13B07F8E1A680F5B00A75B9A /* Resources */,
+				1E55884F2CC0EF2C00CF55B4 /* Copy FaceSDK Model */,
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
 				800E24972A6A228C8D4807E9 /* [CP] Copy Pods Resources */,
 				D11A8C363B4A5B625DB10379 /* [CP] Embed Pods Frameworks */,
@@ -396,6 +397,24 @@
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
+		};
+		1E55884F2CC0EF2C00CF55B4 /* Copy FaceSDK Model */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 12;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Copy FaceSDK Model";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "MODEL_SRC_DIR=\"${PROJECT_DIR}/../assets/models\"\nMODEL_DST_DIR=\"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.app\"\n\ncp -v \"$MODEL_SRC_DIR/faceModel.tflite\" \"$MODEL_DST_DIR\" || {\n    echo \"Failed to copy face model\"\n    exit 1\n}\n";
 		};
 		654269ECFA0A4BA5DD24AB2B /* [Expo] Configure project */ = {
 			isa = PBXShellScriptBuildPhase;

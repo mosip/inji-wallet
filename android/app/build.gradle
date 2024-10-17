@@ -317,6 +317,14 @@ dependencies {
     implementation 'com.jakewharton.timber:timber:4.7.1'
 }
 
+task copyModelFile(type: Copy) {
+    from '../../assets/models/'     
+    include 'faceModel.tflite'    
+    into 'src/main/assets/'
+}
+
+preBuild.dependsOn copyModelFile
+
 task CaptureLibraryVersion {
     def libDef = project.configurations.getByName('implementation').allDependencies.matching {
         it.group.equals("io.mosip") && it.name.equals("tuvali")
