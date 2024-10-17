@@ -2,17 +2,18 @@
 
 ### **Inji Wallet**
 
-- The use installs the application on Android or iOS device.
+- The user installs the application on Android or iOS device.
   - Application link is available in our sandbox env https://collab.mosip.net/
-- After installation, user will be asked to select unlock mehtod as passcode or biometric to add security to the applicaiton
+- After installation, user will be asked to select unlock method as passcode or biometric to add security to the application
 - After selecting unlock method, user will be navigated to Home screen.
-- There is plus icon on home screen, after tapping on that icon, it will display list of issuers supported by Inji wallet to downlaod credentials.
-  - List of Issuers supported and sourced from [mimoto-issuers-configuration](https://github.com/mosip/inji-config/blob/collab/mimoto-issuers-config.json)
+- After this, user can download the verifiable credentials for trusted issuers configured in mimoto.
+  - Mimoto maintains a list of trusted issuers and that is sourced from [mimoto-issuers-configuration](https://github.com/mosip/inji-config/blob/collab/mimoto-issuers-config.json)
+  - Use can tap on plus icon on home screen. It will fetch the trusted issuer list from mimoto and display it.
 
 ### **Selection of Issuer and credential type:**
 
 - The users can select an Issuer from the list of trusted issuers
-- On Clicking the issuer, user will be redirected to credential Types, where user will be displayed with list of credentials supported by the selected issuer.
+- On clicking the issuer, user will be redirected to credential Types, where user will be displayed with list of credentials supported by the selected issuer.
 - Credential Types of the issuers are sourced from the issuers wellknown **"/.well-known/openid-credential-issuer"**
 - The users can select a credential type from the available options provided by the issuers.
 
@@ -23,6 +24,8 @@
 ### **Authorization**
 
 - When the user selects any credential type, user is redirected to the authorization page for that specific issuer.
+- This authorization page is managed by `OAuth Authorization server (eSignet)` and will be rendered in webview inside Inji App.
+  - User will be asked to provide details for authorization.
 - Once authorization is successful, authorization server return the **"authorizationCode"**
 - Inji Wallet sends the authorization code to authorization server through Mimoto to perform the client assertions.
 - Once authorized, authorization server issues token response, which include **access_token**.

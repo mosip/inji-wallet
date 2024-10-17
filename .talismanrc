@@ -374,7 +374,7 @@ fileignoreconfig:
   - filename: machines/VerifiableCredential/VCItemMachine/VCItemActions.ts       
     checksum: 9b68ccc45681459d164197f73a1875e6f8bdf473acede18c811f4a784fca00e0
   - filename: docs/InjiWalletComponents.drawio
-    checksum: d295ba37678f892d6939fa51b7e936d942fb9fa9b29ca4b64f0acef28ffeffa1
+    checksum: 7bc81e784fcb9898db91430b7343e44b462d3b9e72e432545d4133ce72534f14
   - filename: docs/InjiWalletComponents.md
-    checksum: 2e1d6b147803bfcf93c1f83fcd01242c0d5d873817cc135491a24fecaae2b53e
+    checksum: 77df95e6f523fe81e6d0180473617d4c1b663e3961649f3a37a79a171efdb086
     version: ""
