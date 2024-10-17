@@ -17,8 +17,8 @@ Be sure to have the following build tools installed before proceeding:
 - [React Native 0.71.8](https://reactnative.dev/docs/0.71/getting-started)
   - Hermes Engine enabled
 - [Expo 49.0.23](https://docs.expo.dev/get-started/installation/)
-- [node v18.20.4](https://nodejs.org/en/blog/release/v18.20.4)
-- [npm 10.7.0](https://www.npmjs.com/package/npm/v/10.7.0)
+- [node v16.19.0](https://nodejs.org/en/blog/release/v16.19.0)
+- [npm 8.19.3](https://www.npmjs.com/package/npm/v/8.19.3)
 
 ### Android
 
