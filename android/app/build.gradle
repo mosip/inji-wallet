@@ -317,13 +317,13 @@ dependencies {
     implementation 'com.jakewharton.timber:timber:4.7.1'
 }
 
-task copyModelFile(type: Copy) {
+task copyFaceSdkModel(type: Copy) {
     from '../../assets/models/'     
     include 'faceModel.tflite'    
     into 'src/main/assets/'
 }
 
-preBuild.dependsOn copyModelFile
+preBuild.dependsOn copyFaceSdkModel
 
 task CaptureLibraryVersion {
     def libDef = project.configurations.getByName('implementation').allDependencies.matching {
