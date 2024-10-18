@@ -158,3 +158,6 @@ export const copilotTestID = {
   '5': 'settings',
   '6': 'cardView',
 };
+
+export const FACE_SDK_MODEL_PATH = isAndroid() ? 'assets:faceModel.tflite' : 'bundle:/faceModel.tflite'
+export const FACE_SDK_MODEL_CHECKSUM = '797b4d99794965749635352d55da38d4748c28c659ee1502338badee4614ed06'
