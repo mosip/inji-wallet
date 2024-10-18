@@ -38,7 +38,6 @@ export const VCCardViewContent: React.FC<VCItemContentProps> = props => {
             name="check-box-outline-blank"
             color={Theme.Colors.uncheckedIcon}
             size={22}
-            style={{backgroundColor: 'red'}}
           />
         }
         onPress={() => props.onPress()}

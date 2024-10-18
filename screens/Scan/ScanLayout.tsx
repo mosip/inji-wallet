@@ -128,10 +128,15 @@ export const ScanLayout: React.FC = () => {
             options={{
               title: t('SendVPScreen:requester'),
               headerTitle: props => (
-                <View style={Theme.Styles.scanLayoutHeaderContainer}>
-                  <Text style={Theme.Styles.scanLayoutHeaderTitle}>
+                <View style={Theme.Styles.sendVPHeaderContainer}>
+                  <Text style={Theme.Styles.sendVPHeaderTitle}>
                     {props.children}
                   </Text>
+                  {controller.vpVerifierName && (
+                    <Text style={Theme.Styles.sendVPHeaderSubTitle}>
+                      {controller.vpVerifierName}
+                    </Text>
+                  )}
                 </View>
               ),
               headerBackVisible: false,
