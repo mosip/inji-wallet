@@ -15,6 +15,7 @@ import {SharingStatusModal} from '../Scan/SharingStatusModal';
 import {SvgImage} from '../../components/ui/svg';
 import {I18nManager} from 'react-native';
 import {Theme} from '../../components/ui/styleUtils';
+import LinearGradient from 'react-native-linear-gradient';
 
 const RequestStack = createNativeStackNavigator();
 
@@ -48,6 +49,7 @@ export const RequestLayout: React.FC = () => {
               title: t('incomingVc'),
               headerLeft: () =>
                 !I18nManager.isRTL && (
+                  
                   <HeaderBackButton
                     onPress={() => {
                       controller.RESET();

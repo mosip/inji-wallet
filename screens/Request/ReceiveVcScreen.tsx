@@ -65,6 +65,7 @@ export const ReceiveVcScreen: React.FC = () => {
             <Button
               title={t('goToReceivedVCTab')}
               margin="0 0 12 0"
+              type='gradient'
               onPress={controller.GO_TO_RECEIVED_VC_TAB}
             />
           </Column>

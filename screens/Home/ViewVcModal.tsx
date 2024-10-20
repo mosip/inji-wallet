@@ -10,11 +10,11 @@ import { BindingVcWarningOverlay } from './MyVcs/BindingVcWarningOverlay';
 import { VcDetailsContainer } from '../../components/VC/VcDetailsContainer';
 import { TelemetryConstants } from '../../shared/telemetry/TelemetryConstants';
 import { BannerNotificationContainer } from '../../components/BannerNotificationContainer';
-import { Icon } from 'react-native-elements';
+import { Icon, ThemeConsumer } from 'react-native-elements';
 import { Theme } from '../../components/ui/styleUtils';
 import testIDProps from '../../shared/commonUtil';
 import { HelpScreen } from '../../components/HelpScreen';
-import { Pressable } from 'react-native';
+import { Pressable, View } from 'react-native';
 import { KebabPopUp } from '../../components/KebabPopUp';
 import { SvgImage } from '../../components/ui/svg';
 import { VCMetadata } from '../../shared/VCMetadata';
@@ -72,15 +72,7 @@ export const ViewVcModal: React.FC<ViewVcModalProps> = props => {
       <Row align="space-between">
         <HelpScreen
           triggerComponent={
-            <Icon
-              {...testIDProps('help')}
-              accessible={true}
-              name="question"
-              type="font-awesome"
-              size={21}
-              style={Theme.Styles.IconContainer}
-              color={Theme.Colors.Icon}
-            />
+            <View style={Theme.Styles.IconContainer}>{SvgImage.questionIcon()}</View>
           }
         />
         {isVCLoaded(controller.credential, fields) ? (

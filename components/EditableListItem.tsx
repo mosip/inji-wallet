@@ -5,6 +5,7 @@ import {Text, Column, Row, Button} from './ui';
 import {Theme} from './ui/styleUtils';
 import {useTranslation} from 'react-i18next';
 import testIDProps from '../shared/commonUtil';
+import { SvgImage } from './ui/svg';
 
 export const EditableListItem: React.FC<EditableListItemProps> = props => {
   const {t} = useTranslation('common');
@@ -34,12 +35,7 @@ export const EditableListItem: React.FC<EditableListItemProps> = props => {
       bottomDivider
       topDivider
       onPress={() => setIsEditing(true)}>
-      <Icon
-        name={props.Icon}
-        type={props.IconType}
-        size={25}
-        color={Theme.Colors.Icon}
-      />
+      {SvgImage.starIcon()}
       <ListItem.Content>
         <ListItem.Title
           {...testIDProps(props.testID + 'Title')}
@@ -98,6 +94,7 @@ export const EditableListItem: React.FC<EditableListItemProps> = props => {
             <Button
               testID="save"
               fill
+              type='gradient'
               title={t('save')}
               onPress={edit}
               loading={props.progress}
