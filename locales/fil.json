@@ -14,7 +14,16 @@
     "WALLET_BINDING_SUCCESSFULL": "Ang pag-activate ng {{idType}} {{id}} ay matagumpay.",
     "WALLET_BINDING_FAILURE": "Nabigo ang pag-activate ng {{idType}} {{id}}.",
     "VC_REMOVED": "Ang {{idType}} {{id}} ay inalis sa wallet.",
-    "TAMPERED_VC_REMOVED": "Ang {{idType}} {{id}} ay inalis mula sa wallet dahil sa pakikialam."
+    "TAMPERED_VC_REMOVED": "Ang {{idType}} {{id}} ay inalis mula sa wallet dahil sa pakikialam.",
+    "VP_SHARING": {
+      "SHARED_SUCCESSFULLY": "Matagumpay na naibahagi ang Pagtatanghal ng Kredensyal.",
+      "SHARED_WITH_FACE_VERIFIACTION": "Matagumpay ang pag-verify sa mukha, at matagumpay na naibahagi ang Credential Presentation.",
+      "VERIFIER_AUTHENTICATION_FAILED": "Nabigong i-authenticate ang Serbisyo sa Pag-verify sa panahon ng pagbabahagi ng VP.",
+      "INVALID_AUTH_REQUEST": "Ang QR code ay may di-wasto o nawawalang data. Tingnan sa serbisyo ng pag-verify.",
+      "USER_DECLINED_CONSENT": "Tinanggihan ng user ang pahintulot para sa pagbabahagi ng Credential Presentation.",
+      "SHARED_AFTER_RETRY": "Ang Pagtatanghal ng Kredensyal ay matagumpay na naibahagi pagkatapos ng muling pagsubok.",
+      "SHARED_WITH_FACE_VERIFICATION_AFTER_RETRY": "Matagumpay ang pag-verify sa mukha, at matagumpay na naibahagi ang Credential Presentation pagkatapos ng muling pagsubok."
+    }
   },
   "DeviceInfoList": {
     "requestedBy": "Hiniling ni",

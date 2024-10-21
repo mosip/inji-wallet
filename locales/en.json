@@ -14,7 +14,16 @@
     "WALLET_BINDING_SUCCESSFULL": "Activation of {{idType}} {{id}} is successful.",
     "WALLET_BINDING_FAILURE": "Activation of {{idType}} {{id}} has failed.",
     "VC_REMOVED": "{{idType}} {{id}} is removed from wallet.",
-    "TAMPERED_VC_REMOVED": "{{idType}} {{id}} is removed from from wallet due to tampering."
+    "TAMPERED_VC_REMOVED": "{{idType}} {{id}} is removed from from wallet due to tampering.",
+    "VP_SHARING": {
+      "SHARED_SUCCESSFULLY": "Credential Presentation is shared successfully.",
+      "SHARED_WITH_FACE_VERIFIACTION": "Face verification is successful, and the Credential Presentation is shared successfully.",
+      "VERIFIER_AUTHENTICATION_FAILED": "Failed to authenticate the Verification Service during VP sharing.",
+      "INVALID_AUTH_REQUEST": "QR code has invalid or missing data. Check with the verification service.",
+      "USER_DECLINED_CONSENT": "User declined consent for Credential Presentation sharing.",
+      "SHARED_AFTER_RETRY": "Credential Presentation is shared successfully after a retry.",
+      "SHARED_WITH_FACE_VERIFICATION_AFTER_RETRY": "Face verification is successful, and the Credential Presentation is shared successfully after a retry."
+    }
   },
   "DeviceInfoList": {
     "requestedBy": "Requested by",

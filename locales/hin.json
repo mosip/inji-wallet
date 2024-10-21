@@ -14,7 +14,16 @@
     "WALLET_BINDING_SUCCESSFULL": "{{idType}} {{id}} का सक्रियण सफल रहा।",
     "WALLET_BINDING_FAILURE": "{{idType}} {{id}} का सक्रियण विफल हो गया।",
     "VC_REMOVED": "{{idType}} {{id}} को वॉलेट से हटा दिया गया।",
-    "TAMPERED_VC_REMOVED": "{{idType}} {{id}} को छेड़छाड़ के कारण वॉलेट से हटा दिया गया।"
+    "TAMPERED_VC_REMOVED": "{{idType}} {{id}} को छेड़छाड़ के कारण वॉलेट से हटा दिया गया।",
+    "VP_SHARING": {
+      "SHARED_SUCCESSFULLY": "क्रेडेंशियल प्रेजेंटेशन सफलतापूर्वक साझा किया गया है.",
+      "SHARED_WITH_FACE_VERIFIACTION": "चेहरा सत्यापन सफल है, और क्रेडेंशियल प्रस्तुति सफलतापूर्वक साझा की गई है।",
+      "VERIFIER_AUTHENTICATION_FAILED": "वीपी साझाकरण के दौरान सत्यापन सेवा को प्रमाणित करने में विफल।",
+      "INVALID_AUTH_REQUEST": "QR कोड में अमान्य या अनुपलब्ध डेटा है. सत्यापन सेवा से जांचें.",
+      "USER_DECLINED_CONSENT": "उपयोगकर्ता ने क्रेडेंशियल प्रेजेंटेशन साझा करने के लिए सहमति देने से इनकार कर दिया।",
+      "SHARED_AFTER_RETRY": "पुन: प्रयास के बाद क्रेडेंशियल प्रस्तुति सफलतापूर्वक साझा की जाती है।",
+      "SHARED_WITH_FACE_VERIFICATION_AFTER_RETRY": "चेहरे का सत्यापन सफल है, और पुन: प्रयास के बाद क्रेडेंशियल प्रस्तुति सफलतापूर्वक साझा की जाती है।"
+    }
   },
   "DeviceInfoList": {
     "requestedBy": "द्वारा अनुरोध किया गया",
