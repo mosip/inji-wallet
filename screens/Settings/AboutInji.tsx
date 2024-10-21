@@ -17,6 +17,8 @@ import testIDProps from '../../shared/commonUtil';
 import {__InjiVersion, __TuvaliVersion} from '../../shared/GlobalVariables';
 import i18next from '../../i18n';
 import {BannerNotificationContainer} from '../../components/BannerNotificationContainer';
+import {SvgImage} from '../../components/ui/svg';
+import LinearGradient from 'react-native-linear-gradient';
 
 export const AboutInji: React.FC<AboutInjiProps> = ({appId}) => {
   const {t} = useTranslation('AboutInji');
@@ -37,12 +39,7 @@ export const AboutInji: React.FC<AboutInjiProps> = ({appId}) => {
           setShowAboutInji(!showAboutInji);
         }}>
         <ListItem {...testIDProps('aboutInji')} topDivider bottomDivider>
-          <Icon
-            type={'feather'}
-            name={'file'}
-            color={Theme.Colors.Icon}
-            size={25}
-          />
+          {SvgImage.abotInjiIcon()}
           <ListItem.Content>
             <ListItem.Title
               {...testIDProps('aboutInjiTitle')}
@@ -64,30 +61,37 @@ export const AboutInji: React.FC<AboutInjiProps> = ({appId}) => {
           setShowAboutInji(!showAboutInji);
         }}>
         <BannerNotificationContainer />
-        <Row
-          testID="appID"
-          crossAlign="flex-start"
-          style={Theme.Styles.primaryRow}>
-          <Row>
-            <Text
-              weight="semibold"
-              style={{
-                maxWidth: 110,
-                paddingTop:
-                  i18next.language == 'kn' || i18next.language == 'hi' ? 5 : 0,
-              }}>
-              {t('appID')}
-            </Text>
-            <Text
-              weight="semibold"
-              style={{
-                paddingTop: i18next.language == 'hi' ? 2 : 0,
-              }}>
-              {I18nManager.isRTL ? appId : ' : ' + appId}
-            </Text>
+        <LinearGradient
+          colors={Theme.Colors.GradientColorsLight}
+          start={{x: 0.5, y: 0.5}}
+          end={{x: 1, y: 0.5}}>
+          <Row
+            testID="appID"
+            crossAlign="flex-start"
+            style={Theme.Styles.primaryRow}>
+            <Row>
+              <Text
+                weight="semibold"
+                style={{
+                  maxWidth: 110,
+                  paddingTop:
+                    i18next.language == 'kn' || i18next.language == 'hi'
+                      ? 5
+                      : 0,
+                }}>
+                {t('appID')}
+              </Text>
+              <Text
+                weight="semibold"
+                style={{
+                  paddingTop: i18next.language == 'hi' ? 2 : 0,
+                }}>
+                {I18nManager.isRTL ? appId : ' : ' + appId}
+              </Text>
+            </Row>
+            <CopyButton content={appId} />
           </Row>
-          <CopyButton content={appId} />
-        </Row>
+        </LinearGradient>
         <Column padding="12" align="space-between">
           <Column>
             <Text
