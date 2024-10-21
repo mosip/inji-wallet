@@ -41,7 +41,7 @@ export const DataBackupAndRestore: React.FC = ({} = () => {
         {...testIDProps('dataBackupAndRestore')}
         onPress={controller.BACKUP_AND_RESTORE}>
         <ListItem topDivider bottomDivider>
-          {SvgImage.DataBackupIcon(25, 25)}
+          {SvgImage.backUpAndRestoreIcon(24,24)}
           <ListItem.Content>
             <ListItem.Title
               accessible={false}

@@ -13,13 +13,14 @@ import {ProfileInfo} from '../../shared/CloudBackupAndRestoreUtils';
 import {useBackupScreen} from './BackupController';
 import {BannerNotificationContainer} from '../../components/BannerNotificationContainer';
 import {useBackupRestoreScreen} from '../Settings/BackupRestoreController';
-import {Icon} from 'react-native-elements';
+import {Icon, colors} from 'react-native-elements';
 import testIDProps, {
   getAccountType,
   getDriveName,
 } from '../../shared/commonUtil';
 import {HelpScreen} from '../../components/HelpScreen';
 import {isAndroid, isIOS} from '../../shared/constants';
+import LinearGradient from 'react-native-linear-gradient';
 
 const BackupAndRestoreScreen: React.FC<BackupAndRestoreProps> = props => {
   const backupController = useBackupScreen();
@@ -66,7 +67,7 @@ const BackupAndRestoreScreen: React.FC<BackupAndRestoreProps> = props => {
       <View>
         {backupController.lastBackupDetails && (
           <Row>
-            <Column>{SvgImage.CloudUploadDoneIcon()}</Column>
+            <Column>{SvgImage.backUpAndRestoreIcon(34,24)}</Column>
             <Column margin={'0 0 0 9'} align="center">
               <Timestamp
                 testId="lastBackup"
@@ -99,7 +100,7 @@ const BackupAndRestoreScreen: React.FC<BackupAndRestoreProps> = props => {
           ? t('backupProgressState')
           : t('lastBackupDetails')
       }
-      headerIcon={SvgImage.DataBackupIcon(34, 24)}>
+      headerIcon={SvgImage.backUpAndRestoreIcon(34, 24)}>
       <Row>
         <View style={{marginBottom: 19}}>
           {backupController.isBackupInProgress ? (
@@ -166,7 +167,7 @@ const BackupAndRestoreScreen: React.FC<BackupAndRestoreProps> = props => {
     <SectionLayout
       testId="restoreSection"
       headerText={t('restore')}
-      headerIcon={SvgImage.RestoreIcon()}
+      headerIcon={SvgImage.restoreIcon()}
       marginBottom={16}>
       <Row>
         <View style={{marginBottom: 19}}>
@@ -209,20 +210,22 @@ const BackupAndRestoreScreen: React.FC<BackupAndRestoreProps> = props => {
       arrowLeft={true}
       headerRight={
         <HelpScreen
+        
           source={'BackUp'}
           triggerComponent={
-            <View testID="help" style={Theme.HelpScreenStyle.viewStyle}>
-              <Row crossAlign="center" style={Theme.HelpScreenStyle.rowStyle}>
-                <View testID="helpIcon" style={Theme.HelpScreenStyle.iconStyle}>
-                  {SvgImage.info()}
-                </View>
-                <Text
-                  testID="helpText"
-                  style={Theme.HelpScreenStyle.labelStyle}>
-                  {t('help')}
-                </Text>
-              </Row>
-            </View>
+            <LinearGradient style={{borderRadius: 8}} colors={Theme.Colors.GradientColorsLight} start={{x:0.5,y:0.5}} end={{x:1, y:0.5}}><View testID="help" style={Theme.HelpScreenStyle.viewStyle}>
+            <Row crossAlign="center" style={Theme.HelpScreenStyle.rowStyle}>
+              <View testID="helpIcon" style={Theme.HelpScreenStyle.iconStyle}>
+                {SvgImage.info()}
+              </View>
+              <Text
+                testID="helpText"
+                style={Theme.HelpScreenStyle.labelStyle}>
+                {t('help')}
+              </Text>
+            </Row>
+          </View></LinearGradient>
+            
           }
         />
       }

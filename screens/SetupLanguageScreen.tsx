@@ -10,6 +10,7 @@ import {useWelcomeScreen} from './WelcomeScreenController';
 import {changeLanguage} from '../components/LanguageSelector';
 import {BackHandler, Dimensions} from 'react-native';
 import {useBackupRestoreScreen} from './Settings/BackupRestoreController';
+import { SvgImage } from '../components/ui/svg';
 
 export const SetupLanguageScreen: React.FC<RootRouteProps> = props => {
   const {t} = useTranslation('SetupLanguage');
@@ -39,12 +40,7 @@ export const SetupLanguageScreen: React.FC<RootRouteProps> = props => {
 
   return (
     <Column style={Theme.SetupLanguageScreenStyle.columnStyle}>
-      <Icon
-        name="globe"
-        type="simple-line-icon"
-        color={Theme.Colors.Icon}
-        size={58}
-      />
+      {SvgImage.settingsLanguageIcon(58)}
       <Column crossAlign="center" width={Dimensions.get('window').width * 0.8}>
         <Text
           testID="chooseLanguage"
