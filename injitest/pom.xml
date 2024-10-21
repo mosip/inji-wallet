@@ -2,10 +2,10 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>inji</groupId>
     <artifactId>injitest</artifactId>
-    <version>0.0.1-java21-SNAPSHOT</version>
+    <version>0.14.0-SNAPSHOT</version>
     <packaging>jar</packaging>
-    <name>inji-mob-automation</name>
-    <description>inji-mob-automation</description>
+    <name>inji-wallet-automation</name>
+    <description>inji-wallet-automation</description>
     <url>https://github.com/mosip/inji/injitest</url>
 
     <licenses>
@@ -15,8 +15,8 @@
         </license>
     </licenses>
     <scm>
-        <connection>scm:git:git://github.com/mosip/admin-ui.git</connection>
-        <developerConnection>scm:git:ssh://github.com:mosip/admin-ui.git</developerConnection>
+        <connection>scm:git:git://github.com/mosip/inji-wallet.git</connection>
+        <developerConnection>scm:git:ssh://github.com:mosip/inji-wallet.git</developerConnection>
         <url>https://github.com/mosip/inji/injitest</url>
         <tag>HEAD</tag>
     </scm>
@@ -30,8 +30,8 @@
     </developers>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <maven.compiler.source>11</maven.compiler.source>
-        <maven.compiler.target>11</maven.compiler.target>
+        <maven.compiler.source>21</maven.compiler.source>
+        <maven.compiler.target>21</maven.compiler.target>
         <surefire.plugin.version>3.0.0-M5</surefire.plugin.version>
     </properties>
     <dependencies>
