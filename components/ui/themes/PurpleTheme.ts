@@ -45,6 +45,7 @@ const Colors = {
   plainText: '#F3E2FF',
   walletbindingLabel: '#000000',
   GradientColors: ['#373086', '#70308C'],
+  GradientColorsLight:['#373086', '#70308C'],
   DisabledColors: ['#C7C7C7', '#C7C7C7'],
   captureIconBorder: '#F59B4B',
   Purple: '#70308C',
@@ -121,6 +122,7 @@ export const PurpleTheme = {
     plainText: Colors.plainText,
     IconBackground: Colors.LightPurple,
     GradientColors: Colors.GradientColors,
+    GradientColorsLight: Colors.GradientColorsLight,
     DisabledColors: Colors.DisabledColors,
     getVidColor: Colors.Zambezi,
     TimeoutHintBoxColor: Colors.TimeoutHintBoxColor,
@@ -1656,6 +1658,7 @@ export const PurpleTheme = {
   DigitalWallet: require('../../../assets/Intro_Wallet.png'),
   IntroShare: require('../../../assets/Intro_Share.png'),
   IntroBackup: require('../../../assets/Intro_Backup.png'),
+  IntroSliderbackground: require('../../../assets/Gradient-1.svg'),
   elevation(level: ElevationLevel): ViewStyle {
     // https://ethercreative.github.io/react-native-shadow-generator/
 

@@ -14,8 +14,9 @@ import WalletActivatedLargeIcon from '../../assets/Wallet_Activated_Large_Icon.s
 import WalletUnActivatedIcon from '../../assets/Wallet_UnActivated_Icon.svg';
 import WalletUnActivatedLargeIcon from '../../assets/Wallet_UnActivated_Large_Icon.svg';
 import InjiSmallLogo from '../../assets/Inji_Logo.svg';
+import InjiLogoNewBranding from '../../assets/InjiLogoNewBranding.svg'
 import LockIcon from '../../assets/Lock_Icon1.svg';
-import InjiLogo from '../../assets/Inji_Home_Logo.svg';
+import InjiLogo from '../../assets/InjiHomeLogo.svg';
 import DigitalIdentity from '../../assets/Digital_Identity_Icon1.svg';
 import ReceiveCard from '../../assets/Receive_Card.svg';
 import ReceivedCards from '../../assets/Received_Cards.svg';
@@ -53,14 +54,41 @@ import ColoredInfo from '../../assets/Colored_Info.svg';
 import Info from '../../assets/Info.svg';
 import Search from '../../assets/Search.svg';
 import CloudUploadDoneIcon from '../../assets/Cloud_Upload_Done_Icon.svg';
+import SettingsLanguage from '../../assets/Language_Icon.svg'
+import SettingsBiometric from '../../assets/biometric_unlock.svg'
+import SettingsAboutInji from '../../assets/legal_notices_icon.svg'
+import SettingsBackup from '../../assets/cloud_upload.svg'
+import SettingsLogOut from '../../assets/logout_icon.svg'
+import RestoreIcon from '../../assets/restore.svg'
+import QuestionIcon from '../../assets/questionIcon.svg'
+import CopyIcon from '../../assets/file_copy.svg'
+import StarIcon from '../../assets/credentialRegestryStar.svg'
 
 export class SvgImage {
+  static copyIcon(): React.ReactNode {
+   return <CopyIcon/>
+  }
+  static questionIcon() {
+   return <QuestionIcon/>
+  }
+  static logOutIcon(): any {
+    return <SettingsLogOut/>
+  }
+
+  static restoreIcon(): any {
+    return <RestoreIcon/>
+  }
+
+  static starIcon(){
+    return <StarIcon/>
+  }
+
   static MosipLogo(props: LogoProps) {
     const {width, height} = props;
     return <Logo width={width} height={height} />;
   }
 
-  static kebabIcon(testId) {
+  static kebabIcon(testId: string) {
     return <KebabIcon {...testIDProps(testId)} />;
   }
 
@@ -229,8 +257,9 @@ export class SvgImage {
   }
 
   static InjiSmallLogo() {
-    return <InjiSmallLogo {...testIDProps('injiSmallLogo')} />;
+    return <InjiLogoNewBranding {...testIDProps('injiSmallLogo')} />;
   }
+
 
   static ProgressIcon() {
     return (
@@ -346,7 +375,7 @@ export class SvgImage {
     );
   }
 
-  static DataBackupIcon(width, height) {
+  static DataBackupIcon(width: number, height: number) {
     return (
       <Backup
         {...testIDProps('dataBackupIcon')}
@@ -354,12 +383,6 @@ export class SvgImage {
         width={width}
         height={height}
       />
-    );
-  }
-
-  static RestoreIcon() {
-    return (
-      <Restore color1={Theme.Colors.Icon} {...testIDProps('restoreIcon')} />
     );
   }
 
@@ -422,8 +445,8 @@ export class SvgImage {
   static coloredInfo() {
     return (
       <ColoredInfo
-        color1={Theme.Colors.linearGradientStart}
-        color2={Theme.Colors.linearGradientEnd}
+        color1={Theme.Colors.GradientColors[0]}
+        color2={Theme.Colors.GradientColors[1]}
         {...testIDProps('coloredInfoIcon')}
       />
     );
@@ -460,7 +483,7 @@ export class SvgImage {
     return <UnCheckedIcon {...testIDProps('unCheckedIcon')} />;
   }
 
-  static GoogleDriveIcon(width, height) {
+  static GoogleDriveIcon(width: number, height: number) {
     return (
       <GoogleDriveIcon
         width={width}
@@ -470,7 +493,7 @@ export class SvgImage {
     );
   }
 
-  static GoogleDriveIconSmall(width, height) {
+  static GoogleDriveIconSmall(width: number, height: number) {
     return (
       <GoogleDriveIconSmall
         width={width}
@@ -480,7 +503,7 @@ export class SvgImage {
     );
   }
 
-  static ICloudIcon(width, height) {
+  static ICloudIcon(width: number, height: number) {
     return (
       <ICloudLogo
         width={width}
@@ -492,6 +515,22 @@ export class SvgImage {
 
   static SearchIcon() {
     return <Search {...testIDProps('searchIcon')} />;
+  }
+
+  static settingsLanguageIcon(size){
+  return <SettingsLanguage width={size} height={size}/>
+  }
+
+  static fingerprintIcon(size?: number | undefined){
+    return <SettingsBiometric height={size} width={size}/>
+    }
+
+  static abotInjiIcon(){
+    return <SettingsAboutInji/>
+  }
+  
+  static backUpAndRestoreIcon(height: number,width: number){
+    return <SettingsBackup height={height} width={width}/>
   }
 }
 

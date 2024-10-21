@@ -48,7 +48,10 @@ export const HomeScreen: React.FC<HomeRouteProps> = props => {
     );
     return (
       <LinearGradient
-        colors={Theme.Colors.gradientBtn}
+        colors={Theme.Colors.gradientBtn
+        }
+        start={{x: 0.5, y: 0.5}}
+        end={{x:1, y:0.5}}
         style={Theme.Styles.downloadFabIconContainer}>
         <Pressable
           onPress={() => {

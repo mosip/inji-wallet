@@ -13,6 +13,7 @@ import {
 } from '../shared/telemetry/TelemetryUtils';
 import {TelemetryConstants} from '../shared/telemetry/TelemetryConstants';
 import {Icon} from 'react-native-elements';
+import { SvgImage } from '../components/ui/svg';
 
 export const AuthScreen: React.FC<RootRouteProps> = props => {
   const {t} = useTranslation('AuthScreen');
@@ -43,7 +44,7 @@ export const AuthScreen: React.FC<RootRouteProps> = props => {
         title={controller.alertMsg}
       />
       <Column crossAlign="center">
-        <Icon name="fingerprint" size={80} color={Theme.Colors.Icon} />
+        {SvgImage.fingerprintIcon(66)}
         <Column margin="30 0 0 0">
           <Text
             testID="selectAppUnlockMethod"

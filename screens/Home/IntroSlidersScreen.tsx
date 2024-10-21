@@ -1,6 +1,6 @@
 import React, {useRef} from 'react';
 import AppIntroSlider from 'react-native-app-intro-slider';
-import {Dimensions, Image, StatusBar, View} from 'react-native';
+import {Dimensions, Image, ImageBackground, StatusBar, View} from 'react-native';
 import {Centered, Column, Row, Text, Button} from '../../components/ui';
 import {Theme} from '../../components/ui/styleUtils';
 import {useTranslation} from 'react-i18next';
@@ -54,7 +54,7 @@ export const IntroSlidersScreen: React.FC<RootRouteProps> = props => {
 
   const renderItem = ({item}) => {
     return (
-      <LinearGradient colors={Theme.Colors.gradientBtn}>
+      <ImageBackground source={Theme.IntroSliderbackground} >
         <Centered>
           <Row align="space-between" style={Theme.Styles.introSliderHeader}>
             <Column style={{marginLeft: INTRO_SLIDER_LOGO_MARGIN}}>
@@ -104,7 +104,8 @@ export const IntroSlidersScreen: React.FC<RootRouteProps> = props => {
             </Text>
           </Column>
         </Centered>
-      </LinearGradient>
+        </ImageBackground>
+     
     );
   };
 
@@ -113,6 +114,8 @@ export const IntroSlidersScreen: React.FC<RootRouteProps> = props => {
       <View {...testIDProps('nextButton')}>
         <LinearGradient
           colors={Theme.Colors.gradientBtn}
+          start={{x:0.5,y:0.5}}
+          end={{x:1,y:0.5}}
           style={Theme.Styles.introSliderButton}>
           <Text
             testID="next"
@@ -135,7 +138,10 @@ export const IntroSlidersScreen: React.FC<RootRouteProps> = props => {
       <View {...testIDProps(testId)}>
         <LinearGradient
           colors={Theme.Colors.gradientBtn}
-          style={Theme.Styles.introSliderButton}>
+          style={Theme.Styles.introSliderButton}
+          start={{ x: 0, y: 0 }}
+          end={{ x: 1, y: 1 }}
+          >
           <Text
             style={{paddingTop: 3}}
             weight="semibold"
