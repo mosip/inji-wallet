@@ -15,6 +15,7 @@ import {
   sendImpressionEvent,
 } from './telemetry/TelemetryUtils';
 import {TelemetryConstants} from './telemetry/TelemetryConstants';
+import NetInfo, {NetInfoState} from '@react-native-community/netinfo';
 
 export const API_URLS: ApiUrls = {
   trustedVerifiersList: {
@@ -257,9 +258,10 @@ async function generateCacheAPIFunctionWithAPIPreference(
     }`);
 
     console.log(error);
-
-    const response = await getItem(cacheKey, null, '');
-
+    var response=null;
+    if(!(await NetInfo.fetch()).isConnected){
+       response = await getItem(cacheKey, null, '');
+    }
     if (response) {
       return response;
     } else {

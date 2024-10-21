@@ -44,4 +44,5 @@ export const VcMetaEvents = {
   }),
   VC_DOWNLOADING_FAILED: () => ({}),
   RESET_DOWNLOADING_FAILED: () => ({}),
+  RESET_DOWNLOADING_SUCCESS: () => ({}),
 };

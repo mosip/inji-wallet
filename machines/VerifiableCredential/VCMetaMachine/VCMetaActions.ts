@@ -220,6 +220,13 @@ export const VCMetaActions = (model: any) => {
     resetDownloadCreadentialsFailed: model.assign({
       DownloadingCredentialsFailed: () => false,
     }),
+    setDownloadCredentialsSuccess: model.assign({
+      DownloadingCredentialsSuccess: () => true
+      
+    }),
+    resetDownloadCredentialsSuccess: model.assign({
+      DownloadingCredentialsSuccess: () => false,
+    }),
   };
 };
 
