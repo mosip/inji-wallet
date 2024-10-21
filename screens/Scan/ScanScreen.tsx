@@ -93,6 +93,7 @@ export const ScanScreen: React.FC = () => {
 
         <Button
           testID="enableBluetoothButton"
+          type='gradient'
           title={t('enableBluetoothButtonText')}
           onPress={openSettings}
         />
