@@ -23,7 +23,7 @@ export enum VCShareFlowType {
 export enum VCItemContainerFlowType {
   QR_LOGIN = 'qr login',
   VC_SHARE = 'vc share',
-  OPENID4VP = 'openID4VP',
+  VP_SHARE = 'vp share',
 }
 
 export interface CommunicationDetails {

@@ -38,6 +38,7 @@ import {
 import {TelemetryConstants} from '../../../shared/telemetry/TelemetryConstants';
 
 import {EventTypes, VerificationStatus, verifier} from '../../../shared/tuvali';
+import {VCActivityLog} from '../../../components/ActivityLogEvent';
 
 const model = createModel(
   {
@@ -614,18 +615,21 @@ export const requestMachine =
             const vcMetadata = VCMetadata.fromVC(
               context.incomingVc?.vcMetadata,
             );
-            return ActivityLogEvents.LOG_ACTIVITY({
-              _vcKey: vcMetadata.getVcKey(),
-              type: context.receiveLogType,
-              id: vcMetadata.displayId,
-              credentialConfigurationId:
-                context.incomingVc.verifiableCredential
-                  .credentialConfigurationId,
-              issuer: vcMetadata.issuer!!,
-              timestamp: Date.now(),
-              deviceName:
-                context.senderInfo.name || context.senderInfo.deviceName,
-            });
+
+            return ActivityLogEvents.LOG_ACTIVITY(
+              VCActivityLog.getLogFromObject({
+                _vcKey: vcMetadata.getVcKey(),
+                type: context.receiveLogType,
+                id: vcMetadata.displayId,
+                credentialConfigurationId:
+                  context.incomingVc.verifiableCredential
+                    .credentialConfigurationId,
+                issuer: vcMetadata.issuer!!,
+                timestamp: Date.now(),
+                deviceName:
+                  context.senderInfo.name || context.senderInfo.deviceName,
+              }),
+            );
           },
           {to: context => context.serviceRefs.activityLog},
         ),

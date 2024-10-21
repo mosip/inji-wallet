@@ -30,6 +30,7 @@ import BluetoothStateManager from 'react-native-bluetooth-state-manager';
 import {NativeModules} from 'react-native';
 import {wallet} from '../../../shared/tuvali';
 import {createOpenID4VPMachine} from '../../openID4VP/openID4VPMachine';
+import {VCActivityLog} from '../../../components/ActivityLogEvent';
 
 const QR_LOGIN_REF_ID = 'QrLogin';
 const OPENID4VP_REF_ID = 'OpenID4VP';
@@ -235,19 +236,21 @@ export const ScanActions = (model: any) => {
       (context: any) => {
         const vcMetadata = VCMetadata.fromVC(context.selectedVc?.vcMetadata);
 
-        return ActivityLogEvents.LOG_ACTIVITY({
-          _vcKey: vcMetadata.getVcKey(),
-          type: context.shareLogType
-            ? context.shareLogType
-            : 'VC_SHARED_WITH_VERIFICATION_CONSENT',
-          id: vcMetadata.displayId,
-          credentialConfigurationId:
-            context.selectedVc.verifiableCredential.credentialConfigurationId,
-          issuer: vcMetadata.issuer!!,
-          timestamp: Date.now(),
-          deviceName:
-            context.receiverInfo.name || context.receiverInfo.deviceName,
-        });
+        return ActivityLogEvents.LOG_ACTIVITY(
+          VCActivityLog.getLogFromObject({
+            _vcKey: vcMetadata.getVcKey(),
+            type: context.shareLogType
+              ? context.shareLogType
+              : 'VC_SHARED_WITH_VERIFICATION_CONSENT',
+            id: vcMetadata.displayId,
+            credentialConfigurationId:
+              context.selectedVc.verifiableCredential.credentialConfigurationId,
+            issuer: vcMetadata.issuer!!,
+            timestamp: Date.now(),
+            deviceName:
+              context.receiverInfo.name || context.receiverInfo.deviceName,
+          }),
+        );
       },
       {to: context => context.serviceRefs.activityLog},
     ),
@@ -255,17 +258,19 @@ export const ScanActions = (model: any) => {
     logFailedVerification: send(
       (context: any) => {
         const vcMetadata = VCMetadata.fromVC(context.selectedVc);
-        return ActivityLogEvents.LOG_ACTIVITY({
-          _vcKey: vcMetadata.getVcKey(),
-          type: 'PRESENCE_VERIFICATION_FAILED',
-          timestamp: Date.now(),
-          credentialConfigurationId:
-            context.selectedVc.verifiableCredential.credentialConfigurationId,
-          id: vcMetadata.displayId,
-          issuer: vcMetadata.issuer!!,
-          deviceName:
-            context.receiverInfo.name || context.receiverInfo.deviceName,
-        });
+        return ActivityLogEvents.LOG_ACTIVITY(
+          VCActivityLog.getLogFromObject({
+            _vcKey: vcMetadata.getVcKey(),
+            type: 'PRESENCE_VERIFICATION_FAILED',
+            timestamp: Date.now(),
+            credentialConfigurationId:
+              context.selectedVc.verifiableCredential.credentialConfigurationId,
+            id: vcMetadata.displayId,
+            issuer: vcMetadata.issuer!!,
+            deviceName:
+              context.receiverInfo.name || context.receiverInfo.deviceName,
+          }),
+        );
       },
       {to: context => context.serviceRefs.activityLog},
     ),
@@ -332,16 +337,18 @@ export const ScanActions = (model: any) => {
 
         const selectedVc = context.QrLoginRef.getSnapshot().context.selectedVc;
 
-        return ActivityLogEvents.LOG_ACTIVITY({
-          _vcKey: '',
-          id: vcMetadata.displayId,
-          issuer: vcMetadata.issuer!!,
-          credentialConfigurationId:
-            selectedVc.verifiableCredential.credentialConfigurationId,
-          type: 'QRLOGIN_SUCCESFULL',
-          timestamp: Date.now(),
-          deviceName: '',
-        });
+        return ActivityLogEvents.LOG_ACTIVITY(
+          VCActivityLog.getLogFromObject({
+            _vcKey: '',
+            id: vcMetadata.displayId,
+            issuer: vcMetadata.issuer!!,
+            credentialConfigurationId:
+              selectedVc.verifiableCredential.credentialConfigurationId,
+            type: 'QRLOGIN_SUCCESFULL',
+            timestamp: Date.now(),
+            deviceName: '',
+          }),
+        );
       },
       {
         to: (context: any) => context.serviceRefs.activityLog,

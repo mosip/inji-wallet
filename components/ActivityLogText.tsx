@@ -1,38 +1,31 @@
 import React from 'react';
-import {formatDistanceToNow} from 'date-fns';
 import {useTranslation} from 'react-i18next';
 
-import * as DateFnsLocale from 'date-fns/locale';
 import {TextItem} from './ui/TextItem';
-import {ActivityLog, getActionText} from './ActivityLogEvent';
+import {VCActivityLog} from './ActivityLogEvent';
 import {useHistoryTab} from '../screens/History/HistoryScreenController';
+import {VPShareActivityLog} from './VPShareActivityLogEvent';
 
-export const ActivityLogText: React.FC<{activity: ActivityLog}> = props => {
+export const ActivityLogText: React.FC<{
+  activity: VCActivityLog | VPShareActivityLog;
+}> = props => {
   const {t, i18n} = useTranslation('ActivityLogText');
   const historyController = useHistoryTab();
-  const {activity} = props;
+  let {activity} = props;
+  activity =
+    activity.constructor.name === 'VPShareActivityLog'
+      ? VPShareActivityLog.getLogFromObject(activity)
+      : VCActivityLog.getLogFromObject(activity);
+  const wellknown =
+    activity.constructor.name === 'VCActivityLog'
+      ? historyController.getWellKnownIssuerMap(activity.issuer)
+      : undefined;
 
   return (
     <TextItem
-      label={getActionLabel(activity, i18n.language)}
-      text={getActionText(
-        activity,
-        t,
-        historyController.getWellKnownIssuerMap(activity.issuer),
-      )}
+      label={activity.getActionLabel(i18n.language)}
+      text={activity.getActionText(t, wellknown)}
       divider
     />
   );
 };
-
-function getActionLabel(activity: ActivityLog, language: string) {
-  return [
-    activity.deviceName,
-    formatDistanceToNow(activity.timestamp, {
-      addSuffix: true,
-      locale: DateFnsLocale[language],
-    }),
-  ]
-    .filter(label => label?.trim() !== '')
-    .join(' · ');
-}

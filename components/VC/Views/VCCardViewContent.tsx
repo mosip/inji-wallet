@@ -29,7 +29,7 @@ import {useTranslation} from 'react-i18next';
 export const VCCardViewContent: React.FC<VCItemContentProps> = props => {
   const vcSelectableButton =
     props.selectable &&
-    (props.flow === VCItemContainerFlowType.OPENID4VP ? (
+    (props.flow === VCItemContainerFlowType.VP_SHARE ? (
       <CheckBox
         checked={props.selected}
         checkedIcon={SvgImage.selectedCheckBox()}
