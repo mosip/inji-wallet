@@ -28,20 +28,24 @@ export const openID4VPActions = (model: any) => {
       vcsMatchingAuthRequest: (context, event) => {
         let vcs = event.vcs;
         let matchingVCs = {} as Record<string, [VC]>;
-        let presentationDefinition;
-        const response = context.authenticationResponse;
-        presentationDefinition = response['presentation_definition'];
+        let presentationDefinition =
+          context.authenticationResponse['presentation_definition'];
+        let anyInputDescriptoHasFormatOrConstraints = false;
 
         vcs.forEach(vc => {
           presentationDefinition['input_descriptors'].forEach(
             inputDescriptor => {
               const format =
                 inputDescriptor.format ?? presentationDefinition.format;
+              anyInputDescriptoHasFormatOrConstraints =
+                anyInputDescriptoHasFormatOrConstraints ||
+                format !== undefined ||
+                inputDescriptor.constraints.fields !== undefined;
               if (
                 isVCMatchingRequestConstraints(
                   inputDescriptor.constraints,
                   vc.verifiableCredential.credential,
-                ) &&
+                ) ||
                 areVCFormatAndProofTypeMatchingRequest(
                   format,
                   vc.format,
@@ -54,6 +58,9 @@ export const openID4VPActions = (model: any) => {
             },
           );
         });
+        if (!anyInputDescriptoHasFormatOrConstraints) {
+          matchingVCs[presentationDefinition['input_descriptors'][0].id] = vcs;
+        }
         return matchingVCs;
       },
       purpose: context => {
@@ -189,6 +196,9 @@ function areVCFormatAndProofTypeMatchingRequest(
   vcFormatType: string,
   vcProofType: string,
 ): boolean {
+  if (!format) {
+    return false;
+  }
   return Object.entries(format).some(
     ([type, value]) =>
       type === vcFormatType && value.proof_type.includes(vcProofType),
@@ -196,6 +206,9 @@ function areVCFormatAndProofTypeMatchingRequest(
 }
 
 function isVCMatchingRequestConstraints(constraints, credential) {
+  if (!constraints.fields) {
+    return false;
+  }
   for (const field of constraints.fields) {
     for (const path of field.path) {
       const valueMatchingPath = JSONPath({
@@ -203,14 +216,12 @@ function isVCMatchingRequestConstraints(constraints, credential) {
         json: credential,
       })[0];
 
-      if (valueMatchingPath !== undefined) {
-        const pathValueAsString = String(valueMatchingPath);
-        if (
-          field.filter?.type === typeof valueMatchingPath &&
-          pathValueAsString.includes(field.filter?.pattern)
-        ) {
-          return true;
-        }
+      if (
+        valueMatchingPath !== undefined &&
+        field.filter?.type === typeof valueMatchingPath &&
+        String(valueMatchingPath).includes(field.filter?.pattern)
+      ) {
+        return true;
       }
     }
   }
