@@ -15,7 +15,7 @@
     "WALLET_BINDING_FAILURE": "{{idType}} {{id}} का सक्रियण विफल हो गया।",
     "VC_REMOVED": "{{idType}} {{id}} को वॉलेट से हटा दिया गया।",
     "TAMPERED_VC_REMOVED": "{{idType}} {{id}} को छेड़छाड़ के कारण वॉलेट से हटा दिया गया।",
-    "VP_SHARING": {
+    "vpSharing": {
       "SHARED_SUCCESSFULLY": "क्रेडेंशियल प्रेजेंटेशन सफलतापूर्वक साझा किया गया है.",
       "SHARED_WITH_FACE_VERIFIACTION": "चेहरा सत्यापन सफल है, और क्रेडेंशियल प्रस्तुति सफलतापूर्वक साझा की गई है।",
       "VERIFIER_AUTHENTICATION_FAILED": "वीपी साझाकरण के दौरान सत्यापन सेवा को प्रमाणित करने में विफल।",

@@ -15,7 +15,7 @@
     "WALLET_BINDING_FAILURE": "فشل تفعيل {{idType}} {{id}}.",
     "VC_REMOVED": "تم إزالة {{idType}} {{id}} من المحفظة.",
     "TAMPERED_VC_REMOVED": "تم إزالة {{idType}} {{id}} من المحفظة بسبب العبث.",
-    "VP_SHARING": {
+    "vpSharing": {
       "SHARED_SUCCESSFULLY": "تمت مشاركة العرض التقديمي لبيانات الاعتماد بنجاح.",
       "SHARED_WITH_FACE_VERIFIACTION": "تم التحقق من الوجه بنجاح، وتمت مشاركة العرض التقديمي لبيانات الاعتماد بنجاح.",
       "VERIFIER_AUTHENTICATION_FAILED": "فشلت مصادقة خدمة التحقق أثناء مشاركة VP.",

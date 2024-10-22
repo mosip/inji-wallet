@@ -15,7 +15,7 @@
     "WALLET_BINDING_FAILURE": "Nabigo ang pag-activate ng {{idType}} {{id}}.",
     "VC_REMOVED": "Ang {{idType}} {{id}} ay inalis sa wallet.",
     "TAMPERED_VC_REMOVED": "Ang {{idType}} {{id}} ay inalis mula sa wallet dahil sa pakikialam.",
-    "VP_SHARING": {
+    "vpSharing": {
       "SHARED_SUCCESSFULLY": "Matagumpay na naibahagi ang Pagtatanghal ng Kredensyal.",
       "SHARED_WITH_FACE_VERIFIACTION": "Matagumpay ang pag-verify sa mukha, at matagumpay na naibahagi ang Credential Presentation.",
       "VERIFIER_AUTHENTICATION_FAILED": "Nabigong i-authenticate ang Serbisyo sa Pag-verify sa panahon ng pagbabahagi ng VP.",
