@@ -6,7 +6,6 @@ import React
 class RNOpenId4VpModule: NSObject, RCTBridgeModule {
   
   private var openID4VP: OpenID4VP?
-  private let networkManager: NetworkManaging = NetworkManager.shared
   
   static func moduleName() -> String {
     return "InjiOpenID4VP"
