@@ -63,6 +63,7 @@ export const openID4VPModel = createModel(
     openID4VPRetryCount: 0,
     trustedVerifiers: [] as VerifierType[],
     showFaceCaptureSuccessBanner: false,
+    isFaceVerificationRetryAttempt: false as boolean,
   },
   {events: openID4VPEvents},
 );

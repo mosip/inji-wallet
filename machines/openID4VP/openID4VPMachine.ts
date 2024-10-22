@@ -269,13 +269,26 @@ export const openID4VPMachine = model.createMachine(
               target: 'checkKeyPair',
             },
           ],
-          FACE_INVALID: {
-            target: 'invalidIdentity',
-            actions: send({
-              type: 'LOG_ACTIVITY',
-              logType: 'FACE_VERIFICATION_FAILED',
-            }),
-          },
+          FACE_INVALID: [
+            {
+              cond: 'isFaceVerificationRetryAttempt',
+              actions: send({
+                type: 'LOG_ACTIVITY',
+                logType: 'FACE_VERIFICATION_FAILED_AFTER_RETRY_ATTEMPT',
+              }),
+              target: 'invalidIdentity',
+            },
+            {
+              actions: [
+                send({
+                  type: 'LOG_ACTIVITY',
+                  logType: 'FACE_VERIFICATION_FAILED',
+                }),
+                'setIsFaceVerificationRetryAttempt',
+              ],
+              target: 'invalidIdentity',
+            },
+          ],
           CANCEL: [
             {
               cond: 'isSimpleOpenID4VPShare',
@@ -293,10 +306,14 @@ export const openID4VPMachine = model.createMachine(
           DISMISS: [
             {
               cond: 'isSimpleOpenID4VPShare',
+              actions: 'resetIsFaceVerificationRetryAttempt',
               target: 'selectingVCs',
             },
             {
-              actions: sendParent('DISMISS'),
+              actions: [
+                'resetIsFaceVerificationRetryAttempt',
+                sendParent('DISMISS'),
+              ],
             },
           ],
           RETRY_VERIFICATION: {
@@ -342,7 +359,7 @@ export const openID4VPMachine = model.createMachine(
                 type: 'LOG_ACTIVITY',
                 logType: 'RETRY_ATTEMPT_FAILED',
               }),
-              'setError',
+              'setSendVPShareError',
               sendParent('SHOW_ERROR'),
             ],
             target: 'showError',

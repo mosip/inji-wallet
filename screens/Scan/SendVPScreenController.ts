@@ -51,6 +51,7 @@ export function useSendVPScreen() {
   const {appService} = useContext(GlobalContext);
   const scanService = appService.children.get('scan')!!;
   const vcMetaService = appService.children.get('vcMeta')!!;
+  const activityLogService = appService.children.get('activityLog')!!;
   const navigation = useNavigation<MyVcsTabNavigation>();
   const openID4VPService = scanService.getSnapshot().context.OpenId4VPRef;
   const [selectedVCKeys, setSelectedVCKeys] = useState<Record<string, string>>(
@@ -115,7 +116,10 @@ export function useSendVPScreen() {
 
   const DISMISS_POPUP = () =>
     openID4VPService.send(OpenID4VPEvents.DISMISS_POPUP());
-
+  const openID4VPRetryCount = useSelector(
+    openID4VPService,
+    selectOpenID4VPRetryCount,
+  );
   const noCredentialsMatchingVPRequest =
     isSelectingVCs && Object.keys(vcsMatchingAuthRequest).length === 0;
   let errorModal = {
@@ -124,6 +128,17 @@ export function useSendVPScreen() {
     message: '',
     showRetryButton: false,
   };
+
+  function generateAndStoreLogMessage(logType: String) {
+    activityLogService.send(
+      ActivityLogEvents.LOG_ACTIVITY(
+        VPShareActivityLog.getLogFromObject({
+          timestamp: Date.now(),
+          type: logType,
+        }),
+      ),
+    );
+  }
 
   if (noCredentialsMatchingVPRequest) {
     errorModal.title = t('errors.noMatchingCredentials.title');
@@ -148,10 +163,13 @@ export function useSendVPScreen() {
     errorModal.title = t('errors.invalidQrCode.title');
     errorModal.message = t('errors.invalidQrCode.message');
     generateAndStoreLogMessage('INVALID_AUTH_REQUEST');
-  } else if (error !== '') {
+  } else if (error.startsWith('send vp')) {
     errorModal.title = t('errors.genericError.title');
     errorModal.message = t('errors.genericError.message');
     errorModal.showRetryButton = true;
+  } else if (error !== '') {
+    errorModal.title = t('errors.genericError.title');
+    errorModal.message = t('errors.genericError.message');
     generateAndStoreLogMessage('TECHNICAL_ERROR');
   }
 
@@ -273,20 +291,8 @@ export function useSendVPScreen() {
       );
     },
     CANCEL,
-    openID4VPRetryCount: useSelector(
-      openID4VPService,
-      selectOpenID4VPRetryCount,
-    ),
+    openID4VPRetryCount,
     RESET_RETRY_COUNT: () =>
       openID4VPService.send(OpenID4VPEvents.RESET_RETRY_COUNT()),
   };
-}
-
-function generateAndStoreLogMessage(logType: String) {
-  ActivityLogEvents.LOG_ACTIVITY(
-    VPShareActivityLog.getLogFromObject({
-      timestamp: Date.now(),
-      type: logType,
-    }),
-  );
 }

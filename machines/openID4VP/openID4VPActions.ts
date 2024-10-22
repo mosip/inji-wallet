@@ -44,16 +44,27 @@ export const openID4VPActions = (model: any) => {
                 anyInputDescriptoHasFormatOrConstraints ||
                 format !== undefined ||
                 inputDescriptor.constraints.fields !== undefined;
-              if (
-                isVCMatchingRequestConstraints(
-                  inputDescriptor.constraints,
-                  vc.verifiableCredential.credential,
-                ) &&
+
+              const isMatchingConstraints = isVCMatchingRequestConstraints(
+                inputDescriptor.constraints,
+                vc.verifiableCredential.credential,
+              );
+
+              const areMatchingFormatAndProofType =
                 areVCFormatAndProofTypeMatchingRequest(
                   format,
                   vc.format,
                   vc.verifiableCredential.credential.proof.type,
-                )
+                );
+
+              if (inputDescriptor.constraints.fields && format) {
+                if (isMatchingConstraints && areMatchingFormatAndProofType) {
+                  matchingVCs[inputDescriptor.id]?.push(vc) ||
+                    (matchingVCs[inputDescriptor.id] = [vc]);
+                }
+              } else if (
+                isMatchingConstraints ||
+                areMatchingFormatAndProofType
               ) {
                 matchingVCs[inputDescriptor.id]?.push(vc) ||
                   (matchingVCs[inputDescriptor.id] = [vc]);
@@ -180,6 +191,13 @@ export const openID4VPActions = (model: any) => {
       },
     }),
 
+    setSendVPShareError: model.assign({
+      error: (_, event) => {
+        console.error('Error:', event.data.message);
+        return 'send vp - ' + event.data.message;
+      },
+    }),
+
     setTrustedVerifiers: model.assign({
       trustedVerifiers: (_: any, event: any) => event.data.response.verifiers,
     }),
@@ -195,15 +213,13 @@ export const openID4VPActions = (model: any) => {
     logActivity: send(
       (context: any, event: any) => {
         let logType = event.logType;
-        if (context.openID4VPRetryCount == 3) {
-          switch (logType) {
-            case 'RETRY_ATTEMPT_FAILED':
-              logType = 'MAX_RETRY_ATTEMPT_FAILED';
-              break;
-            case 'FACE_VERIFICATION_FAILED':
-              logType = 'FACE_VERIFICATION_FAILED_AFTER_RETRY_ATTEMPT';
-          }
+        if (
+          context.openID4VPRetryCount === 3 &&
+          logType === 'RETRY_ATTEMPT_FAILED'
+        ) {
+          logType = 'MAX_RETRY_ATTEMPT_FAILED';
         }
+
         if (context.openID4VPRetryCount > 1) {
           switch (logType) {
             case 'SHARED_SUCCESSFULLY':
@@ -228,6 +244,14 @@ export const openID4VPActions = (model: any) => {
         'The user has declined to share their credentials at this time',
       );
     },
+
+    setIsFaceVerificationRetryAttempt: model.assign({
+      isFaceVerificationRetryAttempt: () => true,
+    }),
+
+    resetIsFaceVerificationRetryAttempt: model.assign({
+      isFaceVerificationRetryAttempt: () => false,
+    }),
   };
 };
 
