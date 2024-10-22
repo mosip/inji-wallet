@@ -18,6 +18,12 @@ RCT_EXTERN_METHOD(shareVerifiablePresentation:(id)vpResponseMetadata
                   resolver:(RCTPromiseResolveBlock)resolve
                   rejecter:(RCTPromiseRejectBlock)reject)
 
+RCT_EXTERN_METHOD(sendErrorToResponseUri:(NSString *)error
+                  uri:(NSString *)uri
+                  traceabilityId:(NSString *)traceabilityId
+                  resolver:(RCTPromiseResolveBlock)resolve
+                  rejecter:(RCTPromiseRejectBlock)reject)
+
 RCT_EXTERN_METHOD(requiresMainQueueSetup:(BOOL))
 
 @end

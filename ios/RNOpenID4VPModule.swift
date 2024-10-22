@@ -6,6 +6,7 @@ import React
 class RNOpenId4VpModule: NSObject, RCTBridgeModule {
   
   private var openID4VP: OpenID4VP?
+  private let networkManager: NetworkManaging = NetworkManager.shared
   
   static func moduleName() -> String {
     return "InjiOpenID4VP"
@@ -91,6 +92,30 @@ class RNOpenId4VpModule: NSObject, RCTBridgeModule {
       }
     }
   }
+  
+  @objc
+     func sendErrorToResponseUri(_ error: String, uri: String, traceabilityId: String, resolver: @escaping RCTPromiseResolveBlock, rejecter: @escaping RCTPromiseRejectBlock) {
+         guard let url = URL(string: uri) else {
+             rejecter("invalid_uri", "The provided URI is not valid", nil)
+             return
+         }
+
+         let errorInfo = """
+         {
+             "error": "\(error)",
+             "traceabilityId": "\(traceabilityId)"
+         }
+         """
+
+         Task {
+             do {
+                 let response = try await networkManager.sendHTTPPostRequest(requestBody: errorInfo, url: url)
+                 resolver(response)
+             } catch {
+                 rejecter("send_error", "Unexpected error occurred while sending the error to verifier", error)
+             }
+         }
+     }
   
 func toJsonString(_ jsonObject: Any) throws -> String {
     guard let jsonDict = jsonObject as? [String: String] else {
