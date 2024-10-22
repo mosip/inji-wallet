@@ -28,17 +28,18 @@ class RNOpenId4VpModule: NSObject, RCTBridgeModule {
           reject("OPENID4VP", "Invalid verifier meta format", nil)
           return
         }
-      
-        let trustedVerifiersList: [Verifier] = try verifierMeta.map { verifierDict in
-              guard let clientId = verifierDict["client_id"] as? String,
-                    let responseUris = verifierDict["response_uris"] as? [String] else {
-                  throw NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "Invalid Verifier data"])
-              }
-              return Verifier(clientId: clientId, responseUris: responseUris)
-          }
         
-        let authenticationResponse: AuthenticationResponse = try await openID4VP!.authenticateVerifier(encodedAuthorizationRequest: encodedAuthorizationRequest, trustedVerifierJSON: trustedVerifiersList)
-        let response = try toJsonString(authenticationResponse.response)
+        let trustedVerifiersList: [Verifier] = try verifierMeta.map { verifierDict in
+          guard let clientId = verifierDict["client_id"] as? String,
+                let responseUris = verifierDict["response_uris"] as? [String] else {
+            throw NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "Invalid Verifier data"])
+          }
+          return Verifier(clientId: clientId, responseUris: responseUris)
+        }
+        
+        let authenticationResponse: AuthorizationRequest = try await openID4VP!.authenticateVerifier(encodedAuthorizationRequest: encodedAuthorizationRequest, trustedVerifierJSON: trustedVerifiersList)
+        
+        let response = try toJsonString(jsonObject: authenticationResponse)
         resolve(response)
       } catch {
         reject("OPENID4VP", "Unable to authenticate the Verifier", error)
@@ -55,7 +56,7 @@ class RNOpenId4VpModule: NSObject, RCTBridgeModule {
           return
         }
         
-      let response = try await openID4VP?.constructVerifiablePresentationToken(credentialsMap: credentialsMap)
+        let response = try await openID4VP?.constructVerifiablePresentationToken(credentialsMap: credentialsMap)
         resolve(response)
         
       } catch {
@@ -101,22 +102,19 @@ class RNOpenId4VpModule: NSObject, RCTBridgeModule {
        }
        
        await openID4VP?.sendErrorToVerifier(VerifierError.customError(error))
-       
      }
   
-func toJsonString(_ jsonObject: Any) throws -> String {
-    guard let jsonDict = jsonObject as? [String: String] else {
-        throw NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "Invalid JSON object type"])
-    }
+  func toJsonString(jsonObject: AuthorizationRequest) throws -> String {
+    let encoder = JSONEncoder()
+    let jsonData = try encoder.encode(jsonObject)
     
-    let jsonData = try JSONSerialization.data(withJSONObject: jsonDict, options: [])
-    guard let jsonString = String(data: jsonData, encoding: .utf8) else {
-        throw NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "Failed to convert data to string"])
+    if let jsonString = String(data: jsonData, encoding: .utf8) {
+      return jsonString
+    } else {
+      throw NSError(domain: "Error converting JSON data to String", code: 0, userInfo: nil)
     }
-    
-    return jsonString
-}
-
+  }
+  
   @objc
   static func requiresMainQueueSetup() -> Bool {
     return true
