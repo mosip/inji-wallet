@@ -202,7 +202,7 @@ export const openID4VPMachine = model.createMachine(
       showConfirmationPopup: {
         on: {
           CONFIRM: {
-            actions: sendParent('DISMISS'),
+            target: 'shareVPDeclineStatusToVerifier',
           },
           GO_BACK: {
             target: 'getConsentForVPSharing',
@@ -308,6 +308,9 @@ export const openID4VPMachine = model.createMachine(
             actions: sendParent('TIMEOUT'),
           },
         },
+      },
+      shareVPDeclineStatusToVerifier: {
+        entry: ['shareDeclineStatus', sendParent('DISMISS')],
       },
       showError: {
         on: {

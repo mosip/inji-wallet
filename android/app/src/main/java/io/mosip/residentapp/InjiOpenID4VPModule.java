@@ -98,6 +98,11 @@ public class InjiOpenID4VPModule extends ReactContextBaseJavaModule {
         }
     }
 
+    @ReactMethod
+    public void sendErrorToVerifier(String errorMessage) {
+        openID4VP.sendErrorToVerifier(new Exception(errorMessage));
+    }
+
     private VPResponseMetadata getVPResponseMetadata(ReadableMap vpResponseMetadata) throws IllegalArgumentException {
         String jws = vpResponseMetadata.getString("jws");
         String signatureAlgorithm = vpResponseMetadata.getString("signatureAlgorithm");

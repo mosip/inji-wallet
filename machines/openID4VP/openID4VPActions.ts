@@ -188,6 +188,12 @@ export const openID4VPActions = (model: any) => {
     resetFaceCaptureBannerStatus: model.assign({
       showFaceCaptureSuccessBanner: false,
     }),
+
+    shareDeclineStatus: () => {
+      OpenID4VP.sendErrorToVerifier(
+        'The user has declined to share their credentials at this time',
+      );
+    },
   };
 };
 
