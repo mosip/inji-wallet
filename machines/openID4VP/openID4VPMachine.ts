@@ -33,6 +33,9 @@ export const openID4VPMachine = model.createMachine(
           target: 'waitingForData',
         },
       ],
+      LOG_ACTIVITY: {
+        actions: 'logActivity',
+      },
     },
     states: {
       waitingForData: {
@@ -202,6 +205,12 @@ export const openID4VPMachine = model.createMachine(
       showConfirmationPopup: {
         on: {
           CONFIRM: {
+            actions: [
+              send({
+                type: 'LOG_ACTIVITY',
+                logType: 'USER_DECLINED_CONSENT',
+              }),
+            ],
             target: 'shareVPDeclineStatusToVerifier',
           },
           GO_BACK: {
@@ -233,9 +242,16 @@ export const openID4VPMachine = model.createMachine(
               target: 'verifyingIdentity',
             },
             {
-              actions: model.assign({
-                error: () => 'none of the selected VC has image',
-              }),
+              actions: [
+                send({
+                  type: 'LOG_ACTIVITY',
+                  logType:
+                    'SHARE_WITH_SELFIE_FAILED_AS_NONE_OF_SELECTED_VCS_HAS_IMAGE',
+                }),
+                model.assign({
+                  error: () => 'none of the selected VC has image',
+                }),
+              ],
               target: 'showError',
             },
           ],
@@ -255,7 +271,10 @@ export const openID4VPMachine = model.createMachine(
           ],
           FACE_INVALID: {
             target: 'invalidIdentity',
-            actions: 'logFailedVerification',
+            actions: send({
+              type: 'LOG_ACTIVITY',
+              logType: 'FACE_VERIFICATION_FAILED',
+            }),
           },
           CANCEL: [
             {
@@ -294,12 +313,38 @@ export const openID4VPMachine = model.createMachine(
         },
         invoke: {
           src: 'sendVP',
-          onDone: {
-            actions: sendParent('SUCCESS'),
-            target: 'success',
-          },
+          onDone: [
+            {
+              cond: 'isShareWithSelfie',
+              actions: [
+                send({
+                  type: 'LOG_ACTIVITY',
+                  logType: 'SHARED_WITH_FACE_VERIFIACTION',
+                }),
+                sendParent('SUCCESS'),
+              ],
+              target: 'success',
+            },
+            {
+              actions: [
+                send({
+                  type: 'LOG_ACTIVITY',
+                  logType: 'SHARED_SUCCESSFULLY',
+                }),
+                sendParent('SUCCESS'),
+              ],
+              target: 'success',
+            },
+          ],
           onError: {
-            actions: ['setError', sendParent('SHOW_ERROR')],
+            actions: [
+              send({
+                type: 'LOG_ACTIVITY',
+                logType: 'RETRY_ATTEMPT_FAILED',
+              }),
+              'setError',
+              sendParent('SHOW_ERROR'),
+            ],
             target: 'showError',
           },
         },

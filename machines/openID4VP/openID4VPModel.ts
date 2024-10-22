@@ -2,6 +2,8 @@ import {createModel} from 'xstate/lib/model';
 import {AppServices} from '../../shared/GlobalContext';
 import {VC} from '../VerifiableCredential/VCMetaMachine/vc';
 import {KeyTypes} from '../../shared/cryptoutil/KeyTypes';
+import {VPActivityLogType} from '../../components/VPShareActivityLogEvent';
+
 const openID4VPEvents = {
   AUTHENTICATE: (
     encodedAuthRequest: string,
@@ -38,6 +40,7 @@ const openID4VPEvents = {
   RESET_RETRY_COUNT: () => ({}),
   RESET_ERROR: () => ({}),
   CLOSE_BANNER: () => ({}),
+  LOG_ACTIVITY: (logType: VPActivityLogType) => ({logType}),
 };
 
 export const openID4VPModel = createModel(

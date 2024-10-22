@@ -6,6 +6,9 @@ import {StoreEvents} from '../store';
 import {JSONPath} from 'jsonpath-plus';
 
 import {VCShareFlowType} from '../../shared/Utils';
+import {ActivityLogEvents} from '../activityLog';
+import {VPShareActivityLog} from '../../components/VPShareActivityLogEvent';
+import {OpenID4VP} from '../../shared/openID4VP/OpenID4VP';
 
 // TODO - get this presentation definition list which are alias for scope param
 // from the verifier end point after the endpoint is created and exposed.
@@ -45,7 +48,7 @@ export const openID4VPActions = (model: any) => {
                 isVCMatchingRequestConstraints(
                   inputDescriptor.constraints,
                   vc.verifiableCredential.credential,
-                ) ||
+                ) &&
                 areVCFormatAndProofTypeMatchingRequest(
                   format,
                   vc.format,
@@ -188,6 +191,37 @@ export const openID4VPActions = (model: any) => {
     resetFaceCaptureBannerStatus: model.assign({
       showFaceCaptureSuccessBanner: false,
     }),
+
+    logActivity: send(
+      (context: any, event: any) => {
+        let logType = event.logType;
+        if (context.openID4VPRetryCount == 3) {
+          switch (logType) {
+            case 'RETRY_ATTEMPT_FAILED':
+              logType = 'MAX_RETRY_ATTEMPT_FAILED';
+              break;
+            case 'FACE_VERIFICATION_FAILED':
+              logType = 'FACE_VERIFICATION_FAILED_AFTER_RETRY_ATTEMPT';
+          }
+        }
+        if (context.openID4VPRetryCount > 1) {
+          switch (logType) {
+            case 'SHARED_SUCCESSFULLY':
+              logType = 'SHARED_AFTER_RETRY';
+              break;
+            case 'SHARED_WITH_FACE_VERIFIACTION':
+              logType = 'SHARED_WITH_FACE_VERIFICATION_AFTER_RETRY';
+          }
+        }
+        return ActivityLogEvents.LOG_ACTIVITY(
+          VPShareActivityLog.getLogFromObject({
+            type: logType,
+            timestamp: Date.now(),
+          }),
+        );
+      },
+      {to: (context: any) => context.serviceRefs.activityLog},
+    ),
 
     shareDeclineStatus: () => {
       OpenID4VP.sendErrorToVerifier(

@@ -37,14 +37,14 @@ import {GlobalContext} from '../../shared/GlobalContext';
 import {isMosipVC} from '../../shared/Utils';
 import {VCMetadata} from '../../shared/VCMetadata';
 import {VPShareOverlayProps} from './VPShareOverlay';
+import {ActivityLogEvents} from '../../machines/activityLog';
+import {VPShareActivityLog} from '../../components/VPShareActivityLogEvent';
 
 type MyVcsTabNavigation = NavigationProp<RootRouteProps>;
 
 const changeTabBarVisible = (visible: string) => {
   Theme.BottomTabBarStyle.tabBarStyle.display = visible;
 };
-
-export function getVcsForVPSharing(vcMetadatas: VCMetadata[]) {}
 
 export function useSendVPScreen() {
   const {t} = useTranslation('SendVPScreen');
@@ -128,25 +128,31 @@ export function useSendVPScreen() {
   if (noCredentialsMatchingVPRequest) {
     errorModal.title = t('errors.noMatchingCredentials.title');
     errorModal.message = t('errors.noMatchingCredentials.message');
+    generateAndStoreLogMessage('NO_CREDENTIAL_MATCHING_REQUEST');
   } else if (
     error.includes('Verifier authentication was unsuccessful') ||
     error.startsWith('api error')
   ) {
     errorModal.title = t('errors.invalidVerifier.title');
     errorModal.message = t('errors.invalidVerifier.message');
+    generateAndStoreLogMessage('VERIFIER_AUTHENTICATION_FAILED');
   } else if (error.includes('credential mismatch detected')) {
     errorModal.title = t('errors.credentialsMismatch.title');
     errorModal.message = t('errors.credentialsMismatch.message');
+    generateAndStoreLogMessage('CREDENTIAL_MISMATCH_FROM_KEBAB');
   } else if (error.includes('none of the selected VC has image')) {
     errorModal.title = t('errors.noImage.title');
     errorModal.message = t('errors.noImage.message');
+    generateAndStoreLogMessage('NO_SELECTED_VC_HAS_IMAGE');
   } else if (error.startsWith('vc validation')) {
     errorModal.title = t('errors.invalidQrCode.title');
     errorModal.message = t('errors.invalidQrCode.message');
+    generateAndStoreLogMessage('INVALID_AUTH_REQUEST');
   } else if (error !== '') {
     errorModal.title = t('errors.genericError.title');
     errorModal.message = t('errors.genericError.message');
     errorModal.showRetryButton = true;
+    generateAndStoreLogMessage('TECHNICAL_ERROR');
   }
 
   let overlayDetails: Omit<VPShareOverlayProps, 'isVisible'> | null = null;
@@ -274,4 +280,13 @@ export function useSendVPScreen() {
     RESET_RETRY_COUNT: () =>
       openID4VPService.send(OpenID4VPEvents.RESET_RETRY_COUNT()),
   };
+}
+
+function generateAndStoreLogMessage(logType: String) {
+  ActivityLogEvents.LOG_ACTIVITY(
+    VPShareActivityLog.getLogFromObject({
+      timestamp: Date.now(),
+      type: logType,
+    }),
+  );
 }

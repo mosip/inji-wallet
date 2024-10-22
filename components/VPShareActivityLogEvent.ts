@@ -11,7 +11,15 @@ export type VPActivityLogType =
   | 'INVALID_AUTH_REQUEST'
   | 'USER_DECLINED_CONSENT'
   | 'SHARED_AFTER_RETRY'
-  | 'SHARED_WITH_FACE_VERIFICATION_AFTER_RETRY';
+  | 'SHARED_WITH_FACE_VERIFICATION_AFTER_RETRY'
+  | 'RETRY_ATTEMPT_FAILED'
+  | 'MAX_RETRY_ATTEMPT_FAILED'
+  | 'FACE_VERIFICATION_FAILED'
+  | 'FACE_VERIFICATION_FAILED_AFTER_RETRY_ATTEMPT'
+  | 'NO_SELECTED_VC_HAS_IMAGE'
+  | 'CREDENTIAL_MISMATCH_FROM_KEBAB'
+  | 'NO_CREDENTIAL_MATCHING_REQUEST'
+  | 'TECHNICAL_ERROR';
 
 export class VPShareActivityLog implements ActivityLog {
   timestamp: number;
@@ -29,7 +37,7 @@ export class VPShareActivityLog implements ActivityLog {
   }
 
   getActionText(t: any) {
-    return `${t(this.type)}`;
+    return `${t('ActivityLogText:vpSharing:' + this.type)}`;
   }
 
   static getLogFromObject(data: Object): VPShareActivityLog {
