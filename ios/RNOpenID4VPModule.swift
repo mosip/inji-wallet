@@ -6,6 +6,7 @@ import React
 class RNOpenId4VpModule: NSObject, RCTBridgeModule {
   
   private var openID4VP: OpenID4VP?
+  private let networkManager: NetworkManaging = NetworkManager.shared
   
   static func moduleName() -> String {
     return "InjiOpenID4VP"
@@ -91,6 +92,17 @@ class RNOpenId4VpModule: NSObject, RCTBridgeModule {
       }
     }
   }
+  
+  @objc
+     func sendErrorToVerifier(_ error: String, resolver: @escaping RCTPromiseResolveBlock, rejecter: @escaping RCTPromiseRejectBlock) {
+
+       enum VerifierError: Error {
+           case customError(String)
+       }
+       
+       await openID4VP?.sendErrorToVerifier(VerifierError.customError(error))
+       
+     }
   
 func toJsonString(_ jsonObject: Any) throws -> String {
     guard let jsonDict = jsonObject as? [String: String] else {
