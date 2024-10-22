@@ -26,6 +26,7 @@ import {KeyTypes} from '../cryptoutil/KeyTypes';
 import {VCFormat} from '../VCFormat';
 import {UnsupportedVcFormat} from '../error/UnsupportedVCFormat';
 import {VCMetadata} from '../VCMetadata';
+import { VCProcessor } from '../../components/VC/common/VCProcessor';
 
 export const Protocols = {
   OpenId4VCI: 'OpenId4VCI',
@@ -35,6 +36,7 @@ export const Protocols = {
 export const Issuers = {
   MosipOtp: '',
   Mosip: 'Mosip',
+  Mock: 'Mock',
 };
 
 export function getVcVerificationDetails(
@@ -62,9 +64,12 @@ export const isActivationNeeded = (issuer: string) => {
 
 export const Issuers_Key_Ref = 'OpenId4VCI_KeyPair';
 
-export const getIdentifier = (context, credential: VerifiableCredential) => {
-  const credentialIdentifier = credential.credential.id;
-  if (credentialIdentifier === undefined) {
+export const getIdentifier = (
+  context,
+  credential: VerifiableCredential,
+  format: string,
+) => {
+  if (format === VCFormat.mso_mdoc) {
     return (
       context.selectedIssuer.credential_issuer +
       ':' +
@@ -73,6 +78,7 @@ export const getIdentifier = (context, credential: VerifiableCredential) => {
       CredentialIdForMsoMdoc(credential)
     );
   } else {
+    const credentialIdentifier = credential.credential.id;
     const credId = credentialIdentifier.startsWith('did')
       ? credentialIdentifier.split(':')
       : credentialIdentifier.split('/');
@@ -86,22 +92,38 @@ export const getIdentifier = (context, credential: VerifiableCredential) => {
   }
 };
 
-export const updateCredentialInformation = (
+export const updateCredentialInformation = async (
   context,
   credential: VerifiableCredential,
-): CredentialWrapper => {
+): Promise<CredentialWrapper> => {
+  let processedCredential;
+  if (context.selectedCredentialType.format === VCFormat.mso_mdoc) {
+    console.log(
+      'credential.credential ',
+      JSON.stringify(credential.credential),
+    );
+    console.log('credential.credential type', typeof credential.credential);
+    processedCredential = await VCProcessor.processForRendering(credential,context.selectedCredentialType.format)
+  }
+  const verifiableCredential = {
+    ...credential,
+    wellKnown: context.selectedIssuer['wellknown_endpoint'],
+    credentialConfigurationId: context.selectedCredentialType.id,
+    issuerLogo: getDisplayObjectForCurrentLanguage(
+      context.selectedIssuer.display,
+    )?.logo,
+    processedCredential,
+  };
   return {
-    verifiableCredential: {
-      ...credential,
-      wellKnown: context.selectedIssuer['wellknown_endpoint'],
-      credentialConfigurationId: context.selectedCredentialType.id,
-      issuerLogo: getDisplayObjectForCurrentLanguage(
-        context.selectedIssuer.display,
-      )?.logo,
-    },
+    verifiableCredential,
     format: context.selectedCredentialType.format,
-    identifier: getIdentifier(context, credential),
+    identifier: getIdentifier(
+      context,
+      verifiableCredential,
+      context.selectedCredentialType.format,
+    ),
     generatedOn: new Date(),
+    // TODO: Is the or check necessary?
     vcMetadata:
       {...context.vcMetadata, format: context.selectedCredentialType.format} ||
       {},
@@ -260,10 +282,17 @@ export enum ErrorMessage {
 }
 
 export function CredentialIdForMsoMdoc(credential: VerifiableCredential) {
-  return credential.credential['issuerSigned']['nameSpaces'][
-    'org.iso.18013.5.1'
-  ].find(element => element.elementIdentifier === 'document_number')
-    .elementValue;
+  console.log('CredentialIdForMsoMdoc ', JSON.stringify(credential, null, 2));
+  try {
+    const found = credential.processedCredential['issuerSigned']['nameSpaces'][
+      'org.iso.18013.5.1'
+    ].find(
+      element => element.elementIdentifier === 'document_number',
+    ).elementValue;
+    return found;
+  } catch (error) {
+    console.error('error in id getting ', error);
+  }
 }
 
 export async function constructProofJWT(

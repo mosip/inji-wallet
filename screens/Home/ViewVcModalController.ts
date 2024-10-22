@@ -22,6 +22,7 @@ import {
   selectIsVerificationInProgress,
   selectShowVerificationStatusBanner,
   selectIsVerificationCompleted,
+  selectCredential2,
 } from '../../machines/VerifiableCredential/VCItemMachine/VCItemSelectors';
 import {selectPasscode} from '../../machines/auth';
 import {biometricsMachine, selectIsSuccess} from '../../machines/biometrics';
@@ -87,7 +88,7 @@ export function useViewVcModal({vcItemActor, isVisible}: ViewVcModalProps) {
     error,
     message,
     toastVisible,
-    credential: useSelector(vcItemActor, selectCredential),
+    credential: useSelector(vcItemActor, selectCredential2),
     verifiableCredentialData: useSelector(
       vcItemActor,
       selectVerifiableCredentialData,

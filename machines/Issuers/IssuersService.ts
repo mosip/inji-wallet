@@ -75,7 +75,7 @@ export const IssuersService = () => {
       );
 
       console.info(`VC download via ${context.selectedIssuerId} is successful`);
-      return updateCredentialInformation(context, credential);
+      return await updateCredentialInformation(context, credential);
     },
     invokeAuthorization: async (context: any) => {
       sendImpressionEvent(

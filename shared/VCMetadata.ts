@@ -67,7 +67,7 @@ export class VCMetadata {
         ? vc.displayId
         : vc.vcMetadata
         ? vc.vcMetadata.displayId
-        : getDisplayId(vc.verifiableCredential),
+        : getDisplayId(vc.verifiableCredential, vc.format),
       downloadKeyType: vc.downloadKeyType,
     });
   }
@@ -119,7 +119,10 @@ export const getVCMetadata = (context: object, keyType: string) => {
     id: `${credentialId} + '_' + ${issuer}`,
     timestamp: context.timestamp ?? '',
     isVerified: context.vcMetadata.isVerified ?? false,
-    displayId: getDisplayId(context.verifiableCredential),
+    displayId: getDisplayId(
+      context.verifiableCredential,
+      context['credentialWrapper'].format,
+    ),
     format: context.credentialWrapper.format,
     downloadKeyType: keyType,
   });
@@ -127,15 +130,17 @@ export const getVCMetadata = (context: object, keyType: string) => {
 
 const getDisplayId = (
   verifiableCredential: VerifiableCredential | Credential,
+  format: string,
 ) => {
+  if (format === VCFormat.mso_mdoc) {
+    return CredentialIdForMsoMdoc(verifiableCredential as VerifiableCredential);
+  }
   if (verifiableCredential?.credential) {
     if (verifiableCredential.credential?.credentialSubject) {
       return (
         verifiableCredential.credential?.credentialSubject?.policyNumber ||
         getMosipIdentifier(verifiableCredential.credential.credentialSubject)
       );
-    } else {
-      return CredentialIdForMsoMdoc(verifiableCredential);
     }
   }
   return (

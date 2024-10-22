@@ -27,7 +27,7 @@ import {NativeModules} from 'react-native';
 import {KeyTypes} from '../../shared/cryptoutil/KeyTypes';
 import {VCActivityLog} from '../../components/ActivityLogEvent';
 
-const {RNSecureKeystoreModule} = NativeModules;
+const {RNSecureKeystoreModule, RNPixelpassModule} = NativeModules;
 export const IssuersActions = (model: any) => {
   return {
     setIsVerified: assign({
@@ -168,10 +168,21 @@ export const IssuersActions = (model: any) => {
 
     storeVerifiableCredentialData: send(
       (context: any) => {
-        const vcMeatadata = getVCMetadata(context, context.keyType);
-        return StoreEvents.SET(vcMeatadata.getVcKey(), {
-          ...context.credentialWrapper,
-          vcMetadata: vcMeatadata,
+        const vcMetadata = getVCMetadata(context, context.keyType);
+        const {
+          verifiableCredential: {
+            processedCredential,
+            ...filteredVerifiableCredential
+          },
+          ...rest
+        } = context.credentialWrapper;
+        const storableData = {
+          ...rest,
+          verifiableCredential: filteredVerifiableCredential,
+        };
+        return StoreEvents.SET(vcMetadata.getVcKey(), {
+          ...storableData,
+          vcMetadata: vcMetadata,
         });
       },
       {
@@ -247,6 +258,20 @@ export const IssuersActions = (model: any) => {
     setCredentialWrapper: model.assign({
       credentialWrapper: (_: any, event: any) => {
         return event.data;
+      },
+    }),
+    processCredential: model.assign({
+      credentialWrapper: (context: any, event: any) => {
+        const decodedData = RNPixelpassModule.decodeBase64UrlEncodedCBORData(
+          context.credentialWrapper.verifiableCredential.verifiableCredential,
+        );
+        return {
+          ...context.credentialWrapper,
+          verifiableCredential: {
+            ...context.credentialWrapper.verifiableCredential,
+            processedCredential: decodedData,
+          },
+        };
       },
     }),
     setPublicKey: assign({

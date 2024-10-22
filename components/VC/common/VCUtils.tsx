@@ -232,7 +232,7 @@ export const fieldItemIterator = (
 };
 
 export const isVCLoaded = (
-  verifiableCredential: Credential,
+  verifiableCredential: Credential | null,
   fields: string[],
 ) => {
   return verifiableCredential != null && fields.length > 0;
@@ -300,6 +300,7 @@ export const getIdType = (
 };
 
 export function DisplayName(props: VCItemContentProps): string | Object {
+  console.log('dislay name ', JSON.stringify(props.credential, null, 2));
   if (props.verifiableCredentialData.format === VCFormat.mso_mdoc) {
     return props.credential['issuerSigned']['nameSpaces'][
       'org.iso.18013.5.1'

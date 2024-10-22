@@ -2,7 +2,7 @@ import {StateFrom} from 'xstate';
 import {requestMachine} from './requestMachine';
 import {VCMetadata} from '../../../shared/VCMetadata';
 import {getMosipLogo} from '../../../components/VC/common/VCUtils';
-import {Credential} from '../../VerifiableCredential/VCMetaMachine/vc';
+import {Credential, VerifiableCredential} from '../../VerifiableCredential/VCMetaMachine/vc';
 
 type State = StateFrom<typeof requestMachine>;
 
@@ -10,11 +10,8 @@ export function selectSenderInfo(state: State) {
   return state.context.senderInfo;
 }
 
-export function selectCredential(state: State): Credential {
-  return (
-    state.context.incomingVc?.verifiableCredential?.credential ||
-    state.context.incomingVc?.verifiableCredential
-  );
+export function selectCredential(state: State): VerifiableCredential {
+  return state.context.incomingVc?.verifiableCredential;
 }
 
 export function selectVerifiableCredentialData(state: State) {

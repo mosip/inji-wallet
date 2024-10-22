@@ -1,8 +1,9 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {useTranslation} from 'react-i18next';
-import {Image, ImageBackground, View} from 'react-native';
+import {Image, ImageBackground, NativeModules, View} from 'react-native';
 import {
   Credential,
+  CredentialWrapper,
   VerifiableCredential,
   VerifiableCredentialData,
   WalletBindingResponse,
@@ -40,9 +41,10 @@ const getProfileImage = (face: any) => {
 };
 
 export const VCDetailView: React.FC<VCItemDetailsProps> = props => {
-  const {t, i18n} = useTranslation('VcDetails');
+  const {t} = useTranslation('VcDetails');
   const logo = props.verifiableCredentialData.issuerLogo;
   const face = props.verifiableCredentialData.face;
+  //TODO: give whole crdentialWrapper as props
   const verifiableCredential = props.credential;
 
   const shouldShowHrLine = verifiableCredential => {
@@ -94,7 +96,7 @@ export const VCDetailView: React.FC<VCItemDetailsProps> = props => {
                 <Column crossAlign="center">
                   {getProfileImage(face)}
                   <QrCodeOverlay
-                    verifiableCredential={verifiableCredential}
+                    verifiableCredential={props.credentialWrapper as unknown as VerifiableCredential}
                     meta={props.verifiableCredentialData.vcMetadata}
                   />
                   <Column
@@ -136,6 +138,7 @@ export const VCDetailView: React.FC<VCItemDetailsProps> = props => {
                       },
                     ]}></View>
                   <Column padding="0 14 14 14">
+                    {/* TODO: verifiableCredential to hold parsed JSON data */}
                     {fieldItemIterator(
                       DETAIL_VIEW_BOTTOM_SECTION_FIELDS,
                       verifiableCredential,
@@ -246,6 +249,7 @@ export interface VCItemDetailsProps {
   credential: VerifiableCredential | Credential;
   verifiableCredentialData: VerifiableCredentialData;
   walletBindingResponse?: WalletBindingResponse;
+  credentialWrapper?: CredentialWrapper;
   onBinding?: () => void;
   activeTab?: Number;
   vcHasImage: boolean;

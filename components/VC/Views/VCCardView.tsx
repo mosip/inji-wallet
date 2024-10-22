@@ -14,6 +14,7 @@ import {CARD_VIEW_DEFAULT_FIELDS, isVCLoaded} from '../common/VCUtils';
 import {VCItemMachine} from '../../../machines/VerifiableCredential/VCItemMachine/VCItemMachine';
 import {useTranslation} from 'react-i18next';
 import {Copilot} from '../../ui/Copilot';
+import {VCProcessor} from '../common/VCProcessor';
 
 export const VCCardView: React.FC<VCItemProps> = props => {
   const controller = useVcItemController(props);
@@ -30,10 +31,25 @@ export const VCCardView: React.FC<VCItemProps> = props => {
     controller.UPDATE_VC_METADATA(props.vcMetadata);
   }, [props.vcMetadata]);
 
-  const vc = props.isDownloading ? null : controller.credential;
 
   const [fields, setFields] = useState([]);
   const [wellknown, setWellknown] = useState(null);
+  const [vc, setVc] = useState(null);
+
+  useEffect(() => {
+    async function loadVc() {
+      if(!props.isDownloading){
+        console.log("ficontroller.credential rst",controller.credential)
+        const processedData = await VCProcessor.processForRendering(
+          controller.credential,
+          controller.verifiableCredentialData.format
+        );
+        setVc(processedData)
+      }
+    }
+
+    loadVc()
+  }, [props.isDownloading, controller.credential])
 
   useEffect(() => {
     const {

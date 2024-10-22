@@ -427,6 +427,7 @@ export const IssuersMachine = model.createMachine(
       storing: {
         description: 'all the verified credential is stored.',
         entry: [
+          // 'processCredential',
           'setVCMetadata',
           'setMetadataInCredentialData',
           'storeVerifiableCredentialMeta',

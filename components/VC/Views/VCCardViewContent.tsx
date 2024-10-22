@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {ImageBackground, Pressable, Image, View} from 'react-native';
 import {getLocalizedField} from '../../../i18n';
 import {VCMetadata} from '../../../shared/VCMetadata';
@@ -61,6 +61,10 @@ export const VCCardViewContent: React.FC<VCItemContentProps> = props => {
   const faceImage = props.verifiableCredentialData.face;
   const {start} = useCopilot();
   const {t} = useTranslation();
+
+  useEffect(() => {
+    console.log('props.credential ', props.credential);
+  }, [props.credential]);
 
   return (
     <ImageBackground

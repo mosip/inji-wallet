@@ -7,6 +7,7 @@ import {
   selectWalletBindingResponse,
   selectCredential,
   selectVerifiableCredentialData,
+  selectCredential2,
 } from '../../machines/VerifiableCredential/VCItemMachine/VCItemSelectors';
 import {useInterpret, useSelector} from '@xstate/react';
 import {VCItemProps} from './Views/VCCardView';
@@ -31,7 +32,7 @@ export function useVcItemController(props: VCItemProps) {
   return {
     VCItemService,
     context: useSelector(VCItemService, selectContext),
-    credential: useSelector(VCItemService, selectCredential),
+    credential: useSelector(VCItemService, selectCredential2),
     verifiableCredentialData: useSelector(
       VCItemService,
       selectVerifiableCredentialData,

@@ -11,6 +11,7 @@ import {SharingStatusModal} from '../Scan/SharingStatusModal';
 import {SvgImage} from '../../components/ui/svg';
 import {DETAIL_VIEW_DEFAULT_FIELDS} from '../../components/VC/common/VCUtils';
 import {getDetailedViewFields} from '../../shared/openId4VCI/Utils';
+import { VCProcessor } from '../../components/VC/common/VCProcessor';
 
 export const ReceiveVcScreen: React.FC = () => {
   const {t} = useTranslation('ReceiveVcScreen');
@@ -22,6 +23,22 @@ export const ReceiveVcScreen: React.FC = () => {
   );
   const verifiableCredentialData = controller.verifiableCredentialData;
   const profileImage = verifiableCredentialData.face;
+
+  const [credential, setCredential] = useState(null);
+
+  useEffect(() => {
+    async function processVC() {
+      if (controller.credential) {
+        const vcData = await VCProcessor.processForRendering(
+          controller.credential,
+          verifiableCredentialData.vcMetadata.format,
+        );
+        setCredential(vcData);
+      }
+    }
+
+    processVC();
+  }, [controller.credential]);
 
   useEffect(() => {
     getDetailedViewFields(
@@ -54,7 +71,7 @@ export const ReceiveVcScreen: React.FC = () => {
             <VcDetailsContainer
               fields={fields}
               wellknown={wellknown}
-              credential={controller.credential}
+              credential={credential}
               verifiableCredentialData={verifiableCredentialData}
               isBindingPending={false}
               activeTab={1}
