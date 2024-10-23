@@ -25,19 +25,22 @@ export class VPShareActivityLog implements ActivityLog {
   timestamp: number;
   type: VPActivityLogType;
   flow: string;
+  info: string;
 
   constructor({
     type = '' as VPActivityLogType,
     timestamp = Date.now(),
     flow = VCItemContainerFlowType.VP_SHARE,
+    info = '',
   }) {
     this.type = type;
     this.timestamp = timestamp;
     this.flow = flow;
+    this.info = info;
   }
 
   getActionText(t: any) {
-    return `${t('ActivityLogText:vpSharing:' + this.type)}`;
+    return `${t('ActivityLogText:vpSharing:' + this.type, {info: this.info})}`;
   }
 
   static getLogFromObject(data: Object): VPShareActivityLog {

@@ -28,8 +28,8 @@
       "FACE_VERIFICATION_FAILED": "Nabigo ang pag-verify ng mukha sa panahon ng pagbabahagi ng Credential Presentation.",
       "FACE_VERIFICATION_FAILED_AFTER_RETRY_ATTEMPT": "Nabigo ang pag-verify ng mukha habang sinusubukang muli ang pagbabahagi ng Credential Presentation.",
       "NO_SELECTED_VC_HAS_IMAGE": "Nabigo ang pagbabahagi ng Pagtatanghal ng Kredensyal dahil walang larawan ng mukha ang mga napiling nabe-verify na kredensyal.",
-      "CREDENTIAL_MISMATCH_FROM_KEBAB": "Naganap ang hindi pagkakatugma ng mga kredensyal sa panahon ng pagbabahagi ng Credential Presentation mula sa menu.",
-      "NO_CREDENTIAL_MATCHING_REQUEST": "Walang nakitang kredensyal na tumutugma sa kahilingan ng serbisyo sa pag-verify.",
+      "CREDENTIAL_MISMATCH_FROM_KEBAB": "Ang hindi pagkakatugma ng Pagtatanghal ng Mga Kredensyal ay naganap sa panahon ng pagbabahagi mula sa menu, batay sa mga hiniling na claim: {{info}}.",
+      "NO_CREDENTIAL_MATCHING_REQUEST": "Walang nakitang mga kredensyal na tumutugma sa kahilingan ng serbisyo sa pag-verify batay sa mga ibinigay na claim: {{info}}.",
       "TECHNICAL_ERROR": "Hindi matuloy ang pagbabahagi ng Kredensyal na Presentasyon dahil sa teknikal na error."
     }
   },
@@ -824,7 +824,7 @@
     "errors": {
       "noMatchingCredentials": {
         "title": "Walang nakitang katugmang mga kredensyal!",
-        "message": "Subukang muli ang pagbabahagi pagkatapos i-download ang mga kredensyal."
+        "message": "Ang verifier ay humiling ng mga kredensyal batay sa mga sumusunod na claim: {{claims}}. Paki-download ang kaukulang mga kredensyal at subukang muli ang proseso ng pagbabahagi."
       },
       "invalidVerifier": {
         "title": "Isang Error ang Naganap!",
@@ -832,7 +832,7 @@
       },
       "credentialsMismatch": {
         "title": "Isang Error ang Naganap!",
-        "message": "May nakitang hindi pagkakatugma ng kredensyal. Tiyaking napili mo ang tama at subukang muli."
+        "message": "May nakitang hindi pagkakatugma ng kredensyal. Tiyaking napili mo ang tama na naglalaman ng mga sumusunod na claim: {{claims}} at subukang muli."
       },
       "genericError": {
         "title": "Oops! Isang Error ang Naganap.",

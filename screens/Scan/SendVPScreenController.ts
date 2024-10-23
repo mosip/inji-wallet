@@ -10,7 +10,10 @@ import {
   selectFlowType,
   selectIsSendingVPError,
 } from '../../machines/bleShare/scan/scanSelectors';
-import {selectOpenID4VPRetryCount} from '../../machines/openID4VP/openID4VPSelectors';
+import {
+  selectOpenID4VPRetryCount,
+  selectRequestedClaimsByVerifier,
+} from '../../machines/openID4VP/openID4VPSelectors';
 import {OpenID4VPEvents} from '../../machines/openID4VP/openID4VPMachine';
 import {
   selectAreAllVCsChecked,
@@ -129,21 +132,31 @@ export function useSendVPScreen() {
     showRetryButton: false,
   };
 
-  function generateAndStoreLogMessage(logType: String) {
+  function generateAndStoreLogMessage(logType: string, errorInfo?: string) {
     activityLogService.send(
       ActivityLogEvents.LOG_ACTIVITY(
         VPShareActivityLog.getLogFromObject({
           timestamp: Date.now(),
           type: logType,
+          info: errorInfo,
         }),
       ),
     );
   }
-
+  const requestedClaimsByVerifier = useSelector(
+    openID4VPService,
+    selectRequestedClaimsByVerifier,
+  );
+  const claimsAsString = '[' + requestedClaimsByVerifier + ']';
   if (noCredentialsMatchingVPRequest) {
     errorModal.title = t('errors.noMatchingCredentials.title');
-    errorModal.message = t('errors.noMatchingCredentials.message');
-    generateAndStoreLogMessage('NO_CREDENTIAL_MATCHING_REQUEST');
+    errorModal.message = t('errors.noMatchingCredentials.message', {
+      claims: claimsAsString,
+    });
+    generateAndStoreLogMessage(
+      'NO_CREDENTIAL_MATCHING_REQUEST',
+      claimsAsString,
+    );
   } else if (
     error.includes('Verifier authentication was unsuccessful') ||
     error.startsWith('api error')
@@ -153,8 +166,13 @@ export function useSendVPScreen() {
     generateAndStoreLogMessage('VERIFIER_AUTHENTICATION_FAILED');
   } else if (error.includes('credential mismatch detected')) {
     errorModal.title = t('errors.credentialsMismatch.title');
-    errorModal.message = t('errors.credentialsMismatch.message');
-    generateAndStoreLogMessage('CREDENTIAL_MISMATCH_FROM_KEBAB');
+    errorModal.message = t('errors.credentialsMismatch.message', {
+      claims: claimsAsString,
+    });
+    generateAndStoreLogMessage(
+      'CREDENTIAL_MISMATCH_FROM_KEBAB',
+      claimsAsString,
+    );
   } else if (error.includes('none of the selected VC has image')) {
     errorModal.title = t('errors.noImage.title');
     errorModal.message = t('errors.noImage.message');

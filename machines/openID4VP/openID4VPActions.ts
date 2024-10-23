@@ -14,6 +14,7 @@ import {OpenID4VP} from '../../shared/openID4VP/OpenID4VP';
 // from the verifier end point after the endpoint is created and exposed.
 
 export const openID4VPActions = (model: any) => {
+  let requestedClaimsByVerifier;
   return {
     setAuthenticationResponse: model.assign({
       authenticationResponse: (_, event) => event.data,
@@ -34,7 +35,7 @@ export const openID4VPActions = (model: any) => {
         let presentationDefinition =
           context.authenticationResponse['presentation_definition'];
         let anyInputDescriptoHasFormatOrConstraints = false;
-
+        requestedClaimsByVerifier = new Set();
         vcs.forEach(vc => {
           presentationDefinition['input_descriptors'].forEach(
             inputDescriptor => {
@@ -48,6 +49,7 @@ export const openID4VPActions = (model: any) => {
               const isMatchingConstraints = isVCMatchingRequestConstraints(
                 inputDescriptor.constraints,
                 vc.verifiableCredential.credential,
+                requestedClaimsByVerifier,
               );
 
               const areMatchingFormatAndProofType =
@@ -77,6 +79,7 @@ export const openID4VPActions = (model: any) => {
         }
         return matchingVCs;
       },
+      requestedClaims: () => Array.from(requestedClaimsByVerifier).join(','),
       purpose: context => {
         const response = context.authenticationResponse;
         const pd = response['presentation_definition'];
@@ -269,12 +272,18 @@ function areVCFormatAndProofTypeMatchingRequest(
   );
 }
 
-function isVCMatchingRequestConstraints(constraints, credential) {
+function isVCMatchingRequestConstraints(
+  constraints,
+  credential,
+  requestedClaimsByVerifier,
+): boolean {
   if (!constraints.fields) {
     return false;
   }
   for (const field of constraints.fields) {
     for (const path of field.path) {
+      const pathArray = JSONPath.toPathArray(path);
+      requestedClaimsByVerifier.add(pathArray[pathArray.length - 1]);
       const valueMatchingPath = JSONPath({
         path: path,
         json: credential,
