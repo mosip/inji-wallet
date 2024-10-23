@@ -15,8 +15,10 @@ import {Buffer} from 'buffer';
 import base64url from 'base64url';
 import {hmac} from '@noble/hashes/hmac';
 import {sha256} from '@noble/hashes/sha256';
+import { sha512 } from '@noble/hashes/sha512'
 import 'react-native-get-random-values';
 import * as secp from '@noble/secp256k1';
+import * as ed from '@noble/ed25519';
 import base64 from 'react-native-base64';
 import {KeyTypes} from './KeyTypes';
 import convertDerToRsFormat from './signFormatConverter';
@@ -27,6 +29,8 @@ secp.etc.hmacSha256Sync = (k, ...m) =>
   hmac(sha256, k, secp.etc.concatBytes(...m));
 secp.etc.hmacSha256Async = (k, ...m) =>
   Promise.resolve(secp.etc.hmacSha256Sync(k, ...m));
+  ed.etc.sha512Sync = (...m) => sha512(ed.etc.concatBytes(...m));
+  ed.etc.sha512Async = (...m) => Promise.resolve(ed.etc.sha512Sync(...m));
 const {RNSecureKeystoreModule} = NativeModules;
 // 5min
 export const AUTH_TIMEOUT = 5 * 60;
@@ -59,7 +63,6 @@ export async function generateKeyPairRSA() {
 
 export function generateKeyPairECK1() {
   const privKey = secp.utils.randomPrivateKey();
-  const decoder = new TextDecoder();
   const pubKey = secp.getPublicKey(privKey, false);
   return {
     publicKey: Buffer.from(pubKey).toString('base64'),
@@ -92,9 +95,12 @@ export async function generateKeyPairECR1() {
 }
 
 export async function generateKeyPairED() {
+  const privKey = ed.utils.randomPrivateKey();
+  const pubKey = ed.getPublicKey(privKey);
+ 
   return {
-    privateKey: '',
-    publicKey: '',
+    publicKey: Buffer.from(pubKey).toString('base64'),
+    privateKey: Buffer.from(privKey).toString('base64'),
   };
 }
 
@@ -114,11 +120,20 @@ export async function generateKeyPair(keyType: any): Promise<any> {
 }
 
 export async function checkAllKeyPairs() {
-  const RSAKey = await hasKeyPair(KeyTypes.RS256);
-  const ECR1Key = await hasKeyPair(KeyTypes.ES256);
-  const ECK1Key = await hasKeyPair(KeyTypes.ES256K);
-  const EDKey = true;
-  if (!(RSAKey && ECR1Key && ECK1Key && EDKey)) throw Error('Keys not present');
+  const RSAKey = await fetchKeyPair(KeyTypes.RS256);
+  const ECR1Key = await fetchKeyPair(KeyTypes.ES256);
+  const ECK1Key = await fetchKeyPair(KeyTypes.ES256K);
+  const EDKey = await fetchKeyPair(KeyTypes.ED25519);
+
+  if (
+    !(
+      !!RSAKey.publicKey &&
+      !!ECR1Key.publicKey &&
+      !!ECK1Key.publicKey &&
+      !!EDKey.publicKey
+    )
+  )
+    throw Error('Keys not present');
 }
 
 export async function generateKeyPairsAndStoreOrder() {
@@ -126,7 +141,7 @@ export async function generateKeyPairsAndStoreOrder() {
   const RSAKeyPair = await generateKeyPair(KeyTypes.RS256);
   const ECR1KeyPair = await generateKeyPair(KeyTypes.ES256);
   const ECK1KeyPair = await generateKeyPair(KeyTypes.ES256K);
-  //const EDKeyPair = generateKeyPair(KeyTypes.ED25519);
+  const EDKeyPair = await generateKeyPair(KeyTypes.ED25519);
   const keys = Object.entries(SUPPORTED_KEY_TYPES).map(([label, value]) => ({
     label,
     value,
@@ -136,16 +151,17 @@ export async function generateKeyPairsAndStoreOrder() {
     'keyPreference',
     JSON.stringify(keyOrderMap),
   );
+  console.log("ED key "+EDKeyPair.publicKey+" "+EDKeyPair.privateKey)
   await RNSecureKeystoreModule.storeGenericKey(
     ECK1KeyPair.publicKey,
     ECK1KeyPair.privateKey,
     KeyTypes.ES256K,
   );
-  // await RNSecureKeystoreModule.storeGenericKey(
-  //   EDKeyPair.publicKey,
-  //   EDKeyPair.privateKey,
-  //   KeyTypes.ED25519,
-  // );
+  await RNSecureKeystoreModule.storeGenericKey(
+    EDKeyPair.publicKey,
+    EDKeyPair.privateKey,
+    KeyTypes.ED25519,
+  );
 
   if (isIOS()) {
     await RNSecureKeystoreModule.storeGenericKey(
@@ -247,9 +263,9 @@ export async function createSignatureECK1(privateKey, prehash) {
 }
 
 export async function createSignatureED(privateKey, prehash) {
-  const sha = sha256(prehash);
-  const sign = await secp.signAsync(sha, privateKey);
-  return base64url(Buffer.from(sign.toCompactRawBytes()));
+  const sha = sha512(prehash);
+  const sign = await ed.signAsync(sha, privateKey);
+  return replaceCharactersInB64(Buffer.from(sign).toString('base64'));
 }
 
 export async function createSignatureECR1(
@@ -288,7 +304,7 @@ export async function createSignatureECR1(
   return jws;
 }
 
-function replaceCharactersInB64(encodedB64: string) {
+export function replaceCharactersInB64(encodedB64: string) {
   return encodedB64.replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
 }
 

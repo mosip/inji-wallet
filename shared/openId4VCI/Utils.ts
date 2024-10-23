@@ -5,7 +5,7 @@ import {displayType, issuerType} from '../../machines/Issuers/IssuersMachine';
 import getAllConfigurations, {CACHED_API} from '../api';
 import base64url from 'base64url';
 import i18next from 'i18next';
-import {getJWT} from '../cryptoutil/cryptoUtil';
+import {getJWT, replaceCharactersInB64} from '../cryptoutil/cryptoUtil';
 import i18n from '../../i18n';
 import {
   CredentialTypes,
@@ -274,7 +274,7 @@ export async function constructProofJWT(
   keyType: string,
 ): Promise<string> {
   const jwtHeader = {
-    alg: keyType,
+    alg: keyType != KeyTypes.ED25519 ? keyType : 'Ed25519',
     jwk: await getJWK(publicKey, keyType),
     typ: 'openid4vci-proof+jwt',
   };
@@ -317,7 +317,7 @@ export const getJWK = async (publicKey, keyType) => {
     }
     return {
       ...publicKeyJWK,
-      alg: keyType,
+      alg: 'Ed25519',
       use: 'sig',
     };
   } catch (e) {
@@ -350,7 +350,13 @@ function getJWKECK1(publicKey): any {
   return jwk;
 }
 function getJWKED(publicKey): any {
-  throw new Error('Function not implemented.');
+  const x = replaceCharactersInB64(publicKey);
+  const jwk = {
+    kty: 'OKP',
+    crv: 'Ed25519',
+    x: x,
+  };
+  return jwk;
 }
 export async function hasKeyPair(keyType: any): Promise<boolean> {
   const {RNSecureKeystoreModule} = NativeModules;
@@ -416,3 +422,5 @@ export function getMatchingCredentialIssuerMetadata(
     `Selected credential type - ${credentialConfigurationId} is not available in wellknown config supported credentials list`,
   );
 }
+
+
