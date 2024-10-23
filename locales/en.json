@@ -23,14 +23,14 @@
       "USER_DECLINED_CONSENT": "User declined consent for Credential Presentation sharing.",
       "SHARED_AFTER_RETRY": "Credential Presentation is shared successfully after a retry.",
       "SHARED_WITH_FACE_VERIFICATION_AFTER_RETRY": "Face verification is successful, and the Credential Presentation is shared successfully after a retry.",
-      "RETRY_ATTEMPT_FAILED": "",
+      "RETRY_ATTEMPT_FAILED": "Credential Presentation sharing failed due to technical error after a retry attempt.",
       "MAX_RETRY_ATTEMPT_FAILED": "Credential Presentation sharing failed due to technical error after maximum retry attempts.",
       "FACE_VERIFICATION_FAILED": "Face verification failed during Credential Presentation sharing.",
       "FACE_VERIFICATION_FAILED_AFTER_RETRY_ATTEMPT": "Face verification failed during a retry attempt of Credential Presentation sharing.",
       "NO_SELECTED_VC_HAS_IMAGE": "Credential Presentation sharing failed as the selected verifiable credentials lack a face image.",
       "CREDENTIAL_MISMATCH_FROM_KEBAB": "Credentials mismatch occurred during Credential Presentation sharing from the menu.",
       "NO_CREDENTIAL_MATCHING_REQUEST": "No credentials were found that match the verification service's request.",
-      "TECHNICAL_ERROR": ""
+      "TECHNICAL_ERROR": "Credential Presentation sharing could not proceed due to technical error."
     }
   },
   "DeviceInfoList": {
