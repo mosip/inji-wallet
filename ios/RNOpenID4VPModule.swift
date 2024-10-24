@@ -107,6 +107,7 @@ class RNOpenId4VpModule: NSObject, RCTBridgeModule {
   
   func toJsonString(jsonObject: AuthorizationRequest) throws -> String {
     let encoder = JSONEncoder()
+    encoder.keyEncodingStrategy = .convertToSnakeCase
     let jsonData = try encoder.encode(jsonObject)
     
     if let jsonString = String(data: jsonData, encoding: .utf8) {
