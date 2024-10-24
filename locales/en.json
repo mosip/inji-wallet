@@ -23,6 +23,7 @@
       "USER_DECLINED_CONSENT": "User declined consent for Credential Presentation sharing.",
       "SHARED_AFTER_RETRY": "Credential Presentation is shared successfully after a retry.",
       "SHARED_WITH_FACE_VERIFICATION_AFTER_RETRY": "Face verification is successful, and the Credential Presentation is shared successfully after a retry.",
+      "SHARING_FAILED": "Credential Presentation sharing failed due to technical error.",
       "RETRY_ATTEMPT_FAILED": "Credential Presentation sharing failed due to technical error after a retry attempt.",
       "MAX_RETRY_ATTEMPT_FAILED": "Credential Presentation sharing failed due to technical error after maximum retry attempts.",
       "FACE_VERIFICATION_FAILED": "Face verification failed during Credential Presentation sharing.",

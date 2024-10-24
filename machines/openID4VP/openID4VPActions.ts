@@ -216,11 +216,14 @@ export const openID4VPActions = (model: any) => {
     logActivity: send(
       (context: any, event: any) => {
         let logType = event.logType;
-        if (
-          context.openID4VPRetryCount === 3 &&
-          logType === 'RETRY_ATTEMPT_FAILED'
-        ) {
-          logType = 'MAX_RETRY_ATTEMPT_FAILED';
+
+        if (logType === 'RETRY_ATTEMPT_FAILED') {
+          logType =
+            context.openID4VPRetryCount === 0
+              ? 'SHARING_FAILED'
+              : context.openID4VPRetryCount === 3
+              ? 'MAX_RETRY_ATTEMPT_FAILED'
+              : logType;
         }
 
         if (context.openID4VPRetryCount > 1) {

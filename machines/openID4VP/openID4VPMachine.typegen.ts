@@ -161,11 +161,9 @@ export interface Typegen0 {
     showFaceAuthConsentScreen: 'CONFIRM';
   };
   eventsCausingServices: {
-    fetchTrustedVerifiers: never;
+    fetchTrustedVerifiers: 'STORE_RESPONSE';
     getAuthenticationResponse: 'done.invoke.OpenID4VP.checkKeyPair:invocation[0]';
-    getKeyPair:
-      | 'STORE_RESPONSE'
-      | 'done.invoke.OpenID4VP.getTrustedVerifiersList:invocation[0]';
+    getKeyPair: 'done.invoke.OpenID4VP.getTrustedVerifiersList:invocation[0]';
     getSelectedKey:
       | 'FACE_VALID'
       | 'done.invoke.OpenID4VP.getKeyPairFromKeystore:invocation[0]';
