@@ -23,6 +23,8 @@ import base64 from 'react-native-base64';
 import {KeyTypes} from './KeyTypes';
 import convertDerToRsFormat from './signFormatConverter';
 import {hasKeyPair} from '../openId4VCI/Utils';
+import { TelemetryConstants } from '../telemetry/TelemetryConstants';
+import { sendImpressionEvent, getImpressionEventData } from '../telemetry/TelemetryUtils';
 
 //polyfills setup
 secp.etc.hmacSha256Sync = (k, ...m) =>
@@ -120,20 +122,11 @@ export async function generateKeyPair(keyType: any): Promise<any> {
 }
 
 export async function checkAllKeyPairs() {
-  const RSAKey = await fetchKeyPair(KeyTypes.RS256);
-  const ECR1Key = await fetchKeyPair(KeyTypes.ES256);
-  const ECK1Key = await fetchKeyPair(KeyTypes.ES256K);
-  const EDKey = await fetchKeyPair(KeyTypes.ED25519);
-
-  if (
-    !(
-      !!RSAKey.publicKey &&
-      !!ECR1Key.publicKey &&
-      !!ECK1Key.publicKey &&
-      !!EDKey.publicKey
-    )
-  )
-    throw Error('Keys not present');
+  const RSAKey = await hasKeyPair(KeyTypes.RS256);
+  const ECR1Key = await hasKeyPair(KeyTypes.ES256);
+  const ECK1Key = await hasKeyPair(KeyTypes.ES256K);
+  const EDKey = await hasKeyPair(KeyTypes.ED25519);
+  if (!(RSAKey && ECR1Key && ECK1Key && EDKey)) throw Error('Keys not present');
 }
 
 export async function generateKeyPairsAndStoreOrder() {
@@ -151,7 +144,6 @@ export async function generateKeyPairsAndStoreOrder() {
     'keyPreference',
     JSON.stringify(keyOrderMap),
   );
-  console.log("ED key "+EDKeyPair.publicKey+" "+EDKeyPair.privateKey)
   await RNSecureKeystoreModule.storeGenericKey(
     ECK1KeyPair.publicKey,
     ECK1KeyPair.privateKey,
@@ -175,6 +167,7 @@ export async function generateKeyPairsAndStoreOrder() {
       KeyTypes.ES256,
     );
   }
+ console.warn(TelemetryConstants.FlowType.keyGeneration)
 }
 
 /**

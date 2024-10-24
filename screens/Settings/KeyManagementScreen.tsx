@@ -13,7 +13,9 @@ import {useCopilot} from 'react-native-copilot';
 import {useNavigation, useRoute, RouteProp} from '@react-navigation/native';
 import {
   getEndEventData,
+  getImpressionEventData,
   sendEndEvent,
+  sendImpressionEvent,
 } from '../../shared/telemetry/TelemetryUtils';
 import {TelemetryConstants} from '../../shared/telemetry/TelemetryConstants';
 import {SUPPORTED_KEY_TYPES} from '../../shared/constants';
@@ -170,15 +172,15 @@ export const KeyManagementScreen: React.FC<KeyManagementScreenProps> = () => {
               JSON.stringify(keyOrderMap),
             );
             controller.SET_KEY_ORDER_RESPONSE(true);
-            sendEndEvent(
-              getEndEventData(
+            sendImpressionEvent(
+              getImpressionEventData(
                 TelemetryConstants.FlowType.setKeyPriority,
                 TelemetryConstants.EndEventStatus.success,
               ),
             );
           } catch (e) {
-            sendEndEvent(
-              getEndEventData(
+            sendImpressionEvent(
+              getImpressionEventData(
                 TelemetryConstants.FlowType.setKeyPriority,
                 TelemetryConstants.EndEventStatus.failure,
               ),

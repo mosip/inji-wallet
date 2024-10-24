@@ -39,7 +39,7 @@ export class Ed25519Signature2018 extends JwsLinkedDataSignature {
   }: any = {}) {
     super({
       type: 'Ed25519Signature2018',
-      alg: 'Ed25519',
+      alg: 'EdDSA',
       LDKeyClass: Ed25519VerificationKey2018,
       verificationMethod,
       signer,

@@ -317,7 +317,7 @@ export const getJWK = async (publicKey, keyType) => {
     }
     return {
       ...publicKeyJWK,
-      alg: 'Ed25519',
+      alg: keyType,
       use: 'sig',
     };
   } catch (e) {
