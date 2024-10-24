@@ -238,6 +238,7 @@ export const qrLoginMachine =
             onError: [
               {
                 actions: 'SetErrorMessage',
+
                 target: 'ShowError',
               },
             ],
@@ -245,11 +246,12 @@ export const qrLoginMachine =
         },
         success: {
           entry: [
-            () =>
+            (context) =>
               sendEndEvent(
                 getEndEventData(
                   TelemetryConstants.FlowType.qrLogin,
                   TelemetryConstants.EndEventStatus.success,
+                  {"Keytype for QrLogin":context.selectedVc.vcMetadata.downloadKeyType}
                 ),
               ),
           ],
