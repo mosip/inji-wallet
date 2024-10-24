@@ -3,19 +3,23 @@ import {createModel} from 'xstate/lib/model';
 import {AppServices} from '../shared/GlobalContext';
 import {ACTIVITY_LOG_STORE_KEY} from '../shared/constants';
 import {StoreEvents} from './store';
-import {ActivityLog} from '../components/ActivityLogEvent';
+import {VCActivityLog} from '../components/ActivityLogEvent';
 import {IssuerWellknownResponse} from './VerifiableCredential/VCMetaMachine/vc';
+import {VPShareActivityLog} from '../components/VPShareActivityLogEvent';
 
 const model = createModel(
   {
     serviceRefs: {} as AppServices,
-    activities: [] as ActivityLog[],
+    activities: [] as VCActivityLog[],
     wellKnownIssuerMap: {} as Record<string, Object>,
   },
   {
     events: {
       STORE_RESPONSE: (response: unknown) => ({response}),
-      LOG_ACTIVITY: (log: ActivityLog | ActivityLog[], wellknown?: any) => ({
+      LOG_ACTIVITY: (
+        log: VCActivityLog | VCActivityLog[] | VPShareActivityLog,
+        wellknown?: any,
+      ) => ({
         log,
         wellknown,
       }),
@@ -110,7 +114,7 @@ export const activityLogMachine =
         }),
 
         setActivities: model.assign({
-          activities: (_, event) => (event.response || []) as ActivityLog[],
+          activities: (_, event) => (event.response || []) as VCActivityLog[],
         }),
 
         storeActivity: send(
@@ -140,7 +144,7 @@ export const activityLogMachine =
               Array.isArray(event.response)
                 ? [...event.response, ...context.activities]
                 : [event.response, ...context.activities]
-            ) as ActivityLog[];
+            ) as VCActivityLog[];
           },
         }),
 

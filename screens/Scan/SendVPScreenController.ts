@@ -10,7 +10,10 @@ import {
   selectFlowType,
   selectIsSendingVPError,
 } from '../../machines/bleShare/scan/scanSelectors';
-import {selectOpenID4VPRetryCount} from '../../machines/openID4VP/openID4VPSelectors';
+import {
+  selectOpenID4VPRetryCount,
+  selectRequestedClaimsByVerifier,
+} from '../../machines/openID4VP/openID4VPSelectors';
 import {OpenID4VPEvents} from '../../machines/openID4VP/openID4VPMachine';
 import {
   selectAreAllVCsChecked,
@@ -37,6 +40,8 @@ import {GlobalContext} from '../../shared/GlobalContext';
 import {isMosipVC} from '../../shared/Utils';
 import {VCMetadata} from '../../shared/VCMetadata';
 import {VPShareOverlayProps} from './VPShareOverlay';
+import {ActivityLogEvents} from '../../machines/activityLog';
+import {VPShareActivityLog} from '../../components/VPShareActivityLogEvent';
 
 type MyVcsTabNavigation = NavigationProp<RootRouteProps>;
 
@@ -44,13 +49,12 @@ const changeTabBarVisible = (visible: string) => {
   Theme.BottomTabBarStyle.tabBarStyle.display = visible;
 };
 
-export function getVcsForVPSharing(vcMetadatas: VCMetadata[]) {}
-
 export function useSendVPScreen() {
   const {t} = useTranslation('SendVPScreen');
   const {appService} = useContext(GlobalContext);
   const scanService = appService.children.get('scan')!!;
   const vcMetaService = appService.children.get('vcMeta')!!;
+  const activityLogService = appService.children.get('activityLog')!!;
   const navigation = useNavigation<MyVcsTabNavigation>();
   const openID4VPService = scanService.getSnapshot().context.OpenId4VPRef;
   const [selectedVCKeys, setSelectedVCKeys] = useState<Record<string, string>>(
@@ -115,7 +119,10 @@ export function useSendVPScreen() {
 
   const DISMISS_POPUP = () =>
     openID4VPService.send(OpenID4VPEvents.DISMISS_POPUP());
-
+  const openID4VPRetryCount = useSelector(
+    openID4VPService,
+    selectOpenID4VPRetryCount,
+  );
   const noCredentialsMatchingVPRequest =
     isSelectingVCs && Object.keys(vcsMatchingAuthRequest).length === 0;
   let errorModal = {
@@ -125,28 +132,63 @@ export function useSendVPScreen() {
     showRetryButton: false,
   };
 
+  function generateAndStoreLogMessage(logType: string, errorInfo?: string) {
+    activityLogService.send(
+      ActivityLogEvents.LOG_ACTIVITY(
+        VPShareActivityLog.getLogFromObject({
+          timestamp: Date.now(),
+          type: logType,
+          info: errorInfo,
+        }),
+      ),
+    );
+  }
+  const requestedClaimsByVerifier = useSelector(
+    openID4VPService,
+    selectRequestedClaimsByVerifier,
+  );
+  const claimsAsString = '[' + requestedClaimsByVerifier + ']';
   if (noCredentialsMatchingVPRequest) {
     errorModal.title = t('errors.noMatchingCredentials.title');
-    errorModal.message = t('errors.noMatchingCredentials.message');
+    errorModal.message = t('errors.noMatchingCredentials.message', {
+      claims: claimsAsString,
+    });
+    generateAndStoreLogMessage(
+      'NO_CREDENTIAL_MATCHING_REQUEST',
+      claimsAsString,
+    );
   } else if (
     error.includes('Verifier authentication was unsuccessful') ||
     error.startsWith('api error')
   ) {
     errorModal.title = t('errors.invalidVerifier.title');
     errorModal.message = t('errors.invalidVerifier.message');
+    generateAndStoreLogMessage('VERIFIER_AUTHENTICATION_FAILED');
   } else if (error.includes('credential mismatch detected')) {
     errorModal.title = t('errors.credentialsMismatch.title');
-    errorModal.message = t('errors.credentialsMismatch.message');
+    errorModal.message = t('errors.credentialsMismatch.message', {
+      claims: claimsAsString,
+    });
+    generateAndStoreLogMessage(
+      'CREDENTIAL_MISMATCH_FROM_KEBAB',
+      claimsAsString,
+    );
   } else if (error.includes('none of the selected VC has image')) {
     errorModal.title = t('errors.noImage.title');
     errorModal.message = t('errors.noImage.message');
+    generateAndStoreLogMessage('NO_SELECTED_VC_HAS_IMAGE');
   } else if (error.startsWith('vc validation')) {
     errorModal.title = t('errors.invalidQrCode.title');
     errorModal.message = t('errors.invalidQrCode.message');
-  } else if (error !== '') {
+    generateAndStoreLogMessage('INVALID_AUTH_REQUEST');
+  } else if (error.startsWith('send vp')) {
     errorModal.title = t('errors.genericError.title');
     errorModal.message = t('errors.genericError.message');
     errorModal.showRetryButton = true;
+  } else if (error !== '') {
+    errorModal.title = t('errors.genericError.title');
+    errorModal.message = t('errors.genericError.message');
+    generateAndStoreLogMessage('TECHNICAL_ERROR');
   }
 
   let overlayDetails: Omit<VPShareOverlayProps, 'isVisible'> | null = null;
@@ -267,10 +309,7 @@ export function useSendVPScreen() {
       );
     },
     CANCEL,
-    openID4VPRetryCount: useSelector(
-      openID4VPService,
-      selectOpenID4VPRetryCount,
-    ),
+    openID4VPRetryCount,
     RESET_RETRY_COUNT: () =>
       openID4VPService.send(OpenID4VPEvents.RESET_RETRY_COUNT()),
   };

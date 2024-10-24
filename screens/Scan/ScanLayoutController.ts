@@ -49,7 +49,10 @@ import {ScanStackParamList} from '../../routes/routesConstants';
 import {VCShareFlowType} from '../../shared/Utils';
 import {Theme} from '../../components/ui/styleUtils';
 import {APP_EVENTS, selectIsLinkCode} from '../../machines/app';
-import {selectIsFaceVerifiedInVPSharing} from '../../machines/openID4VP/openID4VPSelectors';
+import {
+  selectIsFaceVerifiedInVPSharing,
+  selectVerifierNameInVPSharing,
+} from '../../machines/openID4VP/openID4VPSelectors';
 import {OpenID4VPEvents} from '../../machines/openID4VP/openID4VPMachine';
 
 type ScanLayoutNavigation = NavigationProp<
@@ -343,6 +346,10 @@ export function useScanLayout() {
     isSendingVc,
     isSendingVP,
     isVPSharingSuccess: useSelector(scanService, selectIsSendingVPSuccess),
+    vpVerifierName: useSelector(
+      openID4VPService,
+      selectVerifierNameInVPSharing,
+    ),
     flowType,
     openID4VPFlowType,
     isVerifyingIdentity,

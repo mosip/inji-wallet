@@ -138,7 +138,7 @@ export const SendVPScreen: React.FC = () => {
                           getVcKey(vcData),
                         )
                       }
-                      flow={VCItemContainerFlowType.OPENID4VP}
+                      flow={VCItemContainerFlowType.VP_SHARE}
                       isPinned={vcData.vcMetadata.isPinned}
                     />
                   )),

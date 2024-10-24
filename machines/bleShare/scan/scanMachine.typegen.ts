@@ -56,6 +56,7 @@ export interface Typegen0 {
       | 'removeLoggers'
       | 'resetFaceCaptureBannerStatus'
       | 'resetFlowType'
+      | 'resetIsQrLoginViaDeepLink'
       | 'resetLinkCode'
       | 'resetOpenID4VPFlowType'
       | 'resetSelectedVc'
@@ -68,8 +69,8 @@ export interface Typegen0 {
       | 'sendVcShareSuccessEvent'
       | 'sendVcSharingStartEvent'
       | 'setBleError'
-      | 'setChildRef'
       | 'setFlowType'
+      | 'setIsQrLoginViaDeepLink'
       | 'setLinkCode'
       | 'setLinkCodeFromDeepLink'
       | 'setOpenId4VPFlowType'
@@ -100,6 +101,7 @@ export interface Typegen0 {
       | 'isOnlineSharing'
       | 'isOpenIdQr'
       | 'isQrLogin'
+      | 'isQrLoginViaDeepLinking'
       | 'isQuickShare'
       | 'showFaceAuthConsentScreen'
       | 'uptoAndroid11';
@@ -119,7 +121,7 @@ export interface Typegen0 {
       | 'startConnection';
   };
   eventsCausingActions: {
-    clearUri: 'STORE_RESPONSE';
+    clearUri: '';
     enableLocation: 'ALLOWED' | 'LOCATION_REQUEST';
     getFaceAuthConsent:
       | 'DISCONNECT'
@@ -132,31 +134,32 @@ export interface Typegen0 {
     openAppPermission: 'GOTO_SETTINGS' | 'LOCATION_REQUEST';
     openBluetoothSettings: 'GOTO_SETTINGS';
     refreshVCs: 'STORE_RESPONSE';
-    registerLoggers: 'STORE_RESPONSE';
+    registerLoggers: '';
     removeLoggers:
+      | ''
       | 'DISCONNECT'
       | 'DISMISS'
       | 'DISMISS_QUICK_SHARE_BANNER'
+      | 'QRLOGIN_VIA_DEEP_LINK'
       | 'RESET'
       | 'SCREEN_BLUR'
-      | 'STORE_RESPONSE'
       | 'xstate.init';
-    resetFaceCaptureBannerStatus:
-      | 'ACCEPT_REQUEST'
-      | 'CLOSE_BANNER'
-      | 'STORE_RESPONSE';
+    resetFaceCaptureBannerStatus: '' | 'ACCEPT_REQUEST' | 'CLOSE_BANNER';
     resetFlowType:
       | 'DISCONNECT'
       | 'DISMISS'
       | 'DISMISS_QUICK_SHARE_BANNER'
       | 'GOTO_HISTORY'
+      | 'QRLOGIN_VIA_DEEP_LINK'
       | 'RESET'
       | 'SCREEN_BLUR'
       | 'xstate.init';
+    resetIsQrLoginViaDeepLink: 'DISMISS' | 'RESET';
     resetLinkCode:
       | 'BLE_ERROR'
       | 'DISMISS'
       | 'DISMISS_QUICK_SHARE_BANNER'
+      | 'QRLOGIN_VIA_DEEP_LINK'
       | 'RESET'
       | 'SCREEN_BLUR'
       | 'SCREEN_FOCUS'
@@ -168,20 +171,21 @@ export interface Typegen0 {
       | 'DISMISS'
       | 'DISMISS_QUICK_SHARE_BANNER'
       | 'GOTO_HISTORY'
+      | 'QRLOGIN_VIA_DEEP_LINK'
       | 'RESET'
       | 'SCREEN_BLUR'
       | 'xstate.init';
     resetShowQuickShareSuccessBanner: 'DISMISS' | 'DISMISS_QUICK_SHARE_BANNER';
     sendBLEConnectionErrorEvent: 'BLE_ERROR';
-    sendScanData: 'QRLOGIN_VIA_DEEP_LINK' | 'SCAN';
+    sendScanData: '' | 'SCAN';
     sendVCShareFlowCancelEndEvent: 'CANCEL';
     sendVCShareFlowTimeoutEndEvent: 'CANCEL' | 'RETRY';
     sendVPScanData: 'SCAN';
     sendVcShareSuccessEvent: 'VC_ACCEPTED';
     sendVcSharingStartEvent: 'SCAN';
     setBleError: 'BLE_ERROR';
-    setChildRef: 'QRLOGIN_VIA_DEEP_LINK';
     setFlowType: 'SELECT_VC';
+    setIsQrLoginViaDeepLink: 'QRLOGIN_VIA_DEEP_LINK';
     setLinkCode: 'SCAN';
     setLinkCodeFromDeepLink: 'QRLOGIN_VIA_DEEP_LINK';
     setOpenId4VPFlowType: 'SCAN';
@@ -190,6 +194,7 @@ export interface Typegen0 {
       | 'DISCONNECT'
       | 'DISMISS'
       | 'DISMISS_QUICK_SHARE_BANNER'
+      | 'QRLOGIN_VIA_DEEP_LINK'
       | 'RESET'
       | 'RETRY'
       | 'SCREEN_BLUR'
@@ -227,13 +232,14 @@ export interface Typegen0 {
     isOnlineSharing: 'SCAN';
     isOpenIdQr: 'SCAN';
     isQrLogin: 'SCAN';
+    isQrLoginViaDeepLinking: '' | 'STORE_RESPONSE';
     isQuickShare: 'SCAN';
     showFaceAuthConsentScreen: '' | 'VERIFY_AND_ACCEPT_REQUEST';
     uptoAndroid11: '' | 'START_PERMISSION_CHECK';
   };
   eventsCausingServices: {
     OpenId4VP: 'SCAN';
-    QrLogin: 'QRLOGIN_VIA_DEEP_LINK' | 'SCAN';
+    QrLogin: '' | 'SCAN';
     checkBluetoothPermission:
       | ''
       | 'BLUETOOTH_STATE_DISABLED'
@@ -246,12 +252,17 @@ export interface Typegen0 {
     checkStorageAvailability:
       | 'CANCEL'
       | 'DISMISS'
+      | 'QRLOGIN_VIA_DEEP_LINK'
       | 'RESET'
       | 'RETRY'
       | 'SCREEN_FOCUS'
       | 'SELECT_VC';
     disconnect: '' | 'DISMISS' | 'LOCATION_ENABLED' | 'RETRY' | 'SCREEN_BLUR';
-    monitorConnection: 'DISMISS' | 'SCREEN_BLUR' | 'xstate.init';
+    monitorConnection:
+      | 'DISMISS'
+      | 'QRLOGIN_VIA_DEEP_LINK'
+      | 'SCREEN_BLUR'
+      | 'xstate.init';
     requestBluetooth: 'BLUETOOTH_STATE_DISABLED';
     requestNearByDevicesPermission: 'NEARBY_DISABLED';
     requestToEnableLocationPermission: 'LOCATION_DISABLED';
@@ -273,6 +284,7 @@ export interface Typegen0 {
     | 'checkNearbyDevicesPermission.checking'
     | 'checkNearbyDevicesPermission.enabled'
     | 'checkNearbyDevicesPermission.requesting'
+    | 'checkQrLoginViaDeepLink'
     | 'checkStorage'
     | 'checkingLocationState'
     | 'checkingLocationState.LocationPermissionRationale'
@@ -296,7 +308,6 @@ export interface Typegen0 {
     | 'loadVCS.idle'
     | 'loadVCS.navigatingToHome'
     | 'nearByDevicesPermissionDenied'
-    | 'qrLoginViaDeepLink'
     | 'recheckBluetoothState'
     | 'recheckBluetoothState.checking'
     | 'recheckBluetoothState.enabled'
@@ -320,6 +331,7 @@ export interface Typegen0 {
     | 'showQrLogin'
     | 'showQrLogin.idle'
     | 'showQrLogin.navigatingToHistory'
+    | 'showQrLogin.navigatingToHome'
     | 'showQrLogin.storing'
     | 'startPermissionCheck'
     | 'startVPSharing'
@@ -355,7 +367,11 @@ export interface Typegen0 {
           | 'sendingVc'
           | 'verifyingIdentity'
           | {sendingVc?: 'inProgress' | 'sent' | 'timeout'};
-        showQrLogin?: 'idle' | 'navigatingToHistory' | 'storing';
+        showQrLogin?:
+          | 'idle'
+          | 'navigatingToHistory'
+          | 'navigatingToHome'
+          | 'storing';
         startVPSharing?: 'inProgress' | 'showError' | 'success' | 'timeout';
       };
   tags: never;

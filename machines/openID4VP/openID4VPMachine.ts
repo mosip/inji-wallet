@@ -33,6 +33,9 @@ export const openID4VPMachine = model.createMachine(
           target: 'waitingForData',
         },
       ],
+      LOG_ACTIVITY: {
+        actions: 'logActivity',
+      },
     },
     states: {
       waitingForData: {
@@ -202,7 +205,13 @@ export const openID4VPMachine = model.createMachine(
       showConfirmationPopup: {
         on: {
           CONFIRM: {
-            actions: sendParent('DISMISS'),
+            actions: [
+              send({
+                type: 'LOG_ACTIVITY',
+                logType: 'USER_DECLINED_CONSENT',
+              }),
+            ],
+            target: 'shareVPDeclineStatusToVerifier',
           },
           GO_BACK: {
             target: 'getConsentForVPSharing',
@@ -233,9 +242,11 @@ export const openID4VPMachine = model.createMachine(
               target: 'verifyingIdentity',
             },
             {
-              actions: model.assign({
-                error: () => 'none of the selected VC has image',
-              }),
+              actions: [
+                model.assign({
+                  error: () => 'none of the selected VC has image',
+                }),
+              ],
               target: 'showError',
             },
           ],
@@ -253,10 +264,26 @@ export const openID4VPMachine = model.createMachine(
               target: 'checkKeyPair',
             },
           ],
-          FACE_INVALID: {
-            target: 'invalidIdentity',
-            actions: 'logFailedVerification',
-          },
+          FACE_INVALID: [
+            {
+              cond: 'isFaceVerificationRetryAttempt',
+              actions: send({
+                type: 'LOG_ACTIVITY',
+                logType: 'FACE_VERIFICATION_FAILED_AFTER_RETRY_ATTEMPT',
+              }),
+              target: 'invalidIdentity',
+            },
+            {
+              actions: [
+                send({
+                  type: 'LOG_ACTIVITY',
+                  logType: 'FACE_VERIFICATION_FAILED',
+                }),
+                'setIsFaceVerificationRetryAttempt',
+              ],
+              target: 'invalidIdentity',
+            },
+          ],
           CANCEL: [
             {
               cond: 'isSimpleOpenID4VPShare',
@@ -274,10 +301,14 @@ export const openID4VPMachine = model.createMachine(
           DISMISS: [
             {
               cond: 'isSimpleOpenID4VPShare',
+              actions: 'resetIsFaceVerificationRetryAttempt',
               target: 'selectingVCs',
             },
             {
-              actions: sendParent('DISMISS'),
+              actions: [
+                'resetIsFaceVerificationRetryAttempt',
+                sendParent('DISMISS'),
+              ],
             },
           ],
           RETRY_VERIFICATION: {
@@ -294,12 +325,38 @@ export const openID4VPMachine = model.createMachine(
         },
         invoke: {
           src: 'sendVP',
-          onDone: {
-            actions: sendParent('SUCCESS'),
-            target: 'success',
-          },
+          onDone: [
+            {
+              cond: 'isShareWithSelfie',
+              actions: [
+                send({
+                  type: 'LOG_ACTIVITY',
+                  logType: 'SHARED_WITH_FACE_VERIFIACTION',
+                }),
+                sendParent('SUCCESS'),
+              ],
+              target: 'success',
+            },
+            {
+              actions: [
+                send({
+                  type: 'LOG_ACTIVITY',
+                  logType: 'SHARED_SUCCESSFULLY',
+                }),
+                sendParent('SUCCESS'),
+              ],
+              target: 'success',
+            },
+          ],
           onError: {
-            actions: ['setError', sendParent('SHOW_ERROR')],
+            actions: [
+              send({
+                type: 'LOG_ACTIVITY',
+                logType: 'RETRY_ATTEMPT_FAILED',
+              }),
+              'setSendVPShareError',
+              sendParent('SHOW_ERROR'),
+            ],
             target: 'showError',
           },
         },
@@ -308,6 +365,9 @@ export const openID4VPMachine = model.createMachine(
             actions: sendParent('TIMEOUT'),
           },
         },
+      },
+      shareVPDeclineStatusToVerifier: {
+        entry: ['shareDeclineStatus', sendParent('DISMISS')],
       },
       showError: {
         on: {

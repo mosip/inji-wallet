@@ -51,6 +51,10 @@ export class OpenID4VP {
       vpResponseMetadata,
     );
   }
+
+  static sendErrorToVerifier(error: string) {
+    OpenID4VP.InjiOpenID4VP.sendErrorToVerifier(error);
+  }
 }
 
 export async function constructProofJWT(

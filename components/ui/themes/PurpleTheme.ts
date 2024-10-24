@@ -27,6 +27,7 @@ const Colors = {
   DarkGray: '#A5A5A5',
   platinumGrey: '#EDEDED',
   Orange: '#F2811D',
+  OrangeShade: '#E3781A',
   OrangeBrown: '#D9822B',
   Blue: '#0000FF',
   LightOrange: '#FDF1E6',
@@ -712,6 +713,20 @@ export const PurpleTheme = {
       flexDirection: 'row',
       marginLeft: I18nManager.isRTL ? 50 : 0,
       marginTop: 15,
+    },
+    sendVPHeaderContainer: {
+      flex: 1,
+      flexDirection: 'column',
+      marginLeft: I18nManager.isRTL ? 50 : 0,
+    },
+    sendVPHeaderTitle: {
+      fontSize: 18,
+      fontFamily: 'Inter_600SemiBold',
+    },
+    sendVPHeaderSubTitle: {
+      fontSize: 13,
+      fontFamily: 'Inter_600SemiBold',
+      color: Colors.LightPurple,
     },
     HistoryHeaderTitleStyle: {
       fontSize: 26,

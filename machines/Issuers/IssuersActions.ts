@@ -25,6 +25,7 @@ import {
 import {TelemetryConstants} from '../../shared/telemetry/TelemetryConstants';
 import {NativeModules} from 'react-native';
 import {KeyTypes} from '../../shared/cryptoutil/KeyTypes';
+import {VCActivityLog} from '../../components/ActivityLogEvent';
 
 const {RNSecureKeystoreModule} = NativeModules;
 export const IssuersActions = (model: any) => {
@@ -265,7 +266,7 @@ export const IssuersActions = (model: any) => {
       context => {
         const vcMetadata = getVCMetadata(context, context.keyType);
         return ActivityLogEvents.LOG_ACTIVITY(
-          {
+          VCActivityLog.getLogFromObject({
             _vcKey: vcMetadata.getVcKey(),
             type: 'VC_DOWNLOADED',
             id: vcMetadata.displayId,
@@ -273,7 +274,7 @@ export const IssuersActions = (model: any) => {
             deviceName: '',
             issuer: context.selectedIssuerId,
             credentialConfigurationId: context.selectedCredentialType.id,
-          },
+          }),
           context.selectedIssuerWellknownResponse,
         );
       },

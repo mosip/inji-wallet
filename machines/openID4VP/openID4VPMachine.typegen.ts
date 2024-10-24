@@ -65,9 +65,10 @@ export interface Typegen0 {
       | 'getVcsMatchingAuthRequest'
       | 'incrementOpenID4VPRetryCount'
       | 'loadKeyPair'
-      | 'logFailedVerification'
+      | 'logActivity'
       | 'resetError'
       | 'resetFaceCaptureBannerStatus'
+      | 'resetIsFaceVerificationRetryAttempt'
       | 'resetIsShareWithSelfie'
       | 'resetOpenID4VPRetryCount'
       | 'setAuthenticationError'
@@ -75,13 +76,16 @@ export interface Typegen0 {
       | 'setEncodedAuthorizationRequest'
       | 'setError'
       | 'setFlowType'
+      | 'setIsFaceVerificationRetryAttempt'
       | 'setIsShareWithSelfie'
       | 'setMiniViewShareSelectedVC'
       | 'setSelectedVCs'
+      | 'setSendVPShareError'
       | 'setShareLogTypeUnverified'
       | 'setShowFaceAuthConsent'
       | 'setTrustedVerifiers'
       | 'setTrustedVerifiersApiCallError'
+      | 'shareDeclineStatus'
       | 'storeShowFaceAuthConsent'
       | 'updateFaceCaptureBannerStatus'
       | 'updateShowFaceAuthConsent';
@@ -89,6 +93,7 @@ export interface Typegen0 {
     guards:
       | 'hasKeyPair'
       | 'isAnyVCHasImage'
+      | 'isFaceVerificationRetryAttempt'
       | 'isSelectedVCMatchingRequest'
       | 'isShareWithSelfie'
       | 'isSimpleOpenID4VPShare'
@@ -107,9 +112,10 @@ export interface Typegen0 {
     getVcsMatchingAuthRequest: 'DOWNLOADED_VCS';
     incrementOpenID4VPRetryCount: 'RETRY';
     loadKeyPair: 'done.invoke.OpenID4VP.getKeyPairFromKeystore:invocation[0]';
-    logFailedVerification: 'FACE_INVALID';
+    logActivity: 'LOG_ACTIVITY';
     resetError: 'RESET_ERROR';
     resetFaceCaptureBannerStatus: 'ACCEPT_REQUEST' | 'CLOSE_BANNER';
+    resetIsFaceVerificationRetryAttempt: 'DISMISS';
     resetIsShareWithSelfie: 'CANCEL' | 'DISMISS_POPUP';
     resetOpenID4VPRetryCount: 'RESET_RETRY_COUNT';
     setAuthenticationError: 'error.platform.OpenID4VP.authenticateVerifier:invocation[0]';
@@ -117,16 +123,18 @@ export interface Typegen0 {
     setEncodedAuthorizationRequest: 'AUTHENTICATE';
     setError:
       | 'error.platform.OpenID4VP.checkKeyPair:invocation[0]'
-      | 'error.platform.OpenID4VP.getKeyPairFromKeystore:invocation[0]'
-      | 'error.platform.OpenID4VP.sendingVP:invocation[0]';
+      | 'error.platform.OpenID4VP.getKeyPairFromKeystore:invocation[0]';
     setFlowType: 'AUTHENTICATE';
+    setIsFaceVerificationRetryAttempt: 'FACE_INVALID';
     setIsShareWithSelfie: 'AUTHENTICATE';
     setMiniViewShareSelectedVC: 'AUTHENTICATE';
     setSelectedVCs: 'ACCEPT_REQUEST' | 'VERIFY_AND_ACCEPT_REQUEST';
+    setSendVPShareError: 'error.platform.OpenID4VP.sendingVP:invocation[0]';
     setShareLogTypeUnverified: 'ACCEPT_REQUEST';
     setShowFaceAuthConsent: 'FACE_VERIFICATION_CONSENT';
     setTrustedVerifiers: 'done.invoke.OpenID4VP.getTrustedVerifiersList:invocation[0]';
     setTrustedVerifiersApiCallError: 'error.platform.OpenID4VP.getTrustedVerifiersList:invocation[0]';
+    shareDeclineStatus: 'CONFIRM';
     storeShowFaceAuthConsent: 'FACE_VERIFICATION_CONSENT';
     updateFaceCaptureBannerStatus: 'FACE_VALID';
     updateShowFaceAuthConsent: 'STORE_RESPONSE';
@@ -139,8 +147,11 @@ export interface Typegen0 {
       | 'FACE_VALID'
       | 'done.invoke.OpenID4VP.checkKeyPair:invocation[0]';
     isAnyVCHasImage: 'CHECK_FOR_IMAGE';
+    isFaceVerificationRetryAttempt: 'FACE_INVALID';
     isSelectedVCMatchingRequest: 'CHECK_SELECTED_VC';
-    isShareWithSelfie: 'CONFIRM';
+    isShareWithSelfie:
+      | 'CONFIRM'
+      | 'done.invoke.OpenID4VP.sendingVP:invocation[0]';
     isSimpleOpenID4VPShare:
       | 'CANCEL'
       | 'DISMISS'
@@ -173,6 +184,7 @@ export interface Typegen0 {
     | 'selectingVCs'
     | 'sendingVP'
     | 'setSelectedVC'
+    | 'shareVPDeclineStatusToVerifier'
     | 'showConfirmationPopup'
     | 'showError'
     | 'success'
