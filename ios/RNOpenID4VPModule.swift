@@ -41,7 +41,7 @@ class RNOpenId4VpModule: NSObject, RCTBridgeModule {
         let response = try toJsonString(jsonObject: authenticationResponse)
         resolve(response)
       } catch {
-        reject("OPENID4VP", "Unable to authenticate the Verifier", error)
+        reject("OPENID4VP", error.localizedDescription, error)
       }
     }
   }
@@ -59,7 +59,7 @@ class RNOpenId4VpModule: NSObject, RCTBridgeModule {
         resolve(response)
         
       } catch {
-        reject("OPENID4VP","Failed to construct verifiable presentation",error)
+        reject("OPENID4VP", error.localizedDescription, error)
       }
     }
   }
@@ -88,20 +88,22 @@ class RNOpenId4VpModule: NSObject, RCTBridgeModule {
         
         resolve(response)
       } catch {
-        reject("OPENID4VP","Failed to send verifiable presentation",error)
+        reject("OPENID4VP", error.localizedDescription, error)
       }
     }
   }
   
   @objc
-     func sendErrorToVerifier(_ error: String, resolver: @escaping RCTPromiseResolveBlock, rejecter: @escaping RCTPromiseRejectBlock) {
-
-       enum VerifierError: Error {
-           case customError(String)
-       }
-       
-       await openID4VP?.sendErrorToVerifier(VerifierError.customError(error))
-     }
+  func sendErrorToVerifier(_ error: String, resolver resolve: @escaping RCTPromiseResolveBlock, rejecter reject: @escaping RCTPromiseRejectBlock) {
+    Task {
+      enum VerifierError: Error {
+        case customError(String)
+      }
+      
+      await openID4VP?.sendErrorToVerifier(error: VerifierError.customError(error))
+      resolve(true)
+    }
+  }
   
   func toJsonString(jsonObject: AuthorizationRequest) throws -> String {
     let encoder = JSONEncoder()

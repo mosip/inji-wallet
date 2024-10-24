@@ -718,8 +718,6 @@ export const PurpleTheme = {
       flex: 1,
       flexDirection: 'column',
       marginLeft: I18nManager.isRTL ? 50 : 0,
-      marginTop: 15,
-      marginBottom: 15,
     },
     sendVPHeaderTitle: {
       fontSize: 18,

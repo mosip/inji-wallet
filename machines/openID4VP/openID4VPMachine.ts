@@ -243,11 +243,6 @@ export const openID4VPMachine = model.createMachine(
             },
             {
               actions: [
-                send({
-                  type: 'LOG_ACTIVITY',
-                  logType:
-                    'SHARE_WITH_SELFIE_FAILED_AS_NONE_OF_SELECTED_VCS_HAS_IMAGE',
-                }),
                 model.assign({
                   error: () => 'none of the selected VC has image',
                 }),
