@@ -123,19 +123,11 @@ export const IssuersService = () => {
     },
 
     verifyCredential: async (context: any) => {
-      //this issuer specific check has to be removed once vc validation is done.
-      if (isMosipVC(context.selectedIssuerId)) {
-        const verificationResult = await verifyCredential(
-          context.verifiableCredential?.credential,
-        );
-        if (!verificationResult.isVerified) {
-          throw new Error(verificationResult.errorMessage);
-        }
-      } else {
-        return {
-          isVerified: true,
-          errorMessage: VerificationErrorType.NO_ERROR,
-        };
+      const verificationResult = await verifyCredential(
+        context.verifiableCredential?.credential,
+      );
+      if (!verificationResult.isVerified) {
+        throw new Error(verificationResult.errorMessage);
       }
     },
   };

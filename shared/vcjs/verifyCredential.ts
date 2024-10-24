@@ -17,8 +17,9 @@ import {isAndroid} from '../constants';
 // FIXME: Ed25519Signature2018 not fully supported yet.
 // Ed25519Signature2018 proof type check is not tested with its real credential
 const ProofType = {
-  ED25519: 'Ed25519Signature2018',
+  ED25519_2018: 'Ed25519Signature2018',
   RSA: 'RsaSignature2018',
+  ED25519_2020: 'Ed25519Signature2020',
 };
 
 const ProofPurpose = {
@@ -32,55 +33,58 @@ export async function verifyCredential(
   verifiableCredential: Credential,
 ): Promise<VerificationResult> {
   try {
-    let purpose: PublicKeyProofPurpose | AssertionProofPurpose;
-    const proof = verifiableCredential.proof;
-    switch (proof.proofPurpose) {
-      case ProofPurpose.PublicKey:
-        purpose = new PublicKeyProofPurpose();
-        break;
-      case ProofPurpose.Assertion:
-        purpose = new AssertionProofPurpose();
-        break;
-    }
+    //ToDo - Have to remove else part once Vc Verifier Library is built for Swift
+    if (isAndroid()) {
+      let vcVerifierResult = await vcVerifier.verifyCredentials(
+        JSON.stringify(verifiableCredential),
+      );
+      return handleVcVerifierResponse(vcVerifierResult, verifiableCredential);
+    } else {
+      let purpose: PublicKeyProofPurpose | AssertionProofPurpose;
+      const proof = verifiableCredential.proof;
 
-    let suite: Ed25519Signature2018 | RsaSignature2018;
-    const suiteOptions = {
-      verificationMethod: proof.verificationMethod,
-      date: proof.created,
-    };
-    switch (proof.type) {
-      case ProofType.ED25519: {
-        suite = new Ed25519Signature2018(suiteOptions);
-        break;
+      switch (proof.proofPurpose) {
+        case ProofPurpose.PublicKey:
+          purpose = new PublicKeyProofPurpose();
+          break;
+        case ProofPurpose.Assertion:
+          purpose = new AssertionProofPurpose();
+          break;
       }
-      case ProofType.RSA: {
-        if (isAndroid()) {
-          let vcVerifierResult = await vcVerifier.verifyCredentials(
-            JSON.stringify(verifiableCredential),
-          );
-          return handleVcVerifierResponse(
-            vcVerifierResult,
-            verifiableCredential,
-          );
-        } else {
+
+      let suite: Ed25519Signature2018 | RsaSignature2018;
+      const suiteOptions = {
+        verificationMethod: proof.verificationMethod,
+        date: proof.created,
+      };
+      switch (proof.type) {
+        case ProofType.RSA: {
           suite = new RsaSignature2018(suiteOptions);
           break;
         }
+        case ProofType.ED25519_2018: {
+          suite = new Ed25519Signature2018(suiteOptions);
+          break;
+        }
+        case ProofType.ED25519_2020: {
+          return {
+            isVerified: true,
+            errorMessage: VerificationErrorType.NO_ERROR,
+          };
+        }
       }
+
+      const vcjsOptions = {
+        purpose,
+        suite,
+        credential: verifiableCredential,
+        documentLoader: jsonld.documentLoaders.xhr(),
+      };
+
+      //ToDo - Have to remove once range error is fixed during verification
+      const result = await vcjs.verifyCredential(vcjsOptions);
+      return handleResponse(result, verifiableCredential);
     }
-
-    const vcjsOptions = {
-      purpose,
-      suite,
-      credential: verifiableCredential,
-      documentLoader: jsonld.documentLoaders.xhr(),
-    };
-
-    //ToDo - Have to remove once range error is fixed during verification
-    const result = await vcjs.verifyCredential(vcjsOptions);
-    return handleResponse(result, verifiableCredential);
-
-    //ToDo Handle Expiration error message
   } catch (error) {
     console.error(
       'Error occurred while verifying the VC using digital bazaar:',
@@ -130,15 +134,16 @@ function handleResponse(
 }
 
 function handleVcVerifierResponse(
-  verificationStatus: boolean,
+  verificationResult: any,
   verifiableCredential: VerifiableCredential | Credential,
 ): VerificationResult {
   try {
-    const isVerified = verificationStatus;
-    const errorMessage = verificationStatus
+    const isVerified = verificationResult.verificationStatus;
+    const errorMessage = verificationResult.verificationStatus
       ? VerificationErrorType.NO_ERROR
       : VerificationErrorType.TECHNICAL_ERROR;
 
+    //ToDo Handle Expiration scenario and showing other error message
     return {isVerified, errorMessage};
   } catch (error) {
     console.error(
