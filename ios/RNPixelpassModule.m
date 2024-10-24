@@ -11,6 +11,9 @@ RCT_EXTERN_METHOD(decode:(NSString *)parameter
 RCT_EXTERN_METHOD(generateQRData:(NSString *)data
                   header:(NSString *)header resolve:(RCTPromiseResolveBlock)resolve reject:(RCTPromiseRejectBlock)reject)
 
+RCT_EXTERN_METHOD(decodeBase64UrlEncodedCBORData:(NSString *)data
+                   resolve:(RCTPromiseResolveBlock)resolve reject:(RCTPromiseRejectBlock)reject)
+
 
 
 @end
