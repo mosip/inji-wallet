@@ -44,7 +44,7 @@ public class RNPixelpassModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public void decodeBase64UrlEncodedCBORData(String data, Promise promise) {
         try {
-            Object decodedData = new Utils().toJson(data);
+            Object decodedData = pixelPass.toJson(data);
             promise.resolve(decodedData.toString());
         } catch (Exception e) {
             promise.reject("ERROR_DECODING_DATA", "Failed to decode Data: " + e);
