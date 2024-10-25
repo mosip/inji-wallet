@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import {ImageBackground, Pressable, Image, View} from 'react-native';
 import {getLocalizedField} from '../../../i18n';
 import {VCMetadata} from '../../../shared/VCMetadata';

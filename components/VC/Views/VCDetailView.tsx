@@ -1,6 +1,6 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import {useTranslation} from 'react-i18next';
-import {Image, ImageBackground, NativeModules, View} from 'react-native';
+import {Image, ImageBackground, View} from 'react-native';
 import {
   Credential,
   CredentialWrapper,
