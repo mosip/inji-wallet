@@ -25,6 +25,9 @@ export const vcMetaMachine =
         VC_DOWNLOADING_FAILED: {
           actions: 'setDownloadCreadentialsFailed',
         },
+        RESET_DOWNLOADING_SUCCESS:{
+          actions: 'resetDownloadCredentialsSuccess'
+        },
         RESET_DOWNLOADING_FAILED: {
           actions: 'resetDownloadCreadentialsFailed',
         },
@@ -115,7 +118,7 @@ export const vcMetaMachine =
               actions: ['updateMyVcsMetadata', 'setUpdatedVcMetadatas'],
             },
             VC_DOWNLOADED: {
-              actions: 'setDownloadedVc',
+              actions: ['setDownloadCredentialsSuccess','setDownloadedVc',]
             },
             ADD_VC_TO_IN_PROGRESS_DOWNLOADS: {
               actions: 'addVcToInProgressDownloads',

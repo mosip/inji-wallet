@@ -4,11 +4,11 @@ Inji Mobile Wallet is a mobile application specifically created to streamline al
 It offers a secure, trustworthy, and dependable mobile Verifiable Credentials wallet designed to fulfil the following functions
 
 - Download and store Verifiable Credentials
-- Conduct offline face authentication
 - Share Verifiable Credentials
-- Enable users to log in to online portals
+- Enable users to log in to relying parties with their credential
+- Generate a QR code for the credential to be shared offline with relying parties.
 
-for more details refer [here](https://docs.mosip.io/inji)
+for more details refer [here](https://docs.mosip.io/inji/inji-wallet/overview)
 
 ## Setup PreRequisites
 
@@ -16,18 +16,18 @@ Be sure to have the following build tools installed before proceeding:
 
 - [React Native 0.71.8](https://reactnative.dev/docs/0.71/getting-started)
   - Hermes Engine enabled
-- [Expo 49.0.16](https://docs.expo.dev/get-started/installation/)
+- [Expo 49.0.23](https://docs.expo.dev/get-started/installation/)
 - [node v16.19.0](https://nodejs.org/en/blog/release/v16.19.0)
 - [npm 8.19.3](https://www.npmjs.com/package/npm/v/8.19.3)
 
 ### Android
 
-- [Java 11](https://openjdk.org/projects/jdk/11/)
+- [Java 17](https://openjdk.org/projects/jdk/17/)
 - [Gradle 7.5.1](https://gradle.org/install/)
 - [Android SDK](https://developer.android.com/)
-- minSdkVersion = 23
-- compileSdkVersion = 33
-- targetSdkVersion = 33
+- minSdkVersion = 24
+- compileSdkVersion = 34
+- targetSdkVersion = 34
 - ndkVersion = 21.4.7075529
 - kotlinVersion = 1.9.0
 
@@ -40,6 +40,7 @@ Be sure to have the following build tools installed before proceeding:
 
 ## Configuring the Environment
 
+If you ever want to use something in your local environment based on your customization and in need of using environment files other than default (.env), you can add some variables to your .env.local file. 
 Create a `.env.local` file using `.env` as your template in your root directory :
 
 ```
@@ -52,88 +53,34 @@ ESIGNET_HOST =  https://esignet.collab.mosip.net/
 # Telemetry Server
 OBSRV_HOST = https://dataset-api.obsrv.mosip.net
 Telemetry Dashboard = https://druid.obsrv.mosip.net/unified-console.html#workbench
+
+#Application Theme can be ( orange | purple ), defaults to orange theme
+APPLICATION_THEME=orange
+
+#environment can be changed if it is toggled
+CREDENTIAL_REGISTRY_EDIT=true
+
+#Inji Wallet CLIENT ID for Data backup & Restore
+GOOGLE_ANDROID_CLIENT_ID='<client_id>'
 ```
 
 for more information on the backend services
-refer [here](https://docs.mosip.io/inji/inji-mobile-wallet/backend-services).
+refer [here](https://docs.mosip.io/inji/inji-wallet/technical-overview/backend-services).
 
 ## Building & Running for Android
 
-### Generate keystore
+Refer to the documentation of Inji Wallet's [build and deployment android section](https://docs.mosip.io/inji/inji-wallet/build-and-deployment#android-build-and-run) for the steps build the android application.
 
-```shell
-# Generate and use Release keystore for Publishing to Play store
-keytool \
--genkey -v \
--storetype PKCS12 \
--keyalg RSA \
--keysize 2048 \
--validity 10000 \
--storepass '<USE-YOUR-RELEASE-PASSWORD-HERE>' \
--keypass '<USE-YOUR-RELEASE-PASSWORD-HERE>' \
--alias androidreleasekey \
--keystore android/app/release.keystore \
--dname "CN=io.mosip.residentapp,OU=,O=,L=,S=,C=US"
-```
-
-### Build via Android Studio
-
-The app is available in this repository's `frontend/android` directory. Open this directory in Android Studio (version  
+Note: Alternative to building and running app via react native CLI, it can be built via Android Studio. The app is available in this repository's `./android` directory. Open this directory in Android Studio (version  
 4.1 and above) and the app can be built and run from there.
 
-More info here: [Build your app using Android Studio](https://developer.android.com/studio/run)
+More info here:
+- [Build your app using Android Studio](https://developer.android.com/studio/run)
 
-### Build via command line
-
-You need Android SDK CLI to build APK.
-
-```shell
-# 1. Install dependencies
-npm install
-
-# 2. Setup the environment variables for the keystore
-
-# Debug keystore
-export DEBUG_KEYSTORE_ALIAS=androiddebugkey
-export DEBUG_KEYSTORE_PASSWORD=android
-
-# Release keystore
-export RELEASE_KEYSTORE_ALIAS=androidreleasekey
-export RELEASE_KEYSTORE_PASSWORD=<USE-YOUR-RELEASE-PASSWORD-HERE>
-
-# https://hostname/mimoto is the Mimoto service url
-export BACKEND_SERVICE_URL=https://hostname/v1/mimoto
-
-# Build for MOSIP test
-npm run build:android:mosip
-```
-
-More info here: [Build your app from the command line](https://developer.android.com/studio/build/building-cmdline)
 
 ## Building & Running for iOS
 
-### Build for TestFlight
-
-- Install all dependencies
-
-```shell
-npm install
-npx pod-install
-```
-
-- Open the `ios/` directory in XCode
-- Set the build target to "Any iOS device (arm64)"
-- Use an Apple Developer account that can provision builds for release/TestFlight
-
-![Screen Shot 2022-09-01 at 10 34 45 AM](https://user-images.githubusercontent.com/1631922/187820476-52111665-d6b9-447c-953d-c6451d66b634.png)
-
-- Don't forget to bump the version number when creating an archive
-- Open the Product menu and from there click Archive
-- Once done you can follow the dialog wizard to distribute the app to TestFlight
-
-![Screen Shot 2022-09-01 at 1 08 34 PM](https://user-images.githubusercontent.com/1631922/187836055-617fbba8-2eca-4ad3-805b-9627b925f0df.png)
-
-- Go to your [App Store Connect](https://appstoreconnect.apple.com/) dashboard to manage the newly-uploaded build.
+Refer to the documentation of Inji Wallet's [build and deployment iOS section](https://docs.mosip.io/inji/inji-wallet/build-and-deployment#ios-build-and-run) for the steps build the iOS application.
 
 More info here:
 

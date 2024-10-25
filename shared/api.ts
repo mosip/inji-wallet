@@ -15,6 +15,7 @@ import {
   sendImpressionEvent,
 } from './telemetry/TelemetryUtils';
 import {TelemetryConstants} from './telemetry/TelemetryConstants';
+import NetInfo, {NetInfoState} from '@react-native-community/netinfo';
 
 export const API_URLS: ApiUrls = {
   trustedVerifiersList: {
@@ -257,9 +258,10 @@ async function generateCacheAPIFunctionWithAPIPreference(
     }`);
 
     console.log(error);
-
-    const response = await getItem(cacheKey, null, '');
-
+    var response=null;
+    if(!(await NetInfo.fetch()).isConnected){
+       response = await getItem(cacheKey, null, '');
+    }
     if (response) {
       return response;
     } else {
@@ -282,49 +284,25 @@ export default async function getAllConfigurations(
   return await CACHED_API.getAllProperties(isCachePreferred);
 }
 
-export async function downloadModel() {
-  try {
-    console.log('restart Face model init');
-    const injiProp = await getAllConfigurations();
-    const maxRetryStr = injiProp.modelDownloadMaxRetry;
-    const maxRetry = parseInt(maxRetryStr);
-    const resp: string = injiProp != null ? injiProp.faceSdkModelUrl : null;
-
-    if (resp != null) {
-      for (let counter = 0; counter < maxRetry; counter++) {
-        const config = faceMatchConfig(resp);
-        const result = await configure(config);
-        console.log('model download result is = ' + result);
-        if (result) {
-          sendImpressionEvent(
-            getImpressionEventData(
-              TelemetryConstants.FlowType.faceModelInit,
-              TelemetryConstants.Screens.home,
-              {status: TelemetryConstants.EndEventStatus.success},
-            ),
-          );
-          break;
-        } else if (!result && counter === maxRetry - 1) {
-          sendErrorEvent(
-            getErrorEventData(
-              TelemetryConstants.FlowType.faceModelInit,
-              TelemetryConstants.ErrorId.failure,
-              TelemetryConstants.ErrorMessage.faceModelInitFailed,
-            ),
-          );
-        }
-      }
-    }
-  } catch (error) {
+export async function initializeFaceModel() {
+  const config = faceMatchConfig();
+  const result = await configure(config);
+  if (result) {
+    sendImpressionEvent(
+      getImpressionEventData(
+        TelemetryConstants.FlowType.faceModelInit,
+        TelemetryConstants.Screens.home,
+        {status: TelemetryConstants.EndEventStatus.success},
+      ),
+    );
+  } else {
     sendErrorEvent(
       getErrorEventData(
         TelemetryConstants.FlowType.faceModelInit,
         TelemetryConstants.ErrorId.failure,
         TelemetryConstants.ErrorMessage.faceModelInitFailed,
-        error,
       ),
     );
-    console.error('Error while downloading face model - ', error);
   }
 }
 
