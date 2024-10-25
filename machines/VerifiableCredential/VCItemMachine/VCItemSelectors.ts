@@ -38,13 +38,7 @@ export function getVerifiableCredential(
   return verifiableCredential?.credential || verifiableCredential;
 }
 
-//TODO: rename as selectVerifiableCredential
-export function selectCredential(state: State): Credential {
-  return getVerifiableCredential(state.context.verifiableCredential);
-}
-
-export function selectCredential2(state: State): VerifiableCredential {
-  console.log("state.context.verifiableCredential ",state.context.verifiableCredential)
+export function selectCredential(state: State): VerifiableCredential {
   return state.context.verifiableCredential;
 }
 

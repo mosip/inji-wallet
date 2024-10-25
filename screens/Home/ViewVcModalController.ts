@@ -12,7 +12,6 @@ import {
   selectOtpError,
   selectShowWalletBindingError,
   selectVc,
-  selectCredential,
   selectVerifiableCredentialData,
   selectWalletBindingError,
   selectWalletBindingInProgress,
@@ -22,7 +21,7 @@ import {
   selectIsVerificationInProgress,
   selectShowVerificationStatusBanner,
   selectIsVerificationCompleted,
-  selectCredential2,
+  selectCredential,
 } from '../../machines/VerifiableCredential/VCItemMachine/VCItemSelectors';
 import {selectPasscode} from '../../machines/auth';
 import {biometricsMachine, selectIsSuccess} from '../../machines/biometrics';
@@ -88,7 +87,7 @@ export function useViewVcModal({vcItemActor, isVisible}: ViewVcModalProps) {
     error,
     message,
     toastVisible,
-    credential: useSelector(vcItemActor, selectCredential2),
+    credential: useSelector(vcItemActor, selectCredential),
     verifiableCredentialData: useSelector(
       vcItemActor,
       selectVerifiableCredentialData,
