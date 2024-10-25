@@ -72,6 +72,7 @@ export const ReceiveVcScreen: React.FC = () => {
               fields={fields}
               wellknown={wellknown}
               credential={credential}
+              credentialWrapper={controller.credential}
               verifiableCredentialData={verifiableCredentialData}
               isBindingPending={false}
               activeTab={1}

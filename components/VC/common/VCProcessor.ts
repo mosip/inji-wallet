@@ -2,7 +2,7 @@ import {NativeModules} from 'react-native';
 import {VerifiableCredential} from '../../../machines/VerifiableCredential/VCMetaMachine/vc';
 import {VCFormat} from '../../../shared/VCFormat';
 import {getVerifiableCredential} from '../../../machines/VerifiableCredential/VCItemMachine/VCItemSelectors';
-import { parseJSON } from '../../../shared/Utils';
+import {parseJSON} from '../../../shared/Utils';
 
 const {RNPixelpassModule} = NativeModules;
 
@@ -20,10 +20,7 @@ export class VCProcessor {
         await RNPixelpassModule.decodeBase64UrlEncodedCBORData(
           vcData.credential.toString(),
         );
-      console.log('decoded the data ', decodedString);
-      const parsedData = parseJSON(decodedString);
-      //TODO: Exclude issuerAuth to avoid bigger data?
-      return parsedData;
+      return parseJSON(decodedString);
     }
     return getVerifiableCredential(vcData);
   }
