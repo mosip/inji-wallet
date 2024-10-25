@@ -11,7 +11,6 @@ export class VCProcessor {
     vcData: VerifiableCredential,
     vcFormat: String,
   ): Promise<any> {
-    console.log('data i ', vcData);
     if (vcFormat === VCFormat.mso_mdoc) {
       if (vcData.processedCredential) {
         return vcData.processedCredential;

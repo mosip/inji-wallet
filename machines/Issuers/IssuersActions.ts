@@ -7,7 +7,6 @@ import {
   MY_VCS_STORE_KEY,
   NETWORK_REQUEST_FAILED,
   REQUEST_TIMEOUT,
-  TECHNICAL_ERROR,
   isIOS,
 } from '../../shared/constants';
 import {assign, send} from 'xstate';
@@ -258,20 +257,6 @@ export const IssuersActions = (model: any) => {
     setCredentialWrapper: model.assign({
       credentialWrapper: (_: any, event: any) => {
         return event.data;
-      },
-    }),
-    processCredential: model.assign({
-      credentialWrapper: (context: any, event: any) => {
-        const decodedData = RNPixelpassModule.decodeBase64UrlEncodedCBORData(
-          context.credentialWrapper.verifiableCredential.verifiableCredential,
-        );
-        return {
-          ...context.credentialWrapper,
-          verifiableCredential: {
-            ...context.credentialWrapper.verifiableCredential,
-            processedCredential: decodedData,
-          },
-        };
       },
     }),
     setPublicKey: assign({

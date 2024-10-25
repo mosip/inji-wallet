@@ -62,8 +62,7 @@ export type Credential = {
 
 export interface VerifiableCredential {
   issuerLogo: logoType;
-  credential: Credential; //unprocessed data
-  // verifiableCredential: Credential | string; //unprocessed data
+  credential: Credential;
   processedCredential?: object;
   wellKnown: string;
   credentialConfigurationId: string;

@@ -258,7 +258,11 @@ export const getIdType = (
   wellknown: CredentialTypes | IssuerWellknownResponse,
   credentialConfigurationId: string | undefined = undefined,
 ): string => {
-  if (wellknown && wellknown["credential_configurations_supported"]===undefined && wellknown?.display) {
+  if (
+    wellknown &&
+    wellknown['credential_configurations_supported'] === undefined &&
+    wellknown?.display
+  ) {
     const idTypeObj = wellknown.display.map((displayProps: any) => {
       return {language: displayProps.locale, value: displayProps.name};
     });
@@ -299,7 +303,6 @@ export const getIdType = (
 };
 
 export function DisplayName(props: VCItemContentProps): string | Object {
-  console.log('dislay name ', JSON.stringify(props.credential, null, 2));
   if (props.verifiableCredentialData.format === VCFormat.mso_mdoc) {
     return props.credential['issuerSigned']['nameSpaces'][
       'org.iso.18013.5.1'
