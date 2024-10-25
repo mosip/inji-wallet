@@ -13,7 +13,6 @@ configurations.all {
     all*.exclude module: 'bcprov-jdk15on'
     all*.exclude module: 'bcutil-jdk15on'
     all*.exclude module: 'titanium-json-ld'
-    all*.exclude module: 'bcpkix-jdk15on'
 }
 
 react {
