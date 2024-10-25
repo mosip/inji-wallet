@@ -62,10 +62,6 @@ export const VCCardViewContent: React.FC<VCItemContentProps> = props => {
   const {start} = useCopilot();
   const {t} = useTranslation();
 
-  useEffect(() => {
-    console.log('props.credential ', props.credential);
-  }, [props.credential]);
-
   return (
     <ImageBackground
       source={getBackgroundImage(props.wellknown, Theme.CloseCard)}

@@ -31,25 +31,23 @@ export const VCCardView: React.FC<VCItemProps> = props => {
     controller.UPDATE_VC_METADATA(props.vcMetadata);
   }, [props.vcMetadata]);
 
-
   const [fields, setFields] = useState([]);
   const [wellknown, setWellknown] = useState(null);
   const [vc, setVc] = useState(null);
 
   useEffect(() => {
     async function loadVc() {
-      if(!props.isDownloading){
-        console.log("ficontroller.credential rst",controller.credential)
+      if (!props.isDownloading) {
         const processedData = await VCProcessor.processForRendering(
           controller.credential,
-          controller.verifiableCredentialData.format
+          controller.verifiableCredentialData.format,
         );
-        setVc(processedData)
+        setVc(processedData);
       }
     }
 
-    loadVc()
-  }, [props.isDownloading, controller.credential])
+    loadVc();
+  }, [props.isDownloading, controller.credential]);
 
   useEffect(() => {
     const {

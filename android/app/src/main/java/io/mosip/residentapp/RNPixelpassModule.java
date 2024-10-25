@@ -1,4 +1,5 @@
 package io.mosip.residentapp;
+
 import io.mosip.pixelpass.PixelPass;
 import io.mosip.pixelpass.cbor.Utils;
 
@@ -8,11 +9,11 @@ import com.facebook.react.bridge.ReactMethod;
 import com.facebook.react.bridge.Promise;
 
 public class RNPixelpassModule extends ReactContextBaseJavaModule {
-     private final PixelPass pixelPass;
+    private final PixelPass pixelPass;
+
     public RNPixelpassModule(ReactApplicationContext reactContext) {
         super(reactContext);
         pixelPass = new PixelPass();
-
     }
 
     @Override
@@ -33,13 +34,9 @@ public class RNPixelpassModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public void generateQRData(String data, String header, Promise promise) {
         try {
-            System.out.println("inside the generateQRData "+data.getClass());
-            System.out.println("inside the generateQRData "+data);
-            String qrData=pixelPass.generateQRData(data,header);
-            System.out.println("success qrdata "+qrData);
+            String qrData = pixelPass.generateQRData(data, header);
             promise.resolve(qrData);
         } catch (Exception e) {
-            System.out.println("Error Error "+e);
             promise.reject("ERROR_GENERATING_QR", "Failed to generate QR Data: " + e);
         }
     }
@@ -47,8 +44,7 @@ public class RNPixelpassModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public void decodeBase64UrlEncodedCBORData(String data, Promise promise) {
         try {
-            Object decodedData= new Utils().toJson(data);
-            System.out.println("decode success from lib");
+            Object decodedData = new Utils().toJson(data);
             promise.resolve(decodedData.toString());
         } catch (Exception e) {
             promise.reject("ERROR_DECODING_DATA", "Failed to decode Data: " + e);
