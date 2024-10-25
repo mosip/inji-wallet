@@ -2,7 +2,7 @@ import {StateFrom} from 'xstate';
 import {requestMachine} from './requestMachine';
 import {VCMetadata} from '../../../shared/VCMetadata';
 import {getMosipLogo} from '../../../components/VC/common/VCUtils';
-import {Credential, VerifiableCredential} from '../../VerifiableCredential/VCMetaMachine/vc';
+import {VerifiableCredential} from '../../VerifiableCredential/VCMetaMachine/vc';
 
 type State = StateFrom<typeof requestMachine>;
 

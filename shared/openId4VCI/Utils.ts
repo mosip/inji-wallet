@@ -26,7 +26,7 @@ import {KeyTypes} from '../cryptoutil/KeyTypes';
 import {VCFormat} from '../VCFormat';
 import {UnsupportedVcFormat} from '../error/UnsupportedVCFormat';
 import {VCMetadata} from '../VCMetadata';
-import { VCProcessor } from '../../components/VC/common/VCProcessor';
+import {VCProcessor} from '../../components/VC/common/VCProcessor';
 
 export const Protocols = {
   OpenId4VCI: 'OpenId4VCI',
@@ -36,7 +36,6 @@ export const Protocols = {
 export const Issuers = {
   MosipOtp: '',
   Mosip: 'Mosip',
-  Mock: 'Mock',
 };
 
 export function getVcVerificationDetails(
@@ -98,12 +97,10 @@ export const updateCredentialInformation = async (
 ): Promise<CredentialWrapper> => {
   let processedCredential;
   if (context.selectedCredentialType.format === VCFormat.mso_mdoc) {
-    console.log(
-      'credential.credential ',
-      JSON.stringify(credential.credential),
+    processedCredential = await VCProcessor.processForRendering(
+      credential,
+      context.selectedCredentialType.format,
     );
-    console.log('credential.credential type', typeof credential.credential);
-    processedCredential = await VCProcessor.processForRendering(credential,context.selectedCredentialType.format)
   }
   const verifiableCredential = {
     ...credential,
@@ -123,10 +120,10 @@ export const updateCredentialInformation = async (
       context.selectedCredentialType.format,
     ),
     generatedOn: new Date(),
-    // TODO: Is the or check necessary?
-    vcMetadata:
-      {...context.vcMetadata, format: context.selectedCredentialType.format} ||
-      {},
+    vcMetadata: {
+      ...context.vcMetadata,
+      format: context.selectedCredentialType.format,
+    },
   };
 };
 

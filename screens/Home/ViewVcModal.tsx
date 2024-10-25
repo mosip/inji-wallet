@@ -167,7 +167,7 @@ export const ViewVcModal: React.FC<ViewVcModalProps> = props => {
           fields={fields}
           wellknown={wellknown}
           credential={verifiableCredential}
-          credentialWrapper = {controller.credential}
+          credentialWrapper={controller.credential}
           verifiableCredentialData={controller.verifiableCredentialData}
           onBinding={controller.addtoWallet}
           walletBindingResponse={controller.walletBindingResponse}
