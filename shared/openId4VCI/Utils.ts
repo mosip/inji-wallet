@@ -279,7 +279,6 @@ export enum ErrorMessage {
 }
 
 export function CredentialIdForMsoMdoc(credential: VerifiableCredential) {
-  console.log('CredentialIdForMsoMdoc ', JSON.stringify(credential, null, 2));
   try {
     const found = credential.processedCredential['issuerSigned']['nameSpaces'][
       'org.iso.18013.5.1'
