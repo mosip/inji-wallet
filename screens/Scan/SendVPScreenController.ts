@@ -11,8 +11,10 @@ import {
   selectIsSendingVPError,
 } from '../../machines/bleShare/scan/scanSelectors';
 import {
+  selectIsShowLoadingScreen,
   selectOpenID4VPRetryCount,
   selectRequestedClaimsByVerifier,
+  selectVerifierNameInVPSharing,
 } from '../../machines/openID4VP/openID4VPSelectors';
 import {OpenID4VPEvents} from '../../machines/openID4VP/openID4VPMachine';
 import {
@@ -223,7 +225,12 @@ export function useSendVPScreen() {
   }
 
   return {
-    isSendingVP,
+    isSendingVP: useSelector(openID4VPService, selectIsSharingVP),
+    showLoadingScreen: useSelector(openID4VPService, selectIsShowLoadingScreen),
+    vpVerifierName: useSelector(
+      openID4VPService,
+      selectVerifierNameInVPSharing,
+    ),
     flowType: useSelector(openID4VPService, selectFlowType),
     showConfirmationPopup,
     isSelectingVCs,
