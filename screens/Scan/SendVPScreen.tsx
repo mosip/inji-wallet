@@ -201,19 +201,33 @@ export const SendVPScreen: React.FC<ScanLayoutProps> = props => {
                 {position: 'relative'},
               ]}
               backgroundColor={Theme.Colors.whiteBackgroundColor}>
-              <Button
-                type="gradient"
-                styles={{marginTop: 12}}
-                title={t('SendVcScreen:acceptRequest')}
-                disabled={Object.keys(controller.selectedVCKeys).length === 0}
-                onPress={controller.ACCEPT_REQUEST}
-              />
-              {controller.checkIfAnyMatchingVCHasImage() && (
+              {!controller.checkIfAllVCsHasImage(
+                controller.vcsMatchingAuthRequest,
+              ) && (
+                <Button
+                  type="gradient"
+                  styles={{marginTop: 12}}
+                  title={t('SendVcScreen:acceptRequest')}
+                  disabled={
+                    Object.keys(controller.getSelectedVCs()).length === 0 ||
+                    controller.checkIfAnyVCHasImage(controller.getSelectedVCs())
+                  }
+                  onPress={controller.ACCEPT_REQUEST}
+                />
+              )}
+              {controller.checkIfAnyVCHasImage(
+                controller.vcsMatchingAuthRequest,
+              ) && (
                 <Button
                   type="gradient"
                   title={t('SendVcScreen:acceptRequestAndVerify')}
                   styles={{marginTop: 12}}
-                  disabled={Object.keys(controller.selectedVCKeys).length === 0}
+                  disabled={
+                    Object.keys(controller.getSelectedVCs()).length === 0 ||
+                    !controller.checkIfAnyVCHasImage(
+                      controller.getSelectedVCs(),
+                    )
+                  }
                   onPress={controller.VERIFY_AND_ACCEPT_REQUEST}
                 />
               )}

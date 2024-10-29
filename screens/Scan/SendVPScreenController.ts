@@ -14,6 +14,7 @@ import {
   selectIsShowLoadingScreen,
   selectOpenID4VPRetryCount,
   selectRequestedClaimsByVerifier,
+  selectSelectedVCs,
   selectVerifierNameInVPSharing,
 } from '../../machines/openID4VP/openID4VPSelectors';
 import {OpenID4VPEvents} from '../../machines/openID4VP/openID4VPMachine';
@@ -83,10 +84,20 @@ export function useSendVPScreen() {
     openID4VPService,
     selectVCsMatchingAuthRequest,
   );
-  const checkIfAnyMatchingVCHasImage = () => {
-    const hasImage = Object.values(vcsMatchingAuthRequest)
+
+  const checkIfAnyVCHasImage = vcs => {
+    const hasImage = Object.values(vcs)
       .flatMap(vc => vc)
-      .some(vc => isMosipVC(vc.vcMetadata.issuer));
+      .some(vc => {
+        return isMosipVC(vc.vcMetadata.issuer);
+      });
+    return hasImage;
+  };
+
+  const checkIfAllVCsHasImage = vcs => {
+    const hasImage = Object.values(vcs)
+      .flatMap(vc => vc)
+      .every(vc => isMosipVC(vc.vcMetadata.issuer));
     return hasImage;
   };
 
@@ -100,7 +111,6 @@ export function useSendVPScreen() {
     return selectedVcsData;
   };
 
-  const isSendingVP = useSelector(openID4VPService, selectIsSharingVP);
   const showConfirmationPopup = useSelector(
     openID4VPService,
     selectShowConfirmationPopup,
@@ -234,11 +244,14 @@ export function useSendVPScreen() {
     flowType: useSelector(openID4VPService, selectFlowType),
     showConfirmationPopup,
     isSelectingVCs,
-    checkIfAnyMatchingVCHasImage,
+    checkIfAnyVCHasImage,
+    checkIfAllVCsHasImage,
+    getSelectedVCs,
     errorModal,
     overlayDetails,
     scanScreenError: useSelector(scanService, selectIsSendingVPError),
     vcsMatchingAuthRequest,
+    userSelectedVCs: useSelector(openID4VPService, selectSelectedVCs),
     areAllVCsChecked,
     selectedVCKeys,
     isVerifyingIdentity: useSelector(
