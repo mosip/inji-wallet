@@ -34,7 +34,7 @@ fileignoreconfig:
   - filename: shared/fileStorage.ts
     checksum: 2ba2721d9722cd9420ae26762316230f7dab1a0be45820cbda4d0ecae0edf957
   - filename: screens/Issuers/IssuersScreen.tsx
-    checksum: 9c53e3770dbefe26e0de67ee4b7d5cc9c52d9823cbb136a1a5104dcb0a101071
+    checksum: 9df6ce091f535b3114dc9a2b994e863a7a97c9350967b6be8b87446788928386
   - filename: screens/Home/MyVcs/GetIdInputModal.tsx
     checksum: 5c736ed79a372d0ffa7c02eb33d0dc06edbbb08d120978ff287f5f06cd6c7746
   - filename: shared/openId4VCI/Utils.ts
@@ -192,7 +192,7 @@ fileignoreconfig:
   - filename: screens/Home/MyVcs/OtpVerificationModal.tsx
     checksum: c42e2387dfc2cc637033ae849d8b2c2fc30cabaeb77e074661cf466a8476e947
   - filename: shared/commonUtil.ts
-    checksum: e456f6aa366558e6a9b0761c752ff0a8072f25faf2d1e3ff20987a3b03d99742
+    checksum: 8c73780d7d34e6833c9032c5db02c82a8a0c3cf6f86d77c1dfe7ef1763ab9e49
   - filename: screens/Home/MyVcs/GetIdInputModal.tsx
     checksum: 1a15e4327b358ffee8bddfe412a38873ad6d4414d2b1d6bffd3c1782f5ec852f
   - filename: screens/Home/IntroSlidersScreen.tsx
@@ -248,7 +248,7 @@ fileignoreconfig:
   - filename: machines/IssuersMachine.typegen.ts
     checksum: 959fef1e51f0f3d5b12933f7b362e96401fb776ab12f0d13c6e542918b2ff255
   - filename: screens/Home/MyVcsTab.tsx
-    checksum: ccf9ca41165b35628e026e7557f6fa7771f29dae8b09324d9af93c2c9b0eca6f
+    checksum: f59c867c8f029ede26bdf3c2fe5feae92a79f9cb0c6ddd23627437765fdc4b3f
   - filename: machines/store.typegen.ts
     checksum: 077a1906c908daf79544f604632df36f3359075a7bc912e51ab5707cb178bf48
   - filename: machines/VerifiableCredential/VCMetaMachine/VCMetaMachine.ts

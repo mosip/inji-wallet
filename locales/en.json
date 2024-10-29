@@ -203,6 +203,14 @@
       "technicalDifficulty": {
         "title": "An error occurred!",
         "message": "Thanks for your patience! We're experiencing technical difficulties right now. Please try again later or contact the admin for further assistance!"
+      },
+      "verificationFailed": {
+        "title": "An Error Occurred!",
+        "goBackButton": "Go Back",
+        "ERR_ISSUANCE_DATE_IS_FUTURE_DATE": "Credential is not issued in the Past Date.",
+        "ERR_GENERIC": "Due to Technical Error, we were unable to download the card.",
+        "ERR_NETWORK": "Due to unstable internet connection, we were unable to download the card. Please check your internet connection.",
+        "ERR_MISSING_PROOF": "Proof is missing"
       }
     }
   },
@@ -411,8 +419,9 @@
       "verificationFailed": {
         "title": "An Error Occurred!",
         "goBackButton": "Go Back",
-        "technicalError": "Due to Technical Error, we were unable to download the card.",
-        "networkError": "Due to unstable internet connection, we were unable to download the card. Please check your internet connection."
+        "ERR_ISSUANCE_DATE_IS_FUTURE_DATE": "Credential is not issued in the Past Date.",
+        "ERR_GENERIC": "Due to Technical Error, we were unable to download the card.",
+        "ERR_NETWORK": "Due to unstable internet connection, we were unable to download the card. Please check your internet connection."
       }
     }
   },

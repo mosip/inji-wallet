@@ -15,16 +15,12 @@ import {
   generateKeyPair,
 } from '../../shared/cryptoutil/cryptoUtil';
 import {NativeModules} from 'react-native';
-import {
-  VerificationErrorType,
-  verifyCredential,
-} from '../../shared/vcjs/verifyCredential';
+import {verifyCredential} from '../../shared/vcjs/verifyCredential';
 import {
   getImpressionEventData,
   sendImpressionEvent,
 } from '../../shared/telemetry/TelemetryUtils';
 import {TelemetryConstants} from '../../shared/telemetry/TelemetryConstants';
-import {isMosipVC} from '../../shared/Utils';
 import {VciClient} from '../../shared/vciClient/VciClient';
 
 export const IssuersService = () => {
@@ -127,7 +123,7 @@ export const IssuersService = () => {
         context.verifiableCredential?.credential,
       );
       if (!verificationResult.isVerified) {
-        throw new Error(verificationResult.errorMessage);
+        throw new Error(verificationResult.verificationErrorCode);
       }
     },
   };

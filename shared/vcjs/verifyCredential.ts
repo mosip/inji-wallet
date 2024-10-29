@@ -69,7 +69,8 @@ export async function verifyCredential(
         case ProofType.ED25519_2020: {
           return {
             isVerified: true,
-            errorMessage: VerificationErrorType.NO_ERROR,
+            verificationMessage: VerificationErrorMessage.NO_ERROR,
+            verificationErrorCode: VerificationErrorType.NO_ERROR,
           };
         }
       }
@@ -90,12 +91,11 @@ export async function verifyCredential(
       'Error occurred while verifying the VC using digital bazaar:',
       error,
     );
-    const telemetryErrorMessage =
-      error + '-' + getMosipIdentifier(verifiableCredential.credentialSubject);
-    sendVerificationErrorEvent(telemetryErrorMessage, verifiableCredential);
+
     return {
       isVerified: false,
-      errorMessage: VerificationErrorType.TECHNICAL_ERROR,
+      verificationMessage: error.message,
+      verificationErrorCode: VerificationErrorType.GENERIC_TECHNICAL_ERROR,
     };
   }
 }
@@ -104,18 +104,21 @@ function handleResponse(
   result: any,
   verifiableCredential: VerifiableCredential | Credential,
 ) {
-  var errorMessage = VerificationErrorType.NO_ERROR;
-  var isVerifiedFlag = true;
+  let errorMessage = VerificationErrorMessage.NO_ERROR;
+  let errorCode = VerificationErrorType.NO_ERROR;
+  let isVerifiedFlag = true;
 
   if (!result?.verified) {
     let errorCodeName = result['results'][0].error.name;
-    errorMessage = VerificationErrorType.TECHNICAL_ERROR;
+    errorMessage = VerificationErrorType.GENERIC_TECHNICAL_ERROR;
     isVerifiedFlag = false;
+    errorCode = VerificationErrorType.GENERIC_TECHNICAL_ERROR;
 
     if (errorCodeName == 'jsonld.InvalidUrl') {
       errorMessage = VerificationErrorType.NETWORK_ERROR;
-    } else if (errorCodeName == VerificationErrorType.RANGE_ERROR) {
-      errorMessage = VerificationErrorType.RANGE_ERROR;
+      errorCode = VerificationErrorType.NETWORK_ERROR;
+    } else if (errorCodeName == VerificationErrorMessage.RANGE_ERROR) {
+      errorMessage = VerificationErrorMessage.RANGE_ERROR;
       const vcIdentifier = getMosipIdentifier(
         verifiableCredential.credentialSubject,
       );
@@ -123,12 +126,14 @@ function handleResponse(
         TelemetryConstants.ErrorMessage.vcVerificationFailed + vcIdentifier;
       sendVerificationErrorEvent(telemetryErrorMessage, verifiableCredential);
       isVerifiedFlag = true;
+      errorCode = VerificationErrorType.RANGE_ERROR;
     }
   }
 
   const verificationResult: VerificationResult = {
     isVerified: isVerifiedFlag,
-    errorMessage: errorMessage,
+    verificationMessage: errorMessage,
+    verificationErrorCode: errorCode,
   };
   return verificationResult;
 }
@@ -138,16 +143,21 @@ function handleVcVerifierResponse(
   verifiableCredential: VerifiableCredential | Credential,
 ): VerificationResult {
   try {
-    const isVerified = verificationResult.verificationStatus;
-    const errorMessage = verificationResult.verificationStatus
-      ? VerificationErrorType.NO_ERROR
-      : VerificationErrorType.TECHNICAL_ERROR;
-
-    //ToDo Handle Expiration scenario and showing other error message
-    return {isVerified, errorMessage};
+    if (!verificationResult.verificationStatus) {
+      const telemetryErrorMessage =
+        verificationResult.verificationMessage +
+        '-' +
+        getMosipIdentifier(verifiableCredential.credentialSubject);
+      sendVerificationErrorEvent(telemetryErrorMessage, verifiableCredential);
+    }
+    return {
+      isVerified: verificationResult.verificationStatus,
+      verificationMessage: verificationResult.verificationMessage,
+      verificationErrorCode: verificationResult.verificationErrorCode,
+    };
   } catch (error) {
     console.error(
-      'Error occured while verifying the VC using VcVerifier Library:',
+      'Error occurred while verifying the VC using VcVerifier Library:',
       error,
     );
     const telemetryErrorMessage =
@@ -155,7 +165,8 @@ function handleVcVerifierResponse(
     sendVerificationErrorEvent(telemetryErrorMessage, verifiableCredential);
     return {
       isVerified: false,
-      errorMessage: VerificationErrorType.TECHNICAL_ERROR,
+      verificationMessage: verificationResult.verificationMessage,
+      verificationErrorCode: verificationResult.verificationErrorCode,
     };
   }
 }
@@ -177,13 +188,19 @@ function sendVerificationErrorEvent(
 
 export const VerificationErrorType = {
   NO_ERROR: '',
-  TECHNICAL_ERROR: 'technicalError',
+  GENERIC_TECHNICAL_ERROR: 'ERR_GENERIC',
+  NETWORK_ERROR: 'ERR_NETWORK',
+  EXPIRATION_ERROR: 'ERR_VC_EXPIRED',
+  RANGE_ERROR: 'ERR_RANGE',
+};
+
+export const VerificationErrorMessage = {
+  NO_ERROR: '',
   RANGE_ERROR: 'RangeError',
-  NETWORK_ERROR: 'networkError',
-  EXPIRATION_ERROR: 'expirationError',
 };
 
 export interface VerificationResult {
-  errorMessage: string;
   isVerified: boolean;
+  verificationMessage: string;
+  verificationErrorCode: string;
 }

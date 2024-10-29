@@ -191,13 +191,13 @@ export const VCItemServices = model => {
       return () => clearInterval(pollInterval);
     },
 
-    verifyCredential: async context => {
+    verifyCredential: async (context: any) => {
       if (context.verifiableCredential) {
         const verificationResult = await verifyCredential(
           getVerifiableCredential(context.verifiableCredential),
         );
         if (!verificationResult.isVerified) {
-          throw new Error(verificationResult.errorMessage);
+          throw new Error(verificationResult.verificationErrorCode);
         }
       }
     },

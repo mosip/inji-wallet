@@ -30,6 +30,7 @@ public class RNVCVerifierModule extends ReactContextBaseJavaModule {
         WritableMap response = Arguments.createMap();
         response.putBoolean("verificationStatus", result.getVerificationStatus());
         response.putString("verificationMessage", result.getVerificationMessage());
+        response.putString("verificationErrorCode", result.getVerificationErrorCode());
 
         promise.resolve(response);
     }
