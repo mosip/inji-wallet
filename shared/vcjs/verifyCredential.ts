@@ -13,6 +13,7 @@ import {TelemetryConstants} from '../telemetry/TelemetryConstants';
 import {getMosipIdentifier} from '../commonUtil';
 import {NativeModules} from 'react-native';
 import {isAndroid} from '../constants';
+import {VCFormat} from '../VCFormat';
 
 // FIXME: Ed25519Signature2018 not fully supported yet.
 // Ed25519Signature2018 proof type check is not tested with its real credential
@@ -31,15 +32,25 @@ const vcVerifier = NativeModules.VCVerifierModule;
 
 export async function verifyCredential(
   verifiableCredential: Credential,
+  credentialFormat: String,
 ): Promise<VerificationResult> {
   try {
     //ToDo - Have to remove else part once Vc Verifier Library is built for Swift
     if (isAndroid()) {
       let vcVerifierResult = await vcVerifier.verifyCredentials(
         JSON.stringify(verifiableCredential),
+        credentialFormat,
       );
       return handleVcVerifierResponse(vcVerifierResult, verifiableCredential);
     } else {
+      //ToDo - Have to remove the condition once Vc Verifier Library is built for Swift to validate mso_mdoc
+      if (credentialFormat == VCFormat.mso_mdoc) {
+        return {
+          isVerified: true,
+          verificationMessage: VerificationErrorMessage.NO_ERROR,
+          verificationErrorCode: VerificationErrorType.NO_ERROR,
+        };
+      }
       let purpose: PublicKeyProofPurpose | AssertionProofPurpose;
       const proof = verifiableCredential.proof;
 
@@ -115,7 +126,7 @@ function handleResponse(
     errorCode = VerificationErrorType.GENERIC_TECHNICAL_ERROR;
 
     if (errorCodeName == 'jsonld.InvalidUrl') {
-      errorMessage = VerificationErrorType.NETWORK_ERROR;
+      errorMessage = VerificationErrorMessage.NETWORK_ERROR;
       errorCode = VerificationErrorType.NETWORK_ERROR;
     } else if (errorCodeName == VerificationErrorMessage.RANGE_ERROR) {
       errorMessage = VerificationErrorMessage.RANGE_ERROR;
@@ -197,6 +208,7 @@ export const VerificationErrorType = {
 export const VerificationErrorMessage = {
   NO_ERROR: '',
   RANGE_ERROR: 'RangeError',
+  NETWORK_ERROR: 'NetworkError',
 };
 
 export interface VerificationResult {

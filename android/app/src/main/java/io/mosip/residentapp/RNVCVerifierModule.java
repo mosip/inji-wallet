@@ -24,9 +24,9 @@ public class RNVCVerifierModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public void verifyCredentials(String vc, Promise promise) {
+    public void verifyCredentials(String vc, String format, Promise promise) {
 
-        VerificationResult result = credentialsVerifier.verify(vc, CredentialFormat.LDP_VC);
+        VerificationResult result = credentialsVerifier.verify(vc, CredentialFormat.Companion.fromValue(format));
         WritableMap response = Arguments.createMap();
         response.putBoolean("verificationStatus", result.getVerificationStatus());
         response.putString("verificationMessage", result.getVerificationMessage());
