@@ -34,13 +34,14 @@
 "verifyCredential": "done.invoke.issuersMachine.verifyingCredential:invocation[0]";
         };
         missingImplementations: {
-          actions: "getKeyPairFromStore" | "loadKeyPair" | "logDownloaded" | "resetError" | "resetIsVerified" | "resetLoadingReason" | "resetSelectedCredentialType" | "resetVerificationErrorMessage" | "sendBackupEvent" | "sendDownloadingFailedToVcMeta" | "sendErrorEndEvent" | "sendImpressionEvent" | "sendSuccessEndEvent" | "setCredentialWrapper" | "setError" | "setFetchWellknownError" | "setIsVerified" | "setIssuers" | "setLoadingReasonAsDisplayIssuers" | "setLoadingReasonAsDownloadingCredentials" | "setLoadingReasonAsSettingUp" | "setMetadataInCredentialData" | "setNoInternet" | "setOIDCConfigError" | "setPrivateKey" | "setPublicKey" | "setSelectedCredentialType" | "setSelectedIssuerId" | "setSelectedIssuers" | "setSupportedCredentialTypes" | "setTokenResponse" | "setVCMetadata" | "setVerifiableCredential" | "storeKeyPair" | "storeVcMetaContext" | "storeVcsContext" | "storeVerifiableCredentialData" | "storeVerifiableCredentialMeta" | "updateIssuerFromWellknown" | "updateVerificationErrorMessage";
+          actions: "downloadIssuerWellknown" | "getKeyPairFromStore" | "loadKeyPair" | "logDownloaded" | "resetError" | "resetIsVerified" | "resetLoadingReason" | "resetSelectedCredentialType" | "resetVerificationErrorMessage" | "sendBackupEvent" | "sendDownloadingFailedToVcMeta" | "sendErrorEndEvent" | "sendImpressionEvent" | "sendSuccessEndEvent" | "setCredentialTypeListDownloadFailureError" | "setCredentialWrapper" | "setError" | "setFetchWellknownError" | "setIsVerified" | "setIssuers" | "setLoadingReasonAsDisplayIssuers" | "setLoadingReasonAsDownloadingCredentials" | "setLoadingReasonAsSettingUp" | "setMetadataInCredentialData" | "setNoInternet" | "setOIDCConfigError" | "setPrivateKey" | "setPublicKey" | "setSelectedCredentialType" | "setSelectedIssuerId" | "setSelectedIssuers" | "setSupportedCredentialTypes" | "setTokenResponse" | "setVCMetadata" | "setVerifiableCredential" | "storeKeyPair" | "storeVcMetaContext" | "storeVcsContext" | "storeVerifiableCredentialData" | "storeVerifiableCredentialMeta" | "updateIssuerFromWellknown" | "updateVerificationErrorMessage";
           delays: never;
           guards: "canSelectIssuerAgain" | "hasKeyPair" | "hasUserCancelledBiometric" | "isCustomSecureKeystore" | "isGenericError" | "isInternetConnected" | "isOIDCConfigError" | "isOIDCflowCancelled" | "isSignedIn" | "isVerificationPendingBecauseOfNetworkIssue" | "shouldFetchIssuersAgain";
           services: "checkInternet" | "downloadCredential" | "downloadCredentialTypes" | "downloadIssuerWellknown" | "downloadIssuersList" | "generateKeyPair" | "invokeAuthorization" | "isUserSignedAlready" | "verifyCredential";
         };
         eventsCausingActions: {
-          "getKeyPairFromStore": "TRY_AGAIN" | "done.invoke.issuersMachine.performAuthorization:invocation[0]";
+          "downloadIssuerWellknown": "TRY_AGAIN";
+"getKeyPairFromStore": "TRY_AGAIN" | "done.invoke.issuersMachine.performAuthorization:invocation[0]";
 "loadKeyPair": "STORE_RESPONSE";
 "logDownloaded": "done.invoke.issuersMachine.verifyingCredential:invocation[0]" | "error.platform.issuersMachine.verifyingCredential:invocation[0]";
 "resetError": "RESET_ERROR" | "TRY_AGAIN" | "error.platform.issuersMachine.performAuthorization:invocation[0]";
@@ -53,8 +54,9 @@
 "sendErrorEndEvent": "error.platform.issuersMachine.verifyingCredential:invocation[0]";
 "sendImpressionEvent": "done.invoke.issuersMachine.displayIssuers:invocation[0]";
 "sendSuccessEndEvent": "done.invoke.issuersMachine.verifyingCredential:invocation[0]";
+"setCredentialTypeListDownloadFailureError": "error.platform.issuersMachine.downloadCredentialTypes:invocation[0]";
 "setCredentialWrapper": "done.invoke.issuersMachine.downloadCredentials:invocation[0]";
-"setError": "error.platform.issuersMachine.displayIssuers:invocation[0]" | "error.platform.issuersMachine.downloadCredentialTypes:invocation[0]" | "error.platform.issuersMachine.downloadCredentials:invocation[0]" | "error.platform.issuersMachine.performAuthorization:invocation[0]";
+"setError": "error.platform.issuersMachine.displayIssuers:invocation[0]" | "error.platform.issuersMachine.downloadCredentials:invocation[0]" | "error.platform.issuersMachine.performAuthorization:invocation[0]";
 "setFetchWellknownError": "error.platform.issuersMachine.downloadIssuerWellknown:invocation[0]";
 "setIsVerified": "done.invoke.issuersMachine.verifyingCredential:invocation[0]";
 "setIssuers": "done.invoke.issuersMachine.displayIssuers:invocation[0]";

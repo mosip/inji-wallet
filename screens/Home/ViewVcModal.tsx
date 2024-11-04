@@ -72,7 +72,9 @@ export const ViewVcModal: React.FC<ViewVcModalProps> = props => {
       <Row align="space-between">
         <HelpScreen
           triggerComponent={
+            <LinearGradient style={{borderRadius: 8, marginRight:4}} colors={Theme.Colors.GradientColorsLight} start={Theme.LinearGradientDirection.start} end={Theme.LinearGradientDirection.end}><View testID="help"></View>
             <View style={Theme.Styles.IconContainer}>{SvgImage.questionIcon()}</View>
+            </LinearGradient>
           }
         />
         {isVCLoaded(controller.credential, fields) ? (
