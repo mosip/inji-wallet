@@ -61,6 +61,7 @@ export const SendVPScreen: React.FC<ScanLayoutProps> = props => {
       props.navigation.setOptions({
         headerShown: true,
         title: t('SendVPScreen:requester'),
+        headerTitleAlign: 'center',
         headerTitle: props => (
           <View style={Theme.Styles.sendVPHeaderContainer}>
             <Text style={Theme.Styles.sendVPHeaderTitle}>{props.children}</Text>
