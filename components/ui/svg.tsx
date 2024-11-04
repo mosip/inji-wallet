@@ -1,6 +1,6 @@
 import React from 'react';
-import Svg, {Image} from 'react-native-svg';
-import {Theme} from './styleUtils';
+import Svg, { Image } from 'react-native-svg';
+import { Theme } from './styleUtils';
 import Home from '../../assets/Home_tab_icon.svg';
 import History from '../../assets/History_tab_icon.svg';
 import ShareWithSelfie from '../../assets/Share_with_selfie.svg';
@@ -13,10 +13,7 @@ import WalletActivatedIcon from '../../assets/Wallet_Activated_Icon.svg';
 import WalletActivatedLargeIcon from '../../assets/Wallet_Activated_Large_Icon.svg';
 import WalletUnActivatedIcon from '../../assets/Wallet_UnActivated_Icon.svg';
 import WalletUnActivatedLargeIcon from '../../assets/Wallet_UnActivated_Large_Icon.svg';
-import InjiSmallLogo from '../../assets/Inji_Logo.svg';
-import InjiLogoNewBranding from '../../assets/InjiLogoNewBranding.svg'
 import LockIcon from '../../assets/Lock_Icon1.svg';
-import InjiLogo from '../../assets/InjiHomeLogo.svg';
 import DigitalIdentity from '../../assets/Digital_Identity_Icon1.svg';
 import ReceiveCard from '../../assets/Receive_Card.svg';
 import ReceivedCards from '../../assets/Received_Cards.svg';
@@ -39,10 +36,9 @@ import GoogleDriveIcon from '../../assets/Gdrive_Logo.svg';
 import GoogleDriveIconSmall from '../../assets/google-drive-28.svg';
 import ICloudLogo from '../../assets/Icloud-Logo.svg';
 import KebabIcon from '../../assets/Detailed_view_kebab_icon.svg';
-import {displayType} from '../../machines/Issuers/IssuersMachine';
-import {IssuerProps} from '../openId4VCI/Issuer';
+import { displayType } from '../../machines/Issuers/IssuersMachine';
+import { IssuerProps } from '../openId4VCI/Issuer';
 import Backup from '../../assets/Backup.svg';
-import Restore from '../../assets/Restore.svg';
 import PermissionDenied from '../../assets/Permission_Denied.svg';
 import OutlinedShieldedIcon from '../../assets/Outlined_Shielded_Icon.svg';
 import OutlinedPinIcon from '../../assets/Outlined_Pin_Icon.svg';
@@ -56,40 +52,45 @@ import Search from '../../assets/Search.svg';
 import CloudUploadDoneIcon from '../../assets/Cloud_Upload_Done_Icon.svg';
 import SettingsLanguage from '../../assets/Language_Icon.svg'
 import SettingsBiometric from '../../assets/biometric_unlock.svg'
-import SettingsAboutInji from '../../assets/legal_notices_icon.svg'
+import SettingsAboutInji from '../../assets/about_inji.svg'
 import SettingsBackup from '../../assets/cloud_upload.svg'
 import SettingsLogOut from '../../assets/logout_icon.svg'
 import RestoreIcon from '../../assets/restoreIconBackup.svg'
 import QuestionIcon from '../../assets/questionIcon.svg'
 import CopyIcon from '../../assets/file_copy.svg'
 import StarIcon from '../../assets/credentialRegestryStar.svg'
-
 export class SvgImage {
   static copyIcon(): React.ReactNode {
-   return <CopyIcon/>
+    return <CopyIcon color1={Theme.Colors.linearIconGradientStart}
+    color2={Theme.Colors.linearIconGradientEnd} />
   }
   static questionIcon() {
-   return <QuestionIcon/>
+    return <QuestionIcon color1={Theme.Colors.linearIconGradientStart}
+    color2={Theme.Colors.linearIconGradientEnd}/>
   }
   static logOutIcon(): any {
-    return <SettingsLogOut/>
+    return <SettingsLogOut color1={Theme.Colors.linearIconGradientStart}
+    color2={Theme.Colors.linearIconGradientEnd} />
   }
 
   static restoreIcon(): any {
-    return <RestoreIcon/>
+    return <RestoreIcon  color1={Theme.Colors.linearIconGradientStart}
+    color2={Theme.Colors.linearIconGradientEnd}/>
   }
 
-  static starIcon(){
-    return <StarIcon/>
+  static starIcon() {
+    return <StarIcon color1={Theme.Colors.linearIconGradientStart}
+    color2={Theme.Colors.linearIconGradientEnd}/>
   }
 
   static MosipLogo(props: LogoProps) {
-    const {width, height} = props;
+    const { width, height } = props;
     return <Logo width={width} height={height} />;
   }
 
   static kebabIcon(testId: string) {
-    return <KebabIcon {...testIDProps(testId)} />;
+    return <KebabIcon {...testIDProps(testId)} color1={Theme.Colors.linearIconGradientStart}
+    color2={Theme.Colors.linearIconGradientEnd} />;
   }
 
   static walletActivatedIcon() {
@@ -257,7 +258,8 @@ export class SvgImage {
   }
 
   static InjiSmallLogo() {
-    return <InjiLogoNewBranding {...testIDProps('injiSmallLogo')} />;
+    const InjiLogoSmall=Theme.InjiLogoSmall
+    return <InjiLogoSmall {...testIDProps('injiSmallLogo')} />;
   }
 
 
@@ -277,20 +279,19 @@ export class SvgImage {
       <LockIcon
         color1={Theme.Colors.linearGradientStart}
         color2={Theme.Colors.linearGradientEnd}
-        style={{alignSelf: 'center'}}
+        style={{ alignSelf: 'center' }}
       />
     );
   }
 
   static InjiLogo(props: LogoProps) {
-    return (
-      <InjiLogo
-        color1={Theme.Colors.linearGradientStart}
-        color2={Theme.Colors.linearGradientEnd}
-        width={props.width}
-        height={props.height}
-      />
-    );
+    const InjiLogo=Theme.HomeScreenLogo
+    return <InjiLogo 
+    color1={Theme.Colors.linearGradientStart}
+    color2={Theme.Colors.linearGradientEnd}
+    width={props.width}
+    height={props.height}
+    {...testIDProps('injiLogo')}/>
   }
 
   static DigitalIdentity() {
@@ -353,7 +354,7 @@ export class SvgImage {
   }
 
   static FlipCameraIcon() {
-    const {width, height} = Theme.CameraEnabledStyles.cameraFlipIcon;
+    const { width, height } = Theme.CameraEnabledStyles.cameraFlipIcon;
     return (
       <FlipCameraIcon
         {...testIDProps('flipCameraIcon')}
@@ -445,8 +446,8 @@ export class SvgImage {
   static coloredInfo() {
     return (
       <ColoredInfo
-        color1={Theme.Colors.GradientColors[0]}
-        color2={Theme.Colors.GradientColors[1]}
+        color1={Theme.Colors.linearIconGradientStart}
+        color2={Theme.Colors.linearIconGradientEnd}
         {...testIDProps('coloredInfoIcon')}
       />
     );
@@ -517,25 +518,29 @@ export class SvgImage {
     return <Search {...testIDProps('searchIcon')} />;
   }
 
-  static settingsLanguageIcon(size){
-  return <SettingsLanguage width={size} height={size}/>
+  static settingsLanguageIcon(size) {
+    return <SettingsLanguage width={size} height={size} color1={Theme.Colors.linearIconGradientStart}
+      color2={Theme.Colors.linearIconGradientEnd} />
   }
 
-  static fingerprintIcon(size?: number | undefined){
-    return <SettingsBiometric height={size} width={size}/>
-    }
-
-  static abotInjiIcon(){
-    return <SettingsAboutInji/>
+  static fingerprintIcon(size?: number | undefined) {
+    return <SettingsBiometric height={size} width={size} color1={Theme.Colors.linearIconGradientStart}
+    color2={Theme.Colors.linearIconGradientEnd} />
   }
-  
-  static backUpAndRestoreIcon(height: number,width: number){
-    return <SettingsBackup height={height} width={width}/>
+
+  static abotInjiIcon() {
+    return <SettingsAboutInji color1={Theme.Colors.linearIconGradientStart}
+    color2={Theme.Colors.linearIconGradientEnd}/>
+  }
+
+  static backUpAndRestoreIcon(height: number, width: number) {
+    return <SettingsBackup height={height} width={width} color1={Theme.Colors.linearIconGradientStart}
+    color2={Theme.Colors.linearIconGradientEnd} />
   }
 }
 
 function getIssuerLogo(props: displayType) {
-  return {uri: props.logo.url};
+  return { uri: props.logo.url };
 }
 
 interface LogoProps {

@@ -9,7 +9,8 @@ import {
 import {Spacing} from '../styleUtils';
 import {COPILOT_HEIGHT, isIOS} from '../../../shared/constants';
 import Constants from 'expo-constants';
-
+import HomeScreenLogo from '../../../assets/InjiHomeLogo.svg'
+import InjiLogoSmall from '../../../assets/InjiLogo.svg'
 const Colors = {
   Black: '#000000',
   Zambezi: '#5F5F5F',
@@ -138,6 +139,8 @@ export const DefaultTheme = {
     chevronRightColor: Colors.Grey,
     linearGradientStart: Colors.startColor,
     linearGradientEnd: Colors.endColor,
+    linearIconGradientStart: Colors.startColor,
+    linearIconGradientEnd: Colors.endColor,
     LinearGradientStroke: Colors.stroke,
     warningLogoBgColor: Colors.warningLogoBg,
     tooltipIcon: Colors.toolTip,
@@ -234,7 +237,6 @@ export const DefaultTheme = {
       width: Dimensions.get('window').width * 0.12,
       height: Dimensions.get('window').height * 0.045,
       borderRadius: 6,
-      backgroundColor: Colors.LightOrange,
     },
     homeScreenContainer: {
       alignItems: 'center',
@@ -467,14 +469,13 @@ export const DefaultTheme = {
     },
     IconContainer: {
       padding: 6,
-      width: 36,
+      width: 25,
       marginRight: 4,
       marginLeft: 10,
       alignItems: 'center',
       justifyContent: 'center',
       height: 36,
       borderRadius: 10,
-      backgroundColor: Colors.LightOrange,
     },
     imageCaptureButton: {
       marginLeft: 130,
@@ -485,7 +486,6 @@ export const DefaultTheme = {
       width: 36,
       height: 36,
       borderRadius: 10,
-      backgroundColor: Colors.LightOrange,
     },
     receiveCardsContainer: {
       height: Dimensions.get('window').height * 0.14,
@@ -686,11 +686,8 @@ export const DefaultTheme = {
       paddingHorizontal: 24,
     },
     newLabel: {
-      backgroundColor: Colors.Orange,
       paddingHorizontal: 5,
-      paddingVertical: 4,
       maxHeight: 20,
-      marginTop: 10,
       borderRadius: 4,
       fontSize: 10,
       fontFamily: 'Inter_700Bold',
@@ -843,7 +840,7 @@ export const DefaultTheme = {
       flex: 1,
       fontSize: 33,
       fontFamily: 'Inter_600SemiBold',
-      height: 60,
+      height: 40,
       lineHeight: 28,
       margin: 8,
       textAlign: 'center',
@@ -1522,7 +1519,6 @@ export const DefaultTheme = {
   HelpScreenStyle: StyleSheet.create({
     viewStyle: {
       borderRadius: 8,
-      backgroundColor: Colors.LightOrange,
       justifyContent: 'center',
       alignItems: 'center',
       paddingLeft: 16,
@@ -1664,6 +1660,8 @@ export const DefaultTheme = {
   IntroShare: require('../../../assets/quickAccess.png'),
   IntroBackup: require('../../../assets/backupRestoreIntro.png'),
   IntroSliderbackground: require('../../../assets/IntroBg.png'),
+  HomeScreenLogo: HomeScreenLogo,
+  InjiLogoSmall: InjiLogoSmall,
   elevation(level: ElevationLevel): ViewStyle {
     // https://ethercreative.github.io/react-native-shadow-generator/
 
@@ -1705,6 +1703,10 @@ export const DefaultTheme = {
       [`${type}Start`]: start != null ? start : end != null ? end : top,
     };
   },
+  LinearGradientDirection: {
+    start: {x:0.5,y:0.5},
+    end: {x:1,y:0.5}
+  }
 };
 
 function generateBoxShadowStyle() {

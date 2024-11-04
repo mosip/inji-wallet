@@ -88,8 +88,8 @@ export const Button: React.FC<ButtonProps> = props => {
         colors: !props.disabled
           ? Theme.Colors.GradientColors
           : Theme.Colors.DisabledColors,
-          start: { x: 0.5, y: 0.5 },
-          end: { x: 1, y: 0.5 },
+          start: Theme.LinearGradientDirection.start,
+          end: Theme.LinearGradientDirection.end,
           
       }}
       containerStyle={[

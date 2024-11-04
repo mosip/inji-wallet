@@ -61,7 +61,7 @@ export const AboutInji: React.FC<AboutInjiProps> = ({appId}) => {
           setShowAboutInji(!showAboutInji);
         }}>
         <BannerNotificationContainer />
-        <LinearGradient colors={Theme.Colors.GradientColorsLight} start={{x:0.5 ,y:0.5}} end={{x:1, y:0.5}}>
+        <LinearGradient colors={Theme.Colors.GradientColorsLight} start={Theme.LinearGradientDirection.start} end={Theme.LinearGradientDirection.end}>
         <Row
           testID="appID"
           crossAlign="flex-start"
