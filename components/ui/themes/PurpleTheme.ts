@@ -9,6 +9,8 @@ import {
 import {Spacing} from '../styleUtils';
 import {COPILOT_HEIGHT, isIOS} from '../../../shared/constants';
 import Constants from 'expo-constants';
+import HomeScreenLogo from '../../../assets/Inji_Home_Logo.svg';
+import InjiLogoSmall  from '../../../assets/InjiLogo.svg'
 
 const Colors = {
   Black: '#231F20',
@@ -45,7 +47,7 @@ const Colors = {
   plainText: '#F3E2FF',
   walletbindingLabel: '#000000',
   GradientColors: ['#373086', '#70308C'],
-  GradientColorsLight:['#373086', '#70308C'],
+  GradientColorsLight:['#F3E2FF', '#F3E2FF'],
   DisabledColors: ['#C7C7C7', '#C7C7C7'],
   captureIconBorder: '#F59B4B',
   Purple: '#70308C',
@@ -138,6 +140,8 @@ export const PurpleTheme = {
     chevronRightColor: Colors.Grey,
     linearGradientStart: Colors.startColor,
     linearGradientEnd: Colors.endColor,
+    linearIconGradientStart: Colors.startColor,
+    linearIconGradientEnd: Colors.startColor,
     LinearGradientStroke: Colors.stroke,
     warningLogoBgColor: Colors.warningLogoBg,
     tooltipIcon: Colors.tooltip,
@@ -469,7 +473,9 @@ export const PurpleTheme = {
     },
     IconContainer: {
       padding: 6,
-      width: 36,
+      width: 24,
+      alignItems: 'center',
+      justifyContent: 'center',
       marginRight: 4,
       marginLeft: 10,
       height: 36,
@@ -855,7 +861,7 @@ export const PurpleTheme = {
       flex: 1,
       fontFamily: 'Inter_700Bold',
       fontSize: 29,
-      height: 60,
+      height: 40,
       margin: 8,
       textAlign: 'center',
     },
@@ -1658,7 +1664,9 @@ export const PurpleTheme = {
   DigitalWallet: require('../../../assets/Intro_Wallet.png'),
   IntroShare: require('../../../assets/Intro_Share.png'),
   IntroBackup: require('../../../assets/Intro_Backup.png'),
-  IntroSliderbackground: require('../../../assets/Gradient-1.svg'),
+  IntroSliderbackground: require('../../../assets/IntroSliderBackgroundPurple.png'),
+  HomeScreenLogo: HomeScreenLogo,
+  InjiLogoSmall:InjiLogoSmall,
   elevation(level: ElevationLevel): ViewStyle {
     // https://ethercreative.github.io/react-native-shadow-generator/
 
@@ -1700,6 +1708,10 @@ export const PurpleTheme = {
       [`${type}Start`]: start != null ? start : end != null ? end : top,
     };
   },
+  LinearGradientDirection:{
+    start: {x:0.5,y:0.5},
+    end: {x:0.5,y:1}
+  }
 };
 
 function generateBoxShadowStyle() {
