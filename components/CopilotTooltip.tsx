@@ -55,7 +55,7 @@ export const CopilotTooltip = () => {
             <Button
               testID={`${controller.CURRENT_STEP}done`}
               title={t('done')}
-              type="solid"
+              type="gradient"
               styles={Theme.Styles.copilotButton}
               onPress={controller.stop}
             />
@@ -63,7 +63,7 @@ export const CopilotTooltip = () => {
             <Button
               testID={`${controller.CURRENT_STEP}next`}
               title={t('next')}
-              type="solid"
+              type="gradient"
               styles={Theme.Styles.copilotButton}
               onPress={controller.goToNext}
             />

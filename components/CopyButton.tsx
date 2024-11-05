@@ -7,6 +7,7 @@ import {Row, Text} from './ui';
 import {useTranslation} from 'react-i18next';
 import testIDProps from '../shared/commonUtil';
 import i18next from '../i18n';
+import { SvgImage } from './ui/svg';
 
 export const CopyButton: React.FC<CopyButtonProps> = ({content}) => {
   const {t} = useTranslation('common');
@@ -21,14 +22,7 @@ export const CopyButton: React.FC<CopyButtonProps> = ({content}) => {
         Clipboard.setString(content);
       }}>
       <Row>
-        <Icon
-          {...testIDProps('fileCopyIcon')}
-          type={'material'}
-          name={'file-copy'}
-          color={Theme.Colors.Icon}
-          style={{marginRight: 2}}
-          size={19}
-        />
+        {SvgImage.copyIcon()}
         <Text
           testID={`${buttonText}Text`}
           weight="semibold"

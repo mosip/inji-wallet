@@ -93,6 +93,7 @@ export const ScanScreen: React.FC = () => {
 
         <Button
           testID="enableBluetoothButton"
+          type='gradient'
           title={t('enableBluetoothButtonText')}
           onPress={openSettings}
         />
@@ -113,6 +114,7 @@ export const ScanScreen: React.FC = () => {
         </Centered>
 
         <Button
+          type='gradient'
           testID="allowNearbyDevicesPermissionButton"
           title={t('errors.nearbyDevicesPermissionDenied.button')}
           onPress={openSettings}
@@ -135,6 +137,7 @@ export const ScanScreen: React.FC = () => {
 
         <Button
           testID="enableLocationServicesButton"
+          type='gradient'
           title={scanScreenController.locationError.button}
           onPress={scanScreenController.LOCATION_REQUEST}
         />

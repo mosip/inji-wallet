@@ -166,7 +166,7 @@ export const HelpScreen: React.FC<HelpScreenProps> = props => {
           {getTextField(
             t('answers.inji.seven'),
             getLinkedText(
-              injiHelpUrl + '/end-user-guide#downloading-vc',
+              injiHelpUrl + '/functional-overview/end-user-guide#downloading-vc',
               t('here'),
             ),
           )}
@@ -186,7 +186,7 @@ export const HelpScreen: React.FC<HelpScreenProps> = props => {
           {getTextField(
             t('answers.inji.nine'),
             getLinkedText(
-              injiHelpUrl + '/end-user-guide#activating-a-vc',
+              injiHelpUrl + '/functional-overview/end-user-guide#activating-a-vc',
               t('here'),
             ),
           )}
