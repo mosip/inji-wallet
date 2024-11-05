@@ -363,6 +363,7 @@ export const VCItemActions = model => {
             ? TelemetryConstants.FlowType.vcActivationFromKebab
             : TelemetryConstants.FlowType.vcActivation,
           TelemetryConstants.EndEventStatus.success,
+          {"Activation key":context.vcMetadata?.downloadKeyType}
         ),
       ),
 
