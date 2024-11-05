@@ -2,7 +2,7 @@ fileignoreconfig:
   - filename: package.json
     checksum: 5b4fcb5ddc7cc96cc2d1733b544d56ea66e88cdab995a1052fbf9ac0e9c2dc21
   - filename: package-lock.json
-    checksum: 9881b52e355224afaba17ea81f1c6850aa2005dc0c758ced41e26186e4bc2472
+    checksum: ff50406b126500d05370d03da3bf9d36ef529b3551cd42c9fed318d5d6d088f7
   - filename: lib/jsonld-signatures/suites/ed255192018/ed25519.ts
     checksum: 493b6e31144116cb612c24d98b97d8adcad5609c0a52c865a6847ced0a0ddc3a
   - filename: components/PasscodeVerify.tsx
@@ -341,7 +341,7 @@ fileignoreconfig:
   - filename: android/app/src/main/java/io/mosip/residentapp/InjiVciClientModule.java
     checksum: 17f55840bab193bc353034445ba4fce53e1ce466e95f616c15a1351f8d2f23bc
   - filename: ios/Inji.xcworkspace/xcshareddata/swiftpm/Package.resolved
-    checksum: 2d0a5899777bff2ff8412e4931e0b1087e44f63047a2e3525e82eda0dfe8791c
+    checksum: 7a90c456ff14e4b637ea6a4aa3c6d197bc89452238d303af0f4a15bccc5e2be2
   - filename: injitest/src/main/resources/Vids.json
     checksum: 8bcffed7a6dd565ae695e1b29de0655e10bd5c5420af2718defd593a687b8817
   - filename: injitest/src/main/java/inji/utils/UpdateNetworkSettings.java     
@@ -375,7 +375,7 @@ fileignoreconfig:
   - filename: components/FaceScanner/LivenessDetection.tsx
     checksum: d4140a42ee9ca0f7c90e490f762d181a723fd9dd20db891cbbe53bfbd8f81632
   - filename: machines/VerifiableCredential/VCItemMachine/VCItemActions.ts       
-    checksum: 7aa78ee8918954bf4e7607c96042ccdf0d31faee9a627fef8a23aaa8492d66bb
+    checksum: bc11e275227ccf93c5e869b47bb2b63454758983b8fc0e105004fefa1b169091
   - filename: machines/app.ts
     checksum: 5da59bb384d04e29c7745d773108903fa144275c57edc1aca1898fcae7baea84
   - filename: shared/cryptoutil/signFormatConverter.ts
@@ -392,4 +392,6 @@ fileignoreconfig:
     checksum: f898ac7f1ecfa1df17e33b327d675f57debf2d5bd56052fc047dd03577354590
   - filename: machines/openID4VP/openID4VPMachine.typegen.ts
     checksum: a87664e146d420fb3140a0f6579980aaf82041928b502f8b301b4ebff048351c
+  - filename: ios/RNOpenID4VPModule.swift
+    checksum: 4bd3c69556b86024cd15490deafb0d8c6b760ebcfc486f68da5575d63b315d14
     version: ""
