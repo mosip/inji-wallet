@@ -11,6 +11,7 @@ import com.facebook.react.bridge.ReactMethod;
 import com.facebook.react.bridge.ReadableArray;
 import com.facebook.react.bridge.ReadableMap;
 import com.facebook.react.bridge.ReadableMapKeySetIterator;
+import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -18,9 +19,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 import io.mosip.openID4VP.OpenID4VP;
+import io.mosip.openID4VP.authorizationRequest.AuthorizationRequest;
 import io.mosip.openID4VP.dto.VPResponseMetadata;
 import io.mosip.openID4VP.dto.Verifier;
 
@@ -43,17 +44,18 @@ public class InjiOpenID4VPModule extends ReactContextBaseJavaModule {
         Log.d("InjiOpenID4VPModule", "Initializing InjiOpenID4VPModule with " + appId);
         openID4VP = new OpenID4VP(appId);
         gson = new GsonBuilder()
-                    .disableHtmlEscaping()
-                    .create();
+                .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
+                .disableHtmlEscaping()
+                .create();
     }
 
     @ReactMethod
     public void authenticateVerifier(String encodedAuthorizationRequest, ReadableArray trustedVerifiers,
             Promise promise) {
         try {
-            Map<String, String> authenticationResponse = openID4VP.authenticateVerifier(encodedAuthorizationRequest,
+            AuthorizationRequest authenticationResponse = openID4VP.authenticateVerifier(encodedAuthorizationRequest,
                     convertReadableArrayToVerifierArray(trustedVerifiers));
-            String authenticationResponseAsJson = gson.toJson(authenticationResponse, Map.class);
+            String authenticationResponseAsJson = gson.toJson(authenticationResponse, AuthorizationRequest.class);
             promise.resolve(authenticationResponseAsJson);
         } catch (Exception exception) {
             promise.reject(exception);
@@ -94,6 +96,11 @@ public class InjiOpenID4VPModule extends ReactContextBaseJavaModule {
         } catch (Exception exception) {
             promise.reject(exception);
         }
+    }
+
+    @ReactMethod
+    public void sendErrorToVerifier(String errorMessage) {
+        openID4VP.sendErrorToVerifier(new Exception(errorMessage));
     }
 
     private VPResponseMetadata getVPResponseMetadata(ReadableMap vpResponseMetadata) throws IllegalArgumentException {

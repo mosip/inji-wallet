@@ -26,6 +26,7 @@ import {BackupEvents} from '../../backupAndRestore/backup';
 import {VcMetaEvents} from '../VCMetaMachine/VCMetaMachine';
 import {WalletBindingResponse} from '../VCMetaMachine/vc';
 import {BannerStatusType} from '../../../components/BannerNotification';
+import {VCActivityLog} from '../../../components/ActivityLogEvent';
 
 export const VCItemActions = model => {
   return {
@@ -452,16 +453,18 @@ export const VCItemActions = model => {
     logDownloaded: send(
       (context: any) => {
         const {serviceRefs, ...data} = context;
-        return ActivityLogEvents.LOG_ACTIVITY({
-          _vcKey: context.vcMetadata.getVcKey(),
-          type: 'VC_DOWNLOADED',
-          id: context.vcMetadata.displayId,
-          issuer: context.vcMetadata.issuer!!,
-          credentialConfigurationId:
-            context.verifiableCredential.credentialConfigurationId,
-          timestamp: Date.now(),
-          deviceName: '',
-        });
+        return ActivityLogEvents.LOG_ACTIVITY(
+          VCActivityLog.getLogFromObject({
+            _vcKey: context.vcMetadata.getVcKey(),
+            type: 'VC_DOWNLOADED',
+            id: context.vcMetadata.displayId,
+            issuer: context.vcMetadata.issuer!!,
+            credentialConfigurationId:
+              context.verifiableCredential.credentialConfigurationId,
+            timestamp: Date.now(),
+            deviceName: '',
+          }),
+        );
       },
       {
         to: context => context.serviceRefs.activityLog,
@@ -470,16 +473,18 @@ export const VCItemActions = model => {
     logRemovedVc: send(
       (context: any, _) => {
         const vcMetadata = VCMetadata.fromVC(context.vcMetadata);
-        return ActivityLogEvents.LOG_ACTIVITY({
-          credentialConfigurationId:
-            context.verifiableCredential.credentialConfigurationId,
-          issuer: vcMetadata.issuer!!,
-          id: vcMetadata.displayId,
-          _vcKey: vcMetadata.getVcKey(),
-          type: 'VC_REMOVED',
-          timestamp: Date.now(),
-          deviceName: '',
-        });
+        return ActivityLogEvents.LOG_ACTIVITY(
+          VCActivityLog.getLogFromObject({
+            credentialConfigurationId:
+              context.verifiableCredential.credentialConfigurationId,
+            issuer: vcMetadata.issuer!!,
+            id: vcMetadata.displayId,
+            _vcKey: vcMetadata.getVcKey(),
+            type: 'VC_REMOVED',
+            timestamp: Date.now(),
+            deviceName: '',
+          }),
+        );
       },
       {
         to: context => context.serviceRefs.activityLog,
@@ -488,16 +493,18 @@ export const VCItemActions = model => {
     logWalletBindingSuccess: send(
       (context: any) => {
         const vcMetadata = VCMetadata.fromVC(context.vcMetadata);
-        return ActivityLogEvents.LOG_ACTIVITY({
-          _vcKey: vcMetadata.getVcKey(),
-          type: 'WALLET_BINDING_SUCCESSFULL',
-          credentialConfigurationId:
-            context.verifiableCredential.credentialConfigurationId,
-          issuer: vcMetadata.issuer!!,
-          id: vcMetadata.displayId,
-          timestamp: Date.now(),
-          deviceName: '',
-        });
+        return ActivityLogEvents.LOG_ACTIVITY(
+          VCActivityLog.getLogFromObject({
+            _vcKey: vcMetadata.getVcKey(),
+            type: 'WALLET_BINDING_SUCCESSFULL',
+            credentialConfigurationId:
+              context.verifiableCredential.credentialConfigurationId,
+            issuer: vcMetadata.issuer!!,
+            id: vcMetadata.displayId,
+            timestamp: Date.now(),
+            deviceName: '',
+          }),
+        );
       },
       {
         to: context => context.serviceRefs.activityLog,
@@ -507,16 +514,18 @@ export const VCItemActions = model => {
     logWalletBindingFailure: send(
       (context: any) => {
         const vcMetadata = VCMetadata.fromVC(context.vcMetadata);
-        return ActivityLogEvents.LOG_ACTIVITY({
-          _vcKey: vcMetadata.getVcKey(),
-          type: 'WALLET_BINDING_FAILURE',
-          id: vcMetadata.displayId,
-          credentialConfigurationId:
-            context.verifiableCredential.credentialConfigurationId,
-          issuer: vcMetadata.issuer!!,
-          timestamp: Date.now(),
-          deviceName: '',
-        });
+        return ActivityLogEvents.LOG_ACTIVITY(
+          VCActivityLog.getLogFromObject({
+            _vcKey: vcMetadata.getVcKey(),
+            type: 'WALLET_BINDING_FAILURE',
+            id: vcMetadata.displayId,
+            credentialConfigurationId:
+              context.verifiableCredential.credentialConfigurationId,
+            issuer: vcMetadata.issuer!!,
+            timestamp: Date.now(),
+            deviceName: '',
+          }),
+        );
       },
       {
         to: context => context.serviceRefs.activityLog,

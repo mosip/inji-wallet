@@ -63,7 +63,7 @@ export const VCCardView: React.FC<VCItemProps> = props => {
   }, [verifiableCredentialData?.wellKnown]);
 
   if (!isVCLoaded(controller.credential, fields)) {
-    return <VCCardSkeleton flow={props.flow} />;
+    return <VCCardSkeleton />;
   }
 
   const CardViewContent = props => (

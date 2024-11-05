@@ -29,5 +29,8 @@ export const openID4VPGuards = () => {
         );
       return !!hasImage;
     },
+
+    isFaceVerificationRetryAttempt: (context: any) =>
+      context.isFaceVerificationRetryAttempt,
   };
 };
