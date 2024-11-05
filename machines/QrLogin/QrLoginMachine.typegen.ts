@@ -17,7 +17,7 @@
 "sendConsent": "done.invoke.QrLogin.sendingConsent:invocation[0]";
         };
         missingImplementations: {
-          actions: "SetErrorMessage" | "expandLinkTransResp" | "forwardToParent" | "getFaceAuthConsent" | "loadMyVcs" | "loadThumbprint" | "resetFlowType" | "resetIsQrLoginViaDeepLink" | "resetLinkTransactionId" | "resetSelectedVc" | "resetSelectedVoluntaryClaims" | "setClaims" | "setConsentClaims" | "setLinkedTransactionId" | "setMyVcs" | "setScanData" | "setSelectedVc" | "setShowFaceAuthConsent" | "setThumbprint" | "setlinkTransactionResponse" | "storeShowFaceAuthConsent" | "updateShowFaceAuthConsent";
+          actions: "SetErrorMessage" | "expandLinkTransResp" | "forwardToParent" | "getFaceAuthConsent" | "loadMyVcs" | "loadThumbprint" | "resetFlowType" | "resetLinkTransactionId" | "resetSelectedVc" | "resetSelectedVoluntaryClaims" | "setClaims" | "setConsentClaims" | "setLinkedTransactionId" | "setMyVcs" | "setScanData" | "setSelectedVc" | "setShowFaceAuthConsent" | "setThumbprint" | "setlinkTransactionResponse" | "storeShowFaceAuthConsent" | "updateShowFaceAuthConsent";
           delays: never;
           guards: "isConsentAlreadyCaptured" | "isSimpleShareFlow" | "showFaceAuthConsentScreen";
           services: "linkTransaction" | "sendAuthenticate" | "sendConsent";
@@ -30,7 +30,6 @@
 "loadMyVcs": "done.invoke.QrLogin.linkTransaction:invocation[0]";
 "loadThumbprint": "FACE_VALID";
 "resetFlowType": "xstate.init";
-"resetIsQrLoginViaDeepLink": "error.platform.QrLogin.linkTransaction:invocation[0]" | "error.platform.QrLogin.sendingAuthenticate:invocation[0]" | "error.platform.QrLogin.sendingConsent:invocation[0]" | "xstate.init";
 "resetLinkTransactionId": "GET";
 "resetSelectedVc": "xstate.init";
 "resetSelectedVoluntaryClaims": "GET";
