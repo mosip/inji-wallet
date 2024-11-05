@@ -208,7 +208,13 @@
         "goBackButton": "Bumalik ka",
         "ERR_GENERIC": "Dahil sa Technical Error, hindi namin na-download ang card.",
         "ERR_NETWORK": "Dahil sa hindi matatag na koneksyon sa internet, hindi namin na-download ang card. Pakisuri ang iyong koneksyon sa internet.",
-        "ERR_ISSUANCE_DATE_IS_FUTURE_DATE": "Credential is not issued in the Past Date."
+        "ERR_MISSING_ISSUANCEDATE": "Ang petsa ng pag-isyu ay hindi wasto o nakatakda sa hinaharap. Tingnan kung may wastong petsa.",
+        "ERR_INVALID_ISSUANCEDATE": "Ang petsa ng pag-isyu ay hindi wasto o nakatakda sa hinaharap. Tingnan kung may wastong petsa.",
+        "ERR_ISSUANCE_DATE_IS_FUTURE_DATE": "Ang petsa ng pag-isyu ay hindi wasto o nakatakda sa hinaharap. Tingnan kung may wastong petsa.",
+        "ERR_INVALID_EXPIRATIONDATE": "Ang petsa ng pag-expire ay hindi wasto. Tingnan kung may wastong petsa.",
+        "ERR_INVALID_VALIDFROM": "Ang petsa ay hindi wasto o nakatakda sa hinaharap. Tingnan kung may wastong petsa.",
+        "ERR_VALID_FROM_IS_FUTURE_DATE": "Ang petsa ay hindi wasto o nakatakda sa hinaharap. Tingnan kung may wastong petsa.",
+        "ERR_INVALID_VALIDUNTIL": "Di-wasto ang petsa. Tingnan kung may wastong petsa."
       }
     }
   },
@@ -418,7 +424,13 @@
         "goBackButton": "Bumalik ka",
         "ERR_GENERIC": "Dahil sa Technical Error, hindi namin na-download ang card.",
         "ERR_NETWORK": "Dahil sa hindi matatag na koneksyon sa internet, hindi namin na-download ang card. Pakisuri ang iyong koneksyon sa internet.",
-        "ERR_ISSUANCE_DATE_IS_FUTURE_DATE": "Credential is not issued in the Past Date."
+        "ERR_MISSING_ISSUANCEDATE": "Ang petsa ng pag-isyu ay hindi wasto o nakatakda sa hinaharap. Tingnan kung may wastong petsa.",
+        "ERR_INVALID_ISSUANCEDATE": "Ang petsa ng pag-isyu ay hindi wasto o nakatakda sa hinaharap. Tingnan kung may wastong petsa.",
+        "ERR_ISSUANCE_DATE_IS_FUTURE_DATE": "Ang petsa ng pag-isyu ay hindi wasto o nakatakda sa hinaharap. Tingnan kung may wastong petsa.",
+        "ERR_INVALID_EXPIRATIONDATE": "Ang petsa ng pag-expire ay hindi wasto. Tingnan kung may wastong petsa.",
+        "ERR_INVALID_VALIDFROM": "Ang petsa ay hindi wasto o nakatakda sa hinaharap. Tingnan kung may wastong petsa.",
+        "ERR_VALID_FROM_IS_FUTURE_DATE": "Ang petsa ay hindi wasto o nakatakda sa hinaharap. Tingnan kung may wastong petsa.",
+        "ERR_INVALID_VALIDUNTIL": "Di-wasto ang petsa. Tingnan kung may wastong petsa."
       }
     }
   },
