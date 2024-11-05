@@ -1,6 +1,6 @@
 import {send} from 'xstate';
 import {respond} from 'xstate/lib/actions';
-import {ActivityLog} from '../../../components/ActivityLogEvent';
+import {VCActivityLog} from '../../../components/ActivityLogEvent';
 import {VCMetadata, parseMetadatas} from '../../../shared/VCMetadata';
 import {
   MY_VCS_STORE_KEY,
@@ -195,7 +195,19 @@ export const VCMetaActions = (model: any) => {
     ),
 
     logTamperedVCsremoved: send(
-      context => ActivityLogEvents.LOG_ACTIVITY(ActivityLog.logTamperedVCs()),
+      () =>
+        ActivityLogEvents.LOG_ACTIVITY(
+          VCActivityLog.getLogFromObject({
+            _vcKey: '',
+            type: 'TAMPERED_VC_REMOVED',
+            timestamp: Date.now(),
+            deviceName: '',
+            vcLabel: '',
+            issuer: '',
+            id: '',
+            credentialConfigurationId: '',
+          }),
+        ),
       {
         to: (context: any) => context.serviceRefs.activityLog,
       },
@@ -221,8 +233,7 @@ export const VCMetaActions = (model: any) => {
       DownloadingCredentialsFailed: () => false,
     }),
     setDownloadCredentialsSuccess: model.assign({
-      DownloadingCredentialsSuccess: () => true
-      
+      DownloadingCredentialsSuccess: () => true,
     }),
     resetDownloadCredentialsSuccess: model.assign({
       DownloadingCredentialsSuccess: () => false,

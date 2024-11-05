@@ -2,7 +2,7 @@ fileignoreconfig:
   - filename: package.json
     checksum: 5b4fcb5ddc7cc96cc2d1733b544d56ea66e88cdab995a1052fbf9ac0e9c2dc21
   - filename: package-lock.json
-    checksum: fcd20d64976458ad10ec4421a3603c8350538e76c700d0494e58488371c1a566
+    checksum: 9881b52e355224afaba17ea81f1c6850aa2005dc0c758ced41e26186e4bc2472
   - filename: lib/jsonld-signatures/suites/ed255192018/ed25519.ts
     checksum: 493b6e31144116cb612c24d98b97d8adcad5609c0a52c865a6847ced0a0ddc3a
   - filename: components/PasscodeVerify.tsx
@@ -34,19 +34,21 @@ fileignoreconfig:
   - filename: shared/fileStorage.ts
     checksum: 2ba2721d9722cd9420ae26762316230f7dab1a0be45820cbda4d0ecae0edf957
   - filename: screens/Issuers/IssuersScreen.tsx
-    checksum: 9df6ce091f535b3114dc9a2b994e863a7a97c9350967b6be8b87446788928386
+    checksum: 9c53e3770dbefe26e0de67ee4b7d5cc9c52d9823cbb136a1a5104dcb0a101071
   - filename: screens/Home/MyVcs/GetIdInputModal.tsx
     checksum: 5c736ed79a372d0ffa7c02eb33d0dc06edbbb08d120978ff287f5f06cd6c7746
   - filename: shared/openId4VCI/Utils.ts
-    checksum: 78064475b5e6d1559fecdbc77bd489037f7791a9ea5c78af5c62adde3b712684
+    checksum: 78473ce25cd52c8d07da9ba98683bdb64ae83a9de8fa907c62f2ebeca7dd21dc
   - filename: shared/cryptoutil/cryptoUtil.ts
-    checksum: 89731825893414bc11b13195034d1bd7c1f70b3b9e146f7a27bc3495648c35e7
+    checksum: 281f061ae6eb722c75c2caf2bdfb5b1bf72f292b471318d972c898c5a972c65f
   - filename: shared/telemetry/TelemetryConstants.js
-    checksum: 9b289550d3d05965cf580b71b467832834962eeda949da89d7ad9b335475879f
+    checksum: fd8dc3a69cdef68855dc5f0531d8e634bfa2621bb4dc22f85b8247512a349c4c
   - filename: shared/telemetry/TelemetryUtils.js
     checksum: a0686e9a5c006176fd720b84bc36ca947db1422caf65c90cd0c2d1102a9e96df
   - filename: ios/fastlane/Fastfile
     checksum: a4e3772dc67a07ecbcfc58be0d6d4f7fa799cec7ac25bd269ac29459c8669ca4
+  - filename: machines/bleShare/request/requestMachine.ts
+    checksum: 23a560448f0b79f7cc399f042501c7517e9e341eff3d6f671fa3c892e030a0cc
   - filename: machines/bleShare/scan/scanMachine.ts
     checksum: 5f4a183db610fe0ffe36e3e1129d67221535335e4a866341a5b8759228ddee15
   - filename: screens/PasscodeScreen.tsx
@@ -298,7 +300,7 @@ fileignoreconfig:
   - filename: machines/QrLogin/QrLoginServices.ts
     checksum: 0eee865344c9e15722bac2307b5dd6025fd809233b71456472609d578c9a365a
   - filename: machines/bleShare/scan/scanActions.ts
-    checksum: e32e1be4a02f9247844771293e5fc285bd6e1bfd3f0451a6bbc5bd171931b6f2
+    checksum: 2472d41c4e4638f2958d5d088cfc280e11798b9c0627f15ecbc6c583e2d4155c
   - filename: injitest/src/test/java/iosTestCases/ActivateVcTest.java
     checksum: 280fcbfa6e7b26baa41aa9e60e8be857a16fd409f2dcc5b31d53ced7d1b26dec
   - filename: injitest/src/test/java/iosTestCases/GenerateUinOrVidTest.java
@@ -373,7 +375,7 @@ fileignoreconfig:
   - filename: components/FaceScanner/LivenessDetection.tsx
     checksum: d4140a42ee9ca0f7c90e490f762d181a723fd9dd20db891cbbe53bfbd8f81632
   - filename: machines/VerifiableCredential/VCItemMachine/VCItemActions.ts       
-    checksum: f80ddb68b1e2b6007fea090ee9a20bcbc079e67194a421c420f7acf345258955
+    checksum: 7aa78ee8918954bf4e7607c96042ccdf0d31faee9a627fef8a23aaa8492d66bb
   - filename: machines/app.ts
     checksum: 5da59bb384d04e29c7745d773108903fa144275c57edc1aca1898fcae7baea84
   - filename: shared/cryptoutil/signFormatConverter.ts
@@ -389,5 +391,5 @@ fileignoreconfig:
   - filename: screens/Scan/SendVPScreenController.ts
     checksum: f898ac7f1ecfa1df17e33b327d675f57debf2d5bd56052fc047dd03577354590
   - filename: machines/openID4VP/openID4VPMachine.typegen.ts
-    checksum: 986c2743bba3554068c1cf52e6f3e7b1762699e62dab6f971a6f796e2ea3eb81
+    checksum: a87664e146d420fb3140a0f6579980aaf82041928b502f8b301b4ebff048351c
     version: ""
