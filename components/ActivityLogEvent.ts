@@ -2,6 +2,7 @@ import {formatDistanceToNow} from 'date-fns';
 import {getIdType} from './VC/common/VCUtils';
 import * as DateFnsLocale from 'date-fns/locale';
 import {VCItemContainerFlowType} from '../shared/Utils';
+import {TFunction} from 'react-i18next';
 
 export type ActivityLogType =
   | '' // replacement for undefined
@@ -22,7 +23,7 @@ export type ActivityLogType =
   | 'TAMPERED_VC_REMOVED';
 
 export interface ActivityLog {
-  getActionText(t: any, wellknown: Object | undefined);
+  getActionText(t: TFunction, wellknown: Object | undefined);
 }
 
 export class VCActivityLog implements ActivityLog {
@@ -57,7 +58,7 @@ export class VCActivityLog implements ActivityLog {
     this.flow = flow;
   }
 
-  getActionText(t: any, wellknown: Object | undefined) {
+  getActionText(t: TFunction, wellknown: Object | undefined) {
     if (!!this.credentialConfigurationId && wellknown) {
       const cardType = getIdType(wellknown, this.credentialConfigurationId);
       return `${t(this.type, {idType: cardType, id: this.id})}`;
