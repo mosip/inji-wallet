@@ -2,6 +2,7 @@ import {formatDistanceToNow} from 'date-fns';
 import {ActivityLog} from './ActivityLogEvent';
 import * as DateFnsLocale from 'date-fns/locale';
 import {VCItemContainerFlowType, VCShareFlowType} from '../shared/Utils';
+import {TFunction} from 'react-i18next';
 
 export type VPActivityLogType =
   | '' // replacement for undefined
@@ -39,7 +40,7 @@ export class VPShareActivityLog implements ActivityLog {
     this.info = info;
   }
 
-  getActionText(t: any) {
+  getActionText(t: TFunction) {
     return `${t('ActivityLogText:vpSharing:' + this.type, {info: this.info})}`;
   }
 
