@@ -38,7 +38,9 @@ export async function verifyCredential(
     //ToDo - Have to remove else part once Vc Verifier Library is built for Swift
     if (isAndroid()) {
       let vcVerifierResult = await vcVerifier.verifyCredentials(
-        JSON.stringify(verifiableCredential),
+        typeof verifiableCredential === 'string'
+          ? verifiableCredential
+          : JSON.stringify(verifiableCredential),
         credentialFormat,
       );
       return handleVcVerifierResponse(vcVerifierResult, verifiableCredential);
@@ -155,6 +157,10 @@ function handleVcVerifierResponse(
 ): VerificationResult {
   try {
     if (!verificationResult.verificationStatus) {
+      verificationResult.verificationErrorCode =
+        verificationResult.verificationErrorCode === ''
+          ? VerificationErrorType.GENERIC_TECHNICAL_ERROR
+          : verificationResult.verificationErrorCode;
       const telemetryErrorMessage =
         verificationResult.verificationMessage +
         '-' +
