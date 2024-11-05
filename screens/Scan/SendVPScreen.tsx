@@ -90,7 +90,7 @@ export const SendVPScreen: React.FC<ScanLayoutProps> = props => {
           ),
       });
     }
-  }, [controller.showLoadingScreen]);
+  }, [controller.showLoadingScreen, controller.vpVerifierName]);
 
   if (controller.showLoadingScreen) {
     return (
