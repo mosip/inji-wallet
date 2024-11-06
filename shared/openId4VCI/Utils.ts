@@ -68,27 +68,24 @@ export const getIdentifier = (
   credential: VerifiableCredential,
   format: string,
 ) => {
+  let credentialIdentifier = '';
   if (format === VCFormat.mso_mdoc) {
-    return (
-      context.selectedIssuer.credential_issuer +
-      ':' +
-      context.selectedIssuer.protocol +
-      ':' +
-      CredentialIdForMsoMdoc(credential)
-    );
-  } else {
-    const credentialIdentifier = credential.credential.id;
-    const credId = credentialIdentifier.startsWith('did')
+    credentialIdentifier = credential?.processedCredential?.['id'] ?? '';
+  } else if (typeof credential.credential !== 'string') {
+    credentialIdentifier = credential.credential.id;
+  }
+  const credId =
+    credentialIdentifier.startsWith('did') ||
+    credentialIdentifier.startsWith('urn:')
       ? credentialIdentifier.split(':')
       : credentialIdentifier.split('/');
-    return (
-      context.selectedIssuer.credential_issuer +
-      ':' +
-      context.selectedIssuer.protocol +
-      ':' +
-      credId[credId.length - 1]
-    );
-  }
+  return (
+    context.selectedIssuer.credential_issuer +
+    ':' +
+    context.selectedIssuer.protocol +
+    ':' +
+    credId[credId.length - 1]
+  );
 };
 
 export const updateCredentialInformation = async (
