@@ -26,7 +26,7 @@ import {NativeModules} from 'react-native';
 import {KeyTypes} from '../../shared/cryptoutil/KeyTypes';
 import {VCActivityLog} from '../../components/ActivityLogEvent';
 
-const {RNSecureKeystoreModule, RNPixelpassModule} = NativeModules;
+const {RNSecureKeystoreModule} = NativeModules;
 export const IssuersActions = (model: any) => {
   return {
     setIsVerified: assign({
