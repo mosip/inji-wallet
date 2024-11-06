@@ -15,13 +15,18 @@ import {
   generateKeyPair,
 } from '../../shared/cryptoutil/cryptoUtil';
 import {NativeModules} from 'react-native';
-import {verifyCredential} from '../../shared/vcjs/verifyCredential';
+import {
+  VerificationErrorMessage,
+  VerificationErrorType,
+  verifyCredential,
+} from '../../shared/vcjs/verifyCredential';
 import {
   getImpressionEventData,
   sendImpressionEvent,
 } from '../../shared/telemetry/TelemetryUtils';
 import {TelemetryConstants} from '../../shared/telemetry/TelemetryConstants';
 import {VciClient} from '../../shared/vciClient/VciClient';
+import {isMockVC} from '../../shared/Utils';
 
 export const IssuersService = () => {
   return {
@@ -119,12 +124,21 @@ export const IssuersService = () => {
     },
 
     verifyCredential: async (context: any) => {
-      const verificationResult = await verifyCredential(
-        context.verifiableCredential?.credential,
-        context.selectedCredentialType.format,
-      );
-      if (!verificationResult.isVerified) {
-        throw new Error(verificationResult.verificationErrorCode);
+      //TODO: Remove bypassing verification of mock VCs once mock VCs are verifiable
+      if (!isMockVC(context.selectedIssuerId)) {
+        const verificationResult = await verifyCredential(
+          context.verifiableCredential?.credential,
+          context.selectedCredentialType.format,
+        );
+        if (!verificationResult.isVerified) {
+          throw new Error(verificationResult.verificationErrorCode);
+        }
+      } else {
+        return {
+          isVerified: true,
+          verificationMessage: VerificationErrorMessage.NO_ERROR,
+          verificationErrorCode: VerificationErrorType.NO_ERROR,
+        };
       }
     },
   };

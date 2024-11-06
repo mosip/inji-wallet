@@ -34,7 +34,6 @@ import fileStorage from './fileStorage';
 import {DocumentDirectoryPath, ReadDirItem} from 'react-native-fs';
 import {verifyCredential} from './vcjs/verifyCredential';
 import {Credential} from '../machines/VerifiableCredential/VCMetaMachine/vc';
-import {isMosipVC} from './Utils';
 
 export const MMKV = new MMKVLoader().initialize();
 const {RNSecureKeystoreModule} = NativeModules;
