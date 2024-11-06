@@ -126,35 +126,34 @@ export const VCDetailView: React.FC<VCItemDetailsProps> = props => {
                   )}
                 </Column>
               </Row>
-              {shouldShowHrLine(verifiableCredential) && (
-                <>
-                  <View
-                    style={[
-                      Theme.Styles.hrLine,
-                      {
-                        borderBottomColor: getTextColor(
-                          props.wellknown,
-                          Theme.Styles.hrLine.borderBottomColor,
-                        ),
-                      },
-                    ]}></View>
-                  <Column padding="0 14 14 14">
-                    {fieldItemIterator(
+              <>
+                <View
+                  style={[
+                    Theme.Styles.hrLine,
+                    {
+                      borderBottomColor: getTextColor(
+                        props.wellknown,
+                        Theme.Styles.hrLine.borderBottomColor,
+                      ),
+                    },
+                  ]}></View>
+                <Column padding="0 14 14 14">
+                  {shouldShowHrLine(verifiableCredential) &&
+                    fieldItemIterator(
                       DETAIL_VIEW_BOTTOM_SECTION_FIELDS,
                       verifiableCredential,
                       props.wellknown,
                       props,
                     )}
-                    <VCItemField
-                      key={'keyTypeVcDetailView'}
-                      fieldName={KEY_TYPE_FIELD}
-                      fieldValue={props.keyType}
-                      verifiableCredential={verifiableCredential}
-                      testID={'keyTypeVcDetailView'}
-                    />
-                  </Column>
-                </>
-              )}
+                  <VCItemField
+                    key={'keyTypeVcDetailView'}
+                    fieldName={KEY_TYPE_FIELD}
+                    fieldValue={props.keyType}
+                    verifiableCredential={verifiableCredential}
+                    testID={'keyTypeVcDetailView'}
+                  />
+                </Column>
+              </>
             </ImageBackground>
           </Column>
         </Column>
