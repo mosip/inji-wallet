@@ -79,6 +79,10 @@ export async function verifyCredential(
           suite = new Ed25519Signature2018(suiteOptions);
           break;
         }
+        /*
+        Since Digital Bazaar library is not able to verify ProofType: "Ed25519Signature2020",
+        defaulting it to return true until VcVerifier is implemented for iOS.
+         */
         case ProofType.ED25519_2020: {
           return {
             isVerified: true,
