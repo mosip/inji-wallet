@@ -317,13 +317,14 @@ class Storage {
 
   private static async verifyCredential(
     verifiableCredential: Credential,
-    issuer: string,
+    format: string,
   ) {
     let isVerified = true;
-    if (isMosipVC(issuer)) {
-      const verificationResult = await verifyCredential(verifiableCredential);
-      isVerified = verificationResult.isVerified;
-    }
+    const verificationResult = await verifyCredential(
+      verifiableCredential,
+      format,
+    );
+    isVerified = verificationResult.isVerified;
     return isVerified;
   }
 
@@ -345,7 +346,7 @@ class Storage {
 
           const isVerified = await Storage.verifyCredential(
             vc.verifiableCredential?.credential || vc.verifiableCredential,
-            vc.vcMetadata.issuer,
+            vc.vcMetadata.format,
           );
           vc.vcMetadata.timestamp = ts;
           vc.vcMetadata.isVerified = isVerified;

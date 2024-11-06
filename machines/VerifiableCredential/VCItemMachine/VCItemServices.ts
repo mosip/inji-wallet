@@ -15,6 +15,7 @@ import {verifyCredential} from '../../../shared/vcjs/verifyCredential';
 import {getVerifiableCredential} from './VCItemSelectors';
 import {getMatchingCredentialIssuerMetadata} from '../../../shared/openId4VCI/Utils';
 import {isIOS} from '../../../shared/constants';
+import {VCMetadata} from '../../../shared/VCMetadata';
 
 const {RNSecureKeystoreModule} = NativeModules;
 export const VCItemServices = model => {
@@ -191,13 +192,14 @@ export const VCItemServices = model => {
       return () => clearInterval(pollInterval);
     },
 
-    verifyCredential: async context => {
+    verifyCredential: async (context: any) => {
       if (context.verifiableCredential) {
         const verificationResult = await verifyCredential(
           getVerifiableCredential(context.verifiableCredential),
+          (context.vcMetadata as VCMetadata).format,
         );
         if (!verificationResult.isVerified) {
-          throw new Error(verificationResult.errorMessage);
+          throw new Error(verificationResult.verificationErrorCode);
         }
       }
     },

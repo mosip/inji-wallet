@@ -2,7 +2,7 @@ fileignoreconfig:
   - filename: package.json
     checksum: 5b4fcb5ddc7cc96cc2d1733b544d56ea66e88cdab995a1052fbf9ac0e9c2dc21
   - filename: package-lock.json
-    checksum: 9881b52e355224afaba17ea81f1c6850aa2005dc0c758ced41e26186e4bc2472
+    checksum: e448b633936de692ebdbadfac3a5a1ae3c2a2a55a8cc3ea7440bd5ec1dd9cef5
   - filename: lib/jsonld-signatures/suites/ed255192018/ed25519.ts
     checksum: 493b6e31144116cb612c24d98b97d8adcad5609c0a52c865a6847ced0a0ddc3a
   - filename: components/PasscodeVerify.tsx
@@ -66,7 +66,7 @@ fileignoreconfig:
   - filename: assets/Finger_Print_Icon.svg
     checksum: 776d4fe4fc4b54d185ccf97daf0511b9fe2c0e0f7c1a809047020e5e8a100db6
   - filename: screens/MainLayout.tsx
-    checksum: 53ead79279c9609e42a8993db1a66bdb4649e1ae3b909d462b45b00c507c416e
+    checksum: dd31361997111c28461239e986112a30ee986e99432ac3016033508863b90ddd
   - filename: android/app/build.gradle
     checksum: 251ac12b49cf226d40931a02eb1b362a1d29e74cfe8f7a60ed128d66b0fea838
   - filename: .github/workflows/push-triggers.yml
@@ -194,7 +194,7 @@ fileignoreconfig:
   - filename: screens/Home/MyVcs/OtpVerificationModal.tsx
     checksum: c42e2387dfc2cc637033ae849d8b2c2fc30cabaeb77e074661cf466a8476e947
   - filename: shared/commonUtil.ts
-    checksum: e456f6aa366558e6a9b0761c752ff0a8072f25faf2d1e3ff20987a3b03d99742
+    checksum: 8c73780d7d34e6833c9032c5db02c82a8a0c3cf6f86d77c1dfe7ef1763ab9e49
   - filename: screens/Home/MyVcs/GetIdInputModal.tsx
     checksum: 1a15e4327b358ffee8bddfe412a38873ad6d4414d2b1d6bffd3c1782f5ec852f
   - filename: screens/Home/IntroSlidersScreen.tsx
@@ -250,7 +250,7 @@ fileignoreconfig:
   - filename: machines/IssuersMachine.typegen.ts
     checksum: 959fef1e51f0f3d5b12933f7b362e96401fb776ab12f0d13c6e542918b2ff255
   - filename: screens/Home/MyVcsTab.tsx
-    checksum: ccf9ca41165b35628e026e7557f6fa7771f29dae8b09324d9af93c2c9b0eca6f
+    checksum: f59c867c8f029ede26bdf3c2fe5feae92a79f9cb0c6ddd23627437765fdc4b3f
   - filename: machines/store.typegen.ts
     checksum: 077a1906c908daf79544f604632df36f3359075a7bc912e51ab5707cb178bf48
   - filename: machines/VerifiableCredential/VCMetaMachine/VCMetaMachine.ts
@@ -328,7 +328,7 @@ fileignoreconfig:
   - filename: injitest/src/test/java/iosTestCases/VcDownloadAndVerifyUsingUinTest.java
     checksum: a6feabb768e2d97dfb0a1693f09d839686ce6be686523cf273b2d3ce614b34fd
   - filename: machines/Issuers/IssuersMachine.typegen.ts
-    checksum: 581e73b10471735aa6415590b0f01f6c9b503a196d3fca450a4c2a9e647487d3
+    checksum: a00a77539eaafacf58f25b08c03bae9e36f312407754ee2e7d700b32828d90b3
   - filename: injitest/src/test/java/iosTestCases/DeletingVcTest.java
     checksum: 0816d4b9440da5384fd867d13555986d223124b9609280350226510a06ae96fa
   - filename: machines/VerifiableCredential/VCItemMachine/VCItemMachine.ts
@@ -341,7 +341,7 @@ fileignoreconfig:
   - filename: android/app/src/main/java/io/mosip/residentapp/InjiVciClientModule.java
     checksum: 17f55840bab193bc353034445ba4fce53e1ce466e95f616c15a1351f8d2f23bc
   - filename: ios/Inji.xcworkspace/xcshareddata/swiftpm/Package.resolved
-    checksum: 2d0a5899777bff2ff8412e4931e0b1087e44f63047a2e3525e82eda0dfe8791c
+    checksum: 7a90c456ff14e4b637ea6a4aa3c6d197bc89452238d303af0f4a15bccc5e2be2
   - filename: injitest/src/main/resources/Vids.json
     checksum: 8bcffed7a6dd565ae695e1b29de0655e10bd5c5420af2718defd593a687b8817
   - filename: injitest/src/main/java/inji/utils/UpdateNetworkSettings.java     
@@ -375,7 +375,7 @@ fileignoreconfig:
   - filename: components/FaceScanner/LivenessDetection.tsx
     checksum: d4140a42ee9ca0f7c90e490f762d181a723fd9dd20db891cbbe53bfbd8f81632
   - filename: machines/VerifiableCredential/VCItemMachine/VCItemActions.ts       
-    checksum: 7aa78ee8918954bf4e7607c96042ccdf0d31faee9a627fef8a23aaa8492d66bb 
+    checksum: bc11e275227ccf93c5e869b47bb2b63454758983b8fc0e105004fefa1b169091
   - filename: machines/app.ts
     checksum: 5da59bb384d04e29c7745d773108903fa144275c57edc1aca1898fcae7baea84
   - filename: shared/cryptoutil/signFormatConverter.ts
@@ -392,4 +392,10 @@ fileignoreconfig:
     checksum: f898ac7f1ecfa1df17e33b327d675f57debf2d5bd56052fc047dd03577354590
   - filename: machines/openID4VP/openID4VPMachine.typegen.ts
     checksum: a87664e146d420fb3140a0f6579980aaf82041928b502f8b301b4ebff048351c
+  - filename: ios/RNOpenID4VPModule.swift
+    checksum: 4bd3c69556b86024cd15490deafb0d8c6b760ebcfc486f68da5575d63b315d14
+  - filename: assets/InjiHomeLogoSmall.svg
+    checksum: 9f29c9b0b91eba7fd7f5f4d1f78f9b6f96ef2c850c1346d712058a438d01036a
+  - filename: assets/InjiHomeLogo.svg
+    checksum: 6600a3d75033af4d702dd8c9663e12ad7c2c096a529bac2771bb856cc75a5ed0
     version: ""

@@ -3,6 +3,7 @@ import {I18nManager, TouchableOpacity} from 'react-native';
 import {Icon} from 'react-native-elements';
 import testIDProps from '../../../shared/commonUtil';
 import {Theme} from '../styleUtils';
+import LinearGradient from 'react-native-linear-gradient';
 
 export const BackButton: React.FC<BackButtonProps> = (
   props: BackButtonProps,
@@ -15,14 +16,20 @@ export const BackButton: React.FC<BackButtonProps> = (
       onPress={props.onPress}
       {...testIDProps('goBack')}
       style={{zIndex: 1}}>
-      <Icon
-        {...testIDProps('arrow-left')}
-        name={I18nManager.isRTL ? 'arrow-right' : 'arrow-left'}
-        type="material-community"
-        onPress={props.onPress}
-        containerStyle={containerStyle}
-        color={Theme.Colors.Icon}
-      />
+      <LinearGradient
+        start={Theme.LinearGradientDirection.start}
+        end={Theme.LinearGradientDirection.end}
+        colors={Theme.Colors.GradientColorsLight}
+        style={{borderRadius: 10}}>
+        <Icon
+          {...testIDProps('arrow-left')}
+          name={I18nManager.isRTL ? 'arrow-right' : 'arrow-left'}
+          type="material-community"
+          onPress={props.onPress}
+          containerStyle={containerStyle}
+          color={Theme.Colors.Icon}
+        />
+      </LinearGradient>
     </TouchableOpacity>
   );
 };

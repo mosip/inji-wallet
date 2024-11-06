@@ -220,6 +220,19 @@
       "technicalDifficulty": {
         "title": "May naganap na error!",
         "message": "Salamat sa iyong pasensya! Nakakaranas kami ng mga teknikal na paghihirap ngayon. Pakisubukang muli mamaya o makipag-ugnayan sa admin para sa karagdagang tulong!"
+      },
+      "verificationFailed": {
+        "title": "May pagkakamaling naganap!",
+        "goBackButton": "Bumalik ka",
+        "ERR_GENERIC": "Dahil sa Technical Error, hindi namin na-download ang card.",
+        "ERR_NETWORK": "Dahil sa hindi matatag na koneksyon sa internet, hindi namin na-download ang card. Pakisuri ang iyong koneksyon sa internet.",
+        "ERR_MISSING_ISSUANCEDATE": "Ang petsa ng pag-isyu ay hindi wasto o nakatakda sa hinaharap. Tingnan kung may wastong petsa.",
+        "ERR_INVALID_ISSUANCEDATE": "Ang petsa ng pag-isyu ay hindi wasto o nakatakda sa hinaharap. Tingnan kung may wastong petsa.",
+        "ERR_ISSUANCE_DATE_IS_FUTURE_DATE": "Ang petsa ng pag-isyu ay hindi wasto o nakatakda sa hinaharap. Tingnan kung may wastong petsa.",
+        "ERR_INVALID_EXPIRATIONDATE": "Ang petsa ng pag-expire ay hindi wasto. Tingnan kung may wastong petsa.",
+        "ERR_INVALID_VALIDFROM": "Ang petsa ay hindi wasto o nakatakda sa hinaharap. Tingnan kung may wastong petsa.",
+        "ERR_VALID_FROM_IS_FUTURE_DATE": "Ang petsa ay hindi wasto o nakatakda sa hinaharap. Tingnan kung may wastong petsa.",
+        "ERR_INVALID_VALIDUNTIL": "Di-wasto ang petsa. Tingnan kung may wastong petsa."
       }
     }
   },
@@ -427,8 +440,15 @@
       "verificationFailed": {
         "title": "May pagkakamaling naganap!",
         "goBackButton": "Bumalik ka",
-        "technicalError": "Dahil sa Technical Error, hindi namin na-download ang card.",
-        "networkError": "Dahil sa hindi matatag na koneksyon sa internet, hindi namin na-download ang card. Pakisuri ang iyong koneksyon sa internet."
+        "ERR_GENERIC": "Dahil sa Technical Error, hindi namin na-download ang card.",
+        "ERR_NETWORK": "Dahil sa hindi matatag na koneksyon sa internet, hindi namin na-download ang card. Pakisuri ang iyong koneksyon sa internet.",
+        "ERR_MISSING_ISSUANCEDATE": "Ang petsa ng pag-isyu ay hindi wasto o nakatakda sa hinaharap. Tingnan kung may wastong petsa.",
+        "ERR_INVALID_ISSUANCEDATE": "Ang petsa ng pag-isyu ay hindi wasto o nakatakda sa hinaharap. Tingnan kung may wastong petsa.",
+        "ERR_ISSUANCE_DATE_IS_FUTURE_DATE": "Ang petsa ng pag-isyu ay hindi wasto o nakatakda sa hinaharap. Tingnan kung may wastong petsa.",
+        "ERR_INVALID_EXPIRATIONDATE": "Ang petsa ng pag-expire ay hindi wasto. Tingnan kung may wastong petsa.",
+        "ERR_INVALID_VALIDFROM": "Ang petsa ay hindi wasto o nakatakda sa hinaharap. Tingnan kung may wastong petsa.",
+        "ERR_VALID_FROM_IS_FUTURE_DATE": "Ang petsa ay hindi wasto o nakatakda sa hinaharap. Tingnan kung may wastong petsa.",
+        "ERR_INVALID_VALIDUNTIL": "Di-wasto ang petsa. Tingnan kung may wastong petsa."
       }
     }
   },
