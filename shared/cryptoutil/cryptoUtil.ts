@@ -450,10 +450,9 @@ export async function fetchKeyPair(keyType: any) {
     }
   } catch (e) {
     console.error('error getting key', e);
-    return {
-      publicKey: '',
-      privateKey: '',
-    };
+    if (e.toString().includes(BIOMETRIC_CANCELLED)) {
+      throw new BiometricCancellationError(e.toString());
+    } else throw e;
   }
 }
 const convertToKeyValue = items => {
