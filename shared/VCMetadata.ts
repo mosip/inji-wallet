@@ -4,7 +4,7 @@ import {
   VcIdType,
   VerifiableCredential,
 } from '../machines/VerifiableCredential/VCMetaMachine/vc';
-import {CredentialIdForMsoMdoc, Protocols} from './openId4VCI/Utils';
+import {Protocols} from './openId4VCI/Utils';
 import {getMosipIdentifier} from './commonUtil';
 import {VCFormat} from './VCFormat';
 
@@ -120,10 +120,10 @@ export const getVCMetadata = (context: object, keyType: string) => {
     timestamp: context.timestamp ?? '',
     isVerified: context.vcMetadata.isVerified ?? false,
     displayId: getDisplayId(
-      context.verifiableCredential,
+      context['verifiableCredential'] as VerifiableCredential,
       context['credentialWrapper'].format,
     ),
-    format: context.credentialWrapper.format,
+    format: context['credentialWrapper'].format,
     downloadKeyType: keyType,
   });
 };
@@ -132,19 +132,40 @@ const getDisplayId = (
   verifiableCredential: VerifiableCredential | Credential,
   format: string,
 ) => {
-  if (format === VCFormat.mso_mdoc) {
-    return CredentialIdForMsoMdoc(verifiableCredential as VerifiableCredential);
-  }
-  if (verifiableCredential?.credential) {
-    if (verifiableCredential.credential?.credentialSubject) {
-      return (
-        verifiableCredential.credential?.credentialSubject?.policyNumber ||
-        getMosipIdentifier(verifiableCredential.credential.credentialSubject)
-      );
+  try {
+    if (format === VCFormat.mso_mdoc) {
+      const namespaces =
+        (verifiableCredential as VerifiableCredential)?.processedCredential?.[
+          'issuerSigned'
+        ]['nameSpaces'] ?? {};
+
+      let displayId: string | undefined;
+      for (const namespace in namespaces) {
+        displayId = namespaces[namespace].find(
+          (element: object) =>
+            element['elementIdentifier'] === 'document_number',
+        ).elementValue;
+        if (!!displayId) break;
+      }
+
+      if (!!displayId) return displayId;
+      console.error('error in id getting ', 'Id not found for the credential');
+      throw new Error('Id not found for the credential');
     }
+    if (verifiableCredential?.credential) {
+      if (verifiableCredential.credential?.credentialSubject) {
+        return (
+          verifiableCredential.credential?.credentialSubject?.policyNumber ||
+          getMosipIdentifier(verifiableCredential.credential.credentialSubject)
+        );
+      }
+    }
+    return (
+      verifiableCredential?.credentialSubject?.policyNumber ||
+      getMosipIdentifier(verifiableCredential.credentialSubject)
+    );
+  } catch (error) {
+    console.error('Error getting the display Id - ', error);
+    return null;
   }
-  return (
-    verifiableCredential?.credentialSubject?.policyNumber ||
-    getMosipIdentifier(verifiableCredential.credentialSubject)
-  );
 };

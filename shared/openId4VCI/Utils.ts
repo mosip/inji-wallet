@@ -275,19 +275,6 @@ export enum ErrorMessage {
   CREDENTIAL_TYPE_DOWNLOAD_FAILURE = 'credentialTypeListDownloadFailure',
 }
 
-export function CredentialIdForMsoMdoc(credential: VerifiableCredential) {
-  try {
-    const found = credential.processedCredential['issuerSigned']['nameSpaces'][
-      'org.iso.18013.5.1'
-    ].find(
-      element => element.elementIdentifier === 'document_number',
-    ).elementValue;
-    return found;
-  } catch (error) {
-    console.error('error in id getting ', error);
-  }
-}
-
 export async function constructProofJWT(
   publicKey: string,
   privateKey: string,
