@@ -7,7 +7,6 @@ import {
   MY_VCS_STORE_KEY,
   NETWORK_REQUEST_FAILED,
   REQUEST_TIMEOUT,
-  TECHNICAL_ERROR,
   isIOS,
 } from '../../shared/constants';
 import {assign, send} from 'xstate';
@@ -168,10 +167,21 @@ export const IssuersActions = (model: any) => {
 
     storeVerifiableCredentialData: send(
       (context: any) => {
-        const vcMeatadata = getVCMetadata(context, context.keyType);
-        return StoreEvents.SET(vcMeatadata.getVcKey(), {
-          ...context.credentialWrapper,
-          vcMetadata: vcMeatadata,
+        const vcMetadata = getVCMetadata(context, context.keyType);
+        const {
+          verifiableCredential: {
+            processedCredential,
+            ...filteredVerifiableCredential
+          },
+          ...rest
+        } = context.credentialWrapper;
+        const storableData = {
+          ...rest,
+          verifiableCredential: filteredVerifiableCredential,
+        };
+        return StoreEvents.SET(vcMetadata.getVcKey(), {
+          ...storableData,
+          vcMetadata: vcMetadata,
         });
       },
       {

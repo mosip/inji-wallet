@@ -11,7 +11,7 @@ import {
   getImpressionEventData,
   sendImpressionEvent,
 } from '../../shared/telemetry/TelemetryUtils';
-import {isMosipVC, VCItemContainerFlowType} from '../../shared/Utils';
+import {VCItemContainerFlowType} from '../../shared/Utils';
 import {VCMetadata} from '../../shared/VCMetadata';
 import {VerifyIdentityOverlay} from '../VerifyIdentityOverlay';
 import {VPShareOverlay} from './VPShareOverlay';

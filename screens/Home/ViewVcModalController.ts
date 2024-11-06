@@ -12,7 +12,6 @@ import {
   selectOtpError,
   selectShowWalletBindingError,
   selectVc,
-  selectCredential,
   selectVerifiableCredentialData,
   selectWalletBindingError,
   selectWalletBindingInProgress,
@@ -22,6 +21,7 @@ import {
   selectIsVerificationInProgress,
   selectShowVerificationStatusBanner,
   selectIsVerificationCompleted,
+  selectCredential,
 } from '../../machines/VerifiableCredential/VCItemMachine/VCItemSelectors';
 import {selectPasscode} from '../../machines/auth';
 import {biometricsMachine, selectIsSuccess} from '../../machines/biometrics';

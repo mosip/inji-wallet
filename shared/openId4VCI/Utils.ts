@@ -26,6 +26,7 @@ import {KeyTypes} from '../cryptoutil/KeyTypes';
 import {VCFormat} from '../VCFormat';
 import {UnsupportedVcFormat} from '../error/UnsupportedVCFormat';
 import {VCMetadata} from '../VCMetadata';
+import {VCProcessor} from '../../components/VC/common/VCProcessor';
 
 export const Protocols = {
   OpenId4VCI: 'OpenId4VCI',
@@ -62,49 +63,64 @@ export const isActivationNeeded = (issuer: string) => {
 
 export const Issuers_Key_Ref = 'OpenId4VCI_KeyPair';
 
-export const getIdentifier = (context, credential: VerifiableCredential) => {
-  const credentialIdentifier = credential.credential.id;
-  if (credentialIdentifier === undefined) {
-    return (
-      context.selectedIssuer.credential_issuer +
-      ':' +
-      context.selectedIssuer.protocol +
-      ':' +
-      CredentialIdForMsoMdoc(credential)
-    );
-  } else {
-    const credId = credentialIdentifier.startsWith('did')
-      ? credentialIdentifier.split(':')
-      : credentialIdentifier.split('/');
-    return (
-      context.selectedIssuer.credential_issuer +
-      ':' +
-      context.selectedIssuer.protocol +
-      ':' +
-      credId[credId.length - 1]
-    );
-  }
-};
-
-export const updateCredentialInformation = (
+export const getIdentifier = (
   context,
   credential: VerifiableCredential,
-): CredentialWrapper => {
+  format: string,
+) => {
+  let credentialIdentifier = '';
+  if (format === VCFormat.mso_mdoc) {
+    credentialIdentifier = credential?.processedCredential?.['id'] ?? '';
+  } else if (typeof credential.credential !== 'string') {
+    credentialIdentifier = credential.credential.id;
+  }
+  const credId =
+    credentialIdentifier.startsWith('did') ||
+    credentialIdentifier.startsWith('urn:')
+      ? credentialIdentifier.split(':')
+      : credentialIdentifier.split('/');
+  return (
+    context.selectedIssuer.credential_issuer +
+    ':' +
+    context.selectedIssuer.protocol +
+    ':' +
+    credId[credId.length - 1]
+  );
+};
+
+export const updateCredentialInformation = async (
+  context,
+  credential: VerifiableCredential,
+): Promise<CredentialWrapper> => {
+  let processedCredential;
+  if (context.selectedCredentialType.format === VCFormat.mso_mdoc) {
+    processedCredential = await VCProcessor.processForRendering(
+      credential,
+      context.selectedCredentialType.format,
+    );
+  }
+  const verifiableCredential = {
+    ...credential,
+    wellKnown: context.selectedIssuer['wellknown_endpoint'],
+    credentialConfigurationId: context.selectedCredentialType.id,
+    issuerLogo: getDisplayObjectForCurrentLanguage(
+      context.selectedIssuer.display,
+    )?.logo,
+    processedCredential,
+  };
   return {
-    verifiableCredential: {
-      ...credential,
-      wellKnown: context.selectedIssuer['wellknown_endpoint'],
-      credentialConfigurationId: context.selectedCredentialType.id,
-      issuerLogo: getDisplayObjectForCurrentLanguage(
-        context.selectedIssuer.display,
-      )?.logo,
-    },
+    verifiableCredential,
     format: context.selectedCredentialType.format,
-    identifier: getIdentifier(context, credential),
+    identifier: getIdentifier(
+      context,
+      verifiableCredential,
+      context.selectedCredentialType.format,
+    ),
     generatedOn: new Date(),
-    vcMetadata:
-      {...context.vcMetadata, format: context.selectedCredentialType.format} ||
-      {},
+    vcMetadata: {
+      ...context.vcMetadata,
+      format: context.selectedCredentialType.format,
+    },
   };
 };
 
@@ -257,13 +273,6 @@ export enum ErrorMessage {
   BIOMETRIC_CANCELLED = 'biometricCancelled',
   TECHNICAL_DIFFICULTIES = 'technicalDifficulty',
   CREDENTIAL_TYPE_DOWNLOAD_FAILURE = 'credentialTypeListDownloadFailure',
-}
-
-export function CredentialIdForMsoMdoc(credential: VerifiableCredential) {
-  return credential.credential['issuerSigned']['nameSpaces'][
-    'org.iso.18013.5.1'
-  ].find(element => element.elementIdentifier === 'document_number')
-    .elementValue;
 }
 
 export async function constructProofJWT(

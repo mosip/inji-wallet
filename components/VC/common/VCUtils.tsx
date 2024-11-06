@@ -232,7 +232,7 @@ export const fieldItemIterator = (
 };
 
 export const isVCLoaded = (
-  verifiableCredential: Credential,
+  verifiableCredential: Credential | null,
   fields: string[],
 ) => {
   return verifiableCredential != null && fields.length > 0;
@@ -258,7 +258,11 @@ export const getIdType = (
   wellknown: CredentialTypes | IssuerWellknownResponse,
   credentialConfigurationId: string | undefined = undefined,
 ): string => {
-  if (wellknown && wellknown?.display) {
+  if (
+    wellknown &&
+    wellknown['credential_configurations_supported'] === undefined &&
+    wellknown?.display
+  ) {
     const idTypeObj = wellknown.display.map((displayProps: any) => {
       return {language: displayProps.locale, value: displayProps.name};
     });
@@ -266,7 +270,6 @@ export const getIdType = (
   } else if (wellknown && Object.keys(wellknown).length > 0) {
     let supportedCredentialsWellknown;
     wellknown = parseJSON(wellknown) as unknown as Object[];
-
     if (!!!wellknown['credential_configurations_supported']) {
       return i18n.t('VcDetails:nationalCard');
     }
