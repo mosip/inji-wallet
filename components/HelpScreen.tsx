@@ -212,7 +212,7 @@ export const HelpScreen: React.FC<HelpScreenProps> = props => {
             t('answers.inji.ten-a'),
             getLinkedText(
               injiHelpUrl +
-                '/overview/features/feature-workflows#id-4.-qr-code-login-process',
+                '/functional-overview/feature-workflows#id-4.-qr-code-login-process',
               t('here'),
             ),
           )}
@@ -259,7 +259,7 @@ export const HelpScreen: React.FC<HelpScreenProps> = props => {
           {getTextField(
             t('answers.inji.thirteen-a'),
             getLinkedText(
-              injiHelpUrl + '/end-user-guide#deleting-a-vc',
+              injiHelpUrl + '/functional-overview/end-user-guide#deleting-a-vc',
               t('here'),
             ),
           )}
