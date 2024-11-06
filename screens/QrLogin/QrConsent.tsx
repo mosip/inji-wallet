@@ -116,6 +116,7 @@ export const QrConsent: React.FC<QrConsentProps> = props => {
           style={Theme.Styles.bottomButtonsContainer}
           elevation={5}>
           <Button
+            type="gradient"
             margin={'6 10 0 10'}
             styles={Theme.ButtonStyles.radius}
             title={t('allow')}

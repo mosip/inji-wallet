@@ -1,7 +1,6 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import {useTranslation} from 'react-i18next';
-import {Alert, BackHandler, Image, Linking} from 'react-native';
-import {Icon} from 'react-native-elements';
+import {BackHandler, Image} from 'react-native';
 import {Modal} from '../../components/ui/Modal';
 import {Centered, Button, Text, Column} from '../../components/ui';
 import {Theme} from '../../components/ui/styleUtils';
@@ -50,6 +49,7 @@ export const QrLoginSuccess: React.FC<QrLoginSuccessProps> = props => {
           margin="2 0 0 0"
           elevation={2}>
           <Button
+            type="gradient"
             title={t('ok')}
             margin="0 0 12 0"
             styles={Theme.ButtonStyles.radius}

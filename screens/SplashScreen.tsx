@@ -10,7 +10,7 @@ export const SplashScreen: React.FC<RootRouteProps> = props => {
   const imageResource =
     APPLICATION_THEME?.toLowerCase() === 'purple'
       ? require('../assets/purpleSplashScreen.png')
-      : require('../assets/orangeSplashScreen.png');
+      : require('../assets/SplashScreen.png');
   const controller = useAppLayout();
   useEffect(() => {
     setTimeout(() => {
@@ -33,7 +33,7 @@ export const SplashScreen: React.FC<RootRouteProps> = props => {
       }}>
       <Image
         resizeMode="stretch"
-        style={{width: 250, height: 150}}
+        style={{width: 400, height: 450}}
         source={imageResource}
       />
     </Column>

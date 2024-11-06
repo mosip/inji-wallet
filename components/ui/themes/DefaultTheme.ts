@@ -9,10 +9,14 @@ import {
 import {Spacing} from '../styleUtils';
 import {COPILOT_HEIGHT, isIOS} from '../../../shared/constants';
 import Constants from 'expo-constants';
-
+import HomeScreenLogo from '../../../assets/InjiHomeLogo.svg';
+import InjiLogoSmall from '../../../assets/InjiLogo.svg';
 const Colors = {
   Black: '#000000',
   Zambezi: '#5F5F5F',
+  Violet: '#5B03AD',
+  BrightOrange: '#FF5300',
+  Magenta: '#951F6F',
   Grey: '#C7C7C7',
   Grey5: '#E0E0E0',
   Grey6: '#F2F2F2',
@@ -26,8 +30,7 @@ const Colors = {
   DimGray: '#737373',
   DarkGray: '#A5A5A5',
   platinumGrey: '#EDEDED',
-  Orange: '#F2811D',
-  OrangeShade: '#E3781A', // closer to vivid tangelo color
+  Orange: '#951F6F',
   OrangeBrown: '#D9822B',
   Blue: '#0000FF',
   LightGrey: '#F8F8F8',
@@ -42,18 +45,19 @@ const Colors = {
   GrayText: '#6F6F6F',
   mediumLightGrayText: '#A7A7A7',
   dorColor: '#CBCBCB',
-  plainText: '#FFD6A7',
+  plainText: '#FFFFFF',
   walletbindingLabel: '#000000',
-  LightOrange: '#FDF1E6',
-  GradientColors: ['#F59B4B', '#E86E04'],
+  LightOrange: '#F7EDF3',
+  GradientColors: ['#FF5300', '#5B03AD'],
+  GradientColorsLight: ['#FF5300' + 14, '#5B03AD' + 14],
   DisabledColors: ['#C7C7C7', '#C7C7C7'],
   TimeoutHintBoxColor: '#FFF7E5',
   TimeoutHintBoxBorder: '#FFF2D6',
   TimeoutHintText: '#8B6105',
   resendCodeTimer: '#555555',
   uncheckedIcon: '#DBDBDB',
-  startColor: '#f59b4b',
-  endColor: '#e86e04',
+  startColor: '#ff5300',
+  endColor: '#5b03ad',
   stroke: '#ee8123',
   iconBg: '#ffa85a',
   warningLogoBg: '#FFF7E5',
@@ -114,12 +118,12 @@ export const DefaultTheme = {
     DefaultToggle: Colors.LightOrange,
     GrayText: Colors.GrayText,
     errorGrayText: Colors.mediumDarkGrey,
-    gradientBtn: ['#F59B4B', '#E86E04'],
-    selectIDTextGradient: ['#F5F5F5', '#FFFFFF'],
+    gradientBtn: ['#FF5300', '#5B03AD'],
     dotColor: Colors.dorColor,
     plainText: Colors.plainText,
     IconBackground: Colors.LightOrange,
     GradientColors: Colors.GradientColors,
+    GradientColorsLight: Colors.GradientColorsLight,
     DisabledColors: Colors.DisabledColors,
     getVidColor: Colors.Zambezi,
     TimeoutHintBoxColor: Colors.TimeoutHintBoxColor,
@@ -135,6 +139,8 @@ export const DefaultTheme = {
     chevronRightColor: Colors.Grey,
     linearGradientStart: Colors.startColor,
     linearGradientEnd: Colors.endColor,
+    linearIconGradientStart: Colors.startColor,
+    linearIconGradientEnd: Colors.endColor,
     LinearGradientStroke: Colors.stroke,
     warningLogoBgColor: Colors.warningLogoBg,
     tooltipIcon: Colors.toolTip,
@@ -231,7 +237,6 @@ export const DefaultTheme = {
       width: Dimensions.get('window').width * 0.12,
       height: Dimensions.get('window').height * 0.045,
       borderRadius: 6,
-      backgroundColor: Colors.LightOrange,
     },
     homeScreenContainer: {
       alignItems: 'center',
@@ -406,8 +411,8 @@ export const DefaultTheme = {
       height: 71,
     },
     injiLogo: {
-      width: 105,
-      height: 40,
+      width: 191.58,
+      height: 28,
     },
     logo: {
       height: 35,
@@ -464,12 +469,13 @@ export const DefaultTheme = {
     },
     IconContainer: {
       padding: 6,
-      width: 36,
+      width: 25,
       marginRight: 4,
       marginLeft: 10,
+      alignItems: 'center',
+      justifyContent: 'center',
       height: 36,
       borderRadius: 10,
-      backgroundColor: Colors.LightOrange,
     },
     imageCaptureButton: {
       marginLeft: 130,
@@ -480,7 +486,6 @@ export const DefaultTheme = {
       width: 36,
       height: 36,
       borderRadius: 10,
-      backgroundColor: Colors.LightOrange,
     },
     receiveCardsContainer: {
       height: Dimensions.get('window').height * 0.14,
@@ -535,7 +540,6 @@ export const DefaultTheme = {
       borderRadius: 14,
     },
     primaryRow: {
-      backgroundColor: Colors.LightOrange,
       paddingHorizontal: 18,
       paddingVertical: 9,
       justifyContent: 'space-between',
@@ -682,11 +686,8 @@ export const DefaultTheme = {
       paddingHorizontal: 24,
     },
     newLabel: {
-      backgroundColor: Colors.Orange,
       paddingHorizontal: 5,
-      paddingVertical: 4,
       maxHeight: 20,
-      marginTop: 10,
       borderRadius: 4,
       fontSize: 10,
       fontFamily: 'Inter_700Bold',
@@ -853,7 +854,7 @@ export const DefaultTheme = {
       flex: 1,
       fontSize: 33,
       fontFamily: 'Inter_600SemiBold',
-      height: 60,
+      height: 40,
       lineHeight: 28,
       margin: 8,
       textAlign: 'center',
@@ -1588,7 +1589,6 @@ export const DefaultTheme = {
   HelpScreenStyle: StyleSheet.create({
     viewStyle: {
       borderRadius: 8,
-      backgroundColor: Colors.LightOrange,
       justifyContent: 'center',
       alignItems: 'center',
       paddingLeft: 16,
@@ -1747,11 +1747,14 @@ export const DefaultTheme = {
   ICON_LARGE_SIZE: 33,
   CloseCard: require('../../../assets/Card_Bg1.png'),
   OpenCard: require('../../../assets/Card_Bg1.png'),
-  IntroWelcome: require('../../../assets/Intro_Unlock.png'),
-  SecureSharing: require('../../../assets/Intro_Secure_Sharing.png'),
-  DigitalWallet: require('../../../assets/Intro_Wallet.png'),
-  IntroShare: require('../../../assets/Intro_Share.png'),
-  IntroBackup: require('../../../assets/Intro_Backup.png'),
+  IntroWelcome: require('../../../assets/biometricIntro.png'),
+  SecureSharing: require('../../../assets/secureSharing.png'),
+  DigitalWallet: require('../../../assets/trustedDigitalWallet.png'),
+  IntroShare: require('../../../assets/quickAccess.png'),
+  IntroBackup: require('../../../assets/backupRestoreIntro.png'),
+  IntroSliderbackground: require('../../../assets/IntroBg.png'),
+  HomeScreenLogo: HomeScreenLogo,
+  InjiLogoSmall: InjiLogoSmall,
   elevation(level: ElevationLevel): ViewStyle {
     // https://ethercreative.github.io/react-native-shadow-generator/
 
@@ -1792,6 +1795,10 @@ export const DefaultTheme = {
       [`${type}Bottom`]: bottom != null ? bottom : top,
       [`${type}Start`]: start != null ? start : end != null ? end : top,
     };
+  },
+  LinearGradientDirection: {
+    start: {x: 0.5, y: 0.5},
+    end: {x: 1, y: 0.5},
   },
 };
 

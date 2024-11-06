@@ -41,7 +41,6 @@ export interface Typegen0 {
       | 'loadMyVcs'
       | 'loadThumbprint'
       | 'resetFlowType'
-      | 'resetIsQrLoginViaDeepLink'
       | 'resetLinkTransactionId'
       | 'resetSelectedVc'
       | 'resetSelectedVoluntaryClaims'
@@ -74,11 +73,6 @@ export interface Typegen0 {
     loadMyVcs: 'done.invoke.QrLogin.linkTransaction:invocation[0]';
     loadThumbprint: 'FACE_VALID';
     resetFlowType: 'xstate.init';
-    resetIsQrLoginViaDeepLink:
-      | 'error.platform.QrLogin.linkTransaction:invocation[0]'
-      | 'error.platform.QrLogin.sendingAuthenticate:invocation[0]'
-      | 'error.platform.QrLogin.sendingConsent:invocation[0]'
-      | 'xstate.init';
     resetLinkTransactionId: 'GET';
     resetSelectedVc: 'xstate.init';
     resetSelectedVoluntaryClaims: 'GET';
