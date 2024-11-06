@@ -66,7 +66,7 @@ fileignoreconfig:
   - filename: assets/Finger_Print_Icon.svg
     checksum: 776d4fe4fc4b54d185ccf97daf0511b9fe2c0e0f7c1a809047020e5e8a100db6
   - filename: screens/MainLayout.tsx
-    checksum: 53ead79279c9609e42a8993db1a66bdb4649e1ae3b909d462b45b00c507c416e
+    checksum: dd31361997111c28461239e986112a30ee986e99432ac3016033508863b90ddd
   - filename: android/app/build.gradle
     checksum: 251ac12b49cf226d40931a02eb1b362a1d29e74cfe8f7a60ed128d66b0fea838
   - filename: .github/workflows/push-triggers.yml
@@ -394,4 +394,8 @@ fileignoreconfig:
     checksum: a87664e146d420fb3140a0f6579980aaf82041928b502f8b301b4ebff048351c
   - filename: ios/RNOpenID4VPModule.swift
     checksum: 4bd3c69556b86024cd15490deafb0d8c6b760ebcfc486f68da5575d63b315d14
+  - filename: assets/InjiHomeLogoSmall.svg
+    checksum: 9f29c9b0b91eba7fd7f5f4d1f78f9b6f96ef2c850c1346d712058a438d01036a
+  - filename: assets/InjiHomeLogo.svg
+    checksum: 6600a3d75033af4d702dd8c9663e12ad7c2c096a529bac2771bb856cc75a5ed0
     version: ""
