@@ -183,7 +183,7 @@ export async function getJWT(
   header: object,
   payLoad: object,
   alias: string,
-  privateKey: string,
+  privateKey: any,
   keyType: string,
 ) {
   try {
@@ -259,11 +259,11 @@ export async function createSignatureECK1(privateKey, prehash) {
 }
 
 export async function createSignatureED(privateKey, prehash) {
-  const sha = sha512(prehash);
-  const sign = await ed.signAsync(sha, privateKey);
+  const messageBytes = new TextEncoder().encode(prehash);
+  const privateKeyUint8 = Uint8Array.from(privateKey);
+  const sign = await ed.signAsync(messageBytes, privateKeyUint8);
   return replaceCharactersInB64(Buffer.from(sign).toString('base64'));
 }
-
 export async function createSignatureECR1(
   privateKey,
   header,
