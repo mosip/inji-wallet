@@ -267,14 +267,14 @@ export function CredentialIdForMsoMdoc(credential: VerifiableCredential) {
 }
 
 export async function constructProofJWT(
-  publicKey: string,
-  privateKey: string,
+  publicKey: any,
+  privateKey: any,
   accessToken: string,
   selectedIssuer: issuerType,
   keyType: string,
 ): Promise<string> {
   const jwtHeader = {
-    alg: keyType != KeyTypes.ED25519 ? keyType : 'Ed25519',
+    alg: keyType,
     jwk: await getJWK(publicKey, keyType),
     typ: 'openid4vci-proof+jwt',
   };
@@ -350,7 +350,7 @@ function getJWKECK1(publicKey): any {
   return jwk;
 }
 function getJWKED(publicKey): any {
-  const x = replaceCharactersInB64(publicKey);
+  const x = base64url(publicKey);
   const jwk = {
     kty: 'OKP',
     crv: 'Ed25519',
@@ -372,8 +372,12 @@ export function selectCredentialRequestKey(
   keyTypes: string[],
   keyOrder: object,
 ) {
+  const lowerCaseKeyTypes = keyTypes.map(key => key.toLowerCase());
+
   for (const index in keyOrder) {
-    if (keyTypes.includes(keyOrder[index])) return keyOrder[index];
+    if (lowerCaseKeyTypes.includes(keyOrder[index].toLowerCase())) {
+      return keyOrder[index];
+    }
   }
   return '';
 }
