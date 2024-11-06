@@ -422,5 +422,3 @@ export function getMatchingCredentialIssuerMetadata(
     `Selected credential type - ${credentialConfigurationId} is not available in wellknown config supported credentials list`,
   );
 }
-
-

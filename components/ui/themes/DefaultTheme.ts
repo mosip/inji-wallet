@@ -9,8 +9,8 @@ import {
 import {Spacing} from '../styleUtils';
 import {COPILOT_HEIGHT, isIOS} from '../../../shared/constants';
 import Constants from 'expo-constants';
-import HomeScreenLogo from '../../../assets/InjiHomeLogo.svg'
-import InjiLogoSmall from '../../../assets/InjiLogo.svg'
+import HomeScreenLogo from '../../../assets/InjiHomeLogo.svg';
+import InjiLogoSmall from '../../../assets/InjiLogo.svg';
 const Colors = {
   Black: '#000000',
   Zambezi: '#5F5F5F',
@@ -1797,9 +1797,9 @@ export const DefaultTheme = {
     };
   },
   LinearGradientDirection: {
-    start: {x:0.5,y:0.5},
-    end: {x:1,y:0.5}
-  }
+    start: {x: 0.5, y: 0.5},
+    end: {x: 1, y: 0.5},
+  },
 };
 
 function generateBoxShadowStyle() {

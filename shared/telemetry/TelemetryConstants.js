@@ -22,7 +22,7 @@ export const TelemetryConstants = {
     vcVerification: 'VC Verification',
     wellknownConfig: 'Wellknown config',
     setKeyPriority: 'Setting user Key priority order',
-    keyGeneration: 'Generated keypair of all keytypes'
+    keyGeneration: 'Generated keypair of all keytypes',
   }),
 
   EndEventStatus: Object.freeze({

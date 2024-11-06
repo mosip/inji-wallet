@@ -90,9 +90,8 @@ export const Button: React.FC<ButtonProps> = props => {
         colors: !props.disabled
           ? Theme.Colors.GradientColors
           : Theme.Colors.DisabledColors,
-          start: Theme.LinearGradientDirection.start,
-          end: Theme.LinearGradientDirection.end,
-          
+        start: Theme.LinearGradientDirection.start,
+        end: Theme.LinearGradientDirection.end,
       }}
       containerStyle={[
         props.fill ? Theme.ButtonStyles.fill : null,

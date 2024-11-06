@@ -27,6 +27,7 @@ import {SearchBar} from '../../components/ui/SearchBar';
 import {Icon} from 'react-native-elements';
 import {VCMetadata} from '../../shared/VCMetadata';
 import {useCopilot} from 'react-native-copilot';
+import {isTranslationKeyFound} from '../../shared/commonUtil';
 
 export const MyVcsTab: React.FC<HomeScreenTabProps> = props => {
   const {t} = useTranslation('MyVcsTab');
@@ -188,9 +189,11 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = props => {
 
   const isVerificationFailed = controller.verificationErrorMessage !== '';
 
-  const verificationErrorMessage = t(
-    `errors.verificationFailed.${controller.verificationErrorMessage}`,
-  );
+  const translationKey = `errors.verificationFailed.${controller.verificationErrorMessage}`;
+
+  const verificationErrorMessage = isTranslationKeyFound(translationKey, t)
+    ? t(translationKey)
+    : t(`errors.verificationFailed.ERR_GENERIC`);
 
   const downloadFailedVcsErrorMessage = `${t(
     'errors.downloadLimitExpires.message',

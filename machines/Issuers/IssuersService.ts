@@ -15,16 +15,12 @@ import {
   generateKeyPair,
 } from '../../shared/cryptoutil/cryptoUtil';
 import {NativeModules} from 'react-native';
-import {
-  VerificationErrorType,
-  verifyCredential,
-} from '../../shared/vcjs/verifyCredential';
+import {verifyCredential} from '../../shared/vcjs/verifyCredential';
 import {
   getImpressionEventData,
   sendImpressionEvent,
 } from '../../shared/telemetry/TelemetryUtils';
 import {TelemetryConstants} from '../../shared/telemetry/TelemetryConstants';
-import {isMosipVC} from '../../shared/Utils';
 import {VciClient} from '../../shared/vciClient/VciClient';
 
 export const IssuersService = () => {
@@ -123,19 +119,12 @@ export const IssuersService = () => {
     },
 
     verifyCredential: async (context: any) => {
-      //this issuer specific check has to be removed once vc validation is done.
-      if (isMosipVC(context.selectedIssuerId)) {
-        const verificationResult = await verifyCredential(
-          context.verifiableCredential?.credential,
-        );
-        if (!verificationResult.isVerified) {
-          throw new Error(verificationResult.errorMessage);
-        }
-      } else {
-        return {
-          isVerified: true,
-          errorMessage: VerificationErrorType.NO_ERROR,
-        };
+      const verificationResult = await verifyCredential(
+        context.verifiableCredential?.credential,
+        context.selectedCredentialType.format,
+      );
+      if (!verificationResult.isVerified) {
+        throw new Error(verificationResult.verificationErrorCode);
       }
     },
   };

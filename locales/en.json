@@ -221,6 +221,19 @@
       "technicalDifficulty": {
         "title": "An error occurred!",
         "message": "Thanks for your patience! We're experiencing technical difficulties right now. Please try again later or contact the admin for further assistance!"
+      },
+      "verificationFailed": {
+        "title": "An Error Occurred!",
+        "goBackButton": "Go Back",
+        "ERR_GENERIC": "Due to Technical Error, we were unable to download the card.",
+        "ERR_NETWORK": "Due to unstable internet connection, we were unable to download the card. Please check your internet connection.",
+        "ERR_MISSING_ISSUANCEDATE": "Issuance date is invalid or set in the future. Check for a valid date.",
+        "ERR_INVALID_ISSUANCEDATE": "Issuance date is invalid or set in the future. Check for a valid date.",
+        "ERR_ISSUANCE_DATE_IS_FUTURE_DATE": "Issuance date is invalid or set in the future. Check for a valid date.",
+        "ERR_INVALID_EXPIRATIONDATE": "Expiration date is invalid. Check for a valid date.",
+        "ERR_INVALID_VALIDFROM": "Date is invalid or set in the future. Check for a valid date.",
+        "ERR_VALID_FROM_IS_FUTURE_DATE": "Date is invalid or set in the future. Check for a valid date.",
+        "ERR_INVALID_VALIDUNTIL": "Date is invalid. Check for a valid date."
       }
     }
   },
@@ -429,8 +442,15 @@
       "verificationFailed": {
         "title": "An Error Occurred!",
         "goBackButton": "Go Back",
-        "technicalError": "Due to Technical Error, we were unable to download the card.",
-        "networkError": "Due to unstable internet connection, we were unable to download the card. Please check your internet connection."
+        "ERR_GENERIC": "Due to Technical Error, we were unable to download the card.",
+        "ERR_NETWORK": "Due to unstable internet connection, we were unable to download the card. Please check your internet connection.",
+        "ERR_MISSING_ISSUANCEDATE": "Issuance date is invalid or set in the future. Check for a valid date.",
+        "ERR_INVALID_ISSUANCEDATE": "Issuance date is invalid or set in the future. Check for a valid date.",
+        "ERR_ISSUANCE_DATE_IS_FUTURE_DATE": "Issuance date is invalid or set in the future. Check for a valid date.",
+        "ERR_INVALID_EXPIRATIONDATE": "Expiration date is invalid. Check for a valid date.",
+        "ERR_INVALID_VALIDFROM": "Date is invalid or set in the future. Check for a valid date.",
+        "ERR_VALID_FROM_IS_FUTURE_DATE": "Date is invalid or set in the future. Check for a valid date.",
+        "ERR_INVALID_VALIDUNTIL": "Date is invalid. Check for a valid date."
       }
     }
   },
