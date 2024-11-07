@@ -1,5 +1,6 @@
 import {BottomTabScreenProps} from '@react-navigation/bottom-tabs';
 import {RootStackParamList} from './index';
+import {ScanStackParamList} from './routesConstants';
 
 export type MainBottomTabParamList = {
   home: undefined;
@@ -14,4 +15,8 @@ export type MainRouteProps = BottomTabScreenProps<
 export type HomeRouteProps = BottomTabScreenProps<
   MainBottomTabParamList & RootStackParamList,
   'home'
+>;
+
+export type ScanLayoutProps = BottomTabScreenProps<
+  ScanStackParamList & MainBottomTabParamList
 >;

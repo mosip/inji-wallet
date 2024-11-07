@@ -61,6 +61,7 @@ export const openID4VPMachine = model.createMachine(
         },
       },
       getTrustedVerifiersList: {
+        entry: 'setIsShowLoadingScreen',
         invoke: {
           src: 'fetchTrustedVerifiers',
           onDone: {
@@ -113,6 +114,7 @@ export const openID4VPMachine = model.createMachine(
             target: 'showError',
           },
         },
+        exit: 'resetIsShowLoadingScreen',
       },
       getVCsSatisfyingAuthRequest: {
         on: {

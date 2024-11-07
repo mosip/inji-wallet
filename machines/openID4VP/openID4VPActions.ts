@@ -258,6 +258,14 @@ export const openID4VPActions = (model: any) => {
     resetIsFaceVerificationRetryAttempt: model.assign({
       isFaceVerificationRetryAttempt: () => false,
     }),
+
+    setIsShowLoadingScreen: model.assign({
+      showLoadingScreen: () => true,
+    }),
+
+    resetIsShowLoadingScreen: model.assign({
+      showLoadingScreen: () => false,
+    }),
   };
 };
 

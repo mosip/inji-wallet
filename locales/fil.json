@@ -867,6 +867,12 @@
         "title": "Isang Error ang Naganap!",
         "message": "Ang pag-verify ng mukha ay nangangailangan ng larawan sa napiling (mga) kredensyal. Pakigamit ang opsyong Ibahagi o pumili ng kredensyal na may kasamang larawan."
       }
+    },
+    "loaders": {
+      "loading": "Naglo-load...",
+      "subTitle": {
+        "fetchingVerifiers": "Kinukuha ang iyong listahan ng mga tumutugmang nabe-verify na kredensyal"
+      }
     }
   },
   "VerifyIdentityOverlay": {

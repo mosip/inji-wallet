@@ -49,6 +49,7 @@ export interface Typegen0 {
       data: unknown;
     };
     'xstate.init': {type: 'xstate.init'};
+    'xstate.stop': {type: 'xstate.stop'};
   };
   invokeSrcNameMap: {
     fetchTrustedVerifiers: 'done.invoke.OpenID4VP.getTrustedVerifiersList:invocation[0]';
@@ -70,6 +71,7 @@ export interface Typegen0 {
       | 'resetFaceCaptureBannerStatus'
       | 'resetIsFaceVerificationRetryAttempt'
       | 'resetIsShareWithSelfie'
+      | 'resetIsShowLoadingScreen'
       | 'resetOpenID4VPRetryCount'
       | 'setAuthenticationError'
       | 'setAuthenticationResponse'
@@ -78,6 +80,7 @@ export interface Typegen0 {
       | 'setFlowType'
       | 'setIsFaceVerificationRetryAttempt'
       | 'setIsShareWithSelfie'
+      | 'setIsShowLoadingScreen'
       | 'setMiniViewShareSelectedVC'
       | 'setSelectedVCs'
       | 'setSendVPShareError'
@@ -117,6 +120,11 @@ export interface Typegen0 {
     resetFaceCaptureBannerStatus: 'ACCEPT_REQUEST' | 'CLOSE_BANNER';
     resetIsFaceVerificationRetryAttempt: 'DISMISS';
     resetIsShareWithSelfie: 'CANCEL' | 'DISMISS_POPUP';
+    resetIsShowLoadingScreen:
+      | 'DISMISS_POPUP'
+      | 'done.invoke.OpenID4VP.authenticateVerifier:invocation[0]'
+      | 'error.platform.OpenID4VP.authenticateVerifier:invocation[0]'
+      | 'xstate.stop';
     resetOpenID4VPRetryCount: 'RESET_RETRY_COUNT';
     setAuthenticationError: 'error.platform.OpenID4VP.authenticateVerifier:invocation[0]';
     setAuthenticationResponse: 'done.invoke.OpenID4VP.authenticateVerifier:invocation[0]';
@@ -127,6 +135,7 @@ export interface Typegen0 {
     setFlowType: 'AUTHENTICATE';
     setIsFaceVerificationRetryAttempt: 'FACE_INVALID';
     setIsShareWithSelfie: 'AUTHENTICATE';
+    setIsShowLoadingScreen: 'STORE_RESPONSE';
     setMiniViewShareSelectedVC: 'AUTHENTICATE';
     setSelectedVCs: 'ACCEPT_REQUEST' | 'VERIFY_AND_ACCEPT_REQUEST';
     setSendVPShareError: 'error.platform.OpenID4VP.sendingVP:invocation[0]';

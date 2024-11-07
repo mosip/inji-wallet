@@ -65,6 +65,7 @@ export const openID4VPModel = createModel(
     showFaceCaptureSuccessBanner: false,
     isFaceVerificationRetryAttempt: false as boolean,
     requestedClaims: '' as string,
+    showLoadingScreen: false as boolean,
   },
   {events: openID4VPEvents},
 );
