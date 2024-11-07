@@ -200,9 +200,12 @@ export async function getJWT(
     );
     if (keyType == KeyTypes.ES256 && isIOS()) return signature64;
     return header64 + '.' + payLoad64 + '.' + signature64;
-  } catch (e) {
-    console.error('Exception Occurred While Constructing JWT ', e);
-    throw e;
+  } catch (error) {
+    console.error('Exception Occurred While Constructing JWT ', error);
+    if (error.toString().includes(BIOMETRIC_CANCELLED)) {
+      throw new BiometricCancellationError(error.toString());
+    }
+    throw error;
   }
 }
 
@@ -448,12 +451,12 @@ export async function fetchKeyPair(keyType: any) {
         privateKey: privateKey,
       };
     }
-  } catch (e) {
-    console.error('error getting key', e);
-    return {
-      publicKey: '',
-      privateKey: '',
-    };
+  } catch (error) {
+    console.error('error getting key', error);
+    if (error.toString().includes(BIOMETRIC_CANCELLED)) {
+      throw new BiometricCancellationError(error.toString());
+    }
+    throw error;
   }
 }
 const convertToKeyValue = items => {
