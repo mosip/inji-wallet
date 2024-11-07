@@ -27,6 +27,7 @@ import {
 import {TelemetryConstants} from '../../shared/telemetry/TelemetryConstants';
 import {VciClient} from '../../shared/vciClient/VciClient';
 import {isMockVC} from '../../shared/Utils';
+import {VCFormat} from '../../shared/VCFormat';
 
 export const IssuersService = () => {
   return {
@@ -125,7 +126,10 @@ export const IssuersService = () => {
 
     verifyCredential: async (context: any) => {
       //TODO: Remove bypassing verification of mock VCs once mock VCs are verifiable
-      if (!isMockVC(context.selectedIssuerId)) {
+      if (
+        context.selectedCredentialType.format === VCFormat.mso_mdoc ||
+        !isMockVC(context.selectedIssuerId)
+      ) {
         const verificationResult = await verifyCredential(
           context.verifiableCredential?.credential,
           context.selectedCredentialType.format,
