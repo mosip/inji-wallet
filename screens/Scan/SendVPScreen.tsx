@@ -162,7 +162,10 @@ export const SendVPScreen: React.FC<ScanLayoutProps> = props => {
                 {cardsSelectedText}
               </Text>
               <Text
-                style={{color: '#F2801D', fontFamily: 'Inter_600SemiBold'}}
+                style={{
+                  color: Theme.Colors.Icon,
+                  fontFamily: 'Inter_600SemiBold',
+                }}
                 onPress={
                   areAllVcsChecked
                     ? controller.UNCHECK_ALL
