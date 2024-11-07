@@ -24,7 +24,7 @@ export const HelpScreen: React.FC<HelpScreenProps> = props => {
       setTimeout(() => {
         if (listingRef?.current != null) {
           listingRef.current.scrollToIndex({
-            index: 15,
+            index: 18,
             animated: true,
           });
         }
