@@ -59,7 +59,11 @@ import RestoreIcon from '../../assets/restoreIconBackup.svg';
 import QuestionIcon from '../../assets/questionIcon.svg';
 import CopyIcon from '../../assets/file_copy.svg';
 import StarIcon from '../../assets/credentialRegestryStar.svg';
+import SelectedCheckBox from '../../assets/Selected_Check_Box.svg';
 export class SvgImage {
+  static selectedCheckBox() {
+    return <SelectedCheckBox />;
+  }
   static copyIcon(): React.ReactNode {
     return (
       <CopyIcon

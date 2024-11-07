@@ -68,6 +68,7 @@ const Colors = {
   toolTipPointer: '#E0E0E0',
   Mercury: '#E6E6E6',
   Yellow: '#E8A94F',
+  selectIDTextGradient: ['#F5F5F5', '#FFFFFF'],
 };
 
 export type ElevationLevel = 0 | 1 | 2 | 3 | 4 | 5 | 6;
