@@ -420,6 +420,9 @@ export const PurpleTheme = {
       width: 105,
       height: 40,
     },
+    injiHomeLogo:{
+      marginLeft:0
+    },
     logo: {
       height: 35,
       width: 35,
