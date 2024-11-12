@@ -17,7 +17,6 @@ import {
   SettingsEvents,
   selectAppId,
   selectEsignetHostUrl,
-  selectIsKeymanagementExplored,
   selectIsKeymanagementTourGuideExplored,
   selectIsKeyOrderSet,
 } from '../../machines/settings';
@@ -128,10 +127,6 @@ export function useSettingsScreen(props: RootRouteProps & RequestRouteProps) {
     isBiometricUnlockEnabled: useSelector(
       settingsService || {},
       selectBiometricUnlockEnabled,
-    ),
-    isKeyManagementExplored: useSelector(
-      settingsService,
-      selectIsKeymanagementExplored,
     ),
     isKeyManagementTourGuideExplored: useSelector(
       settingsService,
