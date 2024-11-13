@@ -22,7 +22,6 @@ import {NativeModules} from 'react-native';
 import {
   AUTH_TIMEOUT,
   decryptJson,
-  DUMMY_KEY_FOR_BIOMETRIC_ALIAS,
   ENCRYPTION_ID,
   encryptJson,
   HMAC_ALIAS,
@@ -274,6 +273,19 @@ export const storeMachine =
             DECRYPT_ERROR: {
               actions: sendParent('DECRYPT_ERROR'),
             },
+            BIOMETRIC_CANCELLED: {
+              actions: [
+                send(
+                  (_, event) => model.events.BIOMETRIC_CANCELLED(event.requester),
+                  {
+                    to: (_, event) => event.requester,
+                  },
+                ),
+                sendUpdate(),
+                sendParent('BIOMETRIC_CANCELLED')
+              ],
+              target: 'checkFreshInstall',
+            }
           },
         },
       },
@@ -290,17 +302,10 @@ export const storeMachine =
           actions: sendParent('KEY_INVALIDATE_ERROR'),
         },
         BIOMETRIC_CANCELLED: {
-          actions: [
-            send(
-              (_, event) => model.events.BIOMETRIC_CANCELLED(event.requester),
-              {
-                to: (_, event) => event.requester,
-              },
-            ),
-            sendUpdate(),
-          ],
-        },
+          actions: [sendParent('BIOMETRIC_CANCELLED')],
+          target: 'checkFreshInstall'
       },
+    },
     },
     {
       actions: {
@@ -328,9 +333,15 @@ export const storeMachine =
           }
           return;
         },
-        checkFreshInstall: () => async _ => {
-          const response = await getItem('auth', null, '');
-          return response;
+        checkFreshInstall: () => async callback => {
+          try{
+          return await getItem('auth', null, '');
+          }
+          catch(e){
+            if(e instanceof BiometricCancellationError){
+              callback(model.events.BIOMETRIC_CANCELLED());
+            }
+          }
         },
         hasEncryptionKey: () => async callback => {
           let hasSetCredentials;
@@ -350,6 +361,9 @@ export const storeMachine =
                 base64EncodedString,
               );
             } catch (e) {
+              if(e instanceof BiometricCancellationError){
+                callback(model.events.BIOMETRIC_CANCELLED(event.requester));
+              }
               sendErrorEvent(getErrorEventData('ENCRYPTION', '', e));
 
               if (e.message.includes(keyinvalidatedString)) {
