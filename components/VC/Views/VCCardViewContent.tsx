@@ -107,10 +107,11 @@ export const VCCardViewContent: React.FC<VCItemContentProps> = props => {
 
           {!Object.values(VCItemContainerFlowType).includes(props.flow) && (
             <>
-              {!props.walletBindingResponse &&
-              isActivationNeeded(props.verifiableCredentialData?.issuer)
-                ? SvgImage.walletUnActivatedIcon()
-                : SvgImage.walletActivatedIcon()}
+              {!props.verifiableCredentialData?.vcMetadata.isExpired &&
+                (!props.walletBindingResponse &&
+                isActivationNeeded(props.verifiableCredentialData?.issuer)
+                  ? SvgImage.walletUnActivatedIcon()
+                  : SvgImage.walletActivatedIcon())}
               <Pressable
                 onPress={props.KEBAB_POPUP}
                 accessible={false}
