@@ -23,6 +23,7 @@ export class VCMetadata {
   isVerified: boolean = false;
   displayId: string = '';
   format: string = '';
+  isExpired: boolean = false;
 
   downloadKeyType: string = '';
   constructor({
@@ -37,6 +38,7 @@ export class VCMetadata {
     displayId = '',
     format = '',
     downloadKeyType = '',
+    isExpired = false,
   } = {}) {
     this.idType = idType;
     this.requestId = requestId;
@@ -49,6 +51,7 @@ export class VCMetadata {
     this.displayId = displayId;
     this.format = format;
     this.downloadKeyType = downloadKeyType;
+    this.isExpired = isExpired;
   }
 
   //TODO: Remove any typing and use appropriate typing
@@ -63,6 +66,7 @@ export class VCMetadata {
       issuer: vc.issuer,
       timestamp: vc.vcMetadata ? vc.vcMetadata.timestamp : vc.timestamp,
       isVerified: vc.isVerified,
+      isExpired: vc.isExpired,
       displayId: vc.displayId
         ? vc.displayId
         : vc.vcMetadata
@@ -119,6 +123,7 @@ export const getVCMetadata = (context: object, keyType: string) => {
     id: `${credentialId} + '_' + ${issuer}`,
     timestamp: context.timestamp ?? '',
     isVerified: context.vcMetadata.isVerified ?? false,
+    isExpired: context.vcMetadata.isExpired ?? false,
     displayId: getDisplayId(
       context['verifiableCredential'] as VerifiableCredential,
       context['credentialWrapper'].format,

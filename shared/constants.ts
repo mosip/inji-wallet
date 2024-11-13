@@ -159,5 +159,10 @@ export const copilotTestID = {
   '6': 'cardView',
 };
 
-export const FACE_SDK_MODEL_PATH = isAndroid() ? 'assets:faceModel.tflite' : 'bundle:/faceModel.tflite'
-export const FACE_SDK_MODEL_CHECKSUM = '797b4d99794965749635352d55da38d4748c28c659ee1502338badee4614ed06'
+export const FACE_SDK_MODEL_PATH = isAndroid()
+  ? 'assets:faceModel.tflite'
+  : 'bundle:/faceModel.tflite';
+export const FACE_SDK_MODEL_CHECKSUM =
+  '797b4d99794965749635352d55da38d4748c28c659ee1502338badee4614ed06';
+
+export const EXPIRED_VC_ERROR_CODE = 'ERR_VC_EXPIRED';

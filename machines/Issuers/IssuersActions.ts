@@ -8,6 +8,7 @@ import {
   NETWORK_REQUEST_FAILED,
   REQUEST_TIMEOUT,
   isIOS,
+  EXPIRED_VC_ERROR_CODE,
 } from '../../shared/constants';
 import {assign, send} from 'xstate';
 import {StoreEvents} from '../store';
@@ -41,6 +42,21 @@ export const IssuersActions = (model: any) => {
         new VCMetadata({
           ...context.vcMetadata,
           isVerified: false,
+        }),
+    }),
+    setIsExpired: assign({
+      vcMetadata: (context: any, event: any) => {
+        return new VCMetadata({
+          ...context.vcMetadata,
+          isExpired: event.data.verificationErrorCode == EXPIRED_VC_ERROR_CODE,
+        });
+      },
+    }),
+    resetIsExpired: assign({
+      vcMetadata: (context: any, event: any) =>
+        new VCMetadata({
+          ...context.vcMetadata,
+          isExpired: false,
         }),
     }),
     setIssuers: model.assign({

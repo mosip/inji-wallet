@@ -90,6 +90,7 @@ export const VCCardViewContent: React.FC<VCItemContentProps> = props => {
               <VCVerification
                 wellknown={props.wellknown}
                 isVerified={props.isVerified}
+                isExpired={props.isExpired}
               />
             </Row>
           </Column>
@@ -168,6 +169,7 @@ export interface VCItemContentProps {
   vcMetadata: VCMetadata;
   isVerified?: boolean;
   isInitialLaunch?: boolean;
+  isExpired?: boolean;
 }
 
 VCCardViewContent.defaultProps = {
