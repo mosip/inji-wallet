@@ -65,6 +65,7 @@ const model = createModel(
       STORE_RESPONSE: (response: unknown) => ({response}),
       RESET_KEY_INVALIDATE_ERROR_DISMISS: () => ({}),
       RESET_LINKCODE: () => ({}),
+      BIOMETRIC_CANCELLED: () => ({}),
     },
   },
 );
@@ -101,6 +102,9 @@ export const appMachine = model.createMachine(
         actions: ['resetKeyInvalidateError'],
         target: 'init',
       },
+      BIOMETRIC_CANCELLED: {
+        target: 'init'
+      }
     },
     states: {
       init: {
@@ -166,6 +170,10 @@ export const appMachine = model.createMachine(
                 ],
                 target: 'info',
               },
+              BIOMETRIC_CANCELLED: {
+                target: 'store'
+              }
+              
             },
           },
           info: {

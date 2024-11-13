@@ -1,4 +1,4 @@
-import {assign, ContextFrom, EventFrom, send, StateFrom} from 'xstate';
+import {assign, ContextFrom, EventFrom, send, StateFrom, sendUpdate} from 'xstate';
 import {createModel} from 'xstate/lib/model';
 import {AppServices} from '../shared/GlobalContext';
 import {
@@ -71,6 +71,7 @@ const model = createModel(
       RESET_KEY_ORDER_RESPONSE: () => ({}),
       SHOWN_ACCOUNT_SELECTION_CONFIRMATION: () => ({}),
       DISMISS: () => ({}),
+      BIOMETRIC_CANCELLED: (requester?: string) => ({requester}),
     },
   },
 );
@@ -105,6 +106,18 @@ export const settingsMachine = model.createMachine(
             },
             {target: 'storingDefaults'},
           ],
+          BIOMETRIC_CANCELLED: {
+              actions: [
+                send(
+                  (_, event) => model.events.BIOMETRIC_CANCELLED(event.requester),
+                  {
+                    to: (_, event) => event.requester,
+                  },
+                ),
+                sendUpdate(),
+              ],
+              target: 'init',
+            },
         },
       },
       storingDefaults: {
