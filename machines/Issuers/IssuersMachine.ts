@@ -432,14 +432,18 @@ export const IssuersMachine = model.createMachine(
           src: 'verifyCredential',
           onDone: [
             {
-              actions: ['sendSuccessEndEvent', 'setIsVerified'],
+              actions: ['sendSuccessEndEvent', 'setIsVerified', 'setIsExpired'],
               target: 'storing',
             },
           ],
           onError: [
             {
               cond: 'isVerificationPendingBecauseOfNetworkIssue',
-              actions: ['resetLoadingReason', 'resetIsVerified'],
+              actions: [
+                'resetLoadingReason',
+                'resetIsVerified',
+                'resetIsExpired',
+              ],
               target: 'storing',
             },
             {

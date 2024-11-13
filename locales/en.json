@@ -70,6 +70,7 @@
     "status": "Status",
     "valid": "Valid",
     "pending": "Pending",
+    "expired": "Expired",
     "photo": "Photo",
     "fullName": "Full Name",
     "gender": "Gender",
