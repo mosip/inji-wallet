@@ -152,6 +152,14 @@ export const AboutInji: React.FC<AboutInjiProps> = ({appId}) => {
                 {__InjiVersion.getValue()}
               </Text>
             </Row>
+            {__TuvaliVersion.getpackageVersion() != 'unknown' && (
+              <Text
+                weight="semibold"
+                style={{paddingTop: 3, paddingBottom: 12, marginTop: 3}}
+                color={Theme.Colors.aboutVersion}>
+                {t('tuvaliVersion')}: {__TuvaliVersion.getValue()}
+              </Text>
+            )}
             <View
               style={{
                 backgroundColor: 'lightgrey',
@@ -163,17 +171,8 @@ export const AboutInji: React.FC<AboutInjiProps> = ({appId}) => {
               weight="semibold"
               style={{paddingTop: 15, maxWidth: 250}}
               color="black">
-              Powered by Inji, A MOSIP Product
+              {t('poweredBy')}
             </Text>
-
-            {__TuvaliVersion.getpackageVersion() != 'unknown' && (
-              <Text
-                weight="semibold"
-                style={{paddingTop: 3, marginTop: 3}}
-                color={Theme.Colors.aboutVersion}>
-                {t('tuvaliVersion')}: {__TuvaliVersion.getValue()}
-              </Text>
-            )}
           </Column>
         </Column>
       </Modal>

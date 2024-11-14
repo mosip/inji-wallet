@@ -88,7 +88,7 @@ export const DefaultTheme = {
     Loading: Colors.Green,
     Cursor: Colors.Orange,
     noUinText: Colors.Orange,
-    IconBg: Colors.Orange,
+    IconBg: Colors.DarkGreen,
     popUp: Colors.Green,
     Icon: Colors.DarkGreen,
     GrayIcon: Colors.Gray50,

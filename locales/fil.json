@@ -161,14 +161,15 @@
     "activated": "Ang mga kredensyal ay pinagana para sa online na pagpapatunay."
   },
   "AboutInji": {
-    "aboutInji": "Tungkol kay Inji",
-    "header": "TUNGKOL KAY INJI",
+    "aboutInji": "Tungkol sa Inji Wallet",
+    "header": "Tungkol sa Inji Wallet",
     "appID": "App ID",
-    "aboutDetails": "Ang Inji ay isang mobile app na maaaring gamitin bilang digital wallet para mag-imbak ng mga kredensyal. Pinapayagan din nito ang pag-verify ng pagkakakilanlan sa parehong offline at online na mga mode, sa anumang lugar at oras.",
+    "aboutDetails": "Ginagawa ng Inji Wallet na mapagkakatiwalaan at portable ang data, na nagtatampok ng dalawang pangunahing interface na tumutugon sa magkakaibang pangangailangan ng user, kung saan ang Inji Mobile ang isa sa mga ito. Bilang isang mobile-based na wallet app, ang Inji Mobile ay isang secure, desentralisadong solusyon na nagbibigay-daan sa mga user na mag-download, mamahala, magbahagi, at mag-verify ng mga nabe-verify na kredensyal nang direkta mula sa kanilang mga smartphone, na nagbibigay ng maayos at mapagkakatiwalaang paraan upang mahawakan ang mga kredensyal on the go.",
     "forMoreDetails": "Para sa karagdagang detalye",
     "clickHere": "Pindutin dito",
     "version": "Bersyon",
-    "tuvaliVersion": "Tuvali-bersyon"
+    "tuvaliVersion": "Tuvali-bersyon",
+    "poweredBy": "Pinapatakbo ng Inji, Isang Produktong MOSIP"
   },
   "IssuersScreen": {
     "title": "Magdagdag ng bagong card",
