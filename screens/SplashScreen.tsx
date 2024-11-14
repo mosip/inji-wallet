@@ -34,8 +34,8 @@ export const SplashScreen: React.FC<RootRouteProps> = props => {
         width: Dimensions.get('screen').width,
       }}>
       <Image
-        resizeMode="stretch"
-        style={{width: 400, height: 450}}
+        resizeMode="contain"
+        style={{width: Dimensions.get('screen').width -180, height: Dimensions.get('screen').height - 120}}
         source={imageResource}
       />
     </Column>
