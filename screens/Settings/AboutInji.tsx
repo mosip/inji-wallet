@@ -93,7 +93,7 @@ export const AboutInji: React.FC<AboutInjiProps> = ({appId}) => {
             <CopyButton content={appId} />
           </Row>
         </LinearGradient>
-        <Column padding="12" align="space-between">
+        <Column padding="12" align="space-between" style={{flex:1}}>
           <Column>
             <Text
               testID="aboutDetails"
