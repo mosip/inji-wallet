@@ -8,7 +8,7 @@ It offers a secure, trustworthy, and dependable mobile Verifiable Credentials wa
 - Enable users to log in to relying parties with their credential
 - Generate a QR code for the credential to be shared offline with relying parties.
 
-for more details refer [here](https://docs.mosip.io/inji/inji-wallet/overview)
+for more details refer [here](https://docs.inji.io/inji-wallet/overview)
 
 ## Setup PreRequisites
 
@@ -25,8 +25,8 @@ Be sure to have the following build tools installed before proceeding:
 - [Java 17](https://openjdk.org/projects/jdk/17/)
 - [Gradle 7.5.1](https://gradle.org/install/)
 - [Android SDK](https://developer.android.com/)
-- minSdkVersion = 24
-- compileSdkVersion = 34
+- minSdkVersion = 23
+- compileSdkVersion = 33
 - targetSdkVersion = 34
 - ndkVersion = 21.4.7075529
 - kotlinVersion = 1.9.0
@@ -40,7 +40,7 @@ Be sure to have the following build tools installed before proceeding:
 
 ## Configuring the Environment
 
-If you ever want to use something in your local environment based on your customization and in need of using environment files other than default (.env), you can add some variables to your .env.local file. 
+If you ever want to use something in your local environment based on your customization and in need of using environment files other than default (.env), you can add some variables to your .env.local file.
 Create a `.env.local` file using `.env` as your template in your root directory :
 
 ```
@@ -65,22 +65,24 @@ GOOGLE_ANDROID_CLIENT_ID='<client_id>'
 ```
 
 for more information on the backend services
-refer [here](https://docs.mosip.io/inji/inji-wallet/technical-overview/backend-services).
+refer [here](https://docs.inji.io/inji-wallet/technical-overview/backend-services).
 
 ## Building & Running for Android
 
-Refer to the documentation of Inji Wallet's [build and deployment android section](https://docs.mosip.io/inji/inji-wallet/build-and-deployment#android-build-and-run) for the steps build the android application.
+For local build, update targetSdkVersion to 33. There is some known issues in the debug build with targetSdk version = 34.
+
+Refer to the documentation of Inji Wallet's [build and deployment android section](https://docs.inji.io/inji-wallet/build-and-deployment#android-build-and-run) for the steps to build the android application.
 
 Note: Alternative to building and running app via react native CLI, it can be built via Android Studio. The app is available in this repository's `./android` directory. Open this directory in Android Studio (version  
 4.1 and above) and the app can be built and run from there.
 
 More info here:
-- [Build your app using Android Studio](https://developer.android.com/studio/run)
 
+- [Build your app using Android Studio](https://developer.android.com/studio/run)
 
 ## Building & Running for iOS
 
-Refer to the documentation of Inji Wallet's [build and deployment iOS section](https://docs.mosip.io/inji/inji-wallet/build-and-deployment#ios-build-and-run) for the steps build the iOS application.
+Refer to the documentation of Inji Wallet's [build and deployment iOS section](https://docs.inji.io/inji-wallet/build-and-deployment#ios-build-and-run) for the steps build the iOS application.
 
 More info here:
 
@@ -89,7 +91,7 @@ More info here:
 
 ## Contributions
 
-Please refer [here](https://docs.mosip.io/inji/inji-mobile-wallet/contribution) for contributing to Inji
+Please refer [here](https://docs.inji.io/inji-mobile-wallet/contribution) for contributing to Inji
 
 ## Credits
 
