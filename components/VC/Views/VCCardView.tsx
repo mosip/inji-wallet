@@ -100,9 +100,7 @@ export const VCCardView: React.FC<VCItemProps> = props => {
       isKebabPopUp={controller.isKebabPopUp}
       DISMISS={controller.DISMISS}
       KEBAB_POPUP={controller.KEBAB_POPUP}
-      isVerified={props.vcMetadata.isVerified}
       isInitialLaunch={props.isInitialLaunch}
-      isExpired={props.vcMetadata.isExpired}
     />
   );
 

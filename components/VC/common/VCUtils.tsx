@@ -76,8 +76,7 @@ export const getFieldValue = (
       return (
         <VCVerification
           wellknown={wellknown}
-          isVerified={props.verifiableCredentialData.vcMetadata.isVerified}
-          isExpired={props.verifiableCredentialData.vcMetadata.isExpired}
+          vcMetadata={props.verifiableCredentialData.vcMetadata}
         />
       );
     case 'idType':
