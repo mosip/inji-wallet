@@ -27,10 +27,6 @@ export const HomeScreenLayout: React.FC<RootRouteProps> = props => {
       props.navigation.setOptions({
         tabBarShowLabel: true,
         tabBarActiveTintColor: Theme.Colors.IconBg,
-        tabBarLabelStyle: {
-          fontSize: 12,
-          fontFamily: 'Inter_600SemiBold',
-        },
         tabBarStyle: {
           height: 75,
           paddingHorizontal: 10,
@@ -82,14 +78,22 @@ export const HomeScreenLayout: React.FC<RootRouteProps> = props => {
 
   var HomeScreenOptions = {
     headerLeft: () =>
-      isIOS() || !isRTL
-        ? <View style={Theme.Styles.injiHomeLogo}>{SvgImage.InjiLogo(Theme.Styles.injiLogo)}</View>
-        : screenOptions,
+      isIOS() || !isRTL ? (
+        <View style={Theme.Styles.injiHomeLogo}>
+          {SvgImage.InjiLogo(Theme.Styles.injiLogo)}
+        </View>
+      ) : (
+        screenOptions
+      ),
     headerTitle: '',
     headerRight: () =>
-      isIOS() || !isRTL
-        ? screenOptions
-        : <View style={Theme.Styles.injiHomeLogo}>{SvgImage.InjiLogo(Theme.Styles.injiLogo)}</View>,
+      isIOS() || !isRTL ? (
+        screenOptions
+      ) : (
+        <View style={Theme.Styles.injiHomeLogo}>
+          {SvgImage.InjiLogo(Theme.Styles.injiLogo)}
+        </View>
+      ),
   };
 
   return (

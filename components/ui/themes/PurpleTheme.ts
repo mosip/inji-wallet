@@ -75,6 +75,7 @@ export type ElevationLevel = 0 | 1 | 2 | 3 | 4 | 5 | 6;
 
 export const PurpleTheme = {
   Colors: {
+    KebabIconBackgroundcolor: Colors.Purple,
     ProfileIconColor: Colors.DarkGray,
     DetailedViewBackground: Colors.Gray97,
     TabItemText: Colors.Purple,
@@ -254,7 +255,6 @@ export const PurpleTheme = {
       width: Dimensions.get('window').width * 0.12,
       height: Dimensions.get('window').height * 0.045,
       borderRadius: 6,
-      backgroundColor: Colors.LightPurple,
     },
     homeScreenContainer: {
       alignItems: 'center',
@@ -421,8 +421,8 @@ export const PurpleTheme = {
       width: 105,
       height: 40,
     },
-    injiHomeLogo:{
-      marginLeft:0
+    injiHomeLogo: {
+      marginLeft: 0,
     },
     logo: {
       height: 35,
@@ -1750,6 +1750,16 @@ export const PurpleTheme = {
     tabBarItemStyle: {
       height: 83,
       padding: 11,
+    },
+    bottomTabLabelText: {
+      fontSize: 11,
+      fontFamily: 'Inter_700Bold',
+      color: Colors.Purple,
+    },
+    unfocusedbottomTabLabelText: {
+      fontSize: 11,
+      fontFamily: 'Inter_700Bold',
+      color: Colors.DarkGray,
     },
   }),
 
