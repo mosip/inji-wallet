@@ -25,8 +25,8 @@ Be sure to have the following build tools installed before proceeding:
 - [Java 17](https://openjdk.org/projects/jdk/17/)
 - [Gradle 7.5.1](https://gradle.org/install/)
 - [Android SDK](https://developer.android.com/)
-- minSdkVersion = 23
-- compileSdkVersion = 33
+- minSdkVersion = 24
+- compileSdkVersion = 34
 - targetSdkVersion = 34
 - ndkVersion = 21.4.7075529
 - kotlinVersion = 1.9.0
@@ -69,7 +69,7 @@ refer [here](https://docs.inji.io/inji-wallet/technical-overview/backend-service
 
 ## Building & Running for Android
 
-For local build, update targetSdkVersion to 33. There is some known issues in the debug build with targetSdk version = 34.
+For local build, update targetSdkVersion and compleSdkVersion to 33. There is some known issues in the debug build with targetSdk version and compleSdkVersion = 34.
 
 **Step 1:** Generate debug keystore for building debug build. [One time activity]
 
