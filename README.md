@@ -71,10 +71,53 @@ refer [here](https://docs.inji.io/inji-wallet/technical-overview/backend-service
 
 For local build, update targetSdkVersion to 33. There is some known issues in the debug build with targetSdk version = 34.
 
-Refer to the documentation of Inji Wallet's [build and deployment android section](https://docs.inji.io/inji-wallet/build-and-deployment#android-build-and-run) for the steps to build the android application.
+**Step 1:** Generate debug keystore for building debug build. [One time activity]
+
+```
+keytool \
+ -genkey -v \
+ -storetype PKCS12 \
+ -keyalg RSA \
+ -keysize 2048 \
+ -validity 10000 \
+ -storepass 'android' \
+ -keypass 'android' \
+ -alias androiddebugkey \
+ -keystore android/app/debug.keystore \
+ -dname "CN=io.mosip.residentapp,OU=,O=,L=,S=,C=US"
+```
+
+Export keystore. Run the below command in your terminal.
+
+```
+export DEBUG_KEYSTORE_ALIAS=androiddebugkey
+export DEBUG_KEYSTORE_PASSWORD=android
+```
+
+**Step 2:** Clone the inji repository and create an `android/local.properties` file with the following data:
+
+```
+sdk.dir = <location-of-the-android-sdk>
+```
+
+Alternatively, you can open the Android folder in the android studio. It will create local.properties file with sdk.dir = <location-of-the-android-sdk>.
+
+**Step 3:** Update the mimoto url and esignet host in the .env file.
+
+- mimoto url: https://api.collab.mosip.net
+- esignet host: https://esignet.collab.mosip.net
+
+**Step 4:** Go to the root folder of the project in the terminal. Install all the dependencies using `npm install`.
+
+**Step 5:** Build and run the application on the device:
+
+- Run `npm run android:mosip` to build and install the application on the device.
+- Run `npm run android:mosip --reset-cache` to build and install the application if any change is made in the .env file.
 
 Note: Alternative to building and running app via react native CLI, it can be built via Android Studio. The app is available in this repository's `./android` directory. Open this directory in Android Studio (version  
 4.1 and above) and the app can be built and run from there.
+
+Refer to the documentation of Inji Wallet's [build and deployment android section](https://docs.inji.io/inji-wallet/build-and-deployment#android-build-and-run) for the steps to build the android application.
 
 More info here:
 
@@ -82,7 +125,32 @@ More info here:
 
 ## Building & Running for iOS
 
-Refer to the documentation of Inji Wallet's [build and deployment iOS section](https://docs.inji.io/inji-wallet/build-and-deployment#ios-build-and-run) for the steps build the iOS application.
+**Step 1:** Install all the dependencies
+
+```
+npm install
+npx pod-install
+```
+
+**Step 2:** Run Metro bundler in the background
+
+```
+npm start
+```
+
+**Step 3:** Run Inji directly to a connected device Command to run on simulator
+
+```
+npm run ios
+```
+
+**Step 4:** Command to run real device
+
+```
+npm run ios -- --device
+```
+
+Refer to the documentation of Inji Wallet's [build and deployment iOS section](https://docs.inji.io/inji-wallet/build-and-deployment#ios-build-and-run) for detailed steps to build the iOS application.
 
 More info here:
 
