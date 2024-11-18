@@ -27,10 +27,6 @@ export const HomeScreenLayout: React.FC<RootRouteProps> = props => {
       props.navigation.setOptions({
         tabBarShowLabel: true,
         tabBarActiveTintColor: Theme.Colors.IconBg,
-        tabBarLabelStyle: {
-          fontSize: 12,
-          fontFamily: 'Inter_600SemiBold',
-        },
         tabBarStyle: {
           height: 75,
           paddingHorizontal: 10,
