@@ -80,7 +80,22 @@ export const IssuersService = () => {
         accessToken,
       );
 
+      console.log('credentialmaincheck', JSON.stringify(credential, null, 2));
+
       console.info(`VC download via ${context.selectedIssuerId} is successful`);
+      if (credential.credential.credentialSubject.name) {
+        credential.credential.credentialSubject.fullName =
+          credential.credential.credentialSubject.name;
+      }
+      console.log(
+        'credential.credential.id>>>>>>>>>>',
+        JSON.stringify(credential, null, 2),
+      );
+      if (credential.credential.id) {
+        credential.credential.id = credential.credential.id
+          .split(':')
+          .reverse()[0];
+      }
       return await updateCredentialInformation(context, credential);
     },
     invokeAuthorization: async (context: any) => {
