@@ -827,7 +827,7 @@
     }
   },
   "SendVPScreen": {
-    "requester": "الطالب",
+    "requester": "جهة التحقق",
     "cardsSelected": "البطاقات المختارة",
     "cardSelected": "card selected",
     "unCheck": "البطاقة مختارة",

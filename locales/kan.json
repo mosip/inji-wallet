@@ -827,7 +827,7 @@
     }
   },
   "SendVPScreen": {
-    "requester": "ವಿನಂತಿಸುವವರು",
+    "requester": "ಪರಿಶೀಲನೆ ಘಟಕ",
     "cardsSelected": "ಕಾರ್ಡ್‌ಗಳನ್ನು ಆಯ್ಕೆ ಮಾಡಲಾಗಿದೆ",
     "cardSelected": "ಕಾರ್ಡ್ ಆಯ್ಕೆಮಾಡಲಾಗಿದೆ",
     "unCheck": "ಅನ್ಚೆಕ್ ಮಾಡಿ",

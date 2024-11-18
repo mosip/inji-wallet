@@ -829,7 +829,7 @@
     }
   },
   "SendVPScreen": {
-    "requester": "अनुरोधकर्ता",
+    "requester": "सत्यापन इकाई",
     "cardsSelected": "कार्ड चयनित",
     "cardSelected": "कार्ड चयनित",
     "unCheck": "सही का निशान हटाएँ",

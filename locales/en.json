@@ -835,7 +835,7 @@
     }
   },
   "SendVPScreen": {
-    "requester": "Requester",
+    "requester": "Verification Entity",
     "cardsSelected": "cards selected",
     "cardSelected": "card selected",
     "unCheck": "Uncheck",
