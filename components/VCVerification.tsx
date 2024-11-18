@@ -8,20 +8,19 @@ import {useTranslation} from 'react-i18next';
 import PendingIcon from './PendingIcon';
 import {VCMetadata} from '../shared/VCMetadata';
 
-export const VCVerification: React.FC = ({
+export const VCVerification: React.FC<VCVerificationProps> = ({
+  vcMetadata,
   display,
-  isVerified,
-  isExpired,
-}: any) => {
+}) => {
   const {t} = useTranslation('VcDetails');
-  const statusText = isVerified
-    ? isExpired
+  const statusText = vcMetadata.isVerified
+    ? vcMetadata.isExpired
       ? t('expired')
       : t('valid')
     : t('pending');
 
-  const statusIcon = isVerified ? (
-    isExpired ? (
+  const statusIcon = vcMetadata.isVerified ? (
+    vcMetadata.isExpired ? (
       <PendingIcon />
     ) : (
       <VerifiedIcon />
@@ -49,6 +48,6 @@ export const VCVerification: React.FC = ({
 };
 
 export interface VCVerificationProps {
-  isVerified: boolean;
+  vcMetadata: VCMetadata;
   display: Display;
 }
