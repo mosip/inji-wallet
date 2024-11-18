@@ -30,32 +30,19 @@ import {VCActivityLog} from '../../components/ActivityLogEvent';
 const {RNSecureKeystoreModule} = NativeModules;
 export const IssuersActions = (model: any) => {
   return {
-    setIsVerified: assign({
-      vcMetadata: (context: any) =>
+    setVerificationResult: assign({
+      vcMetadata: (context: any, event: any) =>
         new VCMetadata({
           ...context.vcMetadata,
           isVerified: true,
+          isExpired: event.data.verificationErrorCode == EXPIRED_VC_ERROR_CODE,
         }),
     }),
-    resetIsVerified: assign({
+    resetVerificationResult: assign({
       vcMetadata: (context: any) =>
         new VCMetadata({
           ...context.vcMetadata,
           isVerified: false,
-        }),
-    }),
-    setIsExpired: assign({
-      vcMetadata: (context: any, event: any) => {
-        return new VCMetadata({
-          ...context.vcMetadata,
-          isExpired: event.data.verificationErrorCode == EXPIRED_VC_ERROR_CODE,
-        });
-      },
-    }),
-    resetIsExpired: assign({
-      vcMetadata: (context: any, event: any) =>
-        new VCMetadata({
-          ...context.vcMetadata,
           isExpired: false,
         }),
     }),
