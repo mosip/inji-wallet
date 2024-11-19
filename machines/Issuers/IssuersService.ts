@@ -137,6 +137,7 @@ export const IssuersService = () => {
         if (!verificationResult.isVerified) {
           throw new Error(verificationResult.verificationErrorCode);
         }
+        return verificationResult;
       } else {
         return {
           isVerified: true,
