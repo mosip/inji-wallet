@@ -91,11 +91,11 @@ export const IssuersService = () => {
         'credential.credential.id>>>>>>>>>>',
         JSON.stringify(credential, null, 2),
       );
-      if (credential.credential.id) {
-        credential.credential.id = credential.credential.id
-          .split(':')
-          .reverse()[0];
-      }
+      // if (credential.credential.id) {
+      //   credential.credential.id = credential.credential.id
+      //     .split(':')
+      //     .reverse()[0];
+      // }
       return await updateCredentialInformation(context, credential);
     },
     invokeAuthorization: async (context: any) => {
