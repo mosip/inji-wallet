@@ -63,7 +63,11 @@ export class VCMetadata {
       issuer: vc.issuer,
       timestamp: vc.vcMetadata ? vc.vcMetadata.timestamp : vc.timestamp,
       isVerified: vc.isVerified,
-      displayId: '',
+      displayId: vc.displayId
+        ? vc.displayId
+        : vc.vcMetadata
+        ? vc.vcMetadata.displayId
+        : getDisplayId(vc.verifiableCredential, vc.format),
       downloadKeyType: vc.downloadKeyType,
     });
   }
@@ -115,7 +119,10 @@ export const getVCMetadata = (context: object, keyType: string) => {
     id: `${credentialId} + '_' + ${issuer}`,
     timestamp: context.timestamp ?? '',
     isVerified: context.vcMetadata.isVerified ?? false,
-    displayId: '',
+    displayId: getDisplayId(
+      context['verifiableCredential'] as VerifiableCredential,
+      context['credentialWrapper'].format,
+    ),
     format: context['credentialWrapper'].format,
     downloadKeyType: keyType,
   });
