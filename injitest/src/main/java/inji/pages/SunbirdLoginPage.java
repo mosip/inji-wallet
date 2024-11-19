@@ -39,7 +39,7 @@ public class SunbirdLoginPage extends BasePage {
     @iOSXCUITFindBy(xpath = "//XCUIElementTypeStaticText[@name=\"January 2024\"]")
     private WebElement January2024;
 
-    @AndroidFindBy(xpath = "//android.widget.Button[@resource-id=\"verify_form\"]")
+    @AndroidFindBy(xpath = "//*[@resource-id=\"verify_form\"]")
     @iOSXCUITFindBy(iOSClassChain = "**/XCUIElementTypeButton[`name == \"Login\"`]")
     private WebElement loginButton;
 
@@ -151,6 +151,15 @@ public class SunbirdLoginPage extends BasePage {
     @iOSXCUITFindBy(accessibility = "6done")
     private WebElement doneButton;
 
+    @AndroidFindBy(accessibility = "keyTypeVcDetailViewValue")
+    @iOSXCUITFindBy(accessibility = "keyTypeVcDetailViewValue")
+    private WebElement keyTypeVcDetailViewValue;
+
+    @AndroidFindBy(xpath = "//*[@text=\"Login failed, please enter correct credentials\"]")
+    @iOSXCUITFindBy(xpath = "//*[@text=\"Login failed, please enter correct credentials\"]")
+    private WebElement LoginFailedDueTOInValidCredentials;
+
+
     public SunbirdLoginPage(AppiumDriver driver) {
         super(driver);
     }
@@ -206,11 +215,19 @@ public class SunbirdLoginPage extends BasePage {
             clickOnElement(clickOnSetButton);
         }
     }
-    public void clickOnloginButton() {
-        if(isElementDisplayed(loginButton)) {
+    public void clickOnloginButton() throws InterruptedException {
+
+        int retryCount = 0;
+        while (isElementDisplayed(loginButton) && retryCount < 5) {
             clickOnElement(loginButton);
+            if (isElementDisplayed(LoginFailedDueTOInValidCredentials)) {
+                retryCount++;
+                Thread.sleep(1000);
+            } else {
+                break;
+            }
         }
-        else {
+         if(isElementDisplayed(loginButtonSecond)){
             clickOnElement(loginButtonSecond);
         }
     }

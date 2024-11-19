@@ -34,8 +34,12 @@ public class TestDataReader {
                 return "1234567891";
             case "fullName":
                 return "TEST_FULLNAMEeng";
+            case "fullNameForMobileDrivingLicense":
+                return "Joseph";
             case "idType":
                 return "MOSIP National ID";
+            case "idTypeForMobileDrivingLicense":
+                return "Mobile Driving License";
             case "gender":
                 return "MLEeng";
             case "genderVidEsignet":
@@ -50,6 +54,8 @@ public class TestDataReader {
                 return "01/01/1996";
             case "dateOfBirthForVidEsignet":
                 return "1996/01/01";
+            case "dateOfBirthForMobileDrivingLicense":
+                return "1994-11-06";
             case "aid":
                 return UinGenerationUtil.getRandomAidData();
             case "emailPassword":
@@ -66,6 +72,8 @@ public class TestDataReader {
                 return UinGenerationUtil.getRandomUin();
             case "uin2":
                 return "2162743612";
+            case "MockVc":
+                return "1234567";
             case "uin2FullName":
                 return "TEST_FULLNAMEeng";
             case "newEnv":
@@ -100,6 +108,14 @@ public class TestDataReader {
                 return "Valid";
             case "isDeviceFarmRun":
                 return "true";
+            case "ED25519Key":
+                return "ED25519";
+            case "ECCK1Key":
+                return "ECC K1";
+            case "ECCR1Key":
+                return "ECC R1";
+            case "RSAKey":
+                return "RSA";
             default:
                 return "Key not found";
         }
