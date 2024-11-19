@@ -1,7 +1,7 @@
 import {useFocusEffect} from '@react-navigation/native';
-import React, {useEffect} from 'react';
+import React, {useEffect, useLayoutEffect} from 'react';
 import {useTranslation} from 'react-i18next';
-import {BackHandler, View} from 'react-native';
+import {BackHandler, I18nManager, View} from 'react-native';
 import {Button, Column, Row, Text} from '../../components/ui';
 import {Theme} from '../../components/ui/styleUtils';
 import {VcItemContainer} from '../../components/VC/VcItemContainer';
@@ -11,7 +11,7 @@ import {
   getImpressionEventData,
   sendImpressionEvent,
 } from '../../shared/telemetry/TelemetryUtils';
-import {isMosipVC, VCItemContainerFlowType} from '../../shared/Utils';
+import {VCItemContainerFlowType} from '../../shared/Utils';
 import {VCMetadata} from '../../shared/VCMetadata';
 import {VerifyIdentityOverlay} from '../VerifyIdentityOverlay';
 import {VPShareOverlay} from './VPShareOverlay';
@@ -20,8 +20,11 @@ import {useSendVPScreen} from './SendVPScreenController';
 import LinearGradient from 'react-native-linear-gradient';
 import {Error} from '../../components/ui/Error';
 import {SvgImage} from '../../components/ui/svg';
+import {Loader} from '../../components/ui/Loader';
+import {Icon} from 'react-native-elements';
+import {ScanLayoutProps} from '../../routes/routeTypes';
 
-export const SendVPScreen: React.FC = () => {
+export const SendVPScreen: React.FC<ScanLayoutProps> = props => {
   const {t} = useTranslation('SendVPScreen');
   const controller = useSendVPScreen();
 
@@ -48,6 +51,55 @@ export const SendVPScreen: React.FC = () => {
       return () => disableBackHandler.remove();
     }, []),
   );
+
+  useLayoutEffect(() => {
+    if (controller.showLoadingScreen) {
+      props.navigation.setOptions({
+        headerShown: false,
+      });
+    } else {
+      props.navigation.setOptions({
+        headerShown: true,
+        title: t('SendVPScreen:requester'),
+        headerTitleAlign: 'center',
+        headerTitle: props => (
+          <View style={Theme.Styles.sendVPHeaderContainer}>
+            <Text style={Theme.Styles.sendVPHeaderTitle}>{props.children}</Text>
+            {controller.vpVerifierName && (
+              <Text style={Theme.Styles.sendVPHeaderSubTitle}>
+                {controller.vpVerifierName}
+              </Text>
+            )}
+          </View>
+        ),
+        headerRight: () =>
+          !I18nManager.isRTL && (
+            <Icon
+              name="close"
+              color={Theme.Colors.blackIcon}
+              onPress={controller.DISMISS}
+            />
+          ),
+        headerLeft: () =>
+          I18nManager.isRTL && (
+            <Icon
+              name="close"
+              color={Theme.Colors.blackIcon}
+              onPress={controller.DISMISS}
+            />
+          ),
+      });
+    }
+  }, [controller.showLoadingScreen, controller.vpVerifierName]);
+
+  if (controller.showLoadingScreen) {
+    return (
+      <Loader
+        title={t('loaders.loading')}
+        subTitle={t(`loaders.subTitle.fetchingVerifiers`)}
+      />
+    );
+  }
 
   const handleTextButtonEvent = () => {
     controller.GO_TO_HOME();
@@ -110,7 +162,10 @@ export const SendVPScreen: React.FC = () => {
                 {cardsSelectedText}
               </Text>
               <Text
-                style={{color: '#F2801D', fontFamily: 'Inter_600SemiBold'}}
+                style={{
+                  color: Theme.Colors.Icon,
+                  fontFamily: 'Inter_600SemiBold',
+                }}
                 onPress={
                   areAllVcsChecked
                     ? controller.UNCHECK_ALL
@@ -150,19 +205,33 @@ export const SendVPScreen: React.FC = () => {
                 {position: 'relative'},
               ]}
               backgroundColor={Theme.Colors.whiteBackgroundColor}>
-              <Button
-                type="gradient"
-                styles={{marginTop: 12}}
-                title={t('SendVcScreen:acceptRequest')}
-                disabled={Object.keys(controller.selectedVCKeys).length === 0}
-                onPress={controller.ACCEPT_REQUEST}
-              />
-              {controller.checkIfAnyMatchingVCHasImage() && (
+              {!controller.checkIfAllVCsHasImage(
+                controller.vcsMatchingAuthRequest,
+              ) && (
+                <Button
+                  type="gradient"
+                  styles={{marginTop: 12}}
+                  title={t('SendVcScreen:acceptRequest')}
+                  disabled={
+                    Object.keys(controller.getSelectedVCs()).length === 0 ||
+                    controller.checkIfAnyVCHasImage(controller.getSelectedVCs())
+                  }
+                  onPress={controller.ACCEPT_REQUEST}
+                />
+              )}
+              {controller.checkIfAnyVCHasImage(
+                controller.vcsMatchingAuthRequest,
+              ) && (
                 <Button
                   type="gradient"
                   title={t('SendVcScreen:acceptRequestAndVerify')}
                   styles={{marginTop: 12}}
-                  disabled={Object.keys(controller.selectedVCKeys).length === 0}
+                  disabled={
+                    Object.keys(controller.getSelectedVCs()).length === 0 ||
+                    !controller.checkIfAnyVCHasImage(
+                      controller.getSelectedVCs(),
+                    )
+                  }
                   onPress={controller.VERIFY_AND_ACCEPT_REQUEST}
                 />
               )}

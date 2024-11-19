@@ -31,7 +31,6 @@ const model = createModel(
     esignetHostUrl: ESIGNET_BASE_URL,
     appId: null,
     isBackupAndRestoreExplored: false as boolean,
-    isKeyManagementExplored: false as boolean,
     isKeyManagementTourGuideExplored: false as boolean,
     isKeyOrderSet: undefined as unknown as boolean,
     hasUserShownWithHardwareKeystoreNotExists: false,
@@ -267,9 +266,6 @@ export const settingsMachine = model.createMachine(
       setBackupAndRestoreOptionExplored: model.assign({
         isBackupAndRestoreExplored: () => true,
       }),
-      setKeyManagementExplored: model.assign({
-        isKeyManagementExplored: true,
-      }),
       setKeyOrderingResponse: model.assign({
         isKeyOrderSet: (_, event: any) => event.status,
       }),
@@ -370,9 +366,6 @@ export function selectAppId(state: State) {
   return state?.context?.appId;
 }
 
-export function selectIsKeymanagementExplored(state: State) {
-  return state.context.isKeyManagementExplored == true;
-}
 
 /** Alerting the user when the hardware keystore not supported by device and
  * not shown to user atlease once */

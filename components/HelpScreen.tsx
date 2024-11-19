@@ -24,7 +24,7 @@ export const HelpScreen: React.FC<HelpScreenProps> = props => {
       setTimeout(() => {
         if (listingRef?.current != null) {
           listingRef.current.scrollToIndex({
-            index: 15,
+            index: 18,
             animated: true,
           });
         }
@@ -175,7 +175,8 @@ export const HelpScreen: React.FC<HelpScreenProps> = props => {
           {getTextField(
             t('answers.inji.seven'),
             getLinkedText(
-              injiHelpUrl + '/functional-overview/end-user-guide#downloading-vc',
+              injiHelpUrl +
+                '/functional-overview/end-user-guide#downloading-vc',
               t('here'),
             ),
           )}
@@ -195,7 +196,8 @@ export const HelpScreen: React.FC<HelpScreenProps> = props => {
           {getTextField(
             t('answers.inji.nine'),
             getLinkedText(
-              injiHelpUrl + '/functional-overview/end-user-guide#activating-a-vc',
+              injiHelpUrl +
+                '/functional-overview/end-user-guide#activating-a-vc',
               t('here'),
             ),
           )}
@@ -210,7 +212,7 @@ export const HelpScreen: React.FC<HelpScreenProps> = props => {
             t('answers.inji.ten-a'),
             getLinkedText(
               injiHelpUrl +
-                '/overview/features/feature-workflows#id-4.-qr-code-login-process',
+                '/functional-overview/feature-workflows#id-4.-qr-code-login-process',
               t('here'),
             ),
           )}
@@ -257,7 +259,7 @@ export const HelpScreen: React.FC<HelpScreenProps> = props => {
           {getTextField(
             t('answers.inji.thirteen-a'),
             getLinkedText(
-              injiHelpUrl + '/end-user-guide#deleting-a-vc',
+              injiHelpUrl + '/functional-overview/end-user-guide#deleting-a-vc',
               t('here'),
             ),
           )}

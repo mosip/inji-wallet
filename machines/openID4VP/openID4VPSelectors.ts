@@ -42,6 +42,10 @@ export function selectIsSharingVP(state: State) {
   return state.matches('sendingVP');
 }
 
+export function selectIsShowLoadingScreen(state: State) {
+  return state.context.showLoadingScreen;
+}
+
 export function selectCredentials(state: State) {
   let selectedCredentials: Credential[] = [];
   Object.values(state.context.selectedVCs).map(vcs => {

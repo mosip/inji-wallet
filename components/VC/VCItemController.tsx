@@ -5,8 +5,8 @@ import {
   selectGeneratedOn,
   selectKebabPopUp,
   selectWalletBindingResponse,
-  selectCredential,
   selectVerifiableCredentialData,
+  selectCredential,
 } from '../../machines/VerifiableCredential/VCItemMachine/VCItemSelectors';
 import {useInterpret, useSelector} from '@xstate/react';
 import {VCItemProps} from './Views/VCCardView';

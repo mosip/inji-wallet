@@ -70,6 +70,7 @@
     "status": "Katayuan",
     "valid": "Napatunayan",
     "pending": "Nakabinbin",
+    "expired": "Nag-expire na",
     "photo": "Larawan",
     "fullName": "Buong pangalan",
     "gender": "Kasarian",
@@ -220,6 +221,19 @@
       "technicalDifficulty": {
         "title": "May naganap na error!",
         "message": "Salamat sa iyong pasensya! Nakakaranas kami ng mga teknikal na paghihirap ngayon. Pakisubukang muli mamaya o makipag-ugnayan sa admin para sa karagdagang tulong!"
+      },
+      "verificationFailed": {
+        "title": "May pagkakamaling naganap!",
+        "goBackButton": "Bumalik ka",
+        "ERR_GENERIC": "Dahil sa Technical Error, hindi namin na-download ang card.",
+        "ERR_NETWORK": "Dahil sa hindi matatag na koneksyon sa internet, hindi namin na-download ang card. Pakisuri ang iyong koneksyon sa internet.",
+        "ERR_MISSING_ISSUANCEDATE": "Ang petsa ng pag-isyu ay hindi wasto o nakatakda sa hinaharap. Tingnan kung may wastong petsa.",
+        "ERR_INVALID_ISSUANCEDATE": "Ang petsa ng pag-isyu ay hindi wasto o nakatakda sa hinaharap. Tingnan kung may wastong petsa.",
+        "ERR_ISSUANCE_DATE_IS_FUTURE_DATE": "Ang petsa ng pag-isyu ay hindi wasto o nakatakda sa hinaharap. Tingnan kung may wastong petsa.",
+        "ERR_INVALID_EXPIRATIONDATE": "Ang petsa ng pag-expire ay hindi wasto. Tingnan kung may wastong petsa.",
+        "ERR_INVALID_VALIDFROM": "Ang petsa ay hindi wasto o nakatakda sa hinaharap. Tingnan kung may wastong petsa.",
+        "ERR_VALID_FROM_IS_FUTURE_DATE": "Ang petsa ay hindi wasto o nakatakda sa hinaharap. Tingnan kung may wastong petsa.",
+        "ERR_INVALID_VALIDUNTIL": "Di-wasto ang petsa. Tingnan kung may wastong petsa."
       }
     }
   },
@@ -394,6 +408,7 @@
     "generateVcFABDescription": "Upang i-download ang iyong card i-tap ang + sa ibaba",
     "downloadCard": "I-download ang Card",
     "downloadingYourCard": "Ang pagda-download ng iyong card, maaari itong tumagal nang hanggang 5 minuto",
+    "downloadingVcSuccess": "Matagumpay na na-download ang iyong Card",
     "downloadingVcFailed": "Paumanhin! Dahil sa teknikal na error hindi namin ma-download ang iyong card ngayon. Subukang muli mamaya.",
     "activated": "Ang mga kredensyal ay pinagana para sa online na pagpapatotoo.",
     "noCardsTitle": "Walang Nahanap na Mga Card!",
@@ -427,8 +442,15 @@
       "verificationFailed": {
         "title": "May pagkakamaling naganap!",
         "goBackButton": "Bumalik ka",
-        "technicalError": "Dahil sa Technical Error, hindi namin na-download ang card.",
-        "networkError": "Dahil sa hindi matatag na koneksyon sa internet, hindi namin na-download ang card. Pakisuri ang iyong koneksyon sa internet."
+        "ERR_GENERIC": "Dahil sa Technical Error, hindi namin na-download ang card.",
+        "ERR_NETWORK": "Dahil sa hindi matatag na koneksyon sa internet, hindi namin na-download ang card. Pakisuri ang iyong koneksyon sa internet.",
+        "ERR_MISSING_ISSUANCEDATE": "Ang petsa ng pag-isyu ay hindi wasto o nakatakda sa hinaharap. Tingnan kung may wastong petsa.",
+        "ERR_INVALID_ISSUANCEDATE": "Ang petsa ng pag-isyu ay hindi wasto o nakatakda sa hinaharap. Tingnan kung may wastong petsa.",
+        "ERR_ISSUANCE_DATE_IS_FUTURE_DATE": "Ang petsa ng pag-isyu ay hindi wasto o nakatakda sa hinaharap. Tingnan kung may wastong petsa.",
+        "ERR_INVALID_EXPIRATIONDATE": "Ang petsa ng pag-expire ay hindi wasto. Tingnan kung may wastong petsa.",
+        "ERR_INVALID_VALIDFROM": "Ang petsa ay hindi wasto o nakatakda sa hinaharap. Tingnan kung may wastong petsa.",
+        "ERR_VALID_FROM_IS_FUTURE_DATE": "Ang petsa ay hindi wasto o nakatakda sa hinaharap. Tingnan kung may wastong petsa.",
+        "ERR_INVALID_VALIDUNTIL": "Di-wasto ang petsa. Tingnan kung may wastong petsa."
       }
     }
   },
@@ -846,6 +868,12 @@
       "noImage": {
         "title": "Isang Error ang Naganap!",
         "message": "Ang pag-verify ng mukha ay nangangailangan ng larawan sa napiling (mga) kredensyal. Pakigamit ang opsyong Ibahagi o pumili ng kredensyal na may kasamang larawan."
+      }
+    },
+    "loaders": {
+      "loading": "Naglo-load...",
+      "subTitle": {
+        "fetchingVerifiers": "Kinukuha ang iyong listahan ng mga tumutugmang nabe-verify na kredensyal"
       }
     }
   },

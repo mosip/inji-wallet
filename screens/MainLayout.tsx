@@ -1,34 +1,34 @@
-import React, { useContext, useEffect } from 'react';
+import React, {useContext, useEffect} from 'react';
 import {
   BottomTabNavigationOptions,
   createBottomTabNavigator,
 } from '@react-navigation/bottom-tabs';
-import { mainRoutes, share } from '../routes/main';
-import { Theme } from '../components/ui/styleUtils';
-import { useTranslation } from 'react-i18next';
-import {Column } from '../components/ui';
+import {mainRoutes, share} from '../routes/main';
+import {Theme} from '../components/ui/styleUtils';
+import {useTranslation} from 'react-i18next';
+import {Column} from '../components/ui';
 
-import { GlobalContext } from '../shared/GlobalContext';
-import { ScanEvents } from '../machines/bleShare/scan/scanMachine';
+import {GlobalContext} from '../shared/GlobalContext';
+import {ScanEvents} from '../machines/bleShare/scan/scanMachine';
 import testIDProps from '../shared/commonUtil';
-import { SvgImage } from '../components/ui/svg';
-import { isIOS } from '../shared/constants';
-import { CopilotProvider } from 'react-native-copilot';
-import { View } from 'react-native';
-import { CopilotTooltip } from '../components/CopilotTooltip';
-import { Copilot } from '../components/ui/Copilot';
+import {SvgImage} from '../components/ui/svg';
+import {isIOS} from '../shared/constants';
+import {CopilotProvider} from 'react-native-copilot';
+import {View} from 'react-native';
+import {CopilotTooltip} from '../components/CopilotTooltip';
+import {Copilot} from '../components/ui/Copilot';
 import LinearGradient from 'react-native-linear-gradient';
-import { useNavigation } from '@react-navigation/native';
-import { useSelector } from '@xstate/react';
-import { selectIsLinkCode } from '../machines/app';
-import { BOTTOM_TAB_ROUTES } from '../routes/routesConstants';
+import {useNavigation} from '@react-navigation/native';
+import {useSelector} from '@xstate/react';
+import {selectIsLinkCode} from '../machines/app';
+import {BOTTOM_TAB_ROUTES} from '../routes/routesConstants';
 
-const { Navigator, Screen } = createBottomTabNavigator();
+const {Navigator, Screen} = createBottomTabNavigator();
 
 export const MainLayout: React.FC = () => {
-  const { t } = useTranslation('MainLayout');
+  const {t} = useTranslation('MainLayout');
 
-  const { appService } = useContext(GlobalContext);
+  const {appService} = useContext(GlobalContext);
   const scanService = appService.children.get('scan');
 
   const options: BottomTabNavigationOptions = {
@@ -56,7 +56,7 @@ export const MainLayout: React.FC = () => {
       animated>
       <Navigator
         initialRouteName={mainRoutes[0].name}
-        screenOptions={({ route }) => ({
+        screenOptions={({route}) => ({
           tabBarAccessibilityLabel: route.name,
           ...options,
         })}>
@@ -75,21 +75,57 @@ export const MainLayout: React.FC = () => {
             options={{
               ...route.options,
               title: t(route.name),
-              tabBarIcon: ({ focused }) => (
+              tabBarIcon: ({focused}) => (
                 <Column
                   {...testIDProps(route.name + 'Icon')}
                   align="center"
                   crossAlign="center"
                   style={focused ? Theme.Styles.bottomTabIconStyle : null}>
                   {route.name === 'home' ? (
-                    focused ? <LinearGradient colors={Theme.Colors.GradientColorsLight} start={Theme.LinearGradientDirection.start} end={Theme.LinearGradientDirection.end} style={{ width: 36, height: 36, borderRadius: 10, justifyContent: 'center', alignItems: 'center' }}><View>{SvgImage[`${route.name}`](focused)}</View></LinearGradient> : <View>{SvgImage[`${route.name}`](focused)}</View>
+                    focused ? (
+                      <LinearGradient
+                        colors={Theme.Colors.GradientColorsLight}
+                        start={Theme.LinearGradientDirection.start}
+                        end={Theme.LinearGradientDirection.end}
+                        style={{
+                          width: 36,
+                          height: 36,
+                          borderRadius: 10,
+                          justifyContent: 'center',
+                          alignItems: 'center',
+                        }}>
+                        <View>{SvgImage[`${route.name}`](focused)}</View>
+                      </LinearGradient>
+                    ) : (
+                      <View>{SvgImage[`${route.name}`](focused)}</View>
+                    )
                   ) : (
                     <Copilot
                       title={t(`copilot:${route.name}Title`)}
                       description={t(`copilot:${route.name}Message`)}
                       order={2 + index}
                       targetStyle={Theme.Styles.tabBarIconCopilot}
-                      children={<>{focused ? <LinearGradient style={{ width: 36, height: 36, borderRadius: 10, justifyContent: 'center', alignItems: 'center' }} colors={Theme.Colors.GradientColorsLight} start={Theme.LinearGradientDirection.start} end={Theme.LinearGradientDirection.end}>{SvgImage[`${route.name}`](focused)}</LinearGradient>:<View>{SvgImage[`${route.name}`](focused)}</View>}</>}
+                      children={
+                        <>
+                          {focused ? (
+                            <LinearGradient
+                              style={{
+                                width: 36,
+                                height: 36,
+                                borderRadius: 10,
+                                justifyContent: 'center',
+                                alignItems: 'center',
+                              }}
+                              colors={Theme.Colors.GradientColorsLight}
+                              start={Theme.LinearGradientDirection.start}
+                              end={Theme.LinearGradientDirection.end}>
+                              {SvgImage[`${route.name}`](focused)}
+                            </LinearGradient>
+                          ) : (
+                            <View>{SvgImage[`${route.name}`](focused)}</View>
+                          )}
+                        </>
+                      }
                     />
                   )}
                 </Column>

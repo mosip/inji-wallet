@@ -1,6 +1,6 @@
 import React, {useLayoutEffect, useState} from 'react';
 import {useTranslation} from 'react-i18next';
-import {FlatList, Pressable, View} from 'react-native';
+import {FlatList, Pressable} from 'react-native';
 import {Issuer} from '../../components/openId4VCI/Issuer';
 import {Error} from '../../components/ui/Error';
 import {Header} from '../../components/ui/Header';
@@ -10,7 +10,7 @@ import {RootRouteProps} from '../../routes';
 import {HomeRouteProps} from '../../routes/routeTypes';
 import {useIssuerScreenController} from './IssuerScreenController';
 import {Loader} from '../../components/ui/Loader';
-import {removeWhiteSpace} from '../../shared/commonUtil';
+import {isTranslationKeyFound, removeWhiteSpace} from '../../shared/commonUtil';
 import {
   ErrorMessage,
   getDisplayObjectForCurrentLanguage,
@@ -44,9 +44,11 @@ export const IssuersScreen: React.FC<
 
   const isVerificationFailed = controller.verificationErrorMessage !== '';
 
-  const verificationErrorMessage = t(
-    `MyVcsTab:errors.verificationFailed.${controller.verificationErrorMessage}`,
-  );
+  const translationKey = `errors.verificationFailed.${controller.verificationErrorMessage}`;
+
+  const verificationErrorMessage = isTranslationKeyFound(translationKey, t)
+    ? t(translationKey)
+    : t(`errors.verificationFailed.ERR_GENERIC`);
 
   useLayoutEffect(() => {
     if (controller.loadingReason || controller.errorMessageType) {

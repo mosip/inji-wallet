@@ -35,6 +35,10 @@ export const isMosipVC = (issuer: string) => {
   return issuer === Issuers.Mosip || issuer === Issuers.MosipOtp;
 };
 
+export const isMockVC = (issuer: string) => {
+  return issuer.toLowerCase().startsWith('mock');
+};
+
 export const parseJSON = (input: any) => {
   let result = null;
   try {

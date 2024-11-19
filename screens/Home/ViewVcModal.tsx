@@ -33,12 +33,29 @@ import {
   BannerNotification,
   BannerStatus,
 } from '../../components/BannerNotification';
+import {VCProcessor} from '../../components/VC/common/VCProcessor';
 
 export const ViewVcModal: React.FC<ViewVcModalProps> = props => {
   const {t} = useTranslation('ViewVcModal');
   const controller = useViewVcModal(props);
   const profileImage = controller.verifiableCredentialData.face;
   const verificationStatus = controller.verificationStatus;
+  const [verifiableCredential, setVerifiableCredential] = useState(null);
+
+  useEffect(() => {
+    async function processVC() {
+      if (controller.credential) {
+        const vcData = await VCProcessor.processForRendering(
+          controller.credential,
+          controller.verifiableCredentialData.format,
+        );
+        setVerifiableCredential(vcData);
+      }
+    }
+
+    processVC();
+  }, [controller.credential]);
+
   useEffect(() => {
     if (controller.isVerificationInProgress) {
       controller.SHOW_VERIFICATION_STATUS_BANNER();
@@ -73,12 +90,19 @@ export const ViewVcModal: React.FC<ViewVcModalProps> = props => {
       <Row align="space-between">
         <HelpScreen
           triggerComponent={
-            <LinearGradient style={{borderRadius: 8, marginRight:4}} colors={Theme.Colors.GradientColorsLight} start={Theme.LinearGradientDirection.start} end={Theme.LinearGradientDirection.end}><View testID="help"></View>
-            <View style={Theme.Styles.IconContainer}>{SvgImage.questionIcon()}</View>
+            <LinearGradient
+              style={{borderRadius: 8, marginRight: 4}}
+              colors={Theme.Colors.GradientColorsLight}
+              start={Theme.LinearGradientDirection.start}
+              end={Theme.LinearGradientDirection.end}>
+              <View testID="help"></View>
+              <View style={Theme.Styles.IconContainer}>
+                {SvgImage.questionIcon()}
+              </View>
             </LinearGradient>
           }
         />
-        {isVCLoaded(controller.credential, fields) ? (
+        {isVCLoaded(verifiableCredential, fields) ? (
           <Pressable
             onPress={() => props.vcItemActor.send('KEBAB_POPUP')}
             accessible={false}>
@@ -136,13 +160,14 @@ export const ViewVcModal: React.FC<ViewVcModalProps> = props => {
         />
       )}
 
-      {!isVCLoaded(controller.credential, fields) ? (
+      {!isVCLoaded(verifiableCredential, fields) ? (
         <ActivityIndicator />
       ) : (
         <VcDetailsContainer
           fields={fields}
           wellknown={wellknown}
-          credential={controller.credential}
+          credential={verifiableCredential}
+          credentialWrapper={controller.credential}
           verifiableCredentialData={controller.verifiableCredentialData}
           onBinding={controller.addtoWallet}
           walletBindingResponse={controller.walletBindingResponse}

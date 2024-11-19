@@ -15,7 +15,7 @@ import {Buffer} from 'buffer';
 import base64url from 'base64url';
 import {hmac} from '@noble/hashes/hmac';
 import {sha256} from '@noble/hashes/sha256';
-import { sha512 } from '@noble/hashes/sha512'
+import {sha512} from '@noble/hashes/sha512';
 import 'react-native-get-random-values';
 import * as secp from '@noble/secp256k1';
 import * as ed from '@noble/ed25519';
@@ -23,16 +23,19 @@ import base64 from 'react-native-base64';
 import {KeyTypes} from './KeyTypes';
 import convertDerToRsFormat from './signFormatConverter';
 import {hasKeyPair} from '../openId4VCI/Utils';
-import { TelemetryConstants } from '../telemetry/TelemetryConstants';
-import { sendImpressionEvent, getImpressionEventData } from '../telemetry/TelemetryUtils';
+import {TelemetryConstants} from '../telemetry/TelemetryConstants';
+import {
+  sendImpressionEvent,
+  getImpressionEventData,
+} from '../telemetry/TelemetryUtils';
 
 //polyfills setup
 secp.etc.hmacSha256Sync = (k, ...m) =>
   hmac(sha256, k, secp.etc.concatBytes(...m));
 secp.etc.hmacSha256Async = (k, ...m) =>
   Promise.resolve(secp.etc.hmacSha256Sync(k, ...m));
-  ed.etc.sha512Sync = (...m) => sha512(ed.etc.concatBytes(...m));
-  ed.etc.sha512Async = (...m) => Promise.resolve(ed.etc.sha512Sync(...m));
+ed.etc.sha512Sync = (...m) => sha512(ed.etc.concatBytes(...m));
+ed.etc.sha512Async = (...m) => Promise.resolve(ed.etc.sha512Sync(...m));
 const {RNSecureKeystoreModule} = NativeModules;
 // 5min
 export const AUTH_TIMEOUT = 5 * 60;
@@ -99,7 +102,7 @@ export async function generateKeyPairECR1() {
 export async function generateKeyPairED() {
   const privKey = ed.utils.randomPrivateKey();
   const pubKey = ed.getPublicKey(privKey);
- 
+
   return {
     publicKey: Buffer.from(pubKey).toString('base64'),
     privateKey: Buffer.from(privKey).toString('base64'),
@@ -167,7 +170,7 @@ export async function generateKeyPairsAndStoreOrder() {
       KeyTypes.ES256,
     );
   }
- console.warn(TelemetryConstants.FlowType.keyGeneration)
+  console.warn(TelemetryConstants.FlowType.keyGeneration);
 }
 
 /**
@@ -180,7 +183,7 @@ export async function getJWT(
   header: object,
   payLoad: object,
   alias: string,
-  privateKey: string,
+  privateKey: any,
   keyType: string,
 ) {
   try {
@@ -197,9 +200,12 @@ export async function getJWT(
     );
     if (keyType == KeyTypes.ES256 && isIOS()) return signature64;
     return header64 + '.' + payLoad64 + '.' + signature64;
-  } catch (e) {
-    console.error('Exception Occurred While Constructing JWT ', e);
-    throw e;
+  } catch (error) {
+    console.error('Exception Occurred While Constructing JWT ', error);
+    if (error.toString().includes(BIOMETRIC_CANCELLED)) {
+      throw new BiometricCancellationError(error.toString());
+    }
+    throw error;
   }
 }
 
@@ -256,11 +262,11 @@ export async function createSignatureECK1(privateKey, prehash) {
 }
 
 export async function createSignatureED(privateKey, prehash) {
-  const sha = sha512(prehash);
-  const sign = await ed.signAsync(sha, privateKey);
+  const messageBytes = new TextEncoder().encode(prehash);
+  const privateKeyUint8 = Uint8Array.from(privateKey);
+  const sign = await ed.signAsync(messageBytes, privateKeyUint8);
   return replaceCharactersInB64(Buffer.from(sign).toString('base64'));
 }
-
 export async function createSignatureECR1(
   privateKey,
   header,
@@ -445,12 +451,12 @@ export async function fetchKeyPair(keyType: any) {
         privateKey: privateKey,
       };
     }
-  } catch (e) {
-    console.error('error getting key', e);
-    return {
-      publicKey: '',
-      privateKey: '',
-    };
+  } catch (error) {
+    console.error('error getting key', error);
+    if (error.toString().includes(BIOMETRIC_CANCELLED)) {
+      throw new BiometricCancellationError(error.toString());
+    }
+    throw error;
   }
 }
 const convertToKeyValue = items => {

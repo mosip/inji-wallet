@@ -70,6 +70,7 @@
     "status": "Status",
     "valid": "Valid",
     "pending": "Pending",
+    "expired": "Expired",
     "photo": "Photo",
     "fullName": "Full Name",
     "gender": "Gender",
@@ -221,6 +222,19 @@
       "technicalDifficulty": {
         "title": "An error occurred!",
         "message": "Thanks for your patience! We're experiencing technical difficulties right now. Please try again later or contact the admin for further assistance!"
+      },
+      "verificationFailed": {
+        "title": "An Error Occurred!",
+        "goBackButton": "Go Back",
+        "ERR_GENERIC": "Due to Technical Error, we were unable to download the card.",
+        "ERR_NETWORK": "Due to unstable internet connection, we were unable to download the card. Please check your internet connection.",
+        "ERR_MISSING_ISSUANCEDATE": "Issuance date is invalid or set in the future. Check for a valid date.",
+        "ERR_INVALID_ISSUANCEDATE": "Issuance date is invalid or set in the future. Check for a valid date.",
+        "ERR_ISSUANCE_DATE_IS_FUTURE_DATE": "Issuance date is invalid or set in the future. Check for a valid date.",
+        "ERR_INVALID_EXPIRATIONDATE": "Expiration date is invalid. Check for a valid date.",
+        "ERR_INVALID_VALIDFROM": "Date is invalid or set in the future. Check for a valid date.",
+        "ERR_VALID_FROM_IS_FUTURE_DATE": "Date is invalid or set in the future. Check for a valid date.",
+        "ERR_INVALID_VALIDUNTIL": "Date is invalid. Check for a valid date."
       }
     }
   },
@@ -395,7 +409,7 @@
     "generateVcFABDescription": "Tap on  \"+\" below to download your card",
     "downloadCard": "Download Card",
     "downloadingYourCard": "Downloading your card, this can take upto 5 minutes",
-    "downloadingVcSuccess":"Your Card has been downloaded successfully",
+    "downloadingVcSuccess": "Your Card has been downloaded successfully",
     "downloadingVcFailed": "Sorry! Due to technical error we are unable to download your card now. Please try again later.",
     "activated": "Credentials are enabled for online authentication.",
     "noCardsTitle": "No Cards Found!",
@@ -429,8 +443,15 @@
       "verificationFailed": {
         "title": "An Error Occurred!",
         "goBackButton": "Go Back",
-        "technicalError": "Due to Technical Error, we were unable to download the card.",
-        "networkError": "Due to unstable internet connection, we were unable to download the card. Please check your internet connection."
+        "ERR_GENERIC": "Due to Technical Error, we were unable to download the card.",
+        "ERR_NETWORK": "Due to unstable internet connection, we were unable to download the card. Please check your internet connection.",
+        "ERR_MISSING_ISSUANCEDATE": "Issuance date is invalid or set in the future. Check for a valid date.",
+        "ERR_INVALID_ISSUANCEDATE": "Issuance date is invalid or set in the future. Check for a valid date.",
+        "ERR_ISSUANCE_DATE_IS_FUTURE_DATE": "Issuance date is invalid or set in the future. Check for a valid date.",
+        "ERR_INVALID_EXPIRATIONDATE": "Expiration date is invalid. Check for a valid date.",
+        "ERR_INVALID_VALIDFROM": "Date is invalid or set in the future. Check for a valid date.",
+        "ERR_VALID_FROM_IS_FUTURE_DATE": "Date is invalid or set in the future. Check for a valid date.",
+        "ERR_INVALID_VALIDUNTIL": "Date is invalid. Check for a valid date."
       }
     }
   },
@@ -856,6 +877,12 @@
       "noImage": {
         "title": "An Error Occured!",
         "message": "Face verification requires a photo in the selected credential(s). Please use the Share option or select a credential that includes an image."
+      }
+    },
+    "loaders": {
+      "loading": "Loading...",
+      "subTitle": {
+        "fetchingVerifiers": "Fetching your list of matching verifiable credentials"
       }
     }
   },

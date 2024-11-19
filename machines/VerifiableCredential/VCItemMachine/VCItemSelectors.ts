@@ -7,6 +7,8 @@ import {
   VerifiableCredential,
   VerifiableCredentialData,
 } from '../VCMetaMachine/vc';
+import {VCFormat} from '../../../shared/VCFormat';
+import {VCProcessor} from '../../../components/VC/common/VCProcessor';
 
 type State = StateFrom<typeof VCItemMachine>;
 
@@ -36,8 +38,8 @@ export function getVerifiableCredential(
   return verifiableCredential?.credential || verifiableCredential;
 }
 
-export function selectCredential(state: State): Credential {
-  return getVerifiableCredential(state.context.verifiableCredential);
+export function selectCredential(state: State): VerifiableCredential {
+  return state.context.verifiableCredential;
 }
 
 export function selectVerifiableCredentialData(

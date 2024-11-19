@@ -7,10 +7,23 @@ import React from 'react';
 import {useTranslation} from 'react-i18next';
 import PendingIcon from './PendingIcon';
 
-export const VCVerification: React.FC = ({wellknown, isVerified}: any) => {
+export const VCVerification: React.FC = ({wellknown, vcMetadata}: any) => {
   const {t} = useTranslation('VcDetails');
-  const statusText = isVerified ? t('valid') : t('pending');
-  const statusIcon = isVerified ? <VerifiedIcon /> : <PendingIcon />;
+  const statusText = vcMetadata.isVerified
+    ? vcMetadata.isExpired
+      ? t('expired')
+      : t('valid')
+    : t('pending');
+
+  const statusIcon = vcMetadata.isVerified ? (
+    vcMetadata.isExpired ? (
+      <PendingIcon />
+    ) : (
+      <VerifiedIcon />
+    )
+  ) : (
+    <PendingIcon />
+  );
   return (
     <Row
       {...testIDProps('verified')}

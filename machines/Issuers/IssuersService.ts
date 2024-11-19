@@ -16,6 +16,7 @@ import {
 } from '../../shared/cryptoutil/cryptoUtil';
 import {NativeModules} from 'react-native';
 import {
+  VerificationErrorMessage,
   VerificationErrorType,
   verifyCredential,
 } from '../../shared/vcjs/verifyCredential';
@@ -24,8 +25,9 @@ import {
   sendImpressionEvent,
 } from '../../shared/telemetry/TelemetryUtils';
 import {TelemetryConstants} from '../../shared/telemetry/TelemetryConstants';
-import {isMosipVC} from '../../shared/Utils';
 import {VciClient} from '../../shared/vciClient/VciClient';
+import {isMockVC} from '../../shared/Utils';
+import {VCFormat} from '../../shared/VCFormat';
 
 export const IssuersService = () => {
   return {
@@ -79,7 +81,7 @@ export const IssuersService = () => {
       );
 
       console.info(`VC download via ${context.selectedIssuerId} is successful`);
-      return updateCredentialInformation(context, credential);
+      return await updateCredentialInformation(context, credential);
     },
     invokeAuthorization: async (context: any) => {
       sendImpressionEvent(
@@ -123,18 +125,24 @@ export const IssuersService = () => {
     },
 
     verifyCredential: async (context: any) => {
-      //this issuer specific check has to be removed once vc validation is done.
-      if (isMosipVC(context.selectedIssuerId)) {
+      //TODO: Remove bypassing verification of mock VCs once mock VCs are verifiable
+      if (
+        context.selectedCredentialType.format === VCFormat.mso_mdoc ||
+        !isMockVC(context.selectedIssuerId)
+      ) {
         const verificationResult = await verifyCredential(
           context.verifiableCredential?.credential,
+          context.selectedCredentialType.format,
         );
         if (!verificationResult.isVerified) {
-          throw new Error(verificationResult.errorMessage);
+          throw new Error(verificationResult.verificationErrorCode);
         }
+        return verificationResult;
       } else {
         return {
           isVerified: true,
-          errorMessage: VerificationErrorType.NO_ERROR,
+          verificationMessage: VerificationErrorMessage.NO_ERROR,
+          verificationErrorCode: VerificationErrorType.NO_ERROR,
         };
       }
     },

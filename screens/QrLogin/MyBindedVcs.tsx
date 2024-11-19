@@ -66,6 +66,7 @@ export const MyBindedVcs: React.FC<MyBindedVcsProps> = props => {
                   margin="2 0 0 0"
                   elevation={2}>
                   <Button
+                    type='gradient'
                     title={t('verify')}
                     styles={Theme.ButtonStyles.radius}
                     disabled={controller.selectedIndex == null}
@@ -82,6 +83,7 @@ export const MyBindedVcs: React.FC<MyBindedVcsProps> = props => {
                   </Text>
                 </Centered>
                 <Button
+                  type='gradient'
                   title={t('back')}
                   margin="0 20 12 20"
                   styles={Theme.ButtonStyles.radius}

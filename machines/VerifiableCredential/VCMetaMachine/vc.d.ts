@@ -43,7 +43,7 @@ export interface CredentialSubject {
 
 type VCContext = (string | Record<string, unknown>)[];
 
-export interface Credential {
+export type Credential = {
   credentialConfigurationId: any;
   '@context': VCContext;
   credentialSubject: CredentialSubject;
@@ -58,11 +58,12 @@ export interface Credential {
     verificationMethod: string;
   };
   type: string[];
-}
+} | string
 
 export interface VerifiableCredential {
   issuerLogo: logoType;
   credential: Credential;
+  processedCredential?: object;
   wellKnown: string;
   credentialConfigurationId: string;
 }

@@ -7,8 +7,8 @@ import {
   MY_VCS_STORE_KEY,
   NETWORK_REQUEST_FAILED,
   REQUEST_TIMEOUT,
-  TECHNICAL_ERROR,
   isIOS,
+  EXPIRED_VC_ERROR_CODE,
 } from '../../shared/constants';
 import {assign, send} from 'xstate';
 import {StoreEvents} from '../store';
@@ -30,18 +30,20 @@ import {VCActivityLog} from '../../components/ActivityLogEvent';
 const {RNSecureKeystoreModule} = NativeModules;
 export const IssuersActions = (model: any) => {
   return {
-    setIsVerified: assign({
-      vcMetadata: (context: any) =>
+    setVerificationResult: assign({
+      vcMetadata: (context: any, event: any) =>
         new VCMetadata({
           ...context.vcMetadata,
           isVerified: true,
+          isExpired: event.data.verificationErrorCode == EXPIRED_VC_ERROR_CODE,
         }),
     }),
-    resetIsVerified: assign({
+    resetVerificationResult: assign({
       vcMetadata: (context: any) =>
         new VCMetadata({
           ...context.vcMetadata,
           isVerified: false,
+          isExpired: false,
         }),
     }),
     setIssuers: model.assign({
@@ -168,10 +170,21 @@ export const IssuersActions = (model: any) => {
 
     storeVerifiableCredentialData: send(
       (context: any) => {
-        const vcMeatadata = getVCMetadata(context, context.keyType);
-        return StoreEvents.SET(vcMeatadata.getVcKey(), {
-          ...context.credentialWrapper,
-          vcMetadata: vcMeatadata,
+        const vcMetadata = getVCMetadata(context, context.keyType);
+        const {
+          verifiableCredential: {
+            processedCredential,
+            ...filteredVerifiableCredential
+          },
+          ...rest
+        } = context.credentialWrapper;
+        const storableData = {
+          ...rest,
+          verifiableCredential: filteredVerifiableCredential,
+        };
+        return StoreEvents.SET(vcMetadata.getVcKey(), {
+          ...storableData,
+          vcMetadata: vcMetadata,
         });
       },
       {

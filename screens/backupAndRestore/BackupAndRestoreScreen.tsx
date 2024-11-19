@@ -212,19 +212,26 @@ const BackupAndRestoreScreen: React.FC<BackupAndRestoreProps> = props => {
         <HelpScreen
           source={'BackUp'}
           triggerComponent={
-            <LinearGradient style={{borderRadius: 8}} colors={Theme.Colors.GradientColorsLight} start={Theme.LinearGradientDirection.start} end={Theme.LinearGradientDirection.end}><View testID="help" style={Theme.HelpScreenStyle.viewStyle}>
-            <Row crossAlign="center" style={Theme.HelpScreenStyle.rowStyle}>
-              <View testID="helpIcon" style={Theme.HelpScreenStyle.iconStyle}>
-                {SvgImage.info()}
+            <LinearGradient
+              style={{borderRadius: 8}}
+              colors={Theme.Colors.GradientColorsLight}
+              start={Theme.LinearGradientDirection.start}
+              end={Theme.LinearGradientDirection.end}>
+              <View testID="help" style={Theme.HelpScreenStyle.viewStyle}>
+                <Row crossAlign="center" style={Theme.HelpScreenStyle.rowStyle}>
+                  <View
+                    testID="helpIcon"
+                    style={Theme.HelpScreenStyle.iconStyle}>
+                    {SvgImage.info()}
+                  </View>
+                  <Text
+                    testID="helpText"
+                    style={Theme.HelpScreenStyle.labelStyle}>
+                    {t('help')}
+                  </Text>
+                </Row>
               </View>
-              <Text
-                testID="helpText"
-                style={Theme.HelpScreenStyle.labelStyle}>
-                {t('help')}
-              </Text>
-            </Row>
-          </View></LinearGradient>
-            
+            </LinearGradient>
           }
         />
       }

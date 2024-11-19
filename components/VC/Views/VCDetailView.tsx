@@ -3,6 +3,7 @@ import {useTranslation} from 'react-i18next';
 import {Image, ImageBackground, View} from 'react-native';
 import {
   Credential,
+  CredentialWrapper,
   VerifiableCredential,
   VerifiableCredentialData,
   WalletBindingResponse,
@@ -40,7 +41,7 @@ const getProfileImage = (face: any) => {
 };
 
 export const VCDetailView: React.FC<VCItemDetailsProps> = props => {
-  const {t, i18n} = useTranslation('VcDetails');
+  const {t} = useTranslation('VcDetails');
   const logo = props.verifiableCredentialData.issuerLogo;
   const face = props.verifiableCredentialData.face;
   const verifiableCredential = props.credential;
@@ -94,7 +95,9 @@ export const VCDetailView: React.FC<VCItemDetailsProps> = props => {
                 <Column crossAlign="center">
                   {getProfileImage(face)}
                   <QrCodeOverlay
-                    verifiableCredential={verifiableCredential}
+                    verifiableCredential={
+                      props.credentialWrapper as unknown as VerifiableCredential
+                    }
                     meta={props.verifiableCredentialData.vcMetadata}
                   />
                   <Column
@@ -123,119 +126,119 @@ export const VCDetailView: React.FC<VCItemDetailsProps> = props => {
                   )}
                 </Column>
               </Row>
-              {shouldShowHrLine(verifiableCredential) && (
-                <>
-                  <View
-                    style={[
-                      Theme.Styles.hrLine,
-                      {
-                        borderBottomColor: getTextColor(
-                          props.wellknown,
-                          Theme.Styles.hrLine.borderBottomColor,
-                        ),
-                      },
-                    ]}></View>
-                  <Column padding="0 14 14 14">
-                    {fieldItemIterator(
+              <>
+                <View
+                  style={[
+                    Theme.Styles.hrLine,
+                    {
+                      borderBottomColor: getTextColor(
+                        props.wellknown,
+                        Theme.Styles.hrLine.borderBottomColor,
+                      ),
+                    },
+                  ]}></View>
+                <Column padding="0 14 14 14">
+                  {shouldShowHrLine(verifiableCredential) &&
+                    fieldItemIterator(
                       DETAIL_VIEW_BOTTOM_SECTION_FIELDS,
                       verifiableCredential,
                       props.wellknown,
                       props,
                     )}
-                    <VCItemField
-                      key={'keyTypeVcDetailView'}
-                      fieldName={KEY_TYPE_FIELD}
-                      fieldValue={props.keyType}
-                      verifiableCredential={verifiableCredential}
-                      testID={'keyTypeVcDetailView'}
-                    />
-                  </Column>
-                </>
-              )}
+                  <VCItemField
+                    key={'keyTypeVcDetailView'}
+                    fieldName={KEY_TYPE_FIELD}
+                    fieldValue={props.keyType}
+                    verifiableCredential={verifiableCredential}
+                    testID={'keyTypeVcDetailView'}
+                  />
+                </Column>
+              </>
             </ImageBackground>
           </Column>
         </Column>
       </Column>
-      {props.vcHasImage && (
-        <View
-          style={{
-            position: 'relative',
-            backgroundColor: Theme.Colors.DetailedViewBackground,
-          }}>
-          {props.activeTab !== 1 &&
-            (!props.walletBindingResponse &&
-            isActivationNeeded(props.verifiableCredentialData?.issuer) ? (
-              <Column
-                padding="10"
-                style={Theme.Styles.detailedViewActivationPopupContainer}>
-                <Row>
-                  <Column crossAlign="flex-start" margin={'2 0 0 10'}>
-                    {SvgImage.WalletUnActivatedLargeIcon()}
-                  </Column>
-                  <Column crossAlign="flex-start" margin={'5 18 13 8'}>
-                    <Text
-                      testID="offlineAuthDisabledHeader"
-                      style={{
-                        fontFamily: 'Inter_600SemiBold',
-                        fontSize: 14,
-                      }}
-                      color={Theme.Colors.statusLabel}
-                      margin={'0 18 0 0'}>
-                      {t('offlineAuthDisabledHeader')}
-                    </Text>
-                    <Text
-                      testID="offlineAuthDisabledMessage"
-                      style={{
-                        fontFamily: 'Inter_400Regular',
-                        fontSize: 12,
-                      }}
-                      color={Theme.Colors.statusMessage}
-                      margin={'0 18 0 0'}>
-                      {t('offlineAuthDisabledMessage')}
-                    </Text>
-                  </Column>
-                </Row>
+      {props.vcHasImage &&
+        !props.verifiableCredentialData?.vcMetadata.isExpired && (
+          <View
+            style={{
+              position: 'relative',
+              backgroundColor: Theme.Colors.DetailedViewBackground,
+            }}>
+            {props.activeTab !== 1 &&
+              (!props.walletBindingResponse &&
+              isActivationNeeded(props.verifiableCredentialData?.issuer) ? (
+                <Column
+                  padding="10"
+                  style={Theme.Styles.detailedViewActivationPopupContainer}>
+                  <Row>
+                    <Column crossAlign="flex-start" margin={'2 0 0 10'}>
+                      {SvgImage.WalletUnActivatedLargeIcon()}
+                    </Column>
+                    <Column crossAlign="flex-start" margin={'5 18 13 8'}>
+                      <Text
+                        testID="offlineAuthDisabledHeader"
+                        style={{
+                          fontFamily: 'Inter_600SemiBold',
+                          fontSize: 14,
+                        }}
+                        color={Theme.Colors.statusLabel}
+                        margin={'0 18 0 0'}>
+                        {t('offlineAuthDisabledHeader')}
+                      </Text>
+                      <Text
+                        testID="offlineAuthDisabledMessage"
+                        style={{
+                          fontFamily: 'Inter_400Regular',
+                          fontSize: 12,
+                        }}
+                        color={Theme.Colors.statusMessage}
+                        margin={'0 18 0 0'}>
+                        {t('offlineAuthDisabledMessage')}
+                      </Text>
+                    </Column>
+                  </Row>
 
-                <Button
-                  testID="enableVerification"
-                  title={t('enableVerification')}
-                  onPress={props.onBinding}
-                  type="gradient"
-                  size="Large"
-                  disabled={
-                    !props.verifiableCredentialData.vcMetadata.isVerified
-                  }
-                />
-              </Column>
-            ) : (
-              <Column
-                style={Theme.Styles.detailedViewActivationPopupContainer}
-                padding="10">
-                <Row>
-                  <Column crossAlign="flex-start" margin={'2 0 0 10'}>
-                    {SvgImage.WalletActivatedLargeIcon()}
-                  </Column>
-                  <Column crossAlign="flex-start" margin={'5 18 13 8'}>
-                    <Text
-                      testID="profileAuthenticated"
-                      color={Theme.Colors.statusLabel}
-                      style={{
-                        fontFamily: 'Inter_600SemiBold',
-                        fontSize: 14,
-                      }}
-                      margin={'0 18 0 0'}>
-                      {isActivationNeeded(
-                        props.verifiableCredentialData?.issuer,
-                      )
-                        ? t('profileAuthenticated')
-                        : t('credentialActivated')}
-                    </Text>
-                  </Column>
-                </Row>
-              </Column>
-            ))}
-        </View>
-      )}
+                  <Button
+                    testID="enableVerification"
+                    title={t('enableVerification')}
+                    onPress={props.onBinding}
+                    type="gradient"
+                    size="Large"
+                    disabled={
+                      !props.verifiableCredentialData.vcMetadata.isVerified
+                    }
+                  />
+                </Column>
+              ) : (
+                <Column
+                  style={Theme.Styles.detailedViewActivationPopupContainer}
+                  padding="10">
+                  <Row>
+                    <Column crossAlign="flex-start" margin={'2 0 0 10'}>
+                      {SvgImage.WalletActivatedLargeIcon()}
+                    </Column>
+                    <Column crossAlign="flex-start" margin={'5 18 13 8'}>
+                      <Text
+                        testID="profileAuthenticated"
+                        color={Theme.Colors.statusLabel}
+                        style={{
+                          fontFamily: 'Inter_600SemiBold',
+                          fontSize: 14,
+                        }}
+                        margin={'0 18 0 0'}>
+                        {isActivationNeeded(
+                          props.verifiableCredentialData?.issuer,
+                        )
+                          ? t('profileAuthenticated')
+                          : t('credentialActivated')}
+                      </Text>
+                    </Column>
+                  </Row>
+                </Column>
+              ))}
+          </View>
+        )}
     </>
   );
 };
@@ -246,6 +249,7 @@ export interface VCItemDetailsProps {
   credential: VerifiableCredential | Credential;
   verifiableCredentialData: VerifiableCredentialData;
   walletBindingResponse?: WalletBindingResponse;
+  credentialWrapper: CredentialWrapper;
   onBinding?: () => void;
   activeTab?: Number;
   vcHasImage: boolean;

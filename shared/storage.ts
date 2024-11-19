@@ -34,7 +34,8 @@ import fileStorage from './fileStorage';
 import {DocumentDirectoryPath, ReadDirItem} from 'react-native-fs';
 import {verifyCredential} from './vcjs/verifyCredential';
 import {Credential} from '../machines/VerifiableCredential/VCMetaMachine/vc';
-import {isMosipVC} from './Utils';
+import {VCFormat} from './VCFormat';
+import {isMockVC} from './Utils';
 
 export const MMKV = new MMKVLoader().initialize();
 const {RNSecureKeystoreModule} = NativeModules;
@@ -317,11 +318,16 @@ class Storage {
 
   private static async verifyCredential(
     verifiableCredential: Credential,
+    format: string,
     issuer: string,
   ) {
     let isVerified = true;
-    if (isMosipVC(issuer)) {
-      const verificationResult = await verifyCredential(verifiableCredential);
+    //TODO: Remove bypassing verification of mock VCs once mock VCs are verifiable
+    if (format === VCFormat.mso_mdoc || !isMockVC(issuer)) {
+      const verificationResult = await verifyCredential(
+        verifiableCredential,
+        format,
+      );
       isVerified = verificationResult.isVerified;
     }
     return isVerified;
@@ -345,6 +351,7 @@ class Storage {
 
           const isVerified = await Storage.verifyCredential(
             vc.verifiableCredential?.credential || vc.verifiableCredential,
+            vc.vcMetadata.format,
             vc.vcMetadata.issuer,
           );
           vc.vcMetadata.timestamp = ts;

@@ -9,8 +9,8 @@ import {
 import {Spacing} from '../styleUtils';
 import {COPILOT_HEIGHT, isIOS} from '../../../shared/constants';
 import Constants from 'expo-constants';
-import HomeScreenLogo from '../../../assets/InjiHomeLogo.svg'
-import InjiLogoSmall from '../../../assets/InjiLogo.svg'
+import HomeScreenLogo from '../../../assets/InjiHomeLogo.svg';
+import InjiLogoSmall from '../../../assets/InjiLogo.svg';
 const Colors = {
   Black: '#000000',
   Zambezi: '#5F5F5F',
@@ -66,6 +66,7 @@ const Colors = {
   toolTipPointer: '#E0E0E0',
   Mercury: '#E6E6E6',
   Yellow: '#E8A94F',
+  selectIDTextGradient: ['#F5F5F5', '#FFFFFF'],
 };
 
 export type ElevationLevel = 0 | 1 | 2 | 3 | 4 | 5 | 6;
@@ -148,6 +149,7 @@ export const DefaultTheme = {
     urlLink: Colors.Orange,
     warningText: Colors.Red,
     PendingIcon: Colors.Yellow,
+    selectIDTextGradient: ['#F5F5F5', '#FFFFFF'],
   },
   Styles: StyleSheet.create({
     title: {
@@ -413,6 +415,9 @@ export const DefaultTheme = {
     injiLogo: {
       width: 191.58,
       height: 28,
+    },
+    injiHomeLogo:{
+      marginLeft:-24
     },
     logo: {
       height: 35,
@@ -723,7 +728,7 @@ export const DefaultTheme = {
     sendVPHeaderSubTitle: {
       fontSize: 13,
       fontFamily: 'Inter_600SemiBold',
-      color: Colors.OrangeShade,
+      color: Colors.Orange,
     },
     HistoryHeaderTitleStyle: {
       fontSize: 26,
@@ -1797,9 +1802,9 @@ export const DefaultTheme = {
     };
   },
   LinearGradientDirection: {
-    start: {x:0.5,y:0.5},
-    end: {x:1,y:0.5}
-  }
+    start: {x: 0.5, y: 0.5},
+    end: {x: 1, y: 0.5},
+  },
 };
 
 function generateBoxShadowStyle() {
