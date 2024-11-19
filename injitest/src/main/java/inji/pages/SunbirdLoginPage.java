@@ -215,19 +215,11 @@ public class SunbirdLoginPage extends BasePage {
             clickOnElement(clickOnSetButton);
         }
     }
-    public void clickOnloginButton() throws InterruptedException {
-
-        int retryCount = 0;
-        while (isElementDisplayed(loginButton) && retryCount < 5) {
+    public void clickOnloginButton() {
+        if(isElementDisplayed(loginButton)) {
             clickOnElement(loginButton);
-            if (isElementDisplayed(LoginFailedDueTOInValidCredentials)) {
-                retryCount++;
-                Thread.sleep(1000);
-            } else {
-                break;
-            }
         }
-         if(isElementDisplayed(loginButtonSecond)){
+        else {
             clickOnElement(loginButtonSecond);
         }
     }
