@@ -292,6 +292,7 @@ export const IssuersActions = (model: any) => {
         to: (context: any) => context.serviceRefs.activityLog,
       },
     ),
+
     sendSuccessEndEvent: (context: any) => {
       sendEndEvent(
         getEndEventData(

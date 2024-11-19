@@ -399,3 +399,9 @@ fileignoreconfig:
   - filename: assets/InjiHomeLogo.svg
     checksum: 6600a3d75033af4d702dd8c9663e12ad7c2c096a529bac2771bb856cc75a5ed0
     version: ""
+  - filename: shared/constants.ts
+    checksum: 383485550871f47ceba8230d9d12edd848296cc5d0499567c9ccd17e8d2842bd
+    version: ""
+  - filename: shared/constants.ts
+    checksum: 383485550871f47ceba8230d9d12edd848296cc5d0499567c9ccd17e8d2842bd
+    version: ""
