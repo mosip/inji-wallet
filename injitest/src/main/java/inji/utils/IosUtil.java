@@ -67,42 +67,6 @@ public class IosUtil {
                 .perform();
     }
 
-
-
-
-
-
-//    public static void dragAndDrop(AppiumDriver driver, WebElement draggableElement, int startX, int startY, int endX, int endY) {
-//        PointerInput finger = new PointerInput(PointerInput.Kind.TOUCH, "first finger");
-//        Sequence sequence = new Sequence(finger, 0)
-//                .addAction(finger.createPointerMove(Duration.ZERO, PointerInput.Origin.viewport(), startX, startY))  // Move to start position
-//                .addAction(finger.createPointerDown(Duration.ofMillis(500))) // Long press to initiate drag
-//                .addAction(finger.createPointerMove(toPointerLocation(draggableElement)))  // Move to draggable element
-//                .addAction(finger.createPointerMove(Duration.ofMillis(100)))  // Slight delay after grabbing element
-//                .concat(repeatWhileMoving(finger, endX, endY))  // Loop and move to end position
-//                .addAction(finger.createPointerUp());  // Release element at end position
-//
-//        driver.perform(Collections.singleton(sequence));
-//    }
-//
-//    private static Action repeatWhileMoving(PointerInput finger, int endX, int endY) {
-//        CompoundAction action = new CompoundAction();
-//        while (true) {
-//            action.add(finger.createPointerMove(Duration.ofMillis(50), PointerInput.Origin.pointer(), 10, 10));  // Move slightly during loop
-//            if (isElementAtPosition(driver, draggableElement, endX, endY)) {
-//                break;
-//            }
-//        }
-//        return action;
-//    }
-
-    private static boolean isElementAtPosition(AppiumDriver driver, WebElement element, int x, int y) {
-        // Implement logic to check if element is at desired coordinates (x, y) using Appium locators
-        // You can use element.getLocation() and compare with (x, y)
-        // This is a placeholder, replace with your actual implementation
-        return true; // Replace with actual logic
-    }
-
     public static void tapOnElement(AppiumDriver driver, WebElement element) {
         Point location = element.getLocation();
         Dimension size = element.getSize();
