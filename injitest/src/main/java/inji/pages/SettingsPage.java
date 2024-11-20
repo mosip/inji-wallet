@@ -99,6 +99,9 @@ public class SettingsPage extends BasePage {
     @AndroidFindBy(accessibility = "newLabel")
     private WebElement newlable;
 
+    @AndroidFindBy(accessibility = "keyManagement")
+    private WebElement keyManagement;
+
 
     public SettingsPage(AppiumDriver driver) {
         super(driver);
@@ -245,4 +248,8 @@ public class SettingsPage extends BasePage {
         return getTextFromLocator(receiveCardText);
     }
 
+    public KeyManagementPage clickOnKeyManagement() {
+        clickOnElement(keyManagement);
+        return new KeyManagementPage(driver);
+    }
 }

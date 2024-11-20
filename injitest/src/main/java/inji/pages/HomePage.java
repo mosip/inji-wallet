@@ -267,7 +267,7 @@ public class HomePage extends BasePage {
 
     public DetailedVcViewPage openDetailedVcView(String name) {
         By fullName = By.xpath("//*[contains(@value,'" + name + "') or contains(@text,'" + name + "')]");
-        clickOnElement(fullNameValue);
+        clickOnElement(fullName);
         return new DetailedVcViewPage(driver);
     }
 
