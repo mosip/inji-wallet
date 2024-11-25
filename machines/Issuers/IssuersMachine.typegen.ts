@@ -257,6 +257,7 @@ export interface Typegen0 {
       | 'done.invoke.issuersMachine.performAuthorization.getKeyPairFromKeystore:invocation[0]'
       | 'error.platform.issuersMachine.performAuthorization.getKeyPairFromKeystore:invocation[0]';
     setLoadingReasonAsSettingUp:
+      | 'RESET_ERROR'
       | 'SELECTED_ISSUER'
       | 'TRY_AGAIN'
       | 'done.invoke.issuersMachine.performAuthorization:invocation[0]';
@@ -350,6 +351,8 @@ export interface Typegen0 {
     | 'downloadIssuerWellknown'
     | 'error'
     | 'fetchAuthorizationEndpoint'
+    | 'fetchAuthorizationEndpoint.error'
+    | 'fetchAuthorizationEndpoint.idle'
     | 'generateKeyPair'
     | 'handleVCVerificationFailure'
     | 'idle'
@@ -364,6 +367,7 @@ export interface Typegen0 {
     | 'verifyingCredential'
     | {
         downloadCredentials?: 'idle' | 'userCancelledBiometric';
+        fetchAuthorizationEndpoint?: 'error' | 'idle';
         performAuthorization?:
           | 'getKeyPairFromKeystore'
           | 'idle'

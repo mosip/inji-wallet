@@ -1,6 +1,7 @@
 import {
   ErrorMessage,
   Issuers_Key_Ref,
+  OIDCErrors,
   selectCredentialRequestKey,
 } from '../../shared/openId4VCI/Utils';
 import {
@@ -103,13 +104,16 @@ export const IssuersActions = (model: any) => {
 
     setError: model.assign({
       errorMessage: (_: any, event: any) => {
-        console.error('Error occurred ', event.data.message);
+        console.error(`Error occurred while ${event} -> `, event.data.message);
         const error = event.data.message;
         if (error.includes(NETWORK_REQUEST_FAILED)) {
           return ErrorMessage.NO_INTERNET;
         }
         if (error.includes(REQUEST_TIMEOUT)) {
           return ErrorMessage.REQUEST_TIMEDOUT;
+        }
+        if (error.includes(OIDCErrors.AUTHORIZATION_ENDPOINT_DISCOVERY.GRANT_TYPE_NOT_SUPPORTED)) {
+          return ErrorMessage.AUTHORIZATION_GRANT_TYPE_NOT_SUPPORTED;
         }
         return ErrorMessage.GENERIC;
       },
