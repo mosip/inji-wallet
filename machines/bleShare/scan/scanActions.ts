@@ -242,7 +242,6 @@ export const ScanActions = (model: any) => {
             type: context.shareLogType
               ? context.shareLogType
               : 'VC_SHARED_WITH_VERIFICATION_CONSENT',
-            id: vcMetadata.displayId,
             credentialConfigurationId:
               context.selectedVc.verifiableCredential.credentialConfigurationId,
             issuer: vcMetadata.issuer!!,
@@ -265,7 +264,6 @@ export const ScanActions = (model: any) => {
             timestamp: Date.now(),
             credentialConfigurationId:
               context.selectedVc.verifiableCredential.credentialConfigurationId,
-            id: vcMetadata.displayId,
             issuer: vcMetadata.issuer!!,
             deviceName:
               context.receiverInfo.name || context.receiverInfo.deviceName,
@@ -340,7 +338,6 @@ export const ScanActions = (model: any) => {
         return ActivityLogEvents.LOG_ACTIVITY(
           VCActivityLog.getLogFromObject({
             _vcKey: '',
-            id: vcMetadata.displayId,
             issuer: vcMetadata.issuer!!,
             credentialConfigurationId:
               selectedVc.verifiableCredential.credentialConfigurationId,

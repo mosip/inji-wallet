@@ -282,7 +282,6 @@ export const IssuersActions = (model: any) => {
           VCActivityLog.getLogFromObject({
             _vcKey: vcMetadata.getVcKey(),
             type: 'VC_DOWNLOADED',
-            id: vcMetadata.displayId,
             timestamp: Date.now(),
             deviceName: '',
             issuer: context.selectedIssuerId,

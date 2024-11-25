@@ -10,13 +10,13 @@ import {ActorRefFrom} from 'xstate';
 import {VCItemMachine} from '../../../machines/VerifiableCredential/VCItemMachine/VCItemMachine';
 
 export const HistoryTab: React.FC<HistoryTabProps> = props => {
-  const {t} = useTranslation('HistoryTab');
+  const {t} = useTranslation('HistoryScreen');
   const controller = useKebabPopUp(props);
 
   return (
     <>
       <Modal
-        headerLabel={props.vcMetadata.displayId}
+        headerLabel={t('historyHeaderLabel')}
         isVisible={controller.isShowActivities}
         onDismiss={controller.DISMISS}>
         <Column fill>
