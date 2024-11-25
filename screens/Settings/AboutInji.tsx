@@ -55,7 +55,7 @@ export const AboutInji: React.FC<AboutInjiProps> = ({appId}) => {
       <Modal
         testID="aboutInji"
         isVisible={showAboutInji}
-        headerTitle={'About Inji Wallet'}
+        headerTitle={t('aboutInji')}
         headerElevation={2}
         arrowLeft={true}
         onDismiss={() => {

@@ -1752,12 +1752,12 @@ export const PurpleTheme = {
       padding: 11,
     },
     bottomTabLabelText: {
-      fontSize: 11,
+      fontSize: 9,
       fontFamily: 'Inter_700Bold',
       color: Colors.Purple,
     },
     unfocusedbottomTabLabelText: {
-      fontSize: 11,
+      fontSize: 9,
       fontFamily: 'Inter_700Bold',
       color: Colors.DarkGray,
     },
