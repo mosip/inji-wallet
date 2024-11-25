@@ -239,7 +239,13 @@ export const IssuersActions = (model: any) => {
         credential_endpoint: event.data.credential_endpoint,
         credential_configurations_supported:
           event.data.credential_configurations_supported,
-        authorization_servers: event.data.authorization_servers,
+      }),
+    }),
+
+    updateAuthorizationEndpoint: model.assign({
+      selectedIssuer: (context: any, event: any) => ({
+        ...context.selectedIssuer,
+        authorizationEndpoint: event.data,
       }),
     }),
 
