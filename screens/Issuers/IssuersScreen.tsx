@@ -101,7 +101,9 @@ export const IssuersScreen: React.FC<
     return (
       controller.errorMessageType === ErrorMessage.TECHNICAL_DIFFICULTIES ||
       controller.errorMessageType ===
-        ErrorMessage.CREDENTIAL_TYPE_DOWNLOAD_FAILURE
+        ErrorMessage.CREDENTIAL_TYPE_DOWNLOAD_FAILURE ||
+      controller.errorMessageType ===
+        ErrorMessage.AUTHORIZATION_GRANT_TYPE_NOT_SUPPORTED
     );
   }
 
@@ -213,7 +215,9 @@ export const IssuersScreen: React.FC<
         showClose
         primaryButtonTestID="tryAgain"
         primaryButtonText={
-          controller.errorMessageType != ErrorMessage.TECHNICAL_DIFFICULTIES
+          controller.errorMessageType != ErrorMessage.TECHNICAL_DIFFICULTIES &&
+          controller.errorMessageType !=
+            ErrorMessage.AUTHORIZATION_GRANT_TYPE_NOT_SUPPORTED
             ? 'tryAgain'
             : undefined
         }

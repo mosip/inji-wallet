@@ -286,7 +286,7 @@ async function generateCacheAPIFunctionWithAPIPreference(
       onErrorHardCodedValue != undefined
     }`);
 
-    console.log(error);
+    console.error(`The error in fetching api ${cacheKey}`,error);
     var response=null;
     if(!(await NetInfo.fetch()).isConnected){
        response = await getItem(cacheKey, null, '');

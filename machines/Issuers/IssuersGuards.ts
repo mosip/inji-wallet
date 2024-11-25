@@ -33,7 +33,14 @@ export const IssuersGuards = () => {
       return (
         !!event.data &&
         typeof event.data.toString === 'function' &&
-        event.data.toString().includes(OIDCErrors.OIDC_CONFIG_ERROR_PREFIX)
+        event.data.toString()(OIDCErrors.OIDC_CONFIG_ERROR_PREFIX)
+      );
+    },
+    isGrantTypeNotSupportedError: (_: any, event: any) => {
+      return (
+        !!event.data &&
+        event.data.toString() ===
+          OIDCErrors.AUTHORIZATION_ENDPOINT_DISCOVERY.GRANT_TYPE_NOT_SUPPORTED
       );
     },
     canSelectIssuerAgain: (context: any) => {

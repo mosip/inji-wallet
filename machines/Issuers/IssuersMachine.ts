@@ -156,11 +156,32 @@ export const IssuersMachine = model.createMachine(
             },
           ],
           onError: {
-            actions: [
-              'setError',
-              'resetLoadingReason',
-            ],
-            target: 'error',
+            actions: ['setError', 'resetLoadingReason'],
+            target: '.error',
+          },
+        },
+        initial: 'idle',
+        states: {
+          idle: {},
+          error: {
+            on: {
+              TRY_AGAIN: [
+                {
+                  description:
+                    'issuer and credential type is selected by the user',
+                  actions: ['setLoadingReasonAsSettingUp', 'resetError'],
+                  target: '#issuersMachine.fetchAuthorizationEndpoint',
+                },
+              ],
+              RESET_ERROR: [
+                {
+                  description:
+                    'issuer and credential type is selected by the user',
+                  actions: ['setLoadingReasonAsSettingUp', 'resetError'],
+                  target: '#issuersMachine.selectingCredentialType',
+                },
+              ],
+            },
           },
         },
       },
