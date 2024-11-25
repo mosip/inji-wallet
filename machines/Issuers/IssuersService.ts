@@ -60,6 +60,15 @@ export const IssuersService = () => {
 
       return credentialTypes;
     },
+    fetchAuthorizationEndpoint: async (context: any) => {
+      const authorizationServer =
+        context.selectedIssuerWellknownResponse['authorization_servers'][0];
+      const authorizationServerMetadata =
+        await CACHED_API.fetchIssuerAuthorizationServerMetadata(
+          authorizationServer,
+        );
+      return authorizationServerMetadata['authorization_endpoint'];
+    },
     downloadCredential: async (context: any) => {
       const downloadTimeout = await vcDownloadTimeout();
       const accessToken: string = context.tokenResponse?.accessToken;

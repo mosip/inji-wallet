@@ -142,7 +142,25 @@ export const IssuersMachine = model.createMachine(
           },
           SELECTED_CREDENTIAL_TYPE: {
             actions: 'setSelectedCredentialType',
-            target: 'checkInternet',
+            target: 'fetchAuthorizationEndpoint',
+          },
+        },
+      },
+      fetchAuthorizationEndpoint: {
+        invoke: {
+          src: 'fetchAuthorizationEndpoint',
+          onDone: [
+            {
+              actions: 'updateAuthorizationEndpoint',
+              target: 'checkInternet',
+            },
+          ],
+          onError: {
+            actions: [
+              'setError',
+              'resetLoadingReason',
+            ],
+            target: 'error',
           },
         },
       },
@@ -496,4 +514,5 @@ export interface issuerType {
   credential_configurations_supported: object;
   display: [displayType];
   credentialTypes: [CredentialTypes];
+  authorizationEndpoint: string;
 }

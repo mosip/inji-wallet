@@ -151,7 +151,7 @@ export const constructAuthorizationConfiguration = (
     additionalParameters: {ui_locales: i18n.language},
     serviceConfiguration: {
       authorizationEndpoint:
-        selectedIssuer.authorization_servers[0] + '/authorize',
+      selectedIssuer.authorizationEndpoint,
       tokenEndpoint: selectedIssuer.token_endpoint,
     },
   };
