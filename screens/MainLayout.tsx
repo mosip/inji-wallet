@@ -83,7 +83,7 @@ export const MainLayout: React.FC = () => {
               ),
               tabBarAccessibilityLabel: isIOS() ? t(route.name) : route.name,
               tabBarLabel: ({ focused }) => (
-                  <Text style={focused ? Theme.BottomTabBarStyle.bottomTabLabelText : Theme.BottomTabBarStyle.unfocusedbottomTabLabelText}>
+                  <Text  numLines={1} style={focused ? Theme.BottomTabBarStyle.bottomTabLabelText : Theme.BottomTabBarStyle.unfocusedbottomTabLabelText}>
                   {t(route.name)}
                 </Text>
               ),
