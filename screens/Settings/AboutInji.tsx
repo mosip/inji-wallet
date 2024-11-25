@@ -44,7 +44,7 @@ export const AboutInji: React.FC<AboutInjiProps> = ({appId}) => {
           <ListItem.Content>
             <ListItem.Title
               {...testIDProps('aboutInjiTitle')}
-              style={{paddingTop: 3}}>
+              style={Theme.AboutInjiScreenStyle.titleStyle}>
               <Text weight="semibold" color={Theme.Colors.settingsLabel}>
                 {t('aboutInji')}
               </Text>
@@ -73,47 +73,32 @@ export const AboutInji: React.FC<AboutInjiProps> = ({appId}) => {
             <Row>
               <Text
                 weight="semibold"
-                style={{
-                  maxWidth: 110,
-                  paddingTop:
-                    i18next.language == 'kn' || i18next.language == 'hi'
-                      ? 5
-                      : 0,
-                }}>
+                style={Theme.AboutInjiScreenStyle.appIdTitleStyle}>
                 {t('appID')}
               </Text>
               <Text
                 weight="semibold"
-                style={{
-                  paddingTop: i18next.language == 'hi' ? 2 : 0,
-                }}>
+                style={Theme.AboutInjiScreenStyle.appIdTextStyle}>
                 {I18nManager.isRTL ? appId : ' : ' + appId}
               </Text>
             </Row>
             <CopyButton content={appId} />
           </Row>
         </LinearGradient>
-        <Column padding="12" align="space-between" style={{flex: 1}}>
+        <Column
+          align="space-between"
+          style={Theme.AboutInjiScreenStyle.containerStyle}>
           <Column>
             <Text
               testID="aboutDetails"
-              style={{...Theme.TextStyles.aboutDetails, paddingTop: 5}}>
+              style={Theme.AboutInjiScreenStyle.aboutDetailstextStyle}>
               {t('aboutDetails')}
             </Text>
             <Row
               align="space-between"
               crossAlign="center"
-              style={{
-                maxWidth: Dimensions.get('window').width * 0.94,
-                minHeight: Dimensions.get('window').height * 0.1,
-                marginTop: 7,
-              }}>
-              <Text
-                style={{
-                  ...Theme.TextStyles.aboutDetails,
-                  maxWidth: 150,
-                  paddingTop: 10,
-                }}>
+              style={Theme.AboutInjiScreenStyle.innerContainerStyle}>
+              <Text style={Theme.AboutInjiScreenStyle.moreDetailstextStyle}>
                 {t('forMoreDetails')}
               </Text>
               <TouchableOpacity
@@ -124,7 +109,7 @@ export const AboutInji: React.FC<AboutInjiProps> = ({appId}) => {
                 <Text
                   testID="clickHere"
                   color={Theme.Colors.AddIdBtnBg}
-                  style={{maxWidth: 150, paddingTop: 3}}
+                  style={Theme.AboutInjiScreenStyle.clickHereTextStyle}
                   weight="bold">
                   {t('clickHere')}
                 </Text>
@@ -137,40 +122,33 @@ export const AboutInji: React.FC<AboutInjiProps> = ({appId}) => {
             align="space-between"
             crossAlign="center"
             style={Theme.Styles.versionContainer}>
-            <Row style={{paddingBottom: 15}}>
+            <Row style={Theme.AboutInjiScreenStyle.injiVersionContainerStyle}>
               <Text
                 testID="tuvaliVersion"
                 weight="semibold"
-                style={{paddingTop: 3}}
+                style={Theme.AboutInjiScreenStyle.injiVersionTitle}
                 color={Theme.Colors.aboutVersion}>
                 {t('version') + ' : '}
               </Text>
               <Text
                 weight="semibold"
-                style={{paddingTop: 3, maxWidth: 250}}
+                style={Theme.AboutInjiScreenStyle.injiVersionText}
                 color={Theme.Colors.aboutVersion}>
                 {__InjiVersion.getValue()}
               </Text>
             </Row>
-            
             {__TuvaliVersion.getpackageVersion() != 'unknown' && (
               <Text
                 weight="semibold"
-                style={{paddingTop: 3, paddingBottom: 12, marginTop: 3}}
+                style={Theme.AboutInjiScreenStyle.tuvaliVerisonStyle}
                 color={Theme.Colors.aboutVersion}>
                 {t('tuvaliVersion')}: {__TuvaliVersion.getValue()}
               </Text>
             )}
-            <View
-              style={{
-                backgroundColor: 'lightgrey',
-                width: '90%',
-                height: 1,
-              }}
-            />
+            <View style={Theme.AboutInjiScreenStyle.horizontalLineStyle} />
             <Text
               weight="semibold"
-              style={{paddingTop: 15, maxWidth: 250}}
+              style={Theme.AboutInjiScreenStyle.poweredByTextStyle}
               color="black">
               {t('poweredBy')}
             </Text>
