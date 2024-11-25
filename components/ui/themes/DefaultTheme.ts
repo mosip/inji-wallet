@@ -1652,12 +1652,12 @@ export const DefaultTheme = {
       padding: 11,
     },
     bottomTabLabelText: {
-      fontSize: 11,
+      fontSize: 9,
       fontFamily: 'Inter_700Bold',
       color: Colors.DarkGreen,
     },
     unfocusedbottomTabLabelText: {
-      fontSize: 11,
+      fontSize: 9,
       fontFamily: 'Inter_700Bold',
       color: Colors.DarkGray,
     },
