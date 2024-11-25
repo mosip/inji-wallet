@@ -11,6 +11,7 @@ import {COPILOT_HEIGHT, isIOS} from '../../../shared/constants';
 import Constants from 'expo-constants';
 import HomeScreenLogo from '../../../assets/Inji_Home_Logo.svg';
 import InjiLogoSmall from '../../../assets/InjiLogo.svg';
+import i18next from '../../../i18n';
 
 const Colors = {
   Black: '#231F20',
@@ -417,6 +418,9 @@ export const PurpleTheme = {
     injiLogo: {
       width: 105,
       height: 40,
+    },
+    injiHomeLogo: {
+      marginLeft: -24,
     },
     logo: {
       height: 35,
@@ -1661,6 +1665,71 @@ export const PurpleTheme = {
       fontSize: 9,
       fontFamily: 'Inter_700Bold',
       color: Colors.DarkGray,
+    },
+  }),
+
+  AboutInjiScreenStyle: StyleSheet.create({
+    titleStyle: {
+      paddingTop: 3,
+    },
+    appIdTitleStyle: {
+      maxWidth: 110,
+      paddingTop: i18next.language == 'kn' || i18next.language == 'hi' ? 5 : 0,
+    },
+    appIdTextStyle: {
+      paddingTop: i18next.language == 'hi' ? 2 : 0,
+    },
+    containerStyle: {
+      flex: 1,
+      padding: 12,
+    },
+    innerContainerStyle: {
+      maxWidth: Dimensions.get('window').width * 0.94,
+      minHeight: Dimensions.get('window').height * 0.1,
+      marginTop: 7,
+    },
+    clickHereTextStyle: {
+      maxWidth: 150,
+      paddingTop: 3,
+    },
+    injiVersionContainerStyle: {
+      paddingBottom: 15,
+    },
+    injiVersionTitle: {
+      paddingTop: 3,
+    },
+    injiVersionText: {
+      paddingTop: 3,
+      maxWidth: 250,
+    },
+    tuvaliVerisonStyle: {
+      paddingTop: 3,
+      paddingBottom: 12,
+      marginTop: 3,
+    },
+    horizontalLineStyle: {
+      backgroundColor: 'lightgrey',
+      width: '90%',
+      height: 1,
+    },
+    poweredByTextStyle: {
+      paddingTop: 15,
+      maxWidth: 250,
+    },
+    aboutDetailstextStyle: {
+      color: Colors.Black,
+      fontSize: 18,
+      margin: 7,
+      lineHeight: 18,
+      paddingTop: 5,
+    },
+    moreDetailstextStyle: {
+      color: Colors.Black,
+      fontSize: 18,
+      margin: 7,
+      lineHeight: 18,
+      maxWidth: 150,
+      paddingTop: 10,
     },
   }),
 
