@@ -152,6 +152,7 @@ export const AboutInji: React.FC<AboutInjiProps> = ({appId}) => {
                 {__InjiVersion.getValue()}
               </Text>
             </Row>
+            
             {__TuvaliVersion.getpackageVersion() != 'unknown' && (
               <Text
                 weight="semibold"
