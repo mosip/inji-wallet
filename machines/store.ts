@@ -340,6 +340,8 @@ export const storeMachine =
           catch(e){
             if(e instanceof BiometricCancellationError){
               callback(model.events.BIOMETRIC_CANCELLED());
+            } else {
+              callback(model.events.STORE_ERROR(e));
             }
           }
         },
