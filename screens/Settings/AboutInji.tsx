@@ -6,6 +6,7 @@ import {
   Pressable,
   TouchableOpacity,
   I18nManager,
+  View,
 } from 'react-native';
 import {Modal} from '../../components/ui/Modal';
 import {Column, Row, Text} from '../../components/ui';
@@ -92,7 +93,7 @@ export const AboutInji: React.FC<AboutInjiProps> = ({appId}) => {
             <CopyButton content={appId} />
           </Row>
         </LinearGradient>
-        <Column padding="12" align="space-between">
+        <Column padding="12" align="space-between" style={{flex: 1}}>
           <Column>
             <Text
               testID="aboutDetails"
@@ -136,7 +137,7 @@ export const AboutInji: React.FC<AboutInjiProps> = ({appId}) => {
             align="space-between"
             crossAlign="center"
             style={Theme.Styles.versionContainer}>
-            <Row>
+            <Row style={{paddingBottom: 15}}>
               <Text
                 testID="tuvaliVersion"
                 weight="semibold"
@@ -151,15 +152,27 @@ export const AboutInji: React.FC<AboutInjiProps> = ({appId}) => {
                 {__InjiVersion.getValue()}
               </Text>
             </Row>
-
             {__TuvaliVersion.getpackageVersion() != 'unknown' && (
               <Text
                 weight="semibold"
-                style={{paddingTop: 3, marginTop: 3}}
+                style={{paddingTop: 3, paddingBottom: 12, marginTop: 3}}
                 color={Theme.Colors.aboutVersion}>
                 {t('tuvaliVersion')}: {__TuvaliVersion.getValue()}
               </Text>
             )}
+            <View
+              style={{
+                backgroundColor: 'lightgrey',
+                width: '90%',
+                height: 1,
+              }}
+            />
+            <Text
+              weight="semibold"
+              style={{paddingTop: 15, maxWidth: 250}}
+              color="black">
+              {t('poweredBy')}
+            </Text>
           </Column>
         </Column>
       </Modal>
