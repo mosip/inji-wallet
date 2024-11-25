@@ -8,27 +8,26 @@ Inji Automation is a mobile automation framework designed for iOS and Android pl
 
 To set up Appium for use with this framework, please follow the installation instructions provided in the [Appium documentation](https://appium.io/docs/en/2.2/quickstart/install/).
 
-## Build
+## Pre-requisites
+Ensure the following software is installed on the machine from where the automation tests will be executed:
 
-1. Build the JAR file: `mvn clean package -DskipTests=true`
-2. The JAR file will be generated in the `target` directory.
-3. For running tests on Device Farm, use the JAR file with dependencies (`zip-with-dependencies`).
+1. The project requires JDK 21
 
 ## Configurations
 
-1. Update `Config>>kernal.properties` to modify the environment settings.
-2. Update the following keys in `src/main/java>>inji.utils>>TestDataReader.java`:
-   - `uin`
-   - `uin2`
-   - `aid` for environment changes.
-3. Update `Config>>config.properties` with the following values:
-   - `nodePath`
-   - `appiumServerExecutable`
-4. Update `Config>>DesiredCapabilies.json` with the following keys:
-   - `appium:udid`
-   - `appium:app`
-5. If the run is on Device Farm, set `isDeviceFarmRun` to `true`.
-6. To run tests in an IDE, set `isDeviceFarmRun` to `false` and execute the `testng.xml` file.
+1. update `resourec/uin.json`,`resourec/Vid.json`,`resourec/aid.json` file as per the uin and vids being used.
+2. Update utils/TestDataReader to include updates for FullName, uin, idType, gender, phoneNumber, dateOfBirth, and externalEmail as they are used during creation.
+
+## BrowserStack
+1.singup to browserStack & get the userName and accessKey from home page on browserStack
+2.Upload app on browserStack it will return 'bs://<app-id>', update the same appid in iosConfig.yml/androidconfig.yml
+2.update the userName and accessKey from iosConfig.yml/androidconfig.yml
+3.update the device from tag platforms from https://www.browserstack.com/list-of-browsers-and-platforms/automate (Windows, Mac)
+4.Open command prompt and change directory by using command 'cd ../injitest'
+5.Hit the command mvn clean test -DtestngXmlFile=androidSanity.xml -Dbrowserstack.config="androidConfig.yml", for running the sanity for android
+6.Hit the command mvn clean test -DtestngXmlFile=iosSanity.xml -Dbrowserstack.config="iosConfig.yml", for running the sanity for ios
+7.6.Hit the command mvn clean test -DtestngXmlFile=iosRegression.xml -Dbrowserstack.config="iosConfig.yml", for running the regression for ios
+5.Hit the command mvn clean test -DtestngXmlFile=androidRegression.xml -Dbrowserstack.config="androidConfig.yml", for running the Regression for android
 
 ## Reports
 
