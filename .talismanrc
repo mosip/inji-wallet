@@ -322,6 +322,8 @@ fileignoreconfig:
     checksum: 3d9e317d4463e3df61ce135ae9ed2acaef8074cf60d12f672140ab45d59c3df7
   - filename: injitest/src/test/java/iosTestCases/VcDownloadAndVerifyUsingUinTest.java
     checksum: a6feabb768e2d97dfb0a1693f09d839686ce6be686523cf273b2d3ce614b34fd
+  - filename: locales/pt.json
+    checksum: 7ddf49a5afe0c94b30ec7115fd3e06d91dda9b1d574b03b2ed9b7441c0953285
   - filename: machines/Issuers/IssuersMachine.typegen.ts
     checksum: 08fd5e4eff836c219a0f16f6d4178a3511ec2581507076d3f9d32dcadbc01351
   - filename: injitest/src/test/java/iosTestCases/DeletingVcTest.java

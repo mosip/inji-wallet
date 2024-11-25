@@ -6,7 +6,7 @@ import {
   Pressable,
   TouchableOpacity,
   I18nManager,
-  View
+  View,
 } from 'react-native';
 import {Modal} from '../../components/ui/Modal';
 import {Column, Row, Text} from '../../components/ui';
@@ -18,7 +18,7 @@ import testIDProps from '../../shared/commonUtil';
 import {__InjiVersion, __TuvaliVersion} from '../../shared/GlobalVariables';
 import i18next from '../../i18n';
 import {BannerNotificationContainer} from '../../components/BannerNotificationContainer';
-import { SvgImage } from '../../components/ui/svg';
+import {SvgImage} from '../../components/ui/svg';
 import LinearGradient from 'react-native-linear-gradient';
 
 export const AboutInji: React.FC<AboutInjiProps> = ({appId}) => {
@@ -40,7 +40,7 @@ export const AboutInji: React.FC<AboutInjiProps> = ({appId}) => {
           setShowAboutInji(!showAboutInji);
         }}>
         <ListItem {...testIDProps('aboutInji')} topDivider bottomDivider>
-        {SvgImage.abotInjiIcon()}
+          {SvgImage.abotInjiIcon()}
           <ListItem.Content>
             <ListItem.Title
               {...testIDProps('aboutInjiTitle')}
@@ -55,7 +55,7 @@ export const AboutInji: React.FC<AboutInjiProps> = ({appId}) => {
       <Modal
         testID="aboutInji"
         isVisible={showAboutInji}
-        headerTitle={"About Inji Wallet"}
+        headerTitle={t('aboutInji')}
         headerElevation={2}
         arrowLeft={true}
         onDismiss={() => {
@@ -93,7 +93,7 @@ export const AboutInji: React.FC<AboutInjiProps> = ({appId}) => {
             <CopyButton content={appId} />
           </Row>
         </LinearGradient>
-        <Column padding="12" align="space-between" style={{flex:1}}>
+        <Column padding="12" align="space-between" style={{flex: 1}}>
           <Column>
             <Text
               testID="aboutDetails"

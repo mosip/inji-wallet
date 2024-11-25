@@ -9,8 +9,8 @@ import {
 import {Spacing} from '../styleUtils';
 import {COPILOT_HEIGHT, isIOS} from '../../../shared/constants';
 import Constants from 'expo-constants';
-import HomeScreenLogo from '../../../assets/InjiHomeLogo.svg'
-import InjiLogoSmall from '../../../assets/InjiLogo.svg'
+import HomeScreenLogo from '../../../assets/InjiHomeLogo.svg';
+import InjiLogoSmall from '../../../assets/InjiLogo.svg';
 const Colors = {
   Black: '#000000',
   Zambezi: '#5F5F5F',
@@ -52,7 +52,7 @@ const Colors = {
   walletbindingLabel: '#000000',
   LightOrange: '#F7EDF3',
   GradientColors: ['#52AE32', '#006535'],
-  GradientColorsLight: ['#52AE32'+14, '#006535'+14],
+  GradientColorsLight: ['#52AE32' + 14, '#006535' + 14],
   DisabledColors: ['#C7C7C7', '#C7C7C7'],
   TimeoutHintBoxColor: '#FFF7E5',
   TimeoutHintBoxBorder: '#FFF2D6',
@@ -1652,12 +1652,12 @@ export const DefaultTheme = {
       padding: 11,
     },
     bottomTabLabelText: {
-      fontSize: 11,
+      fontSize: 9,
       fontFamily: 'Inter_700Bold',
       color: Colors.DarkGreen,
     },
     unfocusedbottomTabLabelText: {
-      fontSize: 11,
+      fontSize: 9,
       fontFamily: 'Inter_700Bold',
       color: Colors.DarkGray,
     },
@@ -1718,9 +1718,9 @@ export const DefaultTheme = {
     };
   },
   LinearGradientDirection: {
-    start: {x:0.5,y:0.5},
-    end: {x:1,y:0.5}
-  }
+    start: {x: 0.5, y: 0.5},
+    end: {x: 1, y: 0.5},
+  },
 };
 
 function generateBoxShadowStyle() {
