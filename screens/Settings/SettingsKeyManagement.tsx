@@ -11,6 +11,7 @@ import {
   SettingsStackParamList,
 } from '../../routes/routesConstants';
 import {useTranslation} from 'react-i18next';
+import LinearGradient from 'react-native-linear-gradient';
 
 type SettingsNavigation = NavigationProp<SettingsStackParamList>;
 
@@ -45,12 +46,22 @@ export const SettingsKeyManagementScreen: React.FC<
                   {t('header')}
                 </Text>
                 {!props.controller.isKeyManagementExplored && (
-                  <Text
-                    testID="newLabel"
-                    style={Theme.Styles.newLabel}
-                    color={Theme.Colors.whiteText}>
-                    {t('NEW')}
-                  </Text>
+                  <LinearGradient
+                    colors={Theme.Colors.GradientColors}
+                    start={Theme.LinearGradientDirection.start}
+                    end={Theme.LinearGradientDirection.end}
+                    style={{
+                      justifyContent: 'center',
+                      height: 20,
+                      marginTop: 10,
+                    }}>
+                    <Text
+                      testID="newLabel"
+                      style={Theme.Styles.newLabel}
+                      color={Theme.Colors.whiteText}>
+                      {t('NEW')}
+                    </Text>
+                  </LinearGradient>
                 )}
               </Row>
             </ListItem.Title>

@@ -34,6 +34,7 @@ const model = createModel(
       ONBOARDING_DONE: () => ({}),
       INITIAL_DOWNLOAD_DONE: () => ({}),
       SET_TOUR_GUIDE: (set: boolean) => ({set}),
+      BIOMETRIC_CANCELLED: () => ({}),
     },
   },
 );
@@ -63,6 +64,9 @@ export const authMachine = model.createMachine(
       SET_TOUR_GUIDE: {
         actions: 'setTourGuide',
       },
+      BIOMETRIC_CANCELLED: {
+        target: 'init',
+      },
     },
     states: {
       init: {
@@ -75,6 +79,11 @@ export const authMachine = model.createMachine(
               actions: ['setContext'],
             },
             {target: 'savingDefaults'},
+          ],
+          BIOMETRIC_CANCELLED: [
+            {
+              target: 'init',
+            },
           ],
         },
       },

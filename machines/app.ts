@@ -65,6 +65,7 @@ const model = createModel(
       STORE_RESPONSE: (response: unknown) => ({response}),
       RESET_KEY_INVALIDATE_ERROR_DISMISS: () => ({}),
       RESET_LINKCODE: () => ({}),
+      BIOMETRIC_CANCELLED: () => ({}),
     },
   },
 );
@@ -99,6 +100,9 @@ export const appMachine = model.createMachine(
       },
       RESET_KEY_INVALIDATE_ERROR_DISMISS: {
         actions: ['resetKeyInvalidateError'],
+        target: 'init',
+      },
+      BIOMETRIC_CANCELLED: {
         target: 'init',
       },
     },
@@ -165,6 +169,9 @@ export const appMachine = model.createMachine(
                   'loadEsignetHostFromConstants',
                 ],
                 target: 'info',
+              },
+              BIOMETRIC_CANCELLED: {
+                target: 'store',
               },
             },
           },

@@ -159,6 +159,9 @@ function handleVcVerifierResponse(
 ): VerificationResult {
   try {
     if (!verificationResult.verificationStatus) {
+      console.error(
+        `Verification failure occurred, errorcode - ${verificationResult.verificationErrorCode}, message - ${verificationResult.verificationMessage}`,
+      );
       verificationResult.verificationErrorCode =
         verificationResult.verificationErrorCode === ''
           ? VerificationErrorType.GENERIC_TECHNICAL_ERROR
