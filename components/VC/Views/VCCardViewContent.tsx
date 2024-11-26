@@ -1,6 +1,5 @@
 import React from 'react';
 import {ImageBackground, Pressable, Image, View} from 'react-native';
-import {getLocalizedField} from '../../../i18n';
 import {VCMetadata} from '../../../shared/VCMetadata';
 import {KebabPopUp} from '../../KebabPopUp';
 import {Credential} from '../../../machines/VerifiableCredential/VCMetaMachine/vc';
@@ -13,7 +12,7 @@ import {
   isVCLoaded,
   getBackgroundColour,
   getBackgroundImage,
-  DisplayName,
+  getIdType,
 } from '../common/VCUtils';
 import {VCItemFieldValue} from '../common/VCItemField';
 import {WalletBinding} from '../../../screens/Home/MyVcs/WalletBinding';
@@ -81,9 +80,9 @@ export const VCCardViewContent: React.FC<VCItemContentProps> = props => {
           {VcItemContainerProfileImage(props)}
           <Column fill align={'space-around'} margin="0 10 0 10">
             <VCItemFieldValue
-              key={'fullName'}
-              testID="fullName"
-              fieldValue={getLocalizedField(DisplayName(props))}
+              key={'credentialType'}
+              testID="credentialType"
+              fieldValue={getIdType(props.wellknown)}
               wellknown={props.wellknown}
             />
             <Row>

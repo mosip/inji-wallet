@@ -148,18 +148,29 @@ export const getFieldName = (
 };
 
 export const getBackgroundColour = (wellknown: any) => {
+  const defaultBackgroundColor = Theme.Colors.textValue;
+
   return {
     backgroundColor:
-      wellknown?.display[0]?.background_color ?? Theme.Colors.textValue,
+      (wellknown?.display?.length
+        ? wellknown.display[0]?.background_color
+        : null) ?? defaultBackgroundColor,
   };
 };
 
 export const getBackgroundImage = (wellknown: any, defaultBackground: any) => {
-  return wellknown?.display[0]?.background_image ?? defaultBackground;
+  return (
+    (wellknown?.display?.length
+      ? wellknown.display[0]?.background_image
+      : null) ?? defaultBackground
+  );
 };
 
 export const getTextColor = (wellknown: any, defaultColor: string) => {
-  return wellknown?.display[0]?.text_color ?? defaultColor;
+  return (
+    (wellknown?.display?.length ? wellknown.display[0]?.text_color : null) ??
+    defaultColor
+  );
 };
 
 export function getAddressFields() {
@@ -251,27 +262,29 @@ export const getMosipLogo = () => {
  * @param idType
  * @returns id Type translations (Eg - National ID)
  *
- * supportedCredential's wellknown is passed from getActivityText after fresh download
+ * supportedCredential's wellknown is passed from getActivityText after fresh download and viewing of card's mini view flow
  * & all other consumers pass whole well known response of issuer
  */
+//TODO: Modify the function to *CredentialType to name as per domain
 export const getIdType = (
   wellknown: CredentialTypes | IssuerWellknownResponse,
   credentialConfigurationId: string | undefined = undefined,
 ): string => {
+  const defaultCredentialType = i18n.t('VcDetails:nationalCard');
   if (
     wellknown &&
     wellknown['credential_configurations_supported'] === undefined &&
-    wellknown?.display
+    wellknown?.display?.length
   ) {
     const idTypeObj = wellknown.display.map((displayProps: any) => {
       return {language: displayProps.locale, value: displayProps.name};
     });
-    return getLocalizedField(idTypeObj);
+    return getLocalizedField(idTypeObj) ?? defaultCredentialType;
   } else if (wellknown && Object.keys(wellknown).length > 0) {
     let supportedCredentialsWellknown;
     wellknown = parseJSON(wellknown) as unknown as Object[];
     if (!!!wellknown['credential_configurations_supported']) {
-      return i18n.t('VcDetails:nationalCard');
+      return defaultCredentialType;
     }
     try {
       if (!!credentialConfigurationId) {
@@ -281,7 +294,7 @@ export const getIdType = (
         );
       } else {
         console.error(
-          'credentialConfigurationId not available for fetching the ID type',
+          'credentialConfigurationId not available or display properties not available for fetching the ID type',
         );
         throw new Error(
           `invalid credential credentialConfigurationId - ${credentialConfigurationId} passed`,
@@ -291,22 +304,13 @@ export const getIdType = (
       console.error(
         `error occurred while getting supported credential's ${credentialConfigurationId} wellknown`,
       );
-      return i18n.t('VcDetails:nationalCard');
+      return defaultCredentialType;
     }
     if (Object.keys(supportedCredentialsWellknown).length === 0) {
-      return i18n.t('VcDetails:nationalCard');
+      return defaultCredentialType;
     }
     return getIdType(supportedCredentialsWellknown);
   } else {
-    return i18n.t('VcDetails:nationalCard');
+    return defaultCredentialType;
   }
 };
-
-export function DisplayName(props: VCItemContentProps): string | Object {
-  if (props.verifiableCredentialData.format === VCFormat.mso_mdoc) {
-    return props.credential['issuerSigned']['nameSpaces'][
-      'org.iso.18013.5.1'
-    ].find(element => element.elementIdentifier === 'given_name').elementValue;
-  }
-  return props.credential?.credentialSubject['fullName'];
-}
