@@ -12,7 +12,7 @@ import {
   isVCLoaded,
   getBackgroundColour,
   getBackgroundImage,
-  getIdType,
+  getCredentialType,
 } from '../common/VCUtils';
 import {VCItemFieldValue} from '../common/VCItemField';
 import {WalletBinding} from '../../../screens/Home/MyVcs/WalletBinding';
@@ -82,7 +82,7 @@ export const VCCardViewContent: React.FC<VCItemContentProps> = props => {
             <VCItemFieldValue
               key={'credentialType'}
               testID="credentialType"
-              fieldValue={getIdType(props.wellknown)}
+              fieldValue={getCredentialType(props.wellknown)}
               wellknown={props.wellknown}
             />
             <Row>
