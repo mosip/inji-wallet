@@ -16,7 +16,6 @@ import {MIMOTO_BASE_URL} from '../../../shared/constants';
 import {VCItemDetailsProps} from '../Views/VCDetailView';
 import {getMatchingCredentialIssuerMetadata} from '../../../shared/openId4VCI/Utils';
 import {parseJSON} from '../../../shared/Utils';
-import {VCItemContentProps} from '../Views/VCCardViewContent';
 import {VCFormat} from '../../../shared/VCFormat';
 
 export const CARD_VIEW_DEFAULT_FIELDS = ['fullName'];
@@ -80,7 +79,7 @@ export const getFieldValue = (
         />
       );
     case 'idType':
-      return getIdType(wellknown);
+      return getCredentialType(wellknown);
     case 'credentialRegistry':
       return props?.vc?.credentialRegistry;
     case 'address':
@@ -259,14 +258,13 @@ export const getMosipLogo = () => {
 /**
  *
  * @param wellknown (either supportedCredential's wellknown or whole well known response of issuer)
- * @param idType
- * @returns id Type translations (Eg - National ID)
+ * @param credentialConfigurationId
+ * @returns credential type translations (Eg - National ID)
  *
  * supportedCredential's wellknown is passed from getActivityText after fresh download and viewing of card's mini view flow
  * & all other consumers pass whole well known response of issuer
  */
-//TODO: Modify the function to *CredentialType to name as per domain
-export const getIdType = (
+export const getCredentialType = (
   wellknown: CredentialTypes | IssuerWellknownResponse,
   credentialConfigurationId: string | undefined = undefined,
 ): string => {
@@ -294,7 +292,7 @@ export const getIdType = (
         );
       } else {
         console.error(
-          'credentialConfigurationId not available or display properties not available for fetching the ID type',
+          'credentialConfigurationId not available or display properties not available for fetching the Credential type',
         );
         throw new Error(
           `invalid credential credentialConfigurationId - ${credentialConfigurationId} passed`,
@@ -309,7 +307,7 @@ export const getIdType = (
     if (Object.keys(supportedCredentialsWellknown).length === 0) {
       return defaultCredentialType;
     }
-    return getIdType(supportedCredentialsWellknown);
+    return getCredentialType(supportedCredentialsWellknown);
   } else {
     return defaultCredentialType;
   }
