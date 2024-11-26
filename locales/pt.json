@@ -14,7 +14,25 @@
     "WALLET_BINDING_SUCCESSFULL": "Ativação de {{idType}} {{id}} é bem sucedido.",
     "WALLET_BINDING_FAILURE": "Ativação de {{idType}} {{id}} falhou.",
     "VC_REMOVED": "{{idType}} {{id}} é removido da carteira.",
-    "TAMPERED_VC_REMOVED": "{{idType}} {{id}} é removido da carteira devido a adulteração."
+    "TAMPERED_VC_REMOVED": "{{idType}} {{id}} é removido da carteira devido a adulteração.",
+    "vpSharing": {
+      "SHARED_SUCCESSFULLY": "A apresentação da credencial foi compartilhada com sucesso.",
+      "SHARED_WITH_FACE_VERIFIACTION": "A verificação facial foi bem-sucedida e a apresentação de credenciais foi compartilhada com sucesso.",
+      "VERIFIER_AUTHENTICATION_FAILED": "Falha ao autenticar o serviço de verificação durante o compartilhamento de VP.",
+      "INVALID_AUTH_REQUEST": "O código QR contém dados inválidos ou ausentes. ",
+      "USER_DECLINED_CONSENT": "O usuário recusou o consentimento para o compartilhamento da apresentação de credenciais.",
+      "SHARED_AFTER_RETRY": "A apresentação da credencial é compartilhada com êxito após uma nova tentativa.",
+      "SHARED_WITH_FACE_VERIFICATION_AFTER_RETRY": "A verificação facial foi bem-sucedida e a apresentação de credenciais foi compartilhada com êxito após uma nova tentativa.",
+      "SHARING_FAILED": "O compartilhamento da apresentação de credenciais falhou devido a um erro técnico.",
+      "RETRY_ATTEMPT_FAILED": "O compartilhamento de apresentação de credenciais falhou devido a um erro técnico após uma nova tentativa.",
+      "MAX_RETRY_ATTEMPT_FAILED": "O compartilhamento da apresentação de credenciais falhou devido a um erro técnico após o máximo de tentativas.",
+      "FACE_VERIFICATION_FAILED": "A verificação facial falhou durante o compartilhamento da apresentação de credenciais.",
+      "FACE_VERIFICATION_FAILED_AFTER_RETRY_ATTEMPT": "A verificação facial falhou durante uma nova tentativa de compartilhamento de apresentação de credenciais.",
+      "NO_SELECTED_VC_HAS_IMAGE": "O compartilhamento de apresentação de credenciais falhou porque as credenciais verificáveis ​​selecionadas não possuem uma imagem facial.",
+      "CREDENTIAL_MISMATCH_FROM_KEBAB": "Ocorreu incompatibilidade de apresentação de credenciais durante o compartilhamento do menu, com base nas reivindicações solicitadas: {{info}}.",
+      "NO_CREDENTIAL_MATCHING_REQUEST": "Não foram encontradas credenciais que correspondam à solicitação do serviço de verificação com base nas declarações fornecidas: {{info}}.",
+      "TECHNICAL_ERROR": "O compartilhamento da apresentação de credenciais não pôde prosseguir devido a um erro técnico."
+    }
   },
   "DeviceInfoList": {
     "requestedBy": "Solicitado por",
@@ -159,13 +177,15 @@
   "BannerNotification": {
     "alternatePasscodeSuccess": "Sucesso! ",
     "alternateBiometricSuccess": "Sucesso! ",
-    "activated": "As credenciais estão habilitadas para autenticação online."
+    "activated": "As credenciais estão habilitadas para autenticação online.",
+    "keyPreferenceSuccess": "Suas principais preferências foram salvas com sucesso!",
+    "keyPreferenceError": "Desculpe! "
   },
   "AboutInji": {
     "aboutInji": "Sobre a Carteira Inji",
     "header": "Sobre a Carteira Inji",
     "appID": "ID do aplicativo",
-    "aboutDetails": "A Inji Wallet torna os dados confiáveis ​​e portáteis, apresentando duas interfaces principais que atendem às diversas necessidades do usuário, sendo o Inji Mobile uma delas. ",
+    "aboutDetails": "A Inji Wallet torna os dados confiáveis ​​e portáteis, apresentando duas interfaces principais que atendem às diversas necessidades do usuário, sendo o Inji Mobile uma delas. Como um aplicativo de carteira móvel, o Inji Mobile é uma solução segura e descentralizada que permite aos usuários baixar, gerenciar, compartilhar e verificar credenciais verificáveis ​​diretamente de seus smartphones, fornecendo uma maneira confiável e contínua de lidar com credenciais em qualquer lugar.",
     "forMoreDetails": "Para mais detalhes",
     "clickHere": "Clique aqui",
     "version": "Versão",
@@ -202,6 +222,19 @@
       "technicalDifficulty": {
         "title": "Ocorreu um erro!",
         "message": "Obrigado pela sua paciência! "
+      },
+      "verificationFailed": {
+        "title": "Ocorreu um erro!",
+        "goBackButton": "Volte",
+        "ERR_GENERIC": "Devido a um erro técnico, não foi possível fazer o download do cartão.",
+        "ERR_NETWORK": "Devido à conexão instável com a Internet, não foi possível fazer o download do cartão. ",
+        "ERR_MISSING_ISSUANCEDATE": "A data de emissão é inválida ou definida no futuro. ",
+        "ERR_INVALID_ISSUANCEDATE": "A data de emissão é inválida ou definida no futuro. ",
+        "ERR_ISSUANCE_DATE_IS_FUTURE_DATE": "A data de emissão é inválida ou definida no futuro. ",
+        "ERR_INVALID_EXPIRATIONDATE": "A data de expiração é inválida. ",
+        "ERR_INVALID_VALIDFROM": "A data é inválida ou definida no futuro. ",
+        "ERR_VALID_FROM_IS_FUTURE_DATE": "A data é inválida ou definida no futuro. ",
+        "ERR_INVALID_VALIDUNTIL": "A data é inválida. "
       }
     }
   },
@@ -237,6 +270,14 @@
         "six": "Como posso restaurar o backup que fiz?",
         "seven": "Por que recebo um erro \"nenhum arquivo de backup encontrado\"?",
         "eight": "O que acontece quando eu limpo o armazenamento do aplicativo INJI nas configurações do dispositivo?"
+      },
+      "KeyManagement": {
+        "one": "Quais são os diferentes tipos de chaves que posso escolher?",
+        "two": "Como posso saber qual tipo de chave é melhor para mim?",
+        "three": "Como a escolha do tipo de chave afeta minha segurança?",
+        "four": "Posso alterar meu tipo de chave posteriormente?",
+        "five": "Qual é o impacto da prioridade principal e como posso defini-la?",
+        "six": "O que acontece se eu não escolher um tipo de chave ou definir uma preferência?"
       }
     },
     "answers": {
@@ -272,6 +313,14 @@
         "six": "Para restaurar um backup, acesse as configurações do aplicativo, escolha a opção de restauração e selecione o arquivo de backup. ",
         "seven": "Este erro pode ocorrer se não houver arquivos de backup associados ao ID de e-mail fornecido ou se os arquivos de backup estiverem armazenados em um local diferente. ",
         "eight": "Observe que esta ação é tomada com cautela, pois limpa os dados do aplicativo, o que significa que todos os seus VCs baixados serão apagados. "
+      },
+      "KeyManagement": {
+        "one": "Você pode escolher entre as chaves Ed25519, ECC K1, ECC R1 e RSA. ",
+        "two": "Se você prioriza velocidade, eficiência e segurança relativamente maior, então Ed25519 ou ECC K1 podem ser ideais. ",
+        "three": "Chaves diferentes oferecem diferentes níveis de segurança. ",
+        "four": "Sim, você pode alterar o tipo de chave, mas é importante observar que isso pode afetar a forma como suas credenciais interagem com diferentes sistemas. ",
+        "five": "A ordem das suas chaves determina sua prioridade de uso. ",
+        "six": "Se você não selecionar um tipo de chave específico, o aplicativo escolherá automaticamente o mais adequado com base no que é suportado pelo emissor da credencial. "
       }
     }
   },
@@ -360,6 +409,7 @@
     "generateVcFABDescription": "Toque em \"+\" abaixo para baixar seu cartão",
     "downloadCard": "Baixar cartão",
     "downloadingYourCard": "Baixando seu cartão, isso pode levar até 5 minutos",
+    "downloadingVcSuccess": "Seu cartão foi baixado com sucesso",
     "downloadingVcFailed": "Desculpe! ",
     "activated": "As credenciais estão habilitadas para autenticação online.",
     "noCardsTitle": "Nenhum cartão encontrado!",
@@ -393,8 +443,15 @@
       "verificationFailed": {
         "title": "Ocorreu um erro!",
         "goBackButton": "Volte",
-        "technicalError": "Devido a um erro técnico, não foi possível fazer o download do cartão.",
-        "networkError": "Devido à conexão instável com a Internet, não foi possível fazer o download do cartão. "
+        "ERR_GENERIC": "Devido a um erro técnico, não foi possível fazer o download do cartão.",
+        "ERR_NETWORK": "Devido à conexão instável com a Internet, não foi possível fazer o download do cartão. ",
+        "ERR_MISSING_ISSUANCEDATE": "A data de emissão é inválida ou definida no futuro. ",
+        "ERR_INVALID_ISSUANCEDATE": "A data de emissão é inválida ou definida no futuro. ",
+        "ERR_ISSUANCE_DATE_IS_FUTURE_DATE": "A data de emissão é inválida ou definida no futuro. ",
+        "ERR_INVALID_EXPIRATIONDATE": "A data de expiração é inválida. ",
+        "ERR_INVALID_VALIDFROM": "A data é inválida ou definida no futuro. ",
+        "ERR_VALID_FROM_IS_FUTURE_DATE": "A data é inválida ou definida no futuro. ",
+        "ERR_INVALID_VALIDUNTIL": "A data é inválida. "
       }
     }
   },
@@ -778,6 +835,57 @@
       }
     }
   },
+  "SendVPScreen": {
+    "requester": "Solicitante",
+    "cardsSelected": "cartas selecionadas",
+    "cardSelected": "cartão selecionado",
+    "unCheck": "Desmarque",
+    "checkAll": "Verifique tudo",
+    "consentDialog": {
+      "title": "Consentimento necessário",
+      "message": "Exigimos seu consentimento para compartilhar suas credenciais verificáveis. ",
+      "confirmButton": "Sim, prosseguir",
+      "cancelButton": "Declínio"
+    },
+    "confirmationDialog": {
+      "title": "Tem certeza?",
+      "message": "Recusar o consentimento impedirá que você compartilhe suas credenciais verificáveis.",
+      "confirmButton": "Sim, prosseguir",
+      "cancelButton": "Volte"
+    },
+    "errors": {
+      "noMatchingCredentials": {
+        "title": "Nenhuma credencial correspondente encontrada!",
+        "message": "O verificador solicitou credenciais com base nas seguintes afirmações: {{claims}}. "
+      },
+      "invalidVerifier": {
+        "title": "Ocorreu um erro!",
+        "message": "O verificador não é reconhecido. "
+      },
+      "credentialsMismatch": {
+        "title": "Ocorreu um erro!",
+        "message": "Incompatibilidade de credenciais detectada.  {{claims}} e tente novamente."
+      },
+      "genericError": {
+        "title": "Ops! ",
+        "message": "Devido a erro técnico, não podemos compartilhar o cartão. "
+      },
+      "invalidQrCode": {
+        "title": "Código QR inválido",
+        "message": "O código QR é inválido porque faltam algumas informações obrigatórias. "
+      },
+      "noImage": {
+        "title": "Ocorreu um erro!",
+        "message": "A verificação facial requer uma foto nas credenciais selecionadas. "
+      }
+    },
+    "loaders": {
+      "loading": "Carregando...",
+      "subTitle": {
+        "fetchingVerifiers": "Buscando sua lista de credenciais verificáveis ​​correspondentes"
+      }
+    }
+  },
   "VerifyIdentityOverlay": {
     "faceAuth": "Verificação facial",
     "status": {
@@ -875,6 +983,12 @@
     "description": "Selecione seu idioma preferido",
     "save": "Salvar preferência"
   },
+  "SetupKey": {
+    "header": "Gerenciamento de Chaves",
+    "description": "Escolha suas chaves preferidas para gerar chaves de titular. ",
+    "save": "Salvar preferência",
+    "skip": "farei mais tarde"
+  },
   "common": {
     "card": "cartão",
     "cards": "cartões",
@@ -921,6 +1035,8 @@
     "next": "Próximo",
     "previous": "Anterior",
     "skip": "Pular",
-    "done": "Feito"
+    "done": "Feito",
+    "keyManagementTitle": "Gerenciamento de Chaves",
+    "keyManagementDesc": "Selecione o método de geração de chaves que se alinha com sua preferência, colocando você no controle da segurança de sua credencial.\n"
   }
 }
