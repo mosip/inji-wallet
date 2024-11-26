@@ -144,7 +144,7 @@ export const DEFAULT_ECL = 'L';
 export const DEFAULT_QR_HEADER = 'INJIQUICKSHARE://';
 export const MAX_QR_DATA_LENGTH = 4296;
 
-export const INTRO_SLIDER_LOGO_MARGIN = Dimensions.get('screen').width * 0.45;
+export const INTRO_SLIDER_LOGO_MARGIN = Dimensions.get('screen').width * 0.41;
 
 export const COPILOT_PRE_FINAL_STEP: number = 5;
 export const COPILOT_FINAL_STEP: number = 6;
@@ -159,5 +159,8 @@ export const copilotTestID = {
   '6': 'cardView',
 };
 
-export const FACE_SDK_MODEL_PATH = isAndroid() ? 'assets:faceModel.tflite' : 'bundle:/faceModel.tflite'
-export const FACE_SDK_MODEL_CHECKSUM = '797b4d99794965749635352d55da38d4748c28c659ee1502338badee4614ed06'
+export const FACE_SDK_MODEL_PATH = isAndroid()
+  ? 'assets:faceModel.tflite'
+  : 'bundle:/faceModel.tflite';
+export const FACE_SDK_MODEL_CHECKSUM =
+  '797b4d99794965749635352d55da38d4748c28c659ee1502338badee4614ed06';

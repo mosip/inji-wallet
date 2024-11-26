@@ -166,7 +166,7 @@ fileignoreconfig:
   - filename: shared/storage.ts
     checksum: 181bbdfe1f4a7daa82c7e8ea1050028c4c50f72200ab2a5eff5bfe1915c7de68
   - filename: shared/constants.ts
-    checksum: 69aa79ed25fee2162de7c8e065930e18168551377420a520092bdf6a86c7712d
+    checksum: ddbf8073cad531f82f3435c100cf5af3564aeeff75465ee2f4d4aa7edc33991f
   - filename: machines/backupAndRestore/backup.ts
     checksum: 9810de8d626df3a2cf8266e4be0c1b50aa3bce3c6e3b082afaa3e3ecab66af17
   - filename: machines/backupAndRestore/backup.typegen.ts
@@ -396,4 +396,6 @@ fileignoreconfig:
     checksum: 9f29c9b0b91eba7fd7f5f4d1f78f9b6f96ef2c850c1346d712058a438d01036a
   - filename: assets/InjiHomeLogo.svg
     checksum: 6600a3d75033af4d702dd8c9663e12ad7c2c096a529bac2771bb856cc75a5ed0
+  - filename: locales/pt.json
+    checksum: 7ddf49a5afe0c94b30ec7115fd3e06d91dda9b1d574b03b2ed9b7441c0953285
     version: ""

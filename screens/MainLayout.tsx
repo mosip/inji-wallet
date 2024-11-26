@@ -22,6 +22,7 @@ import {useNavigation} from '@react-navigation/native';
 import {useSelector} from '@xstate/react';
 import {selectIsLinkCode} from '../machines/app';
 import {BOTTOM_TAB_ROUTES} from '../routes/routesConstants';
+import {Text} from '../components/ui';
 
 const {Navigator, Screen} = createBottomTabNavigator();
 
@@ -131,6 +132,17 @@ export const MainLayout: React.FC = () => {
                 </Column>
               ),
               tabBarAccessibilityLabel: isIOS() ? t(route.name) : route.name,
+              tabBarLabel: ({focused}) => (
+                <Text
+                  numLines={1}
+                  style={
+                    focused
+                      ? Theme.BottomTabBarStyle.bottomTabLabelText
+                      : Theme.BottomTabBarStyle.unfocusedbottomTabLabelText
+                  }>
+                  {t(route.name)}
+                </Text>
+              ),
               tabBarTestID: route.name,
             }}
           />
