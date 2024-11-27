@@ -14,7 +14,7 @@ public class SuiteListener implements ISuiteListener {
 
     @Override
     public void onStart(ISuite suite) {
-        // No action needed for `onStart` in this case
+
     }
 
     @Override
@@ -23,7 +23,6 @@ public class SuiteListener implements ISuiteListener {
             boolean hasFailures = suite.getResults().values().stream()
                     .anyMatch(result -> result.getTestContext().getFailedTests().size() > 0);
 
-            // Dynamically skip androidRegression if there are failures
             if (hasFailures) {
                System.exit(1);
                 System.out.println("Sanity suite has failures. Skipping Regression suite.");
