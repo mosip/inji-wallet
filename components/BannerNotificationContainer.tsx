@@ -138,7 +138,6 @@ export const BannerNotificationContainer: React.FC<
 export type vcVerificationBannerDetails = {
   statusType: BannerStatus;
   vcType: string;
-  vcNumber: string;
 };
 
 export interface BannerNotificationContainerProps {
