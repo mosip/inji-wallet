@@ -60,7 +60,7 @@ export class VCMetadata {
         ? vc.displayId
         : vc.vcMetadata
         ? vc.vcMetadata.displayId
-        : getDisplayId(vc.verifiableCredential),
+        : getDisplayId(vc.verifiableCredential, vc.issuer),
     });
   }
 
