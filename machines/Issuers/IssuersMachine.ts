@@ -522,7 +522,6 @@ export interface displayType {
 }
 
 export interface issuerType {
-  authorization_servers: [string];
   credential_issuer: string;
   protocol: string;
   client_id: string;
