@@ -6,6 +6,7 @@ import {
 } from '../machines/VerifiableCredential/VCMetaMachine/vc';
 import {Protocols} from './openId4VCI/Utils';
 import {getMosipIdentifier} from './commonUtil';
+import { isMosipVC } from './Utils';
 
 const VC_KEY_PREFIX = 'VC';
 const VC_ITEM_STORE_KEY_REGEX = '^VC_[a-zA-Z0-9_-]+$';
@@ -110,21 +111,26 @@ export const getVCMetadata = (context: object) => {
     id: `${credentialId} + '_' + ${issuer}`,
     timestamp: context.timestamp ?? '',
     isVerified: context.vcMetadata.isVerified ?? false,
-    displayId: getDisplayId(context.verifiableCredential),
+    displayId: getDisplayId(context.verifiableCredential,issuer),
   });
 };
 
 const getDisplayId = (
   verifiableCredential: VerifiableCredential | Credential,
+  issuer: string
 ) => {
-  if (verifiableCredential?.credential) {
-    return (
-      verifiableCredential.credential?.credentialSubject?.policyNumber ||
-      getMosipIdentifier(verifiableCredential.credential.credentialSubject)
-    );
+  try {
+    const credential = verifiableCredential?.credential
+      ? verifiableCredential.credential
+      : verifiableCredential;
+
+    const credentialSubject = credential?.credentialSubject;
+    if(isMosipVC(issuer)) {
+      return credentialSubject ? getMosipIdentifier(credentialSubject) : '';
+    }
+    return '';
+  } catch (error) {
+    console.error('Error getting the display ID:', error);
+    return null;
   }
-  return (
-    verifiableCredential?.credentialSubject?.policyNumber ||
-    getMosipIdentifier(verifiableCredential.credentialSubject)
-  );
 };
