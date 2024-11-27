@@ -9,8 +9,9 @@ import {
 import {Spacing} from '../styleUtils';
 import {COPILOT_HEIGHT, isIOS} from '../../../shared/constants';
 import Constants from 'expo-constants';
-import HomeScreenLogo from '../../../assets/InjiHomeLogo.svg'
-import InjiLogoSmall from '../../../assets/InjiLogo.svg'
+import HomeScreenLogo from '../../../assets/InjiHomeLogo.svg';
+import InjiLogoSmall from '../../../assets/InjiLogo.svg';
+import i18next from '../../../i18n';
 const Colors = {
   Black: '#000000',
   Zambezi: '#5F5F5F',
@@ -52,7 +53,7 @@ const Colors = {
   walletbindingLabel: '#000000',
   LightOrange: '#F7EDF3',
   GradientColors: ['#52AE32', '#006535'],
-  GradientColorsLight: ['#52AE32'+14, '#006535'+14],
+  GradientColorsLight: ['#52AE32' + 14, '#006535' + 14],
   DisabledColors: ['#C7C7C7', '#C7C7C7'],
   TimeoutHintBoxColor: '#FFF7E5',
   TimeoutHintBoxBorder: '#FFF2D6',
@@ -417,6 +418,9 @@ export const DefaultTheme = {
     injiLogo: {
       width: Dimensions.get('screen').width / 3,
       height: Dimensions.get('screen').height / 20,
+    },
+    injiHomeLogo: {
+      marginLeft: -24,
     },
     logo: {
       height: 35,
@@ -1663,6 +1667,71 @@ export const DefaultTheme = {
     },
   }),
 
+  AboutInjiScreenStyle: StyleSheet.create({
+    titleStyle: {
+      paddingTop: 3,
+    },
+    appIdTitleStyle: {
+      maxWidth: 110,
+      paddingTop: i18next.language == 'kn' || i18next.language == 'hi' ? 5 : 0,
+    },
+    appIdTextStyle: {
+      paddingTop: i18next.language == 'hi' ? 2 : 0,
+    },
+    containerStyle: {
+      flex: 1,
+      padding: 12,
+    },
+    innerContainerStyle: {
+      maxWidth: Dimensions.get('window').width * 0.94,
+      minHeight: Dimensions.get('window').height * 0.1,
+      marginTop: 7,
+    },
+    clickHereTextStyle: {
+      maxWidth: 150,
+      paddingTop: 3,
+    },
+    injiVersionContainerStyle: {
+      paddingBottom: 15,
+    },
+    injiVersionTitle: {
+      paddingTop: 3,
+    },
+    injiVersionText: {
+      paddingTop: 3,
+      maxWidth: 250,
+    },
+    tuvaliVerisonStyle: {
+      paddingTop: 3,
+      paddingBottom: 12,
+      marginTop: 3,
+    },
+    horizontalLineStyle: {
+      backgroundColor: 'lightgrey',
+      width: '90%',
+      height: 1,
+    },
+    poweredByTextStyle: {
+      paddingTop: 15,
+      maxWidth: 250,
+    },
+    aboutDetailstextStyle: {
+      color: Colors.Black,
+      fontSize: 18,
+      margin: 7,
+      lineHeight: 18,
+      paddingTop: 5,
+    },
+    moreDetailstextStyle: {
+      color: Colors.Black,
+      fontSize: 18,
+      margin: 7,
+      lineHeight: 18,
+      maxWidth: 150,
+      paddingTop: 10,
+    },
+  }),
+
   ICON_SMALL_SIZE: 16,
   ICON_MID_SIZE: 22,
   ICON_LARGE_SIZE: 33,
@@ -1718,9 +1787,9 @@ export const DefaultTheme = {
     };
   },
   LinearGradientDirection: {
-    start: {x:0.5,y:0.5},
-    end: {x:1,y:0.5}
-  }
+    start: {x: 0.5, y: 0.5},
+    end: {x: 1, y: 0.5},
+  },
 };
 
 function generateBoxShadowStyle() {

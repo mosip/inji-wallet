@@ -24,6 +24,8 @@ def generate_app_bundle_id()
     return "io.mosip.inji.synergy"
   when "mec"
     return "io.mosip.inji.mec"
+  when "car"
+    return "io.mosip.inji.car"
   end
 end
 
@@ -40,6 +42,8 @@ def generate_app_name()
     return "Inji Wallet Synergy"
   when "mec"
     return "Inji Wallet Mec"
+  when "car"
+    return "Inji Wallet CAR"
   end
 end
 

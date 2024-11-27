@@ -47,6 +47,7 @@ on:
           - collab
           - synergy
           - mec
+          - car
       internal-testers:
         description: 'Internal Testers Group'
         required: true
@@ -64,7 +65,7 @@ on:
         default: 'orange'
         type: choice
         options:
-          - orange
+          - green
           - purple
       allow_env_edit:
         description: 'Edit ENV'
