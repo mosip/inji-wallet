@@ -6,119 +6,14 @@
     </suite-files>
 	<test verbose="2" preserve-order="true" name="ios">
         <classes>
-            <class name="iosTestCases.AboutInjiTest">
-                <methods>
-                    <include name="copyAppId"/>
-                </methods>
-            </class>
-            <class name="iosTestCases.ActivateVcTest">
-                <methods>
-                    <include name="noPreDownloadedVCAndNoHistoryInFreshInstallation"/>
-                    <include name="downloadAndActiveVcUsingUinViaEsignet"/>
-                </methods>
-            </class>
             <class name="iosTestCases.ChangeLanguageTest">
                 <methods>
-                    <include name="changeLanguage"/>
-                    <include name="languageShouldBeInNativeLanguages"/>
-                    <include name="changeLanguageToArabic"/>
-                    <include name="changeLanguageToFilipionAndcheckInjiTour"/>
-                    <include name="changeLanguageToHindiAndcheckInjiTour"/>
-                    <include name="changeLanguageToTamilAndcheckInjiTour"/>
-                    <include name="changeLanguageToKannadAndcheckInjiTour"/>
-                    <include name="downloadVcAndChnageLangaugeVerifyVcViaSunbird"/>
-                </methods>
-            </class>
-            <class name="iosTestCases.DeletingVcTest">
-                <methods>
-                    <include name="deleteVcAndVerifyInHistoryForEsignet"/>
-                    <include name="deleteVcAndVerifyInHistoryForSunbird"/>
-                </methods>
-            </class>
-            <class name="iosTestCases.ShareVcTest">
-                <methods>
-                    <include name="noCardsAvailableToShare"/>
-                    <include name="verifyReceivedCardTabPresent"/>
-                </methods>
-            </class>
-            <class name="iosTestCases.NoNetworkIosTest">
-                <methods>
-                    <include name="setupPasscodeAndDownloadCardWithoutInternet"/>
-                    <include name="verifyListOfLanguagesInOfflineMode"/>
-                    <include name="verifyHelpPageOfflineMode"/>
-                    <include name="verifyRecivedCardOffline"/>
-                    <include name="downloadCardWithoutInternetRetryWithInternet"/>
-                    <include name="verifyVcIssuerListWithoutNetwork"/>
-                    <include name="DownloadVcWithEsignetWithoutNetwork"/>
-                </methods>
-            </class>
-            <class name="iosTestCases.ShareVcTest">
-                <methods>
-                    <include name="noCardsAvailableToShare"/>
-                    <include name="verifyReceivedCardTabPresent"/>
-                </methods>
-            </class>
-            <class name="iosTestCases.UnlockWithPasscodeTest">
-                <methods>
-                    <include name="logoutAndLoginWithPasscode"/>
-                    <include name="loginWithInvalidPasscode"/>
-                </methods>
-            </class>
-            <class name="iosTestCases.VcDownloadAndVerifyUsingEsignetTest">
-                <methods>
-                    <include name="downloadAndVerifyVcUsingUinViaEsignet"/>
-                    <include name="downloadAndVerifyVcUsingVidViaEsignet"/>
-                    <include name="denyPopupforEsignetLoginWebPage"/>
-
-                </methods>
-            </class>
-            <class name="iosTestCases.VcDownloadAndVerifyUsingSunbirdTest">
-                <methods>
-                    <include name="downloadAndVerifyVcUsingUinViaSunbird"/>
-                </methods>
-            </class>
-            <class name="iosTestCases.VerifyHelpPageTest">
-                <methods>
-                    <include name="verifyHelpPage"/>
-                </methods>
-            </class>
-            <class name="iosTestCases.VerifyHistoryTest">
-                <methods>
-                    <include name="downloadAndVerifyHistoryUsingUinViaEsignet"/>
-                    <include name="downloadAndVerifyHistoryUsingVidViaEsignet"/>
-                    <include name="downloadAndVerifyHistoryForSunbird"/>
-                    <include name="downloadVcAndVerifyActivityLog"/>
-                </methods>
-            </class>
-            <class name="iosTestCases.VerifyWelcomePagesTest">
-                <methods>
-                    <include name="verifyWelcomePagesContent"/>
-                    <include name="verifyWelcomePagesFromInjiTourGuide"/>
-                    <include name="verifyClickOnBackFromInjiTourGuide"/>
-                    <include name="verifyWelcomePagesFromInjiTourGuideForFirstCard"/>
-                    <include name="verifyWelcomePagesFromInjiTourGuideAfterDeleteTheCard"/>
-                </methods>
-            </class>
-            <class name="iosTestCases.MosipOtpAlternativeFlow">
-                <methods>
-                    <include name="verifyInvalidOtpMessage" />
-                    <include name="activateVcFromDetailedViewPage" />
-                    <include name="verifyActiveVcAndWaitForOtpTimeOut" />
-                    <include name="cancelDeleteVc" />
-                    <include name="DownloadingDeletedVc" />
-                    <include name="deleteDownloadedVcInOfflineMode" />
-                    <include name="openQrOffline" />
-                    <include name="verifyVcIssuerListWithoutNetwork" />
-                    <include name="VerifyCameraOpenAfterPinVc" />
-                    <include name="pinVcInDetailedVcView" />
-                    <include name="verifyActivationFailedRecordInHistory" />
-                    <include name="verifyActivationFailedRecordInHistoryFromDetailedView" />
-                </methods>
-            </class>
-            <class name="iosTestCases.AboutInjiTest">
-                <methods>
-                    <include name="copyAppId"/>
-                    <include name="verifyAppId"/>
+                    <include name="changeLanguageToHindiAndVerifyEsignetPage"/>
+                    <include name="changeLanguageToTamilAndVerifyEsignetPage"/>
+                    <include name="changeLanguageToKannadaAndVerifyEsignetPage"/>
+                    <include name="changeLanguageToArabicAndVerifyEsignetPage"/>
+                    <include name="changeLanguageToFillpinoAndVerifyEsignetPage"/>
+                    <include name="changeLanguageToKannadaToEnglishAndVerifyEsignetPage"/>
                 </methods>
             </class>
         </classes>
