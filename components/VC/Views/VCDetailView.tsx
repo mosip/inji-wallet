@@ -134,7 +134,7 @@ export const VCDetailView: React.FC<VCItemDetailsProps> = props => {
                     {
                       borderBottomColor: getTextColor(
                         props.wellknown,
-                        Theme.Styles.hrLine.borderBottomColor,
+                        fallbackDisplayColors.borderColor,
                       ),
                     },
                   ]}></View>
