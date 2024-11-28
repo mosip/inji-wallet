@@ -169,10 +169,11 @@ export const getBackgroundImage = (wellknown: any, defaultBackground: any) => {
 };
 
 export const getTextColor = (wellknown: any, defaultColor: string) => {
-  return (
-    (wellknown?.display?.length ? wellknown.display[0]?.text_color : null) ??
-    defaultColor
-  );
+  const wellknownDisplayProperty = wellknown?.display
+    ? getDisplayObjectForCurrentLanguage(wellknown.display)
+    : {};
+
+  return wellknownDisplayProperty?.text_color ?? defaultColor;
 };
 
 export function getAddressFields() {
