@@ -280,7 +280,7 @@ export const getCredentialType = (
       .type as string[];
     return types[1];
   } else {
-    return i18n.t('VcDetails:nationalCard');
+    return i18n.t('VcDetails:identityCard');
   }
 };
 
