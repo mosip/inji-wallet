@@ -5,16 +5,24 @@ import {Theme} from '../../ui/styleUtils';
 import React from 'react';
 import {SvgImage} from '../../ui/svg';
 import {useTranslation} from 'react-i18next';
-import {getTextColor} from './VCUtils';
+import {fallbackDisplayColors} from './VCUtils';
 
-export const VCItemFieldName = ({fieldName, wellknown, testID}) => {
+export const VCItemFieldName = ({
+  fieldName,
+  testID,
+  fieldNameColor: textColor = fallbackDisplayColors.fieldName,
+}: {
+  fieldName: string;
+  testID: string;
+  fieldNameColor?: string;
+}) => {
   const {t} = useTranslation('ViewVcModal');
   return (
     <Row>
       {fieldName && (
         <Text
           testID={`${testID}Title`}
-          color={getTextColor(wellknown, Theme.Colors.DetailsLabel)}
+          color={textColor}
           style={Theme.Styles.fieldItemTitle}>
           {fieldName}
         </Text>
@@ -63,12 +71,20 @@ export const VCItemFieldName = ({fieldName, wellknown, testID}) => {
   );
 };
 
-export const VCItemFieldValue = ({fieldValue, wellknown, testID}) => {
+export const VCItemFieldValue = ({
+  fieldValue,
+  testID,
+  fieldValueColor: textColor = fallbackDisplayColors.fieldValue,
+}: {
+  fieldValue: string;
+  testID: string;
+  fieldValueColor?: string;
+}) => {
   return (
     <>
       <Text
         testID={`${testID}Value`}
-        color={getTextColor(wellknown, Theme.Colors.Details)}
+        color={textColor}
         style={Theme.Styles.fieldItemValue}>
         {fieldValue}
       </Text>
@@ -76,7 +92,7 @@ export const VCItemFieldValue = ({fieldValue, wellknown, testID}) => {
   );
 };
 
-export const VCItemField = props => {
+export const VCItemField: React.FC<VCItemFieldProps> = props => {
   return (
     <Column>
       <VCItemFieldName {...props} />
@@ -84,3 +100,12 @@ export const VCItemField = props => {
     </Column>
   );
 };
+
+interface VCItemFieldProps {
+  fieldName: string;
+  fieldValue: string;
+  wellknown: any;
+  testID: string;
+  fieldNameColor?: string;
+  fieldValueColor?: string;
+}

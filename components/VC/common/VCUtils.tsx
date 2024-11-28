@@ -51,6 +51,14 @@ export const BOTTOM_SECTION_FIELDS_WITH_DETAILED_ADDRESS_FIELDS = [
   'credentialRegistry',
 ];
 
+export const fallbackDisplayColors = {
+  fieldName: Theme.Colors.DetailsLabel,
+  fieldValue: Theme.Colors.Details,
+  verificationText: Theme.Colors.Details,
+  borderColor: Theme.Styles.hrLine.borderBottomColor,
+  kebabIconColor: Theme.Colors.helpText,
+};
+
 function iterateMsoMdocFor(
   credential,
   namespace: string,
@@ -207,6 +215,14 @@ export const fieldItemIterator = (
   wellknown: any,
   props: VCItemDetailsProps,
 ) => {
+  const fieldNameColor = getTextColor(
+    wellknown,
+    fallbackDisplayColors.fieldName,
+  );
+  const fieldValueColor = getTextColor(
+    wellknown,
+    fallbackDisplayColors.fieldValue,
+  );
   return fields.map(field => {
     const fieldName = getFieldName(
       field,
@@ -236,7 +252,9 @@ export const fieldItemIterator = (
           key={field}
           fieldName={fieldName}
           fieldValue={fieldValue}
-          verifiableCredential={verifiableCredential}
+          verifiableCredential={verifiableCredential} //TODO: This prop is unused remove it
+          fieldNameColor={fieldNameColor}
+          fieldValueColor={fieldValueColor}
           wellknown={wellknown}
           testID={field}
         />

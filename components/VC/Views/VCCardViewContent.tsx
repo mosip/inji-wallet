@@ -13,6 +13,7 @@ import {
   getBackgroundColour,
   getBackgroundImage,
   getCredentialType,
+  fallbackDisplayColors,
 } from '../common/VCUtils';
 import {VCItemFieldValue} from '../common/VCItemField';
 import {WalletBinding} from '../../../screens/Home/MyVcs/WalletBinding';
@@ -83,7 +84,10 @@ export const VCCardViewContent: React.FC<VCItemContentProps> = props => {
               key={'credentialType'}
               testID="credentialType"
               fieldValue={getCredentialType(props.wellknown)}
-              wellknown={props.wellknown}
+              fieldValueColor={getTextColor(
+                props.wellknown,
+                fallbackDisplayColors.fieldValue,
+              )}
             />
             <Row>
               <VCVerification

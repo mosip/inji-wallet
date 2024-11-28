@@ -17,6 +17,7 @@ import {
   BOTTOM_SECTION_FIELDS_WITH_DETAILED_ADDRESS_FIELDS,
   DETAIL_VIEW_BOTTOM_SECTION_FIELDS,
   KEY_TYPE_FIELD,
+  fallbackDisplayColors,
   fieldItemIterator,
   getBackgroundColour,
   getBackgroundImage,
@@ -147,7 +148,9 @@ export const VCDetailView: React.FC<VCItemDetailsProps> = props => {
                     )}
                   <VCItemField
                     key={'keyTypeVcDetailView'}
-                    fieldName={KEY_TYPE_FIELD}
+                    fieldName={KEY_TYPE_FIELD} //TODO: Is it required to be array?
+                    fieldNameColor={fallbackDisplayColors.fieldName}
+                    fieldValueColor={fallbackDisplayColors.fieldValue}
                     fieldValue={props.keyType}
                     verifiableCredential={verifiableCredential}
                     testID={'keyTypeVcDetailView'}
