@@ -1,5 +1,5 @@
 import testIDProps from '../shared/commonUtil';
-import {getTextColor} from './VC/common/VCUtils';
+import {fallbackDisplayColors, getTextColor} from './VC/common/VCUtils';
 import VerifiedIcon from './VerifiedIcon';
 import {Row, Text} from './ui';
 import {Theme} from './ui/styleUtils';
@@ -39,7 +39,10 @@ export const VCVerification: React.FC<VCVerificationProps> = ({
         {statusIcon}
         <Text
           testID="verificationStatus"
-          color={getTextColor(wellknown, Theme.Colors.Details)}
+          color={getTextColor(
+            wellknown,
+            fallbackDisplayColors.verificationText,
+          )}
           style={Theme.Styles.verificationStatus}>
           {statusText}
         </Text>
