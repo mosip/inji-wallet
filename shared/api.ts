@@ -190,7 +190,7 @@ export const CACHED_API = {
   ) =>
     generateCacheAPIFunction({
       isCachePreferred,
-      cacheKey: API_CACHED_STORAGE_KEYS.fetchIssuerWellknownConfig(
+      cacheKey: API_CACHED_STORAGE_KEYS.fetchIssuerAuthorizationServerMetadata(
         authorizationServerUrl,
       ),
       fetchCall: API.fetchAuthorizationServerMetadata.bind(
