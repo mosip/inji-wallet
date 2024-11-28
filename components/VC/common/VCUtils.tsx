@@ -161,11 +161,11 @@ export const getBackgroundColour = (wellknown: any) => {
 };
 
 export const getBackgroundImage = (wellknown: any, defaultBackground: any) => {
-  return (
-    (wellknown?.display?.length
-      ? wellknown.display[0]?.background_image
-      : null) ?? defaultBackground
-  );
+  const wellknownDisplayProperty = wellknown?.display
+    ? getDisplayObjectForCurrentLanguage(wellknown.display)
+    : {};
+
+  return wellknownDisplayProperty?.background_image ?? defaultBackground;
 };
 
 export const getTextColor = (wellknown: any, defaultColor: string) => {
