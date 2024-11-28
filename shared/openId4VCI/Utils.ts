@@ -51,7 +51,6 @@ export function getVcVerificationDetails(
   return {
     statusType: statusType,
     vcType: idType,
-    vcNumber: vcMetadata.displayId,
   };
 }
 
