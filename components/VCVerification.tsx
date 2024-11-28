@@ -6,8 +6,13 @@ import {Theme} from './ui/styleUtils';
 import React from 'react';
 import {useTranslation} from 'react-i18next';
 import PendingIcon from './PendingIcon';
+import {VCMetadata} from '../shared/VCMetadata';
+import {CredentialTypes} from '../machines/VerifiableCredential/VCMetaMachine/vc';
 
-export const VCVerification: React.FC = ({wellknown, isVerified}: any) => {
+export const VCVerification: React.FC<VCVerificationProps> = ({
+  isVerified,
+  wellknown,
+}) => {
   const {t} = useTranslation('VcDetails');
   const statusText = isVerified ? t('valid') : t('pending');
   const statusIcon = isVerified ? <VerifiedIcon /> : <PendingIcon />;
@@ -29,3 +34,8 @@ export const VCVerification: React.FC = ({wellknown, isVerified}: any) => {
     </Row>
   );
 };
+
+export interface VCVerificationProps {
+  isVerified: boolean;
+  wellknown: CredentialTypes;
+}
