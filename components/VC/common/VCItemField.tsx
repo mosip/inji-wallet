@@ -104,7 +104,6 @@ export const VCItemField: React.FC<VCItemFieldProps> = props => {
 interface VCItemFieldProps {
   fieldName: string;
   fieldValue: string;
-  wellknown: any;
   testID: string;
   fieldNameColor?: string;
   fieldValueColor?: string;

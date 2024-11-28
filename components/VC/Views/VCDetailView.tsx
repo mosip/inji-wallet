@@ -152,7 +152,6 @@ export const VCDetailView: React.FC<VCItemDetailsProps> = props => {
                     fieldNameColor={fallbackDisplayColors.fieldName}
                     fieldValueColor={fallbackDisplayColors.fieldValue}
                     fieldValue={props.keyType}
-                    verifiableCredential={verifiableCredential}
                     testID={'keyTypeVcDetailView'}
                   />
                 </Column>

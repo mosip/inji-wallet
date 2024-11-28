@@ -252,7 +252,6 @@ export const fieldItemIterator = (
           key={field}
           fieldName={fieldName}
           fieldValue={fieldValue}
-          verifiableCredential={verifiableCredential} //TODO: This prop is unused remove it
           fieldNameColor={fieldNameColor}
           fieldValueColor={fieldValueColor}
           wellknown={wellknown}
