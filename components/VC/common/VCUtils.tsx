@@ -254,7 +254,6 @@ export const fieldItemIterator = (
           fieldValue={fieldValue}
           fieldNameColor={fieldNameColor}
           fieldValueColor={fieldValueColor}
-          wellknown={wellknown}
           testID={field}
         />
       </Row>

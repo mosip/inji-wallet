@@ -148,7 +148,7 @@ export const VCDetailView: React.FC<VCItemDetailsProps> = props => {
                     )}
                   <VCItemField
                     key={'keyTypeVcDetailView'}
-                    fieldName={KEY_TYPE_FIELD} //TODO: Is it required to be array?
+                    fieldName={KEY_TYPE_FIELD}
                     fieldValue={props.keyType}
                     testID={'keyTypeVcDetailView'}
                   />
