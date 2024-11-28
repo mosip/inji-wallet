@@ -14,7 +14,10 @@ import {CREDENTIAL_REGISTRY_EDIT} from 'react-native-dotenv';
 import {VCVerification} from '../../VCVerification';
 import {MIMOTO_BASE_URL} from '../../../shared/constants';
 import {VCItemDetailsProps} from '../Views/VCDetailView';
-import {getMatchingCredentialIssuerMetadata} from '../../../shared/openId4VCI/Utils';
+import {
+  getDisplayObjectForCurrentLanguage,
+  getMatchingCredentialIssuerMetadata,
+} from '../../../shared/openId4VCI/Utils';
 import {VCFormat} from '../../../shared/VCFormat';
 
 export const CARD_VIEW_DEFAULT_FIELDS = ['fullName'];
@@ -147,12 +150,13 @@ export const getFieldName = (
 
 export const getBackgroundColour = (wellknown: any) => {
   const defaultBackgroundColor = Theme.Colors.textValue;
+  const wellknownDisplayProperty = wellknown?.display
+    ? getDisplayObjectForCurrentLanguage(wellknown.display)
+    : {};
 
   return {
     backgroundColor:
-      (wellknown?.display?.length
-        ? wellknown.display[0]?.background_color
-        : null) ?? defaultBackgroundColor,
+      wellknownDisplayProperty?.background_color ?? defaultBackgroundColor,
   };
 };
 
