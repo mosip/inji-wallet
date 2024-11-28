@@ -1,5 +1,5 @@
 {
-  "originHash" : "178f6c7c607eeb08b99a4966015d08339500de64791888a2e79d6b7afae53659",
+  "originHash" : "6b82a714050e22d309e029aaffac33f021c04aac740f661a9879441a7d414f4f",
   "pins" : [
     {
       "identity" : "base45-swift",
@@ -61,7 +61,7 @@
       "location" : "https://github.com/mosip/secure-keystore-ios-swift",
       "state" : {
         "branch" : "develop",
-        "revision" : "4f736866277379f5aa5128e64a39be6165b3500d"
+        "revision" : "767b9dabd1a0cd374732ee97cb7cf34dd051acc1"
       }
     },
     {
