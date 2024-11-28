@@ -260,8 +260,6 @@ export const getMosipLogo = () => {
  * @param credentialConfigurationId
  * @returns credential type translations (Eg - National ID)
  *
- * supportedCredential's wellknown is passed from getActivityText after fresh download and viewing of card's mini view flow
- * & all other consumers pass whole well known response of issuer
  */
 export const getCredentialType = (
   supportedCredentialsWellknown: CredentialTypes,
