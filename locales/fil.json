@@ -83,6 +83,7 @@
     "id": "Id",
     "qrCodeHeader": "QR Code",
     "nationalCard": "Pambansang ID",
+    "identityCard": "Kard ng Pagkakakilanlan",
     "insuranceCard": "Insurance Card",
     "beneficiaryCard": "Benepisyaryo Card",
     "socialRegistryCard": "Social Registry Card",

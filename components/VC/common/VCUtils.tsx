@@ -15,7 +15,6 @@ import {VCVerification} from '../../VCVerification';
 import {MIMOTO_BASE_URL} from '../../../shared/constants';
 import {VCItemDetailsProps} from '../Views/VCDetailView';
 import {getMatchingCredentialIssuerMetadata} from '../../../shared/openId4VCI/Utils';
-import {parseJSON} from '../../../shared/Utils';
 import {VCFormat} from '../../../shared/VCFormat';
 
 export const CARD_VIEW_DEFAULT_FIELDS = ['fullName'];
@@ -265,50 +264,99 @@ export const getMosipLogo = () => {
  * & all other consumers pass whole well known response of issuer
  */
 export const getCredentialType = (
-  wellknown: CredentialTypes | IssuerWellknownResponse,
-  credentialConfigurationId: string | undefined = undefined,
+  supportedCredentialsWellknown: CredentialTypes,
 ): string => {
-  const defaultCredentialType = i18n.t('VcDetails:nationalCard');
-  if (
-    wellknown &&
-    wellknown['credential_configurations_supported'] === undefined &&
-    wellknown?.display?.length
-  ) {
-    const idTypeObj = wellknown.display.map((displayProps: any) => {
-      return {language: displayProps.locale, value: displayProps.name};
-    });
-    return getLocalizedField(idTypeObj) ?? defaultCredentialType;
-  } else if (wellknown && Object.keys(wellknown).length > 0) {
-    let supportedCredentialsWellknown;
-    wellknown = parseJSON(wellknown) as unknown as Object[];
-    if (!!!wellknown['credential_configurations_supported']) {
-      return defaultCredentialType;
-    }
-    try {
-      if (!!credentialConfigurationId) {
-        supportedCredentialsWellknown = getMatchingCredentialIssuerMetadata(
-          wellknown,
-          credentialConfigurationId,
-        );
-      } else {
-        console.error(
-          'credentialConfigurationId not available or display properties not available for fetching the Credential type',
-        );
-        throw new Error(
-          `invalid credential credentialConfigurationId - ${credentialConfigurationId} passed`,
-        );
-      }
-    } catch (error) {
-      console.error(
-        `error occurred while getting supported credential's ${credentialConfigurationId} wellknown`,
-      );
-      return defaultCredentialType;
-    }
-    if (Object.keys(supportedCredentialsWellknown).length === 0) {
-      return defaultCredentialType;
-    }
-    return getCredentialType(supportedCredentialsWellknown);
+  if (supportedCredentialsWellknown['display']) {
+    const idTypeObj = supportedCredentialsWellknown.display.map(
+      (displayProps: any) => ({
+        language: displayProps.locale,
+        value: displayProps.name,
+      }),
+    );
+    return getLocalizedField(idTypeObj);
+  }
+  if (supportedCredentialsWellknown.format === VCFormat.ldp_vc) {
+    const types = supportedCredentialsWellknown.credential_definition
+      .type as string[];
+    return types[1];
   } else {
-    return defaultCredentialType;
+    return i18n.t('VcDetails:nationalCard');
   }
 };
+
+export const getCredentialTypeFromWellKnown = (
+  wellknown: IssuerWellknownResponse,
+  credentialConfigurationId: string | undefined = undefined,
+): string => {
+  if (credentialConfigurationId !== undefined) {
+    const supportedCredentialsWellknown = getMatchingCredentialIssuerMetadata(
+      wellknown,
+      credentialConfigurationId,
+    );
+    return getCredentialType(supportedCredentialsWellknown);
+  }
+  console.error(
+    'credentialConfigurationId not available for fetching the Credential type',
+  );
+  throw new Error(
+    `Invalid credentialConfigurationId - ${credentialConfigurationId} passed`,
+  );
+};
+
+/* 
+export const getDisplayId = (
+  wellknown: IssuerWellknownResponse,
+  credentialConfigurationId: string | undefined = undefined,
+): string => {
+  if (credentialConfigurationId !== undefined) {
+    const supportedCredentialsWellknown = getMatchingCredentialIssuerMetadata(wellknown,credentialConfigurationId);
+    if(!!!supportedCredentialsWellknown['display']){
+      if (supportedCredentialsWellknown.format === VCFormat.ldp_vc) {
+        const credentialDefinition = supportedCredentialsWellknown['credential_definition']
+        let type = credentialDefinition['type'] as Array<string>
+        return type[1];
+      }
+      else {
+        return i18n.t('VcDetails:nationalCard'); // update this to IdentityCard
+      }
+    }
+    const idTypeObj = supportedCredentialsWellknown.display.map((displayProps: any) => {
+      return {language: displayProps.locale, value: displayProps.name};
+    });
+    return getLocalizedField(idTypeObj);
+  } else {
+    console.error('credentialConfigurationId not available or display properties not available for fetching the Credential type');
+    throw new Error(`invalid credential credentialConfigurationId - ${credentialConfigurationId} passed`);
+  }
+}
+
+
+
+export const getDisplayId1 = (
+  wellknown: IssuerWellknownResponse | CredentialTypes,
+  credentialConfigurationId?: string,
+): string => {
+  let supportedCredentials;
+
+  if (!!wellknown['credential_configurations_supported']) {
+    if (credentialConfigurationId === undefined) {
+      console.error('credentialConfigurationId not available for fetching the Credential type');
+      throw new Error(`Invalid credentialConfigurationId - ${credentialConfigurationId} passed`);
+    }
+    supportedCredentials = getMatchingCredentialIssuerMetadata(wellknown, credentialConfigurationId);
+  } else {
+    supportedCredentials = wellknown;
+  }
+
+  if (!!!supportedCredentials['display']) {
+    const types = supportedCredentials.credential_definition.type as string[];
+    return types[1];
+  }
+
+  const idTypeObj = supportedCredentials.display.map((displayProps: any) => ({
+    language: displayProps.locale,
+    value: displayProps.name,
+  }));
+
+  return getLocalizedField(idTypeObj);
+}; */
