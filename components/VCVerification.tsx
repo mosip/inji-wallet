@@ -6,8 +6,13 @@ import {Theme} from './ui/styleUtils';
 import React from 'react';
 import {useTranslation} from 'react-i18next';
 import PendingIcon from './PendingIcon';
+import {VCMetadata} from '../shared/VCMetadata';
+import {CredentialTypes} from '../machines/VerifiableCredential/VCMetaMachine/vc';
 
-export const VCVerification: React.FC = ({wellknown, vcMetadata}: any) => {
+export const VCVerification: React.FC<VCVerificationProps> = ({
+  vcMetadata,
+  wellknown,
+}) => {
   const {t} = useTranslation('VcDetails');
   const statusText = vcMetadata.isVerified
     ? vcMetadata.isExpired
@@ -42,3 +47,8 @@ export const VCVerification: React.FC = ({wellknown, vcMetadata}: any) => {
     </Row>
   );
 };
+
+export interface VCVerificationProps {
+  vcMetadata: VCMetadata;
+  wellknown: CredentialTypes;
+}
