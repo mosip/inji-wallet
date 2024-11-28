@@ -139,13 +139,25 @@ class Cloud {
           requestedOperation: appleAuth.Operation.LOGIN,
           requestedScopes: [appleAuth.Scope.FULL_NAME, appleAuth.Scope.EMAIL],
         });
-        const {email, nonce, identityToken, realUserStatus /* etc */} =
+        const {email, user, nonce, identityToken, realUserStatus /* etc */} =
           appleAuthRequestResponse;
         profileInfo = {email: email, picture: null};
-        await RNSecureKeystoreModule.storeData(
-          'userIdentifier',
-          JSON.stringify(appleAuthRequestResponse),
-        );
+
+        if (email) {
+          await RNSecureKeystoreModule.storeValueInCloud(user, email);
+          await RNSecureKeystoreModule.storeData(
+            'userIdentifier',
+            JSON.stringify({user, email}),
+          );
+        } else {
+          const userEmailFromCloud =
+            await RNSecureKeystoreModule.retrieveValueFromCloud(user);
+          profileInfo.email = userEmailFromCloud;
+          await RNSecureKeystoreModule.storeData(
+            'userIdentifier',
+            JSON.stringify({user, userEmailFromCloud}),
+          );
+        }
 
         return {status: this.status.SUCCESS, profileInfo: profileInfo};
       } catch (error) {
@@ -206,13 +218,16 @@ class Cloud {
 
         const userIdentifier = await RNSecureKeystoreModule.getData(
           'userIdentifier',
-        )[1];
-        const userToken = JSON.parse(userIdentifier + '');
-        const user = userToken.user;
-        const email = userToken.email;
+        );
+        const userToken = JSON.parse(userIdentifier[1]);
+        const {user, email} = userToken;
+
+        const userEmail = email
+          ? email
+          : await RNSecureKeystoreModule.retrieveValueFromCloud(user);
 
         const credentialState = await appleAuth.getCredentialStateForUser(user);
-        const profileInfo = {email: email, picture: undefined};
+        const profileInfo = {email: userEmail, picture: undefined};
         if (
           credentialState === appleAuth.State.AUTHORIZED &&
           isSignedIn === true

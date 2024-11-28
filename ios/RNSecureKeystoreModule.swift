@@ -252,8 +252,32 @@ class RNSecureKeystoreModule: NSObject,RCTBridgeModule {
     }
     secureKeystore.retrieveKey(tag: alias, onSuccess: successLambda, onFailure: failureLambda)
   }
-
-
+  
+  @objc
+    func storeValueInCloud(_ key: String, value: String, resolver resolve: @escaping RCTPromiseResolveBlock, rejecter reject: @escaping RCTPromiseRejectBlock) {
+        let successLambda: (Bool) -> Void = { success in
+            resolve(success)
+        }
+        
+        let failureLambda: (String, String) -> Void = { code, message in
+            reject(code, message, nil)
+        }
+        
+        secureKeystore.storeValueInCloud(key: key, value: value, onSuccess: successLambda, onFailure: failureLambda)
+    }
+    
+    @objc
+    func retrieveValueFromCloud(_ key: String, resolver resolve: @escaping RCTPromiseResolveBlock, rejecter reject: @escaping RCTPromiseRejectBlock) {
+        let successLambda: (String?) -> Void = { value in
+            resolve(value)
+        }
+        
+        let failureLambda: (String, String) -> Void = { code, message in
+            reject(code, message, nil)
+        }
+        
+        secureKeystore.retrieveValueFromCloud(key: key, onSuccess: successLambda, onFailure: failureLambda)
+    }
   
   
 }
