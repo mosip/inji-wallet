@@ -15,7 +15,7 @@ import {
 import {
   BOTTOM_SECTION_FIELDS_WITH_DETAILED_ADDRESS_FIELDS,
   DETAIL_VIEW_ADD_ON_FIELDS,
-  getCredentialType,
+  getCredentialTypeFromWellKnown,
 } from '../../components/VC/common/VCUtils';
 import {getVerifiableCredential} from '../../machines/VerifiableCredential/VCItemMachine/VCItemSelectors';
 import {vcVerificationBannerDetails} from '../../components/BannerNotificationContainer';
@@ -44,7 +44,7 @@ export function getVcVerificationDetails(
   verifiableCredential,
   wellknown: Object,
 ): vcVerificationBannerDetails {
-  const credentialType = getCredentialType(
+  const credentialType = getCredentialTypeFromWellKnown(
     wellknown,
     getVerifiableCredential(verifiableCredential).credentialConfigurationId,
   );
