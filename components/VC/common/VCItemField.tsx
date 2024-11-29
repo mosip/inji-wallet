@@ -14,7 +14,7 @@ export const VCItemFieldName = ({fieldName, wellknown, testID}) => {
       {fieldName && (
         <Text
           testID={`${testID}Title`}
-          color={getTextColor(wellknown, Theme.Colors.DetailsLabel)}
+          color={getTextColor(wellknown, Theme.Colors.Details)}
           style={Theme.Styles.fieldItemTitle}>
           {fieldName}
         </Text>

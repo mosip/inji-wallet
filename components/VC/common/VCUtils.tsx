@@ -101,7 +101,7 @@ export const getFieldName = (field: string, wellknown: any) => {
 export const getBackgroundColour = (wellknown: any) => {
   return {
     backgroundColor:
-      wellknown?.display[0]?.background_color ?? Theme.Colors.textValue,
+      wellknown?.display[0]?.background_color ?? Theme.Colors.whiteBackgroundColor,
   };
 };
 

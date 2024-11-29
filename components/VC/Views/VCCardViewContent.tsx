@@ -104,7 +104,7 @@ export const VCCardViewContent: React.FC<VCItemContentProps> = props => {
                 <KebabPopUp
                   iconColor={getTextColor(
                     props.wellknown,
-                    Theme.Colors.helpText,
+                    Theme.Colors.blackIcon,
                   )}
                   vcMetadata={props.vcMetadata}
                   iconName="dots-three-horizontal"
