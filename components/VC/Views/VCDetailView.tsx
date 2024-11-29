@@ -97,7 +97,10 @@ export const VCDetailView: React.FC<VCItemDetailsProps> = props => {
                 Theme.Styles.openCardBgContainer,
                 getBackgroundColour(wellknownDisplayProperty),
               ]}
-              source={getBackgroundImage(props.wellknown, Theme.OpenCard)}>
+              source={getBackgroundImage(
+                wellknownDisplayProperty,
+                Theme.OpenCard,
+              )}>
               <Row padding="14 14 0 14" margin="0 0 0 0">
                 <Column crossAlign="center">
                   {getProfileImage(face)}
