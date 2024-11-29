@@ -52,14 +52,6 @@ export const BOTTOM_SECTION_FIELDS_WITH_DETAILED_ADDRESS_FIELDS = [
   'credentialRegistry',
 ];
 
-export const fallbackDisplayColors = {
-  fieldName: Theme.Colors.DetailsLabel,
-  fieldValue: Theme.Colors.Details,
-  verificationText: Theme.Colors.Details,
-  borderColor: Theme.Styles.hrLine.borderBottomColor,
-  kebabIconColor: Theme.Colors.helpText,
-};
-
 function iterateMsoMdocFor(
   credential,
   namespace: string,
@@ -79,7 +71,7 @@ export const getFieldValue = (
   field: string,
   wellknown: any,
   props: any,
-  display: displayType | {},
+  display: Display,
   format: string,
 ) => {
   switch (field) {
@@ -158,29 +150,6 @@ export const getFieldName = (
   return i18n.t(`VcDetails:${field}`);
 };
 
-export const getBackgroundColour = (wellknownDisplayProperty: any) => {
-  const defaultBackgroundColor = Theme.Colors.textValue;
-
-  return {
-    backgroundColor:
-      wellknownDisplayProperty?.background_color ?? defaultBackgroundColor,
-  };
-};
-
-export const getBackgroundImage = (
-  wellknownDisplayProperty: any,
-  defaultBackground: any,
-) => {
-  return wellknownDisplayProperty?.background_image ?? defaultBackground;
-};
-
-export const getTextColor = (
-  wellknownDisplayProperty: any,
-  defaultColor: string,
-) => {
-  return wellknownDisplayProperty?.text_color ?? defaultColor;
-};
-
 export function getAddressFields() {
   return [
     'addressLine1',
@@ -210,13 +179,12 @@ export const fieldItemIterator = (
   fields: any[],
   verifiableCredential: VerifiableCredential | Credential,
   wellknown: any,
-  display: displayType | {},
+  display: Display,
   props: VCItemDetailsProps,
 ) => {
-  const fieldNameColor = getTextColor(display, fallbackDisplayColors.fieldName);
-  const fieldValueColor = getTextColor(
-    display,
-    fallbackDisplayColors.fieldValue,
+  const fieldNameColor = display.getTextColor(Display.fallbackColors.fieldName);
+  const fieldValueColor = display.getTextColor(
+    Display.fallbackColors.fieldValue,
   );
   return fields.map(field => {
     const fieldName = getFieldName(
@@ -281,6 +249,9 @@ export const getMosipLogo = () => {
 export const getCredentialType = (
   supportedCredentialsWellknown: CredentialTypes,
 ): string => {
+  if (!!!supportedCredentialsWellknown) {
+    return i18n.t('VcDetails:identityCard');
+  }
   if (supportedCredentialsWellknown['display']) {
     const wellknownDisplayProperty = getDisplayObjectForCurrentLanguage(
       supportedCredentialsWellknown.display,
@@ -314,3 +285,57 @@ export const getCredentialTypeFromWellKnown = (
     `Invalid credentialConfigurationId - ${credentialConfigurationId} passed`,
   );
 };
+
+export class Display {
+  private readonly textColor: string | undefined = undefined;
+  private readonly backgroundColor: {backgroundColor: string};
+  private readonly backgroundImage: string | undefined = undefined;
+
+  private defaultBackgroundColor = Theme.Colors.textValue;
+
+  static fallbackColors = {
+    fieldName: Theme.Colors.DetailsLabel,
+    fieldValue: Theme.Colors.Details,
+    verificationText: Theme.Colors.Details,
+    borderColor: Theme.Styles.hrLine.borderBottomColor,
+    kebabIconColor: Theme.Colors.helpText,
+  };
+
+  static fallbackBackgroundImage = {
+    openCard: Theme.OpenCard,
+    closeCard: Theme.CloseCard,
+  };
+
+  constructor(wellknown: any) {
+    const wellknownDisplayProperty = wellknown?.display
+      ? getDisplayObjectForCurrentLanguage(wellknown.display)
+      : {};
+
+    if (!!!Object.keys(wellknownDisplayProperty).length) {
+      this.backgroundColor = {
+        backgroundColor: this.defaultBackgroundColor,
+      };
+      return;
+    }
+
+    const display = wellknownDisplayProperty as displayType;
+
+    this.backgroundColor = {
+      backgroundColor: display.background_color ?? this.defaultBackgroundColor,
+    };
+    this.backgroundImage = display.background_image;
+    this.textColor = display.text_color;
+  }
+
+  getTextColor(defaultColor: string): string {
+    return this.textColor ?? defaultColor;
+  }
+
+  getBackgroundColor(): {backgroundColor: string} {
+    return this.backgroundColor;
+  }
+
+  getBackgroundImage(defaultBackgroundImage: string) {
+    return this.backgroundImage ?? defaultBackgroundImage;
+  }
+}

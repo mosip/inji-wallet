@@ -8,21 +8,11 @@ import {Theme} from '../../ui/styleUtils';
 import {CheckBox, Icon} from 'react-native-elements';
 import {SvgImage} from '../../ui/svg';
 import {VcItemContainerProfileImage} from '../../VcItemContainerProfileImage';
-import {
-  isVCLoaded,
-  getBackgroundColour,
-  getBackgroundImage,
-  getCredentialType,
-  fallbackDisplayColors,
-  getTextColor,
-} from '../common/VCUtils';
+import {isVCLoaded, getCredentialType, Display} from '../common/VCUtils';
 import {VCItemFieldValue} from '../common/VCItemField';
 import {WalletBinding} from '../../../screens/Home/MyVcs/WalletBinding';
 import {VCVerification} from '../../VCVerification';
-import {
-  getDisplayObjectForCurrentLanguage,
-  isActivationNeeded,
-} from '../../../shared/openId4VCI/Utils';
+import {isActivationNeeded} from '../../../shared/openId4VCI/Utils';
 import {VCItemContainerFlowType} from '../../../shared/Utils';
 import {RemoveVcWarningOverlay} from '../../../screens/Home/MyVcs/RemoveVcWarningOverlay';
 import {HistoryTab} from '../../../screens/Home/MyVcs/HistoryTab';
@@ -30,9 +20,7 @@ import {useCopilot} from 'react-native-copilot';
 import {useTranslation} from 'react-i18next';
 
 export const VCCardViewContent: React.FC<VCItemContentProps> = props => {
-  const wellknownDisplayProperty = props.wellknown?.display
-    ? getDisplayObjectForCurrentLanguage(props.wellknown.display)
-    : {};
+  const wellknownDisplayProperty = new Display(props.wellknown);
 
   const vcSelectableButton =
     props.selectable &&
@@ -71,12 +59,12 @@ export const VCCardViewContent: React.FC<VCItemContentProps> = props => {
 
   return (
     <ImageBackground
-      source={getBackgroundImage(wellknownDisplayProperty, Theme.CloseCard)}
+      source={wellknownDisplayProperty.getBackgroundImage(Theme.CloseCard)}
       resizeMode="stretch"
       imageStyle={Theme.Styles.vcBg}
       style={[
         Theme.Styles.backgroundImageContainer,
-        getBackgroundColour(wellknownDisplayProperty),
+        wellknownDisplayProperty.getBackgroundColor(),
       ]}>
       <View
         onLayout={
@@ -91,9 +79,8 @@ export const VCCardViewContent: React.FC<VCItemContentProps> = props => {
               key={'credentialType'}
               testID="credentialType"
               fieldValue={getCredentialType(props.wellknown)}
-              fieldValueColor={getTextColor(
-                wellknownDisplayProperty,
-                fallbackDisplayColors.fieldValue,
+              fieldValueColor={wellknownDisplayProperty.getTextColor(
+                Display.fallbackColors.fieldValue,
               )}
             />
             <Row>
@@ -126,9 +113,8 @@ export const VCCardViewContent: React.FC<VCItemContentProps> = props => {
                 accessible={false}
                 style={Theme.Styles.kebabPressableContainer}>
                 <KebabPopUp
-                  iconColor={getTextColor(
-                    wellknownDisplayProperty,
-                    fallbackDisplayColors.kebabIconColor,
+                  iconColor={wellknownDisplayProperty.getTextColor(
+                    Display.fallbackColors.kebabIconColor,
                   )}
                   vcMetadata={props.vcMetadata}
                   iconName="dots-three-horizontal"

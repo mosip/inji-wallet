@@ -1,5 +1,5 @@
 import testIDProps from '../shared/commonUtil';
-import {fallbackDisplayColors, getTextColor} from './VC/common/VCUtils';
+import {Display} from './VC/common/VCUtils';
 import VerifiedIcon from './VerifiedIcon';
 import {Row, Text} from './ui';
 import {Theme} from './ui/styleUtils';
@@ -7,7 +7,6 @@ import React from 'react';
 import {useTranslation} from 'react-i18next';
 import PendingIcon from './PendingIcon';
 import {VCMetadata} from '../shared/VCMetadata';
-import { displayType } from '../machines/Issuers/IssuersMachine';
 
 export const VCVerification: React.FC<VCVerificationProps> = ({
   vcMetadata,
@@ -39,7 +38,7 @@ export const VCVerification: React.FC<VCVerificationProps> = ({
         {statusIcon}
         <Text
           testID="verificationStatus"
-          color={getTextColor(display, fallbackDisplayColors.verificationText)}
+          color={display.getTextColor(Display.fallbackColors.verificationText)}
           style={Theme.Styles.verificationStatus}>
           {statusText}
         </Text>
@@ -50,5 +49,5 @@ export const VCVerification: React.FC<VCVerificationProps> = ({
 
 export interface VCVerificationProps {
   vcMetadata: VCMetadata;
-  display: displayType | {};
+  display: Display;
 }

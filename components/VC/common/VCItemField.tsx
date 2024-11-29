@@ -5,12 +5,12 @@ import {Theme} from '../../ui/styleUtils';
 import React from 'react';
 import {SvgImage} from '../../ui/svg';
 import {useTranslation} from 'react-i18next';
-import {fallbackDisplayColors} from './VCUtils';
+import {Display} from './VCUtils';
 
 export const VCItemFieldName = ({
   fieldName,
   testID,
-  fieldNameColor: textColor = fallbackDisplayColors.fieldName,
+  fieldNameColor: textColor = Display.fallbackColors.fieldName,
 }: {
   fieldName: string;
   testID: string;
@@ -74,7 +74,7 @@ export const VCItemFieldName = ({
 export const VCItemFieldValue = ({
   fieldValue,
   testID,
-  fieldValueColor: textColor = fallbackDisplayColors.fieldValue,
+  fieldValueColor: textColor = Display.fallbackColors.fieldValue,
 }: {
   fieldValue: string;
   testID: string;
