@@ -38,7 +38,7 @@ export const VCVerification: React.FC<VCVerificationProps> = ({
         {statusIcon}
         <Text
           testID="verificationStatus"
-          color={display.getTextColor(Display.fallbackColors.verificationText)}
+          color={display.getTextColor(Theme.Colors.Details)}
           style={Theme.Styles.verificationStatus}>
           {statusText}
         </Text>

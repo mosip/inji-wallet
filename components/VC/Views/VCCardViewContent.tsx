@@ -80,7 +80,7 @@ export const VCCardViewContent: React.FC<VCItemContentProps> = props => {
               testID="credentialType"
               fieldValue={getCredentialType(props.wellknown)}
               fieldValueColor={wellknownDisplayProperty.getTextColor(
-                Display.fallbackColors.fieldValue,
+                Theme.Colors.Details,
               )}
             />
             <Row>
@@ -114,7 +114,7 @@ export const VCCardViewContent: React.FC<VCItemContentProps> = props => {
                 style={Theme.Styles.kebabPressableContainer}>
                 <KebabPopUp
                   iconColor={wellknownDisplayProperty.getTextColor(
-                    Display.fallbackColors.kebabIconColor,
+                    Theme.Colors.helpText,
                   )}
                   vcMetadata={props.vcMetadata}
                   iconName="dots-three-horizontal"

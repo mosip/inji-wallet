@@ -182,10 +182,8 @@ export const fieldItemIterator = (
   display: Display,
   props: VCItemDetailsProps,
 ) => {
-  const fieldNameColor = display.getTextColor(Display.fallbackColors.fieldName);
-  const fieldValueColor = display.getTextColor(
-    Display.fallbackColors.fieldValue,
-  );
+  const fieldNameColor = display.getTextColor(Theme.Colors.DetailsLabel);
+  const fieldValueColor = display.getTextColor(Theme.Colors.Details);
   return fields.map(field => {
     const fieldName = getFieldName(
       field,
@@ -291,20 +289,7 @@ export class Display {
   private readonly backgroundColor: {backgroundColor: string};
   private readonly backgroundImage: string | undefined = undefined;
 
-  private defaultBackgroundColor = Theme.Colors.textValue;
-
-  static fallbackColors = {
-    fieldName: Theme.Colors.DetailsLabel,
-    fieldValue: Theme.Colors.Details,
-    verificationText: Theme.Colors.Details,
-    borderColor: Theme.Styles.hrLine.borderBottomColor,
-    kebabIconColor: Theme.Colors.helpText,
-  };
-
-  static fallbackBackgroundImage = {
-    openCard: Theme.OpenCard,
-    closeCard: Theme.CloseCard,
-  };
+  private defaultBackgroundColor = Theme.Colors.whiteBackgroundColor;
 
   constructor(wellknown: any) {
     const wellknownDisplayProperty = wellknown?.display
