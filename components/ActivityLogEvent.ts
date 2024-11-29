@@ -1,5 +1,5 @@
 import {formatDistanceToNow} from 'date-fns';
-import {getIdType} from './VC/common/VCUtils';
+import {getCredentialTypeFromWellKnown} from './VC/common/VCUtils';
 import * as DateFnsLocale from 'date-fns/locale';
 import {VCItemContainerFlowType} from '../shared/Utils';
 import {TFunction} from 'react-i18next';
@@ -60,7 +60,10 @@ export class VCActivityLog implements ActivityLog {
 
   getActionText(t: TFunction, wellknown: Object | undefined) {
     if (!!this.credentialConfigurationId && wellknown) {
-      const cardType = getIdType(wellknown, this.credentialConfigurationId);
+      const cardType = getCredentialTypeFromWellKnown(
+        wellknown,
+        this.credentialConfigurationId,
+      );
       return `${t(this.type, {idType: cardType})}`;
     }
     return `${t(this.type, {idType: ''})}`;

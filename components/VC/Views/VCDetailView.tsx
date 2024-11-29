@@ -16,11 +16,9 @@ import {isActivationNeeded} from '../../../shared/openId4VCI/Utils';
 import {
   BOTTOM_SECTION_FIELDS_WITH_DETAILED_ADDRESS_FIELDS,
   DETAIL_VIEW_BOTTOM_SECTION_FIELDS,
+  Display,
   KEY_TYPE_FIELD,
   fieldItemIterator,
-  getBackgroundColour,
-  getBackgroundImage,
-  getTextColor,
 } from '../common/VCUtils';
 import {ProfileIcon} from '../../ProfileIcon';
 import {VCFormat} from '../../../shared/VCFormat';
@@ -45,6 +43,7 @@ export const VCDetailView: React.FC<VCItemDetailsProps> = props => {
   const logo = props.verifiableCredentialData.issuerLogo;
   const face = props.verifiableCredentialData.face;
   const verifiableCredential = props.credential;
+  const wellknownDisplayProperty = new Display(props.wellknown);
 
   const shouldShowHrLine = verifiableCredential => {
     let availableFieldNames: string[] = [];
@@ -88,9 +87,11 @@ export const VCDetailView: React.FC<VCItemDetailsProps> = props => {
               resizeMode="stretch"
               style={[
                 Theme.Styles.openCardBgContainer,
-                getBackgroundColour(props.wellknown),
+                wellknownDisplayProperty.getBackgroundColor(),
               ]}
-              source={getBackgroundImage(props.wellknown, Theme.OpenCard)}>
+              source={wellknownDisplayProperty.getBackgroundImage(
+                Theme.OpenCard,
+              )}>
               <Row padding="14 14 0 14" margin="0 0 0 0">
                 <Column crossAlign="center">
                   {getProfileImage(face)}
@@ -122,6 +123,7 @@ export const VCDetailView: React.FC<VCItemDetailsProps> = props => {
                     props.fields,
                     verifiableCredential,
                     props.wellknown,
+                    wellknownDisplayProperty,
                     props,
                   )}
                 </Column>
@@ -131,8 +133,7 @@ export const VCDetailView: React.FC<VCItemDetailsProps> = props => {
                   style={[
                     Theme.Styles.hrLine,
                     {
-                      borderBottomColor: getTextColor(
-                        props.wellknown,
+                      borderBottomColor: wellknownDisplayProperty.getTextColor(
                         Theme.Styles.hrLine.borderBottomColor,
                       ),
                     },
@@ -143,13 +144,13 @@ export const VCDetailView: React.FC<VCItemDetailsProps> = props => {
                       DETAIL_VIEW_BOTTOM_SECTION_FIELDS,
                       verifiableCredential,
                       props.wellknown,
+                      wellknownDisplayProperty,
                       props,
                     )}
                   <VCItemField
                     key={'keyTypeVcDetailView'}
                     fieldName={KEY_TYPE_FIELD}
                     fieldValue={props.keyType}
-                    verifiableCredential={verifiableCredential}
                     testID={'keyTypeVcDetailView'}
                   />
                 </Column>

@@ -9,7 +9,7 @@ import {getDisplayObjectForCurrentLanguage} from '../../shared/openId4VCI/Utils'
 import {CredentialTypes} from '../../machines/VerifiableCredential/VCMetaMachine/vc';
 
 export const CredentialType: React.FC<CredentialTypeProps> = props => {
-  const selectedIssuerDisplayObject = props.item.display
+  const selectedIssuerDisplayObject = props.item.display?.length
     ? getDisplayObjectForCurrentLanguage(props.item.display)
     : {};
 
