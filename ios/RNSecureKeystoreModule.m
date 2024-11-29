@@ -83,5 +83,14 @@ RCT_EXTERN_METHOD(clearKeys:(RCTPromiseResolveBlock)resolve
 RCT_EXTERN_METHOD(getJwk: (RCTPromiseResolveBlock)resolve
                   rejecter: (RCTPromiseRejectBlock)reject)
 
+RCT_EXTERN_METHOD(storeValueInCloud:(NSString *)key
+                  value:(NSString *)value
+                  resolver:(RCTPromiseResolveBlock)resolve
+                  rejecter:(RCTPromiseRejectBlock)reject)
+
+RCT_EXTERN_METHOD(retrieveValueFromCloud:(NSString *)key
+                  resolver:(RCTPromiseResolveBlock)resolve
+                  rejecter:(RCTPromiseRejectBlock)reject)
+
 
 @end
