@@ -224,6 +224,10 @@
         "title": "May naganap na error!",
         "message": "Salamat sa iyong pasensya! Nakakaranas kami ng mga teknikal na paghihirap ngayon. Pakisubukang muli mamaya o makipag-ugnayan sa admin para sa karagdagang tulong!"
       },
+      "authorizationGrantTypeNotSupportedByWallet": {
+        "title": "Ang uri ng grant ay hindi sinusuportahan ng error sa pahintulot!",
+        "message": "Salamat sa iyong pasensya! Nakakaranas kami ng mga teknikal na paghihirap ngayon. Pakisubukang muli mamaya o makipag-ugnayan sa admin para sa karagdagang tulong!"
+      },
       "verificationFailed": {
         "title": "May pagkakamaling naganap!",
         "goBackButton": "Bumalik ka",

@@ -225,6 +225,10 @@
         "title": "An error occurred!",
         "message": "Thanks for your patience! We're experiencing technical difficulties right now. Please try again later or contact the admin for further assistance!"
       },
+      "authorizationGrantTypeNotSupportedByWallet": {
+        "title": "Grant type not supported authorization error!",
+        "message": "Thanks for your patience! We're experiencing technical difficulties right now. Please try again later or contact the admin for further assistance!"
+      },
       "verificationFailed": {
         "title": "An Error Occurred!",
         "goBackButton": "Go Back",
