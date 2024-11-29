@@ -132,6 +132,7 @@ export const VCDetailView: React.FC<VCItemDetailsProps> = props => {
                     props.fields,
                     verifiableCredential,
                     props.wellknown,
+                    wellknownDisplayProperty,
                     props,
                   )}
                 </Column>
@@ -142,7 +143,7 @@ export const VCDetailView: React.FC<VCItemDetailsProps> = props => {
                     Theme.Styles.hrLine,
                     {
                       borderBottomColor: getTextColor(
-                        props.wellknown,
+                        wellknownDisplayProperty,
                         fallbackDisplayColors.borderColor,
                       ),
                     },
@@ -153,6 +154,7 @@ export const VCDetailView: React.FC<VCItemDetailsProps> = props => {
                       DETAIL_VIEW_BOTTOM_SECTION_FIELDS,
                       verifiableCredential,
                       props.wellknown,
+                      wellknownDisplayProperty,
                       props,
                     )}
                   <VCItemField

@@ -14,11 +14,9 @@ import {CREDENTIAL_REGISTRY_EDIT} from 'react-native-dotenv';
 import {VCVerification} from '../../VCVerification';
 import {MIMOTO_BASE_URL} from '../../../shared/constants';
 import {VCItemDetailsProps} from '../Views/VCDetailView';
-import {
-  getDisplayObjectForCurrentLanguage,
-  getMatchingCredentialIssuerMetadata,
-} from '../../../shared/openId4VCI/Utils';
+import {getMatchingCredentialIssuerMetadata} from '../../../shared/openId4VCI/Utils';
 import {VCFormat} from '../../../shared/VCFormat';
+import {displayType} from '../../../machines/Issuers/IssuersMachine';
 
 export const CARD_VIEW_DEFAULT_FIELDS = ['fullName'];
 export const DETAIL_VIEW_DEFAULT_FIELDS = [
@@ -78,13 +76,14 @@ export const getFieldValue = (
   field: string,
   wellknown: any,
   props: any,
+  display: displayType | {},
   format: string,
 ) => {
   switch (field) {
     case 'status':
       return (
         <VCVerification
-          wellknown={wellknown}
+          display={display}
           vcMetadata={props.verifiableCredentialData.vcMetadata}
         />
       );
@@ -172,11 +171,10 @@ export const getBackgroundImage = (
   return wellknownDisplayProperty?.background_image ?? defaultBackground;
 };
 
-export const getTextColor = (wellknown: any, defaultColor: string) => {
-  const wellknownDisplayProperty = wellknown?.display
-    ? getDisplayObjectForCurrentLanguage(wellknown.display)
-    : {};
-
+export const getTextColor = (
+  wellknownDisplayProperty: any,
+  defaultColor: string,
+) => {
   return wellknownDisplayProperty?.text_color ?? defaultColor;
 };
 
@@ -209,14 +207,12 @@ export const fieldItemIterator = (
   fields: any[],
   verifiableCredential: VerifiableCredential | Credential,
   wellknown: any,
+  display: displayType | {},
   props: VCItemDetailsProps,
 ) => {
-  const fieldNameColor = getTextColor(
-    wellknown,
-    fallbackDisplayColors.fieldName,
-  );
+  const fieldNameColor = getTextColor(display, fallbackDisplayColors.fieldName);
   const fieldValueColor = getTextColor(
-    wellknown,
+    display,
     fallbackDisplayColors.fieldValue,
   );
   return fields.map(field => {
@@ -230,6 +226,7 @@ export const fieldItemIterator = (
       field,
       wellknown,
       props,
+      display,
       props.verifiableCredentialData.vcMetadata.format,
     );
     if (
