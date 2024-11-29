@@ -71,7 +71,7 @@ export const VCCardViewContent: React.FC<VCItemContentProps> = props => {
 
   return (
     <ImageBackground
-      source={getBackgroundImage(props.wellknown, Theme.CloseCard)}
+      source={getBackgroundImage(wellknownDisplayProperty, Theme.CloseCard)}
       resizeMode="stretch"
       imageStyle={Theme.Styles.vcBg}
       style={[

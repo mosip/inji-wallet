@@ -165,11 +165,10 @@ export const getBackgroundColour = (wellknownDisplayProperty: any) => {
   };
 };
 
-export const getBackgroundImage = (wellknown: any, defaultBackground: any) => {
-  const wellknownDisplayProperty = wellknown?.display
-    ? getDisplayObjectForCurrentLanguage(wellknown.display)
-    : {};
-
+export const getBackgroundImage = (
+  wellknownDisplayProperty: any,
+  defaultBackground: any,
+) => {
   return wellknownDisplayProperty?.background_image ?? defaultBackground;
 };
 
