@@ -54,8 +54,8 @@ ESIGNET_HOST =  https://esignet.collab.mosip.net/
 OBSRV_HOST = https://dataset-api.obsrv.mosip.net
 Telemetry Dashboard = https://druid.obsrv.mosip.net/unified-console.html#workbench
 
-#Application Theme can be ( orange | purple ), defaults to orange theme
-APPLICATION_THEME=orange
+#Application Theme can be ( grdaient | purple ), defaults to grdaient theme
+APPLICATION_THEME=grdaient
 
 #environment can be changed if it is toggled
 CREDENTIAL_REGISTRY_EDIT=true
