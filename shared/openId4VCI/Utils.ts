@@ -150,8 +150,7 @@ export const constructAuthorizationConfiguration = (
     redirectUrl: selectedIssuer.redirect_uri,
     additionalParameters: {ui_locales: i18n.language},
     serviceConfiguration: {
-      authorizationEndpoint:
-        selectedIssuer.authorization_servers[0] + '/authorize',
+      authorizationEndpoint: selectedIssuer.authorizationEndpoint,
       tokenEndpoint: selectedIssuer.token_endpoint,
     },
   };
@@ -255,13 +254,17 @@ export const vcDownloadTimeout = async (): Promise<number> => {
 };
 
 // OIDCErrors is a collection of external errors from the OpenID library or the issuer
-export enum OIDCErrors {
-  OIDC_FLOW_CANCELLED_ANDROID = 'User cancelled flow',
-  OIDC_FLOW_CANCELLED_IOS = 'org.openid.appauth.general error -3',
+export const OIDCErrors = {
+  OIDC_FLOW_CANCELLED_ANDROID : 'User cancelled flow',
+  OIDC_FLOW_CANCELLED_IOS : 'org.openid.appauth.general error -3',
 
-  INVALID_TOKEN_SPECIFIED = 'Invalid token specified',
-  OIDC_CONFIG_ERROR_PREFIX = 'Config error',
-}
+  INVALID_TOKEN_SPECIFIED: 'Invalid token specified',
+  OIDC_CONFIG_ERROR_PREFIX: 'Config error',
+
+  AUTHORIZATION_ENDPOINT_DISCOVERY: {
+    GRANT_TYPE_NOT_SUPPORTED: 'Grant type not supported by Wallet',
+  },
+};
 
 // ErrorMessage is the type of error message shown in the UI
 
@@ -272,6 +275,7 @@ export enum ErrorMessage {
   BIOMETRIC_CANCELLED = 'biometricCancelled',
   TECHNICAL_DIFFICULTIES = 'technicalDifficulty',
   CREDENTIAL_TYPE_DOWNLOAD_FAILURE = 'credentialTypeListDownloadFailure',
+  AUTHORIZATION_GRANT_TYPE_NOT_SUPPORTED = 'authorizationGrantTypeNotSupportedByWallet',
 }
 
 export async function constructProofJWT(

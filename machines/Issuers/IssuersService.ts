@@ -6,6 +6,7 @@ import {
   constructIssuerMetaData,
   constructProofJWT,
   hasKeyPair,
+  OIDCErrors,
   updateCredentialInformation,
   vcDownloadTimeout,
 } from '../../shared/openId4VCI/Utils';
@@ -59,6 +60,31 @@ export const IssuersService = () => {
         );
 
       return credentialTypes;
+    },
+    fetchAuthorizationEndpoint: async (context: any) => {
+      /**
+       * Incase of multiple entries of authorization_servers, each element is iterated and metadata check is made for support with wallet.
+       * For now, its been kept as getting first entry and checking for matching grant_types_supported
+       */
+      const authorizationServer =
+        context.selectedIssuerWellknownResponse['authorization_servers'][0];
+      const authorizationServerMetadata =
+        await CACHED_API.fetchIssuerAuthorizationServerMetadata(
+          authorizationServer,
+        );
+      const SUPPORTED_GRANT_TYPES = ['authorization_code'];
+      if (
+        (
+          authorizationServerMetadata['grant_types_supported'] as Array<string>
+        ).filter(grantType => SUPPORTED_GRANT_TYPES.includes(grantType))
+          .length === 0
+      ) {
+        throw new Error(
+          OIDCErrors.AUTHORIZATION_ENDPOINT_DISCOVERY.GRANT_TYPE_NOT_SUPPORTED,
+        );
+      }
+
+      return authorizationServerMetadata['authorization_endpoint'];
     },
     downloadCredential: async (context: any) => {
       const downloadTimeout = await vcDownloadTimeout();
