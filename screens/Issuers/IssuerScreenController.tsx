@@ -52,6 +52,7 @@ export function useIssuerScreenController({route, navigation}) {
       service,
       selectVerificationErrorMessage,
     ),
+    isError: useSelector(service, selectIsError),
 
     CANCEL: () => service.send(IssuerScreenTabEvents.CANCEL()),
     SELECTED_ISSUER: id =>
