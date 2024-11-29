@@ -74,7 +74,7 @@ jobs:
         env:
           MIMOTO_HOST: ${{ github.event.inputs.backendServiceUrlMimoto }}
           ESIGNET_HOST: ${{ github.event.inputs.backendServiceUrlEsignet }}
-          APPLICATION_THEME: 'orange'
+          APPLICATION_THEME: 'gradient'
           CREDENTIAL_REGISTRY_EDIT: 'false'
           RELEASE_KEYSTORE_ALIAS: 'androidreleasekey'
           RELEASE_KEYSTORE_PASSWORD: "${{ secrets.INJI_ANDROID_RELEASE_STOREPASS }}"
@@ -149,7 +149,7 @@ jobs:
         env:
           MIMOTO_HOST: ${{ github.event.inputs.backendServiceUrlMimoto }}
           ESIGNET_HOST: ${{ github.event.inputs.backendServiceUrlEsignet }}
-          APPLICATION_THEME: 'orange'
+          APPLICATION_THEME: 'gradient'
           APP_FLAVOR: 'residentapp'
           CREDENTIAL_REGISTRY_EDIT: 'false'
           INJI_IOS_TEMP_KEYCHAIN_PASSWORD: '${{ secrets.INJI_IOS_TEMP_KEYCHAIN_PASSWORD }}'
