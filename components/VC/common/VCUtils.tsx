@@ -14,10 +14,12 @@ import {CREDENTIAL_REGISTRY_EDIT} from 'react-native-dotenv';
 import {VCVerification} from '../../VCVerification';
 import {MIMOTO_BASE_URL} from '../../../shared/constants';
 import {VCItemDetailsProps} from '../Views/VCDetailView';
-import {getMatchingCredentialIssuerMetadata} from '../../../shared/openId4VCI/Utils';
-import {parseJSON} from '../../../shared/Utils';
-import {VCItemContentProps} from '../Views/VCCardViewContent';
+import {
+  getDisplayObjectForCurrentLanguage,
+  getMatchingCredentialIssuerMetadata,
+} from '../../../shared/openId4VCI/Utils';
 import {VCFormat} from '../../../shared/VCFormat';
+import {displayType} from '../../../machines/Issuers/IssuersMachine';
 
 export const CARD_VIEW_DEFAULT_FIELDS = ['fullName'];
 export const DETAIL_VIEW_DEFAULT_FIELDS = [
@@ -43,7 +45,7 @@ export const DETAIL_VIEW_BOTTOM_SECTION_FIELDS = [
   'credentialRegistry',
 ];
 
-export const KEY_TYPE_FIELD = ['keytype'];
+export const KEY_TYPE_FIELD = 'keytype';
 export const BOTTOM_SECTION_FIELDS_WITH_DETAILED_ADDRESS_FIELDS = [
   ...getAddressFields(),
   'email',
@@ -69,18 +71,19 @@ export const getFieldValue = (
   field: string,
   wellknown: any,
   props: any,
+  display: Display,
   format: string,
 ) => {
   switch (field) {
     case 'status':
       return (
         <VCVerification
-          wellknown={wellknown}
+          display={display}
           vcMetadata={props.verifiableCredentialData.vcMetadata}
         />
       );
     case 'idType':
-      return getIdType(wellknown);
+      return getCredentialType(wellknown);
     case 'credentialRegistry':
       return props?.vc?.credentialRegistry;
     case 'address':
@@ -147,21 +150,6 @@ export const getFieldName = (
   return i18n.t(`VcDetails:${field}`);
 };
 
-export const getBackgroundColour = (wellknown: any) => {
-  return {
-    backgroundColor:
-      wellknown?.display[0]?.background_color ?? Theme.Colors.textValue,
-  };
-};
-
-export const getBackgroundImage = (wellknown: any, defaultBackground: any) => {
-  return wellknown?.display[0]?.background_image ?? defaultBackground;
-};
-
-export const getTextColor = (wellknown: any, defaultColor: string) => {
-  return wellknown?.display[0]?.text_color ?? defaultColor;
-};
-
 export function getAddressFields() {
   return [
     'addressLine1',
@@ -191,8 +179,11 @@ export const fieldItemIterator = (
   fields: any[],
   verifiableCredential: VerifiableCredential | Credential,
   wellknown: any,
+  display: Display,
   props: VCItemDetailsProps,
 ) => {
+  const fieldNameColor = display.getTextColor(Theme.Colors.DetailsLabel);
+  const fieldValueColor = display.getTextColor(Theme.Colors.Details);
   return fields.map(field => {
     const fieldName = getFieldName(
       field,
@@ -204,6 +195,7 @@ export const fieldItemIterator = (
       field,
       wellknown,
       props,
+      display,
       props.verifiableCredentialData.vcMetadata.format,
     );
     if (
@@ -222,8 +214,8 @@ export const fieldItemIterator = (
           key={field}
           fieldName={fieldName}
           fieldValue={fieldValue}
-          verifiableCredential={verifiableCredential}
-          wellknown={wellknown}
+          fieldNameColor={fieldNameColor}
+          fieldValueColor={fieldValueColor}
           testID={field}
         />
       </Row>
@@ -248,65 +240,87 @@ export const getMosipLogo = () => {
 /**
  *
  * @param wellknown (either supportedCredential's wellknown or whole well known response of issuer)
- * @param idType
- * @returns id Type translations (Eg - National ID)
+ * @param credentialConfigurationId
+ * @returns credential type translations (Eg - National ID)
  *
- * supportedCredential's wellknown is passed from getActivityText after fresh download
- * & all other consumers pass whole well known response of issuer
  */
-export const getIdType = (
-  wellknown: CredentialTypes | IssuerWellknownResponse,
-  credentialConfigurationId: string | undefined = undefined,
+export const getCredentialType = (
+  supportedCredentialsWellknown: CredentialTypes,
 ): string => {
-  if (
-    wellknown &&
-    wellknown['credential_configurations_supported'] === undefined &&
-    wellknown?.display
-  ) {
-    const idTypeObj = wellknown.display.map((displayProps: any) => {
-      return {language: displayProps.locale, value: displayProps.name};
-    });
-    return getLocalizedField(idTypeObj);
-  } else if (wellknown && Object.keys(wellknown).length > 0) {
-    let supportedCredentialsWellknown;
-    wellknown = parseJSON(wellknown) as unknown as Object[];
-    if (!!!wellknown['credential_configurations_supported']) {
-      return i18n.t('VcDetails:nationalCard');
-    }
-    try {
-      if (!!credentialConfigurationId) {
-        supportedCredentialsWellknown = getMatchingCredentialIssuerMetadata(
-          wellknown,
-          credentialConfigurationId,
-        );
-      } else {
-        console.error(
-          'credentialConfigurationId not available for fetching the ID type',
-        );
-        throw new Error(
-          `invalid credential credentialConfigurationId - ${credentialConfigurationId} passed`,
-        );
-      }
-    } catch (error) {
-      console.error(
-        `error occurred while getting supported credential's ${credentialConfigurationId} wellknown`,
-      );
-      return i18n.t('VcDetails:nationalCard');
-    }
-    if (Object.keys(supportedCredentialsWellknown).length === 0) {
-      return i18n.t('VcDetails:nationalCard');
-    }
-    return getIdType(supportedCredentialsWellknown);
+  if (!!!supportedCredentialsWellknown) {
+    return i18n.t('VcDetails:identityCard');
+  }
+  if (supportedCredentialsWellknown['display']) {
+    const wellknownDisplayProperty = getDisplayObjectForCurrentLanguage(
+      supportedCredentialsWellknown.display,
+    );
+    return wellknownDisplayProperty.name;
+  }
+  if (supportedCredentialsWellknown.format === VCFormat.ldp_vc) {
+    const types = supportedCredentialsWellknown.credential_definition
+      .type as string[];
+    return types[1];
   } else {
-    return i18n.t('VcDetails:nationalCard');
+    return i18n.t('VcDetails:identityCard');
   }
 };
 
-export function DisplayName(props: VCItemContentProps): string | Object {
-  if (props.verifiableCredentialData.format === VCFormat.mso_mdoc) {
-    return props.credential['issuerSigned']['nameSpaces'][
-      'org.iso.18013.5.1'
-    ].find(element => element.elementIdentifier === 'given_name').elementValue;
+export const getCredentialTypeFromWellKnown = (
+  wellknown: IssuerWellknownResponse,
+  credentialConfigurationId: string | undefined = undefined,
+): string => {
+  if (credentialConfigurationId !== undefined) {
+    const supportedCredentialsWellknown = getMatchingCredentialIssuerMetadata(
+      wellknown,
+      credentialConfigurationId,
+    );
+    return getCredentialType(supportedCredentialsWellknown);
   }
-  return props.credential?.credentialSubject['fullName'];
+  console.error(
+    'credentialConfigurationId not available for fetching the Credential type',
+  );
+  throw new Error(
+    `Invalid credentialConfigurationId - ${credentialConfigurationId} passed`,
+  );
+};
+
+export class Display {
+  private readonly textColor: string | undefined = undefined;
+  private readonly backgroundColor: {backgroundColor: string};
+  private readonly backgroundImage: string | undefined = undefined;
+
+  private defaultBackgroundColor = Theme.Colors.whiteBackgroundColor;
+
+  constructor(wellknown: any) {
+    const wellknownDisplayProperty = wellknown?.display
+      ? getDisplayObjectForCurrentLanguage(wellknown.display)
+      : {};
+
+    if (!!!Object.keys(wellknownDisplayProperty).length) {
+      this.backgroundColor = {
+        backgroundColor: this.defaultBackgroundColor,
+      };
+      return;
+    }
+
+    const display = wellknownDisplayProperty as displayType;
+
+    this.backgroundColor = {
+      backgroundColor: display.background_color ?? this.defaultBackgroundColor,
+    };
+    this.backgroundImage = display.background_image;
+    this.textColor = display.text_color;
+  }
+
+  getTextColor(defaultColor: string): string {
+    return this.textColor ?? defaultColor;
+  }
+
+  getBackgroundColor(): {backgroundColor: string} {
+    return this.backgroundColor;
+  }
+
+  getBackgroundImage(defaultBackgroundImage: string) {
+    return this.backgroundImage ?? defaultBackgroundImage;
+  }
 }

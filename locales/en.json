@@ -83,6 +83,7 @@
     "id": "ID",
     "qrCodeHeader": "QR Code",
     "nationalCard": "National ID",
+    "identityCard": "Identity Card",
     "insuranceCard": "Insurance Card",
     "beneficiaryCard": "Beneficiary Card",
     "socialRegistryCard": "Social Registry Card",
