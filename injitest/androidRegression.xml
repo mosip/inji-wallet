@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite name="All Test Suite">
-	<!--<listeners>
-        <listener class-name="inji.utils.SuiteListener" />
-	</listeners>-->
+    <suite-files>
+        <suite-file path="androidSanity.xml"/>
+    </suite-files>
 	<test verbose="2" preserve-order="true" name="android">
-		<classes>
+        <classes>
             <class name="androidTestCases.AboutInjiTest">
                 <methods>
                     <include name="copyAppId"/>
@@ -28,11 +28,6 @@
                     <include name="changeLanguageToTamilAndcheckInjiTour"/>
                     <include name="changeLanguageToKannadAndcheckInjiTour"/>
                     <include name="downloadVcAndChnageLangaugeVerifyVcViaSunbird"/>
-                    <include name="changeLanguageToHindiAndVerifyEsignetPage"/>
-                    <include name="changeLanguageToTamilAndVerifyEsignetPage"/>
-                    <include name="changeLanguageToKannadaAndVerifyEsignetPage"/>
-                    <include name="changeLanguageToArabicAndVerifyEsignetPage"/>
-                    <include name="changeLanguageToFillipineAndVerifyEsignetPage"/>
                 </methods>
             </class>
             <class name="androidTestCases.DeletingVcTest">
@@ -98,7 +93,7 @@
                 <methods>
                     <include name="downloadAndVerifyVcUsingUinViaEsignet"/>
                     <include name="downloadAndVerifyVcUsingVidViaEsignet"/>
-<!--                    <include name="downloadMultipleVcViaEsignet"/>  invalid testcase-->
+                    <!--                    <include name="downloadMultipleVcViaEsignet"/>  invalid testcase-->
                     <include name="downloadMultipleCardsAndVerifySearch"/>
                     <include name="downloadCardsAndVerifySearch"/>
                 </methods>
@@ -149,10 +144,10 @@
                 <methods>
                     <include name="copyAppId"/>
                     <include name="verifyAppId"/>
-                   <!-- <include name="verifyTuvaliVersion"/> invalid testcase-->
+                    <!-- <include name="verifyTuvaliVersion"/> invalid testcase-->
                 </methods>
             </class>
-		</classes>
+        </classes>
 	</test>
 </suite>
 
