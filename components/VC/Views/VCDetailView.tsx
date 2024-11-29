@@ -12,19 +12,13 @@ import {Button, Column, Row, Text} from '../../ui';
 import {Theme} from '../../ui/styleUtils';
 import {QrCodeOverlay} from '../../QrCodeOverlay';
 import {SvgImage} from '../../ui/svg';
-import {
-  getDisplayObjectForCurrentLanguage,
-  isActivationNeeded,
-} from '../../../shared/openId4VCI/Utils';
+import {isActivationNeeded} from '../../../shared/openId4VCI/Utils';
 import {
   BOTTOM_SECTION_FIELDS_WITH_DETAILED_ADDRESS_FIELDS,
   DETAIL_VIEW_BOTTOM_SECTION_FIELDS,
+  Display,
   KEY_TYPE_FIELD,
-  fallbackDisplayColors,
   fieldItemIterator,
-  getBackgroundColour,
-  getBackgroundImage,
-  getTextColor,
 } from '../common/VCUtils';
 import {ProfileIcon} from '../../ProfileIcon';
 import {VCFormat} from '../../../shared/VCFormat';
@@ -49,9 +43,7 @@ export const VCDetailView: React.FC<VCItemDetailsProps> = props => {
   const logo = props.verifiableCredentialData.issuerLogo;
   const face = props.verifiableCredentialData.face;
   const verifiableCredential = props.credential;
-  const wellknownDisplayProperty = props.wellknown?.display
-    ? getDisplayObjectForCurrentLanguage(props.wellknown.display)
-    : {};
+  const wellknownDisplayProperty = new Display(props.wellknown);
 
   const shouldShowHrLine = verifiableCredential => {
     let availableFieldNames: string[] = [];
@@ -95,10 +87,9 @@ export const VCDetailView: React.FC<VCItemDetailsProps> = props => {
               resizeMode="stretch"
               style={[
                 Theme.Styles.openCardBgContainer,
-                getBackgroundColour(wellknownDisplayProperty),
+                wellknownDisplayProperty.getBackgroundColor(),
               ]}
-              source={getBackgroundImage(
-                wellknownDisplayProperty,
+              source={wellknownDisplayProperty.getBackgroundImage(
                 Theme.OpenCard,
               )}>
               <Row padding="14 14 0 14" margin="0 0 0 0">
@@ -142,9 +133,8 @@ export const VCDetailView: React.FC<VCItemDetailsProps> = props => {
                   style={[
                     Theme.Styles.hrLine,
                     {
-                      borderBottomColor: getTextColor(
-                        wellknownDisplayProperty,
-                        fallbackDisplayColors.borderColor,
+                      borderBottomColor: wellknownDisplayProperty.getTextColor(
+                        Display.fallbackColors.borderColor,
                       ),
                     },
                   ]}></View>
