@@ -18,7 +18,7 @@
           services: never;
         };
         eventsCausingActions: {
-          "requestStoredContext": "xstate.init";
+          "requestStoredContext": "BIOMETRIC_CANCELLED" | "xstate.init";
 "resetCredentialRegistryResponse": "CANCEL" | "UPDATE_HOST";
 "resetIsBiometricToggled": "DISMISS";
 "resetKeyOrderingResponse": "RESET_KEY_ORDER_RESPONSE";

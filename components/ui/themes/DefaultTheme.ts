@@ -929,7 +929,7 @@ export const DefaultTheme = {
     },
     error: {
       position: 'absolute',
-      top: 30,
+      top: 65,
       left: 5,
       color: Colors.Red,
       fontFamily: 'Inter_600SemiBold',
