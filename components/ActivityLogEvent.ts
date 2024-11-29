@@ -61,9 +61,9 @@ export class VCActivityLog implements ActivityLog {
   getActionText(t: TFunction, wellknown: Object | undefined) {
     if (!!this.credentialConfigurationId && wellknown) {
       const cardType = getIdType(wellknown, this.credentialConfigurationId);
-      return `${t(this.type, {idType: cardType, id: this.id})}`;
+      return `${t(this.type, {idType: cardType})}`;
     }
-    return `${t(this.type, {idType: '', id: this.id})}`;
+    return `${t(this.type, {idType: ''})}`;
   }
 
   static getLogFromObject(data: Object): VCActivityLog {

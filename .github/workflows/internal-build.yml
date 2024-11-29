@@ -61,10 +61,10 @@ on:
       theme:
         description: 'Application Theme'
         required: true
-        default: 'orange'
+        default: 'gradient'
         type: choice
         options:
-          - orange
+          - gradient
           - purple
       allow_env_edit:
         description: 'Edit ENV'
