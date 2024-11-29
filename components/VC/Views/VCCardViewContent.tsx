@@ -14,6 +14,7 @@ import {
   getBackgroundImage,
   getCredentialType,
   fallbackDisplayColors,
+  getTextColor,
 } from '../common/VCUtils';
 import {VCItemFieldValue} from '../common/VCItemField';
 import {WalletBinding} from '../../../screens/Home/MyVcs/WalletBinding';
@@ -25,7 +26,6 @@ import {
 import {VCItemContainerFlowType} from '../../../shared/Utils';
 import {RemoveVcWarningOverlay} from '../../../screens/Home/MyVcs/RemoveVcWarningOverlay';
 import {HistoryTab} from '../../../screens/Home/MyVcs/HistoryTab';
-import {getTextColor} from '../common/VCUtils';
 import {useCopilot} from 'react-native-copilot';
 import {useTranslation} from 'react-i18next';
 
@@ -92,14 +92,14 @@ export const VCCardViewContent: React.FC<VCItemContentProps> = props => {
               testID="credentialType"
               fieldValue={getCredentialType(props.wellknown)}
               fieldValueColor={getTextColor(
-                props.wellknown,
+                wellknownDisplayProperty,
                 fallbackDisplayColors.fieldValue,
               )}
             />
             <Row>
               <VCVerification
-                wellknown={props.wellknown}
                 isVerified={props.isVerified}
+                display={wellknownDisplayProperty}
               />
             </Row>
           </Column>
@@ -126,7 +126,7 @@ export const VCCardViewContent: React.FC<VCItemContentProps> = props => {
                 style={Theme.Styles.kebabPressableContainer}>
                 <KebabPopUp
                   iconColor={getTextColor(
-                    props.wellknown,
+                    wellknownDisplayProperty,
                     fallbackDisplayColors.kebabIconColor,
                   )}
                   vcMetadata={props.vcMetadata}

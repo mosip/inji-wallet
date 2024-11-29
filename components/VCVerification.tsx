@@ -7,11 +7,11 @@ import React from 'react';
 import {useTranslation} from 'react-i18next';
 import PendingIcon from './PendingIcon';
 import {VCMetadata} from '../shared/VCMetadata';
-import {CredentialTypes} from '../machines/VerifiableCredential/VCMetaMachine/vc';
+import {displayType} from '../machines/Issuers/IssuersMachine';
 
 export const VCVerification: React.FC<VCVerificationProps> = ({
   isVerified,
-  wellknown,
+  display,
 }) => {
   const {t} = useTranslation('VcDetails');
   const statusText = isVerified ? t('valid') : t('pending');
@@ -26,10 +26,7 @@ export const VCVerification: React.FC<VCVerificationProps> = ({
         {statusIcon}
         <Text
           testID="verificationStatus"
-          color={getTextColor(
-            wellknown,
-            fallbackDisplayColors.verificationText,
-          )}
+          color={getTextColor(display, fallbackDisplayColors.verificationText)}
           style={Theme.Styles.verificationStatus}>
           {statusText}
         </Text>
@@ -40,5 +37,5 @@ export const VCVerification: React.FC<VCVerificationProps> = ({
 
 export interface VCVerificationProps {
   isVerified: boolean;
-  wellknown: CredentialTypes;
+  display: displayType | {};
 }
