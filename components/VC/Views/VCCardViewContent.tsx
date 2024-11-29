@@ -18,7 +18,10 @@ import {
 import {VCItemFieldValue} from '../common/VCItemField';
 import {WalletBinding} from '../../../screens/Home/MyVcs/WalletBinding';
 import {VCVerification} from '../../VCVerification';
-import {isActivationNeeded} from '../../../shared/openId4VCI/Utils';
+import {
+  getDisplayObjectForCurrentLanguage,
+  isActivationNeeded,
+} from '../../../shared/openId4VCI/Utils';
 import {VCItemContainerFlowType} from '../../../shared/Utils';
 import {RemoveVcWarningOverlay} from '../../../screens/Home/MyVcs/RemoveVcWarningOverlay';
 import {HistoryTab} from '../../../screens/Home/MyVcs/HistoryTab';
@@ -27,6 +30,10 @@ import {useCopilot} from 'react-native-copilot';
 import {useTranslation} from 'react-i18next';
 
 export const VCCardViewContent: React.FC<VCItemContentProps> = props => {
+  const wellknownDisplayProperty = props.wellknown?.display
+    ? getDisplayObjectForCurrentLanguage(props.wellknown.display)
+    : {};
+
   const vcSelectableButton =
     props.selectable &&
     (props.flow === VCItemContainerFlowType.VP_SHARE ? (
@@ -69,7 +76,7 @@ export const VCCardViewContent: React.FC<VCItemContentProps> = props => {
       imageStyle={Theme.Styles.vcBg}
       style={[
         Theme.Styles.backgroundImageContainer,
-        getBackgroundColour(props.wellknown),
+        getBackgroundColour(wellknownDisplayProperty),
       ]}>
       <View
         onLayout={

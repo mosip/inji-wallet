@@ -156,11 +156,8 @@ export const getFieldName = (
   return i18n.t(`VcDetails:${field}`);
 };
 
-export const getBackgroundColour = (wellknown: any) => {
+export const getBackgroundColour = (wellknownDisplayProperty: any) => {
   const defaultBackgroundColor = Theme.Colors.textValue;
-  const wellknownDisplayProperty = wellknown?.display
-    ? getDisplayObjectForCurrentLanguage(wellknown.display)
-    : {};
 
   return {
     backgroundColor:

@@ -12,7 +12,10 @@ import {Button, Column, Row, Text} from '../../ui';
 import {Theme} from '../../ui/styleUtils';
 import {QrCodeOverlay} from '../../QrCodeOverlay';
 import {SvgImage} from '../../ui/svg';
-import {isActivationNeeded} from '../../../shared/openId4VCI/Utils';
+import {
+  getDisplayObjectForCurrentLanguage,
+  isActivationNeeded,
+} from '../../../shared/openId4VCI/Utils';
 import {
   BOTTOM_SECTION_FIELDS_WITH_DETAILED_ADDRESS_FIELDS,
   DETAIL_VIEW_BOTTOM_SECTION_FIELDS,
@@ -46,6 +49,9 @@ export const VCDetailView: React.FC<VCItemDetailsProps> = props => {
   const logo = props.verifiableCredentialData.issuerLogo;
   const face = props.verifiableCredentialData.face;
   const verifiableCredential = props.credential;
+  const wellknownDisplayProperty = props.wellknown?.display
+    ? getDisplayObjectForCurrentLanguage(props.wellknown.display)
+    : {};
 
   const shouldShowHrLine = verifiableCredential => {
     let availableFieldNames: string[] = [];
@@ -89,7 +95,7 @@ export const VCDetailView: React.FC<VCItemDetailsProps> = props => {
               resizeMode="stretch"
               style={[
                 Theme.Styles.openCardBgContainer,
-                getBackgroundColour(props.wellknown),
+                getBackgroundColour(wellknownDisplayProperty),
               ]}
               source={getBackgroundImage(props.wellknown, Theme.OpenCard)}>
               <Row padding="14 14 0 14" margin="0 0 0 0">
