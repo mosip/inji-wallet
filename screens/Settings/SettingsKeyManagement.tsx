@@ -44,14 +44,6 @@ export const SettingsKeyManagementScreen: React.FC<
                   style={Theme.KeyManagementScreenStyle.textStyle}>
                   {t('header')}
                 </Text>
-                {!props.controller.isKeyManagementExplored && (
-                  <Text
-                    testID="newLabel"
-                    style={Theme.Styles.newLabel}
-                    color={Theme.Colors.whiteText}>
-                    {t('NEW')}
-                  </Text>
-                )}
               </Row>
             </ListItem.Title>
           </ListItem.Content>

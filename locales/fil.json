@@ -1,20 +1,20 @@
 {
   "ActivityLogText": {
-    "VC_SHARED": "Matagumpay na naibahagi ang {{idType}} {{id}}.",
-    "VC_RECEIVED": "Natanggap ang {{idType}} {{id}}.",
-    "VC_RECEIVED_NOT_SAVED": "Hindi ma-save ang {{idType}} {{id}}.",
-    "VC_DELETED": "Matagumpay na natanggal ang {{idType}} {{id}}.",
-    "VC_DOWNLOADED": "Na-download ang {{idType}} {{id}}.",
-    "VC_SHARED_WITH_VERIFICATION_CONSENT": "Ibinahagi ang {{idType}} {{id}} na may pahintulot para sa pag-verify ng presensya.",
-    "VC_RECEIVED_WITH_PRESENCE_VERIFIED": "Natanggap ang {{idType}} {{id}} at matagumpay ang pag-verify ng presensya.",
-    "VC_RECEIVED_BUT_PRESENCE_VERIFICATION_FAILED": "Natanggap ang {{idType}} {{id}} at nabigo ang pag-verify ng presensya.",
-    "PRESENCE_VERIFIED_AND_VC_SHARED": "Matagumpay ang pag-verify ng mukha at ibinahagi ang {{idType}} {{id}}.",
-    "PRESENCE_VERIFICATION_FAILED": "Nabigo ang pag-verify ng mukha habang sinusubukang ibahagi ang {{idType}} {{id}}.",
-    "QRLOGIN_SUCCESFULL": "Ang QRlogin gamit ang {{idType}} {{id}} ay matagumpay.",
-    "WALLET_BINDING_SUCCESSFULL": "Ang pag-activate ng {{idType}} {{id}} ay matagumpay.",
-    "WALLET_BINDING_FAILURE": "Nabigo ang pag-activate ng {{idType}} {{id}}.",
-    "VC_REMOVED": "Ang {{idType}} {{id}} ay inalis sa wallet.",
-    "TAMPERED_VC_REMOVED": "Ang {{idType}} {{id}} ay inalis mula sa wallet dahil sa pakikialam.",
+    "VC_SHARED": "Matagumpay na naibahagi ang {{idType}}.",
+    "VC_RECEIVED": "Natanggap ang {{idType}}.",
+    "VC_RECEIVED_NOT_SAVED": "Hindi ma-save ang {{idType}}.",
+    "VC_DELETED": "Matagumpay na natanggal ang {{idType}}.",
+    "VC_DOWNLOADED": "Na-download ang {{idType}}.",
+    "VC_SHARED_WITH_VERIFICATION_CONSENT": "Ibinahagi ang {{idType}} na may pahintulot para sa pag-verify ng presensya.",
+    "VC_RECEIVED_WITH_PRESENCE_VERIFIED": "Natanggap ang {{idType}} at matagumpay ang pag-verify ng presensya.",
+    "VC_RECEIVED_BUT_PRESENCE_VERIFICATION_FAILED": "Natanggap ang {{idType}} at nabigo ang pag-verify ng presensya.",
+    "PRESENCE_VERIFIED_AND_VC_SHARED": "Matagumpay ang pag-verify ng mukha at ibinahagi ang {{idType}}.",
+    "PRESENCE_VERIFICATION_FAILED": "Nabigo ang pag-verify ng mukha habang sinusubukang ibahagi ang {{idType}}.",
+    "QRLOGIN_SUCCESFULL": "Ang QRlogin gamit ang {{idType}} ay matagumpay.",
+    "WALLET_BINDING_SUCCESSFULL": "Ang pag-activate ng {{idType}} ay matagumpay.",
+    "WALLET_BINDING_FAILURE": "Nabigo ang pag-activate ng {{idType}}.",
+    "VC_REMOVED": "Ang {{idType}} ay inalis sa wallet.",
+    "TAMPERED_VC_REMOVED": "Ang {{idType}} ay inalis mula sa wallet dahil sa pakikialam.",
     "vpSharing": {
       "SHARED_SUCCESSFULLY": "Matagumpay na naibahagi ang Pagtatanghal ng Kredensyal.",
       "SHARED_WITH_FACE_VERIFIACTION": "Matagumpay ang pag-verify sa mukha, at matagumpay na naibahagi ang Credential Presentation.",
@@ -70,6 +70,7 @@
     "status": "Katayuan",
     "valid": "Napatunayan",
     "pending": "Nakabinbin",
+    "expired": "Nag-expire na",
     "photo": "Larawan",
     "fullName": "Buong pangalan",
     "gender": "Kasarian",
@@ -82,6 +83,7 @@
     "id": "Id",
     "qrCodeHeader": "QR Code",
     "nationalCard": "Pambansang ID",
+    "identityCard": "Kard ng Pagkakakilanlan",
     "insuranceCard": "Insurance Card",
     "beneficiaryCard": "Benepisyaryo Card",
     "socialRegistryCard": "Social Registry Card",
@@ -157,7 +159,8 @@
     "downloaded": "nakuha",
     "shared": "ibinahagi",
     "received": "natanggap",
-    "deleted": "tinanggal"
+    "deleted": "tinanggal",
+    "historyHeaderLabel": "Kasaysayan"
   },
   "SettingScreen": {
     "header": "Mga setting",
@@ -181,14 +184,15 @@
     "keyPreferenceError": "Paumanhin! May error sa pagsasaayos ng iyong mga kagustuhan sa key"
   },
   "AboutInji": {
-    "aboutInji": "Tungkol kay Inji",
-    "header": "TUNGKOL KAY INJI",
+    "aboutInji": "Tungkol kay Inji Wallet",
+    "header": "TUNGKOL SA INJI WALLET",
     "appID": "App ID",
-    "aboutDetails": "Ang Inji ay isang mobile app na maaaring gamitin bilang digital wallet para mag-imbak ng mga kredensyal. Pinapayagan din nito ang pag-verify ng pagkakakilanlan sa parehong offline at online na mga mode, sa anumang lugar at oras.",
+    "aboutDetails": "Ginagawa ng Inji Wallet na mapagkakatiwalaan at portable ang data, na nagtatampok ng dalawang pangunahing interface na tumutugon sa magkakaibang pangangailangan ng user, kung saan ang Inji Mobile ang isa sa mga ito. Bilang isang mobile-based na wallet app, ang Inji Mobile ay isang secure, desentralisadong solusyon na nagbibigay-daan sa mga user na mag-download, mamahala, magbahagi, at mag-verify ng mga nabe-verify na kredensyal nang direkta mula sa kanilang mga smartphone, na nagbibigay ng maayos at mapagkakatiwalaang paraan upang mahawakan ang mga kredensyal on the go.",
     "forMoreDetails": "Para sa karagdagang detalye",
     "clickHere": "Pindutin dito",
     "version": "Bersyon",
-    "tuvaliVersion": "Tuvali-bersyon"
+    "tuvaliVersion": "Tuvali-bersyon",
+    "poweredBy": "Pinapatakbo ng Inji, Isang Produktong MOSIP"
   },
   "IssuersScreen": {
     "title": "Magdagdag ng bagong card",
@@ -219,6 +223,10 @@
       },
       "technicalDifficulty": {
         "title": "May naganap na error!",
+        "message": "Salamat sa iyong pasensya! Nakakaranas kami ng mga teknikal na paghihirap ngayon. Pakisubukang muli mamaya o makipag-ugnayan sa admin para sa karagdagang tulong!"
+      },
+      "authorizationGrantTypeNotSupportedByWallet": {
+        "title": "Ang uri ng grant ay hindi sinusuportahan ng error sa pahintulot!",
         "message": "Salamat sa iyong pasensya! Nakakaranas kami ng mga teknikal na paghihirap ngayon. Pakisubukang muli mamaya o makipag-ugnayan sa admin para sa karagdagang tulong!"
       },
       "verificationFailed": {

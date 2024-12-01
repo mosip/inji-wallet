@@ -1,16 +1,33 @@
 import testIDProps from '../shared/commonUtil';
-import {getTextColor} from './VC/common/VCUtils';
+import {Display} from './VC/common/VCUtils';
 import VerifiedIcon from './VerifiedIcon';
 import {Row, Text} from './ui';
 import {Theme} from './ui/styleUtils';
 import React from 'react';
 import {useTranslation} from 'react-i18next';
 import PendingIcon from './PendingIcon';
+import {VCMetadata} from '../shared/VCMetadata';
 
-export const VCVerification: React.FC = ({wellknown, isVerified}: any) => {
+export const VCVerification: React.FC<VCVerificationProps> = ({
+  vcMetadata,
+  display,
+}) => {
   const {t} = useTranslation('VcDetails');
-  const statusText = isVerified ? t('valid') : t('pending');
-  const statusIcon = isVerified ? <VerifiedIcon /> : <PendingIcon />;
+  const statusText = vcMetadata.isVerified
+    ? vcMetadata.isExpired
+      ? t('expired')
+      : t('valid')
+    : t('pending');
+
+  const statusIcon = vcMetadata.isVerified ? (
+    vcMetadata.isExpired ? (
+      <PendingIcon />
+    ) : (
+      <VerifiedIcon />
+    )
+  ) : (
+    <PendingIcon />
+  );
   return (
     <Row
       {...testIDProps('verified')}
@@ -21,7 +38,7 @@ export const VCVerification: React.FC = ({wellknown, isVerified}: any) => {
         {statusIcon}
         <Text
           testID="verificationStatus"
-          color={getTextColor(wellknown, Theme.Colors.Details)}
+          color={display.getTextColor(Theme.Colors.Details)}
           style={Theme.Styles.verificationStatus}>
           {statusText}
         </Text>
@@ -29,3 +46,8 @@ export const VCVerification: React.FC = ({wellknown, isVerified}: any) => {
     </Row>
   );
 };
+
+export interface VCVerificationProps {
+  vcMetadata: VCMetadata;
+  display: Display;
+}

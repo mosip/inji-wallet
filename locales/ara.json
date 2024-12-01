@@ -1,20 +1,20 @@
 {
   "ActivityLogText": {
-    "VC_SHARED": "تم مشاركة {{idType}} {{id}} بنجاح.",
-    "VC_RECEIVED": "تم استلام {{idType}} {{id}}.",
-    "VC_RECEIVED_NOT_SAVED": "لم يتمكن من حفظ {{idType}} {{id}}.",
-    "VC_DELETED": "تم حذف {{idType}} {{id}} بنجاح.",
-    "VC_DOWNLOADED": "تم تنزيل {{idType}} {{id}}.",
-    "VC_SHARED_WITH_VERIFICATION_CONSENT": "تم مشاركة {{idType}} {{id}} بالموافقة للتحقق من الحضور.",
-    "VC_RECEIVED_WITH_PRESENCE_VERIFIED": "تم استلام {{idType}} {{id}} ونجح التحقق من الحضور.",
-    "VC_RECEIVED_BUT_PRESENCE_VERIFICATION_FAILED": "تم استلام {{idType}} {{id}} ولكن فشل التحقق من الحضور.",
-    "PRESENCE_VERIFIED_AND_VC_SHARED": "تم التحقق من الوجه بنجاح وتمت مشاركة {{idType}} {{id}}.",
-    "PRESENCE_VERIFICATION_FAILED": "فشل التحقق من الوجه أثناء محاولة مشاركة {{idType}} {{id}}.",
-    "QRLOGIN_SUCCESFULL": "نجح تسجيل الدخول باستخدام QR باستخدام {{idType}} {{id}}.",
-    "WALLET_BINDING_SUCCESSFULL": "تم تفعيل {{idType}} {{id}} بنجاح.",
-    "WALLET_BINDING_FAILURE": "فشل تفعيل {{idType}} {{id}}.",
-    "VC_REMOVED": "تم إزالة {{idType}} {{id}} من المحفظة.",
-    "TAMPERED_VC_REMOVED": "تم إزالة {{idType}} {{id}} من المحفظة بسبب العبث.",
+    "VC_SHARED": "تم مشاركة {{idType}} بنجاح.",
+    "VC_RECEIVED": "تم استلام {{idType}}.",
+    "VC_RECEIVED_NOT_SAVED": "لم يتمكن من حفظ {{idType}}.",
+    "VC_DELETED": "تم حذف {{idType}} بنجاح.",
+    "VC_DOWNLOADED": "تم تنزيل {{idType}}.",
+    "VC_SHARED_WITH_VERIFICATION_CONSENT": "تم مشاركة {{idType}} بالموافقة للتحقق من الحضور.",
+    "VC_RECEIVED_WITH_PRESENCE_VERIFIED": "تم استلام {{idType}} ونجح التحقق من الحضور.",
+    "VC_RECEIVED_BUT_PRESENCE_VERIFICATION_FAILED": "تم استلام {{idType}} ولكن فشل التحقق من الحضور.",
+    "PRESENCE_VERIFIED_AND_VC_SHARED": "تم التحقق من الوجه بنجاح وتمت مشاركة {{idType}}.",
+    "PRESENCE_VERIFICATION_FAILED": "فشل التحقق من الوجه أثناء محاولة مشاركة {{idType}}.",
+    "QRLOGIN_SUCCESFULL": "نجح تسجيل الدخول باستخدام QR باستخدام {{idType}}.",
+    "WALLET_BINDING_SUCCESSFULL": "تم تفعيل {{idType}} بنجاح.",
+    "WALLET_BINDING_FAILURE": "فشل تفعيل {{idType}}.",
+    "VC_REMOVED": "تم إزالة {{idType}} من المحفظة.",
+    "TAMPERED_VC_REMOVED": "تم إزالة {{idType}} من المحفظة بسبب العبث.",
     "vpSharing": {
       "SHARED_SUCCESSFULLY": "تمت مشاركة العرض التقديمي لبيانات الاعتماد بنجاح.",
       "SHARED_WITH_FACE_VERIFIACTION": "تم التحقق من الوجه بنجاح، وتمت مشاركة العرض التقديمي لبيانات الاعتماد بنجاح.",
@@ -69,6 +69,7 @@
     "generatedOn": "تم إنشاؤه في",
     "status": "الحالة",
     "valid": "صالح",
+    "expired": "منتهي الصلاحية",
     "pending": "قيد الانتظار",
     "photo": " صورة",
     "fullName": "الاسم الكامل",
@@ -82,6 +83,7 @@
     "id": "بطاقة تعريف",
     "qrCodeHeader": "رمز الاستجابة السريعة",
     "nationalCard": "الهوية الوطنية",
+    "identityCard": "بطاقة الهوية",
     "insuranceCard": "بطاقة التأمين",
     "beneficiaryCard": "بطاقة المستفيد",
     "socialRegistryCard": "بطاقة السجل الاجتماعي",
@@ -157,7 +159,8 @@
     "downloaded": "يملك",
     "shared": "مشترك",
     "received": "تلقى",
-    "deleted": "إزالة"
+    "deleted": "إزالة",
+    "historyHeaderLabel": "تاريخ"
   },
   "SettingScreen": {
     "header": "إعدادات",
@@ -181,14 +184,15 @@
     "keyPreferenceError": "عذرًا! حدث خطأ أثناء تعيين تفضيلات المفتاح الخاصة بك"
   },
   "AboutInji": {
-    "aboutInji": "حول إنجي",
-    "header": "حول إنجي",
+    "aboutInji": "حول محفظة إنجي",
+    "header": "حول محفظة إنجي",
     "appID": " : ID طبيق",
-    "aboutDetails": "إنجي هو تطبيق جوال يمكن استخدامه كمحفظة رقمية لتخزين بيانات الاعتماد. كما يسمح بالتحقق من الهوية في الوضعين غير المتصلين بالإنترنت وفي أي مكان وزمان.",
+    "aboutDetails": "تجعل Inji Wallet البيانات جديرة بالثقة ومحمولة، وتتميز بواجهتين رئيسيتين تلبيان احتياجات المستخدمين المتنوعة، مع كون Inji Mobile إحداهما. باعتباره تطبيق محفظة قائمًا على الهاتف المحمول، يعد Inji Mobile حلاً آمنًا ولا مركزيًا يسمح للمستخدمين بتنزيل بيانات الاعتماد التي يمكن التحقق منها وإدارتها ومشاركتها والتحقق منها مباشرة من هواتفهم الذكية، مما يوفر طريقة سلسة وجديرة بالثقة للتعامل مع بيانات الاعتماد أثناء التنقل.",
     "forMoreDetails": "لمزيد من التفاصيل",
     "clickHere": "انقر هنا",
     "version": "الإصدار",
-    "tuvaliVersion": "نسخة توفالي"
+    "tuvaliVersion": "نسخة توفالي",
+    "poweredBy": "مدعوم من Inji، منتج MOSIP"
   },
   "IssuersScreen": {
     "title": "أضف بطاقة جديدة",
@@ -219,6 +223,10 @@
       },
       "technicalDifficulty": {
         "title": "حدث خطأ!",
+        "message": "شكرًا على صبرك! نحن نواجه صعوبات تقنية في الوقت الحالي. يُرجى المحاولة مرة أخرى لاحقًا أو الاتصال بالمسؤول للحصول على مزيد من المساعدة!"
+      },
+      "authorizationGrantTypeNotSupportedByWallet": {
+        "title": "نوع المنحة غير مدعوم خطأ في التفويض!",
         "message": "شكرًا على صبرك! نحن نواجه صعوبات تقنية في الوقت الحالي. يُرجى المحاولة مرة أخرى لاحقًا أو الاتصال بالمسؤول للحصول على مزيد من المساعدة!"
       },
       "verificationFailed": {

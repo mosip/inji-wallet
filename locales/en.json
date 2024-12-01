@@ -1,20 +1,20 @@
 {
   "ActivityLogText": {
-    "VC_SHARED": "{{idType}} {{id}} is shared successfully.",
-    "VC_RECEIVED": "Received {{idType}} {{id}}.",
-    "VC_RECEIVED_NOT_SAVED": "Couldn't save {{idType}} {{id}}.",
-    "VC_DELETED": "{{idType}} {{id}} is deleted successfully.",
-    "VC_DOWNLOADED": "{{idType}} {{id}} is downloaded.",
-    "VC_SHARED_WITH_VERIFICATION_CONSENT": "Shared {{idType}} {{id}} with consent for presence verification.",
-    "VC_RECEIVED_WITH_PRESENCE_VERIFIED": "Received {{idType}} {{id}} and presence verification is successful.",
-    "VC_RECEIVED_BUT_PRESENCE_VERIFICATION_FAILED": "Received {{idType}} {{id}} and presence verification failed.",
-    "PRESENCE_VERIFIED_AND_VC_SHARED": "Face verification is successful and {{idType}} {{id}} is shared.",
-    "PRESENCE_VERIFICATION_FAILED": "Face verification has failed while trying to share {{idType}} {{id}}.",
-    "QRLOGIN_SUCCESFULL": "QRLogin using {{idType}} {{id}} is successful.",
-    "WALLET_BINDING_SUCCESSFULL": "Activation of {{idType}} {{id}} is successful.",
-    "WALLET_BINDING_FAILURE": "Activation of {{idType}} {{id}} has failed.",
-    "VC_REMOVED": "{{idType}} {{id}} is removed from wallet.",
-    "TAMPERED_VC_REMOVED": "{{idType}} {{id}} is removed from from wallet due to tampering.",
+    "VC_SHARED": "{{idType}} is shared successfully.",
+    "VC_RECEIVED": "Received {{idType}}.",
+    "VC_RECEIVED_NOT_SAVED": "Couldn't save {{idType}}.",
+    "VC_DELETED": "{{idType}} is deleted successfully.",
+    "VC_DOWNLOADED": "{{idType}} is downloaded.",
+    "VC_SHARED_WITH_VERIFICATION_CONSENT": "Shared {{idType}} with consent for presence verification.",
+    "VC_RECEIVED_WITH_PRESENCE_VERIFIED": "Received {{idType}} and presence verification is successful.",
+    "VC_RECEIVED_BUT_PRESENCE_VERIFICATION_FAILED": "Received {{idType}} and presence verification failed.",
+    "PRESENCE_VERIFIED_AND_VC_SHARED": "Face verification is successful and {{idType}} is shared.",
+    "PRESENCE_VERIFICATION_FAILED": "Face verification has failed while trying to share {{idType}}.",
+    "QRLOGIN_SUCCESFULL": "QRLogin using {{idType}} is successful.",
+    "WALLET_BINDING_SUCCESSFULL": "Activation of {{idType}} is successful.",
+    "WALLET_BINDING_FAILURE": "Activation of {{idType}} has failed.",
+    "VC_REMOVED": "{{idType}} is removed from wallet.",
+    "TAMPERED_VC_REMOVED": "{{idType}} is removed from from wallet due to tampering.",
     "vpSharing": {
       "SHARED_SUCCESSFULLY": "Credential Presentation is shared successfully.",
       "SHARED_WITH_FACE_VERIFIACTION": "Face verification is successful, and the Credential Presentation is shared successfully.",
@@ -70,6 +70,7 @@
     "status": "Status",
     "valid": "Valid",
     "pending": "Pending",
+    "expired": "Expired",
     "photo": "Photo",
     "fullName": "Full Name",
     "gender": "Gender",
@@ -82,6 +83,7 @@
     "id": "ID",
     "qrCodeHeader": "QR Code",
     "nationalCard": "National ID",
+    "identityCard": "Identity Card",
     "insuranceCard": "Insurance Card",
     "beneficiaryCard": "Beneficiary Card",
     "socialRegistryCard": "Social Registry Card",
@@ -157,7 +159,8 @@
     "downloaded": "downloaded",
     "shared": "shared",
     "received": "received",
-    "deleted": "deleted"
+    "deleted": "deleted",
+    "historyHeaderLabel": "History"
   },
   "SettingScreen": {
     "header": "Settings",
@@ -182,14 +185,15 @@
     "keyPreferenceError": "Sorry! Error setting your key preferences"
   },
   "AboutInji": {
-    "aboutInji": "About Inji",
-    "header": "ABOUT INJI",
+    "aboutInji": "About Inji Wallet",
+    "header": "ABOUT INJI WALLET",
     "appID": "App ID",
-    "aboutDetails": "Inji is a mobile app that can be used as a digital wallet to store credentials. It also allows identity verification in both offline and online modes, at any place and time.",
+    "aboutDetails": "Inji Wallet makes data trustworthy and portable, featuring two main interfaces that cater to diverse user needs, with Inji Mobile being one of them. As a mobile-based wallet app, Inji Mobile is a secure, decentralized solution that allows users to download, manage, share, and verify verifiable credentials directly from their smartphones, providing a seamless and trustworthy way to handle credentials on the go.",
     "forMoreDetails": "For more details",
     "clickHere": "Click here",
     "version": "Version",
-    "tuvaliVersion": "Tuvali-version"
+    "tuvaliVersion": "Tuvali-version",
+    "poweredBy": "Powered by Inji, A MOSIP Product"
   },
   "IssuersScreen": {
     "title": "Add new card",
@@ -220,6 +224,10 @@
       },
       "technicalDifficulty": {
         "title": "An error occurred!",
+        "message": "Thanks for your patience! We're experiencing technical difficulties right now. Please try again later or contact the admin for further assistance!"
+      },
+      "authorizationGrantTypeNotSupportedByWallet": {
+        "title": "Grant type not supported authorization error!",
         "message": "Thanks for your patience! We're experiencing technical difficulties right now. Please try again later or contact the admin for further assistance!"
       },
       "verificationFailed": {

@@ -23,6 +23,9 @@ public class AddNewCardPage extends BasePage{
     @iOSXCUITFindBy(accessibility = "issuerHeading-Mosip")
     private WebElement downloadViaEsignet;
 
+    @AndroidFindBy(accessibility = "issuerHeading-MockCertify")
+    @iOSXCUITFindBy(accessibility = "issuerHeading-MockCertify")
+    private WebElement downloadViaMockCertify;
     @iOSXCUITFindBy(accessibility = "Continue")
     private WebElement continueButton;
 
@@ -56,6 +59,10 @@ public class AddNewCardPage extends BasePage{
     @AndroidFindBy(accessibility = "credentialTypeHeading-MosipVerifiableCredential")
     @iOSXCUITFindBy(accessibility = "credentialTypeHeading-MosipVerifiableCredential")
     private WebElement credentialTypeHeadingMOSIPVerifiableCredential;
+
+    @AndroidFindBy(accessibility = "credentialTypeHeading-MockVerifiableCredential_mdoc")
+    @iOSXCUITFindBy(accessibility = "credentialTypeHeading-MockVerifiableCredential_mdoc")
+    private WebElement credentialTypeHeadingMockVerifiableCredential_mdoc;
 
     public AddNewCardPage(AppiumDriver driver) {
         super(driver);
@@ -101,6 +108,10 @@ public class AddNewCardPage extends BasePage{
         return this.isElementDisplayed(downloadViaEsignet);
     }
 
+    public boolean isDownloadViaMockCertifyDisplayed() {
+        return this.isElementDisplayed(downloadViaMockCertify);
+    }
+
     public boolean isDownloadViaEsignetDisplayedInHindi() {
         return this.isElementDisplayed(downloadViaEsignet);
     }
@@ -121,6 +132,20 @@ public class AddNewCardPage extends BasePage{
             clickOnElement(credentialTypeHeadingMOSIPVerifiableCredential);
         }
         return new EsignetLoginPage(driver);
+    }
+
+    public MockCertifyLoginPage clickOnDownloadViaMockCertify(){
+        clickOnElement(downloadViaMockCertify);
+
+        try {
+            Thread.sleep(3000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        if(isElementDisplayed(credentialTypeHeadingMockVerifiableCredential_mdoc)) {
+            clickOnElement(credentialTypeHeadingMockVerifiableCredential_mdoc);
+        }
+        return new MockCertifyLoginPage(driver);
     }
 
     public void clickOnContinueButtonInSigninPopupIos(){

@@ -52,7 +52,7 @@ public class SettingsPage extends BasePage {
 
 
     @AndroidFindBy(xpath = "//*[contains(@text,'Wika')]")
-    @iOSXCUITFindBy(iOSClassChain = "**/XCUIElementTypeOther[`label == \"\uE037 Wika \uE5CC\"`][1]")
+    @iOSXCUITFindBy(accessibility = "languageTitle")
     private WebElement wikaButton;
 
     @AndroidFindBy(uiAutomator = "new UiSelector().resourceId(\"listItemTitle\")")
@@ -98,6 +98,9 @@ public class SettingsPage extends BasePage {
 
     @AndroidFindBy(accessibility = "newLabel")
     private WebElement newlable;
+
+    @AndroidFindBy(accessibility = "keyManagement")
+    private WebElement keyManagement;
 
 
     public SettingsPage(AppiumDriver driver) {
@@ -245,4 +248,8 @@ public class SettingsPage extends BasePage {
         return getTextFromLocator(receiveCardText);
     }
 
+    public KeyManagementPage clickOnKeyManagement() {
+        clickOnElement(keyManagement);
+        return new KeyManagementPage(driver);
+    }
 }

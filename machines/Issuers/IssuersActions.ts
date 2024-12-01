@@ -1,6 +1,7 @@
 import {
   ErrorMessage,
   Issuers_Key_Ref,
+  OIDCErrors,
   selectCredentialRequestKey,
 } from '../../shared/openId4VCI/Utils';
 import {
@@ -8,6 +9,7 @@ import {
   NETWORK_REQUEST_FAILED,
   REQUEST_TIMEOUT,
   isIOS,
+  EXPIRED_VC_ERROR_CODE,
 } from '../../shared/constants';
 import {assign, send} from 'xstate';
 import {StoreEvents} from '../store';
@@ -29,18 +31,20 @@ import {VCActivityLog} from '../../components/ActivityLogEvent';
 const {RNSecureKeystoreModule} = NativeModules;
 export const IssuersActions = (model: any) => {
   return {
-    setIsVerified: assign({
-      vcMetadata: (context: any) =>
+    setVerificationResult: assign({
+      vcMetadata: (context: any, event: any) =>
         new VCMetadata({
           ...context.vcMetadata,
           isVerified: true,
+          isExpired: event.data.verificationErrorCode == EXPIRED_VC_ERROR_CODE,
         }),
     }),
-    resetIsVerified: assign({
+    resetVerificationResult: assign({
       vcMetadata: (context: any) =>
         new VCMetadata({
           ...context.vcMetadata,
           isVerified: false,
+          isExpired: false,
         }),
     }),
     setIssuers: model.assign({
@@ -100,13 +104,16 @@ export const IssuersActions = (model: any) => {
 
     setError: model.assign({
       errorMessage: (_: any, event: any) => {
-        console.error('Error occurred ', event.data.message);
+        console.error(`Error occurred while ${event} -> `, event.data.message);
         const error = event.data.message;
         if (error.includes(NETWORK_REQUEST_FAILED)) {
           return ErrorMessage.NO_INTERNET;
         }
         if (error.includes(REQUEST_TIMEOUT)) {
           return ErrorMessage.REQUEST_TIMEDOUT;
+        }
+        if (error.includes(OIDCErrors.AUTHORIZATION_ENDPOINT_DISCOVERY.GRANT_TYPE_NOT_SUPPORTED)) {
+          return ErrorMessage.AUTHORIZATION_GRANT_TYPE_NOT_SUPPORTED;
         }
         return ErrorMessage.GENERIC;
       },
@@ -236,7 +243,13 @@ export const IssuersActions = (model: any) => {
         credential_endpoint: event.data.credential_endpoint,
         credential_configurations_supported:
           event.data.credential_configurations_supported,
-        authorization_servers: event.data.authorization_servers,
+      }),
+    }),
+
+    updateAuthorizationEndpoint: model.assign({
+      selectedIssuer: (context: any, event: any) => ({
+        ...context.selectedIssuer,
+        authorizationEndpoint: event.data,
       }),
     }),
 
@@ -279,7 +292,6 @@ export const IssuersActions = (model: any) => {
           VCActivityLog.getLogFromObject({
             _vcKey: vcMetadata.getVcKey(),
             type: 'VC_DOWNLOADED',
-            id: vcMetadata.displayId,
             timestamp: Date.now(),
             deviceName: '',
             issuer: context.selectedIssuerId,

@@ -14,7 +14,11 @@ export const Error: React.FC<ErrorProps> = props => {
   const errorContent = () => {
     return (
       <Fragment>
-        <View style={[{alignItems: 'center'}, props.customStyles]}>
+        <View
+          style={[
+            {alignItems: 'center', marginHorizontal: 1},
+            props.customStyles,
+          ]}>
           <View>
             <Row
               align="center"

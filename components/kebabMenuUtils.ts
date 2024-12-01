@@ -71,6 +71,12 @@ export const getKebabMenuOptions = props => {
     if (isMosipVC(props.vcMetadata.issuer)) {
       vcActionsList.splice(2, 0, shareWithSelfieOption, VCActivationOption);
     }
+    if (props.vcMetadata.isExpired) {
+      const indexOfActivation = vcActionsList.indexOf(VCActivationOption);
+      if (indexOfActivation !== -1) {
+        vcActionsList.splice(indexOfActivation, 1);
+      }
+    }
   }
 
   return vcActionsList;

@@ -198,6 +198,8 @@ public class SharePage extends BasePage {
     public void clickOnDontAllowCameraAccessButton(){
         if(isElementDisplayed(cameraDontAllowAccessPopup))
             clickOnElement(cameraDontAllowAccessPopup);
+
+
     }
 
     public boolean isCameraAccessLostPageLoaded() {

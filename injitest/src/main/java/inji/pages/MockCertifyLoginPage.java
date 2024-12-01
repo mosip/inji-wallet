@@ -1,14 +1,12 @@
 package inji.pages;
 
-import inji.utils.UpdateNetworkSettings;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.HidesKeyboard;
 import io.appium.java_client.pagefactory.AndroidFindBy;
 import io.appium.java_client.pagefactory.iOSXCUITFindBy;
 import org.openqa.selenium.WebElement;
 
-public class EsignetLoginPage extends BasePage {
-
+public class MockCertifyLoginPage extends BasePage {
 
     @iOSXCUITFindBy(iOSClassChain = "**/XCUIElementTypeStaticText[`label == \"“Inji” Wants to Use “mosip.net” to Sign In\"`]")
     private WebElement iosSignInPermissionPopup;
@@ -88,8 +86,7 @@ public class EsignetLoginPage extends BasePage {
     private WebElement credentialTypeHeadingMOSIPVerifiableCredential;
 
 
-
-    public EsignetLoginPage(AppiumDriver driver) {
+    public MockCertifyLoginPage(AppiumDriver driver) {
         super(driver);
     }
 
@@ -228,4 +225,6 @@ public class EsignetLoginPage extends BasePage {
             clickOnElement(credentialTypeHeadingMOSIPVerifiableCredential);
         }
     }
+
+
 }
