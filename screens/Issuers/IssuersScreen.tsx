@@ -41,6 +41,7 @@ export const IssuersScreen: React.FC<
   const [search, setSearch] = useState('');
   const [tapToSearch, setTapToSearch] = useState(false);
   const [clearSearchIcon, setClearSearchIcon] = useState(false);
+  const showFullScreenError = controller.isError && controller.errorMessageType;
 
   const isVerificationFailed = controller.verificationErrorMessage !== '';
 
@@ -51,7 +52,7 @@ export const IssuersScreen: React.FC<
     : t(`errors.verificationFailed.ERR_GENERIC`);
 
   useLayoutEffect(() => {
-    if (controller.loadingReason || controller.errorMessageType) {
+    if (controller.loadingReason || showFullScreenError) {
       props.navigation.setOptions({
         headerShown: false,
       });
@@ -202,7 +203,7 @@ export const IssuersScreen: React.FC<
       </MessageOverlay>
     );
   }
-  if (controller.errorMessageType) {
+  if (showFullScreenError) {
     return (
       <Error
         testID={`${controller.errorMessageType}Error`}

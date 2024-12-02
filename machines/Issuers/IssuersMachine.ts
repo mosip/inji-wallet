@@ -101,7 +101,7 @@ export const IssuersMachine = model.createMachine(
             target: 'downloadCredentialTypes',
           },
           onError: {
-            actions: ['setFetchWellknownError', 'resetLoadingReason'],
+            actions: ['setNetworkOrTechnicalError', 'resetLoadingReason'],
             target: 'error',
           },
         },
@@ -234,16 +234,15 @@ export const IssuersMachine = model.createMachine(
             {
               actions: [
                 'resetSelectedCredentialType',
-                'setError',
+                'setNetworkOrTechnicalError',
                 'resetLoadingReason',
-                'sendDownloadingFailedToVcMeta',
                 (_, event) =>
                   console.error(
                     'Error Occurred while invoking Auth - ',
                     event.data,
                   ),
               ],
-              target: 'selectingIssuer',
+              target: 'error',
             },
           ],
         },
@@ -265,7 +264,7 @@ export const IssuersMachine = model.createMachine(
                   'sendDownloadingFailedToVcMeta',
                   (_, event) =>
                     console.error(
-                      'Error Occurred while invoking Auth - ',
+                      'Error Occurred while getting key order - ',
                       event.data,
                     ),
                 ],
@@ -294,7 +293,7 @@ export const IssuersMachine = model.createMachine(
                     'sendDownloadingFailedToVcMeta',
                     (_, event) =>
                       console.error(
-                        'Error Occurred while invoking Auth - ',
+                        'Error Occurred while getting keypair from keystore - ',
                         event.data,
                       ),
                   ],
