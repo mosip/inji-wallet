@@ -131,10 +131,10 @@ export interface Typegen0 {
       | 'loadKeyPair'
       | 'logDownloaded'
       | 'resetError'
+      | 'resetIsVerified'
       | 'resetLoadingReason'
       | 'resetSelectedCredentialType'
       | 'resetVerificationErrorMessage'
-      | 'resetVerificationResult'
       | 'sendBackupEvent'
       | 'sendDownloadingFailedToVcMeta'
       | 'sendErrorEndEvent'
@@ -143,12 +143,13 @@ export interface Typegen0 {
       | 'setCredentialTypeListDownloadFailureError'
       | 'setCredentialWrapper'
       | 'setError'
-      | 'setFetchWellknownError'
+      | 'setIsVerified'
       | 'setIssuers'
       | 'setLoadingReasonAsDisplayIssuers'
       | 'setLoadingReasonAsDownloadingCredentials'
       | 'setLoadingReasonAsSettingUp'
       | 'setMetadataInCredentialData'
+      | 'setNetworkOrTechnicalError'
       | 'setNoInternet'
       | 'setOIDCConfigError'
       | 'setPrivateKey'
@@ -161,7 +162,6 @@ export interface Typegen0 {
       | 'setTokenResponse'
       | 'setVCMetadata'
       | 'setVerifiableCredential'
-      | 'setVerificationResult'
       | 'storeKeyPair'
       | 'storeVcMetaContext'
       | 'storeVcsContext'
@@ -210,6 +210,7 @@ export interface Typegen0 {
       | 'RESET_ERROR'
       | 'TRY_AGAIN'
       | 'error.platform.issuersMachine.performAuthorization:invocation[0]';
+    resetIsVerified: 'error.platform.issuersMachine.verifyingCredential:invocation[0]';
     resetLoadingReason:
       | 'RESET_ERROR'
       | 'done.invoke.checkInternet'
@@ -229,13 +230,11 @@ export interface Typegen0 {
       | 'error.platform.issuersMachine.performAuthorization.setSelectedKey:invocation[0]'
       | 'error.platform.issuersMachine.performAuthorization:invocation[0]';
     resetVerificationErrorMessage: 'RESET_VERIFY_ERROR';
-    resetVerificationResult: 'error.platform.issuersMachine.verifyingCredential:invocation[0]';
     sendBackupEvent: 'done.invoke.issuersMachine.storing:invocation[0]';
     sendDownloadingFailedToVcMeta:
       | 'error.platform.issuersMachine.downloadCredentials:invocation[0]'
       | 'error.platform.issuersMachine.performAuthorization.getKeyPairFromKeystore:invocation[0]'
-      | 'error.platform.issuersMachine.performAuthorization.setSelectedKey:invocation[0]'
-      | 'error.platform.issuersMachine.performAuthorization:invocation[0]';
+      | 'error.platform.issuersMachine.performAuthorization.setSelectedKey:invocation[0]';
     sendErrorEndEvent: 'error.platform.issuersMachine.verifyingCredential:invocation[0]';
     sendImpressionEvent: 'done.invoke.issuersMachine.displayIssuers:invocation[0]';
     sendSuccessEndEvent: 'done.invoke.issuersMachine.verifyingCredential:invocation[0]';
@@ -246,9 +245,8 @@ export interface Typegen0 {
       | 'error.platform.issuersMachine.downloadCredentials:invocation[0]'
       | 'error.platform.issuersMachine.fetchAuthorizationEndpoint:invocation[0]'
       | 'error.platform.issuersMachine.performAuthorization.getKeyPairFromKeystore:invocation[0]'
-      | 'error.platform.issuersMachine.performAuthorization.setSelectedKey:invocation[0]'
-      | 'error.platform.issuersMachine.performAuthorization:invocation[0]';
-    setFetchWellknownError: 'error.platform.issuersMachine.downloadIssuerWellknown:invocation[0]';
+      | 'error.platform.issuersMachine.performAuthorization.setSelectedKey:invocation[0]';
+    setIsVerified: 'done.invoke.issuersMachine.verifyingCredential:invocation[0]';
     setIssuers: 'done.invoke.issuersMachine.displayIssuers:invocation[0]';
     setLoadingReasonAsDisplayIssuers: 'TRY_AGAIN';
     setLoadingReasonAsDownloadingCredentials:
@@ -264,6 +262,9 @@ export interface Typegen0 {
     setMetadataInCredentialData:
       | 'done.invoke.issuersMachine.verifyingCredential:invocation[0]'
       | 'error.platform.issuersMachine.verifyingCredential:invocation[0]';
+    setNetworkOrTechnicalError:
+      | 'error.platform.issuersMachine.downloadIssuerWellknown:invocation[0]'
+      | 'error.platform.issuersMachine.performAuthorization:invocation[0]';
     setNoInternet: 'done.invoke.checkInternet';
     setOIDCConfigError: 'error.platform.issuersMachine.performAuthorization:invocation[0]';
     setPrivateKey: 'done.invoke.issuersMachine.generateKeyPair:invocation[0]';
@@ -278,7 +279,6 @@ export interface Typegen0 {
       | 'done.invoke.issuersMachine.verifyingCredential:invocation[0]'
       | 'error.platform.issuersMachine.verifyingCredential:invocation[0]';
     setVerifiableCredential: 'done.invoke.issuersMachine.downloadCredentials:invocation[0]';
-    setVerificationResult: 'done.invoke.issuersMachine.verifyingCredential:invocation[0]';
     storeKeyPair: 'done.invoke.issuersMachine.generateKeyPair:invocation[0]';
     storeVcMetaContext:
       | 'done.invoke.issuersMachine.verifyingCredential:invocation[0]'

@@ -1,4 +1,5 @@
 import {VCMetadata} from './VCMetadata';
+import {NETWORK_REQUEST_FAILED} from './constants';
 import {groupBy} from './javascript';
 import {Issuers} from './openId4VCI/Utils';
 
@@ -48,4 +49,8 @@ export const parseJSON = (input: any) => {
     result = JSON.parse(JSON.stringify(input));
   }
   return result;
+};
+
+export const isNetworkError = (error: string) => {
+  return error.includes(NETWORK_REQUEST_FAILED);
 };

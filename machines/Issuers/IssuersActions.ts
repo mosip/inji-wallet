@@ -4,12 +4,7 @@ import {
   OIDCErrors,
   selectCredentialRequestKey,
 } from '../../shared/openId4VCI/Utils';
-import {
-  MY_VCS_STORE_KEY,
-  NETWORK_REQUEST_FAILED,
-  REQUEST_TIMEOUT,
-  isIOS,
-} from '../../shared/constants';
+import {isIOS, MY_VCS_STORE_KEY, REQUEST_TIMEOUT} from '../../shared/constants';
 import {assign, send} from 'xstate';
 import {StoreEvents} from '../store';
 import {BackupEvents} from '../backupAndRestore/backup';
@@ -26,6 +21,7 @@ import {TelemetryConstants} from '../../shared/telemetry/TelemetryConstants';
 import {NativeModules} from 'react-native';
 import {KeyTypes} from '../../shared/cryptoutil/KeyTypes';
 import {VCActivityLog} from '../../components/ActivityLogEvent';
+import {isNetworkError} from '../../shared/Utils';
 
 const {RNSecureKeystoreModule} = NativeModules;
 export const IssuersActions = (model: any) => {
@@ -80,19 +76,20 @@ export const IssuersActions = (model: any) => {
     resetSelectedCredentialType: model.assign({
       selectedCredentialType: {},
     }),
-    setFetchWellknownError: model.assign({
+    setNetworkOrTechnicalError: model.assign({
       errorMessage: (_: any, event: any) => {
-        const error = event.data.message;
-        if (error.includes(NETWORK_REQUEST_FAILED)) {
-          return ErrorMessage.NO_INTERNET;
-        }
-        return ErrorMessage.TECHNICAL_DIFFICULTIES;
+        console.error(
+          `Error occurred during ${event} flow`,
+          event.data.message,
+        );
+        return isNetworkError(event.data.message)
+          ? ErrorMessage.NO_INTERNET
+          : ErrorMessage.TECHNICAL_DIFFICULTIES;
       },
     }),
     setCredentialTypeListDownloadFailureError: model.assign({
       errorMessage: (_: any, event: any) => {
-        const error = event.data.message;
-        if (error.includes(NETWORK_REQUEST_FAILED)) {
+        if (isNetworkError(event.data.message)) {
           return ErrorMessage.NO_INTERNET;
         }
         return ErrorMessage.CREDENTIAL_TYPE_DOWNLOAD_FAILURE;
@@ -103,7 +100,7 @@ export const IssuersActions = (model: any) => {
       errorMessage: (_: any, event: any) => {
         console.error(`Error occurred while ${event} -> `, event.data.message);
         const error = event.data.message;
-        if (error.includes(NETWORK_REQUEST_FAILED)) {
+        if (isNetworkError(error)) {
           return ErrorMessage.NO_INTERNET;
         }
         if (error.includes(REQUEST_TIMEOUT)) {
