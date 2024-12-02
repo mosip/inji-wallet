@@ -223,7 +223,7 @@
       },
       "technicalDifficulty": {
         "title": "May naganap na error!",
-        "message": "Salamat sa iyong pasensya! Nakakaranas kami ng mga teknikal na paghihirap ngayon. Pakisubukang muli mamaya o makipag-ugnayan sa admin para sa karagdagang tulong!"
+        "message": "Salamat sa iyong pasensya! Kasalukuyan kaming nakakaranas ng mga teknikal na paghihirap. Pakisubukang mag-download muli sa ilang sandali."
       },
       "authorizationGrantTypeNotSupportedByWallet": {
         "title": "Ang uri ng grant ay hindi sinusuportahan ng error sa pahintulot!",

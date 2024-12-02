@@ -224,7 +224,7 @@
       },
       "technicalDifficulty": {
         "title": "An error occurred!",
-        "message": "Thanks for your patience! We're experiencing technical difficulties right now. Please try again later or contact the admin for further assistance!"
+        "message": "Thank you for your patience! We're currently experiencing technical difficulties. Please try downloading again shortly."
       },
       "authorizationGrantTypeNotSupportedByWallet": {
         "title": "Grant type not supported authorization error!",
