@@ -188,7 +188,7 @@ export async function getJWT(
 ) {
   try {
     const header64 = encodeB64(JSON.stringify(header));
-    const payLoad64 = encodeB64(JSON.stringify(payLoad));
+    const payLoad64 = encodeB64(forge.util.encodeUtf8(JSON.stringify(payLoad)));
     const preHash = header64 + '.' + payLoad64;
     const signature64 = await createSignature(
       privateKey,
