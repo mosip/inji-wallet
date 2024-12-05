@@ -363,7 +363,7 @@ fileignoreconfig:
   - filename: android/app/src/main/AndroidManifest.xml
     checksum: 8f4bd61770b8bb0a28859ca0f3b4b095aed4e3fb5adef435cb74b9389ff13e09
   - filename: ios/Inji.xcworkspace/xcshareddata/swiftpm/Package.resolved
-    checksum: 7eaaa0c1e1dca39e20cc57d058548533d4b6b7c7daca04ca9f80d9759900f0fe
+    checksum: 1f5cf15c5093ec6d873a60bf8e7a19288d7f77707bf1b2f08a1c371c08fcf47b
   - filename: ios/Inji.xcodeproj/project.pbxproj
     checksum: 6e83472f832f71f75aa82ed06eb677d865195755074144e4bf832d6adb30e959
   - filename: screens/Settings/ReceivedCardsModal.tsx
