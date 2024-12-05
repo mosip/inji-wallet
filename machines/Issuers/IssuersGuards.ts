@@ -33,7 +33,7 @@ export const IssuersGuards = () => {
       return (
         !!event.data &&
         typeof event.data.toString === 'function' &&
-        event.data.toString()(OIDCErrors.OIDC_CONFIG_ERROR_PREFIX)
+        event.data.toString().includes(OIDCErrors.OIDC_CONFIG_ERROR_PREFIX)
       );
     },
     isGrantTypeNotSupportedError: (_: any, event: any) => {
