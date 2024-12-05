@@ -269,19 +269,23 @@ export const getCredentialTypeFromWellKnown = (
   wellknown: IssuerWellknownResponse,
   credentialConfigurationId: string | undefined = undefined,
 ): string => {
-  if (credentialConfigurationId !== undefined) {
-    const supportedCredentialsWellknown = getMatchingCredentialIssuerMetadata(
-      wellknown,
-      credentialConfigurationId,
+  try {
+    if (credentialConfigurationId !== undefined) {
+      const supportedCredentialsWellknown = getMatchingCredentialIssuerMetadata(
+        wellknown,
+        credentialConfigurationId,
+      );
+      return getCredentialType(supportedCredentialsWellknown);
+    }
+    console.error(
+      'credentialConfigurationId not available for fetching the Credential type',
     );
-    return getCredentialType(supportedCredentialsWellknown);
+    throw new Error(
+      `Invalid credentialConfigurationId - ${credentialConfigurationId} passed`,
+    );
+  } catch (error) {
+    return i18n.t('VcDetails:identityCard');
   }
-  console.error(
-    'credentialConfigurationId not available for fetching the Credential type',
-  );
-  throw new Error(
-    `Invalid credentialConfigurationId - ${credentialConfigurationId} passed`,
-  );
 };
 
 export class Display {
