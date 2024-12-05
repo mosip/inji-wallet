@@ -70,6 +70,7 @@
     "status": "Katayuan",
     "valid": "Napatunayan",
     "pending": "Nakabinbin",
+    "expired": "Nag-expire na",
     "photo": "Larawan",
     "fullName": "Buong pangalan",
     "gender": "Kasarian",
@@ -499,6 +500,10 @@
       "pending": {
         "title": "Nakabinbing Katayuan:",
         "description": "Kasalukuyang nakabinbin ang pag-verify dahil sa mga teknikal na isyu."
+      }, 
+      "expired": {
+        "title": "Nag-expire na Katayuan:",
+        "description": "Nag-expire na ang kredensyal."
       }
     }
   },

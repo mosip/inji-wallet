@@ -9,12 +9,25 @@ import PendingIcon from './PendingIcon';
 import {VCMetadata} from '../shared/VCMetadata';
 
 export const VCVerification: React.FC<VCVerificationProps> = ({
-  isVerified,
+  vcMetadata,
   display,
 }) => {
   const {t} = useTranslation('VcDetails');
-  const statusText = isVerified ? t('valid') : t('pending');
-  const statusIcon = isVerified ? <VerifiedIcon /> : <PendingIcon />;
+  const statusText = vcMetadata.isVerified
+    ? vcMetadata.isExpired
+      ? t('expired')
+      : t('valid')
+    : t('pending');
+
+  const statusIcon = vcMetadata.isVerified ? (
+    vcMetadata.isExpired ? (
+      <PendingIcon />
+    ) : (
+      <VerifiedIcon />
+    )
+  ) : (
+    <PendingIcon />
+  );
   return (
     <Row
       {...testIDProps('verified')}
@@ -35,6 +48,6 @@ export const VCVerification: React.FC<VCVerificationProps> = ({
 };
 
 export interface VCVerificationProps {
-  isVerified: boolean;
+  vcMetadata: VCMetadata;
   display: Display;
 }

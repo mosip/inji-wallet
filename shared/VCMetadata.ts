@@ -24,6 +24,7 @@ export class VCMetadata {
   isVerified: boolean = false;
   mosipIndividualId: string = '';
   format: string = '';
+  isExpired: boolean = false;
 
   downloadKeyType: string = '';
   constructor({
@@ -38,6 +39,7 @@ export class VCMetadata {
     mosipIndividualId = '',
     format = '',
     downloadKeyType = '',
+    isExpired = false,
   } = {}) {
     this.idType = idType;
     this.requestId = requestId;
@@ -50,6 +52,7 @@ export class VCMetadata {
     this.mosipIndividualId = mosipIndividualId;
     this.format = format;
     this.downloadKeyType = downloadKeyType;
+    this.isExpired = isExpired;
   }
 
   //TODO: Remove any typing and use appropriate typing

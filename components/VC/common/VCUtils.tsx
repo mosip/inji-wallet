@@ -78,8 +78,8 @@ export const getFieldValue = (
     case 'status':
       return (
         <VCVerification
-          isVerified={props.verifiableCredentialData.vcMetadata.isVerified}
           display={display}
+          vcMetadata={props.verifiableCredentialData.vcMetadata}
         />
       );
     case 'idType':
