@@ -31,7 +31,7 @@ export const VCItemFieldName = ({
         <CustomTooltip
           testID="statusToolTip"
           width={Dimensions.get('screen').width * 0.8}
-          height={Dimensions.get('screen').height * 0.18}
+          height={Dimensions.get('screen').height * 0.28}
           triggerComponent={SvgImage.info()}
           triggerComponentStyles={{marginLeft: 2, marginTop: 2}}
           toolTipContent={
@@ -49,7 +49,7 @@ export const VCItemFieldName = ({
                   {t('statusToolTipContent.valid.description')}
                 </Text>
               </View>
-              <View>
+              <View style={{marginBottom: 20}}>
                 <Text weight="semibold">
                   {t('statusToolTipContent.pending.title')}
                 </Text>
@@ -60,6 +60,19 @@ export const VCItemFieldName = ({
                     {marginTop: 3},
                   ]}>
                   {t('statusToolTipContent.pending.description')}
+                </Text>
+              </View>
+              <View>
+                <Text weight="semibold">
+                  {t('statusToolTipContent.expired.title')}
+                </Text>
+                <Text
+                  weight="regular"
+                  style={[
+                    Theme.Styles.tooltipContentDescription,
+                    {marginTop: 3},
+                  ]}>
+                  {t('statusToolTipContent.expired.description')}
                 </Text>
               </View>
             </Column>
