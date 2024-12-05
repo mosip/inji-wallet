@@ -500,6 +500,10 @@
       "pending": {
         "title": "Nakabinbing Katayuan:",
         "description": "Kasalukuyang nakabinbin ang pag-verify dahil sa mga teknikal na isyu."
+      }, 
+      "expired": {
+        "title": "Nag-expire na Katayuan:",
+        "description": "Nag-expire na ang kredensyal."
       }
     }
   },

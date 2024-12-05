@@ -501,6 +501,10 @@
       "pending": {
         "title": "Pending Status:",
         "description": "Verification is currently pending due to technical issues."
+      },
+      "expired": {
+        "title": "Expired Status:",
+        "description": "The credential has expired."
       }
     }
   },
