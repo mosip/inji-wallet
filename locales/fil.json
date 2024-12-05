@@ -838,14 +838,14 @@
     }
   },
   "SendVPScreen": {
-    "requester": "Humihiling",
+    "requester": "Entity ng Pagpapatunay",
     "cardsSelected": "mga card na napili",
     "cardSelected": "card pinili",
     "unCheck": "Alisin ang check",
     "checkAll": "Suriin Lahat",
     "consentDialog": {
       "title": "Kinakailangan ang Pahintulot",
-      "message": "Hinihiling namin ang iyong pahintulot na ibahagi ang iyong mga nabe-verify na kredensyal. Ito ay magbibigay-daan sa amin na i-verify ang iyong pagkakakilanlan at matupad ang iyong mga kahilingan sa serbisyo. Piliin ang \"Oo, Magpatuloy\" sa pagsang-ayon o \"Tanggihan\" kung ayaw mong ibahagi.",
+      "message": "Hinihiling namin ang iyong pahintulot na ibahagi ang iyong mga nabe-verify na kredensyal sa {{verifierName}}. Ito ay magbibigay-daan sa amin na i-verify ang iyong pagkakakilanlan at matupad ang iyong mga kahilingan sa serbisyo. Piliin ang \"Oo, Magpatuloy\" upang pumayag o \"Tanggihan\" kung hindi mo gustong ibahagi ang iyong mga kredensyal sa {{verifierName}}.",
       "confirmButton": "Oo, Magpatuloy",
       "cancelButton": "Tanggihan"
     },

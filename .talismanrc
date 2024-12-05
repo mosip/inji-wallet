@@ -341,7 +341,7 @@ fileignoreconfig:
   - filename: android/app/src/main/java/io/mosip/residentapp/InjiVciClientModule.java
     checksum: 17f55840bab193bc353034445ba4fce53e1ce466e95f616c15a1351f8d2f23bc
   - filename: ios/Inji.xcworkspace/xcshareddata/swiftpm/Package.resolved
-    checksum: 7a90c456ff14e4b637ea6a4aa3c6d197bc89452238d303af0f4a15bccc5e2be2
+    checksum: e1814f6ac8fe15794f26e96de887bc196ffcb37b434d46ffb69a9497d2683667
   - filename: injitest/src/main/resources/Vids.json
     checksum: 8bcffed7a6dd565ae695e1b29de0655e10bd5c5420af2718defd593a687b8817
   - filename: injitest/src/main/java/inji/utils/UpdateNetworkSettings.java     
@@ -364,8 +364,6 @@ fileignoreconfig:
     checksum: cef9be4bfafb54e2c885b2459f2819554cad6448b5dc372976706894df704e5d
   - filename: android/app/src/main/AndroidManifest.xml
     checksum: 8f4bd61770b8bb0a28859ca0f3b4b095aed4e3fb5adef435cb74b9389ff13e09
-  - filename: ios/Inji.xcworkspace/xcshareddata/swiftpm/Package.resolved
-    checksum: b168940c6b487dc96fd22f564f2e187dae46f4fa5e4a64cf81c4d810b1c1ae78
   - filename: ios/Inji.xcodeproj/project.pbxproj
     checksum: 6e83472f832f71f75aa82ed06eb677d865195755074144e4bf832d6adb30e959
   - filename: screens/Settings/ReceivedCardsModal.tsx

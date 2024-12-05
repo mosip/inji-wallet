@@ -56,7 +56,7 @@ export const openID4VPActions = (model: any) => {
                 areVCFormatAndProofTypeMatchingRequest(
                   format,
                   vc.format,
-                  vc.verifiableCredential.credential.proof.type,
+                  vc?.verifiableCredential?.credential?.proof?.type,
                 );
 
               if (inputDescriptor.constraints.fields && format) {
