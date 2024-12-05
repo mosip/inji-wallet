@@ -847,14 +847,14 @@
     }
   },
   "SendVPScreen": {
-    "requester": "Requester",
+    "requester": "Verification Entity",
     "cardsSelected": "cards selected",
     "cardSelected": "card selected",
     "unCheck": "Uncheck",
     "checkAll": "Check All",
     "consentDialog": {
       "title": "Consent Required",
-      "message": "We require your consent to share your verifiable credentials. This will enable us to verify your identity and fulfil your service requests. Choose \"Yes, Proceed\" to consent or \"Decline\" if you do not wish to share.",
+      "message": "We require your consent to share your verifiable credentials with {{verifierName}}. This will enable us to verify your identity and fulfil your service requests. Choose \"Yes, Proceed\" to consent or \"Decline\" if you do not wish to share your credentials with {{verifierName}}.",
       "confirmButton": "Yes, Proceed",
       "cancelButton": "Decline"
     },

@@ -103,8 +103,8 @@ export const appMachine = model.createMachine(
         target: 'init',
       },
       BIOMETRIC_CANCELLED: {
-        target: 'init'
-      }
+        target: 'init',
+      },
     },
     states: {
       init: {
@@ -171,9 +171,8 @@ export const appMachine = model.createMachine(
                 target: 'info',
               },
               BIOMETRIC_CANCELLED: {
-                target: 'store'
-              }
-              
+                target: 'store',
+              },
             },
           },
           info: {

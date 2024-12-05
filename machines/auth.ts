@@ -65,7 +65,7 @@ export const authMachine = model.createMachine(
         actions: 'setTourGuide',
       },
       BIOMETRIC_CANCELLED: {
-        target: 'init'
+        target: 'init',
       },
     },
     states: {
@@ -80,9 +80,11 @@ export const authMachine = model.createMachine(
             },
             {target: 'savingDefaults'},
           ],
-          BIOMETRIC_CANCELLED: [{
-            target: 'init'
-          }],
+          BIOMETRIC_CANCELLED: [
+            {
+              target: 'init',
+            },
+          ],
         },
       },
       savingDefaults: {

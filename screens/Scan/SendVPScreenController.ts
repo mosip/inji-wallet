@@ -204,6 +204,10 @@ export function useSendVPScreen() {
   }
 
   let overlayDetails: Omit<VPShareOverlayProps, 'isVisible'> | null = null;
+  let vpVerifierName = useSelector(
+    openID4VPService,
+    selectVerifierNameInVPSharing,
+  );
   if (isVPSharingConsent) {
     overlayDetails = {
       primaryButtonTestID: 'confirm',
@@ -214,7 +218,7 @@ export function useSendVPScreen() {
       secondaryButtonEvent: CANCEL,
       title: t('consentDialog.title'),
       titleTestID: 'consentTitle',
-      message: t('consentDialog.message'),
+      message: t('consentDialog.message', {verifierName: vpVerifierName}),
       messageTestID: 'consentMsg',
       onCancel: DISMISS_POPUP,
     };
@@ -237,10 +241,7 @@ export function useSendVPScreen() {
   return {
     isSendingVP: useSelector(openID4VPService, selectIsSharingVP),
     showLoadingScreen: useSelector(openID4VPService, selectIsShowLoadingScreen),
-    vpVerifierName: useSelector(
-      openID4VPService,
-      selectVerifierNameInVPSharing,
-    ),
+    vpVerifierName,
     flowType: useSelector(openID4VPService, selectFlowType),
     showConfirmationPopup,
     isSelectingVCs,

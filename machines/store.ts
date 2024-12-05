@@ -276,16 +276,17 @@ export const storeMachine =
             BIOMETRIC_CANCELLED: {
               actions: [
                 send(
-                  (_, event) => model.events.BIOMETRIC_CANCELLED(event.requester),
+                  (_, event) =>
+                    model.events.BIOMETRIC_CANCELLED(event.requester),
                   {
                     to: (_, event) => event.requester,
                   },
                 ),
                 sendUpdate(),
-                sendParent('BIOMETRIC_CANCELLED')
+                sendParent('BIOMETRIC_CANCELLED'),
               ],
               target: 'checkFreshInstall',
-            }
+            },
           },
         },
       },
@@ -303,9 +304,9 @@ export const storeMachine =
         },
         BIOMETRIC_CANCELLED: {
           actions: [sendParent('BIOMETRIC_CANCELLED')],
-          target: 'checkFreshInstall'
+          target: 'checkFreshInstall',
+        },
       },
-    },
     },
     {
       actions: {
@@ -334,11 +335,10 @@ export const storeMachine =
           return;
         },
         checkFreshInstall: () => async callback => {
-          try{
-          return await getItem('auth', null, '');
-          }
-          catch(e){
-            if(e instanceof BiometricCancellationError){
+          try {
+            return await getItem('auth', null, '');
+          } catch (e) {
+            if (e instanceof BiometricCancellationError) {
               callback(model.events.BIOMETRIC_CANCELLED());
             } else {
               callback(model.events.STORE_ERROR(e));
@@ -363,7 +363,7 @@ export const storeMachine =
                 base64EncodedString,
               );
             } catch (e) {
-              if(e instanceof BiometricCancellationError){
+              if (e instanceof BiometricCancellationError) {
                 callback(model.events.BIOMETRIC_CANCELLED(event.requester));
               }
               sendErrorEvent(getErrorEventData('ENCRYPTION', '', e));
