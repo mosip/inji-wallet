@@ -255,21 +255,6 @@ public class HomePage extends BasePage {
         return new AddNewCardPage(driver);
     }
 
-//    public boolean isNameDisplayed(String name) {
-//
-//        if(isElementDisplayed(doneButton)){
-//            clickOnElement(doneButton);
-//        }
-//        By fullName = By.xpath("//*[contains(@value,'" + name + "') or contains(@text,'" + name + "')]");
-//        return this.isElementDisplayed(fullName, 150);
-//    }
-//
-//    public boolean isSecondNameDisplayed(String name) {
-//        By fullName = By.xpath("(//*[contains(@value,'" + name + "') or contains(@text,'" + name + "')])[2]");
-//        return this.isElementDisplayed(fullName, 80);
-//
-//    }
-
     public DetailedVcViewPage openDetailedVcView() {
         clickOnElement(credentialTypeValue);
         return new DetailedVcViewPage(driver);
