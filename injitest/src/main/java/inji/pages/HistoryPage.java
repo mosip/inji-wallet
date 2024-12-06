@@ -36,17 +36,17 @@ public class HistoryPage extends BasePage {
     }
 
     private boolean verifyHistoryIos(String vcNumber) {
-        By locator = By.xpath("//*[contains(@name,'National ID " + vcNumber + " is downloaded.')]");
+        By locator = By.xpath("//*[contains(@name,'National ID is downloaded.')]");
         return this.isElementDisplayed(locator);
     }
 
     private boolean verifyHistoryAndroid(String vcNumber) {
-        By locator = By.xpath("//*[contains(@text,'National ID " + vcNumber + " is downloaded.')]");
+        By locator = By.xpath("//*[contains(@text,'National ID is downloaded.')]");
         return this.isElementDisplayed(locator);
     }
 
     private boolean verifyHistoryAndroidforInsuranceCard(String vcNumber) {
-        By locator = By.xpath("//*[contains(@text,'Health Insurance " + vcNumber + " is downloaded.')]");
+        By locator = By.xpath("//*[contains(@text,'Health Insurance is downloaded.')]");
         return this.isElementDisplayed(locator);
     }
 
@@ -61,33 +61,33 @@ public class HistoryPage extends BasePage {
     }
 
     private boolean verifyDeleteHistoryAndroid(String vcNumber) {
-        By locator = By.xpath("//*[contains(@text,'MOSIP National ID " + vcNumber + " is removed from wallet.')]");
+        By locator = By.xpath("//*[contains(@text,'MOSIP National ID is removed from wallet.')]");
         return this.isElementDisplayed(locator);
     }
 
     private boolean verifyDeletedHistoryIos(String vcNumber) {
-        By locator = By.xpath("//*[contains(@name,'MOSIP National ID " + vcNumber + " is removed from wallet.')]");
+        By locator = By.xpath("//*[contains(@name,'MOSIP National ID is removed from wallet.')]");
         return this.isElementDisplayed(locator);
     }
 
     private boolean verifyDeleteHistoryAndroidInsuranceCard(String vcNumber) {
-        By locator = By.xpath("//*[contains(@text,'Health Insurance " + vcNumber + " is removed from wallet.')]");
+        By locator = By.xpath("//*[contains(@text,'Health Insurance is removed from wallet.')]");
         return this.isElementDisplayed(locator);
     }
 
     private boolean verifyDeletedHistoryIosInsuranceCard(String vcNumber) {
-        By locator = By.xpath("//*[contains(@name,'Health Insurance " + vcNumber + " is removed from wallet.')]");
+        By locator = By.xpath("//*[contains(@name,'Health Insurance is removed from wallet.')]");
         return this.isElementDisplayed(locator);
     }
 
     private int verifyNumberOfRecordsInHistoryAndroid(String vcNumber) throws InterruptedException {
-        By locator = By.xpath("//*[contains(@text,'" + vcNumber + " is downloaded.')]");
+        By locator = By.xpath("//*[contains(@text,'is downloaded.')]");
         List<WebElement> elements = driver.findElements(locator);
         return elements.size();
     }
 
     private int verifyNumberOfRecordsInHistoryIos(String vcNumber) {
-        By locator = By.xpath("//XCUIElementTypeStaticText[@name=\"National ID "+ vcNumber +" is downloaded.\"]");
+        By locator = By.xpath("//XCUIElementTypeStaticText[@name=\"National ID is downloaded.\"]");
 
         List<WebElement> elements = driver.findElements(locator);
         return elements.size();
@@ -195,7 +195,7 @@ public class HistoryPage extends BasePage {
 
 
     private boolean verifyActivationSuccessfulRecordAndroid(String vcNumber) {
-        By locator = By.xpath("//*[contains(@text,'Activation of MOSIP National ID " + vcNumber + " is successful.')]");
+        By locator = By.xpath("//*[contains(@text,'Activation of MOSIP National ID is successful.')]");
         return this.isElementDisplayed(locator);
     }
 }

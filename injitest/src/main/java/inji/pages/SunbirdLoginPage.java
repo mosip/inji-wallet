@@ -69,6 +69,10 @@ public class SunbirdLoginPage extends BasePage {
     @iOSXCUITFindBy(accessibility = "fullNameValue")
     private WebElement fullName;
 
+    @AndroidFindBy(accessibility = "credentialTypeValue")
+    @iOSXCUITFindBy(accessibility = "credentialTypeValue")
+    private WebElement credentialTypeValue;
+
     @AndroidFindBy(accessibility = "fullNameValue")
     @iOSXCUITFindBy(accessibility = "fullNameValue")
     private WebElement fullNameInDetailView;
@@ -289,8 +293,8 @@ public class SunbirdLoginPage extends BasePage {
     }
 
     public void openDetailedSunbirdVcView() {
-        basePage.retryToGetElement(fullName);
-        clickOnElement(fullName);
+        basePage.retryToGetElement(credentialTypeValue);
+        clickOnElement(credentialTypeValue);
     }
 
     public boolean isSunbirdRCInsuranceVerifiableCredentialHeaderDisplayed() {

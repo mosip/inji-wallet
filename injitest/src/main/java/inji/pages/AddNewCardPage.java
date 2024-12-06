@@ -1,5 +1,6 @@
 package inji.pages;
 
+import inji.utils.IosUtil;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.pagefactory.AndroidFindBy;
 import io.appium.java_client.pagefactory.iOSXCUITFindBy;
@@ -49,13 +50,23 @@ public class AddNewCardPage extends BasePage{
     @iOSXCUITFindBy(accessibility = "issuerHeading-StayProtected")
     private WebElement downloadViaSunbird;
 
-    @AndroidFindBy(accessibility = "credentialTypeHeading-InsuranceCredential")
-    @iOSXCUITFindBy(accessibility = "credentialTypeHeading-InsuranceCredential")
+    @AndroidFindBy(accessibility = "credentialTypeHeading-LdpVcInsuranceCredential")
+    @iOSXCUITFindBy(accessibility = "credentialTypeHeading-LdpVcInsuranceCredential")
     private WebElement credentialTypeHeadingInsuranceCredential;
 
     @AndroidFindBy(accessibility = "credentialTypeHeading-MosipVerifiableCredential")
     @iOSXCUITFindBy(accessibility = "credentialTypeHeading-MosipVerifiableCredential")
     private WebElement credentialTypeHeadingMOSIPVerifiableCredential;
+
+    @AndroidFindBy(accessibility = "credentialTypeValue")
+    @iOSXCUITFindBy(accessibility = "credentialTypeValue")
+    private WebElement credentialTypeValue;
+
+    @AndroidFindBy(accessibility = "6stepCount")
+    @iOSXCUITFindBy(accessibility = "6stepCount")
+    private WebElement DoneButton;
+
+
 
     public AddNewCardPage(AppiumDriver driver) {
         super(driver);
@@ -179,5 +190,17 @@ public class AddNewCardPage extends BasePage{
             clickOnElement(credentialTypeHeadingInsuranceCredential);
         }
     }
+ public void  clickOnDoneButton(){
+     try {
+         Thread.sleep(3000);
+     } catch (InterruptedException e) {
+         throw new RuntimeException(e);
+     }
+     if (isElementDisplayed(DoneButton )){
+         clickOnElement(DoneButton);
+         IosUtil.scrollToElement(driver,100,800,100,200);
+     }
+ }
+
 }
 
