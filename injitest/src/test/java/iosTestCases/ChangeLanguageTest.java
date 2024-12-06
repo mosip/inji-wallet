@@ -506,7 +506,8 @@ public class ChangeLanguageTest extends IosBaseTest {
         assertTrue(otpVerification.isOtpVerificationPageLoaded(), "Verify if otp verification page is displayed");
         otpVerification.enterOtp(BaseTestCase.getOtp(), Target.IOS);
 
-        assertTrue(homePage.isNameDisplayed(TestDataReader.readData("fullName")), "Verify if full name is displayed");
+        addNewCardPage.clickOnDoneButton();
+        assertTrue(homePage.isCredentialTypeValueDisplayed(), "Verify if credential type value is displayed");
         SettingsPage settingsPage = homePage.clickOnSettingIcon();
 
         assertTrue(settingsPage.isSettingPageLoaded(), "Verify if setting page is displayed");
@@ -515,7 +516,7 @@ public class ChangeLanguageTest extends IosBaseTest {
         assertTrue(unlockApplicationPage.isUnlockApplicationPageLoadedInArabic(), "Verify if language is changed to arabic");
         unlockApplicationPage.clickOnUnlockApplicationButton();
         setPasscode.enterPasscode(TestDataReader.readData("passcode"), Target.IOS);
-        DetailedVcViewPage detailedVcViewPage = homePage.openDetailedVcView(TestDataReader.readData("fullName"));
+        DetailedVcViewPage detailedVcViewPage = homePage.openDetailedVcView();
         assertEquals(homePage.getfullNameTitleText(), "الاسم الكامل");
         detailedVcViewPage.clickOnBackArrow();
 
@@ -525,7 +526,7 @@ public class ChangeLanguageTest extends IosBaseTest {
 
         unlockApplicationPage.clickOnUnlockApplicationButton();
         setPasscode.enterPasscode(TestDataReader.readData("passcode"), Target.IOS);
-        homePage.openDetailedVcView(TestDataReader.readData("fullName"));
+        homePage.openDetailedVcView();
         assertEquals(homePage.getfullNameTitleText(), "पूरा नाम");
     }
 
