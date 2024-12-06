@@ -59,7 +59,7 @@ export const EditableListItem: React.FC<EditableListItemProps> = props => {
           {props.items.map((item: ListItemProps, index) => {
             return (
               <React.Fragment key={index}>
-                <Text testID={item.testID + 'Label'}>
+                <Text testID={item.testID + 'Label'} style={{marginTop:10}}>
                   {t('editLabel', {label: item.label})}
                 </Text>
                 <Input
