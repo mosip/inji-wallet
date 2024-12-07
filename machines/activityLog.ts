@@ -6,6 +6,7 @@ import {StoreEvents} from './store';
 import {VCActivityLog} from '../components/ActivityLogEvent';
 import {IssuerWellknownResponse} from './VerifiableCredential/VCMetaMachine/vc';
 import {VPShareActivityLog} from '../components/VPShareActivityLogEvent';
+import {parseJSON} from '../shared/Utils';
 
 const model = createModel(
   {
@@ -155,6 +156,10 @@ export const activityLogMachine =
 
         setAllWellknownConfigResponse: model.assign({
           wellKnownIssuerMap: (_, event) => {
+            Object.entries(event.response).forEach(([key, value]) => {
+              event.response[key] = parseJSON(value);
+            });
+
             return event.response as Record<string, Object>;
           },
         }),
