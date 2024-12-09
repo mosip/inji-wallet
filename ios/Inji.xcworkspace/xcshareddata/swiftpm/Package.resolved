@@ -1,5 +1,4 @@
 {
-  "originHash" : "6b82a714050e22d309e029aaffac33f021c04aac740f661a9879441a7d414f4f",
   "pins" : [
     {
       "identity" : "base45-swift",
@@ -33,8 +32,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/mosip/inji-openid4vp-ios-swift",
       "state" : {
-        "branch" : "develop",
-        "revision" : "7529cd4b0342f8d5c98c37f7ed3961b7073bf730"
+        "branch" : "ovp-demo",
+        "revision" : "571e1f577e831efc32d6cef1dcec8d8cc130b221"
       }
     },
     {

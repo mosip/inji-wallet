@@ -262,7 +262,7 @@ android {
 }
 
 dependencies {
-    implementation("io.mosip:inji-openid4vp:0.1.0-SNAPSHOT")
+    implementation("io.mosip:inji-openid4vp:0.1.1-SNAPSHOT")
     implementation("com.facebook.react:react-android")
     implementation 'com.facebook.soloader:soloader:0.10.1+'
     implementation("io.mosip:pixelpass-aar:0.6.0-SNAPSHOT")
