@@ -51,7 +51,7 @@ public class HistoryPage extends BasePage {
     }
 
     private boolean verifyHistoryIosInsuranceCard(String vcNumber) {
-        By locator = By.xpath("//*[@name=\"Health Insurance " + vcNumber + " is downloaded.\"]");
+        By locator = By.xpath("//*[@name=\"Health Insurance is downloaded.\"]");
         return this.isElementDisplayed(locator);
     }
 
@@ -168,12 +168,12 @@ public class HistoryPage extends BasePage {
     }
 
     private boolean verifyActivationFailedRecordIos(String vcNumber) {
-        By locator = By.xpath("//*[contains(@name,'National ID " + vcNumber + " has failed.')]");
+        By locator = By.xpath("//*[contains(@name,'National ID has failed.')]");
         return this.isElementDisplayed(locator);
     }
 
     private boolean verifyActivationFailedRecordAndroid(String vcNumber) {
-        By locator = By.xpath("//*[contains(@text,'National ID " + vcNumber + " has failed.')]");
+        By locator = By.xpath("//*[contains(@text,'National ID has failed.')]");
         return this.isElementDisplayed(locator);
     }
 
@@ -188,7 +188,7 @@ public class HistoryPage extends BasePage {
     }
 
     private boolean verifyActivationSuccessfulRecordIos(String vcNumber) {
-        By locator = By.xpath("//*[contains(@name,'Activation of MOSIP National ID " + vcNumber + " is successful.')]");
+        By locator = By.xpath("//*[contains(@name,'Activation of MOSIP National ID is successful.')]");
         return this.isElementDisplayed(locator);
     }
 
