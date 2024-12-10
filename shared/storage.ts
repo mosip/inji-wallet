@@ -20,6 +20,7 @@ import {
   SETTINGS_STORE_KEY,
   ENOENT,
   API_CACHED_STORAGE_KEYS,
+  BASE_36
 } from './constants';
 import FileStorage, {
   getFilePath,
@@ -346,7 +347,7 @@ class Storage {
       await Promise.all(
         allVCKeys.map(async key => {
           const vc = allVCs[key];
-          const ts = Date.now();
+          const ts = Date.now() +  Math.random().toString(BASE_36).substring(2,7)
           const prevUnixTimeStamp = vc.vcMetadata.timestamp;
 
           const isVerified = await Storage.verifyCredential(
