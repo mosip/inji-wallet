@@ -33,8 +33,8 @@ export const API_URLS: ApiUrls = {
   },
   issuerWellknownConfig: {
     method: 'GET',
-    buildURL: (issuerId: string): `/${string}` =>
-      `/v1/mimoto/issuers/${issuerId}/well-known-proxy`,
+    buildURL: (credentialIssuerIdentifier: string): string =>
+      `${credentialIssuerIdentifier}/.well-known/openid-credential-issuer`,
   },
   authorizationServerMetadataConfig: {
     method: 'GET',
@@ -123,17 +123,19 @@ export const API = {
     );
     return response.response;
   },
-  fetchIssuerWellknownConfig: async (issuerId: string) => {
+  fetchIssuerWellknownConfig: async (credentialIssuerIdentifier: string) => {
     const response = await request(
       API_URLS.issuerWellknownConfig.method,
-      API_URLS.issuerWellknownConfig.buildURL(issuerId),
+      API_URLS.issuerWellknownConfig.buildURL(credentialIssuerIdentifier),
     );
     return response;
   },
   fetchAuthorizationServerMetadata: async (authorizationServerUrl: string) => {
     const response = await request(
       API_URLS.authorizationServerMetadataConfig.method,
-      API_URLS.authorizationServerMetadataConfig.buildURL(authorizationServerUrl),
+      API_URLS.authorizationServerMetadataConfig.buildURL(
+        authorizationServerUrl,
+      ),
       undefined,
       '',
     );
@@ -175,13 +177,18 @@ export const CACHED_API = {
       fetchCall: API.fetchIssuerConfig.bind(null, issuerId),
     }),
   fetchIssuerWellknownConfig: (
-    issuerId: string,
+    credentialIssuerIdentifier: string,
     isCachePreferred: boolean = false,
   ) =>
     generateCacheAPIFunction({
       isCachePreferred,
-      cacheKey: API_CACHED_STORAGE_KEYS.fetchIssuerWellknownConfig(issuerId),
-      fetchCall: API.fetchIssuerWellknownConfig.bind(null, issuerId),
+      cacheKey: API_CACHED_STORAGE_KEYS.fetchIssuerWellknownConfig(
+        credentialIssuerIdentifier,
+      ),
+      fetchCall: API.fetchIssuerWellknownConfig.bind(
+        null,
+        credentialIssuerIdentifier,
+      ),
     }),
 
   fetchIssuerAuthorizationServerMetadata: (
@@ -286,10 +293,10 @@ async function generateCacheAPIFunctionWithAPIPreference(
       onErrorHardCodedValue != undefined
     }`);
 
-    console.error(`The error in fetching api ${cacheKey}`,error);
-    var response=null;
-    if(!(await NetInfo.fetch()).isConnected){
-       response = await getItem(cacheKey, null, '');
+    console.error(`The error in fetching api ${cacheKey}`, error);
+    var response = null;
+    if (!(await NetInfo.fetch()).isConnected) {
+      response = await getItem(cacheKey, null, '');
     }
     if (response) {
       return response;
