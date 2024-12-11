@@ -33,8 +33,8 @@ export const API_URLS: ApiUrls = {
   },
   issuerWellknownConfig: {
     method: 'GET',
-    buildURL: (credentialIssuerIdentifier: string): string =>
-      `${credentialIssuerIdentifier}/.well-known/openid-credential-issuer`,
+    buildURL: (credentialIssuerHost: string): string =>
+      `${credentialIssuerHost}/.well-known/openid-credential-issuer`,
   },
   authorizationServerMetadataConfig: {
     method: 'GET',
@@ -123,10 +123,10 @@ export const API = {
     );
     return response.response;
   },
-  fetchIssuerWellknownConfig: async (credentialIssuerIdentifier: string) => {
+  fetchIssuerWellknownConfig: async (credentialIssuerHost: string) => {
     const response = await request(
       API_URLS.issuerWellknownConfig.method,
-      API_URLS.issuerWellknownConfig.buildURL(credentialIssuerIdentifier),
+      API_URLS.issuerWellknownConfig.buildURL(credentialIssuerHost),
     );
     return response;
   },
@@ -177,17 +177,18 @@ export const CACHED_API = {
       fetchCall: API.fetchIssuerConfig.bind(null, issuerId),
     }),
   fetchIssuerWellknownConfig: (
-    credentialIssuerIdentifier: string,
+    credentialIssuerHost: string,
     isCachePreferred: boolean = false,
   ) =>
     generateCacheAPIFunction({
       isCachePreferred,
-      cacheKey: API_CACHED_STORAGE_KEYS.fetchIssuerWellknownConfig(
-        credentialIssuerIdentifier,
-      ),
+      cacheKey:
+        API_CACHED_STORAGE_KEYS.fetchIssuerWellknownConfig(
+          credentialIssuerHost,
+        ),
       fetchCall: API.fetchIssuerWellknownConfig.bind(
         null,
-        credentialIssuerIdentifier,
+        credentialIssuerHost,
       ),
     }),
 

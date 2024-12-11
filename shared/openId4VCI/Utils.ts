@@ -166,7 +166,7 @@ export const getCredentialIssuersWellKnownConfig = async (
   let matchingWellknownDetails: any;
   const issuerConfig = await CACHED_API.fetchIssuerConfig(issuer!);
   const wellknownResponse = await CACHED_API.fetchIssuerWellknownConfig(
-    issuerConfig.credential_issuer_identifier,
+    issuerConfig.credential_issuer_host,
   );
   try {
     if (wellknownResponse) {

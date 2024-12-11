@@ -44,7 +44,7 @@ export const IssuersService = () => {
         context.selectedIssuerId,
       );
       const wellknownResponse = await CACHED_API.fetchIssuerWellknownConfig(
-        issuerConfig.credential_issuer_identifier,
+        issuerConfig.credential_issuer_host,
       );
       return wellknownResponse;
     },
