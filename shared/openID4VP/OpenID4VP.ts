@@ -21,11 +21,13 @@ export class OpenID4VP {
     trustedVerifiersList: any,
   ) {
     const config = await getAllConfigurations();
+    const validateClient = config.openid4vpClientValidation === 'true';
+
     const authenticationResponse =
       await OpenID4VP.InjiOpenID4VP.authenticateVerifier(
         encodedAuthorizationRequest,
         trustedVerifiersList,
-        Boolean(config.openid4vpClientValidation),
+        validateClient,
       );
     return JSON.parse(authenticationResponse);
   }
