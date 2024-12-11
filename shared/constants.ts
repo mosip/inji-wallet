@@ -70,7 +70,7 @@ export const API_CACHED_STORAGE_KEYS = {
   fetchIssuerWellknownConfig: (issuerId: string) =>
     `CACHE_FETCH_ISSUER_WELLKNOWN_CONFIG_${issuerId}`,
   fetchIssuerAuthorizationServerMetadata: (authorizationServerUrl: string) =>
-      `CACHE_FETCH_ISSUER_AUTHORIZATION_SERVER_METADATA_${authorizationServerUrl}`,
+    `CACHE_FETCH_ISSUER_AUTHORIZATION_SERVER_METADATA_${authorizationServerUrl}`,
   fetchTrustedVerifiers: 'CACHE_FETCH_TRUSTED_VERIFIERS',
 };
 
@@ -168,3 +168,5 @@ export const FACE_SDK_MODEL_CHECKSUM =
   '797b4d99794965749635352d55da38d4748c28c659ee1502338badee4614ed06';
 
 export const EXPIRED_VC_ERROR_CODE = 'ERR_VC_EXPIRED';
+
+export const BASE_36 = 36;

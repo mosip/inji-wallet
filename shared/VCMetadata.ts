@@ -1,5 +1,6 @@
 import {
   Credential,
+  CredentialTypes,
   VC,
   VcIdType,
   VerifiableCredential,
@@ -8,6 +9,7 @@ import {Protocols} from './openId4VCI/Utils';
 import {getMosipIdentifier} from './commonUtil';
 import {VCFormat} from './VCFormat';
 import {isMosipVC} from './Utils';
+import { getCredentialType } from '../components/VC/common/VCUtils';
 
 const VC_KEY_PREFIX = 'VC';
 const VC_ITEM_STORE_KEY_REGEX = '^VC_[a-zA-Z0-9_-]+$';
@@ -27,6 +29,7 @@ export class VCMetadata {
   isExpired: boolean = false;
 
   downloadKeyType: string = '';
+  credentialType: string = '';
   constructor({
     idType = '',
     requestId = '',
@@ -40,6 +43,7 @@ export class VCMetadata {
     format = '',
     downloadKeyType = '',
     isExpired = false,
+    credentialType = '',
   } = {}) {
     this.idType = idType;
     this.requestId = requestId;
@@ -53,6 +57,7 @@ export class VCMetadata {
     this.format = format;
     this.downloadKeyType = downloadKeyType;
     this.isExpired = isExpired;
+    this.credentialType = credentialType
   }
 
   //TODO: Remove any typing and use appropriate typing
@@ -74,6 +79,7 @@ export class VCMetadata {
         ? vc.vcMetadata.mosipIndividualId
         : getMosipIndividualId(vc.verifiableCredential, vc.issuer),
       downloadKeyType: vc.downloadKeyType,
+      credentialType: vc.credentialType
     });
   }
 
@@ -113,7 +119,7 @@ export function parseMetadatas(metadataStrings: object[]) {
   return metadataStrings.map(o => new VCMetadata(o));
 }
 
-export const getVCMetadata = (context: object, keyType: string) => {
+export const getVCMetadata = (context: object, keyType: string, credType: CredentialTypes) => {
   const [issuer, protocol, credentialId] =
     context.credentialWrapper?.identifier.split(':');
 
@@ -131,6 +137,7 @@ export const getVCMetadata = (context: object, keyType: string) => {
     ),
     format: context['credentialWrapper'].format,
     downloadKeyType: keyType,
+    credentialType: getCredentialType(context.selectedCredentialType)
   });
 };
 
