@@ -25,7 +25,7 @@ export class OpenID4VP {
       await OpenID4VP.InjiOpenID4VP.authenticateVerifier(
         encodedAuthorizationRequest,
         trustedVerifiersList,
-        config.openid4vpClientValidation,
+        Boolean(config.openid4vpClientValidation),
       );
     return JSON.parse(authenticationResponse);
   }
