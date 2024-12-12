@@ -7,7 +7,7 @@ RCT_EXTERN_METHOD(init:(NSString *)appId)
 
 RCT_EXTERN_METHOD(authenticateVerifier:(NSString *)encodedAuthorizationRequest
                   trustedVerifierJSON:(id)trustedVerifierJSON
-                  clientValidation:(BOOL)clientValidation
+                  shouldValidateClient:(BOOL)shouldValidateClient
                   resolver:(RCTPromiseResolveBlock)resolve
                   rejecter:(RCTPromiseRejectBlock)reject)
 
