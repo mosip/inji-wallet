@@ -52,16 +52,28 @@ export const openID4VPMachine = model.createMachine(
         },
       },
       checkFaceAuthConsent: {
-        entry: 'getFaceAuthConsent',
+        entry: ['setIsShowLoadingScreen', 'getFaceAuthConsent'],
         on: {
-          STORE_RESPONSE: {
-            actions: 'updateShowFaceAuthConsent',
-            target: 'getTrustedVerifiersList',
-          },
+          STORE_RESPONSE: {target: 'checkIfClientValidationIsRequired'},
+        },
+      },
+      checkIfClientValidationIsRequired: {
+        invoke: {
+          src: 'getClientValidationConfig',
+          onDone: [
+            {
+              cond: 'isClientValidationRequred',
+              actions: 'updateShowFaceAuthConsent',
+              target: 'getTrustedVerifiersList',
+            },
+            {
+              actions: 'updateShowFaceAuthConsent',
+              target: 'getKeyPairFromKeystore',
+            },
+          ],
         },
       },
       getTrustedVerifiersList: {
-        entry: 'setIsShowLoadingScreen',
         invoke: {
           src: 'fetchTrustedVerifiers',
           onDone: {
