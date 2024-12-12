@@ -8,6 +8,11 @@ export interface Typegen0 {
       data: unknown;
       __tip: 'See the XState TS docs to learn how to strongly type this.';
     };
+    'done.invoke.OpenID4VP.checkIfClientValidationIsRequired:invocation[0]': {
+      type: 'done.invoke.OpenID4VP.checkIfClientValidationIsRequired:invocation[0]';
+      data: unknown;
+      __tip: 'See the XState TS docs to learn how to strongly type this.';
+    };
     'done.invoke.OpenID4VP.checkKeyPair:invocation[0]': {
       type: 'done.invoke.OpenID4VP.checkKeyPair:invocation[0]';
       data: unknown;
@@ -57,6 +62,7 @@ export interface Typegen0 {
     getKeyPair: 'done.invoke.OpenID4VP.getKeyPairFromKeystore:invocation[0]';
     getSelectedKey: 'done.invoke.OpenID4VP.checkKeyPair:invocation[0]';
     sendVP: 'done.invoke.OpenID4VP.sendingVP:invocation[0]';
+    shouldValidateClient: 'done.invoke.OpenID4VP.checkIfClientValidationIsRequired:invocation[0]';
   };
   missingImplementations: {
     actions:
@@ -107,7 +113,8 @@ export interface Typegen0 {
       | 'getAuthenticationResponse'
       | 'getKeyPair'
       | 'getSelectedKey'
-      | 'sendVP';
+      | 'sendVP'
+      | 'shouldValidateClient';
   };
   eventsCausingActions: {
     compareAndStoreSelectedVC: 'SET_SELECTED_VC';
@@ -136,7 +143,7 @@ export interface Typegen0 {
     setFlowType: 'AUTHENTICATE';
     setIsFaceVerificationRetryAttempt: 'FACE_INVALID';
     setIsShareWithSelfie: 'AUTHENTICATE';
-    setIsShowLoadingScreen: 'STORE_RESPONSE';
+    setIsShowLoadingScreen: 'AUTHENTICATE';
     setMiniViewShareSelectedVC: 'AUTHENTICATE';
     setSelectedVCs: 'ACCEPT_REQUEST' | 'VERIFY_AND_ACCEPT_REQUEST';
     setSendVPShareError: 'error.platform.OpenID4VP.sendingVP:invocation[0]';
@@ -147,7 +154,7 @@ export interface Typegen0 {
     shareDeclineStatus: 'CONFIRM';
     storeShowFaceAuthConsent: 'FACE_VERIFICATION_CONSENT';
     updateFaceCaptureBannerStatus: 'FACE_VALID';
-    updateShowFaceAuthConsent: 'STORE_RESPONSE';
+    updateShowFaceAuthConsent: 'done.invoke.OpenID4VP.checkIfClientValidationIsRequired:invocation[0]';
   };
   eventsCausingDelays: {
     SHARING_TIMEOUT: 'CONFIRM' | 'FACE_VALID' | 'RETRY';
@@ -157,7 +164,7 @@ export interface Typegen0 {
       | 'FACE_VALID'
       | 'done.invoke.OpenID4VP.checkKeyPair:invocation[0]';
     isAnyVCHasImage: 'CHECK_FOR_IMAGE';
-    isClientValidationRequred: 'STORE_RESPONSE';
+    isClientValidationRequred: 'done.invoke.OpenID4VP.checkIfClientValidationIsRequired:invocation[0]';
     isFaceVerificationRetryAttempt: 'FACE_INVALID';
     isSelectedVCMatchingRequest: 'CHECK_SELECTED_VC';
     isShareWithSelfie:
@@ -172,20 +179,22 @@ export interface Typegen0 {
     showFaceAuthConsentScreen: 'CONFIRM';
   };
   eventsCausingServices: {
-    fetchTrustedVerifiers: 'STORE_RESPONSE';
+    fetchTrustedVerifiers: 'done.invoke.OpenID4VP.checkIfClientValidationIsRequired:invocation[0]';
     getAuthenticationResponse: 'done.invoke.OpenID4VP.checkKeyPair:invocation[0]';
     getKeyPair:
-      | 'STORE_RESPONSE'
+      | 'done.invoke.OpenID4VP.checkIfClientValidationIsRequired:invocation[0]'
       | 'done.invoke.OpenID4VP.getTrustedVerifiersList:invocation[0]';
     getSelectedKey:
       | 'FACE_VALID'
       | 'done.invoke.OpenID4VP.getKeyPairFromKeystore:invocation[0]';
     sendVP: 'CONFIRM' | 'FACE_VALID' | 'RETRY';
+    shouldValidateClient: 'STORE_RESPONSE';
   };
   matchesStates:
     | 'authenticateVerifier'
     | 'checkFaceAuthConsent'
     | 'checkIfAnySelectedVCHasImage'
+    | 'checkIfClientValidationIsRequired'
     | 'checkIfMatchingVCsHasSelectedVC'
     | 'checkKeyPair'
     | 'faceVerificationConsent'
