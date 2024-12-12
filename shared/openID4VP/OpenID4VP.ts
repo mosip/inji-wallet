@@ -20,14 +20,13 @@ export class OpenID4VP {
     encodedAuthorizationRequest: string,
     trustedVerifiersList: any,
   ) {
-    const config = await getAllConfigurations();
-    const validateClient = config.openid4vpClientValidation === 'true';
+    const shouldValidateClient = await isClientValidationRequired();
 
     const authenticationResponse =
       await OpenID4VP.InjiOpenID4VP.authenticateVerifier(
         encodedAuthorizationRequest,
         trustedVerifiersList,
-        validateClient,
+        shouldValidateClient,
       );
     return JSON.parse(authenticationResponse);
   }
@@ -93,4 +92,9 @@ function createJwtPayload(vpToken: {[key: string]: any}) {
     id,
     holder,
   };
+}
+
+export async function isClientValidationRequired() {
+  const config = await getAllConfigurations();
+  return config.openid4vpClientValidation === 'true';
 }
