@@ -59,10 +59,10 @@ export interface Typegen0 {
   invokeSrcNameMap: {
     fetchTrustedVerifiers: 'done.invoke.OpenID4VP.getTrustedVerifiersList:invocation[0]';
     getAuthenticationResponse: 'done.invoke.OpenID4VP.authenticateVerifier:invocation[0]';
+    getClientValidationConfig: 'done.invoke.OpenID4VP.checkIfClientValidationIsRequired:invocation[0]';
     getKeyPair: 'done.invoke.OpenID4VP.getKeyPairFromKeystore:invocation[0]';
     getSelectedKey: 'done.invoke.OpenID4VP.checkKeyPair:invocation[0]';
     sendVP: 'done.invoke.OpenID4VP.sendingVP:invocation[0]';
-    shouldValidateClient: 'done.invoke.OpenID4VP.checkIfClientValidationIsRequired:invocation[0]';
   };
   missingImplementations: {
     actions:
@@ -111,10 +111,10 @@ export interface Typegen0 {
     services:
       | 'fetchTrustedVerifiers'
       | 'getAuthenticationResponse'
+      | 'getClientValidationConfig'
       | 'getKeyPair'
       | 'getSelectedKey'
-      | 'sendVP'
-      | 'shouldValidateClient';
+      | 'sendVP';
   };
   eventsCausingActions: {
     compareAndStoreSelectedVC: 'SET_SELECTED_VC';
@@ -181,6 +181,7 @@ export interface Typegen0 {
   eventsCausingServices: {
     fetchTrustedVerifiers: 'done.invoke.OpenID4VP.checkIfClientValidationIsRequired:invocation[0]';
     getAuthenticationResponse: 'done.invoke.OpenID4VP.checkKeyPair:invocation[0]';
+    getClientValidationConfig: 'STORE_RESPONSE';
     getKeyPair:
       | 'done.invoke.OpenID4VP.checkIfClientValidationIsRequired:invocation[0]'
       | 'done.invoke.OpenID4VP.getTrustedVerifiersList:invocation[0]';
@@ -188,7 +189,6 @@ export interface Typegen0 {
       | 'FACE_VALID'
       | 'done.invoke.OpenID4VP.getKeyPairFromKeystore:invocation[0]';
     sendVP: 'CONFIRM' | 'FACE_VALID' | 'RETRY';
-    shouldValidateClient: 'STORE_RESPONSE';
   };
   matchesStates:
     | 'authenticateVerifier'

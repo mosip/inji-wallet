@@ -15,7 +15,7 @@ export const openID4VPServices = () => {
       return await CACHED_API.fetchTrustedVerifiersList();
     },
 
-    shouldValidateClient: async () => {
+    getClientValidationConfig: async () => {
       return await isClientValidationRequired();
     },
 

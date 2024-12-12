@@ -59,7 +59,7 @@ export const openID4VPMachine = model.createMachine(
       },
       checkIfClientValidationIsRequired: {
         invoke: {
-          src: 'shouldValidateClient',
+          src: 'getClientValidationConfig',
           onDone: [
             {
               cond: 'isClientValidationRequred',
