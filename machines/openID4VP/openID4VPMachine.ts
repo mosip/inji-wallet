@@ -52,9 +52,15 @@ export const openID4VPMachine = model.createMachine(
         },
       },
       checkFaceAuthConsent: {
-        entry: 'getFaceAuthConsent',
+        entry: ['setIsShowLoadingScreen', 'getFaceAuthConsent'],
         on: {
-          STORE_RESPONSE: [
+          STORE_RESPONSE: {target: 'checkIfClientValidationIsRequired'},
+        },
+      },
+      checkIfClientValidationIsRequired: {
+        invoke: {
+          src: 'shouldValidateClient',
+          onDone: [
             {
               cond: 'isClientValidationRequred',
               actions: 'updateShowFaceAuthConsent',
@@ -68,7 +74,6 @@ export const openID4VPMachine = model.createMachine(
         },
       },
       getTrustedVerifiersList: {
-        entry: 'setIsShowLoadingScreen',
         invoke: {
           src: 'fetchTrustedVerifiers',
           onDone: {

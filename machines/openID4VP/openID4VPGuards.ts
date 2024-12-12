@@ -34,6 +34,6 @@ export const openID4VPGuards = () => {
     isFaceVerificationRetryAttempt: (context: any) =>
       context.isFaceVerificationRetryAttempt,
 
-    isClientValidationRequred: () => isClientValidationRequired(),
+    isClientValidationRequred: (_, event) => event.data,
   };
 };
