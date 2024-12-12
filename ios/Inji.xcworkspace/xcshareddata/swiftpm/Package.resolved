@@ -1,5 +1,5 @@
 {
-  "originHash" : "6b82a714050e22d309e029aaffac33f021c04aac740f661a9879441a7d414f4f",
+  "originHash" : "178f6c7c607eeb08b99a4966015d08339500de64791888a2e79d6b7afae53659",
   "pins" : [
     {
       "identity" : "base45-swift",
@@ -34,7 +34,7 @@
       "location" : "https://github.com/mosip/inji-openid4vp-ios-swift",
       "state" : {
         "branch" : "develop",
-        "revision" : "20c1a6c314b73d303ce7c5f2b6ba94235dcb68ad"
+        "revision" : "10c161f4e7414e8a7b0dc2d52d3f4d8faf19b8d7"
       }
     },
     {
@@ -80,6 +80,15 @@
       "state" : {
         "branch" : "develop",
         "revision" : "96bc662cd07df051cf2357691469bba57b0217e8"
+      }
+    },
+    {
+      "identity" : "zipfoundation",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/weichsel/ZIPFoundation.git",
+      "state" : {
+        "revision" : "02b6abe5f6eef7e3cbd5f247c5cc24e246efcfe0",
+        "version" : "0.9.19"
       }
     }
   ],

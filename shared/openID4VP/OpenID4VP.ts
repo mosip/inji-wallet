@@ -3,6 +3,7 @@ import {__AppId} from '../GlobalVariables';
 import {VC} from '../../machines/VerifiableCredential/VCMetaMachine/vc';
 import {getJWT} from '../cryptoutil/cryptoUtil';
 import {getJWK} from '../openId4VCI/Utils';
+import getAllConfigurations from '../api';
 
 export const OpenID4VP_Key_Ref = 'OpenID4VP_KeyPair';
 export const OpenID4VP_Proof_Algo_Type = 'RsaSignature2018';
@@ -19,10 +20,13 @@ export class OpenID4VP {
     encodedAuthorizationRequest: string,
     trustedVerifiersList: any,
   ) {
+    const shouldValidateClient = await isClientValidationRequired();
+
     const authenticationResponse =
       await OpenID4VP.InjiOpenID4VP.authenticateVerifier(
         encodedAuthorizationRequest,
         trustedVerifiersList,
+        shouldValidateClient,
       );
     return JSON.parse(authenticationResponse);
   }
@@ -88,4 +92,9 @@ function createJwtPayload(vpToken: {[key: string]: any}) {
     id,
     holder,
   };
+}
+
+export async function isClientValidationRequired() {
+  const config = await getAllConfigurations();
+  return config.openid4vpClientValidation === 'true';
 }
