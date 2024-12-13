@@ -27,6 +27,7 @@ import {VCFormat} from '../VCFormat';
 import {UnsupportedVcFormat} from '../error/UnsupportedVCFormat';
 import {VCMetadata} from '../VCMetadata';
 import {VCProcessor} from '../../components/VC/common/VCProcessor';
+import {UUID} from '../Utils';
 
 export const Protocols = {
   OpenId4VCI: 'OpenId4VCI',
@@ -67,23 +68,13 @@ export const getIdentifier = (
   credential: VerifiableCredential,
   format: string,
 ) => {
-  let credentialIdentifier = '';
-  if (format === VCFormat.mso_mdoc) {
-    credentialIdentifier = credential?.processedCredential?.['id'] ?? '';
-  } else if (typeof credential.credential !== 'string') {
-    credentialIdentifier = credential.credential.id;
-  }
-  const credId =
-    credentialIdentifier.startsWith('did') ||
-    credentialIdentifier.startsWith('urn:')
-      ? credentialIdentifier.split(':')
-      : credentialIdentifier.split('/');
+  const credId = UUID.generate();
   return (
     context.selectedIssuer.credential_issuer +
     ':' +
     context.selectedIssuer.protocol +
     ':' +
-    credId[credId.length - 1]
+    credId
   );
 };
 
@@ -255,8 +246,8 @@ export const vcDownloadTimeout = async (): Promise<number> => {
 
 // OIDCErrors is a collection of external errors from the OpenID library or the issuer
 export const OIDCErrors = {
-  OIDC_FLOW_CANCELLED_ANDROID : 'User cancelled flow',
-  OIDC_FLOW_CANCELLED_IOS : 'org.openid.appauth.general error -3',
+  OIDC_FLOW_CANCELLED_ANDROID: 'User cancelled flow',
+  OIDC_FLOW_CANCELLED_IOS: 'org.openid.appauth.general error -3',
 
   INVALID_TOKEN_SPECIFIED: 'Invalid token specified',
   OIDC_CONFIG_ERROR_PREFIX: 'Config error',
