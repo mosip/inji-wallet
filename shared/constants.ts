@@ -67,10 +67,10 @@ export const API_CACHED_STORAGE_KEYS = {
   fetchIssuers: 'CACHE_FETCH_ISSUERS',
   fetchIssuerConfig: (issuerId: string) =>
     `CACHE_FETCH_ISSUER_CONFIG_${issuerId}`,
-  fetchIssuerWellknownConfig: (issuerId: string) =>
-    `CACHE_FETCH_ISSUER_WELLKNOWN_CONFIG_${issuerId}`,
+  fetchIssuerWellknownConfig: (credentialIssuerHost: string) =>
+    `CACHE_FETCH_ISSUER_WELLKNOWN_CONFIG_${credentialIssuerHost}`,
   fetchIssuerAuthorizationServerMetadata: (authorizationServerUrl: string) =>
-      `CACHE_FETCH_ISSUER_AUTHORIZATION_SERVER_METADATA_${authorizationServerUrl}`,
+    `CACHE_FETCH_ISSUER_AUTHORIZATION_SERVER_METADATA_${authorizationServerUrl}`,
   fetchTrustedVerifiers: 'CACHE_FETCH_TRUSTED_VERIFIERS',
 };
 
