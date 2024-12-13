@@ -19,6 +19,7 @@ class RNOpenId4VpModule: NSObject, RCTBridgeModule {
   @objc
   func authenticateVerifier(_ encodedAuthorizationRequest: String,
                             trustedVerifierJSON: AnyObject,
+                            shouldValidateClient: Bool,
                             resolver resolve: @escaping RCTPromiseResolveBlock,
                             rejecter reject: @escaping RCTPromiseRejectBlock) {
     Task {
@@ -36,7 +37,7 @@ class RNOpenId4VpModule: NSObject, RCTBridgeModule {
           return Verifier(clientId: clientId, responseUris: responseUris)
         }
         
-        let authenticationResponse: AuthorizationRequest = try await openID4VP!.authenticateVerifier(encodedAuthorizationRequest: encodedAuthorizationRequest, trustedVerifierJSON: trustedVerifiersList)
+        let authenticationResponse: AuthorizationRequest = try await openID4VP!.authenticateVerifier(encodedAuthorizationRequest: encodedAuthorizationRequest, trustedVerifierJSON: trustedVerifiersList, shouldValidateClient: shouldValidateClient)
         
         let response = try toJsonString(jsonObject: authenticationResponse)
         resolve(response)
