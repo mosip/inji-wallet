@@ -1,5 +1,5 @@
 import {assign, send} from 'xstate';
-import {CommunicationDetails} from '../../../shared/Utils';
+import {CommunicationDetails, UUID} from '../../../shared/Utils';
 import {StoreEvents} from '../../store';
 import {VCMetadata} from '../../../shared/VCMetadata';
 import {MIMOTO_BASE_URL, MY_VCS_STORE_KEY} from '../../../shared/constants';
@@ -124,11 +124,8 @@ export const VCItemActions = model => {
     setContext: model.assign((context, event) => {
       const vcMetadata = VCMetadata.fromVC(context.vcMetadata);
       if (!vcMetadata.id) {
-        const verifiableCredentialId = event.response.verifiableCredential.id;
-        const credId = verifiableCredentialId.startsWith('did')
-          ? verifiableCredentialId.split(':')
-          : verifiableCredentialId.split('/');
-        vcMetadata.id = `${credId[credId.length - 1]} - ${vcMetadata.issuer}`;
+          const credId = UUID.generate();
+        vcMetadata.id = `${credId}_${vcMetadata.issuer}`;
       }
       return {
         ...context,

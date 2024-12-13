@@ -2,34 +2,39 @@ import base64url from 'base64url';
 import i18next from 'i18next';
 import jwtDecode from 'jwt-decode';
 import jose from 'node-jose';
-import { NativeModules } from 'react-native';
-import { vcVerificationBannerDetails } from '../../components/BannerNotificationContainer';
-import { VCProcessor } from '../../components/VC/common/VCProcessor';
+import {NativeModules} from 'react-native';
+import {vcVerificationBannerDetails} from '../../components/BannerNotificationContainer';
+import {VCProcessor} from '../../components/VC/common/VCProcessor';
 import {
   BOTTOM_SECTION_FIELDS_WITH_DETAILED_ADDRESS_FIELDS,
   DETAIL_VIEW_ADD_ON_FIELDS,
   getCredentialTypeFromWellKnown,
 } from '../../components/VC/common/VCUtils';
 import i18n from '../../i18n';
-import { displayType, issuerType } from '../../machines/Issuers/IssuersMachine';
-import { getVerifiableCredential } from '../../machines/VerifiableCredential/VCItemMachine/VCItemSelectors';
+import {displayType, issuerType} from '../../machines/Issuers/IssuersMachine';
 import {
   Credential,
   CredentialTypes,
   CredentialWrapper,
   VerifiableCredential,
 } from '../../machines/VerifiableCredential/VCMetaMachine/vc';
-import getAllConfigurations, { CACHED_API } from '../api';
-import { isIOS } from '../constants';
-import { getJWT } from '../cryptoutil/cryptoUtil';
-import { KeyTypes } from '../cryptoutil/KeyTypes';
-import { UnsupportedVcFormat } from '../error/UnsupportedVCFormat';
-import { TelemetryConstants } from '../telemetry/TelemetryConstants';
-import { getErrorEventData, sendErrorEvent } from '../telemetry/TelemetryUtils';
-import { isMockVC } from '../Utils';
-import { VCFormat } from '../VCFormat';
-import { VerificationErrorMessage, VerificationErrorType, verifyCredential } from '../vcjs/verifyCredential';
-import { VCMetadata } from '../VCMetadata';
+import getAllConfigurations, {CACHED_API} from '../api';
+import {isIOS} from '../constants';
+import {getJWT} from '../cryptoutil/cryptoUtil';
+import {isMockVC} from '../Utils';
+import {
+  VerificationErrorMessage,
+  VerificationErrorType,
+  verifyCredential,
+} from '../vcjs/verifyCredential';
+import {getVerifiableCredential} from '../../machines/VerifiableCredential/VCItemMachine/VCItemSelectors';
+import {getErrorEventData, sendErrorEvent} from '../telemetry/TelemetryUtils';
+import {TelemetryConstants} from '../telemetry/TelemetryConstants';
+import {KeyTypes} from '../cryptoutil/KeyTypes';
+import {VCFormat} from '../VCFormat';
+import {UnsupportedVcFormat} from '../error/UnsupportedVCFormat';
+import {VCMetadata} from '../VCMetadata';
+import {UUID} from '../Utils';
 
 export const Protocols = {
   OpenId4VCI: 'OpenId4VCI',
@@ -70,23 +75,13 @@ export const getIdentifier = (
   credential: VerifiableCredential,
   format: string,
 ) => {
-  let credentialIdentifier = '';
-  if (format === VCFormat.mso_mdoc) {
-    credentialIdentifier = credential?.processedCredential?.['id'] ?? '';
-  } else if (typeof credential.credential !== 'string') {
-    credentialIdentifier = credential.credential.id;
-  }
-  const credId =
-    credentialIdentifier.startsWith('did') ||
-    credentialIdentifier.startsWith('urn:')
-      ? credentialIdentifier.split(':')
-      : credentialIdentifier.split('/');
+  const credId = UUID.generate();
   return (
     context.selectedIssuer.issuer_id +
     ':' +
     context.selectedIssuer.protocol +
     ':' +
-    credId[credId.length - 1]
+    credId
   );
 };
 
@@ -448,12 +443,14 @@ export function getMatchingCredentialIssuerMetadata(
 
 export async function verifyCredentialData(
   credential: Credential,
-  credentialFormat: string, 
-  issuerId: string
+  credentialFormat: string,
+  issuerId: string,
 ) {
-
   if (credentialFormat === VCFormat.mso_mdoc || !isMockVC(issuerId)) {
-    const verificationResult = await verifyCredential(credential, credentialFormat);
+    const verificationResult = await verifyCredential(
+      credential,
+      credentialFormat,
+    );
     return verificationResult;
   } else {
     return {

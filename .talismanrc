@@ -2,7 +2,7 @@ fileignoreconfig:
   - filename: package.json
     checksum: 5b4fcb5ddc7cc96cc2d1733b544d56ea66e88cdab995a1052fbf9ac0e9c2dc21
   - filename: package-lock.json
-    checksum: e448b633936de692ebdbadfac3a5a1ae3c2a2a55a8cc3ea7440bd5ec1dd9cef5
+    checksum: 8925d62a7011241371e295553f7bbe1af468c7f3f4d051436a30c8885a12d0a5
   - filename: lib/jsonld-signatures/suites/ed255192018/ed25519.ts
     checksum: 493b6e31144116cb612c24d98b97d8adcad5609c0a52c865a6847ced0a0ddc3a
   - filename: components/PasscodeVerify.tsx
@@ -344,7 +344,7 @@ fileignoreconfig:
     checksum: e1814f6ac8fe15794f26e96de887bc196ffcb37b434d46ffb69a9497d2683667
   - filename: injitest/src/main/resources/Vids.json
     checksum: 8bcffed7a6dd565ae695e1b29de0655e10bd5c5420af2718defd593a687b8817
-  - filename: injitest/src/main/java/inji/utils/UpdateNetworkSettings.java     
+  - filename: injitest/src/main/java/inji/utils/UpdateNetworkSettings.java
     checksum: e249ce3e6b7f47abc183fe5a3637bb39ccb06900ef75b9b2f08426d1535e22aa
   - filename: App.tsx
     checksum: d16d4a40b246abe25a5d2da7ec65163b5756fe8ba9390608a7fc7f8e721b2ed1
@@ -358,8 +358,8 @@ fileignoreconfig:
     checksum: c91348eceec5edbffa03ba03f3f52a8e90ff7f942816c9609080d1647052fd66
   - filename: ios/RNPixelpassModule.swift
     checksum: 822a2421798d5c0669f4ab1b983194eb770cbef2aa30bf212d06bd959738c4ca
-  - filename: injitest/src/test/java/androidTestCases/VerifyHistoryTest.java   
-    checksum: dffc4741b251b42c81d5bdac7d649c02b37bb9045285590b29f86c2d5f526fd1 
+  - filename: injitest/src/test/java/androidTestCases/VerifyHistoryTest.java
+    checksum: dffc4741b251b42c81d5bdac7d649c02b37bb9045285590b29f86c2d5f526fd1
   - filename: android/app/src/main/java/io/mosip/residentapp/RNPixelpassModule.java
     checksum: cef9be4bfafb54e2c885b2459f2819554cad6448b5dc372976706894df704e5d
   - filename: android/app/src/main/AndroidManifest.xml
@@ -372,7 +372,7 @@ fileignoreconfig:
     checksum: 947b6d75543e2bf959ca2d95dd7224051e0b4ec2c28f7515f923701e22a932f0
   - filename: components/FaceScanner/LivenessDetection.tsx
     checksum: d4140a42ee9ca0f7c90e490f762d181a723fd9dd20db891cbbe53bfbd8f81632
-  - filename: machines/VerifiableCredential/VCItemMachine/VCItemActions.ts       
+  - filename: machines/VerifiableCredential/VCItemMachine/VCItemActions.ts
     checksum: bc11e275227ccf93c5e869b47bb2b63454758983b8fc0e105004fefa1b169091
   - filename: machines/app.ts
     checksum: 5da59bb384d04e29c7745d773108903fa144275c57edc1aca1898fcae7baea84
