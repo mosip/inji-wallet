@@ -132,11 +132,13 @@ export const getVCMetadata = (
   const [issuer, protocol, credentialId] =
     context.credentialWrapper?.identifier.split(':');
 
+  //TODO: Can we get the issuer and protocol as context.selectedIssuer.credential_issuer  and context.selectedIssuer.protocol respectively?
+  // This will avoid setting identifier field in credential wrapper and splitting it to get the details
   return VCMetadata.fromVC({
     requestId: credentialId ?? null,
     issuer: issuer,
     protocol: protocol,
-    id: `${credentialId} + '_' + ${issuer}`,
+    id: `${credentialId}_${issuer}`,
     timestamp: context.timestamp ?? '',
     isVerified: context.vcMetadata.isVerified ?? false,
     isExpired: context.vcMetadata.isExpired ?? false,
