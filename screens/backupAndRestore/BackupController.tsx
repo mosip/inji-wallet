@@ -1,7 +1,7 @@
 import {useSelector} from '@xstate/react';
 import {useContext} from 'react';
+import {BackupEvents} from '../../machines/backupAndRestore/backup/backupMachine';
 import {
-  BackupEvents,
   selectIsBackingUpSuccess,
   selectIsBackingUpFailure,
   selectIsBackupInprogress,
@@ -9,7 +9,7 @@ import {
   lastBackupDetails,
   selectIsLoadingBackupDetails,
   selectShowBackupInProgress,
-} from '../../machines/backupAndRestore/backup';
+} from '../../machines/backupAndRestore/backup/backupSelector';
 import {GlobalContext} from '../../shared/GlobalContext';
 
 export function useBackupScreen() {
