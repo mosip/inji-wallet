@@ -113,7 +113,12 @@ export const IssuersActions = (model: any) => {
         if (error.includes(REQUEST_TIMEOUT)) {
           return ErrorMessage.REQUEST_TIMEDOUT;
         }
-        if (error.includes(OIDCErrors.AUTHORIZATION_ENDPOINT_DISCOVERY.GRANT_TYPE_NOT_SUPPORTED)) {
+        if (
+          error.includes(
+            OIDCErrors.AUTHORIZATION_ENDPOINT_DISCOVERY
+              .GRANT_TYPE_NOT_SUPPORTED,
+          )
+        ) {
           return ErrorMessage.AUTHORIZATION_GRANT_TYPE_NOT_SUPPORTED;
         }
         return ErrorMessage.GENERIC;
@@ -234,7 +239,7 @@ export const IssuersActions = (model: any) => {
 
     setSelectedIssuers: model.assign({
       selectedIssuer: (context: any, event: any) =>
-        context.issuers.find(issuer => issuer.credential_issuer === event.id),
+        context.issuers.find(issuer => issuer.issuer_id === event.id),
     }),
 
     updateIssuerFromWellknown: model.assign({
