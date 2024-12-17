@@ -386,12 +386,6 @@ export const backupAndRestoreSetupMachine = model.createMachine(
   },
 );
 
-export function createBackupAndRestoreSetupMachine(serviceRefs: AppServices) {
-  return backupAndRestoreSetupMachine.withContext({
-    ...backupAndRestoreSetupMachine.context,
-    serviceRefs,
-  });
-}
 export function selectIsLoading(state: State) {
   return state.context.isLoading;
 }
