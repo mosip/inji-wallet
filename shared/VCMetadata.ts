@@ -8,7 +8,7 @@ import {
 import {Protocols} from './openId4VCI/Utils';
 import {getMosipIdentifier} from './commonUtil';
 import {VCFormat} from './VCFormat';
-import {isMosipVC} from './Utils';
+import {isMosipVC, UUID} from './Utils';
 import {getCredentialType} from '../components/VC/common/VCUtils';
 
 const VC_KEY_PREFIX = 'VC';
@@ -129,21 +129,15 @@ export function parseMetadatas(metadataStrings: object[]) {
   return metadataStrings.map(o => new VCMetadata(o));
 }
 
-export const getVCMetadata = (
-  context: object,
-  keyType: string,
-  credType: CredentialTypes,
-) => {
-  const [issuer, protocol, credentialId] =
-    context.credentialWrapper?.identifier.split(':');
+export const getVCMetadata = (context: object, keyType: string) => {
+  const issuer = context.selectedIssuer.credential_issuer;
+  const credentialId = context.vcMetadata.id || `${UUID.generate()}_${issuer}`;
 
-  //TODO: Can we get the issuer and protocol as context.selectedIssuer.credential_issuer  and context.selectedIssuer.protocol respectively?
-  // This will avoid setting identifier field in credential wrapper and splitting it to get the details
   return VCMetadata.fromVC({
-    requestId: credentialId ?? null,
+    requestId: credentialId,
     issuer: issuer,
-    protocol: protocol,
-    id: `${credentialId}_${issuer}`,
+    protocol: context.selectedIssuer.protocol,
+    id: credentialId,
     timestamp: context.timestamp ?? '',
     isVerified: context.vcMetadata.isVerified ?? false,
     isExpired: context.vcMetadata.isExpired ?? false,

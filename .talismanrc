@@ -156,7 +156,7 @@ fileignoreconfig:
   - filename: injitest/README.md
     checksum: 82974a6b9363512472272245e9b433f92e63377e58ba306980876b745181a09c
   - filename: shared/VCMetadata.ts
-    checksum: 4c0f2acc58894e5a427e1317b38d04daff91f64d1e61d6ee2f246ee516ef97ca
+    checksum: c76bd3c825931ac241d8e4f76b8a7444789f49e3b4e45a599b4dcd574f7971c8
   - filename: ios/Podfile.lock
     checksum: 43bd4742f2ba13357d8b9c44430bfa3cca0bf9bf8341984fd81174a929c85955
   - filename: components/BackupAndRestoreBannerNotification.tsx

@@ -70,21 +70,6 @@ export const isActivationNeeded = (issuer: string) => {
 
 export const Issuers_Key_Ref = 'OpenId4VCI_KeyPair';
 
-export const getIdentifier = (
-  context,
-  credential: VerifiableCredential,
-  format: string,
-) => {
-  const credId = UUID.generate();
-  return (
-    context.selectedIssuer.issuer_id +
-    ':' +
-    context.selectedIssuer.protocol +
-    ':' +
-    credId
-  );
-};
-
 export const updateCredentialInformation = async (
   context,
   credential: VerifiableCredential,
@@ -108,11 +93,6 @@ export const updateCredentialInformation = async (
   return {
     verifiableCredential,
     format: context.selectedCredentialType.format,
-    identifier: getIdentifier(
-      context,
-      verifiableCredential,
-      context.selectedCredentialType.format,
-    ),
     generatedOn: new Date(),
     vcMetadata: {
       ...context.vcMetadata,
