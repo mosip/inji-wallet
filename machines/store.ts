@@ -1,5 +1,4 @@
 import Storage, {MMKV} from '../shared/storage';
-import binaryToBase64 from 'react-native/Libraries/Utilities/binaryToBase64';
 import {
   EventFrom,
   Receiver,
@@ -36,6 +35,7 @@ import {
 } from '../shared/telemetry/TelemetryUtils';
 import {Buffer} from 'buffer';
 import {VC} from './VerifiableCredential/VCMetaMachine/vc';
+import { isVCStorageInitialised } from '../shared/fileStorage';
 
 export const keyinvalidatedString =
   'Key Invalidated due to biometric enrollment';
@@ -394,7 +394,7 @@ export const storeMachine =
         },
 
         checkStorageInitialisedOrNot: () => async callback => {
-          const isDirectoryExist = await Storage.isVCStorageInitialised();
+          const isDirectoryExist = await isVCStorageInitialised();
           if (!isDirectoryExist) {
             callback(model.events.READY());
           } else {
@@ -422,7 +422,7 @@ export const storeMachine =
                   break;
                 }
                 case 'EXPORT': {
-                  response = await exportData(context.encryptionKey);
+                  response = await backupAndExportData(context.encryptionKey);
                   break;
                 }
                 case 'GET_VCS_DATA': {
@@ -431,7 +431,7 @@ export const storeMachine =
                 }
                 case 'RESTORE_BACKUP': {
                   // the backup data is in plain text
-                  await loadBackupData(event.data, context.encryptionKey);
+                  await restoreBackedUpData(event.data, context.encryptionKey);
                   break;
                 }
                 case 'SET': {
@@ -619,12 +619,12 @@ export async function setItem(
   }
 }
 
-export async function exportData(encryptionKey: string) {
-  return Storage.exportData(encryptionKey);
+export async function backupAndExportData(encryptionKey: string) {
+  return Storage.backupData(encryptionKey);
 }
 
-export async function loadBackupData(data, encryptionKey) {
-  await Storage.loadBackupData(data, encryptionKey);
+export async function restoreBackedUpData(data, encryptionKey) {
+  await Storage.restoreBackedUpData(data, encryptionKey);
 }
 
 export async function fetchAllWellknownConfig(encryptionKey: string) {

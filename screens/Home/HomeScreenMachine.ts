@@ -7,7 +7,7 @@ import {
   ReceivedVcsTabMachine,
 } from './ReceivedVcsTabMachine';
 import {IssuersMachine} from '../../machines/Issuers/IssuersMachine';
-import Storage from '../../shared/storage';
+import Storage, { isMinimumLimitReached } from '../../shared/storage';
 import {VCItemMachine} from '../../machines/VerifiableCredential/VCItemMachine/VCItemMachine';
 
 const model = createModel(
@@ -173,7 +173,7 @@ export const HomeScreenMachine = model.createMachine(
     services: {
       checkStorageAvailability: () => async () => {
         return Promise.resolve(
-          Storage.isMinimumLimitReached('minStorageRequired'),
+          isMinimumLimitReached('minStorageRequired'),
         );
       },
     },

@@ -6,7 +6,7 @@ import fileStorage, {
   getBackupFilePath,
   unZipAndRemoveFile,
 } from '../../shared/fileStorage';
-import Storage from '../../shared/storage';
+import Storage, { isMinimumLimitReached } from '../../shared/storage';
 import {StoreEvents} from '../store';
 import Cloud from '../../shared/CloudBackupAndRestoreUtils';
 import {TelemetryConstants} from '../../shared/telemetry/TelemetryConstants';
@@ -289,7 +289,7 @@ export const backupRestoreMachine = model.createMachine(
       checkInternet: async () => await NetInfo.fetch(),
 
       checkStorageAvailability: () => async () => {
-        return await Storage.isMinimumLimitReached('minStorageRequired');
+        return await isMinimumLimitReached('minStorageRequired');
       },
 
       downloadLatestBackup: () => async () => {
