@@ -14,6 +14,11 @@ import {getCredentialType} from '../components/VC/common/VCUtils';
 const VC_KEY_PREFIX = 'VC';
 const VC_ITEM_STORE_KEY_REGEX = '^VC_[a-zA-Z0-9_-]+$';
 
+/** TODO: two identifiers requestId and id
+ * we have 2 fields in metadata - id, requestID
+ * requestID -> This will be holding the requestId required for OTP flow VCs and for OIDC flow it holds the generated UUID
+ * id        -> holds UUID for both OTP based & OIDC flow
+ */
 export class VCMetadata {
   static vcKeyRegExp = new RegExp(VC_ITEM_STORE_KEY_REGEX);
   idType: VcIdType | string = '';
@@ -111,8 +116,8 @@ export class VCMetadata {
   // Update VC_ITEM_STORE_KEY_REGEX in case of changes in vckey
   getVcKey(): string {
     return this.timestamp !== ''
-      ? `${VC_KEY_PREFIX}_${this.timestamp}_${this.requestId}`
-      : `${VC_KEY_PREFIX}_${this.requestId}`;
+      ? `${VC_KEY_PREFIX}_${this.timestamp}_${this.id}`
+      : `${VC_KEY_PREFIX}_${this.id}`;
   }
 
   equals(other: VCMetadata): boolean {
