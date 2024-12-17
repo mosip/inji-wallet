@@ -118,6 +118,7 @@ export const VCItemServices = model => {
         context.vcMetadata.issuer,
       );
       const wellknownResponse = await CACHED_API.fetchIssuerWellknownConfig(
+        issuerConfig.issuer_id,
         issuerConfig.credential_issuer,
         true,
       );
