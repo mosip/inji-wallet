@@ -113,7 +113,12 @@ export const IssuersActions = (model: any) => {
         if (error.includes(REQUEST_TIMEOUT)) {
           return ErrorMessage.REQUEST_TIMEDOUT;
         }
-        if (error.includes(OIDCErrors.AUTHORIZATION_ENDPOINT_DISCOVERY.GRANT_TYPE_NOT_SUPPORTED)) {
+        if (
+          error.includes(
+            OIDCErrors.AUTHORIZATION_ENDPOINT_DISCOVERY
+              .GRANT_TYPE_NOT_SUPPORTED,
+          )
+        ) {
           return ErrorMessage.AUTHORIZATION_GRANT_TYPE_NOT_SUPPORTED;
         }
         return ErrorMessage.GENERIC;
@@ -150,11 +155,7 @@ export const IssuersActions = (model: any) => {
     },
 
     storeVerifiableCredentialMeta: send(
-      context =>
-        StoreEvents.PREPEND(
-          MY_VCS_STORE_KEY,
-          getVCMetadata(context, context.keyType),
-        ),
+      context => StoreEvents.PREPEND(MY_VCS_STORE_KEY, context.vcMetadata),
       {
         to: (context: any) => context.serviceRefs.store,
       },
@@ -175,7 +176,7 @@ export const IssuersActions = (model: any) => {
 
     storeVerifiableCredentialData: send(
       (context: any) => {
-        const vcMetadata = getVCMetadata(context, context.keyType);
+        const vcMetadata = context.vcMetadata;
         const {
           verifiableCredential: {
             processedCredential,
@@ -201,7 +202,7 @@ export const IssuersActions = (model: any) => {
       context => {
         return {
           type: 'VC_ADDED',
-          vcMetadata: getVCMetadata(context, context.keyType),
+          vcMetadata: context.vcMetadata,
         };
       },
       {
@@ -213,7 +214,7 @@ export const IssuersActions = (model: any) => {
       (context: any) => {
         return {
           type: 'VC_DOWNLOADED',
-          vcMetadata: getVCMetadata(context, context.keyType),
+          vcMetadata: context.vcMetadata,
           vc: context.credentialWrapper,
         };
       },
@@ -288,7 +289,7 @@ export const IssuersActions = (model: any) => {
 
     logDownloaded: send(
       context => {
-        const vcMetadata = getVCMetadata(context, context.keyType);
+        const vcMetadata = context.vcMetadata;
         return ActivityLogEvents.LOG_ACTIVITY(
           VCActivityLog.getLogFromObject({
             _vcKey: vcMetadata.getVcKey(),
