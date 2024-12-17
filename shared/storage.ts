@@ -20,7 +20,6 @@ import {
   SETTINGS_STORE_KEY,
   ENOENT,
   API_CACHED_STORAGE_KEYS,
-  BASE_36,
 } from './constants';
 import FileStorage, {
   getFilePath,
@@ -58,6 +57,7 @@ class Storage {
       let dataFromDB: Record<string, any> = {};
 
       const allKeysInDB = await MMKV.indexer.strings.getKeys();
+
       const keysToBeExported = allKeysInDB.filter(key =>
         key.includes('CACHE_FETCH_ISSUER_WELLKNOWN_CONFIG_'),
       );
@@ -116,47 +116,276 @@ class Storage {
     }
   };
 
-  static loadBackupData = async (data, encryptionKey) => {
+  /**
+   * Load backup data with improved error handling and logging
+   * @param data Backup data to be loaded
+   * @param encryptionKey Key used for encryption/decryption
+   * @returns Promise resolving to loaded data or error
+   */
+  static async loadBackupData(
+    data: string,
+    encryptionKey: string,
+  ): Promise<any> {
+    const PREV_BACKUP_STATE_PATH = `${DocumentDirectoryPath}/.prev`;
     try {
-      // 0. check for previous backup states
-      const prevBkpState = `${DocumentDirectoryPath}/.prev`;
-      const previousBackupExists = await fileStorage.exists(prevBkpState);
-      let previousRestoreTimestamp: string = '';
-      if (previousBackupExists) {
-        // 0. Remove partial restored files
-        previousRestoreTimestamp = await fileStorage.readFile(prevBkpState);
-        previousRestoreTimestamp = previousRestoreTimestamp.trim();
-        this.unloadVCs(encryptionKey, parseInt(previousRestoreTimestamp));
-      }
-      // 1. opening the file
+      await this.handlePreviousBackup(PREV_BACKUP_STATE_PATH, encryptionKey);
       const completeBackupData = JSON.parse(data);
-      // 2. Load and store VC_records & MMKV things
       const backupStartState = Date.now().toString();
-      // record the state to help with cleanup activities post partial backup
-      await fileStorage.writeFile(prevBkpState, backupStartState);
-      const dataFromDB = await Storage.loadVCs(
-        completeBackupData,
+      await fileStorage.writeFile(PREV_BACKUP_STATE_PATH, backupStartState);
+      const dataFromDB = await this.loadVCs(completeBackupData, encryptionKey);
+      await this.updateWellKnownConfigs(dataFromDB, encryptionKey);
+    } catch (error) {
+      console.error('Error while loading backup data:', error);
+    }
+  }
+
+  /**
+   * Handle cleanup of previous backup state
+   * @param prevBackupStatePath Path to previous backup state file
+   * @param encryptionKey Encryption key
+   * @returns Previous restore timestamp
+   */
+  private static async handlePreviousBackup(
+    prevBackupStatePath: string,
+    encryptionKey: string,
+  ) {
+    const previousBackupExists = await fileStorage.exists(prevBackupStatePath);
+    if (previousBackupExists) {
+      const previousRestoreTimestamp = await fileStorage.readFile(
+        prevBackupStatePath,
+      );
+      const timestampNum = parseInt(previousRestoreTimestamp.trim());
+      await this.unloadVCs(encryptionKey, timestampNum);
+    }
+  }
+
+  /**
+   * Unload Verifiable Credentials based on a cutoff timestamp
+   * @param encryptionKey Encryption key
+   * @param cutOffTimestamp Timestamp to use as cutoff
+   */
+  private static async unloadVCs(
+    encryptionKey: string,
+    cutOffTimestamp: number,
+  ) {
+    try {
+      await this.removeOldVCFiles(cutOffTimestamp);
+      await this.removeVCMetadataFromDB(encryptionKey, cutOffTimestamp);
+    } catch (error) {
+      console.error('Error while unloading VCs:', error);
+      sendErrorEvent(
+        getErrorEventData(
+          TelemetryConstants.FlowType.dataRestore,
+          TelemetryConstants.ErrorId.failure,
+          error.message,
+        ),
+      );
+    }
+  }
+
+  /**
+   * Remove VC files created after the cutoff timestamp
+   * @param cutOffTimestamp Timestamp to use as cutoff
+   */
+  private static async removeOldVCFiles(cutOffTimestamp: number) {
+    const vcDirectory = `${DocumentDirectoryPath}/inji/VC/`;
+    const files = await fileStorage.getAllFilesInDirectory(vcDirectory);
+
+    const filesToRemove = files.filter(file => {
+      const fileName = file.name.split('.')[0];
+      const fileTimestamp = parseInt(fileName.split('_')[1]);
+      return fileTimestamp >= cutOffTimestamp;
+    });
+
+    await Promise.all(
+      filesToRemove.map(file => fileStorage.removeItem(file.path)),
+    );
+  }
+
+  /**
+   * Update MMKV store to remove VCs after cutoff timestamp
+   * @param encryptionKey Encryption key
+   * @param cutOffTimestamp Timestamp to use as cutoff
+   */
+  private static async removeVCMetadataFromDB(
+    encryptionKey: any,
+    cutOffTimestamp: number,
+  ) {
+    const myVCsEnc = await MMKV.getItem(MY_VCS_STORE_KEY, encryptionKey);
+
+    if (myVCsEnc === null) return;
+
+    const mmkvVCs = await decryptJson(encryptionKey, myVCsEnc);
+    const vcList: VCMetadata[] = JSON.parse(mmkvVCs);
+    const newVCList = vcList.filter(
+      vc => !vc.timestamp || parseInt(vc.timestamp) < cutOffTimestamp,
+    );
+    const finalVC = await encryptJson(encryptionKey, JSON.stringify(newVCList));
+    await MMKV.setItem(MY_VCS_STORE_KEY, finalVC);
+  }
+
+  /**
+   * Handle cleanup of previous backup state
+   * @param completeBackupData Entire Backup data to be loaded
+   * @param encryptionKey Encryption key
+   * @returns Previous
+   */
+  private static async loadVCs(
+    completeBackupData: Record<string, any>,
+    encryptionKey: string,
+  ): Promise<Record<string, any> | undefined> {
+    try {
+      const {VC_Records: allVCs, dataFromDB: dataFromDB} = completeBackupData;
+
+      await this.processAndStoreVCs(allVCs, dataFromDB, encryptionKey);
+      await this.updateMyVcList(dataFromDB, encryptionKey);
+      await fileStorage.removeItemIfExist(`${DocumentDirectoryPath}/.prev`);
+      return dataFromDB;
+    } catch (error) {
+      console.error('Error while loading VCs:', error);
+      sendErrorEvent(
+        getErrorEventData(
+          TelemetryConstants.FlowType.dataBackup,
+          TelemetryConstants.ErrorId.failure,
+          error.message,
+        ),
+      );
+    }
+  }
+
+  /**
+   * Process and store individual Verifiable Credentials
+   * @param allVCs All Verifiable Credentials from backup
+   * @param dataFromDB Database data containing VC metadata
+   * @param encryptionKey Encryption key
+   */
+  private static async processAndStoreVCs(
+    allVCs: Record<string, any>,
+    dataFromDB: Record<string, any>,
+    encryptionKey: string,
+  ) {
+    const vcKeys = Object.keys(allVCs);
+
+    await Promise.all(
+      vcKeys.map(async key => {
+        const vcData = allVCs[key];
+        // Add randomness to timestamp to maintain uniqueness
+        const timestamp =
+          Date.now() + Math.random().toString().substring(2, 10);
+        const prevUnixTimeStamp = vcData.vcMetadata.timestamp;
+
+        // Verify and update the credential
+        const isVerified = await this.verifyCredential(
+          vcData,
+          vcData.vcMetadata,
+        );
+        vcData.vcMetadata.timestamp = timestamp;
+        vcData.vcMetadata.isVerified = isVerified;
+
+        //update the vcMetadata
+        dataFromDB.myVCs.forEach(myVcMetadata => {
+          if (
+            myVcMetadata.requestId === vcData.vcMetadata.requestId &&
+            myVcMetadata.timestamp === prevUnixTimeStamp
+          ) {
+            myVcMetadata.timestamp = timestamp;
+            myVcMetadata.isVerified = isVerified;
+          }
+        });
+
+        // Encrypt and store the VC
+        const updatedVcKey = new VCMetadata(vcData.vcMetadata).getVcKey();
+        const encryptedVC = await encryptJson(
+          encryptionKey,
+          JSON.stringify(vcData),
+        );
+        await this.setItem(updatedVcKey, encryptedVC, encryptionKey);
+      }),
+    );
+  }
+
+  /**
+   * Verify the restored credential
+   * @param vcData  Verifiable Credential from backup
+   * @param vcMetadata  VC metadata
+   */
+  private static async verifyCredential(vcData: any, vcMetadata: any) {
+    let isVerified = true;
+    const verifiableCredential =
+      vcData.verifiableCredential?.credential || vcData.verifiableCredential;
+    if (
+      vcMetadata.format === VCFormat.mso_mdoc ||
+      !isMockVC(vcMetadata.issuer)
+    ) {
+      const verificationResult = await verifyCredential(
+        verifiableCredential,
+        vcMetadata.format,
+      );
+      isVerified = verificationResult.isVerified;
+    }
+    return isVerified;
+  }
+
+  /**
+   * Update MMKV store with new VC metadata
+   * @param dataFromDB Database data containing VC metadata
+   * @param encryptionKey Encryption key
+   */
+  private static async updateMyVcList(
+    dataFromDB: Record<string, any>,
+    encryptionKey: string,
+  ) {
+    const dataFromMyVCKey = dataFromDB[MY_VCS_STORE_KEY];
+    const encryptedMyVCKeyFromMMKV = await MMKV.getItem(MY_VCS_STORE_KEY);
+
+    let newDataForMyVCKey: VCMetadata[];
+
+    if (encryptedMyVCKeyFromMMKV != null) {
+      const myVCKeyFromMMKV = await decryptJson(
         encryptionKey,
+        encryptedMyVCKeyFromMMKV,
       );
-      // 3. Update the Well Known configs of the VCs
-      const allKeysFromDB = Object.keys(dataFromDB);
-      const cacheKeys = allKeysFromDB.filter(key =>
-        key.includes('CACHE_FETCH_ISSUER_WELLKNOWN_CONFIG_'),
-      );
-      cacheKeys.forEach(async key => {
+
+      newDataForMyVCKey = [...JSON.parse(myVCKeyFromMMKV), ...dataFromMyVCKey];
+    } else {
+      newDataForMyVCKey = dataFromMyVCKey;
+    }
+    const encryptedDataForMyVCKey = await encryptJson(
+      encryptionKey,
+      JSON.stringify(newDataForMyVCKey),
+    );
+
+    await this.setItem(
+      MY_VCS_STORE_KEY,
+      encryptedDataForMyVCKey,
+      encryptionKey,
+    );
+  }
+
+  /**
+   * Update Well Known configs for cached issuers
+   * @param dataFromDB Database data
+   * @param encryptionKey Encryption key
+   */
+  private static async updateWellKnownConfigs(
+    dataFromDB: Record<string, any>,
+    encryptionKey: string,
+  ) {
+    const cacheKeys = Object.keys(dataFromDB).filter(key =>
+      key.includes('CACHE_FETCH_ISSUER_WELLKNOWN_CONFIG_'),
+    );
+
+    await Promise.all(
+      cacheKeys.map(async key => {
         const value = dataFromDB[key];
         const encryptedValue = await encryptJson(
           encryptionKey,
           JSON.stringify(value),
         );
         await this.setItem(key, encryptedValue, encryptionKey);
-        return true;
-      });
-    } catch (error) {
-      console.error('Error while loading backup data ', error);
-      return error;
-    }
-  };
+      }),
+    );
+  }
 
   static fetchAllWellknownConfig = async (encryptionKey: string) => {
     let wellknownConfigData: Record<string, Object> = {};
@@ -264,158 +493,6 @@ class Storage {
       throw error;
     }
   };
-
-  /**
-   * unloadVCs will remove a set of VCs against a particular time range
-   *
-   * @param cutOffTimestamp the timestamp of the VC backup start time to current time
-   */
-  private static async unloadVCs(encryptionKey: any, cutOffTimestamp: number) {
-    try {
-      // 1. Find the VCs in the inji directory which have the said timestamp
-      const file: ReadDirItem[] = await fileStorage.getAllFilesInDirectory(
-        `${DocumentDirectoryPath}/inji/VC/`,
-      );
-      const isGreaterThanEq = function (fName: string, ts: number): boolean {
-        fName = fName.split('.')[0];
-        const curr = fName.split('_')[1];
-        return parseInt(curr) >= ts;
-      };
-      for (let i = 0; i < file.length; i++) {
-        const f = file[i];
-        if (isGreaterThanEq(f.name, cutOffTimestamp)) {
-          await fileStorage.removeItem(f.path);
-        }
-      }
-      // TODO: should this be done via the Store state machine to avoid popups?
-      // 3. Remove the keys from MMKV which have the same timestamp
-      let myVCsEnc = await MMKV.getItem(MY_VCS_STORE_KEY, encryptionKey);
-      if (myVCsEnc !== null) {
-        let mmkvVCs = await decryptJson(encryptionKey, myVCsEnc);
-        let vcList: VCMetadata[] = JSON.parse(mmkvVCs);
-        let newVCList: VCMetadata[] = [];
-        vcList.forEach(d => {
-          if (d.timestamp && parseInt(d.timestamp) < cutOffTimestamp) {
-            newVCList.push(d);
-          }
-        });
-        const finalVC = await encryptJson(
-          encryptionKey,
-          JSON.stringify(newVCList),
-        );
-        await MMKV.setItem(MY_VCS_STORE_KEY, finalVC);
-      }
-    } catch (e) {
-      console.error('error while unloadVcs:', e);
-      sendErrorEvent(
-        getErrorEventData(
-          TelemetryConstants.FlowType.dataRestore,
-          TelemetryConstants.ErrorId.failure,
-          e.message,
-        ),
-      );
-    }
-  }
-
-  private static async verifyCredential(
-    verifiableCredential: Credential,
-    format: string,
-    issuer: string,
-  ) {
-    let isVerified = true;
-    //TODO: Remove bypassing verification of mock VCs once mock VCs are verifiable
-    if (format === VCFormat.mso_mdoc || !isMockVC(issuer)) {
-      const verificationResult = await verifyCredential(
-        verifiableCredential,
-        format,
-      );
-      isVerified = verificationResult.isVerified;
-    }
-    return isVerified;
-  }
-
-  private static async loadVCs(completeBackupData: {}, encryptionKey: any) {
-    try {
-      const allVCs = completeBackupData['VC_Records'];
-      const allVCKeys = Object.keys(allVCs);
-      const dataFromDB = completeBackupData['dataFromDB'];
-
-      // 0. Check for VC presense in the store
-      // 1. store the VCs and the HMAC
-      // 2. Verify the VC and update the result
-
-      await Promise.all(
-        allVCKeys.map(async key => {
-          const vc = allVCs[key];
-          const ts =
-            Date.now() + Math.random().toString(BASE_36).substring(2, 7);
-          const prevUnixTimeStamp = vc.vcMetadata.timestamp;
-
-          const isVerified = await Storage.verifyCredential(
-            vc.verifiableCredential?.credential || vc.verifiableCredential,
-            vc.vcMetadata.format,
-            vc.vcMetadata.issuer,
-          );
-          vc.vcMetadata.timestamp = ts;
-          vc.vcMetadata.isVerified = isVerified;
-
-          dataFromDB.myVCs.map(async myVcMetadata => {
-            if (
-              myVcMetadata.requestId === vc.vcMetadata.requestId &&
-              myVcMetadata.timestamp === prevUnixTimeStamp
-            ) {
-              myVcMetadata.timestamp = ts;
-            }
-            myVcMetadata.isVerified = isVerified;
-          });
-          const updatedVcKey = new VCMetadata(vc.vcMetadata).getVcKey();
-
-          const encryptedVC = await encryptJson(
-            encryptionKey,
-            JSON.stringify(vc),
-          );
-          // Save the VC to disk
-          await this.setItem(updatedVcKey, encryptedVC, encryptionKey);
-        }),
-      );
-      // 2. Update myVCsKey
-      const dataFromMyVCKey = dataFromDB[MY_VCS_STORE_KEY];
-      const encryptedMyVCKeyFromMMKV = await MMKV.getItem(MY_VCS_STORE_KEY);
-      let newDataForMyVCKey: VCMetadata[] = [];
-      if (encryptedMyVCKeyFromMMKV != null) {
-        const myVCKeyFromMMKV = await decryptJson(
-          encryptionKey,
-          encryptedMyVCKeyFromMMKV,
-        );
-        newDataForMyVCKey = [
-          ...JSON.parse(myVCKeyFromMMKV),
-          ...dataFromMyVCKey,
-        ];
-      } else {
-        newDataForMyVCKey = dataFromMyVCKey;
-      }
-      const encryptedDataForMyVCKey = await encryptJson(
-        encryptionKey,
-        JSON.stringify(newDataForMyVCKey),
-      );
-      await this.setItem(
-        MY_VCS_STORE_KEY,
-        encryptedDataForMyVCKey,
-        encryptionKey,
-      );
-      await fileStorage.removeItemIfExist(`${DocumentDirectoryPath}/.prev`);
-      return dataFromDB;
-    } catch (e) {
-      console.error('error while loading Vcs:', e);
-      sendErrorEvent(
-        getErrorEventData(
-          TelemetryConstants.FlowType.dataBackup,
-          TelemetryConstants.ErrorId.failure,
-          e.message,
-        ),
-      );
-    }
-  }
 
   private static async isVCAlreadyDownloaded(
     key: string,
