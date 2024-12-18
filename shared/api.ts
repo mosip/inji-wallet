@@ -115,14 +115,6 @@ export const API = {
     );
     return response.response.issuers || [];
   },
-
-  fetchIssuerConfig: async (issuerId: string) => {
-    const response = await request(
-      API_URLS.issuerConfig.method,
-      API_URLS.issuerConfig.buildURL(issuerId),
-    );
-    return response.response;
-  },
   fetchIssuerWellknownConfig: async (credentialIssuer: string) => {
     const response = await request(
       API_URLS.issuerWellknownConfig.method,
@@ -171,11 +163,6 @@ export const CACHED_API = {
       fetchCall: API.fetchIssuers,
     }),
 
-  fetchIssuerConfig: (issuerId: string) =>
-    generateCacheAPIFunction({
-      cacheKey: API_CACHED_STORAGE_KEYS.fetchIssuerConfig(issuerId),
-      fetchCall: API.fetchIssuerConfig.bind(null, issuerId),
-    }),
   fetchIssuerWellknownConfig: (
     issuerId: string,
     credentialIssuer: string,

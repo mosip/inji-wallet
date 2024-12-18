@@ -40,12 +40,9 @@ export const IssuersService = () => {
     },
     checkInternet: async () => await NetInfo.fetch(),
     downloadIssuerWellknown: async (context: any) => {
-      const issuerConfig = await CACHED_API.fetchIssuerConfig(
-        context.selectedIssuerId,
-      );
       const wellknownResponse = await CACHED_API.fetchIssuerWellknownConfig(
-        issuerConfig.issuer_id,
-        issuerConfig.credential_issuer,
+        context.selectedIssuer.issuer_id,
+        context.selectedIssuer.credential_issuer,
       );
       return wellknownResponse;
     },
