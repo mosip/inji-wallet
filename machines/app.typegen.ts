@@ -47,6 +47,7 @@ export interface Typegen0 {
     loadEsignetHostFromStorage: 'READY';
     logServiceEvents: 'done.invoke.app.init.checkKeyPairs:invocation[0]';
     logStoreEvents:
+      | 'BIOMETRIC_CANCELLED'
       | 'KEY_INVALIDATE_ERROR'
       | 'RESET_KEY_INVALIDATE_ERROR_DISMISS'
       | 'xstate.init';
@@ -59,6 +60,7 @@ export interface Typegen0 {
     setLinkCode: 'done.invoke.app.ready.focus.active:invocation[0]';
     spawnServiceActors: 'done.invoke.app.init.checkKeyPairs:invocation[0]';
     spawnStoreActor:
+      | 'BIOMETRIC_CANCELLED'
       | 'KEY_INVALIDATE_ERROR'
       | 'RESET_KEY_INVALIDATE_ERROR_DISMISS'
       | 'xstate.init';

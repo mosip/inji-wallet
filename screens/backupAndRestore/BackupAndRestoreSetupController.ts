@@ -4,6 +4,9 @@ import {useContext, useRef} from 'react';
 import {
   BackupAndRestoreSetupEvents,
   backupAndRestoreSetupMachine,
+} from '../../machines/backupAndRestore/backupAndRestoreSetup/backupAndRestoreSetupMachine';
+
+import {
   selectIsCloudSignedInFailed,
   selectIsLoading,
   selectIsNetworkError as selectIsNetworkErrorDuringSetup,
@@ -13,12 +16,10 @@ import {
   selectProfileInfo,
   selectShouldTriggerAutoBackup,
   selectShowAccountSelectionConfirmation,
-} from '../../machines/backupAndRestore/backupAndRestoreSetup';
+} from '../../machines/backupAndRestore/backupAndRestoreSetup/backupAndRestoreSetupSelectors';
 import {GlobalContext} from '../../shared/GlobalContext';
-import {
-  BackupEvents,
-  selectIsNetworkError as selectIsNetworkErrorWhileFetchingLastBackupDetails,
-} from '../../machines/backupAndRestore/backup';
+import {BackupEvents} from '../../machines/backupAndRestore/backup/backupMachine';
+import {selectIsNetworkError as selectIsNetworkErrorWhileFetchingLastBackupDetails} from '../../machines/backupAndRestore/backup/backupSelector';
 
 export function useBackupAndRestoreSetup() {
   const {appService} = useContext(GlobalContext);

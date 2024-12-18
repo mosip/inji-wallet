@@ -22,7 +22,7 @@ import {
 } from '../../../shared/telemetry/TelemetryUtils';
 
 import {ActivityLogEvents} from '../../activityLog';
-import {BackupEvents} from '../../backupAndRestore/backup';
+import {BackupEvents} from '../../backupAndRestore/backup/backupMachine';
 import {VcMetaEvents} from '../VCMetaMachine/VCMetaMachine';
 import {WalletBindingResponse} from '../VCMetaMachine/vc';
 import {BannerStatusType} from '../../../components/BannerNotification';
