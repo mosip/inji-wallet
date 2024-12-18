@@ -30,7 +30,7 @@ export class VCMetadata {
 
   downloadKeyType: string = '';
   credentialType: string = '';
-  credentialIssuer: string = '';
+  issuerHost: string = '';
   constructor({
     idType = '',
     requestId = '',
@@ -45,7 +45,7 @@ export class VCMetadata {
     downloadKeyType = '',
     isExpired = false,
     credentialType = '',
-    credentialIssuer = '',
+    issuerHost = '',
   } = {}) {
     this.idType = idType;
     this.requestId = requestId;
@@ -60,7 +60,7 @@ export class VCMetadata {
     this.downloadKeyType = downloadKeyType;
     this.isExpired = isExpired;
     this.credentialType = credentialType;
-    this.credentialIssuer = credentialIssuer;
+    this.issuerHost = issuerHost;
   }
 
   //TODO: Remove any typing and use appropriate typing
@@ -83,7 +83,7 @@ export class VCMetadata {
         : getMosipIndividualId(vc.verifiableCredential, vc.issuer),
       downloadKeyType: vc.downloadKeyType,
       credentialType: vc.credentialType,
-      credentialIssuer: vc.credentialIssuer,
+      issuerHost: vc.issuerHost,
     });
   }
 
@@ -146,7 +146,7 @@ export const getVCMetadata = (
     format: context['credentialWrapper'].format,
     downloadKeyType: keyType,
     credentialType: getCredentialType(context.selectedCredentialType),
-    credentialIssuer: context.selectedIssuer.credential_issuer,
+    issuerHost: context.selectedIssuer.credential_issuer,
   });
 };
 
