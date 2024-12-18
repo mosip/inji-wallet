@@ -12,7 +12,7 @@ import {
 } from '../../shared/constants';
 import {assign, send} from 'xstate';
 import {StoreEvents} from '../store';
-import {BackupEvents} from '../backupAndRestore/backup';
+import {BackupEvents} from '../backupAndRestore/backup/backupMachine';
 import {getVCMetadata, VCMetadata} from '../../shared/VCMetadata';
 import {isHardwareKeystoreExists} from '../../shared/cryptoutil/cryptoUtil';
 import {ActivityLogEvents} from '../activityLog';
@@ -113,7 +113,12 @@ export const IssuersActions = (model: any) => {
         if (error.includes(REQUEST_TIMEOUT)) {
           return ErrorMessage.REQUEST_TIMEDOUT;
         }
-        if (error.includes(OIDCErrors.AUTHORIZATION_ENDPOINT_DISCOVERY.GRANT_TYPE_NOT_SUPPORTED)) {
+        if (
+          error.includes(
+            OIDCErrors.AUTHORIZATION_ENDPOINT_DISCOVERY
+              .GRANT_TYPE_NOT_SUPPORTED,
+          )
+        ) {
           return ErrorMessage.AUTHORIZATION_GRANT_TYPE_NOT_SUPPORTED;
         }
         return ErrorMessage.GENERIC;
