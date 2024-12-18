@@ -8,6 +8,9 @@ import { MY_VCS_STORE_KEY } from "../constants";
 import { VCMetadata } from "../VCMetadata";
 import { VCFormat } from "../VCFormat";
 import { isMockVC } from "../Utils";
+import {
+  verifyCredential,
+} from '../vcjs/verifyCredential'
 
 export async function loadBackupData(
     data: string,
@@ -23,6 +26,7 @@ export async function loadBackupData(
       await updateWellKnownConfigs(dataFromDB, encryptionKey);
     } catch (error) {
       console.error('Error while loading backup data:', error);
+      throw error;
     }
   }
 
@@ -67,6 +71,7 @@ async function handlePreviousBackup(
           error.message,
         ),
       );
+      throw error;
     }
   }
 
@@ -137,6 +142,7 @@ async function handlePreviousBackup(
           error.message,
         ),
       );
+      throw error;
     }
   }
 
@@ -162,7 +168,7 @@ async function handlePreviousBackup(
         const prevUnixTimeStamp = vcData.vcMetadata.timestamp;
 
         // Verify and update the credential
-        const isVerified = await verifyCredential(
+        const isVerified = await verifyCredentialData(
           vcData,
           vcData.vcMetadata,
         );
@@ -196,7 +202,7 @@ async function handlePreviousBackup(
    * @param vcData  Verifiable Credential from backup
    * @param vcMetadata  VC metadata
    */
-  async function verifyCredential(vcData: any, vcMetadata: any) {
+  async function verifyCredentialData(vcData: any, vcMetadata: any) {
     let isVerified = true;
     const verifiableCredential =
       vcData.verifiableCredential?.credential || vcData.verifiableCredential;

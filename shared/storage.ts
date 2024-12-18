@@ -5,7 +5,7 @@ import {
 } from 'react-native-device-info';
 import { MMKVLoader } from 'react-native-mmkv-storage';
 import getAllConfigurations from './api';
-import { exportData as backupData } from './backupUtils/backupData';
+import { exportData } from './backupUtils/backupData';
 import { loadBackupData } from './backupUtils/restoreData';
 import { BYTES_IN_MEGABYTE } from './commonUtil';
 import {
@@ -33,7 +33,7 @@ import { getErrorEventData, sendErrorEvent } from './telemetry/TelemetryUtils';
 import { VCMetadata } from './VCMetadata';
 
 export const MMKV = new MMKVLoader().initialize();
-const {RNSecureKeystoreModule} = NativeModules;
+const { RNSecureKeystoreModule } = NativeModules;
 
 async function generateHmac(
   encryptionKey: string,
@@ -48,10 +48,10 @@ async function generateHmac(
 class Storage {
 
   static backupData = async (encryptionKey: string) => {
-    return await backupData(encryptionKey)
+    return await exportData(encryptionKey)
   };
- 
-  static async restoreBackedUpData(data: string, encryptionKey: string): Promise<any> {
+
+  static async restoreBackUpData(data: string, encryptionKey: string): Promise<any> {
     return await loadBackupData(data, encryptionKey)
   }
 
@@ -174,7 +174,7 @@ class Storage {
       const appId = JSON.parse(settings).appId;
       __AppId.setValue(appId);
       MMKV.clearStore();
-      await MMKV.setItem(SETTINGS_STORE_KEY, JSON.stringify({appId: appId}));
+      await MMKV.setItem(SETTINGS_STORE_KEY, JSON.stringify({ appId: appId }));
     } catch (e) {
       console.error('Error Occurred while Clearing Storage.', e);
     }
@@ -285,10 +285,10 @@ export async function isMinimumLimitForBackupRestorationReached() {
   // APIs:
   // 1. CloudStorage.stat(file, context)
   // 2. getUncompressedSize()
-  return await isMinimumLimitReached('minStorageRequired');
+  return await isMinimumStorageLimitReached('minStorageRequired');
 }
 
-export async function  isMinimumLimitReached(limitInMB: string) {
+export async function isMinimumStorageLimitReached(limitInMB: string) {
   const configurations = await getAllConfigurations();
   if (!configurations[limitInMB]) return false;
 

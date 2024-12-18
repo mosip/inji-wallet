@@ -624,7 +624,7 @@ export async function backupAndExportData(encryptionKey: string) {
 }
 
 export async function restoreBackedUpData(data, encryptionKey) {
-  await Storage.restoreBackedUpData(data, encryptionKey);
+  await Storage.restoreBackUpData(data, encryptionKey);
 }
 
 export async function fetchAllWellknownConfig(encryptionKey: string) {

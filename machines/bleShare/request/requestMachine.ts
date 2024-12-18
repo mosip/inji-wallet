@@ -23,7 +23,7 @@ import {VcMetaEvents} from '../../VerifiableCredential/VCMetaMachine/VCMetaMachi
 import {subscribe} from '../../../shared/openIdBLE/verifierEventHandler';
 import {VerifierDataEvent} from '../../../shared/tuvali/types/events';
 import {BLEError} from '../types';
-import Storage, { isMinimumLimitReached } from '../../../shared/storage';
+import Storage, { isMinimumStorageLimitReached } from '../../../shared/storage';
 import {VCMetadata} from '../../../shared/VCMetadata';
 import {
   getEndEventData,
@@ -885,7 +885,7 @@ export const requestMachine =
         },
 
         checkStorageAvailability: () => async () => {
-          return Promise.resolve(isMinimumLimitReached('minStorageRequired'));
+          return Promise.resolve(isMinimumStorageLimitReached('minStorageRequired'));
         },
       },
 
