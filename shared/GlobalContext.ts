@@ -7,9 +7,9 @@ import {requestMachine} from '../machines/bleShare/request/requestMachine';
 import {scanMachine} from '../machines/bleShare/scan/scanMachine';
 import {settingsMachine} from '../machines/settings';
 import {storeMachine} from '../machines/store';
-import {backupMachine} from '../machines/backupAndRestore/backup';
-import {backupRestoreMachine} from '../machines/backupAndRestore/backupRestore';
+import {backupMachine} from '../machines/backupAndRestore/backup/backupMachine';
 import {vcMetaMachine} from '../machines/VerifiableCredential/VCMetaMachine/VCMetaMachine';
+import {restoreMachine} from '../machines/backupAndRestore/restore/restoreMachine';
 
 export const GlobalContext = createContext({} as GlobalServices);
 
@@ -26,5 +26,5 @@ export interface AppServices {
   request: ActorRefFrom<typeof requestMachine>;
   scan: ActorRefFrom<typeof scanMachine>;
   backup: ActorRefFrom<typeof backupMachine>;
-  backupRestore: ActorRefFrom<typeof backupRestoreMachine>;
+  backupRestore: ActorRefFrom<typeof restoreMachine>;
 }

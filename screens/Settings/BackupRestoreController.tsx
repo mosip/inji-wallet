@@ -1,18 +1,19 @@
 import {useSelector} from '@xstate/react';
 import {useContext} from 'react';
+import {RestoreEvents} from '../../machines/backupAndRestore/restore/restoreMachine';
+
 import {
-  BackupRestoreEvents,
   selectIsBackUpRestoring,
   selectIsBackUpRestoreFailure,
   selectIsBackUpRestoreSuccess,
   selectErrorReason,
   selectShowRestoreInProgress,
-} from '../../machines/backupAndRestore/backupRestore';
+} from '../../machines/backupAndRestore/restore/restoreSelector';
 import {GlobalContext} from '../../shared/GlobalContext';
 
 export function useBackupRestoreScreen() {
   const {appService} = useContext(GlobalContext);
-  const backupRestoreService = appService.children.get('backupRestore')!!;
+  const backupRestoreService = appService.children.get('restore')!!;
 
   return {
     isBackUpRestoring: useSelector(
@@ -29,22 +30,20 @@ export function useBackupRestoreScreen() {
       selectIsBackUpRestoreFailure,
     ),
     DOWNLOAD_UNSYNCED_BACKUP_FILES: () =>
-      backupRestoreService.send(
-        BackupRestoreEvents.DOWNLOAD_UNSYNCED_BACKUP_FILES(),
-      ),
+      backupRestoreService.send(RestoreEvents.DOWNLOAD_UNSYNCED_BACKUP_FILES()),
     showRestoreInProgress: useSelector(
       backupRestoreService!,
       selectShowRestoreInProgress,
     ),
     BACKUP_RESTORE: () => {
-      backupRestoreService.send(BackupRestoreEvents.BACKUP_RESTORE());
+      backupRestoreService.send(RestoreEvents.BACKUP_RESTORE());
     },
     DISMISS: () => {
-      backupRestoreService.send(BackupRestoreEvents.DISMISS());
+      backupRestoreService.send(RestoreEvents.DISMISS());
     },
     DISMISS_SHOW_RESTORE_IN_PROGRESS: () => {
       backupRestoreService.send(
-        BackupRestoreEvents.DISMISS_SHOW_RESTORE_IN_PROGRESS(),
+        RestoreEvents.DISMISS_SHOW_RESTORE_IN_PROGRESS(),
       );
     },
   };

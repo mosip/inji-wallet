@@ -24,11 +24,14 @@ import {
   SETTINGS_STORE_KEY,
 } from '../shared/constants';
 import {logState} from '../shared/commonUtil';
-import {backupMachine, createBackupMachine} from './backupAndRestore/backup';
 import {
-  backupRestoreMachine,
-  createBackupRestoreMachine,
-} from './backupAndRestore/backupRestore';
+  backupMachine,
+  createBackupMachine,
+} from './backupAndRestore/backup/backupMachine';
+import {
+  restoreMachine,
+  createRestoreMachine,
+} from './backupAndRestore/restore/restoreMachine';
 import {
   createVcMetaMachine,
   vcMetaMachine,
@@ -103,8 +106,8 @@ export const appMachine = model.createMachine(
         target: 'init',
       },
       BIOMETRIC_CANCELLED: {
-        target: 'init'
-      }
+        target: 'init',
+      },
     },
     states: {
       init: {
@@ -171,9 +174,8 @@ export const appMachine = model.createMachine(
                 target: 'info',
               },
               BIOMETRIC_CANCELLED: {
-                target: 'store'
-              }
-              
+                target: 'store',
+              },
             },
           },
           info: {
@@ -340,8 +342,8 @@ export const appMachine = model.createMachine(
           );
 
           serviceRefs.backupRestore = spawn(
-            createBackupRestoreMachine(serviceRefs),
-            backupRestoreMachine.id,
+            createRestoreMachine(serviceRefs),
+            restoreMachine.id,
           );
 
           serviceRefs.activityLog = spawn(
