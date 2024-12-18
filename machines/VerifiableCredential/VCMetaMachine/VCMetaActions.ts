@@ -7,7 +7,7 @@ import {
   RECEIVED_VCS_STORE_KEY,
 } from '../../../shared/constants';
 import {ActivityLogEvents} from '../../activityLog';
-import {BackupEvents} from '../../backupAndRestore/backup';
+import {BackupEvents} from '../../backupAndRestore/backup/backupMachine';
 import {StoreEvents} from '../../store';
 import {vcVerificationBannerDetails} from '../../../components/BannerNotificationContainer';
 
