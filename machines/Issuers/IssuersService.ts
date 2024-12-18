@@ -27,7 +27,7 @@ import {
 } from '../../shared/telemetry/TelemetryUtils';
 import {TelemetryConstants} from '../../shared/telemetry/TelemetryConstants';
 import {VciClient} from '../../shared/vciClient/VciClient';
-import {isMockVC} from '../../shared/Utils';
+import {isMockVC, verifyCredentialData} from '../../shared/Utils';
 import {VCFormat} from '../../shared/VCFormat';
 
 export const IssuersService = () => {
@@ -151,26 +151,15 @@ export const IssuersService = () => {
     },
 
     verifyCredential: async (context: any) => {
-      //TODO: Remove bypassing verification of mock VCs once mock VCs are verifiable
-      if (
-        context.selectedCredentialType.format === VCFormat.mso_mdoc ||
-        !isMockVC(context.selectedIssuerId)
-      ) {
-        const verificationResult = await verifyCredential(
-          context.verifiableCredential?.credential,
-          context.selectedCredentialType.format,
-        );
-        if (!verificationResult.isVerified) {
+      const verificationResult = await verifyCredentialData(
+        context.verifiableCredential?.credential,
+        context.selectedCredentialType.format,
+        context.selectedIssuerId
+      );
+       if(!verificationResult.isVerified) {
           throw new Error(verificationResult.verificationErrorCode);
         }
         return verificationResult;
-      } else {
-        return {
-          isVerified: true,
-          verificationMessage: VerificationErrorMessage.NO_ERROR,
-          verificationErrorCode: VerificationErrorType.NO_ERROR,
-        };
-      }
     },
   };
 };

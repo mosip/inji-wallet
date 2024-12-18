@@ -7,10 +7,7 @@ import Storage, { MMKV } from "../storage";
 import { MY_VCS_STORE_KEY } from "../constants";
 import { VCMetadata } from "../VCMetadata";
 import { VCFormat } from "../VCFormat";
-import { isMockVC } from "../Utils";
-import {
-  verifyCredential,
-} from '../vcjs/verifyCredential'
+import { isMockVC, verifyCredentialData } from "../Utils";
 
 export async function loadBackupData(
     data: string,
@@ -163,15 +160,14 @@ async function handlePreviousBackup(
       vcKeys.map(async key => {
         const vcData = allVCs[key];
         // Add randomness to timestamp to maintain uniqueness
-        const timestamp =
-          Date.now() + Math.random().toString().substring(2, 10);
+        const timestamp = Date.now() + Math.random().toString().substring(2, 10);
         const prevUnixTimeStamp = vcData.vcMetadata.timestamp;
 
-        // Verify and update the credential
-        const isVerified = await verifyCredentialData(
-          vcData,
-          vcData.vcMetadata,
-        );
+        //verify the credential and update the metadata
+        const verifiableCredential = vcData.verifiableCredential?.credential || vcData.verifiableCredential;
+        const verificationResult = await verifyCredentialData(verifiableCredential, vcData.vcMetadata.format, vcData.vcMetadata.issuer)
+        const isVerified = verificationResult.isVerified;
+        
         vcData.vcMetadata.timestamp = timestamp;
         vcData.vcMetadata.isVerified = isVerified;
 
@@ -195,28 +191,6 @@ async function handlePreviousBackup(
         await Storage.setItem(updatedVcKey, encryptedVC, encryptionKey);
       }),
     );
-  }
-
-  /**
-   * Verify the restored credential
-   * @param vcData  Verifiable Credential from backup
-   * @param vcMetadata  VC metadata
-   */
-  async function verifyCredentialData(vcData: any, vcMetadata: any) {
-    let isVerified = true;
-    const verifiableCredential =
-      vcData.verifiableCredential?.credential || vcData.verifiableCredential;
-    if (
-      vcMetadata.format === VCFormat.mso_mdoc ||
-      !isMockVC(vcMetadata.issuer)
-    ) {
-      const verificationResult = await verifyCredential(
-        verifiableCredential,
-        vcMetadata.format,
-      );
-      isVerified = verificationResult.isVerified;
-    }
-    return isVerified;
   }
 
   /**

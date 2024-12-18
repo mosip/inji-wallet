@@ -21,7 +21,7 @@ import {getMatchingCredentialIssuerMetadata} from '../../../shared/openId4VCI/Ut
 import {isIOS} from '../../../shared/constants';
 import {VCMetadata} from '../../../shared/VCMetadata';
 import {VCFormat} from '../../../shared/VCFormat';
-import {isMockVC} from '../../../shared/Utils';
+import {isMockVC, verifyCredentialData} from '../../../shared/Utils';
 
 const {RNSecureKeystoreModule} = NativeModules;
 export const VCItemServices = model => {
@@ -199,26 +199,16 @@ export const VCItemServices = model => {
     },
 
     verifyCredential: async (context: any) => {
-      if (context.verifiableCredential) {
-        //TODO: Remove bypassing verification of mock VCs once mock VCs are verifiable
-        if (
-          context.selectedCredentialType.format === VCFormat.mso_mdoc ||
-          !isMockVC(context.selectedIssuerId)
-        ) {
-          const verificationResult = await verifyCredential(
-            getVerifiableCredential(context.verifiableCredential),
-            (context.vcMetadata as VCMetadata).format,
-          );
-          if (!verificationResult.isVerified) {
+      if(context.verifiableCredential){
+        const verificationResult = await verifyCredentialData(
+          getVerifiableCredential(context.verifiableCredential),
+          context.selectedCredentialType.format,
+          context.selectedIssuerId
+        );
+         if(!verificationResult.isVerified) {
             throw new Error(verificationResult.verificationErrorCode);
           }
-        } else {
-          return {
-            isVerified: true,
-            verificationMessage: VerificationErrorMessage.NO_ERROR,
-            verificationErrorCode: VerificationErrorType.NO_ERROR,
-          };
-        }
+          return verificationResult;
       }
     },
   };

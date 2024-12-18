@@ -1,7 +1,10 @@
+import { VCFormat } from './VCFormat';
 import {VCMetadata} from './VCMetadata';
+import { VerificationErrorMessage, VerificationErrorType, verifyCredential } from './vcjs/verifyCredential';
 import {NETWORK_REQUEST_FAILED} from './constants';
 import {groupBy} from './javascript';
 import {Issuers} from './openId4VCI/Utils';
+import {Credential} from '../machines/VerifiableCredential/VCMetaMachine/vc';
 
 export const getVCsOrderedByPinStatus = (vcMetadatas: VCMetadata[]) => {
   const [pinned, unpinned] = groupBy(
@@ -54,3 +57,21 @@ export const parseJSON = (input: any) => {
 export const isNetworkError = (error: string) => {
   return error.includes(NETWORK_REQUEST_FAILED);
 };
+
+export async function verifyCredentialData(
+  credential: Credential,
+  credentialFormat: string, 
+  issuerId: string
+) {
+
+  if (credentialFormat === VCFormat.mso_mdoc || !isMockVC(issuerId)) {
+    const verificationResult = await verifyCredential(credential, credentialFormat);
+    return verificationResult;
+  } else {
+    return {
+      isVerified: true,
+      verificationMessage: VerificationErrorMessage.NO_ERROR,
+      verificationErrorCode: VerificationErrorType.NO_ERROR,
+    };
+  }
+}
