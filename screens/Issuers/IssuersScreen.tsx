@@ -285,19 +285,19 @@ export const IssuersScreen: React.FC<
                 data={filteredSearchData}
                 renderItem={({item}) => (
                   <Issuer
-                    testID={removeWhiteSpace(item.credential_issuer)}
-                    key={item.credential_issuer}
+                    testID={removeWhiteSpace(item.issuer_id)}
+                    key={item.issuer_id}
                     displayDetails={getDisplayObjectForCurrentLanguage(
                       item.display,
                     )}
                     onPress={() =>
-                      onPressHandler(item.credential_issuer, item.protocol)
+                      onPressHandler(item.issuer_id, item.protocol)
                     }
                     {...props}
                   />
                 )}
                 numColumns={1}
-                keyExtractor={item => item.credential_issuer}
+                keyExtractor={item => item.issuer_id}
               />
             )}
           </Column>

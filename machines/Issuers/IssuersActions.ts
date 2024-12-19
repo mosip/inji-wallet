@@ -239,7 +239,7 @@ export const IssuersActions = (model: any) => {
 
     setSelectedIssuers: model.assign({
       selectedIssuer: (context: any, event: any) =>
-        context.issuers.find(issuer => issuer.credential_issuer === event.id),
+        context.issuers.find(issuer => issuer.issuer_id === event.id),
     }),
 
     updateIssuerFromWellknown: model.assign({

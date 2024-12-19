@@ -41,7 +41,8 @@ export const IssuersService = () => {
     checkInternet: async () => await NetInfo.fetch(),
     downloadIssuerWellknown: async (context: any) => {
       const wellknownResponse = await CACHED_API.fetchIssuerWellknownConfig(
-        context.selectedIssuerId,
+        context.selectedIssuer.issuer_id,
+        context.selectedIssuer.credential_issuer_host,
       );
       return wellknownResponse;
     },
@@ -56,7 +57,7 @@ export const IssuersService = () => {
       }
       if (credentialTypes.length == 0)
         throw new Error(
-          `No credential type found for issuer ${context.selectedIssuer.credential_issuer}`,
+          `No credential type found for issuer ${context.selectedIssuer.issuer_id}`,
         );
 
       return credentialTypes;
@@ -113,7 +114,7 @@ export const IssuersService = () => {
       sendImpressionEvent(
         getImpressionEventData(
           TelemetryConstants.FlowType.vcDownload,
-          context.selectedIssuer.credential_issuer +
+          context.selectedIssuer.issuer_id +
             TelemetryConstants.Screens.webViewPage,
         ),
       );

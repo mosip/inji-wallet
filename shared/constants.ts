@@ -65,8 +65,6 @@ export const APP_ID_DICTIONARY = [
 
 export const API_CACHED_STORAGE_KEYS = {
   fetchIssuers: 'CACHE_FETCH_ISSUERS',
-  fetchIssuerConfig: (issuerId: string) =>
-    `CACHE_FETCH_ISSUER_CONFIG_${issuerId}`,
   fetchIssuerWellknownConfig: (issuerId: string) =>
     `CACHE_FETCH_ISSUER_WELLKNOWN_CONFIG_${issuerId}`,
   fetchIssuerAuthorizationServerMetadata: (authorizationServerUrl: string) =>

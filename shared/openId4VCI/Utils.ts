@@ -79,7 +79,7 @@ export const getIdentifier = (
       ? credentialIdentifier.split(':')
       : credentialIdentifier.split('/');
   return (
-    context.selectedIssuer.credential_issuer +
+    context.selectedIssuer.issuer_id +
     ':' +
     context.selectedIssuer.protocol +
     ':' +
@@ -144,7 +144,7 @@ export const constructAuthorizationConfiguration = (
   supportedScope: string,
 ) => {
   return {
-    issuer: selectedIssuer.credential_issuer,
+    issuer: selectedIssuer.issuer_id,
     clientId: selectedIssuer.client_id,
     scopes: [supportedScope],
     redirectUrl: selectedIssuer.redirect_uri,
@@ -161,11 +161,13 @@ export const getCredentialIssuersWellKnownConfig = async (
   defaultFields: string[],
   credentialConfigurationId: string,
   format: string,
+  issuerHost: string,
 ) => {
   let fields: string[] = defaultFields;
   let matchingWellknownDetails: any;
   const wellknownResponse = await CACHED_API.fetchIssuerWellknownConfig(
     issuer!,
+    issuerHost,
   );
   try {
     if (wellknownResponse) {
@@ -220,12 +222,14 @@ export const getDetailedViewFields = async (
   credentialConfigurationId: string,
   defaultFields: string[],
   format: string,
+  issuerHost: string,
 ) => {
   let response = await getCredentialIssuersWellKnownConfig(
     issuer,
     defaultFields,
     credentialConfigurationId,
     format,
+    issuerHost,
   );
 
   let updatedFieldsList = response.fields.concat(DETAIL_VIEW_ADD_ON_FIELDS);
@@ -255,8 +259,8 @@ export const vcDownloadTimeout = async (): Promise<number> => {
 
 // OIDCErrors is a collection of external errors from the OpenID library or the issuer
 export const OIDCErrors = {
-  OIDC_FLOW_CANCELLED_ANDROID : 'User cancelled flow',
-  OIDC_FLOW_CANCELLED_IOS : 'org.openid.appauth.general error -3',
+  OIDC_FLOW_CANCELLED_ANDROID: 'User cancelled flow',
+  OIDC_FLOW_CANCELLED_IOS: 'org.openid.appauth.general error -3',
 
   INVALID_TOKEN_SPECIFIED: 'Invalid token specified',
   OIDC_CONFIG_ERROR_PREFIX: 'Config error',

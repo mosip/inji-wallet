@@ -521,6 +521,7 @@ export interface displayType {
 }
 
 export interface issuerType {
+  issuer_id: string;
   credential_issuer: string;
   protocol: string;
   client_id: string;
@@ -534,4 +535,5 @@ export interface issuerType {
   display: [displayType];
   credentialTypes: [CredentialTypes];
   authorizationEndpoint: string;
+  credential_issuer_host: string;
 }

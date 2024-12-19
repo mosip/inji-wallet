@@ -9,7 +9,7 @@ import {Protocols} from './openId4VCI/Utils';
 import {getMosipIdentifier} from './commonUtil';
 import {VCFormat} from './VCFormat';
 import {isMosipVC} from './Utils';
-import { getCredentialType } from '../components/VC/common/VCUtils';
+import {getCredentialType} from '../components/VC/common/VCUtils';
 
 const VC_KEY_PREFIX = 'VC';
 const VC_ITEM_STORE_KEY_REGEX = '^VC_[a-zA-Z0-9_-]+$';
@@ -30,6 +30,8 @@ export class VCMetadata {
 
   downloadKeyType: string = '';
   credentialType: string = '';
+  issuerHost: string = '';
+
   constructor({
     idType = '',
     requestId = '',
@@ -44,6 +46,7 @@ export class VCMetadata {
     downloadKeyType = '',
     isExpired = false,
     credentialType = '',
+    issuerHost = '',
   } = {}) {
     this.idType = idType;
     this.requestId = requestId;
@@ -57,7 +60,8 @@ export class VCMetadata {
     this.format = format;
     this.downloadKeyType = downloadKeyType;
     this.isExpired = isExpired;
-    this.credentialType = credentialType
+    this.credentialType = credentialType;
+    this.issuerHost = issuerHost;
   }
 
   //TODO: Remove any typing and use appropriate typing
@@ -79,7 +83,8 @@ export class VCMetadata {
         ? vc.vcMetadata.mosipIndividualId
         : getMosipIndividualId(vc.verifiableCredential, vc.issuer),
       downloadKeyType: vc.downloadKeyType,
-      credentialType: vc.credentialType
+      credentialType: vc.credentialType,
+      issuerHost: vc.issuerHost,
     });
   }
 
@@ -119,7 +124,11 @@ export function parseMetadatas(metadataStrings: object[]) {
   return metadataStrings.map(o => new VCMetadata(o));
 }
 
-export const getVCMetadata = (context: object, keyType: string, credType: CredentialTypes) => {
+export const getVCMetadata = (
+  context: object,
+  keyType: string,
+  credType: CredentialTypes,
+) => {
   const [issuer, protocol, credentialId] =
     context.credentialWrapper?.identifier.split(':');
 
@@ -133,17 +142,18 @@ export const getVCMetadata = (context: object, keyType: string, credType: Creden
     isExpired: context.vcMetadata.isExpired ?? false,
     mosipIndividualId: getMosipIndividualId(
       context['verifiableCredential'] as VerifiableCredential,
-      issuer
+      issuer,
     ),
     format: context['credentialWrapper'].format,
     downloadKeyType: keyType,
-    credentialType: getCredentialType(context.selectedCredentialType)
+    credentialType: getCredentialType(context.selectedCredentialType),
+    issuerHost: context.selectedIssuer.credential_issuer_host,
   });
 };
 
 const getMosipIndividualId = (
   verifiableCredential: VerifiableCredential | Credential,
-  issuer: string
+  issuer: string,
 ) => {
   try {
     const credential = verifiableCredential?.credential
