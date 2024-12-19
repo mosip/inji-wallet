@@ -8,12 +8,17 @@ import {
 import {Protocols} from './openId4VCI/Utils';
 import {getMosipIdentifier} from './commonUtil';
 import {VCFormat} from './VCFormat';
-import {isMosipVC} from './Utils';
-import { getCredentialType } from '../components/VC/common/VCUtils';
+import {isMosipVC, UUID} from './Utils';
+import {getCredentialType} from '../components/VC/common/VCUtils';
 
 const VC_KEY_PREFIX = 'VC';
 const VC_ITEM_STORE_KEY_REGEX = '^VC_[a-zA-Z0-9_-]+$';
 
+/** TODO: two identifiers requestId and id
+ * we have 2 fields in metadata - id, requestID
+ * requestID -> This will be holding the requestId required for OTP flow VCs and for OIDC flow it holds the generated UUID
+ * id        -> holds UUID for both OTP based & OIDC flow
+ */
 export class VCMetadata {
   static vcKeyRegExp = new RegExp(VC_ITEM_STORE_KEY_REGEX);
   idType: VcIdType | string = '';
@@ -57,7 +62,7 @@ export class VCMetadata {
     this.format = format;
     this.downloadKeyType = downloadKeyType;
     this.isExpired = isExpired;
-    this.credentialType = credentialType
+    this.credentialType = credentialType;
   }
 
   //TODO: Remove any typing and use appropriate typing
@@ -79,7 +84,7 @@ export class VCMetadata {
         ? vc.vcMetadata.mosipIndividualId
         : getMosipIndividualId(vc.verifiableCredential, vc.issuer),
       downloadKeyType: vc.downloadKeyType,
-      credentialType: vc.credentialType
+      credentialType: vc.credentialType,
     });
   }
 
@@ -106,8 +111,8 @@ export class VCMetadata {
   // Update VC_ITEM_STORE_KEY_REGEX in case of changes in vckey
   getVcKey(): string {
     return this.timestamp !== ''
-      ? `${VC_KEY_PREFIX}_${this.timestamp}_${this.requestId}`
-      : `${VC_KEY_PREFIX}_${this.requestId}`;
+      ? `${VC_KEY_PREFIX}_${this.timestamp}_${this.id}`
+      : `${VC_KEY_PREFIX}_${this.id}`;
   }
 
   equals(other: VCMetadata): boolean {
@@ -119,31 +124,31 @@ export function parseMetadatas(metadataStrings: object[]) {
   return metadataStrings.map(o => new VCMetadata(o));
 }
 
-export const getVCMetadata = (context: object, keyType: string, credType: CredentialTypes) => {
-  const [issuer, protocol, credentialId] =
-    context.credentialWrapper?.identifier.split(':');
+export const getVCMetadata = (context: object, keyType: string) => {
+  const issuer = context.selectedIssuer.credential_issuer;
+  const credentialId = `${UUID.generate()}_${issuer}`;
 
   return VCMetadata.fromVC({
-    requestId: credentialId ?? null,
+    requestId: credentialId,
     issuer: issuer,
-    protocol: protocol,
-    id: `${credentialId} + '_' + ${issuer}`,
+    protocol: context.selectedIssuer.protocol,
+    id: credentialId,
     timestamp: context.timestamp ?? '',
     isVerified: context.vcMetadata.isVerified ?? false,
     isExpired: context.vcMetadata.isExpired ?? false,
     mosipIndividualId: getMosipIndividualId(
       context['verifiableCredential'] as VerifiableCredential,
-      issuer
+      issuer,
     ),
     format: context['credentialWrapper'].format,
     downloadKeyType: keyType,
-    credentialType: getCredentialType(context.selectedCredentialType)
+    credentialType: getCredentialType(context.selectedCredentialType),
   });
 };
 
 const getMosipIndividualId = (
   verifiableCredential: VerifiableCredential | Credential,
-  issuer: string
+  issuer: string,
 ) => {
   try {
     const credential = verifiableCredential?.credential
