@@ -1,27 +1,19 @@
-import {NativeModules} from 'react-native';
-import Cloud from '../../../shared/CloudBackupAndRestoreUtils';
+import { NativeModules } from 'react-native';
 import getAllConfigurations, {
   API_URLS,
   CACHED_API,
   DownloadProps,
 } from '../../../shared/api';
+import Cloud from '../../../shared/CloudBackupAndRestoreUtils';
+import { isIOS } from '../../../shared/constants';
 import {
   fetchKeyPair,
   generateKeyPair,
 } from '../../../shared/cryptoutil/cryptoUtil';
-import {CredentialDownloadResponse, request} from '../../../shared/request';
-import {WalletBindingResponse} from '../VCMetaMachine/vc';
-import {
-  VerificationErrorMessage,
-  VerificationErrorType,
-  verifyCredential,
-} from '../../../shared/vcjs/verifyCredential';
-import {getVerifiableCredential} from './VCItemSelectors';
-import {getMatchingCredentialIssuerMetadata} from '../../../shared/openId4VCI/Utils';
-import {isIOS} from '../../../shared/constants';
-import {VCMetadata} from '../../../shared/VCMetadata';
-import {VCFormat} from '../../../shared/VCFormat';
-import {isMockVC, verifyCredentialData} from '../../../shared/Utils';
+import { getMatchingCredentialIssuerMetadata, verifyCredentialData } from '../../../shared/openId4VCI/Utils';
+import { CredentialDownloadResponse, request } from '../../../shared/request';
+import { WalletBindingResponse } from '../VCMetaMachine/vc';
+import { getVerifiableCredential } from './VCItemSelectors';
 
 const {RNSecureKeystoreModule} = NativeModules;
 export const VCItemServices = model => {

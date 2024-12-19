@@ -1,6 +1,12 @@
-import Cloud from '../../shared/CloudBackupAndRestoreUtils';
-import {CACHED_API} from '../../shared/api';
 import NetInfo from '@react-native-community/netinfo';
+import { NativeModules } from 'react-native';
+import { authorize } from 'react-native-app-auth';
+import Cloud from '../../shared/CloudBackupAndRestoreUtils';
+import { CACHED_API } from '../../shared/api';
+import {
+  fetchKeyPair,
+  generateKeyPair,
+} from '../../shared/cryptoutil/cryptoUtil';
 import {
   constructAuthorizationConfiguration,
   constructIssuerMetaData,
@@ -9,26 +15,14 @@ import {
   OIDCErrors,
   updateCredentialInformation,
   vcDownloadTimeout,
+  verifyCredentialData
 } from '../../shared/openId4VCI/Utils';
-import {authorize} from 'react-native-app-auth';
-import {
-  fetchKeyPair,
-  generateKeyPair,
-} from '../../shared/cryptoutil/cryptoUtil';
-import {NativeModules} from 'react-native';
-import {
-  VerificationErrorMessage,
-  VerificationErrorType,
-  verifyCredential,
-} from '../../shared/vcjs/verifyCredential';
+import { TelemetryConstants } from '../../shared/telemetry/TelemetryConstants';
 import {
   getImpressionEventData,
   sendImpressionEvent,
 } from '../../shared/telemetry/TelemetryUtils';
-import {TelemetryConstants} from '../../shared/telemetry/TelemetryConstants';
-import {VciClient} from '../../shared/vciClient/VciClient';
-import {isMockVC, verifyCredentialData} from '../../shared/Utils';
-import {VCFormat} from '../../shared/VCFormat';
+import { VciClient } from '../../shared/vciClient/VciClient';
 
 export const IssuersService = () => {
   return {

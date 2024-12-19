@@ -1,13 +1,12 @@
 import { DocumentDirectoryPath } from "react-native-fs";
-import fileStorage from "../fileStorage";
-import { getErrorEventData, sendErrorEvent } from "../telemetry/TelemetryUtils";
-import { TelemetryConstants } from "../telemetry/TelemetryConstants";
-import { decryptJson, encryptJson } from "../cryptoutil/cryptoUtil";
-import Storage, { MMKV } from "../storage";
 import { MY_VCS_STORE_KEY } from "../constants";
+import { decryptJson, encryptJson } from "../cryptoutil/cryptoUtil";
+import fileStorage from "../fileStorage";
+import Storage, { MMKV } from "../storage";
+import { TelemetryConstants } from "../telemetry/TelemetryConstants";
+import { getErrorEventData, sendErrorEvent } from "../telemetry/TelemetryUtils";
 import { VCMetadata } from "../VCMetadata";
-import { VCFormat } from "../VCFormat";
-import { isMockVC, verifyCredentialData } from "../Utils";
+import { verifyCredentialData } from "../openId4VCI/Utils";
 
 export async function loadBackupData(
     data: string,
