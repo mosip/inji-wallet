@@ -396,4 +396,6 @@ fileignoreconfig:
     checksum: 9f29c9b0b91eba7fd7f5f4d1f78f9b6f96ef2c850c1346d712058a438d01036a
   - filename: assets/InjiHomeLogo.svg
     checksum: 6600a3d75033af4d702dd8c9663e12ad7c2c096a529bac2771bb856cc75a5ed0
+  - filename: machines/openID4VP/openID4VPModel.ts
+    checksum: 5d1ed430f84852d6c85bc439c47641cfb5b19cbd1a03faf8918429685db51e07
     version: ""

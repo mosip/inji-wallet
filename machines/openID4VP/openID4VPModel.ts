@@ -57,7 +57,7 @@ export const openID4VPModel = createModel(
     error: '' as string,
     publicKey: '',
     privateKey: '',
-    keyType: KeyTypes.RS256,
+    keyType: KeyTypes.ED25519,
     flowType: '' as string,
     miniViewSelectedVC: {} as VC,
     openID4VPRetryCount: 0,

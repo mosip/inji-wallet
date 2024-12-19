@@ -1,12 +1,13 @@
 import {CACHED_API} from '../../shared/api';
 import {fetchKeyPair} from '../../shared/cryptoutil/cryptoUtil';
 import {hasKeyPair} from '../../shared/openId4VCI/Utils';
+import base64url from 'base64url';
 import {
   constructProofJWT,
   isClientValidationRequired,
   OpenID4VP,
   OpenID4VP_Domain,
-  OpenID4VP_Proof_Algo_Type,
+  OpenID4VP_Proof_Sign_Algo_Suite,
 } from '../../shared/openID4VP/OpenID4VP';
 
 export const openID4VPServices = () => {
@@ -52,8 +53,8 @@ export const openID4VPServices = () => {
 
       const vpResponseMetadata = {
         jws: proofJWT,
-        signatureAlgorithm: OpenID4VP_Proof_Algo_Type,
-        publicKey: context.publicKey,
+        signatureAlgorithm: OpenID4VP_Proof_Sign_Algo_Suite,
+        publicKey: base64url(context.publicKey),
         domain: OpenID4VP_Domain,
       };
       return await OpenID4VP.shareVerifiablePresentation(vpResponseMetadata);

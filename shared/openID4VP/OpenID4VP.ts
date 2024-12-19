@@ -6,8 +6,9 @@ import {getJWK} from '../openId4VCI/Utils';
 import getAllConfigurations from '../api';
 
 export const OpenID4VP_Key_Ref = 'OpenID4VP_KeyPair';
-export const OpenID4VP_Proof_Algo_Type = 'RsaSignature2018';
+export const OpenID4VP_Proof_Sign_Algo_Suite = 'Ed25519Signature2018';
 export const OpenID4VP_Domain = 'OpenID4VP';
+export const OpenID4VP_Proof_Sign_Algo = 'EdDSA';
 
 export class OpenID4VP {
   static InjiOpenID4VP = NativeModules.InjiOpenID4VP;
@@ -62,13 +63,13 @@ export class OpenID4VP {
 }
 
 export async function constructProofJWT(
-  publicKey: string,
-  privateKey: string,
+  publicKey: any,
+  privateKey: any,
   vpToken: Object,
   keyType: string,
 ): Promise<string> {
   const jwtHeader = {
-    alg: keyType,
+    alg: OpenID4VP_Proof_Sign_Algo,
     jwk: await getJWK(publicKey, keyType),
   };
 
