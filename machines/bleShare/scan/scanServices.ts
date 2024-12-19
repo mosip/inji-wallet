@@ -1,5 +1,5 @@
 import {isLocationEnabled} from 'react-native-device-info';
-import Storage from '../../../shared/storage';
+import Storage, { isMinimumStorageLimitReached } from '../../../shared/storage';
 import BluetoothStateManager from 'react-native-bluetooth-state-manager';
 import {
   check,
@@ -188,9 +188,7 @@ export const ScanServices = (model: any) => {
     },
 
     checkStorageAvailability: () => async () => {
-      return Promise.resolve(
-        Storage.isMinimumLimitReached('minStorageRequiredForAuditEntry'),
-      );
+      return Promise.resolve(isMinimumStorageLimitReached('minStorageRequiredForAuditEntry'));
     },
   };
 };
