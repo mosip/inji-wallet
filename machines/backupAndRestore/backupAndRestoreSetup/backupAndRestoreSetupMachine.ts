@@ -236,10 +236,3 @@ export const backupAndRestoreSetupMachine = model.createMachine(
     guards: backupAndRestoreSetupGaurds(),
   },
 );
-
-export function createBackupAndRestoreSetupMachine(serviceRefs: AppServices) {
-  return backupAndRestoreSetupMachine.withContext({
-    ...backupAndRestoreSetupMachine.context,
-    serviceRefs,
-  });
-}

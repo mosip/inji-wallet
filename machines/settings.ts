@@ -64,7 +64,6 @@ const model = createModel(
       BACK: () => ({}),
       CANCEL: () => ({}),
       ACCEPT_HARDWARE_SUPPORT_NOT_EXISTS: () => ({}),
-      SET_IS_BACKUP_AND_RESTORE_EXPLORED: () => ({}),
       SET_KEY_MANAGEMENT_EXPLORED: () => ({}),
       SET_KEY_MANAGEMENT_TOUR_GUIDE_EXPLORED: () => ({}),
       SET_KEY_ORDER_RESPONSE: (status: boolean) => ({status}),
@@ -137,9 +136,6 @@ export const settingsMachine = model.createMachine(
           },
           UPDATE_NAME: {
             actions: ['updateName', 'storeContext'],
-          },
-          SET_IS_BACKUP_AND_RESTORE_EXPLORED: {
-            actions: ['setBackupAndRestoreOptionExplored', 'storeContext'],
           },
           SET_KEY_MANAGEMENT_EXPLORED: {
             actions: ['setKeyManagementExplored', 'storeContext'],
@@ -415,10 +411,6 @@ export function selectBiometricUnlockEnabled(state: State) {
 
 export function selectIsResetInjiProps(state: State) {
   return state?.matches('resetInjiProps');
-}
-
-export function selectIsBackUpAndRestoreExplored(state: State) {
-  return state?.context?.isBackupAndRestoreExplored;
 }
 
 export function selectIsBiometricUnlock(state: State) {
