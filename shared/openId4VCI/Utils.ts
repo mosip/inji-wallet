@@ -1,32 +1,35 @@
-import jwtDecode from 'jwt-decode';
-import jose from 'node-jose';
-import {isIOS} from '../constants';
-import {displayType, issuerType} from '../../machines/Issuers/IssuersMachine';
-import getAllConfigurations, {CACHED_API} from '../api';
 import base64url from 'base64url';
 import i18next from 'i18next';
-import {getJWT, replaceCharactersInB64} from '../cryptoutil/cryptoUtil';
-import i18n from '../../i18n';
-import {
-  CredentialTypes,
-  CredentialWrapper,
-  VerifiableCredential,
-} from '../../machines/VerifiableCredential/VCMetaMachine/vc';
+import jwtDecode from 'jwt-decode';
+import jose from 'node-jose';
+import { NativeModules } from 'react-native';
+import { vcVerificationBannerDetails } from '../../components/BannerNotificationContainer';
+import { VCProcessor } from '../../components/VC/common/VCProcessor';
 import {
   BOTTOM_SECTION_FIELDS_WITH_DETAILED_ADDRESS_FIELDS,
   DETAIL_VIEW_ADD_ON_FIELDS,
   getCredentialTypeFromWellKnown,
 } from '../../components/VC/common/VCUtils';
-import {getVerifiableCredential} from '../../machines/VerifiableCredential/VCItemMachine/VCItemSelectors';
-import {vcVerificationBannerDetails} from '../../components/BannerNotificationContainer';
-import {getErrorEventData, sendErrorEvent} from '../telemetry/TelemetryUtils';
-import {TelemetryConstants} from '../telemetry/TelemetryConstants';
-import {NativeModules} from 'react-native';
-import {KeyTypes} from '../cryptoutil/KeyTypes';
-import {VCFormat} from '../VCFormat';
-import {UnsupportedVcFormat} from '../error/UnsupportedVCFormat';
-import {VCMetadata} from '../VCMetadata';
-import {VCProcessor} from '../../components/VC/common/VCProcessor';
+import i18n from '../../i18n';
+import { displayType, issuerType } from '../../machines/Issuers/IssuersMachine';
+import { getVerifiableCredential } from '../../machines/VerifiableCredential/VCItemMachine/VCItemSelectors';
+import {
+  Credential,
+  CredentialTypes,
+  CredentialWrapper,
+  VerifiableCredential,
+} from '../../machines/VerifiableCredential/VCMetaMachine/vc';
+import getAllConfigurations, { CACHED_API } from '../api';
+import { isIOS } from '../constants';
+import { getJWT } from '../cryptoutil/cryptoUtil';
+import { KeyTypes } from '../cryptoutil/KeyTypes';
+import { UnsupportedVcFormat } from '../error/UnsupportedVCFormat';
+import { TelemetryConstants } from '../telemetry/TelemetryConstants';
+import { getErrorEventData, sendErrorEvent } from '../telemetry/TelemetryUtils';
+import { isMockVC } from '../Utils';
+import { VCFormat } from '../VCFormat';
+import { VerificationErrorMessage, VerificationErrorType, verifyCredential } from '../vcjs/verifyCredential';
+import { VCMetadata } from '../VCMetadata';
 
 export const Protocols = {
   OpenId4VCI: 'OpenId4VCI',
@@ -437,4 +440,22 @@ export function getMatchingCredentialIssuerMetadata(
   throw new Error(
     `Selected credential type - ${credentialConfigurationId} is not available in wellknown config supported credentials list`,
   );
+}
+
+export async function verifyCredentialData(
+  credential: Credential,
+  credentialFormat: string, 
+  issuerId: string
+) {
+
+  if (credentialFormat === VCFormat.mso_mdoc || !isMockVC(issuerId)) {
+    const verificationResult = await verifyCredential(credential, credentialFormat);
+    return verificationResult;
+  } else {
+    return {
+      isVerified: true,
+      verificationMessage: VerificationErrorMessage.NO_ERROR,
+      verificationErrorCode: VerificationErrorType.NO_ERROR,
+    };
+  }
 }

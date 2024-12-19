@@ -147,3 +147,12 @@ export async function writeToBackupFile(data: any): Promise<string> {
   await writeFile(path, JSON.stringify(data));
   return fileName;
 }
+
+export async function isVCStorageInitialised() : Promise<boolean> {
+  try {
+    const res = await new FileStorage().getInfo(vcDirectoryPath);
+    return res.isDirectory();
+  } catch (_) {
+    return false;
+  }
+};

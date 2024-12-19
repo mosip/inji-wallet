@@ -32,88 +32,88 @@ const vcVerifier = NativeModules.VCVerifierModule;
 
 export async function verifyCredential(
   verifiableCredential: Credential,
-  credentialFormat: String,
+  credentialFormat: string
 ): Promise<VerificationResult> {
   try {
-    //ToDo - Have to remove else part once Vc Verifier Library is built for Swift
     if (isAndroid()) {
-      let vcVerifierResult = await vcVerifier.verifyCredentials(
-        typeof verifiableCredential === 'string'
-          ? verifiableCredential
-          : JSON.stringify(verifiableCredential),
-        credentialFormat,
-      );
-      return handleVcVerifierResponse(vcVerifierResult, verifiableCredential);
-    } else {
-      //ToDo - Have to remove the condition once Vc Verifier Library is built for Swift to validate mso_mdoc
-      if (credentialFormat == VCFormat.mso_mdoc) {
-        return {
-          isVerified: true,
-          verificationMessage: VerificationErrorMessage.NO_ERROR,
-          verificationErrorCode: VerificationErrorType.NO_ERROR,
-        };
-      }
-      let purpose: PublicKeyProofPurpose | AssertionProofPurpose;
-      const proof = verifiableCredential.proof;
-
-      switch (proof.proofPurpose) {
-        case ProofPurpose.PublicKey:
-          purpose = new PublicKeyProofPurpose();
-          break;
-        case ProofPurpose.Assertion:
-          purpose = new AssertionProofPurpose();
-          break;
-      }
-
-      let suite: Ed25519Signature2018 | RsaSignature2018;
-      const suiteOptions = {
-        verificationMethod: proof.verificationMethod,
-        date: proof.created,
-      };
-      switch (proof.type) {
-        case ProofType.RSA: {
-          suite = new RsaSignature2018(suiteOptions);
-          break;
-        }
-        case ProofType.ED25519_2018: {
-          suite = new Ed25519Signature2018(suiteOptions);
-          break;
-        }
-        /*
-        Since Digital Bazaar library is not able to verify ProofType: "Ed25519Signature2020",
-        defaulting it to return true until VcVerifier is implemented for iOS.
-         */
-        case ProofType.ED25519_2020: {
-          return {
-            isVerified: true,
-            verificationMessage: VerificationErrorMessage.NO_ERROR,
-            verificationErrorCode: VerificationErrorType.NO_ERROR,
-          };
-        }
-      }
-
-      const vcjsOptions = {
-        purpose,
-        suite,
-        credential: verifiableCredential,
-        documentLoader: jsonld.documentLoaders.xhr(),
-      };
-
-      //ToDo - Have to remove once range error is fixed during verification
-      const result = await vcjs.verifyCredential(vcjsOptions);
-      return handleResponse(result, verifiableCredential);
+      return await verifyCredentialForAndroid(verifiableCredential, credentialFormat);
     }
+    return await verifyCredentialForIos(verifiableCredential, credentialFormat);
   } catch (error) {
-    console.error(
-      'Error occurred while verifying the VC using digital bazaar:',
-      error,
-    );
+    console.error('Error occurred during credential verification:', error);
 
     return {
       isVerified: false,
       verificationMessage: error.message,
       verificationErrorCode: VerificationErrorType.GENERIC_TECHNICAL_ERROR,
     };
+  }
+}
+
+async function verifyCredentialForAndroid(
+  verifiableCredential: Credential,
+  credentialFormat: string
+): Promise<VerificationResult> {
+  const credentialString = typeof verifiableCredential === 'string'
+    ? verifiableCredential
+    : JSON.stringify(verifiableCredential);
+  
+  const vcVerifierResult = await vcVerifier.verifyCredentials(credentialString, credentialFormat);
+  return handleVcVerifierResponse(vcVerifierResult, verifiableCredential);
+}
+
+async function verifyCredentialForIos(
+  verifiableCredential: Credential,
+  credentialFormat: string
+): Promise<VerificationResult> {
+  if (credentialFormat === VCFormat.mso_mdoc) {
+    return createSuccessfulVerificationResult();
+  }
+  /*
+  Since Digital Bazaar library is not able to verify ProofType: "Ed25519Signature2020",
+  defaulting it to return true until VcVerifier is implemented for iOS.
+  */
+  if (verifiableCredential.proof.type === ProofType.ED25519_2020) {
+    return createSuccessfulVerificationResult();
+  }
+
+  const purpose = getPurposeFromProof(verifiableCredential.proof.proofPurpose);
+  const suite = selectVerificationSuite(verifiableCredential.proof);
+  const vcjsOptions = {
+    purpose,
+    suite,
+    credential: verifiableCredential,
+    documentLoader: jsonld.documentLoaders.xhr(),
+  };
+
+  const result = await vcjs.verifyCredential(vcjsOptions);
+  return handleResponse(result, verifiableCredential);
+}
+
+function getPurposeFromProof(proofPurpose) {
+  switch (proofPurpose) {
+    case ProofPurpose.PublicKey:
+      return new vcjs.PublicKeyProofPurpose();
+    case ProofPurpose.Assertion:
+      return new vcjs.AssertionProofPurpose();
+    default:
+      throw new Error('Unsupported proof purpose');
+  }
+}
+
+function selectVerificationSuite(proof: any) {
+  const suiteOptions = {
+    verificationMethod: proof.verificationMethod,
+    date: proof.created,
+  };
+
+  switch (proof.type) {
+    case ProofType.RSA:
+      return new RsaSignature2018(suiteOptions);
+    case ProofType.ED25519_2018:
+      return new Ed25519Signature2018(suiteOptions);
+    default:
+      throw new Error('Unsupported proof type');
   }
 }
 
@@ -159,8 +159,7 @@ function handleVcVerifierResponse(
 ): VerificationResult {
   try {
     if (!verificationResult.verificationStatus) {
-      verificationResult.verificationErrorCode =
-        verificationResult.verificationErrorCode === ''
+      verificationResult.verificationErrorCode = verificationResult.verificationErrorCode === ''
           ? VerificationErrorType.GENERIC_TECHNICAL_ERROR
           : verificationResult.verificationErrorCode;
       sendVerificationErrorEvent(
@@ -185,6 +184,14 @@ function handleVcVerifierResponse(
       verificationErrorCode: verificationResult.verificationErrorCode,
     };
   }
+}
+
+function createSuccessfulVerificationResult(): VerificationResult {
+  return {
+    isVerified: true,
+    verificationMessage: VerificationErrorMessage.NO_ERROR,
+    verificationErrorCode: VerificationErrorType.NO_ERROR,
+  };
 }
 
 function sendVerificationErrorEvent(
