@@ -147,7 +147,7 @@ export const getVCMetadata = (
     format: context['credentialWrapper'].format,
     downloadKeyType: keyType,
     credentialType: getCredentialType(context.selectedCredentialType),
-    issuerHost: context.selectedIssuer.credential_issuer,
+    issuerHost: context.selectedIssuer.credential_issuer_host,
   });
 };
 

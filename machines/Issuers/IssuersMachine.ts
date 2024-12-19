@@ -535,4 +535,5 @@ export interface issuerType {
   display: [displayType];
   credentialTypes: [CredentialTypes];
   authorizationEndpoint: string;
+  credential_issuer_host: string;
 }
