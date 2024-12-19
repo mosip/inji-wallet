@@ -18,8 +18,6 @@ import {
   selectShowAccountSelectionConfirmation,
 } from '../../machines/backupAndRestore/backupAndRestoreSetup/backupAndRestoreSetupSelectors';
 import {GlobalContext} from '../../shared/GlobalContext';
-import {selectIsBackUpAndRestoreExplored} from '../../machines/settings';
-import {SettingsEvents} from '../../machines/settings';
 import {BackupEvents} from '../../machines/backupAndRestore/backup/backupMachine';
 import {selectIsNetworkError as selectIsNetworkErrorWhileFetchingLastBackupDetails} from '../../machines/backupAndRestore/backup/backupSelector';
 
@@ -35,10 +33,6 @@ export function useBackupAndRestoreSetup() {
     }),
   );
   const backupAndRestoreSetupService = useInterpret(machine.current);
-  const isBackupAndRestoreExplored = useSelector(
-    settingsService,
-    selectIsBackUpAndRestoreExplored,
-  );
 
   const isNetworkErrorDuringAccountSetup = useSelector(
     backupAndRestoreSetupService,
@@ -81,16 +75,10 @@ export function useBackupAndRestoreSetup() {
       backupAndRestoreSetupService,
       selectIsSigningInSuccessful,
     ),
-    isBackupAndRestoreExplored,
     BACKUP_AND_RESTORE: () => {
       backupAndRestoreSetupService.send(
         BackupAndRestoreSetupEvents.HANDLE_BACKUP_AND_RESTORE(),
       );
-      if (!isBackupAndRestoreExplored) {
-        settingsService.send(
-          SettingsEvents.SET_IS_BACKUP_AND_RESTORE_EXPLORED(),
-        );
-      }
     },
     shouldTriggerAutoBackup: useSelector(
       backupAndRestoreSetupService,
