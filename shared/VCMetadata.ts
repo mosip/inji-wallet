@@ -31,6 +31,7 @@ export class VCMetadata {
   downloadKeyType: string = '';
   credentialType: string = '';
   issuerHost: string = '';
+
   constructor({
     idType = '',
     requestId = '',

@@ -11,7 +11,7 @@ import {SharingStatusModal} from '../Scan/SharingStatusModal';
 import {SvgImage} from '../../components/ui/svg';
 import {DETAIL_VIEW_DEFAULT_FIELDS} from '../../components/VC/common/VCUtils';
 import {getDetailedViewFields} from '../../shared/openId4VCI/Utils';
-import { VCProcessor } from '../../components/VC/common/VCProcessor';
+import {VCProcessor} from '../../components/VC/common/VCProcessor';
 
 export const ReceiveVcScreen: React.FC = () => {
   const {t} = useTranslation('ReceiveVcScreen');
@@ -46,6 +46,7 @@ export const ReceiveVcScreen: React.FC = () => {
       verifiableCredentialData.credentialConfigurationId,
       DETAIL_VIEW_DEFAULT_FIELDS,
       verifiableCredentialData.vcMetadata.format,
+      verifiableCredentialData.vcMetadata.issuerHost,
     ).then(response => {
       setWellknown(response.matchingCredentialIssuerMetadata);
       setFields(response.fields);

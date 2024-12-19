@@ -62,7 +62,7 @@ export const VCCardView: React.FC<VCItemProps> = props => {
         CARD_VIEW_DEFAULT_FIELDS,
         credentialConfigurationId,
         format,
-        props.vcMetadata,
+        props.vcMetadata.issuerHost,
       )
         .then(response => {
           setWellknown(response.matchingCredentialIssuerMetadata);

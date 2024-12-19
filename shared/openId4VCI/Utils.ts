@@ -161,13 +161,13 @@ export const getCredentialIssuersWellKnownConfig = async (
   defaultFields: string[],
   credentialConfigurationId: string,
   format: string,
-  vcMetadata: any,
+  issuerHost: string,
 ) => {
   let fields: string[] = defaultFields;
   let matchingWellknownDetails: any;
   const wellknownResponse = await CACHED_API.fetchIssuerWellknownConfig(
     issuer!,
-    vcMetadata.issuerHost,
+    issuerHost,
   );
   try {
     if (wellknownResponse) {
@@ -222,12 +222,14 @@ export const getDetailedViewFields = async (
   credentialConfigurationId: string,
   defaultFields: string[],
   format: string,
+  issuerHost: string,
 ) => {
   let response = await getCredentialIssuersWellKnownConfig(
     issuer,
     defaultFields,
     credentialConfigurationId,
     format,
+    issuerHost,
   );
 
   let updatedFieldsList = response.fields.concat(DETAIL_VIEW_ADD_ON_FIELDS);
