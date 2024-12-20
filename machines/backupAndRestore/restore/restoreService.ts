@@ -1,6 +1,6 @@
 import NetInfo from '@react-native-community/netinfo';
 import Cloud from '../../../shared/CloudBackupAndRestoreUtils';
-import Storage from '../../../shared/storage';
+import { isMinimumStorageLimitReached } from '../../../shared/storage';
 import fileStorage, {
   getBackupFilePath,
   unZipAndRemoveFile,
@@ -11,7 +11,7 @@ export const restoreService = model => {
     checkInternet: async () => await NetInfo.fetch(),
 
     checkStorageAvailability: () => async () => {
-      return await Storage.isMinimumLimitReached('minStorageRequired');
+      return await isMinimumStorageLimitReached('minStorageRequired');
     },
 
     downloadLatestBackup: () => async () => {

@@ -1,7 +1,7 @@
-import {VCMetadata} from './VCMetadata';
-import {NETWORK_REQUEST_FAILED} from './constants';
-import {groupBy} from './javascript';
-import {Issuers} from './openId4VCI/Utils';
+import { VCMetadata } from './VCMetadata';
+import { NETWORK_REQUEST_FAILED } from './constants';
+import { groupBy } from './javascript';
+import { Issuers } from './openId4VCI/Utils';
 
 export const getVCsOrderedByPinStatus = (vcMetadatas: VCMetadata[]) => {
   const [pinned, unpinned] = groupBy(

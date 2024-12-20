@@ -1,27 +1,19 @@
-import {NativeModules} from 'react-native';
-import Cloud from '../../../shared/CloudBackupAndRestoreUtils';
+import { NativeModules } from 'react-native';
 import getAllConfigurations, {
   API_URLS,
   CACHED_API,
   DownloadProps,
 } from '../../../shared/api';
+import Cloud from '../../../shared/CloudBackupAndRestoreUtils';
+import { isIOS } from '../../../shared/constants';
 import {
   fetchKeyPair,
   generateKeyPair,
 } from '../../../shared/cryptoutil/cryptoUtil';
-import {CredentialDownloadResponse, request} from '../../../shared/request';
-import {WalletBindingResponse} from '../VCMetaMachine/vc';
-import {
-  VerificationErrorMessage,
-  VerificationErrorType,
-  verifyCredential,
-} from '../../../shared/vcjs/verifyCredential';
-import {getVerifiableCredential} from './VCItemSelectors';
-import {getMatchingCredentialIssuerMetadata} from '../../../shared/openId4VCI/Utils';
-import {isIOS} from '../../../shared/constants';
-import {VCMetadata} from '../../../shared/VCMetadata';
-import {VCFormat} from '../../../shared/VCFormat';
-import {isMockVC} from '../../../shared/Utils';
+import { getMatchingCredentialIssuerMetadata, verifyCredentialData } from '../../../shared/openId4VCI/Utils';
+import { CredentialDownloadResponse, request } from '../../../shared/request';
+import { WalletBindingResponse } from '../VCMetaMachine/vc';
+import { getVerifiableCredential } from './VCItemSelectors';
 
 const {RNSecureKeystoreModule} = NativeModules;
 export const VCItemServices = model => {
@@ -200,26 +192,16 @@ export const VCItemServices = model => {
     },
 
     verifyCredential: async (context: any) => {
-      if (context.verifiableCredential) {
-        //TODO: Remove bypassing verification of mock VCs once mock VCs are verifiable
-        if (
-          context.selectedCredentialType.format === VCFormat.mso_mdoc ||
-          !isMockVC(context.selectedIssuerId)
-        ) {
-          const verificationResult = await verifyCredential(
-            getVerifiableCredential(context.verifiableCredential),
-            (context.vcMetadata as VCMetadata).format,
-          );
-          if (!verificationResult.isVerified) {
+      if(context.verifiableCredential){
+        const verificationResult = await verifyCredentialData(
+          getVerifiableCredential(context.verifiableCredential),
+          context.selectedCredentialType.format,
+          context.selectedIssuerId
+        );
+         if(!verificationResult.isVerified) {
             throw new Error(verificationResult.verificationErrorCode);
           }
-        } else {
-          return {
-            isVerified: true,
-            verificationMessage: VerificationErrorMessage.NO_ERROR,
-            verificationErrorCode: VerificationErrorType.NO_ERROR,
-          };
-        }
+          return verificationResult;
       }
     },
   };

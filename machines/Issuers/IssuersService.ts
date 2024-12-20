@@ -1,6 +1,12 @@
-import Cloud from '../../shared/CloudBackupAndRestoreUtils';
-import {CACHED_API} from '../../shared/api';
 import NetInfo from '@react-native-community/netinfo';
+import { NativeModules } from 'react-native';
+import { authorize } from 'react-native-app-auth';
+import Cloud from '../../shared/CloudBackupAndRestoreUtils';
+import { CACHED_API } from '../../shared/api';
+import {
+  fetchKeyPair,
+  generateKeyPair,
+} from '../../shared/cryptoutil/cryptoUtil';
 import {
   constructAuthorizationConfiguration,
   constructIssuerMetaData,
@@ -9,26 +15,14 @@ import {
   OIDCErrors,
   updateCredentialInformation,
   vcDownloadTimeout,
+  verifyCredentialData
 } from '../../shared/openId4VCI/Utils';
-import {authorize} from 'react-native-app-auth';
-import {
-  fetchKeyPair,
-  generateKeyPair,
-} from '../../shared/cryptoutil/cryptoUtil';
-import {NativeModules} from 'react-native';
-import {
-  VerificationErrorMessage,
-  VerificationErrorType,
-  verifyCredential,
-} from '../../shared/vcjs/verifyCredential';
+import { TelemetryConstants } from '../../shared/telemetry/TelemetryConstants';
 import {
   getImpressionEventData,
   sendImpressionEvent,
 } from '../../shared/telemetry/TelemetryUtils';
-import {TelemetryConstants} from '../../shared/telemetry/TelemetryConstants';
-import {VciClient} from '../../shared/vciClient/VciClient';
-import {isMockVC} from '../../shared/Utils';
-import {VCFormat} from '../../shared/VCFormat';
+import { VciClient } from '../../shared/vciClient/VciClient';
 
 export const IssuersService = () => {
   return {
@@ -152,26 +146,15 @@ export const IssuersService = () => {
     },
 
     verifyCredential: async (context: any) => {
-      //TODO: Remove bypassing verification of mock VCs once mock VCs are verifiable
-      if (
-        context.selectedCredentialType.format === VCFormat.mso_mdoc ||
-        !isMockVC(context.selectedIssuerId)
-      ) {
-        const verificationResult = await verifyCredential(
-          context.verifiableCredential?.credential,
-          context.selectedCredentialType.format,
-        );
-        if (!verificationResult.isVerified) {
+      const verificationResult = await verifyCredentialData(
+        context.verifiableCredential?.credential,
+        context.selectedCredentialType.format,
+        context.selectedIssuerId
+      );
+       if(!verificationResult.isVerified) {
           throw new Error(verificationResult.verificationErrorCode);
         }
         return verificationResult;
-      } else {
-        return {
-          isVerified: true,
-          verificationMessage: VerificationErrorMessage.NO_ERROR,
-          verificationErrorCode: VerificationErrorType.NO_ERROR,
-        };
-      }
     },
   };
 };
