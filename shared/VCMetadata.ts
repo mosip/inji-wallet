@@ -1,6 +1,5 @@
 import {
   Credential,
-  CredentialTypes,
   VC,
   VcIdType,
   VerifiableCredential,
