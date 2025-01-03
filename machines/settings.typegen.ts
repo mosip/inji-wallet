@@ -18,21 +18,24 @@ export interface Typegen0 {
     resetInjiProps: 'done.invoke.settings.resetInjiProps:invocation[0]';
   };
   missingImplementations: {
-    actions: never;
+    actions: 'setKeyManagementExplored';
     delays: never;
     guards: never;
     services: never;
   };
   eventsCausingActions: {
-    requestStoredContext: 'xstate.init';
+    requestStoredContext: 'BIOMETRIC_CANCELLED' | 'xstate.init';
     resetCredentialRegistryResponse: 'CANCEL' | 'UPDATE_HOST';
     resetIsBiometricToggled: 'DISMISS';
-    setBackupAndRestoreOptionExplored: 'SET_IS_BACKUP_AND_RESTORE_EXPLORED';
+    resetKeyOrderingResponse: 'RESET_KEY_ORDER_RESPONSE';
     setContext: 'STORE_RESPONSE';
     setIsBiometricToggled: 'TOGGLE_BIOMETRIC_UNLOCK';
+    setKeyManagementExplored: 'SET_KEY_MANAGEMENT_EXPLORED';
+    setKeyManagementTourGuideExplored: 'SET_KEY_MANAGEMENT_TOUR_GUIDE_EXPLORED';
+    setKeyOrderingResponse: 'SET_KEY_ORDER_RESPONSE';
     storeContext:
       | 'ACCEPT_HARDWARE_SUPPORT_NOT_EXISTS'
-      | 'SET_IS_BACKUP_AND_RESTORE_EXPLORED'
+      | 'SET_KEY_MANAGEMENT_EXPLORED'
       | 'SHOWN_ACCOUNT_SELECTION_CONFIRMATION'
       | 'STORE_RESPONSE'
       | 'TOGGLE_BIOMETRIC_UNLOCK'
