@@ -90,6 +90,7 @@ export const ViewVcModal: React.FC<ViewVcModalProps> = props => {
     return flow === 'downloadedVc' ? (
       <Row align="space-between">
         <HelpScreen
+          source={'Inji'}
           triggerComponent={
             <LinearGradient
               style={{borderRadius: 8, marginRight: 4}}
