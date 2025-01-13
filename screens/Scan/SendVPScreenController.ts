@@ -218,7 +218,10 @@ export function useSendVPScreen() {
       secondaryButtonEvent: CANCEL,
       title: t('consentDialog.title'),
       titleTestID: 'consentTitle',
-      message: t('consentDialog.message', {verifierName: vpVerifierName}),
+      message: t('consentDialog.message', {
+        verifierName: vpVerifierName,
+        interpolation: {escapeValue: false},
+      }),
       messageTestID: 'consentMsg',
       onCancel: DISMISS_POPUP,
     };
