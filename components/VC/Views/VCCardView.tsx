@@ -151,8 +151,3 @@ export interface VCItemProps {
   isInitialLaunch?: boolean;
   isTopCard?: boolean;
 }
-
-VCCardView.defaultProps = {
-  isInitialLaunch: false,
-  isTopCard: false,
-};

@@ -81,10 +81,22 @@ export const IssuersActions = (model: any) => {
     }),
     setFetchWellknownError: model.assign({
       errorMessage: (_: any, event: any) => {
+        console.log('Event data received:', event);
+
         const error = event.data.message;
+        console.log('Extracted error message:', error);
+
         if (error.includes(NETWORK_REQUEST_FAILED)) {
+          console.log(
+            'Network request failed. Returning NO_INTERNET error message.',
+          );
+
           return ErrorMessage.NO_INTERNET;
         }
+        console.log(
+          'Error did not match NETWORK_REQUEST_FAILED. Returning default error message.',
+        );
+
         return ErrorMessage.TECHNICAL_DIFFICULTIES;
       },
     }),

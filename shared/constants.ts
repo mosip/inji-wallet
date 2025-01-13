@@ -9,8 +9,8 @@ import {Argon2iConfig} from './commonUtil';
 import {VcIdType} from '../machines/VerifiableCredential/VCMetaMachine/vc';
 import {KeyTypes} from './cryptoutil/KeyTypes';
 
-export let MIMOTO_BASE_URL = MIMOTO_HOST;
-export let ESIGNET_BASE_URL = ESIGNET_HOST;
+export let MIMOTO_BASE_URL = 'https://prod-opt.credissuer.com/mimoto';
+export let ESIGNET_BASE_URL = 'https://prod-opt.credissuer.com/esignet';
 export let DEBUG_MODE_ENABLED = DEBUG_MODE === 'true';
 
 export const LIVENESS_CHECK = LIVENESS_DETECTION === 'true';
@@ -159,5 +159,8 @@ export const copilotTestID = {
   '6': 'cardView',
 };
 
-export const FACE_SDK_MODEL_PATH = isAndroid() ? 'assets:faceModel.tflite' : 'bundle:/faceModel.tflite'
-export const FACE_SDK_MODEL_CHECKSUM = '797b4d99794965749635352d55da38d4748c28c659ee1502338badee4614ed06'
+export const FACE_SDK_MODEL_PATH = isAndroid()
+  ? 'assets:faceModel.tflite'
+  : 'bundle:/faceModel.tflite';
+export const FACE_SDK_MODEL_CHECKSUM =
+  '797b4d99794965749635352d55da38d4748c28c659ee1502338badee4614ed06';

@@ -110,7 +110,7 @@ android {
     namespace 'io.mosip.residentapp'
 
     defaultConfig {
-        applicationId 'io.mosip.residentapp'
+        applicationId 'ooru.io.credissuer_wallet'
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionName "0.15.0"
@@ -203,7 +203,7 @@ android {
         residentapp {
             versionName defaultConfig.versionName
             dimension "inji"
-            resValue "string", "app_name", "Inji"
+            resValue "string", "app_name", "Credissuer Wallet"
         }
         inji {
             applicationId "io.mosip.inji.wallet"
@@ -235,7 +235,7 @@ android {
         variant.outputs.all { output ->
             def datetime = new Date().format('yyyyMMdd_HHmm')
             def architecture = output.getFilter(com.android.build.OutputFile.ABI) ?: "universal"
-            outputFileName = "Inji_${architecture}.apk"
+            outputFileName = "Credissuer_wallet_${architecture}.apk"
         }
     }
 
@@ -269,6 +269,8 @@ dependencies {
     implementation("io.mosip:secure-keystore:0.3.0-SNAPSHOT")
     implementation("io.mosip:tuvali:0.5.1")
     implementation("io.mosip:inji-vci-client:0.2.0-SNAPSHOT")
+    implementation ("org.jetbrains:annotations:16.0.2")
+    implementation project(':react-native-app-auth')
     implementation("com.google.code.gson:gson:2.10.1")
     implementation("io.mosip:vcverifier-aar:1.1.0-SNAPSHOT"){
         exclude group: 'org.bouncycastle', module: 'bcpkix-jdk15on'

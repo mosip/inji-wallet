@@ -144,7 +144,10 @@ export const constructAuthorizationConfiguration = (
   selectedIssuer: issuerType,
   supportedScope: string,
 ) => {
-  return {
+  console.log('Constructing Authorization Configuration...');
+  console.log('Selected Issuer: ', selectedIssuer);
+  console.log('Supported Scope: ', supportedScope);
+  const config = {
     issuer: selectedIssuer.credential_issuer,
     clientId: selectedIssuer.client_id,
     scopes: [supportedScope],
@@ -156,6 +159,8 @@ export const constructAuthorizationConfiguration = (
       tokenEndpoint: selectedIssuer.token_endpoint,
     },
   };
+  console.log('Authorization Configuration: ', config);
+  return config;
 };
 
 export const getCredentialIssuersWellKnownConfig = async (

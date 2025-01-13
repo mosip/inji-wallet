@@ -280,7 +280,6 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = props => {
                       <VcItemContainer
                         key={vcMetadata.getVcKey()}
                         vcMetadata={vcMetadata}
-                        margin="0 2 8 2"
                         onPress={controller.VIEW_VC}
                         isDownloading={controller.inProgressVcDownloads?.has(
                           vcMetadata.getVcKey(),
@@ -288,6 +287,7 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = props => {
                         isPinned={vcMetadata.isPinned}
                         isInitialLaunch={controller.isInitialDownloading}
                         isTopCard={index === 0}
+                        name={vcMetadata.name}
                       />
                     );
                   })}

@@ -33,15 +33,7 @@
             <data android:scheme="https" />
         </intent>
     </queries>
-    <application
-        android:name=".MainApplication"
-        android:allowBackup="false"
-        android:icon="@mipmap/ic_launcher"
-        android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
-        android:theme="@style/AppTheme"
-        android:usesCleartextTraffic="false"
-        tools:replace="usesCleartextTraffic">
+     <application tools:replace="usesCleartextTraffic" android:name=".MainApplication" android:label="@string/app_name" android:icon="@mipmap/ic_launcher" android:roundIcon="@mipmap/ic_launcher_round" android:allowBackup="false" android:theme="@style/AppTheme" android:usesCleartextTraffic="false" android:requestLegacyExternalStorage="true">
         <meta-data
             android:name="expo.modules.updates.ENABLED"
             android:value="true" />

@@ -195,8 +195,17 @@ export const IssuersMachine = model.createMachine(
             {
               actions: [
                 'resetSelectedCredentialType',
+                () => {
+                  console.log('Action: resetSelectedCredentialType triggered.');
+                },
                 'setError',
+                () => {
+                  console.log('Action: setError triggered.');
+                },
                 'resetLoadingReason',
+                () => {
+                  console.log('Action: resetLoadingReason triggered.');
+                },
                 'sendDownloadingFailedToVcMeta',
                 (_, event) =>
                   console.error(

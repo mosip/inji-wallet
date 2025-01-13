@@ -6,7 +6,7 @@ import {ProfileIcon} from './ProfileIcon';
 import {SvgImage} from './ui/svg';
 
 export const VcItemContainerProfileImage = (props: VCItemContentProps) => {
-  const imageUri = props.verifiableCredentialData.face;
+  const imageUri = props.credential?.credentialSubject.photo;
 
   return imageUri ? (
     <ImageBackground

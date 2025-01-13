@@ -1,6 +1,13 @@
 import React from 'react';
 import {useTranslation} from 'react-i18next';
-import {Image, ImageBackground, View} from 'react-native';
+import {
+  Image,
+  ImageBackground,
+  View,
+  TouchableOpacity,
+  Linking,
+} from 'react-native';
+import QRCode from 'react-native-qrcode-svg';
 import {
   Credential,
   CredentialWrapper,
@@ -10,7 +17,6 @@ import {
 } from '../../../machines/VerifiableCredential/VCMetaMachine/vc';
 import {Button, Column, Row, Text} from '../../ui';
 import {Theme} from '../../ui/styleUtils';
-import {QrCodeOverlay} from '../../QrCodeOverlay';
 import {SvgImage} from '../../ui/svg';
 import {isActivationNeeded} from '../../../shared/openId4VCI/Utils';
 import {
@@ -43,9 +49,10 @@ const getProfileImage = (face: any) => {
 export const VCDetailView: React.FC<VCItemDetailsProps> = props => {
   const {t} = useTranslation('VcDetails');
   const logo = props.verifiableCredentialData.issuerLogo;
-  const face = props.verifiableCredentialData.face;
+  const face = props.credential?.credentialSubject.face;
   const verifiableCredential = props.credential;
-
+  const publicUrl = props.credential?.credentialSubject['public_verify_url'];
+  const qrCodeData = props.credential?.credentialSubject['qr_Code'];
   const shouldShowHrLine = verifiableCredential => {
     let availableFieldNames: string[] = [];
     if (props.verifiableCredentialData.vcMetadata.format === VCFormat.ldp_vc) {
@@ -82,6 +89,28 @@ export const VCDetailView: React.FC<VCItemDetailsProps> = props => {
           <Column
             padding="10 10 3 10"
             backgroundColor={Theme.Colors.DetailedViewBackground}>
+            <View
+              style={{
+                position: 'absolute',
+                top: 30,
+                left: '90%',
+                transform: [{translateX: -20}],
+                zIndex: 1,
+              }}>
+              <TouchableOpacity
+                onPress={() => {
+                  if (publicUrl) {
+                    Linking.openURL(publicUrl);
+                  }
+                }}>
+                <Image
+                  source={require('../../../assets/share.png')}
+                  style={{width: 40, height: 40}}
+                  resizeMethod="scale"
+                  resizeMode="contain"
+                />
+              </TouchableOpacity>
+            </View>
             <ImageBackground
               imageStyle={Theme.Styles.vcDetailBg}
               resizeMethod="scale"
@@ -94,12 +123,16 @@ export const VCDetailView: React.FC<VCItemDetailsProps> = props => {
               <Row padding="14 14 0 14" margin="0 0 0 0">
                 <Column crossAlign="center">
                   {getProfileImage(face)}
-                  <QrCodeOverlay
-                    verifiableCredential={
-                      props.credentialWrapper as unknown as VerifiableCredential
-                    }
-                    meta={props.verifiableCredentialData.vcMetadata}
-                  />
+                  {qrCodeData ? (
+                    <View style={{marginTop: 10}}>
+                      <QRCode
+                        value={qrCodeData}
+                        size={60} // Adjust size as needed
+                        backgroundColor="white"
+                        color="black"
+                      />
+                    </View>
+                  ) : null}
                   <Column
                     width={80}
                     height={59}
@@ -117,7 +150,14 @@ export const VCDetailView: React.FC<VCItemDetailsProps> = props => {
                 <Column
                   align="space-evenly"
                   margin={'0 0 0 24'}
-                  style={{flex: 1}}>
+                  style={{flex: 1}}
+                  ref={ref => {
+                    console.log('Column ref:', ref); // Log ref of Column
+                  }}>
+                  {console.log('Props fields:', props.fields)}
+                  {console.log('Verifiable Credential:', verifiableCredential)}
+                  {console.log('Well-known props:', props.wellknown)}
+                  {console.log('Props object:', props)}
                   {fieldItemIterator(
                     props.fields,
                     verifiableCredential,
@@ -158,90 +198,9 @@ export const VCDetailView: React.FC<VCItemDetailsProps> = props => {
           </Column>
         </Column>
       </Column>
-      {props.vcHasImage && (
-        <View
-          style={{
-            position: 'relative',
-            backgroundColor: Theme.Colors.DetailedViewBackground,
-          }}>
-          {props.activeTab !== 1 &&
-            (!props.walletBindingResponse &&
-            isActivationNeeded(props.verifiableCredentialData?.issuer) ? (
-              <Column
-                padding="10"
-                style={Theme.Styles.detailedViewActivationPopupContainer}>
-                <Row>
-                  <Column crossAlign="flex-start" margin={'2 0 0 10'}>
-                    {SvgImage.WalletUnActivatedLargeIcon()}
-                  </Column>
-                  <Column crossAlign="flex-start" margin={'5 18 13 8'}>
-                    <Text
-                      testID="offlineAuthDisabledHeader"
-                      style={{
-                        fontFamily: 'Inter_600SemiBold',
-                        fontSize: 14,
-                      }}
-                      color={Theme.Colors.statusLabel}
-                      margin={'0 18 0 0'}>
-                      {t('offlineAuthDisabledHeader')}
-                    </Text>
-                    <Text
-                      testID="offlineAuthDisabledMessage"
-                      style={{
-                        fontFamily: 'Inter_400Regular',
-                        fontSize: 12,
-                      }}
-                      color={Theme.Colors.statusMessage}
-                      margin={'0 18 0 0'}>
-                      {t('offlineAuthDisabledMessage')}
-                    </Text>
-                  </Column>
-                </Row>
-
-                <Button
-                  testID="enableVerification"
-                  title={t('enableVerification')}
-                  onPress={props.onBinding}
-                  type="gradient"
-                  size="Large"
-                  disabled={
-                    !props.verifiableCredentialData.vcMetadata.isVerified
-                  }
-                />
-              </Column>
-            ) : (
-              <Column
-                style={Theme.Styles.detailedViewActivationPopupContainer}
-                padding="10">
-                <Row>
-                  <Column crossAlign="flex-start" margin={'2 0 0 10'}>
-                    {SvgImage.WalletActivatedLargeIcon()}
-                  </Column>
-                  <Column crossAlign="flex-start" margin={'5 18 13 8'}>
-                    <Text
-                      testID="profileAuthenticated"
-                      color={Theme.Colors.statusLabel}
-                      style={{
-                        fontFamily: 'Inter_600SemiBold',
-                        fontSize: 14,
-                      }}
-                      margin={'0 18 0 0'}>
-                      {isActivationNeeded(
-                        props.verifiableCredentialData?.issuer,
-                      )
-                        ? t('profileAuthenticated')
-                        : t('credentialActivated')}
-                    </Text>
-                  </Column>
-                </Row>
-              </Column>
-            ))}
-        </View>
-      )}
     </>
   );
 };
-
 export interface VCItemDetailsProps {
   fields: any[];
   wellknown: any;

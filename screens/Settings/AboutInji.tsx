@@ -118,7 +118,7 @@ export const AboutInji: React.FC<AboutInjiProps> = ({appId}) => {
               <TouchableOpacity
                 activeOpacity={1}
                 onPress={() => {
-                  aboutInjiUrl && Linking.openURL(aboutInjiUrl);
+                  aboutInjiUrl && Linking.openURL('https://app.credissuer.com');
                 }}>
                 <Text
                   testID="clickHere"

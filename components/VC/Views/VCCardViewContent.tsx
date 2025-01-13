@@ -25,6 +25,8 @@ import {HistoryTab} from '../../../screens/Home/MyVcs/HistoryTab';
 import {getTextColor} from '../common/VCUtils';
 import {useCopilot} from 'react-native-copilot';
 import {useTranslation} from 'react-i18next';
+import { getIdType } from '../VCUtils/getIdType';
+
 
 export const VCCardViewContent: React.FC<VCItemContentProps> = props => {
   const vcSelectableButton =
@@ -61,7 +63,7 @@ export const VCCardViewContent: React.FC<VCItemContentProps> = props => {
   const faceImage = props.verifiableCredentialData.face;
   const {start} = useCopilot();
   const {t} = useTranslation();
-
+  const id = props.verifiableCredentialData.credentialConfigurationId;
   return (
     <ImageBackground
       source={getBackgroundImage(props.wellknown, Theme.CloseCard)}
@@ -79,11 +81,33 @@ export const VCCardViewContent: React.FC<VCItemContentProps> = props => {
         }>
         <Row crossAlign="center" padding="3 0 0 3">
           {VcItemContainerProfileImage(props)}
-          <Column fill align={'space-around'} margin="0 10 0 10">
+          <Column fill align="center" justify="center" margin="0 10 0 10">
+            <Column
+                         style={{
+                           width: '90%',
+                           alignItems: 'center',
+                           justifyContent: 'center',
+                           marginHorizontal: '10%',
+                         }}>
+                         <VCItemFieldValue
+                           key={'id'}
+                           testID="id"
+                           fieldValue={props.verifiableCredentialData.credentialConfigurationId}
+                           wellknown={props.wellknown}
+                           style={{
+                             textAlign: 'center',
+                             fontWeight: 'bold',
+                           }}
+                           numberOfLines={1}
+                           ellipsizeMode="tail"
+                         />
+                       </Column>
             <VCItemFieldValue
               key={'fullName'}
               testID="fullName"
-              fieldValue={getLocalizedField(DisplayName(props))}
+              fieldValue={getLocalizedField(
+                props.credential?.credentialSubject.recipientName,
+              )}
               wellknown={props.wellknown}
             />
             <Row>
@@ -103,13 +127,6 @@ export const VCCardViewContent: React.FC<VCItemContentProps> = props => {
               resizeMode="contain"
             />
           )}
-
-          {!Object.values(VCItemContainerFlowType).includes(props.flow) && (
-            <>
-              {!props.walletBindingResponse &&
-              isActivationNeeded(props.verifiableCredentialData?.issuer)
-                ? SvgImage.walletUnActivatedIcon()
-                : SvgImage.walletActivatedIcon()}
               <Pressable
                 onPress={props.KEBAB_POPUP}
                 accessible={false}
@@ -128,8 +145,7 @@ export const VCCardViewContent: React.FC<VCItemContentProps> = props => {
                   vcHasImage={faceImage !== undefined}
                 />
               </Pressable>
-            </>
-          )}
+
           {vcSelectableButton}
         </Row>
 

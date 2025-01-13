@@ -83,15 +83,15 @@ export const SettingScreen: React.FC<
         <Column
           style={{display: Platform.OS !== 'ios' ? 'flex' : 'none'}}
           backgroundColor={Theme.Colors.lightGreyBackgroundColor}>
-          <Text
+          {/*<Text
             style={{paddingTop: 3}}
             testID="injiAsVerifierApp"
             weight="semibold"
             margin="10"
             color={Theme.Colors.aboutVersion}>
             {t('injiAsVerifierApp')}
-          </Text>
-          <Row
+          </Text>*/}
+          {/* <Row
             align="space-evenly"
             backgroundColor={Theme.Colors.whiteBackgroundColor}>
             <Pressable
@@ -110,15 +110,15 @@ export const SettingScreen: React.FC<
             </Pressable>
 
             <ReceivedCards />
-          </Row>
+          </Row>*/}
 
-          <Text
+          {/*<Text
             weight="semibold"
             style={{paddingTop: 3}}
             margin="10"
             color={Theme.Colors.aboutVersion}>
             {t('basicSettings')}
-          </Text>
+          </Text>*/}
         </Column>
         <Column fill>
           <MessageOverlay
@@ -129,7 +129,7 @@ export const SettingScreen: React.FC<
 
           <LanguageSetting />
 
-          <ListItem topDivider disabled={!controller.canUseBiometrics}>
+          {/*  <ListItem topDivider disabled={!controller.canUseBiometrics}>
             {SvgImage.fingerprintIcon(24)}
             <ListItem.Content>
               <ListItem.Title
@@ -153,7 +153,7 @@ export const SettingScreen: React.FC<
               }}
               color={Theme.Colors.switchHead}
             />
-          </ListItem>
+          </ListItem>*/}
 
           <AboutInji appId={controller.appId} />
 
@@ -187,7 +187,7 @@ export const SettingScreen: React.FC<
             />
           )}
 
-          <ListItem
+          {/*<ListItem
             topDivider
             bottomDivider
             onPress={() => controller.INJI_TOUR_GUIDE()}>
@@ -201,7 +201,7 @@ export const SettingScreen: React.FC<
                 </Text>
               </ListItem.Title>
             </ListItem.Content>
-          </ListItem>
+          </ListItem>*/}
 
           <ListItem onPress={controller.LOGOUT}>
             {SvgImage.logOutIcon()}

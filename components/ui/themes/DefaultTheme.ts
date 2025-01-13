@@ -416,8 +416,8 @@ export const DefaultTheme = {
       width: 191.58,
       height: 28,
     },
-    injiHomeLogo:{
-      marginLeft:-24
+    injiHomeLogo: {
+      marginLeft: -80,
     },
     logo: {
       height: 35,
@@ -524,8 +524,8 @@ export const DefaultTheme = {
       borderRadius: 100,
     },
     detailedViewImage: {
-      width: 80,
-      height: 106,
+      width: 50,
+      height: 80,
       borderRadius: 5,
       marginTop: 10,
     },
