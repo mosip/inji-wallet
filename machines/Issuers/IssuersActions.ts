@@ -9,6 +9,7 @@ import {
   REQUEST_TIMEOUT,
   isIOS,
   EXPIRED_VC_ERROR_CODE,
+  DEFAULT_OTP,
 } from '../../shared/constants';
 import {assign, send} from 'xstate';
 import {StoreEvents} from '../store';
@@ -28,7 +29,7 @@ import {TelemetryConstants} from '../../shared/telemetry/TelemetryConstants';
 import {NativeModules} from 'react-native';
 import {KeyTypes} from '../../shared/cryptoutil/KeyTypes';
 import {VCActivityLog} from '../../components/ActivityLogEvent';
-import {CommunicationDetails, isNetworkError} from '../../shared/Utils';
+import {isNetworkError} from '../../shared/Utils';
 import {WalletBindingResponse} from '../VerifiableCredential/VCMetaMachine/vc';
 import {getBindingCertificateConstant} from '../../shared/keystore/SecureKeystore';
 
@@ -367,19 +368,10 @@ export const IssuersActions = (model: any) => {
         to: context => context.serviceRefs.vcMeta,
       },
     ),
-    setCommunicationDetails: model.assign({
-      communicationDetails: (_context: any, event: any) => {
-        const communicationDetails: CommunicationDetails = {
-          phoneNumber: event.data.response.maskedMobile,
-          emailId: event.data.response.maskedEmail,
-        };
-        return communicationDetails;
-      },
-    }),
-    unSetOTP: model.assign({OTP: () => ''}),
+    unsetOTP: model.assign({OTP: () => ''}),
     setOTP: model.assign({
       OTP: (_, event) => {
-        return '111111';
+        return DEFAULT_OTP;
       },
     }),
     setWalletBindingResponse: (context: any, event: any) => {

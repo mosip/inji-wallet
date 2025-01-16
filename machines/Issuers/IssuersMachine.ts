@@ -482,7 +482,7 @@ export const IssuersMachine = model.createMachine(
           onDone: [
             {
               target: 'addKeyPair',
-              actions: ['setCommunicationDetails', 'unsetOTP', 'setOTP'],
+              actions: ['unsetOTP', 'setOTP'],
             },
           ],
           onError: [

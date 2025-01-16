@@ -32,7 +32,6 @@ export const IssuersModel = createModel(
     vcMetadata: {} as VCMetadata,
     keyType: 'RS256' as string,
     wellknownKeyTypes: [] as string[],
-    communicationDetails: null as unknown as CommunicationDetails,
     OTP: '',
     isAutoWalletBindingFailed: false,
   },
