@@ -549,7 +549,7 @@ export const IssuersMachine = model.createMachine(
       },
       handleVCVerificationFailure: {
         on: {
-          RESET_VERIFY_ERROR: {
+          RESET_ERROR_SCREEN: {
             actions: ['resetVerificationErrorMessage'],
           },
         },
@@ -557,7 +557,7 @@ export const IssuersMachine = model.createMachine(
 
       handleVCAutoWalletBindingFailure: {
         on: {
-          RESET_VERIFY_ERROR: {
+          RESET_ERROR_SCREEN: {
             actions: ['resetAutoWalletBindingFailure'],
           },
         },

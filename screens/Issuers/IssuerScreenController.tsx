@@ -70,8 +70,8 @@ export function useIssuerScreenController({route, navigation}) {
     },
     SELECTED_CREDENTIAL_TYPE: (credType: CredentialTypes) =>
       service.send(IssuerScreenTabEvents.SELECTED_CREDENTIAL_TYPE(credType)),
-    RESET_VERIFY_ERROR: () => {
-      service.send(IssuerScreenTabEvents.RESET_VERIFY_ERROR());
+    RESET_ERROR_SCREEN: () => {
+      service.send(IssuerScreenTabEvents.RESET_ERROR_SCREEN());
       if (isAndroid()) {
         navigation.navigate(BOTTOM_TAB_ROUTES.home, {screen: 'HomeScreen'});
       } else {

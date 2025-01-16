@@ -154,7 +154,7 @@ export const vcMetaMachine =
               ],
               target: '#vcMeta.ready',
             },
-            RESET_VERIFY_ERROR: {
+            RESET_ERROR_SCREEN: {
               actions: 'resetVerificationErrorMessage',
             },
             SET_VERIFICATION_STATUS: {

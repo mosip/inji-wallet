@@ -172,7 +172,7 @@ export const IssuersScreen: React.FC<
         image={SvgImage.PermissionDenied()}
         showClose={false}
         primaryButtonText="goBack"
-        primaryButtonEvent={controller.RESET_VERIFY_ERROR}
+        primaryButtonEvent={controller.RESET_ERROR_SCREEN}
         primaryButtonTestID="goBack"
         customStyles={{marginTop: '30%'}}
       />
@@ -191,7 +191,7 @@ export const IssuersScreen: React.FC<
         image={SvgImage.PermissionDenied()}
         showClose={false}
         primaryButtonText="goBack"
-        primaryButtonEvent={controller.RESET_VERIFY_ERROR}
+        primaryButtonEvent={controller.RESET_ERROR_SCREEN}
         primaryButtonTestID="goBack"
         customStyles={{marginTop: '30%'}}
       />

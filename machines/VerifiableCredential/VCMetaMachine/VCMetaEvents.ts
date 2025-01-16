@@ -32,7 +32,7 @@ export const VcMetaEvents = {
     errorMessage,
     vcMetadata,
   }),
-  RESET_VERIFY_ERROR: () => ({}),
+  RESET_ERROR_SCREEN: () => ({}),
   REFRESH_VCS_METADATA: () => ({}),
   SHOW_TAMPERED_POPUP: () => ({}),
   SET_VERIFICATION_STATUS: (verificationStatus: unknown) => ({
