@@ -18,6 +18,7 @@ export const VcMetaEvents = {
   REFRESH_MY_VCS_TWO: (vc: VC) => ({vc}),
   REFRESH_RECEIVED_VCS: () => ({}),
   WALLET_BINDING_SUCCESS: () => ({}),
+  AUTO_WALLET_BINDING_SUCCESS: () => ({}),
   RESET_WALLET_BINDING_SUCCESS: () => ({}),
   ADD_VC_TO_IN_PROGRESS_DOWNLOADS: (requestId: string) => ({requestId}),
   REMOVE_VC_FROM_IN_PROGRESS_DOWNLOADS: (vcMetadata: VCMetadata) => ({

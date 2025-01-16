@@ -23,6 +23,8 @@ export const BannerNotificationContainer: React.FC<
 
   const bannerNotificationController = UseBannerNotification();
   const WalletBindingSuccess = bannerNotificationController.isBindingSuccess;
+  const autoWalletBindingSuccess =
+    bannerNotificationController.isAutoWalletBindingSuccess;
   const {t} = useTranslation('BannerNotification');
   const rt = useTranslation('RequestScreen').t;
   const verificationStatus = bannerNotificationController.verificationStatus;
@@ -55,19 +57,20 @@ export const BannerNotificationContainer: React.FC<
         </View>
       )}
 
-      {WalletBindingSuccess && (
-        <View style={Theme.BannerStyles.topBanner}>
-          <BannerNotification
-            type={BannerStatusType.SUCCESS}
-            message={t('activated')}
-            onClosePress={
-              bannerNotificationController.RESET_WALLET_BINDING_SUCCESS
-            }
-            key={'activatedVcPopup'}
-            testId={'activatedVcPopup'}
-          />
-        </View>
-      )}
+      {WalletBindingSuccess ||
+        (!autoWalletBindingSuccess && (
+          <View style={Theme.BannerStyles.topBanner}>
+            <BannerNotification
+              type={BannerStatusType.SUCCESS}
+              message={t('activated')}
+              onClosePress={
+                bannerNotificationController.RESET_WALLET_BINDING_SUCCESS
+              }
+              key={'activatedVcPopup'}
+              testId={'activatedVcPopup'}
+            />
+          </View>
+        ))}
 
       {showQuickShareSuccessBanner && (
         <View style={Theme.BannerStyles.topBanner}>
