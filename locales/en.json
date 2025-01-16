@@ -459,6 +459,10 @@
         "ERR_INVALID_VALIDFROM": "Date is invalid or set in the future. Check for a valid date.",
         "ERR_VALID_FROM_IS_FUTURE_DATE": "Date is invalid or set in the future. Check for a valid date.",
         "ERR_INVALID_VALIDUNTIL": "Date is invalid. Check for a valid date."
+      },
+      "autoWalletBindingError": {
+        "title": "An Error Occurred!",
+        "message": "Something went wrong while processing your credential. Please try downloading it again. If the issue persists, reach out to support for help."
       }
     }
   },

@@ -458,6 +458,10 @@
         "ERR_INVALID_VALIDFROM": "Ang petsa ay hindi wasto o nakatakda sa hinaharap. Tingnan kung may wastong petsa.",
         "ERR_VALID_FROM_IS_FUTURE_DATE": "Ang petsa ay hindi wasto o nakatakda sa hinaharap. Tingnan kung may wastong petsa.",
         "ERR_INVALID_VALIDUNTIL": "Di-wasto ang petsa. Tingnan kung may wastong petsa."
+      },
+      "autoWalletBindingError": {
+        "title": "May pagkakamaling naganap!",
+        "message": "Nagkaproblema habang pinoproseso ang iyong kredensyal. Pakisubukang i-download itong muli. Kung magpapatuloy ang isyu, makipag-ugnayan sa suporta para sa tulong."
       }
     }
   },
