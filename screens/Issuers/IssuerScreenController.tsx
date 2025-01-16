@@ -14,6 +14,7 @@ import {
   selectStoring,
   selectVerificationErrorMessage,
   selectIsNonGenericError,
+  selectAutoWalletBindingFailure,
 } from '../../machines/Issuers/IssuersSelectors';
 import {ActorRefFrom} from 'xstate';
 import {BOTTOM_TAB_ROUTES} from '../../routes/routesConstants';
@@ -51,6 +52,10 @@ export function useIssuerScreenController({route, navigation}) {
     verificationErrorMessage: useSelector(
       service,
       selectVerificationErrorMessage,
+    ),
+    isAutoWalletBindingFailed: useSelector(
+      service,
+      selectAutoWalletBindingFailure,
     ),
     isError: useSelector(service, selectIsError),
 

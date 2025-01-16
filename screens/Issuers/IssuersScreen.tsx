@@ -51,6 +51,8 @@ export const IssuersScreen: React.FC<
     ? t(translationKey)
     : t(`errors.verificationFailed.ERR_GENERIC`);
 
+  const isAutoWalletBindingFailed = controller.isAutoWalletBindingFailed;
+
   useLayoutEffect(() => {
     if (controller.loadingReason || showFullScreenError) {
       props.navigation.setOptions({
@@ -167,6 +169,25 @@ export const IssuersScreen: React.FC<
         alignActionsOnEnd
         title={t('MyVcsTab:errors.verificationFailed.title')}
         message={verificationErrorMessage}
+        image={SvgImage.PermissionDenied()}
+        showClose={false}
+        primaryButtonText="goBack"
+        primaryButtonEvent={controller.RESET_VERIFY_ERROR}
+        primaryButtonTestID="goBack"
+        customStyles={{marginTop: '30%'}}
+      />
+    );
+  }
+
+  if (isAutoWalletBindingFailed) {
+    return (
+      <Error
+        testID="autoWalletBindingError"
+        isVisible={isAutoWalletBindingFailed}
+        isModal={true}
+        alignActionsOnEnd
+        title={t('MyVcsTab:errors.autoWalletBindingError.title')}
+        message={t(`MyVcsTab:errors.autoWalletBindingError.message`)}
         image={SvgImage.PermissionDenied()}
         showClose={false}
         primaryButtonText="goBack"

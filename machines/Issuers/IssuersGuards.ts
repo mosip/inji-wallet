@@ -57,5 +57,8 @@ export const IssuersGuards = () => {
       const errorMessage = event.data.message;
       return errorMessage === ErrorMessage.GENERIC;
     },
+    isAutoWalletBindingFlow: (context: any, event: any) =>
+      context.communicationDetails &&
+      typeof context.communicationDetails === 'object',
   };
 };

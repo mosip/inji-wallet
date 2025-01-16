@@ -1,5 +1,5 @@
 import Cloud from '../../shared/CloudBackupAndRestoreUtils';
-import {CACHED_API} from '../../shared/api';
+import {API_URLS, CACHED_API} from '../../shared/api';
 import NetInfo from '@react-native-community/netinfo';
 import {
   constructAuthorizationConfiguration,
@@ -29,6 +29,8 @@ import {TelemetryConstants} from '../../shared/telemetry/TelemetryConstants';
 import {VciClient} from '../../shared/vciClient/VciClient';
 import {isMockVC} from '../../shared/Utils';
 import {VCFormat} from '../../shared/VCFormat';
+import {request} from '../../shared/request';
+import {WalletBindingResponse} from '../VerifiableCredential/VCMetaMachine/vc';
 
 export const IssuersService = () => {
   return {
@@ -171,6 +173,61 @@ export const IssuersService = () => {
           verificationErrorCode: VerificationErrorType.NO_ERROR,
         };
       }
+    },
+
+    requestBindingOTP: async (context: any) => {
+      const response = await request(
+        API_URLS.bindingOtp.method,
+        API_URLS.bindingOtp.buildURL(),
+        {
+          requestTime: String(new Date().toISOString()),
+          request: {
+            individualId: context.vcMetadata.mosipIndividualId,
+            otpChannels: ['EMAIL', 'PHONE'],
+          },
+        },
+      );
+      if (response.response == null) {
+        throw new Error('Could not process request');
+      }
+      return response;
+    },
+
+    fetchKeyPair: async context => {
+      const keyType = context.vcMetadata?.downloadKeyType;
+      return await fetchKeyPair(keyType);
+    },
+
+    addWalletBindingId: async context => {
+      const response = await request(
+        API_URLS.walletBinding.method,
+        API_URLS.walletBinding.buildURL(),
+        {
+          requestTime: String(new Date().toISOString()),
+          request: {
+            authFactorType: 'WLA',
+            format: 'jwt',
+            individualId: context.vcMetadata.mosipIndividualId,
+            transactionId: context.bindingTransactionId,
+            publicKey: context.publicKey,
+            challengeList: [
+              {
+                authFactorType: 'OTP',
+                challenge: context.OTP,
+                format: 'alpha-numeric',
+              },
+            ],
+          },
+        },
+      );
+
+      const walletResponse: WalletBindingResponse = {
+        walletBindingId: response.response.encryptedWalletBindingId,
+        keyId: response.response.keyId,
+        thumbprint: response.response.thumbprint,
+        expireDateTime: response.response.expireDateTime,
+      };
+      return walletResponse;
     },
   };
 };

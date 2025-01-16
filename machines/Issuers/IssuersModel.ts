@@ -10,6 +10,7 @@ import {AppServices} from '../../shared/GlobalContext';
 import {VCMetadata} from '../../shared/VCMetadata';
 import {IssuersEvents} from './IssuersEvents';
 import {issuerType} from './IssuersMachine';
+import {CommunicationDetails} from '../../shared/Utils';
 
 export const IssuersModel = createModel(
   {
@@ -31,6 +32,9 @@ export const IssuersModel = createModel(
     vcMetadata: {} as VCMetadata,
     keyType: 'RS256' as string,
     wellknownKeyTypes: [] as string[],
+    communicationDetails: null as unknown as CommunicationDetails,
+    OTP: '',
+    isAutoWalletBindingFailed: false,
   },
   {
     events: IssuersEvents,
