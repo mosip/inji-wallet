@@ -43,7 +43,8 @@ public class DeletingVcTest extends IosBaseTest {
         assertTrue(otpVerification.isOtpVerificationPageLoaded(), "Verify if otp verification page is displayed");
         otpVerification.enterOtp(BaseTestCase.getOtp(), Target.IOS);
 
-        assertTrue(homePage.isNameDisplayed(TestDataReader.readData("fullName")), "Verify if full name is displayed");
+        addNewCardPage.clickOnDoneButton();
+        assertTrue(homePage.isCredentialTypeValueDisplayed(), "Verify if credential type value is displayed");
 
         MoreOptionsPage moreOptionsPage = homePage.clickOnMoreOptionsButton();
         assertTrue(moreOptionsPage.isMoreOptionsPageLoaded(), "Verify if more options page is displayed");
@@ -94,7 +95,8 @@ public class DeletingVcTest extends IosBaseTest {
         assertTrue(otpVerification.isOtpVerificationPageLoaded(), "Verify if otp verification page is displayed");
         otpVerification.enterOtp(BaseTestCase.getOtp(), Target.IOS);
 
-        assertTrue(homePage.isNameDisplayed(TestDataReader.readData("fullName")), "Verify if full name is displayed");
+        addNewCardPage.clickOnDoneButton();
+        assertTrue(homePage.isCredentialTypeValueDisplayed(), "Verify if credential type value is displayed");
 
         MoreOptionsPage moreOptionsPage = homePage.clickOnMoreOptionsButton();
         assertTrue(moreOptionsPage.isMoreOptionsPageLoaded(), "Verify if more options page is displayed");
@@ -106,7 +108,8 @@ public class DeletingVcTest extends IosBaseTest {
 //        assertTrue(moreOptionsPage.isMoreOptionsPageLoaded(), "Verify if more options page is displayed");
 //
 //        moreOptionsPage.clickOnCloseButton();
-        assertTrue(homePage.isNameDisplayed(TestDataReader.readData("fullName")), "Verify if full name is displayed");
+        addNewCardPage.clickOnDoneButton();
+        assertTrue(homePage.isCredentialTypeValueDisplayed(), "Verify if credential type value is displayed");
     }
 
     @Test
@@ -142,7 +145,8 @@ public class DeletingVcTest extends IosBaseTest {
         assertTrue(otpVerification.isOtpVerificationPageLoaded(), "Verify if otp verification page is displayed");
         otpVerification.enterOtp(BaseTestCase.getOtp(), Target.IOS);
 
-        assertTrue(homePage.isNameDisplayed(TestDataReader.readData("fullName")), "Verify if full name is displayed");
+        addNewCardPage.clickOnDoneButton();
+        assertTrue(homePage.isCredentialTypeValueDisplayed(), "Verify if credential type value is displayed");
 
         MoreOptionsPage moreOptionsPage = homePage.clickOnMoreOptionsButton();
         assertTrue(moreOptionsPage.isMoreOptionsPageLoaded(), "Verify if more options page is displayed");
@@ -151,7 +155,7 @@ public class DeletingVcTest extends IosBaseTest {
         assertTrue(pleaseConfirmPopupPage.isPleaseConfirmPopupPageLoaded(), "Verify if pop up page is displayed");
 
         pleaseConfirmPopupPage.clickOnConfirmButton();
-        assertFalse(homePage.isNameDisplayed(TestDataReader.readData("fullName")), "Verify if VC is removed");
+        assertFalse(homePage.isCredentialTypeValueDisplayed(), "Verify if VC is removed");
 
         homePage.downloadCard();
 
@@ -164,7 +168,8 @@ public class DeletingVcTest extends IosBaseTest {
         assertTrue(otpVerification.isOtpVerificationPageLoaded(), "Verify if otp verification page is displayed");
         otpVerification.enterOtp(BaseTestCase.getOtp(), Target.IOS);
 
-        assertTrue(homePage.isNameDisplayed(TestDataReader.readData("fullName")), "Verify if full name is displayed");
+        addNewCardPage.clickOnDoneButton();
+        assertTrue(homePage.isCredentialTypeValueDisplayed(), "Verify if credential type value is displayed");
 
         HistoryPage historyPage = homePage.clickOnHistoryButton();
         assertTrue(historyPage.isHistoryPageLoaded(), "Verify if history page is displayed");
@@ -213,7 +218,8 @@ public class DeletingVcTest extends IosBaseTest {
         otpVerification.enterOtpForEsignet(BaseTestCase.getOtp(), Target.IOS);
         esignetLoginPage.clickOnVerifyButtonIos();
 
-        assertTrue(homePage.isNameDisplayed(TestDataReader.readData("fullName")), "Verify if full name is displayed");
+        addNewCardPage.clickOnDoneButton();
+        assertTrue(homePage.isCredentialTypeValueDisplayed(), "Verify if credential type value is displayed");
 
         MoreOptionsPage moreOptionsPage = homePage.clickOnMoreOptionsButton();
         assertTrue(moreOptionsPage.isMoreOptionsPageLoaded(), "Verify if more options page is displayed");

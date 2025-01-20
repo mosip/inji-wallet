@@ -105,7 +105,8 @@ public class ShareVcTest  extends IosBaseTest {
         otpVerification.enterOtpForEsignet(BaseTestCase.getOtp(), Target.IOS);
         esignetLoginPage.clickOnVerifyButtonIos();
 
-        assertTrue(homePage.isNameDisplayed(TestDataReader.readData("fullName")), "Verify if full name is displayed");
+        addNewCardPage.clickOnDoneButton();
+        assertTrue(homePage.isCredentialTypeValueDisplayed(), "Verify if credential type value is displayed");
 
         SharePage SharePage = homePage.clickOnShareButton();
 

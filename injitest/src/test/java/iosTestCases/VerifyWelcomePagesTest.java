@@ -91,7 +91,7 @@ public class VerifyWelcomePagesTest extends IosBaseTest {
         assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
 
     }
-    
+
     @Test
     public void verifyGoBackFromInjiTourGuide() {
     	ChooseLanguagePage chooseLanguagePage = new ChooseLanguagePage(driver);
@@ -114,7 +114,7 @@ public class VerifyWelcomePagesTest extends IosBaseTest {
         homePage.clickOnNextButtonForInjiTour();
         assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
         SettingsPage settingsPage = homePage.clickOnSettingIcon();
-        
+
         assertTrue(settingsPage.isSettingPageLoaded(), "Verify if setting page is displayed");
         settingsPage.clickOnInjiTourGuide();
 
@@ -153,7 +153,7 @@ public class VerifyWelcomePagesTest extends IosBaseTest {
         assertTrue(homePage.verifyLanguageForHelpAndFrequentlyAskedQuationsHeaderDisplayed("English"), "Verify if help and frequently asked quations header displayed");
         assertTrue(homePage.verifyLanguageForHelpAndFrequentlyAskedQuationsDescriptionDisplayed("English"), "Verify if help and frequently asked quations description displayed");
     }
-    
+
     @Test
     public void verifyClickOnBackFromInjiTourGuide() {
     	ChooseLanguagePage chooseLanguagePage = new ChooseLanguagePage(driver);
@@ -176,7 +176,7 @@ public class VerifyWelcomePagesTest extends IosBaseTest {
         homePage.clickOnNextButtonForInjiTour();
         assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
         SettingsPage settingsPage = homePage.clickOnSettingIcon();
-        
+
         assertTrue(settingsPage.isSettingPageLoaded(), "Verify if setting page is displayed");
         settingsPage.clickOnInjiTourGuide();
 
@@ -224,7 +224,8 @@ public class VerifyWelcomePagesTest extends IosBaseTest {
         otpVerification.enterOtpForEsignet(BaseTestCase.getOtp(), Target.IOS);
         esignetLoginPage.clickOnVerifyButtonIos();
 
-        assertTrue(homePage.isNameDisplayed(TestDataReader.readData("fullName")), "Verify if full name is displayed");
+        addNewCardPage.clickOnDoneButton();
+        assertTrue(homePage.isCredentialTypeValueDisplayed(), "Verify if credential type value is displayed");
 
         SettingsPage settingsPage = homePage.clickOnSettingIcon();
 
@@ -270,10 +271,8 @@ public class VerifyWelcomePagesTest extends IosBaseTest {
         otpVerification.enterOtpForEsignet(BaseTestCase.getOtp(), Target.IOS);
         esignetLoginPage.clickOnVerifyButtonIos();
 
-        assertTrue(homePage.isNameDisplayed(TestDataReader.readData("fullName")), "Verify if full name is displayed");
-
-        assertTrue(homePage.isNameDisplayed(TestDataReader.readData("fullName")), "Verify if full name is displayed");
-
+        addNewCardPage.clickOnDoneButton();
+        assertTrue(homePage.isCredentialTypeValueDisplayed(), "Verify if credential type value is displayed");
         homePage.clickOnSettingIcon();
 
         assertTrue(settingsPage.isSettingPageLoaded(), "Verify if setting page is displayed");
@@ -345,7 +344,8 @@ public class VerifyWelcomePagesTest extends IosBaseTest {
         otpVerification.enterOtpForEsignet(BaseTestCase.getOtp(), Target.IOS);
         esignetLoginPage.clickOnVerifyButtonIos();
 
-        assertTrue(homePage.isNameDisplayed(TestDataReader.readData("fullName")), "Verify if full name is displayed");
+        addNewCardPage.clickOnDoneButton();
+        assertTrue(homePage.isCredentialTypeValueDisplayed(), "Verify if credential type value is displayed");
 
         SettingsPage settingsPage = homePage.clickOnSettingIcon();
 

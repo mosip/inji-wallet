@@ -47,7 +47,8 @@ public class PinVcTest extends IosBaseTest {
         assertTrue(otpVerification.isOtpVerificationPageLoaded(), "Verify if otp verification page is displayed");
         otpVerification.enterOtp(BaseTestCase.getOtp(), Target.IOS);
 
-        assertTrue(homePage.isNameDisplayed(TestDataReader.readData("fullName")), "Verify if full name is displayed");
+        addNewCardPage.clickOnDoneButton();
+        assertTrue(homePage.isCredentialTypeValueDisplayed(), "Verify if credential type value is displayed");
         MoreOptionsPage moreOptionsPage = homePage.clickOnMoreOptionsButton();
 
         assertTrue(moreOptionsPage.isMoreOptionsPageLoaded(), "Verify if more options page is displayed");
@@ -93,7 +94,8 @@ public class PinVcTest extends IosBaseTest {
         assertTrue(otpVerification.isOtpVerificationPageLoaded(), "Verify if otp verification page is displayed");
         otpVerification.enterOtp(BaseTestCase.getOtp(), Target.IOS);
 
-        assertTrue(homePage.isNameDisplayed(TestDataReader.readData("fullName")), "Verify if full name is displayed");
+        addNewCardPage.clickOnDoneButton();
+        assertTrue(homePage.isCredentialTypeValueDisplayed(), "Verify if credential type value is displayed");
         MoreOptionsPage moreOptionsPage = homePage.clickOnMoreOptionsButton();
 
         assertTrue(moreOptionsPage.isMoreOptionsPageLoaded(), "Verify if more options page is displayed");
@@ -145,7 +147,8 @@ public class PinVcTest extends IosBaseTest {
         otpVerification.enterOtpForEsignet(BaseTestCase.getOtp(), Target.IOS);
         esignetLoginPage.clickOnVerifyButtonIos();
 
-        assertTrue(homePage.isNameDisplayed(TestDataReader.readData("fullName")), "Verify if full name is displayed");
+        addNewCardPage.clickOnDoneButton();
+        assertTrue(homePage.isCredentialTypeValueDisplayed(), "Verify if credential type value is displayed");
         MoreOptionsPage moreOptionsPage = homePage.clickOnMoreOptionsButton();
 
         assertTrue(moreOptionsPage.isMoreOptionsPageLoaded(), "Verify if more options page is displayed");
@@ -162,7 +165,7 @@ public class PinVcTest extends IosBaseTest {
         assertTrue(otpVerification.isOtpVerificationPageLoaded(), "Verify if otp verification page is displayed");
         otpVerification.enterOtp(BaseTestCase.getOtp(), Target.IOS);
 
-        assertTrue(homePage.isSecondNameDisplayed(TestDataReader.readData("fullName")), "Verify if second card name is displayed");
+        assertTrue(homePage.isCredentialTypeValueDisplayed(), "Verify if credential type value is displayed");
         homePage.clickOnMoreOptionsButton();
 
         assertTrue(moreOptionsPage.isMoreOptionsPageLoaded(), "Verify if more options page is displayed");
@@ -203,7 +206,8 @@ public class PinVcTest extends IosBaseTest {
         assertTrue(otpVerification.isOtpVerificationPageLoaded(), "Verify if otp verification page is displayed");
         otpVerification.enterOtp(BaseTestCase.getOtp(), Target.IOS);
 
-        assertTrue(homePage.isNameDisplayed(TestDataReader.readData("fullName")), "Verify if full name is displayed");
+        addNewCardPage.clickOnDoneButton();
+        assertTrue(homePage.isCredentialTypeValueDisplayed(), "Verify if credential type value is displayed");
         MoreOptionsPage moreOptionsPage = homePage.clickOnMoreOptionsButton();
 
         assertTrue(moreOptionsPage.isMoreOptionsPageLoaded(), "Verify if more options page is displayed");
@@ -264,7 +268,8 @@ public class PinVcTest extends IosBaseTest {
 
         assertTrue(sunbirdLoginPage.isSunbirdCardIsActive(), "Verify if download sunbird displayed active");
 
-        assertTrue(homePage.isNameDisplayed(TestDataReader.readData("fullName")), "Verify if full name is displayed");
+        addNewCardPage.clickOnDoneButton();
+        assertTrue(homePage.isCredentialTypeValueDisplayed(), "Verify if credential type value is displayed");
         MoreOptionsPage moreOptionsPage = homePage.clickOnMoreOptionsButton();
 
         assertTrue(moreOptionsPage.isMoreOptionsPageLoaded(), "Verify if more options page is displayed");
@@ -337,7 +342,8 @@ public class PinVcTest extends IosBaseTest {
 
         assertTrue(sunbirdLoginPage.isSunbirdCardIsActive(), "Verify if download sunbird displayed active");
 
-        assertTrue(homePage.isNameDisplayed(TestDataReader.readData("fullName")), "Verify if full name is displayed");
+        addNewCardPage.clickOnDoneButton();
+        assertTrue(homePage.isCredentialTypeValueDisplayed(), "Verify if credential type value is displayed");
         MoreOptionsPage moreOptionsPage = new MoreOptionsPage(driver);
         // mosip vc
         homePage.clickOnSecondVcEllipsis();
@@ -399,9 +405,10 @@ public class PinVcTest extends IosBaseTest {
         otpVerification.enterOtp(BaseTestCase.getOtp(), Target.IOS);
 
         assertTrue(homePage.isDownloadingVcPopupDisplayed(),"verify downloading vc popup displayed");
-        assertTrue(homePage.isNameDisplayed(TestDataReader.readData("fullName")), "Verify if full name is displayed");
+        addNewCardPage.clickOnDoneButton();
+        assertTrue(homePage.isCredentialTypeValueDisplayed(), "Verify if credential type value is displayed");
 
-        DetailedVcViewPage detailedVcViewPage = homePage.openDetailedVcView(TestDataReader.readData("fullName"));
+        DetailedVcViewPage detailedVcViewPage = homePage.openDetailedVcView();
         assertTrue(detailedVcViewPage.isDetailedVcViewPageLoaded(), "Verify if detailed Vc view page is displayed");
 
         detailedVcViewPage.clickOnMoreOptionsInDetails();
@@ -411,10 +418,11 @@ public class PinVcTest extends IosBaseTest {
         moreOptionsPage.clickOnPinOrUnPinCard();
 
         detailedVcViewPage.clickOnBackArrow();
-        assertTrue(homePage.isNameDisplayed(TestDataReader.readData("fullName")), "Verify if full name is displayed");
+        addNewCardPage.clickOnDoneButton();
+        assertTrue(homePage.isCredentialTypeValueDisplayed(), "Verify if credential type value is displayed");
         assertTrue(homePage.isPinIconDisplayed(), "Verify if pin icon on vc is displayed");
 
-        homePage.openDetailedVcView(TestDataReader.readData("fullName"));
+        homePage.openDetailedVcView();
         assertTrue(detailedVcViewPage.isDetailedVcViewPageLoaded(), "Verify if detailed Vc view page is displayed");
 
         detailedVcViewPage.clickOnMoreOptionsInDetails();
