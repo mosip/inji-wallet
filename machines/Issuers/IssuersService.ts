@@ -1,33 +1,28 @@
-import Cloud from '../../shared/CloudBackupAndRestoreUtils';
-import {CACHED_API} from '../../shared/api';
 import NetInfo from '@react-native-community/netinfo';
+import { NativeModules } from 'react-native';
+import { authorize } from 'react-native-app-auth';
+import Cloud from '../../shared/CloudBackupAndRestoreUtils';
+import { CACHED_API } from '../../shared/api';
+import {
+  fetchKeyPair,
+  generateKeyPair,
+} from '../../shared/cryptoutil/cryptoUtil';
 import {
   constructAuthorizationConfiguration,
   constructIssuerMetaData,
   constructProofJWT,
   hasKeyPair,
+  OIDCErrors,
   updateCredentialInformation,
   vcDownloadTimeout,
+  verifyCredentialData
 } from '../../shared/openId4VCI/Utils';
-import {authorize} from 'react-native-app-auth';
-import {
-  fetchKeyPair,
-  generateKeyPair,
-} from '../../shared/cryptoutil/cryptoUtil';
-import {NativeModules} from 'react-native';
-import {
-  VerificationErrorMessage,
-  VerificationErrorType,
-  verifyCredential,
-} from '../../shared/vcjs/verifyCredential';
+import { TelemetryConstants } from '../../shared/telemetry/TelemetryConstants';
 import {
   getImpressionEventData,
   sendImpressionEvent,
 } from '../../shared/telemetry/TelemetryUtils';
-import {TelemetryConstants} from '../../shared/telemetry/TelemetryConstants';
-import {VciClient} from '../../shared/vciClient/VciClient';
-import {isMockVC} from '../../shared/Utils';
-import {VCFormat} from '../../shared/VCFormat';
+import { VciClient } from '../../shared/vciClient/VciClient';
 
 export const IssuersService = () => {
   return {
@@ -40,7 +35,8 @@ export const IssuersService = () => {
     checkInternet: async () => await NetInfo.fetch(),
     downloadIssuerWellknown: async (context: any) => {
       const wellknownResponse = await CACHED_API.fetchIssuerWellknownConfig(
-        context.selectedIssuerId,
+        context.selectedIssuer.issuer_id,
+        context.selectedIssuer.credential_issuer_host,
       );
       return wellknownResponse;
     },
@@ -55,10 +51,35 @@ export const IssuersService = () => {
       }
       if (credentialTypes.length == 0)
         throw new Error(
-          `No credential type found for issuer ${context.selectedIssuer.credential_issuer}`,
+          `No credential type found for issuer ${context.selectedIssuer.issuer_id}`,
         );
 
       return credentialTypes;
+    },
+    fetchAuthorizationEndpoint: async (context: any) => {
+      /**
+       * Incase of multiple entries of authorization_servers, each element is iterated and metadata check is made for support with wallet.
+       * For now, its been kept as getting first entry and checking for matching grant_types_supported
+       */
+      const authorizationServer =
+        context.selectedIssuerWellknownResponse['authorization_servers'][0];
+      const authorizationServerMetadata =
+        await CACHED_API.fetchIssuerAuthorizationServerMetadata(
+          authorizationServer,
+        );
+      const SUPPORTED_GRANT_TYPES = ['authorization_code'];
+      if (
+        (
+          authorizationServerMetadata['grant_types_supported'] as Array<string>
+        ).filter(grantType => SUPPORTED_GRANT_TYPES.includes(grantType))
+          .length === 0
+      ) {
+        throw new Error(
+          OIDCErrors.AUTHORIZATION_ENDPOINT_DISCOVERY.GRANT_TYPE_NOT_SUPPORTED,
+        );
+      }
+
+      return authorizationServerMetadata['authorization_endpoint'];
     },
     downloadCredential: async (context: any) => {
       const downloadTimeout = await vcDownloadTimeout();
@@ -87,7 +108,7 @@ export const IssuersService = () => {
       sendImpressionEvent(
         getImpressionEventData(
           TelemetryConstants.FlowType.vcDownload,
-          context.selectedIssuer.credential_issuer +
+          context.selectedIssuer.issuer_id +
             TelemetryConstants.Screens.webViewPage,
         ),
       );
@@ -125,26 +146,15 @@ export const IssuersService = () => {
     },
 
     verifyCredential: async (context: any) => {
-      //TODO: Remove bypassing verification of mock VCs once mock VCs are verifiable
-      if (
-        context.selectedCredentialType.format === VCFormat.mso_mdoc ||
-        !isMockVC(context.selectedIssuerId)
-      ) {
-        const verificationResult = await verifyCredential(
-          context.verifiableCredential?.credential,
-          context.selectedCredentialType.format,
-        );
-        if (!verificationResult.isVerified) {
+      const verificationResult = await verifyCredentialData(
+        context.verifiableCredential?.credential,
+        context.selectedCredentialType.format,
+        context.selectedIssuerId
+      );
+       if(!verificationResult.isVerified) {
           throw new Error(verificationResult.verificationErrorCode);
         }
         return verificationResult;
-      } else {
-        return {
-          isVerified: true,
-          verificationMessage: VerificationErrorMessage.NO_ERROR,
-          verificationErrorCode: VerificationErrorType.NO_ERROR,
-        };
-      }
     },
   };
 };

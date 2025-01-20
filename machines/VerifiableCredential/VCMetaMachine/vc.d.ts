@@ -43,22 +43,24 @@ export interface CredentialSubject {
 
 type VCContext = (string | Record<string, unknown>)[];
 
-export type Credential = {
-  credentialConfigurationId: any;
-  '@context': VCContext;
-  credentialSubject: CredentialSubject;
-  id: string;
-  issuanceDate: string;
-  issuer: string;
-  proof: {
-    created: string;
-    jws: string;
-    proofPurpose: 'assertionMethod' | string;
-    type: 'RsaSignature2018' | string;
-    verificationMethod: string;
-  };
-  type: string[];
-} | string
+export type Credential =
+  | {
+      credentialConfigurationId: any;
+      '@context': VCContext;
+      credentialSubject: CredentialSubject;
+      id: string;
+      issuanceDate: string;
+      issuer: string;
+      proof: {
+        created: string;
+        jws: string;
+        proofPurpose: 'assertionMethod' | string;
+        type: 'RsaSignature2018' | string;
+        verificationMethod: string;
+      };
+      type: string[];
+    }
+  | string;
 
 export interface VerifiableCredential {
   issuerLogo: logoType;
@@ -81,7 +83,6 @@ export interface VerifiableCredentialData {
 export interface CredentialWrapper {
   verifiableCredential: VerifiableCredential;
   format: string;
-  identifier: string;
   generatedOn: Date;
   vcMetadata: VCMetadata;
 }

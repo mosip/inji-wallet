@@ -101,7 +101,7 @@ export const IssuersMachine = model.createMachine(
             target: 'downloadCredentialTypes',
           },
           onError: {
-            actions: ['setFetchWellknownError', 'resetLoadingReason'],
+            actions: ['setNetworkOrTechnicalError', 'resetLoadingReason'],
             target: 'error',
           },
         },
@@ -142,7 +142,46 @@ export const IssuersMachine = model.createMachine(
           },
           SELECTED_CREDENTIAL_TYPE: {
             actions: 'setSelectedCredentialType',
-            target: 'checkInternet',
+            target: 'fetchAuthorizationEndpoint',
+          },
+        },
+      },
+      fetchAuthorizationEndpoint: {
+        invoke: {
+          src: 'fetchAuthorizationEndpoint',
+          onDone: [
+            {
+              actions: 'updateAuthorizationEndpoint',
+              target: 'checkInternet',
+            },
+          ],
+          onError: {
+            actions: ['setError', 'resetLoadingReason'],
+            target: '.error',
+          },
+        },
+        initial: 'idle',
+        states: {
+          idle: {},
+          error: {
+            on: {
+              TRY_AGAIN: [
+                {
+                  description:
+                    'issuer and credential type is selected by the user',
+                  actions: ['setLoadingReasonAsSettingUp', 'resetError'],
+                  target: '#issuersMachine.fetchAuthorizationEndpoint',
+                },
+              ],
+              RESET_ERROR: [
+                {
+                  description:
+                    'issuer and credential type is selected by the user',
+                  actions: ['setLoadingReasonAsSettingUp', 'resetError'],
+                  target: '#issuersMachine.selectingCredentialType',
+                },
+              ],
+            },
           },
         },
       },
@@ -195,16 +234,15 @@ export const IssuersMachine = model.createMachine(
             {
               actions: [
                 'resetSelectedCredentialType',
-                'setError',
+                'setNetworkOrTechnicalError',
                 'resetLoadingReason',
-                'sendDownloadingFailedToVcMeta',
                 (_, event) =>
                   console.error(
                     'Error Occurred while invoking Auth - ',
                     event.data,
                   ),
               ],
-              target: 'selectingIssuer',
+              target: 'error',
             },
           ],
         },
@@ -226,7 +264,7 @@ export const IssuersMachine = model.createMachine(
                   'sendDownloadingFailedToVcMeta',
                   (_, event) =>
                     console.error(
-                      'Error Occurred while invoking Auth - ',
+                      'Error Occurred while getting key order - ',
                       event.data,
                     ),
                 ],
@@ -255,7 +293,7 @@ export const IssuersMachine = model.createMachine(
                     'sendDownloadingFailedToVcMeta',
                     (_, event) =>
                       console.error(
-                        'Error Occurred while invoking Auth - ',
+                        'Error Occurred while getting keypair from keystore - ',
                         event.data,
                       ),
                   ],
@@ -483,7 +521,7 @@ export interface displayType {
 }
 
 export interface issuerType {
-  authorization_servers: [string];
+  issuer_id: string;
   credential_issuer: string;
   protocol: string;
   client_id: string;
@@ -496,4 +534,6 @@ export interface issuerType {
   credential_configurations_supported: object;
   display: [displayType];
   credentialTypes: [CredentialTypes];
+  authorizationEndpoint: string;
+  credential_issuer_host: string;
 }

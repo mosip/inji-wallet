@@ -46,7 +46,7 @@ jobs:
         with:
           node-version: '18.x'        
       - name: Cache npm dependencies
-        uses: actions/cache@v3.3.1
+        uses: actions/cache@v4
         with:
           path: '~/.npm'
           key: ${{ runner.os }}-npm-${{ hashFiles('**/package-lock.json') }}
@@ -74,7 +74,7 @@ jobs:
         env:
           MIMOTO_HOST: ${{ github.event.inputs.backendServiceUrlMimoto }}
           ESIGNET_HOST: ${{ github.event.inputs.backendServiceUrlEsignet }}
-          APPLICATION_THEME: 'orange'
+          APPLICATION_THEME: 'gradient'
           CREDENTIAL_REGISTRY_EDIT: 'false'
           RELEASE_KEYSTORE_ALIAS: 'androidreleasekey'
           RELEASE_KEYSTORE_PASSWORD: "${{ secrets.INJI_ANDROID_RELEASE_STOREPASS }}"
@@ -130,7 +130,7 @@ jobs:
           node-version: '18.x'
         
       - name: Cache npm dependencies
-        uses: actions/cache@v3.3.1
+        uses: actions/cache@v4
         with:
           path: '~/.npm'
           key: ${{ runner.os }}-npm-${{ hashFiles('**/package-lock.json') }}
@@ -149,7 +149,7 @@ jobs:
         env:
           MIMOTO_HOST: ${{ github.event.inputs.backendServiceUrlMimoto }}
           ESIGNET_HOST: ${{ github.event.inputs.backendServiceUrlEsignet }}
-          APPLICATION_THEME: 'orange'
+          APPLICATION_THEME: 'gradient'
           APP_FLAVOR: 'residentapp'
           CREDENTIAL_REGISTRY_EDIT: 'false'
           INJI_IOS_TEMP_KEYCHAIN_PASSWORD: '${{ secrets.INJI_IOS_TEMP_KEYCHAIN_PASSWORD }}'

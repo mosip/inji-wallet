@@ -1,32 +1,40 @@
-import jwtDecode from 'jwt-decode';
-import jose from 'node-jose';
-import {isIOS} from '../constants';
-import {displayType, issuerType} from '../../machines/Issuers/IssuersMachine';
-import getAllConfigurations, {CACHED_API} from '../api';
 import base64url from 'base64url';
 import i18next from 'i18next';
-import {getJWT, replaceCharactersInB64} from '../cryptoutil/cryptoUtil';
-import i18n from '../../i18n';
+import jwtDecode from 'jwt-decode';
+import jose from 'node-jose';
+import {NativeModules} from 'react-native';
+import {vcVerificationBannerDetails} from '../../components/BannerNotificationContainer';
+import {VCProcessor} from '../../components/VC/common/VCProcessor';
 import {
+  BOTTOM_SECTION_FIELDS_WITH_DETAILED_ADDRESS_FIELDS,
+  DETAIL_VIEW_ADD_ON_FIELDS,
+  getCredentialTypeFromWellKnown,
+} from '../../components/VC/common/VCUtils';
+import i18n from '../../i18n';
+import {displayType, issuerType} from '../../machines/Issuers/IssuersMachine';
+import {
+  Credential,
   CredentialTypes,
   CredentialWrapper,
   VerifiableCredential,
 } from '../../machines/VerifiableCredential/VCMetaMachine/vc';
+import getAllConfigurations, {CACHED_API} from '../api';
+import {isIOS} from '../constants';
+import {getJWT} from '../cryptoutil/cryptoUtil';
+import {isMockVC} from '../Utils';
 import {
-  BOTTOM_SECTION_FIELDS_WITH_DETAILED_ADDRESS_FIELDS,
-  DETAIL_VIEW_ADD_ON_FIELDS,
-  getIdType,
-} from '../../components/VC/common/VCUtils';
+  VerificationErrorMessage,
+  VerificationErrorType,
+  verifyCredential,
+} from '../vcjs/verifyCredential';
 import {getVerifiableCredential} from '../../machines/VerifiableCredential/VCItemMachine/VCItemSelectors';
-import {vcVerificationBannerDetails} from '../../components/BannerNotificationContainer';
 import {getErrorEventData, sendErrorEvent} from '../telemetry/TelemetryUtils';
 import {TelemetryConstants} from '../telemetry/TelemetryConstants';
-import {NativeModules} from 'react-native';
 import {KeyTypes} from '../cryptoutil/KeyTypes';
 import {VCFormat} from '../VCFormat';
 import {UnsupportedVcFormat} from '../error/UnsupportedVCFormat';
 import {VCMetadata} from '../VCMetadata';
-import {VCProcessor} from '../../components/VC/common/VCProcessor';
+import {UUID} from '../Utils';
 
 export const Protocols = {
   OpenId4VCI: 'OpenId4VCI',
@@ -44,13 +52,13 @@ export function getVcVerificationDetails(
   verifiableCredential,
   wellknown: Object,
 ): vcVerificationBannerDetails {
-  const idType = getIdType(
+  const credentialType = getCredentialTypeFromWellKnown(
     wellknown,
     getVerifiableCredential(verifiableCredential).credentialConfigurationId,
   );
   return {
     statusType: statusType,
-    vcType: idType,
+    vcType: credentialType,
   };
 }
 
@@ -61,31 +69,6 @@ export const isActivationNeeded = (issuer: string) => {
 };
 
 export const Issuers_Key_Ref = 'OpenId4VCI_KeyPair';
-
-export const getIdentifier = (
-  context,
-  credential: VerifiableCredential,
-  format: string,
-) => {
-  let credentialIdentifier = '';
-  if (format === VCFormat.mso_mdoc) {
-    credentialIdentifier = credential?.processedCredential?.['id'] ?? '';
-  } else if (typeof credential.credential !== 'string') {
-    credentialIdentifier = credential.credential.id;
-  }
-  const credId =
-    credentialIdentifier.startsWith('did') ||
-    credentialIdentifier.startsWith('urn:')
-      ? credentialIdentifier.split(':')
-      : credentialIdentifier.split('/');
-  return (
-    context.selectedIssuer.credential_issuer +
-    ':' +
-    context.selectedIssuer.protocol +
-    ':' +
-    credId[credId.length - 1]
-  );
-};
 
 export const updateCredentialInformation = async (
   context,
@@ -110,11 +93,6 @@ export const updateCredentialInformation = async (
   return {
     verifiableCredential,
     format: context.selectedCredentialType.format,
-    identifier: getIdentifier(
-      context,
-      verifiableCredential,
-      context.selectedCredentialType.format,
-    ),
     generatedOn: new Date(),
     vcMetadata: {
       ...context.vcMetadata,
@@ -144,14 +122,13 @@ export const constructAuthorizationConfiguration = (
   supportedScope: string,
 ) => {
   return {
-    issuer: selectedIssuer.credential_issuer,
+    issuer: selectedIssuer.issuer_id,
     clientId: selectedIssuer.client_id,
     scopes: [supportedScope],
     redirectUrl: selectedIssuer.redirect_uri,
     additionalParameters: {ui_locales: i18n.language},
     serviceConfiguration: {
-      authorizationEndpoint:
-        selectedIssuer.authorization_servers[0] + '/authorize',
+      authorizationEndpoint: selectedIssuer.authorizationEndpoint,
       tokenEndpoint: selectedIssuer.token_endpoint,
     },
   };
@@ -162,11 +139,13 @@ export const getCredentialIssuersWellKnownConfig = async (
   defaultFields: string[],
   credentialConfigurationId: string,
   format: string,
+  issuerHost: string,
 ) => {
   let fields: string[] = defaultFields;
   let matchingWellknownDetails: any;
   const wellknownResponse = await CACHED_API.fetchIssuerWellknownConfig(
     issuer!,
+    issuerHost,
   );
   try {
     if (wellknownResponse) {
@@ -221,12 +200,14 @@ export const getDetailedViewFields = async (
   credentialConfigurationId: string,
   defaultFields: string[],
   format: string,
+  issuerHost: string,
 ) => {
   let response = await getCredentialIssuersWellKnownConfig(
     issuer,
     defaultFields,
     credentialConfigurationId,
     format,
+    issuerHost,
   );
 
   let updatedFieldsList = response.fields.concat(DETAIL_VIEW_ADD_ON_FIELDS);
@@ -255,13 +236,17 @@ export const vcDownloadTimeout = async (): Promise<number> => {
 };
 
 // OIDCErrors is a collection of external errors from the OpenID library or the issuer
-export enum OIDCErrors {
-  OIDC_FLOW_CANCELLED_ANDROID = 'User cancelled flow',
-  OIDC_FLOW_CANCELLED_IOS = 'org.openid.appauth.general error -3',
+export const OIDCErrors = {
+  OIDC_FLOW_CANCELLED_ANDROID: 'User cancelled flow',
+  OIDC_FLOW_CANCELLED_IOS: 'org.openid.appauth.general error -3',
 
-  INVALID_TOKEN_SPECIFIED = 'Invalid token specified',
-  OIDC_CONFIG_ERROR_PREFIX = 'Config error',
-}
+  INVALID_TOKEN_SPECIFIED: 'Invalid token specified',
+  OIDC_CONFIG_ERROR_PREFIX: 'Config error',
+
+  AUTHORIZATION_ENDPOINT_DISCOVERY: {
+    GRANT_TYPE_NOT_SUPPORTED: 'Grant type not supported by Wallet',
+  },
+};
 
 // ErrorMessage is the type of error message shown in the UI
 
@@ -272,6 +257,7 @@ export enum ErrorMessage {
   BIOMETRIC_CANCELLED = 'biometricCancelled',
   TECHNICAL_DIFFICULTIES = 'technicalDifficulty',
   CREDENTIAL_TYPE_DOWNLOAD_FAILURE = 'credentialTypeListDownloadFailure',
+  AUTHORIZATION_GRANT_TYPE_NOT_SUPPORTED = 'authorizationGrantTypeNotSupportedByWallet',
 }
 
 export async function constructProofJWT(
@@ -433,4 +419,24 @@ export function getMatchingCredentialIssuerMetadata(
   throw new Error(
     `Selected credential type - ${credentialConfigurationId} is not available in wellknown config supported credentials list`,
   );
+}
+
+export async function verifyCredentialData(
+  credential: Credential,
+  credentialFormat: string,
+  issuerId: string,
+) {
+  if (credentialFormat === VCFormat.mso_mdoc || !isMockVC(issuerId)) {
+    const verificationResult = await verifyCredential(
+      credential,
+      credentialFormat,
+    );
+    return verificationResult;
+  } else {
+    return {
+      isVerified: true,
+      verificationMessage: VerificationErrorMessage.NO_ERROR,
+      verificationErrorCode: VerificationErrorType.NO_ERROR,
+    };
+  }
 }

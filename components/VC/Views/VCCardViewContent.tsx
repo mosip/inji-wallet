@@ -1,6 +1,5 @@
 import React from 'react';
 import {ImageBackground, Pressable, Image, View} from 'react-native';
-import {getLocalizedField} from '../../../i18n';
 import {VCMetadata} from '../../../shared/VCMetadata';
 import {KebabPopUp} from '../../KebabPopUp';
 import {Credential} from '../../../machines/VerifiableCredential/VCMetaMachine/vc';
@@ -9,12 +8,7 @@ import {Theme} from '../../ui/styleUtils';
 import {CheckBox, Icon} from 'react-native-elements';
 import {SvgImage} from '../../ui/svg';
 import {VcItemContainerProfileImage} from '../../VcItemContainerProfileImage';
-import {
-  isVCLoaded,
-  getBackgroundColour,
-  getBackgroundImage,
-  DisplayName,
-} from '../common/VCUtils';
+import {isVCLoaded, getCredentialType, Display} from '../common/VCUtils';
 import {VCItemFieldValue} from '../common/VCItemField';
 import {WalletBinding} from '../../../screens/Home/MyVcs/WalletBinding';
 import {VCVerification} from '../../VCVerification';
@@ -22,11 +16,12 @@ import {isActivationNeeded} from '../../../shared/openId4VCI/Utils';
 import {VCItemContainerFlowType} from '../../../shared/Utils';
 import {RemoveVcWarningOverlay} from '../../../screens/Home/MyVcs/RemoveVcWarningOverlay';
 import {HistoryTab} from '../../../screens/Home/MyVcs/HistoryTab';
-import {getTextColor} from '../common/VCUtils';
 import {useCopilot} from 'react-native-copilot';
 import {useTranslation} from 'react-i18next';
 
 export const VCCardViewContent: React.FC<VCItemContentProps> = props => {
+  const wellknownDisplayProperty = new Display(props.wellknown);
+
   const vcSelectableButton =
     props.selectable &&
     (props.flow === VCItemContainerFlowType.VP_SHARE ? (
@@ -64,12 +59,12 @@ export const VCCardViewContent: React.FC<VCItemContentProps> = props => {
 
   return (
     <ImageBackground
-      source={getBackgroundImage(props.wellknown, Theme.CloseCard)}
+      source={wellknownDisplayProperty.getBackgroundImage(Theme.CloseCard)}
       resizeMode="stretch"
       imageStyle={Theme.Styles.vcBg}
       style={[
         Theme.Styles.backgroundImageContainer,
-        getBackgroundColour(props.wellknown),
+        wellknownDisplayProperty.getBackgroundColor(),
       ]}>
       <View
         onLayout={
@@ -81,15 +76,17 @@ export const VCCardViewContent: React.FC<VCItemContentProps> = props => {
           {VcItemContainerProfileImage(props)}
           <Column fill align={'space-around'} margin="0 10 0 10">
             <VCItemFieldValue
-              key={'fullName'}
-              testID="fullName"
-              fieldValue={getLocalizedField(DisplayName(props))}
-              wellknown={props.wellknown}
+              key={'credentialType'}
+              testID="credentialType"
+              fieldValue={getCredentialType(props.wellknown)}
+              fieldValueColor={wellknownDisplayProperty.getTextColor(
+                Theme.Colors.Details,
+              )}
             />
             <Row>
               <VCVerification
-                wellknown={props.wellknown}
                 vcMetadata={props.verifiableCredentialData?.vcMetadata}
+                display={wellknownDisplayProperty}
               />
             </Row>
           </Column>
@@ -116,8 +113,7 @@ export const VCCardViewContent: React.FC<VCItemContentProps> = props => {
                 accessible={false}
                 style={Theme.Styles.kebabPressableContainer}>
                 <KebabPopUp
-                  iconColor={getTextColor(
-                    props.wellknown,
+                  iconColor={wellknownDisplayProperty.getTextColor(
                     Theme.Colors.helpText,
                   )}
                   vcMetadata={props.vcMetadata}

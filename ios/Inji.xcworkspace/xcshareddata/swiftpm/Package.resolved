@@ -34,7 +34,7 @@
       "location" : "https://github.com/mosip/inji-openid4vp-ios-swift",
       "state" : {
         "branch" : "develop",
-        "revision" : "7529cd4b0342f8d5c98c37f7ed3961b7073bf730"
+        "revision" : "10c161f4e7414e8a7b0dc2d52d3f4d8faf19b8d7"
       }
     },
     {
@@ -61,7 +61,7 @@
       "location" : "https://github.com/mosip/secure-keystore-ios-swift",
       "state" : {
         "branch" : "develop",
-        "revision" : "4f736866277379f5aa5128e64a39be6165b3500d"
+        "revision" : "767b9dabd1a0cd374732ee97cb7cf34dd051acc1"
       }
     },
     {
@@ -80,6 +80,15 @@
       "state" : {
         "branch" : "develop",
         "revision" : "96bc662cd07df051cf2357691469bba57b0217e8"
+      }
+    },
+    {
+      "identity" : "zipfoundation",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/weichsel/ZIPFoundation.git",
+      "state" : {
+        "revision" : "02b6abe5f6eef7e3cbd5f247c5cc24e246efcfe0",
+        "version" : "0.9.19"
       }
     }
   ],

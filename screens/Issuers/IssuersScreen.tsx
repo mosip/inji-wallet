@@ -41,6 +41,7 @@ export const IssuersScreen: React.FC<
   const [search, setSearch] = useState('');
   const [tapToSearch, setTapToSearch] = useState(false);
   const [clearSearchIcon, setClearSearchIcon] = useState(false);
+  const showFullScreenError = controller.isError && controller.errorMessageType;
 
   const isVerificationFailed = controller.verificationErrorMessage !== '';
 
@@ -51,7 +52,7 @@ export const IssuersScreen: React.FC<
     : t(`errors.verificationFailed.ERR_GENERIC`);
 
   useLayoutEffect(() => {
-    if (controller.loadingReason || controller.errorMessageType) {
+    if (controller.loadingReason || showFullScreenError) {
       props.navigation.setOptions({
         headerShown: false,
       });
@@ -101,7 +102,9 @@ export const IssuersScreen: React.FC<
     return (
       controller.errorMessageType === ErrorMessage.TECHNICAL_DIFFICULTIES ||
       controller.errorMessageType ===
-        ErrorMessage.CREDENTIAL_TYPE_DOWNLOAD_FAILURE
+        ErrorMessage.CREDENTIAL_TYPE_DOWNLOAD_FAILURE ||
+      controller.errorMessageType ===
+        ErrorMessage.AUTHORIZATION_GRANT_TYPE_NOT_SUPPORTED
     );
   }
 
@@ -200,7 +203,7 @@ export const IssuersScreen: React.FC<
       </MessageOverlay>
     );
   }
-  if (controller.errorMessageType) {
+  if (showFullScreenError) {
     return (
       <Error
         testID={`${controller.errorMessageType}Error`}
@@ -213,7 +216,9 @@ export const IssuersScreen: React.FC<
         showClose
         primaryButtonTestID="tryAgain"
         primaryButtonText={
-          controller.errorMessageType != ErrorMessage.TECHNICAL_DIFFICULTIES
+          controller.errorMessageType != ErrorMessage.TECHNICAL_DIFFICULTIES &&
+          controller.errorMessageType !=
+            ErrorMessage.AUTHORIZATION_GRANT_TYPE_NOT_SUPPORTED
             ? 'tryAgain'
             : undefined
         }
@@ -280,19 +285,19 @@ export const IssuersScreen: React.FC<
                 data={filteredSearchData}
                 renderItem={({item}) => (
                   <Issuer
-                    testID={removeWhiteSpace(item.credential_issuer)}
-                    key={item.credential_issuer}
+                    testID={removeWhiteSpace(item.issuer_id)}
+                    key={item.issuer_id}
                     displayDetails={getDisplayObjectForCurrentLanguage(
                       item.display,
                     )}
                     onPress={() =>
-                      onPressHandler(item.credential_issuer, item.protocol)
+                      onPressHandler(item.issuer_id, item.protocol)
                     }
                     {...props}
                   />
                 )}
                 numColumns={1}
-                keyExtractor={item => item.credential_issuer}
+                keyExtractor={item => item.issuer_id}
               />
             )}
           </Column>

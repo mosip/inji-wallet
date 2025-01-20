@@ -83,6 +83,7 @@
     "id": "ID",
     "qrCodeHeader": "QR Code",
     "nationalCard": "National ID",
+    "identityCard": "Identity Card",
     "insuranceCard": "Insurance Card",
     "beneficiaryCard": "Beneficiary Card",
     "socialRegistryCard": "Social Registry Card",
@@ -184,14 +185,15 @@
     "keyPreferenceError": "Sorry! Error setting your key preferences"
   },
   "AboutInji": {
-    "aboutInji": "About Inji",
-    "header": "ABOUT INJI",
+    "aboutInji": "About Inji Wallet",
+    "header": "ABOUT INJI WALLET",
     "appID": "App ID",
-    "aboutDetails": "Inji is a mobile app that can be used as a digital wallet to store credentials. It also allows identity verification in both offline and online modes, at any place and time.",
+    "aboutDetails": "Inji Wallet makes data trustworthy and portable, featuring two main interfaces that cater to diverse user needs, with Inji Mobile being one of them. As a mobile-based wallet app, Inji Mobile is a secure, decentralized solution that allows users to download, manage, share, and verify verifiable credentials directly from their smartphones, providing a seamless and trustworthy way to handle credentials on the go.",
     "forMoreDetails": "For more details",
     "clickHere": "Click here",
     "version": "Version",
-    "tuvaliVersion": "Tuvali-version"
+    "tuvaliVersion": "Tuvali-version",
+    "poweredBy": "Powered by Inji, A MOSIP Product"
   },
   "IssuersScreen": {
     "title": "Add new card",
@@ -222,6 +224,10 @@
       },
       "technicalDifficulty": {
         "title": "An error occurred!",
+        "message": "Thank you for your patience! We're currently experiencing technical difficulties. Please try downloading again shortly."
+      },
+      "authorizationGrantTypeNotSupportedByWallet": {
+        "title": "Grant type not supported authorization error!",
         "message": "Thanks for your patience! We're experiencing technical difficulties right now. Please try again later or contact the admin for further assistance!"
       },
       "verificationFailed": {
@@ -404,7 +410,7 @@
     }
   },
   "MyVcsTab": {
-    "searchByName": "Search by name",
+    "searchByName": "Search",
     "bringYourDigitalID": "Bring your digital identity",
     "generateVcDescription": "Tap on \"Download card\" below to download your card",
     "generateVcFABDescription": "Tap on  \"+\" below to download your card",
@@ -495,6 +501,10 @@
       "pending": {
         "title": "Pending Status:",
         "description": "Verification is currently pending due to technical issues."
+      },
+      "expired": {
+        "title": "Expired Status:",
+        "description": "The credential has expired."
       }
     }
   },
@@ -837,14 +847,14 @@
     }
   },
   "SendVPScreen": {
-    "requester": "Requester",
+    "requester": "Verification Entity",
     "cardsSelected": "cards selected",
     "cardSelected": "card selected",
     "unCheck": "Uncheck",
     "checkAll": "Check All",
     "consentDialog": {
       "title": "Consent Required",
-      "message": "We require your consent to share your verifiable credentials. This will enable us to verify your identity and fulfil your service requests. Choose \"Yes, Proceed\" to consent or \"Decline\" if you do not wish to share.",
+      "message": "We require your consent to share your verifiable credentials with {{verifierName}}. This will enable us to verify your identity and fulfil your service requests. Choose \"Yes, Proceed\" to consent or \"Decline\" if you do not wish to share your credentials with {{verifierName}}.",
       "confirmButton": "Yes, Proceed",
       "cancelButton": "Decline"
     },

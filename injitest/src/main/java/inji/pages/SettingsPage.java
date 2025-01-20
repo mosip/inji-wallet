@@ -52,7 +52,7 @@ public class SettingsPage extends BasePage {
 
 
     @AndroidFindBy(xpath = "//*[contains(@text,'Wika')]")
-    @iOSXCUITFindBy(iOSClassChain = "**/XCUIElementTypeOther[`label == \"\uE037 Wika \uE5CC\"`][1]")
+    @iOSXCUITFindBy(accessibility = "languageTitle")
     private WebElement wikaButton;
 
     @AndroidFindBy(uiAutomator = "new UiSelector().resourceId(\"listItemTitle\")")

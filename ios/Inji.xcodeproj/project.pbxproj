@@ -30,7 +30,7 @@
 		9C4850532C3E59E2002ECBD5 /* RNEventEmitterProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C4850522C3E59E2002ECBD5 /* RNEventEmitterProtocol.swift */; };
 		9C7CDF3E2C7CBEDE00243A9A /* RNSecureKeystoreModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C7CDF3D2C7CBEDE00243A9A /* RNSecureKeystoreModule.swift */; };
 		9C7CDF432C7CC13500243A9A /* RNSecureKeystoreModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C7CDF422C7CC13500243A9A /* RNSecureKeystoreModule.m */; };
-		9C7CDF492C89802C00243A9A /* securekeystore in Frameworks */ = {isa = PBXBuildFile; productRef = 9C7CDF482C89802C00243A9A /* securekeystore */; };
+		9CCCA19E2CF87A8400D5A461 /* securekeystore in Frameworks */ = {isa = PBXBuildFile; productRef = 9CCCA19D2CF87A8400D5A461 /* securekeystore */; };
 		B18059E884C0ABDD17F3DC3D /* ExpoModulesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAC715A2D49A985799AEE119 /* ExpoModulesProvider.swift */; };
 		BB2F792D24A3F905000567C9 /* Expo.plist in Resources */ = {isa = PBXBuildFile; fileRef = BB2F792C24A3F905000567C9 /* Expo.plist */; };
 		E86208152C0335C5007C3E24 /* RNVCIClientModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = E86208142C0335C5007C3E24 /* RNVCIClientModule.swift */; };
@@ -116,8 +116,8 @@
 				34873E472CD8DAF3004DE734 /* VCIClient in Frameworks */,
 				9C4850432C3E5873002ECBD5 /* ios-tuvali-library in Frameworks */,
 				1E6875E92CA554E80086D870 /* OpenID4VP in Frameworks */,
+				9CCCA19E2CF87A8400D5A461 /* securekeystore in Frameworks */,
 				34873E4D2CD8DD11004DE734 /* pixelpass in Frameworks */,
-				9C7CDF492C89802C00243A9A /* securekeystore in Frameworks */,
 				96905EF65AED1B983A6B3ABC /* libPods-Inji.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -282,10 +282,10 @@
 			name = Inji;
 			packageProductDependencies = (
 				9C4850422C3E5873002ECBD5 /* ios-tuvali-library */,
-				9C7CDF482C89802C00243A9A /* securekeystore */,
 				1E6875E82CA554E80086D870 /* OpenID4VP */,
 				34873E462CD8DAF3004DE734 /* VCIClient */,
 				34873E4C2CD8DD11004DE734 /* pixelpass */,
+				9CCCA19D2CF87A8400D5A461 /* securekeystore */,
 			);
 			productName = Inji;
 			productReference = 13B07F961A680F5B00A75B9A /* Inji.app */;
@@ -317,8 +317,8 @@
 				34873E4B2CD8DD11004DE734 /* XCRemoteSwiftPackageReference "pixelpass-ios-swift" */,
 				34873E452CD8DAF3004DE734 /* XCRemoteSwiftPackageReference "inji-vci-client-ios-swift" */,
 				9C4850412C3E5873002ECBD5 /* XCRemoteSwiftPackageReference "tuvali-ios-swift" */,
-				9C7CDF472C89802C00243A9A /* XCRemoteSwiftPackageReference "secure-keystore-ios-swift" */,
 				1E6875E72CA554E80086D870 /* XCRemoteSwiftPackageReference "inji-openid4vp-ios-swift" */,
+				9CCCA19C2CF87A8400D5A461 /* XCRemoteSwiftPackageReference "secure-keystore-ios-swift" */,
 			);
 			productRefGroup = 83CBBA001A601CBA00E9B192 /* Products */;
 			projectDirPath = "";
@@ -771,22 +771,6 @@
 				kind = branch;
 			};
 		};
-		9C4850412C3E5873002ECBD5 /* XCRemoteSwiftPackageReference "tuvali-ios-swift" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/mosip/tuvali-ios-swift/";
-			requirement = {
-				branch = develop;
-				kind = branch;
-			};
-		};
-		9C7CDF472C89802C00243A9A /* XCRemoteSwiftPackageReference "secure-keystore-ios-swift" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/mosip/secure-keystore-ios-swift";
-			requirement = {
-				branch = develop;
-				kind = branch;
-			};
-		};
 		34873E452CD8DAF3004DE734 /* XCRemoteSwiftPackageReference "inji-vci-client-ios-swift" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/mosip/inji-vci-client-ios-swift";
@@ -803,6 +787,22 @@
 				kind = branch;
 			};
 		};
+		9C4850412C3E5873002ECBD5 /* XCRemoteSwiftPackageReference "tuvali-ios-swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/mosip/tuvali-ios-swift/";
+			requirement = {
+				branch = develop;
+				kind = branch;
+			};
+		};
+		9CCCA19C2CF87A8400D5A461 /* XCRemoteSwiftPackageReference "secure-keystore-ios-swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/mosip/secure-keystore-ios-swift";
+			requirement = {
+				branch = develop;
+				kind = branch;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -811,25 +811,25 @@
 			package = 1E6875E72CA554E80086D870 /* XCRemoteSwiftPackageReference "inji-openid4vp-ios-swift" */;
 			productName = OpenID4VP;
 		};
-		9C4850422C3E5873002ECBD5 /* ios-tuvali-library */ = {
+		34873E462CD8DAF3004DE734 /* VCIClient */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 9C4850412C3E5873002ECBD5 /* XCRemoteSwiftPackageReference "tuvali-ios-swift" */;
-			productName = "ios-tuvali-library";
-		};
-		9C7CDF482C89802C00243A9A /* securekeystore */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 9C7CDF472C89802C00243A9A /* XCRemoteSwiftPackageReference "secure-keystore-ios-swift" */;
-			productName = securekeystore;
+			package = 34873E452CD8DAF3004DE734 /* XCRemoteSwiftPackageReference "inji-vci-client-ios-swift" */;
+			productName = VCIClient;
 		};
 		34873E4C2CD8DD11004DE734 /* pixelpass */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 34873E4B2CD8DD11004DE734 /* XCRemoteSwiftPackageReference "pixelpass-ios-swift" */;
 			productName = pixelpass;
 		};
-		34873E462CD8DAF3004DE734 /* VCIClient */ = {
+		9C4850422C3E5873002ECBD5 /* ios-tuvali-library */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 34873E452CD8DAF3004DE734 /* XCRemoteSwiftPackageReference "inji-vci-client-ios-swift" */;
-			productName = VCIClient;
+			package = 9C4850412C3E5873002ECBD5 /* XCRemoteSwiftPackageReference "tuvali-ios-swift" */;
+			productName = "ios-tuvali-library";
+		};
+		9CCCA19D2CF87A8400D5A461 /* securekeystore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 9CCCA19C2CF87A8400D5A461 /* XCRemoteSwiftPackageReference "secure-keystore-ios-swift" */;
+			productName = securekeystore;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

@@ -163,6 +163,7 @@
 	</test>
 </suite>
 
+
 <!--<suite name="All Test Suite">
 <listeners>
     <listener class-name="inji.utils.SuiteListener" />

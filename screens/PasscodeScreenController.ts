@@ -15,11 +15,12 @@ import {
   sendEndEvent,
 } from '../shared/telemetry/TelemetryUtils';
 import {TelemetryConstants} from '../shared/telemetry/TelemetryConstants';
+import { SettingsEvents } from '../machines/settings';
 
 export function usePasscodeScreen(props: PasscodeRouteProps) {
   const {appService} = useContext(GlobalContext);
   const authService = appService.children.get('auth');
-
+  const settingsService = appService.children.get('settings');
   const isAuthorized = useSelector(authService, selectAuthorized);
   const isPasscodeSet = () => !!passcode;
   const [passcode, setPasscode] = useState('');
@@ -56,6 +57,7 @@ export function usePasscodeScreen(props: PasscodeRouteProps) {
 
     SETUP_PASSCODE: () => {
       authService.send(AuthEvents.SETUP_PASSCODE(passcode));
+      settingsService?.send(SettingsEvents.TOGGLE_BIOMETRIC_UNLOCK(false,true))
     },
 
     storedSalt: useSelector(authService, selectPasscodeSalt),

@@ -1,6 +1,8 @@
 import {VCMetadata} from './VCMetadata';
+import {NETWORK_REQUEST_FAILED} from './constants';
 import {groupBy} from './javascript';
 import {Issuers} from './openId4VCI/Utils';
+import {v4 as uuid} from 'uuid';
 
 export const getVCsOrderedByPinStatus = (vcMetadatas: VCMetadata[]) => {
   const [pinned, unpinned] = groupBy(
@@ -49,3 +51,13 @@ export const parseJSON = (input: any) => {
   }
   return result;
 };
+
+export const isNetworkError = (error: string) => {
+  return error.includes(NETWORK_REQUEST_FAILED);
+};
+
+export class UUID {
+  public static generate(): string {
+    return uuid();
+  }
+}

@@ -1,3 +1,4 @@
+import {isClientValidationRequired} from '../../shared/openID4VP/OpenID4VP';
 import {VCShareFlowType} from '../../shared/Utils';
 
 export const openID4VPGuards = () => {
@@ -32,5 +33,7 @@ export const openID4VPGuards = () => {
 
     isFaceVerificationRetryAttempt: (context: any) =>
       context.isFaceVerificationRetryAttempt,
+
+    isClientValidationRequred: (_, event) => event.data,
   };
 };

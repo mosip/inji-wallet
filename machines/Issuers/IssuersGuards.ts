@@ -36,6 +36,13 @@ export const IssuersGuards = () => {
         event.data.toString().includes(OIDCErrors.OIDC_CONFIG_ERROR_PREFIX)
       );
     },
+    isGrantTypeNotSupportedError: (_: any, event: any) => {
+      return (
+        !!event.data &&
+        event.data.toString() ===
+          OIDCErrors.AUTHORIZATION_ENDPOINT_DISCOVERY.GRANT_TYPE_NOT_SUPPORTED
+      );
+    },
     canSelectIssuerAgain: (context: any) => {
       return (
         context.errorMessage.includes(OIDCErrors.OIDC_CONFIG_ERROR_PREFIX) ||

@@ -15,7 +15,7 @@ import {
   sendImpressionEvent,
 } from './telemetry/TelemetryUtils';
 import {TelemetryConstants} from './telemetry/TelemetryConstants';
-import NetInfo, {NetInfoState} from '@react-native-community/netinfo';
+import NetInfo from '@react-native-community/netinfo';
 
 export const API_URLS: ApiUrls = {
   trustedVerifiersList: {
@@ -33,8 +33,13 @@ export const API_URLS: ApiUrls = {
   },
   issuerWellknownConfig: {
     method: 'GET',
-    buildURL: (issuerId: string): `/${string}` =>
-      `/v1/mimoto/issuers/${issuerId}/well-known-proxy`,
+    buildURL: (credentialIssuer: string): string =>
+      `${credentialIssuer}/.well-known/openid-credential-issuer`,
+  },
+  authorizationServerMetadataConfig: {
+    method: 'GET',
+    buildURL: (authorizationServerUrl: string): string =>
+      `${authorizationServerUrl}/.well-known/oauth-authorization-server`,
   },
   allProperties: {
     method: 'GET',
@@ -110,18 +115,21 @@ export const API = {
     );
     return response.response.issuers || [];
   },
-
-  fetchIssuerConfig: async (issuerId: string) => {
-    const response = await request(
-      API_URLS.issuerConfig.method,
-      API_URLS.issuerConfig.buildURL(issuerId),
-    );
-    return response.response;
-  },
-  fetchIssuerWellknownConfig: async (issuerId: string) => {
+  fetchIssuerWellknownConfig: async (credentialIssuer: string) => {
     const response = await request(
       API_URLS.issuerWellknownConfig.method,
-      API_URLS.issuerWellknownConfig.buildURL(issuerId),
+      API_URLS.issuerWellknownConfig.buildURL(credentialIssuer),
+    );
+    return response;
+  },
+  fetchAuthorizationServerMetadata: async (authorizationServerUrl: string) => {
+    const response = await request(
+      API_URLS.authorizationServerMetadataConfig.method,
+      API_URLS.authorizationServerMetadataConfig.buildURL(
+        authorizationServerUrl,
+      ),
+      undefined,
+      '',
     );
     return response;
   },
@@ -155,19 +163,30 @@ export const CACHED_API = {
       fetchCall: API.fetchIssuers,
     }),
 
-  fetchIssuerConfig: (issuerId: string) =>
-    generateCacheAPIFunction({
-      cacheKey: API_CACHED_STORAGE_KEYS.fetchIssuerConfig(issuerId),
-      fetchCall: API.fetchIssuerConfig.bind(null, issuerId),
-    }),
   fetchIssuerWellknownConfig: (
     issuerId: string,
+    credentialIssuer: string,
     isCachePreferred: boolean = false,
   ) =>
     generateCacheAPIFunction({
       isCachePreferred,
       cacheKey: API_CACHED_STORAGE_KEYS.fetchIssuerWellknownConfig(issuerId),
-      fetchCall: API.fetchIssuerWellknownConfig.bind(null, issuerId),
+      fetchCall: API.fetchIssuerWellknownConfig.bind(null, credentialIssuer),
+    }),
+
+  fetchIssuerAuthorizationServerMetadata: (
+    authorizationServerUrl: string,
+    isCachePreferred: boolean = false,
+  ) =>
+    generateCacheAPIFunction({
+      isCachePreferred,
+      cacheKey: API_CACHED_STORAGE_KEYS.fetchIssuerAuthorizationServerMetadata(
+        authorizationServerUrl,
+      ),
+      fetchCall: API.fetchAuthorizationServerMetadata.bind(
+        null,
+        authorizationServerUrl,
+      ),
     }),
 
   getAllProperties: (isCachePreferred: boolean) =>
@@ -257,10 +276,10 @@ async function generateCacheAPIFunctionWithAPIPreference(
       onErrorHardCodedValue != undefined
     }`);
 
-    console.log(error);
-    var response=null;
-    if(!(await NetInfo.fetch()).isConnected){
-       response = await getItem(cacheKey, null, '');
+    console.error(`The error in fetching api ${cacheKey}`, error);
+    var response = null;
+    if (!(await NetInfo.fetch()).isConnected) {
+      response = await getItem(cacheKey, null, '');
     }
     if (response) {
       return response;
@@ -316,6 +335,7 @@ type ApiUrls = {
   issuersList: Api_Params;
   issuerConfig: Api_Params;
   issuerWellknownConfig: Api_Params;
+  authorizationServerMetadataConfig: Api_Params;
   allProperties: Api_Params;
   getIndividualId: Api_Params;
   reqIndividualOTP: Api_Params;
