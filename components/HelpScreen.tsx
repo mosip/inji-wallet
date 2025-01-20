@@ -347,6 +347,7 @@ export const HelpScreen: React.FC<HelpScreenProps> = props => {
   return (
     <React.Fragment>
       <Pressable
+        disabled={props.isDisabled}
         accessible={false}
         onPress={() => {
           setShowHelpPage(!showHelpPage);
@@ -394,4 +395,5 @@ export const HelpScreen: React.FC<HelpScreenProps> = props => {
 interface HelpScreenProps {
   source: 'Inji' | 'BackUp' | 'keyManagement';
   triggerComponent: React.ReactElement;
+  isDisabled?: boolean; 
 }

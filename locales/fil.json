@@ -816,6 +816,8 @@
   },
   "SendVcScreen": {
     "reasonForSharing": "Dahilan ng pagbabahagi (opsyonal)",
+    "introTitle": "Tagapagpatunay",
+    "requestMessage": "humihiling ng iyong digital na ID para sa layunin.",
     "acceptRequest": "Tanggapin ang kahilingan at pumili ng card",
     "acceptRequestAndVerify": "Ibahagi sa Selfie",
     "reject": "Tanggihan",
