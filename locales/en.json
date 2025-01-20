@@ -848,7 +848,9 @@
   },
   "SendVPScreen": {
     "requester": "Verification Entity",
+    "introTitle": "Requester",
     "cardsSelected": "cards selected",
+    "requestMessage":"is requesting your digital ID for the purpose",
     "cardSelected": "card selected",
     "unCheck": "Uncheck",
     "checkAll": "Check All",

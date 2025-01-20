@@ -1,12 +1,6 @@
 import React, {useRef} from 'react';
 import AppIntroSlider from 'react-native-app-intro-slider';
-import {
-  Dimensions,
-  Image,
-  ImageBackground,
-  StatusBar,
-  View,
-} from 'react-native';
+import {Dimensions, ImageBackground, StatusBar, View} from 'react-native';
 import {Centered, Column, Row, Text, Button} from '../../components/ui';
 import {Theme} from '../../components/ui/styleUtils';
 import {useTranslation} from 'react-i18next';
@@ -16,6 +10,11 @@ import LinearGradient from 'react-native-linear-gradient';
 import {SvgImage} from '../../components/ui/svg';
 import testIDProps from '../../shared/commonUtil';
 import {INTRO_SLIDER_LOGO_MARGIN} from '../../shared/constants';
+import { StaticAuthScreen } from '../IntroSliders/biometricIntro';
+import { StaticScanScreen } from '../IntroSliders/quickAccessIntro';
+import StaticBackupAndRestoreScreen from '../IntroSliders/backupRestoreIntro';
+import { StaticHomeScreen } from '../IntroSliders/trustedDigitalWalletIntro';
+import { StaticSendVcScreen } from '../IntroSliders/secureShareIntro';
 
 export const IntroSlidersScreen: React.FC<RootRouteProps> = props => {
   const slider = useRef<AppIntroSlider>();
@@ -23,36 +22,37 @@ export const IntroSlidersScreen: React.FC<RootRouteProps> = props => {
   const {t} = useTranslation('OnboardingOverlay');
   const controller = useWelcomeScreen(props);
 
+  // Define slides with React components
   const slides = [
     {
       key: 'one',
       title: t('stepOneTitle'),
       text: t('stepOneText'),
-      image: Theme.IntroWelcome,
+      component: <StaticAuthScreen />, 
     },
     {
       key: 'two',
       title: t('stepTwoTitle'),
       text: t('stepTwoText'),
-      image: Theme.SecureSharing,
+      component: <StaticSendVcScreen />, 
     },
     {
       key: 'three',
       title: t('stepThreeTitle'),
       text: t('stepThreeText'),
-      image: Theme.DigitalWallet,
+      component: <StaticHomeScreen />, 
     },
     {
       key: 'four',
       title: t('stepFourTitle'),
       text: t('stepFourText'),
-      image: Theme.IntroShare,
+      component: <StaticScanScreen />, 
     },
     {
       key: 'five',
       title: t('stepFiveTitle'),
       text: t('stepFiveText'),
-      image: Theme.IntroBackup,
+      component: <StaticBackupAndRestoreScreen />, 
     },
   ];
 
@@ -81,12 +81,7 @@ export const IntroSlidersScreen: React.FC<RootRouteProps> = props => {
               />
             )}
           </Row>
-          <Image
-            {...testIDProps(`introImage-${item.key}`)}
-            source={item.image}
-            resizeMode="contain"
-            style={{height: Dimensions.get('screen').height * 0.6}}
-          />
+          <View style={{width:300, height:600}}><Centered fill>{item.component}</Centered></View>
           <Column
             testID={`introSlide-${item.key}`}
             style={Theme.OnboardingOverlayStyles.bottomContainer}
@@ -135,6 +130,7 @@ export const IntroSlidersScreen: React.FC<RootRouteProps> = props => {
       </View>
     );
   };
+
   const renderDoneButton = () => {
     const isPasscodeSet = controller.isPasscodeSet();
     const testId = isPasscodeSet ? 'goBack' : 'getStarted';
@@ -158,6 +154,7 @@ export const IntroSlidersScreen: React.FC<RootRouteProps> = props => {
       </View>
     );
   };
+
   return (
     <Column style={{flex: 1}}>
       <StatusBar translucent={true} backgroundColor="transparent" />

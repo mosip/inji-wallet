@@ -839,6 +839,8 @@
   },
   "SendVPScreen": {
     "requester": "Entity ng Pagpapatunay",
+    "introTitle": "Tagapagpatunay",
+    "requestMessage": "humihiling ng iyong digital na ID para sa layunin.",
     "cardsSelected": "mga card na napili",
     "cardSelected": "card pinili",
     "unCheck": "Alisin ang check",

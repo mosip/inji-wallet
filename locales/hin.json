@@ -842,6 +842,8 @@
   },
   "SendVPScreen": {
     "requester": "सत्यापन इकाई",
+    "introTitle": "अनुरोधकर्ता",
+    "requestMessage":"आपके डिजिटल आईडी के लिए अनुरोध कर रहा है",
     "cardsSelected": "कार्ड चयनित",
     "cardSelected": "कार्ड चयनित",
     "unCheck": "सही का निशान हटाएँ",

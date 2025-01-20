@@ -31,6 +31,7 @@ export const SearchBar = (props: SearchBarProps) => {
         onFocus={props.onFocus}
         onChangeText={searchText => props.onChangeText(searchText)}
         onLayout={props.onLayout}
+        editable={props.editable??true}
       />
     </Row>
   );
@@ -49,4 +50,5 @@ interface SearchBarProps {
   onFocus: () => void;
   onChangeText: (searchText: string) => void;
   onLayout: () => void;
+  editable?: boolean;
 }

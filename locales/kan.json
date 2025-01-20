@@ -840,6 +840,8 @@
   },
   "SendVPScreen": {
     "requester": "ಪರಿಶೀಲನೆ ಘಟಕ",
+    "introTitle": "ವಿನಂತಿದವರು",
+    "requestMessage": "ನಿಮ್ಮ ಡಿಜಿಟಲ್ ಐಡಿಯನ್ನು ವಿನಂತಿಸುತ್ತಿದ್ದಾರೆ",
     "cardsSelected": "ಕಾರ್ಡ್‌ಗಳನ್ನು ಆಯ್ಕೆ ಮಾಡಲಾಗಿದೆ",
     "cardSelected": "ಕಾರ್ಡ್ ಆಯ್ಕೆಮಾಡಲಾಗಿದೆ",
     "unCheck": "ಅನ್ಚೆಕ್ ಮಾಡಿ",

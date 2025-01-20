@@ -836,6 +836,8 @@
   },
   "SendVPScreen": {
     "requester": "جهة التحقق",
+    "introTitle": "المحقق",
+    "requestMessage": "يطلب هويتك الرقمية لغرض",
     "cardsSelected": "البطاقات المختارة",
     "cardSelected": "card selected",
     "unCheck": "البطاقة مختارة",

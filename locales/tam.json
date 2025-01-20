@@ -839,7 +839,9 @@
     }
   },
   "SendVPScreen": {
-    "requester": "Tagzemt n usefqed",
+    "requester": "கோரியவர்",
+    "introTitle": "கோரியவர்",
+    "requestMessage":"உங்கள் டிஜிட்டல் ஐடியை கோருகிறார்",
     "cardsSelected": "அட்டைகள் தேர்ந்தெடுக்கப்பட்டன",
     "cardSelected": "அட்டை தேர்ந்தெடுக்கப்பட்டது",
     "unCheck": "தேர்வுநீக்கவும்",
