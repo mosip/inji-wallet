@@ -90,6 +90,10 @@ public class HomePage extends BasePage {
     @iOSXCUITFindBy(accessibility = "fullNameValue")
     private WebElement fullNameValue;
 
+    @AndroidFindBy(accessibility = "credentialTypeValue")
+    @iOSXCUITFindBy(accessibility = "credentialTypeValue")
+    private WebElement credentialTypeValue;
+
     @AndroidFindBy(accessibility = "activationPending")
     @iOSXCUITFindBy(accessibility = "activationPending")
     private WebElement activationPending;
@@ -236,6 +240,7 @@ public class HomePage extends BasePage {
     @iOSXCUITFindBy(accessibility = "cardViewDescription")
     private WebElement cardViewDescription;
 
+
     public HomePage(AppiumDriver driver) {
         super(driver);
     }
@@ -250,24 +255,8 @@ public class HomePage extends BasePage {
         return new AddNewCardPage(driver);
     }
 
-    public boolean isNameDisplayed(String name) {
-
-        if(isElementDisplayed(doneButton)){
-            clickOnElement(doneButton);
-        }
-        By fullName = By.xpath("//*[contains(@value,'" + name + "') or contains(@text,'" + name + "')]");
-        return this.isElementDisplayed(fullName, 150);
-    }
-
-    public boolean isSecondNameDisplayed(String name) {
-        By fullName = By.xpath("(//*[contains(@value,'" + name + "') or contains(@text,'" + name + "')])[2]");
-        return this.isElementDisplayed(fullName, 80);
-
-    }
-
-    public DetailedVcViewPage openDetailedVcView(String name) {
-        By fullName = By.xpath("//*[contains(@value,'" + name + "') or contains(@text,'" + name + "')]");
-        clickOnElement(fullName);
+    public DetailedVcViewPage openDetailedVcView() {
+        clickOnElement(credentialTypeValue);
         return new DetailedVcViewPage(driver);
     }
 
@@ -816,4 +805,14 @@ public class HomePage extends BasePage {
             clickOnElement(fifthDoneButton);
         }
     }
+
+    public boolean isCredentialTypeValueDisplayed() {
+        if(isElementDisplayed(doneButton)){
+            clickOnElement(doneButton);
+        }
+        return this.isElementDisplayed(credentialTypeValue);
+
+
+}
+
 }

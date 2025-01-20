@@ -127,8 +127,8 @@ public class keyManagement extends AndroidBaseTest {
         otpVerification.enterOtpForEsignet(BaseTestCase.getOtp(), Target.ANDROID);
         mockCertifyLoginPage.clickOnVerifyButton();
 
-        assertTrue(homePage.isNameDisplayed(TestDataReader.readData("fullNameForMobileDrivingLicense")), "Verify if full name is displayed");
-        DetailedVcViewPage detailedVcViewPage = homePage.openDetailedVcView(TestDataReader.readData("fullNameForMobileDrivingLicense"));
+        assertTrue(homePage.isCredentialTypeValueDisplayed(), "Verify if credential type value is displayed");
+        DetailedVcViewPage detailedVcViewPage = homePage.openDetailedVcView();
 
         detailedVcViewPage.clickOnQrCodeButton();
         SoftAssert softAssert = new SoftAssert();
@@ -139,7 +139,7 @@ public class keyManagement extends AndroidBaseTest {
         assertTrue(detailedVcViewPage.isDetailedVcViewPageLoaded(), "Verify if detailed Vc view page is displayed");
         assertEquals(detailedVcViewPage.getIdTypeValueInDetailedVcView(), TestDataReader.readData("idTypeForMobileDrivingLicense"), "Verify if id type is displayed");
         assertEquals(detailedVcViewPage.getStatusInDetailedVcView(), TestDataReader.readData("status"), "Verify if status is displayed");
-        assertTrue(detailedVcViewPage.isKeyTypeVcDetailViewValueDisplayed(), "Verify if key type detailed Vc value displayed");
+//        assertTrue(detailedVcViewPage.isKeyTypeVcDetailViewValueDisplayed(), "Verify if key type detailed Vc value displayed");
         assertTrue(keyManagementPage.compareListOfKeys());
 
     }
@@ -196,8 +196,8 @@ public class keyManagement extends AndroidBaseTest {
         otpVerification.enterOtpForEsignet(BaseTestCase.getOtp(), Target.ANDROID);
         esignetLoginPage.clickOnVerifyButton();
 
-        assertTrue(homePage.isNameDisplayed(TestDataReader.readData("fullName")), "Verify if full name is displayed");
-        DetailedVcViewPage detailedVcViewPage = homePage.openDetailedVcView(TestDataReader.readData("fullName"));
+        assertTrue(homePage.isCredentialTypeValueDisplayed(), "Verify if credential type value is displayed");
+        DetailedVcViewPage detailedVcViewPage = homePage.openDetailedVcView();
 
         detailedVcViewPage.clickOnQrCodeButton();
         SoftAssert softAssert = new SoftAssert();

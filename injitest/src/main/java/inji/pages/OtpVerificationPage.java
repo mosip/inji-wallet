@@ -61,8 +61,8 @@ public class OtpVerificationPage extends BasePage {
     private WebElement waitPopupButton;
 
 
-    @AndroidFindBy(uiAutomator = "new UiSelector().textContains(\"Please enter valid OTP.\")")
-    @iOSXCUITFindBy(accessibility = "Please enter valid OTP.")
+    @AndroidFindBy(uiAutomator = "new UiSelector().textContains(\"OTP is invalid\")")
+    @iOSXCUITFindBy(accessibility = "OTP is invalid")
     private WebElement invalidOtpMessageforEsignet;
 
     public OtpVerificationPage(AppiumDriver driver) {

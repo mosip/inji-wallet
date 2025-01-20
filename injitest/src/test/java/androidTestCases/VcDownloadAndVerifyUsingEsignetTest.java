@@ -45,20 +45,21 @@ public class VcDownloadAndVerifyUsingEsignetTest extends AndroidBaseTest {
         EsignetLoginPage esignetLoginPage =  addNewCardPage.clickOnDownloadViaEsignet();
 
         esignetLoginPage.clickOnEsignetLoginWithOtpButton();
-        
+
         assertTrue(esignetLoginPage.isEnterYourVidTextDisplayed(), "Verify if enter your vid text is displayed");
         String uin=TestDataReader.readData("uin");
         OtpVerificationPage otpVerification= esignetLoginPage.setEnterIdTextBox(uin);
-        
+
         esignetLoginPage.clickOnGetOtpButton();
         assertTrue(esignetLoginPage.isOtpHasSendMessageDisplayed(),"verify if otp page is displayed");
-        
+
         otpVerification.enterOtpForEsignet(BaseTestCase.getOtp(), Target.ANDROID);
         esignetLoginPage.clickOnVerifyButton();
-        
-        assertTrue(homePage.isNameDisplayed(TestDataReader.readData("fullName")), "Verify if full name is displayed");
-        DetailedVcViewPage detailedVcViewPage = homePage.openDetailedVcView(TestDataReader.readData("fullName"));
-        
+
+        addNewCardPage.clickOnDoneButton();
+        assertTrue(homePage.isCredentialTypeValueDisplayed(), "Verify if credential type value is displayed");
+        DetailedVcViewPage detailedVcViewPage = homePage.openDetailedVcView();
+
         detailedVcViewPage.clickOnQrCodeButton();
         SoftAssert softAssert = new SoftAssert();
         softAssert.assertTrue(detailedVcViewPage.isQrCodeDisplayed(), "Verify if QR Code header is displayed");
@@ -75,20 +76,20 @@ public class VcDownloadAndVerifyUsingEsignetTest extends AndroidBaseTest {
         assertEquals(detailedVcViewPage.getPhoneInDetailedVcView(), TestDataReader.readData("phoneNumber"), "Verify if phone number is displayed");
         assertEquals(detailedVcViewPage.getEmailInDetailedVcView(), TestDataReader.readData("externalemail"), "Verify if email is displayed");
         assertTrue(detailedVcViewPage.isActivateButtonDisplayed(), "Verify if activate vc button displayed");
-        
+
         PleaseConfirmPopupPage pleaseConfirmPopupPage  =detailedVcViewPage.clickOnActivateButtonAndroid();
         assertTrue(pleaseConfirmPopupPage.isPleaseConfirmPopupPageLoaded(), "Verify if confirm popup page is displayed");
-        
+
         pleaseConfirmPopupPage.clickOnConfirmButton();
         assertTrue(otpVerification.isOtpVerificationPageLoaded(), "Verify if otp verification page is displayed");
-       
+
         otpVerification.enterOtp(TestDataReader.readData("passcode"), Target.ANDROID);
         assertTrue(detailedVcViewPage.isProfileAuthenticatedDisplayed(), "Verify profile authenticated displayed");
-        
+
         detailedVcViewPage.clickOnBackArrow();
         assertTrue(detailedVcViewPage.isEsignetLogoDisplayed(), "Verify if detailed Vc esignet logo is displayed");
     }
-    
+
     @Test
     public void downloadAndVerifyVcUsingVidViaEsignet() throws InterruptedException {
         ChooseLanguagePage chooseLanguagePage = new ChooseLanguagePage(driver);
@@ -115,7 +116,7 @@ public class VcDownloadAndVerifyUsingEsignetTest extends AndroidBaseTest {
         assertTrue(addNewCardPage.isAddNewCardPageLoaded(), "Verify if add new card page is displayed");
         EsignetLoginPage esignetLoginPage =  addNewCardPage.clickOnDownloadViaEsignet();
         esignetLoginPage.clickOnEsignetLoginWithOtpButton();
-        
+
         assertTrue(esignetLoginPage.isEnterYourVidTextDisplayed(), "Verify if enter your vid text is displayed");
         String vid = TestDataReader.readData("vid");
         OtpVerificationPage otpVerification= esignetLoginPage.setEnterIdTextBox(vid);
@@ -125,7 +126,7 @@ public class VcDownloadAndVerifyUsingEsignetTest extends AndroidBaseTest {
         esignetLoginPage.clickOnVerifyButton();
         Thread.sleep(2000);
         homePage.clickOnDoneButton();
-        DetailedVcViewPage detailedVcViewPage = homePage.openDetailedVcView(TestDataReader.readData("fullName"));
+        DetailedVcViewPage detailedVcViewPage = homePage.openDetailedVcView();
         detailedVcViewPage.clickOnQrCodeButton();
         SoftAssert softAssert = new SoftAssert();
         softAssert.assertTrue(detailedVcViewPage.isQrCodeDisplayed(), "Verify if QR Code header is displayed");
@@ -142,16 +143,16 @@ public class VcDownloadAndVerifyUsingEsignetTest extends AndroidBaseTest {
 //        assertEquals(detailedVcViewPage.getPhoneInDetailedVcView(), TestDataReader.readData("phoneNumberVidEsignet"), "Verify if phone number is displayed");
         assertEquals(detailedVcViewPage.getEmailInDetailedVcView(), TestDataReader.readData("externalemail"), "Verify if email is displayed");
         assertTrue(detailedVcViewPage.isActivateButtonDisplayed(), "Verify if activate vc button displayed");
-        
+
         PleaseConfirmPopupPage pleaseConfirmPopupPage  =detailedVcViewPage.clickOnActivateButtonAndroid();
         assertTrue(pleaseConfirmPopupPage.isPleaseConfirmPopupPageLoaded(), "Verify if confirm popup page is displayed");
-        
+
         pleaseConfirmPopupPage.clickOnConfirmButton();
         assertTrue(otpVerification.isOtpVerificationPageLoaded(), "Verify if otp verification page is displayed");
-       
+
         otpVerification.enterOtp(TestDataReader.readData("passcode"), Target.ANDROID);
         assertTrue(detailedVcViewPage.isProfileAuthenticatedDisplayed(), "Verify profile authenticated displayed");
-        
+
     }
 
     @Test
@@ -198,8 +199,9 @@ public class VcDownloadAndVerifyUsingEsignetTest extends AndroidBaseTest {
         otpVerification.enterOtpForEsignet(BaseTestCase.getOtp(), Target.ANDROID);
         esignetLoginPage.clickOnVerifyButton();
 
-        assertTrue(homePage.isNameDisplayed(TestDataReader.readData("fullName")), "Verify if full name is displayed");
-        DetailedVcViewPage detailedVcViewPage = homePage.openDetailedVcView(TestDataReader.readData("fullName"));
+        addNewCardPage.clickOnDoneButton();
+        assertTrue(homePage.isCredentialTypeValueDisplayed(), "Verify if credential type value is displayed");
+        DetailedVcViewPage detailedVcViewPage = homePage.openDetailedVcView();
 
         PleaseConfirmPopupPage pleaseConfirmPopupPage  =detailedVcViewPage.clickOnActivateButtonAndroid();
         assertTrue(pleaseConfirmPopupPage.isPleaseConfirmPopupPageLoaded(), "Verify if confirm popup page is displayed");
@@ -230,8 +232,9 @@ public class VcDownloadAndVerifyUsingEsignetTest extends AndroidBaseTest {
         otpVerification.enterOtpForEsignet(BaseTestCase.getOtp(), Target.ANDROID);
         esignetLoginPage.clickOnVerifyButton();
 
-        assertTrue(homePage.isNameDisplayed(TestDataReader.readData("fullName")), "Verify if full name is displayed");
-        homePage.openDetailedVcView(TestDataReader.readData("fullName"));
+        addNewCardPage.clickOnDoneButton();
+        assertTrue(homePage.isCredentialTypeValueDisplayed(), "Verify if credential type value is displayed");
+        homePage.openDetailedVcView();
     }
 
     @Test

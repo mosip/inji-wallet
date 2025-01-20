@@ -34,14 +34,10 @@ public class TestDataReader {
                 return "1234567891";
             case "fullName":
                 return "TEST_FULLNAMEeng";
-            case "fullNameForMobileDrivingLicense":
-                return "Joseph";
             case "idType":
                 return "MOSIP National ID";
-            case "idTypeForMobileDrivingLicense":
-                return "Mobile Driving License";
             case "gender":
-                return "MLEeng";
+                return "MLE";
             case "genderVidEsignet":
                 return "MLE";
             case "status":
@@ -54,8 +50,6 @@ public class TestDataReader {
                 return "01/01/1996";
             case "dateOfBirthForVidEsignet":
                 return "1996/01/01";
-            case "dateOfBirthForMobileDrivingLicense":
-                return "1994-11-06";
             case "aid":
                 return UinGenerationUtil.getRandomAidData();
             case "emailPassword":
@@ -72,8 +66,6 @@ public class TestDataReader {
                 return UinGenerationUtil.getRandomUin();
             case "uin2":
                 return "2162743612";
-            case "MockVc":
-                return "1234567";
             case "uin2FullName":
                 return "TEST_FULLNAMEeng";
             case "newEnv":
@@ -85,7 +77,7 @@ public class TestDataReader {
             case "fullNameSunbird":
                 return "PolicyTestAutomation";
             case "policyNameSunbird":
-                return "Start Insurance Gold Premium";
+                return "PolicyTestAutomation";
             case "policyNumberSunbird":
                 return "120-720-24";
             case "idTypeSunbird":
@@ -93,13 +85,13 @@ public class TestDataReader {
             case "idTypeSunbirdHindi":
                 return "Health Insurance";
             case "phoneNumberSunbird":
-                return "0123456789";
+                return "1234567890";
             case "dateOfBirthSunbird":
-                return "2024-01-01";
+                return "2025-01-01";
             case "genderValueSunbird":
-                return "Male";
+                return "Female";
             case "emailIdValueSunbird":
-                return "abhishek@gmail.com";
+                return "PolicyTestAutomation@example.com";
             case "statusValueSunbird":
                 return "Valid";
             case "statusValueSunbirdForVaild":
@@ -108,14 +100,6 @@ public class TestDataReader {
                 return "Valid";
             case "isDeviceFarmRun":
                 return "true";
-            case "ED25519Key":
-                return "ED25519";
-            case "ECCK1Key":
-                return "ECC K1";
-            case "ECCR1Key":
-                return "ECC R1";
-            case "RSAKey":
-                return "RSA";
             default:
                 return "Key not found";
         }

@@ -88,7 +88,6 @@ public class EsignetLoginPage extends BasePage {
     private WebElement credentialTypeHeadingMOSIPVerifiableCredential;
 
 
-
     public EsignetLoginPage(AppiumDriver driver) {
         super(driver);
     }
@@ -117,6 +116,7 @@ public class EsignetLoginPage extends BasePage {
         if(isElementDisplayed(esignetLoginButton)) {
             clickOnElement(esignetLoginButton);
         }
+
     }
 
     public OtpVerificationPage setEnterIdTextBox(String uinOrVid) {
