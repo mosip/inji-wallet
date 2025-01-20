@@ -58,6 +58,10 @@ export function selectVerificationErrorMessage(state: State) {
   return state.context.verificationErrorMessage;
 }
 
+export function selectAutoWalletBindingFailure(state: State) {
+  return state.context.isAutoWalletBindingFailed;
+}
+
 export function selectSelectingCredentialType(state: State) {
   return state.matches('selectingCredentialType');
 }

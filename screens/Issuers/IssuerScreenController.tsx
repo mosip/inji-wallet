@@ -14,6 +14,7 @@ import {
   selectStoring,
   selectVerificationErrorMessage,
   selectIsNonGenericError,
+  selectAutoWalletBindingFailure,
 } from '../../machines/Issuers/IssuersSelectors';
 import {ActorRefFrom} from 'xstate';
 import {BOTTOM_TAB_ROUTES} from '../../routes/routesConstants';
@@ -52,6 +53,10 @@ export function useIssuerScreenController({route, navigation}) {
       service,
       selectVerificationErrorMessage,
     ),
+    isAutoWalletBindingFailed: useSelector(
+      service,
+      selectAutoWalletBindingFailure,
+    ),
     isError: useSelector(service, selectIsError),
 
     CANCEL: () => service.send(IssuerScreenTabEvents.CANCEL()),
@@ -65,8 +70,8 @@ export function useIssuerScreenController({route, navigation}) {
     },
     SELECTED_CREDENTIAL_TYPE: (credType: CredentialTypes) =>
       service.send(IssuerScreenTabEvents.SELECTED_CREDENTIAL_TYPE(credType)),
-    RESET_VERIFY_ERROR: () => {
-      service.send(IssuerScreenTabEvents.RESET_VERIFY_ERROR());
+    RESET_ERROR_SCREEN: () => {
+      service.send(IssuerScreenTabEvents.RESET_ERROR_SCREEN());
       if (isAndroid()) {
         navigation.navigate(BOTTOM_TAB_ROUTES.home, {screen: 'HomeScreen'});
       } else {

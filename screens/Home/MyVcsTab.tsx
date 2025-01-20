@@ -84,8 +84,8 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = props => {
         const credentialSubject =
           vc.verifiableCredential.credentialSubject ||
           vc.verifiableCredential.credential.credentialSubject;
-        if(isStringAndContains(searchText,vc['vcMetadata'].credentialType))
-          isVcFound=true
+        if (isStringAndContains(searchText, vc['vcMetadata'].credentialType))
+          isVcFound = true;
         else if (credentialSubject) {
           isVcFound = searchNestedCredentialFields(
             searchTextLower,
@@ -449,7 +449,7 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = props => {
           image={SvgImage.PermissionDenied()}
           showClose={false}
           primaryButtonText="goBack"
-          primaryButtonEvent={controller.RESET_VERIFY_ERROR}
+          primaryButtonEvent={controller.RESET_ERROR_SCREEN}
           primaryButtonTestID="goBack"
           customStyles={{marginTop: '30%'}}
         />

@@ -3,6 +3,7 @@ import {ErrorMessage, OIDCErrors} from '../../shared/openId4VCI/Utils';
 import {isHardwareKeystoreExists} from '../../shared/cryptoutil/cryptoUtil';
 import {BiometricCancellationError} from '../../shared/error/BiometricCancellationError';
 import {VerificationErrorType} from '../../shared/vcjs/verifyCredential';
+import {DEFAULT_OTP} from '../../shared/constants';
 
 export const IssuersGuards = () => {
   return {
@@ -57,5 +58,7 @@ export const IssuersGuards = () => {
       const errorMessage = event.data.message;
       return errorMessage === ErrorMessage.GENERIC;
     },
+    isAutoWalletBindingFlow: (context: any, event: any) =>
+      context?.OTP === DEFAULT_OTP,
   };
 };

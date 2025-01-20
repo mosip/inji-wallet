@@ -268,11 +268,11 @@ fileignoreconfig:
   - filename: machines/Issuers/IssuersGuards.ts
     checksum: 21783a057207ad04facdb4c71884f49b0230490def04158419d730e0cc60eb83
   - filename: machines/Issuers/IssuersActions.ts
-    checksum: 4414aa10588d2305293b1902982c5969895c858355e4b91d01dfaa8601c2dd62
+    checksum: 7a7918df36cc41a9ebc5af763fe7c9e355be50223caf267315b12822000918cb
   - filename: injitest/automation_trigger.sh
     checksum: f2f34839c99cb1b871dde17aed8508a071345d22738796e005ff709d2dab8644
   - filename: machines/Issuers/IssuersService.ts
-    checksum: e3832dff27687abc28609d2b281e570b4b0017995b7cfb56627a6b96949c469a
+    checksum: e33a75d4ea92db6e843900c9e57411f48bbe3d2fd43b78335f9cc6662cdfa85a
   - filename: screens/Home/ViewVcModal.tsx
     checksum: cfb25d562185488432b76287c4ef93359c1c64d8e29f5755d4c0a726c1485442
   - filename: injitest/src/main/resources/TestData.json
@@ -310,7 +310,7 @@ fileignoreconfig:
   - filename: machines/store.ts
     checksum: 3fd2db0c41f8bd5f30ef922b856549cb5423997b2123c5364e643e47e5efd3cf
   - filename: components/BannerNotificationContainer.tsx
-    checksum: 9e5b4a61b87e86666f0bee550d410df2b8576dfe5ec374de0ab139a468a234f7
+    checksum: 15bfe7b05ae7faa2a00f80a7efe35f7285b2178731908e80ac358cc5b3c740d0
   - filename: injitest/src/test/java/iosTestCases/PinVcTest.java
     checksum: 55098750062a199fdf1e33078acc50080dea12a885f934a7aa88411c06899cb7
   - filename: injitest/src/test/java/androidTestCases/VcBackupAndRestoreTest.java

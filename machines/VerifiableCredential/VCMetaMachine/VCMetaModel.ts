@@ -15,12 +15,13 @@ export const VCMetamodel = createModel(
     inProgressVcDownloads: new Set<string>(), //VCDownloadInProgress
     areAllVcsDownloaded: false as boolean,
     walletBindingSuccess: false,
+    autoWalletBindingSuccess: true,
     tamperedVcs: [] as VCMetadata[],
     downloadingFailedVcs: [] as VCMetadata[], //VCDownloadFailed
     verificationErrorMessage: '' as string,
     verificationStatus: null as vcVerificationBannerDetails | null,
     DownloadingCredentialsFailed: false,
-    DownloadingCredentialsSuccess: false
+    DownloadingCredentialsSuccess: false,
   },
   {
     events: VcMetaEvents,

@@ -218,6 +218,12 @@ export const VCMetaActions = (model: any) => {
         ...getUpdatedVCMetadatas(context.myVcsMetadata, event.vcMetadata),
       ],
     }),
+    setAutoWalletBindingSuccess: model.assign({
+      autoWalletBindingSuccess: true,
+    }),
+    resetAutoWalletBindingSuccess: model.assign({
+      autoWalletBindingSuccess: false,
+    }),
 
     setWalletBindingSuccess: model.assign({
       walletBindingSuccess: true,
