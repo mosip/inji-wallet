@@ -21,6 +21,7 @@ import testIDProps, {
 import {HelpScreen} from '../../components/HelpScreen';
 import {isAndroid, isIOS} from '../../shared/constants';
 import LinearGradient from 'react-native-linear-gradient';
+import { HelpIcon } from '../../components/ui/HelpIcon';
 
 const BackupAndRestoreScreen: React.FC<BackupAndRestoreProps> = props => {
   const backupController = useBackupScreen();
@@ -211,18 +212,7 @@ const BackupAndRestoreScreen: React.FC<BackupAndRestoreProps> = props => {
       headerRight={
         <HelpScreen
           source={'BackUp'}
-          triggerComponent={
-            <LinearGradient
-              style={{borderRadius: 8, marginRight: 4}}
-              colors={Theme.Colors.GradientColorsLight}
-              start={Theme.LinearGradientDirection.start}
-              end={Theme.LinearGradientDirection.end}>
-              <View testID="help"></View>
-              <View style={Theme.Styles.IconContainer}>
-                {SvgImage.questionIcon()}
-              </View>
-            </LinearGradient>
-          }
+          triggerComponent={HelpIcon()}
         />
       }
       onDismiss={props.onBackPress}>

@@ -34,6 +34,7 @@ import {
   BannerStatus,
 } from '../../components/BannerNotification';
 import {VCProcessor} from '../../components/VC/common/VCProcessor';
+import { HelpIcon } from '../../components/ui/HelpIcon';
 
 export const ViewVcModal: React.FC<ViewVcModalProps> = props => {
   const {t} = useTranslation('ViewVcModal');
@@ -91,18 +92,7 @@ export const ViewVcModal: React.FC<ViewVcModalProps> = props => {
       <Row align="space-between">
         <HelpScreen
           source={'Inji'}
-          triggerComponent={
-            <LinearGradient
-              style={{borderRadius: 8, marginRight: 4}}
-              colors={Theme.Colors.GradientColorsLight}
-              start={Theme.LinearGradientDirection.start}
-              end={Theme.LinearGradientDirection.end}>
-              <View testID="help"></View>
-              <View style={Theme.Styles.IconContainer}>
-                {SvgImage.questionIcon()}
-              </View>
-            </LinearGradient>
-          }
+          triggerComponent={HelpIcon()}
         />
         {isVCLoaded(verifiableCredential, fields) ? (
           <Pressable
