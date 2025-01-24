@@ -1,5 +1,5 @@
 {
-  "originHash" : "5737403c0b9f43f503dc98794e8805e76575a62d145e75f6c4c953bff4223584",
+  "originHash" : "d0ef7729783f4c216ab7451a346f71c827dd7f1af2bc67d1a14254025e270a3c",
   "pins" : [
     {
       "identity" : "base45-swift",
@@ -58,10 +58,10 @@
     {
       "identity" : "secure-keystore-ios-swift",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/mosip/secure-keystore-ios-swift",
+      "location" : "https://github.com/tw-mosip/secure-keystore-ios-swift",
       "state" : {
-        "branch" : "release-0.3.x",
-        "revision" : "661bdb56de5aeb26e0230be4490635fbcfe4513e"
+        "branch" : "injimob-biometric-bypass",
+        "revision" : "19f537cc8adb01389d4ce69281d1d0991ef68fb6"
       }
     },
     {
