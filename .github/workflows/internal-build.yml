@@ -164,6 +164,7 @@ jobs:
       TESTFLIGHT_BETA_APP_DESCRIPTION: ${{ inputs.buildName }}
       ALLOW_ENV_EDIT: ${{ inputs.allow_env_edit }}
       LIVENESS_DETECTION: ${{ inputs.liveness_detection }}
+      ENABLE_AUTH: 'true'
       TESTFLIGHT_INTERNAL_TESTERS_GROUP: ${{ inputs.internal-testers }}
       APP_FLAVOR: ${{ inputs.injiFlavor }}
       SERVICE_LOCATION: '.'
