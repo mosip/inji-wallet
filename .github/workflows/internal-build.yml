@@ -82,6 +82,14 @@ on:
         options:
           - false
           - true
+      enable_auth:
+        description: 'Enable Authentication'
+        required: true
+        default: 'true'
+        type: choice
+        options:
+          - false
+          - true
 
 jobs:
   set-client-id:
@@ -166,6 +174,7 @@ jobs:
       TESTFLIGHT_BETA_APP_DESCRIPTION: ${{ inputs.buildName }}
       ALLOW_ENV_EDIT: ${{ inputs.allow_env_edit }}
       LIVENESS_DETECTION: ${{ inputs.liveness_detection }}
+      ENABLE_AUTH: ${{ inputs.enable_auth }}
       TESTFLIGHT_INTERNAL_TESTERS_GROUP: ${{ inputs.internal-testers }}
       APP_FLAVOR: ${{ inputs.injiFlavor }}
       SERVICE_LOCATION: '.'
