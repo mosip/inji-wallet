@@ -74,14 +74,6 @@ on:
         options:
           - false
           - true
-      liveness_detection:
-        description: 'Detect Liveness'
-        required: true
-        default: 'false'
-        type: choice
-        options:
-          - false
-          - true
       enable_auth:
         description: 'Enable Authentication'
         required: true
@@ -120,7 +112,7 @@ jobs:
       APPLICATION_THEME: ${{ inputs.theme }}
       BUILD_DESCRIPTION: ${{ inputs.buildName }}
       ALLOW_ENV_EDIT: ${{ inputs.allow_env_edit }}
-      LIVENESS_DETECTION: ${{ inputs.liveness_detection }}
+      LIVENESS_DETECTION: 'false'
       APP_FLAVOR: ${{ inputs.injiFlavor }}
       SERVICE_LOCATION: '.'
       ANDROID_SERVICE_LOCATION: 'android'
