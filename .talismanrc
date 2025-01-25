@@ -370,5 +370,9 @@ fileignoreconfig:
   - filename: components/FaceScanner/LivenessDetection.tsx
     checksum: d4140a42ee9ca0f7c90e490f762d181a723fd9dd20db891cbbe53bfbd8f81632
   - filename: machines/VerifiableCredential/VCItemMachine/VCItemActions.ts       
-    checksum: 9b68ccc45681459d164197f73a1875e6f8bdf473acede18c811f4a784fca00e0 
+    checksum: 9b68ccc45681459d164197f73a1875e6f8bdf473acede18c811f4a784fca00e0
+  - filename: docs/InjiWalletComponents.drawio
+    checksum: 7bc81e784fcb9898db91430b7343e44b462d3b9e72e432545d4133ce72534f14
+  - filename: docs/InjiWalletComponents.md
+    checksum: 77df95e6f523fe81e6d0180473617d4c1b663e3961649f3a37a79a171efdb086
     version: ""

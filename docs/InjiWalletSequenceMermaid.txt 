@@ -1,0 +1,20 @@
+sequenceDiagram
+actor User
+    User->>Inji Wallet: Launches Inji Wallet in mobile
+    Inji Wallet->>Mimoto: Fetch trusted issuers
+    Mimoto->>Inji Wallet: List of Issuers
+    User->>Inji Wallet: User chooses an issuer
+    Inji Wallet->>Issuer System / Inji Certify: Fetches issuers' well-known details
+    Issuer System / Inji Certify->>Inji Wallet: Provide List of Credential types
+    User->>Inji Wallet: User chooses a credential type
+    Inji Wallet->>OAuth Authorization server (eSignet): Authentication request
+    OAuth Authorization server (eSignet)->>Inji Wallet: Webview page is rendered to accept input for authentication
+    User->>OAuth Authorization server (eSignet): User provides details for authentication
+    OAuth Authorization server (eSignet)->>Inji Wallet: Authentication response with auth code
+    Inji Wallet->>Mimoto: Initiate Token request
+    Mimoto->>OAuth Authorization server (eSignet): Access Token request with client details
+    OAuth Authorization server (eSignet)->>Mimoto: Token response with access token
+    Mimoto->>Inji Wallet: Access token
+    Inji Wallet->>Issuer System / Inji Certify: Credential request with token
+    Issuer System / Inji Certify->>Inji Wallet: VC sent in response
+    Inji Wallet->>Inji Wallet: Store the VC and generate the QR code
