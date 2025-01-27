@@ -30,7 +30,7 @@
 		9C5E691D2D0ACB7A00D31852 /* ios-tuvali-library in Frameworks */ = {isa = PBXBuildFile; productRef = 9C5E691C2D0ACB7A00D31852 /* ios-tuvali-library */; };
 		9C7CDF3E2C7CBEDE00243A9A /* RNSecureKeystoreModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C7CDF3D2C7CBEDE00243A9A /* RNSecureKeystoreModule.swift */; };
 		9C7CDF432C7CC13500243A9A /* RNSecureKeystoreModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C7CDF422C7CC13500243A9A /* RNSecureKeystoreModule.m */; };
-		9CCAAC202D425DB90032F366 /* securekeystore in Frameworks */ = {isa = PBXBuildFile; productRef = 9CCAAC1F2D425DB90032F366 /* securekeystore */; };
+		9CBD233D2D476DD2006F8CE7 /* securekeystore in Frameworks */ = {isa = PBXBuildFile; productRef = 9CBD233C2D476DD2006F8CE7 /* securekeystore */; };
 		B18059E884C0ABDD17F3DC3D /* ExpoModulesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAC715A2D49A985799AEE119 /* ExpoModulesProvider.swift */; };
 		BB2F792D24A3F905000567C9 /* Expo.plist in Resources */ = {isa = PBXBuildFile; fileRef = BB2F792C24A3F905000567C9 /* Expo.plist */; };
 		E86208152C0335C5007C3E24 /* RNVCIClientModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = E86208142C0335C5007C3E24 /* RNVCIClientModule.swift */; };
@@ -116,7 +116,7 @@
 				9C5E69112D0ACAC000D31852 /* VCIClient in Frameworks */,
 				96905EF65AED1B983A6B3ABC /* libPods-Inji.a in Frameworks */,
 				9C5E69172D0ACB3C00D31852 /* OpenID4VP in Frameworks */,
-				9CCAAC202D425DB90032F366 /* securekeystore in Frameworks */,
+				9CBD233D2D476DD2006F8CE7 /* securekeystore in Frameworks */,
 				9C5E69142D0ACADA00D31852 /* pixelpass in Frameworks */,
 				9C5E691D2D0ACB7A00D31852 /* ios-tuvali-library in Frameworks */,
 			);
@@ -285,7 +285,7 @@
 				9C5E69132D0ACADA00D31852 /* pixelpass */,
 				9C5E69162D0ACB3C00D31852 /* OpenID4VP */,
 				9C5E691C2D0ACB7A00D31852 /* ios-tuvali-library */,
-				9CCAAC1F2D425DB90032F366 /* securekeystore */,
+				9CBD233C2D476DD2006F8CE7 /* securekeystore */,
 			);
 			productName = Inji;
 			productReference = 13B07F961A680F5B00A75B9A /* Inji.app */;
@@ -318,7 +318,7 @@
 				9C5E69122D0ACADA00D31852 /* XCRemoteSwiftPackageReference "pixelpass-ios-swift" */,
 				9C5E69152D0ACB3C00D31852 /* XCRemoteSwiftPackageReference "inji-openid4vp-ios-swift" */,
 				9C5E691B2D0ACB7A00D31852 /* XCRemoteSwiftPackageReference "tuvali-ios-swift" */,
-				9CCAAC1E2D425DB90032F366 /* XCRemoteSwiftPackageReference "secure-keystore-ios-swift" */,
+				9CBD233B2D476DD2006F8CE7 /* XCRemoteSwiftPackageReference "secure-keystore-ios-swift" */,
 			);
 			productRefGroup = 83CBBA001A601CBA00E9B192 /* Products */;
 			projectDirPath = "";
@@ -795,11 +795,11 @@
 				kind = branch;
 			};
 		};
-		9CCAAC1E2D425DB90032F366 /* XCRemoteSwiftPackageReference "secure-keystore-ios-swift" */ = {
+		9CBD233B2D476DD2006F8CE7 /* XCRemoteSwiftPackageReference "secure-keystore-ios-swift" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/tw-mosip/secure-keystore-ios-swift";
+			repositoryURL = "https://github.com/mosip/secure-keystore-ios-swift";
 			requirement = {
-				branch = "injimob-biometric-bypass";
+				branch = "release-0.3.x";
 				kind = branch;
 			};
 		};
@@ -826,9 +826,9 @@
 			package = 9C5E691B2D0ACB7A00D31852 /* XCRemoteSwiftPackageReference "tuvali-ios-swift" */;
 			productName = "ios-tuvali-library";
 		};
-		9CCAAC1F2D425DB90032F366 /* securekeystore */ = {
+		9CBD233C2D476DD2006F8CE7 /* securekeystore */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 9CCAAC1E2D425DB90032F366 /* XCRemoteSwiftPackageReference "secure-keystore-ios-swift" */;
+			package = 9CBD233B2D476DD2006F8CE7 /* XCRemoteSwiftPackageReference "secure-keystore-ios-swift" */;
 			productName = securekeystore;
 		};
 /* End XCSwiftPackageProductDependency section */
