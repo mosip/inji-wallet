@@ -212,9 +212,9 @@ public class VerifyWelcomePagesTest extends IosBaseTest {
         AddNewCardPage addNewCardPage = homePage.downloadCard();
         EsignetLoginPage esignetLoginPage =  addNewCardPage.clickOnDownloadViaEsignet();
 
-        esignetLoginPage.clickOnEsignetLoginWithOtpButton();
-        addNewCardPage.clickOnContinueButtonInSigninPopupIos();
 
+        addNewCardPage.clickOnContinueButtonInSigninPopupIos();
+        esignetLoginPage.clickOnEsignetLoginWithOtpButton();
 
         String uin=TestDataReader.readData("uin");
         OtpVerificationPage otpVerification= esignetLoginPage.setEnterIdTextBox(uin);
@@ -261,11 +261,10 @@ public class VerifyWelcomePagesTest extends IosBaseTest {
         homePage.downloadCard();
         addNewCardPage.clickOnDownloadViaEsignet();
 
-        esignetLoginPage.clickOnEsignetLoginWithOtpButton();
         addNewCardPage.clickOnContinueButtonInSigninPopupIos();
+        esignetLoginPage.clickOnEsignetLoginWithOtpButton();
 
         esignetLoginPage.setEnterIdTextBox(uin);
-
         esignetLoginPage.clickOnGetOtpButton();
 
         otpVerification.enterOtpForEsignet(BaseTestCase.getOtp(), Target.IOS);
@@ -333,8 +332,9 @@ public class VerifyWelcomePagesTest extends IosBaseTest {
         assertTrue(addNewCardPage.isDownloadViaEsignetDisplayed(), "Verify if download via uin displayed");
         EsignetLoginPage esignetLoginPage =  addNewCardPage.clickOnDownloadViaEsignet();
 
-        esignetLoginPage.clickOnEsignetLoginWithOtpButton();
+
         addNewCardPage.clickOnContinueButtonInSigninPopupIos();
+        esignetLoginPage.clickOnEsignetLoginWithOtpButton();
 
         String uin=TestDataReader.readData("uin");
         OtpVerificationPage otpVerification= esignetLoginPage.setEnterIdTextBox(uin);

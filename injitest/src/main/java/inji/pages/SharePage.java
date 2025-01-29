@@ -52,6 +52,9 @@ public class SharePage extends BasePage {
 
     @iOSXCUITFindBy(accessibility = "OK")
     private WebElement okButtonIos;
+
+    @iOSXCUITFindBy(xpath = "//*[@name=\"Allow\"]")
+    private WebElement AllowButtonIos;
     @iOSXCUITFindBy(accessibility = "Don’t Allow")
     @AndroidFindBy(xpath = "//android.widget.Button[@resource-id=\"com.android.permissioncontroller:id/permission_deny_button\"]")
     private WebElement dontAllowButtonIos;
@@ -107,6 +110,9 @@ public class SharePage extends BasePage {
     public SharePage acceptPermissionPopupBluetoothIos() {
         if (isElementDisplayed(okButtonIos)) {
             clickOnElement(okButtonIos);
+            if(isElementDisplayed(AllowButtonIos)){
+                clickOnElement(AllowButtonIos);
+            }
         }
         return this;
     }
@@ -114,6 +120,9 @@ public class SharePage extends BasePage {
     public SharePage acceptPermissionPopupCameraIos() {
         if (isElementDisplayed(okButtonIos)) {
             clickOnElement(okButtonIos);
+            if(isElementDisplayed(AllowButtonIos)){
+                clickOnElement(AllowButtonIos);
+            }
         }
         return this;
     }
