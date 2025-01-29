@@ -25,8 +25,7 @@ import {HistoryTab} from '../../../screens/Home/MyVcs/HistoryTab';
 import {getTextColor} from '../common/VCUtils';
 import {useCopilot} from 'react-native-copilot';
 import {useTranslation} from 'react-i18next';
-import { getIdType } from '../VCUtils/getIdType';
-
+import {getIdType} from '../common/VCUtils';
 
 export const VCCardViewContent: React.FC<VCItemContentProps> = props => {
   const vcSelectableButton =
@@ -63,7 +62,8 @@ export const VCCardViewContent: React.FC<VCItemContentProps> = props => {
   const faceImage = props.verifiableCredentialData.face;
   const {start} = useCopilot();
   const {t} = useTranslation();
-  const id = props.verifiableCredentialData.credentialConfigurationId;
+  const idType = getIdType(props.wellknown);
+
   return (
     <ImageBackground
       source={getBackgroundImage(props.wellknown, Theme.CloseCard)}
@@ -83,25 +83,25 @@ export const VCCardViewContent: React.FC<VCItemContentProps> = props => {
           {VcItemContainerProfileImage(props)}
           <Column fill align="center" justify="center" margin="0 10 0 10">
             <Column
-                         style={{
-                           width: '90%',
-                           alignItems: 'center',
-                           justifyContent: 'center',
-                           marginHorizontal: '10%',
-                         }}>
-                         <VCItemFieldValue
-                           key={'id'}
-                           testID="id"
-                           fieldValue={props.verifiableCredentialData.credentialConfigurationId}
-                           wellknown={props.wellknown}
-                           style={{
-                             textAlign: 'center',
-                             fontWeight: 'bold',
-                           }}
-                           numberOfLines={1}
-                           ellipsizeMode="tail"
-                         />
-                       </Column>
+              style={{
+                width: '90%',
+                alignItems: 'center',
+                justifyContent: 'center',
+                marginHorizontal: '10%',
+              }}>
+              <VCItemFieldValue
+                key={'id'}
+                testID="id"
+                fieldValue={idType}
+                wellknown={props.wellknown}
+                style={{
+                  textAlign: 'center',
+                  fontWeight: 'bold',
+                }}
+                numberOfLines={1}
+                ellipsizeMode="tail"
+              />
+            </Column>
             <VCItemFieldValue
               key={'fullName'}
               testID="fullName"
@@ -127,24 +127,21 @@ export const VCCardViewContent: React.FC<VCItemContentProps> = props => {
               resizeMode="contain"
             />
           )}
-              <Pressable
-                onPress={props.KEBAB_POPUP}
-                accessible={false}
-                style={Theme.Styles.kebabPressableContainer}>
-                <KebabPopUp
-                  iconColor={getTextColor(
-                    props.wellknown,
-                    Theme.Colors.helpText,
-                  )}
-                  vcMetadata={props.vcMetadata}
-                  iconName="dots-three-horizontal"
-                  iconType="entypo"
-                  isVisible={props.isKebabPopUp}
-                  onDismiss={props.DISMISS}
-                  service={props.service}
-                  vcHasImage={faceImage !== undefined}
-                />
-              </Pressable>
+          <Pressable
+            onPress={props.KEBAB_POPUP}
+            accessible={false}
+            style={Theme.Styles.kebabPressableContainer}>
+            <KebabPopUp
+              iconColor={getTextColor(props.wellknown, Theme.Colors.helpText)}
+              vcMetadata={props.vcMetadata}
+              iconName="dots-three-horizontal"
+              iconType="entypo"
+              isVisible={props.isKebabPopUp}
+              onDismiss={props.DISMISS}
+              service={props.service}
+              vcHasImage={faceImage !== undefined}
+            />
+          </Pressable>
 
           {vcSelectableButton}
         </Row>

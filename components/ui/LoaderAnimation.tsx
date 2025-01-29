@@ -16,7 +16,7 @@ export const LoaderAnimation: React.FC<LoaderAnimationProps> = ({
         <Spinner
           type="ThreeBounce"
           color={Theme.Colors.Loading}
-          style={{marginLeft: 6}}
+          style={{marginLeft: 30}}
         />
       </View>
     </Fragment>

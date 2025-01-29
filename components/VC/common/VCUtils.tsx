@@ -149,8 +149,7 @@ export const getFieldName = (
 
 export const getBackgroundColour = (wellknown: any) => {
   return {
-    backgroundColor:
-      wellknown?.display[0]?.background_color ?? Theme.Colors.textValue,
+    backgroundColor: '#EFEFFA',
   };
 };
 

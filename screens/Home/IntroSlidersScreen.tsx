@@ -31,12 +31,6 @@ export const IntroSlidersScreen: React.FC<RootRouteProps> = props => {
       image: Theme.IntroWelcome,
     },
     {
-      key: 'two',
-      title: t('stepTwoTitle'),
-      text: t('stepTwoText'),
-      image: Theme.SecureSharing,
-    },
-    {
       key: 'three',
       title: t('stepThreeTitle'),
       text: t('stepThreeText'),
@@ -63,10 +57,7 @@ export const IntroSlidersScreen: React.FC<RootRouteProps> = props => {
       <ImageBackground source={Theme.IntroSliderbackground}>
         <Centered>
           <Row align="space-between" style={Theme.Styles.introSliderHeader}>
-            <Column style={{marginLeft: INTRO_SLIDER_LOGO_MARGIN}}>
-              {SvgImage.InjiSmallLogo()}
-            </Column>
-
+            <Column style={{marginLeft: INTRO_SLIDER_LOGO_MARGIN}}></Column>
             {item.key !== 'five' && (
               <Button
                 testID={
@@ -77,7 +68,10 @@ export const IntroSlidersScreen: React.FC<RootRouteProps> = props => {
                 type="plain"
                 title={isPasscodeSet ? t('back') : t('skip')}
                 onPress={isPasscodeSet ? controller.BACK : controller.NEXT}
-                styles={{height: 40, maxWidth: 115}}
+                styles={{
+                  height: 40,
+                  maxWidth: 115,
+                }}
               />
             )}
           </Row>
