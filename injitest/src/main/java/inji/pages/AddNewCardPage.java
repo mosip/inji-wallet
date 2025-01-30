@@ -12,8 +12,8 @@ public class AddNewCardPage extends BasePage{
     @iOSXCUITFindBy(accessibility = "title")
     private WebElement addNewCardHeader;
 
-    @AndroidFindBy(accessibility = "issuerHeading-MosipOtp")
-    @iOSXCUITFindBy(accessibility = "issuerHeading-MosipOtp")
+    @AndroidFindBy(accessibility = "issuerHeading-Mosip")
+    @iOSXCUITFindBy(accessibility = "issuerHeading-Mosip")
     private WebElement downloadViaUin;
 
     @AndroidFindBy(accessibility = "goBack")
@@ -34,8 +34,8 @@ public class AddNewCardPage extends BasePage{
     @iOSXCUITFindBy(accessibility = "issuersScreenDescription")
     private WebElement addNewCardGuideMessage;
 
-    @AndroidFindBy(accessibility = "issuerDescription-MosipOtp")
-    @iOSXCUITFindBy(accessibility = "issuerDescription-MosipOtp")
+    @AndroidFindBy(accessibility = "issuerDescription-Mosip")
+    @iOSXCUITFindBy(accessibility = "issuerDescription-Mosip")
     private WebElement issuerDescriptionMosip;
 
     @AndroidFindBy(accessibility = "issuerDescription-Mosip")
@@ -50,8 +50,8 @@ public class AddNewCardPage extends BasePage{
     @iOSXCUITFindBy(accessibility = "issuerHeading-StayProtected")
     private WebElement downloadViaSunbird;
 
-    @AndroidFindBy(accessibility = "credentialTypeHeading-LdpVcInsuranceCredential")
-    @iOSXCUITFindBy(accessibility = "credentialTypeHeading-LdpVcInsuranceCredential")
+    @AndroidFindBy(accessibility = "credentialTypeHeading-InsuranceCredential")
+    @iOSXCUITFindBy(accessibility = "credentialTypeHeading-InsuranceCredential")
     private WebElement credentialTypeHeadingInsuranceCredential;
 
     @AndroidFindBy(accessibility = "credentialTypeHeading-MosipVerifiableCredential")
@@ -66,7 +66,13 @@ public class AddNewCardPage extends BasePage{
     @iOSXCUITFindBy(accessibility = "6stepCount")
     private WebElement DoneButton;
 
+    @AndroidFindBy(accessibility = "issuerHeading-MockMdl")
+    @iOSXCUITFindBy(accessibility = "issuerHeading-MockMdl")
+    private WebElement downloadViaMockCertify;
 
+    @AndroidFindBy(accessibility = "credentialTypeHeading-DrivingLicenseCredential")
+    @iOSXCUITFindBy(accessibility = "credentialTypeHeading-DrivingLicenseCredential")
+    private WebElement credentialTypeHeadingMockVerifiableCredential_mdoc;
 
     public AddNewCardPage(AppiumDriver driver) {
         super(driver);
@@ -201,6 +207,20 @@ public class AddNewCardPage extends BasePage{
          IosUtil.scrollToElement(driver,100,800,100,200);
      }
  }
+
+    public MockCertifyLoginPage clickOnDownloadViaMockCertify(){
+        clickOnElement(downloadViaMockCertify);
+
+        try {
+            Thread.sleep(3000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        if(isElementDisplayed(credentialTypeHeadingMockVerifiableCredential_mdoc)) {
+            clickOnElement(credentialTypeHeadingMockVerifiableCredential_mdoc);
+        }
+        return new MockCertifyLoginPage(driver);
+    }
 
 }
 

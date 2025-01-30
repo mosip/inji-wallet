@@ -6,6 +6,7 @@ import io.appium.java_client.pagefactory.AndroidFindBy;
 import io.appium.java_client.pagefactory.iOSXCUITFindBy;
 
 import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebElement;
 
@@ -30,19 +31,18 @@ public class SunbirdLoginPage extends BasePage {
     @iOSXCUITFindBy(accessibility = "Done")
     private WebElement clickOnSetButton;
 
-    @AndroidFindBy(xpath = "//android.view.View[@content-desc='01 January 2024']")
+    @AndroidFindBy(xpath = "//android.view.View[@content-desc='01 January 2025']")
     @iOSXCUITFindBy(xpath = "//XCUIElementTypeButton[@name=\"Monday, January 1\"]")
     private WebElement dateOfBirth;
 
     @iOSXCUITFindBy(xpath = "//XCUIElementTypeCollectionView//XCUIElementTypeButton[@name=\"Monday, 1 January\"]")
     private WebElement dateOfBirthSecond;
-    @iOSXCUITFindBy(xpath = "//XCUIElementTypeStaticText[@name=\"January 2024\"]")
-    private WebElement January2024;
+    @iOSXCUITFindBy(xpath = "//XCUIElementTypeStaticText[@name=\"January 2025\"]")
+    private WebElement January2025;
 
     @AndroidFindBy(xpath = "//android.widget.Button[@resource-id=\"verify_form\"]")
     @iOSXCUITFindBy(iOSClassChain = "**/XCUIElementTypeButton[`name == \"Login\"`]")
     private WebElement loginButton;
-
 
     @AndroidFindBy(xpath = "//android.widget.Button[@text=\"Login\"]")
     @iOSXCUITFindBy(iOSClassChain = "**/XCUIElementTypeButton[`name == \"Login\"`]")
@@ -155,6 +155,9 @@ public class SunbirdLoginPage extends BasePage {
     @iOSXCUITFindBy(accessibility = "6done")
     private WebElement doneButton;
 
+    @AndroidFindBy(xpath = "//*[contains(@text,'Login failed')]")
+    private WebElement LoginFailedDueTOInValidCredentials;
+
     public SunbirdLoginPage(AppiumDriver driver) {
         super(driver);
     }
@@ -210,15 +213,23 @@ public class SunbirdLoginPage extends BasePage {
             clickOnElement(clickOnSetButton);
         }
     }
-    public void clickOnloginButton() {
-        if(isElementDisplayed(loginButton)) {
+
+    public void clickOnloginButton() throws InterruptedException {
+
+        int retryCount = 0;
+        while (isElementDisplayed(loginButton) && retryCount < 5) {
             clickOnElement(loginButton);
+            if (isElementDisplayed(LoginFailedDueTOInValidCredentials)) {
+                retryCount++;
+                Thread.sleep(1000);
+            } else {
+                break;
+            }
         }
-        else {
+        if(isElementDisplayed(loginButtonSecond)){
             clickOnElement(loginButtonSecond);
         }
     }
-
     public boolean isSunbirdCardIsActive() {
         if(isElementDisplayed(doneButton))
        clickOnElement(doneButton);

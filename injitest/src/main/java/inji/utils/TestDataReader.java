@@ -37,7 +37,7 @@ public class TestDataReader {
             case "idType":
                 return "MOSIP National ID";
             case "gender":
-                return "MLEeng";
+                return "MLE";
             case "genderVidEsignet":
                 return "MLE";
             case "status":
@@ -77,7 +77,7 @@ public class TestDataReader {
             case "fullNameSunbird":
                 return "PolicyTestAutomation";
             case "policyNameSunbird":
-                return "Start Insurance Gold Premium";
+                return "PolicyTestAutomation";
             case "policyNumberSunbird":
                 return "120-720-24";
             case "idTypeSunbird":
@@ -85,13 +85,13 @@ public class TestDataReader {
             case "idTypeSunbirdHindi":
                 return "Health Insurance";
             case "phoneNumberSunbird":
-                return "0123456789";
+                return "1234567890";
             case "dateOfBirthSunbird":
-                return "2024-01-01";
+                return "2025-01-01";
             case "genderValueSunbird":
-                return "Male";
+                return "Female";
             case "emailIdValueSunbird":
-                return "abhishek@gmail.com";
+                return "PolicyTestAutomation@example.com";
             case "statusValueSunbird":
                 return "Valid";
             case "statusValueSunbirdForVaild":
@@ -100,6 +100,8 @@ public class TestDataReader {
                 return "Valid";
             case "isDeviceFarmRun":
                 return "true";
+            case "MockVc":
+                return "2405782960";
             default:
                 return "Key not found";
         }
