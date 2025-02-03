@@ -40,18 +40,18 @@
     {
       "identity" : "inji-openid4vp-ios-swift",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/mosip/inji-openid4vp-ios-swift",
+      "location" : "https://github.com/mosip/inji-openid4vp-ios-swift.git",
       "state" : {
-        "branch" : "develop",
+        "branch" : "release-0.2.x",
         "revision" : "8c682e3c99a4091330bcdf1725a8a659ab79a7cc"
       }
     },
     {
       "identity" : "inji-vci-client-ios-swift",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/mosip/inji-vci-client-ios-swift",
+      "location" : "https://github.com/mosip/inji-vci-client-ios-swift.git",
       "state" : {
-        "branch" : "develop",
+        "branch" : "release-0.2.x",
         "revision" : "5fe56728106cffc8eff47e43437f288307c9d91b"
       }
     },
@@ -67,9 +67,9 @@
     {
       "identity" : "pixelpass-ios-swift",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/mosip/pixelpass-ios-swift",
+      "location" : "https://github.com/mosip/pixelpass-ios-swift.git",
       "state" : {
-        "branch" : "develop",
+        "branch" : "release-0.6.x",
         "revision" : "7111692893287015599e4e0297bcade6a5375527"
       }
     },
@@ -85,10 +85,10 @@
     {
       "identity" : "secure-keystore-ios-swift",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/mosip/secure-keystore-ios-swift",
+      "location" : "https://github.com/mosip/secure-keystore-ios-swift.git",
       "state" : {
-        "branch" : "develop",
-        "revision" : "767b9dabd1a0cd374732ee97cb7cf34dd051acc1"
+        "branch" : "release-0.3.x",
+        "revision" : "1ea5182ca985302d11010b7a16ea496167969ab3"
       }
     },
     {
@@ -103,10 +103,10 @@
     {
       "identity" : "tuvali-ios-swift",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/mosip/tuvali-ios-swift/",
+      "location" : "https://github.com/mosip/tuvali-ios-swift.git",
       "state" : {
-        "branch" : "develop",
-        "revision" : "96bc662cd07df051cf2357691469bba57b0217e8"
+        "branch" : "release-0.5.x",
+        "revision" : "2d49e123f70dfc2179983a753d370cc2212385db"
       }
     },
     {
