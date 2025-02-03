@@ -58,18 +58,11 @@ export const VCDetailView: React.FC<VCItemDetailsProps> = props => {
   const verifiableCredential = props.credential;
   const publicUrl = props.credential?.credentialSubject['public_verify_url'];
   const qrCodeData = props.credential?.credentialSubject['qr_code'];
-  const verifiablePresentation = '/assets/ID.png';
-  const linkedinUrl =
-    'https://www.linkedin.com/profile/add?startTask=CERTIFICATION_NAME&name=${encodeURIComponent(data.certificate_name)}&organizationId=${data.org_linkedin_code}&issueYear=${issued_year}&issueMonth=${issued_month}&certUrl=${encodeURIComponent(data.public_verify_url)}&certId=${data.credential_id}';
-  const whatsappUrl = 'https://whatsapp.com';
   const [isModalVisible, setModalVisible] = useState(false);
   const [isQRCodeModalVisible, setQRCodeModalVisible] = useState(false);
-  const addtolinkedin =
-    'https://www.linkedin.com/profile/add/?startTask=CERTIFICATION_NAME&name=Marriage%20Certificate%20&organizationName=None&issueYear=2024&issueMonth=12&certUrl=https%3A//app.credissuer.com/credentials/verify/f011ff0a9eba94b0a235b6121c31aa407996a957f62f3737d534fd6e2261c04d&certId=F46189BC29D1';
-  const postonlinkedin =
-    'https://www.linkedin.com/feed/?shareActive=true&mini=true&shareUrl=https%3A%2F%2Fconnect.mosip.io&text=Hey+I%E2%80%99m+at+MOSIP+Connect+from+11th+to+13th+March%2C+2025.+Let%E2%80%99s+connect%21%0A%0AKnow+more+about+it+here+-+https%3A%2F%2Fconnect.mosip.io%0A%0A%23MOSIPConnect+%23OpenSource+%23DigitalIdentity+%23IdentityForAll';
-  const shareonx =
-    'https://x.com/intent/tweet?text=Crossing+another+milestone+on+my+professional+journey%21+%F0%9F%8F%85+My+credential+from+is+now+live+and+verified+on+Verix.%0A%0ASee+it+here%3A+https%3A%2F%2Fwww.verix.io%2Fcredential%2Fd66c224e-c216-468e-a3b6-9d693a44913f.%0A%0A%23VerixVerification';
+  const addtolinkedin = props.credential?.credentialSubject['add_to_linkedin'];
+  const postonlinkedin = props.credential?.credentialSubject['post_on_linkedin'];
+  const shareonx = props.credential?.credentialSubject['share_on_x'];
   const [isImageExpanded, setIsImageExpanded] = useState(false); // State for expanded image
   const face = props.credential?.credentialSubject.face;
   const name = props.credential?.credentialSubject.recipientName;
@@ -137,10 +130,7 @@ export const VCDetailView: React.FC<VCItemDetailsProps> = props => {
   };
 
   console.log('>>>>>>>>>>>>>>>>>>>>>>>QRCODE>>>>>>>>>>>>>>>>>>>>>', qrCodeData);
-  console.log(
-    '>>>>>>>>>>>>>>>>>>>>>>>publicUrl>>>>>>>>>>>>>>>>>>>>>',
-    publicUrl,
-  );
+  console.log('>>>>>>>>>>>>>>>>>>>>>>>publicUrl>>>>>>>>>>>>>>>>>>>>>',publicUrl);
 
   const shouldShowHrLine = verifiableCredential => {
     let availableFieldNames: string[] = [];
@@ -462,13 +452,16 @@ export const VCDetailView: React.FC<VCItemDetailsProps> = props => {
                       justifyContent: 'center',
                       alignItems: 'center',
                     }}>
-                    <TouchableOpacity onPress={() => setModalVisible(true)}>
-                      <Image
-                        source={require('../../../assets/share.png')} // replace with your actual image path
-                        style={{width: 30, height: 30}} // adjust size as needed
-                        resizeMode="contain"
-                      />
-                    </TouchableOpacity>
+                    {addtolinkedin || postonlinkedin || shareonx ? (
+                      <TouchableOpacity onPress={() => setModalVisible(true)}>
+                        <Image
+                          source={require('../../../assets/share.png')} // replace with your actual image path
+                          style={{ width: 30, height: 30 }} // adjust size as needed
+                          resizeMode="contain"
+                        />
+                      </TouchableOpacity>
+                    ) : null}
+
                     {/* Modal for pop-up */}
                     <Modal
                       animationType="slide"
@@ -531,137 +524,122 @@ export const VCDetailView: React.FC<VCItemDetailsProps> = props => {
                               width: '100%',
                             }}
                           />
-                          {/* Add on linkedin */}
-                          <TouchableOpacity
-                            onPress={() =>
-                              console.log('Redirecting to LinkedIn')
-                            }>
-                            <View
-                              style={{
-                                flexDirection: 'row',
-                                alignItems: 'center',
-                                marginBottom: 20,
-                              }}>
-                              <Image
-                                source={require('../../../assets/linkedIn.png')} // Replace with your LinkedIn image path
+
+                          {/* Add on LinkedIn */}
+                          {addtolinkedin && (
+                            <>
+                              <TouchableOpacity onPress={() => Linking.openURL(addtolinkedin)}>
+                                <View
+                                  style={{
+                                    flexDirection: 'row',
+                                    alignItems: 'center',
+                                    marginBottom: 20,
+                                  }}>
+                                  <Image
+                                    source={require('../../../assets/linkedIn.png')} // Replace with your LinkedIn image path
+                                    style={{
+                                      width: 20,
+                                      height: 20,
+                                      marginRight: 10, // Adds space between image and text
+                                    }}
+                                  />
+                                  <Text
+                                    style={{
+                                      color: 'black',
+                                      fontWeight: 'bold',
+                                      fontSize: 14,
+                                      marginRight:200,
+                                    }}>
+                                    Add to LinkedIn
+                                  </Text>
+                                </View>
+                              </TouchableOpacity>
+
+                              {/* Horizontal Line */}
+                              <View
                                 style={{
-                                  width: 20,
-                                  height: 20,
-                                  marginRight: 10, // Adds space between image and text
+                                  height: 0.5,
+                                  backgroundColor: '#D3D3D3',
+                                  marginBottom: 20,
+                                  width: '100%',
                                 }}
                               />
-                              <TouchableOpacity
-                                onPress={() => {
-                                  if (addtolinkedin) {
-                                    Linking.openURL(addtolinkedin);
-                                  }
-                                }}>
-                                <Text
+                            </>
+                          )}
+
+                          {/* Post on LinkedIn */}
+                          {postonlinkedin && (
+                            <>
+                              <TouchableOpacity onPress={() => Linking.openURL(postonlinkedin)}>
+                                <View
                                   style={{
-                                    color: 'black',
-                                    fontWeight: 'bold',
-                                    fontSize: 14,
-                                    marginRight: 200,
+                                    flexDirection: 'row',
+                                    alignItems: 'center',
+                                    marginBottom: 20,
                                   }}>
-                                  Add to LinkedIn
-                                </Text>
+                                  <Image
+                                    source={require('../../../assets/linkedIn.png')}
+                                    style={{
+                                      width: 20,
+                                      height: 20,
+                                      marginRight: 10,
+                                    }}
+                                  />
+                                  <Text
+                                    style={{
+                                      color: 'black',
+                                      fontWeight: 'bold',
+                                      fontSize: 14,
+                                      marginRight:200,
+                                    }}>
+                                    Post on LinkedIn
+                                  </Text>
+                                </View>
                               </TouchableOpacity>
-                            </View>
-                          </TouchableOpacity>
 
-                          {/* Horizontal Line */}
-                          <View
-                            style={{
-                              height: 0.5,
-                              backgroundColor: '#D3D3D3', // Light gray color for the line
-                              marginBottom: 20,
-                              width: '100%',
-                            }}
-                          />
-
-                          {/* post on linkedin */}
-                          <TouchableOpacity
-                            onPress={() =>
-                              console.log('Redirecting to linkedin')
-                            }>
-                            <View
-                              style={{
-                                flexDirection: 'row',
-                                alignItems: 'center',
-                                marginBottom: 20,
-                              }}>
-                              <Image
-                                source={require('../../../assets/linkedIn.png')} // Replace with your Twitter/X image path
+                              {/* Horizontal Line */}
+                              <View
                                 style={{
-                                  width: 20,
-                                  height: 20,
-                                  marginBottom: 5,
-                                  marginRight: 10,
+                                  height: 0.5,
+                                  backgroundColor: '#D3D3D3',
+                                  marginBottom: 20,
+                                  width: '100%',
                                 }}
                               />
-                              <TouchableOpacity
-                                onPress={() => {
-                                  if (postonlinkedin) {
-                                    Linking.openURL(postonlinkedin);
-                                  }
-                                }}>
-                                <Text
-                                  style={{
-                                    color: 'black',
-                                    fontWeight: 'bold',
-                                    fontSize: 14,
-                                    marginRight: 200,
-                                  }}>
-                                  Post on LinkedIn
-                                </Text>
-                              </TouchableOpacity>
-                            </View>
-                          </TouchableOpacity>
-                          {/* Horizontal Line */}
-                          <View
-                            style={{
-                              height: 0.5,
-                              backgroundColor: '#D3D3D3', // Light gray color for the line
-                              marginBottom: 20,
-                              width: '100%',
-                            }}
-                          />
+                            </>
+                          )}
 
-                          {/* X Redirect */}
-                          <TouchableOpacity
-                            onPress={() => console.log('Redirecting to X')}>
-                            <View
-                              style={{
-                                flexDirection: 'row',
-                                alignItems: 'center',
-                              }}>
-                              <Image
-                                source={require('../../../assets/twitter.png')} // Replace with your Twitter/X image path
-                                style={{
-                                  width: 30,
-                                  height: 30,
-                                  marginBottom: 5,
-                                  marginRight: 10,
-                                }}
-                              />
-                              <TouchableOpacity
-                                onPress={() => {
-                                  if (shareonx) {
-                                    Linking.openURL(shareonx);
-                                  }
-                                }}>
-                                <Text
+                          {/* Share on X */}
+                          {shareonx && (
+                            <>
+                              <TouchableOpacity onPress={() => Linking.openURL(shareonx)}>
+                                <View
                                   style={{
-                                    color: 'black',
-                                    fontWeight: 'bold',
-                                    fontSize: 14,
-                                    marginRight: 230,
+                                    flexDirection: 'row',
+                                    alignItems: 'center',
                                   }}>
-                                  Share on X
-                                </Text>
+                                  <Image
+                                    source={require('../../../assets/twitter.png')}
+                                    style={{
+                                      width: 30,
+                                      height: 30,
+                                      marginBottom: 5,
+                                      marginRight: 10,
+                                    }}
+                                  />
+                                  <Text
+                                    style={{
+                                      color: 'black',
+                                      fontWeight: 'bold',
+                                      fontSize: 14,
+                                      marginRight:220,
+                                    }}>
+                                    Share on X
+                                  </Text>
+                                </View>
                               </TouchableOpacity>
-                            </View>
-                          </TouchableOpacity>
+                            </>
+                          )}
                         </View>
                       </View>
                     </Modal>
