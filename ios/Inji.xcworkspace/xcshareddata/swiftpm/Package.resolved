@@ -20,6 +20,15 @@
       }
     },
     {
+      "identity" : "cryptoswift",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/krzyzanowskim/CryptoSwift.git",
+      "state" : {
+        "revision" : "729e01bc9b9dab466ac85f21fb9ee2bc1c61b258",
+        "version" : "1.8.4"
+      }
+    },
+    {
       "identity" : "gzipswift",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/1024jp/GzipSwift",
@@ -31,37 +40,55 @@
     {
       "identity" : "inji-openid4vp-ios-swift",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/mosip/inji-openid4vp-ios-swift",
+      "location" : "https://github.com/mosip/inji-openid4vp-ios-swift.git",
       "state" : {
-        "branch" : "develop",
-        "revision" : "10c161f4e7414e8a7b0dc2d52d3f4d8faf19b8d7"
+        "branch" : "release-0.2.x",
+        "revision" : "8c682e3c99a4091330bcdf1725a8a659ab79a7cc"
       }
     },
     {
       "identity" : "inji-vci-client-ios-swift",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/mosip/inji-vci-client-ios-swift",
+      "location" : "https://github.com/mosip/inji-vci-client-ios-swift.git",
       "state" : {
-        "branch" : "develop",
+        "branch" : "release-0.2.x",
         "revision" : "5fe56728106cffc8eff47e43437f288307c9d91b"
+      }
+    },
+    {
+      "identity" : "jose-swift",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/beatt83/jose-swift.git",
+      "state" : {
+        "revision" : "57fe5a03c83feaf73a84b23c02e641f86482e313",
+        "version" : "4.0.2"
       }
     },
     {
       "identity" : "pixelpass-ios-swift",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/mosip/pixelpass-ios-swift",
+      "location" : "https://github.com/mosip/pixelpass-ios-swift.git",
       "state" : {
-        "branch" : "develop",
+        "branch" : "release-0.6.x",
         "revision" : "7111692893287015599e4e0297bcade6a5375527"
+      }
+    },
+    {
+      "identity" : "secp256k1.swift",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/GigaBitcoin/secp256k1.swift.git",
+      "state" : {
+        "revision" : "4c77c7384768acf1093d66ccaacf298d322b10b7",
+        "version" : "0.15.0"
       }
     },
     {
       "identity" : "secure-keystore-ios-swift",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/mosip/secure-keystore-ios-swift",
+      "location" : "https://github.com/mosip/secure-keystore-ios-swift.git",
       "state" : {
-        "branch" : "develop",
-        "revision" : "767b9dabd1a0cd374732ee97cb7cf34dd051acc1"
+        "branch" : "release-0.3.x",
+        "revision" : "1ea5182ca985302d11010b7a16ea496167969ab3"
       }
     },
     {
@@ -76,10 +103,10 @@
     {
       "identity" : "tuvali-ios-swift",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/mosip/tuvali-ios-swift/",
+      "location" : "https://github.com/mosip/tuvali-ios-swift.git",
       "state" : {
-        "branch" : "develop",
-        "revision" : "96bc662cd07df051cf2357691469bba57b0217e8"
+        "branch" : "release-0.5.x",
+        "revision" : "2d49e123f70dfc2179983a753d370cc2212385db"
       }
     },
     {
