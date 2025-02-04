@@ -21,7 +21,7 @@ export const WelcomeScreen: React.FC<RootRouteProps> = props => {
       <Button
         testID="unlockApplication"
         margin="0 0 32"
-        type="gradient"
+        type='gradient'
         title={t('unlockApplication')}
         onPress={controller.unlockPage}
       />

@@ -24,16 +24,7 @@ export const HelpScreen: React.FC<HelpScreenProps> = props => {
       setTimeout(() => {
         if (listingRef?.current != null) {
           listingRef.current.scrollToIndex({
-            index: 18,
-            animated: true,
-          });
-        }
-      }, 2000);
-    } else if (props.source == 'keyManagement') {
-      setTimeout(() => {
-        if (listingRef?.current != null) {
-          listingRef.current.scrollToIndex({
-            index: 26,
+            index: 15,
             animated: true,
           });
         }
@@ -126,7 +117,7 @@ export const HelpScreen: React.FC<HelpScreenProps> = props => {
         <React.Fragment>{getTextField(t('answers.inji.one'))}</React.Fragment>
       ),
     },
-    /*{
+    {
       title: t('questions.inji.two'),
       data: (
         <React.Fragment>
@@ -149,7 +140,7 @@ export const HelpScreen: React.FC<HelpScreenProps> = props => {
           {getTextField(t('answers.inji.three-c'))}
         </React.Fragment>
       ),
-    },*/
+    },
     {
       title: t('questions.inji.four'),
       data: (
@@ -175,8 +166,7 @@ export const HelpScreen: React.FC<HelpScreenProps> = props => {
           {getTextField(
             t('answers.inji.seven'),
             getLinkedText(
-              injiHelpUrl +
-                '/functional-overview/end-user-guide#downloading-vc',
+              injiHelpUrl + '/functional-overview/end-user-guide#downloading-vc',
               t('here'),
             ),
           )}
@@ -196,8 +186,7 @@ export const HelpScreen: React.FC<HelpScreenProps> = props => {
           {getTextField(
             t('answers.inji.nine'),
             getLinkedText(
-              injiHelpUrl +
-                '/functional-overview/end-user-guide#activating-a-vc',
+              injiHelpUrl + '/functional-overview/end-user-guide#activating-a-vc',
               t('here'),
             ),
           )}
@@ -212,7 +201,7 @@ export const HelpScreen: React.FC<HelpScreenProps> = props => {
             t('answers.inji.ten-a'),
             getLinkedText(
               injiHelpUrl +
-                '/functional-overview/feature-workflows#id-4.-qr-code-login-process',
+                '/overview/features/feature-workflows#id-4.-qr-code-login-process',
               t('here'),
             ),
           )}
@@ -259,7 +248,7 @@ export const HelpScreen: React.FC<HelpScreenProps> = props => {
           {getTextField(
             t('answers.inji.thirteen-a'),
             getLinkedText(
-              injiHelpUrl + '/functional-overview/end-user-guide#deleting-a-vc',
+              injiHelpUrl + '/end-user-guide#deleting-a-vc',
               t('here'),
             ),
           )}
@@ -281,64 +270,6 @@ export const HelpScreen: React.FC<HelpScreenProps> = props => {
       data: (
         <React.Fragment>
           {getTextField(t('answers.inji.fifteen'))}
-        </React.Fragment>
-      ),
-    },
-    {
-      title: t('questions.inji.fifteen'),
-      data: (
-        <React.Fragment>
-          {getTextField(t('answers.inji.fifteen'))}
-        </React.Fragment>
-      ),
-    },
-  ];
-  const KeyManagementFaqMap = [
-    {
-      title: t('questions.KeyManagement.one'),
-      data: (
-        <React.Fragment>
-          {getTextField(t('answers.KeyManagement.one'))}
-        </React.Fragment>
-      ),
-    },
-    {
-      title: t('questions.KeyManagement.two'),
-      data: (
-        <React.Fragment>
-          {getTextField(t('answers.KeyManagement.two'))}
-        </React.Fragment>
-      ),
-    },
-    {
-      title: t('questions.KeyManagement.three'),
-      data: (
-        <React.Fragment>
-          {getTextField(t('answers.KeyManagement.three'))}
-        </React.Fragment>
-      ),
-    },
-    {
-      title: t('questions.KeyManagement.four'),
-      data: (
-        <React.Fragment>
-          {getTextField(t('answers.KeyManagement.four'))}
-        </React.Fragment>
-      ),
-    },
-    {
-      title: t('questions.KeyManagement.five'),
-      data: (
-        <React.Fragment>
-          {getTextField(t('answers.KeyManagement.five'))}
-        </React.Fragment>
-      ),
-    },
-    {
-      title: t('questions.KeyManagement.six'),
-      data: (
-        <React.Fragment>
-          {getTextField(t('answers.KeyManagement.six'))}
         </React.Fragment>
       ),
     },
@@ -373,7 +304,7 @@ export const HelpScreen: React.FC<HelpScreenProps> = props => {
                   {item.data}
                 </View>
               )}
-              data={[...InjiFaqMap, ...BackupFaqMap, ...KeyManagementFaqMap]}
+              data={[...InjiFaqMap, ...BackupFaqMap]}
               onScrollToIndexFailed={info => {
                 const wait = new Promise(resolve => setTimeout(resolve, 500));
                 wait.then(() => {
@@ -392,6 +323,6 @@ export const HelpScreen: React.FC<HelpScreenProps> = props => {
 };
 
 interface HelpScreenProps {
-  source: 'Inji' | 'BackUp' | 'keyManagement';
+  source: 'Inji' | 'BackUp';
   triggerComponent: React.ReactElement;
 }

@@ -49,6 +49,7 @@ export const RequestLayout: React.FC = () => {
               title: t('incomingVc'),
               headerLeft: () =>
                 !I18nManager.isRTL && (
+                  
                   <HeaderBackButton
                     onPress={() => {
                       controller.RESET();

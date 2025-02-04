@@ -10,7 +10,7 @@ import {useWelcomeScreen} from './WelcomeScreenController';
 import {changeLanguage} from '../components/LanguageSelector';
 import {BackHandler, Dimensions} from 'react-native';
 import {useBackupRestoreScreen} from './Settings/BackupRestoreController';
-import {SvgImage} from '../components/ui/svg';
+import { SvgImage } from '../components/ui/svg';
 
 export const SetupLanguageScreen: React.FC<RootRouteProps> = props => {
   const {t} = useTranslation('SetupLanguage');
