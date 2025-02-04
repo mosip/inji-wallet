@@ -129,7 +129,7 @@ platform :ios do
       workspace: "Inji.xcworkspace",
       scheme: "Inji",
       export_method: "app-store",
-      output_directory: "./Inji_artifacts", 
+      output_directory: "./fastlane/Inji_artifacts", 
       output_name: "#{generate_app_name}.ipa",
       export_options: {
         provisioningProfiles: {
