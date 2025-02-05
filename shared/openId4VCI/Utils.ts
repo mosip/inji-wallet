@@ -4,44 +4,51 @@ import {isIOS} from '../constants';
 import pem2jwk from 'simple-pem2jwk';
 import {displayType, issuerType} from '../../machines/Issuers/IssuersMachine';
 import getAllConfigurations, {CACHED_API} from '../api';
-
+import base64url from 'base64url';
 import i18next from 'i18next';
-import {getJWT} from '../cryptoutil/cryptoUtil';
+import {getJWT, replaceCharactersInB64} from '../cryptoutil/cryptoUtil';
 import i18n from '../../i18n';
 import {
-  CredentialWrapper,
-  VerifiableCredential,
+CredentialTypes,
+CredentialWrapper,
+VerifiableCredential,
 } from '../../machines/VerifiableCredential/VCMetaMachine/vc';
 import {
-  BOTTOM_SECTION_FIELDS_WITH_DETAILED_ADDRESS_FIELDS,
-  DETAIL_VIEW_ADD_ON_FIELDS,
-  getIdType,
-  getCredentialTypes,
+BOTTOM_SECTION_FIELDS_WITH_DETAILED_ADDRESS_FIELDS,
+DETAIL_VIEW_ADD_ON_FIELDS,
+getIdType,
+getCredentialTypes,
 } from '../../components/VC/common/VCUtils';
 import {getVerifiableCredential} from '../../machines/VerifiableCredential/VCItemMachine/VCItemSelectors';
 import {vcVerificationBannerDetails} from '../../components/BannerNotificationContainer';
 import {getErrorEventData, sendErrorEvent} from '../telemetry/TelemetryUtils';
 import {TelemetryConstants} from '../telemetry/TelemetryConstants';
+import {NativeModules} from 'react-native';
+import {KeyTypes} from '../cryptoutil/KeyTypes';
+import {VCFormat} from '../VCFormat';
+import {UnsupportedVcFormat} from '../error/UnsupportedVCFormat';
+import {VCMetadata} from '../VCMetadata';
+import {VCProcessor} from '../../components/VC/common/VCProcessor';
 
 export const Protocols = {
-  OpenId4VCI: 'OpenId4VCI',
-  OTP: 'OTP',
+OpenId4VCI: 'OpenId4VCI',
+OTP: 'OTP',
 };
 
 export const Issuers = {
-  MosipOtp: '',
-  Mosip: 'Mosip',
+MosipOtp: '',
+Mosip: 'Mosip',
 };
 
 export function getVcVerificationDetails(
   statusType,
-  vcMetadata,
+  vcMetadata: VCMetadata,
   verifiableCredential,
   wellknown: Object,
 ): vcVerificationBannerDetails {
   const idType = getIdType(
     wellknown,
-    getCredentialTypes(getVerifiableCredential(verifiableCredential)),
+    getVerifiableCredential(verifiableCredential).credentialConfigurationId,
   );
   return {
     statusType: statusType,
@@ -58,11 +65,22 @@ export const isActivationNeeded = (issuer: string) => {
 
 export const Issuers_Key_Ref = 'OpenId4VCI_KeyPair';
 
-export const getIdentifier = (context, credential: VerifiableCredential) => {
-  const credentialIdentifier = credential.credential.id;
-  const credId = credentialIdentifier.startsWith('did')
-    ? credentialIdentifier.split(':')
-    : credentialIdentifier.split('/');
+export const getIdentifier = (
+  context,
+  credential: VerifiableCredential,
+  format: string,
+) => {
+  let credentialIdentifier = '';
+  if (format === VCFormat.mso_mdoc) {
+    credentialIdentifier = credential?.processedCredential?.['id'] ?? '';
+  } else if (typeof credential.credential !== 'string') {
+    credentialIdentifier = credential.credential.id;
+  }
+  const credId =
+    credentialIdentifier.startsWith('did') ||
+    credentialIdentifier.startsWith('urn:')
+      ? credentialIdentifier.split(':')
+      : credentialIdentifier.split('/');
   return (
     context.selectedIssuer.credential_issuer +
     ':' +
@@ -72,39 +90,39 @@ export const getIdentifier = (context, credential: VerifiableCredential) => {
   );
 };
 
-export const getCredentialRequestBody = async (
-  proofJWT: string,
-  credentialType: Array<string>,
-) => {
-  return {
-    format: 'ldp_vc',
-    credential_definition: {
-      '@context': ['https://www.w3.org/2018/credentials/v1'],
-      type: credentialType,
-    },
-    proof: {
-      proof_type: 'jwt',
-      jwt: proofJWT,
-    },
-  };
-};
-
-export const updateCredentialInformation = (
+export const updateCredentialInformation = async (
   context,
   credential: VerifiableCredential,
-): CredentialWrapper => {
+): Promise<CredentialWrapper> => {
+  let processedCredential;
+  if (context.selectedCredentialType.format === VCFormat.mso_mdoc) {
+    processedCredential = await VCProcessor.processForRendering(
+      credential,
+      context.selectedCredentialType.format,
+    );
+  }
+  const verifiableCredential = {
+    ...credential,
+    wellKnown: context.selectedIssuer['wellknown_endpoint'],
+    credentialConfigurationId: context.selectedCredentialType.id,
+    issuerLogo: getDisplayObjectForCurrentLanguage(
+      context.selectedIssuer.display,
+    )?.logo,
+    processedCredential,
+  };
   return {
-    verifiableCredential: {
-      ...credential,
-      wellKnown: context.selectedIssuer['wellknown_endpoint'],
-      credentialTypes: credential.credential.type ?? ['VerifiableCredential'],
-      issuerLogo: getDisplayObjectForCurrentLanguage(
-        context.selectedIssuer.display,
-      )?.logo,
-    },
-    identifier: getIdentifier(context, credential),
+    verifiableCredential,
+    format: context.selectedCredentialType.format,
+    identifier: getIdentifier(
+      context,
+      verifiableCredential,
+      context.selectedCredentialType.format,
+    ),
     generatedOn: new Date(),
-    vcMetadata: context.vcMetadata || {},
+    vcMetadata: {
+      ...context.vcMetadata,
+      format: context.selectedCredentialType.format,
+    },
   };
 };
 
@@ -128,7 +146,10 @@ export const constructAuthorizationConfiguration = (
   selectedIssuer: issuerType,
   supportedScope: string,
 ) => {
-  return {
+  console.log('Constructing Authorization Configuration...');
+  console.log('Selected Issuer: ', selectedIssuer);
+  console.log('Supported Scope: ', supportedScope);
+  const config = {
     issuer: selectedIssuer.credential_issuer,
     clientId: selectedIssuer.client_id,
     scopes: [supportedScope],
@@ -140,99 +161,80 @@ export const constructAuthorizationConfiguration = (
       tokenEndpoint: selectedIssuer.token_endpoint,
     },
   };
-};
-
-export const getJWK = async publicKey => {
-  try {
-    let publicKeyJWKString;
-    let publicKeyJWK;
-    if (isIOS()) {
-      publicKeyJWKString = await jose.JWK.asKey(publicKey, 'pem');
-      publicKeyJWK = publicKeyJWKString.toJSON();
-    } else {
-      publicKeyJWK = await pem2jwk(publicKey);
-    }
-    return {
-      ...publicKeyJWK,
-      alg: 'RS256',
-      use: 'sig',
-    };
-  } catch (e) {
-    console.error(
-      'Exception occurred while constructing JWK from PEM : ' +
-        publicKey +
-        '  Exception is ',
-      e,
-    );
-  }
-};
-
-export const getSelectedCredentialTypeDetails = (
-  wellknown: any,
-  vcCredentialTypes: Object[],
-): Object => {
-  for (let credential in wellknown.credential_configurations_supported) {
-    const credentialDetails =
-      wellknown.credential_configurations_supported[credential];
-    if (
-      JSON.stringify(credentialDetails.credential_definition.type) ===
-      JSON.stringify(vcCredentialTypes)
-    ) {
-      return credentialDetails;
-    }
-  }
-  console.error(
-    'Selected credential type is not available in wellknown config supported credentials list',
-  );
-  sendErrorEvent(
-    getErrorEventData(
-      TelemetryConstants.FlowType.wellknownConfig,
-      TelemetryConstants.ErrorId.mismatch,
-      TelemetryConstants.ErrorMessage.wellknownConfigMismatch,
-    ),
-  );
-  return {};
+  console.log('Authorization Configuration: ', config);
+  return config;
 };
 
 export const getCredentialIssuersWellKnownConfig = async (
   issuer: string | undefined,
-  vcCredentialTypes: Object[] | undefined,
   defaultFields: string[],
+  credentialConfigurationId: string,
+  format: string,
 ) => {
   let fields: string[] = defaultFields;
-  let credentialDetails: any;
-  const response = await CACHED_API.fetchIssuerWellknownConfig(issuer!);
-  if (response) {
-    credentialDetails = getSelectedCredentialTypeDetails(
-      response,
-      vcCredentialTypes!,
-    );
-    if (
-      credentialDetails.order !== null &&
-      credentialDetails.order.length > 0
-    ) {
-      fields = credentialDetails.order;
-    } else {
-      fields = Object.keys(
-        credentialDetails.credential_definition.credentialSubject,
+  let matchingWellknownDetails: any;
+  const wellknownResponse = await CACHED_API.fetchIssuerWellknownConfig(
+    issuer!,
+  );
+  try {
+    if (wellknownResponse) {
+      matchingWellknownDetails = getMatchingCredentialIssuerMetadata(
+        wellknownResponse,
+        credentialConfigurationId,
       );
+      if (
+        matchingWellknownDetails.order != null &&
+        matchingWellknownDetails.order.length > 0
+      ) {
+        fields = matchingWellknownDetails.order;
+      } else {
+        if (format === VCFormat.mso_mdoc) {
+          fields = [];
+          Object.keys(matchingWellknownDetails.claims).forEach(namespace => {
+            Object.keys(matchingWellknownDetails.claims[namespace]).forEach(
+              claim => {
+                fields.concat(`${namespace}~${claim}`);
+              },
+            );
+          });
+        } else if (format === VCFormat.ldp_vc) {
+          fields = Object.keys(
+            matchingWellknownDetails.credential_definition.credentialSubject,
+          );
+        } else {
+          console.error(`Unsupported credential format - ${format} found`);
+          throw new UnsupportedVcFormat(format);
+        }
+      }
     }
+  } catch (error) {
+    console.error(
+      `Error occurred while parsing well-known response of credential type - ${credentialConfigurationId} so returning default fields only. Error is `,
+      error.toString(),
+    );
+    return {
+      matchingCredentialIssuerMetadata: matchingWellknownDetails,
+      fields: fields,
+    };
   }
   return {
-    wellknown: credentialDetails,
+    matchingCredentialIssuerMetadata: matchingWellknownDetails,
+    wellknownResponse,
     fields: fields,
   };
 };
 
 export const getDetailedViewFields = async (
   issuer: string,
-  vcCredentialTypes: Object[],
+  credentialConfigurationId: string,
   defaultFields: string[],
+  format: string,
 ) => {
   let response = await getCredentialIssuersWellKnownConfig(
     issuer,
-    vcCredentialTypes,
     defaultFields,
+    credentialConfigurationId,
+    format,
   );
 
   let updatedFieldsList = response.fields.concat(DETAIL_VIEW_ADD_ON_FIELDS);
@@ -240,8 +242,9 @@ export const getDetailedViewFields = async (
   updatedFieldsList = removeBottomSectionFields(updatedFieldsList);
 
   return {
-    wellknown: response.wellknown,
+    matchingCredentialIssuerMetadata: response.matchingCredentialIssuerMetadata,
     fields: updatedFieldsList,
+    wellknownResponse: response.wellknownResponse,
   };
 };
 
@@ -280,14 +283,15 @@ export enum ErrorMessage {
 }
 
 export async function constructProofJWT(
-  publicKey: string,
-  privateKey: string,
+  publicKey: any,
+  privateKey: any,
   accessToken: string,
   selectedIssuer: issuerType,
+  keyType: string,
 ): Promise<string> {
   const jwtHeader = {
-    alg: 'RS256',
-    jwk: await getJWK(publicKey),
+    alg: keyType,
+    jwk: await getJWK(publicKey, keyType),
     typ: 'openid4vci-proof+jwt',
   };
   const decodedToken = jwtDecode(accessToken);
@@ -299,5 +303,142 @@ export async function constructProofJWT(
     exp: Math.floor(new Date().getTime() / 1000) + 18000,
   };
 
-  return await getJWT(jwtHeader, jwtPayload, Issuers_Key_Ref, privateKey);
+  return await getJWT(
+    jwtHeader,
+    jwtPayload,
+    Issuers_Key_Ref,
+    privateKey,
+    keyType,
+  );
+}
+
+export const getJWK = async (publicKey, keyType) => {
+  try {
+    let publicKeyJWK;
+    switch (keyType) {
+      case KeyTypes.RS256:
+        publicKeyJWK = await getJWKRSA(publicKey);
+        break;
+      case KeyTypes.ES256:
+        publicKeyJWK = await getJWKECR1(publicKey);
+        break;
+      case KeyTypes.ES256K:
+        publicKeyJWK = await getJWKECK1(publicKey);
+        break;
+      case KeyTypes.ED25519:
+        publicKeyJWK = await getJWKED(publicKey);
+        break;
+      default:
+        throw Error;
+    }
+    return {
+      ...publicKeyJWK,
+      alg: keyType,
+      use: 'sig',
+    };
+  } catch (e) {
+    console.error(
+      'Exception occurred while constructing JWK from PEM : ' +
+        publicKey +
+        '  Exception is ',
+      e,
+    );
+  }
+};
+async function getJWKRSA(publicKey): Promise<any> {
+  const publicKeyJWKString = await jose.JWK.asKey(publicKey, 'pem');
+  return publicKeyJWKString.toJSON();
+}
+async function getJWKECR1(publicKey): Promise<any> {
+  if (isIOS()) return JSON.parse(publicKey);
+  const publicKeyJWKString = await jose.JWK.asKey(publicKey, 'pem');
+  return publicKeyJWKString.toJSON();
+}
+function getJWKECK1(publicKey): any {
+  const x = base64url(Buffer.from(publicKey.slice(1, 33))); // Skip the first byte (0x04) in the uncompressed public key
+  const y = base64url(Buffer.from(publicKey.slice(33)));
+  const jwk = {
+    kty: 'EC',
+    crv: 'secp256k1',
+    x: x,
+    y: y,
+  };
+  return jwk;
+}
+function getJWKED(publicKey): any {
+  const x = base64url(publicKey);
+  const jwk = {
+    kty: 'OKP',
+    crv: 'Ed25519',
+    x: x,
+  };
+  return jwk;
+}
+export async function hasKeyPair(keyType: any): Promise<boolean> {
+  const {RNSecureKeystoreModule} = NativeModules;
+  try {
+    return await RNSecureKeystoreModule.hasAlias(keyType);
+  } catch (e) {
+    console.error('key not found');
+    return false;
+  }
+}
+
+export function selectCredentialRequestKey(
+  keyTypes: string[],
+  keyOrder: object,
+) {
+  const lowerCaseKeyTypes = keyTypes.map(key => key.toLowerCase());
+
+  for (const index in keyOrder) {
+    if (lowerCaseKeyTypes.includes(keyOrder[index].toLowerCase())) {
+      return keyOrder[index];
+    }
+  }
+  return '';
+}
+
+export const constructIssuerMetaData = (
+  selectedIssuer: issuerType,
+  selectedCredentialType: CredentialTypes,
+  downloadTimeout: Number,
+): Object => {
+  const issuerMeta: Object = {
+    credentialAudience: selectedIssuer.credential_audience,
+    credentialEndpoint: selectedIssuer.credential_endpoint,
+    downloadTimeoutInMilliSeconds: downloadTimeout,
+    credentialFormat: selectedCredentialType.format,
+  };
+  if (selectedCredentialType.format === VCFormat.ldp_vc) {
+    issuerMeta['credentialType'] = selectedCredentialType?.credential_definition
+      ?.type ?? ['VerifiableCredential'];
+  } else if (selectedCredentialType.format === VCFormat.mso_mdoc) {
+    issuerMeta['doctype'] = selectedCredentialType.doctype;
+    issuerMeta['claims'] = selectedCredentialType.claims;
+  }
+  return issuerMeta;
+};
+
+export function getMatchingCredentialIssuerMetadata(
+  wellknown: any,
+  credentialConfigurationId: string,
+): any {
+  for (const credentialTypeKey in wellknown.credential_configurations_supported) {
+    if (credentialTypeKey === credentialConfigurationId) {
+      return wellknown.credential_configurations_supported[credentialTypeKey];
+    }
+  }
+  console.error(
+    'Selected credential type is not available in wellknown config supported credentials list',
+  );
+  sendErrorEvent(
+    getErrorEventData(
+      TelemetryConstants.FlowType.wellknownConfig,
+      TelemetryConstants.ErrorId.mismatch,
+      TelemetryConstants.ErrorMessage.wellknownConfigMismatch,
+    ),
+  );
+  throw new Error(
+    `Selected credential type - ${credentialConfigurationId} is not available in wellknown config supported credentials list`,
+  );
 }
