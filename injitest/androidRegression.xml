@@ -147,9 +147,22 @@
                     <!-- <include name="verifyTuvaliVersion"/> invalid testcase-->
                 </methods>
             </class>
+            <class name="androidTestCases.VcDownloadAndVerifyUsingMockIdentity">
+                <methods>
+                    <include name="downloadAndVerifyVcUsingUinViaMockIdentity"/>
+                </methods>
+            </class>
+            <class name="androidTestCases.keyManagement">
+                <methods>
+                    <include name="downloadAndVerifyVcUsingUinViaMockIdentity"/>
+                    <include name="downloadAndVerifyVcUsingMockIdentity"/>
+                    <include name="downloadAndVerifyVcUsingEsignet"/>
+                </methods>
+            </class>
         </classes>
 	</test>
 </suite>
+
 
 <!--<suite name="All Test Suite">
 <listeners>

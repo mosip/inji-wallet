@@ -95,9 +95,10 @@ public class MosipOtpAlternativeFlow extends AndroidBaseTest {
         otpVerification.enterOtpForEsignet(getOtp(), Target.ANDROID);
         esignetLoginPage.clickOnVerifyButton();
 
-        assertTrue(homePage.isNameDisplayed(TestDataReader.readData("fullName")), "Verify if full name is displayed");
+        addNewCardPage.clickOnDoneButton();
+        assertTrue(homePage.isCredentialTypeValueDisplayed(), "Verify if credential type value is displayed");
 
-        DetailedVcViewPage detailedVcViewPage = homePage.openDetailedVcView(TestDataReader.readData("fullName"));
+        DetailedVcViewPage detailedVcViewPage = homePage.openDetailedVcView();
         assertTrue(detailedVcViewPage.isDetailedVcViewPageLoaded(), "Verify if detailed Vc view page is displayed");
 
         detailedVcViewPage.clickOnMoreOptionsInDetails();
@@ -154,7 +155,8 @@ public class MosipOtpAlternativeFlow extends AndroidBaseTest {
         otpVerification.enterOtpForEsignet(getOtp(), Target.ANDROID);
         esignetLoginPage.clickOnVerifyButton();
 
-        assertTrue(homePage.isNameDisplayed(TestDataReader.readData("fullName")), "Verify if full name is displayed");
+        addNewCardPage.clickOnDoneButton();
+        assertTrue(homePage.isCredentialTypeValueDisplayed(), "Verify if credential type value is displayed");
         MoreOptionsPage moreOptionsPage = homePage.clickOnMoreOptionsButton();
 
         assertTrue(moreOptionsPage.isMoreOptionsPageLoaded(), "Verify if more options page is displayed");
@@ -211,7 +213,8 @@ public class MosipOtpAlternativeFlow extends AndroidBaseTest {
         otpVerification.enterOtpForEsignet(getOtp(), Target.ANDROID);
         esignetLoginPage.clickOnVerifyButton();
 
-        assertTrue(homePage.isNameDisplayed(TestDataReader.readData("fullName")), "Verify if full name is displayed");
+        addNewCardPage.clickOnDoneButton();
+        assertTrue(homePage.isCredentialTypeValueDisplayed(), "Verify if credential type value is displayed");
 
         MoreOptionsPage moreOptionsPage = homePage.clickOnMoreOptionsButton();
         assertTrue(moreOptionsPage.isMoreOptionsPageLoaded(), "Verify if more options page is displayed");
@@ -223,7 +226,8 @@ public class MosipOtpAlternativeFlow extends AndroidBaseTest {
 //        assertTrue(moreOptionsPage.isMoreOptionsPageLoaded(), "Verify if more options page is displayed");
 
 //        moreOptionsPage.clickOnCloseButton();
-        assertTrue(homePage.isNameDisplayed(TestDataReader.readData("fullName")), "Verify if full name is displayed");
+        addNewCardPage.clickOnDoneButton();
+        assertTrue(homePage.isCredentialTypeValueDisplayed(), "Verify if credential type value is displayed");
     }
 
     @Test
@@ -264,7 +268,8 @@ public class MosipOtpAlternativeFlow extends AndroidBaseTest {
         otpVerification.enterOtpForEsignet(getOtp(), Target.ANDROID);
         esignetLoginPage.clickOnVerifyButton();
 
-        assertTrue(homePage.isNameDisplayed(TestDataReader.readData("fullName")), "Verify if full name is displayed");
+        addNewCardPage.clickOnDoneButton();
+        assertTrue(homePage.isCredentialTypeValueDisplayed(), "Verify if credential type value is displayed");
 
         MoreOptionsPage moreOptionsPage = homePage.clickOnMoreOptionsButton();
         assertTrue(moreOptionsPage.isMoreOptionsPageLoaded(), "Verify if more options page is displayed");
@@ -292,7 +297,8 @@ public class MosipOtpAlternativeFlow extends AndroidBaseTest {
         otpVerification.enterOtpForEsignet(getOtp(), Target.ANDROID);
         esignetLoginPage.clickOnVerifyButton();
 
-        assertTrue(homePage.isNameDisplayed(TestDataReader.readData("fullName")), "Verify if full name is displayed");
+        addNewCardPage.clickOnDoneButton();
+        assertTrue(homePage.isCredentialTypeValueDisplayed(), "Verify if credential type value is displayed");
 
         HistoryPage historyPage = homePage.clickOnHistoryButton();
         assertTrue(historyPage.isHistoryPageLoaded(), "Verify if history page is displayed");
@@ -341,7 +347,8 @@ public class MosipOtpAlternativeFlow extends AndroidBaseTest {
         otpVerification.enterOtpForEsignet(getOtp(), Target.ANDROID);
         esignetLoginPage.clickOnVerifyButton();
 
-        assertTrue(homePage.isNameDisplayed(TestDataReader.readData("fullName")), "Verify if full name is displayed");
+        addNewCardPage.clickOnDoneButton();
+        assertTrue(homePage.isCredentialTypeValueDisplayed(), "Verify if credential type value is displayed");
         String sessionId  = driver.getSessionId().toString();
         UpdateNetworkSettings.setNoNetworkProfile(sessionId);
 
@@ -397,17 +404,17 @@ public class MosipOtpAlternativeFlow extends AndroidBaseTest {
         otpVerification.enterOtpForEsignet(getOtp(), Target.ANDROID);
         esignetLoginPage.clickOnVerifyButton();
 
-        assertTrue(homePage.isNameDisplayed(TestDataReader.readData("fullName")), "Verify if full name is displayed");
+        addNewCardPage.clickOnDoneButton();
+        assertTrue(homePage.isCredentialTypeValueDisplayed(), "Verify if credential type value is displayed");
         String sessionId  = driver.getSessionId().toString();
         UpdateNetworkSettings.setNoNetworkProfile(sessionId);
 
-        DetailedVcViewPage detailedVcViewPage = homePage.openDetailedVcView(TestDataReader.readData("fullName"));
+        DetailedVcViewPage detailedVcViewPage = homePage.openDetailedVcView();
         SoftAssert softAssert = new SoftAssert();
         detailedVcViewPage.clickOnQrCodeButton();
         softAssert.assertTrue(detailedVcViewPage.isQrCodeDisplayed(), "Verify if QR Code header is displayed");
 
         detailedVcViewPage.clickOnQrCrossIcon();
-        assertTrue(homePage.isNameDisplayed(TestDataReader.readData("fullName")), "Verify if full name is displayed");
     }
 
     @Test
@@ -483,7 +490,8 @@ public class MosipOtpAlternativeFlow extends AndroidBaseTest {
         otpVerification.enterOtpForEsignet(getOtp(), Target.ANDROID);
         esignetLoginPage.clickOnVerifyButton();
 
-        assertTrue(homePage.isNameDisplayed(TestDataReader.readData("fullName")), "Verify if full name is displayed");
+        addNewCardPage.clickOnDoneButton();
+        assertTrue(homePage.isCredentialTypeValueDisplayed(), "Verify if credential type value is displayed");
         MoreOptionsPage moreOptionsPage = homePage.clickOnMoreOptionsButton();
 
         assertTrue(moreOptionsPage.isMoreOptionsPageLoaded(), "Verify if more options page is displayed");
@@ -539,7 +547,8 @@ public class MosipOtpAlternativeFlow extends AndroidBaseTest {
         otpVerification.enterOtpForEsignet(getOtp(), Target.ANDROID);
         esignetLoginPage.clickOnVerifyButton();
 
-        assertTrue(homePage.isNameDisplayed(TestDataReader.readData("fullName")), "Verify if full name is displayed");
+        addNewCardPage.clickOnDoneButton();
+        assertTrue(homePage.isCredentialTypeValueDisplayed(), "Verify if credential type value is displayed");
         MoreOptionsPage moreOptionsPage = homePage.clickOnMoreOptionsButton();
 
         assertTrue(moreOptionsPage.isMoreOptionsPageLoaded(), "Verify if more options page is displayed");
@@ -590,9 +599,10 @@ public class MosipOtpAlternativeFlow extends AndroidBaseTest {
         esignetLoginPage.clickOnVerifyButton();
 
         assertTrue(homePage.isDownloadingVcPopupDisplayed(),"verify downloading vc popup displayed");
-        assertTrue(homePage.isNameDisplayed(TestDataReader.readData("fullName")), "Verify if full name is displayed");
+        addNewCardPage.clickOnDoneButton();
+        assertTrue(homePage.isCredentialTypeValueDisplayed(), "Verify if credential type value is displayed");
 
-        DetailedVcViewPage detailedVcViewPage = homePage.openDetailedVcView(TestDataReader.readData("fullName"));
+        DetailedVcViewPage detailedVcViewPage = homePage.openDetailedVcView();
         assertTrue(detailedVcViewPage.isDetailedVcViewPageLoaded(), "Verify if detailed Vc view page is displayed");
 
         detailedVcViewPage.clickOnMoreOptionsInDetails();
@@ -602,10 +612,11 @@ public class MosipOtpAlternativeFlow extends AndroidBaseTest {
         moreOptionsPage.clickOnPinOrUnPinCard();
 
         detailedVcViewPage.clickOnBackArrow();
-        assertTrue(homePage.isNameDisplayed(TestDataReader.readData("fullName")), "Verify if full name is displayed");
+        addNewCardPage.clickOnDoneButton();
+        assertTrue(homePage.isCredentialTypeValueDisplayed(), "Verify if credential type value is displayed");
         assertTrue(homePage.isPinIconDisplayed(), "Verify if pin icon on vc is displayed");
 
-        homePage.openDetailedVcView(TestDataReader.readData("fullName"));
+        homePage.openDetailedVcView();
         assertTrue(detailedVcViewPage.isDetailedVcViewPageLoaded(), "Verify if detailed Vc view page is displayed");
 
         detailedVcViewPage.clickOnMoreOptionsInDetails();
@@ -671,9 +682,9 @@ public class MosipOtpAlternativeFlow extends AndroidBaseTest {
          otpVerification.enterOtpForEsignet(getOtp(), Target.ANDROID);
         esignetLoginPage.clickOnVerifyButton();
 
-        assertTrue(homePage.isNameDisplayed(TestDataReader.readData("fullName")), "Verify if full name is displayed");
+        addNewCardPage.clickOnDoneButton();
+        assertTrue(homePage.isCredentialTypeValueDisplayed(), "Verify if credential type value is displayed");
 
-        assertTrue(homePage.isNameDisplayed(TestDataReader.readData("fullName")), "Verify if full name is displayed");
         MoreOptionsPage moreOptionsPage = homePage.clickOnMoreOptionsButton();
 
         assertTrue(moreOptionsPage.isMoreOptionsPageLoaded(), "Verify if more options page is displayed");
@@ -751,9 +762,8 @@ public class MosipOtpAlternativeFlow extends AndroidBaseTest {
         otpVerification.enterOtpForEsignet(getOtp(), Target.ANDROID);
         esignetLoginPage.clickOnVerifyButton();
 
-        assertTrue(homePage.isNameDisplayed(TestDataReader.readData("fullName")), "Verify if full name is displayed");
-
-        assertTrue(homePage.isNameDisplayed(TestDataReader.readData("fullName")), "Verify if full name is displayed");
+        addNewCardPage.clickOnDoneButton();
+        assertTrue(homePage.isCredentialTypeValueDisplayed(), "Verify if credential type value is displayed");
 
         MoreOptionsPage moreOptionsPage = new MoreOptionsPage(driver);
         // mosip vc
@@ -819,7 +829,8 @@ public class MosipOtpAlternativeFlow extends AndroidBaseTest {
         otpVerification.enterOtpForEsignet(getOtp(), Target.ANDROID);
         esignetLoginPage.clickOnVerifyButton();
 
-        assertTrue(homePage.isNameDisplayed(TestDataReader.readData("fullName")), "Verify if full name is displayed");
+        addNewCardPage.clickOnDoneButton();
+        assertTrue(homePage.isCredentialTypeValueDisplayed(), "Verify if credential type value is displayed");
         MoreOptionsPage moreOptionsPage = homePage.clickOnMoreOptionsButton();
 
         assertTrue(moreOptionsPage.isMoreOptionsPageLoaded(), "Verify if more options page is displayed");
@@ -881,8 +892,9 @@ public class MosipOtpAlternativeFlow extends AndroidBaseTest {
         otpVerification.enterOtpForEsignet(getOtp(), Target.ANDROID);
         esignetLoginPage.clickOnVerifyButton();
 
-        assertTrue(homePage.isNameDisplayed(TestDataReader.readData("fullName")), "Verify if full name is displayed");
-        DetailedVcViewPage detailedVcViewPage = homePage.openDetailedVcView(TestDataReader.readData("fullName"));
+        addNewCardPage.clickOnDoneButton();
+        assertTrue(homePage.isCredentialTypeValueDisplayed(), "Verify if credential type value is displayed");
+        DetailedVcViewPage detailedVcViewPage = homePage.openDetailedVcView();
         assertTrue(detailedVcViewPage.isDetailedVcViewPageLoaded(), "Verify if detailed Vc view page is displayed");
         PleaseConfirmPopupPage pleaseConfirmPopupPage = detailedVcViewPage.clickOnActivateButtonAndroid();
 

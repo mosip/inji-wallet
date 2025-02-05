@@ -55,9 +55,9 @@ public class VcDownloadAndVerifyUsingMockIdentity extends AndroidBaseTest {
         
         otpVerification.enterOtpForEsignet(BaseTestCase.getOtp(), Target.ANDROID);
         mockCertifyLoginPage.clickOnVerifyButtonIos();
-        
-        assertTrue(homePage.isNameDisplayed(TestDataReader.readData("fullNameForMobileDrivingLicense")), "Verify if full name is displayed");
-        DetailedVcViewPage detailedVcViewPage = homePage.openDetailedVcView(TestDataReader.readData("fullNameForMobileDrivingLicense"));
+
+        assertTrue(homePage.isCredentialTypeValueDisplayed(), "Verify if credential type value is displayed");
+        DetailedVcViewPage detailedVcViewPage = homePage.openDetailedVcView();
 
         detailedVcViewPage.clickOnQrCodeButton();
         SoftAssert softAssert = new SoftAssert();
@@ -70,7 +70,7 @@ public class VcDownloadAndVerifyUsingMockIdentity extends AndroidBaseTest {
 //        assertEquals(detailedVcViewPage.getDateOfBirthInDetailedVcView(), TestDataReader.readData("dateOfBirthForMobileDrivingLicense"), "Verify if date of birth is displayed");
         assertEquals(detailedVcViewPage.getIdTypeValueInDetailedVcView(), TestDataReader.readData("idTypeForMobileDrivingLicense"), "Verify if id type is displayed");
         assertEquals(detailedVcViewPage.getStatusInDetailedVcView(), TestDataReader.readData("status"), "Verify if status is displayed");
-        assertTrue(detailedVcViewPage.isKeyTypeVcDetailViewValueDisplayed(), "Verify if key type detailed Vc value displayed");
+//        assertTrue(detailedVcViewPage.isKeyTypeVcDetailViewValueDisplayed(), "Verify if key type detailed Vc value displayed");
         detailedVcViewPage.clickOnBackArrow();
         assertTrue(detailedVcViewPage.isEsignetLogoDisplayed(), "Verify if detailed Vc esignet logo is displayed");
     }

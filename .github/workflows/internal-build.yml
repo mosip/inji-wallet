@@ -74,10 +74,10 @@ on:
         options:
           - false
           - true
-      liveness_detection:
-        description: 'Detect Liveness'
+      enable_auth:
+        description: 'Enable Authentication'
         required: true
-        default: 'false'
+        default: 'true'
         type: choice
         options:
           - false
@@ -112,7 +112,7 @@ jobs:
       APPLICATION_THEME: ${{ inputs.theme }}
       BUILD_DESCRIPTION: ${{ inputs.buildName }}
       ALLOW_ENV_EDIT: ${{ inputs.allow_env_edit }}
-      LIVENESS_DETECTION: ${{ inputs.liveness_detection }}
+      LIVENESS_DETECTION: 'false'
       APP_FLAVOR: ${{ inputs.injiFlavor }}
       SERVICE_LOCATION: '.'
       ANDROID_SERVICE_LOCATION: 'android'
@@ -166,11 +166,12 @@ jobs:
       TESTFLIGHT_BETA_APP_DESCRIPTION: ${{ inputs.buildName }}
       ALLOW_ENV_EDIT: ${{ inputs.allow_env_edit }}
       LIVENESS_DETECTION: ${{ inputs.liveness_detection }}
+      ENABLE_AUTH: ${{ inputs.enable_auth }}
       TESTFLIGHT_INTERNAL_TESTERS_GROUP: ${{ inputs.internal-testers }}
       APP_FLAVOR: ${{ inputs.injiFlavor }}
       SERVICE_LOCATION: '.'
       IOS_SERVICE_LOCATION: 'ios'
-      SCRIPT_NAME: "fastlane beta"
+      SCRIPT_NAME: ${{ inputs.enable_auth == 'true' && 'fastlane beta' || 'fastlane ios_ui_automation_build' }}
       IOS_ARTIFACT_NAME: "ios-artifacts"
       IOS_ARTIFACT_PATH: "ios/fastlane/Inji_artifacts/"
     secrets:

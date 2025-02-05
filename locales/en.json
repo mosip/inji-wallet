@@ -825,6 +825,8 @@
   },
   "SendVcScreen": {
     "reasonForSharing": "Reason for sharing (optional)",
+    "introTitle": "Requester",
+    "requestMessage":"is requesting your digital ID for the purpose",
     "acceptRequest": "Share",
     "acceptRequestAndVerify": "Share with Selfie",
     "reject": "Reject",

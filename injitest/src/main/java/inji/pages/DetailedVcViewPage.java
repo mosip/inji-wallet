@@ -99,10 +99,6 @@ public class DetailedVcViewPage extends BasePage{
     @iOSXCUITFindBy(accessibility = "KebabIcon")
     public WebElement moreOptionsButton;
 
-    @AndroidFindBy(accessibility = "keyTypeVcDetailViewValue")
-    @iOSXCUITFindBy(accessibility = "keyTypeVcDetailViewValue")
-    public WebElement keyTypeVcDetailViewValue;
-
     public DetailedVcViewPage(AppiumDriver driver) {
         super(driver);
     }
@@ -222,8 +218,6 @@ public class DetailedVcViewPage extends BasePage{
         }
         clickOnElement(moreOptionsButton);
     }
-    public boolean isKeyTypeVcDetailViewValueDisplayed() {
-        return isElementDisplayed(keyTypeVcDetailViewValue);
-    }
+
 
 }
