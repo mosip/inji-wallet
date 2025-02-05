@@ -1,0 +1,92 @@
+name: Build iOS App
+run-name: ${{ inputs.buildName }}
+
+on:
+  workflow_dispatch:
+    inputs:
+      buildName:
+        description: 'Build App For'
+        required: true
+        default: 'Sprint-x/QA-Inji/Release-x.x.x'
+        type: string
+      mimotoBackendServiceUrl:
+        description: 'Mimoto backend service URL'
+        required: true
+        default: 'https://api.sandbox.mosip.net'
+        type: string
+      esignetBackendServiceUrl:
+        description: 'Esignet backend service URL'
+        required: true
+        default: 'https://api.sandbox.mosip.net'
+        type: string
+      injiFlavor:
+        description: 'Select Inji flavor'
+        required: true
+        default: 'Inji'
+        type: choice
+        options:
+          - residentapp
+          - inji
+          - collab
+          - synergy
+          - mec
+      theme:
+        description: 'Application Theme'
+        required: true
+        default: 'gradient'
+        type: choice
+        options:
+          - gradient
+          - purple
+      allow_env_edit:
+        description: 'Edit ENV'
+        required: true
+        default: 'true'
+        type: choice
+        options:
+          - false
+          - true
+      enable_auth:
+        description: 'Enable Authentication'
+        required: true
+        default: 'true'
+        type: choice
+        options:
+          - false
+          - true
+
+jobs:
+  build-ios:
+    uses: mosip/kattu/.github/workflows/ios-publish.yml@master
+    with:
+      NODE_VERSION: '18.x'
+      MIMOTO_HOST: ${{ inputs.mimotoBackendServiceUrl }}
+      ESIGNET_HOST: ${{ inputs.esignetBackendServiceUrl }}
+      APPLICATION_THEME: ${{ inputs.theme }}
+      TESTFLIGHT_BETA_APP_DESCRIPTION: ${{ inputs.buildName }}
+      ALLOW_ENV_EDIT: ${{ inputs.allow_env_edit }}
+      LIVENESS_DETECTION: 'false'
+      ENABLE_AUTH: ${{ inputs.enable_auth }}
+      TESTFLIGHT_INTERNAL_TESTERS_GROUP: 'Dev-testing'
+      APP_FLAVOR: ${{ inputs.injiFlavor }}
+      SERVICE_LOCATION: '.'
+      IOS_SERVICE_LOCATION: 'ios'
+      SCRIPT_NAME: "fastlane ios_ui_automation_build"
+      IOS_ARTIFACT_NAME: "ios-artifacts"
+      IOS_ARTIFACT_PATH: "ios/fastlane/Inji_artifacts/"
+    secrets:
+      APP_STORE_CONNECT_TEAM_ID: '${{ secrets.APP_STORE_CONNECT_TEAM_ID }}'
+      DEVELOPER_APP_ID: '${{ secrets.IOS_INJI_DEVELOPER_APP_ID }}'
+      INJI_IOS_DEVELOPER_APP_IDENTIFIER: '${{ secrets.INJI_IOS_DEVELOPER_APP_IDENTIFIER }}'
+      INJI_IOS_DEVELOPER_PORTAL_TEAM_ID: '${{ secrets.INJI_IOS_DEVELOPER_PORTAL_TEAM_ID }}'
+      INJI_IOS_FASTLANE_APPLE_ID: '${{ secrets.INJI_IOS_FASTLANE_APPLE_ID }}'
+      INJI_IOS_FASTLANE_APPLE_APPLICATION_SPECIFIC_PASSWORD: '${{ secrets.INJI_IOS_FASTLANE_APPLE_APPLICATION_SPECIFIC_PASSWORD }}'
+      GIT_AUTHORIZATION: '${{ secrets.GIT_AUTHORIZATION }}'
+      INJI_IOS_PROVISIONING_PROFILE_SPECIFIER: '${{ secrets.INJI_IOS_PROVISIONING_PROFILE_SPECIFIER }}'
+      INJI_IOS_TEMP_KEYCHAIN_PASSWORD: '${{ secrets.INJI_IOS_TEMP_KEYCHAIN_PASSWORD }}'
+      INJI_IOS_TEMP_KEYCHAIN_USER: '${{ secrets.INJI_IOS_TEMP_KEYCHAIN_USER }}'
+      APPLE_KEY_ID: '${{ secrets.APPLE_KEY_ID }}'
+      APPLE_ISSUER_ID: '${{ secrets.APPLE_ISSUER_ID }}'
+      APPLE_KEY_CONTENT: '${{ secrets.APPLE_KEY_CONTENT }}'
+      MATCH_PASSWORD: '${{ secrets.INJI_IOS_MATCH_PASSWORD }}'
+      SLACK_WEBHOOK_URL: '${{ secrets.SLACK_WEBHOOK_INJI_TEAM }}'
