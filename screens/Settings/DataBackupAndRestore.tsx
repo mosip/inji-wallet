@@ -42,7 +42,7 @@ export const DataBackupAndRestore: React.FC = ({} = () => {
         {...testIDProps('dataBackupAndRestore')}
         onPress={controller.BACKUP_AND_RESTORE}>
         <ListItem topDivider bottomDivider>
-          {SvgImage.backUpAndRestoreIcon(24,24)}
+          {SvgImage.backUpAndRestoreIcon(24, 24)}
           <ListItem.Content>
             <ListItem.Title
               accessible={false}
@@ -56,14 +56,21 @@ export const DataBackupAndRestore: React.FC = ({} = () => {
                   {t('dataBackupAndRestore')}
                 </Text>
                 {!controller.isBackupAndRestoreExplored && (
-                  <LinearGradient colors={Theme.Colors.GradientColors} start={Theme.LinearGradientDirection.start} end={Theme.LinearGradientDirection.end} style={{justifyContent:'center', height:20, marginTop:10}}
-                  >
-                  <Text
-                    testID="newLabel"
-                    style={Theme.Styles.newLabel}
-                    color={Theme.Colors.whiteText}>
-                    {t('new')}
-                  </Text>
+                  <LinearGradient
+                    colors={Theme.Colors.GradientColors}
+                    start={Theme.LinearGradientDirection.start}
+                    end={Theme.LinearGradientDirection.end}
+                    style={{
+                      justifyContent: 'center',
+                      height: 20,
+                      marginTop: 10,
+                    }}>
+                    <Text
+                      testID="newLabel"
+                      style={Theme.Styles.newLabel}
+                      color={Theme.Colors.whiteText}>
+                      {t('new')}
+                    </Text>
                   </LinearGradient>
                 )}
               </Row>

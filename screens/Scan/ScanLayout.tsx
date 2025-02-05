@@ -16,18 +16,22 @@ import {View, I18nManager} from 'react-native';
 import {Text} from './../../components/ui';
 import {BannerStatusType} from '../../components/BannerNotification';
 import {LIVENESS_CHECK} from '../../shared/constants';
+import {SendVPScreen} from './SendVPScreen';
 
 const ScanStack = createNativeStackNavigator();
 
 export const ScanLayout: React.FC = () => {
   const {t} = useTranslation('ScanScreen');
   const controller = useScanLayout();
-
   if (
     controller.statusOverlay != null &&
     !controller.isAccepted &&
     !controller.isInvalid
   ) {
+    const onClosingBanner = controller.isFaceVerifiedInVPSharing
+      ? controller.VP_SHARE_CLOSE_BANNER
+      : controller.CLOSE_BANNER;
+
     return (
       <Loader
         title={controller.statusOverlay?.title}
@@ -37,12 +41,16 @@ export const ScanLayout: React.FC = () => {
         isHintVisible={
           controller.isStayInProgress ||
           controller.isBleError ||
-          controller.isSendingVc
+          controller.isSendingVc ||
+          controller.isSendingVP
         }
         onRetry={controller.statusOverlay?.onRetry}
-        showBanner={controller.isFaceIdentityVerified}
+        showBanner={
+          controller.isFaceIdentityVerified ||
+          controller.isFaceVerifiedInVPSharing
+        }
         bannerMessage={t('ScanScreen:postFaceCapture:captureSuccessMessage')}
-        onBannerClose={controller.CLOSE_BANNER}
+        onBannerClose={onClosingBanner}
         bannerType={BannerStatusType.SUCCESS}
         bannerTestID={'faceVerificationSuccess'}
       />
@@ -113,10 +121,48 @@ export const ScanLayout: React.FC = () => {
             ),
           }}
         />
+        {controller.openID4VPFlowType === VCShareFlowType.OPENID4VP && (
+          <ScanStack.Screen
+            name={SCAN_ROUTES.SendVPScreen}
+            component={SendVPScreen}
+            options={{
+              title: t('SendVPScreen:requester'),
+              headerTitle: props => (
+                <View style={Theme.Styles.sendVPHeaderContainer}>
+                  <Text style={Theme.Styles.sendVPHeaderTitle}>
+                    {props.children}
+                  </Text>
+                  {controller.vpVerifierName && (
+                    <Text style={Theme.Styles.sendVPHeaderSubTitle}>
+                      {controller.vpVerifierName}
+                    </Text>
+                  )}
+                </View>
+              ),
+              headerBackVisible: false,
+              headerRight: () =>
+                !I18nManager.isRTL && (
+                  <Icon
+                    name="close"
+                    color={Theme.Colors.blackIcon}
+                    onPress={controller.DISMISS}
+                  />
+                ),
+              headerLeft: () =>
+                I18nManager.isRTL && (
+                  <Icon
+                    name="close"
+                    color={Theme.Colors.blackIcon}
+                    onPress={controller.DISMISS}
+                  />
+                ),
+            }}
+          />
+        )}
       </ScanStack.Navigator>
 
       <SharingStatusModal
-        isVisible={controller.isAccepted}
+        isVisible={controller.isAccepted || controller.isVPSharingSuccess}
         testId={'sharingSuccessModal'}
         buttonStatus={'homeAndHistoryIcons'}
         title={t('status.accepted.title')}

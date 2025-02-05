@@ -18,11 +18,9 @@ export const SplashScreen: React.FC<RootRouteProps> = props => {
         props.navigation.navigate('Language');
       } else if (controller.isUnAuthorized) {
         props.navigation.navigate('Welcome');
-      } else {
-        props.navigation.navigate('IntroSliders');
       }
     }, 3000);
-  }, []);
+  }, [controller.isAuthorized || controller.isLanguagesetup]);
 
   return (
     <Column

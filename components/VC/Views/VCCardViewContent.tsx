@@ -13,6 +13,7 @@ import {
   isVCLoaded,
   getBackgroundColour,
   getBackgroundImage,
+  DisplayName,
 } from '../common/VCUtils';
 import {VCItemFieldValue} from '../common/VCItemField';
 import {WalletBinding} from '../../../screens/Home/MyVcs/WalletBinding';
@@ -24,28 +25,44 @@ import {HistoryTab} from '../../../screens/Home/MyVcs/HistoryTab';
 import {getTextColor} from '../common/VCUtils';
 import {useCopilot} from 'react-native-copilot';
 import {useTranslation} from 'react-i18next';
+import {getIdType} from '../common/VCUtils';
 
 export const VCCardViewContent: React.FC<VCItemContentProps> = props => {
-  const isVCSelectable = props.selectable && (
-    <CheckBox
-      checked={props.selected}
-      checkedIcon={
-        <Icon name="check-circle" type="material" color={Theme.Colors.Icon} />
-      }
-      uncheckedIcon={
-        <Icon
-          name="radio-button-unchecked"
-          color={Theme.Colors.uncheckedIcon}
-        />
-      }
-      onPress={() => props.onPress()}
-    />
-  );
+  const vcSelectableButton =
+    props.selectable &&
+    (props.flow === VCItemContainerFlowType.VP_SHARE ? (
+      <CheckBox
+        checked={props.selected}
+        checkedIcon={SvgImage.selectedCheckBox()}
+        uncheckedIcon={
+          <Icon
+            name="check-box-outline-blank"
+            color={Theme.Colors.uncheckedIcon}
+            size={22}
+          />
+        }
+        onPress={() => props.onPress()}
+      />
+    ) : (
+      <CheckBox
+        checked={props.selected}
+        checkedIcon={
+          <Icon name="check-circle" type="material" color={Theme.Colors.Icon} />
+        }
+        uncheckedIcon={
+          <Icon
+            name="radio-button-unchecked"
+            color={Theme.Colors.uncheckedIcon}
+          />
+        }
+        onPress={() => props.onPress()}
+      />
+    ));
   const issuerLogo = props.verifiableCredentialData.issuerLogo;
   const faceImage = props.verifiableCredentialData.face;
   const {start} = useCopilot();
   const {t} = useTranslation();
-
+  const idType = getIdType(props.wellknown);
 
   return (
     <ImageBackground
@@ -64,12 +81,32 @@ export const VCCardViewContent: React.FC<VCItemContentProps> = props => {
         }>
         <Row crossAlign="center" padding="3 0 0 3">
           {VcItemContainerProfileImage(props)}
-          <Column fill align={'space-around'} margin="0 10 0 10">
+          <Column fill align="center" justify="center" margin="0 10 0 10">
+            <Column
+              style={{
+                width: '90%',
+                alignItems: 'center',
+                justifyContent: 'center',
+                marginHorizontal: '10%',
+              }}>
+              <VCItemFieldValue
+                key={'id'}
+                testID="id"
+                fieldValue={idType}
+                wellknown={props.wellknown}
+                style={{
+                  textAlign: 'center',
+                  fontWeight: 'bold',
+                }}
+                numberOfLines={1}
+                ellipsizeMode="tail"
+              />
+            </Column>
             <VCItemFieldValue
               key={'fullName'}
               testID="fullName"
               fieldValue={getLocalizedField(
-                props.credential?.credentialSubject['fullName'],
+                props.credential?.credentialSubject.recipientName,
               )}
               wellknown={props.wellknown}
             />
@@ -90,34 +127,23 @@ export const VCCardViewContent: React.FC<VCItemContentProps> = props => {
               resizeMode="contain"
             />
           )}
+          <Pressable
+            onPress={props.KEBAB_POPUP}
+            accessible={false}
+            style={Theme.Styles.kebabPressableContainer}>
+            <KebabPopUp
+              iconColor={getTextColor(props.wellknown, Theme.Colors.helpText)}
+              vcMetadata={props.vcMetadata}
+              iconName="dots-three-horizontal"
+              iconType="entypo"
+              isVisible={props.isKebabPopUp}
+              onDismiss={props.DISMISS}
+              service={props.service}
+              vcHasImage={faceImage !== undefined}
+            />
+          </Pressable>
 
-          {!Object.values(VCItemContainerFlowType).includes(props.flow) && (
-            <>
-              {!props.walletBindingResponse &&
-              isActivationNeeded(props.verifiableCredentialData?.issuer)
-                ? SvgImage.walletUnActivatedIcon()
-                : SvgImage.walletActivatedIcon()}
-              <Pressable
-                onPress={props.KEBAB_POPUP}
-                accessible={false}
-                style={Theme.Styles.kebabPressableContainer}>
-                <KebabPopUp
-                  iconColor={getTextColor(
-                    props.wellknown,
-                    Theme.Colors.helpText,
-                  )}
-                  vcMetadata={props.vcMetadata}
-                  iconName="dots-three-horizontal"
-                  iconType="entypo"
-                  isVisible={props.isKebabPopUp}
-                  onDismiss={props.DISMISS}
-                  service={props.service}
-                  vcHasImage={faceImage !== undefined}
-                />
-              </Pressable>
-            </>
-          )}
-          {isVCSelectable}
+          {vcSelectableButton}
         </Row>
 
         <WalletBinding service={props.service} vcMetadata={props.vcMetadata} />

@@ -24,23 +24,23 @@ export function sendEndEvent(data) {
 }
 
 export function sendImpressionEvent(data) {
-  telemetry.impression(data, {});
+  //telemetry.impression(data, {});
 }
 
 export function sendInteractEvent(data) {
-  telemetry.interact(data, {});
+  //telemetry.interact(data, {});
 }
 
 export function sendAppInfoEvent(data) {
-  telemetry.appinfo(data);
+  //telemetry.appinfo(data);
 }
 
 export function sendErrorEvent(data) {
-  telemetry.error(data, {});
+  //telemetry.error(data, {});
 }
 
 export function initializeTelemetry(config) {
-  telemetry.initialize(config);
+  //telemetry.initialize(config);
 }
 
 export function getTelemetryConfigData() {
@@ -152,7 +152,7 @@ export const incrementRetryCount = (eventType, screen) => {
             TelemetryConstants.ErrorId.resend,
             TelemetryConstants.ErrorMessage.resendOtp,
           ];
-    sendErrorEvent(getErrorEventData(eventType, errorId, errorMessage));
+    // sendErrorEvent(getErrorEventData(eventType, errorId, errorMessage));
     retryCount = 0;
   }
 };
@@ -162,9 +162,9 @@ export const resetRetryCount = () => {
 };
 
 export function configureTelemetry() {
-  const config = getTelemetryConfigData();
-  initializeTelemetry(config);
-  sendAppInfoEvent(getAppInfoEventData());
+  // const config = getTelemetryConfigData();
+  //initializeTelemetry(config);
+  //sendAppInfoEvent(getAppInfoEventData());
 }
 
 export function getEventType(isSettingUp) {

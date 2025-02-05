@@ -14,8 +14,10 @@ import {CREDENTIAL_REGISTRY_EDIT} from 'react-native-dotenv';
 import {VCVerification} from '../../VCVerification';
 import {MIMOTO_BASE_URL} from '../../../shared/constants';
 import {VCItemDetailsProps} from '../Views/VCDetailView';
-import {getSelectedCredentialTypeDetails} from '../../../shared/openId4VCI/Utils';
+import {getMatchingCredentialIssuerMetadata} from '../../../shared/openId4VCI/Utils';
 import {parseJSON} from '../../../shared/Utils';
+import {VCItemContentProps} from '../Views/VCCardViewContent';
+import {VCFormat} from '../../../shared/VCFormat';
 
 export const CARD_VIEW_DEFAULT_FIELDS = ['fullName'];
 export const DETAIL_VIEW_DEFAULT_FIELDS = [
@@ -41,17 +43,33 @@ export const DETAIL_VIEW_BOTTOM_SECTION_FIELDS = [
   'credentialRegistry',
 ];
 
+export const KEY_TYPE_FIELD = ['keytype'];
 export const BOTTOM_SECTION_FIELDS_WITH_DETAILED_ADDRESS_FIELDS = [
   ...getAddressFields(),
   'email',
   'credentialRegistry',
 ];
 
+function iterateMsoMdocFor(
+  credential,
+  namespace: string,
+  element: 'elementIdentifier' | 'elementValue',
+  fieldName: string,
+) {
+  const foundItem = credential['issuerSigned']['nameSpaces'][namespace].find(
+    element => {
+      return element.elementIdentifier === fieldName;
+    },
+  );
+  return foundItem[element];
+}
+
 export const getFieldValue = (
   verifiableCredential: Credential,
   field: string,
   wellknown: any,
   props: any,
+  format: string,
 ) => {
   switch (field) {
     case 'status':
@@ -70,29 +88,60 @@ export const getFieldValue = (
         getFullAddress(verifiableCredential?.credentialSubject),
       );
     default: {
-      const fieldValue = verifiableCredential?.credentialSubject[field];
-      if (Array.isArray(fieldValue) && typeof fieldValue[0] !== 'object') {
-        return fieldValue.join(', ');
+      if (format === VCFormat.ldp_vc) {
+        const fieldValue = verifiableCredential?.credentialSubject[field];
+        if (Array.isArray(fieldValue) && typeof fieldValue[0] !== 'object') {
+          return fieldValue.join(', ');
+        }
+        return getLocalizedField(fieldValue);
+      } else if (format === VCFormat.mso_mdoc) {
+        const splitField = field.split('~');
+        if (splitField.length > 1) {
+          const [namespace, fieldName] = splitField;
+          return iterateMsoMdocFor(
+            verifiableCredential,
+            namespace,
+            'elementValue',
+            fieldName,
+          );
+        }
       }
-      return getLocalizedField(fieldValue);
     }
   }
 };
 
-export const getFieldName = (field: string, wellknown: any) => {
+export const getFieldName = (
+  field: string,
+  wellknown: any,
+  format: string,
+): string => {
   if (wellknown) {
-    const credentialDefinition = wellknown.credential_definition;
-    if (!credentialDefinition) {
-      console.error(
-        'Credential definition is not available for the selected credential type',
-      );
-    }
-    let fieldObj = credentialDefinition?.credentialSubject[field];
-    if (fieldObj) {
-      const newFieldObj = fieldObj.display.map(obj => {
-        return {language: obj.locale, value: obj.name};
-      });
-      return getLocalizedField(newFieldObj);
+    if (format === VCFormat.ldp_vc) {
+      const credentialDefinition = wellknown.credential_definition;
+      if (!credentialDefinition) {
+        console.error(
+          'Credential definition is not available for the selected credential type',
+        );
+      }
+      let fieldObj = credentialDefinition?.credentialSubject[field];
+      if (fieldObj) {
+        const newFieldObj = fieldObj.display.map(obj => {
+          return {language: obj.locale, value: obj.name};
+        });
+        return getLocalizedField(newFieldObj);
+      }
+    } else if (format === VCFormat.mso_mdoc) {
+      const splitField = field.split('~');
+      if (splitField.length > 1) {
+        const [namespace, fieldName] = splitField;
+        const fieldObj = wellknown.claims[namespace][fieldName];
+        if (fieldObj) {
+          const newFieldObj = fieldObj.display.map(obj => {
+            return {language: obj.locale, value: obj.name};
+          });
+          return getLocalizedField(newFieldObj);
+        }
+      }
     }
   }
   return i18n.t(`VcDetails:${field}`);
@@ -100,8 +149,7 @@ export const getFieldName = (field: string, wellknown: any) => {
 
 export const getBackgroundColour = (wellknown: any) => {
   return {
-    backgroundColor:
-      wellknown?.display[0]?.background_color ?? Theme.Colors.textValue,
+    backgroundColor: '#EFEFFA',
   };
 };
 
@@ -145,12 +193,17 @@ export const fieldItemIterator = (
   props: VCItemDetailsProps,
 ) => {
   return fields.map(field => {
-    const fieldName = getFieldName(field, wellknown);
+    const fieldName = getFieldName(
+      field,
+      wellknown,
+      props.verifiableCredentialData.vcMetadata.format,
+    );
     const fieldValue = getFieldValue(
       verifiableCredential,
       field,
       wellknown,
       props,
+      props.verifiableCredentialData.vcMetadata.format,
     );
     if (
       (field === 'credentialRegistry' &&
@@ -178,7 +231,7 @@ export const fieldItemIterator = (
 };
 
 export const isVCLoaded = (
-  verifiableCredential: Credential,
+  verifiableCredential: Credential | null,
   fields: string[],
 ) => {
   return verifiableCredential != null && fields.length > 0;
@@ -202,27 +255,50 @@ export const getMosipLogo = () => {
  */
 export const getIdType = (
   wellknown: CredentialTypes | IssuerWellknownResponse,
-  idType?: string[],
-) => {
-  if (wellknown && wellknown?.display) {
+  credentialConfigurationId: string | undefined = undefined,
+): string => {
+  if (
+    wellknown &&
+    wellknown['credential_configurations_supported'] === undefined &&
+    wellknown?.display
+  ) {
+    console.log('wellknown object:', wellknown);
+
     const idTypeObj = wellknown.display.map((displayProps: any) => {
+      console.log('Mapping displayProps:', displayProps);
+
       return {language: displayProps.locale, value: displayProps.name};
     });
-    return getLocalizedField(idTypeObj);
-  } else if (
-    wellknown &&
-    Object.keys(wellknown).length > 0 &&
-    idType !== undefined
-  ) {
+    console.log('Generated idTypeObj:', idTypeObj);
+    const localizedField = getLocalizedField(idTypeObj);
+    console.log('Localized Field:', localizedField);
+    return localizedField;
+  } else if (wellknown && Object.keys(wellknown).length > 0) {
     let supportedCredentialsWellknown;
     wellknown = parseJSON(wellknown) as unknown as Object[];
     if (!!!wellknown['credential_configurations_supported']) {
       return i18n.t('VcDetails:nationalCard');
     }
-    supportedCredentialsWellknown = getSelectedCredentialTypeDetails(
-      wellknown,
-      idType,
-    );
+    try {
+      if (!!credentialConfigurationId) {
+        supportedCredentialsWellknown = getMatchingCredentialIssuerMetadata(
+          wellknown,
+          credentialConfigurationId,
+        );
+      } else {
+        console.error(
+          'credentialConfigurationId not available for fetching the ID type',
+        );
+        throw new Error(
+          `invalid credential credentialConfigurationId - ${credentialConfigurationId} passed`,
+        );
+      }
+    } catch (error) {
+      console.error(
+        `error occurred while getting supported credential's ${credentialConfigurationId} wellknown`,
+      );
+      return i18n.t('VcDetails:nationalCard');
+    }
     if (Object.keys(supportedCredentialsWellknown).length === 0) {
       return i18n.t('VcDetails:nationalCard');
     }
@@ -232,8 +308,11 @@ export const getIdType = (
   }
 };
 
-export const getCredentialTypes = (
-  credential: Credential | VerifiableCredential,
-): string[] => {
-  return (credential?.credentialTypes as string[]) ?? ['VerifiableCredential'];
-};
+export function DisplayName(props: VCItemContentProps): string | Object {
+  if (props.verifiableCredentialData.format === VCFormat.mso_mdoc) {
+    return props.credential['issuerSigned']['nameSpaces'][
+      'org.iso.18013.5.1'
+    ].find(element => element.elementIdentifier === 'given_name').elementValue;
+  }
+  return props.credential?.credentialSubject['fullName'];
+}

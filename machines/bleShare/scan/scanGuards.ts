@@ -24,12 +24,18 @@ export const ScanGuards = () => {
       }
     },
 
+    isOnlineSharing: (_, event) => {
+      return event.params.startsWith('openid4vp://authorize');
+    },
+
     uptoAndroid11: () => isAndroid() && androidVersion < 31,
 
     isIOS: () => isIOS(),
 
     isMinimumStorageRequiredForAuditEntryReached: (_context, event) =>
       Boolean(event.data),
+
+    isQrLoginViaDeepLinking: context => context.isQrLoginViaDeepLink === true,
 
     isFlowTypeMiniViewShareWithSelfie: context =>
       context.flowType === VCShareFlowType.MINI_VIEW_SHARE_WITH_SELFIE,

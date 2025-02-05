@@ -31,6 +31,9 @@ const model = createModel(
     esignetHostUrl: ESIGNET_BASE_URL,
     appId: null,
     isBackupAndRestoreExplored: false as boolean,
+    isKeyManagementExplored: false as boolean,
+    isKeyManagementTourGuideExplored: false as boolean,
+    isKeyOrderSet: undefined as unknown as boolean,
     hasUserShownWithHardwareKeystoreNotExists: false,
     isAccountSelectionConfirmationShown: false,
     credentialRegistryResponse: '' as string,
@@ -63,6 +66,10 @@ const model = createModel(
       CANCEL: () => ({}),
       ACCEPT_HARDWARE_SUPPORT_NOT_EXISTS: () => ({}),
       SET_IS_BACKUP_AND_RESTORE_EXPLORED: () => ({}),
+      SET_KEY_MANAGEMENT_EXPLORED: () => ({}),
+      SET_KEY_MANAGEMENT_TOUR_GUIDE_EXPLORED: () => ({}),
+      SET_KEY_ORDER_RESPONSE: (status: boolean) => ({status}),
+      RESET_KEY_ORDER_RESPONSE: () => ({}),
       SHOWN_ACCOUNT_SELECTION_CONFIRMATION: () => ({}),
       DISMISS: () => ({}),
     },
@@ -122,8 +129,20 @@ export const settingsMachine = model.createMachine(
           SET_IS_BACKUP_AND_RESTORE_EXPLORED: {
             actions: ['setBackupAndRestoreOptionExplored', 'storeContext'],
           },
+          SET_KEY_MANAGEMENT_EXPLORED: {
+            actions: ['setKeyManagementExplored', 'storeContext'],
+          },
           UPDATE_VC_LABEL: {
             actions: ['updateVcLabel', 'storeContext'],
+          },
+          SET_KEY_ORDER_RESPONSE: {
+            actions: ['setKeyOrderingResponse'],
+          },
+          RESET_KEY_ORDER_RESPONSE: {
+            actions: ['resetKeyOrderingResponse'],
+          },
+          SET_KEY_MANAGEMENT_TOUR_GUIDE_EXPLORED: {
+            actions: ['setKeyManagementTourGuideExplored'],
           },
           UPDATE_HOST: {
             actions: [
@@ -248,6 +267,18 @@ export const settingsMachine = model.createMachine(
       setBackupAndRestoreOptionExplored: model.assign({
         isBackupAndRestoreExplored: () => true,
       }),
+      setKeyManagementExplored: model.assign({
+        isKeyManagementExplored: true,
+      }),
+      setKeyOrderingResponse: model.assign({
+        isKeyOrderSet: (_, event: any) => event.status,
+      }),
+      resetKeyOrderingResponse: model.assign({
+        isKeyOrderSet: undefined,
+      }),
+      setKeyManagementTourGuideExplored: model.assign({
+        isKeyManagementTourGuideExplored: true,
+      }),
       updateEsignetHostUrl: model.assign({
         esignetHostUrl: (_, event) => event.esignetHostUrl,
       }),
@@ -339,6 +370,10 @@ export function selectAppId(state: State) {
   return state?.context?.appId;
 }
 
+export function selectIsKeymanagementExplored(state: State) {
+  return state.context.isKeyManagementExplored == true;
+}
+
 /** Alerting the user when the hardware keystore not supported by device and
  * not shown to user atlease once */
 
@@ -390,4 +425,12 @@ export function selectIsPasscodeUnlock(state: State) {
   return (
     state.context.isBiometricToggled && !state.context.isBiometricUnlockEnabled
   );
+}
+
+export function selectIsKeyOrderSet(state: State) {
+  return state.context.isKeyOrderSet;
+}
+
+export function selectIsKeymanagementTourGuideExplored(state: State) {
+  return state.context.isKeyManagementTourGuideExplored;
 }

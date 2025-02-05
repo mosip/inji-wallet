@@ -1,8 +1,13 @@
-import {ErrorMessage, Issuers_Key_Ref} from '../../shared/openId4VCI/Utils';
+import {
+  ErrorMessage,
+  Issuers_Key_Ref,
+  selectCredentialRequestKey,
+} from '../../shared/openId4VCI/Utils';
 import {
   MY_VCS_STORE_KEY,
   NETWORK_REQUEST_FAILED,
   REQUEST_TIMEOUT,
+  isIOS,
 } from '../../shared/constants';
 import {assign, send} from 'xstate';
 import {StoreEvents} from '../store';
@@ -17,8 +22,11 @@ import {
   sendImpressionEvent,
 } from '../../shared/telemetry/TelemetryUtils';
 import {TelemetryConstants} from '../../shared/telemetry/TelemetryConstants';
-import {KeyPair} from 'react-native-rsa-native';
+import {NativeModules} from 'react-native';
+import {KeyTypes} from '../../shared/cryptoutil/KeyTypes';
+import {VCActivityLog} from '../../components/ActivityLogEvent';
 
+const {RNSecureKeystoreModule} = NativeModules;
 export const IssuersActions = (model: any) => {
   return {
     setIsVerified: assign({
@@ -55,6 +63,15 @@ export const IssuersActions = (model: any) => {
     }),
     setSelectedCredentialType: model.assign({
       selectedCredentialType: (_: any, event: any) => event.credType,
+      wellknownKeyTypes: (_: any, event: any) => {
+        const proofTypesSupported = event.credType.proof_types_supported;
+        if (proofTypesSupported?.jwt) {
+          return proofTypesSupported.jwt
+            .proof_signing_alg_values_supported as string[];
+        } else {
+          return [KeyTypes.RS256] as string[];
+        }
+      },
     }),
     setSupportedCredentialTypes: model.assign({
       supportedCredentialTypes: (_: any, event: any) => event.data,
@@ -64,10 +81,22 @@ export const IssuersActions = (model: any) => {
     }),
     setFetchWellknownError: model.assign({
       errorMessage: (_: any, event: any) => {
+        console.log('Event data received:', event);
+
         const error = event.data.message;
+        console.log('Extracted error message:', error);
+
         if (error.includes(NETWORK_REQUEST_FAILED)) {
+          console.log(
+            'Network request failed. Returning NO_INTERNET error message.',
+          );
+
           return ErrorMessage.NO_INTERNET;
         }
+        console.log(
+          'Error did not match NETWORK_REQUEST_FAILED. Returning default error message.',
+        );
+
         return ErrorMessage.TECHNICAL_DIFFICULTIES;
       },
     }),
@@ -102,11 +131,11 @@ export const IssuersActions = (model: any) => {
     }),
 
     loadKeyPair: assign({
-      publicKey: (_, event: any) => event.response?.publicKey,
+      publicKey: (_, event: any) => event.data?.publicKey as string,
       privateKey: (context: any, event: any) =>
-        event.response?.privateKey
-          ? event.response.privateKey
-          : context.privateKey,
+        event.data?.privateKey
+          ? event.data.privateKey
+          : (context.privateKey as string),
     }),
     getKeyPairFromStore: send(StoreEvents.GET(Issuers_Key_Ref), {
       to: (context: any) => context.serviceRefs.store,
@@ -114,19 +143,22 @@ export const IssuersActions = (model: any) => {
     sendBackupEvent: send(BackupEvents.DATA_BACKUP(true), {
       to: (context: any) => context.serviceRefs.backup,
     }),
-    storeKeyPair: send(
-      (context: any) => {
-        return StoreEvents.SET(Issuers_Key_Ref, {
-          publicKey: context.publicKey,
-          privateKey: context.privateKey,
-        });
-      },
-      {
-        to: context => context.serviceRefs.store,
-      },
-    ),
+    storeKeyPair: async (context: any) => {
+      const keyType = context.keyType;
+      if ((keyType != 'ES256' && keyType != 'RS256') || isIOS())
+        await RNSecureKeystoreModule.storeGenericKey(
+          context.publicKey,
+          context.privateKey,
+          keyType,
+        );
+    },
+
     storeVerifiableCredentialMeta: send(
-      context => StoreEvents.PREPEND(MY_VCS_STORE_KEY, getVCMetadata(context)),
+      context =>
+        StoreEvents.PREPEND(
+          MY_VCS_STORE_KEY,
+          getVCMetadata(context, context.keyType),
+        ),
       {
         to: (context: any) => context.serviceRefs.store,
       },
@@ -140,17 +172,28 @@ export const IssuersActions = (model: any) => {
     },
 
     setVCMetadata: assign({
-      vcMetadata: context => {
-        return getVCMetadata(context);
+      vcMetadata: (context: any) => {
+        return getVCMetadata(context, context.keyType);
       },
     }),
 
     storeVerifiableCredentialData: send(
       (context: any) => {
-        const vcMeatadata = getVCMetadata(context);
-        return StoreEvents.SET(vcMeatadata.getVcKey(), {
-          ...context.credentialWrapper,
-          vcMetadata: vcMeatadata,
+        const vcMetadata = getVCMetadata(context, context.keyType);
+        const {
+          verifiableCredential: {
+            processedCredential,
+            ...filteredVerifiableCredential
+          },
+          ...rest
+        } = context.credentialWrapper;
+        const storableData = {
+          ...rest,
+          verifiableCredential: filteredVerifiableCredential,
+        };
+        return StoreEvents.SET(vcMetadata.getVcKey(), {
+          ...storableData,
+          vcMetadata: vcMetadata,
         });
       },
       {
@@ -162,7 +205,7 @@ export const IssuersActions = (model: any) => {
       context => {
         return {
           type: 'VC_ADDED',
-          vcMetadata: getVCMetadata(context),
+          vcMetadata: getVCMetadata(context, context.keyType),
         };
       },
       {
@@ -174,7 +217,7 @@ export const IssuersActions = (model: any) => {
       (context: any) => {
         return {
           type: 'VC_DOWNLOADED',
-          vcMetadata: getVCMetadata(context),
+          vcMetadata: getVCMetadata(context, context.keyType),
           vc: context.credentialWrapper,
         };
       },
@@ -182,6 +225,16 @@ export const IssuersActions = (model: any) => {
         to: context => context.serviceRefs.vcMeta,
       },
     ),
+
+    setSelectedKey: model.assign({
+      keyType: (context: any, event: any) => {
+        const keyType = selectCredentialRequestKey(
+          context.wellknownKeyTypes,
+          event.data,
+        );
+        return keyType;
+      },
+    }),
 
     setSelectedIssuers: model.assign({
       selectedIssuer: (context: any, event: any) =>
@@ -197,6 +250,10 @@ export const IssuersActions = (model: any) => {
           event.data.credential_configurations_supported,
         authorization_servers: event.data.authorization_servers,
       }),
+    }),
+
+    updateSelectedIssuerWellknownResponse: model.assign({
+      selectedIssuerWellknownResponse: (_: any, event: any) => event.data,
     }),
     setSelectedIssuerId: model.assign({
       selectedIssuerId: (_: any, event: any) => event.id,
@@ -217,51 +274,53 @@ export const IssuersActions = (model: any) => {
     setPublicKey: assign({
       publicKey: (_, event: any) => {
         if (!isHardwareKeystoreExists) {
-          return (event.data as KeyPair).public;
+          return event.data.publicKey as string;
         }
-        return event.data as string;
+        return event.data.publicKey as string;
       },
     }),
 
     setPrivateKey: assign({
-      privateKey: (_, event: any) => (event.data as KeyPair).private,
+      privateKey: (_, event: any) => event.data.privateKey as string,
     }),
 
     logDownloaded: send(
       context => {
-        const vcMetadata = getVCMetadata(context);
+        const vcMetadata = getVCMetadata(context, context.keyType);
         return ActivityLogEvents.LOG_ACTIVITY(
-          {
+          VCActivityLog.getLogFromObject({
             _vcKey: vcMetadata.getVcKey(),
             type: 'VC_DOWNLOADED',
             id: vcMetadata.displayId,
-            idType:
-              context.credentialWrapper.verifiableCredential.credentialTypes,
             timestamp: Date.now(),
             deviceName: '',
             issuer: context.selectedIssuerId,
-          },
-          context.selectedCredentialType,
+            credentialConfigurationId: context.selectedCredentialType.id,
+          }),
+          context.selectedIssuerWellknownResponse,
         );
       },
       {
         to: (context: any) => context.serviceRefs.activityLog,
       },
     ),
-    sendSuccessEndEvent: () => {
+
+    sendSuccessEndEvent: (context: any) => {
       sendEndEvent(
         getEndEventData(
           TelemetryConstants.FlowType.vcDownload,
           TelemetryConstants.EndEventStatus.success,
+          {'VC Key': context.keyType},
         ),
       );
     },
 
-    sendErrorEndEvent: () => {
+    sendErrorEndEvent: (context: any) => {
       sendEndEvent(
         getEndEventData(
           TelemetryConstants.FlowType.vcDownload,
           TelemetryConstants.EndEventStatus.failure,
+          {'VC Key': context.keyType},
         ),
       );
     },

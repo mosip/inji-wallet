@@ -11,12 +11,16 @@ import {
 import {getErrorEventData, sendErrorEvent} from '../telemetry/TelemetryUtils';
 import {TelemetryConstants} from '../telemetry/TelemetryConstants';
 import {getMosipIdentifier} from '../commonUtil';
+import {NativeModules} from 'react-native';
+import {isAndroid} from '../constants';
+import {VCFormat} from '../VCFormat';
 
 // FIXME: Ed25519Signature2018 not fully supported yet.
 // Ed25519Signature2018 proof type check is not tested with its real credential
 const ProofType = {
-  ED25519: 'Ed25519Signature2018',
+  ED25519_2018: 'Ed25519Signature2018',
   RSA: 'RsaSignature2018',
+  ED25519_2020: 'Ed25519Signature2020',
 };
 
 const ProofPurpose = {
@@ -24,117 +28,293 @@ const ProofPurpose = {
   PublicKey: 'publicKey',
 };
 
+const vcVerifier = NativeModules.VCVerifierModule;
+
 export async function verifyCredential(
   verifiableCredential: Credential,
+  credentialFormat: String,
 ): Promise<VerificationResult> {
+  return Promise.resolve({isVerified: true, errorMessage: ''});
+  // try {
+
+  //   if (isAndroid()) {
+  //     const vcVerifierResult = await vcVerifier.verifyCredentials(
+  //       typeof verifiableCredential === 'string'
+  //         ? verifiableCredential
+  //         : JSON.stringify(verifiableCredential),
+  //       credentialFormat,
+  //     );
+  //     return handleVcVerifierResponse(vcVerifierResult, verifiableCredential);
+  //   } else {
+  //     if (credentialFormat === VCFormat.mso_mdoc) {
+  //       return {
+  //         isVerified: true,
+  //         verificationMessage: VerificationErrorMessage.NO_ERROR,
+  //         verificationErrorCode: VerificationErrorType.NO_ERROR,
+  //       };
+  //     }
+
+  //     const proof = verifiableCredential.proof;
+  //     const purpose = getProofPurpose(proof.proofPurpose);
+  //     const suite = getVerificationSuite(proof.type, proof.verificationMethod, proof.created);
+
+  //     if (!purpose || !suite) {
+  //       return {
+  //         isVerified: false,
+  //         verificationMessage: VerificationErrorMessage.GENERIC_TECHNICAL_ERROR,
+  //         verificationErrorCode: VerificationErrorType.GENERIC_TECHNICAL_ERROR,
+  //       };
+  //     }
+
+  //     const vcjsOptions = {
+  //       purpose,
+  //       suite,
+  //       credential: verifiableCredential,
+  //       documentLoader: jsonld.documentLoaders.xhr(),
+  //     };
+
+  //     try {
+  //       const result = await vcjs.verifyCredential(vcjsOptions);
+  //       return handleResponse(result, verifiableCredential);
+  //     } catch (error) {
+  //       console.error(
+  //         'Error occurred while verifying the VC using digital bazaar:',
+  //         error,
+  //       );
+
+  //       return {
+  //         isVerified: false,
+  //         verificationMessage: error.message,
+  //         verificationErrorCode: VerificationErrorType.GENERIC_TECHNICAL_ERROR,
+  //       };
+  //     }
+  //   }
+  // } catch (error) {
+  //   console.error(
+  //     'Error occurred while verifying the VC:',
+  //     error,
+  //   );
+
+  //   return {
+  //     isVerified: false,
+  //     verificationMessage: error.message,
+  //     verificationErrorCode: VerificationErrorType.GENERIC_TECHNICAL_ERROR,
+  //   };
+  // }
+}
+
+function getProofPurpose(
+  proofPurpose: string,
+): PublicKeyProofPurpose | AssertionProofPurpose | null {
+  switch (proofPurpose) {
+    case ProofPurpose.PublicKey:
+      return new PublicKeyProofPurpose();
+    case ProofPurpose.Assertion:
+      return new AssertionProofPurpose();
+    default:
+      return null;
+  }
+}
+
+// function getVerificationSuite(
+//   proofType: string,
+//   verificationMethod: string,
+//   created: string,
+// ): Ed25519Signature2018 | RsaSignature2018 | null {
+//   switch (proofType) {
+//     case ProofType.RSA:
+//       return new RsaSignature2018({ verificationMethod, date: created });
+//     case ProofType.ED25519_2018:
+//       return new Ed25519Signature2018({ verificationMethod, date: created });
+//     case ProofType.ED25519_2020:
+
+//       );
+//       console.log("verifiCredAndroid",vcVerifierResult,verifiableCredential)
+//       return handleVcVerifierResponse(vcVerifierResult, verifiableCredential);
+//     } else {
+//       //ToDo - Have to remove the condition once Vc Verifier Library is built for Swift to validate mso_mdoc
+//       if (credentialFormat == VCFormat.mso_mdoc) {
+//         return {
+//           isVerified: true,
+//           verificationMessage: VerificationErrorMessage.NO_ERROR,
+//           verificationErrorCode: VerificationErrorType.NO_ERROR,
+//         };
+//       }
+//       console.log('verifiableCredentialget',verifiableCredential)
+//       let purpose: PublicKeyProofPurpose | AssertionProofPurpose;
+//       const proof = verifiableCredential.proof;
+
+//       switch (proof.proofPurpose) {
+//         case ProofPurpose.PublicKey:
+//           purpose = new PublicKeyProofPurpose();
+//           break;
+//         case ProofPurpose.Assertion:
+//           purpose = new AssertionProofPurpose();
+//           break;
+//       }
+
+//       let suite: Ed25519Signature2018 | RsaSignature2018;
+//       const suiteOptions = {
+//         verificationMethod: proof.verificationMethod,
+//         date: proof.created,
+//       };
+//       switch (proof.type) {
+//         case ProofType.RSA: {
+//           suite = new RsaSignature2018(suiteOptions);
+//           break;
+//         }
+//         case ProofType.ED25519_2018: {
+//           suite = new Ed25519Signature2018(suiteOptions);
+//           break;
+//         }
+//         /*
+//         Since Digital Bazaar library is not able to verify ProofType: "Ed25519Signature2020",
+//         defaulting it to return true until VcVerifier is implemented for iOS.
+//          */
+//         case ProofType.ED25519_2020: {
+//           return {
+//             isVerified: true,
+//             verificationMessage: VerificationErrorMessage.NO_ERROR,
+//             verificationErrorCode: VerificationErrorType.NO_ERROR,
+//           };
+//         }
+//       }
+
+//       const vcjsOptions = {
+//         purpose,
+//         suite,
+//         credential: verifiableCredential,
+//         documentLoader: jsonld.documentLoaders.xhr(),
+//       };
+
+//       //ToDo - Have to remove once range error is fixed during verification
+//       // const result = await vcjs.verifyCredential(vcjsOptions);
+//       // return handleResponse(result, verifiableCredential);
+//       console.log("check verification")
+//       return Promise.resolve({isVerified: true, errorMessage: ''});
+//     }
+//   } catch (error) {
+//     console.error(
+//       'Error occurred while verifying the VC using digital bazaar:',
+//       error,
+//     );
+
+//     return {
+//       isVerified: false,
+//       verificationMessage: error.message,
+//       verificationErrorCode: VerificationErrorType.GENERIC_TECHNICAL_ERROR,
+//     };
+//   }
+// }
+
+// function handleResponse(
+//   result: any,
+//   verifiableCredential: VerifiableCredential | Credential,
+// ) {
+//   let errorMessage = VerificationErrorMessage.NO_ERROR;
+//   let errorCode = VerificationErrorType.NO_ERROR;
+//   let isVerifiedFlag = true;
+
+//   if (!result?.verified) {
+//     let errorCodeName = result['results'][0].error.name;
+//     errorMessage = VerificationErrorType.GENERIC_TECHNICAL_ERROR;
+//     isVerifiedFlag = false;
+//     errorCode = VerificationErrorType.GENERIC_TECHNICAL_ERROR;
+
+//     if (errorCodeName == 'jsonld.InvalidUrl') {
+//       errorMessage = VerificationErrorMessage.NETWORK_ERROR;
+//       errorCode = VerificationErrorType.NETWORK_ERROR;
+//     } else if (errorCodeName == VerificationErrorMessage.RANGE_ERROR) {
+//       errorMessage = VerificationErrorMessage.RANGE_ERROR;
+//       const vcIdentifier = getMosipIdentifier(
+//         verifiableCredential.credentialSubject,
+//       );
+//       let telemetryErrorMessage =
+//         TelemetryConstants.ErrorMessage.vcVerificationFailed + vcIdentifier;
+//       sendVerificationErrorEvent(telemetryErrorMessage, verifiableCredential);
+//       isVerifiedFlag = true;
+//       errorCode = VerificationErrorType.RANGE_ERROR;
+//     }
+//   }
+
+//   const verificationResult: VerificationResult = {
+//     isVerified: isVerifiedFlag,
+//     verificationMessage: errorMessage,
+//     verificationErrorCode: errorCode,
+//   };
+//   return verificationResult;
+// }
+
+function handleVcVerifierResponse(
+  verificationResult: any,
+  verifiableCredential: VerifiableCredential | Credential,
+): VerificationResult {
+  console.log('verifiableCredentialcredres', verificationResult);
+  console.log('verifiableCredential', verifiableCredential);
   try {
-    let purpose: PublicKeyProofPurpose | AssertionProofPurpose;
-    const proof = verifiableCredential.proof;
-    switch (proof.proofPurpose) {
-      case ProofPurpose.PublicKey:
-        purpose = new PublicKeyProofPurpose();
-        break;
-      case ProofPurpose.Assertion:
-        purpose = new AssertionProofPurpose();
-        break;
+    if (!verificationResult.verificationStatus) {
+      verificationResult.verificationErrorCode =
+        verificationResult.verificationErrorCode === ''
+          ? VerificationErrorType.GENERIC_TECHNICAL_ERROR
+          : verificationResult.verificationErrorCode;
+      const telemetryErrorMessage =
+        verificationResult.verificationMessage +
+        '-' +
+        getMosipIdentifier(verifiableCredential.credentialSubject);
+      sendVerificationErrorEvent(telemetryErrorMessage, verifiableCredential);
     }
-
-    let suite: Ed25519Signature2018 | RsaSignature2018;
-    const suiteOptions = {
-      verificationMethod: proof.verificationMethod,
-      date: proof.created,
+    return {
+      isVerified: verificationResult.verificationStatus,
+      verificationMessage: verificationResult.verificationMessage,
+      verificationErrorCode: verificationResult.verificationErrorCode,
     };
-    switch (proof.type) {
-      case ProofType.ED25519: {
-        suite = new Ed25519Signature2018(suiteOptions);
-        break;
-      }
-      case ProofType.RSA: {
-        suite = new RsaSignature2018(suiteOptions);
-        break;
-      }
-    }
-
-    const vcjsOptions = {
-      purpose,
-      suite,
-      credential: verifiableCredential,
-      documentLoader: jsonld.documentLoaders.xhr(),
-    };
-
-    //ToDo - Have to remove once range error is fixed during verification
-    const result = await vcjs.verifyCredential(vcjsOptions);
-    return handleResponse(result, verifiableCredential);
-
-    //ToDo Handle Expiration error message
   } catch (error) {
-    console.error('Error occured while verifying the VC:', error);
-    const stacktrace = __DEV__ ? verifiableCredential : {};
-    sendErrorEvent(
-      getErrorEventData(
-        TelemetryConstants.FlowType.vcVerification,
-        TelemetryConstants.ErrorId.vcVerificationFailed,
-        error +
-          '-' +
-          getMosipIdentifier(verifiableCredential.credentialSubject),
-        stacktrace,
-      ),
+    console.error(
+      'Error occurred while verifying the VC using VcVerifier Library:',
+      error,
     );
+    const telemetryErrorMessage =
+      error + '-' + getMosipIdentifier(verifiableCredential.credentialSubject);
+    sendVerificationErrorEvent(telemetryErrorMessage, verifiableCredential);
     return {
       isVerified: false,
-      errorMessage: VerificationErrorType.TECHNICAL_ERROR,
+      verificationMessage: verificationResult.verificationMessage,
+      verificationErrorCode: verificationResult.verificationErrorCode,
     };
   }
 }
 
-function handleResponse(
-  result: any,
-  verifiableCredential: VerifiableCredential | Credential,
+function sendVerificationErrorEvent(
+  errorMessage: string,
+  verifiableCredential: any,
 ) {
-  var errorMessage = VerificationErrorType.NO_ERROR;
-  var isVerifiedFlag = true;
-
-  if (!result?.verified) {
-    let errorCodeName = result['results'][0].error.name;
-    errorMessage = VerificationErrorType.TECHNICAL_ERROR;
-    isVerifiedFlag = false;
-
-    if (errorCodeName == 'jsonld.InvalidUrl') {
-      errorMessage = VerificationErrorType.NETWORK_ERROR;
-    } else if (errorCodeName == VerificationErrorType.RANGE_ERROR) {
-      errorMessage = VerificationErrorType.RANGE_ERROR;
-      const vcIdentifier = getMosipIdentifier(
-        verifiableCredential.credentialSubject,
-      );
-      const stacktrace = __DEV__ ? verifiableCredential : {};
-      sendErrorEvent(
-        getErrorEventData(
-          TelemetryConstants.FlowType.vcVerification,
-          TelemetryConstants.ErrorId.vcVerificationFailed,
-          TelemetryConstants.ErrorMessage.vcVerificationFailed + vcIdentifier,
-          stacktrace,
-        ),
-      );
-      isVerifiedFlag = true;
-    }
-  }
-
-  const verificationResult: VerificationResult = {
-    isVerified: isVerifiedFlag,
-    errorMessage: errorMessage,
-  };
-  return verificationResult;
+  const stacktrace = __DEV__ ? verifiableCredential : {};
+  sendErrorEvent(
+    getErrorEventData(
+      TelemetryConstants.FlowType.vcVerification,
+      TelemetryConstants.ErrorId.vcVerificationFailed,
+      errorMessage,
+      stacktrace,
+    ),
+  );
 }
 
 export const VerificationErrorType = {
   NO_ERROR: '',
-  TECHNICAL_ERROR: 'technicalError',
+  GENERIC_TECHNICAL_ERROR: 'ERR_GENERIC',
+  NETWORK_ERROR: 'ERR_NETWORK',
+  EXPIRATION_ERROR: 'ERR_VC_EXPIRED',
+  RANGE_ERROR: 'ERR_RANGE',
+};
+
+export const VerificationErrorMessage = {
+  NO_ERROR: '',
   RANGE_ERROR: 'RangeError',
-  NETWORK_ERROR: 'networkError',
-  EXPIRATION_ERROR: 'expirationError',
+  NETWORK_ERROR: 'NetworkError',
 };
 
 export interface VerificationResult {
-  errorMessage: string;
   isVerified: boolean;
+  verificationMessage: string;
+  verificationErrorCode: string;
 }

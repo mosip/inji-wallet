@@ -13,7 +13,7 @@ import {
   resetRetryCount,
 } from '../shared/telemetry/TelemetryUtils';
 import {TelemetryConstants} from '../shared/telemetry/TelemetryConstants';
-import { SvgImage } from '../components/ui/svg';
+import {SvgImage} from '../components/ui/svg';
 
 export const BiometricScreen: React.FC<RootRouteProps> = props => {
   const {t} = useTranslation('BiometricScreen');
@@ -47,7 +47,7 @@ export const BiometricScreen: React.FC<RootRouteProps> = props => {
       <Button
         title={t('unlock')}
         margin="8 0"
-        type='gradient'
+        type="gradient"
         onPress={controller.useBiometrics}
         disabled={controller.isSuccessBio}
       />

@@ -124,6 +124,7 @@ public class AddNewCardPage extends BasePage{
     }
 
     public void clickOnContinueButtonInSigninPopupIos(){
+        if(isElementDisplayed(continueButton))
         clickOnElement(continueButton);
     }
 
@@ -179,3 +180,4 @@ public class AddNewCardPage extends BasePage{
         }
     }
 }
+

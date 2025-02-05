@@ -35,16 +35,26 @@ on:
         options:
           - orange
           - purple
+      type:
+          description: 'Apk type'
+          required: true
+          default: 'release'
+          type: choice
+          options:
+            - release
+            - debug
 
 jobs:
   build-android:
     uses: mosip/kattu/.github/workflows/android-build.yml@master
     with:
         NODE_VERSION: "16.x"
+        JAVA_VERSION: '17'
         MIMOTO_HOST: ${{ inputs.mimotoBackendServiceUrl }}
         ESIGNET_HOST: ${{ inputs.esignetBackendServiceUrl }}
         APPLICATION_THEME: ${{ inputs.theme }}
         ALLOW_ENV_EDIT: ${{ inputs.allow_env_edit }}
+        APPLICATION_TYPE: ${{ inputs.type }}
         KEYSTORE_ALIAS: androidbuildkey
         KEYSTORE_PASSWORD: 'password'
         SERVICE_LOCATION: '.'
@@ -53,4 +63,4 @@ jobs:
         SCRIPT_NAME: './android-build.sh'
         UPLOAD_TO_ACTIONS: 'true'
         ANDROID_ARTIFACT_NAME: ${{ inputs.buildName }}
-        ANDROID_ARTIFACT_PATH: "android/app/build/outputs/apk/residentapp/release/Inji_universal.apk"
+        ANDROID_ARTIFACT_PATH: "android/app/build/outputs/apk/residentapp/${{ inputs.type }}/Inji_universal.apk"

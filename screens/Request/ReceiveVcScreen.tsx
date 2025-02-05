@@ -1,20 +1,20 @@
-import React, { useEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
-import { DeviceInfoList } from '../../components/DeviceInfoList';
-import { Button, Column, Text } from '../../components/ui';
-import { Theme } from '../../components/ui/styleUtils';
-import { useReceiveVcScreen } from './ReceiveVcScreenController';
-import { VerifyIdentityOverlay } from '../VerifyIdentityOverlay';
-import { MessageOverlay } from '../../components/MessageOverlay';
-import { useOverlayVisibleAfterTimeout } from '../../shared/hooks/useOverlayVisibleAfterTimeout';
-import { VcDetailsContainer } from '../../components/VC/VcDetailsContainer';
-import { SharingStatusModal } from '../Scan/SharingStatusModal';
-import { SvgImage } from '../../components/ui/svg';
-import { DETAIL_VIEW_DEFAULT_FIELDS } from '../../components/VC/common/VCUtils';
-import { getDetailedViewFields } from '../../shared/openId4VCI/Utils';
+import React, {useEffect, useState} from 'react';
+import {useTranslation} from 'react-i18next';
+import {DeviceInfoList} from '../../components/DeviceInfoList';
+import {Button, Column, Text} from '../../components/ui';
+import {Theme} from '../../components/ui/styleUtils';
+import {useReceiveVcScreen} from './ReceiveVcScreenController';
+import {MessageOverlay} from '../../components/MessageOverlay';
+import {useOverlayVisibleAfterTimeout} from '../../shared/hooks/useOverlayVisibleAfterTimeout';
+import {VcDetailsContainer} from '../../components/VC/VcDetailsContainer';
+import {SharingStatusModal} from '../Scan/SharingStatusModal';
+import {SvgImage} from '../../components/ui/svg';
+import {DETAIL_VIEW_DEFAULT_FIELDS} from '../../components/VC/common/VCUtils';
+import {getDetailedViewFields} from '../../shared/openId4VCI/Utils';
+import { VCProcessor } from '../../components/VC/common/VCProcessor';
 
 export const ReceiveVcScreen: React.FC = () => {
-  const { t } = useTranslation('ReceiveVcScreen');
+  const {t} = useTranslation('ReceiveVcScreen');
   const [fields, setFields] = useState([]);
   const [wellknown, setWellknown] = useState(null);
   const controller = useReceiveVcScreen();
@@ -24,17 +24,34 @@ export const ReceiveVcScreen: React.FC = () => {
   const verifiableCredentialData = controller.verifiableCredentialData;
   const profileImage = verifiableCredentialData.face;
 
+  const [credential, setCredential] = useState(null);
+
+  useEffect(() => {
+    async function processVC() {
+      if (controller.credential) {
+        const vcData = await VCProcessor.processForRendering(
+          controller.credential,
+          verifiableCredentialData.vcMetadata.format,
+        );
+        setCredential(vcData);
+      }
+    }
+
+    processVC();
+  }, [controller.credential]);
+
   useEffect(() => {
     getDetailedViewFields(
       verifiableCredentialData?.issuer,
-      verifiableCredentialData?.credentialTypes,
+      verifiableCredentialData.credentialConfigurationId,
       DETAIL_VIEW_DEFAULT_FIELDS,
+      verifiableCredentialData.vcMetadata.format,
     ).then(response => {
-      setWellknown(response.wellknown);
+      setWellknown(response.matchingCredentialIssuerMetadata);
       setFields(response.fields);
       controller.STORE_INCOMING_VC_WELLKNOWN_CONFIG(
         verifiableCredentialData?.issuer,
-        response.wellknown,
+        response.wellknownResponse,
       );
     });
   }, [verifiableCredentialData?.wellKnown]);
@@ -54,7 +71,8 @@ export const ReceiveVcScreen: React.FC = () => {
             <VcDetailsContainer
               fields={fields}
               wellknown={wellknown}
-              credential={controller.credential}
+              credential={credential}
+              credentialWrapper={controller.credential}
               verifiableCredentialData={verifiableCredentialData}
               isBindingPending={false}
               activeTab={1}
@@ -65,7 +83,7 @@ export const ReceiveVcScreen: React.FC = () => {
             <Button
               title={t('goToReceivedVCTab')}
               margin="0 0 12 0"
-              type='gradient'
+              type="gradient"
               onPress={controller.GO_TO_RECEIVED_VC_TAB}
             />
           </Column>

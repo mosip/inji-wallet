@@ -28,14 +28,17 @@ import {ActivityLogEvents} from '../../activityLog';
 import {StoreEvents} from '../../store';
 import BluetoothStateManager from 'react-native-bluetooth-state-manager';
 import {NativeModules} from 'react-native';
-import {getCredentialTypes} from '../../../components/VC/common/VCUtils';
-
 import {wallet} from '../../../shared/tuvali';
+import {createOpenID4VPMachine} from '../../openID4VP/openID4VPMachine';
+import {VCActivityLog} from '../../../components/ActivityLogEvent';
 
-export const ScanActions = (model: any, QR_LOGIN_REF_ID: any) => {
+const QR_LOGIN_REF_ID = 'QrLogin';
+const OPENID4VP_REF_ID = 'OpenID4VP';
+
+export const ScanActions = (model: any) => {
   const {RNPixelpassModule} = NativeModules;
   return {
-    setChildRef: assign({
+    setQrLoginRef: assign({
       QrLoginRef: (context: any) => {
         const service = spawn(
           createQrLoginMachine(context.serviceRefs),
@@ -46,12 +49,25 @@ export const ScanActions = (model: any, QR_LOGIN_REF_ID: any) => {
       },
     }),
 
+    setOpenId4VPRef: assign({
+      OpenId4VPRef: (context: any) => {
+        const service = spawn(
+          createOpenID4VPMachine(context.serviceRefs),
+          OPENID4VP_REF_ID,
+        );
+        service.subscribe(logState);
+        return service;
+      },
+    }),
+
+    resetLinkCode: model.assign({
+      linkcode: '',
+    }),
     updateShowFaceAuthConsent: model.assign({
       showFaceAuthConsent: (_, event) => {
         return event.response || event.response === null;
       },
     }),
-
     setShowFaceAuthConsent: model.assign({
       showFaceAuthConsent: (_, event) => {
         return !event.isDoNotAskAgainChecked;
@@ -82,6 +98,15 @@ export const ScanActions = (model: any, QR_LOGIN_REF_ID: any) => {
         linkCode: context.linkCode,
         flowType: context.flowType,
         selectedVc: context.selectedVc,
+        isQrLoginViaDeepLink: context.isQrLoginViaDeepLink,
+      }),
+
+    sendVPScanData: context =>
+      context.OpenId4VPRef.send({
+        type: 'AUTHENTICATE',
+        encodedAuthRequest: context.linkCode,
+        flowType: context.openID4VPFlowType,
+        selectedVC: context.selectedVc,
       }),
 
     openBluetoothSettings: () => {
@@ -144,8 +169,26 @@ export const ScanActions = (model: any, QR_LOGIN_REF_ID: any) => {
       flowType: (_context, event) => event.flowType,
     }),
 
+    setOpenId4VPFlowType: assign({
+      openID4VPFlowType: (context: any) => {
+        let flowType = VCShareFlowType.OPENID4VP;
+        if (context.flowType === VCShareFlowType.MINI_VIEW_SHARE) {
+          flowType = VCShareFlowType.MINI_VIEW_SHARE_OPENID4VP;
+        } else if (
+          context.flowType === VCShareFlowType.MINI_VIEW_SHARE_WITH_SELFIE
+        ) {
+          flowType = VCShareFlowType.MINI_VIEW_SHARE_WITH_SELFIE_OPENID4VP;
+        }
+        return flowType;
+      },
+    }),
+
     resetFlowType: assign({
       flowType: VCShareFlowType.SIMPLE_SHARE,
+    }),
+
+    resetOpenID4VPFlowType: assign({
+      openID4VPFlowType: '',
     }),
 
     registerLoggers: assign({
@@ -193,18 +236,21 @@ export const ScanActions = (model: any, QR_LOGIN_REF_ID: any) => {
       (context: any) => {
         const vcMetadata = VCMetadata.fromVC(context.selectedVc?.vcMetadata);
 
-        return ActivityLogEvents.LOG_ACTIVITY({
-          _vcKey: vcMetadata.getVcKey(),
-          type: context.shareLogType
-            ? context.shareLogType
-            : 'VC_SHARED_WITH_VERIFICATION_CONSENT',
-          id: vcMetadata.displayId,
-          idType: getCredentialTypes(context.selectedVc.verifiableCredential),
-          issuer: vcMetadata.issuer!!,
-          timestamp: Date.now(),
-          deviceName:
-            context.receiverInfo.name || context.receiverInfo.deviceName,
-        });
+        return ActivityLogEvents.LOG_ACTIVITY(
+          VCActivityLog.getLogFromObject({
+            _vcKey: vcMetadata.getVcKey(),
+            type: context.shareLogType
+              ? context.shareLogType
+              : 'VC_SHARED_WITH_VERIFICATION_CONSENT',
+            id: vcMetadata.displayId,
+            credentialConfigurationId:
+              context.selectedVc.verifiableCredential.credentialConfigurationId,
+            issuer: vcMetadata.issuer!!,
+            timestamp: Date.now(),
+            deviceName:
+              context.receiverInfo.name || context.receiverInfo.deviceName,
+          }),
+        );
       },
       {to: context => context.serviceRefs.activityLog},
     ),
@@ -212,24 +258,42 @@ export const ScanActions = (model: any, QR_LOGIN_REF_ID: any) => {
     logFailedVerification: send(
       (context: any) => {
         const vcMetadata = VCMetadata.fromVC(context.selectedVc);
-        return ActivityLogEvents.LOG_ACTIVITY({
-          _vcKey: vcMetadata.getVcKey(),
-          type: 'PRESENCE_VERIFICATION_FAILED',
-          timestamp: Date.now(),
-          idType: getCredentialTypes(context.selectedVc.verifiableCredential),
-          id: vcMetadata.displayId,
-          issuer: vcMetadata.issuer!!,
-          deviceName:
-            context.receiverInfo.name || context.receiverInfo.deviceName,
-        });
+        return ActivityLogEvents.LOG_ACTIVITY(
+          VCActivityLog.getLogFromObject({
+            _vcKey: vcMetadata.getVcKey(),
+            type: 'PRESENCE_VERIFICATION_FAILED',
+            timestamp: Date.now(),
+            credentialConfigurationId:
+              context.selectedVc.verifiableCredential.credentialConfigurationId,
+            id: vcMetadata.displayId,
+            issuer: vcMetadata.issuer!!,
+            deviceName:
+              context.receiverInfo.name || context.receiverInfo.deviceName,
+          }),
+        );
       },
       {to: context => context.serviceRefs.activityLog},
     ),
 
     setLinkCode: assign({
-      linkCode: (_, event) =>
-        new URL(event.params).searchParams.get('linkCode'),
+      linkCode: (context: any, event) =>
+        context.openID4VPFlowType.startsWith('OpenID4VP')
+          ? event.params
+          : new URL(event.params).searchParams.get('linkCode'),
     }),
+
+    setLinkCodeFromDeepLink: assign({
+      linkCode: (_, event) => event.linkCode,
+    }),
+
+    setIsQrLoginViaDeepLink: assign({
+      isQrLoginViaDeepLink: true,
+    }),
+
+    resetIsQrLoginViaDeepLink: assign({
+      isQrLoginViaDeepLink: false,
+    }),
+
     setQuickShareData: assign({
       quickShareData: (_, event) =>
         JSON.parse(
@@ -273,15 +337,18 @@ export const ScanActions = (model: any, QR_LOGIN_REF_ID: any) => {
 
         const selectedVc = context.QrLoginRef.getSnapshot().context.selectedVc;
 
-        return ActivityLogEvents.LOG_ACTIVITY({
-          _vcKey: '',
-          id: vcMetadata.displayId,
-          issuer: vcMetadata.issuer!!,
-          idType: getCredentialTypes(selectedVc.verifiableCredential),
-          type: 'QRLOGIN_SUCCESFULL',
-          timestamp: Date.now(),
-          deviceName: '',
-        });
+        return ActivityLogEvents.LOG_ACTIVITY(
+          VCActivityLog.getLogFromObject({
+            _vcKey: '',
+            id: vcMetadata.displayId,
+            issuer: vcMetadata.issuer!!,
+            credentialConfigurationId:
+              selectedVc.verifiableCredential.credentialConfigurationId,
+            type: 'QRLOGIN_SUCCESFULL',
+            timestamp: Date.now(),
+            deviceName: '',
+          }),
+        );
       },
       {
         to: (context: any) => context.serviceRefs.activityLog,

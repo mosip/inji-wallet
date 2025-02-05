@@ -13,7 +13,7 @@ import {
 } from '../shared/telemetry/TelemetryUtils';
 import {TelemetryConstants} from '../shared/telemetry/TelemetryConstants';
 import {Icon} from 'react-native-elements';
-import { SvgImage } from '../components/ui/svg';
+import {SvgImage} from '../components/ui/svg';
 
 export const AuthScreen: React.FC<RootRouteProps> = props => {
   const {t} = useTranslation('AuthScreen');

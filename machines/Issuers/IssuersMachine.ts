@@ -94,7 +94,10 @@ export const IssuersMachine = model.createMachine(
         invoke: {
           src: 'downloadIssuerWellknown',
           onDone: {
-            actions: 'updateIssuerFromWellknown',
+            actions: [
+              'updateIssuerFromWellknown',
+              'updateSelectedIssuerWellknownResponse',
+            ],
             target: 'downloadCredentialTypes',
           },
           onError: {
@@ -171,11 +174,8 @@ export const IssuersMachine = model.createMachine(
         invoke: {
           src: 'invokeAuthorization',
           onDone: {
-            actions: [
-              'setTokenResponse',
-              'setLoadingReasonAsSettingUp',
-              'getKeyPairFromStore',
-            ],
+            actions: ['setTokenResponse', 'setLoadingReasonAsSettingUp'],
+            target: '.setSelectedKey',
           },
           onError: [
             {
@@ -195,8 +195,17 @@ export const IssuersMachine = model.createMachine(
             {
               actions: [
                 'resetSelectedCredentialType',
+                () => {
+                  console.log('Action: resetSelectedCredentialType triggered.');
+                },
                 'setError',
+                () => {
+                  console.log('Action: setError triggered.');
+                },
                 'resetLoadingReason',
+                () => {
+                  console.log('Action: resetLoadingReason triggered.');
+                },
                 'sendDownloadingFailedToVcMeta',
                 (_, event) =>
                   console.error(
@@ -210,26 +219,68 @@ export const IssuersMachine = model.createMachine(
         },
         initial: 'idle',
         states: {
-          idle: {
-            on: {
-              STORE_RESPONSE: {
-                actions: 'loadKeyPair',
+          idle: {},
+          setSelectedKey: {
+            invoke: {
+              src: 'getKeyOrderList',
+              onDone: {
+                actions: 'setSelectedKey',
+                target: 'getKeyPairFromKeystore',
+              },
+              onError: {
+                actions: [
+                  'resetSelectedCredentialType',
+                  'setError',
+                  'resetLoadingReason',
+                  'sendDownloadingFailedToVcMeta',
+                  (_, event) =>
+                    console.error(
+                      'Error Occurred while invoking Auth - ',
+                      event.data,
+                    ),
+                ],
+                target: '#issuersMachine.selectingIssuer',
+              },
+            },
+          },
+          getKeyPairFromKeystore: {
+            invoke: {
+              src: 'getKeyPair',
+              onDone: {
+                actions: ['loadKeyPair'],
                 target: '#issuersMachine.checkKeyPair',
               },
-              BIOMETRIC_CANCELLED: {
-                target: 'userCancelledBiometric',
-              },
-              STORE_ERROR: {
-                target: '#issuersMachine.checkKeyPair',
-              },
+              onError: [
+                {
+                  cond: 'hasUserCancelledBiometric',
+                  target: 'userCancelledBiometric',
+                },
+                {
+                  cond: 'isKeyTypeNotFound',
+                  actions: [
+                    'resetSelectedCredentialType',
+                    'setError',
+                    'resetLoadingReason',
+                    'sendDownloadingFailedToVcMeta',
+                    (_, event) =>
+                      console.error(
+                        'Error Occurred while invoking Auth - ',
+                        event.data,
+                      ),
+                  ],
+                  target: '#issuersMachine.selectingIssuer',
+                },
+                {
+                  target: '#issuersMachine.checkKeyPair',
+                },
+              ],
             },
           },
           userCancelledBiometric: {
             on: {
               TRY_AGAIN: [
                 {
-                  actions: ['getKeyPairFromStore'],
-                  target: 'idle',
+                  target: 'getKeyPairFromKeystore',
                 },
               ],
               RESET_ERROR: {
@@ -242,18 +293,22 @@ export const IssuersMachine = model.createMachine(
       },
       checkKeyPair: {
         description: 'checks whether key pair is generated',
-        entry: [
-          'setLoadingReasonAsDownloadingCredentials',
-          send('CHECK_KEY_PAIR'),
-        ],
-        on: {
-          CHECK_KEY_PAIR: [
+        entry: ['setLoadingReasonAsDownloadingCredentials'],
+        invoke: {
+          src: 'getSelectedKey',
+          onDone: [
             {
               cond: 'hasKeyPair',
               target: 'downloadCredentials',
             },
             {
               target: 'generateKeyPair',
+            },
+          ],
+
+          onError: [
+            {
+              target: 'selectingIssuer',
             },
           ],
         },
@@ -267,6 +322,7 @@ export const IssuersMachine = model.createMachine(
             {
               actions: [
                 'setPublicKey',
+                'setPrivateKey',
                 'setLoadingReasonAsDownloadingCredentials',
                 'storeKeyPair',
               ],
@@ -275,6 +331,7 @@ export const IssuersMachine = model.createMachine(
             },
             {
               actions: [
+                // to be decided
                 'setPublicKey',
                 'setLoadingReasonAsDownloadingCredentials',
                 'setPrivateKey',

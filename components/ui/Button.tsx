@@ -29,7 +29,9 @@ export const Button: React.FC<ButtonProps> = props => {
     {width: props.width ?? '100%'},
   ];
   const containerStyle: StyleProp<ViewStyle> = [
-    !(type === 'gradient') ? Theme.ButtonStyles.container : {flexDirection:'row'},
+    !(type === 'gradient')
+      ? Theme.ButtonStyles.container
+      : {flexDirection: 'row'},
     props.disabled && props.type !== 'outline'
       ? Theme.ButtonStyles.disabled
       : null,
@@ -88,9 +90,8 @@ export const Button: React.FC<ButtonProps> = props => {
         colors: !props.disabled
           ? Theme.Colors.GradientColors
           : Theme.Colors.DisabledColors,
-          start: Theme.LinearGradientDirection.start,
-          end: Theme.LinearGradientDirection.end,
-          
+        start: Theme.LinearGradientDirection.start,
+        end: Theme.LinearGradientDirection.end,
       }}
       containerStyle={[
         props.fill ? Theme.ButtonStyles.fill : null,

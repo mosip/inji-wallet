@@ -3,18 +3,20 @@ import {CACHED_API} from '../../shared/api';
 import NetInfo from '@react-native-community/netinfo';
 import {
   constructAuthorizationConfiguration,
+  constructIssuerMetaData,
   constructProofJWT,
-  Issuers_Key_Ref,
+  hasKeyPair,
   updateCredentialInformation,
   vcDownloadTimeout,
 } from '../../shared/openId4VCI/Utils';
 import {authorize} from 'react-native-app-auth';
 import {
-  generateKeys,
-  isHardwareKeystoreExists,
+  fetchKeyPair,
+  generateKeyPair,
 } from '../../shared/cryptoutil/cryptoUtil';
 import {NativeModules} from 'react-native';
 import {
+  VerificationErrorMessage,
   VerificationErrorType,
   verifyCredential,
 } from '../../shared/vcjs/verifyCredential';
@@ -23,17 +25,19 @@ import {
   sendImpressionEvent,
 } from '../../shared/telemetry/TelemetryUtils';
 import {TelemetryConstants} from '../../shared/telemetry/TelemetryConstants';
-import {isMosipVC} from '../../shared/Utils';
 import {VciClient} from '../../shared/vciClient/VciClient';
+import {isMockVC} from '../../shared/Utils';
+import {VCFormat} from '../../shared/VCFormat';
 
-const {RNSecureKeystoreModule} = NativeModules;
 export const IssuersService = () => {
   return {
     isUserSignedAlready: () => async () => {
       return await Cloud.isSignedInAlready();
     },
     downloadIssuersList: async () => {
-      return await CACHED_API.fetchIssuers();
+      let issuers = await CACHED_API.fetchIssuers();
+      console.log('Issuers>>>>>>>>>>>>>', issuers);
+      return issuers;
     },
     checkInternet: async () => await NetInfo.fetch(),
     downloadIssuerWellknown: async (context: any) => {
@@ -55,36 +59,75 @@ export const IssuersService = () => {
         throw new Error(
           `No credential type found for issuer ${context.selectedIssuer.credential_issuer}`,
         );
-
+      console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>', credentialTypes);
       return credentialTypes;
     },
     downloadCredential: async (context: any) => {
+      console.log('Starting downloadCredential function...');
+
       const downloadTimeout = await vcDownloadTimeout();
+      console.log('downloadTimeout>>>>>>>>>>>>>', downloadTimeout);
       const accessToken: string = context.tokenResponse?.accessToken;
-      const issuerMeta: Object = {
-        credentialAudience: context.selectedIssuer.credential_audience,
-        credentialEndpoint: context.selectedIssuer.credential_endpoint,
-        downloadTimeoutInMilliSeconds: downloadTimeout,
-        credentialType: context.selectedCredentialType?.credential_definition
-          ?.type ?? ['VerifiableCredential'],
-        credentialFormat: context.selectedCredentialType.format,
-      };
+      console.log('downloadTimeout>>>>>>>>>>>>>', accessToken);
+
       const proofJWT = await constructProofJWT(
         context.publicKey,
         context.privateKey,
         accessToken,
         context.selectedIssuer,
+        context.keyType,
       );
+      console.log('downloadTimeout>>>>>>>>>>>>>', proofJWT);
+
       let credential = await VciClient.downloadCredential(
-        issuerMeta,
+        constructIssuerMetaData(
+          context.selectedIssuer,
+          context.selectedCredentialType,
+          downloadTimeout,
+        ),
         proofJWT,
         accessToken,
+        console.log(
+          '>>>>>>>>>>>>>>>>>>>>>>>>>>>>>accesstoken>>>>>>>>>>:',
+          credential,
+        ),
+        console.log(
+          '>>>>>>>>>>>>>>>>>>>>>>>>>>>>>accesstoken>>>>>>>>>>>>>>>>',
+          accessToken,
+        ),
       );
-
+      console.log('credentialmaincheck', JSON.stringify(credential, null, 2));
+      console.info(
+        '>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>',
+      );
       console.info(`VC download via ${context.selectedIssuerId} is successful`);
-      return updateCredentialInformation(context, credential);
+      // if (credential.credential.credentialSubject.name) {
+      //   credential.credential.credentialSubject.fullName =
+      //     credential.credential.credentialSubject.name;
+      // }
+      console.log(
+        'credential.credential.id>>>>>>>>>>',
+        JSON.stringify(credential, null, 2),
+      );
+      // if (credential.credential.id) {
+      //   credential.credential.id = credential.credential.id
+      //     .split(':')
+      //     .reverse()[0];
+      // }
+      return await updateCredentialInformation(context, credential);
     },
     invokeAuthorization: async (context: any) => {
+      console.log(
+        'invokeAuthorization called with context:>>>>>>>>>>>>>>>>>>>>>',
+        context,
+      );
+
+      console.log('Selected Issuer:', context.selectedIssuer);
+
+      console.log(
+        'Credential Issuer URL:',
+        context.selectedIssuer?.credential_issuer,
+      );
       sendImpressionEvent(
         getImpressionEventData(
           TelemetryConstants.FlowType.vcDownload,
@@ -92,38 +135,67 @@ export const IssuersService = () => {
             TelemetryConstants.Screens.webViewPage,
         ),
       );
-      return await authorize(
+      console.log('FlowType:', TelemetryConstants.FlowType.vcDownload);
+      console.log('Issuer:', context.selectedIssuer.credential_issuer);
+      console.log('Screen:', TelemetryConstants.Screens.webViewPage);
+      console.log('Selected Issuer:', context.selectedIssuer);
+      console.log(
+        'Selected Credential Scope:',
+        context.selectedCredentialType.scope,
+      );
+      let accessToken = await authorize(
         constructAuthorizationConfiguration(
           context.selectedIssuer,
           context.selectedCredentialType.scope,
         ),
       );
+      console.log('access token >>>>>>>>>>>>>>', accessToken);
+      return accessToken;
     },
 
-    generateKeyPair: async () => {
-      if (!isHardwareKeystoreExists) {
-        return await generateKeys();
-      }
-      const isBiometricsEnabled = RNSecureKeystoreModule.hasBiometricsEnabled();
-      return RNSecureKeystoreModule.generateKeyPair(
-        Issuers_Key_Ref,
-        isBiometricsEnabled,
-        0,
+    getKeyOrderList: async () => {
+      const {RNSecureKeystoreModule} = NativeModules;
+      const keyOrder = JSON.parse(
+        (await RNSecureKeystoreModule.getData('keyPreference'))[1],
       );
+      return keyOrder;
     },
+
+    generateKeyPair: async (context: any) => {
+      const keypair = await generateKeyPair(context.keyType);
+      return keypair;
+    },
+
+    getKeyPair: async (context: any) => {
+      if (context.keyType === '') {
+        throw new Error('key type not found');
+      } else if (!!(await hasKeyPair(context.keyType))) {
+        return await fetchKeyPair(context.keyType);
+      }
+    },
+
+    getSelectedKey: async (context: any) => {
+      return context.keyType;
+    },
+
     verifyCredential: async (context: any) => {
-      //this issuer specific check has to be removed once vc validation is done.
-      if (isMosipVC(context.vcMetadata.issuer)) {
+      //TODO: Remove bypassing verification of mock VCs once mock VCs are verifiable
+      if (
+        context.selectedCredentialType.format === VCFormat.mso_mdoc ||
+        !isMockVC(context.selectedIssuerId)
+      ) {
         const verificationResult = await verifyCredential(
           context.verifiableCredential?.credential,
+          context.selectedCredentialType.format,
         );
         if (!verificationResult.isVerified) {
-          throw new Error(verificationResult.errorMessage);
+          throw new Error(verificationResult.verificationErrorCode);
         }
       } else {
         return {
           isVerified: true,
-          errorMessage: VerificationErrorType.NO_ERROR,
+          verificationMessage: VerificationErrorMessage.NO_ERROR,
+          verificationErrorCode: VerificationErrorType.NO_ERROR,
         };
       }
     },

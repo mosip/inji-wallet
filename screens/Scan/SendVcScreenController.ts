@@ -80,8 +80,19 @@ export function useSendVcScreen() {
     SELECT_VC_ITEM:
       (index: number) => (vcRef: ActorRefFrom<typeof VCItemMachine>) => {
         setSelectedIndex(index);
-        const {serviceRefs, wellknownResponse, ...vcData} =
-          vcRef.getSnapshot().context;
+        const {
+          serviceRefs,
+          wellknownResponse,
+          verifiableCredential: {
+            processedCredential,
+            ...filteredVerifiableCredential
+          },
+          ...rest
+        } = vcRef.getSnapshot().context;
+        const vcData = {
+          ...rest,
+          verifiableCredential: filteredVerifiableCredential,
+        };
         scanService.send(
           ScanEvents.SELECT_VC(vcData, VCShareFlowType.SIMPLE_SHARE),
         );

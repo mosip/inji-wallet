@@ -27,6 +27,7 @@ import {SearchBar} from '../../components/ui/SearchBar';
 import {Icon} from 'react-native-elements';
 import {VCMetadata} from '../../shared/VCMetadata';
 import {useCopilot} from 'react-native-copilot';
+import {isTranslationKeyFound} from '../../shared/commonUtil';
 
 export const MyVcsTab: React.FC<HomeScreenTabProps> = props => {
   const {t} = useTranslation('MyVcsTab');
@@ -188,9 +189,11 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = props => {
 
   const isVerificationFailed = controller.verificationErrorMessage !== '';
 
-  const verificationErrorMessage = t(
-    `errors.verificationFailed.${controller.verificationErrorMessage}`,
-  );
+  const translationKey = `errors.verificationFailed.${controller.verificationErrorMessage}`;
+
+  const verificationErrorMessage = isTranslationKeyFound(translationKey, t)
+    ? t(translationKey)
+    : t(`errors.verificationFailed.ERR_GENERIC`);
 
   const downloadFailedVcsErrorMessage = `${t(
     'errors.downloadLimitExpires.message',
@@ -251,12 +254,14 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = props => {
                     onLayout={() => filterVcs('')}
                   />
                   {clearSearchIcon && (
-                    <Pressable onPress={clearSearchText}>
+                    <Pressable
+                      onPress={clearSearchText}
+                      style={Theme.SearchBarStyles.clearSearch}>
                       <Icon
                         testID="clearingIssuerSearchIcon"
                         name="circle-with-cross"
                         type="entypo"
-                        size={15}
+                        size={18}
                         color={Theme.Colors.DetailsLabel}
                       />
                     </Pressable>
@@ -275,7 +280,6 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = props => {
                       <VcItemContainer
                         key={vcMetadata.getVcKey()}
                         vcMetadata={vcMetadata}
-                        margin="0 2 8 2"
                         onPress={controller.VIEW_VC}
                         isDownloading={controller.inProgressVcDownloads?.has(
                           vcMetadata.getVcKey(),
@@ -283,6 +287,7 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = props => {
                         isPinned={vcMetadata.isPinned}
                         isInitialLaunch={controller.isInitialDownloading}
                         isTopCard={index === 0}
+                        name={vcMetadata.name}
                       />
                     );
                   })}

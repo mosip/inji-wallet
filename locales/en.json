@@ -3,8 +3,8 @@
     "VC_SHARED": "{{idType}} {{id}} is shared successfully.",
     "VC_RECEIVED": "Received {{idType}} {{id}}.",
     "VC_RECEIVED_NOT_SAVED": "Couldn't save {{idType}} {{id}}.",
-    "VC_DELETED": "{{idType}} {{id}} is deleted successfully.",
-    "VC_DOWNLOADED": "{{idType}} {{id}} is downloaded.",
+    "VC_DELETED": "{{idType}} {{id}} was deleted successfully.",
+    "VC_DOWNLOADED": "{{idType}} {{id}} was downloaded.",
     "VC_SHARED_WITH_VERIFICATION_CONSENT": "Shared {{idType}} {{id}} with consent for presence verification.",
     "VC_RECEIVED_WITH_PRESENCE_VERIFIED": "Received {{idType}} {{id}} and presence verification is successful.",
     "VC_RECEIVED_BUT_PRESENCE_VERIFICATION_FAILED": "Received {{idType}} {{id}} and presence verification failed.",
@@ -14,7 +14,25 @@
     "WALLET_BINDING_SUCCESSFULL": "Activation of {{idType}} {{id}} is successful.",
     "WALLET_BINDING_FAILURE": "Activation of {{idType}} {{id}} has failed.",
     "VC_REMOVED": "{{idType}} {{id}} is removed from wallet.",
-    "TAMPERED_VC_REMOVED": "{{idType}} {{id}} is removed from from wallet due to tampering."
+    "TAMPERED_VC_REMOVED": "{{idType}} {{id}} is removed from from wallet due to tampering.",
+    "vpSharing": {
+      "SHARED_SUCCESSFULLY": "Credential Presentation is shared successfully.",
+      "SHARED_WITH_FACE_VERIFIACTION": "Face verification is successful, and the Credential Presentation is shared successfully.",
+      "VERIFIER_AUTHENTICATION_FAILED": "Failed to authenticate the Verification Service during VP sharing.",
+      "INVALID_AUTH_REQUEST": "QR code has invalid or missing data. Check with the verification service.",
+      "USER_DECLINED_CONSENT": "User declined consent for Credential Presentation sharing.",
+      "SHARED_AFTER_RETRY": "Credential Presentation is shared successfully after a retry.",
+      "SHARED_WITH_FACE_VERIFICATION_AFTER_RETRY": "Face verification is successful, and the Credential Presentation is shared successfully after a retry.",
+      "SHARING_FAILED": "Credential Presentation sharing failed due to technical error.",
+      "RETRY_ATTEMPT_FAILED": "Credential Presentation sharing failed due to technical error after a retry attempt.",
+      "MAX_RETRY_ATTEMPT_FAILED": "Credential Presentation sharing failed due to technical error after maximum retry attempts.",
+      "FACE_VERIFICATION_FAILED": "Face verification failed during Credential Presentation sharing.",
+      "FACE_VERIFICATION_FAILED_AFTER_RETRY_ATTEMPT": "Face verification failed during a retry attempt of Credential Presentation sharing.",
+      "NO_SELECTED_VC_HAS_IMAGE": "Credential Presentation sharing failed as the selected verifiable credentials lack a face image.",
+      "CREDENTIAL_MISMATCH_FROM_KEBAB": "Credentials Presentation mismatch occurred during sharing from the menu, based on requested claims: {{info}}.",
+      "NO_CREDENTIAL_MATCHING_REQUEST": "No credentials were found that match the verification service's request based on the provided claims: {{info}}.",
+      "TECHNICAL_ERROR": "Credential Presentation sharing could not proceed due to technical error."
+    }
   },
   "DeviceInfoList": {
     "requestedBy": "Requested by",
@@ -63,16 +81,16 @@
     "idType": "ID Type",
     "id": "ID",
     "qrCodeHeader": "QR Code",
-    "nationalCard": "National ID",
+    "nationalCard": "Credential ",
     "insuranceCard": "Insurance Card",
     "beneficiaryCard": "Beneficiary Card",
     "socialRegistryCard": "Social Registry Card",
     "uin": "UIN",
     "vid": "VID",
-    "enableVerification": "Activate",
+    "enableVerification": "view",
     "profileAuthenticated": "Credentials are enabled for online authentication.",
     "credentialActivated": "Activated",
-    "offlineAuthDisabledHeader": "Activation pending for online login",
+    "offlineAuthDisabledHeader": "View certificate online",
     "offlineAuthDisabledMessage": "Please click the button below to activate this credential to be used for online login.",
     "verificationEnabledSuccess": "Activated for online login",
     "goback": "GO BACK",
@@ -143,12 +161,12 @@
   },
   "SettingScreen": {
     "header": "Settings",
-    "injiAsVerifierApp": "Inji as verifier app",
+    "injiAsVerifierApp": "Credissuer wallet",
     "receiveCard": "Receive Card",
     "basicSettings": "Basic settings",
     "bioUnlock": "Unlock with Biometric",
     "language": "Language",
-    "aboutInji": "About Inji",
+    "aboutInji": "About Credissuer wallet",
     "credentialRegistry": "Credential Registry",
     "esignethosturl": "Esignet Host",
     "errorMessage": "Incorrect URL entered. Please enter a valid URL to proceed.",
@@ -159,22 +177,24 @@
   "BannerNotification": {
     "alternatePasscodeSuccess": "Success! You can now use passcode to unlock Inji app.",
     "alternateBiometricSuccess": "Success! You can now use biometrics to unlock Inji app.",
-    "activated": "Credentials are enabled for online authentication."
+    "activated": "Credentials are enabled for online authentication.",
+    "keyPreferenceSuccess": "Your key preferences have been saved successfully!",
+    "keyPreferenceError": "Sorry! Error setting your key preferences"
   },
   "AboutInji": {
-    "aboutInji": "About Inji",
-    "header": "ABOUT INJI",
+    "aboutInji": "About Credissuer Wallet",
+    "header": "ABOUT CREDISSUER WALLET",
     "appID": "App ID",
-    "aboutDetails": "Inji is a mobile app that can be used as a digital wallet to store credentials. It also allows identity verification in both offline and online modes, at any place and time.",
+    "aboutDetails": "Credissuer wallet is a mobile app that can be used by anyone to store certificates issued by credissuer",
     "forMoreDetails": "For more details",
     "clickHere": "Click here",
     "version": "Version",
     "tuvaliVersion": "Tuvali-version"
   },
   "IssuersScreen": {
-    "title": "Add new card",
-    "description": "Please choose your preferred issuer from the options below to add a new card.",
-    "searchByIssuersName": "Search by Issuer’s name",
+    "title": "Add new certificate",
+    "description": "Please choose your preferred issuer from the options below to add a new certificate.",
+    "searchByIssuersName": "Search by Issuer's name",
     "credentialTypeDescription": "Please select a credential",
     "help": "Help?",
     "loaders": {
@@ -201,6 +221,19 @@
       "technicalDifficulty": {
         "title": "An error occurred!",
         "message": "Thanks for your patience! We're experiencing technical difficulties right now. Please try again later or contact the admin for further assistance!"
+      },
+      "verificationFailed": {
+        "title": "An Error Occurred!",
+        "goBackButton": "Go Back",
+        "ERR_GENERIC": "Due to Technical Error, we were unable to download the card.",
+        "ERR_NETWORK": "Due to unstable internet connection, we were unable to download the card. Please check your internet connection.",
+        "ERR_MISSING_ISSUANCEDATE": "Issuance date is invalid or set in the future. Check for a valid date.",
+        "ERR_INVALID_ISSUANCEDATE": "Issuance date is invalid or set in the future. Check for a valid date.",
+        "ERR_ISSUANCE_DATE_IS_FUTURE_DATE": "Issuance date is invalid or set in the future. Check for a valid date.",
+        "ERR_INVALID_EXPIRATIONDATE": "Expiration date is invalid. Check for a valid date.",
+        "ERR_INVALID_VALIDFROM": "Date is invalid or set in the future. Check for a valid date.",
+        "ERR_VALID_FROM_IS_FUTURE_DATE": "Date is invalid or set in the future. Check for a valid date.",
+        "ERR_INVALID_VALIDUNTIL": "Date is invalid. Check for a valid date."
       }
     }
   },
@@ -209,19 +242,19 @@
     "here": "here",
     "questions": {
       "inji": {
-        "one": "What is an ID?",
+        "one": "What is a Credissuer wallet?",
         "two": "What are the different types of ID?",
         "three": "Where can I find these IDs?",
-        "four": "What is a digital credential?",
+        "four": "What is a digital certificate?",
         "five": "What can we do with digital credentials?",
         "six": "What is a Verifiable Credential?",
-        "seven": "How to add a card?",
-        "eight": "Can I add multiple cards?",
+        "seven": "How to add a certificate?",
+        "eight": "Can I add multiple certificate?",
         "nine": "Why does my VC say Activation is pending?",
         "ten": "What do you mean by Activated for Online login?",
-        "eleven": "How to activate a card for online login?",
-        "twelve": "How to share a card?",
-        "thirteen": "How to remove a card from the wallet?",
+        "eleven": "How to activate a certificate for online login?",
+        "twelve": "How to share a certificate?",
+        "thirteen": "How to remove a certificate from the wallet?",
         "fourteen": "How to view activity logs?",
         "fifteen": "What happens when Android keystore biometric is changed?",
         "sixteen": "What is Share?",
@@ -236,20 +269,28 @@
         "six": "How can I restore the backup which I have taken?",
         "seven": "Why do I get an error \"no backup file found\"?",
         "eight": "What happens when I Clear Storage of INJI app from device settings?"
+      },
+      "KeyManagement": {
+        "one": "What are the different types of keys I can choose from?",
+        "two": "How do I know which key type is best for me?",
+        "three": "How does the choice of key type affect my security?",
+        "four": "Can I change my key type later on?",
+        "five": "What is the impact of key priority, and how can I set it?",
+        "six": "What happens if I don’t choose a key type or set a preference?"
       }
     },
     "answers": {
       "inji": {
-        "one": "An ID is any document that can prove a person’s identity. In the context of MOSIP, identifiers are alphanumeric digital handles for identities in the system. While a person's identity is represented as a collection of biographic and biometric attributes that can uniquely identify the person, the identity is referred to using identifiers.",
+        "one": "Credissuer wallet is a mobile app that can be used by anyone to store certificates issued by credissuer",
         "two": "In the context of MOSIP, different IDs are UIN, VID, and AID. Read more about them",
         "three-a": "As part of the enrolment (registration) process, upon registering the demographic information and biometrics of the resident successfully, a registration ID (AID) is allocated to the resident. An acknowledgment slip containing the captured details and the AID is also issued (printed) to the resident as proof of registration.",
         "three-b": "Upon successful processing, a Unique Identification Number (UIN) is allocated to the resident and a notification is sent to the resident on the registered phone number and/or email.",
         "three-c": "VID / Virtual ID is an alias identifier configured for one-time usage and is not linkable. Since these are used for authentication transactions, such identifiers are to be known to the user only or generated with their participation.",
-        "four": "A digital credential is the digital version of your physical Identity card",
+        "four": "A digital certificate is the digital version of your physical certificate",
         "five": "You can avail various Government and private services using your digital credentials.",
         "six": "A Verifiable Credential is a digitally signed piece of information that represents a statement made by the issuer about a subject and typically includes demographic details. VCs are secure and trustworthy in various online interactions.",
         "seven": "IDs can be downloaded to INJI Mobile Wallet as Verifiable Credentials. To know how to download VCs with various IDs please read",
-        "eight": "Yes, you can add multiple cards to the wallet by clicking on '+' button on the Home page.",
+        "eight": "Yes, you can add multiple certificates to the wallet by clicking on '+' button on the Home page.",
         "nine": "Once VC is downloaded to your wallet, it is not yet bound with the user’s identity which is why your VC says Activation Pending. Binding your VC to your wallet (with your passcode or biometrics) is crucial to ensure the highest level of security. To activate your VC, please follow the steps",
         "ten-a": "1. Once the VC is successfully binded with the wallet, you can see that it is Activated for Online login which means this VC can now be used for the QR login process. To know more about QR code login, please read",
         "ten-b": "2. The Q&A should be readable and understandable even when the user changes the language in the INJI app.",
@@ -271,6 +312,14 @@
         "six": "To restore a backup, go to the app settings, choose the restore option, and select the backup file. Follow the on-screen instructions to complete the restoration process.",
         "seven": "This error may occur if there are no backup files associated with the provided email ID or if the backup files are stored in a different location. Ensure you are using the correct email ID and storage location, or consider creating a new backup if none exists.",
         "eight": "Please note this action is taken cautiously as it clears app data which means all your downloaded VCs will be cleared. Ensure to take a backup of the data before triggering clear storage."
+      },
+      "KeyManagement": {
+        "one": "You can choose from Ed25519, ECC K1, ECC R1, and RSA keys. Each type has its own strengths in terms of security and performance.",
+        "two": "If you prioritize speed, efficiency, and relatively higher security, then Ed25519 or ECC K1 might be ideal. If you need widespread compatibility and strong security, RSA or ECC R1 could be better choices.",
+        "three": "Different keys offer different levels of security. For example, Ed25519 and ECC keys are known for their high security with smaller key sizes, while RSA is widely trusted for its robust security in various systems.",
+        "four": "Yes, you can change your key type, but it’s important to note that this might affect how your credentials interact with different systems. Always ensure that your chosen key type is compatible with your use case.",
+        "five": "The order of your keys determines their priority in usage. You can drag and arrange your keys, with the top one being your first choice.",
+        "six": "If you don’t select a specific key type, the app will automatically choose the most suitable one based on what is supported by the credential issuer. This ensures compatibility and security, even if you don't make a manual selection."
       }
     }
   },
@@ -354,11 +403,12 @@
   },
   "MyVcsTab": {
     "searchByName": "Search by name",
-    "bringYourDigitalID": "Bring your digital identity",
-    "generateVcDescription": "Tap on \"Download card\" below to download your card",
-    "generateVcFABDescription": "Tap on  \"+\" below to download your card",
-    "downloadCard": "Download Card",
-    "downloadingYourCard": "Downloading your card, this can take upto 5 minutes",
+    "bringYourDigitalID": "Bring your certificates here",
+    "generateVcDescription": "Tap on \"Download card\" below to download your certificate",
+    "generateVcFABDescription": "Tap on  \"+\" below to download your certificate",
+    "downloadCard": "Download Certificate",
+    "downloadingYourCard": "Downloading your certificate, this can take upto 5 minutes",
+    "downloadingVcSuccess": "Your Card has been downloaded successfully",
     "downloadingVcFailed": "Sorry! Due to technical error we are unable to download your card now. Please try again later.",
     "activated": "Credentials are enabled for online authentication.",
     "noCardsTitle": "No Cards Found!",
@@ -392,18 +442,25 @@
       "verificationFailed": {
         "title": "An Error Occurred!",
         "goBackButton": "Go Back",
-        "technicalError": "Due to Technical Error, we were unable to download the card.",
-        "networkError": "Due to unstable internet connection, we were unable to download the card. Please check your internet connection."
+        "ERR_GENERIC": "Due to Technical Error, we were unable to download the card.",
+        "ERR_NETWORK": "Due to unstable internet connection, we were unable to download the card. Please check your internet connection.",
+        "ERR_MISSING_ISSUANCEDATE": "Issuance date is invalid or set in the future. Check for a valid date.",
+        "ERR_INVALID_ISSUANCEDATE": "Issuance date is invalid or set in the future. Check for a valid date.",
+        "ERR_ISSUANCE_DATE_IS_FUTURE_DATE": "Issuance date is invalid or set in the future. Check for a valid date.",
+        "ERR_INVALID_EXPIRATIONDATE": "Expiration date is invalid. Check for a valid date.",
+        "ERR_INVALID_VALIDFROM": "Date is invalid or set in the future. Check for a valid date.",
+        "ERR_VALID_FROM_IS_FUTURE_DATE": "Date is invalid or set in the future. Check for a valid date.",
+        "ERR_INVALID_VALIDUNTIL": "Date is invalid. Check for a valid date."
       }
     }
   },
   "OnboardingOverlay": {
     "stepOneTitle": "Welcome!",
-    "stepOneText": "Keep your digital credential with you at all times. Inji helps you manage and use them effectively. To get started, add cards to your profile.",
+    "stepOneText": "Keep your digital credential with you at all times. Inji helps you manage and use them effectively. To get started, add certificates to your profile.",
     "stepTwoTitle": "Secure Sharing",
-    "stepTwoText": "Share your cards securely in a hassle free way and avail various services.",
+    "stepTwoText": "Share your certificates securely in a hassle free way and avail various services.",
     "stepThreeTitle": "Trusted Digital Wallet",
-    "stepThreeText": "Store and carry all your important cards in a single trusted wallet.",
+    "stepThreeText": "Store and carry all your important certificates in a single trusted wallet.",
     "stepFourTitle": "Quick Access",
     "stepFourText": "Authenticate yourself with ease using the stored digital credential.",
     "stepFiveTitle": "Backup & Restore",
@@ -426,7 +483,7 @@
     "error": "Sorry, we are unable to verify the {{vcDetails}} right now. Please try again later. Until then, you won't be able to activate or share your card."
   },
   "ViewVcModal": {
-    "title": "ID Details",
+    "title": "Details",
     "inProgress": "In Progress",
     "statusToolTipContent": {
       "valid": {
@@ -484,7 +541,7 @@
     }
   },
   "ReceiveVcScreen": {
-    "header": "Card details",
+    "header": "Certificate details",
     "save": "Save card",
     "verifyAndSave": "Verify and save",
     "reject": "Reject",
@@ -614,7 +671,7 @@
     "shareWithSelfieMessageQrLogin": "In order to access the portal, you’ll need to share your Verifiable Credentials and verify your identity securely using face verification. By continuing, you consent to Inji using your camera for this purpose. \n\n Your facial data will only be used for verification and will not be shared. After successful verification, you can choose which details to share.",
     "ConfirmButton": "I Understand",
     "doNotAskMessage": "Don't ask me again",
-    "noShareableVcs": "No shareable cards are available.",
+    "noShareableVcs": "No shareable certificates are available.",
     "sharingVc": "Sharing card",
     "bluetoothStateIos": "Bluetooth is turned OFF, please turn it ON from Control center",
     "bluetoothStateAndroid": "Bluetooth is turned OFF, please turn it ON from Quick settings menu",
@@ -777,6 +834,57 @@
       }
     }
   },
+  "SendVPScreen": {
+    "requester": "Requester",
+    "cardsSelected": "cards selected",
+    "cardSelected": "card selected",
+    "unCheck": "Uncheck",
+    "checkAll": "Check All",
+    "consentDialog": {
+      "title": "Consent Required",
+      "message": "We require your consent to share your verifiable credentials. This will enable us to verify your identity and fulfil your service requests. Choose \"Yes, Proceed\" to consent or \"Decline\" if you do not wish to share.",
+      "confirmButton": "Yes, Proceed",
+      "cancelButton": "Decline"
+    },
+    "confirmationDialog": {
+      "title": "Are you sure?",
+      "message": "Declining the consent will prevent you from sharing your verifiable credentials.",
+      "confirmButton": "Yes, Proceed",
+      "cancelButton": "Go Back"
+    },
+    "errors": {
+      "noMatchingCredentials": {
+        "title": "No matching credentials found!",
+        "message": "The verifier has requested credentials based on the following claims: {{claims}}. Please download the corresponding credentials and retry the sharing process."
+      },
+      "invalidVerifier": {
+        "title": "An Error Occured!",
+        "message": "The verifier is not recognized. Please obtain a valid QR code from the verifier."
+      },
+      "credentialsMismatch": {
+        "title": "An Error Occured!",
+        "message": "Credential mismatch detected. Ensure you have selected the right one containing the following claims: {{claims}} and try again."
+      },
+      "genericError": {
+        "title": "Oops! An Error Occured.",
+        "message": "Due to technical error, we are unable to share the card. Click on retry to re-share or click on Home to exit the sharing process."
+      },
+      "invalidQrCode": {
+        "title": "Invalid QR code",
+        "message": "The QR code is invalid because some required information is missing. Please ask the verifier to provide a valid QR code to share your credentials."
+      },
+      "noImage": {
+        "title": "An Error Occured!",
+        "message": "Face verification requires a photo in the selected credential(s). Please use the Share option or select a credential that includes an image."
+      }
+    },
+    "loaders": {
+      "loading": "Loading...",
+      "subTitle": {
+        "fetchingVerifiers": "Fetching your list of matching verifiable credentials"
+      }
+    }
+  },
   "VerifyIdentityOverlay": {
     "faceAuth": "Face Verification",
     "status": {
@@ -874,9 +982,15 @@
     "description": "Select your preferred language",
     "save": "Save Preference"
   },
+  "SetupKey": {
+    "header": "Key Management",
+    "description": "Choose your preferred keys for generating holder keys. To understand more, head out to help section.",
+    "save": "Save Preference",
+    "skip": "I'll do later"
+  },
   "common": {
-    "card": "card",
-    "cards": "cards",
+    "card": "Certificate",
+    "cards": "Certificates",
     "cancel": "Cancel",
     "accept": "Accept",
     "save": "Save",
@@ -907,19 +1021,21 @@
   "copilot": {
     "helpTitle": "Help/FAQs",
     "helpMessage": "Find answers to common questions and access helpful resources in our FAQ section, ensuring you have the support whenever you need it.",
-    "downloadTitle": "Download Card",
-    "downloadMessage": "Easily download and securely store your card in the app for convenient access whenever you need them.",
-    "shareTitle": "Share Card",
-    "shareMessage": "Share your card with ease in offline mode using bluetooth, empowering you to provide verified information whenever required.",
+    "downloadTitle": "Download Certificate",
+    "downloadMessage": "Easily download and securely store your certificate in the app for convenient access whenever you need them.",
+    "shareTitle": "Share Certificate",
+    "shareMessage": "Share your certificate with ease in offline mode using bluetooth, empowering you to provide verified information whenever required.",
     "historyTitle": "Access to History",
     "historyMessage": "View your activity history to track your interactions and stay informed about your past actions within the app.",
     "settingsTitle": "App Settings",
     "settingsMessage": "Customize your app experience with personalized settings as per your preferences.",
-    "cardTitle": "Card",
-    "cardMessage": "Your card displays your verified identity information. Tap for a detailed view or click on … for additional options.",
+    "cardTitle": "Certificate",
+    "cardMessage": "Your certificate displays your verified identity information. Tap for a detailed view or click on … for additional options.",
     "next": "Next",
     "previous": "Previous",
     "skip": "Skip",
-    "done": "Done"
+    "done": "Done",
+    "keyManagementTitle": "Key Management",
+    "keyManagementDesc": "Select the key generation method that aligns with your preference, putting you in control of your credential security.\nDrag and arrange the keys, with the top one being your highest priority."
   }
 }

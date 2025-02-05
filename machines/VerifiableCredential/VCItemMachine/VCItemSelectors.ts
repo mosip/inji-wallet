@@ -7,6 +7,8 @@ import {
   VerifiableCredential,
   VerifiableCredentialData,
 } from '../VCMetaMachine/vc';
+import {VCFormat} from '../../../shared/VCFormat';
+import {VCProcessor} from '../../../components/VC/common/VCProcessor';
 
 type State = StateFrom<typeof VCItemMachine>;
 
@@ -36,8 +38,8 @@ export function getVerifiableCredential(
   return verifiableCredential?.credential || verifiableCredential;
 }
 
-export function selectCredential(state: State): Credential {
-  return getVerifiableCredential(state.context.verifiableCredential);
+export function selectCredential(state: State): VerifiableCredential {
+  return state.context.verifiableCredential;
 }
 
 export function selectVerifiableCredentialData(
@@ -47,13 +49,15 @@ export function selectVerifiableCredentialData(
 
   return {
     vcMetadata: vcMetadata,
+    format: vcMetadata.format,
     face:
       state.context.verifiableCredential?.credential?.credentialSubject?.face ??
       state.context.credential?.biometrics?.face,
     issuerLogo:
       state.context.verifiableCredential?.issuerLogo ?? getMosipLogo(),
     wellKnown: state.context.verifiableCredential?.wellKnown,
-    credentialTypes: state.context.verifiableCredential?.credentialTypes,
+    credentialConfigurationId:
+      state.context.verifiableCredential?.credentialConfigurationId,
     issuer: vcMetadata.issuer,
   };
 }

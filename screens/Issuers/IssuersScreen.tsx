@@ -1,16 +1,16 @@
-import React, { useLayoutEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
-import { FlatList, Pressable, View } from 'react-native';
-import { Issuer } from '../../components/openId4VCI/Issuer';
-import { Error } from '../../components/ui/Error';
-import { Header } from '../../components/ui/Header';
-import { Button, Column, Row, Text } from '../../components/ui';
-import { Theme } from '../../components/ui/styleUtils';
-import { RootRouteProps } from '../../routes';
-import { HomeRouteProps } from '../../routes/routeTypes';
-import { useIssuerScreenController } from './IssuerScreenController';
-import { Loader } from '../../components/ui/Loader';
-import { removeWhiteSpace } from '../../shared/commonUtil';
+import React, {useLayoutEffect, useState} from 'react';
+import {useTranslation} from 'react-i18next';
+import {FlatList, Pressable} from 'react-native';
+import {Issuer} from '../../components/openId4VCI/Issuer';
+import {Error} from '../../components/ui/Error';
+import {Header} from '../../components/ui/Header';
+import {Button, Column, Row, Text} from '../../components/ui';
+import {Theme} from '../../components/ui/styleUtils';
+import {RootRouteProps} from '../../routes';
+import {HomeRouteProps} from '../../routes/routeTypes';
+import {useIssuerScreenController} from './IssuerScreenController';
+import {Loader} from '../../components/ui/Loader';
+import {isTranslationKeyFound, removeWhiteSpace} from '../../shared/commonUtil';
 import {
   ErrorMessage,
   getDisplayObjectForCurrentLanguage,
@@ -22,19 +22,19 @@ import {
   sendInteractEvent,
   sendStartEvent,
 } from '../../shared/telemetry/TelemetryUtils';
-import { TelemetryConstants } from '../../shared/telemetry/TelemetryConstants';
-import { MessageOverlay } from '../../components/MessageOverlay';
-import { SearchBar } from '../../components/ui/SearchBar';
-import { SvgImage } from '../../components/ui/svg';
-import { Icon } from 'react-native-elements';
-import { BannerNotificationContainer } from '../../components/BannerNotificationContainer';
-import { CredentialTypeSelectionScreen } from './CredentialTypeSelectionScreen';
+import {TelemetryConstants} from '../../shared/telemetry/TelemetryConstants';
+import {MessageOverlay} from '../../components/MessageOverlay';
+import {SearchBar} from '../../components/ui/SearchBar';
+import {SvgImage} from '../../components/ui/svg';
+import {Icon} from 'react-native-elements';
+import {BannerNotificationContainer} from '../../components/BannerNotificationContainer';
+import {CredentialTypeSelectionScreen} from './CredentialTypeSelectionScreen';
 
 export const IssuersScreen: React.FC<
   HomeRouteProps | RootRouteProps
 > = props => {
   const controller = useIssuerScreenController(props);
-  const { t } = useTranslation('IssuersScreen');
+  const {t} = useTranslation('IssuersScreen');
 
   const issuers = controller.issuers;
   let [filteredSearchData, setFilteredSearchData] = useState(issuers);
@@ -44,9 +44,11 @@ export const IssuersScreen: React.FC<
 
   const isVerificationFailed = controller.verificationErrorMessage !== '';
 
-  const verificationErrorMessage = t(
-    `MyVcsTab:errors.verificationFailed.${controller.verificationErrorMessage}`,
-  );
+  const translationKey = `errors.verificationFailed.${controller.verificationErrorMessage}`;
+
+  const verificationErrorMessage = isTranslationKeyFound(translationKey, t)
+    ? t(translationKey)
+    : t(`errors.verificationFailed.ERR_GENERIC`);
 
   useLayoutEffect(() => {
     if (controller.loadingReason || controller.errorMessageType) {
@@ -77,7 +79,7 @@ export const IssuersScreen: React.FC<
 
   const onPressHandler = (id: string, protocol: string) => {
     sendStartEvent(
-      getStartEventData(TelemetryConstants.FlowType.vcDownload, { id: id }),
+      getStartEventData(TelemetryConstants.FlowType.vcDownload, {id: id}),
     );
     sendInteractEvent(
       getInteractEventData(
@@ -127,8 +129,7 @@ export const IssuersScreen: React.FC<
     if (isGenericError()) {
       return SvgImage.SomethingWentWrong();
     }
-    if (isBackendError())
-      return SvgImage.ErrorOccurred()
+    if (isBackendError()) return SvgImage.ErrorOccurred();
     return SvgImage.NoInternetConnection();
   };
 
@@ -168,7 +169,7 @@ export const IssuersScreen: React.FC<
         primaryButtonText="goBack"
         primaryButtonEvent={controller.RESET_VERIFY_ERROR}
         primaryButtonTestID="goBack"
-        customStyles={{ marginTop: '30%' }}
+        customStyles={{marginTop: '30%'}}
       />
     );
   }
@@ -199,7 +200,6 @@ export const IssuersScreen: React.FC<
       </MessageOverlay>
     );
   }
-
   if (controller.errorMessageType) {
     return (
       <Error
@@ -212,7 +212,11 @@ export const IssuersScreen: React.FC<
         image={getImage()}
         showClose
         primaryButtonTestID="tryAgain"
-        primaryButtonText={controller.errorMessageType!=ErrorMessage.TECHNICAL_DIFFICULTIES?"tryAgain":undefined}
+        primaryButtonText={
+          controller.errorMessageType != ErrorMessage.TECHNICAL_DIFFICULTIES
+            ? 'tryAgain'
+            : undefined
+        }
         primaryButtonEvent={controller.TRY_AGAIN}
         onDismiss={goBack}
       />
@@ -249,12 +253,14 @@ export const IssuersScreen: React.FC<
               onLayout={() => filterIssuers('')}
             />
             {clearSearchIcon && (
-              <Pressable onPress={clearSearchText}>
+              <Pressable
+                onPress={clearSearchText}
+                style={Theme.SearchBarStyles.clearSearch}>
                 <Icon
                   testID="clearingIssuerSearchIcon"
                   name="circle-with-cross"
                   type="entypo"
-                  size={15}
+                  size={18}
                   color={Theme.Colors.DetailsLabel}
                 />
               </Pressable>
@@ -272,7 +278,7 @@ export const IssuersScreen: React.FC<
             {controller.issuers.length > 0 && (
               <FlatList
                 data={filteredSearchData}
-                renderItem={({ item }) => (
+                renderItem={({item}) => (
                   <Issuer
                     testID={removeWhiteSpace(item.credential_issuer)}
                     key={item.credential_issuer}

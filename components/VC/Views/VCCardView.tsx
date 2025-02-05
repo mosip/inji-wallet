@@ -14,6 +14,7 @@ import {CARD_VIEW_DEFAULT_FIELDS, isVCLoaded} from '../common/VCUtils';
 import {VCItemMachine} from '../../../machines/VerifiableCredential/VCItemMachine/VCItemMachine';
 import {useTranslation} from 'react-i18next';
 import {Copilot} from '../../ui/Copilot';
+import {VCProcessor} from '../common/VCProcessor';
 
 export const VCCardView: React.FC<VCItemProps> = props => {
   const controller = useVcItemController(props);
@@ -30,22 +31,48 @@ export const VCCardView: React.FC<VCItemProps> = props => {
     controller.UPDATE_VC_METADATA(props.vcMetadata);
   }, [props.vcMetadata]);
 
-  const vc = props.isDownloading ? null : controller.credential;
-
   const [fields, setFields] = useState([]);
   const [wellknown, setWellknown] = useState(null);
+  const [vc, setVc] = useState(null);
 
   useEffect(() => {
-    const {issuer, wellKnown, credentialTypes} = verifiableCredentialData;
+    async function loadVc() {
+      if (!props.isDownloading) {
+        const processedData = await VCProcessor.processForRendering(
+          controller.credential,
+          controller.verifiableCredentialData.format,
+        );
+        setVc(processedData);
+      }
+    }
+
+    loadVc();
+  }, [props.isDownloading, controller.credential]);
+
+  useEffect(() => {
+    const {
+      issuer,
+      wellKnown,
+      credentialConfigurationId,
+      vcMetadata: {format},
+    } = verifiableCredentialData;
     if (wellKnown) {
       getCredentialIssuersWellKnownConfig(
         issuer,
-        credentialTypes,
         CARD_VIEW_DEFAULT_FIELDS,
-      ).then(response => {
-        setWellknown(response.wellknown);
-        setFields(response.fields);
-      });
+        credentialConfigurationId,
+        format,
+      )
+        .then(response => {
+          setWellknown(response.matchingCredentialIssuerMetadata);
+          setFields(response.fields);
+        })
+        .catch(error => {
+          console.error(
+            'Error occurred while fetching wellknown for viewing VC ',
+            error,
+          );
+        });
     }
   }, [verifiableCredentialData?.wellKnown]);
 
@@ -124,8 +151,3 @@ export interface VCItemProps {
   isInitialLaunch?: boolean;
   isTopCard?: boolean;
 }
-
-VCCardView.defaultProps = {
-  isInitialLaunch: false,
-  isTopCard: false,
-};

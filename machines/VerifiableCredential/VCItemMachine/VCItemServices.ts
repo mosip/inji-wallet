@@ -1,25 +1,27 @@
 import {NativeModules} from 'react-native';
 import Cloud from '../../../shared/CloudBackupAndRestoreUtils';
-import {VCMetadata} from '../../../shared/VCMetadata';
 import getAllConfigurations, {
   API_URLS,
   CACHED_API,
   DownloadProps,
 } from '../../../shared/api';
 import {
-  generateKeys,
-  isHardwareKeystoreExists,
+  fetchKeyPair,
+  generateKeyPair,
 } from '../../../shared/cryptoutil/cryptoUtil';
-import {
-  getBindingCertificateConstant,
-  savePrivateKey,
-} from '../../../shared/keystore/SecureKeystore';
 import {CredentialDownloadResponse, request} from '../../../shared/request';
 import {WalletBindingResponse} from '../VCMetaMachine/vc';
-import {verifyCredential} from '../../../shared/vcjs/verifyCredential';
+import {
+  VerificationErrorMessage,
+  VerificationErrorType,
+  verifyCredential,
+} from '../../../shared/vcjs/verifyCredential';
 import {getVerifiableCredential} from './VCItemSelectors';
-import {getSelectedCredentialTypeDetails} from '../../../shared/openId4VCI/Utils';
-import {getCredentialTypes} from '../../../components/VC/common/VCUtils';
+import {getMatchingCredentialIssuerMetadata} from '../../../shared/openId4VCI/Utils';
+import {isIOS} from '../../../shared/constants';
+import {VCMetadata} from '../../../shared/VCMetadata';
+import {VCFormat} from '../../../shared/VCFormat';
+import {isMockVC} from '../../../shared/Utils';
 
 const {RNSecureKeystoreModule} = NativeModules;
 export const VCItemServices = model => {
@@ -28,16 +30,6 @@ export const VCItemServices = model => {
       return await Cloud.isSignedInAlready();
     },
 
-    updatePrivateKey: async context => {
-      const hasSetPrivateKey: boolean = await savePrivateKey(
-        context.walletBindingResponse.walletBindingId,
-        context.privateKey,
-      );
-      if (!hasSetPrivateKey) {
-        throw new Error('Could not store private key in keystore.');
-      }
-      return '';
-    },
     loadDownloadLimitConfig: async context => {
       var resp = await getAllConfigurations();
       const maxLimit: number = resp.vcDownloadMaxRetry;
@@ -89,17 +81,20 @@ export const VCItemServices = model => {
       };
       return walletResponse;
     },
-
-    generateKeyPair: async context => {
-      if (!isHardwareKeystoreExists) {
-        return await generateKeys();
-      }
-      const isBiometricsEnabled = RNSecureKeystoreModule.hasBiometricsEnabled();
-      return RNSecureKeystoreModule.generateKeyPair(
-        VCMetadata.fromVC(context.vcMetadata).id,
-        isBiometricsEnabled,
-        0,
-      );
+    fetchKeyPair: async context => {
+      const keyType = context.vcMetadata?.downloadKeyType;
+      return await fetchKeyPair(keyType);
+    },
+    generateKeypairAndStore: async context => {
+      const keyType = context.vcMetadata?.downloadKeyType;
+      const keypair = await generateKeyPair(keyType);
+      if ((keyType != 'ES256' && keyType != 'RS256') || isIOS())
+        await RNSecureKeystoreModule.storeGenericKey(
+          keypair.publicKey as string,
+          keypair.privateKey as string,
+          keyType,
+        );
+      return keypair;
     },
     requestBindingOTP: async context => {
       const response = await request(
@@ -123,11 +118,14 @@ export const VCItemServices = model => {
         context.vcMetadata.issuer,
         true,
       );
-      const wellknownOfCredential = getSelectedCredentialTypeDetails(
-        wellknownResponse,
-        getCredentialTypes(context.verifiableCredential),
-      );
-      return wellknownOfCredential;
+      try {
+        return getMatchingCredentialIssuerMetadata(
+          wellknownResponse,
+          context.verifiableCredential.credentialConfigurationId,
+        );
+      } catch (error) {
+        return {};
+      }
     },
     checkStatus: context => (callback, onReceive) => {
       const pollInterval = setInterval(
@@ -200,13 +198,26 @@ export const VCItemServices = model => {
       return () => clearInterval(pollInterval);
     },
 
-    verifyCredential: async context => {
+    verifyCredential: async (context: any) => {
       if (context.verifiableCredential) {
-        const verificationResult = await verifyCredential(
-          getVerifiableCredential(context.verifiableCredential),
-        );
-        if (!verificationResult.isVerified) {
-          throw new Error(verificationResult.errorMessage);
+        //TODO: Remove bypassing verification of mock VCs once mock VCs are verifiable
+        if (
+          context.selectedCredentialType.format === VCFormat.mso_mdoc ||
+          !isMockVC(context.selectedIssuerId)
+        ) {
+          const verificationResult = await verifyCredential(
+            getVerifiableCredential(context.verifiableCredential),
+            (context.vcMetadata as VCMetadata).format,
+          );
+          if (!verificationResult.isVerified) {
+            throw new Error(verificationResult.verificationErrorCode);
+          }
+        } else {
+          return {
+            isVerified: true,
+            verificationMessage: VerificationErrorMessage.NO_ERROR,
+            verificationErrorCode: VerificationErrorType.NO_ERROR,
+          };
         }
       }
     },

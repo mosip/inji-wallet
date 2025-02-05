@@ -1,0 +1,2 @@
+export DEBUG_KEYSTORE_ALIAS=androiddebugkey
+export DEBUG_KEYSTORE_PASSWORD=android

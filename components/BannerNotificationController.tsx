@@ -7,10 +7,12 @@ import {
 import {useContext} from 'react';
 import {GlobalContext} from '../shared/GlobalContext';
 import {VcMetaEvents} from '../machines/VerifiableCredential/VCMetaMachine/VCMetaMachine';
-import {selectIsDownloadingFailed, selectWalletBindingSuccess} from '../machines/VerifiableCredential/VCMetaMachine/VCMetaSelectors';
 import {
-  selectVerificationStatus,
-} from '../machines/VerifiableCredential/VCItemMachine/VCItemSelectors';
+  selectIsDownloadingFailed,
+  selectIsDownloadingSuccess,
+  selectWalletBindingSuccess,
+} from '../machines/VerifiableCredential/VCMetaMachine/VCMetaSelectors';
+import {selectVerificationStatus} from '../machines/VerifiableCredential/VCItemMachine/VCItemSelectors';
 
 export const UseBannerNotification = () => {
   const {appService} = useContext(GlobalContext);
@@ -23,6 +25,7 @@ export const UseBannerNotification = () => {
     isPasscodeUnlock: useSelector(settingsService, selectIsPasscodeUnlock),
 
     isBiometricUnlock: useSelector(settingsService, selectIsBiometricUnlock),
+    isDownloadingSuccess: useSelector(vcMetaService, selectIsDownloadingSuccess),
     isDownloadingFailed: useSelector(vcMetaService, selectIsDownloadingFailed),
     DISMISS: () => {
       settingsService.send(SettingsEvents.DISMISS());
@@ -33,6 +36,9 @@ export const UseBannerNotification = () => {
       vcMetaService.send(VcMetaEvents.RESET_VERIFICATION_STATUS(null)),
     RESET_DOWNLOADING_FAILED: () => {
       vcMetaService.send(VcMetaEvents.RESET_DOWNLOADING_FAILED());
+    },
+    RESET_DOWNLOADING_SUCCESS: () => {
+      vcMetaService.send(VcMetaEvents.RESET_DOWNLOADING_SUCCESS());
     },
   };
 };

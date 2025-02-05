@@ -24,6 +24,11 @@ import {
   selectIsFaceIdentityVerified,
   selectCredential,
   selectVerifiableCredentialData,
+  selectIsSendingVPTimeout,
+  selectIsSendingVP,
+  selectIsQrLoginDoneViaDeeplink,
+  selectOpenID4VPFlowType,
+  selectIsSendingVPSuccess,
 } from '../../machines/bleShare/scan/scanSelectors';
 import {
   selectBleError,
@@ -43,6 +48,12 @@ import {BOTTOM_TAB_ROUTES, SCAN_ROUTES} from '../../routes/routesConstants';
 import {ScanStackParamList} from '../../routes/routesConstants';
 import {VCShareFlowType} from '../../shared/Utils';
 import {Theme} from '../../components/ui/styleUtils';
+import {APP_EVENTS, selectIsLinkCode} from '../../machines/app';
+import {
+  selectIsFaceVerifiedInVPSharing,
+  selectVerifierNameInVPSharing,
+} from '../../machines/openID4VP/openID4VPSelectors';
+import {OpenID4VPEvents} from '../../machines/openID4VP/openID4VPMachine';
 
 type ScanLayoutNavigation = NavigationProp<
   ScanStackParamList & MainBottomTabParamList
@@ -58,6 +69,7 @@ export function useScanLayout() {
   const {t} = useTranslation('ScanScreen');
   const {appService} = useContext(GlobalContext);
   const scanService = appService.children.get('scan')!!;
+  const openID4VPService = scanService.getSnapshot().context.OpenId4VPRef;
   const navigation = useNavigation<ScanLayoutNavigation>();
 
   const isLocationDisabled = useSelector(scanService, selectIsLocationDisabled);
@@ -65,6 +77,7 @@ export function useScanLayout() {
   const isBleError = useSelector(scanService, selectIsHandlingBleError);
   const isInvalidIdentity = useSelector(scanService, selectIsInvalidIdentity);
   const flowType = useSelector(scanService, selectFlowType);
+  const openID4VPFlowType = useSelector(scanService, selectOpenID4VPFlowType);
   const isVerifyingIdentity = useSelector(
     scanService,
     selectIsVerifyingIdentity,
@@ -85,12 +98,13 @@ export function useScanLayout() {
     locationError.message = t('errors.locationDenied.message');
     locationError.button = t('errors.locationDenied.button');
   }
-
   const DISMISS = () => scanService.send(ScanEvents.DISMISS());
   const CANCEL = () => scanService.send(ScanEvents.CANCEL());
   const FACE_VALID = () => scanService.send(ScanEvents.FACE_VALID());
   const FACE_INVALID = () => scanService.send(ScanEvents.FACE_INVALID());
   const CLOSE_BANNER = () => scanService.send(ScanEvents.CLOSE_BANNER());
+  const VP_SHARE_CLOSE_BANNER = () =>
+    openID4VPService.send(OpenID4VPEvents.CLOSE_BANNER());
   const onStayInProgress = () =>
     scanService.send(ScanEvents.STAY_IN_PROGRESS());
   const onRetry = () => scanService.send(ScanEvents.RETRY());
@@ -121,17 +135,25 @@ export function useScanLayout() {
     scanService,
     selectIsExchangingDeviceInfoTimeout,
   );
+  const linkCode = useSelector(appService, selectIsLinkCode);
   const isAccepted = useSelector(scanService, selectIsAccepted);
   const isRejected = useSelector(scanService, selectIsRejected);
   const isSent = useSelector(scanService, selectIsSent);
   const isOffline = useSelector(scanService, selectIsOffline);
   const isSendingVc = useSelector(scanService, selectIsSendingVc);
+  const isSendingVP = useSelector(scanService, selectIsSendingVP);
   const isSendingVcTimeout = useSelector(scanService, selectIsSendingVcTimeout);
+  const isSendingVPTimeout = useSelector(scanService, selectIsSendingVPTimeout);
   const isDisconnected = useSelector(scanService, selectIsDisconnected);
-  const isStayInProgress = isConnectingTimeout || isSendingVcTimeout;
+  const isStayInProgress =
+    isConnectingTimeout || isSendingVcTimeout || isSendingVPTimeout;
   let isFaceIdentityVerified = useSelector(
     scanService,
     selectIsFaceIdentityVerified,
+  );
+  let isFaceVerifiedInVPSharing = useSelector(
+    openID4VPService,
+    selectIsFaceVerifiedInVPSharing,
   );
 
   let statusOverlay: Pick<
@@ -176,7 +198,7 @@ export function useScanLayout() {
       onButtonPress: CANCEL,
       progress: true,
     };
-  } else if (isSendingVc) {
+  } else if (isSendingVc || isSendingVP) {
     statusOverlay = {
       title: t('status.sharing.title'),
       hint: t('status.sharing.hint'),
@@ -189,7 +211,7 @@ export function useScanLayout() {
       hint: t('status.sharing.hint'),
       progress: true,
     };
-  } else if (isSendingVcTimeout) {
+  } else if (isSendingVcTimeout || isSendingVPTimeout) {
     statusOverlay = {
       title: t('status.sharing.title'),
       hint: t('status.sharing.timeoutHint'),
@@ -257,9 +279,19 @@ export function useScanLayout() {
   const isReviewing = useSelector(scanService, selectIsReviewing);
   const isScanning = useSelector(scanService, selectIsScanning);
   const isQrLoginDone = useSelector(scanService, selectIsQrLoginDone);
+  const isQrLoginDoneViaDeeplink = useSelector(
+    scanService,
+    selectIsQrLoginDoneViaDeeplink,
+  );
 
   useEffect(() => {
-    if (isDone) {
+    if (linkCode != '') {
+      scanService.send(ScanEvents.QRLOGIN_VIA_DEEP_LINK(linkCode));
+      appService.send(APP_EVENTS.RESET_LINKCODE());
+    } else if (isQrLoginDoneViaDeeplink) {
+      changeTabBarVisible('flex');
+      navigation.navigate(BOTTOM_TAB_ROUTES.home);
+    } else if (isDone) {
       changeTabBarVisible('flex');
       navigation.navigate(BOTTOM_TAB_ROUTES.home);
     } else if (
@@ -269,6 +301,9 @@ export function useScanLayout() {
     ) {
       changeTabBarVisible('none');
       navigation.navigate(SCAN_ROUTES.SendVcScreen);
+    } else if (openID4VPFlowType === VCShareFlowType.OPENID4VP) {
+      changeTabBarVisible('none');
+      navigation.navigate(SCAN_ROUTES.SendVPScreen);
     } else if (isScanning) {
       changeTabBarVisible('flex');
       navigation.navigate(SCAN_ROUTES.ScanScreen);
@@ -283,7 +318,10 @@ export function useScanLayout() {
     isQrLoginDone,
     isBleError,
     flowType,
+    openID4VPFlowType,
     isAccepted,
+    linkCode,
+    isQrLoginDoneViaDeeplink,
   ]);
 
   return {
@@ -306,13 +344,22 @@ export function useScanLayout() {
     onRetry,
     CANCEL,
     isSendingVc,
+    isSendingVP,
+    isVPSharingSuccess: useSelector(scanService, selectIsSendingVPSuccess),
+    vpVerifierName: useSelector(
+      openID4VPService,
+      selectVerifierNameInVPSharing,
+    ),
     flowType,
+    openID4VPFlowType,
     isVerifyingIdentity,
     isInvalidIdentity,
     FACE_INVALID,
     FACE_VALID,
     RETRY_VERIFICATION,
     isFaceIdentityVerified,
+    isFaceVerifiedInVPSharing,
     CLOSE_BANNER,
+    VP_SHARE_CLOSE_BANNER,
   };
 }

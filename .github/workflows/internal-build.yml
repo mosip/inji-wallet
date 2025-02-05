@@ -105,6 +105,7 @@ jobs:
     with:
       RELEASE: ${{ inputs.release }}
       NODE_VERSION: '18.x'
+      JAVA_VERSION: '17'
       RELEASE_KEYSTORE_ALIAS: androidreleasekey
       MIMOTO_HOST: ${{ inputs.mimotoBackendServiceUrl }}
       ESIGNET_HOST: ${{ inputs.esignetBackendServiceUrl }}
@@ -132,6 +133,7 @@ jobs:
     with:
       RELEASE: ${{ inputs.release }}
       NODE_VERSION: '18.x'
+      JAVA_VERSION: '17'
       RELEASE_KEYSTORE_ALIAS: androidreleasekey
       MIMOTO_HOST: ${{ inputs.mimotoBackendServiceUrl }}
       ESIGNET_HOST: ${{ inputs.esignetBackendServiceUrl }}

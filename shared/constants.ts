@@ -7,9 +7,10 @@ import {
 } from 'react-native-dotenv';
 import {Argon2iConfig} from './commonUtil';
 import {VcIdType} from '../machines/VerifiableCredential/VCMetaMachine/vc';
+import {KeyTypes} from './cryptoutil/KeyTypes';
 
-export let MIMOTO_BASE_URL = MIMOTO_HOST;
-export let ESIGNET_BASE_URL = ESIGNET_HOST;
+export let MIMOTO_BASE_URL = 'https://prod-opt.credissuer.com/mimoto';
+export let ESIGNET_BASE_URL = 'https://prod-opt.credissuer.com/esignet';
 export let DEBUG_MODE_ENABLED = DEBUG_MODE === 'true';
 
 export const LIVENESS_CHECK = LIVENESS_DETECTION === 'true';
@@ -68,11 +69,18 @@ export const API_CACHED_STORAGE_KEYS = {
     `CACHE_FETCH_ISSUER_CONFIG_${issuerId}`,
   fetchIssuerWellknownConfig: (issuerId: string) =>
     `CACHE_FETCH_ISSUER_WELLKNOWN_CONFIG_${issuerId}`,
+  fetchTrustedVerifiers: 'CACHE_FETCH_TRUSTED_VERIFIERS',
 };
 
 export function isIOS(): boolean {
   return Platform.OS === 'ios';
 }
+export const SUPPORTED_KEY_TYPES = {
+  ED25519: KeyTypes.ED25519,
+  'ECC K1': KeyTypes.ES256K,
+  'ECC R1': KeyTypes.ES256,
+  RSA: KeyTypes.RS256,
+};
 
 export function isAndroid(): boolean {
   return Platform.OS === 'android';
@@ -141,6 +149,7 @@ export const INTRO_SLIDER_LOGO_MARGIN = Dimensions.get('screen').width * 0.45;
 export const COPILOT_PRE_FINAL_STEP: number = 5;
 export const COPILOT_FINAL_STEP: number = 6;
 export const COPILOT_HEIGHT: number = 0.22;
+export const KEY_MANAGEMENT_STEP = 7;
 export const copilotTestID = {
   '1': 'help',
   '2': 'download',
@@ -149,3 +158,9 @@ export const copilotTestID = {
   '5': 'settings',
   '6': 'cardView',
 };
+
+export const FACE_SDK_MODEL_PATH = isAndroid()
+  ? 'assets:faceModel.tflite'
+  : 'bundle:/faceModel.tflite';
+export const FACE_SDK_MODEL_CHECKSUM =
+  '797b4d99794965749635352d55da38d4748c28c659ee1502338badee4614ed06';

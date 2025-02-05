@@ -1,5 +1,5 @@
 /* eslint-disable sonarjs/no-duplicate-string */
-import {EventFrom, send, StateFrom} from 'xstate';
+import {actions, EventFrom, send, StateFrom} from 'xstate';
 import {AppServices} from '../../../shared/GlobalContext';
 import {TelemetryConstants} from '../../../shared/telemetry/TelemetryConstants';
 import {
@@ -12,9 +12,9 @@ import {ScanActions} from './scanActions';
 import {ScanGuards} from './scanGuards';
 import {ScanModel} from './scanModel';
 import {ScanServices} from './scanServices';
+import {openID4VPMachine} from '../../openID4VP/openID4VPMachine';
 
 const model = ScanModel;
-const QR_LOGIN_REF_ID = 'QrLogin';
 export const ScanEvents = model.events;
 
 export const scanMachine =
@@ -35,6 +35,7 @@ export const scanMachine =
       initial: 'inactive',
       on: {
         SCREEN_BLUR: {
+          actions: 'resetOpenID4VPFlowType',
           target: '#scan.disconnectDevice',
         },
         SCREEN_FOCUS: {
@@ -45,7 +46,12 @@ export const scanMachine =
           actions: ['sendBLEConnectionErrorEvent', 'setBleError'],
         },
         RESET: {
-          actions: ['removeLoggers', 'resetFlowType', 'resetSelectedVc'],
+          actions: [
+            'removeLoggers',
+            'resetFlowType',
+            'resetSelectedVc',
+            'resetIsQrLoginViaDeepLink',
+          ],
           target: '.checkStorage',
         },
         DISMISS: {
@@ -59,10 +65,23 @@ export const scanMachine =
           actions: 'resetShowQuickShareSuccessBanner',
           target: '.inactive',
         },
+        QRLOGIN_VIA_DEEP_LINK: {
+          actions: [
+            'setQrLoginRef',
+            'setLinkCodeFromDeepLink',
+            'setIsQrLoginViaDeepLink',
+          ],
+          target: '#scan.checkStorage',
+        },
       },
       states: {
         inactive: {
-          entry: ['removeLoggers', 'resetFlowType', 'resetSelectedVc'],
+          entry: [
+            'removeLoggers',
+            'resetFlowType',
+            'resetSelectedVc',
+            'setOpenId4VPRef',
+          ],
         },
         disconnectDevice: {
           invoke: {
@@ -75,6 +94,7 @@ export const scanMachine =
           },
         },
         checkStorage: {
+          entry: 'setOpenId4VPRef',
           invoke: {
             src: 'checkStorageAvailability',
             onDone: [
@@ -296,16 +316,26 @@ export const scanMachine =
           on: {
             STORE_RESPONSE: {
               actions: 'updateShowFaceAuthConsent',
-              target: '#scan.findingConnection',
+              target: '#scan.checkQrLoginViaDeepLink',
             },
           },
+        },
+        checkQrLoginViaDeepLink: {
+          always: [
+            {
+              cond: 'isQrLoginViaDeepLinking',
+              target: '#scan.showQrLogin',
+            },
+            {
+              target: '#scan.findingConnection',
+            },
+          ],
         },
         findingConnection: {
           entry: [
             'removeLoggers',
             'registerLoggers',
             'clearUri',
-            'setChildRef',
             'resetFaceCaptureBannerStatus',
           ],
           on: {
@@ -318,7 +348,16 @@ export const scanMachine =
               {
                 target: 'showQrLogin',
                 cond: 'isQrLogin',
-                actions: ['sendVcSharingStartEvent', 'setLinkCode'],
+                actions: [
+                  'setQrLoginRef',
+                  'sendVcSharingStartEvent',
+                  'setLinkCode',
+                ],
+              },
+              {
+                target: 'startVPSharing',
+                cond: 'isOnlineSharing',
+                actions: ['setOpenId4VPFlowType', 'setLinkCode'],
               },
               {
                 target: 'decodeQuickShareData',
@@ -329,6 +368,89 @@ export const scanMachine =
                 target: 'invalid',
               },
             ],
+          },
+        },
+        startVPSharing: {
+          entry: [
+            'sendVPScanData',
+            () =>
+              sendStartEvent(
+                getStartEventData(TelemetryConstants.FlowType.vpSharing),
+              ),
+          ],
+          invoke: {
+            id: 'OpenId4VP',
+            src: openID4VPMachine,
+            onDone: {},
+          },
+          on: {
+            IN_PROGRESS: {
+              target: '.inProgress',
+            },
+            TIMEOUT: {
+              target: '.timeout',
+            },
+            DISMISS: [
+              {
+                cond: 'isFlowTypeSimpleShare',
+                actions: 'resetOpenID4VPFlowType',
+                target: 'checkStorage',
+              },
+              {
+                target: 'checkStorage',
+              },
+            ],
+            SHOW_ERROR: {
+              target: '.showError',
+            },
+            SUCCESS: {
+              target: '.success',
+            },
+          },
+          states: {
+            success: {},
+            showError: {},
+            inProgress: {
+              on: {
+                CANCEL: [
+                  {
+                    cond: 'isFlowTypeSimpleShare',
+                    actions: 'resetOpenID4VPFlowType',
+                    target: '#scan.checkStorage',
+                  },
+                  {
+                    target: '#scan.checkStorage',
+                  },
+                ],
+              },
+            },
+            timeout: {
+              on: {
+                STAY_IN_PROGRESS: {
+                  target: 'inProgress',
+                },
+                CANCEL: [
+                  {
+                    cond: 'isFlowTypeSimpleShare',
+                    actions: 'resetOpenID4VPFlowType',
+                    target: '#scan.checkStorage',
+                  },
+                  {
+                    target: '#scan.checkStorage',
+                  },
+                ],
+                RETRY: [
+                  {
+                    cond: 'isFlowTypeSimpleShare',
+                    actions: 'resetOpenID4VPFlowType',
+                    target: '#scan.checkStorage',
+                  },
+                  {
+                    target: '#scan.checkStorage',
+                  },
+                ],
+              },
+            },
           },
         },
         decodeQuickShareData: {
@@ -362,7 +484,10 @@ export const scanMachine =
             },
           },
           on: {
-            DISMISS: '#scan.checkFaceAuthConsent',
+            DISMISS: {
+              actions: ['resetLinkCode', 'resetIsQrLoginViaDeepLink'],
+              target: '#scan.checkFaceAuthConsent',
+            },
           },
           initial: 'idle',
           states: {
@@ -370,13 +495,21 @@ export const scanMachine =
             storing: {
               entry: ['storeLoginItem'],
               on: {
-                STORE_RESPONSE: {
-                  target: 'navigatingToHistory',
-                  actions: ['storingActivityLog'],
-                },
+                STORE_RESPONSE: [
+                  {
+                    cond: 'isQrLoginViaDeepLinking',
+                    actions: 'storingActivityLog',
+                    target: 'navigatingToHome',
+                  },
+                  {
+                    target: 'navigatingToHistory',
+                    actions: ['storingActivityLog'],
+                  },
+                ],
               },
             },
             navigatingToHistory: {},
+            navigatingToHome: {},
           },
           entry: [
             'sendScanData',
@@ -385,6 +518,7 @@ export const scanMachine =
                 getStartEventData(TelemetryConstants.FlowType.qrLogin),
               ),
           ],
+          exit: ['resetLinkCode'],
         },
         connecting: {
           invoke: {
@@ -757,10 +891,8 @@ export const scanMachine =
       },
     },
     {
-      actions: ScanActions(model, QR_LOGIN_REF_ID),
-
+      actions: ScanActions(model),
       services: ScanServices(model),
-
       guards: ScanGuards(),
       delays: {
         DESTROY_TIMEOUT: 500,

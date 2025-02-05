@@ -48,7 +48,7 @@ export interface Typegen0 {
     services: never;
   };
   eventsCausingActions: {
-    clearId: 'CANCEL' | 'SELECT_ID_TYPE' | 'SET_INDIVIDUAL_ID';
+    clearDisplayId: 'CANCEL' | 'SELECT_ID_TYPE' | 'SET_INDIVIDUAL_ID';
     clearIdError:
       | 'INPUT_ID'
       | 'SELECT_ID_TYPE'
@@ -72,10 +72,10 @@ export interface Typegen0 {
       | 'xstate.after(100)#AddVcModal.acceptingIdInput.focusing';
     forwardToParent: 'CANCEL' | 'DISMISS';
     resetIdInputRef: 'CANCEL';
+    setDisplayId: 'INPUT_ID' | 'SET_INDIVIDUAL_ID';
     setEmail:
       | 'done.invoke.AddVcModal.acceptingIdInput.requestingOtp:invocation[0]'
       | 'done.invoke.AddVcModal.acceptingOtpInput.resendOTP:invocation[0]';
-    setId: 'INPUT_ID' | 'SET_INDIVIDUAL_ID';
     setIdBackendError:
       | 'error.platform.AddVcModal.acceptingIdInput.requestingOtp:invocation[0]'
       | 'error.platform.AddVcModal.acceptingOtpInput.resendOTP:invocation[0]'

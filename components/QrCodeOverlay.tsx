@@ -9,7 +9,6 @@ import testIDProps from '../shared/commonUtil';
 import {SvgImage} from './ui/svg';
 import {NativeModules} from 'react-native';
 import {VerifiableCredential} from '../machines/VerifiableCredential/VCMetaMachine/vc';
-import RNSecureKeyStore, {ACCESSIBLE} from 'react-native-secure-key-store';
 import {DEFAULT_ECL, MAX_QR_DATA_LENGTH} from '../shared/constants';
 import {VCMetadata} from '../shared/VCMetadata';
 import {shareImageToAllSupportedApps} from '../shared/sharing/imageUtils';
@@ -21,19 +20,24 @@ export const QrCodeOverlay: React.FC<QrCodeOverlayProps> = props => {
   const [qrString, setQrString] = useState('');
   const [qrError, setQrError] = useState(false);
   const base64ImageType = 'data:image/png;base64,';
+  const {RNSecureKeystoreModule} = NativeModules;
 
   async function getQRData(): Promise<string> {
     let qrData: string;
     try {
-      qrData = await RNSecureKeyStore.get(props.meta.id);
+      const keyData = await RNSecureKeystoreModule.getData(props.meta.id);
+      if (keyData[1] && keyData.length > 0) {
+        qrData = keyData[1];
+      } else {
+        throw new Error('No key data found');
+      }
     } catch {
+      const {credential} = props.verifiableCredential;
       qrData = await RNPixelpassModule.generateQRData(
-        JSON.stringify(props.verifiableCredential),
+        JSON.stringify(credential),
         '',
       );
-      await RNSecureKeyStore.set(props.meta.id, qrData, {
-        accessible: ACCESSIBLE.ALWAYS_THIS_DEVICE_ONLY,
-      });
+      await RNSecureKeystoreModule.storeData(props.meta.id, qrData);
     }
     return qrData;
   }

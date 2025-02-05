@@ -1,4 +1,8 @@
+import {formatDistanceToNow} from 'date-fns';
 import {getIdType} from './VC/common/VCUtils';
+import * as DateFnsLocale from 'date-fns/locale';
+import {VCItemContainerFlowType} from '../shared/Utils';
+import {TFunction} from 'react-i18next';
 
 export type ActivityLogType =
   | '' // replacement for undefined
@@ -18,14 +22,19 @@ export type ActivityLogType =
   | 'VC_REMOVED'
   | 'TAMPERED_VC_REMOVED';
 
-export class ActivityLog {
+export interface ActivityLog {
+  getActionText(t: TFunction, wellknown: Object | undefined);
+}
+
+export class VCActivityLog implements ActivityLog {
   id: string;
-  idType: string[];
+  credentialConfigurationId: string;
   _vcKey: string;
   timestamp: number;
   deviceName: string;
   type: ActivityLogType;
   issuer: string;
+  flow: string;
 
   constructor({
     id = '',
@@ -35,6 +44,8 @@ export class ActivityLog {
     timestamp = Date.now(),
     deviceName = '',
     issuer = '',
+    credentialConfigurationId = '',
+    flow = VCItemContainerFlowType.VC_SHARE,
   } = {}) {
     this.id = id;
     this.idType = idType;
@@ -43,24 +54,31 @@ export class ActivityLog {
     this.timestamp = timestamp;
     this.deviceName = deviceName;
     this.issuer = issuer;
+    this.credentialConfigurationId = credentialConfigurationId;
+    this.flow = flow;
   }
 
-  static logTamperedVCs() {
-    return {
-      _vcKey: '',
-      type: 'TAMPERED_VC_REMOVED',
-      timestamp: Date.now(),
-      deviceName: '',
-      vcLabel: '',
-      issuer: '',
-    };
+  getActionText(t: TFunction, wellknown: Object | undefined) {
+    if (!!this.credentialConfigurationId && wellknown) {
+      const cardType = getIdType(wellknown, this.credentialConfigurationId);
+      return `${t(this.type, {idType: cardType, id: this.id})}`;
+    }
+    return `${t(this.type, {idType: '', id: this.id})}`;
   }
-}
 
-export function getActionText(activity: ActivityLog, t, wellknown: Object) {
-  if (activity.idType && activity.idType.length !== 0) {
-    const cardType = getIdType(wellknown, activity.idType);
-    return `${t(activity.type, {idType: cardType, id: activity.id})}`;
+  static getLogFromObject(data: Object): VCActivityLog {
+    return new VCActivityLog(data);
   }
-  return `${t(activity.type, {idType: '', id: activity.id})}`;
+
+  getActionLabel(language: string) {
+    return [
+      this.deviceName,
+      formatDistanceToNow(this.timestamp, {
+        addSuffix: true,
+        locale: DateFnsLocale[language],
+      }),
+    ]
+      .filter(label => label?.trim() !== '')
+      .join(' · ');
+  }
 }

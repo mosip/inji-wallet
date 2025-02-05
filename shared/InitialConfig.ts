@@ -15,7 +15,7 @@ export const INITIAL_CONFIG = {
     allowedAuthType: 'demo,otp,bio-Finger,bio-Iris,bio-Face',
     allowedEkycAuthType: 'demo,otp,bio-Finger,bio-Iris,bio-Face',
     warningDomainName: '',
-    aboutInjiUrl: 'https://docs.mosip.io/inji',
+    aboutInjiUrl: 'https://app.credissuer.com/',
     faceSdkModelUrl: '',
     openId4VCIDownloadVCTimeout: '30000',
   },

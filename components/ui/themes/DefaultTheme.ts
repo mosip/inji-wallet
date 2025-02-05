@@ -9,8 +9,8 @@ import {
 import {Spacing} from '../styleUtils';
 import {COPILOT_HEIGHT, isIOS} from '../../../shared/constants';
 import Constants from 'expo-constants';
-import HomeScreenLogo from '../../../assets/InjiHomeLogo.svg'
-import InjiLogoSmall from '../../../assets/InjiLogo.svg'
+import HomeScreenLogo from '../../../assets/InjiHomeLogo.svg';
+import InjiLogoSmall from '../../../assets/InjiLogo.svg';
 const Colors = {
   Black: '#000000',
   Zambezi: '#5F5F5F',
@@ -30,9 +30,9 @@ const Colors = {
   DimGray: '#737373',
   DarkGray: '#A5A5A5',
   platinumGrey: '#EDEDED',
-  Orange: '#951F6F',
+  Orange: '#2A2DA4',
   OrangeBrown: '#D9822B',
-  Blue: '#0000FF',
+  Blue: '#2A2DA4',
   LightGrey: '#F8F8F8',
   ShadeOfGrey: '#6F6F6F',
   mediumDarkGrey: '#7B7B7B',
@@ -48,24 +48,25 @@ const Colors = {
   plainText: '#FFFFFF',
   walletbindingLabel: '#000000',
   LightOrange: '#F7EDF3',
-  GradientColors: ['#FF5300', '#5B03AD'],
-  GradientColorsLight: ['#FF5300'+14, '#5B03AD'+14],
+  GradientColors: ['#2A2DA4', '#2A2DA4'],
+  GradientColorsLight: ['#2A2DA4' + 14, '#2A2DA4' + 14],
   DisabledColors: ['#C7C7C7', '#C7C7C7'],
   TimeoutHintBoxColor: '#FFF7E5',
   TimeoutHintBoxBorder: '#FFF2D6',
   TimeoutHintText: '#8B6105',
   resendCodeTimer: '#555555',
   uncheckedIcon: '#DBDBDB',
-  startColor: '#ff5300',
-  endColor: '#5b03ad',
+  startColor: '#2A2DA4',
+  endColor: '#2A2DA4',
   stroke: '#ee8123',
-  iconBg: '#ffa85a',
+  iconBg: '#2A2DA4',
   warningLogoBg: '#FFF7E5',
   toolTip: '#B7B7B7',
   toolTipContent: '#4B4B4B',
   toolTipPointer: '#E0E0E0',
   Mercury: '#E6E6E6',
   Yellow: '#E8A94F',
+  selectIDTextGradient: ['#F5F5F5', '#FFFFFF'],
 };
 
 export type ElevationLevel = 0 | 1 | 2 | 3 | 4 | 5 | 6;
@@ -118,7 +119,7 @@ export const DefaultTheme = {
     DefaultToggle: Colors.LightOrange,
     GrayText: Colors.GrayText,
     errorGrayText: Colors.mediumDarkGrey,
-    gradientBtn: ['#FF5300', '#5B03AD'],
+    gradientBtn: ['#2A2DA4', '#2A2DA4'],
     dotColor: Colors.dorColor,
     plainText: Colors.plainText,
     IconBackground: Colors.LightOrange,
@@ -148,6 +149,7 @@ export const DefaultTheme = {
     urlLink: Colors.Orange,
     warningText: Colors.Red,
     PendingIcon: Colors.Yellow,
+    selectIDTextGradient: ['#F5F5F5', '#FFFFFF'],
   },
   Styles: StyleSheet.create({
     title: {
@@ -414,6 +416,9 @@ export const DefaultTheme = {
       width: 191.58,
       height: 28,
     },
+    injiHomeLogo: {
+      marginLeft: -80,
+    },
     logo: {
       height: 35,
       width: 35,
@@ -519,8 +524,8 @@ export const DefaultTheme = {
       borderRadius: 100,
     },
     detailedViewImage: {
-      width: 80,
-      height: 106,
+      width: 50,
+      height: 80,
       borderRadius: 5,
       marginTop: 10,
     },
@@ -710,6 +715,20 @@ export const DefaultTheme = {
       flexDirection: 'row',
       marginLeft: I18nManager.isRTL ? 50 : 0,
       marginTop: 15,
+    },
+    sendVPHeaderContainer: {
+      flex: 1,
+      flexDirection: 'column',
+      marginLeft: I18nManager.isRTL ? 50 : 0,
+    },
+    sendVPHeaderTitle: {
+      fontSize: 18,
+      fontFamily: 'Inter_600SemiBold',
+    },
+    sendVPHeaderSubTitle: {
+      fontSize: 13,
+      fontFamily: 'Inter_600SemiBold',
+      color: Colors.Orange,
     },
     HistoryHeaderTitleStyle: {
       fontSize: 26,
@@ -1042,7 +1061,10 @@ export const DefaultTheme = {
     searchBar: {
       textAlign: I18nManager.isRTL ? 'right' : 'left',
       height: Dimensions.get('window').height * 0.055,
-      width: Dimensions.get('window').width * 0.8,
+      width: Dimensions.get('window').width * 0.75,
+    },
+    clearSearch: {
+      padding: 10,
     },
   }),
   ButtonStyles: StyleSheet.create({
@@ -1516,6 +1538,59 @@ export const DefaultTheme = {
       maxHeight: Dimensions.get('window').height,
     },
   }),
+  KeyManagementScreenStyle: StyleSheet.create({
+    columnStyle: {
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      flex: 1,
+    },
+    listItemTitle: {
+      paddingTop: 3,
+    },
+    iconStyle: {
+      marginRight: 15,
+    },
+    outerViewStyle: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      paddingHorizontal: 15,
+      paddingBottom: 10,
+      backgroundColor: '#fff',
+      elevation: 5, // For Android
+      shadowColor: '#000', // For iOS
+      shadowOffset: {width: 0, height: 2},
+      shadowOpacity: 0.2,
+      shadowRadius: 4,
+      zIndex: 1,
+    },
+    heading: {
+      color: 'black',
+      fontFamily: 'Inter_700Bold',
+      fontSize: 18,
+      lineHeight: 19,
+      padding: 10,
+    },
+    copilotViewStyle: {
+      flex: 1,
+      paddingTop: 10,
+      backgroundColor: '#fff',
+    },
+    textStyle: {
+      paddingRight: 10,
+      paddingTop: 10,
+    },
+    dragViewStyle: {
+      padding: 10,
+      marginBottom: 20,
+      width: Dimensions.get('window').width * 0.8,
+    },
+    dragViewStyleSettingsScreen: {
+      padding: 10,
+      marginBottom: 20,
+      width: Dimensions.get('window').width * 0.95,
+    },
+  }),
   HelpScreenStyle: StyleSheet.create({
     viewStyle: {
       borderRadius: 8,
@@ -1536,6 +1611,29 @@ export const DefaultTheme = {
     },
     labelStyle: {
       fontWeight: 'bold',
+    },
+  }),
+  VPSharingStyles: StyleSheet.create({
+    purposeContainer: {
+      backgroundColor: Colors.TimeoutHintBoxColor,
+      borderColor: Colors.TimeoutHintBoxBorder,
+      borderWidth: 1,
+      borderRadius: 5,
+    },
+    purposeText: {
+      fontSize: 13,
+      position: 'relative',
+      fontFamily: 'Inter_500Medium',
+    },
+    cardsSelectedText: {
+      fontFamily: 'Inter_500Medium',
+      color: '#000000',
+      fontSize: 14,
+    },
+    selectIDText: {
+      position: 'relative',
+      fontFamily: 'Inter_600SemiBold',
+      fontSize: 16,
     },
   }),
   CameraDisabledStyles: StyleSheet.create({
@@ -1704,9 +1802,9 @@ export const DefaultTheme = {
     };
   },
   LinearGradientDirection: {
-    start: {x:0.5,y:0.5},
-    end: {x:1,y:0.5}
-  }
+    start: {x: 0.5, y: 0.5},
+    end: {x: 1, y: 0.5},
+  },
 };
 
 function generateBoxShadowStyle() {

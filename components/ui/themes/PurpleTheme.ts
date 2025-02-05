@@ -10,7 +10,7 @@ import {Spacing} from '../styleUtils';
 import {COPILOT_HEIGHT, isIOS} from '../../../shared/constants';
 import Constants from 'expo-constants';
 import HomeScreenLogo from '../../../assets/Inji_Home_Logo.svg';
-import InjiLogoSmall  from '../../../assets/InjiLogo.svg'
+import InjiLogoSmall from '../../../assets/InjiLogo.svg';
 
 const Colors = {
   Black: '#231F20',
@@ -29,6 +29,7 @@ const Colors = {
   DarkGray: '#A5A5A5',
   platinumGrey: '#EDEDED',
   Orange: '#F2811D',
+  OrangeShade: '#E3781A',
   OrangeBrown: '#D9822B',
   Blue: '#0000FF',
   LightOrange: '#FDF1E6',
@@ -47,7 +48,7 @@ const Colors = {
   plainText: '#F3E2FF',
   walletbindingLabel: '#000000',
   GradientColors: ['#373086', '#70308C'],
-  GradientColorsLight:['#F3E2FF', '#F3E2FF'],
+  GradientColorsLight: ['#F3E2FF', '#F3E2FF'],
   DisabledColors: ['#C7C7C7', '#C7C7C7'],
   captureIconBorder: '#F59B4B',
   Purple: '#70308C',
@@ -67,6 +68,7 @@ const Colors = {
   toolTipPointer: '#E0E0E0',
   Mercury: '#E6E6E6',
   Yellow: '#E8A94F',
+  selectIDTextGradient: ['#F5F5F5', '#FFFFFF'],
 };
 
 export type ElevationLevel = 0 | 1 | 2 | 3 | 4 | 5 | 6;
@@ -120,6 +122,7 @@ export const PurpleTheme = {
     DefaultToggle: Colors.LightPurple,
     GrayText: Colors.GrayText,
     gradientBtn: Colors.GradientColors,
+    selectIDTextGradient: ['#F5F5F5', '#FFFFFF'],
     dotColor: Colors.dorColor,
     plainText: Colors.plainText,
     IconBackground: Colors.LightPurple,
@@ -417,6 +420,9 @@ export const PurpleTheme = {
     injiLogo: {
       width: 105,
       height: 40,
+    },
+    injiHomeLogo:{
+      marginLeft:0
     },
     logo: {
       height: 35,
@@ -719,6 +725,20 @@ export const PurpleTheme = {
       flexDirection: 'row',
       marginLeft: I18nManager.isRTL ? 50 : 0,
       marginTop: 15,
+    },
+    sendVPHeaderContainer: {
+      flex: 1,
+      flexDirection: 'column',
+      marginLeft: I18nManager.isRTL ? 50 : 0,
+    },
+    sendVPHeaderTitle: {
+      fontSize: 18,
+      fontFamily: 'Inter_600SemiBold',
+    },
+    sendVPHeaderSubTitle: {
+      fontSize: 13,
+      fontFamily: 'Inter_600SemiBold',
+      color: Colors.LightPurple,
     },
     HistoryHeaderTitleStyle: {
       fontSize: 26,
@@ -1051,7 +1071,10 @@ export const PurpleTheme = {
     searchBar: {
       textAlign: I18nManager.isRTL ? 'right' : 'left',
       height: Dimensions.get('window').height * 0.055,
-      width: Dimensions.get('window').width * 0.8,
+      width: Dimensions.get('window').width * 0.75,
+    },
+    clearSearch: {
+      padding: 10,
     },
   }),
   ButtonStyles: StyleSheet.create({
@@ -1522,6 +1545,59 @@ export const PurpleTheme = {
       maxHeight: Dimensions.get('window').height,
     },
   }),
+  KeyManagementScreenStyle: StyleSheet.create({
+    columnStyle: {
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      flex: 1,
+    },
+    listItemTitle: {
+      paddingTop: 3,
+    },
+    iconStyle: {
+      marginRight: 15,
+    },
+    textStyle: {
+      paddingRight: 10,
+      paddingTop: 10,
+    },
+    outerViewStyle: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      paddingHorizontal: 15,
+      paddingBottom: 10,
+      backgroundColor: '#fff',
+      elevation: 5, // For Android
+      shadowColor: '#000', // For iOS
+      shadowOffset: {width: 0, height: 2},
+      shadowOpacity: 0.2,
+      shadowRadius: 4,
+      zIndex: 1,
+    },
+    heading: {
+      color: 'black',
+      fontFamily: 'Inter_700Bold',
+      fontSize: 18,
+      lineHeight: 19,
+      padding: 10,
+    },
+    copilotViewStyle: {
+      flex: 1,
+      paddingTop: 10,
+      backgroundColor: '#fff',
+    },
+    dragViewStyle: {
+      padding: 10,
+      marginBottom: 20,
+      width: Dimensions.get('window').width * 0.8,
+    },
+    dragViewStyleSettingsScreen: {
+      padding: 10,
+      marginBottom: 20,
+      width: Dimensions.get('window').width * 0.95,
+    },
+  }),
   HelpScreenStyle: StyleSheet.create({
     viewStyle: {
       borderRadius: 8,
@@ -1543,6 +1619,29 @@ export const PurpleTheme = {
     },
     labelStyle: {
       fontWeight: 'bold',
+    },
+  }),
+  VPSharingStyles: StyleSheet.create({
+    purposeContainer: {
+      backgroundColor: Colors.TimeoutHintBoxColor,
+      borderColor: Colors.TimeoutHintBoxBorder,
+      borderWidth: 1,
+      borderRadius: 5,
+    },
+    purposeText: {
+      fontSize: 13,
+      position: 'relative',
+      fontFamily: 'Inter_500Medium',
+    },
+    cardsSelectedText: {
+      fontFamily: 'Inter_500Medium',
+      color: '#000000',
+      fontSize: 14,
+    },
+    selectIDText: {
+      position: 'relative',
+      fontFamily: 'Inter_600SemiBold',
+      fontSize: 16,
     },
   }),
   CameraDisabledStyles: StyleSheet.create({
@@ -1666,7 +1765,7 @@ export const PurpleTheme = {
   IntroBackup: require('../../../assets/Intro_Backup.png'),
   IntroSliderbackground: require('../../../assets/IntroSliderBackgroundPurple.png'),
   HomeScreenLogo: HomeScreenLogo,
-  InjiLogoSmall:InjiLogoSmall,
+  InjiLogoSmall: InjiLogoSmall,
   elevation(level: ElevationLevel): ViewStyle {
     // https://ethercreative.github.io/react-native-shadow-generator/
 
@@ -1708,10 +1807,10 @@ export const PurpleTheme = {
       [`${type}Start`]: start != null ? start : end != null ? end : top,
     };
   },
-  LinearGradientDirection:{
-    start: {x:0.5,y:0.5},
-    end: {x:0.5,y:1}
-  }
+  LinearGradientDirection: {
+    start: {x: 0.5, y: 0.5},
+    end: {x: 0.5, y: 1},
+  },
 };
 
 function generateBoxShadowStyle() {

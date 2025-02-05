@@ -1,5 +1,5 @@
 {
-  "originHash" : "37844cf80fe1416dd9922e75c396bd616f0723f347f5649a1c0355a3ba3f3a82",
+  "originHash" : "178f6c7c607eeb08b99a4966015d08339500de64791888a2e79d6b7afae53659",
   "pins" : [
     {
       "identity" : "base45-swift",
@@ -29,21 +29,48 @@
       }
     },
     {
+      "identity" : "inji-openid4vp-ios-swift",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/mosip/inji-openid4vp-ios-swift",
+      "state" : {
+        "branch" : "ovp-demo",
+        "revision" : "571e1f577e831efc32d6cef1dcec8d8cc130b221"
+      }
+    },
+    {
       "identity" : "inji-vci-client-ios-swift",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/mosip/inji-vci-client-ios-swift.git",
+      "location" : "https://github.com/mosip/inji-vci-client-ios-swift",
       "state" : {
-        "branch" : "0.1.1",
-        "revision" : "39684d021a16e4683e9407594104c10a2ef5db67"
+        "branch" : "release-0.2.x",
+        "revision" : "5fe56728106cffc8eff47e43437f288307c9d91b"
       }
     },
     {
       "identity" : "pixelpass-ios-swift",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/mosip/pixelpass-ios-swift/",
+      "location" : "https://github.com/mosip/pixelpass-ios-swift",
       "state" : {
-        "revision" : "9e2da5077242b903f694e6300627c9c282ebba51",
-        "version" : "0.2.0"
+        "branch" : "release-0.6.x",
+        "revision" : "7111692893287015599e4e0297bcade6a5375527"
+      }
+    },
+    {
+      "identity" : "secure-keystore-ios-swift",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/mosip/secure-keystore-ios-swift",
+      "state" : {
+        "branch" : "release-0.3.x",
+        "revision" : "068969c69eb56d906bf717628aa52e10cf0747ad"
+      }
+    },
+    {
+      "identity" : "swiftcbor",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/valpackett/SwiftCBOR",
+      "state" : {
+        "branch" : "master",
+        "revision" : "ec24382864e5ffc6d3915c0818745d5ab12545a8"
       }
     },
     {

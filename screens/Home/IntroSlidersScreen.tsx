@@ -1,6 +1,12 @@
 import React, {useRef} from 'react';
 import AppIntroSlider from 'react-native-app-intro-slider';
-import {Dimensions, Image, ImageBackground, StatusBar, View} from 'react-native';
+import {
+  Dimensions,
+  Image,
+  ImageBackground,
+  StatusBar,
+  View,
+} from 'react-native';
 import {Centered, Column, Row, Text, Button} from '../../components/ui';
 import {Theme} from '../../components/ui/styleUtils';
 import {useTranslation} from 'react-i18next';
@@ -23,12 +29,6 @@ export const IntroSlidersScreen: React.FC<RootRouteProps> = props => {
       title: t('stepOneTitle'),
       text: t('stepOneText'),
       image: Theme.IntroWelcome,
-    },
-    {
-      key: 'two',
-      title: t('stepTwoTitle'),
-      text: t('stepTwoText'),
-      image: Theme.SecureSharing,
     },
     {
       key: 'three',
@@ -54,13 +54,10 @@ export const IntroSlidersScreen: React.FC<RootRouteProps> = props => {
 
   const renderItem = ({item}) => {
     return (
-      <ImageBackground source={Theme.IntroSliderbackground} >
+      <ImageBackground source={Theme.IntroSliderbackground}>
         <Centered>
           <Row align="space-between" style={Theme.Styles.introSliderHeader}>
-            <Column style={{marginLeft: INTRO_SLIDER_LOGO_MARGIN}}>
-              {SvgImage.InjiSmallLogo()}
-            </Column>
-
+            <Column style={{marginLeft: INTRO_SLIDER_LOGO_MARGIN}}></Column>
             {item.key !== 'five' && (
               <Button
                 testID={
@@ -71,7 +68,10 @@ export const IntroSlidersScreen: React.FC<RootRouteProps> = props => {
                 type="plain"
                 title={isPasscodeSet ? t('back') : t('skip')}
                 onPress={isPasscodeSet ? controller.BACK : controller.NEXT}
-                styles={{height: 40, maxWidth: 115}}
+                styles={{
+                  height: 40,
+                  maxWidth: 115,
+                }}
               />
             )}
           </Row>
@@ -104,8 +104,7 @@ export const IntroSlidersScreen: React.FC<RootRouteProps> = props => {
             </Text>
           </Column>
         </Centered>
-        </ImageBackground>
-     
+      </ImageBackground>
     );
   };
 
@@ -139,9 +138,8 @@ export const IntroSlidersScreen: React.FC<RootRouteProps> = props => {
         <LinearGradient
           colors={Theme.Colors.gradientBtn}
           style={Theme.Styles.introSliderButton}
-          start={{ x: 0, y: 0 }}
-          end={{ x: 1, y: 1 }}
-          >
+          start={{x: 0, y: 0}}
+          end={{x: 1, y: 1}}>
           <Text
             style={{paddingTop: 3}}
             weight="semibold"

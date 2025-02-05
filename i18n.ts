@@ -11,7 +11,6 @@ import ta from './locales/tam.json';
 
 import {iso6393To1} from 'iso-639-3';
 
-import Keychain from 'react-native-keychain';
 import {getItem} from './machines/store';
 import {LocalizedField} from './machines/VerifiableCredential/VCMetaMachine/vc';
 
@@ -38,12 +37,7 @@ i18next
     supportedLngs: Object.keys(SUPPORTED_LANGUAGES),
   })
   .then(async () => {
-    const existingCredentials = await Keychain.getGenericPassword();
-    const language = await getItem(
-      'language',
-      null,
-      existingCredentials.password,
-    );
+    const language = await getItem('language', null, '');
 
     if (language !== i18next.language) {
       i18next.changeLanguage(language);

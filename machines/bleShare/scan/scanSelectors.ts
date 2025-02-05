@@ -9,6 +9,10 @@ export function selectFlowType(state: State) {
   return state.context.flowType;
 }
 
+export function selectOpenID4VPFlowType(state: State) {
+  return state.context.openID4VPFlowType;
+}
+
 export function selectReceiverInfo(state: State) {
   return state.context.receiverInfo;
 }
@@ -18,28 +22,28 @@ export function selectVcName(state: State) {
 }
 
 export function selectCredential(state: State) {
-  return (
+  const credential =
     state.context.selectedVc?.verifiableCredential?.credential ||
-    state.context.selectedVc?.verifiableCredential
-  );
+    state.context.selectedVc?.verifiableCredential;
+  return credential ? [credential] : credential;
 }
 
 export function selectVerifiableCredentialData(state: State) {
   const vcMetadata = new VCMetadata(state.context.selectedVc?.vcMetadata);
-  return {
-    vcMetadata: vcMetadata,
-    issuer: vcMetadata.issuer,
-    issuerLogo:
-      state.context.selectedVc?.verifiableCredential?.issuerLogo ||
-      getMosipLogo(),
-    face:
-      state.context.selectedVc?.verifiableCredential?.credential
-        ?.credentialSubject?.face ||
-      state.context.selectedVc?.credential?.biometrics?.face,
-    wellKnown: state.context.selectedVc?.verifiableCredential?.wellKnown,
-    credentialTypes:
-      state.context.selectedVc?.verifiableCredential?.credentialTypes,
-  };
+  return [
+    {
+      vcMetadata: vcMetadata,
+      issuer: vcMetadata.issuer,
+      issuerLogo:
+        state.context.selectedVc?.verifiableCredential?.issuerLogo ||
+        getMosipLogo(),
+      face:
+        state.context.selectedVc?.verifiableCredential?.credential
+          ?.credentialSubject?.face ||
+        state.context.selectedVc?.credential?.biometrics?.face,
+      wellKnown: state.context.selectedVc?.verifiableCredential?.wellKnown,
+    },
+  ];
 }
 
 export function selectQrLoginRef(state: State) {
@@ -73,6 +77,18 @@ export function selectIsSendingVc(state: State) {
   return state.matches('reviewing.sendingVc.inProgress');
 }
 
+export function selectIsSendingVP(state: State) {
+  return state.matches('startVPSharing.inProgress');
+}
+
+export function selectIsSendingVPError(state: State) {
+  return state.matches('startVPSharing.showError');
+}
+
+export function selectIsSendingVPSuccess(state: State) {
+  return state.matches('startVPSharing.success');
+}
+
 export function selectIsFaceIdentityVerified(state: State) {
   return (
     state.matches('reviewing.sendingVc.inProgress') &&
@@ -82,6 +98,10 @@ export function selectIsFaceIdentityVerified(state: State) {
 
 export function selectIsSendingVcTimeout(state: State) {
   return state.matches('reviewing.sendingVc.timeout');
+}
+
+export function selectIsSendingVPTimeout(state: State) {
+  return state.matches('startVPSharing.timeout');
 }
 
 export function selectIsSent(state: State) {
@@ -106,6 +126,10 @@ export function selectIsShowQrLogin(state: State) {
 
 export function selectIsQrLoginDone(state: State) {
   return state.matches('showQrLogin.navigatingToHistory');
+}
+
+export function selectIsQrLoginDoneViaDeeplink(state: State) {
+  return state.matches('showQrLogin.navigatingToHome');
 }
 
 export function selectIsQrLoginStoring(state: State) {

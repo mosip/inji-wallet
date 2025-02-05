@@ -3,6 +3,7 @@ export const TelemetryConstants = {
     vcDownload: 'VC Download',
     faceModelInit: 'Face SDK initialize',
     qrLogin: 'QR Login',
+    vpSharing: 'VP Sharing',
     senderVcShare: 'Sender VC Share',
     receiverVcShare: 'Receiver VC Share',
     vcActivation: 'VC Activation',
@@ -20,6 +21,8 @@ export const TelemetryConstants = {
     removeVcMetadata: 'VC metadata removed',
     vcVerification: 'VC Verification',
     wellknownConfig: 'Wellknown config',
+    setKeyPriority: 'Setting user Key priority order',
+    keyGeneration: 'Generated keypair of all keytypes',
   }),
 
   EndEventStatus: Object.freeze({

@@ -43,41 +43,50 @@ export interface CredentialSubject {
 
 type VCContext = (string | Record<string, unknown>)[];
 
-export interface Credential {
-  '@context': VCContext;
-  credentialSubject: CredentialSubject;
-  id: string;
-  issuanceDate: string;
-  issuer: string;
-  proof: {
-    created: string;
-    jws: string;
-    proofPurpose: 'assertionMethod' | string;
-    type: 'RsaSignature2018' | string;
-    verificationMethod: string;
-  };
-  type: string[];
-  credentialTypes: string[];
-}
+export type Credential =
+  | {
+      credentialConfigurationId: any;
+      '@context': VCContext;
+      credentialSubject: CredentialSubject;
+      id: string;
+      issuanceDate: string;
+      issuer: string;
+      proof: {
+        created: string;
+        jws: string;
+        proofPurpose: 'assertionMethod' | string;
+        type: 'RsaSignature2018' | string;
+        verificationMethod: string;
+      };
+      holder: {
+        id: string;
+      };
+
+      type: string[];
+    }
+  | string;
 
 export interface VerifiableCredential {
   issuerLogo: logoType;
   credential: Credential;
+  processedCredential?: object;
   wellKnown: string;
-  credentialTypes: Object[];
+  credentialConfigurationId: string;
 }
 
 export interface VerifiableCredentialData {
   vcMetadata: VCMetadata;
+  format: string;
   face: string;
   issuerLogo: logoType;
   wellKnown?: string;
-  credentialTypes?: Object[];
+  credentialConfigurationId: string;
   issuer?: string;
 }
 
 export interface CredentialWrapper {
   verifiableCredential: VerifiableCredential;
+  format: string;
   identifier: string;
   generatedOn: Date;
   vcMetadata: VCMetadata;
@@ -93,6 +102,8 @@ export interface CredentialTypes {
     type: Object[];
     credentialSubject: CredentialSubject;
   };
+  doctype: string;
+  claims: Object;
 }
 
 export interface IssuerWellknownResponse {

@@ -28,7 +28,7 @@ export const qrLoginMachine =
       },
       id: 'QrLogin',
       initial: 'waitingForData',
-      entry: ['resetSelectedVc', 'resetFlowType'],
+      entry: ['resetSelectedVc', 'resetFlowType', 'resetIsQrLoginViaDeepLink'],
       states: {
         waitingForData: {
           on: {
@@ -66,6 +66,11 @@ export const qrLoginMachine =
               },
               {
                 cond: 'showFaceAuthConsentScreen',
+                actions: [
+                  'setlinkTransactionResponse',
+                  'expandLinkTransResp',
+                  'setClaims',
+                ],
                 target: 'faceVerificationConsent',
               },
               {
@@ -86,6 +91,7 @@ export const qrLoginMachine =
           },
         },
         ShowError: {
+          entry: 'resetIsQrLoginViaDeepLink',
           on: {
             DISMISS: {
               actions: 'forwardToParent',
@@ -239,11 +245,15 @@ export const qrLoginMachine =
         },
         success: {
           entry: [
-            () =>
+            context =>
               sendEndEvent(
                 getEndEventData(
                   TelemetryConstants.FlowType.qrLogin,
                   TelemetryConstants.EndEventStatus.success,
+                  {
+                    'Keytype for QrLogin':
+                      context.selectedVc.vcMetadata.downloadKeyType,
+                  },
                 ),
               ),
           ],

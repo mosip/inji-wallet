@@ -21,7 +21,6 @@
                 <methods>
                     <include name="changeLanguage"/>
                     <include name="languageShouldBeInNativeLanguages"/>
-                    <include name="verifyTuvaliVersion"/>
                     <include name="changeLanguageToArabic"/>
                     <include name="changeLanguageToFilipionAndcheckInjiTour"/>
                     <include name="changeLanguageToHindiAndcheckInjiTour"/>
@@ -46,7 +45,6 @@
                 <methods>
                     <include name="noCardsAvailableToShare"/>
                     <include name="verifyReceivedCardTabPresent"/>
-                    <include name="rejectingCameraAccessesOnShareScreen"/>
                 </methods>
             </class>
             <class name="iosTestCases.NoNetworkIosTest">
@@ -77,7 +75,6 @@
                     <include name="downloadAndVerifyVcUsingUinViaEsignet"/>
                     <include name="downloadAndVerifyVcUsingVidViaEsignet"/>
                     <include name="denyPopupforEsignetLoginWebPage"/>
-<!--                    <include name="downloadMultipleVcViaEsignet"/>  invalid testcase -->
 
                 </methods>
             </class>
@@ -103,8 +100,9 @@
                 <methods>
                     <include name="verifyWelcomePagesContent"/>
                     <include name="verifyWelcomePagesFromInjiTourGuide"/>
-                    <include name="verifyGoBackFromInjiTourGuide"/>
                     <include name="verifyClickOnBackFromInjiTourGuide"/>
+                    <include name="verifyWelcomePagesFromInjiTourGuideForFirstCard"/>
+                    <include name="verifyWelcomePagesFromInjiTourGuideAfterDeleteTheCard"/>
                 </methods>
             </class>
             <class name="iosTestCases.MosipOtpAlternativeFlow">

@@ -14,7 +14,25 @@
     "WALLET_BINDING_SUCCESSFULL": "Ang pag-activate ng {{idType}} {{id}} ay matagumpay.",
     "WALLET_BINDING_FAILURE": "Nabigo ang pag-activate ng {{idType}} {{id}}.",
     "VC_REMOVED": "Ang {{idType}} {{id}} ay inalis sa wallet.",
-    "TAMPERED_VC_REMOVED": "Ang {{idType}} {{id}} ay inalis mula sa wallet dahil sa pakikialam."
+    "TAMPERED_VC_REMOVED": "Ang {{idType}} {{id}} ay inalis mula sa wallet dahil sa pakikialam.",
+    "vpSharing": {
+      "SHARED_SUCCESSFULLY": "Matagumpay na naibahagi ang Pagtatanghal ng Kredensyal.",
+      "SHARED_WITH_FACE_VERIFIACTION": "Matagumpay ang pag-verify sa mukha, at matagumpay na naibahagi ang Credential Presentation.",
+      "VERIFIER_AUTHENTICATION_FAILED": "Nabigong i-authenticate ang Serbisyo sa Pag-verify sa panahon ng pagbabahagi ng VP.",
+      "INVALID_AUTH_REQUEST": "Ang QR code ay may di-wasto o nawawalang data. Tingnan sa serbisyo ng pag-verify.",
+      "USER_DECLINED_CONSENT": "Tinanggihan ng user ang pahintulot para sa pagbabahagi ng Credential Presentation.",
+      "SHARED_AFTER_RETRY": "Ang Pagtatanghal ng Kredensyal ay matagumpay na naibahagi pagkatapos ng muling pagsubok.",
+      "SHARED_WITH_FACE_VERIFICATION_AFTER_RETRY": "Matagumpay ang pag-verify sa mukha, at matagumpay na naibahagi ang Credential Presentation pagkatapos ng muling pagsubok.",
+      "SHARING_FAILED": "Nabigo ang pagbabahagi ng Credential Presentation dahil sa teknikal na error.",
+      "RETRY_ATTEMPT_FAILED": "Nabigo ang pagbabahagi ng Kredensyal na Presentasyon dahil sa teknikal na error pagkatapos ng muling pagsubok.",
+      "MAX_RETRY_ATTEMPT_FAILED": "Nabigo ang pagbabahagi ng Kredensyal na Presentasyon dahil sa teknikal na error pagkatapos ng maximum na muling pagsubok.",
+      "FACE_VERIFICATION_FAILED": "Nabigo ang pag-verify ng mukha sa panahon ng pagbabahagi ng Credential Presentation.",
+      "FACE_VERIFICATION_FAILED_AFTER_RETRY_ATTEMPT": "Nabigo ang pag-verify ng mukha habang sinusubukang muli ang pagbabahagi ng Credential Presentation.",
+      "NO_SELECTED_VC_HAS_IMAGE": "Nabigo ang pagbabahagi ng Pagtatanghal ng Kredensyal dahil walang larawan ng mukha ang mga napiling nabe-verify na kredensyal.",
+      "CREDENTIAL_MISMATCH_FROM_KEBAB": "Ang hindi pagkakatugma ng Pagtatanghal ng Mga Kredensyal ay naganap sa panahon ng pagbabahagi mula sa menu, batay sa mga hiniling na claim: {{info}}.",
+      "NO_CREDENTIAL_MATCHING_REQUEST": "Walang nakitang mga kredensyal na tumutugma sa kahilingan ng serbisyo sa pag-verify batay sa mga ibinigay na claim: {{info}}.",
+      "TECHNICAL_ERROR": "Hindi matuloy ang pagbabahagi ng Kredensyal na Presentasyon dahil sa teknikal na error."
+    }
   },
   "DeviceInfoList": {
     "requestedBy": "Hiniling ni",
@@ -158,7 +176,9 @@
   "BannerNotification": {
     "alternatePasscodeSuccess": "Tagumpay! Magagamit mo na ngayon ang passcode upang i-unlock ang Inji app.",
     "alternateBiometricSuccess": "Tagumpay! Maaari ka na ngayong gumamit ng biometrics upang i-unlock ang Inji app.",
-    "activated": "Ang mga kredensyal ay pinagana para sa online na pagpapatunay."
+    "activated": "Ang mga kredensyal ay pinagana para sa online na pagpapatunay.",
+    "keyPreferenceSuccess": "Ang iyong mga kagustuhan sa key ay matagumpay na na-save!",
+    "keyPreferenceError": "Paumanhin! May error sa pagsasaayos ng iyong mga kagustuhan sa key"
   },
   "AboutInji": {
     "aboutInji": "Tungkol kay Inji",
@@ -200,6 +220,19 @@
       "technicalDifficulty": {
         "title": "May naganap na error!",
         "message": "Salamat sa iyong pasensya! Nakakaranas kami ng mga teknikal na paghihirap ngayon. Pakisubukang muli mamaya o makipag-ugnayan sa admin para sa karagdagang tulong!"
+      },
+      "verificationFailed": {
+        "title": "May pagkakamaling naganap!",
+        "goBackButton": "Bumalik ka",
+        "ERR_GENERIC": "Dahil sa Technical Error, hindi namin na-download ang card.",
+        "ERR_NETWORK": "Dahil sa hindi matatag na koneksyon sa internet, hindi namin na-download ang card. Pakisuri ang iyong koneksyon sa internet.",
+        "ERR_MISSING_ISSUANCEDATE": "Ang petsa ng pag-isyu ay hindi wasto o nakatakda sa hinaharap. Tingnan kung may wastong petsa.",
+        "ERR_INVALID_ISSUANCEDATE": "Ang petsa ng pag-isyu ay hindi wasto o nakatakda sa hinaharap. Tingnan kung may wastong petsa.",
+        "ERR_ISSUANCE_DATE_IS_FUTURE_DATE": "Ang petsa ng pag-isyu ay hindi wasto o nakatakda sa hinaharap. Tingnan kung may wastong petsa.",
+        "ERR_INVALID_EXPIRATIONDATE": "Ang petsa ng pag-expire ay hindi wasto. Tingnan kung may wastong petsa.",
+        "ERR_INVALID_VALIDFROM": "Ang petsa ay hindi wasto o nakatakda sa hinaharap. Tingnan kung may wastong petsa.",
+        "ERR_VALID_FROM_IS_FUTURE_DATE": "Ang petsa ay hindi wasto o nakatakda sa hinaharap. Tingnan kung may wastong petsa.",
+        "ERR_INVALID_VALIDUNTIL": "Di-wasto ang petsa. Tingnan kung may wastong petsa."
       }
     }
   },
@@ -235,6 +268,14 @@
         "six": "Paano ko maibabalik ang backup na kinuha ko?",
         "seven": "Bakit ako nakakakuha ng error na \"no backup file found\"?",
         "eight": "Ano ang mangyayari kapag I-clear ko ang Storage ng INJI app mula sa mga setting ng device?"
+      },
+      "KeyManagement": {
+        "one": "Ano ang iba't ibang uri ng mga susi na maaari kong piliin?",
+        "two": "Paano ko malalaman kung anong uri ng key ang pinakamahusay para sa akin?",
+        "three": "Paano naaapektuhan ng pagpili ng uri ng key ang aking seguridad?",
+        "four": "Maaari ko bang baguhin ang uri ng key ko sa hinaharap?",
+        "five": "Ano ang epekto ng priyoridad ng key, at paano ko ito maisasaayos?",
+        "six": "Ano ang mangyayari kung hindi ako pumili ng uri ng key o mag-set ng kagustuhan?"
       }
     },
     "answers": {
@@ -270,6 +311,14 @@
         "six": "Upang mag-restore ng backup, pumunta sa mga setting ng app, piliin ang opsyon sa pag-restore, at piliin ang backup na file. ",
         "seven": "Maaaring mangyari ang error na ito kung walang mga backup na file na nauugnay sa ibinigay na email ID o kung ang mga backup na file ay nakaimbak sa ibang lokasyon. ",
         "eight": "Pakitandaan na ang pagkilos na ito ay ginagawa nang maingat dahil nililimas nito ang data ng app na nangangahulugan na ang lahat ng iyong na-download na VC ay iki-clear. "
+      },
+      "KeyManagement": {
+        "one": "Maaari kang pumili mula sa Ed25519, ECC K1, ECC R1, at RSA keys. Ang bawat uri ay may kanya-kanyang kalakasan pagdating sa seguridad at pagganap.",
+        "two": "Kung inuuna mo ang bilis, kahusayan, at medyo mataas na seguridad, maaaring angkop ang Ed25519 o ECC K1. Kung kailangan mo ng malawakang pagkakatugma at malakas na seguridad, maaaring mas mabuting pagpipilian ang RSA o ECC R1.",
+        "three": "Iba't ibang mga key ay nag-aalok ng iba't ibang antas ng seguridad. Halimbawa, ang Ed25519 at ECC keys ay kilala para sa mataas na seguridad na may mas maliit na sukat ng key, habang ang RSA ay malawakang pinagkakatiwalaan para sa matibay na seguridad sa iba't ibang mga sistema.",
+        "four": "Oo, maaari mong baguhin ang iyong uri ng key, ngunit mahalagang tandaan na maaaring makaapekto ito sa kung paano nakikipag-ugnayan ang iyong mga kredensyal sa iba't ibang mga sistema. Palaging tiyakin na ang napiling uri ng key ay tugma sa iyong kaso ng paggamit.",
+        "five": "Ang pagkakasunud-sunod ng iyong mga key ang nagtatakda ng kanilang priyoridad sa paggamit. Maaari mong i-drag at ayusin ang iyong mga key, kung saan ang nasa itaas ay ang iyong unang pagpipilian.",
+        "six": "Kung hindi ka pipili ng partikular na uri ng key, awtomatikong pipili ang app ng pinaka-angkop na key base sa kung ano ang sinusuportahan ng issuer ng kredensyal. Tinitiyak nito ang pagkakatugma at seguridad, kahit hindi ka gumawa ng manu-manong pagpili."
       }
     }
   },
@@ -358,6 +407,7 @@
     "generateVcFABDescription": "Upang i-download ang iyong card i-tap ang + sa ibaba",
     "downloadCard": "I-download ang Card",
     "downloadingYourCard": "Ang pagda-download ng iyong card, maaari itong tumagal nang hanggang 5 minuto",
+    "downloadingVcSuccess": "Matagumpay na na-download ang iyong Card",
     "downloadingVcFailed": "Paumanhin! Dahil sa teknikal na error hindi namin ma-download ang iyong card ngayon. Subukang muli mamaya.",
     "activated": "Ang mga kredensyal ay pinagana para sa online na pagpapatotoo.",
     "noCardsTitle": "Walang Nahanap na Mga Card!",
@@ -391,8 +441,15 @@
       "verificationFailed": {
         "title": "May pagkakamaling naganap!",
         "goBackButton": "Bumalik ka",
-        "technicalError": "Dahil sa Technical Error, hindi namin na-download ang card.",
-        "networkError": "Dahil sa hindi matatag na koneksyon sa internet, hindi namin na-download ang card. Pakisuri ang iyong koneksyon sa internet."
+        "ERR_GENERIC": "Dahil sa Technical Error, hindi namin na-download ang card.",
+        "ERR_NETWORK": "Dahil sa hindi matatag na koneksyon sa internet, hindi namin na-download ang card. Pakisuri ang iyong koneksyon sa internet.",
+        "ERR_MISSING_ISSUANCEDATE": "Ang petsa ng pag-isyu ay hindi wasto o nakatakda sa hinaharap. Tingnan kung may wastong petsa.",
+        "ERR_INVALID_ISSUANCEDATE": "Ang petsa ng pag-isyu ay hindi wasto o nakatakda sa hinaharap. Tingnan kung may wastong petsa.",
+        "ERR_ISSUANCE_DATE_IS_FUTURE_DATE": "Ang petsa ng pag-isyu ay hindi wasto o nakatakda sa hinaharap. Tingnan kung may wastong petsa.",
+        "ERR_INVALID_EXPIRATIONDATE": "Ang petsa ng pag-expire ay hindi wasto. Tingnan kung may wastong petsa.",
+        "ERR_INVALID_VALIDFROM": "Ang petsa ay hindi wasto o nakatakda sa hinaharap. Tingnan kung may wastong petsa.",
+        "ERR_VALID_FROM_IS_FUTURE_DATE": "Ang petsa ay hindi wasto o nakatakda sa hinaharap. Tingnan kung may wastong petsa.",
+        "ERR_INVALID_VALIDUNTIL": "Di-wasto ang petsa. Tingnan kung may wastong petsa."
       }
     }
   },
@@ -420,10 +477,10 @@
     "noReceivedVcsText": "Pindutin ang Humiling sa ibaba para makatanggap ng card"
   },
   "VcVerificationBanner": {
-      "inProgress": "Pina-validate namin ang iyong card, maaaring magtagal ito. Kapag na-verify na, magagawa mong i-activate ang iyong card.",
-      "success": "Matagumpay na na-verify ang {{vcDetails}} at magagamit na ngayon para sa pag-activate.",
-      "error": "Paumanhin, hindi namin ma-verify ang {{vcDetails}} ngayon. Subukang muli mamaya. Hanggang sa panahong iyon, hindi mo maa-activate o maibabahagi ang iyong card."
-    },
+    "inProgress": "Pina-validate namin ang iyong card, maaaring magtagal ito. Kapag na-verify na, magagawa mong i-activate ang iyong card.",
+    "success": "Matagumpay na na-verify ang {{vcDetails}} at magagamit na ngayon para sa pag-activate.",
+    "error": "Paumanhin, hindi namin ma-verify ang {{vcDetails}} ngayon. Subukang muli mamaya. Hanggang sa panahong iyon, hindi mo maa-activate o maibabahagi ang iyong card."
+  },
   "ViewVcModal": {
     "title": "Mga Detalye ng ID",
     "inProgress": "Isinasagawa",
@@ -768,6 +825,57 @@
       }
     }
   },
+  "SendVPScreen": {
+    "requester": "Humihiling",
+    "cardsSelected": "mga card na napili",
+    "cardSelected": "card pinili",
+    "unCheck": "Alisin ang check",
+    "checkAll": "Suriin Lahat",
+    "consentDialog": {
+      "title": "Kinakailangan ang Pahintulot",
+      "message": "Hinihiling namin ang iyong pahintulot na ibahagi ang iyong mga nabe-verify na kredensyal. Ito ay magbibigay-daan sa amin na i-verify ang iyong pagkakakilanlan at matupad ang iyong mga kahilingan sa serbisyo. Piliin ang \"Oo, Magpatuloy\" sa pagsang-ayon o \"Tanggihan\" kung ayaw mong ibahagi.",
+      "confirmButton": "Oo, Magpatuloy",
+      "cancelButton": "Tanggihan"
+    },
+    "confirmationDialog": {
+      "title": "Sigurado ka ba?",
+      "message": "Ang pagtanggi sa pahintulot ay mapipigilan ka sa pagbabahagi ng iyong mga nabe-verify na kredensyal.",
+      "confirmButton": "Oo, Magpatuloy",
+      "cancelButton": "Bumalik ka"
+    },
+    "errors": {
+      "noMatchingCredentials": {
+        "title": "Walang nakitang katugmang mga kredensyal!",
+        "message": "Ang verifier ay humiling ng mga kredensyal batay sa mga sumusunod na claim: {{claims}}. Paki-download ang kaukulang mga kredensyal at subukang muli ang proseso ng pagbabahagi."
+      },
+      "invalidVerifier": {
+        "title": "Isang Error ang Naganap!",
+        "message": "Hindi nakikilala ang verifier. Mangyaring kumuha ng wastong QR code mula sa verifier."
+      },
+      "credentialsMismatch": {
+        "title": "Isang Error ang Naganap!",
+        "message": "May nakitang hindi pagkakatugma ng kredensyal. Tiyaking napili mo ang tama na naglalaman ng mga sumusunod na claim: {{claims}} at subukang muli."
+      },
+      "genericError": {
+        "title": "Oops! Isang Error ang Naganap.",
+        "message": "Dahil sa teknikal na error, hindi namin maibahagi ang card. Mag-click sa subukang muli upang muling ibahagi o mag-click sa Home upang lumabas sa proseso ng pagbabahagi."
+      },
+      "invalidQrCode": {
+        "title": "Di-wastong QR code",
+        "message": "Di-wasto ang QR code dahil nawawala ang ilang kinakailangang impormasyon. Mangyaring hilingin sa verifier na magbigay ng wastong QR code upang ibahagi ang iyong mga kredensyal."
+      },
+      "noImage": {
+        "title": "Isang Error ang Naganap!",
+        "message": "Ang pag-verify ng mukha ay nangangailangan ng larawan sa napiling (mga) kredensyal. Pakigamit ang opsyong Ibahagi o pumili ng kredensyal na may kasamang larawan."
+      }
+    },
+    "loaders": {
+      "loading": "Naglo-load...",
+      "subTitle": {
+        "fetchingVerifiers": "Kinukuha ang iyong listahan ng mga tumutugmang nabe-verify na kredensyal"
+      }
+    }
+  },
   "VerifyIdentityOverlay": {
     "faceAuth": "Pagpapatunay ng Mukha",
     "status": {
@@ -865,6 +973,12 @@
     "description": "Piliin ang iyong gustong wika",
     "save": "I-save ang Kagustuhan"
   },
+  "SetupKey": {
+    "header": "Pamamahala ng Key",
+    "description": "Piliin ang iyong gustong mga key para sa pagbuo ng holder keys. Para mas maintindihan pa, pumunta sa seksyon ng tulong.",
+    "save": "I-save ang Kagustuhan",
+    "skip": "Gagawin ko mamaya"
+  },
   "common": {
     "card": "card",
     "cards": "mga card",
@@ -911,6 +1025,8 @@
     "next": "Susunod",
     "previous": "Nakaraang",
     "skip": "Laktawan",
-    "done": "Tapos na"
+    "done": "Tapos na",
+    "keyManagementTitle": "Pamamahala ng Key",
+    "keyManagementDesc": "Piliin ang paraan ng paggawa ng key na naaayon sa iyong kagustuhan, nagbibigay sa iyo ng kontrol sa seguridad ng iyong kredensyal.\nI-drag at ayusin ang mga key, kung saan ang nasa itaas ay ang may pinakamataas na priyoridad."
   }
 }

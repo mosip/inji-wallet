@@ -6,6 +6,7 @@ import {
 } from '../machines/VerifiableCredential/VCMetaMachine/vc';
 import {Protocols} from './openId4VCI/Utils';
 import {getMosipIdentifier} from './commonUtil';
+import {VCFormat} from './VCFormat';
 
 const VC_KEY_PREFIX = 'VC';
 const VC_ITEM_STORE_KEY_REGEX = '^VC_[a-zA-Z0-9_-]+$';
@@ -21,7 +22,9 @@ export class VCMetadata {
   timestamp?: string = '';
   isVerified: boolean = false;
   displayId: string = '';
+  format: string = '';
 
+  downloadKeyType: string = '';
   constructor({
     idType = '',
     requestId = '',
@@ -32,6 +35,8 @@ export class VCMetadata {
     timestamp = '',
     isVerified = false,
     displayId = '',
+    format = '',
+    downloadKeyType = '',
   } = {}) {
     this.idType = idType;
     this.requestId = requestId;
@@ -42,12 +47,15 @@ export class VCMetadata {
     this.timestamp = timestamp;
     this.isVerified = isVerified;
     this.displayId = displayId;
+    this.format = format;
+    this.downloadKeyType = downloadKeyType;
   }
 
   //TODO: Remove any typing and use appropriate typing
   static fromVC(vc: Partial<VC> | VCMetadata | any) {
     return new VCMetadata({
       idType: vc.idType,
+      format: vc.format || VCFormat.ldp_vc,
       requestId: vc.requestId,
       isPinned: vc.isPinned || false,
       id: vc.id,
@@ -59,7 +67,8 @@ export class VCMetadata {
         ? vc.displayId
         : vc.vcMetadata
         ? vc.vcMetadata.displayId
-        : getDisplayId(vc.verifiableCredential),
+        : getDisplayId(vc.verifiableCredential, vc.format),
+      downloadKeyType: vc.downloadKeyType,
     });
   }
 
@@ -99,7 +108,7 @@ export function parseMetadatas(metadataStrings: object[]) {
   return metadataStrings.map(o => new VCMetadata(o));
 }
 
-export const getVCMetadata = (context: object) => {
+export const getVCMetadata = (context: object, keyType: string) => {
   const [issuer, protocol, credentialId] =
     context.credentialWrapper?.identifier.split(':');
 
@@ -110,21 +119,53 @@ export const getVCMetadata = (context: object) => {
     id: `${credentialId} + '_' + ${issuer}`,
     timestamp: context.timestamp ?? '',
     isVerified: context.vcMetadata.isVerified ?? false,
-    displayId: getDisplayId(context.verifiableCredential),
+    displayId: getDisplayId(
+      context['verifiableCredential'] as VerifiableCredential,
+      context['credentialWrapper'].format,
+    ),
+    format: context['credentialWrapper'].format,
+    downloadKeyType: keyType,
   });
 };
 
 const getDisplayId = (
   verifiableCredential: VerifiableCredential | Credential,
+  format: string,
 ) => {
-  if (verifiableCredential?.credential) {
+  try {
+    if (format === VCFormat.mso_mdoc) {
+      const namespaces =
+        (verifiableCredential as VerifiableCredential)?.processedCredential?.[
+          'issuerSigned'
+        ]['nameSpaces'] ?? {};
+
+      let displayId: string | undefined;
+      for (const namespace in namespaces) {
+        displayId = namespaces[namespace].find(
+          (element: object) =>
+            element['elementIdentifier'] === 'document_number',
+        ).elementValue;
+        if (!!displayId) break;
+      }
+
+      if (!!displayId) return displayId;
+      console.error('error in id getting ', 'Id not found for the credential');
+      throw new Error('Id not found for the credential');
+    }
+    if (verifiableCredential?.credential) {
+      if (verifiableCredential.credential?.credentialSubject) {
+        return (
+          verifiableCredential.credential?.credentialSubject?.policyNumber ||
+          getMosipIdentifier(verifiableCredential.credential.credentialSubject)
+        );
+      }
+    }
     return (
-      verifiableCredential.credential?.credentialSubject?.policyNumber ||
-      getMosipIdentifier(verifiableCredential.credential.credentialSubject)
+      verifiableCredential?.credentialSubject?.policyNumber ||
+      getMosipIdentifier(verifiableCredential.credentialSubject)
     );
+  } catch (error) {
+    console.error('Error getting the display Id - ', error);
+    return null;
   }
-  return (
-    verifiableCredential?.credentialSubject?.policyNumber ||
-    getMosipIdentifier(verifiableCredential.credentialSubject)
-  );
 };

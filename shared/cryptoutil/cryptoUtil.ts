@@ -1,77 +1,309 @@
-import {KeyPair, RSA} from 'react-native-rsa-native';
+import {RSA} from 'react-native-rsa-native';
 import forge from 'node-forge';
-import {BIOMETRIC_CANCELLED, DEBUG_MODE_ENABLED, isIOS} from '../constants';
+import jose from 'node-jose';
+import {
+  BIOMETRIC_CANCELLED,
+  DEBUG_MODE_ENABLED,
+  SUPPORTED_KEY_TYPES,
+  isAndroid,
+  isIOS,
+} from '../constants';
 import {NativeModules} from 'react-native';
 import {BiometricCancellationError} from '../error/BiometricCancellationError';
 import {EncryptedOutput} from './encryptedOutput';
 import {Buffer} from 'buffer';
+import base64url from 'base64url';
+import {hmac} from '@noble/hashes/hmac';
+import {sha256} from '@noble/hashes/sha256';
+import {sha512} from '@noble/hashes/sha512';
+import 'react-native-get-random-values';
+import * as secp from '@noble/secp256k1';
+import * as ed from '@noble/ed25519';
+import base64 from 'react-native-base64';
+import {KeyTypes} from './KeyTypes';
+import convertDerToRsFormat from './signFormatConverter';
+import {hasKeyPair} from '../openId4VCI/Utils';
+import {TelemetryConstants} from '../telemetry/TelemetryConstants';
+import {
+  sendImpressionEvent,
+  getImpressionEventData,
+} from '../telemetry/TelemetryUtils';
 
+//polyfills setup
+secp.etc.hmacSha256Sync = (k, ...m) =>
+  hmac(sha256, k, secp.etc.concatBytes(...m));
+secp.etc.hmacSha256Async = (k, ...m) =>
+  Promise.resolve(secp.etc.hmacSha256Sync(k, ...m));
+ed.etc.sha512Sync = (...m) => sha512(ed.etc.concatBytes(...m));
+ed.etc.sha512Async = (...m) => Promise.resolve(ed.etc.sha512Sync(...m));
+const {RNSecureKeystoreModule} = NativeModules;
 // 5min
 export const AUTH_TIMEOUT = 5 * 60;
-export const ENCRYPTION_ID = 'c7c22a6c-9759-4605-ac88-46f4041d863d';
+export const ENCRYPTION_ID = 'c7c22a6c-9759-4605-ac88-46f4041d863k';
 export const HMAC_ALIAS = '860cc320-4248-11ee-be56-0242ac120002';
 //This key is used to request biometric at app open to reset auth timeout which is used by encryption key
 export const DUMMY_KEY_FOR_BIOMETRIC_ALIAS =
   '9a6cfc0e-4248-11ee-be56-0242ac120002';
 
-export function generateKeys(): Promise<KeyPair> {
-  return Promise.resolve(RSA.generateKeys(2048));
+export async function generateKeyPairRSA() {
+  if (isAndroid() && isHardwareKeystoreExists) {
+    const isBiometricsEnabled =
+      await RNSecureKeystoreModule.hasBiometricsEnabled();
+    return {
+      publicKey: await RNSecureKeystoreModule.generateKeyPair(
+        KeyTypes.RS256,
+        KeyTypes.RS256,
+        isBiometricsEnabled,
+        0,
+      ),
+      privateKey: '',
+    };
+  }
+  const keyPair = await Promise.resolve(RSA.generateKeys(2048));
+  return {
+    publicKey: keyPair.public,
+    privateKey: keyPair.private,
+  };
+}
+
+export function generateKeyPairECK1() {
+  const privKey = secp.utils.randomPrivateKey();
+  const pubKey = secp.getPublicKey(privKey, false);
+  return {
+    publicKey: Buffer.from(pubKey).toString('base64'),
+    privateKey: Buffer.from(privKey).toString('base64'),
+  };
+}
+
+export async function generateKeyPairECR1() {
+  if (isAndroid()) {
+    const isBiometricsEnabled =
+      await RNSecureKeystoreModule.hasBiometricsEnabled();
+    return {
+      publicKey: await RNSecureKeystoreModule.generateKeyPair(
+        KeyTypes.ES256,
+        KeyTypes.ES256,
+        isBiometricsEnabled,
+        0,
+      ),
+      privateKey: '',
+    };
+  }
+  const keystore = jose.JWK.createKeyStore();
+  const key = await keystore.generate('EC', 'P-256');
+  const jwkPublicKey = key.toJSON(); // Public key JWK
+  const jwkPrivateKey = key.toJSON(true); // Private key JWK (include private part)
+  return {
+    publicKey: JSON.stringify(jwkPublicKey),
+    privateKey: JSON.stringify(jwkPrivateKey),
+  };
+}
+
+export async function generateKeyPairED() {
+  const privKey = ed.utils.randomPrivateKey();
+  const pubKey = ed.getPublicKey(privKey);
+
+  return {
+    publicKey: Buffer.from(pubKey).toString('base64'),
+    privateKey: Buffer.from(privKey).toString('base64'),
+  };
+}
+
+export async function generateKeyPair(keyType: any): Promise<any> {
+  switch (keyType) {
+    case KeyTypes.RS256:
+      return generateKeyPairRSA();
+    case KeyTypes.ES256:
+      return generateKeyPairECR1();
+    case KeyTypes.ES256K:
+      return generateKeyPairECK1();
+    case KeyTypes.ED25519:
+      return generateKeyPairED();
+    default:
+      break;
+  }
+}
+
+export async function checkAllKeyPairs() {
+  const RSAKey = await hasKeyPair(KeyTypes.RS256);
+  const ECR1Key = await hasKeyPair(KeyTypes.ES256);
+  const ECK1Key = await hasKeyPair(KeyTypes.ES256K);
+  const EDKey = await hasKeyPair(KeyTypes.ED25519);
+  if (!(RSAKey && ECR1Key && ECK1Key && EDKey)) throw Error('Keys not present');
+}
+
+export async function generateKeyPairsAndStoreOrder() {
+  const {RNSecureKeystoreModule} = NativeModules;
+  const RSAKeyPair = await generateKeyPair(KeyTypes.RS256);
+  const ECR1KeyPair = await generateKeyPair(KeyTypes.ES256);
+  const ECK1KeyPair = await generateKeyPair(KeyTypes.ES256K);
+  const EDKeyPair = await generateKeyPair(KeyTypes.ED25519);
+  const keys = Object.entries(SUPPORTED_KEY_TYPES).map(([label, value]) => ({
+    label,
+    value,
+  }));
+  const keyOrderMap = convertToKeyValue(keys);
+  await RNSecureKeystoreModule.storeData(
+    'keyPreference',
+    JSON.stringify(keyOrderMap),
+  );
+  await RNSecureKeystoreModule.storeGenericKey(
+    ECK1KeyPair.publicKey,
+    ECK1KeyPair.privateKey,
+    KeyTypes.ES256K,
+  );
+  await RNSecureKeystoreModule.storeGenericKey(
+    EDKeyPair.publicKey,
+    EDKeyPair.privateKey,
+    KeyTypes.ED25519,
+  );
+
+  if (isIOS()) {
+    await RNSecureKeystoreModule.storeGenericKey(
+      RSAKeyPair.publicKey,
+      RSAKeyPair.privateKey,
+      KeyTypes.RS256,
+    );
+    await RNSecureKeystoreModule.storeGenericKey(
+      ECR1KeyPair.publicKey,
+      ECR1KeyPair.privateKey,
+      KeyTypes.ES256,
+    );
+  }
+  console.warn(TelemetryConstants.FlowType.keyGeneration);
 }
 
 /**
  * isCustomKeystore is a cached check of existence of a hardware keystore.
  */
-const {RNSecureKeystoreModule} = NativeModules;
+
 export const isHardwareKeystoreExists = isCustomSecureKeystore();
 
 export async function getJWT(
   header: object,
   payLoad: object,
   alias: string,
-  privateKey: string,
+  privateKey: any,
+  keyType: string,
 ) {
   try {
     const header64 = encodeB64(JSON.stringify(header));
     const payLoad64 = encodeB64(JSON.stringify(payLoad));
     const preHash = header64 + '.' + payLoad64;
-    const signature64 = await createSignature(privateKey, preHash, alias);
+    const signature64 = await createSignature(
+      privateKey,
+      alias,
+      preHash,
+      keyType,
+      header,
+      payLoad,
+    );
+    if (keyType == KeyTypes.ES256 && isIOS()) return signature64;
     return header64 + '.' + payLoad64 + '.' + signature64;
-  } catch (e) {
-    console.error('Exception Occurred While Constructing JWT ', e);
-    throw e;
+  } catch (error) {
+    console.error('Exception Occurred While Constructing JWT ', error);
+    if (error.toString().includes(BIOMETRIC_CANCELLED)) {
+      throw new BiometricCancellationError(error.toString());
+    }
+    throw error;
   }
 }
 
 export async function createSignature(
-  privateKey: string,
-  preHash: string,
-  alias: string,
+  privateKey,
+  alias,
+  preHash,
+  keyType: string,
+  header,
+  payload,
 ) {
-  let signature64;
-
-  if (!isHardwareKeystoreExists) {
-    const key = forge.pki.privateKeyFromPem(privateKey);
-    const md = forge.md.sha256.create();
-    md.update(preHash, 'utf8');
-
-    const signature = key.sign(md);
-    return encodeB64(signature);
-  } else {
-    try {
-      signature64 = await RNSecureKeystoreModule.sign(alias, preHash);
-    } catch (error) {
-      console.error('Error in creating signature:', error);
-      if (error.toString().includes(BIOMETRIC_CANCELLED)) {
-        throw new BiometricCancellationError(error.toString());
-      }
-      throw error;
-    }
-
-    return replaceCharactersInB64(signature64);
+  switch (keyType) {
+    case KeyTypes.RS256:
+      return createSignatureRSA(privateKey, preHash);
+    case KeyTypes.ES256:
+      return createSignatureECR1(privateKey, header, payload, preHash);
+    case KeyTypes.ES256K:
+      return createSignatureECK1(privateKey, preHash);
+    case KeyTypes.ED25519:
+      return createSignatureED(privateKey, preHash);
+    default:
+      break;
   }
 }
 
-function replaceCharactersInB64(encodedB64: string) {
+export async function createSignatureRSA(privateKey: string, preHash: string) {
+  let signature64;
+
+  if (!isHardwareKeystoreExists) {
+    throw Error;
+  } else {
+    if (isAndroid())
+      signature64 = await RNSecureKeystoreModule.sign(
+        KeyTypes.RS256,
+        KeyTypes.RS256,
+        preHash,
+      );
+    else {
+      const key = forge.pki.privateKeyFromPem(privateKey);
+      const md = forge.md.sha256.create();
+      md.update(preHash, 'utf8');
+
+      const signature = key.sign(md);
+      signature64 = encodeB64(signature);
+    }
+  }
+  return replaceCharactersInB64(signature64);
+}
+
+export async function createSignatureECK1(privateKey, prehash) {
+  const sha = sha256(prehash);
+  const sign = await secp.signAsync(sha, privateKey, {lowS: false});
+  return base64url(Buffer.from(sign.toCompactRawBytes()));
+}
+
+export async function createSignatureED(privateKey, prehash) {
+  const messageBytes = new TextEncoder().encode(prehash);
+  const privateKeyUint8 = Uint8Array.from(privateKey);
+  const sign = await ed.signAsync(messageBytes, privateKeyUint8);
+  return replaceCharactersInB64(Buffer.from(sign).toString('base64'));
+}
+export async function createSignatureECR1(
+  privateKey,
+  header,
+  payload,
+  preHash,
+) {
+  if (!isHardwareKeystoreExists) {
+    throw Error;
+  } else {
+    if (isAndroid()) {
+      let signature64 = await RNSecureKeystoreModule.sign(
+        KeyTypes.ES256,
+        KeyTypes.ES256,
+        preHash,
+      );
+      const base64DeodedSignature = base64.decode(
+        signature64.replace(/\n/g, ''),
+      );
+      const derSignature = Uint8Array.from(base64DeodedSignature, char =>
+        char.charCodeAt(0),
+      );
+      signature64 = convertDerToRsFormat(derSignature);
+      return replaceCharactersInB64(signature64);
+    }
+  }
+
+  const key = await jose.JWK.asKey(JSON.parse(privateKey));
+
+  const signer = await jose.JWS.createSign(
+    {format: 'compact', fields: header},
+    {key, reference: false},
+  );
+  const jws = await signer.update(JSON.stringify(payload)).final();
+  return jws;
+}
+
+export function replaceCharactersInB64(encodedB64: string) {
   return encodedB64.replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
 }
 
@@ -87,7 +319,7 @@ export function encodeB64(str: string) {
  *  use the isCustomKeystore constant in the app lifeycle instead.
  */
 function isCustomSecureKeystore() {
-  return !isIOS() ? RNSecureKeystoreModule.deviceSupportsHardware() : false;
+  return isAndroid() ? RNSecureKeystoreModule.deviceSupportsHardware() : true;
 }
 
 export async function encryptJson(
@@ -134,11 +366,11 @@ export async function decryptJson(
     if (!isHardwareKeystoreExists) {
       return decryptWithForge(encryptedData, encryptionKey);
     }
-
-    return await RNSecureKeystoreModule.decryptData(
+    const decryptedData = await RNSecureKeystoreModule.decryptData(
       ENCRYPTION_ID,
       encryptedData,
     );
+    return isIOS() ? base64.decode(decryptedData) : decryptedData;
   } catch (e) {
     console.error('error decryptJson:', e);
 
@@ -188,3 +420,49 @@ export function hmacSHA(encryptionKey: string, data: string) {
   const resultBytes = hmac.digest().getBytes().toString();
   return resultBytes;
 }
+
+export async function fetchKeyPair(keyType: any) {
+  try {
+    const {RNSecureKeystoreModule} = NativeModules;
+    if (keyType == KeyTypes.RS256 || keyType == KeyTypes.ES256) {
+      if (isAndroid()) {
+        const publicKey = await RNSecureKeystoreModule.retrieveKey(keyType);
+        return {
+          publicKey: publicKey,
+          privateKey: '',
+        };
+      } else {
+        const keyPair = await RNSecureKeystoreModule.retrieveGenericKey(
+          keyType,
+        );
+        const publicKey = keyPair[1];
+        const privateKey = keyPair[0];
+        return {
+          publicKey: publicKey,
+          privateKey: privateKey,
+        };
+      }
+    } else {
+      const keyPair = await RNSecureKeystoreModule.retrieveGenericKey(keyType);
+      const publicKey = Buffer.from(keyPair[1], 'base64');
+      const privateKey = Buffer.from(keyPair[0], 'base64');
+      return {
+        publicKey: publicKey,
+        privateKey: privateKey,
+      };
+    }
+  } catch (error) {
+    console.error('error getting key', error);
+    if (error.toString().includes(BIOMETRIC_CANCELLED)) {
+      throw new BiometricCancellationError(error.toString());
+    }
+    throw error;
+  }
+}
+const convertToKeyValue = items => {
+  const result = {};
+  items.forEach((item, index) => {
+    result[index] = item.value;
+  });
+  return result;
+};
