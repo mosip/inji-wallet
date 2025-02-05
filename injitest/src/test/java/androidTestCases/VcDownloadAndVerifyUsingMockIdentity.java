@@ -42,17 +42,17 @@ public class VcDownloadAndVerifyUsingMockIdentity extends AndroidBaseTest {
         assertTrue(addNewCardPage.isAddNewCardPageLoaded(), "Verify if add new card page is displayed");
         assertTrue(addNewCardPage.isAddNewCardPageGuideMessageForEsignetDisplayed(), "Verify if add new card guide message displayed");
         assertTrue(addNewCardPage.isDownloadViaEsignetDisplayed(), "Verify if download via uin displayed");
-        MockCertifyLoginPage mockCertifyLoginPage =  addNewCardPage.clickOnDownloadViaMockCertify();
+        MockCertifyLoginPage mockCertifyLoginPage = addNewCardPage.clickOnDownloadViaMockCertify();
 
 //        mockCertifyLoginPage.clickOnEsignetLoginWithOtpButton();
-        
+
         assertTrue(mockCertifyLoginPage.isEnterYourVidTextDisplayed(), "Verify if enter your vid text is displayed");
 
-        OtpVerificationPage otpVerification= mockCertifyLoginPage.setEnterIdTextBox(TestDataReader.readData("MockVc"));
+        OtpVerificationPage otpVerification = mockCertifyLoginPage.setEnterIdTextBox(TestDataReader.readData("MockVc"));
 
         mockCertifyLoginPage.clickOnGetOtpButton();
-        assertTrue(mockCertifyLoginPage.isOtpHasSendMessageDisplayed(),"verify if otp page is displayed");
-        
+        assertTrue(mockCertifyLoginPage.isOtpHasSendMessageDisplayed(), "verify if otp page is displayed");
+
         otpVerification.enterOtpForEsignet(BaseTestCase.getOtp(), Target.ANDROID);
         mockCertifyLoginPage.clickOnVerifyButtonIos();
 

@@ -38,7 +38,7 @@ public class UnlockWithPasscodeTest extends IosBaseTest {
         SettingsPage settingsPage = homePage.clickOnSettingIcon();
 
         assertTrue(settingsPage.isSettingPageLoaded(), "Verify if setting page is displayed");
-        assertTrue(settingsPage.isdataBackupAndRestoreDisplayed(),"Verify if backup & restore is displayed");
+        assertTrue(settingsPage.isdataBackupAndRestoreDisplayed(), "Verify if backup & restore is displayed");
         UnlockApplicationPage unlockApplicationPage = settingsPage.clickOnLogoutButton();
 
         assertTrue(unlockApplicationPage.isUnlockApplicationPageLoaded(), "Verify if unlock application page is displayed");
@@ -51,7 +51,7 @@ public class UnlockWithPasscodeTest extends IosBaseTest {
         assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
 
     }
-    
+
     @Test
     public void loginWithInvalidPasscode() {
         ChooseLanguagePage chooseLanguagePage = new ChooseLanguagePage(driver);
@@ -85,6 +85,6 @@ public class UnlockWithPasscodeTest extends IosBaseTest {
         enterYourPasscodePage.enterPasscodeOnPasscodePage(TestDataReader.readData("invalidpasscode"), Target.IOS);
 
         assertTrue(confirmPasscode.isPasscodeInvalidMessageDisplayed(), "verify if invalid passcode is displayed");
-    	
+
     }
 }

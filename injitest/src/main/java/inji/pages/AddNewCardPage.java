@@ -6,7 +6,7 @@ import io.appium.java_client.pagefactory.AndroidFindBy;
 import io.appium.java_client.pagefactory.iOSXCUITFindBy;
 import org.openqa.selenium.WebElement;
 
-public class AddNewCardPage extends BasePage{
+public class AddNewCardPage extends BasePage {
 
     @AndroidFindBy(accessibility = "title")
     @iOSXCUITFindBy(accessibility = "title")
@@ -78,7 +78,7 @@ public class AddNewCardPage extends BasePage{
         super(driver);
     }
 
-    public String  verifyLanguageForAddNewCardGuideMessage(){
+    public String verifyLanguageForAddNewCardGuideMessage() {
         return getTextFromLocator(addNewCardGuideMessage);
     }
 
@@ -90,9 +90,9 @@ public class AddNewCardPage extends BasePage{
         return this.isElementDisplayed(addNewCardHeader);
     }
 
-    public RetrieveIdPage clickOnDownloadViaUin(){
+    public RetrieveIdPage clickOnDownloadViaUin() {
         clickOnElement(downloadViaUin);
-        if(isElementDisplayed(credentialTypeHeadingMOSIPVerifiableCredential)){
+        if (isElementDisplayed(credentialTypeHeadingMOSIPVerifiableCredential)) {
             clickOnElement(credentialTypeHeadingMOSIPVerifiableCredential);
         }
         return new RetrieveIdPage(driver);
@@ -126,7 +126,7 @@ public class AddNewCardPage extends BasePage{
         return this.isElementDisplayed(downloadViaEsignet);
     }
 
-    public EsignetLoginPage clickOnDownloadViaEsignet(){
+    public EsignetLoginPage clickOnDownloadViaEsignet() {
         clickOnElement(downloadViaEsignet);
 
         try {
@@ -134,18 +134,18 @@ public class AddNewCardPage extends BasePage{
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
-        if(isElementDisplayed(credentialTypeHeadingMOSIPVerifiableCredential)) {
+        if (isElementDisplayed(credentialTypeHeadingMOSIPVerifiableCredential)) {
             clickOnElement(credentialTypeHeadingMOSIPVerifiableCredential);
         }
         return new EsignetLoginPage(driver);
     }
 
-    public void clickOnContinueButtonInSigninPopupIos(){
-        if(isElementDisplayed(continueButton))
-        clickOnElement(continueButton);
+    public void clickOnContinueButtonInSigninPopupIos() {
+        if (isElementDisplayed(continueButton))
+            clickOnElement(continueButton);
     }
 
-    public void clickOnCancelButtonInSigninPopupIos(){
+    public void clickOnCancelButtonInSigninPopupIos() {
         clickOnElement(cancelButton);
     }
 
@@ -160,6 +160,7 @@ public class AddNewCardPage extends BasePage{
     public boolean isAddNewCardGuideMessageDisplayedInHindi() {
         return this.isElementDisplayed(addNewCardGuideMessage);
     }
+
     public boolean isIssuerDescriptionMosipDisplayed() {
         return this.isElementDisplayed(issuerDescriptionMosip);
     }
@@ -187,28 +188,31 @@ public class AddNewCardPage extends BasePage{
     public boolean isDownloadViaSunbirdDisplayed() {
         return this.isElementDisplayed(downloadViaSunbird);
     }
-    public SunbirdLoginPage clickOnDownloadViaSunbird(){
+
+    public SunbirdLoginPage clickOnDownloadViaSunbird() {
         clickOnElement(downloadViaSunbird);
         return new SunbirdLoginPage(driver);
     }
-    public void clickOnCredentialTypeHeadingInsuranceCredential(){
-        if(isElementDisplayed(credentialTypeHeadingInsuranceCredential)) {
+
+    public void clickOnCredentialTypeHeadingInsuranceCredential() {
+        if (isElementDisplayed(credentialTypeHeadingInsuranceCredential)) {
             clickOnElement(credentialTypeHeadingInsuranceCredential);
         }
     }
- public void  clickOnDoneButton(){
-     try {
-         Thread.sleep(3000);
-     } catch (InterruptedException e) {
-         throw new RuntimeException(e);
-     }
-     if (isElementDisplayed(DoneButton )){
-         clickOnElement(DoneButton);
-         IosUtil.scrollToElement(driver,100,800,100,200);
-     }
- }
 
-    public MockCertifyLoginPage clickOnDownloadViaMockCertify(){
+    public void clickOnDoneButton() {
+        try {
+            Thread.sleep(3000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        if (isElementDisplayed(DoneButton)) {
+            clickOnElement(DoneButton);
+            IosUtil.scrollToElement(driver, 100, 800, 100, 200);
+        }
+    }
+
+    public MockCertifyLoginPage clickOnDownloadViaMockCertify() {
         clickOnElement(downloadViaMockCertify);
 
         try {
@@ -216,7 +220,7 @@ public class AddNewCardPage extends BasePage{
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
-        if(isElementDisplayed(credentialTypeHeadingMockVerifiableCredential_mdoc)) {
+        if (isElementDisplayed(credentialTypeHeadingMockVerifiableCredential_mdoc)) {
             clickOnElement(credentialTypeHeadingMockVerifiableCredential_mdoc);
         }
         return new MockCertifyLoginPage(driver);

@@ -30,9 +30,10 @@ public class WelcomePage extends BasePage {
     public WelcomePage(AppiumDriver driver) {
         super(driver);
     }
+
     BasePage basePage = new BasePage(driver);
 
-    public String  verifyLanguageforWelcomePageLoaded(){
+    public String verifyLanguageforWelcomePageLoaded() {
         return getTextFromLocator(welcomeText);
     }
 

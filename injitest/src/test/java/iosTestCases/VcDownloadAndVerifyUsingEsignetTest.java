@@ -35,14 +35,14 @@ public class VcDownloadAndVerifyUsingEsignetTest extends IosBaseTest {
         assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
         AddNewCardPage addNewCardPage = homePage.downloadCard();
 
-        EsignetLoginPage esignetLoginPage =  addNewCardPage.clickOnDownloadViaEsignet();
+        EsignetLoginPage esignetLoginPage = addNewCardPage.clickOnDownloadViaEsignet();
         esignetLoginPage.clickOnCredentialTypeHeadingMOSIPVerifiableCredential();
         addNewCardPage.clickOnContinueButtonInSigninPopupIos();
 
         esignetLoginPage.clickOnEsignetLoginWithOtpButton();
         Thread.sleep(9000);
         String uin = TestDataReader.readData("uin");
-        OtpVerificationPage otpVerification= esignetLoginPage.setEnterIdTextBox(uin);
+        OtpVerificationPage otpVerification = esignetLoginPage.setEnterIdTextBox(uin);
 
 
         esignetLoginPage.clickOnGetOtpButton();
@@ -74,7 +74,7 @@ public class VcDownloadAndVerifyUsingEsignetTest extends IosBaseTest {
 //        assertEquals(detailedVcViewPage.getEmailInDetailedVcView(), TestDataReader.readData("externalemail"), "Verify if email is displayed");
         assertTrue(detailedVcViewPage.isActivateButtonDisplayed(), "Verify if activate vc button displayed");
 
-        PleaseConfirmPopupPage pleaseConfirmPopupPage  =detailedVcViewPage.clickOnActivateButtonIos();
+        PleaseConfirmPopupPage pleaseConfirmPopupPage = detailedVcViewPage.clickOnActivateButtonIos();
         assertTrue(pleaseConfirmPopupPage.isPleaseConfirmPopupPageLoaded(), "Verify if confirm popup page is displayed");
 
         pleaseConfirmPopupPage.clickOnConfirmButton();
@@ -111,14 +111,14 @@ public class VcDownloadAndVerifyUsingEsignetTest extends IosBaseTest {
         assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
         AddNewCardPage addNewCardPage = homePage.downloadCard();
 
-        EsignetLoginPage esignetLoginPage =  addNewCardPage.clickOnDownloadViaEsignet();
+        EsignetLoginPage esignetLoginPage = addNewCardPage.clickOnDownloadViaEsignet();
         esignetLoginPage.clickOnCredentialTypeHeadingMOSIPVerifiableCredential();
         addNewCardPage.clickOnContinueButtonInSigninPopupIos();
 
         esignetLoginPage.clickOnEsignetLoginWithOtpButton();
 
         String vid = TestDataReader.readData("vid");
-        OtpVerificationPage otpVerification= esignetLoginPage.setEnterIdTextBox(vid);
+        OtpVerificationPage otpVerification = esignetLoginPage.setEnterIdTextBox(vid);
         esignetLoginPage.clickOnGetOtpButton();
 
         otpVerification.enterOtpForEsignet(BaseTestCase.getOtp(), Target.IOS);
@@ -144,7 +144,7 @@ public class VcDownloadAndVerifyUsingEsignetTest extends IosBaseTest {
 //        assertEquals(detailedVcViewPage.getEmailInDetailedVcView(), TestDataReader.readData("externalemail"), "Verify if email is displayed");
         assertTrue(detailedVcViewPage.isActivateButtonDisplayed(), "Verify if activate vc button displayed");
 
-        PleaseConfirmPopupPage pleaseConfirmPopupPage  =detailedVcViewPage.clickOnActivateButtonIos();
+        PleaseConfirmPopupPage pleaseConfirmPopupPage = detailedVcViewPage.clickOnActivateButtonIos();
         assertTrue(pleaseConfirmPopupPage.isPleaseConfirmPopupPageLoaded(), "Verify if confirm popup page is displayed");
 
         pleaseConfirmPopupPage.clickOnConfirmButton();
@@ -212,13 +212,13 @@ public class VcDownloadAndVerifyUsingEsignetTest extends IosBaseTest {
         assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
         AddNewCardPage addNewCardPage = homePage.downloadCard();
 
-        EsignetLoginPage esignetLoginPage =  addNewCardPage.clickOnDownloadViaEsignet();
+        EsignetLoginPage esignetLoginPage = addNewCardPage.clickOnDownloadViaEsignet();
         addNewCardPage.clickOnContinueButtonInSigninPopupIos();
 
         esignetLoginPage.clickOnEsignetLoginWithOtpButton();
         Thread.sleep(9000);
         String uin = TestDataReader.readData("uin");
-        OtpVerificationPage otpVerification= esignetLoginPage.setEnterIdTextBox(uin);
+        OtpVerificationPage otpVerification = esignetLoginPage.setEnterIdTextBox(uin);
 
 
         esignetLoginPage.clickOnGetOtpButton();
@@ -248,7 +248,7 @@ public class VcDownloadAndVerifyUsingEsignetTest extends IosBaseTest {
         assertEquals(detailedVcViewPage.getEmailInDetailedVcView(), TestDataReader.readData("externalemail"), "Verify if email is displayed");
         assertTrue(detailedVcViewPage.isActivateButtonDisplayed(), "Verify if activate vc button displayed");
 
-        PleaseConfirmPopupPage pleaseConfirmPopupPage  =detailedVcViewPage.clickOnActivateButtonIos();
+        PleaseConfirmPopupPage pleaseConfirmPopupPage = detailedVcViewPage.clickOnActivateButtonIos();
         assertTrue(pleaseConfirmPopupPage.isPleaseConfirmPopupPageLoaded(), "Verify if confirm popup page is displayed");
 
         pleaseConfirmPopupPage.clickOnConfirmButton();

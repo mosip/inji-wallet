@@ -10,7 +10,7 @@ import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
 import static inji.api.BaseTestCase.getOtp;
-import static org.testng.Assert.*;
+import static org.testng.Assert.assertTrue;
 import static org.testng.AssertJUnit.assertEquals;
 
 public class MosipOtpAlternativeFlow extends AndroidBaseTest {
@@ -39,16 +39,16 @@ public class MosipOtpAlternativeFlow extends AndroidBaseTest {
         AddNewCardPage addNewCardPage = homePage.downloadCard();
 
         assertTrue(addNewCardPage.isAddNewCardPageLoaded(), "Verify if add new card page is displayed");
-        EsignetLoginPage esignetLoginPage =  addNewCardPage.clickOnDownloadViaEsignet();
+        EsignetLoginPage esignetLoginPage = addNewCardPage.clickOnDownloadViaEsignet();
 
         esignetLoginPage.clickOnEsignetLoginWithOtpButton();
 
         assertTrue(esignetLoginPage.isEnterYourVidTextDisplayed(), "Verify if enter your vid text is displayed");
-        String uin=TestDataReader.readData("uin");
-        OtpVerificationPage otpVerification= esignetLoginPage.setEnterIdTextBox(uin);
+        String uin = TestDataReader.readData("uin");
+        OtpVerificationPage otpVerification = esignetLoginPage.setEnterIdTextBox(uin);
 
         esignetLoginPage.clickOnGetOtpButton();
-        assertTrue(esignetLoginPage.isOtpHasSendMessageDisplayed(),"verify if otp page is displayed");
+        assertTrue(esignetLoginPage.isOtpHasSendMessageDisplayed(), "verify if otp page is displayed");
 
         otpVerification.enterOtpForEsignet(TestDataReader.readData("invalidOtp"), Target.ANDROID);
         esignetLoginPage.clickOnVerifyButton();
@@ -81,16 +81,16 @@ public class MosipOtpAlternativeFlow extends AndroidBaseTest {
         AddNewCardPage addNewCardPage = homePage.downloadCard();
 
         assertTrue(addNewCardPage.isAddNewCardPageLoaded(), "Verify if add new card page is displayed");
-        EsignetLoginPage esignetLoginPage =  addNewCardPage.clickOnDownloadViaEsignet();
+        EsignetLoginPage esignetLoginPage = addNewCardPage.clickOnDownloadViaEsignet();
 
         esignetLoginPage.clickOnEsignetLoginWithOtpButton();
 
         assertTrue(esignetLoginPage.isEnterYourVidTextDisplayed(), "Verify if enter your vid text is displayed");
-        String uin=TestDataReader.readData("uin");
-        OtpVerificationPage otpVerification= esignetLoginPage.setEnterIdTextBox(uin);
+        String uin = TestDataReader.readData("uin");
+        OtpVerificationPage otpVerification = esignetLoginPage.setEnterIdTextBox(uin);
 
         esignetLoginPage.clickOnGetOtpButton();
-        assertTrue(esignetLoginPage.isOtpHasSendMessageDisplayed(),"verify if otp page is displayed");
+        assertTrue(esignetLoginPage.isOtpHasSendMessageDisplayed(), "verify if otp page is displayed");
 
         otpVerification.enterOtpForEsignet(getOtp(), Target.ANDROID);
         esignetLoginPage.clickOnVerifyButton();
@@ -141,16 +141,16 @@ public class MosipOtpAlternativeFlow extends AndroidBaseTest {
         AddNewCardPage addNewCardPage = homePage.downloadCard();
 
         assertTrue(addNewCardPage.isAddNewCardPageLoaded(), "Verify if add new card page is displayed");
-        EsignetLoginPage esignetLoginPage =  addNewCardPage.clickOnDownloadViaEsignet();
+        EsignetLoginPage esignetLoginPage = addNewCardPage.clickOnDownloadViaEsignet();
 
         esignetLoginPage.clickOnEsignetLoginWithOtpButton();
 
         assertTrue(esignetLoginPage.isEnterYourVidTextDisplayed(), "Verify if enter your vid text is displayed");
-        String uin=TestDataReader.readData("uin");
-        OtpVerificationPage otpVerification= esignetLoginPage.setEnterIdTextBox(uin);
+        String uin = TestDataReader.readData("uin");
+        OtpVerificationPage otpVerification = esignetLoginPage.setEnterIdTextBox(uin);
 
         esignetLoginPage.clickOnGetOtpButton();
-        assertTrue(esignetLoginPage.isOtpHasSendMessageDisplayed(),"verify if otp page is displayed");
+        assertTrue(esignetLoginPage.isOtpHasSendMessageDisplayed(), "verify if otp page is displayed");
 
         otpVerification.enterOtpForEsignet(getOtp(), Target.ANDROID);
         esignetLoginPage.clickOnVerifyButton();
@@ -199,16 +199,16 @@ public class MosipOtpAlternativeFlow extends AndroidBaseTest {
         AddNewCardPage addNewCardPage = homePage.downloadCard();
 
         assertTrue(addNewCardPage.isAddNewCardPageLoaded(), "Verify if add new card page is displayed");
-        EsignetLoginPage esignetLoginPage =  addNewCardPage.clickOnDownloadViaEsignet();
+        EsignetLoginPage esignetLoginPage = addNewCardPage.clickOnDownloadViaEsignet();
 
         esignetLoginPage.clickOnEsignetLoginWithOtpButton();
 
         assertTrue(esignetLoginPage.isEnterYourVidTextDisplayed(), "Verify if enter your vid text is displayed");
-        String uin=TestDataReader.readData("uin");
-        OtpVerificationPage otpVerification= esignetLoginPage.setEnterIdTextBox(uin);
+        String uin = TestDataReader.readData("uin");
+        OtpVerificationPage otpVerification = esignetLoginPage.setEnterIdTextBox(uin);
 
         esignetLoginPage.clickOnGetOtpButton();
-        assertTrue(esignetLoginPage.isOtpHasSendMessageDisplayed(),"verify if otp page is displayed");
+        assertTrue(esignetLoginPage.isOtpHasSendMessageDisplayed(), "verify if otp page is displayed");
 
         otpVerification.enterOtpForEsignet(getOtp(), Target.ANDROID);
         esignetLoginPage.clickOnVerifyButton();
@@ -254,16 +254,16 @@ public class MosipOtpAlternativeFlow extends AndroidBaseTest {
         AddNewCardPage addNewCardPage = homePage.downloadCard();
 
         assertTrue(addNewCardPage.isAddNewCardPageLoaded(), "Verify if add new card page is displayed");
-        EsignetLoginPage esignetLoginPage =  addNewCardPage.clickOnDownloadViaEsignet();
+        EsignetLoginPage esignetLoginPage = addNewCardPage.clickOnDownloadViaEsignet();
 
         esignetLoginPage.clickOnEsignetLoginWithOtpButton();
 
         assertTrue(esignetLoginPage.isEnterYourVidTextDisplayed(), "Verify if enter your vid text is displayed");
-        String uin=TestDataReader.readData("uin");
-        OtpVerificationPage otpVerification= esignetLoginPage.setEnterIdTextBox(uin);
+        String uin = TestDataReader.readData("uin");
+        OtpVerificationPage otpVerification = esignetLoginPage.setEnterIdTextBox(uin);
 
         esignetLoginPage.clickOnGetOtpButton();
-        assertTrue(esignetLoginPage.isOtpHasSendMessageDisplayed(),"verify if otp page is displayed");
+        assertTrue(esignetLoginPage.isOtpHasSendMessageDisplayed(), "verify if otp page is displayed");
 
         otpVerification.enterOtpForEsignet(getOtp(), Target.ANDROID);
         esignetLoginPage.clickOnVerifyButton();
@@ -281,7 +281,7 @@ public class MosipOtpAlternativeFlow extends AndroidBaseTest {
 //        assertFalse(homePage.isNameDisplayed(TestDataReader.readData("fullName")), "Verify if VC is removed");
 
         Assert.assertEquals(homePage.verifyLanguageForNoVCDownloadedPageLoaded(), "Bring your digital identity");
-         homePage.downloadCard();
+        homePage.downloadCard();
         assertTrue(addNewCardPage.isAddNewCardPageLoaded(), "Verify if add new card page is displayed");
         addNewCardPage.clickOnDownloadViaEsignet();
 
@@ -289,10 +289,10 @@ public class MosipOtpAlternativeFlow extends AndroidBaseTest {
 
         assertTrue(esignetLoginPage.isEnterYourVidTextDisplayed(), "Verify if enter your vid text is displayed");
 
-         esignetLoginPage.setEnterIdTextBox(uin);
+        esignetLoginPage.setEnterIdTextBox(uin);
 
         esignetLoginPage.clickOnGetOtpButton();
-        assertTrue(esignetLoginPage.isOtpHasSendMessageDisplayed(),"verify if otp page is displayed");
+        assertTrue(esignetLoginPage.isOtpHasSendMessageDisplayed(), "verify if otp page is displayed");
 
         otpVerification.enterOtpForEsignet(getOtp(), Target.ANDROID);
         esignetLoginPage.clickOnVerifyButton();
@@ -333,23 +333,23 @@ public class MosipOtpAlternativeFlow extends AndroidBaseTest {
         AddNewCardPage addNewCardPage = homePage.downloadCard();
 
         assertTrue(addNewCardPage.isAddNewCardPageLoaded(), "Verify if add new card page is displayed");
-        EsignetLoginPage esignetLoginPage =  addNewCardPage.clickOnDownloadViaEsignet();
+        EsignetLoginPage esignetLoginPage = addNewCardPage.clickOnDownloadViaEsignet();
 
         esignetLoginPage.clickOnEsignetLoginWithOtpButton();
 
         assertTrue(esignetLoginPage.isEnterYourVidTextDisplayed(), "Verify if enter your vid text is displayed");
-        String uin=TestDataReader.readData("uin");
-        OtpVerificationPage otpVerification= esignetLoginPage.setEnterIdTextBox(uin);
+        String uin = TestDataReader.readData("uin");
+        OtpVerificationPage otpVerification = esignetLoginPage.setEnterIdTextBox(uin);
 
         esignetLoginPage.clickOnGetOtpButton();
-        assertTrue(esignetLoginPage.isOtpHasSendMessageDisplayed(),"verify if otp page is displayed");
+        assertTrue(esignetLoginPage.isOtpHasSendMessageDisplayed(), "verify if otp page is displayed");
 
         otpVerification.enterOtpForEsignet(getOtp(), Target.ANDROID);
         esignetLoginPage.clickOnVerifyButton();
 
         addNewCardPage.clickOnDoneButton();
         assertTrue(homePage.isCredentialTypeValueDisplayed(), "Verify if credential type value is displayed");
-        String sessionId  = driver.getSessionId().toString();
+        String sessionId = driver.getSessionId().toString();
         UpdateNetworkSettings.setNoNetworkProfile(sessionId);
 
         MoreOptionsPage moreOptionsPage = homePage.clickOnMoreOptionsButton();
@@ -390,23 +390,23 @@ public class MosipOtpAlternativeFlow extends AndroidBaseTest {
         AddNewCardPage addNewCardPage = homePage.downloadCard();
 
         assertTrue(addNewCardPage.isAddNewCardPageLoaded(), "Verify if add new card page is displayed");
-        EsignetLoginPage esignetLoginPage =  addNewCardPage.clickOnDownloadViaEsignet();
+        EsignetLoginPage esignetLoginPage = addNewCardPage.clickOnDownloadViaEsignet();
 
         esignetLoginPage.clickOnEsignetLoginWithOtpButton();
 
         assertTrue(esignetLoginPage.isEnterYourVidTextDisplayed(), "Verify if enter your vid text is displayed");
-        String uin=TestDataReader.readData("uin");
-        OtpVerificationPage otpVerification= esignetLoginPage.setEnterIdTextBox(uin);
+        String uin = TestDataReader.readData("uin");
+        OtpVerificationPage otpVerification = esignetLoginPage.setEnterIdTextBox(uin);
 
         esignetLoginPage.clickOnGetOtpButton();
-        assertTrue(esignetLoginPage.isOtpHasSendMessageDisplayed(),"verify if otp page is displayed");
+        assertTrue(esignetLoginPage.isOtpHasSendMessageDisplayed(), "verify if otp page is displayed");
 
         otpVerification.enterOtpForEsignet(getOtp(), Target.ANDROID);
         esignetLoginPage.clickOnVerifyButton();
 
         addNewCardPage.clickOnDoneButton();
         assertTrue(homePage.isCredentialTypeValueDisplayed(), "Verify if credential type value is displayed");
-        String sessionId  = driver.getSessionId().toString();
+        String sessionId = driver.getSessionId().toString();
         UpdateNetworkSettings.setNoNetworkProfile(sessionId);
 
         DetailedVcViewPage detailedVcViewPage = homePage.openDetailedVcView();
@@ -442,7 +442,7 @@ public class MosipOtpAlternativeFlow extends AndroidBaseTest {
         AddNewCardPage addNewCardPage = homePage.downloadCard();
 
         assertTrue(addNewCardPage.isAddNewCardPageLoaded(), "Verify if add new card page is displayed");
-        String sessionId  = driver.getSessionId().toString();
+        String sessionId = driver.getSessionId().toString();
         UpdateNetworkSettings.setNoNetworkProfile(sessionId);
 
         addNewCardPage.clickOnBack();
@@ -476,16 +476,16 @@ public class MosipOtpAlternativeFlow extends AndroidBaseTest {
         AddNewCardPage addNewCardPage = homePage.downloadCard();
 
         assertTrue(addNewCardPage.isAddNewCardPageLoaded(), "Verify if add new card page is displayed");
-        EsignetLoginPage esignetLoginPage =  addNewCardPage.clickOnDownloadViaEsignet();
+        EsignetLoginPage esignetLoginPage = addNewCardPage.clickOnDownloadViaEsignet();
 
         esignetLoginPage.clickOnEsignetLoginWithOtpButton();
 
         assertTrue(esignetLoginPage.isEnterYourVidTextDisplayed(), "Verify if enter your vid text is displayed");
-        String uin=TestDataReader.readData("uin");
-        OtpVerificationPage otpVerification= esignetLoginPage.setEnterIdTextBox(uin);
+        String uin = TestDataReader.readData("uin");
+        OtpVerificationPage otpVerification = esignetLoginPage.setEnterIdTextBox(uin);
 
         esignetLoginPage.clickOnGetOtpButton();
-        assertTrue(esignetLoginPage.isOtpHasSendMessageDisplayed(),"verify if otp page is displayed");
+        assertTrue(esignetLoginPage.isOtpHasSendMessageDisplayed(), "verify if otp page is displayed");
 
         otpVerification.enterOtpForEsignet(getOtp(), Target.ANDROID);
         esignetLoginPage.clickOnVerifyButton();
@@ -498,7 +498,7 @@ public class MosipOtpAlternativeFlow extends AndroidBaseTest {
         moreOptionsPage.clickOnPinOrUnPinCard();
 
         assertTrue(homePage.isPinIconDisplayed(), "Verify if pin icon on vc is displayed");
-        SharePage scanPage=homePage.clickOnShareButton();
+        SharePage scanPage = homePage.clickOnShareButton();
 
         scanPage.acceptPermissionPopupBluetooth();
         scanPage.acceptPermissionPopupCamera();
@@ -506,7 +506,7 @@ public class MosipOtpAlternativeFlow extends AndroidBaseTest {
         scanPage.clickOnAllowGallaryAccessButton();
 
         assertTrue(scanPage.isCameraPageLoaded(), "Verify camera page is displayed");
-        assertTrue(scanPage.isFlipCameraClickable(),"Verify if flip camera is enabled");
+        assertTrue(scanPage.isFlipCameraClickable(), "Verify if flip camera is enabled");
     }
 
     @Test
@@ -533,16 +533,16 @@ public class MosipOtpAlternativeFlow extends AndroidBaseTest {
         AddNewCardPage addNewCardPage = homePage.downloadCard();
 
         assertTrue(addNewCardPage.isAddNewCardPageLoaded(), "Verify if add new card page is displayed");
-        EsignetLoginPage esignetLoginPage =  addNewCardPage.clickOnDownloadViaEsignet();
+        EsignetLoginPage esignetLoginPage = addNewCardPage.clickOnDownloadViaEsignet();
 
         esignetLoginPage.clickOnEsignetLoginWithOtpButton();
 
         assertTrue(esignetLoginPage.isEnterYourVidTextDisplayed(), "Verify if enter your vid text is displayed");
-        String uin=TestDataReader.readData("uin");
-        OtpVerificationPage otpVerification= esignetLoginPage.setEnterIdTextBox(uin);
+        String uin = TestDataReader.readData("uin");
+        OtpVerificationPage otpVerification = esignetLoginPage.setEnterIdTextBox(uin);
 
         esignetLoginPage.clickOnGetOtpButton();
-        assertTrue(esignetLoginPage.isOtpHasSendMessageDisplayed(),"verify if otp page is displayed");
+        assertTrue(esignetLoginPage.isOtpHasSendMessageDisplayed(), "verify if otp page is displayed");
 
         otpVerification.enterOtpForEsignet(getOtp(), Target.ANDROID);
         esignetLoginPage.clickOnVerifyButton();
@@ -555,14 +555,14 @@ public class MosipOtpAlternativeFlow extends AndroidBaseTest {
         moreOptionsPage.clickOnPinOrUnPinCard();
 
         assertTrue(homePage.isPinIconDisplayed(), "Verify if pin icon on vc is displayed");
-        SharePage scanPage=homePage.clickOnShareButton();
+        SharePage scanPage = homePage.clickOnShareButton();
 
         scanPage.denyPermissionPopupBluetooth();
-        assertEquals(scanPage.isBluetoothIsTurnedOffMessageDisplayed(),"Bluetooth is turned OFF, please turn it ON from Quick settings menu");
+        assertEquals(scanPage.isBluetoothIsTurnedOffMessageDisplayed(), "Bluetooth is turned OFF, please turn it ON from Quick settings menu");
     }
 
     @Test
-    public void pinVcInDetailedVcView() throws InterruptedException  {
+    public void pinVcInDetailedVcView() throws InterruptedException {
         ChooseLanguagePage chooseLanguagePage = new ChooseLanguagePage(driver);
 
         assertTrue(chooseLanguagePage.isChooseLanguagePageLoaded(), "Verify if choose language page is displayed");
@@ -585,20 +585,20 @@ public class MosipOtpAlternativeFlow extends AndroidBaseTest {
         AddNewCardPage addNewCardPage = homePage.downloadCard();
 
         assertTrue(addNewCardPage.isAddNewCardPageLoaded(), "Verify if add new card page is displayed");
-        EsignetLoginPage esignetLoginPage =  addNewCardPage.clickOnDownloadViaEsignet();
+        EsignetLoginPage esignetLoginPage = addNewCardPage.clickOnDownloadViaEsignet();
         esignetLoginPage.clickOnEsignetLoginWithOtpButton();
 
         assertTrue(esignetLoginPage.isEnterYourVidTextDisplayed(), "Verify if enter your vid text is displayed");
-        String uin=TestDataReader.readData("uin");
-        OtpVerificationPage otpVerification= esignetLoginPage.setEnterIdTextBox(uin);
+        String uin = TestDataReader.readData("uin");
+        OtpVerificationPage otpVerification = esignetLoginPage.setEnterIdTextBox(uin);
 
         esignetLoginPage.clickOnGetOtpButton();
-        assertTrue(esignetLoginPage.isOtpHasSendMessageDisplayed(),"verify if otp page is displayed");
+        assertTrue(esignetLoginPage.isOtpHasSendMessageDisplayed(), "verify if otp page is displayed");
 
         otpVerification.enterOtpForEsignet(getOtp(), Target.ANDROID);
         esignetLoginPage.clickOnVerifyButton();
 
-        assertTrue(homePage.isDownloadingVcPopupDisplayed(),"verify downloading vc popup displayed");
+        assertTrue(homePage.isDownloadingVcPopupDisplayed(), "verify downloading vc popup displayed");
         addNewCardPage.clickOnDoneButton();
         assertTrue(homePage.isCredentialTypeValueDisplayed(), "Verify if credential type value is displayed");
 
@@ -625,7 +625,7 @@ public class MosipOtpAlternativeFlow extends AndroidBaseTest {
     }
 
     @Test
-    public void pinEsignetVcMultipleTimes() throws InterruptedException  {
+    public void pinEsignetVcMultipleTimes() throws InterruptedException {
 
         ChooseLanguagePage chooseLanguagePage = new ChooseLanguagePage(driver);
 
@@ -654,7 +654,7 @@ public class MosipOtpAlternativeFlow extends AndroidBaseTest {
         assertTrue(addNewCardPage.isAddNewCardPageLoaded(), "Verify if add new card page is displayed");
         assertTrue(addNewCardPage.isAddNewCardPageGuideMessageForEsignetDisplayed(), "Verify if add new card guide message displayed");
         assertTrue(addNewCardPage.isDownloadViaSunbirdDisplayed(), "Verify if download sunbird displayed");
-        SunbirdLoginPage sunbirdLoginPage =  addNewCardPage.clickOnDownloadViaSunbird();
+        SunbirdLoginPage sunbirdLoginPage = addNewCardPage.clickOnDownloadViaSunbird();
         addNewCardPage.clickOnCredentialTypeHeadingInsuranceCredential();
 
         sunbirdLoginPage.enterPolicyNumberTextBox(TestDataReader.readData("policyNumberSunbird"));
@@ -667,19 +667,19 @@ public class MosipOtpAlternativeFlow extends AndroidBaseTest {
         homePage.downloadCard();
 
         assertTrue(addNewCardPage.isAddNewCardPageLoaded(), "Verify if add new card page is displayed");
-        EsignetLoginPage esignetLoginPage =  addNewCardPage.clickOnDownloadViaEsignet();
+        EsignetLoginPage esignetLoginPage = addNewCardPage.clickOnDownloadViaEsignet();
 
         esignetLoginPage.clickOnEsignetLoginWithOtpButton();
 
         assertTrue(esignetLoginPage.isEnterYourVidTextDisplayed(), "Verify if enter your vid text is displayed");
-        String uin=TestDataReader.readData("uin");
+        String uin = TestDataReader.readData("uin");
         esignetLoginPage.setEnterIdTextBox(uin);
 
         esignetLoginPage.clickOnGetOtpButton();
-        assertTrue(esignetLoginPage.isOtpHasSendMessageDisplayed(),"verify if otp page is displayed");
+        assertTrue(esignetLoginPage.isOtpHasSendMessageDisplayed(), "verify if otp page is displayed");
         OtpVerificationPage otpVerification = new OtpVerificationPage(driver);
 
-         otpVerification.enterOtpForEsignet(getOtp(), Target.ANDROID);
+        otpVerification.enterOtpForEsignet(getOtp(), Target.ANDROID);
         esignetLoginPage.clickOnVerifyButton();
 
         addNewCardPage.clickOnDoneButton();
@@ -710,7 +710,7 @@ public class MosipOtpAlternativeFlow extends AndroidBaseTest {
     }
 
     @Test
-    public void pinSubirdVcMultipleTimes() throws InterruptedException  {
+    public void pinSubirdVcMultipleTimes() throws InterruptedException {
 
         ChooseLanguagePage chooseLanguagePage = new ChooseLanguagePage(driver);
 
@@ -734,7 +734,7 @@ public class MosipOtpAlternativeFlow extends AndroidBaseTest {
         AddNewCardPage addNewCardPage = homePage.downloadCard();
 
         assertTrue(addNewCardPage.isAddNewCardPageLoaded(), "Verify if add new card page is displayed");
-        SunbirdLoginPage sunbirdLoginPage =  addNewCardPage.clickOnDownloadViaSunbird();
+        SunbirdLoginPage sunbirdLoginPage = addNewCardPage.clickOnDownloadViaSunbird();
         addNewCardPage.clickOnCredentialTypeHeadingInsuranceCredential();
 
         sunbirdLoginPage.enterPolicyNumberTextBox(TestDataReader.readData("policyNumberSunbird"));
@@ -746,17 +746,17 @@ public class MosipOtpAlternativeFlow extends AndroidBaseTest {
         homePage.downloadCard();
 
         assertTrue(addNewCardPage.isAddNewCardPageLoaded(), "Verify if add new card page is displayed");
-        EsignetLoginPage esignetLoginPage =  addNewCardPage.clickOnDownloadViaEsignet();
+        EsignetLoginPage esignetLoginPage = addNewCardPage.clickOnDownloadViaEsignet();
 
         esignetLoginPage.clickOnEsignetLoginWithOtpButton();
 
         assertTrue(esignetLoginPage.isEnterYourVidTextDisplayed(), "Verify if enter your vid text is displayed");
 
-        String uin=TestDataReader.readData("uin");
+        String uin = TestDataReader.readData("uin");
         esignetLoginPage.setEnterIdTextBox(uin);
 
         esignetLoginPage.clickOnGetOtpButton();
-        assertTrue(esignetLoginPage.isOtpHasSendMessageDisplayed(),"verify if otp page is displayed");
+        assertTrue(esignetLoginPage.isOtpHasSendMessageDisplayed(), "verify if otp page is displayed");
 
         OtpVerificationPage otpVerification = new OtpVerificationPage(driver);
         otpVerification.enterOtpForEsignet(getOtp(), Target.ANDROID);
@@ -815,16 +815,16 @@ public class MosipOtpAlternativeFlow extends AndroidBaseTest {
         AddNewCardPage addNewCardPage = homePage.downloadCard();
 
         assertTrue(addNewCardPage.isAddNewCardPageLoaded(), "Verify if add new card page is displayed");
-        EsignetLoginPage esignetLoginPage =  addNewCardPage.clickOnDownloadViaEsignet();
+        EsignetLoginPage esignetLoginPage = addNewCardPage.clickOnDownloadViaEsignet();
 
         esignetLoginPage.clickOnEsignetLoginWithOtpButton();
 
         assertTrue(esignetLoginPage.isEnterYourVidTextDisplayed(), "Verify if enter your vid text is displayed");
-        String uin=TestDataReader.readData("uin");
-        OtpVerificationPage otpVerification= esignetLoginPage.setEnterIdTextBox(uin);
+        String uin = TestDataReader.readData("uin");
+        OtpVerificationPage otpVerification = esignetLoginPage.setEnterIdTextBox(uin);
 
         esignetLoginPage.clickOnGetOtpButton();
-        assertTrue(esignetLoginPage.isOtpHasSendMessageDisplayed(),"verify if otp page is displayed");
+        assertTrue(esignetLoginPage.isOtpHasSendMessageDisplayed(), "verify if otp page is displayed");
 
         otpVerification.enterOtpForEsignet(getOtp(), Target.ANDROID);
         esignetLoginPage.clickOnVerifyButton();
@@ -878,16 +878,16 @@ public class MosipOtpAlternativeFlow extends AndroidBaseTest {
         AddNewCardPage addNewCardPage = homePage.downloadCard();
 
         assertTrue(addNewCardPage.isAddNewCardPageLoaded(), "Verify if add new card page is displayed");
-        EsignetLoginPage esignetLoginPage =  addNewCardPage.clickOnDownloadViaEsignet();
+        EsignetLoginPage esignetLoginPage = addNewCardPage.clickOnDownloadViaEsignet();
 
         esignetLoginPage.clickOnEsignetLoginWithOtpButton();
 
         assertTrue(esignetLoginPage.isEnterYourVidTextDisplayed(), "Verify if enter your vid text is displayed");
-        String uin=TestDataReader.readData("uin");
-        OtpVerificationPage otpVerification= esignetLoginPage.setEnterIdTextBox(uin);
+        String uin = TestDataReader.readData("uin");
+        OtpVerificationPage otpVerification = esignetLoginPage.setEnterIdTextBox(uin);
 
         esignetLoginPage.clickOnGetOtpButton();
-        assertTrue(esignetLoginPage.isOtpHasSendMessageDisplayed(),"verify if otp page is displayed");
+        assertTrue(esignetLoginPage.isOtpHasSendMessageDisplayed(), "verify if otp page is displayed");
 
         otpVerification.enterOtpForEsignet(getOtp(), Target.ANDROID);
         esignetLoginPage.clickOnVerifyButton();

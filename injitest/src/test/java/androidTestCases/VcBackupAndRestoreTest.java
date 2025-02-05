@@ -4,9 +4,9 @@ import BaseTest.AndroidBaseTest;
 import inji.api.BaseTestCase;
 import inji.constants.Target;
 import inji.pages.*;
+import inji.utils.IosUtil;
 import inji.utils.TestDataReader;
 import org.testng.annotations.Test;
-import inji.utils.IosUtil;
 
 import static org.testng.Assert.*;
 
@@ -33,7 +33,7 @@ public class VcBackupAndRestoreTest extends AndroidBaseTest {
         assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
         AddNewCardPage addNewCardPage = homePage.downloadCard();
         RetrieveIdPage retrieveIdPage = addNewCardPage.clickOnDownloadViaUin();
-        String uin=TestDataReader.readData("uin");
+        String uin = TestDataReader.readData("uin");
         OtpVerificationPage otpVerification = retrieveIdPage.setEnterIdTextBox(uin).clickOnGenerateCardButton();
 
         otpVerification.enterOtp(BaseTestCase.getOtp(), Target.ANDROID);
@@ -65,9 +65,9 @@ public class VcBackupAndRestoreTest extends AndroidBaseTest {
         assertTrue(backupAndRestorePage.isLastBackupSectionHeaderDisplayed(), "Verify if last backup section displayed");
         backupAndRestorePage.clickOnBackUpButton();
 
-        assertTrue(backupAndRestorePage.isDataBackupInProgressTextDisplayed(),"verify if data backup in progress popup displayed");
+        assertTrue(backupAndRestorePage.isDataBackupInProgressTextDisplayed(), "verify if data backup in progress popup displayed");
         assertTrue(backupAndRestorePage.isAccountSectionHeaderDisplayed(), "Verify if account section header displayed");
-        assertTrue(backupAndRestorePage.isDataBackupInProgressTextDisappear(),"verify if data backup in progress Disappear");
+        assertTrue(backupAndRestorePage.isDataBackupInProgressTextDisappear(), "verify if data backup in progress Disappear");
         assertTrue(backupAndRestorePage.isStorageInfoDisplayed(), "Verify if account storage info displayed");
         assertTrue(backupAndRestorePage.isAssociatedAccountDisplayed(), "Verify if associated account displayed");
         assertTrue(backupAndRestorePage.islastBackupTimeDisplayed(), "Verify if last backup time displayed");
@@ -190,7 +190,7 @@ public class VcBackupAndRestoreTest extends AndroidBaseTest {
         assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
         AddNewCardPage addNewCardPage = homePage.downloadCard();
         RetrieveIdPage retrieveIdPage = addNewCardPage.clickOnDownloadViaUin();
-        String uin=TestDataReader.readData("uin");
+        String uin = TestDataReader.readData("uin");
         OtpVerificationPage otpVerification = retrieveIdPage.setEnterIdTextBox(uin).clickOnGenerateCardButton();
 
         otpVerification.enterOtp(BaseTestCase.getOtp(), Target.ANDROID);
@@ -308,7 +308,7 @@ public class VcBackupAndRestoreTest extends AndroidBaseTest {
         assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
         AddNewCardPage addNewCardPage = homePage.downloadCard();
         RetrieveIdPage retrieveIdPage = addNewCardPage.clickOnDownloadViaUin();
-        String uin=TestDataReader.readData("uin");
+        String uin = TestDataReader.readData("uin");
         OtpVerificationPage otpVerification = retrieveIdPage.setEnterIdTextBox(uin).clickOnGenerateCardButton();
 
         otpVerification.enterOtp(BaseTestCase.getOtp(), Target.ANDROID);
@@ -369,7 +369,7 @@ public class VcBackupAndRestoreTest extends AndroidBaseTest {
         backupAndRestorePage.clickOnArrowLeftButton();
         assertTrue(settingsPage.isSettingPageLoaded(), "Verify if setting page is displayed");
 
-        UnlockApplicationPage unlockApplicationPage =  settingsPage.clickOnLanguage().clickOnArabicLanguageButton();
+        UnlockApplicationPage unlockApplicationPage = settingsPage.clickOnLanguage().clickOnArabicLanguageButton();
 
         assertTrue(unlockApplicationPage.isUnlockApplicationPageLoadedInArabic(), "Verify if language is changed to arabic");
         unlockApplicationPage.clickOnUnlockApplicationButton();
@@ -476,6 +476,7 @@ public class VcBackupAndRestoreTest extends AndroidBaseTest {
         assertTrue(settingsPage.isSettingPageLoaded(), "Verify if setting page is displayed");
 
     }
+
     @Test
     public void ActiveVcAfterBackup() throws InterruptedException {
         ChooseLanguagePage chooseLanguagePage = new ChooseLanguagePage(driver);
@@ -498,7 +499,7 @@ public class VcBackupAndRestoreTest extends AndroidBaseTest {
         assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
         AddNewCardPage addNewCardPage = homePage.downloadCard();
         RetrieveIdPage retrieveIdPage = addNewCardPage.clickOnDownloadViaUin();
-        String uin=TestDataReader.readData("uin");
+        String uin = TestDataReader.readData("uin");
         OtpVerificationPage otpVerification = retrieveIdPage.setEnterIdTextBox(uin).clickOnGenerateCardButton();
 
         otpVerification.enterOtp(BaseTestCase.getOtp(), Target.ANDROID);
@@ -598,6 +599,7 @@ public class VcBackupAndRestoreTest extends AndroidBaseTest {
         assertTrue(backupAndRestorePage.isBackupFQADisplayed(), "Verify if help frequntly asked quations is displayed");
 
     }
+
     @Test
     public void VerifyDeletingDownloadedvc() throws InterruptedException {
         ChooseLanguagePage chooseLanguagePage = new ChooseLanguagePage(driver);
@@ -620,7 +622,7 @@ public class VcBackupAndRestoreTest extends AndroidBaseTest {
         assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
         AddNewCardPage addNewCardPage = homePage.downloadCard();
         RetrieveIdPage retrieveIdPage = addNewCardPage.clickOnDownloadViaUin();
-        String uin=TestDataReader.readData("uin");
+        String uin = TestDataReader.readData("uin");
         OtpVerificationPage otpVerification = retrieveIdPage.setEnterIdTextBox(uin).clickOnGenerateCardButton();
 
         otpVerification.enterOtp(BaseTestCase.getOtp(), Target.ANDROID);
@@ -687,7 +689,7 @@ public class VcBackupAndRestoreTest extends AndroidBaseTest {
         assertTrue(homePage.isActivatedVcPopupTextDisplayed(), "Verify if VC is activated popup displayed");
         homePage.clickPopupCloseButtonButton();
 
-        IosUtil.scrollToElement(driver,100,800,100,200);
+        IosUtil.scrollToElement(driver, 100, 800, 100, 200);
         homePage.clickOnSecondVcsEllipsisButton();
 
         assertTrue(moreOptionsPage.isMoreOptionsPageLoaded(), "Verify if more options page is displayed");
@@ -722,7 +724,7 @@ public class VcBackupAndRestoreTest extends AndroidBaseTest {
         assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
         AddNewCardPage addNewCardPage = homePage.downloadCard();
         RetrieveIdPage retrieveIdPage = addNewCardPage.clickOnDownloadViaUin();
-        String uin=TestDataReader.readData("uin");
+        String uin = TestDataReader.readData("uin");
         OtpVerificationPage otpVerification = retrieveIdPage.setEnterIdTextBox(uin).clickOnGenerateCardButton();
 
         otpVerification.enterOtp(BaseTestCase.getOtp(), Target.ANDROID);
@@ -773,7 +775,7 @@ public class VcBackupAndRestoreTest extends AndroidBaseTest {
 
         addNewCardPage.clickOnDoneButton();
         assertTrue(homePage.isCredentialTypeValueDisplayed(), "Verify if credential type value is displayed");
-        IosUtil.scrollToElement(driver,100,800,100,200);
+        IosUtil.scrollToElement(driver, 100, 800, 100, 200);
         homePage.clickOnSecondVcsEllipsisButton();
         MoreOptionsPage moreOptionsPage = new MoreOptionsPage(driver);
         assertTrue(moreOptionsPage.isMoreOptionsPageLoaded(), "Verify if more options page is displayed");
@@ -823,7 +825,7 @@ public class VcBackupAndRestoreTest extends AndroidBaseTest {
         assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
         AddNewCardPage addNewCardPage = homePage.downloadCard();
         RetrieveIdPage retrieveIdPage = addNewCardPage.clickOnDownloadViaUin();
-        String uin=TestDataReader.readData("uin");
+        String uin = TestDataReader.readData("uin");
         OtpVerificationPage otpVerification = retrieveIdPage.setEnterIdTextBox(uin).clickOnGenerateCardButton();
 
         otpVerification.enterOtp(BaseTestCase.getOtp(), Target.ANDROID);
@@ -872,7 +874,7 @@ public class VcBackupAndRestoreTest extends AndroidBaseTest {
 
         addNewCardPage.clickOnDoneButton();
         assertTrue(homePage.isCredentialTypeValueDisplayed(), "Verify if credential type value is displayed");
-        IosUtil.scrollToElement(driver,100,800,100,200);
+        IosUtil.scrollToElement(driver, 100, 800, 100, 200);
         homePage.clickOnSecondVcsEllipsisButton();
         MoreOptionsPage moreOptionsPage = new MoreOptionsPage(driver);
         assertTrue(moreOptionsPage.isMoreOptionsPageLoaded(), "Verify if more options page is displayed");
@@ -918,7 +920,7 @@ public class VcBackupAndRestoreTest extends AndroidBaseTest {
         assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
         AddNewCardPage addNewCardPage = homePage.downloadCard();
         RetrieveIdPage retrieveIdPage = addNewCardPage.clickOnDownloadViaUin();
-        String uin=TestDataReader.readData("uin");
+        String uin = TestDataReader.readData("uin");
         OtpVerificationPage otpVerification = retrieveIdPage.setEnterIdTextBox(uin).clickOnGenerateCardButton();
 
         otpVerification.enterOtp(BaseTestCase.getOtp(), Target.ANDROID);
@@ -1105,7 +1107,7 @@ public class VcBackupAndRestoreTest extends AndroidBaseTest {
         assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
         AddNewCardPage addNewCardPage = homePage.downloadCard();
         RetrieveIdPage retrieveIdPage = addNewCardPage.clickOnDownloadViaUin();
-        String uin=TestDataReader.readData("uin");
+        String uin = TestDataReader.readData("uin");
         OtpVerificationPage otpVerification = retrieveIdPage.setEnterIdTextBox(uin).clickOnGenerateCardButton();
 
         otpVerification.enterOtp(BaseTestCase.getOtp(), Target.ANDROID);
@@ -1137,10 +1139,10 @@ public class VcBackupAndRestoreTest extends AndroidBaseTest {
         assertTrue(backupAndRestorePage.isLastBackupSectionHeaderDisplayed(), "Verify if last backup section displayed");
         backupAndRestorePage.clickOnBackUpButton();
 
-        assertTrue(backupAndRestorePage.isDataBackupInProgressTextDisplayed(),"verify if data backup in progress popup displayed");
+        assertTrue(backupAndRestorePage.isDataBackupInProgressTextDisplayed(), "verify if data backup in progress popup displayed");
         assertTrue(backupAndRestorePage.isAccountSectionHeaderDisplayed(), "Verify if account section header displayed");
         assertTrue(backupAndRestorePage.islastBackupTimeDisplayed(), "Verify if last backup time displayed");
-        assertFalse(backupAndRestorePage.isDataBackupInProgressTextDisappear(),"verify if data backup in progress Disappear");
+        assertFalse(backupAndRestorePage.isDataBackupInProgressTextDisappear(), "verify if data backup in progress Disappear");
         assertTrue(backupAndRestorePage.isStorageInfoDisplayed(), "Verify if account storage info displayed");
         assertTrue(backupAndRestorePage.isAssociatedAccountDisplayed(), "Verify if associated account displayed");
         assertTrue(backupAndRestorePage.islastBackupTimeDisplayed(), "Verify if last backup time displayed");
@@ -1199,7 +1201,7 @@ public class VcBackupAndRestoreTest extends AndroidBaseTest {
         assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
         AddNewCardPage addNewCardPage = homePage.downloadCard();
         RetrieveIdPage retrieveIdPage = addNewCardPage.clickOnDownloadViaUin();
-        String uin=TestDataReader.readData("uin");
+        String uin = TestDataReader.readData("uin");
         OtpVerificationPage otpVerification = retrieveIdPage.setEnterIdTextBox(uin).clickOnGenerateCardButton();
 
         otpVerification.enterOtp(BaseTestCase.getOtp(), Target.ANDROID);
@@ -1231,10 +1233,10 @@ public class VcBackupAndRestoreTest extends AndroidBaseTest {
         assertTrue(backupAndRestorePage.isLastBackupSectionHeaderDisplayed(), "Verify if last backup section displayed");
         backupAndRestorePage.clickOnBackUpButton();
 
-        assertTrue(backupAndRestorePage.isDataBackupInProgressTextDisplayed(),"verify if data backup in progress popup displayed");
+        assertTrue(backupAndRestorePage.isDataBackupInProgressTextDisplayed(), "verify if data backup in progress popup displayed");
         assertTrue(backupAndRestorePage.isAccountSectionHeaderDisplayed(), "Verify if account section header displayed");
         assertTrue(backupAndRestorePage.islastBackupTimeDisplayed(), "Verify if last backup time displayed");
-        assertFalse(backupAndRestorePage.isDataBackupInProgressTextDisappear(),"verify if data backup in progress Disappear");
+        assertFalse(backupAndRestorePage.isDataBackupInProgressTextDisappear(), "verify if data backup in progress Disappear");
         assertTrue(backupAndRestorePage.isStorageInfoDisplayed(), "Verify if account storage info displayed");
         assertTrue(backupAndRestorePage.isAssociatedAccountDisplayed(), "Verify if associated account displayed");
         assertTrue(backupAndRestorePage.islastBackupTimeDisplayed(), "Verify if last backup time displayed");

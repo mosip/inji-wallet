@@ -4,9 +4,7 @@ import inji.utils.IosUtil;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.pagefactory.AndroidFindBy;
 import io.appium.java_client.pagefactory.iOSXCUITFindBy;
-
 import org.openqa.selenium.NoSuchElementException;
-import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebElement;
 
@@ -31,7 +29,7 @@ public class SunbirdLoginPage extends BasePage {
     @iOSXCUITFindBy(accessibility = "Done")
     private WebElement clickOnSetButton;
 
-    @AndroidFindBy(xpath = "//android.view.View[@content-desc='01 January 2024']")
+    @AndroidFindBy(xpath = "//android.view.View[@content-desc='01 January 2025']")
     @iOSXCUITFindBy(xpath = "//XCUIElementTypeButton[@name=\"Monday, January 1\"]")
     private WebElement dateOfBirth;
 
@@ -62,7 +60,6 @@ public class SunbirdLoginPage extends BasePage {
     @AndroidFindBy(accessibility = "a square logo of a Sunbird")
     @iOSXCUITFindBy(accessibility = "a square logo of a Sunbird")
     private WebElement sunbirdSquareLogo;
-
 
 
     @AndroidFindBy(accessibility = "fullNameValue")
@@ -161,7 +158,9 @@ public class SunbirdLoginPage extends BasePage {
     public SunbirdLoginPage(AppiumDriver driver) {
         super(driver);
     }
+
     BasePage basePage = new BasePage(driver);
+
     public void clickOnloginWithKbaButton() {
         clickOnElement(loginWithKBA);
     }
@@ -182,7 +181,7 @@ public class SunbirdLoginPage extends BasePage {
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
-            sendKeysToTextBox(enterFullnameTextBox, fullname);
+        sendKeysToTextBox(enterFullnameTextBox, fullname);
     }
 
     public void enterDateOfBirthTextBox() {
@@ -192,9 +191,9 @@ public class SunbirdLoginPage extends BasePage {
             for (int i = 0; i < MAX_ATTEMPTS; i++) {
                 try {
                     clickOnElement(previousMonth);
-                    if(isElementDisplayed(dateOfBirth,5)) {
+                    if (isElementDisplayed(dateOfBirth, 5)) {
                         break;
-                    } else if (isElementDisplayed(dateOfBirthSecond,5)) {
+                    } else if (isElementDisplayed(dateOfBirthSecond, 5)) {
                         break;
                     }
 
@@ -205,7 +204,7 @@ public class SunbirdLoginPage extends BasePage {
             }
         }
 
-        if (isElementDisplayed(dateOfBirth,5)) {
+        if (isElementDisplayed(dateOfBirth, 5)) {
             clickOnElement(dateOfBirth);
             clickOnElement(clickOnSetButton);
         } else if (isElementDisplayed(dateOfBirthSecond)) {
@@ -226,26 +225,26 @@ public class SunbirdLoginPage extends BasePage {
                 break;
             }
         }
-        if(isElementDisplayed(loginButtonSecond)){
+        if (isElementDisplayed(loginButtonSecond)) {
             clickOnElement(loginButtonSecond);
         }
     }
+
     public boolean isSunbirdCardIsActive() {
-        if(isElementDisplayed(doneButton))
-       clickOnElement(doneButton);
+        if (isElementDisplayed(doneButton))
+            clickOnElement(doneButton);
         basePage.retryToGetElement(activatedStatus);
         return this.isElementDisplayed(activatedStatus);
     }
 
     public boolean isSunbirdCardLogoIsDisplayed() {
-        if(isElementDisplayed(sunbirdSquareLogo)){
+        if (isElementDisplayed(sunbirdSquareLogo)) {
             basePage.retryToGetElement(sunbirdSquareLogo);
             return true;
         } else if (isElementDisplayed(sunbirdLogo)) {
             basePage.retryToGetElement(sunbirdLogo);
             return true;
-        }
-        else {
+        } else {
             return false;
         }
     }
@@ -254,10 +253,12 @@ public class SunbirdLoginPage extends BasePage {
         basePage.retryToGetElement(fullName);
         return this.getTextFromLocator(fullName);
     }
+
     public String getFullNameForSunbirdCardForDetailView() {
         basePage.retryToGetElement(fullNameInDetailView);
         return this.getTextFromLocator(fullNameInDetailView);
     }
+
     public String getPolicyNameForSunbirdCard() {
         basePage.retryToGetElement(policyName);
         return this.getTextFromLocator(policyName);
@@ -284,7 +285,7 @@ public class SunbirdLoginPage extends BasePage {
     }
 
     public String getEmailIdValueForSunbirdCard() {
-        IosUtil.scrollToElement(driver,100,800,100,200);
+        IosUtil.scrollToElement(driver, 100, 800, 100, 200);
         basePage.retryToGetElement(emailIdValue);
         return this.getTextFromLocator(emailIdValue);
     }
@@ -299,7 +300,7 @@ public class SunbirdLoginPage extends BasePage {
         return this.getTextFromLocator(idType);
     }
 
-    public void clickOnContinueButtonInSigninPopupIos(){
+    public void clickOnContinueButtonInSigninPopupIos() {
         clickOnElement(continueButton);
     }
 
@@ -319,12 +320,12 @@ public class SunbirdLoginPage extends BasePage {
     }
 
     public void clickOnMosipInsurance() {
-         this.clickOnElement(credentialTypeItemInsuranceCredential);
+        this.clickOnElement(credentialTypeItemInsuranceCredential);
     }
 
- public void clickOnBackArrow() {
+    public void clickOnBackArrow() {
         this.clickOnElement(arrowLeft);
- }
+    }
 
     public boolean isPolicyExpiresOnValueDisplayed() {
         return this.isElementDisplayed(policyExpiresOnValue);

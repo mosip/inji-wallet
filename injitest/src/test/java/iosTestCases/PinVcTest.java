@@ -14,7 +14,7 @@ import static org.testng.Assert.assertTrue;
 public class PinVcTest extends IosBaseTest {
 
     @Test
-    public void pinVc() throws InterruptedException  {
+    public void pinVc() throws InterruptedException {
 
         ChooseLanguagePage chooseLanguagePage = new ChooseLanguagePage(driver);
 
@@ -56,7 +56,7 @@ public class PinVcTest extends IosBaseTest {
 
         assertTrue(homePage.isPinIconDisplayed(), "Verify if pin icon on vc is displayed");
         homePage.clickOnMoreOptionsButton();
-        HistoryPage historyPage= moreOptionsPage.clickOnViewActivityLog();
+        HistoryPage historyPage = moreOptionsPage.clickOnViewActivityLog();
         assertTrue(historyPage.verifyHistory(uin, Target.IOS));
     }
 
@@ -88,7 +88,7 @@ public class PinVcTest extends IosBaseTest {
         RetrieveIdPage retrieveIdPage = addNewCardPage.clickOnDownloadViaUin();
 
         assertTrue(retrieveIdPage.isRetrieveIdPageLoaded(), "Verify if retrieve id page is displayed");
-        String uin=TestDataReader.readData("uin");
+        String uin = TestDataReader.readData("uin");
         OtpVerificationPage otpVerification = retrieveIdPage.setEnterIdTextBox(uin).clickOnGenerateCardButton();
 
         assertTrue(otpVerification.isOtpVerificationPageLoaded(), "Verify if otp verification page is displayed");
@@ -102,13 +102,13 @@ public class PinVcTest extends IosBaseTest {
         moreOptionsPage.clickOnPinOrUnPinCard();
 
         assertTrue(homePage.isPinIconDisplayed(), "Verify if pin icon on vc is displayed");
-        SharePage scanPage=homePage.clickOnShareButton();
+        SharePage scanPage = homePage.clickOnShareButton();
         scanPage.acceptPermissionPopupBluetoothIos();
         scanPage.acceptPermissionPopupCameraIos();
 
         assertTrue(scanPage.isCameraPageLoaded(), "Verify camera page is displayed");
-        assertTrue(scanPage.isFlipCameraClickable(),"Verify if flip camera is enabled");
-        assertTrue(scanPage.isCameraOpen(),"Verify if camera is displayed");
+        assertTrue(scanPage.isFlipCameraClickable(), "Verify if flip camera is enabled");
+        assertTrue(scanPage.isCameraOpen(), "Verify if camera is displayed");
     }
 
     @Test
@@ -135,13 +135,13 @@ public class PinVcTest extends IosBaseTest {
         AddNewCardPage addNewCardPage = homePage.downloadCard();
 
         assertTrue(addNewCardPage.isAddNewCardPageLoaded(), "Verify if add new card page is displayed");
-        EsignetLoginPage esignetLoginPage =  addNewCardPage.clickOnDownloadViaEsignet();
+        EsignetLoginPage esignetLoginPage = addNewCardPage.clickOnDownloadViaEsignet();
         esignetLoginPage.clickOnCredentialTypeHeadingMOSIPVerifiableCredential();
         addNewCardPage.clickOnContinueButtonInSigninPopupIos();
 
         esignetLoginPage.clickOnEsignetLoginWithOtpButton();
         String uin = TestDataReader.readData("uin");
-        OtpVerificationPage otpVerification= esignetLoginPage.setEnterIdTextBox(uin);
+        OtpVerificationPage otpVerification = esignetLoginPage.setEnterIdTextBox(uin);
         esignetLoginPage.clickOnGetOtpButton();
 
         otpVerification.enterOtpForEsignet(BaseTestCase.getOtp(), Target.IOS);
@@ -214,14 +214,14 @@ public class PinVcTest extends IosBaseTest {
         moreOptionsPage.clickOnPinOrUnPinCard();
 
         assertTrue(homePage.isPinIconDisplayed(), "Verify if pin icon on vc is displayed");
-        SharePage scanPage=homePage.clickOnShareButton();
+        SharePage scanPage = homePage.clickOnShareButton();
         scanPage.denyPermissionPopupBluetoothIos();
-        assertEquals(scanPage.isEnableBluetoothButtonButtonDisplayed(),"Allow bluetooth permissions");
+        assertEquals(scanPage.isEnableBluetoothButtonButtonDisplayed(), "Allow bluetooth permissions");
 
     }
 
     @Test
-    public void pinEsignetVcMultipleTimes() throws InterruptedException  {
+    public void pinEsignetVcMultipleTimes() throws InterruptedException {
 
         ChooseLanguagePage chooseLanguagePage = new ChooseLanguagePage(driver);
 
@@ -248,7 +248,7 @@ public class PinVcTest extends IosBaseTest {
         RetrieveIdPage retrieveIdPage = addNewCardPage.clickOnDownloadViaUin();
 
         assertTrue(retrieveIdPage.isRetrieveIdPageLoaded(), "Verify if retrieve id page is displayed");
-        String uin=TestDataReader.readData("uin");
+        String uin = TestDataReader.readData("uin");
         OtpVerificationPage otpVerification = retrieveIdPage.setEnterIdTextBox(uin).clickOnGenerateCardButton();
 
         assertTrue(otpVerification.isOtpVerificationPageLoaded(), "Verify if otp verification page is displayed");
@@ -257,13 +257,13 @@ public class PinVcTest extends IosBaseTest {
         homePage.downloadCard();
 
         assertTrue(addNewCardPage.isAddNewCardPageLoaded(), "Verify if add new card page is displayed");
-        SunbirdLoginPage sunbirdLoginPage =  addNewCardPage.clickOnDownloadViaSunbird();
+        SunbirdLoginPage sunbirdLoginPage = addNewCardPage.clickOnDownloadViaSunbird();
         addNewCardPage.clickOnCredentialTypeHeadingInsuranceCredential();
         addNewCardPage.clickOnContinueButtonInSigninPopupIos();
         sunbirdLoginPage.enterPolicyNumberTextBox(TestDataReader.readData("policyNumberSunbird"));
         sunbirdLoginPage.enterFullNameTextBox(TestDataReader.readData("fullNameSunbird"));
         sunbirdLoginPage.enterDateOfBirthTextBox();
-        IosUtil.scrollToElement(driver,100,800,100,200);
+        IosUtil.scrollToElement(driver, 100, 800, 100, 200);
         sunbirdLoginPage.clickOnloginButton();
 
         assertTrue(sunbirdLoginPage.isSunbirdCardIsActive(), "Verify if download sunbird displayed active");
@@ -296,7 +296,7 @@ public class PinVcTest extends IosBaseTest {
     }
 
     @Test
-    public void pinMosipVcMultipleTimes() throws InterruptedException  {
+    public void pinMosipVcMultipleTimes() throws InterruptedException {
 
         ChooseLanguagePage chooseLanguagePage = new ChooseLanguagePage(driver);
 
@@ -322,7 +322,7 @@ public class PinVcTest extends IosBaseTest {
         RetrieveIdPage retrieveIdPage = addNewCardPage.clickOnDownloadViaUin();
 
         assertTrue(retrieveIdPage.isRetrieveIdPageLoaded(), "Verify if retrieve id page is displayed");
-        String uin=TestDataReader.readData("uin");
+        String uin = TestDataReader.readData("uin");
         OtpVerificationPage otpVerification = retrieveIdPage.setEnterIdTextBox(uin).clickOnGenerateCardButton();
 
         assertTrue(otpVerification.isOtpVerificationPageLoaded(), "Verify if otp verification page is displayed");
@@ -331,13 +331,13 @@ public class PinVcTest extends IosBaseTest {
         homePage.downloadCard();
 
         assertTrue(addNewCardPage.isAddNewCardPageLoaded(), "Verify if add new card page is displayed");
-        SunbirdLoginPage sunbirdLoginPage =  addNewCardPage.clickOnDownloadViaSunbird();
+        SunbirdLoginPage sunbirdLoginPage = addNewCardPage.clickOnDownloadViaSunbird();
         addNewCardPage.clickOnCredentialTypeHeadingInsuranceCredential();
         addNewCardPage.clickOnContinueButtonInSigninPopupIos();
         sunbirdLoginPage.enterPolicyNumberTextBox(TestDataReader.readData("policyNumberSunbird"));
         sunbirdLoginPage.enterFullNameTextBox(TestDataReader.readData("fullNameSunbird"));
         sunbirdLoginPage.enterDateOfBirthTextBox();
-        IosUtil.scrollToElement(driver,100,800,100,200);
+        IosUtil.scrollToElement(driver, 100, 800, 100, 200);
         sunbirdLoginPage.clickOnloginButton();
 
         assertTrue(sunbirdLoginPage.isSunbirdCardIsActive(), "Verify if download sunbird displayed active");
@@ -372,7 +372,7 @@ public class PinVcTest extends IosBaseTest {
     }
 
     @Test
-    public void pinVcInDetailedVcView() throws InterruptedException  {
+    public void pinVcInDetailedVcView() throws InterruptedException {
         ChooseLanguagePage chooseLanguagePage = new ChooseLanguagePage(driver);
 
         assertTrue(chooseLanguagePage.isChooseLanguagePageLoaded(), "Verify if choose language page is displayed");
@@ -404,7 +404,7 @@ public class PinVcTest extends IosBaseTest {
         assertTrue(otpVerification.isOtpVerificationPageLoaded(), "Verify if otp verification page is displayed");
         otpVerification.enterOtp(BaseTestCase.getOtp(), Target.IOS);
 
-        assertTrue(homePage.isDownloadingVcPopupDisplayed(),"verify downloading vc popup displayed");
+        assertTrue(homePage.isDownloadingVcPopupDisplayed(), "verify downloading vc popup displayed");
         addNewCardPage.clickOnDoneButton();
         assertTrue(homePage.isCredentialTypeValueDisplayed(), "Verify if credential type value is displayed");
 

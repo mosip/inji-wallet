@@ -42,6 +42,7 @@ public class VerifyWelcomePagesTest extends AndroidBaseTest {
         assertEquals(backupDataPage.verifyLanguageforBackupDataPageLoaded(), "Backup & Restore");
         assertEquals(backupDataPage.getBackupDataPageDescription(), "Protect your data with ease using our Backup & Restore feature. Safely store your VCs against loss or accidents by creating regular backups and recover it effortlessly whenever needed for seamless continuity.");
     }
+
     @Test
     public void verifyWelcomePagesFromInjiTourGuide() {
         ChooseLanguagePage chooseLanguagePage = new ChooseLanguagePage(driver);
@@ -182,7 +183,7 @@ public class VerifyWelcomePagesTest extends AndroidBaseTest {
         assertTrue(homePage.verifyLanguageForHelpAndFrequentlyAskedQuationsHeaderDisplayed("English"), "Verify if help and frequently asked quations header displayed");
         assertTrue(homePage.verifyLanguageForHelpAndFrequentlyAskedQuationsDescriptionDisplayed("English"), "Verify if help and frequently asked quations description displayed");
 
-        IosUtil.scrollToElement(driver,100,800,100,200);
+        IosUtil.scrollToElement(driver, 100, 800, 100, 200);
         assertEquals(homePage.verifyLanguageForNoVCDownloadedPageLoaded(), "Bring your digital identity");
     }
 }

@@ -1,13 +1,11 @@
 package inji.pages;
 
-import inji.constants.Target;
 import inji.utils.IosUtil;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.pagefactory.AndroidFindBy;
 import io.appium.java_client.pagefactory.iOSXCUITFindBy;
 import org.openqa.selenium.WebElement;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
@@ -37,15 +35,15 @@ public class SettingsPage extends BasePage {
     @AndroidFindBy(accessibility = "en")
     @iOSXCUITFindBy(accessibility = "en")
     private WebElement englishLanguageButton;
-    
+
     @AndroidFindBy(accessibility = "hi")
     @iOSXCUITFindBy(accessibility = "hi")
     private WebElement hindiLanguageButton;
-    
+
     @AndroidFindBy(accessibility = "ta")
     @iOSXCUITFindBy(accessibility = "ta")
     private WebElement tamilLanguageButton;
-    
+
     @AndroidFindBy(accessibility = "kn")
     @iOSXCUITFindBy(accessibility = "kn")
     private WebElement kannadaLanguageButton;
@@ -88,7 +86,7 @@ public class SettingsPage extends BasePage {
     @AndroidFindBy(accessibility = "ar")
     @iOSXCUITFindBy(accessibility = "ar")
     private WebElement arabicLanguageButton;
-    
+
     @AndroidFindBy(accessibility = "arrowLeft")
     @iOSXCUITFindBy(accessibility = "arrowLeft")
     private WebElement backButton;
@@ -110,13 +108,13 @@ public class SettingsPage extends BasePage {
     public boolean isSettingPageLoaded() {
         return this.isElementDisplayed(settingsTittle);
     }
-    
+
     public boolean isSettingPageLoadedInFilipion() {
         return this.isElementDisplayed(settingsTittle);
     }
 
     public UnlockApplicationPage clickOnLogoutButton() {
-        IosUtil.scrollToElement(driver,100,800,100,200);
+        IosUtil.scrollToElement(driver, 100, 800, 100, 200);
         clickOnElement(logoutButton);
         return new UnlockApplicationPage(driver);
     }
@@ -137,11 +135,11 @@ public class SettingsPage extends BasePage {
     public void clickOnTamilLanguage() {
         clickOnElement(tamilLanguageButton);
     }
-    
+
     public void clickOnHindiLanguage() {
         clickOnElement(hindiLanguageButton);
     }
-    
+
     public void clickOnKannadaLanguage() {
         clickOnElement(kannadaLanguageButton);
     }
@@ -149,27 +147,27 @@ public class SettingsPage extends BasePage {
     public boolean verifyFilipinoLanguage() {
         return this.isElementDisplayed(wikaButton);
     }
-    
+
     public boolean verifyTamilLanguage() {
         return this.isElementDisplayed(languageButton);
     }
-    
+
     public boolean verifyHindiLanguage() {
         return this.isElementDisplayed(languageButton);
     }
-    
+
     public boolean verifyKannadaLanguage() {
         return this.isElementDisplayed(languageButton);
     }
 
     public boolean verifyLanguagesInLanguageFilter(String os) {
-        List<String> expectedLanguages=null;
-        List<String> actualLanguages= null;
-       if(os.equals("IOS")){
-         expectedLanguages = Arrays.asList("English \uE5CA Filipino عربى हिंदी ಕನ್ನಡ தமிழ்");
-         } else if (os.equals("ANDROID")) {
-           expectedLanguages = Arrays.asList("English", "Filipino","عربى", "हिंदी", "ಕನ್ನಡ", "தமிழ்");
-       }
+        List<String> expectedLanguages = null;
+        List<String> actualLanguages = null;
+        if (os.equals("IOS")) {
+            expectedLanguages = Arrays.asList("English \uE5CA Filipino عربى हिंदी ಕನ್ನಡ தமிழ்");
+        } else if (os.equals("ANDROID")) {
+            expectedLanguages = Arrays.asList("English", "Filipino", "عربى", "हिंदी", "ಕನ್ನಡ", "தமிழ்");
+        }
         actualLanguages = languages.stream()
                 .map(WebElement::getText)
                 .collect(Collectors.toList());
@@ -217,12 +215,13 @@ public class SettingsPage extends BasePage {
         clickOnElement(backButton);
         return this;
     }
+
     public UnlockApplicationPage clickOnlanguageButtonInArabic() {
         clickOnElement(languageButtonInArabic);
         return new UnlockApplicationPage(driver);
     }
 
-    
+
     public UnlockApplicationPage clickOnArabicLanguageButton() {
         clickOnElement(arabicLanguageButton);
         return new UnlockApplicationPage(driver);
@@ -240,11 +239,12 @@ public class SettingsPage extends BasePage {
     public boolean isNewlableDisplayed() {
         return this.isElementDisplayed(newlable);
     }
-    public String  getDataBackupAndRestoreText(){
+
+    public String getDataBackupAndRestoreText() {
         return getTextFromLocator(dataBackupAndRestore);
     }
 
-    public String getreceiveCardText(){
+    public String getreceiveCardText() {
         return getTextFromLocator(receiveCardText);
     }
 

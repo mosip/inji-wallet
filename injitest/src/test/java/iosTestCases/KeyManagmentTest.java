@@ -1,15 +1,12 @@
 package iosTestCases;
 
 import BaseTest.IosBaseTest;
-import inji.api.BaseTestCase;
 import inji.constants.Target;
 import inji.pages.*;
 import inji.utils.IosUtil;
 import inji.utils.TestDataReader;
 import org.testng.annotations.Test;
-import org.testng.asserts.SoftAssert;
 
-import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
 public class KeyManagmentTest extends IosBaseTest {
@@ -42,7 +39,7 @@ public class KeyManagmentTest extends IosBaseTest {
         keyManagementPage.clickOnDoneButton();
         Thread.sleep(3000);
 
-        IosUtil.dragAndDropForIos(driver,keyManagementPage.getTheCoordinatesForRSA(),keyManagementPage.getTheCoordinatesED25519Text());
+        IosUtil.dragAndDropForIos(driver, keyManagementPage.getTheCoordinatesForRSA(), keyManagementPage.getTheCoordinatesED25519Text());
         keyManagementPage.clickOnSaveKeyOrderingPreferenceButton();
     }
 }

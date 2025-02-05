@@ -3,31 +3,9 @@
 <suite name="esignetAndSunbird">
 	<test verbose="2" preserve-order="true" name="android">
 		<classes>
-			<class name="androidTestCases.UnlockWithPasscodeTest">
+			<class name="androidTestCases.VcDownloadAndVerifyUsingEsignetTest">
 				<methods>
-					<include name="logoutAndLoginWithPasscode" />
-					<include name="loginWithInvalidPasscode" />
-				</methods>
-			</class>
-			<class name="androidTestCases.ActivateVcTest">
-				<methods>
-					<include name="downloadAndActiveVcUsingUinViaEsignet" />
-				</methods>
-			</class>
-			<class name="androidTestCases.ChangeLanguageTest">
-				<methods>
-					<include name="changeLanguageToArabic" />
-				</methods>
-			</class>
-			<class name="androidTestCases.PinVcTest">
-				<methods>
-					<include name="downloadVcViaEsignetAndPinUnpin" />
-					<include name="downloadVcViaEsignetAndPinUnpin" />
-				</methods>
-			</class>
-			<class name="androidTestCases.AboutInjiTest">
-				<methods>
-					<include name="verifyAppId"/>
+					<include name="downloadAndVerifyVcUsingUinViaEsignet" />
 				</methods>
 			</class>
 		</classes>

@@ -41,7 +41,7 @@ public class VerifyHelpPageTest extends AndroidBaseTest {
         homePage.clickOnHelpIcon();
 
         assertTrue(helpPage.isHelpPageLoaded(), "Verify if help page is displayed");
-        assertTrue(helpPage.isWhatIsShareWithSelfieTextdHeader(),"verify if share with selfie text displayed");
+        assertTrue(helpPage.isWhatIsShareWithSelfieTextdHeader(), "verify if share with selfie text displayed");
         helpPage.exitHelpPage();
 
         homePage.clickOnNextButtonForInjiTour();

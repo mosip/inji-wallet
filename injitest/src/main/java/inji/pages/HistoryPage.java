@@ -193,7 +193,6 @@ public class HistoryPage extends BasePage {
     }
 
 
-
     private boolean verifyActivationSuccessfulRecordAndroid(String vcNumber) {
         By locator = By.xpath("//*[contains(@text,'Activation of MOSIP National ID is successful.')]");
         return this.isElementDisplayed(locator);

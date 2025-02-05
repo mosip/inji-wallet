@@ -4,7 +4,6 @@ import BaseTest.IosBaseTest;
 import inji.api.BaseTestCase;
 import inji.constants.Target;
 import inji.pages.*;
-import inji.utils.AndroidUtil;
 import inji.utils.IosUtil;
 import inji.utils.TestDataReader;
 import inji.utils.UpdateNetworkSettings;
@@ -18,7 +17,7 @@ public class NoNetworkIosTest extends IosBaseTest {
 
     @Test
     public void setupPasscodeAndDownloadCardWithoutInternet() {
-        String sessionId  = driver.getSessionId().toString();
+        String sessionId = driver.getSessionId().toString();
         UpdateNetworkSettings.setNoNetworkProfile(sessionId);
 
         ChooseLanguagePage chooseLanguagePage = new ChooseLanguagePage(driver);
@@ -87,7 +86,7 @@ public class NoNetworkIosTest extends IosBaseTest {
         addNewCardPage.clickOnDoneButton();
         assertTrue(homePage.isCredentialTypeValueDisplayed(), "Verify if credential type value is displayed");
 
-        String sessionId  = driver.getSessionId().toString();
+        String sessionId = driver.getSessionId().toString();
         UpdateNetworkSettings.setNoNetworkProfile(sessionId);
         assertTrue(homePage.clickOnShareButton().acceptPermissionPopupBluetoothIos().acceptPermissionPopupBluetoothIos().isCameraOpen());
     }
@@ -127,7 +126,7 @@ public class NoNetworkIosTest extends IosBaseTest {
 
         addNewCardPage.clickOnDoneButton();
         assertTrue(homePage.isCredentialTypeValueDisplayed(), "Verify if credential type value is displayed");
-        String sessionId  = driver.getSessionId().toString();
+        String sessionId = driver.getSessionId().toString();
         UpdateNetworkSettings.setNoNetworkProfile(sessionId);
 
         MoreOptionsPage moreOptionsPage = homePage.clickOnMoreOptionsButton();
@@ -144,7 +143,7 @@ public class NoNetworkIosTest extends IosBaseTest {
 
     @Test
     public void verifyListOfLanguagesInOfflineMode() {
-        String sessionId  = driver.getSessionId().toString();
+        String sessionId = driver.getSessionId().toString();
         UpdateNetworkSettings.setNoNetworkProfile(sessionId);
         ChooseLanguagePage chooseLanguagePage = new ChooseLanguagePage(driver);
 
@@ -175,7 +174,7 @@ public class NoNetworkIosTest extends IosBaseTest {
 
     @Test
     public void verifyHelpPageOfflineMode() {
-        String sessionId  = driver.getSessionId().toString();
+        String sessionId = driver.getSessionId().toString();
         UpdateNetworkSettings.setNoNetworkProfile(sessionId);
 
         ChooseLanguagePage chooseLanguagePage = new ChooseLanguagePage(driver);
@@ -240,7 +239,7 @@ public class NoNetworkIosTest extends IosBaseTest {
 
         addNewCardPage.clickOnDoneButton();
         assertTrue(homePage.isCredentialTypeValueDisplayed(), "Verify if credential type value is displayed");
-        String sessionId  = driver.getSessionId().toString();
+        String sessionId = driver.getSessionId().toString();
         UpdateNetworkSettings.setNoNetworkProfile(sessionId);
 
         MoreOptionsPage moreOptionsPage = homePage.clickOnMoreOptionsButton();
@@ -291,7 +290,7 @@ public class NoNetworkIosTest extends IosBaseTest {
 
         addNewCardPage.clickOnDoneButton();
         assertTrue(homePage.isCredentialTypeValueDisplayed(), "Verify if credential type value is displayed");
-        String sessionId  = driver.getSessionId().toString();
+        String sessionId = driver.getSessionId().toString();
         UpdateNetworkSettings.setNoNetworkProfile(sessionId);
 
         DetailedVcViewPage detailedVcViewPage = homePage.openDetailedVcView();
@@ -305,7 +304,7 @@ public class NoNetworkIosTest extends IosBaseTest {
 
     @Test
     public void downloadCardWithoutInternetRetryWithInternet() throws InterruptedException {
-        String sessionId  = driver.getSessionId().toString();
+        String sessionId = driver.getSessionId().toString();
         UpdateNetworkSettings.setNoNetworkProfile(sessionId);
 
         ChooseLanguagePage chooseLanguagePage = new ChooseLanguagePage(driver);
@@ -364,7 +363,7 @@ public class NoNetworkIosTest extends IosBaseTest {
         AddNewCardPage addNewCardPage = homePage.downloadCard();
 
         assertTrue(addNewCardPage.isAddNewCardPageLoaded(), "Verify if add new card page is displayed");
-        String sessionId  = driver.getSessionId().toString();
+        String sessionId = driver.getSessionId().toString();
         UpdateNetworkSettings.setNoNetworkProfile(sessionId);
         addNewCardPage.clickOnBack();
 
@@ -404,7 +403,7 @@ public class NoNetworkIosTest extends IosBaseTest {
         AddNewCardPage addNewCardPage = homePage.downloadCard();
 
         assertTrue(addNewCardPage.isAddNewCardPageLoaded(), "Verify if add new card page is displayed");
-        String sessionId  = driver.getSessionId().toString();
+        String sessionId = driver.getSessionId().toString();
         UpdateNetworkSettings.setNoNetworkProfile(sessionId);
         addNewCardPage.clickOnBack();
 
@@ -451,7 +450,7 @@ public class NoNetworkIosTest extends IosBaseTest {
         assertEquals(retrieveIdPage.verifyGetItTextDisplayed(), "Get it now using your AID.");
         GenerateUinOrVidPage generateUinOrVidPage = retrieveIdPage.clickOnGetItNowText();
 
-        String sessionId  = driver.getSessionId().toString();
+        String sessionId = driver.getSessionId().toString();
         UpdateNetworkSettings.setNoNetworkProfile(sessionId);
 
         assertTrue(generateUinOrVidPage.isGenerateUinOrVidPageLoaded(), "Verify if generate uin or vid page page is displayed");

@@ -10,69 +10,69 @@ import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
 public class ReceiveCardTest extends AndroidBaseTest {
-	
-	 @Test
-	    public void verifyRecivedCardAndQrCode() {
-		 ChooseLanguagePage chooseLanguagePage = new ChooseLanguagePage(driver);
 
-	        assertTrue(chooseLanguagePage.isChooseLanguagePageLoaded(), "Verify if choose language page is displayed");
-	        WelcomePage welcomePage = chooseLanguagePage.clickOnSavePreference();
+    @Test
+    public void verifyRecivedCardAndQrCode() {
+        ChooseLanguagePage chooseLanguagePage = new ChooseLanguagePage(driver);
 
-	        assertTrue(welcomePage.isWelcomePageLoaded(), "Verify if welcome page is loaded");
-	        AppUnlockMethodPage appUnlockMethodPage = welcomePage.clickOnSkipButton();
+        assertTrue(chooseLanguagePage.isChooseLanguagePageLoaded(), "Verify if choose language page is displayed");
+        WelcomePage welcomePage = chooseLanguagePage.clickOnSavePreference();
 
-	        assertTrue(appUnlockMethodPage.isAppUnlockMethodPageLoaded(), "Verify if app unlocked page is displayed");
-	        SetPasscode setPasscode = appUnlockMethodPage.clickOnUsePasscode();
+        assertTrue(welcomePage.isWelcomePageLoaded(), "Verify if welcome page is loaded");
+        AppUnlockMethodPage appUnlockMethodPage = welcomePage.clickOnSkipButton();
 
-	        assertTrue(setPasscode.isSetPassCodePageLoaded(), "Verify if set passcode page is displayed");
-	        ConfirmPasscode confirmPasscode = setPasscode.enterPasscode(TestDataReader.readData("passcode"), Target.ANDROID);
+        assertTrue(appUnlockMethodPage.isAppUnlockMethodPageLoaded(), "Verify if app unlocked page is displayed");
+        SetPasscode setPasscode = appUnlockMethodPage.clickOnUsePasscode();
 
-	        assertTrue(confirmPasscode.isConfirmPassCodePageLoaded(), "Verify if confirm passcode page is displayed");
-	        HomePage homePage = confirmPasscode.enterPasscodeInConfirmPasscodePage(TestDataReader.readData("passcode"), Target.ANDROID);
+        assertTrue(setPasscode.isSetPassCodePageLoaded(), "Verify if set passcode page is displayed");
+        ConfirmPasscode confirmPasscode = setPasscode.enterPasscode(TestDataReader.readData("passcode"), Target.ANDROID);
 
-		 	homePage.clickOnNextButtonForInjiTour();
-	        assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
-	        SettingsPage settingsPage = homePage.clickOnSettingIcon();
+        assertTrue(confirmPasscode.isConfirmPassCodePageLoaded(), "Verify if confirm passcode page is displayed");
+        HomePage homePage = confirmPasscode.enterPasscodeInConfirmPasscodePage(TestDataReader.readData("passcode"), Target.ANDROID);
 
-			assertEquals(settingsPage.getreceiveCardText(), "Receive Card");
-	        ReceiveCardPage receiveCardPage = settingsPage.clickOnReceiveCard();
-	        
-	        receiveCardPage.clickOnAllowButton();
-	        assertTrue(receiveCardPage.isReceiveCardHeaderDisplayed(), "Verify if QR code  header is displayed");
-	        assertTrue(receiveCardPage.isWaitingForConnectionDisplayed(), "Verify if waiting for connection displayed");
-	 }
-	 
-	 @Test
-	    public void verifyRecivedCardAndQrCodeInFilipinoLanguage() {
-	        ChooseLanguagePage chooseLanguagePage = new ChooseLanguagePage(driver);
+        homePage.clickOnNextButtonForInjiTour();
+        assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
+        SettingsPage settingsPage = homePage.clickOnSettingIcon();
 
-	        assertTrue(chooseLanguagePage.isChooseLanguagePageLoaded(), "Verify if choose language page is displayed");
-	        WelcomePage welcomePage = chooseLanguagePage.clickOnSavePreference();
+        assertEquals(settingsPage.getreceiveCardText(), "Receive Card");
+        ReceiveCardPage receiveCardPage = settingsPage.clickOnReceiveCard();
 
-	        assertTrue(welcomePage.isWelcomePageLoaded(), "Verify if welcome page is loaded");
-	        AppUnlockMethodPage appUnlockMethodPage = welcomePage.clickOnSkipButton();
+        receiveCardPage.clickOnAllowButton();
+        assertTrue(receiveCardPage.isReceiveCardHeaderDisplayed(), "Verify if QR code  header is displayed");
+        assertTrue(receiveCardPage.isWaitingForConnectionDisplayed(), "Verify if waiting for connection displayed");
+    }
 
-	        assertTrue(appUnlockMethodPage.isAppUnlockMethodPageLoaded(), "Verify if app unlocked page is displayed");
-	        SetPasscode setPasscode = appUnlockMethodPage.clickOnUsePasscode();
+    @Test
+    public void verifyRecivedCardAndQrCodeInFilipinoLanguage() {
+        ChooseLanguagePage chooseLanguagePage = new ChooseLanguagePage(driver);
 
-	        assertTrue(setPasscode.isSetPassCodePageLoaded(), "Verify if set passcode page is displayed");
-	        ConfirmPasscode confirmPasscode = setPasscode.enterPasscode(TestDataReader.readData("passcode"), Target.ANDROID);
+        assertTrue(chooseLanguagePage.isChooseLanguagePageLoaded(), "Verify if choose language page is displayed");
+        WelcomePage welcomePage = chooseLanguagePage.clickOnSavePreference();
 
-	        assertTrue(confirmPasscode.isConfirmPassCodePageLoaded(), "Verify if confirm passcode page is displayed");
-	        HomePage homePage = confirmPasscode.enterPasscodeInConfirmPasscodePage(TestDataReader.readData("passcode"), Target.ANDROID);
+        assertTrue(welcomePage.isWelcomePageLoaded(), "Verify if welcome page is loaded");
+        AppUnlockMethodPage appUnlockMethodPage = welcomePage.clickOnSkipButton();
 
-		 	homePage.clickOnNextButtonForInjiTour();
-	        assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
-	        SettingsPage settingsPage = homePage.clickOnSettingIcon();
+        assertTrue(appUnlockMethodPage.isAppUnlockMethodPageLoaded(), "Verify if app unlocked page is displayed");
+        SetPasscode setPasscode = appUnlockMethodPage.clickOnUsePasscode();
 
-	        assertTrue(settingsPage.isSettingPageLoaded(), "Verify if setting page is displayed");
-	        settingsPage.clickOnLanguage().clickOnFilipinoLanguage();
+        assertTrue(setPasscode.isSetPassCodePageLoaded(), "Verify if set passcode page is displayed");
+        ConfirmPasscode confirmPasscode = setPasscode.enterPasscode(TestDataReader.readData("passcode"), Target.ANDROID);
 
-	        assertTrue(settingsPage.verifyFilipinoLanguage(), "Verify if language is changed to filipino");
-	        ReceiveCardPage receiveCardPage =settingsPage.clickOnReceiveCardFilipinoLanguage();
-		    receiveCardPage.clickOnAllowButton();
-	        
-	        assertTrue(receiveCardPage.isReceiveCardHeaderInFilipinoLanguageDisplayed(), "Verify if QR code  header is displayed filipino");
-	 }
+        assertTrue(confirmPasscode.isConfirmPassCodePageLoaded(), "Verify if confirm passcode page is displayed");
+        HomePage homePage = confirmPasscode.enterPasscodeInConfirmPasscodePage(TestDataReader.readData("passcode"), Target.ANDROID);
+
+        homePage.clickOnNextButtonForInjiTour();
+        assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
+        SettingsPage settingsPage = homePage.clickOnSettingIcon();
+
+        assertTrue(settingsPage.isSettingPageLoaded(), "Verify if setting page is displayed");
+        settingsPage.clickOnLanguage().clickOnFilipinoLanguage();
+
+        assertTrue(settingsPage.verifyFilipinoLanguage(), "Verify if language is changed to filipino");
+        ReceiveCardPage receiveCardPage = settingsPage.clickOnReceiveCardFilipinoLanguage();
+        receiveCardPage.clickOnAllowButton();
+
+        assertTrue(receiveCardPage.isReceiveCardHeaderInFilipinoLanguageDisplayed(), "Verify if QR code  header is displayed filipino");
+    }
 
 }

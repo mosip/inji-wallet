@@ -4,9 +4,7 @@ import BaseTest.AndroidBaseTest;
 import inji.api.BaseTestCase;
 import inji.constants.Target;
 import inji.pages.*;
-import inji.utils.AndroidUtil;
 import inji.utils.TestDataReader;
-import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import static org.testng.Assert.assertTrue;
@@ -15,7 +13,7 @@ import static org.testng.AssertJUnit.assertEquals;
 public class PinVcTest extends AndroidBaseTest {
 
     @Test
-    public void pinVc() throws InterruptedException  {
+    public void pinVc() throws InterruptedException {
 
         ChooseLanguagePage chooseLanguagePage = new ChooseLanguagePage(driver);
 
@@ -42,7 +40,7 @@ public class PinVcTest extends AndroidBaseTest {
         RetrieveIdPage retrieveIdPage = addNewCardPage.clickOnDownloadViaUin();
 
         assertTrue(retrieveIdPage.isRetrieveIdPageLoaded(), "Verify if retrieve id page is displayed");
-        String uin=TestDataReader.readData("uin");
+        String uin = TestDataReader.readData("uin");
         OtpVerificationPage otpVerification = retrieveIdPage.setEnterIdTextBox(uin).clickOnGenerateCardButton();
 
         assertTrue(otpVerification.isOtpVerificationPageLoaded(), "Verify if otp verification page is displayed");
@@ -58,7 +56,7 @@ public class PinVcTest extends AndroidBaseTest {
         assertTrue(homePage.isPinIconDisplayed(), "Verify if pin icon on vc is displayed");
 
         homePage.clickOnMoreOptionsButton();
-        HistoryPage historyPage= moreOptionsPage.clickOnViewActivityLog();
+        HistoryPage historyPage = moreOptionsPage.clickOnViewActivityLog();
         assertTrue(historyPage.verifyActivityLogHeader(uin, Target.ANDROID));
         assertTrue(historyPage.verifyHistory(uin, Target.ANDROID));
 
@@ -67,7 +65,7 @@ public class PinVcTest extends AndroidBaseTest {
     //For IOS bluetooth does not support in simulator, so we can't automate
     @Test
     public void VerifyCameraOpenAfterPinVc() throws InterruptedException {
-    	ChooseLanguagePage chooseLanguagePage = new ChooseLanguagePage(driver);
+        ChooseLanguagePage chooseLanguagePage = new ChooseLanguagePage(driver);
 
         assertTrue(chooseLanguagePage.isChooseLanguagePageLoaded(), "Verify if choose language page is displayed");
         WelcomePage welcomePage = chooseLanguagePage.clickOnSavePreference();
@@ -92,7 +90,7 @@ public class PinVcTest extends AndroidBaseTest {
         RetrieveIdPage retrieveIdPage = addNewCardPage.clickOnDownloadViaUin();
 
         assertTrue(retrieveIdPage.isRetrieveIdPageLoaded(), "Verify if retrieve id page is displayed");
-        String uin=TestDataReader.readData("uin");
+        String uin = TestDataReader.readData("uin");
         OtpVerificationPage otpVerification = retrieveIdPage.setEnterIdTextBox(uin).clickOnGenerateCardButton();
 
         assertTrue(otpVerification.isOtpVerificationPageLoaded(), "Verify if otp verification page is displayed");
@@ -106,7 +104,7 @@ public class PinVcTest extends AndroidBaseTest {
         moreOptionsPage.clickOnPinOrUnPinCard();
 
         assertTrue(homePage.isPinIconDisplayed(), "Verify if pin icon on vc is displayed");
-        SharePage scanPage=homePage.clickOnShareButton();
+        SharePage scanPage = homePage.clickOnShareButton();
 
         scanPage.acceptPermissionPopupBluetooth();
         scanPage.acceptPermissionPopupCamera();
@@ -114,7 +112,7 @@ public class PinVcTest extends AndroidBaseTest {
         scanPage.clickOnAllowGallaryAccessButton();
 
         assertTrue(scanPage.isCameraPageLoaded(), "Verify camera page is displayed");
-        assertTrue(scanPage.isFlipCameraClickable(),"Verify if flip camera is enabled");
+        assertTrue(scanPage.isFlipCameraClickable(), "Verify if flip camera is enabled");
     }
 
     @Test
@@ -141,16 +139,16 @@ public class PinVcTest extends AndroidBaseTest {
         AddNewCardPage addNewCardPage = homePage.downloadCard();
 
         assertTrue(addNewCardPage.isAddNewCardPageLoaded(), "Verify if add new card page is displayed");
-        EsignetLoginPage esignetLoginPage =  addNewCardPage.clickOnDownloadViaEsignet();
+        EsignetLoginPage esignetLoginPage = addNewCardPage.clickOnDownloadViaEsignet();
 
         esignetLoginPage.clickOnEsignetLoginWithOtpButton();
 
         assertTrue(esignetLoginPage.isEnterYourVidTextDisplayed(), "Verify if enter your vid text is displayed");
-        String uin=TestDataReader.readData("uin");
-        OtpVerificationPage otpVerification= esignetLoginPage.setEnterIdTextBox(uin);
+        String uin = TestDataReader.readData("uin");
+        OtpVerificationPage otpVerification = esignetLoginPage.setEnterIdTextBox(uin);
 
         esignetLoginPage.clickOnGetOtpButton();
-        assertTrue(esignetLoginPage.isOtpHasSendMessageDisplayed(),"verify if otp page is displayed");
+        assertTrue(esignetLoginPage.isOtpHasSendMessageDisplayed(), "verify if otp page is displayed");
 
         otpVerification.enterOtpForEsignet(BaseTestCase.getOtp(), Target.ANDROID);
         esignetLoginPage.clickOnVerifyButton();
@@ -164,10 +162,10 @@ public class PinVcTest extends AndroidBaseTest {
 
         homePage.clickOnNextButtonForInjiTour();
         assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
-         homePage.downloadCard();
+        homePage.downloadCard();
 
         assertTrue(addNewCardPage.isAddNewCardPageLoaded(), "Verify if add new card page is displayed");
-         addNewCardPage.clickOnDownloadViaEsignet();
+        addNewCardPage.clickOnDownloadViaEsignet();
 
         esignetLoginPage.clickOnEsignetLoginWithOtpButton();
 
@@ -175,7 +173,7 @@ public class PinVcTest extends AndroidBaseTest {
         esignetLoginPage.setEnterIdTextBox(uin);
 
         esignetLoginPage.clickOnGetOtpButton();
-        assertTrue(esignetLoginPage.isOtpHasSendMessageDisplayed(),"verify if otp page is displayed");
+        assertTrue(esignetLoginPage.isOtpHasSendMessageDisplayed(), "verify if otp page is displayed");
 
         otpVerification.enterOtpForEsignet(BaseTestCase.getOtp(), Target.ANDROID);
         esignetLoginPage.clickOnVerifyButton();
@@ -183,7 +181,7 @@ public class PinVcTest extends AndroidBaseTest {
         assertTrue(homePage.isPinIconDisplayed(), "Verify if pin icon on vc is displayed");
         addNewCardPage.clickOnDoneButton();
         assertTrue(homePage.isCredentialTypeValueDisplayed(), "Verify if credential type value is displayed");
-         homePage.clickOnMoreOptionsButton();
+        homePage.clickOnMoreOptionsButton();
 
         assertTrue(moreOptionsPage.isMoreOptionsPageLoaded(), "Verify if more options page is displayed");
         moreOptionsPage.clickOnPinOrUnPinCard();
@@ -192,7 +190,7 @@ public class PinVcTest extends AndroidBaseTest {
 
     @Test
     public void verifyMessageAfterDenyBluetoothPopup() throws InterruptedException {
-    	ChooseLanguagePage chooseLanguagePage = new ChooseLanguagePage(driver);
+        ChooseLanguagePage chooseLanguagePage = new ChooseLanguagePage(driver);
 
         assertTrue(chooseLanguagePage.isChooseLanguagePageLoaded(), "Verify if choose language page is displayed");
         WelcomePage welcomePage = chooseLanguagePage.clickOnSavePreference();
@@ -217,7 +215,7 @@ public class PinVcTest extends AndroidBaseTest {
         RetrieveIdPage retrieveIdPage = addNewCardPage.clickOnDownloadViaUin();
 
         assertTrue(retrieveIdPage.isRetrieveIdPageLoaded(), "Verify if retrieve id page is displayed");
-        String uin=TestDataReader.readData("uin");
+        String uin = TestDataReader.readData("uin");
         OtpVerificationPage otpVerification = retrieveIdPage.setEnterIdTextBox(uin).clickOnGenerateCardButton();
 
         assertTrue(otpVerification.isOtpVerificationPageLoaded(), "Verify if otp verification page is displayed");
@@ -231,15 +229,15 @@ public class PinVcTest extends AndroidBaseTest {
         moreOptionsPage.clickOnPinOrUnPinCard();
 
         assertTrue(homePage.isPinIconDisplayed(), "Verify if pin icon on vc is displayed");
-        SharePage scanPage=homePage.clickOnShareButton();
+        SharePage scanPage = homePage.clickOnShareButton();
 
         scanPage.denyPermissionPopupBluetooth();
-        assertEquals(scanPage.isBluetoothIsTurnedOffMessageDisplayed(),"Bluetooth is turned OFF, please turn it ON from Quick settings menu");
+        assertEquals(scanPage.isBluetoothIsTurnedOffMessageDisplayed(), "Bluetooth is turned OFF, please turn it ON from Quick settings menu");
 
     }
 
     @Test
-    public void pinVcInDetailedVcView() throws InterruptedException  {
+    public void pinVcInDetailedVcView() throws InterruptedException {
         ChooseLanguagePage chooseLanguagePage = new ChooseLanguagePage(driver);
 
         assertTrue(chooseLanguagePage.isChooseLanguagePageLoaded(), "Verify if choose language page is displayed");
@@ -272,7 +270,7 @@ public class PinVcTest extends AndroidBaseTest {
         assertTrue(otpVerification.isOtpVerificationPageLoaded(), "Verify if otp verification page is displayed");
         otpVerification.enterOtp(BaseTestCase.getOtp(), Target.ANDROID);
 
-        assertTrue(homePage.isDownloadingVcPopupDisplayed(),"verify downloading vc popup displayed");
+        assertTrue(homePage.isDownloadingVcPopupDisplayed(), "verify downloading vc popup displayed");
         addNewCardPage.clickOnDoneButton();
         assertTrue(homePage.isCredentialTypeValueDisplayed(), "Verify if credential type value is displayed");
 
@@ -299,7 +297,7 @@ public class PinVcTest extends AndroidBaseTest {
     }
 
     @Test
-    public void pinEsignetVcMultipleTimes() throws InterruptedException  {
+    public void pinEsignetVcMultipleTimes() throws InterruptedException {
 
         ChooseLanguagePage chooseLanguagePage = new ChooseLanguagePage(driver);
 
@@ -326,25 +324,25 @@ public class PinVcTest extends AndroidBaseTest {
         RetrieveIdPage retrieveIdPage = addNewCardPage.clickOnDownloadViaUin();
 
         assertTrue(retrieveIdPage.isRetrieveIdPageLoaded(), "Verify if retrieve id page is displayed");
-        String uin=TestDataReader.readData("uin");
+        String uin = TestDataReader.readData("uin");
         OtpVerificationPage otpVerification = retrieveIdPage.setEnterIdTextBox(uin).clickOnGenerateCardButton();
 
         assertTrue(otpVerification.isOtpVerificationPageLoaded(), "Verify if otp verification page is displayed");
         otpVerification.enterOtp(BaseTestCase.getOtp(), Target.ANDROID);
 
-         homePage.downloadCard();
+        homePage.downloadCard();
 
         assertTrue(addNewCardPage.isAddNewCardPageLoaded(), "Verify if add new card page is displayed");
-        EsignetLoginPage esignetLoginPage =  addNewCardPage.clickOnDownloadViaEsignet();
+        EsignetLoginPage esignetLoginPage = addNewCardPage.clickOnDownloadViaEsignet();
 
         esignetLoginPage.clickOnEsignetLoginWithOtpButton();
 
         assertTrue(esignetLoginPage.isEnterYourVidTextDisplayed(), "Verify if enter your vid text is displayed");
 
-         esignetLoginPage.setEnterIdTextBox(uin);
+        esignetLoginPage.setEnterIdTextBox(uin);
 
         esignetLoginPage.clickOnGetOtpButton();
-        assertTrue(esignetLoginPage.isOtpHasSendMessageDisplayed(),"verify if otp page is displayed");
+        assertTrue(esignetLoginPage.isOtpHasSendMessageDisplayed(), "verify if otp page is displayed");
 
         otpVerification.enterOtpForEsignet(BaseTestCase.getOtp(), Target.ANDROID);
         esignetLoginPage.clickOnVerifyButton();
@@ -358,7 +356,7 @@ public class PinVcTest extends AndroidBaseTest {
 
         assertTrue(homePage.isPinIconDisplayed(), "Verify if pin icon on vc is displayed");
 
-         homePage.clickOnMoreOptionsButton();
+        homePage.clickOnMoreOptionsButton();
 
         assertTrue(moreOptionsPage.isMoreOptionsPageLoaded(), "Verify if more options page is displayed");
         moreOptionsPage.clickOnPinOrUnPinCard();
@@ -377,7 +375,7 @@ public class PinVcTest extends AndroidBaseTest {
     }
 
     @Test
-    public void pinMosipVcMultipleTimes() throws InterruptedException  {
+    public void pinMosipVcMultipleTimes() throws InterruptedException {
 
         ChooseLanguagePage chooseLanguagePage = new ChooseLanguagePage(driver);
 
@@ -404,7 +402,7 @@ public class PinVcTest extends AndroidBaseTest {
         RetrieveIdPage retrieveIdPage = addNewCardPage.clickOnDownloadViaUin();
 
         assertTrue(retrieveIdPage.isRetrieveIdPageLoaded(), "Verify if retrieve id page is displayed");
-        String uin=TestDataReader.readData("uin");
+        String uin = TestDataReader.readData("uin");
         OtpVerificationPage otpVerification = retrieveIdPage.setEnterIdTextBox(uin).clickOnGenerateCardButton();
 
         assertTrue(otpVerification.isOtpVerificationPageLoaded(), "Verify if otp verification page is displayed");
@@ -413,7 +411,7 @@ public class PinVcTest extends AndroidBaseTest {
         homePage.downloadCard();
 
         assertTrue(addNewCardPage.isAddNewCardPageLoaded(), "Verify if add new card page is displayed");
-        EsignetLoginPage esignetLoginPage =  addNewCardPage.clickOnDownloadViaEsignet();
+        EsignetLoginPage esignetLoginPage = addNewCardPage.clickOnDownloadViaEsignet();
 
         esignetLoginPage.clickOnEsignetLoginWithOtpButton();
 
@@ -422,7 +420,7 @@ public class PinVcTest extends AndroidBaseTest {
         esignetLoginPage.setEnterIdTextBox(uin);
 
         esignetLoginPage.clickOnGetOtpButton();
-        assertTrue(esignetLoginPage.isOtpHasSendMessageDisplayed(),"verify if otp page is displayed");
+        assertTrue(esignetLoginPage.isOtpHasSendMessageDisplayed(), "verify if otp page is displayed");
 
         otpVerification.enterOtpForEsignet(BaseTestCase.getOtp(), Target.ANDROID);
         esignetLoginPage.clickOnVerifyButton();

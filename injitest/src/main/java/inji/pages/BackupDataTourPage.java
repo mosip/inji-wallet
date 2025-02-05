@@ -22,9 +22,10 @@ public class BackupDataTourPage extends BasePage {
     public BackupDataTourPage(AppiumDriver driver) {
         super(driver);
     }
+
     BasePage basePage = new BasePage(driver);
 
-    public String  verifyLanguageforBackupDataPageLoaded(){
+    public String verifyLanguageforBackupDataPageLoaded() {
         basePage.retryToGetElement(backupDataText);
         return getTextFromLocator(backupDataText);
     }

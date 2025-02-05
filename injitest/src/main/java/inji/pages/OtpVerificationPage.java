@@ -2,7 +2,6 @@ package inji.pages;
 
 import inji.constants.Target;
 import io.appium.java_client.AppiumDriver;
-import io.appium.java_client.HidesKeyboard;
 import io.appium.java_client.pagefactory.AndroidFindBy;
 import io.appium.java_client.pagefactory.iOSXCUITFindBy;
 import org.openqa.selenium.WebElement;
@@ -49,7 +48,8 @@ public class OtpVerificationPage extends BasePage {
     @iOSXCUITFindBy(iOSClassChain = "**/XCUIElementTypeStaticText[`label == \"VID not available in database\"`]")
     private WebElement vidNotAvailableMessage;
 
-    @AndroidFindBy(xpath = "//*[@resource-id=\"resendCodeView\"]") //Not using accessibility id as parent component has correct element property
+    @AndroidFindBy(xpath = "//*[@resource-id=\"resendCodeView\"]")
+    //Not using accessibility id as parent component has correct element property
     @iOSXCUITFindBy(accessibility = "resendCode")
     private WebElement resendCodeButton;
 
@@ -129,16 +129,16 @@ public class OtpVerificationPage extends BasePage {
     }
 
     public boolean verifyResendCodeButtonDisplayedEnabled() {
-        return this.isElementEnabled(resendCodeButton,30);
+        return this.isElementEnabled(resendCodeButton, 30);
     }
-    
+
     public void clickOnResendButton() {
         try {
             Thread.sleep(2000);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
-        if(isElementEnabled(resendCodeButton,30)) {
+        if (isElementEnabled(resendCodeButton, 30)) {
 //            ((HidesKeyboard) driver).hideKeyboard();
             clickOnElement(resendCode);
         }
@@ -149,9 +149,9 @@ public class OtpVerificationPage extends BasePage {
     }
 
     public void WatingTimeForVerificationTimerComplete() {
-         this.WaitTillElementVisible(otpVerificationTimer, 186);
+        this.WaitTillElementVisible(otpVerificationTimer, 186);
     }
-    
+
     public boolean verifyOtpVerificationTimerDisplayedAfterClickOnResend() {
         return this.isElementDisplayed(otpVerificationTimer);
     }

@@ -22,15 +22,16 @@ public class TrustedDigitalWalletPage extends BasePage {
     public TrustedDigitalWalletPage(AppiumDriver driver) {
         super(driver);
     }
+
     BasePage basePage = new BasePage(driver);
-    
-    public String  verifyLanguageforTrustedDigitalWalletPageLoaded(){
-    	basePage.retryToGetElement(trustedDigitalWalletText);
-     	return getTextFromLocator(trustedDigitalWalletText);
+
+    public String verifyLanguageforTrustedDigitalWalletPageLoaded() {
+        basePage.retryToGetElement(trustedDigitalWalletText);
+        return getTextFromLocator(trustedDigitalWalletText);
     }
 
     public String getTrustedDigitalWalletDescription() {
-    	basePage.retryToGetElement(trustedDigitalWalletDescription);
+        basePage.retryToGetElement(trustedDigitalWalletDescription);
         return this.getTextFromLocator(trustedDigitalWalletDescription);
     }
 

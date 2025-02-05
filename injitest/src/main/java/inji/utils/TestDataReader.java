@@ -85,7 +85,7 @@ public class TestDataReader {
             case "idTypeSunbirdHindi":
                 return "Health Insurance";
             case "phoneNumberSunbird":
-                return "0123456789";
+                return "1234567890";
             case "dateOfBirthSunbird":
                 return "2024-01-01";
             case "genderValueSunbird":
