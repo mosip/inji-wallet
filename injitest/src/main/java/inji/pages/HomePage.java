@@ -90,7 +90,7 @@ public class HomePage extends BasePage {
     @iOSXCUITFindBy(accessibility = "fullNameValue")
     private WebElement fullNameValue;
 
-    @AndroidFindBy(accessibility = "credentialTypeValue")
+    @AndroidFindBy(accessibility = "verificationStatus")
     @iOSXCUITFindBy(accessibility = "credentialTypeValue")
     private WebElement credentialTypeValue;
 
