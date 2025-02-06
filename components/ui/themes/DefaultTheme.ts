@@ -730,6 +730,8 @@ export const DefaultTheme = {
       fontSize: 13,
       fontFamily: 'Inter_600SemiBold',
       color: Colors.Orange,
+      maxWidth: '80%',
+      overflow: 'hidden',
     },
     HistoryHeaderTitleStyle: {
       fontSize: 26,

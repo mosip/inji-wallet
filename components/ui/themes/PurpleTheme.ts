@@ -740,6 +740,8 @@ export const PurpleTheme = {
       fontSize: 13,
       fontFamily: 'Inter_600SemiBold',
       color: Colors.LightPurple,
+      maxWidth: '80%',
+      overflow: 'hidden',
     },
     HistoryHeaderTitleStyle: {
       fontSize: 26,
