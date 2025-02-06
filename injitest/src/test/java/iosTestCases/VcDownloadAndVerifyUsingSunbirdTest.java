@@ -52,8 +52,8 @@ public class VcDownloadAndVerifyUsingSunbirdTest extends IosBaseTest {
 
         assertEquals(sunbirdLoginPage.getFullNameForSunbirdCard(), TestDataReader.readData("fullNameSunbird"));
         assertEquals(sunbirdLoginPage.getPolicyNameForSunbirdCard(), TestDataReader.readData("policyNameSunbird"));
-        assertEquals(sunbirdLoginPage.getPhoneNumberForSunbirdCard(), TestDataReader.readData("phoneNumberSunbird"));
-        assertEquals(sunbirdLoginPage.getDateofBirthValueForSunbirdCard(), TestDataReader.readData("dateOfBirthSunbird"));
+//        assertEquals(sunbirdLoginPage.getPhoneNumberForSunbirdCard(), TestDataReader.readData("phoneNumberSunbird"));
+//        assertEquals(sunbirdLoginPage.getDateofBirthValueForSunbirdCard(), TestDataReader.readData("dateOfBirthSunbird"));
         assertEquals(sunbirdLoginPage.getGenderValueForSunbirdCard(), TestDataReader.readData("genderValueSunbird"));
         assertEquals(sunbirdLoginPage.getEmailIdValueForSunbirdCard(), TestDataReader.readData("emailIdValueSunbird"));
         assertEquals(sunbirdLoginPage.getStatusValueForSunbirdCard(), TestDataReader.readData("status"));

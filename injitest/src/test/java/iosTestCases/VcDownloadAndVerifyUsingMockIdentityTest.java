@@ -13,7 +13,7 @@ import static org.testng.Assert.assertTrue;
 
 public class VcDownloadAndVerifyUsingMockIdentityTest extends IosBaseTest {
     @Test
-    public void downloadAndVerifyVcUsingUinViaEsignet() throws InterruptedException {
+    public void downloadAndVerifyVcUsingUinViaMocke() throws InterruptedException {
         ChooseLanguagePage chooseLanguagePage = new ChooseLanguagePage(driver);
 
         assertTrue(chooseLanguagePage.isChooseLanguagePageLoaded(), "Verify if choose language page is displayed");

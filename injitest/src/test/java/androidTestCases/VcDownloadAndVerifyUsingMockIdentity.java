@@ -44,7 +44,7 @@ public class VcDownloadAndVerifyUsingMockIdentity extends AndroidBaseTest {
         assertTrue(addNewCardPage.isDownloadViaEsignetDisplayed(), "Verify if download via uin displayed");
         MockCertifyLoginPage mockCertifyLoginPage = addNewCardPage.clickOnDownloadViaMockCertify();
 
-//        mockCertifyLoginPage.clickOnEsignetLoginWithOtpButton();
+        mockCertifyLoginPage.clickOnEsignetLoginWithOtpButton();
 
         assertTrue(mockCertifyLoginPage.isEnterYourVidTextDisplayed(), "Verify if enter your vid text is displayed");
 

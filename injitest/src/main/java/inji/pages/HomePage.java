@@ -91,7 +91,7 @@ public class HomePage extends BasePage {
     private WebElement fullNameValue;
 
     @AndroidFindBy(accessibility = "verificationStatus")
-    @iOSXCUITFindBy(accessibility = "credentialTypeValue")
+    @iOSXCUITFindBy(accessibility = "verificationStatus")
     private WebElement credentialTypeValue;
 
     @AndroidFindBy(accessibility = "activationPending")
