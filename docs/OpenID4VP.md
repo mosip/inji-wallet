@@ -22,6 +22,12 @@ requesting and presenting Verifiable Credentials.
 
 **Note** : The pre-registered client id scheme validation can be toggled on/off based on the optional boolean which you can pass to the authenticateVerifier methods shouldValidateClient parameter. This is false by default.
 
+## Functionalities
+- Decode and parse the Verifier's encoded Authorization Request received from the Wallet.
+- Authenticates the Verifier using the received clientId and returns the valid Presentation Definition to the Wallet.
+- Receives the list of verifiable credentials(VC's) from the Wallet which are selected by the end user based on the credentials requested as part of Verifier Authorization request.
+- Constructs the verifiable presentation and send it to wallet for generating Json Web Signature (JWS).
+- Receives the signed Verifiable presentation and sends a POST request with generated vp_token and presentation_submission to the Verifier response_uri endpoint.
 
 ```mermaid
 sequenceDiagram
@@ -30,34 +36,30 @@ sequenceDiagram
     participant Library as 📚 Native Library
     
     Note over Verifier: Generate QR Code with<br/>Authorization Request
-    Wallet-->>Verifier: Scan QR Code
-    Wallet-->>Library: Forward Authorization Request
-    
-    Note over Library: Validation Phase
+    Wallet -->> Verifier: Scan QR Code
+    Wallet -->> Library: Forward Authorization Request
+
     activate Library
     Note over Library: Validate Request against:<br/>1. Client ID<br/>2. Response URI<br/>3. Trusted Verifiers
     Note over Library: Validate Required Fields<br/>and Values
     deactivate Library
     Library-->>Wallet: Return Validated Authorization
     
-    Note over Wallet: User Interaction
+
     activate Wallet
     Note over Wallet: Display Matching VCs<br/>to User
     deactivate Wallet
     
-    Note over Wallet,Library: VP Construction
     Wallet-->>Library: Send Selected VCs<br/>with User Consent
     Library-->>Library: Construct VP Token
     Library-->>Wallet: Return VP Token
     
-    Note over Wallet,Library: Signing Phase
     activate Wallet
     Note over Wallet: Sign VP Token
     Note over Wallet: Construct JWS Token
     deactivate Wallet
     Wallet-->>Library: Send Signed JWS Token
     
-    Note over Library: Final Processing
     activate Library
     Note over Library: Construct Proof Object
     Note over Library: Attach Proof to VP Token
@@ -65,3 +67,4 @@ sequenceDiagram
     
     Library-->>Verifier: HTTP POST Request with:<br/>1. VP Token<br/>2. Presentation Submission<br/>3. State
 ```
+
