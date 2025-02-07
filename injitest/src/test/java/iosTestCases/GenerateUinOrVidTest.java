@@ -39,7 +39,7 @@ public class GenerateUinOrVidTest extends IosBaseTest {
         RetrieveIdPage retrieveIdPage = addNewCardPage.clickOnDownloadViaUin();
 
         assertTrue(retrieveIdPage.isRetrieveIdPageLoaded(), "Verify if retrieve id page is displayed");
-        assertEquals(retrieveIdPage.verifyGetItTextDisplayed(), "Get it now using your AID.");
+        assertEquals(retrieveIdPage.verifyGetItTextDisplayed(),"Get it now using your AID.");
         GenerateUinOrVidPage generateUinOrVidPage = retrieveIdPage.clickOnGetItNowText();
 
         assertTrue(generateUinOrVidPage.isGenerateUinOrVidPageLoaded(), "Verify if generate uin or vid page page is displayed");
@@ -92,7 +92,7 @@ public class GenerateUinOrVidTest extends IosBaseTest {
         GenerateUinOrVidPage generateUinOrVidPage = retrieveIdPage.clickOnGetItNowText();
 
         assertTrue(generateUinOrVidPage.isGenerateUinOrVidPageLoaded(), "Verify if generate uin or vid page page is displayed");
-        String aid = TestDataReader.readData("aid");
+        String aid= TestDataReader.readData("aid");
         OtpVerificationPage otpVerification = generateUinOrVidPage.enterApplicationID(aid).clickOnGetUinOrVidButton();
 
         assertTrue(otpVerification.isOtpVerificationPageLoaded(), "Verify if otp verification page is displayed");
@@ -128,7 +128,7 @@ public class GenerateUinOrVidTest extends IosBaseTest {
         RetrieveIdPage retrieveIdPage = addNewCardPage.clickOnDownloadViaUin();
 
         assertTrue(retrieveIdPage.isRetrieveIdPageLoaded(), "Verify if retrieve id page is displayed");
-        assertEquals(retrieveIdPage.verifyGetItTextDisplayed(), "Get it now using your AID.");
+        assertEquals(retrieveIdPage.verifyGetItTextDisplayed(),"Get it now using your AID.");
         GenerateUinOrVidPage generateUinOrVidPage = retrieveIdPage.clickOnGetItNowText();
 
         assertTrue(generateUinOrVidPage.isGenerateUinOrVidPageLoaded(), "Verify if generate uin or vid page page is displayed");
@@ -171,7 +171,7 @@ public class GenerateUinOrVidTest extends IosBaseTest {
         RetrieveIdPage retrieveIdPage = addNewCardPage.clickOnDownloadViaUin();
 
         assertTrue(retrieveIdPage.isRetrieveIdPageLoaded(), "Verify if retrieve id page is displayed");
-        assertEquals(retrieveIdPage.verifyGetItTextDisplayed(), "Get it now using your AID.");
+        assertEquals(retrieveIdPage.verifyGetItTextDisplayed(),"Get it now using your AID.");
         GenerateUinOrVidPage generateUinOrVidPage = retrieveIdPage.clickOnGetItNowText();
 
         assertTrue(generateUinOrVidPage.isGenerateUinOrVidPageLoaded(), "Verify if generate uin or vid page page is displayed");
@@ -179,7 +179,7 @@ public class GenerateUinOrVidTest extends IosBaseTest {
 
         OtpVerificationPage otpVerification = generateUinOrVidPage.enterApplicationID(TestDataReader.readData("invalidaid")).clickOnGetUinOrVidButton();
 
-        assertTrue(retrieveIdPage.isIncorrectInputFormatErrorAidMessageDisplayed(), "Verify if correct error message displayed");
+        assertTrue(retrieveIdPage.isIncorrectInputFormatErrorAidMessageDisplayed(),"Verify if correct error message displayed");
 
     }
 }

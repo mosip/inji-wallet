@@ -74,7 +74,6 @@ public class RetrieveIdPage extends BasePage {
     public boolean isInfoIconDisplayed() {
         return this.isElementDisplayed(infoIcon);
     }
-
     public void clickInfoIcon() {
         clickOnElement(infoIcon);
     }
@@ -95,7 +94,6 @@ public class RetrieveIdPage extends BasePage {
         }
         return this;
     }
-
     public OtpVerificationPage clickOnGenerateCardButton() {
         this.clickOnElement(generateCardButton);
         return new OtpVerificationPage(driver);

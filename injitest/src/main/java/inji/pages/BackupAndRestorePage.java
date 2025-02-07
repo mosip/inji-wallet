@@ -125,7 +125,6 @@ public class BackupAndRestorePage extends BasePage {
     public BackupAndRestorePage(AppiumDriver driver) {
         super(driver);
     }
-
     BasePage basePage = new BasePage(driver);
 
     public void clickOnProceedButton() {
@@ -177,7 +176,7 @@ public class BackupAndRestorePage extends BasePage {
     }
 
     public boolean islastBackupTimeDisplayed() {
-        return this.isElementDisplayed(lastBackupTime, 40);
+        return this.isElementDisplayed(lastBackupTime,40);
     }
 
     public boolean isDataBackupSuccessPopupDisplayed() {
@@ -235,7 +234,7 @@ public class BackupAndRestorePage extends BasePage {
     }
 
     public boolean isLastBackupSectionHeaderDisplayed() {
-        return this.isElementDisplayed(lastBackupSectionHeader, 50);
+        return this.isElementDisplayed(lastBackupSectionHeader , 50);
     }
 
     public boolean isAccountSectionHeaderDisplayed() {
@@ -258,28 +257,27 @@ public class BackupAndRestorePage extends BasePage {
         return this.isElementDisplayed(restoreFailurePopup);
     }
 
-    public String getLastBackupSectionHeaderText() {
+    public String  getLastBackupSectionHeaderText(){
         return getTextFromLocator(lastBackupSectionHeader);
     }
 
-    public String getAccountSectionHeaderText() {
+    public String  getAccountSectionHeaderText(){
         return getTextFromLocator(AccountSectionHeader);
     }
 
-    public String getStorageInfoText() {
+    public String  getStorageInfoText(){
         return getTextFromLocator(storageInfo);
     }
 
-    public String getRestoreInfoText() {
+    public String  getRestoreInfoText(){
         return getTextFromLocator(restoreInfo);
     }
 
-    public String getBackupAndRestoreHeaderText() {
+    public String  getBackupAndRestoreHeaderText(){
         return getTextFromLocator(backupAndRestoreHeader);
     }
-
     public boolean isHelpButtonDisplayed() {
-        return this.isElementDisplayed(helpButton, 30);
+        return this.isElementDisplayed(helpButton,30);
     }
 
     public void clickOnHelpButton() {
@@ -287,38 +285,38 @@ public class BackupAndRestorePage extends BasePage {
     }
 
     public void clickOnEmailHeader() {
-        if (isElementDisplayed(selectAccount)) {
+        if(isElementDisplayed(selectAccount)) {
             clickOnElement(selectAccount);
         }
     }
 
-    public boolean isBackupFQADisplayed() throws InterruptedException {
+    public boolean  isBackupFQADisplayed() throws InterruptedException {
         Thread.sleep(2000);
-        String context = driver.getPageSource();
+        String context= driver.getPageSource();
         return context.contains("Why should I take a backup?") && context.contains("What is data backup? ") && context.contains("How to backup to your google account?");
     }
 
     public boolean isDataBackupInProgressTextDisplayed() {
-        return this.isElementDisplayed(dataBackupInProgressText, 30);
+        return this.isElementDisplayed(dataBackupInProgressText,30);
     }
 
     public boolean isDataBackupInProgressTextDisappear() {
         return this.isElementDisplayed(dataBackupInProgressText, 20);
     }
 
-    public String getDataBackupInProgressText() {
+    public String getDataBackupInProgressText(){
         return getTextFromLocator(dataBackupInProgressText);
     }
 
-    public String getDataBackupSuccessPopupText() {
+    public String getDataBackupSuccessPopupText(){
         return getTextFromLocator(dataBackupSuccessPopup);
     }
 
-    public String getRestoreBackupSuccessPopUpText() {
+    public String getRestoreBackupSuccessPopUpText(){
         return getTextFromLocator(restoreBackupSuccessPopUp);
     }
 
-    public String getRestoreInProgressPopupText() {
+    public String getRestoreInProgressPopupText(){
         return getTextFromLocator(restoreInProgressPopupText);
     }
 

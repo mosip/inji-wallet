@@ -35,7 +35,7 @@ public class VerifyHelpPageTest extends IosBaseTest {
         homePage.clickOnNextButtonForInjiTour();
         assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
         HelpPage helpPage = homePage.clickOnHelpIcon();
-        IosUtil.scrollToElement(driver, 100, 800, 100, 200);
+        IosUtil.scrollToElement(driver,100,800,100,200);
 
         assertFalse(helpPage.isHelpPageContentEmpty(), "verifying if help page is not empty");
         helpPage.exitHelpPage();

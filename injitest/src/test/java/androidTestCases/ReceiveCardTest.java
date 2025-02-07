@@ -69,7 +69,7 @@ public class ReceiveCardTest extends AndroidBaseTest {
         settingsPage.clickOnLanguage().clickOnFilipinoLanguage();
 
         assertTrue(settingsPage.verifyFilipinoLanguage(), "Verify if language is changed to filipino");
-        ReceiveCardPage receiveCardPage = settingsPage.clickOnReceiveCardFilipinoLanguage();
+        ReceiveCardPage receiveCardPage =settingsPage.clickOnReceiveCardFilipinoLanguage();
         receiveCardPage.clickOnAllowButton();
 
         assertTrue(receiveCardPage.isReceiveCardHeaderInFilipinoLanguageDisplayed(), "Verify if QR code  header is displayed filipino");

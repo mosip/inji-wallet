@@ -10,8 +10,7 @@ import inji.utils.UpdateNetworkSettings;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
-import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.assertTrue;
+import static org.testng.Assert.*;
 
 public class MosipOtpAlternativeFlow extends IosBaseTest {
     @Test
@@ -38,14 +37,14 @@ public class MosipOtpAlternativeFlow extends IosBaseTest {
 
         AddNewCardPage addNewCardPage = homePage.downloadCard();
 
-        EsignetLoginPage esignetLoginPage = addNewCardPage.clickOnDownloadViaEsignet();
+        EsignetLoginPage esignetLoginPage =  addNewCardPage.clickOnDownloadViaEsignet();
         esignetLoginPage.clickOnCredentialTypeHeadingMOSIPVerifiableCredential();
         addNewCardPage.clickOnContinueButtonInSigninPopupIos();
 
         esignetLoginPage.clickOnEsignetLoginWithOtpButton();
         Thread.sleep(3000);
         String uin = TestDataReader.readData("uin");
-        OtpVerificationPage otpVerification = esignetLoginPage.setEnterIdTextBox(uin);
+        OtpVerificationPage otpVerification= esignetLoginPage.setEnterIdTextBox(uin);
 
         esignetLoginPage.clickOnGetOtpButton();
         otpVerification.enterOtpForEsignet(TestDataReader.readData("invalidOtp"), Target.IOS);
@@ -78,14 +77,14 @@ public class MosipOtpAlternativeFlow extends IosBaseTest {
 
         AddNewCardPage addNewCardPage = homePage.downloadCard();
 
-        EsignetLoginPage esignetLoginPage = addNewCardPage.clickOnDownloadViaEsignet();
+        EsignetLoginPage esignetLoginPage =  addNewCardPage.clickOnDownloadViaEsignet();
         esignetLoginPage.clickOnCredentialTypeHeadingMOSIPVerifiableCredential();
         addNewCardPage.clickOnContinueButtonInSigninPopupIos();
 
         esignetLoginPage.clickOnEsignetLoginWithOtpButton();
         Thread.sleep(3000);
         String uin = TestDataReader.readData("uin");
-        OtpVerificationPage otpVerification = esignetLoginPage.setEnterIdTextBox(uin);
+        OtpVerificationPage otpVerification= esignetLoginPage.setEnterIdTextBox(uin);
 
         esignetLoginPage.clickOnGetOtpButton();
         otpVerification.enterOtpForEsignet(BaseTestCase.getOtp(), Target.IOS);
@@ -96,7 +95,7 @@ public class MosipOtpAlternativeFlow extends IosBaseTest {
 
         DetailedVcViewPage detailedVcViewPage = homePage.openDetailedVcView();
         assertTrue(detailedVcViewPage.isDetailedVcViewPageLoaded(), "Verify if detailed Vc view page is displayed");
-        IosUtil.scrollToElement(driver, 100, 800, 100, 200);
+        IosUtil.scrollToElement(driver,100,800,100,200);
         PleaseConfirmPopupPage pleaseConfirmPopupPage = detailedVcViewPage.clickOnActivateButtonIos();
 
         assertTrue(pleaseConfirmPopupPage.isPleaseConfirmPopupPageLoaded(), "Verify if pop up page is displayed");
@@ -132,14 +131,14 @@ public class MosipOtpAlternativeFlow extends IosBaseTest {
 
         AddNewCardPage addNewCardPage = homePage.downloadCard();
 
-        EsignetLoginPage esignetLoginPage = addNewCardPage.clickOnDownloadViaEsignet();
+        EsignetLoginPage esignetLoginPage =  addNewCardPage.clickOnDownloadViaEsignet();
         esignetLoginPage.clickOnCredentialTypeHeadingMOSIPVerifiableCredential();
         addNewCardPage.clickOnContinueButtonInSigninPopupIos();
 
         esignetLoginPage.clickOnEsignetLoginWithOtpButton();
         Thread.sleep(3000);
         String uin = TestDataReader.readData("uin");
-        OtpVerificationPage otpVerification = esignetLoginPage.setEnterIdTextBox(uin);
+        OtpVerificationPage otpVerification= esignetLoginPage.setEnterIdTextBox(uin);
 
         esignetLoginPage.clickOnGetOtpButton();
         otpVerification.enterOtpForEsignet(BaseTestCase.getOtp(), Target.IOS);
@@ -187,14 +186,14 @@ public class MosipOtpAlternativeFlow extends IosBaseTest {
         assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
         AddNewCardPage addNewCardPage = homePage.downloadCard();
 
-        EsignetLoginPage esignetLoginPage = addNewCardPage.clickOnDownloadViaEsignet();
+        EsignetLoginPage esignetLoginPage =  addNewCardPage.clickOnDownloadViaEsignet();
         esignetLoginPage.clickOnCredentialTypeHeadingMOSIPVerifiableCredential();
         addNewCardPage.clickOnContinueButtonInSigninPopupIos();
 
         esignetLoginPage.clickOnEsignetLoginWithOtpButton();
         Thread.sleep(3000);
         String uin = TestDataReader.readData("uin");
-        OtpVerificationPage otpVerification = esignetLoginPage.setEnterIdTextBox(uin);
+        OtpVerificationPage otpVerification= esignetLoginPage.setEnterIdTextBox(uin);
 
         esignetLoginPage.clickOnGetOtpButton();
         otpVerification.enterOtpForEsignet(BaseTestCase.getOtp(), Target.IOS);
@@ -240,14 +239,14 @@ public class MosipOtpAlternativeFlow extends IosBaseTest {
         assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
         AddNewCardPage addNewCardPage = homePage.downloadCard();
 
-        EsignetLoginPage esignetLoginPage = addNewCardPage.clickOnDownloadViaEsignet();
+        EsignetLoginPage esignetLoginPage =  addNewCardPage.clickOnDownloadViaEsignet();
         esignetLoginPage.clickOnCredentialTypeHeadingMOSIPVerifiableCredential();
         addNewCardPage.clickOnContinueButtonInSigninPopupIos();
 
         esignetLoginPage.clickOnEsignetLoginWithOtpButton();
         Thread.sleep(3000);
         String uin = TestDataReader.readData("uin");
-        OtpVerificationPage otpVerification = esignetLoginPage.setEnterIdTextBox(uin);
+        OtpVerificationPage otpVerification= esignetLoginPage.setEnterIdTextBox(uin);
 
         esignetLoginPage.clickOnGetOtpButton();
         otpVerification.enterOtpForEsignet(BaseTestCase.getOtp(), Target.IOS);
@@ -316,14 +315,14 @@ public class MosipOtpAlternativeFlow extends IosBaseTest {
         assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
         AddNewCardPage addNewCardPage = homePage.downloadCard();
 
-        EsignetLoginPage esignetLoginPage = addNewCardPage.clickOnDownloadViaEsignet();
+        EsignetLoginPage esignetLoginPage =  addNewCardPage.clickOnDownloadViaEsignet();
         esignetLoginPage.clickOnCredentialTypeHeadingMOSIPVerifiableCredential();
         addNewCardPage.clickOnContinueButtonInSigninPopupIos();
 
         esignetLoginPage.clickOnEsignetLoginWithOtpButton();
         Thread.sleep(3000);
         String uin = TestDataReader.readData("uin");
-        OtpVerificationPage otpVerification = esignetLoginPage.setEnterIdTextBox(uin);
+        OtpVerificationPage otpVerification= esignetLoginPage.setEnterIdTextBox(uin);
 
         esignetLoginPage.clickOnGetOtpButton();
         otpVerification.enterOtpForEsignet(BaseTestCase.getOtp(), Target.IOS);
@@ -331,7 +330,7 @@ public class MosipOtpAlternativeFlow extends IosBaseTest {
 
         addNewCardPage.clickOnDoneButton();
         assertTrue(homePage.isCredentialTypeValueDisplayed(), "Verify if credential type value is displayed");
-        String sessionId = driver.getSessionId().toString();
+        String sessionId  = driver.getSessionId().toString();
         UpdateNetworkSettings.setNoNetworkProfile(sessionId);
 
         MoreOptionsPage moreOptionsPage = homePage.clickOnMoreOptionsButton();
@@ -369,14 +368,14 @@ public class MosipOtpAlternativeFlow extends IosBaseTest {
         assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
         AddNewCardPage addNewCardPage = homePage.downloadCard();
 
-        EsignetLoginPage esignetLoginPage = addNewCardPage.clickOnDownloadViaEsignet();
+        EsignetLoginPage esignetLoginPage =  addNewCardPage.clickOnDownloadViaEsignet();
         esignetLoginPage.clickOnCredentialTypeHeadingMOSIPVerifiableCredential();
         addNewCardPage.clickOnContinueButtonInSigninPopupIos();
 
         esignetLoginPage.clickOnEsignetLoginWithOtpButton();
         Thread.sleep(2000);
         String uin = TestDataReader.readData("uin");
-        OtpVerificationPage otpVerification = esignetLoginPage.setEnterIdTextBox(uin);
+        OtpVerificationPage otpVerification= esignetLoginPage.setEnterIdTextBox(uin);
 
         esignetLoginPage.clickOnGetOtpButton();
         otpVerification.enterOtpForEsignet(BaseTestCase.getOtp(), Target.IOS);
@@ -384,7 +383,7 @@ public class MosipOtpAlternativeFlow extends IosBaseTest {
 
         addNewCardPage.clickOnDoneButton();
         assertTrue(homePage.isCredentialTypeValueDisplayed(), "Verify if credential type value is displayed");
-        String sessionId = driver.getSessionId().toString();
+        String sessionId  = driver.getSessionId().toString();
         UpdateNetworkSettings.setNoNetworkProfile(sessionId);
 
         DetailedVcViewPage detailedVcViewPage = homePage.openDetailedVcView();
@@ -422,7 +421,7 @@ public class MosipOtpAlternativeFlow extends IosBaseTest {
         AddNewCardPage addNewCardPage = homePage.downloadCard();
 
         assertTrue(addNewCardPage.isAddNewCardPageLoaded(), "Verify if add new card page is displayed");
-        String sessionId = driver.getSessionId().toString();
+        String sessionId  = driver.getSessionId().toString();
         UpdateNetworkSettings.setNoNetworkProfile(sessionId);
 
         addNewCardPage.clickOnBack();
@@ -431,7 +430,6 @@ public class MosipOtpAlternativeFlow extends IosBaseTest {
         assertTrue(addNewCardPage.isDownloadViaSunbirdDisplayed(), "Verify if issuer sunbird displayed");
         assertTrue(addNewCardPage.isIssuerDescriptionEsignetDisplayed(), "Verify if issuer description  esignet displayed");
     }
-
     @Test
     public void VerifyCameraOpenAfterPinVc() throws InterruptedException {
         ChooseLanguagePage chooseLanguagePage = new ChooseLanguagePage(driver);
@@ -455,14 +453,14 @@ public class MosipOtpAlternativeFlow extends IosBaseTest {
         assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
         AddNewCardPage addNewCardPage = homePage.downloadCard();
 
-        EsignetLoginPage esignetLoginPage = addNewCardPage.clickOnDownloadViaEsignet();
+        EsignetLoginPage esignetLoginPage =  addNewCardPage.clickOnDownloadViaEsignet();
         esignetLoginPage.clickOnCredentialTypeHeadingMOSIPVerifiableCredential();
         addNewCardPage.clickOnContinueButtonInSigninPopupIos();
 
         esignetLoginPage.clickOnEsignetLoginWithOtpButton();
         Thread.sleep(2000);
         String uin = TestDataReader.readData("uin");
-        OtpVerificationPage otpVerification = esignetLoginPage.setEnterIdTextBox(uin);
+        OtpVerificationPage otpVerification= esignetLoginPage.setEnterIdTextBox(uin);
 
         esignetLoginPage.clickOnGetOtpButton();
         otpVerification.enterOtpForEsignet(BaseTestCase.getOtp(), Target.IOS);
@@ -476,17 +474,17 @@ public class MosipOtpAlternativeFlow extends IosBaseTest {
         moreOptionsPage.clickOnPinOrUnPinCard();
 
         assertTrue(homePage.isPinIconDisplayed(), "Verify if pin icon on vc is displayed");
-        SharePage scanPage = homePage.clickOnShareButton();
+        SharePage scanPage=homePage.clickOnShareButton();
         scanPage.acceptPermissionPopupBluetoothIos();
         scanPage.acceptPermissionPopupCameraIos();
 
         assertTrue(scanPage.isCameraPageLoaded(), "Verify camera page is displayed");
-        assertTrue(scanPage.isFlipCameraClickable(), "Verify if flip camera is enabled");
-        assertTrue(scanPage.isCameraOpen(), "Verify if camera is displayed");
+        assertTrue(scanPage.isFlipCameraClickable(),"Verify if flip camera is enabled");
+        assertTrue(scanPage.isCameraOpen(),"Verify if camera is displayed");
     }
 
     @Test
-    public void pinVcInDetailedVcView() throws InterruptedException {
+    public void pinVcInDetailedVcView() throws InterruptedException  {
         ChooseLanguagePage chooseLanguagePage = new ChooseLanguagePage(driver);
 
         assertTrue(chooseLanguagePage.isChooseLanguagePageLoaded(), "Verify if choose language page is displayed");
@@ -508,20 +506,20 @@ public class MosipOtpAlternativeFlow extends IosBaseTest {
         assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
         AddNewCardPage addNewCardPage = homePage.downloadCard();
 
-        EsignetLoginPage esignetLoginPage = addNewCardPage.clickOnDownloadViaEsignet();
+        EsignetLoginPage esignetLoginPage =  addNewCardPage.clickOnDownloadViaEsignet();
         esignetLoginPage.clickOnCredentialTypeHeadingMOSIPVerifiableCredential();
         addNewCardPage.clickOnContinueButtonInSigninPopupIos();
 
         esignetLoginPage.clickOnEsignetLoginWithOtpButton();
         Thread.sleep(3000);
         String uin = TestDataReader.readData("uin");
-        OtpVerificationPage otpVerification = esignetLoginPage.setEnterIdTextBox(uin);
+        OtpVerificationPage otpVerification= esignetLoginPage.setEnterIdTextBox(uin);
 
         esignetLoginPage.clickOnGetOtpButton();
         otpVerification.enterOtpForEsignet(BaseTestCase.getOtp(), Target.IOS);
         esignetLoginPage.clickOnVerifyButtonIos();
 
-        assertTrue(homePage.isDownloadingVcPopupDisplayed(), "verify downloading vc popup displayed");
+        assertTrue(homePage.isDownloadingVcPopupDisplayed(),"verify downloading vc popup displayed");
         addNewCardPage.clickOnDoneButton();
         assertTrue(homePage.isCredentialTypeValueDisplayed(), "Verify if credential type value is displayed");
 
@@ -571,14 +569,14 @@ public class MosipOtpAlternativeFlow extends IosBaseTest {
 
         AddNewCardPage addNewCardPage = homePage.downloadCard();
 
-        EsignetLoginPage esignetLoginPage = addNewCardPage.clickOnDownloadViaEsignet();
+        EsignetLoginPage esignetLoginPage =  addNewCardPage.clickOnDownloadViaEsignet();
         esignetLoginPage.clickOnCredentialTypeHeadingMOSIPVerifiableCredential();
         addNewCardPage.clickOnContinueButtonInSigninPopupIos();
 
         esignetLoginPage.clickOnEsignetLoginWithOtpButton();
         Thread.sleep(2000);
         String uin = TestDataReader.readData("uin");
-        OtpVerificationPage otpVerification = esignetLoginPage.setEnterIdTextBox(uin);
+        OtpVerificationPage otpVerification= esignetLoginPage.setEnterIdTextBox(uin);
 
         esignetLoginPage.clickOnGetOtpButton();
         otpVerification.enterOtpForEsignet(BaseTestCase.getOtp(), Target.IOS);
@@ -631,14 +629,14 @@ public class MosipOtpAlternativeFlow extends IosBaseTest {
         assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
         AddNewCardPage addNewCardPage = homePage.downloadCard();
 
-        EsignetLoginPage esignetLoginPage = addNewCardPage.clickOnDownloadViaEsignet();
+        EsignetLoginPage esignetLoginPage =  addNewCardPage.clickOnDownloadViaEsignet();
         esignetLoginPage.clickOnCredentialTypeHeadingMOSIPVerifiableCredential();
         addNewCardPage.clickOnContinueButtonInSigninPopupIos();
 
         esignetLoginPage.clickOnEsignetLoginWithOtpButton();
         Thread.sleep(2000);
         String uin = TestDataReader.readData("uin");
-        OtpVerificationPage otpVerification = esignetLoginPage.setEnterIdTextBox(uin);
+        OtpVerificationPage otpVerification= esignetLoginPage.setEnterIdTextBox(uin);
 
         esignetLoginPage.clickOnGetOtpButton();
         otpVerification.enterOtpForEsignet(BaseTestCase.getOtp(), Target.IOS);

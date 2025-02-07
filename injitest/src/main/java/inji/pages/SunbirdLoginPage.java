@@ -4,7 +4,9 @@ import inji.utils.IosUtil;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.pagefactory.AndroidFindBy;
 import io.appium.java_client.pagefactory.iOSXCUITFindBy;
+
 import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebElement;
 
@@ -158,9 +160,7 @@ public class SunbirdLoginPage extends BasePage {
     public SunbirdLoginPage(AppiumDriver driver) {
         super(driver);
     }
-
     BasePage basePage = new BasePage(driver);
-
     public void clickOnloginWithKbaButton() {
         clickOnElement(loginWithKBA);
     }
@@ -225,26 +225,26 @@ public class SunbirdLoginPage extends BasePage {
                 break;
             }
         }
-        if (isElementDisplayed(loginButtonSecond)) {
+        if(isElementDisplayed(loginButtonSecond)){
             clickOnElement(loginButtonSecond);
         }
     }
-
     public boolean isSunbirdCardIsActive() {
-        if (isElementDisplayed(doneButton))
+        if(isElementDisplayed(doneButton))
             clickOnElement(doneButton);
         basePage.retryToGetElement(activatedStatus);
         return this.isElementDisplayed(activatedStatus);
     }
 
     public boolean isSunbirdCardLogoIsDisplayed() {
-        if (isElementDisplayed(sunbirdSquareLogo)) {
+        if(isElementDisplayed(sunbirdSquareLogo)){
             basePage.retryToGetElement(sunbirdSquareLogo);
             return true;
         } else if (isElementDisplayed(sunbirdLogo)) {
             basePage.retryToGetElement(sunbirdLogo);
             return true;
-        } else {
+        }
+        else {
             return false;
         }
     }
@@ -253,12 +253,10 @@ public class SunbirdLoginPage extends BasePage {
         basePage.retryToGetElement(fullName);
         return this.getTextFromLocator(fullName);
     }
-
     public String getFullNameForSunbirdCardForDetailView() {
         basePage.retryToGetElement(fullNameInDetailView);
         return this.getTextFromLocator(fullNameInDetailView);
     }
-
     public String getPolicyNameForSunbirdCard() {
         basePage.retryToGetElement(policyName);
         return this.getTextFromLocator(policyName);
@@ -285,7 +283,7 @@ public class SunbirdLoginPage extends BasePage {
     }
 
     public String getEmailIdValueForSunbirdCard() {
-        IosUtil.scrollToElement(driver, 100, 800, 100, 200);
+        IosUtil.scrollToElement(driver,100,800,100,200);
         basePage.retryToGetElement(emailIdValue);
         return this.getTextFromLocator(emailIdValue);
     }
@@ -300,7 +298,7 @@ public class SunbirdLoginPage extends BasePage {
         return this.getTextFromLocator(idType);
     }
 
-    public void clickOnContinueButtonInSigninPopupIos() {
+    public void clickOnContinueButtonInSigninPopupIos(){
         clickOnElement(continueButton);
     }
 

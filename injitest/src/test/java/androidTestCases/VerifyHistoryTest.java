@@ -244,16 +244,16 @@ public class VerifyHistoryTest extends AndroidBaseTest {
         AddNewCardPage addNewCardPage = homePage.downloadCard();
 
         assertTrue(addNewCardPage.isAddNewCardPageLoaded(), "Verify if add new card page is displayed");
-        EsignetLoginPage esignetLoginPage = addNewCardPage.clickOnDownloadViaEsignet();
+        EsignetLoginPage esignetLoginPage =  addNewCardPage.clickOnDownloadViaEsignet();
 
         esignetLoginPage.clickOnEsignetLoginWithOtpButton();
 
         assertTrue(esignetLoginPage.isEnterYourVidTextDisplayed(), "Verify if enter your vid text is displayed");
         String uin = TestDataReader.readData("uin");
-        OtpVerificationPage otpVerification = esignetLoginPage.setEnterIdTextBox(uin);
+        OtpVerificationPage otpVerification= esignetLoginPage.setEnterIdTextBox(uin);
 
         esignetLoginPage.clickOnGetOtpButton();
-        assertTrue(esignetLoginPage.isOtpHasSendMessageDisplayed(), "verify if otp page is displayed");
+        assertTrue(esignetLoginPage.isOtpHasSendMessageDisplayed(),"verify if otp page is displayed");
 
         otpVerification.enterOtpForEsignet(BaseTestCase.getOtp(), Target.ANDROID);
         esignetLoginPage.clickOnVerifyButton();
@@ -264,7 +264,7 @@ public class VerifyHistoryTest extends AndroidBaseTest {
 
         assertTrue(detailedVcViewPage.isActivateButtonDisplayed(), "Verify if activate vc button displayed");
 
-        PleaseConfirmPopupPage pleaseConfirmPopupPage = detailedVcViewPage.clickOnActivateButtonAndroid();
+        PleaseConfirmPopupPage pleaseConfirmPopupPage  =detailedVcViewPage.clickOnActivateButtonAndroid();
         assertTrue(pleaseConfirmPopupPage.isPleaseConfirmPopupPageLoaded(), "Verify if confirm popup page is displayed");
 
         pleaseConfirmPopupPage.clickOnConfirmButton();
@@ -287,7 +287,7 @@ public class VerifyHistoryTest extends AndroidBaseTest {
         HistoryPage historyPage = homePage.clickOnHistoryButton();
         assertTrue(historyPage.isHistoryPageLoaded(), "Verify if history page is displayed");
         assertTrue(historyPage.verifyActivationSuccessfulRecordInHistory(uin, Target.ANDROID));
-        assertTrue(historyPage.verifyHistory(uin, Target.ANDROID), "verify if download history is displayed");
+        assertTrue(historyPage.verifyHistory(uin, Target.ANDROID),"verify if download history is displayed");
         assertTrue(historyPage.verifyDeleteHistory(uin, Target.ANDROID), "Verify if deleted history is displayed");
     }
 
@@ -315,16 +315,16 @@ public class VerifyHistoryTest extends AndroidBaseTest {
         AddNewCardPage addNewCardPage = homePage.downloadCard();
 
         assertTrue(addNewCardPage.isAddNewCardPageLoaded(), "Verify if add new card page is displayed");
-        EsignetLoginPage esignetLoginPage = addNewCardPage.clickOnDownloadViaEsignet();
+        EsignetLoginPage esignetLoginPage =  addNewCardPage.clickOnDownloadViaEsignet();
 
         esignetLoginPage.clickOnEsignetLoginWithOtpButton();
 
         assertTrue(esignetLoginPage.isEnterYourVidTextDisplayed(), "Verify if enter your vid text is displayed");
         String vid = TestDataReader.readData("vid");
-        OtpVerificationPage otpVerification = esignetLoginPage.setEnterIdTextBox(vid);
+        OtpVerificationPage otpVerification= esignetLoginPage.setEnterIdTextBox(vid);
 
         esignetLoginPage.clickOnGetOtpButton();
-        assertTrue(esignetLoginPage.isOtpHasSendMessageDisplayed(), "verify if otp page is displayed");
+        assertTrue(esignetLoginPage.isOtpHasSendMessageDisplayed(),"verify if otp page is displayed");
 
         otpVerification.enterOtpForEsignet(BaseTestCase.getOtp(), Target.ANDROID);
         esignetLoginPage.clickOnVerifyButton();
@@ -335,7 +335,7 @@ public class VerifyHistoryTest extends AndroidBaseTest {
 
         assertTrue(detailedVcViewPage.isActivateButtonDisplayed(), "Verify if activate vc button displayed");
 
-        PleaseConfirmPopupPage pleaseConfirmPopupPage = detailedVcViewPage.clickOnActivateButtonAndroid();
+        PleaseConfirmPopupPage pleaseConfirmPopupPage  =detailedVcViewPage.clickOnActivateButtonAndroid();
         assertTrue(pleaseConfirmPopupPage.isPleaseConfirmPopupPageLoaded(), "Verify if confirm popup page is displayed");
 
         pleaseConfirmPopupPage.clickOnConfirmButton();
@@ -357,7 +357,7 @@ public class VerifyHistoryTest extends AndroidBaseTest {
         HistoryPage historyPage = homePage.clickOnHistoryButton();
         assertTrue(historyPage.isHistoryPageLoaded(), "Verify if history page is displayed");
         assertTrue(historyPage.verifyActivationSuccessfulRecordInHistory(vid, Target.ANDROID));
-        assertTrue(historyPage.verifyHistory(vid, Target.ANDROID), "verify if download history is displayed");
+        assertTrue(historyPage.verifyHistory(vid, Target.ANDROID),"verify if download history is displayed");
     }
 
     @Test
@@ -389,7 +389,7 @@ public class VerifyHistoryTest extends AndroidBaseTest {
         assertTrue(addNewCardPage.isAddNewCardPageLoaded(), "Verify if add new card page is displayed");
         assertTrue(addNewCardPage.isAddNewCardPageGuideMessageForEsignetDisplayed(), "Verify if add new card guide message displayed");
         assertTrue(addNewCardPage.isDownloadViaSunbirdDisplayed(), "Verify if download sunbird displayed");
-        SunbirdLoginPage sunbirdLoginPage = addNewCardPage.clickOnDownloadViaSunbird();
+        SunbirdLoginPage sunbirdLoginPage =  addNewCardPage.clickOnDownloadViaSunbird();
         addNewCardPage.clickOnCredentialTypeHeadingInsuranceCredential();
 //        assertTrue(sunbirdLoginPage.isSunbirdRCInsuranceVerifiableCredentialHeaderDisplayed(), "Verify if sunbirdRC insurance verifiable credential displayed");
 //        sunbirdLoginPage.clickOnMosipInsurance();
@@ -405,14 +405,14 @@ public class VerifyHistoryTest extends AndroidBaseTest {
 
         sunbirdLoginPage.openDetailedSunbirdVcView();
 
-        assertEquals(sunbirdLoginPage.getFullNameForSunbirdCardForDetailView(), TestDataReader.readData("fullNameSunbird"));
+        assertEquals(sunbirdLoginPage.getFullNameForSunbirdCardForDetailView(),TestDataReader.readData("fullNameSunbird"));
 //        assertEquals(sunbirdLoginPage.getPolicyNameForSunbirdCard(),TestDataReader.readData("policyNameSunbird"));
-        assertEquals(sunbirdLoginPage.getPhoneNumberForSunbirdCard(), TestDataReader.readData("phoneNumberSunbird"));
-        assertEquals(sunbirdLoginPage.getDateofBirthValueForSunbirdCard(), TestDataReader.readData("dateOfBirthSunbird"));
-        assertEquals(sunbirdLoginPage.getGenderValueForSunbirdCard(), TestDataReader.readData("genderValueSunbird"));
-        assertEquals(sunbirdLoginPage.getEmailIdValueForSunbirdCard(), TestDataReader.readData("emailIdValueSunbird"));
-        assertEquals(sunbirdLoginPage.getStatusValueForSunbirdCard(), TestDataReader.readData("statusValueSunbird"));
-        assertEquals(sunbirdLoginPage.getIdTypeValueForSunbirdCard(), TestDataReader.readData("idTypeSunbird"));
+        assertEquals(sunbirdLoginPage.getPhoneNumberForSunbirdCard(),TestDataReader.readData("phoneNumberSunbird"));
+        assertEquals(sunbirdLoginPage.getDateofBirthValueForSunbirdCard(),TestDataReader.readData("dateOfBirthSunbird"));
+        assertEquals(sunbirdLoginPage.getGenderValueForSunbirdCard(),TestDataReader.readData("genderValueSunbird"));
+        assertEquals(sunbirdLoginPage.getEmailIdValueForSunbirdCard(),TestDataReader.readData("emailIdValueSunbird"));
+        assertEquals(sunbirdLoginPage.getStatusValueForSunbirdCard(),TestDataReader.readData("statusValueSunbird"));
+        assertEquals(sunbirdLoginPage.getIdTypeValueForSunbirdCard(),TestDataReader.readData("idTypeSunbird"));
 
         sunbirdLoginPage.clickOnBackArrow();
         HistoryPage historyPage = homePage.clickOnHistoryButton();

@@ -5,8 +5,20 @@ import inji.api.BaseTestCase;
 import inji.constants.Target;
 import inji.pages.*;
 import inji.utils.AndroidUtil;
+import inji.utils.IosUtil;
 import inji.utils.TestDataReader;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.Dimension;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.WebElement;
 import org.testng.annotations.Test;
+
+import com.google.common.collect.ImmutableMap;
 import org.testng.asserts.SoftAssert;
 
 import static org.testng.Assert.*;
@@ -45,7 +57,7 @@ public class VcDownloadAndVerifyUsingUinTest extends AndroidBaseTest {
         RetrieveIdPage retrieveIdPage = addNewCardPage.clickOnDownloadViaUin();
 
         assertTrue(retrieveIdPage.isRetrieveIdPageLoaded(), "Verify if retrieve id page is displayed");
-        assertEquals(retrieveIdPage.getRetrieveIdPageHeader(), "Download your ID");
+        assertEquals(retrieveIdPage.getRetrieveIdPageHeader(),"Download your ID");
         assertTrue(retrieveIdPage.verifyDownloadIdPageGuideMessage(), "Verify if retrieve id page guide message is displayed");
         assertTrue(retrieveIdPage.isInfoIconDisplayed(), "Verify if info icon is displayed");
         //retrieveIdPage.clickInfoIcon();
@@ -56,7 +68,7 @@ public class VcDownloadAndVerifyUsingUinTest extends AndroidBaseTest {
         assertTrue(otpVerification.isOtpVerificationPageLoaded(), "Verify if otp verification page is displayed");
         otpVerification.enterOtp(BaseTestCase.getOtp(), Target.ANDROID);
 
-        assertTrue(homePage.isDownloadingVcPopupDisplayed(), "verify downloading vc popup displayed");
+        assertTrue(homePage.isDownloadingVcPopupDisplayed(),"verify downloading vc popup displayed");
         addNewCardPage.clickOnDoneButton();
         assertTrue(homePage.isCredentialTypeValueDisplayed(), "Verify if credential type value is displayed");
 
@@ -214,7 +226,7 @@ public class VcDownloadAndVerifyUsingUinTest extends AndroidBaseTest {
 
         assertTrue(historyPage.isHistoryPageLoaded(), "Verify if history page is displayed");
 
-        assertEquals(historyPage.getNumberOfRecordsInHistory(uin, Target.ANDROID), 2, "Verify two download records in history page");
+        assertEquals(historyPage.getNumberOfRecordsInHistory(uin, Target.ANDROID),2, "Verify two download records in history page");
 
     }
 
@@ -248,7 +260,7 @@ public class VcDownloadAndVerifyUsingUinTest extends AndroidBaseTest {
         assertTrue(retrieveIdPage.isRetrieveIdPageLoaded(), "Verify if retrieve id page is displayed");
         retrieveIdPage.setEnterIdTextBox(TestDataReader.readData("invaliduin")).clickOnGenerateCardButton();
 
-        assertTrue(retrieveIdPage.isIncorrectInputFormatErrorUinMessageDisplayed(), "Verify if correct error message displayed");
+        assertTrue(retrieveIdPage.isIncorrectInputFormatErrorUinMessageDisplayed(),"Verify if correct error message displayed");
     }
 
     @Test
@@ -329,7 +341,7 @@ public class VcDownloadAndVerifyUsingUinTest extends AndroidBaseTest {
         assertTrue(otpVerification.isOtpVerificationPageLoaded(), "Verify if otp verification page is displayed");
         otpVerification.enterOtp(BaseTestCase.getOtp(), Target.ANDROID);
 
-        assertTrue(homePage.isDownloadingVcPopupDisplayed(), "verify downloading vc popup displayed");
+        assertTrue(homePage.isDownloadingVcPopupDisplayed(),"verify downloading vc popup displayed");
         addNewCardPage.clickOnDoneButton();
         assertTrue(homePage.isCredentialTypeValueDisplayed(), "Verify if credential type value is displayed");
 
@@ -343,7 +355,7 @@ public class VcDownloadAndVerifyUsingUinTest extends AndroidBaseTest {
         assertTrue(otpVerification.isOtpVerificationPageLoaded(), "Verify if otp verification page is displayed");
         otpVerification.enterOtp(BaseTestCase.getOtp(), Target.ANDROID);
 
-        assertTrue(homePage.isDownloadingVcPopupDisplayed(), "verify downloading vc popup displayed");
+        assertTrue(homePage.isDownloadingVcPopupDisplayed(),"verify downloading vc popup displayed");
         addNewCardPage.clickOnDoneButton();
         assertTrue(homePage.isCredentialTypeValueDisplayed(), "Verify if credential type value is displayed");
         //3
@@ -356,7 +368,7 @@ public class VcDownloadAndVerifyUsingUinTest extends AndroidBaseTest {
         assertTrue(otpVerification.isOtpVerificationPageLoaded(), "Verify if otp verification page is displayed");
         otpVerification.enterOtp(BaseTestCase.getOtp(), Target.ANDROID);
 
-        assertTrue(homePage.isDownloadingVcPopupDisplayed(), "verify downloading vc popup displayed");
+        assertTrue(homePage.isDownloadingVcPopupDisplayed(),"verify downloading vc popup displayed");
         addNewCardPage.clickOnDoneButton();
         assertTrue(homePage.isCredentialTypeValueDisplayed(), "Verify if credential type value is displayed");
         //4
@@ -369,7 +381,7 @@ public class VcDownloadAndVerifyUsingUinTest extends AndroidBaseTest {
         assertTrue(otpVerification.isOtpVerificationPageLoaded(), "Verify if otp verification page is displayed");
         otpVerification.enterOtp(BaseTestCase.getOtp(), Target.ANDROID);
 
-        assertTrue(homePage.isDownloadingVcPopupDisplayed(), "verify downloading vc popup displayed");
+        assertTrue(homePage.isDownloadingVcPopupDisplayed(),"verify downloading vc popup displayed");
         addNewCardPage.clickOnDoneButton();
         assertTrue(homePage.isCredentialTypeValueDisplayed(), "Verify if credential type value is displayed");
         //5
@@ -382,7 +394,7 @@ public class VcDownloadAndVerifyUsingUinTest extends AndroidBaseTest {
         assertTrue(otpVerification.isOtpVerificationPageLoaded(), "Verify if otp verification page is displayed");
         otpVerification.enterOtp(BaseTestCase.getOtp(), Target.ANDROID);
 
-        assertTrue(homePage.isDownloadingVcPopupDisplayed(), "verify downloading vc popup displayed");
+        assertTrue(homePage.isDownloadingVcPopupDisplayed(),"verify downloading vc popup displayed");
         addNewCardPage.clickOnDoneButton();
         assertTrue(homePage.isCredentialTypeValueDisplayed(), "Verify if credential type value is displayed");
 
@@ -396,7 +408,7 @@ public class VcDownloadAndVerifyUsingUinTest extends AndroidBaseTest {
         assertTrue(otpVerification.isOtpVerificationPageLoaded(), "Verify if otp verification page is displayed");
         otpVerification.enterOtp(BaseTestCase.getOtp(), Target.ANDROID);
 
-        assertTrue(homePage.isDownloadingVcPopupDisplayed(), "verify downloading vc popup displayed");
+        assertTrue(homePage.isDownloadingVcPopupDisplayed(),"verify downloading vc popup displayed");
         addNewCardPage.clickOnDoneButton();
         assertTrue(homePage.isCredentialTypeValueDisplayed(), "Verify if credential type value is displayed");
 
@@ -410,7 +422,7 @@ public class VcDownloadAndVerifyUsingUinTest extends AndroidBaseTest {
         assertTrue(otpVerification.isOtpVerificationPageLoaded(), "Verify if otp verification page is displayed");
         otpVerification.enterOtp(BaseTestCase.getOtp(), Target.ANDROID);
 
-        assertTrue(homePage.isDownloadingVcPopupDisplayed(), "verify downloading vc popup displayed");
+        assertTrue(homePage.isDownloadingVcPopupDisplayed(),"verify downloading vc popup displayed");
         addNewCardPage.clickOnDoneButton();
         assertTrue(homePage.isCredentialTypeValueDisplayed(), "Verify if credential type value is displayed");
 
@@ -424,7 +436,7 @@ public class VcDownloadAndVerifyUsingUinTest extends AndroidBaseTest {
         assertTrue(otpVerification.isOtpVerificationPageLoaded(), "Verify if otp verification page is displayed");
         otpVerification.enterOtp(BaseTestCase.getOtp(), Target.ANDROID);
 
-        assertTrue(homePage.isDownloadingVcPopupDisplayed(), "verify downloading vc popup displayed");
+        assertTrue(homePage.isDownloadingVcPopupDisplayed(),"verify downloading vc popup displayed");
         addNewCardPage.clickOnDoneButton();
         assertTrue(homePage.isCredentialTypeValueDisplayed(), "Verify if credential type value is displayed");
 
@@ -474,7 +486,7 @@ public class VcDownloadAndVerifyUsingUinTest extends AndroidBaseTest {
         RetrieveIdPage retrieveIdPage = addNewCardPage.clickOnDownloadViaUin();
 
         assertTrue(retrieveIdPage.isRetrieveIdPageLoaded(), "Verify if retrieve id page is displayed");
-        assertEquals(retrieveIdPage.getRetrieveIdPageHeader(), "Download your ID");
+        assertEquals(retrieveIdPage.getRetrieveIdPageHeader(),"Download your ID");
         assertTrue(retrieveIdPage.verifyDownloadIdPageGuideMessage(), "Verify if retrieve id page guide message is displayed");
         assertTrue(retrieveIdPage.isInfoIconDisplayed(), "Verify if info icon is displayed");
 
@@ -484,12 +496,12 @@ public class VcDownloadAndVerifyUsingUinTest extends AndroidBaseTest {
         assertTrue(otpVerification.isOtpVerificationPageLoaded(), "Verify if otp verification page is displayed");
         otpVerification.enterOtp(BaseTestCase.getOtp(), Target.ANDROID);
 
-        assertTrue(homePage.isDownloadingVcPopupDisplayed(), "verify downloading vc popup displayed");
+        assertTrue(homePage.isDownloadingVcPopupDisplayed(),"verify downloading vc popup displayed");
         addNewCardPage.clickOnDoneButton();
         assertTrue(homePage.isCredentialTypeValueDisplayed(), "Verify if credential type value is displayed");
 
         homePage.downloadCard();
-        SunbirdLoginPage sunbirdLoginPage = addNewCardPage.clickOnDownloadViaSunbird();
+        SunbirdLoginPage sunbirdLoginPage =  addNewCardPage.clickOnDownloadViaSunbird();
 
         sunbirdLoginPage.enterPolicyNumberTextBox(TestDataReader.readData("policyNumberSunbird"));
         sunbirdLoginPage.enterFullNameTextBox(TestDataReader.readData("fullNameSunbird"));
@@ -498,14 +510,14 @@ public class VcDownloadAndVerifyUsingUinTest extends AndroidBaseTest {
 
         assertTrue(sunbirdLoginPage.isSunbirdCardIsActive(), "Verify if download sunbird displayed active");
         assertTrue(sunbirdLoginPage.isSunbirdCardLogoIsDisplayed(), "Verify if download sunbird logo displayed");
-        assertEquals(sunbirdLoginPage.getFullNameForSunbirdCard(), TestDataReader.readData("fullNameSunbird"));
+        assertEquals(sunbirdLoginPage.getFullNameForSunbirdCard(),TestDataReader.readData("fullNameSunbird"));
 
         addNewCardPage.clickOnDoneButton();
         assertTrue(homePage.isCredentialTypeValueDisplayed(), "Verify if credential type value is displayed");
         assertTrue(homePage.isCardCountDisplayed(), "Verify if card count is displayed");
 
         homePage.sendTextInIssuerSearchBar(TestDataReader.readData("fullNameSunbird"));
-        assertEquals(sunbirdLoginPage.getFullNameForSunbirdCard(), TestDataReader.readData("fullNameSunbird"));
+        assertEquals(sunbirdLoginPage.getFullNameForSunbirdCard(),TestDataReader.readData("fullNameSunbird"));
         assertTrue(homePage.isCardCountDisplayed(), "Verify if card count is displayed");
         //partial search
 
@@ -532,7 +544,7 @@ public class VcDownloadAndVerifyUsingUinTest extends AndroidBaseTest {
         homePage.sendTextInIssuerSearchBar(uin);
         assertTrue(homePage.isNoCardFoundTextDisplayed(), "Verify if no card found displayed");
 
-        SettingsPage settingsPage = homePage.clickOnSettingIcon();
+        SettingsPage settingsPage= homePage.clickOnSettingIcon();
         assertTrue(settingsPage.isSettingPageLoaded(), "Verify if setting page is displayed");
         settingsPage.clickOnLanguage().clickOnFilipinoLanguage();
 
@@ -540,7 +552,7 @@ public class VcDownloadAndVerifyUsingUinTest extends AndroidBaseTest {
         homePage.clickOnHomeButton();
 
         homePage.sendTextInIssuerSearchBar(TestDataReader.readData("fullNameSunbird"));
-        assertEquals(sunbirdLoginPage.getFullNameForSunbirdCard(), TestDataReader.readData("fullNameSunbird"));
+        assertEquals(sunbirdLoginPage.getFullNameForSunbirdCard(),TestDataReader.readData("fullNameSunbird"));
     }
 
     @Test
@@ -577,7 +589,7 @@ public class VcDownloadAndVerifyUsingUinTest extends AndroidBaseTest {
         RetrieveIdPage retrieveIdPage = addNewCardPage.clickOnDownloadViaUin();
 
         assertTrue(retrieveIdPage.isRetrieveIdPageLoaded(), "Verify if retrieve id page is displayed");
-        assertEquals(retrieveIdPage.getRetrieveIdPageHeader(), "Download your ID");
+        assertEquals(retrieveIdPage.getRetrieveIdPageHeader(),"Download your ID");
         assertTrue(retrieveIdPage.verifyDownloadIdPageGuideMessage(), "Verify if retrieve id page guide message is displayed");
         assertTrue(retrieveIdPage.isInfoIconDisplayed(), "Verify if info icon is displayed");
 
@@ -587,7 +599,7 @@ public class VcDownloadAndVerifyUsingUinTest extends AndroidBaseTest {
         assertTrue(otpVerification.isOtpVerificationPageLoaded(), "Verify if otp verification page is displayed");
         otpVerification.enterOtp(BaseTestCase.getOtp(), Target.ANDROID);
 
-        assertTrue(homePage.isDownloadingVcPopupDisplayed(), "verify downloading vc popup displayed");
+        assertTrue(homePage.isDownloadingVcPopupDisplayed(),"verify downloading vc popup displayed");
         addNewCardPage.clickOnDoneButton();
         assertTrue(homePage.isCredentialTypeValueDisplayed(), "Verify if credential type value is displayed");
 

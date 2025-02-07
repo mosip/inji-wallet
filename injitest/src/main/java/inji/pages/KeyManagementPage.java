@@ -40,6 +40,7 @@ public class KeyManagementPage extends BasePage {
     private WebElement ECCR1Text;
 
 
+
     @AndroidFindBy(accessibility = "keyTypeVcDetailViewValue")
     @iOSXCUITFindBy(accessibility = "saveKeyOrderingPreference")
     private WebElement keyTypeVcDetailViewValue;
@@ -54,39 +55,37 @@ public class KeyManagementPage extends BasePage {
     public KeyManagementPage(AppiumDriver driver) {
         super(driver);
     }
-
     BasePage basePage = new BasePage(driver);
-
     public boolean isDoneButtonDisplayed() {
         return this.isElementDisplayed(stepCountButton);
     }
 
     public void clickOnDoneButton() {
-        clickOnElement(stepCountButton);
+        clickOnElement (stepCountButton);
     }
 
-    public WebElement getTheCoordinatesForRSA() {
+    public WebElement getTheCoordinatesForRSA(){
         RSAText.isDisplayed();
         return RSAText;
     }
 
-    public WebElement getTheCoordinatesED25519Text() {
+    public WebElement getTheCoordinatesED25519Text(){
 
         ECCR1Text.isDisplayed();
         return ECCR1Text;
     }
 
-    public WebElement getTheCoordinatesECCR1TextText() {
+    public WebElement getTheCoordinatesECCR1TextText(){
         ECCR1Text.isDisplayed();
         return ECCR1Text;
     }
 
     public void clickOnSaveKeyOrderingPreferenceButton() {
-        clickOnElement(saveKeyOrderingPreference);
+        clickOnElement (saveKeyOrderingPreference);
     }
 
     public void clickOnArrowleftButton() {
-        clickOnElement(arrowleftButton);
+        clickOnElement (arrowleftButton);
     }
 
     public void clickOnGoBackbutton() {
@@ -100,7 +99,7 @@ public class KeyManagementPage extends BasePage {
     }
 
     public String getPKeyTypeVcDetailViewValueSunbirdCard() {
-        IosUtil.scrollToElement(driver, 100, 800, 100, 200);
+        IosUtil.scrollToElement(driver,100,800,100,200);
         basePage.retryToGetElement(keyTypeVcDetailViewValue);
         return this.getTextFromLocator(keyTypeVcDetailViewValue);
     }

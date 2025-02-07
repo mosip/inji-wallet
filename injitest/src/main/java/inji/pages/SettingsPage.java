@@ -1,11 +1,13 @@
 package inji.pages;
 
+import inji.constants.Target;
 import inji.utils.IosUtil;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.pagefactory.AndroidFindBy;
 import io.appium.java_client.pagefactory.iOSXCUITFindBy;
 import org.openqa.selenium.WebElement;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
@@ -114,7 +116,7 @@ public class SettingsPage extends BasePage {
     }
 
     public UnlockApplicationPage clickOnLogoutButton() {
-        IosUtil.scrollToElement(driver, 100, 800, 100, 200);
+        IosUtil.scrollToElement(driver,100,800,100,200);
         clickOnElement(logoutButton);
         return new UnlockApplicationPage(driver);
     }
@@ -161,12 +163,12 @@ public class SettingsPage extends BasePage {
     }
 
     public boolean verifyLanguagesInLanguageFilter(String os) {
-        List<String> expectedLanguages = null;
-        List<String> actualLanguages = null;
-        if (os.equals("IOS")) {
+        List<String> expectedLanguages=null;
+        List<String> actualLanguages= null;
+        if(os.equals("IOS")){
             expectedLanguages = Arrays.asList("English \uE5CA Filipino عربى हिंदी ಕನ್ನಡ தமிழ்");
         } else if (os.equals("ANDROID")) {
-            expectedLanguages = Arrays.asList("English", "Filipino", "عربى", "हिंदी", "ಕನ್ನಡ", "தமிழ்");
+            expectedLanguages = Arrays.asList("English", "Filipino","عربى", "हिंदी", "ಕನ್ನಡ", "தமிழ்");
         }
         actualLanguages = languages.stream()
                 .map(WebElement::getText)
@@ -215,7 +217,6 @@ public class SettingsPage extends BasePage {
         clickOnElement(backButton);
         return this;
     }
-
     public UnlockApplicationPage clickOnlanguageButtonInArabic() {
         clickOnElement(languageButtonInArabic);
         return new UnlockApplicationPage(driver);
@@ -239,12 +240,11 @@ public class SettingsPage extends BasePage {
     public boolean isNewlableDisplayed() {
         return this.isElementDisplayed(newlable);
     }
-
-    public String getDataBackupAndRestoreText() {
+    public String  getDataBackupAndRestoreText(){
         return getTextFromLocator(dataBackupAndRestore);
     }
 
-    public String getreceiveCardText() {
+    public String getreceiveCardText(){
         return getTextFromLocator(receiveCardText);
     }
 

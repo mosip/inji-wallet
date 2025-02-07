@@ -53,7 +53,6 @@ public class HelpPage extends BasePage {
     public boolean isBiometricIsChangeTextDescription() {
         return this.isElementDisplayed(biometricIsChangeTextDescription);
     }
-
     public void clickOnBackButton() {
         driver.navigate().back();
     }
@@ -63,9 +62,8 @@ public class HelpPage extends BasePage {
         return this.isElementDisplayed(whatIsShareWithSelfieTextdHeader);
     }
 
-    public void clickOnCrossButton() {
+    public void clickOnCrossButton(){
         clickOnElement(crossIcon);
     }
 }
-
 

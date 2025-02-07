@@ -41,7 +41,7 @@ public class ActivateVcTest extends IosBaseTest {
         RetrieveIdPage retrieveIdPage = addNewCardPage.clickOnDownloadViaUin();
 
         assertTrue(retrieveIdPage.isRetrieveIdPageLoaded(), "Verify if retrieve id page is displayed");
-        String uin = TestDataReader.readData("uin");
+        String uin=TestDataReader.readData("uin");
         OtpVerificationPage otpVerification = retrieveIdPage.setEnterIdTextBox(uin).clickOnGenerateCardButton();
 
         assertTrue(otpVerification.isOtpVerificationPageLoaded(), "Verify if otp verification page is displayed");
@@ -161,7 +161,7 @@ public class ActivateVcTest extends IosBaseTest {
         RetrieveIdPage retrieveIdPage = addNewCardPage.clickOnDownloadViaUin();
 
         assertTrue(retrieveIdPage.isRetrieveIdPageLoaded(), "Verify if retrieve id page is displayed");
-        String uin = TestDataReader.readData("uin");
+        String uin=TestDataReader.readData("uin");
         OtpVerificationPage otpVerification = retrieveIdPage.setEnterIdTextBox(uin).clickOnGenerateCardButton();
 
         assertTrue(otpVerification.isOtpVerificationPageLoaded(), "Verify if otp verification page is displayed");
@@ -172,7 +172,7 @@ public class ActivateVcTest extends IosBaseTest {
 
         DetailedVcViewPage detailedVcViewPage = homePage.openDetailedVcView();
         assertTrue(detailedVcViewPage.isDetailedVcViewPageLoaded(), "Verify if detailed Vc view page is displayed");
-        IosUtil.scrollToElement(driver, 100, 800, 100, 200);
+        IosUtil.scrollToElement(driver,100,800,100,200);
         PleaseConfirmPopupPage pleaseConfirmPopupPage = detailedVcViewPage.clickOnActivateButtonIos();
 
         assertTrue(pleaseConfirmPopupPage.isPleaseConfirmPopupPageLoaded(), "Verify if pop up page is displayed");
@@ -236,7 +236,6 @@ public class ActivateVcTest extends IosBaseTest {
         otpVerification.clickOnResendButton();
         assertTrue(otpVerification.verifyOtpVerificationTimerDisplayedAfterClickOnResend(), "verify is You can resend the code displayed again after click on resend button ");
     }
-
     @Test
     public void downloadAndActiveVcUsingUinViaEsignet() throws InterruptedException {
         ChooseLanguagePage chooseLanguagePage = new ChooseLanguagePage(driver);
@@ -261,15 +260,15 @@ public class ActivateVcTest extends IosBaseTest {
         AddNewCardPage addNewCardPage = homePage.downloadCard();
 
         assertTrue(addNewCardPage.isAddNewCardPageLoaded(), "Verify if add new card page is displayed");
-        EsignetLoginPage esignetLoginPage = addNewCardPage.clickOnDownloadViaEsignet();
+        EsignetLoginPage esignetLoginPage =  addNewCardPage.clickOnDownloadViaEsignet();
         esignetLoginPage.clickOnCredentialTypeHeadingMOSIPVerifiableCredential();
 
         addNewCardPage.clickOnContinueButtonInSigninPopupIos();
         esignetLoginPage.clickOnEsignetLoginWithOtpButton();
 
 //        assertTrue(esignetLoginPage.isEnterYourVidTextDisplayed(), "Verify if enter your vid text is displayed");
-        String uin = TestDataReader.readData("uin");
-        OtpVerificationPage otpVerification = esignetLoginPage.setEnterIdTextBox(uin);
+        String uin=TestDataReader.readData("uin");
+        OtpVerificationPage otpVerification= esignetLoginPage.setEnterIdTextBox(uin);
 
         esignetLoginPage.clickOnGetOtpButton();
 //        assertTrue(esignetLoginPage.isOtpHasSendMessageDisplayed(),"verify if otp page is displayed");
@@ -298,7 +297,7 @@ public class ActivateVcTest extends IosBaseTest {
 //        assertEquals(detailedVcViewPage.getEmailInDetailedVcView(), TestDataReader.readData("externalemail"), "Verify if email is displayed");
         assertTrue(detailedVcViewPage.isActivateButtonDisplayed(), "Verify if activate vc button displayed");
 
-        PleaseConfirmPopupPage pleaseConfirmPopupPage = detailedVcViewPage.clickOnActivateButtonAndroid();
+        PleaseConfirmPopupPage pleaseConfirmPopupPage  =detailedVcViewPage.clickOnActivateButtonAndroid();
         assertTrue(pleaseConfirmPopupPage.isPleaseConfirmPopupPageLoaded(), "Verify if confirm popup page is displayed");
 
         pleaseConfirmPopupPage.clickOnConfirmButton();

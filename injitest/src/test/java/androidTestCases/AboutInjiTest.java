@@ -48,6 +48,7 @@ public class AboutInjiTest extends AndroidBaseTest {
     }
 
 
+
     @Test
     public void verifyAppId() throws InterruptedException {
         ChooseLanguagePage chooseLanguagePage = new ChooseLanguagePage(driver);

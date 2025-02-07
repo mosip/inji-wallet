@@ -98,9 +98,9 @@ public class BasePage {
         wait.until(ExpectedConditions.invisibilityOf(element));
     }
 
-    protected boolean isElementEnabled(WebElement element, int waitTime) {
+    protected boolean isElementEnabled(WebElement element,int waitTime) {
         try {
-            waitForElementToBeVisible(element, waitTime);
+            waitForElementToBeVisible(element,waitTime);
             element.isEnabled();
             return true;
         } catch (Exception e) {
@@ -129,7 +129,7 @@ public class BasePage {
         return element.getText();
     }
 
-    protected String retryToGetElement(WebElement element) {
+    protected  String retryToGetElement(WebElement element) {
         int maxRetries = 3;
         String text = null;
         for (int i = 0; i < maxRetries; i++) {
@@ -145,7 +145,6 @@ public class BasePage {
         return text;
 
     }
-
     public boolean retryElementVisible(WebElement element) {
         int maxRetries = 3;
         for (int i = 0; i < maxRetries; i++) {
@@ -168,8 +167,8 @@ public class BasePage {
         }
     }
 
-    public void clickIfVisible(WebElement element) {
-        if (isElementDisplayed(element)) {
+    public void  clickIfVisible(WebElement element){
+        if(isElementDisplayed(element)) {
             clickOnElement(element);
         }
     }

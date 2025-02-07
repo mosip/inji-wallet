@@ -5,6 +5,8 @@ import io.appium.java_client.pagefactory.AndroidFindBy;
 import io.appium.java_client.pagefactory.iOSXCUITFindBy;
 import org.openqa.selenium.WebElement;
 
+import inji.utils.IosUtil;
+
 public class SharePage extends BasePage {
 
     @AndroidFindBy(accessibility = "camera")
@@ -108,7 +110,7 @@ public class SharePage extends BasePage {
     public SharePage acceptPermissionPopupBluetoothIos() {
         if (isElementDisplayed(okButtonIos)) {
             clickOnElement(okButtonIos);
-            if (isElementDisplayed(AllowButtonIos)) {
+            if(isElementDisplayed(AllowButtonIos)){
                 clickOnElement(AllowButtonIos);
             }
         }
@@ -118,7 +120,7 @@ public class SharePage extends BasePage {
     public SharePage acceptPermissionPopupCameraIos() {
         if (isElementDisplayed(okButtonIos)) {
             clickOnElement(okButtonIos);
-            if (isElementDisplayed(AllowButtonIos)) {
+            if(isElementDisplayed(AllowButtonIos)){
                 clickOnElement(AllowButtonIos);
             }
         }
@@ -163,11 +165,11 @@ public class SharePage extends BasePage {
     }
 
     public boolean isCameraPageLoaded() {
-        return this.isElementEnabled(holdCameraSteady, 30);
+        return this.isElementEnabled(holdCameraSteady,30);
     }
 
     public boolean isFlipCameraClickable() {
-        return this.isElementEnabled(flipCamera, 30);
+        return this.isElementEnabled(flipCamera,30);
     }
 
     public void clickOnDenyCameraPopupButton() {
@@ -176,21 +178,20 @@ public class SharePage extends BasePage {
         }
     }
 
-    public boolean isCameraDisabledPopUpDisplayed() {
+    public boolean isCameraDisabledPopUpDisplayed(){
         return isElementDisplayed(cameraAccessDisabledPopup);
     }
-
-    public void clickOnPopupCloseButton() {
+    public void clickOnPopupCloseButton(){
         clickOnElement(closePopupButton);
     }
 
-    public void clickOnAllowLocationPopupButton() {
-        if (isElementDisplayed(locationAccessPopup))
+    public void clickOnAllowLocationPopupButton(){
+        if(isElementDisplayed(locationAccessPopup))
             clickOnElement(locationAccessPopup);
     }
 
-    public void clickOnAllowGallaryAccessButton() {
-        if (isElementDisplayed(gallaryAccessPopup))
+    public void clickOnAllowGallaryAccessButton(){
+        if(isElementDisplayed(gallaryAccessPopup))
             clickOnElement(gallaryAccessPopup);
     }
 
@@ -198,13 +199,13 @@ public class SharePage extends BasePage {
         return isElementDisplayed(cameraDisabledToaster);
     }
 
-    public void clickOnCameraDisabledToasterClose() {
-        if (isElementDisplayed(cameraDisabledToasterClose))
+    public void clickOnCameraDisabledToasterClose(){
+        if(isElementDisplayed(cameraDisabledToasterClose))
             clickOnElement(cameraDisabledToasterClose);
     }
 
-    public void clickOnDontAllowCameraAccessButton() {
-        if (isElementDisplayed(cameraDontAllowAccessPopup))
+    public void clickOnDontAllowCameraAccessButton(){
+        if(isElementDisplayed(cameraDontAllowAccessPopup))
             clickOnElement(cameraDontAllowAccessPopup);
     }
 

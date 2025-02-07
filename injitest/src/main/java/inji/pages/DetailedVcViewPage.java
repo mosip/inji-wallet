@@ -4,9 +4,10 @@ import inji.utils.IosUtil;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.pagefactory.AndroidFindBy;
 import io.appium.java_client.pagefactory.iOSXCUITFindBy;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
-public class DetailedVcViewPage extends BasePage {
+public class DetailedVcViewPage extends BasePage{
     @AndroidFindBy(accessibility = "idDetailsHeader")
     @iOSXCUITFindBy(accessibility = "idDetailsHeader")
     private WebElement detailedVcViewPageTitle;
@@ -146,14 +147,14 @@ public class DetailedVcViewPage extends BasePage {
         return this.isElementDisplayed(activateButton);
     }
 
-    public PleaseConfirmPopupPage clickOnActivateButtonAndroid() {
+    public PleaseConfirmPopupPage clickOnActivateButtonAndroid(){
 //        IosUtil.scrollToElement(driver,58,712,160,129);
         clickOnElement(activateButton);
         return new PleaseConfirmPopupPage(driver);
     }
 
-    public PleaseConfirmPopupPage clickOnActivateButtonIos() {
-        IosUtil.scrollToElement(driver, 58, 712, 160, 129);
+    public PleaseConfirmPopupPage clickOnActivateButtonIos(){
+        IosUtil.scrollToElement(driver,58,712,160,129);
         clickOnElement(activeButtonIos);
         return new PleaseConfirmPopupPage(driver);
     }
@@ -173,21 +174,21 @@ public class DetailedVcViewPage extends BasePage {
     }
 
     public HomePage clickOnQrCrossIcon() {
-        if (isElementDisplayed(qrCloseIcon)) {
+        if (isElementDisplayed(qrCloseIcon)){
             clickOnElement(qrCloseIcon);
         }
         return new HomePage(driver);
     }
 
     public HomePage clickOnCrossIcon() {
-        if (isElementDisplayed(crossIcon)) {
+        if(isElementDisplayed(crossIcon)) {
             clickOnElement(crossIcon);
         }
         return new HomePage(driver);
     }
 
     public void clickOnQrCodeButton() {
-        if (isElementDisplayed(detailedVcViewPageQr)) {
+        if(isElementDisplayed(detailedVcViewPageQr)) {
             clickOnElement(detailedVcViewPageQr);
         }
         new PleaseConfirmPopupPage(driver);

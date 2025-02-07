@@ -38,7 +38,7 @@ public class UnlockWithPasscodeTest extends IosBaseTest {
         SettingsPage settingsPage = homePage.clickOnSettingIcon();
 
         assertTrue(settingsPage.isSettingPageLoaded(), "Verify if setting page is displayed");
-        assertTrue(settingsPage.isdataBackupAndRestoreDisplayed(), "Verify if backup & restore is displayed");
+        assertTrue(settingsPage.isdataBackupAndRestoreDisplayed(),"Verify if backup & restore is displayed");
         UnlockApplicationPage unlockApplicationPage = settingsPage.clickOnLogoutButton();
 
         assertTrue(unlockApplicationPage.isUnlockApplicationPageLoaded(), "Verify if unlock application page is displayed");

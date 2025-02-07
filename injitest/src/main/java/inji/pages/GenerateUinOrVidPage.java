@@ -24,6 +24,7 @@ public class GenerateUinOrVidPage extends BasePage {
     private WebElement networkErrorMesseage;
 
 
+
     public GenerateUinOrVidPage(AppiumDriver driver) {
         super(driver);
     }

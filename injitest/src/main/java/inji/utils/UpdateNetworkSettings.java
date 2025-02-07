@@ -9,14 +9,15 @@ import java.io.IOException;
 public class UpdateNetworkSettings {
 
 
+
     public UpdateNetworkSettings() throws IOException {
     }
 
     public static void setNoNetworkProfile(String sessionID) {
         String baseURL = "https://api-cloud.browserstack.com";
         String endpoint = "/app-automate/sessions/" + sessionID + "/update_network.json";
-        String accessKey = UinGenerationUtil.getKeyValueFromYaml("/androidConfig.yml", "accessKey");
-        String userName = UinGenerationUtil.getKeyValueFromYaml("/androidConfig.yml", "userName");
+        String accessKey = UinGenerationUtil.getKeyValueFromYaml("/androidConfig.yml","accessKey");
+        String userName = UinGenerationUtil.getKeyValueFromYaml("/androidConfig.yml","userName");
         String networkSettingsJson = "{\"networkProfile\":\"no-network\"}";
         RequestSpecification requestSpec = RestAssured.given()
                 .auth().basic(userName, accessKey)
@@ -29,8 +30,8 @@ public class UpdateNetworkSettings {
         String baseURL = "https://api-cloud.browserstack.com";
         String endpoint = "/app-automate/sessions/" + sessionID + "/update_network.json";
 
-        String accessKey = UinGenerationUtil.getKeyValueFromYaml("/androidConfig.yml", "accessKey");
-        String userName = UinGenerationUtil.getKeyValueFromYaml("/androidConfig.yml", "userName");
+        String accessKey = UinGenerationUtil.getKeyValueFromYaml("/androidConfig.yml","accessKey");
+        String userName = UinGenerationUtil.getKeyValueFromYaml("/androidConfig.yml","userName");
         String networkSettingsJson = "{\"networkProfile\":\"reset\"}";
 
         RequestSpecification requestSpec = RestAssured.given()
@@ -44,8 +45,8 @@ public class UpdateNetworkSettings {
     public static void set2gNetworkProfile(String sessionID) {
         String baseURL = "https://api-cloud.browserstack.com";
         String endpoint = "/app-automate/sessions/" + sessionID + "/update_network.json";
-        String accessKey = UinGenerationUtil.getKeyValueFromYaml("/androidConfig.yml", "accessKey");
-        String userName = UinGenerationUtil.getKeyValueFromYaml("/androidConfig.yml", "userName");
+        String accessKey = UinGenerationUtil.getKeyValueFromYaml("/androidConfig.yml","accessKey");
+        String userName = UinGenerationUtil.getKeyValueFromYaml("/androidConfig.yml","userName");
         String networkSettingsJson = "{\"networkProfile\":\"2g-gprs-good\"}";
         RequestSpecification requestSpec = RestAssured.given()
                 .auth().basic(userName, accessKey)

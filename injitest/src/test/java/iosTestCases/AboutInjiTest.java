@@ -35,16 +35,16 @@ public class AboutInjiTest extends IosBaseTest {
         assertTrue(settingsPage.isSettingPageLoaded(), "Verify if setting page is displayed");
         AboutInjiPage aboutInjiPage = settingsPage.clickOnAbouInji();
 
-        assertTrue(aboutInjiPage.isAboutInjiHeaderDisplayed(), "Verify id about inji page displayed");
+        assertTrue(aboutInjiPage.isAboutInjiHeaderDisplayed(),"Verify id about inji page displayed");
 
         aboutInjiPage.clickOnCopyText();
-        assertTrue(aboutInjiPage.isAppIdCopiedTextDisplayed(), "verify if app id is copied");
+        assertTrue(aboutInjiPage.isAppIdCopiedTextDisplayed(),"verify if app id is copied");
 
         aboutInjiPage.clickOnBackButton();
-        assertTrue(aboutInjiPage.isCopyTextDisplayed(), "verify if copy text displayed");
+        assertTrue(aboutInjiPage.isCopyTextDisplayed(),"verify if copy text displayed");
 
         aboutInjiPage.clickOnClickHereButton();
-        assertTrue(aboutInjiPage.isMosipUrlIsDisplayedInChrome(), "verify if mosip url is displayed in chrome");
+        assertTrue(aboutInjiPage.isMosipUrlIsDisplayedInChrome(),"verify if mosip url is displayed in chrome");
     }
 
     @Test
@@ -73,11 +73,10 @@ public class AboutInjiTest extends IosBaseTest {
         assertTrue(settingsPage.isSettingPageLoaded(), "Verify if setting page is displayed");
         AboutInjiPage aboutInjiPage = settingsPage.clickOnAbouInji();
 
-        assertTrue(aboutInjiPage.isAboutInjiHeaderDisplayed(), "Verify id about inji page displayed");
+        assertTrue(aboutInjiPage.isAboutInjiHeaderDisplayed(),"Verify id about inji page displayed");
         assertTrue(aboutInjiPage.isAppIdVisible(), "Verify appID is displayed");
 
     }
-
     @Test
     public void verifyTuvaliVersion() throws InterruptedException {
         ChooseLanguagePage chooseLanguagePage = new ChooseLanguagePage(driver);
@@ -105,7 +104,7 @@ public class AboutInjiTest extends IosBaseTest {
         assertTrue(settingsPage.isSettingPageLoaded(), "Verify if setting page is displayed");
         AboutInjiPage aboutInjiPage = settingsPage.clickOnAbouInji();
 
-        assertTrue(aboutInjiPage.isAboutInjiHeaderDisplayed(), "Verify id about inji page displayed");
+        assertTrue(aboutInjiPage.isAboutInjiHeaderDisplayed(),"Verify id about inji page displayed");
         assertTrue(aboutInjiPage.isTuvaliVesionVisible(), "Verify appID is displayed");
 
     }

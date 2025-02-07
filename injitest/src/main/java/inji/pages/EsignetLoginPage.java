@@ -1,5 +1,6 @@
 package inji.pages;
 
+import inji.utils.UpdateNetworkSettings;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.HidesKeyboard;
 import io.appium.java_client.pagefactory.AndroidFindBy;
@@ -112,7 +113,7 @@ public class EsignetLoginPage extends BasePage {
     }
 
     public void clickOnEsignetLoginWithOtpButton() {
-        if (isElementDisplayed(esignetLoginButton)) {
+        if(isElementDisplayed(esignetLoginButton)) {
             clickOnElement(esignetLoginButton);
         }
 
@@ -153,57 +154,57 @@ public class EsignetLoginPage extends BasePage {
         return this.isElementDisplayed(invalidOtpText);
     }
 
-    public boolean verifyLanguageLoginHeaderTextDisplayed(String language) {
+    public boolean  verifyLanguageLoginHeaderTextDisplayed(String language){
         String actualText = getTextFromLocator(loginTextHeader);
 
         switch (language) {
             case "English":
-                boolean isEnglishMatch = (actualText.equalsIgnoreCase("Login") == true) ? true : false;
-                return isEnglishMatch;
+                boolean isEnglishMatch  = (actualText.equalsIgnoreCase("Login")==true) ? true : false;
+                return isEnglishMatch ;
             case "Tamil":
-                boolean isTamilMatch = (actualText.equalsIgnoreCase("eSignet மூலம் உள்நுழையவும்") == true) ? true : false;
-                return isTamilMatch;
+                boolean isTamilMatch  = (actualText.equalsIgnoreCase("eSignet மூலம் உள்நுழையவும்")==true) ? true : false;
+                return isTamilMatch ;
             case "Kannada":
-                boolean isKannadaMatch = (actualText.equalsIgnoreCase("ಇಸಿಗ್ನೆಟ್ ಮೂಲಕ ಲಾಗಿನ್ ಮಾಡಿ") == true) ? true : false;
-                return isKannadaMatch;
+                boolean isKannadaMatch  = (actualText.equalsIgnoreCase("ಇಸಿಗ್ನೆಟ್ ಮೂಲಕ ಲಾಗಿನ್ ಮಾಡಿ")==true) ? true : false;
+                return isKannadaMatch ;
             case "Hindi":
-                boolean isHindiMatch = (actualText.equalsIgnoreCase("ईसिग्नेट से लॉगिन करें") == true) ? true : false;
-                return isHindiMatch;
+                boolean isHindiMatch  = (actualText.equalsIgnoreCase("ईसिग्नेट से लॉगिन करें")==true) ? true : false;
+                return isHindiMatch ;
             case "HindiIos":
-                boolean isHindiMatchIos = (actualText.equalsIgnoreCase("ईसिग्नेट से लॉगिन करें") == true) ? true : false;
-                return isHindiMatchIos;
+                boolean isHindiMatchIos  = (actualText.equalsIgnoreCase("ईसिग्नेट से लॉगिन करें")==true) ? true : false;
+                return isHindiMatchIos ;
             case "Arabic":
-                boolean isArabicMatch = (actualText.equalsIgnoreCase("تسجيل الدخول باستخدام eSignet") == true) ? true : false;
-                return isArabicMatch;
+                boolean isArabicMatch  = (actualText.equalsIgnoreCase("تسجيل الدخول باستخدام eSignet")==true) ? true : false;
+                return isArabicMatch ;
         }
         return false;
     }
 
-    public boolean verifyLanguagePleaseEnterUinHeaderTextDisplayed(String language) {
+    public boolean  verifyLanguagePleaseEnterUinHeaderTextDisplayed(String language){
         String actualText = getTextFromLocator(pleaseEnterUinHeaderText);
 
         switch (language) {
             case "English":
-                boolean isEnglishMatch = (actualText.equalsIgnoreCase("Please enter your UIN/VID") == true) ? true : false;
-                return isEnglishMatch;
+                boolean isEnglishMatch  = (actualText.equalsIgnoreCase("Please enter your UIN/VID")==true) ? true : false;
+                return isEnglishMatch ;
             case "Tamil":
-                boolean isTamilMatch = (actualText.equalsIgnoreCase("உங்கள் UIN/VIDஐ உள்ளிடவும்") == true) ? true : false;
-                return isTamilMatch;
+                boolean isTamilMatch  = (actualText.equalsIgnoreCase("உங்கள் UIN/VIDஐ உள்ளிடவும்")==true) ? true : false;
+                return isTamilMatch ;
             case "TamilIos":
-                boolean isTamilMatchIos = (actualText.equalsIgnoreCase("உங்கள் UIN/VIDஐ உள்ளிடவும்") == true) ? true : false;
-                return isTamilMatchIos;
+                boolean isTamilMatchIos  = (actualText.equalsIgnoreCase("உங்கள் UIN/VIDஐ உள்ளிடவும்")==true) ? true : false;
+                return isTamilMatchIos ;
             case "Kannada":
-                boolean isKannadaMatch = (actualText.equalsIgnoreCase("ದಯವಿಟ್ಟು ನಿಮ್ಮ UIN/VID ಅನ್ನು ನಮೂದಿಸಿ") == true) ? true : false;
-                return isKannadaMatch;
+                boolean isKannadaMatch  = (actualText.equalsIgnoreCase("ದಯವಿಟ್ಟು ನಿಮ್ಮ UIN/VID ಅನ್ನು ನಮೂದಿಸಿ")==true) ? true : false;
+                return isKannadaMatch ;
             case "Hindi":
-                boolean isHindiMatch = (actualText.equalsIgnoreCase("कृपया अपना यूआईएन/वीआईडी \u200B\u200Bदर्ज करें") == true) ? true : false;
-                return isHindiMatch;
+                boolean isHindiMatch  = (actualText.equalsIgnoreCase("कृपया अपना यूआईएन/वीआईडी \u200B\u200Bदर्ज करें")==true) ? true : false;
+                return isHindiMatch ;
             case "HindiIos":
-                boolean isHindiMatchIos = (actualText.equalsIgnoreCase("अपना यूआईएन या वीआईडी \u200B\u200Bदर्ज करें") == true) ? true : false;
-                return isHindiMatchIos;
+                boolean isHindiMatchIos  = (actualText.equalsIgnoreCase("अपना यूआईएन या वीआईडी \u200B\u200Bदर्ज करें")==true) ? true : false;
+                return isHindiMatchIos ;
             case "Arabic":
-                boolean isArabicMatch = (actualText.equalsIgnoreCase("الرجاء إدخال UIN/VID الخاص بك") == true) ? true : false;
-                return isArabicMatch;
+                boolean isArabicMatch  = (actualText.equalsIgnoreCase("الرجاء إدخال UIN/VID الخاص بك")==true) ? true : false;
+                return isArabicMatch ;
         }
         return false;
     }
@@ -212,7 +213,7 @@ public class EsignetLoginPage extends BasePage {
         clickOnElement(CloseTab);
     }
 
-    public String getText() {
+    public String getText(){
         System.out.println(getTextFromLocator(enterIdTextBox));
         return getTextFromLocator(enterIdTextBox);
     }

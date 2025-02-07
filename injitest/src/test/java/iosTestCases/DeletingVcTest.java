@@ -176,7 +176,7 @@ public class DeletingVcTest extends IosBaseTest {
 
         assertTrue(historyPage.verifyHistory(uin, Target.IOS));
 
-        assertEquals(historyPage.getNumberOfRecordsInHistory(uin, Target.IOS), 2, "Verify two download records in history page");
+        assertEquals(historyPage.getNumberOfRecordsInHistory(uin, Target.IOS), 2,"Verify two download records in history page");
         assertTrue(historyPage.verifyDeleteHistory(uin, Target.IOS), "Verify if deleted history is displayed");
     }
 
@@ -203,14 +203,14 @@ public class DeletingVcTest extends IosBaseTest {
         assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
         AddNewCardPage addNewCardPage = homePage.downloadCard();
 
-        EsignetLoginPage esignetLoginPage = addNewCardPage.clickOnDownloadViaEsignet();
+        EsignetLoginPage esignetLoginPage =  addNewCardPage.clickOnDownloadViaEsignet();
         esignetLoginPage.clickOnCredentialTypeHeadingMOSIPVerifiableCredential();
         addNewCardPage.clickOnContinueButtonInSigninPopupIos();
 
         esignetLoginPage.clickOnEsignetLoginWithOtpButton();
         Thread.sleep(9000);
         String uin = TestDataReader.readData("uin");
-        OtpVerificationPage otpVerification = esignetLoginPage.setEnterIdTextBox(uin);
+        OtpVerificationPage otpVerification= esignetLoginPage.setEnterIdTextBox(uin);
 
 
         esignetLoginPage.clickOnGetOtpButton();
@@ -266,7 +266,7 @@ public class DeletingVcTest extends IosBaseTest {
         AddNewCardPage addNewCardPage = homePage.downloadCard();
 
         assertTrue(addNewCardPage.isAddNewCardPageLoaded(), "Verify if add new card page is displayed");
-        SunbirdLoginPage sunbirdLoginPage = addNewCardPage.clickOnDownloadViaSunbird();
+        SunbirdLoginPage sunbirdLoginPage =  addNewCardPage.clickOnDownloadViaSunbird();
         addNewCardPage.clickOnCredentialTypeHeadingInsuranceCredential();
         addNewCardPage.clickOnContinueButtonInSigninPopupIos();
 

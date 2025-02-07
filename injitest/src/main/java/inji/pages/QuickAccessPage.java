@@ -22,10 +22,9 @@ public class QuickAccessPage extends BasePage {
     public QuickAccessPage(AppiumDriver driver) {
         super(driver);
     }
-
     BasePage basePage = new BasePage(driver);
 
-    public String verifyLanguageforQuickAccessTextPageLoaded() {
+    public String  verifyLanguageforQuickAccessTextPageLoaded(){
         basePage.retryToGetElement(quickAccessText);
         return getTextFromLocator(quickAccessText);
     }

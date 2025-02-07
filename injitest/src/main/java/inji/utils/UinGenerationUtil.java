@@ -1,15 +1,12 @@
 package inji.utils;
-
+import org.yaml.snakeyaml.Yaml;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
-import org.yaml.snakeyaml.Yaml;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.Map;
 import java.util.Random;
+import java.io.File;
 
 public class UinGenerationUtil {
 
@@ -30,7 +27,6 @@ public class UinGenerationUtil {
 //            return "JAR";
         return "IDE";
     }
-
     public static String getKernalFilename() {
         String path = "Kernel.properties";
         String kernalpath = null;
@@ -42,36 +38,36 @@ public class UinGenerationUtil {
         return path;
     }
 
-    public static String getRandomUin() {
+    public static String getRandomUin () {
 
         return getRandomUinOrVidOrAid("Uins.json");
     }
 
-    public static String getRandomVid() {
+    public static String getRandomVid () {
         return getRandomUinOrVidOrAid("Vids.json");
     }
 
-    public static String getRandomAidData() {
+    public static String getRandomAidData () {
 
         return getRandomUinOrVidOrAid("AidData.json");
     }
 
-    public static String getRandomEmails(String fileName) {
+    public static String getRandomEmails ( String fileName) {
         ObjectMapper mapper = new ObjectMapper();
         ArrayNode arrayNode = null;
         try {
-            arrayNode = (ArrayNode) mapper.readTree(new File(System.getProperty("user.dir") + "/src/main/resources/" + fileName));
+            arrayNode = (ArrayNode) mapper.readTree(new File(System.getProperty("user.dir") + "/src/main/resources/"+fileName));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
         Random random = new Random();
         int randomIndex = random.nextInt(arrayNode.size());
         String email = arrayNode.get(randomIndex).asText();
-        String emailValue = email.stripLeading().stripTrailing();
+        String emailValue=email.stripLeading().stripTrailing();
         return emailValue;
     }
 
-    public static String getRandomUinOrVidOrAid(String jsonFileName) {
+    public static String getRandomUinOrVidOrAid (String jsonFileName) {
         ObjectMapper mapper = new ObjectMapper();
         ArrayNode arrayNode = null;
         try {
@@ -88,7 +84,7 @@ public class UinGenerationUtil {
     public static String getKeyValueFromYaml(String filePath, String key) {
         FileReader reader = null;
         try {
-            reader = new FileReader(System.getProperty("user.dir") + filePath);
+            reader = new FileReader(System.getProperty("user.dir")+filePath);
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         }
@@ -99,7 +95,7 @@ public class UinGenerationUtil {
             @SuppressWarnings("unchecked")
             Map<String, String> map = (Map<String, String>) data;
             return (String) map.get(key);
-        } else {
+        }  else {
             throw new RuntimeException("Invalid YAML format, expected a map");
         }
     }

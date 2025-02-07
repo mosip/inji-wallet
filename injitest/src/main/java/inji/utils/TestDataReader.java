@@ -9,7 +9,7 @@ public class TestDataReader {
     private static String getValueForKey(String key) {
         switch (key) {
             case "externalemail":
-                return "Resident_AddIdentity_ValidParam_smoke_Pos@mosip.net";
+                return "Mimoto_AddIdentity_withValidParameters_smoke_Pos@mosip.net";
             case "emailsForBackupAndRestore":
                 return UinGenerationUtil.getRandomEmails("Emails.json");
             case "passcode":
@@ -85,7 +85,7 @@ public class TestDataReader {
             case "idTypeSunbirdHindi":
                 return "Health Insurance";
             case "phoneNumberSunbird":
-                return "1234567890";
+                return "0123456789";
             case "dateOfBirthSunbird":
                 return "2024-01-01";
             case "genderValueSunbird":
@@ -101,7 +101,9 @@ public class TestDataReader {
             case "isDeviceFarmRun":
                 return "true";
             case "MockVc":
-                return "2405782960";
+                return "9261481024";
+            case "idTypeForMobileDrivingLicense":
+                return "Mobile Driving License";
             default:
                 return "Key not found";
         }

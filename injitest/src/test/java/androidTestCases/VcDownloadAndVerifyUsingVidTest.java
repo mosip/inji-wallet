@@ -39,7 +39,7 @@ public class VcDownloadAndVerifyUsingVidTest extends AndroidBaseTest {
         RetrieveIdPage retrieveIdPage = addNewCardPage.clickOnDownloadViaUin();
 
         assertTrue(retrieveIdPage.isRetrieveIdPageLoaded(), "Verify if retrieve id page is displayed");
-        String vid = TestDataReader.readData("vid");
+        String vid=TestDataReader.readData("vid");
         OtpVerificationPage otpVerification = retrieveIdPage.clickOnVid(Target.ANDROID).setEnterIdTextBox(vid).clickOnGenerateCardButton();
 
         assertTrue(otpVerification.isOtpVerificationPageLoaded(), "Verify if otp verification page is displayed");
@@ -79,7 +79,7 @@ public class VcDownloadAndVerifyUsingVidTest extends AndroidBaseTest {
         RetrieveIdPage retrieveIdPage = addNewCardPage.clickOnDownloadViaUin();
 
         assertTrue(retrieveIdPage.isRetrieveIdPageLoaded(), "Verify if retrieve id page is displayed");
-        String vid = TestDataReader.readData("vid");
+        String vid=TestDataReader.readData("vid");
         OtpVerificationPage otpVerification = retrieveIdPage.clickOnVid(Target.ANDROID).setEnterIdTextBox(TestDataReader.readData("vid")).clickOnGenerateCardButton();
 
         assertTrue(otpVerification.isOtpVerificationPageLoaded(), "Verify if otp verification page is displayed");
@@ -205,7 +205,7 @@ public class VcDownloadAndVerifyUsingVidTest extends AndroidBaseTest {
         RetrieveIdPage retrieveIdPage = addNewCardPage.clickOnDownloadViaUin();
 
         assertTrue(retrieveIdPage.isRetrieveIdPageLoaded(), "Verify if retrieve id page is displayed");
-        String vid = TestDataReader.readData("vid");
+        String vid=TestDataReader.readData("vid");
         OtpVerificationPage otpVerification = retrieveIdPage.clickOnVid(Target.ANDROID).setEnterIdTextBox(vid).clickOnGenerateCardButton();
 
         assertTrue(otpVerification.isOtpVerificationPageLoaded(), "Verify if otp verification page is displayed");

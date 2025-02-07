@@ -8,8 +8,9 @@ import inji.utils.TestDataReader;
 import org.testng.annotations.Test;
 
 import static org.testng.Assert.assertTrue;
+import static org.testng.AssertJUnit.assertEquals;
 
-public class ShareVcTest extends AndroidBaseTest {
+public class ShareVcTest  extends AndroidBaseTest {
 
     @Test
     public void noCardsAvailableToShare() {
@@ -91,7 +92,7 @@ public class ShareVcTest extends AndroidBaseTest {
         RetrieveIdPage retrieveIdPage = addNewCardPage.clickOnDownloadViaUin();
 
         assertTrue(retrieveIdPage.isRetrieveIdPageLoaded(), "Verify if retrieve id page is displayed");
-        String uin = TestDataReader.readData("uin");
+        String uin=TestDataReader.readData("uin");
         OtpVerificationPage otpVerification = retrieveIdPage.setEnterIdTextBox(uin).clickOnGenerateCardButton();
 
         assertTrue(otpVerification.isOtpVerificationPageLoaded(), "Verify if otp verification page is displayed");
@@ -103,7 +104,7 @@ public class ShareVcTest extends AndroidBaseTest {
 
         moreOptionsPage.clickOnShareVcWithSelfieFromKebabButton();
 
-        SharePage SharePage = new SharePage(driver);
+        SharePage  SharePage = new SharePage(driver);
 
         SharePage.acceptPermissionPopupBluetooth();
         SharePage.acceptPermissionPopupCamera();
@@ -111,7 +112,7 @@ public class ShareVcTest extends AndroidBaseTest {
         SharePage.clickOnAllowGallaryAccessButton();
 
         assertTrue(SharePage.isCameraPageLoaded(), "Verify camera page is displayed");
-        assertTrue(SharePage.isFlipCameraClickable(), "Verify if flip camera is enabled");
+        assertTrue(SharePage.isFlipCameraClickable(),"Verify if flip camera is enabled");
     }
 
     @Test
@@ -139,16 +140,16 @@ public class ShareVcTest extends AndroidBaseTest {
 
         assertTrue(addNewCardPage.isAddNewCardPageLoaded(), "Verify if add new card page is displayed");
 
-        EsignetLoginPage esignetLoginPage = addNewCardPage.clickOnDownloadViaEsignet();
+        EsignetLoginPage esignetLoginPage =  addNewCardPage.clickOnDownloadViaEsignet();
 
         esignetLoginPage.clickOnEsignetLoginWithOtpButton();
 
         assertTrue(esignetLoginPage.isEnterYourVidTextDisplayed(), "Verify if enter your vid text is displayed");
-        String uin = TestDataReader.readData("uin");
-        OtpVerificationPage otpVerification = esignetLoginPage.setEnterIdTextBox(uin);
+        String uin=TestDataReader.readData("uin");
+        OtpVerificationPage otpVerification= esignetLoginPage.setEnterIdTextBox(uin);
 
         esignetLoginPage.clickOnGetOtpButton();
-        assertTrue(esignetLoginPage.isOtpHasSendMessageDisplayed(), "verify if otp page is displayed");
+        assertTrue(esignetLoginPage.isOtpHasSendMessageDisplayed(),"verify if otp page is displayed");
 
         otpVerification.enterOtpForEsignet(BaseTestCase.getOtp(), Target.ANDROID);
         esignetLoginPage.clickOnVerifyButton();

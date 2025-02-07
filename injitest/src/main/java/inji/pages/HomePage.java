@@ -3,6 +3,7 @@ package inji.pages;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.pagefactory.AndroidFindBy;
 import io.appium.java_client.pagefactory.iOSXCUITFindBy;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
 public class HomePage extends BasePage {
@@ -174,11 +175,11 @@ public class HomePage extends BasePage {
 
     @AndroidFindBy(accessibility = "2previous")
     @iOSXCUITFindBy(accessibility = "2previous")
-    private WebElement secondPreviousButton;
+    private WebElement  secondPreviousButton;
 
     @AndroidFindBy(accessibility = "3previous")
     @iOSXCUITFindBy(accessibility = "3previous")
-    private WebElement thirdPreviousButton;
+    private WebElement  thirdPreviousButton;
 
     @AndroidFindBy(accessibility = "4previous")
     @iOSXCUITFindBy(accessibility = "4previous")
@@ -246,7 +247,6 @@ public class HomePage extends BasePage {
     }
 
     BasePage basePage = new BasePage(driver);
-
     public boolean isHomePageLoaded() {
         return this.isElementDisplayed(homeButton);
     }
@@ -286,23 +286,23 @@ public class HomePage extends BasePage {
         return this.isElementDisplayed(pinIcon);
     }
 
-    public String verifyLanguageForNoVCDownloadedPageLoaded() {
+    public String  verifyLanguageForNoVCDownloadedPageLoaded(){
         return getTextFromLocator(bringYourDigitalIdentity);
     }
 
-    public boolean verifyLanguageForNoInternetConnectionDisplayed(String language) {
+    public boolean  verifyLanguageForNoInternetConnectionDisplayed(String language){
         String actualText = getTextFromLocator(noInternetConnection);
 
         switch (language) {
             case "English":
-                boolean isEnglishMatch = (actualText.equalsIgnoreCase("No internet connection") == true) ? true : false;
-                return isEnglishMatch;
+                boolean isEnglishMatch  = (actualText.equalsIgnoreCase("No internet connection")==true) ? true : false;
+                return isEnglishMatch ;
             case "Tamil":
-                boolean isTamilMatch = (actualText.equalsIgnoreCase("இணைய இணைப்பு இல்லை") == true) ? true : false;
-                return isTamilMatch;
+                boolean isTamilMatch  = (actualText.equalsIgnoreCase("இணைய இணைப்பு இல்லை")==true) ? true : false;
+                return isTamilMatch ;
             case "Filipino":
-                boolean isFilipinoMatch = (actualText.equalsIgnoreCase("Pakisuri ang iyong koneksyon at subukang muli") == true) ? true : false;
-                return isFilipinoMatch;
+                boolean isFilipinoMatch  = (actualText.equalsIgnoreCase("Pakisuri ang iyong koneksyon at subukang muli")==true) ? true : false;
+                return isFilipinoMatch ;
 
         }
         return false;
@@ -321,19 +321,19 @@ public class HomePage extends BasePage {
         return this.isElementDisplayed(idTypeValue);
     }
 
-    public boolean verifyLanguageForTryAgainButtonDisplayed(String language) {
+    public boolean  verifyLanguageForTryAgainButtonDisplayed(String language){
         String actualText = getTextFromLocator(tryAgainButton);
 
         switch (language) {
             case "English":
-                boolean isEnglishMatch = (actualText.equalsIgnoreCase("Try again") == true) ? true : false;
-                return isEnglishMatch;
+                boolean isEnglishMatch  = (actualText.equalsIgnoreCase("Try again")==true) ? true : false;
+                return isEnglishMatch ;
             case "Tamil":
-                boolean isTamilMatch = (actualText.equalsIgnoreCase("மீண்டும் முயற்சி செய்") == true) ? true : false;
-                return isTamilMatch;
+                boolean isTamilMatch  = (actualText.equalsIgnoreCase("மீண்டும் முயற்சி செய்")==true) ? true : false;
+                return isTamilMatch ;
             case "Filipino":
-                boolean isFilipinoMatch = (actualText.equalsIgnoreCase("Subukan muli") == true) ? true : false;
-                return isFilipinoMatch;
+                boolean isFilipinoMatch  = (actualText.equalsIgnoreCase("Subukan muli")==true) ? true : false;
+                return isFilipinoMatch ;
 
         }
         return false;
@@ -366,11 +366,9 @@ public class HomePage extends BasePage {
     public String getfullNameTitleText() {
         return this.getTextFromLocator(fullNameTitle);
     }
-
-    public String getFullNameValue() {
+    public String  getFullNameValue(){
         return getTextFromLocator(fullNameValue);
     }
-
     public String GetIdTypeText() {
         return this.getTextFromLocator(idTypeValue);
     }
@@ -435,324 +433,324 @@ public class HomePage extends BasePage {
         clickOnElement(moreOptionsButtonForFirstVc);
     }
 
-    public void clickOnReturnButton() {
+    public void clickOnReturnButton(){
         clickOnElement(ReturnButton);
     }
 
-    public String getTextFromVerificationStatus() {
+    public  String   getTextFromVerificationStatus(){
         return getTextFromLocator(verificationStatus);
     }
 
-    public boolean verifyLanguageForHelpAndFrequentlyAskedQuationsHeaderDisplayed(String language) {
+    public boolean  verifyLanguageForHelpAndFrequentlyAskedQuationsHeaderDisplayed(String language){
         String actualText = getTextFromLocator(HelpFAQsHeader);
 
         switch (language) {
             case "English":
-                boolean isEnglishMatch = (actualText.equalsIgnoreCase("Help/FAQs") == true) ? true : false;
-                return isEnglishMatch;
+                boolean isEnglishMatch  = (actualText.equalsIgnoreCase("Help/FAQs")==true) ? true : false;
+                return isEnglishMatch ;
             case "Tamil":
-                boolean isTamilMatch = (actualText.equalsIgnoreCase("உதவி/FAQகள்") == true) ? true : false;
-                return isTamilMatch;
+                boolean isTamilMatch  = (actualText.equalsIgnoreCase("உதவி/FAQகள்")==true) ? true : false;
+                return isTamilMatch ;
             case "Kannada":
-                boolean isKannadaMatch = (actualText.equalsIgnoreCase("ಸಹಾಯ/FAQಗಳು") == true) ? true : false;
-                return isKannadaMatch;
+                boolean isKannadaMatch  = (actualText.equalsIgnoreCase("ಸಹಾಯ/FAQಗಳು")==true) ? true : false;
+                return isKannadaMatch ;
             case "Hindi":
-                boolean isHindiMatch = (actualText.equalsIgnoreCase("सहायता/अक्सर पूछे जाने वाले प्रश्न") == true) ? true : false;
-                return isHindiMatch;
+                boolean isHindiMatch  = (actualText.equalsIgnoreCase("सहायता/अक्सर पूछे जाने वाले प्रश्न")==true) ? true : false;
+                return isHindiMatch ;
             case "Arabic":
-                boolean isArabicMatch = (actualText.equalsIgnoreCase("المساعدة/الأسئلة الشائعة") == true) ? true : false;
-                return isArabicMatch;
+                boolean isArabicMatch  = (actualText.equalsIgnoreCase("المساعدة/الأسئلة الشائعة")==true) ? true : false;
+                return isArabicMatch ;
             case "Filipino":
-                boolean isFilipinoMatch = (actualText.equalsIgnoreCase("Tulong/Mga FAQ") == true) ? true : false;
-                return isFilipinoMatch;
+                boolean isFilipinoMatch  = (actualText.equalsIgnoreCase("Tulong/Mga FAQ")==true) ? true : false;
+                return isFilipinoMatch ;
 
         }
         return false;
     }
 
-    public boolean verifyLanguageForHelpAndFrequentlyAskedQuationsDescriptionDisplayed(String language) {
+    public boolean  verifyLanguageForHelpAndFrequentlyAskedQuationsDescriptionDisplayed(String language){
         String actualText = getTextFromLocator(HelpFAQsDescription);
 
         switch (language) {
             case "English":
-                boolean isEnglishMatch = (actualText.equalsIgnoreCase("Find answers to common questions and access helpful resources in our FAQ section, ensuring you have the support whenever you need it.") == true) ? true : false;
-                return isEnglishMatch;
+                boolean isEnglishMatch  = (actualText.equalsIgnoreCase("Find answers to common questions and access helpful resources in our FAQ section, ensuring you have the support whenever you need it.")==true) ? true : false;
+                return isEnglishMatch ;
             case "Tamil":
-                boolean isTamilMatch = (actualText.equalsIgnoreCase("பொதுவான கேள்விகளுக்கான பதில்களைக் கண்டறிந்து, எங்களின் அடிக்கடி கேட்கப்படும் கேள்விகள் பிரிவில் உதவிகரமான ஆதாரங்களை அணுகவும், உங்களுக்குத் தேவைப்படும்போது உங்களுக்கு ஆதரவு இருப்பதை உறுதிசெய்யவும்.") == true) ? true : false;
-                return isTamilMatch;
+                boolean isTamilMatch  = (actualText.equalsIgnoreCase("பொதுவான கேள்விகளுக்கான பதில்களைக் கண்டறிந்து, எங்களின் அடிக்கடி கேட்கப்படும் கேள்விகள் பிரிவில் உதவிகரமான ஆதாரங்களை அணுகவும், உங்களுக்குத் தேவைப்படும்போது உங்களுக்கு ஆதரவு இருப்பதை உறுதிசெய்யவும்.")==true) ? true : false;
+                return isTamilMatch ;
             case "Kannada":
-                boolean isKannadaMatch = (actualText.equalsIgnoreCase("ಸಾಮಾನ್ಯ ಪ್ರಶ್ನೆಗಳಿಗೆ ಉತ್ತರಗಳನ್ನು ಹುಡುಕಿ ಮತ್ತು ನಮ್ಮ FAQ ವಿಭಾಗದಲ್ಲಿ ಸಹಾಯಕವಾದ ಸಂಪನ್ಮೂಲಗಳನ್ನು ಪ್ರವೇಶಿಸಿ, ನಿಮಗೆ ಅಗತ್ಯವಿರುವಾಗ ನಿಮಗೆ ಬೆಂಬಲವಿದೆ ಎಂದು ಖಚಿತಪಡಿಸಿಕೊಳ್ಳಿ.") == true) ? true : false;
-                return isKannadaMatch;
+                boolean isKannadaMatch  = (actualText.equalsIgnoreCase("ಸಾಮಾನ್ಯ ಪ್ರಶ್ನೆಗಳಿಗೆ ಉತ್ತರಗಳನ್ನು ಹುಡುಕಿ ಮತ್ತು ನಮ್ಮ FAQ ವಿಭಾಗದಲ್ಲಿ ಸಹಾಯಕವಾದ ಸಂಪನ್ಮೂಲಗಳನ್ನು ಪ್ರವೇಶಿಸಿ, ನಿಮಗೆ ಅಗತ್ಯವಿರುವಾಗ ನಿಮಗೆ ಬೆಂಬಲವಿದೆ ಎಂದು ಖಚಿತಪಡಿಸಿಕೊಳ್ಳಿ.")==true) ? true : false;
+                return isKannadaMatch ;
             case "Hindi":
-                boolean isHindiMatch = (actualText.equalsIgnoreCase("सामान्य प्रश्नों के उत्तर ढूंढें और हमारे FAQ अनुभाग में सहायक संसाधनों तक पहुंचें, यह सुनिश्चित करते हुए कि जब भी आपको आवश्यकता हो, आपको सहायता मिले।") == true) ? true : false;
-                return isHindiMatch;
+                boolean isHindiMatch  = (actualText.equalsIgnoreCase("सामान्य प्रश्नों के उत्तर ढूंढें और हमारे FAQ अनुभाग में सहायक संसाधनों तक पहुंचें, यह सुनिश्चित करते हुए कि जब भी आपको आवश्यकता हो, आपको सहायता मिले।")==true) ? true : false;
+                return isHindiMatch ;
             case "Arabic":
-                boolean isArabicMatch = (actualText.equalsIgnoreCase("يمكنك العثور على إجابات للأسئلة الشائعة والوصول إلى الموارد المفيدة في قسم الأسئلة الشائعة، مما يضمن حصولك على الدعم متى احتجت إليه.") == true) ? true : false;
-                return isArabicMatch;
+                boolean isArabicMatch  = (actualText.equalsIgnoreCase("يمكنك العثور على إجابات للأسئلة الشائعة والوصول إلى الموارد المفيدة في قسم الأسئلة الشائعة، مما يضمن حصولك على الدعم متى احتجت إليه.")==true) ? true : false;
+                return isArabicMatch ;
             case "Filipino":
-                boolean isFilipinoMatch = (actualText.equalsIgnoreCase("Maghanap ng mga sagot sa mga karaniwang tanong at i-access ang mga kapaki-pakinabang na mapagkukunan sa aming seksyong FAQ, na tinitiyak na mayroon kang suporta sa tuwing kailangan mo ito.") == true) ? true : false;
-                return isFilipinoMatch;
+                boolean isFilipinoMatch  = (actualText.equalsIgnoreCase("Maghanap ng mga sagot sa mga karaniwang tanong at i-access ang mga kapaki-pakinabang na mapagkukunan sa aming seksyong FAQ, na tinitiyak na mayroon kang suporta sa tuwing kailangan mo ito.")==true) ? true : false;
+                return isFilipinoMatch ;
 
         }
         return false;
     }
 
-    public boolean verifyLanguageForDownloadCardHeaderDisplayed(String language) {
+    public boolean  verifyLanguageForDownloadCardHeaderDisplayed(String language){
         String actualText = getTextFromLocator(downloadCardHeader);
 
         switch (language) {
             case "English":
-                boolean isEnglishMatch = (actualText.equalsIgnoreCase("Download Card") == true) ? true : false;
-                return isEnglishMatch;
+                boolean isEnglishMatch  = (actualText.equalsIgnoreCase("Download Card")==true) ? true : false;
+                return isEnglishMatch ;
             case "Tamil":
-                boolean isTamilMatch = (actualText.equalsIgnoreCase("கார்டைப் பதிவிறக்கவும்") == true) ? true : false;
-                return isTamilMatch;
+                boolean isTamilMatch  = (actualText.equalsIgnoreCase("கார்டைப் பதிவிறக்கவும்")==true) ? true : false;
+                return isTamilMatch ;
             case "Kannada":
-                boolean isKannadaMatch = (actualText.equalsIgnoreCase("ಕಾರ್ಡ್ ಡೌನ್\u200Cಲೋಡ್ ಮಾಡಿ") == true) ? true : false;
-                return isKannadaMatch;
+                boolean isKannadaMatch  = (actualText.equalsIgnoreCase("ಕಾರ್ಡ್ ಡೌನ್\u200Cಲೋಡ್ ಮಾಡಿ")==true) ? true : false;
+                return isKannadaMatch ;
             case "Hindi":
-                boolean isHindiMatch = (actualText.equalsIgnoreCase("कार्ड डाउनलोड करें") == true) ? true : false;
-                return isHindiMatch;
+                boolean isHindiMatch  = (actualText.equalsIgnoreCase("कार्ड डाउनलोड करें")==true) ? true : false;
+                return isHindiMatch ;
             case "Arabic":
-                boolean isArabicMatch = (actualText.equalsIgnoreCase("تحميل البطاقة") == true) ? true : false;
-                return isArabicMatch;
+                boolean isArabicMatch  = (actualText.equalsIgnoreCase("تحميل البطاقة")==true) ? true : false;
+                return isArabicMatch ;
             case "Filipino":
-                boolean isFilipinoMatch = (actualText.equalsIgnoreCase("I-download ang Card") == true) ? true : false;
-                return isFilipinoMatch;
+                boolean isFilipinoMatch  = (actualText.equalsIgnoreCase("I-download ang Card")==true) ? true : false;
+                return isFilipinoMatch ;
         }
         return false;
     }
 
-    public boolean verifyLanguageForDownloadCardDescriptionDisplayed(String language) {
+    public boolean  verifyLanguageForDownloadCardDescriptionDisplayed(String language){
         String actualText = getTextFromLocator(downloadCardDescription);
 
         switch (language) {
             case "English":
-                boolean isEnglishMatch = (actualText.equalsIgnoreCase("Easily download and securely store your card in the app for convenient access whenever you need them.") == true) ? true : false;
-                return isEnglishMatch;
+                boolean isEnglishMatch  = (actualText.equalsIgnoreCase("Easily download and securely store your card in the app for convenient access whenever you need them.")==true) ? true : false;
+                return isEnglishMatch ;
             case "Tamil":
-                boolean isTamilMatch = (actualText.equalsIgnoreCase("உங்களுக்குத் தேவைப்படும் போதெல்லாம் வசதியான அணுகலுக்காக உங்கள் கார்டை எளிதாகப் பதிவிறக்கி, பாதுகாப்பாகச் சேமிக்கவும்.") == true) ? true : false;
-                return isTamilMatch;
+                boolean isTamilMatch  = (actualText.equalsIgnoreCase("உங்களுக்குத் தேவைப்படும் போதெல்லாம் வசதியான அணுகலுக்காக உங்கள் கார்டை எளிதாகப் பதிவிறக்கி, பாதுகாப்பாகச் சேமிக்கவும்.")==true) ? true : false;
+                return isTamilMatch ;
             case "Kannada":
-                boolean isKannadaMatch = (actualText.equalsIgnoreCase("ನಿಮಗೆ ಅಗತ್ಯವಿರುವಾಗ ಅನುಕೂಲಕರ ಪ್ರವೇಶಕ್ಕಾಗಿ ಅಪ್ಲಿಕೇಶನ್\u200Cನಲ್ಲಿ ನಿಮ್ಮ ಕಾರ್ಡ್ ಅನ್ನು ಸುಲಭವಾಗಿ ಡೌನ್\u200Cಲೋಡ್ ಮಾಡಿ ಮತ್ತು ಸುರಕ್ಷಿತವಾಗಿ ಸಂಗ್ರಹಿಸಿ.") == true) ? true : false;
-                return isKannadaMatch;
+                boolean isKannadaMatch  = (actualText.equalsIgnoreCase("ನಿಮಗೆ ಅಗತ್ಯವಿರುವಾಗ ಅನುಕೂಲಕರ ಪ್ರವೇಶಕ್ಕಾಗಿ ಅಪ್ಲಿಕೇಶನ್\u200Cನಲ್ಲಿ ನಿಮ್ಮ ಕಾರ್ಡ್ ಅನ್ನು ಸುಲಭವಾಗಿ ಡೌನ್\u200Cಲೋಡ್ ಮಾಡಿ ಮತ್ತು ಸುರಕ್ಷಿತವಾಗಿ ಸಂಗ್ರಹಿಸಿ.")==true) ? true : false;
+                return isKannadaMatch ;
             case "Hindi":
-                boolean isHindiMatch = (actualText.equalsIgnoreCase("जब भी आपको आवश्यकता हो, सुविधाजनक पहुंच के लिए अपने कार्ड को आसानी से डाउनलोड करें और ऐप में सुरक्षित रूप से संग्रहीत करें।") == true) ? true : false;
-                return isHindiMatch;
+                boolean isHindiMatch  = (actualText.equalsIgnoreCase("जब भी आपको आवश्यकता हो, सुविधाजनक पहुंच के लिए अपने कार्ड को आसानी से डाउनलोड करें और ऐप में सुरक्षित रूप से संग्रहीत करें।")==true) ? true : false;
+                return isHindiMatch ;
             case "Arabic":
-                boolean isArabicMatch = (actualText.equalsIgnoreCase("يمكنك بسهولة تنزيل بطاقتك وتخزينها بشكل آمن في التطبيق للوصول إليها بسهولة عندما تحتاج إليها.") == true) ? true : false;
-                return isArabicMatch;
+                boolean isArabicMatch  = (actualText.equalsIgnoreCase("يمكنك بسهولة تنزيل بطاقتك وتخزينها بشكل آمن في التطبيق للوصول إليها بسهولة عندما تحتاج إليها.")==true) ? true : false;
+                return isArabicMatch ;
             case "Filipino":
-                boolean isFilipinoMatch = (actualText.equalsIgnoreCase("Madaling i-download at secure na iimbak ang iyong card sa app para sa maginhawang pag-access sa tuwing kailangan mo ang mga ito.") == true) ? true : false;
-                return isFilipinoMatch;
+                boolean isFilipinoMatch  = (actualText.equalsIgnoreCase("Madaling i-download at secure na iimbak ang iyong card sa app para sa maginhawang pag-access sa tuwing kailangan mo ang mga ito.")==true) ? true : false;
+                return isFilipinoMatch ;
         }
         return false;
     }
 
-    public boolean verifyLanguageForShareCardHeaderDisplayed(String language) {
+    public boolean  verifyLanguageForShareCardHeaderDisplayed(String language){
         String actualText = getTextFromLocator(shareCardHeader);
 
         switch (language) {
             case "English":
-                boolean isEnglishMatch = (actualText.equalsIgnoreCase("Share Card") == true) ? true : false;
-                return isEnglishMatch;
+                boolean isEnglishMatch  = (actualText.equalsIgnoreCase("Share Card")==true) ? true : false;
+                return isEnglishMatch ;
             case "Tamil":
-                boolean isTamilMatch = (actualText.equalsIgnoreCase("பகிர்வு அட்டை") == true) ? true : false;
-                return isTamilMatch;
+                boolean isTamilMatch  = (actualText.equalsIgnoreCase("பகிர்வு அட்டை")==true) ? true : false;
+                return isTamilMatch ;
             case "Kannada":
-                boolean isKannadaMatch = (actualText.equalsIgnoreCase("ಹಂಚಿಕೆ ಕಾರ್ಡ್") == true) ? true : false;
-                return isKannadaMatch;
+                boolean isKannadaMatch  = (actualText.equalsIgnoreCase("ಹಂಚಿಕೆ ಕಾರ್ಡ್")==true) ? true : false;
+                return isKannadaMatch ;
             case "Hindi":
-                boolean isHindiMatch = (actualText.equalsIgnoreCase("कार्ड साझा करें") == true) ? true : false;
-                return isHindiMatch;
+                boolean isHindiMatch  = (actualText.equalsIgnoreCase("कार्ड साझा करें")==true) ? true : false;
+                return isHindiMatch ;
             case "Arabic":
-                boolean isArabicMatch = (actualText.equalsIgnoreCase("مشاركة البطاقة") == true) ? true : false;
-                return isArabicMatch;
+                boolean isArabicMatch  = (actualText.equalsIgnoreCase("مشاركة البطاقة")==true) ? true : false;
+                return isArabicMatch ;
             case "Filipino":
-                boolean isFilipinoMatch = (actualText.equalsIgnoreCase("Share Card") == true) ? true : false;
-                return isFilipinoMatch;
+                boolean isFilipinoMatch  = (actualText.equalsIgnoreCase("Share Card")==true) ? true : false;
+                return isFilipinoMatch ;
         }
         return false;
     }
 
-    public boolean verifyLanguageForShareCardDescriptionDisplayed(String language) {
+    public boolean  verifyLanguageForShareCardDescriptionDisplayed(String language){
         String actualText = getTextFromLocator(shareCardDescription);
 
         switch (language) {
             case "English":
-                boolean isEnglishMatch = (actualText.equalsIgnoreCase("Share your card with ease in offline mode using bluetooth, empowering you to provide verified information whenever required.") == true) ? true : false;
-                return isEnglishMatch;
+                boolean isEnglishMatch  = (actualText.equalsIgnoreCase("Share your card with ease in offline mode using bluetooth, empowering you to provide verified information whenever required.")==true) ? true : false;
+                return isEnglishMatch ;
             case "Tamil":
-                boolean isTamilMatch = (actualText.equalsIgnoreCase("புளூடூத்தைப் பயன்படுத்தி ஆஃப்லைன் பயன்முறையில் உங்கள் கார்டை எளிதாகப் பகிரவும், தேவைப்படும் போதெல்லாம் சரிபார்க்கப்பட்ட தகவலை வழங்க உங்களுக்கு அதிகாரம் அளிக்கிறது.") == true) ? true : false;
-                return isTamilMatch;
+                boolean isTamilMatch  = (actualText.equalsIgnoreCase("புளூடூத்தைப் பயன்படுத்தி ஆஃப்லைன் பயன்முறையில் உங்கள் கார்டை எளிதாகப் பகிரவும், தேவைப்படும் போதெல்லாம் சரிபார்க்கப்பட்ட தகவலை வழங்க உங்களுக்கு அதிகாரம் அளிக்கிறது.")==true) ? true : false;
+                return isTamilMatch ;
             case "Kannada":
-                boolean isKannadaMatch = (actualText.equalsIgnoreCase("ಬ್ಲೂಟೂತ್ ಬಳಸಿಕೊಂಡು ಆಫ್\u200Cಲೈನ್ ಮೋಡ್\u200Cನಲ್ಲಿ ನಿಮ್ಮ ಕಾರ್ಡ್ ಅನ್ನು ಸುಲಭವಾಗಿ ಹಂಚಿಕೊಳ್ಳಿ, ಅಗತ್ಯವಿರುವಾಗ ಪರಿಶೀಲಿಸಿದ ಮಾಹಿತಿಯನ್ನು ಒದಗಿಸಲು ನಿಮಗೆ ಅಧಿಕಾರ ನೀಡುತ್ತದೆ.") == true) ? true : false;
-                return isKannadaMatch;
+                boolean isKannadaMatch  = (actualText.equalsIgnoreCase("ಬ್ಲೂಟೂತ್ ಬಳಸಿಕೊಂಡು ಆಫ್\u200Cಲೈನ್ ಮೋಡ್\u200Cನಲ್ಲಿ ನಿಮ್ಮ ಕಾರ್ಡ್ ಅನ್ನು ಸುಲಭವಾಗಿ ಹಂಚಿಕೊಳ್ಳಿ, ಅಗತ್ಯವಿರುವಾಗ ಪರಿಶೀಲಿಸಿದ ಮಾಹಿತಿಯನ್ನು ಒದಗಿಸಲು ನಿಮಗೆ ಅಧಿಕಾರ ನೀಡುತ್ತದೆ.")==true) ? true : false;
+                return isKannadaMatch ;
             case "Hindi":
-                boolean isHindiMatch = (actualText.equalsIgnoreCase("ब्लूटूथ का उपयोग करके अपने कार्ड को ऑफ़लाइन मोड में आसानी से साझा करें, जिससे आप आवश्यकता पड़ने पर सत्यापित जानकारी प्रदान करने में सक्षम होंगे।") == true) ? true : false;
-                return isHindiMatch;
+                boolean isHindiMatch  = (actualText.equalsIgnoreCase("ब्लूटूथ का उपयोग करके अपने कार्ड को ऑफ़लाइन मोड में आसानी से साझा करें, जिससे आप आवश्यकता पड़ने पर सत्यापित जानकारी प्रदान करने में सक्षम होंगे।")==true) ? true : false;
+                return isHindiMatch ;
             case "Arabic":
-                boolean isArabicMatch = (actualText.equalsIgnoreCase("شارك بطاقتك بسهولة في وضع عدم الاتصال باستخدام البلوتوث، مما يمكّنك من تقديم معلومات تم التحقق منها كلما لزم الأمر.") == true) ? true : false;
-                return isArabicMatch;
+                boolean isArabicMatch  = (actualText.equalsIgnoreCase("شارك بطاقتك بسهولة في وضع عدم الاتصال باستخدام البلوتوث، مما يمكّنك من تقديم معلومات تم التحقق منها كلما لزم الأمر.")==true) ? true : false;
+                return isArabicMatch ;
             case "Filipino":
-                boolean isFilipinoMatch = (actualText.equalsIgnoreCase("Ibahagi ang iyong card nang madali sa offline mode gamit ang bluetooth, na nagbibigay ng kapangyarihan sa iyong magbigay ng na-verify na impormasyon kapag kinakailangan.") == true) ? true : false;
-                return isFilipinoMatch;
+                boolean isFilipinoMatch  = (actualText.equalsIgnoreCase("Ibahagi ang iyong card nang madali sa offline mode gamit ang bluetooth, na nagbibigay ng kapangyarihan sa iyong magbigay ng na-verify na impormasyon kapag kinakailangan.")==true) ? true : false;
+                return isFilipinoMatch ;
         }
         return false;
     }
 
-    public boolean verifyLanguageForAccesstoHistoryHeaderDisplayed(String language) {
+    public boolean  verifyLanguageForAccesstoHistoryHeaderDisplayed(String language){
         String actualText = getTextFromLocator(accesstoHistoryHeader);
 
         switch (language) {
             case "English":
-                boolean isEnglishMatch = (actualText.equalsIgnoreCase("Access to History") == true) ? true : false;
-                return isEnglishMatch;
+                boolean isEnglishMatch  = (actualText.equalsIgnoreCase("Access to History")==true) ? true : false;
+                return isEnglishMatch ;
             case "Tamil":
-                boolean isTamilMatch = (actualText.equalsIgnoreCase("வரலாற்றிற்கான அணுகல்") == true) ? true : false;
-                return isTamilMatch;
+                boolean isTamilMatch  = (actualText.equalsIgnoreCase("வரலாற்றிற்கான அணுகல்")==true) ? true : false;
+                return isTamilMatch ;
             case "Kannada":
-                boolean isKannadaMatch = (actualText.equalsIgnoreCase("ಇತಿಹಾಸಕ್ಕೆ ಪ್ರವೇಶ") == true) ? true : false;
-                return isKannadaMatch;
+                boolean isKannadaMatch  = (actualText.equalsIgnoreCase("ಇತಿಹಾಸಕ್ಕೆ ಪ್ರವೇಶ")==true) ? true : false;
+                return isKannadaMatch ;
             case "Hindi":
-                boolean isHindiMatch = (actualText.equalsIgnoreCase("इतिहास तक पहुंच") == true) ? true : false;
-                return isHindiMatch;
+                boolean isHindiMatch  = (actualText.equalsIgnoreCase("इतिहास तक पहुंच")==true) ? true : false;
+                return isHindiMatch ;
             case "Arabic":
-                boolean isArabicMatch = (actualText.equalsIgnoreCase("الوصول إلى التاريخ") == true) ? true : false;
-                return isArabicMatch;
+                boolean isArabicMatch  = (actualText.equalsIgnoreCase("الوصول إلى التاريخ")==true) ? true : false;
+                return isArabicMatch ;
             case "Filipino":
-                boolean isFilipinoMatch = (actualText.equalsIgnoreCase("Access sa Kasaysayan") == true) ? true : false;
-                return isFilipinoMatch;
+                boolean isFilipinoMatch  = (actualText.equalsIgnoreCase("Access sa Kasaysayan")==true) ? true : false;
+                return isFilipinoMatch ;
         }
         return false;
     }
 
-    public boolean verifyLanguageForaccesstoHistoryDescriptionDisplayed(String language) {
+    public boolean  verifyLanguageForaccesstoHistoryDescriptionDisplayed(String language){
         String actualText = getTextFromLocator(accesstoHistoryDescription);
 
         switch (language) {
             case "English":
-                boolean isEnglishMatch = (actualText.equalsIgnoreCase("View your activity history to track your interactions and stay informed about your past actions within the app.") == true) ? true : false;
-                return isEnglishMatch;
+                boolean isEnglishMatch  = (actualText.equalsIgnoreCase("View your activity history to track your interactions and stay informed about your past actions within the app.")==true) ? true : false;
+                return isEnglishMatch ;
             case "Tamil":
-                boolean isTamilMatch = (actualText.equalsIgnoreCase("உங்களின் செயல்பாடுகளைக் கண்காணிக்க உங்கள் செயல்பாட்டு வரலாற்றைப் பார்க்கவும், மேலும் பயன்பாட்டில் உங்கள் கடந்தகாலச் செயல்களைப் பற்றித் தெரிந்துகொள்ளவும்.") == true) ? true : false;
-                return isTamilMatch;
+                boolean isTamilMatch  = (actualText.equalsIgnoreCase("உங்களின் செயல்பாடுகளைக் கண்காணிக்க உங்கள் செயல்பாட்டு வரலாற்றைப் பார்க்கவும், மேலும் பயன்பாட்டில் உங்கள் கடந்தகாலச் செயல்களைப் பற்றித் தெரிந்துகொள்ளவும்.")==true) ? true : false;
+                return isTamilMatch ;
             case "Kannada":
-                boolean isKannadaMatch = (actualText.equalsIgnoreCase("ನಿಮ್ಮ ಸಂವಹನಗಳನ್ನು ಟ್ರ್ಯಾಕ್ ಮಾಡಲು ನಿಮ್ಮ ಚಟುವಟಿಕೆಯ ಇತಿಹಾಸವನ್ನು ವೀಕ್ಷಿಸಿ ಮತ್ತು ಅಪ್ಲಿಕೇಶನ್\u200Cನಲ್ಲಿ ನಿಮ್ಮ ಹಿಂದಿನ ಕ್ರಿಯೆಗಳ ಬಗ್ಗೆ ಮಾಹಿತಿ ನೀಡಿ.") == true) ? true : false;
-                return isKannadaMatch;
+                boolean isKannadaMatch  = (actualText.equalsIgnoreCase("ನಿಮ್ಮ ಸಂವಹನಗಳನ್ನು ಟ್ರ್ಯಾಕ್ ಮಾಡಲು ನಿಮ್ಮ ಚಟುವಟಿಕೆಯ ಇತಿಹಾಸವನ್ನು ವೀಕ್ಷಿಸಿ ಮತ್ತು ಅಪ್ಲಿಕೇಶನ್\u200Cನಲ್ಲಿ ನಿಮ್ಮ ಹಿಂದಿನ ಕ್ರಿಯೆಗಳ ಬಗ್ಗೆ ಮಾಹಿತಿ ನೀಡಿ.")==true) ? true : false;
+                return isKannadaMatch ;
             case "Hindi":
-                boolean isHindiMatch = (actualText.equalsIgnoreCase("अपने इंटरैक्शन को ट्रैक करने और ऐप के भीतर अपने पिछले कार्यों के बारे में सूचित रहने के लिए अपना गतिविधि इतिहास देखें।") == true) ? true : false;
-                return isHindiMatch;
+                boolean isHindiMatch  = (actualText.equalsIgnoreCase("अपने इंटरैक्शन को ट्रैक करने और ऐप के भीतर अपने पिछले कार्यों के बारे में सूचित रहने के लिए अपना गतिविधि इतिहास देखें।")==true) ? true : false;
+                return isHindiMatch ;
             case "Arabic":
-                boolean isArabicMatch = (actualText.equalsIgnoreCase("اعرض سجل نشاطك لتتبع تفاعلاتك والبقاء على علم بإجراءاتك السابقة داخل التطبيق.") == true) ? true : false;
-                return isArabicMatch;
+                boolean isArabicMatch  = (actualText.equalsIgnoreCase("اعرض سجل نشاطك لتتبع تفاعلاتك والبقاء على علم بإجراءاتك السابقة داخل التطبيق.")==true) ? true : false;
+                return isArabicMatch ;
             case "Filipino":
-                boolean isFilipinoMatch = (actualText.equalsIgnoreCase("Tingnan ang iyong history ng aktibidad upang subaybayan ang iyong mga pakikipag-ugnayan at manatiling may alam tungkol sa iyong mga nakaraang pagkilos sa loob ng app.") == true) ? true : false;
-                return isFilipinoMatch;
+                boolean isFilipinoMatch  = (actualText.equalsIgnoreCase("Tingnan ang iyong history ng aktibidad upang subaybayan ang iyong mga pakikipag-ugnayan at manatiling may alam tungkol sa iyong mga nakaraang pagkilos sa loob ng app.")==true) ? true : false;
+                return isFilipinoMatch ;
         }
         return false;
     }
 
-    public boolean verifyLanguageForAppSettingsHeaderDisplayed(String language) {
+    public boolean  verifyLanguageForAppSettingsHeaderDisplayed(String language){
         String actualText = getTextFromLocator(appSettingsHeader);
 
         switch (language) {
             case "English":
-                boolean isEnglishMatch = (actualText.equalsIgnoreCase("App Settings") == true) ? true : false;
-                return isEnglishMatch;
+                boolean isEnglishMatch  = (actualText.equalsIgnoreCase("App Settings")==true) ? true : false;
+                return isEnglishMatch ;
             case "Tamil":
-                boolean isTamilMatch = (actualText.equalsIgnoreCase("பயன்பாட்டு அமைப்புகள்") == true) ? true : false;
-                return isTamilMatch;
+                boolean isTamilMatch  = (actualText.equalsIgnoreCase("பயன்பாட்டு அமைப்புகள்")==true) ? true : false;
+                return isTamilMatch ;
             case "Kannada":
-                boolean isKannadaMatch = (actualText.equalsIgnoreCase("ಅಪ್ಲಿಕೇಶನ್ ಸೆಟ್ಟಿಂಗ್\u200Cಗಳು") == true) ? true : false;
-                return isKannadaMatch;
+                boolean isKannadaMatch  = (actualText.equalsIgnoreCase("ಅಪ್ಲಿಕೇಶನ್ ಸೆಟ್ಟಿಂಗ್\u200Cಗಳು")==true) ? true : false;
+                return isKannadaMatch ;
             case "Hindi":
-                boolean isHindiMatch = (actualText.equalsIgnoreCase("एप्लिकेशन सेटिंग") == true) ? true : false;
-                return isHindiMatch;
+                boolean isHindiMatch  = (actualText.equalsIgnoreCase("एप्लिकेशन सेटिंग")==true) ? true : false;
+                return isHindiMatch ;
             case "Arabic":
-                boolean isArabicMatch = (actualText.equalsIgnoreCase("إعدادات التطبيقات") == true) ? true : false;
-                return isArabicMatch;
+                boolean isArabicMatch  = (actualText.equalsIgnoreCase("إعدادات التطبيقات")==true) ? true : false;
+                return isArabicMatch ;
             case "Filipino":
-                boolean isFilipinoMatch = (actualText.equalsIgnoreCase("Mga Setting ng App") == true) ? true : false;
-                return isFilipinoMatch;
+                boolean isFilipinoMatch  = (actualText.equalsIgnoreCase("Mga Setting ng App")==true) ? true : false;
+                return isFilipinoMatch ;
         }
         return false;
     }
 
-    public boolean verifyLanguageForAppSettingsDescriptionDisplayed(String language) {
+    public boolean  verifyLanguageForAppSettingsDescriptionDisplayed(String language){
         String actualText = getTextFromLocator(appSettingsDescription);
 
         switch (language) {
             case "English":
-                boolean isEnglishMatch = (actualText.equalsIgnoreCase("Customize your app experience with personalized settings as per your preferences.") == true) ? true : false;
-                return isEnglishMatch;
+                boolean isEnglishMatch  = (actualText.equalsIgnoreCase("Customize your app experience with personalized settings as per your preferences.")==true) ? true : false;
+                return isEnglishMatch ;
             case "Tamil":
-                boolean isTamilMatch = (actualText.equalsIgnoreCase("உங்கள் விருப்பங்களின்படி தனிப்பயனாக்கப்பட்ட அமைப்புகளுடன் உங்கள் பயன்பாட்டு அனுபவத்தைத் தனிப்பயனாக்கவும்.") == true) ? true : false;
-                return isTamilMatch;
+                boolean isTamilMatch  = (actualText.equalsIgnoreCase("உங்கள் விருப்பங்களின்படி தனிப்பயனாக்கப்பட்ட அமைப்புகளுடன் உங்கள் பயன்பாட்டு அனுபவத்தைத் தனிப்பயனாக்கவும்.")==true) ? true : false;
+                return isTamilMatch ;
             case "Kannada":
-                boolean isKannadaMatch = (actualText.equalsIgnoreCase("ನಿಮ್ಮ ಆದ್ಯತೆಗಳ ಪ್ರಕಾರ ವೈಯಕ್ತೀಕರಿಸಿದ ಸೆಟ್ಟಿಂಗ್\u200Cಗಳೊಂದಿಗೆ ನಿಮ್ಮ ಅಪ್ಲಿಕೇಶನ್ ಅನುಭವವನ್ನು ಕಸ್ಟಮೈಸ್ ಮಾಡಿ.") == true) ? true : false;
-                return isKannadaMatch;
+                boolean isKannadaMatch  = (actualText.equalsIgnoreCase("ನಿಮ್ಮ ಆದ್ಯತೆಗಳ ಪ್ರಕಾರ ವೈಯಕ್ತೀಕರಿಸಿದ ಸೆಟ್ಟಿಂಗ್\u200Cಗಳೊಂದಿಗೆ ನಿಮ್ಮ ಅಪ್ಲಿಕೇಶನ್ ಅನುಭವವನ್ನು ಕಸ್ಟಮೈಸ್ ಮಾಡಿ.")==true) ? true : false;
+                return isKannadaMatch ;
             case "Hindi":
-                boolean isHindiMatch = (actualText.equalsIgnoreCase("अपनी प्राथमिकताओं के अनुसार वैयक्तिकृत सेटिंग्स के साथ अपने ऐप अनुभव को अनुकूलित करें।") == true) ? true : false;
-                return isHindiMatch;
+                boolean isHindiMatch  = (actualText.equalsIgnoreCase("अपनी प्राथमिकताओं के अनुसार वैयक्तिकृत सेटिंग्स के साथ अपने ऐप अनुभव को अनुकूलित करें।")==true) ? true : false;
+                return isHindiMatch ;
             case "Arabic":
-                boolean isArabicMatch = (actualText.equalsIgnoreCase("قم بتخصيص تجربة التطبيق الخاص بك من خلال الإعدادات المخصصة وفقًا لتفضيلاتك.") == true) ? true : false;
-                return isArabicMatch;
+                boolean isArabicMatch  = (actualText.equalsIgnoreCase("قم بتخصيص تجربة التطبيق الخاص بك من خلال الإعدادات المخصصة وفقًا لتفضيلاتك.")==true) ? true : false;
+                return isArabicMatch ;
             case "Filipino":
-                boolean isFilipinoMatch = (actualText.equalsIgnoreCase("I-customize ang iyong karanasan sa app gamit ang mga naka-personalize na setting ayon sa iyong mga kagustuhan.") == true) ? true : false;
-                return isFilipinoMatch;
+                boolean isFilipinoMatch  = (actualText.equalsIgnoreCase("I-customize ang iyong karanasan sa app gamit ang mga naka-personalize na setting ayon sa iyong mga kagustuhan.")==true) ? true : false;
+                return isFilipinoMatch ;
         }
         return false;
     }
 
-    public boolean verifyLanguageForCardViewTitleDisplayed(String language) {
+    public boolean  verifyLanguageForCardViewTitleDisplayed(String language){
         String actualText = getTextFromLocator(cardViewTitle);
 
         switch (language) {
             case "English":
-                boolean isEnglishMatch = (actualText.equalsIgnoreCase("Card") == true) ? true : false;
-                return isEnglishMatch;
+                boolean isEnglishMatch  = (actualText.equalsIgnoreCase("Card")==true) ? true : false;
+                return isEnglishMatch ;
             case "Tamil":
-                boolean isTamilMatch = (actualText.equalsIgnoreCase("உங்கள் விருப்பங்களின்படி தனிப்பயனாக்கப்பட்ட அமைப்புகளுடன் உங்கள் பயன்பாட்டு அனுபவத்தைத் தனிப்பயனாக்கவும்.") == true) ? true : false;
-                return isTamilMatch;
+                boolean isTamilMatch  = (actualText.equalsIgnoreCase("உங்கள் விருப்பங்களின்படி தனிப்பயனாக்கப்பட்ட அமைப்புகளுடன் உங்கள் பயன்பாட்டு அனுபவத்தைத் தனிப்பயனாக்கவும்.")==true) ? true : false;
+                return isTamilMatch ;
             case "Kannada":
-                boolean isKannadaMatch = (actualText.equalsIgnoreCase("ನಿಮ್ಮ ಆದ್ಯತೆಗಳ ಪ್ರಕಾರ ವೈಯಕ್ತೀಕರಿಸಿದ ಸೆಟ್ಟಿಂಗ್\u200Cಗಳೊಂದಿಗೆ ನಿಮ್ಮ ಅಪ್ಲಿಕೇಶನ್ ಅನುಭವವನ್ನು ಕಸ್ಟಮೈಸ್ ಮಾಡಿ.") == true) ? true : false;
-                return isKannadaMatch;
+                boolean isKannadaMatch  = (actualText.equalsIgnoreCase("ನಿಮ್ಮ ಆದ್ಯತೆಗಳ ಪ್ರಕಾರ ವೈಯಕ್ತೀಕರಿಸಿದ ಸೆಟ್ಟಿಂಗ್\u200Cಗಳೊಂದಿಗೆ ನಿಮ್ಮ ಅಪ್ಲಿಕೇಶನ್ ಅನುಭವವನ್ನು ಕಸ್ಟಮೈಸ್ ಮಾಡಿ.")==true) ? true : false;
+                return isKannadaMatch ;
             case "Hindi":
-                boolean isHindiMatch = (actualText.equalsIgnoreCase("अपनी प्राथमिकताओं के अनुसार वैयक्तिकृत सेटिंग्स के साथ अपने ऐप अनुभव को अनुकूलित करें।") == true) ? true : false;
-                return isHindiMatch;
+                boolean isHindiMatch  = (actualText.equalsIgnoreCase("अपनी प्राथमिकताओं के अनुसार वैयक्तिकृत सेटिंग्स के साथ अपने ऐप अनुभव को अनुकूलित करें।")==true) ? true : false;
+                return isHindiMatch ;
             case "Arabic":
-                boolean isArabicMatch = (actualText.equalsIgnoreCase("قم بتخصيص تجربة التطبيق الخاص بك من خلال الإعدادات المخصصة وفقًا لتفضيلاتك.") == true) ? true : false;
-                return isArabicMatch;
+                boolean isArabicMatch  = (actualText.equalsIgnoreCase("قم بتخصيص تجربة التطبيق الخاص بك من خلال الإعدادات المخصصة وفقًا لتفضيلاتك.")==true) ? true : false;
+                return isArabicMatch ;
             case "Filipino":
-                boolean isFilipinoMatch = (actualText.equalsIgnoreCase("I-customize ang iyong karanasan sa app gamit ang mga naka-personalize na setting ayon sa iyong mga kagustuhan.") == true) ? true : false;
-                return isFilipinoMatch;
+                boolean isFilipinoMatch  = (actualText.equalsIgnoreCase("I-customize ang iyong karanasan sa app gamit ang mga naka-personalize na setting ayon sa iyong mga kagustuhan.")==true) ? true : false;
+                return isFilipinoMatch ;
         }
         return false;
     }
 
-    public boolean verifyLanguageForCardViewDescriptionDisplayed(String language) {
+    public boolean  verifyLanguageForCardViewDescriptionDisplayed(String language){
         String actualText = getTextFromLocator(cardViewDescription);
 
         switch (language) {
             case "English":
-                boolean isEnglishMatch = (actualText.equalsIgnoreCase("Your card displays your verified identity information. Tap for a detailed view or click on … for additional options.") == true) ? true : false;
-                return isEnglishMatch;
+                boolean isEnglishMatch  = (actualText.equalsIgnoreCase("Your card displays your verified identity information. Tap for a detailed view or click on … for additional options.")==true) ? true : false;
+                return isEnglishMatch ;
             case "Tamil":
-                boolean isTamilMatch = (actualText.equalsIgnoreCase("உங்கள் விருப்பங்களின்படி தனிப்பயனாக்கப்பட்ட அமைப்புகளுடன் உங்கள் பயன்பாட்டு அனுபவத்தைத் தனிப்பயனாக்கவும்.") == true) ? true : false;
-                return isTamilMatch;
+                boolean isTamilMatch  = (actualText.equalsIgnoreCase("உங்கள் விருப்பங்களின்படி தனிப்பயனாக்கப்பட்ட அமைப்புகளுடன் உங்கள் பயன்பாட்டு அனுபவத்தைத் தனிப்பயனாக்கவும்.")==true) ? true : false;
+                return isTamilMatch ;
             case "Kannada":
-                boolean isKannadaMatch = (actualText.equalsIgnoreCase("ನಿಮ್ಮ ಆದ್ಯತೆಗಳ ಪ್ರಕಾರ ವೈಯಕ್ತೀಕರಿಸಿದ ಸೆಟ್ಟಿಂಗ್\u200Cಗಳೊಂದಿಗೆ ನಿಮ್ಮ ಅಪ್ಲಿಕೇಶನ್ ಅನುಭವವನ್ನು ಕಸ್ಟಮೈಸ್ ಮಾಡಿ.") == true) ? true : false;
-                return isKannadaMatch;
+                boolean isKannadaMatch  = (actualText.equalsIgnoreCase("ನಿಮ್ಮ ಆದ್ಯತೆಗಳ ಪ್ರಕಾರ ವೈಯಕ್ತೀಕರಿಸಿದ ಸೆಟ್ಟಿಂಗ್\u200Cಗಳೊಂದಿಗೆ ನಿಮ್ಮ ಅಪ್ಲಿಕೇಶನ್ ಅನುಭವವನ್ನು ಕಸ್ಟಮೈಸ್ ಮಾಡಿ.")==true) ? true : false;
+                return isKannadaMatch ;
             case "Hindi":
-                boolean isHindiMatch = (actualText.equalsIgnoreCase("अपनी प्राथमिकताओं के अनुसार वैयक्तिकृत सेटिंग्स के साथ अपने ऐप अनुभव को अनुकूलित करें।") == true) ? true : false;
-                return isHindiMatch;
+                boolean isHindiMatch  = (actualText.equalsIgnoreCase("अपनी प्राथमिकताओं के अनुसार वैयक्तिकृत सेटिंग्स के साथ अपने ऐप अनुभव को अनुकूलित करें।")==true) ? true : false;
+                return isHindiMatch ;
             case "Arabic":
-                boolean isArabicMatch = (actualText.equalsIgnoreCase("قم بتخصيص تجربة التطبيق الخاص بك من خلال الإعدادات المخصصة وفقًا لتفضيلاتك.") == true) ? true : false;
-                return isArabicMatch;
+                boolean isArabicMatch  = (actualText.equalsIgnoreCase("قم بتخصيص تجربة التطبيق الخاص بك من خلال الإعدادات المخصصة وفقًا لتفضيلاتك.")==true) ? true : false;
+                return isArabicMatch ;
             case "Filipino":
-                boolean isFilipinoMatch = (actualText.equalsIgnoreCase("I-customize ang iyong karanasan sa app gamit ang mga naka-personalize na setting ayon sa iyong mga kagustuhan.") == true) ? true : false;
-                return isFilipinoMatch;
+                boolean isFilipinoMatch  = (actualText.equalsIgnoreCase("I-customize ang iyong karanasan sa app gamit ang mga naka-personalize na setting ayon sa iyong mga kagustuhan.")==true) ? true : false;
+                return isFilipinoMatch ;
         }
         return false;
     }
@@ -761,11 +759,9 @@ public class HomePage extends BasePage {
     public void clickOnFirstNextButton() {
         clickOnElement(firstNextButton);
     }
-
     public void clickOnSecondNextButton() {
         clickOnElement(secondNextButton);
     }
-
     public void clickOnThirdNextButton() {
         clickOnElement(thirdNextButton);
     }
@@ -781,11 +777,9 @@ public class HomePage extends BasePage {
     public void clickOnFifthNextButton() {
         clickOnElement(fifthNextButton);
     }
-
     public void clickOnFifthPreviousButton() {
         clickOnElement(fifthPreviousButton);
     }
-
     public void clickOnForthPreviousButton() {
         clickOnElement(forthPreviousButton);
     }
@@ -799,12 +793,12 @@ public class HomePage extends BasePage {
     }
 
     public void clickOnDoneButton() {
-        if (isElementDisplayed(doneButton))
+        if(isElementDisplayed(doneButton))
             clickOnElement(doneButton);
     }
 
     public void clickOnNextButtonForInjiTour() {
-        if (isElementDisplayed(firstNextButton)) {
+        if(isElementDisplayed(firstNextButton)) {
             clickOnElement(firstNextButton);
             clickOnElement(secondNextButton);
             clickOnElement(thirdNextButton);
@@ -814,7 +808,7 @@ public class HomePage extends BasePage {
     }
 
     public boolean isCredentialTypeValueDisplayed() {
-        if (isElementDisplayed(doneButton)) {
+        if(isElementDisplayed(doneButton)){
             clickOnElement(doneButton);
         }
         return this.isElementDisplayed(credentialTypeValue);

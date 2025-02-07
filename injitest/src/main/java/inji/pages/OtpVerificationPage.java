@@ -2,6 +2,7 @@ package inji.pages;
 
 import inji.constants.Target;
 import io.appium.java_client.AppiumDriver;
+import io.appium.java_client.HidesKeyboard;
 import io.appium.java_client.pagefactory.AndroidFindBy;
 import io.appium.java_client.pagefactory.iOSXCUITFindBy;
 import org.openqa.selenium.WebElement;
@@ -129,7 +130,7 @@ public class OtpVerificationPage extends BasePage {
     }
 
     public boolean verifyResendCodeButtonDisplayedEnabled() {
-        return this.isElementEnabled(resendCodeButton, 30);
+        return this.isElementEnabled(resendCodeButton,30);
     }
 
     public void clickOnResendButton() {
@@ -138,7 +139,7 @@ public class OtpVerificationPage extends BasePage {
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
-        if (isElementEnabled(resendCodeButton, 30)) {
+        if(isElementEnabled(resendCodeButton,30)) {
 //            ((HidesKeyboard) driver).hideKeyboard();
             clickOnElement(resendCode);
         }

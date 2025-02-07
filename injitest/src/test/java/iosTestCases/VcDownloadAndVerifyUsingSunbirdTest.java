@@ -36,13 +36,13 @@ public class VcDownloadAndVerifyUsingSunbirdTest extends IosBaseTest {
 
 
         assertTrue(addNewCardPage.isDownloadViaSunbirdDisplayed(), "Verify if download sunbird displayed");
-        SunbirdLoginPage sunbirdLoginPage = addNewCardPage.clickOnDownloadViaSunbird();
+        SunbirdLoginPage sunbirdLoginPage =  addNewCardPage.clickOnDownloadViaSunbird();
         addNewCardPage.clickOnCredentialTypeHeadingInsuranceCredential();
         addNewCardPage.clickOnContinueButtonInSigninPopupIos();
         sunbirdLoginPage.enterPolicyNumberTextBox(TestDataReader.readData("policyNumberSunbird"));
         sunbirdLoginPage.enterFullNameTextBox(TestDataReader.readData("fullNameSunbird"));
         sunbirdLoginPage.enterDateOfBirthTextBox();
-        IosUtil.scrollToElement(driver, 100, 800, 100, 200);
+        IosUtil.scrollToElement(driver,100,800,100,200);
         sunbirdLoginPage.clickOnloginButton();
 
         assertTrue(sunbirdLoginPage.isSunbirdCardIsActive(), "Verify if download sunbird displayed active");
@@ -59,7 +59,7 @@ public class VcDownloadAndVerifyUsingSunbirdTest extends IosBaseTest {
         assertEquals(sunbirdLoginPage.getStatusValueForSunbirdCard(), TestDataReader.readData("status"));
         assertTrue(sunbirdLoginPage.isPolicyExpiresOnValueDisplayed(), "Verify if policy expireson value displayed");
         assertTrue(sunbirdLoginPage.isbenefitsValueDisplayed(), "Verify if policy expireson value displayed");
-        assertEquals(sunbirdLoginPage.getIdTypeValueForSunbirdCard(), TestDataReader.readData("idTypeSunbird"));
+        assertEquals(sunbirdLoginPage.getIdTypeValueForSunbirdCard(),TestDataReader.readData("idTypeSunbird"));
     }
 
 }
