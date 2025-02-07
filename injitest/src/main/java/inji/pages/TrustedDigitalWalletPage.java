@@ -23,14 +23,14 @@ public class TrustedDigitalWalletPage extends BasePage {
         super(driver);
     }
     BasePage basePage = new BasePage(driver);
-    
+
     public String  verifyLanguageforTrustedDigitalWalletPageLoaded(){
-    	basePage.retryToGetElement(trustedDigitalWalletText);
-     	return getTextFromLocator(trustedDigitalWalletText);
+        basePage.retryToGetElement(trustedDigitalWalletText);
+        return getTextFromLocator(trustedDigitalWalletText);
     }
 
     public String getTrustedDigitalWalletDescription() {
-    	basePage.retryToGetElement(trustedDigitalWalletDescription);
+        basePage.retryToGetElement(trustedDigitalWalletDescription);
         return this.getTextFromLocator(trustedDigitalWalletDescription);
     }
 

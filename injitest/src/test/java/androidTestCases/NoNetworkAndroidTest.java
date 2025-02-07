@@ -317,7 +317,7 @@ public class NoNetworkAndroidTest extends AndroidBaseTest {
     public void verifyRecivedCardOffline() throws InterruptedException {
         String sessionId  = driver.getSessionId().toString();
         UpdateNetworkSettings.setNoNetworkProfile(sessionId);
-    	ChooseLanguagePage chooseLanguagePage = new ChooseLanguagePage(driver);
+        ChooseLanguagePage chooseLanguagePage = new ChooseLanguagePage(driver);
 
         assertTrue(chooseLanguagePage.isChooseLanguagePageLoaded(), "Verify if choose language page is displayed");
         WelcomePage welcomePage = chooseLanguagePage.clickOnSavePreference();
@@ -516,7 +516,7 @@ public class NoNetworkAndroidTest extends AndroidBaseTest {
         moreOptionsPage.clickOnPinOrUnPinCard();
 
         assertTrue(homePage.isPinIconDisplayed(), "Verify if pin icon on vc is displayed");
-         homePage.clickOnMoreOptionsButton();
+        homePage.clickOnMoreOptionsButton();
 
         assertTrue(moreOptionsPage.isMoreOptionsPageLoaded(), "Verify if more options page is displayed");
         moreOptionsPage.clickOnPinOrUnPinCard();
@@ -611,20 +611,20 @@ public class NoNetworkAndroidTest extends AndroidBaseTest {
 
         UpdateNetworkSettings.resetNetworkProfile(sessionId);
 
-         homePage.clickOnTryAgainFillpinoButton();
+        homePage.clickOnTryAgainFillpinoButton();
         assertEquals(addNewCardPage.verifyLanguageForAddNewCardGuideMessage(), "Mangyaring piliin ang iyong gustong tagabigay mula sa mga opsyon sa ibaba upang magdagdag ng bagong card.");
 //
-       EsignetLoginPage esignetLoginPage =  addNewCardPage.clickOnDownloadViaEsignet();
-       esignetLoginPage.clickOnEsignetLoginWithOtpButton();
+        EsignetLoginPage esignetLoginPage =  addNewCardPage.clickOnDownloadViaEsignet();
+        esignetLoginPage.clickOnEsignetLoginWithOtpButton();
 
         String uin = TestDataReader.readData("uin");
-       OtpVerificationPage otpVerification= esignetLoginPage.setEnterIdTextBox(uin);
+        OtpVerificationPage otpVerification= esignetLoginPage.setEnterIdTextBox(uin);
 
-       esignetLoginPage.clickOnGetOtpButton();
-       assertTrue(esignetLoginPage.isOtpHasSendMessageDisplayed(),"verify if otp page is displayed");
+        esignetLoginPage.clickOnGetOtpButton();
+        assertTrue(esignetLoginPage.isOtpHasSendMessageDisplayed(),"verify if otp page is displayed");
 
-       otpVerification.enterOtpForEsignet(BaseTestCase.getOtp(), Target.ANDROID);
-       esignetLoginPage.clickOnVerifyButton();
+        otpVerification.enterOtpForEsignet(BaseTestCase.getOtp(), Target.ANDROID);
+        esignetLoginPage.clickOnVerifyButton();
 
         addNewCardPage.clickOnDoneButton();
         assertTrue(homePage.isCredentialTypeValueDisplayed(), "Verify if credential type value is displayed");
@@ -743,4 +743,4 @@ public class NoNetworkAndroidTest extends AndroidBaseTest {
         assertTrue(generateUinOrVidPage.isNetworkRequesFailedDisplayed(), "Verify if no internet connection is displayed");
     }
 
-    }
+}

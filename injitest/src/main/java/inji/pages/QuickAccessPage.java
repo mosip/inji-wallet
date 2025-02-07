@@ -23,14 +23,14 @@ public class QuickAccessPage extends BasePage {
         super(driver);
     }
     BasePage basePage = new BasePage(driver);
-    
+
     public String  verifyLanguageforQuickAccessTextPageLoaded(){
-    	basePage.retryToGetElement(quickAccessText);
-     	return getTextFromLocator(quickAccessText);
+        basePage.retryToGetElement(quickAccessText);
+        return getTextFromLocator(quickAccessText);
     }
 
     public String getQuickAccessDescription() {
-    	basePage.retryToGetElement(quickAccessDescription);
+        basePage.retryToGetElement(quickAccessDescription);
         return this.getTextFromLocator(quickAccessDescription);
     }
 

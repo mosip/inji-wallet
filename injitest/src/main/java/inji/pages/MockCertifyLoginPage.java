@@ -78,7 +78,7 @@ public class MockCertifyLoginPage extends BasePage {
     private WebElement signUpwithUnifiedLoginText;
 
     @AndroidFindBy(accessibility = "Close tab")
-    @iOSXCUITFindBy(xpath ="//XCUIElementTypeButton[@name=\"Cancel\"]")
+    @iOSXCUITFindBy(xpath = "//XCUIElementTypeButton[@name=\"Cancel\"]")
     private WebElement CloseTab;
 
     @AndroidFindBy(accessibility = "credentialTypeHeading-MOSIPVerifiableCredential")
@@ -144,6 +144,7 @@ public class MockCertifyLoginPage extends BasePage {
     }
 
     public void clickOnVerifyButtonIos() {
+        ((HidesKeyboard) driver).hideKeyboard();
         clickOnElement(verifyButton);
     }
 

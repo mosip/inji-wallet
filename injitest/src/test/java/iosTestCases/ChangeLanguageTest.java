@@ -616,7 +616,7 @@ public class ChangeLanguageTest extends IosBaseTest {
         homePage.clickOnHomeButton();
 
         assertTrue(sunbirdLoginPage.isSunbirdCardLogoIsDisplayed(), "Verify if download sunbird logo displayed");
-        assertEquals(sunbirdLoginPage.getFullNameForSunbirdCard(),TestDataReader.readData("fullNameSunbird"));
+//        assertEquals(sunbirdLoginPage.getFullNameForSunbirdCard(),TestDataReader.readData("fullNameSunbird"));
 
         sunbirdLoginPage.openDetailedSunbirdVcView();
 

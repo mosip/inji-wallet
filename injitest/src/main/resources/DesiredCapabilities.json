@@ -8,7 +8,7 @@
       "appium:appActivity": "io.mosip.residentapp.MainActivity",
       "appium:noReset": false,
       "appium:autoGrantPermissions": true
-      }
+    }
   },
   {
     "name": "iosDevice",
@@ -19,6 +19,6 @@
       "platformName": "iOS",
       "appium:noReset": false,
       "maxTypingFrequency": 30
-      }
+    }
   }
 ]

@@ -49,7 +49,8 @@ public class OtpVerificationPage extends BasePage {
     @iOSXCUITFindBy(iOSClassChain = "**/XCUIElementTypeStaticText[`label == \"VID not available in database\"`]")
     private WebElement vidNotAvailableMessage;
 
-    @AndroidFindBy(xpath = "//*[@resource-id=\"resendCodeView\"]") //Not using accessibility id as parent component has correct element property
+    @AndroidFindBy(xpath = "//*[@resource-id=\"resendCodeView\"]")
+    //Not using accessibility id as parent component has correct element property
     @iOSXCUITFindBy(accessibility = "resendCode")
     private WebElement resendCodeButton;
 
@@ -131,7 +132,7 @@ public class OtpVerificationPage extends BasePage {
     public boolean verifyResendCodeButtonDisplayedEnabled() {
         return this.isElementEnabled(resendCodeButton,30);
     }
-    
+
     public void clickOnResendButton() {
         try {
             Thread.sleep(2000);
@@ -149,9 +150,9 @@ public class OtpVerificationPage extends BasePage {
     }
 
     public void WatingTimeForVerificationTimerComplete() {
-         this.WaitTillElementVisible(otpVerificationTimer, 186);
+        this.WaitTillElementVisible(otpVerificationTimer, 186);
     }
-    
+
     public boolean verifyOtpVerificationTimerDisplayedAfterClickOnResend() {
         return this.isElementDisplayed(otpVerificationTimer);
     }

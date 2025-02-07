@@ -281,7 +281,7 @@ public class MosipOtpAlternativeFlow extends AndroidBaseTest {
 //        assertFalse(homePage.isNameDisplayed(TestDataReader.readData("fullName")), "Verify if VC is removed");
 
         Assert.assertEquals(homePage.verifyLanguageForNoVCDownloadedPageLoaded(), "Bring your digital identity");
-         homePage.downloadCard();
+        homePage.downloadCard();
         assertTrue(addNewCardPage.isAddNewCardPageLoaded(), "Verify if add new card page is displayed");
         addNewCardPage.clickOnDownloadViaEsignet();
 
@@ -289,7 +289,7 @@ public class MosipOtpAlternativeFlow extends AndroidBaseTest {
 
         assertTrue(esignetLoginPage.isEnterYourVidTextDisplayed(), "Verify if enter your vid text is displayed");
 
-         esignetLoginPage.setEnterIdTextBox(uin);
+        esignetLoginPage.setEnterIdTextBox(uin);
 
         esignetLoginPage.clickOnGetOtpButton();
         assertTrue(esignetLoginPage.isOtpHasSendMessageDisplayed(),"verify if otp page is displayed");
@@ -679,7 +679,7 @@ public class MosipOtpAlternativeFlow extends AndroidBaseTest {
         assertTrue(esignetLoginPage.isOtpHasSendMessageDisplayed(),"verify if otp page is displayed");
         OtpVerificationPage otpVerification = new OtpVerificationPage(driver);
 
-         otpVerification.enterOtpForEsignet(getOtp(), Target.ANDROID);
+        otpVerification.enterOtpForEsignet(getOtp(), Target.ANDROID);
         esignetLoginPage.clickOnVerifyButton();
 
         addNewCardPage.clickOnDoneButton();

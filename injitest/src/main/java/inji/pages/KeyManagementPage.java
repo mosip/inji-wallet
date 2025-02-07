@@ -46,6 +46,12 @@ public class KeyManagementPage extends BasePage {
     private WebElement keyTypeVcDetailViewValue;
 
 
+    @AndroidFindBy(accessibility = "goBack")
+    @iOSXCUITFindBy(accessibility = "goBack")
+    private WebElement goBackbutton;
+
+
+
     public KeyManagementPage(AppiumDriver driver) {
         super(driver);
     }
@@ -55,7 +61,7 @@ public class KeyManagementPage extends BasePage {
     }
 
     public void clickOnDoneButton() {
-       clickOnElement (stepCountButton);
+        clickOnElement (stepCountButton);
     }
 
     public WebElement getTheCoordinatesForRSA(){
@@ -81,6 +87,12 @@ public class KeyManagementPage extends BasePage {
     public void clickOnArrowleftButton() {
         clickOnElement (arrowleftButton);
     }
+
+    public void clickOnGoBackbutton() {
+        clickOnElement(goBackbutton);
+    }
+
+
 
     public boolean iskeyOrderingSuccessTextMessageDisplayed() {
         return this.isElementDisplayed(keyOrderingSuccessText);

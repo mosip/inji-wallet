@@ -30,18 +30,18 @@ public class SharePage extends BasePage {
     @iOSXCUITFindBy(accessibility = "noShareableVcs")
     private WebElement noShareableCards;
 
-	@AndroidFindBy(accessibility = "flipCameraIcon")
+    @AndroidFindBy(accessibility = "flipCameraIcon")
     @iOSXCUITFindBy(accessibility = "Flip Camera")
-	private WebElement flipCamera;
+    private WebElement flipCamera;
 
-	@AndroidFindBy(accessibility = "holdPhoneSteadyMessage")
+    @AndroidFindBy(accessibility = "holdPhoneSteadyMessage")
     @iOSXCUITFindBy(accessibility = "holdPhoneSteadyMessage")
     private WebElement holdCameraSteady;
 
     @iOSXCUITFindBy(accessibility = "enableBluetoothButton")
     private WebElement enableBluetoothButton;
 
-	@AndroidFindBy(accessibility = "bluetoothIsTurnedOffMessage")
+    @AndroidFindBy(accessibility = "bluetoothIsTurnedOffMessage")
     private WebElement bluetoothIsTurnedOffMessage;
 
     @iOSXCUITFindBy(iOSClassChain = "**/XCUIElementTypeStaticText[`name == \"“Inji” Would Like to Use Bluetooth\"`]")
@@ -126,7 +126,7 @@ public class SharePage extends BasePage {
         }
         return this;
     }
-    
+
     public SharePage denyPermissionPopupBluetooth() {
         if (isElementDisplayed(denyButton)) {
             clickOnElement(denyButton);
@@ -155,7 +155,7 @@ public class SharePage extends BasePage {
     public boolean isNoShareableCardsMessageDisplayed() {
         return isElementDisplayed(noShareableCards);
     }
-    
+
     public String isBluetoothIsTurnedOffMessageDisplayed() {
         return getTextFromLocator(bluetoothIsTurnedOffMessage);
     }
@@ -182,17 +182,17 @@ public class SharePage extends BasePage {
         return isElementDisplayed(cameraAccessDisabledPopup);
     }
     public void clickOnPopupCloseButton(){
-         clickOnElement(closePopupButton);
+        clickOnElement(closePopupButton);
     }
 
     public void clickOnAllowLocationPopupButton(){
         if(isElementDisplayed(locationAccessPopup))
-        clickOnElement(locationAccessPopup);
+            clickOnElement(locationAccessPopup);
     }
 
     public void clickOnAllowGallaryAccessButton(){
         if(isElementDisplayed(gallaryAccessPopup))
-        clickOnElement(gallaryAccessPopup);
+            clickOnElement(gallaryAccessPopup);
     }
 
     public boolean isCameraDisabledToasterLoaded() {

@@ -38,19 +38,19 @@ public class UinGenerationUtil {
         return path;
     }
 
-        public static String getRandomUin () {
+    public static String getRandomUin () {
 
-            return getRandomUinOrVidOrAid("Uins.json");
-        }
+        return getRandomUinOrVidOrAid("Uins.json");
+    }
 
-        public static String getRandomVid () {
-            return getRandomUinOrVidOrAid("Vids.json");
-        }
+    public static String getRandomVid () {
+        return getRandomUinOrVidOrAid("Vids.json");
+    }
 
-        public static String getRandomAidData () {
+    public static String getRandomAidData () {
 
-            return getRandomUinOrVidOrAid("AidData.json");
-        }
+        return getRandomUinOrVidOrAid("AidData.json");
+    }
 
     public static String getRandomEmails ( String fileName) {
         ObjectMapper mapper = new ObjectMapper();
