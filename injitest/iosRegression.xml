@@ -108,7 +108,7 @@
                     <include name="deleteDownloadedVcInOfflineMode"/>
                     <include name="openQrOffline"/>
                     <include name="verifyVcIssuerListWithoutNetwork"/>
-<!--                    <include name="VerifyCameraOpenAfterPinVc"/>      // out of scope -->
+<!--                    <include name="VerifyCameraOpenAfterPinVc"/>      // This testcase is no more vaild in automation due to browserstack for accessing the mobile settings app   -->
                     <include name="pinVcInDetailedVcView"/>
                     <include name="verifyActivationFailedRecordInHistory"/>
                     <include name="verifyActivationFailedRecordInHistoryFromDetailedView"/>
