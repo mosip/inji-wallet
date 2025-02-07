@@ -11,10 +11,6 @@ This document provides a comprehensive overview of the process for downloading a
 ###  Sequence diagram - download & view mso_mdoc credential format VC
 
 ```mermaid
----
-config:
-  theme: neutral
----
 sequenceDiagram
   participant Inji_Wallet as Inji Wallet (Mobile App)
   participant InjiVCIClient as inji-vci-client
