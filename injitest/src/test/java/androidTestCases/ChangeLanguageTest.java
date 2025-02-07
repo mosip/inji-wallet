@@ -661,6 +661,8 @@ public class ChangeLanguageTest extends AndroidBaseTest {
         AddNewCardPage addNewCardPage = homePage.downloadCard();
         EsignetLoginPage esignetLoginPage = addNewCardPage.clickOnDownloadViaEsignet();
         esignetLoginPage.clickOnCredentialTypeHeadingMOSIPVerifiableCredential();
+
+        esignetLoginPage.clickOnEsignetLoginWithOtpButton();
         assertTrue(esignetLoginPage.verifyLanguageLoginHeaderTextDisplayed("Tamil"),"verify login text in tamil");
         assertTrue(esignetLoginPage.verifyLanguagePleaseEnterUinHeaderTextDisplayed("Tamil"),"verify if enter uin/vid header in tamil");
     }
@@ -697,6 +699,7 @@ public class ChangeLanguageTest extends AndroidBaseTest {
         AddNewCardPage addNewCardPage = homePage.downloadCard();
         EsignetLoginPage esignetLoginPage = addNewCardPage.clickOnDownloadViaEsignet();
         esignetLoginPage.clickOnCredentialTypeHeadingMOSIPVerifiableCredential();
+        esignetLoginPage.clickOnEsignetLoginWithOtpButton();
         assertTrue(esignetLoginPage.verifyLanguageLoginHeaderTextDisplayed("Kannada"),"verify login text in Kannada");
         assertTrue(esignetLoginPage.verifyLanguagePleaseEnterUinHeaderTextDisplayed("Kannada"),"verify if enter uin/vid header in Kannada");
 
@@ -737,6 +740,7 @@ public class ChangeLanguageTest extends AndroidBaseTest {
         AddNewCardPage addNewCardPage = homePage.downloadCard();
         EsignetLoginPage esignetLoginPage = addNewCardPage.clickOnDownloadViaEsignet();
         esignetLoginPage.clickOnCredentialTypeHeadingMOSIPVerifiableCredential();
+        esignetLoginPage.clickOnEsignetLoginWithOtpButton();
         assertTrue(esignetLoginPage.verifyLanguageLoginHeaderTextDisplayed("Arabic"),"verify login text in arabic");
         assertTrue(esignetLoginPage.verifyLanguagePleaseEnterUinHeaderTextDisplayed("Arabic"),"verify if enter uin/vid header in arabic");
 
@@ -774,6 +778,7 @@ public class ChangeLanguageTest extends AndroidBaseTest {
         AddNewCardPage addNewCardPage = homePage.downloadCard();
         EsignetLoginPage esignetLoginPage = addNewCardPage.clickOnDownloadViaEsignet();
         esignetLoginPage.clickOnCredentialTypeHeadingMOSIPVerifiableCredential();
+        esignetLoginPage.clickOnEsignetLoginWithOtpButton();
         assertTrue(esignetLoginPage.verifyLanguageLoginHeaderTextDisplayed("Kannada"),"verify login text in Kannada");
         assertTrue(esignetLoginPage.verifyLanguagePleaseEnterUinHeaderTextDisplayed("Kannada"),"verify if enter uin/vid header in Kannada");
 
@@ -790,6 +795,7 @@ public class ChangeLanguageTest extends AndroidBaseTest {
         homePage.downloadCard();
         addNewCardPage.clickOnDownloadViaEsignet();
         esignetLoginPage.clickOnCredentialTypeHeadingMOSIPVerifiableCredential();
+        esignetLoginPage.clickOnEsignetLoginWithOtpButton();
         assertTrue(esignetLoginPage.verifyLanguageLoginHeaderTextDisplayed("Kannada"),"verify login text in Kannada");
         assertTrue(esignetLoginPage.verifyLanguagePleaseEnterUinHeaderTextDisplayed("Kannada"),"verify if enter uin/vid header in Kannada");
     }
@@ -826,6 +832,7 @@ public class ChangeLanguageTest extends AndroidBaseTest {
         AddNewCardPage addNewCardPage = homePage.downloadCard();
         EsignetLoginPage esignetLoginPage = addNewCardPage.clickOnDownloadViaEsignet();
         esignetLoginPage.clickOnCredentialTypeHeadingMOSIPVerifiableCredential();
+        esignetLoginPage.clickOnEsignetLoginWithOtpButton();
         assertTrue(esignetLoginPage.verifyLanguageLoginHeaderTextDisplayed("Kannada"),"verify login text in Kannada");
         assertTrue(esignetLoginPage.verifyLanguagePleaseEnterUinHeaderTextDisplayed("Kannada"),"verify if enter uin/vid header in Kannada");
 

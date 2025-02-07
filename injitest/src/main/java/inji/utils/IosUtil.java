@@ -61,7 +61,7 @@ public class IosUtil {
         IOSTouchAction action = new IOSTouchAction((PerformsTouchActions) driver);
         action.longPress(LongPressOptions.longPressOptions()
                         .withElement(ElementOption.element(eleToDrag))
-                        .withDuration(Duration.ofSeconds(1)))
+                        .withDuration(Duration.ofSeconds(9)))
                 .moveTo(ElementOption.element(eleTODrop))
                 .release()
                 .perform();

@@ -31,7 +31,7 @@ public class SunbirdLoginPage extends BasePage {
     @iOSXCUITFindBy(accessibility = "Done")
     private WebElement clickOnSetButton;
 
-    @AndroidFindBy(xpath = "//android.view.View[@content-desc='01 January 2025']")
+    @AndroidFindBy(xpath = "//android.view.View[@content-desc='01 January 2024']")
     @iOSXCUITFindBy(xpath = "//XCUIElementTypeButton[@name=\"Monday, January 1\"]")
     private WebElement dateOfBirth;
 
@@ -187,7 +187,7 @@ public class SunbirdLoginPage extends BasePage {
 
     public void enterDateOfBirthTextBox() {
         clickOnElement(enterDateOfBirthTextBox);
-        int MAX_ATTEMPTS = 12;
+        int MAX_ATTEMPTS = 20;
         if (!isElementDisplayed(dateOfBirth, 10)) {
             for (int i = 0; i < MAX_ATTEMPTS; i++) {
                 try {

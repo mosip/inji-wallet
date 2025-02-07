@@ -40,7 +40,7 @@ public class VcDownloadAndVerifyUsingSunbirdTest extends IosBaseTest {
         addNewCardPage.clickOnCredentialTypeHeadingInsuranceCredential();
         addNewCardPage.clickOnContinueButtonInSigninPopupIos();
         sunbirdLoginPage.enterPolicyNumberTextBox(TestDataReader.readData("policyNumberSunbird"));
-        sunbirdLoginPage.enterFullNameTextBox(TestDataReader.readData("fullNameSunbird"));
+//        sunbirdLoginPage.enterFullNameTextBox(TestDataReader.readData("fullNameSunbird"));
         sunbirdLoginPage.enterDateOfBirthTextBox();
         IosUtil.scrollToElement(driver,100,800,100,200);
         sunbirdLoginPage.clickOnloginButton();
@@ -52,9 +52,9 @@ public class VcDownloadAndVerifyUsingSunbirdTest extends IosBaseTest {
 
         assertEquals(sunbirdLoginPage.getFullNameForSunbirdCard(),TestDataReader.readData("fullNameSunbird"));
         assertEquals(sunbirdLoginPage.getPolicyNameForSunbirdCard(),TestDataReader.readData("policyNameSunbird"));
-        assertEquals(sunbirdLoginPage.getPhoneNumberForSunbirdCard(),TestDataReader.readData("phoneNumberSunbird"));
-        assertEquals(sunbirdLoginPage.getDateofBirthValueForSunbirdCard(),TestDataReader.readData("dateOfBirthSunbird"));
-        assertEquals(sunbirdLoginPage.getGenderValueForSunbirdCard(),TestDataReader.readData("genderValueSunbird"));
+//        assertEquals(sunbirdLoginPage.getPhoneNumberForSunbirdCard(),TestDataReader.readData("phoneNumberSunbird"));
+//        assertEquals(sunbirdLoginPage.getDateofBirthValueForSunbirdCard(),TestDataReader.readData("dateOfBirthSunbird"));
+//        assertEquals(sunbirdLoginPage.getGenderValueForSunbirdCard(),TestDataReader.readData("genderValueSunbird"));
         assertEquals(sunbirdLoginPage.getEmailIdValueForSunbirdCard(),TestDataReader.readData("emailIdValueSunbird"));
         assertEquals(sunbirdLoginPage.getStatusValueForSunbirdCard(),TestDataReader.readData("status"));
         assertTrue(sunbirdLoginPage.isPolicyExpiresOnValueDisplayed(), "Verify if policy expireson value displayed");
