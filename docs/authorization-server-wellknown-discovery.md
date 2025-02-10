@@ -25,18 +25,19 @@ sequenceDiagram
   participant Authorization_Server as Authorization Server
   
   Inji_Wallet ->> Issuing_Authority: 1. Request Credential issuer metadata via wellknown
-  Issuing_Authority -> Inji_Wallet: 2. Return the credential issuer metadata
+  Issuing_Authority ->> Inji_Wallet: 2. Return the credential issuer metadata
+  Note over Inji_Wallet: Authorization Server Metadata Discovery
 rect rgba(191, 223, 255, 0.3)
     Inji_Wallet ->> Inji_Wallet: 3.1 Analyzes credential issuer metadata<br> to retrieve authorization server
-    Inji_Wallet ->> Issuing_Authority: 3.2 Get authorization server metadata<br>GET /.well-known/oauth-authorization-server HTTP/1.1<br>Host: authorization server host
-    Issuing_Authority ->> Inji_Wallet: 3.3 Return authorization server metadata
+    Inji_Wallet ->> Authorization_Server: 3.2 Get authorization server metadata<br>GET /.well-known/oauth-authorization-server HTTP/1.1<br>Host: authorization server host
+    Authorization_Server ->> Inji_Wallet: 3.3 Return authorization server metadata
     Inji_Wallet ->> Inji_Wallet: 3.4 Check if wallet supports to initiate authorization flow &<br>gather information to initiate authorization request
 end
   Inji_Wallet ->> Authorization_Server: 4. Initiate authorization flow
   Note right of Inji_Wallet: Other flows of authorization flow & VC download proceeds
   Authorization_Server ->> Inji_Wallet: 5. On successful authentiction return authorization code (auth_code)
   Inji_Wallet ->> mimoto: 6. get accessToken in exchange with authorization code
-  mimoto ->> Authorization_Server: 7. token exchange (use proxy_token_endpoint from config for API call, return access_token)
+  mimoto ->> Authorization_Server: 7. token exchange<br/>(API call to token_endpoint with authorization_code & other client related details)
   Authorization_Server ->> mimoto: 8. On success, return access_token
   mimoto ->> Inji_Wallet: 9. return access_token
   Inji_Wallet ->> Issuing_Authority: 10. Credential request
