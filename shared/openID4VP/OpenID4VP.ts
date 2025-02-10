@@ -49,10 +49,10 @@ export class OpenID4VP {
   }
 
   static async shareVerifiablePresentation(
-    vpResponseMetadata: Record<string, string>,
+    vpResponsesMetadata: Record<string, any>,
   ) {
     return await OpenID4VP.InjiOpenID4VP.shareVerifiablePresentation(
-      vpResponseMetadata,
+      vpResponsesMetadata,
     );
   }
 

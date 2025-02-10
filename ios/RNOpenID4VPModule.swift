@@ -51,7 +51,7 @@ class RNOpenId4VpModule: NSObject, RCTBridgeModule {
   func constructVerifiablePresentationToken(_ credentialsMap: AnyObject, resolver resolve: @escaping RCTPromiseResolveBlock, rejecter reject: @escaping RCTPromiseRejectBlock) {
     Task {
       do {
-        guard let credentialsMap = credentialsMap as? [String:[String]] else {
+        guard let credentialsMap = credentialsMap as? [String: [String: Array<Any>]] else {
           reject("OPENID4VP", "Invalid credentials map format", nil)
           return
         }
@@ -66,26 +66,34 @@ class RNOpenId4VpModule: NSObject, RCTBridgeModule {
   }
   
   @objc
-  func shareVerifiablePresentation(_ vpResponseMetadata: AnyObject, resolver resolve: @escaping RCTPromiseResolveBlock, rejecter reject: @escaping RCTPromiseRejectBlock) {
+  func shareVerifiablePresentation(_ vpResponsesMetadata: [String: Any], resolver resolve: @escaping RCTPromiseResolveBlock, rejecter reject: @escaping RCTPromiseRejectBlock) {
     Task {
       do {
-        guard let vpResponse = vpResponseMetadata as? [String:String] else {
-          reject("OPENID4VP", "Invalid vp response meta format", nil)
-          return
+        var formattedVPResponsesMetadata: [String: VpResponseMetadata] = [:]
+        
+        for (credentialFormat, vpResponseMetadata) in vpResponsesMetadata {
+          switch credentialFormat {
+          case FormatType.ldp_vc.rawValue:
+            guard let vpResponse = vpResponseMetadata as? [String:Any] else {
+              reject("OPENID4VP", "Invalid vp response meta format", nil)
+              return
+            }
+            guard let jws = vpResponse["jws"] as! String?,
+                  let signatureAlgorithm = vpResponse["signatureAlgorithm"] as! String?,
+                  let publicKey = vpResponse["publicKey"] as! String?,
+                  let domain = vpResponse["domain"] as! String?
+            else {
+              reject("OPENID4VP", "Invalid vp response metat", nil)
+              return
+            }
+            
+            formattedVPResponsesMetadata[credentialFormat] = LdpVPResponseMetadata(jws: jws, signatureAlgorithm: signatureAlgorithm, publicKey: publicKey, domain: domain)
+          default:
+            reject("OPENID4VP", "Invalid vp response meta format", nil)
+          }
         }
         
-        guard let jws = vpResponse["jws"] as String?,
-              let signatureAlgorithm = vpResponse["signatureAlgorithm"] as String?,
-              let publicKey = vpResponse["publicKey"] as String?,
-              let domain = vpResponse["domain"] as String?
-        else {
-          reject("OPENID4VP", "Invalid vp response metat", nil)
-          return
-        }
-        
-        let vpResponseMeta = VPResponseMetadata(jws: jws, signatureAlgorithm: signatureAlgorithm, publicKey: publicKey, domain: domain)
-        
-        let response = try await openID4VP?.shareVerifiablePresentation(vpResponseMetadata: vpResponseMeta)
+        let response = try await openID4VP?.shareVerifiablePresentation(vpResponseMetadata: formattedVPResponsesMetadata)
         
         resolve(response)
       } catch {
