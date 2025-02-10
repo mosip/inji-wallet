@@ -1,6 +1,6 @@
 import {NativeModules} from 'react-native';
 import {__AppId} from '../GlobalVariables';
-import {VC} from '../../machines/VerifiableCredential/VCMetaMachine/vc';
+import {SelectedCredentialsForVPSharing, VC} from '../../machines/VerifiableCredential/VCMetaMachine/vc';
 import {getJWT} from '../cryptoutil/cryptoUtil';
 import {getJWK} from '../openId4VCI/Utils';
 import getAllConfigurations from '../api';
@@ -32,7 +32,7 @@ export class OpenID4VP {
   }
 
   static async constructVerifiablePresentationToken(
-    selectedVCs: Record<string, VC[]>,
+    selectedVCs: SelectedCredentialsForVPSharing,
   ) {
     let updatedSelectedVCs = {};
     Object.keys(selectedVCs).forEach(inputDescriptorId => {

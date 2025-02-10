@@ -101,7 +101,18 @@ export const openID4VPActions = (model: any) => {
                 vcData.vcMetadata.requestId ===
                 context.miniViewSelectedVC.vcMetadata.requestId
               ) {
-                matchingVcs[inputDescriptorId] = [vcData];
+                if(matchingVcs.hasOwnProperty(inputDescriptorId)){
+                    const existingData = matchingVcs[inputDescriptorId]
+                  const vcFormat = vcData.vcMetadata.format
+                  if(existingData.hasOwnProperty(vcFormat)){
+                      existingData[inputDescriptorId] = {...existingData[inputDescriptorId],vcFormat: [...existingData[vcFormat],vcData]}
+                  }else {
+                    existingData[inputDescriptorId] = {...existingData[inputDescriptorId],vcFormat: [vcData]}
+                  }
+                }else{
+                  const vcFormat = vcData.vcMetadata.format
+                  matchingVcs[inputDescriptorId] = {vcFormat : [vcData]};
+                }
               }
             }),
         );

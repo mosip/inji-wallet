@@ -9,6 +9,7 @@ import {
   OpenID4VP_Domain,
   OpenID4VP_Proof_Sign_Algo_Suite,
 } from '../../shared/openID4VP/OpenID4VP';
+import {VCFormat} from "../../shared/VCFormat";
 import {KeyTypes} from '../../shared/cryptoutil/KeyTypes';
 
 export const openID4VPServices = () => {
@@ -45,23 +46,31 @@ export const openID4VPServices = () => {
         context.selectedVCs,
       );
 
-      const proofJWT = await constructProofJWT(
-        context.publicKey,
-        context.privateKey,
-        JSON.parse(vpToken),
-        context.keyType,
-      );
+      let vpResponseMetadata: Record<string, any> = {}
 
-      const vpResponseMetadata = {
-        jws: proofJWT,
-        signatureAlgorithm: OpenID4VP_Proof_Sign_Algo_Suite,
-        publicKey:
-          'did:jwk:' +
-          base64url(
-            JSON.stringify(await getJWK(context.publicKey, KeyTypes.ED25519)),
-          ),
-        domain: OpenID4VP_Domain,
-      };
+      for (const formatType in vpToken){
+        if(formatType === VCFormat.ldp_vc){
+          const proofJWT = await constructProofJWT(
+              context.publicKey,
+              context.privateKey,
+              JSON.parse(vpToken),
+              context.keyType,
+          );
+
+          vpResponseMetadata[formatType] = {
+            jws: proofJWT,
+            signatureAlgorithm: OpenID4VP_Proof_Sign_Algo_Suite,
+            publicKey:
+                'did:jwk:' +
+                base64url(
+                    JSON.stringify(await getJWK(context.publicKey, KeyTypes.ED25519)),
+                ),
+            domain: OpenID4VP_Domain,
+          }
+        }
+      }
+
+
       return await OpenID4VP.shareVerifiablePresentation(vpResponseMetadata);
     },
   };
