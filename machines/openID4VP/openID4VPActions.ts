@@ -111,7 +111,7 @@ export const openID4VPActions = (model: any) => {
                   }
                 }else{
                   const vcFormat = vcData.vcMetadata.format
-                  matchingVcs[inputDescriptorId] = {vcFormat : [vcData]};
+                  matchingVcs[inputDescriptorId] = {[vcFormat] : [vcData]};
                 }
               }
             }),
