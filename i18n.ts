@@ -8,23 +8,20 @@ import ar from './locales/ara.json';
 import hi from './locales/hin.json';
 import kn from './locales/kan.json';
 import ta from './locales/tam.json';
+import es from './locales/es.json';
 
 import {iso6393To1} from 'iso-639-3';
 
 import {getItem} from './machines/store';
 import {LocalizedField} from './machines/VerifiableCredential/VCMetaMachine/vc';
 
-const resources = {en, fil, ar, hi, kn, ta};
+const resources = {en, es};
 const locale = Localization.locale;
 const languageCodeMap = {} as {[key: string]: string};
 
 export const SUPPORTED_LANGUAGES = {
   en: 'English',
-  fil: 'Filipino',
-  ar: 'عربى',
-  hi: 'हिंदी',
-  kn: 'ಕನ್ನಡ',
-  ta: 'தமிழ்',
+  es: 'Española',
 };
 
 i18next
