@@ -4,9 +4,10 @@ import {Theme} from './ui/styleUtils';
 import React from 'react';
 import {ProfileIcon} from './ProfileIcon';
 import {SvgImage} from './ui/svg';
+import {addPngBase64Prefix} from '../shared/commonUtil';
 
 export const VcItemContainerProfileImage = (props: VCItemContentProps) => {
-  const imageUri = props.verifiableCredentialData.face;
+  const imageUri = addPngBase64Prefix(props.verifiableCredentialData.face);
 
   return imageUri ? (
     <ImageBackground

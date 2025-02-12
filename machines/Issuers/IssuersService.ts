@@ -182,7 +182,8 @@ export const IssuersService = () => {
         {
           requestTime: String(new Date().toISOString()),
           request: {
-            individualId: context.vcMetadata.mosipIndividualId,
+            individualId:
+              context.verifiableCredential.credential.credentialSubject.dni,
             otpChannels: ['EMAIL', 'PHONE'],
           },
         },
@@ -207,7 +208,8 @@ export const IssuersService = () => {
           request: {
             authFactorType: 'WLA',
             format: 'jwt',
-            individualId: context.vcMetadata.mosipIndividualId,
+            individualId:
+              context.verifiableCredential.credential.credentialSubject.dni,
             transactionId: context.bindingTransactionId,
             publicKey: context.publicKey,
             challengeList: [
