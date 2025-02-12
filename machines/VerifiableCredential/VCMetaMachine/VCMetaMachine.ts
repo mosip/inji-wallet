@@ -25,8 +25,8 @@ export const vcMetaMachine =
         VC_DOWNLOADING_FAILED: {
           actions: 'setDownloadCreadentialsFailed',
         },
-        RESET_DOWNLOADING_SUCCESS:{
-          actions: 'resetDownloadCredentialsSuccess'
+        RESET_DOWNLOADING_SUCCESS: {
+          actions: 'resetDownloadCredentialsSuccess',
         },
         RESET_DOWNLOADING_FAILED: {
           actions: 'resetDownloadCreadentialsFailed',
@@ -105,6 +105,9 @@ export const vcMetaMachine =
             WALLET_BINDING_SUCCESS: {
               actions: 'setWalletBindingSuccess',
             },
+            AUTO_WALLET_BINDING_SUCCESS: {
+              actions: 'setAutoWalletBindingSuccess',
+            },
             GET_VC_ITEM: {
               actions: 'getVcItemResponse',
             },
@@ -118,7 +121,7 @@ export const vcMetaMachine =
               actions: ['updateMyVcsMetadata', 'setUpdatedVcMetadatas'],
             },
             VC_DOWNLOADED: {
-              actions: ['setDownloadCredentialsSuccess','setDownloadedVc',]
+              actions: ['setDownloadCredentialsSuccess', 'setDownloadedVc'],
             },
             ADD_VC_TO_IN_PROGRESS_DOWNLOADS: {
               actions: 'addVcToInProgressDownloads',
@@ -151,7 +154,7 @@ export const vcMetaMachine =
               ],
               target: '#vcMeta.ready',
             },
-            RESET_VERIFY_ERROR: {
+            RESET_ERROR_SCREEN: {
               actions: 'resetVerificationErrorMessage',
             },
             SET_VERIFICATION_STATUS: {

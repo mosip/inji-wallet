@@ -190,21 +190,6 @@ export const HelpScreen: React.FC<HelpScreenProps> = props => {
       ),
     },
     {
-      title: t('questions.inji.nine'),
-      data: (
-        <React.Fragment>
-          {getTextField(
-            t('answers.inji.nine'),
-            getLinkedText(
-              injiHelpUrl +
-                '/functional-overview/end-user-guide#activating-a-vc',
-              t('here'),
-            ),
-          )}
-        </React.Fragment>
-      ),
-    },
-    {
       title: t('questions.inji.ten'),
       data: (
         <React.Fragment>
@@ -217,14 +202,6 @@ export const HelpScreen: React.FC<HelpScreenProps> = props => {
             ),
           )}
           {getTextField(t('answers.inji.ten-b'))}
-        </React.Fragment>
-      ),
-    },
-    {
-      title: t('questions.inji.eleven'),
-      data: (
-        <React.Fragment>
-          {getTextField(t('answers.inji.eleven'))}
         </React.Fragment>
       ),
     },

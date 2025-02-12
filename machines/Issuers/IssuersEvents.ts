@@ -11,6 +11,7 @@ export const IssuersEvents = {
   CANCEL: () => ({}),
   STORE_RESPONSE: (response?: unknown) => ({response}),
   STORE_ERROR: (error: Error, requester?: string) => ({error, requester}),
-  RESET_VERIFY_ERROR: () => ({}),
+  RESET_ERROR_SCREEN: () => ({}),
   SELECTED_CREDENTIAL_TYPE: (credType: CredentialTypes) => ({credType}),
+  SHOW_BINDING_STATUS: () => ({}),
 };

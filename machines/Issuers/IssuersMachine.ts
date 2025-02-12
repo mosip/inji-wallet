@@ -359,6 +359,16 @@ export const IssuersMachine = model.createMachine(
               target: 'downloadCredentials',
             },
             {
+              cond: 'isAutoWalletBindingFlow',
+              actions: [
+                'setPublicKey',
+                'setPrivateKey',
+                'setLoadingReasonAsDownloadingCredentials',
+                'storeKeyPair',
+              ],
+              target: 'addingWalletBindingId',
+            },
+            {
               actions: [
                 // to be decided
                 'setPublicKey',
@@ -367,6 +377,13 @@ export const IssuersMachine = model.createMachine(
                 'storeKeyPair',
               ],
               target: 'downloadCredentials',
+            },
+          ],
+          onError: [
+            {
+              cond: 'isAutoWalletBindingFlow',
+              actions: 'setAutoWalletBindingFailure',
+              target: 'handleVCAutoWalletBindingFailure',
             },
           ],
         },
@@ -432,8 +449,12 @@ export const IssuersMachine = model.createMachine(
           src: 'verifyCredential',
           onDone: [
             {
-              actions: ['sendSuccessEndEvent', 'setVerificationResult'],
-              target: 'storing',
+              actions: [
+                'sendSuccessEndEvent',
+                'setVerificationResult',
+                'setVCMetadata',
+              ],
+              target: 'requestingBindingOTP',
             },
           ],
           onError: [
@@ -454,10 +475,90 @@ export const IssuersMachine = model.createMachine(
         },
       },
 
+      requestingBindingOTP: {
+        entry: 'sendActivationStartEvent',
+        invoke: {
+          src: 'requestBindingOTP',
+          onDone: [
+            {
+              target: 'addKeyPair',
+              actions: ['unsetOTP', 'setOTP'],
+            },
+          ],
+          onError: [
+            {
+              actions: 'setAutoWalletBindingFailure',
+              target: 'handleVCAutoWalletBindingFailure',
+            },
+          ],
+        },
+      },
+      addKeyPair: {
+        invoke: {
+          src: 'fetchKeyPair',
+          onDone: [
+            {
+              cond: 'hasKeyPair',
+              actions: ['setPublicKey'],
+              target: 'addingWalletBindingId',
+            },
+            {
+              target: 'generateKeyPair',
+            },
+          ],
+          onError: [
+            {
+              actions: 'setAutoWalletBindingFailure',
+              target: 'handleVCAutoWalletBindingFailure',
+            },
+          ],
+        },
+      },
+      addingWalletBindingId: {
+        invoke: {
+          src: 'addWalletBindingId',
+          onDone: [
+            {
+              cond: 'isCustomSecureKeystore',
+              actions: ['setWalletBindingResponse'],
+              target: 'updatingContextVariables',
+            },
+          ],
+          onError: [
+            {
+              actions: 'setAutoWalletBindingFailure',
+              target: 'handleVCAutoWalletBindingFailure',
+            },
+          ],
+        },
+      },
+      updatingContextVariables: {
+        entry: [
+          'setThumbprintForWalletBindingId',
+          'resetPrivateKey',
+          send('SHOW_BINDING_STATUS'),
+        ],
+        on: {
+          SHOW_BINDING_STATUS: [
+            {
+              actions: 'sendWalletBindingSuccess',
+              target: 'storing',
+            },
+          ],
+        },
+      },
       handleVCVerificationFailure: {
         on: {
-          RESET_VERIFY_ERROR: {
+          RESET_ERROR_SCREEN: {
             actions: ['resetVerificationErrorMessage'],
+          },
+        },
+      },
+
+      handleVCAutoWalletBindingFailure: {
+        on: {
+          RESET_ERROR_SCREEN: {
+            actions: ['resetAutoWalletBindingFailure'],
           },
         },
       },
