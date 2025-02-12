@@ -14,7 +14,7 @@ Actors Involved
 ```mermaid
 sequenceDiagram
     participant User as User
-    participant Wallet as Wallet<br/>(Download and activate VC)
+    participant Wallet as Wallet<br/>(Downloaded and binded VC)
     participant Online Portal as Online Portal
     participant Authorization Server as Authorization Server
 
