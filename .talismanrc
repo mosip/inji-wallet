@@ -258,7 +258,7 @@ fileignoreconfig:
   - filename: machines/Issuers/IssuersMachine.ts
     checksum: 1eb1e912ea76c88a8d477cce9742da59b5bb41a2a39cc1dc67c5bca240c1553b
   - filename: .github/scripts/set-google-clientid.sh
-    checksum: 013ef3b43f50ba05e18c9c83e89cc366c3f0d8ed4d931ce7daa19a757880419b
+    checksum: 04de37335d2efb014107db49c751ba04e5993ffa868ea5a4e3bca57a64b00fe6
   - filename: screens/Issuers/CredentialTypeSelectionScreen.tsx
     checksum: 144bbf59e86a89bf580ac7931645ca3eaed69a9409de36f6ce9f88a14091a9d3
   - filename: components/QrCodeOverlay.tsx

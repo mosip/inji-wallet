@@ -47,6 +47,7 @@ on:
           - collab
           - synergy
           - mec
+          - reniec
       internal-testers:
         description: 'Internal Testers Group'
         required: true
