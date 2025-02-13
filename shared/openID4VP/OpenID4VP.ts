@@ -22,12 +22,14 @@ export class OpenID4VP {
     trustedVerifiersList: any,
   ) {
     const shouldValidateClient = await isClientValidationRequired();
+    const walletMetadata = await getWalletMetadata();
 
     const authenticationResponse =
       await OpenID4VP.InjiOpenID4VP.authenticateVerifier(
         encodedAuthorizationRequest,
         trustedVerifiersList,
         shouldValidateClient,
+        walletMetadata,
       );
     return JSON.parse(authenticationResponse);
   }
@@ -98,4 +100,9 @@ function createJwtPayload(vpToken: {[key: string]: any}) {
 export async function isClientValidationRequired() {
   const config = await getAllConfigurations();
   return config.openid4vpClientValidation === 'true';
+}
+
+export async function getWalletMetadata() {
+  const config = await getAllConfigurations();
+  return config.walletMetadata;
 }
