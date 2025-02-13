@@ -8,6 +8,7 @@ RCT_EXTERN_METHOD(init:(NSString *)appId)
 RCT_EXTERN_METHOD(authenticateVerifier:(NSString *)encodedAuthorizationRequest
                   trustedVerifierJSON:(id)trustedVerifierJSON
                   shouldValidateClient:(BOOL)shouldValidateClient
+                  walletMetadata: (String) walletMetadata
                   resolver:(RCTPromiseResolveBlock)resolve
                   rejecter:(RCTPromiseRejectBlock)reject)
 
