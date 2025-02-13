@@ -42,18 +42,18 @@ export const openID4VPServices = () => {
     },
 
     sendVP: (context: any) => async () => {
-      const vpToken = await OpenID4VP.constructVerifiablePresentationToken(
+      const vpTokens = await OpenID4VP.constructVerifiablePresentationToken(
         context.selectedVCs,
       );
 
       let vpResponsesMetadata: Record<string, any> = {}
-
-      for (const formatType in vpToken){
-        if(formatType === VCFormat.ldp_vc){
+      for (const formatType in vpTokens){
+        const value = vpTokens[formatType]
+        if(formatType === VCFormat.ldp_vc.valueOf()){
           const proofJWT = await constructProofJWT(
               context.publicKey,
               context.privateKey,
-              JSON.parse(vpToken),
+              JSON.parse(value),
               context.keyType,
           );
 

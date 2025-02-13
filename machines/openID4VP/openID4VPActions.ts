@@ -34,15 +34,15 @@ export const openID4VPActions = (model: any) => {
         let matchingVCs = {} as Record<string, [VC]>;
         let presentationDefinition =
           context.authenticationResponse['presentation_definition'];
-        let anyInputDescriptoHasFormatOrConstraints = false;
+        let anyInputDescriptorHasFormatOrConstraints = false;
         requestedClaimsByVerifier = new Set();
         vcs.forEach(vc => {
           presentationDefinition['input_descriptors'].forEach(
             inputDescriptor => {
               const format =
                 inputDescriptor.format ?? presentationDefinition.format;
-              anyInputDescriptoHasFormatOrConstraints =
-                anyInputDescriptoHasFormatOrConstraints ||
+              anyInputDescriptorHasFormatOrConstraints =
+                anyInputDescriptorHasFormatOrConstraints ||
                 format !== undefined ||
                 inputDescriptor.constraints.fields !== undefined;
 
@@ -74,7 +74,7 @@ export const openID4VPActions = (model: any) => {
             },
           );
         });
-        if (!anyInputDescriptoHasFormatOrConstraints) {
+        if (!anyInputDescriptorHasFormatOrConstraints) {
           matchingVCs[presentationDefinition['input_descriptors'][0].id] = vcs;
         }
         return matchingVCs;
@@ -95,26 +95,15 @@ export const openID4VPActions = (model: any) => {
       selectedVCs: context => {
         const matchingVcs = {};
         Object.entries(context.vcsMatchingAuthRequest).map(
-          ([inputDescriptorId, vcs]) =>
-            (vcs as VC[]).map(vcData => {
-              if (
-                vcData.vcMetadata.requestId ===
-                context.miniViewSelectedVC.vcMetadata.requestId
-              ) {
-                if(matchingVcs.hasOwnProperty(inputDescriptorId)){
-                    const existingData = matchingVcs[inputDescriptorId]
-                  const vcFormat = vcData.vcMetadata.format
-                  if(existingData.hasOwnProperty(vcFormat)){
-                      existingData[inputDescriptorId] = {...existingData[inputDescriptorId],vcFormat: [...existingData[vcFormat],vcData]}
-                  }else {
-                    existingData[inputDescriptorId] = {...existingData[inputDescriptorId],vcFormat: [vcData]}
+            ([inputDescriptorId, vcs]) =>
+                (vcs as VC[]).map(vcData => {
+                  if (
+                      vcData.vcMetadata.requestId ===
+                      context.miniViewSelectedVC.vcMetadata.requestId
+                  ) {
+                    matchingVcs[inputDescriptorId] = [vcData];
                   }
-                }else{
-                  const vcFormat = vcData.vcMetadata.format
-                  matchingVcs[inputDescriptorId] = {[vcFormat] : [vcData]};
-                }
-              }
-            }),
+                }),
         );
         return matchingVcs;
       },
