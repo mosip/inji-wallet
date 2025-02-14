@@ -128,22 +128,22 @@ public class BasePage {
         this.waitForElementToBeVisible(element);
         return element.getText();
     }
-    
+
     protected  String retryToGetElement(WebElement element) {
-    	int maxRetries = 3; 
-    	String text = null;
-    	for (int i = 0; i < maxRetries; i++) {
-			try {
-				 text = getTextFromLocator(element);
-		            break; 
-			} catch (StaleElementReferenceException e) {
-				if (i == maxRetries - 1) {
-					throw e; 
-				}
-			}
-		}
-    	return text;
-    	
+        int maxRetries = 3;
+        String text = null;
+        for (int i = 0; i < maxRetries; i++) {
+            try {
+                text = getTextFromLocator(element);
+                break;
+            } catch (StaleElementReferenceException e) {
+                if (i == maxRetries - 1) {
+                    throw e;
+                }
+            }
+        }
+        return text;
+
     }
     public boolean retryElementVisible(WebElement element) {
         int maxRetries = 3;
@@ -167,10 +167,10 @@ public class BasePage {
         }
     }
 
-   public void  clickIfVisible(WebElement element){
-       if(isElementDisplayed(element)) {
-           clickOnElement(element);
-       }
-   }
+    public void  clickIfVisible(WebElement element){
+        if(isElementDisplayed(element)) {
+            clickOnElement(element);
+        }
+    }
 
 }

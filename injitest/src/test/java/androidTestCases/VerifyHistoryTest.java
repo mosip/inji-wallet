@@ -349,7 +349,7 @@ public class VerifyHistoryTest extends AndroidBaseTest {
         MoreOptionsPage moreOptionsPage = homePage.clickOnMoreOptionsButton();
         assertTrue(moreOptionsPage.isMoreOptionsPageLoaded(), "Verify if more options page is displayed");
 
-         moreOptionsPage.clickOnRemoveFromWallet();
+        moreOptionsPage.clickOnRemoveFromWallet();
         assertTrue(pleaseConfirmPopupPage.isPleaseConfirmPopupPageLoaded(), "Verify if pop up page is displayed");
 
         pleaseConfirmPopupPage.clickOnConfirmButton();

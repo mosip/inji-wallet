@@ -13,7 +13,7 @@ import static org.testng.Assert.assertTrue;
 
 public class VcDownloadAndVerifyUsingMockIdentityTest extends IosBaseTest {
     @Test
-    public void downloadAndVerifyVcUsingUinViaEsignet() throws InterruptedException {
+    public void downloadAndVerifyVcUsingUinViaMocke() throws InterruptedException {
         ChooseLanguagePage chooseLanguagePage = new ChooseLanguagePage(driver);
 
         assertTrue(chooseLanguagePage.isChooseLanguagePageLoaded(), "Verify if choose language page is displayed");
@@ -42,12 +42,14 @@ public class VcDownloadAndVerifyUsingMockIdentityTest extends IosBaseTest {
         assertTrue(addNewCardPage.isAddNewCardPageLoaded(), "Verify if add new card page is displayed");
         assertTrue(addNewCardPage.isAddNewCardPageGuideMessageForEsignetDisplayed(), "Verify if add new card guide message displayed");
         assertTrue(addNewCardPage.isDownloadViaEsignetDisplayed(), "Verify if download via uin displayed");
-        MockCertifyLoginPage mockCertifyLoginPage =  addNewCardPage.clickOnDownloadViaMockCertify();
+        MockCertifyLoginPage mockCertifyLoginPage = addNewCardPage.clickOnDownloadViaMockCertify();
 
         addNewCardPage.clickOnContinueButtonInSigninPopupIos();
+        EsignetLoginPage esignetLoginPage = new EsignetLoginPage(driver);
+        esignetLoginPage.clickOnEsignetLoginWithOtpButton();
 
         Thread.sleep(9000);
-        OtpVerificationPage otpVerification= mockCertifyLoginPage.setEnterIdTextBox(TestDataReader.readData("MockVc"));
+        OtpVerificationPage otpVerification = mockCertifyLoginPage.setEnterIdTextBox(TestDataReader.readData("MockVc"));
 
         mockCertifyLoginPage.clickOnGetOtpButton();
 //        assertTrue(mockCertifyLoginPage.isOtpHasSendMessageDisplayed(),"verify if otp page is displayed");
