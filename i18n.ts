@@ -2,12 +2,6 @@ import i18next from 'i18next';
 import * as Localization from 'expo-localization';
 import {initReactI18next} from 'react-i18next';
 
-import en from './locales/en.json';
-import fil from './locales/fil.json';
-import ar from './locales/ara.json';
-import hi from './locales/hin.json';
-import kn from './locales/kan.json';
-import ta from './locales/tam.json';
 import es from './locales/es.json';
 
 import {iso6393To1} from 'iso-639-3';
@@ -15,12 +9,11 @@ import {iso6393To1} from 'iso-639-3';
 import {getItem} from './machines/store';
 import {LocalizedField} from './machines/VerifiableCredential/VCMetaMachine/vc';
 
-const resources = {en, es};
+const resources = {es};
 const locale = Localization.locale;
 const languageCodeMap = {} as {[key: string]: string};
 
 export const SUPPORTED_LANGUAGES = {
-  en: 'English',
   es: 'Española',
 };
 
@@ -41,7 +34,7 @@ i18next
       populateLanguageCodeMap();
     }
     if (!Object.keys(SUPPORTED_LANGUAGES).includes(i18next.language)) {
-      i18next.changeLanguage('en');
+      i18next.changeLanguage('es');
       populateLanguageCodeMap();
     }
   });

@@ -397,5 +397,5 @@ fileignoreconfig:
   - filename: assets/InjiHomeLogo.svg
     checksum: 6600a3d75033af4d702dd8c9663e12ad7c2c096a529bac2771bb856cc75a5ed0
   - filename: locales/es.json
-    checksum: 15e68aebe4c34b1f6ec843add937fc0db78cbf3d939bced998d8aec1915f282a 
+    checksum: a03fae655b13342afb45ab2b79998f3e06afcb02346c2ddf6aaacacf3b027209
     version: ""
