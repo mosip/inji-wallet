@@ -98,7 +98,7 @@ export const IssuersMachine = model.createMachine(
               'updateIssuerFromWellknown',
               'updateSelectedIssuerWellknownResponse',
             ],
-            target: 'downloadCredentialTypes',
+            target: 'fetchAuthorizationEndpoint',
           },
           onError: {
             actions: ['setNetworkOrTechnicalError', 'resetLoadingReason'],
@@ -122,6 +122,7 @@ export const IssuersMachine = model.createMachine(
               actions: 'setSupportedCredentialTypes',
               target: 'selectingCredentialType',
             },
+            /*is this transition needed?*/
             {
               target: 'checkInternet',
             },
@@ -142,7 +143,7 @@ export const IssuersMachine = model.createMachine(
           },
           SELECTED_CREDENTIAL_TYPE: {
             actions: 'setSelectedCredentialType',
-            target: 'fetchAuthorizationEndpoint',
+            target: 'checkInternet',
           },
         },
       },
@@ -152,7 +153,7 @@ export const IssuersMachine = model.createMachine(
           onDone: [
             {
               actions: 'updateAuthorizationEndpoint',
-              target: 'checkInternet',
+              target: 'downloadCredentialTypes',
             },
           ],
           onError: {
