@@ -33,7 +33,7 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/mosip/inji-openid4vp-ios-swift",
       "state" : {
-        "branch" : "0.1.0",
+        "version" : "0.1.0",
         "revision" : "0c2077ce23b7513d6f939b59a5299871db94d1da"
       }
     },
@@ -42,7 +42,7 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/mosip/inji-vci-client-ios-swift/",
       "state" : {
-        "branch" : "0.2.0",
+        "version" : "0.2.0",
         "revision" : "5fe56728106cffc8eff47e43437f288307c9d91b"
       }
     },
@@ -51,7 +51,7 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/mosip/pixelpass-ios-swift/",
       "state" : {
-        "branch" : "0.6.0",
+        "version" : "0.6.0",
         "revision" : "7111692893287015599e4e0297bcade6a5375527"
       }
     },
@@ -60,7 +60,7 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/mosip/secure-keystore-ios-swift",
       "state" : {
-        "branch" : "0.3.0",
+        "version" : "0.3.0",
         "revision" : "1ea5182ca985302d11010b7a16ea496167969ab3"
       }
     },
