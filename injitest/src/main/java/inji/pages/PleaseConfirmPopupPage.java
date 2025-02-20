@@ -9,7 +9,7 @@ public class PleaseConfirmPopupPage extends BasePage {
     @AndroidFindBy(accessibility = "yesConfirm")
     @iOSXCUITFindBy(accessibility = "yesConfirm")
     private WebElement yesButton;
-    
+
     @AndroidFindBy(accessibility = "no")
     @iOSXCUITFindBy(accessibility = "no")
     private WebElement noButton;
@@ -26,7 +26,7 @@ public class PleaseConfirmPopupPage extends BasePage {
         clickOnElement(yesButton);
         return new OtpVerificationPage(driver);
     }
-    
+
     public void clickOnNoButton() {
         clickOnElement(noButton);
         new OtpVerificationPage(driver);

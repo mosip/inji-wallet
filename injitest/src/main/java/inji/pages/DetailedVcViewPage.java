@@ -51,10 +51,10 @@ public class DetailedVcViewPage extends BasePage{
     @AndroidFindBy(accessibility = "enableVerification")
     @iOSXCUITFindBy(accessibility = "enableVerification")
     private WebElement activateButton;
-    
+
     @iOSXCUITFindBy(accessibility = "enableVerification")
     private WebElement activeButtonIos;
-    
+
     @AndroidFindBy(accessibility = "profileAuthenticated")
     @iOSXCUITFindBy(accessibility = "profileAuthenticated")
     private WebElement profileAuthenticated;
@@ -86,7 +86,7 @@ public class DetailedVcViewPage extends BasePage{
     @AndroidFindBy(accessibility = "mosip-logo")
     @iOSXCUITFindBy(accessibility = "mosip-logo")
     private WebElement esignetLogo;
-    
+
     @AndroidFindBy(accessibility = "goBack")
     @iOSXCUITFindBy(accessibility = "goBack")
     public WebElement backArrow;
@@ -152,7 +152,7 @@ public class DetailedVcViewPage extends BasePage{
         clickOnElement(activateButton);
         return new PleaseConfirmPopupPage(driver);
     }
-    
+
     public PleaseConfirmPopupPage clickOnActivateButtonIos(){
         IosUtil.scrollToElement(driver,58,712,160,129);
         clickOnElement(activeButtonIos);
@@ -175,13 +175,13 @@ public class DetailedVcViewPage extends BasePage{
 
     public HomePage clickOnQrCrossIcon() {
         if (isElementDisplayed(qrCloseIcon)){
-        clickOnElement(qrCloseIcon);
+            clickOnElement(qrCloseIcon);
         }
         return new HomePage(driver);
     }
 
     public HomePage clickOnCrossIcon() {
-       if(isElementDisplayed(crossIcon)) {
+        if(isElementDisplayed(crossIcon)) {
             clickOnElement(crossIcon);
         }
         return new HomePage(driver);

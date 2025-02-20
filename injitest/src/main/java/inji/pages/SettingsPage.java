@@ -37,15 +37,15 @@ public class SettingsPage extends BasePage {
     @AndroidFindBy(accessibility = "en")
     @iOSXCUITFindBy(accessibility = "en")
     private WebElement englishLanguageButton;
-    
+
     @AndroidFindBy(accessibility = "hi")
     @iOSXCUITFindBy(accessibility = "hi")
     private WebElement hindiLanguageButton;
-    
+
     @AndroidFindBy(accessibility = "ta")
     @iOSXCUITFindBy(accessibility = "ta")
     private WebElement tamilLanguageButton;
-    
+
     @AndroidFindBy(accessibility = "kn")
     @iOSXCUITFindBy(accessibility = "kn")
     private WebElement kannadaLanguageButton;
@@ -88,7 +88,7 @@ public class SettingsPage extends BasePage {
     @AndroidFindBy(accessibility = "ar")
     @iOSXCUITFindBy(accessibility = "ar")
     private WebElement arabicLanguageButton;
-    
+
     @AndroidFindBy(accessibility = "arrowLeft")
     @iOSXCUITFindBy(accessibility = "arrowLeft")
     private WebElement backButton;
@@ -110,7 +110,7 @@ public class SettingsPage extends BasePage {
     public boolean isSettingPageLoaded() {
         return this.isElementDisplayed(settingsTittle);
     }
-    
+
     public boolean isSettingPageLoadedInFilipion() {
         return this.isElementDisplayed(settingsTittle);
     }
@@ -137,11 +137,11 @@ public class SettingsPage extends BasePage {
     public void clickOnTamilLanguage() {
         clickOnElement(tamilLanguageButton);
     }
-    
+
     public void clickOnHindiLanguage() {
         clickOnElement(hindiLanguageButton);
     }
-    
+
     public void clickOnKannadaLanguage() {
         clickOnElement(kannadaLanguageButton);
     }
@@ -149,15 +149,15 @@ public class SettingsPage extends BasePage {
     public boolean verifyFilipinoLanguage() {
         return this.isElementDisplayed(wikaButton);
     }
-    
+
     public boolean verifyTamilLanguage() {
         return this.isElementDisplayed(languageButton);
     }
-    
+
     public boolean verifyHindiLanguage() {
         return this.isElementDisplayed(languageButton);
     }
-    
+
     public boolean verifyKannadaLanguage() {
         return this.isElementDisplayed(languageButton);
     }
@@ -165,11 +165,11 @@ public class SettingsPage extends BasePage {
     public boolean verifyLanguagesInLanguageFilter(String os) {
         List<String> expectedLanguages=null;
         List<String> actualLanguages= null;
-       if(os.equals("IOS")){
-         expectedLanguages = Arrays.asList("English \uE5CA Filipino عربى हिंदी ಕನ್ನಡ தமிழ்");
-         } else if (os.equals("ANDROID")) {
-           expectedLanguages = Arrays.asList("English", "Filipino","عربى", "हिंदी", "ಕನ್ನಡ", "தமிழ்");
-       }
+        if(os.equals("IOS")){
+            expectedLanguages = Arrays.asList("English \uE5CA Filipino عربى हिंदी ಕನ್ನಡ தமிழ்");
+        } else if (os.equals("ANDROID")) {
+            expectedLanguages = Arrays.asList("English", "Filipino","عربى", "हिंदी", "ಕನ್ನಡ", "தமிழ்");
+        }
         actualLanguages = languages.stream()
                 .map(WebElement::getText)
                 .collect(Collectors.toList());
@@ -222,7 +222,7 @@ public class SettingsPage extends BasePage {
         return new UnlockApplicationPage(driver);
     }
 
-    
+
     public UnlockApplicationPage clickOnArabicLanguageButton() {
         clickOnElement(arabicLanguageButton);
         return new UnlockApplicationPage(driver);

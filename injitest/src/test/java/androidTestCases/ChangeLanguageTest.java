@@ -519,7 +519,7 @@ public class ChangeLanguageTest extends AndroidBaseTest {
         homePage.clickOnHomeButton();
 
         assertTrue(sunbirdLoginPage.isSunbirdCardLogoIsDisplayed(), "Verify if download sunbird logo displayed");
-       // assertEquals(sunbirdLoginPage.getFullNameForSunbirdCard(),TestDataReader.readData("fullNameSunbird"));
+        // assertEquals(sunbirdLoginPage.getFullNameForSunbirdCard(),TestDataReader.readData("fullNameSunbird"));
         sunbirdLoginPage.openDetailedSunbirdVcView();
 
         assertEquals(sunbirdLoginPage.getFullNameForSunbirdCard(),TestDataReader.readData("fullNameSunbird"));
@@ -622,7 +622,7 @@ public class ChangeLanguageTest extends AndroidBaseTest {
         assertEquals(addNewCardPage.verifyLanguageForAddNewCardGuideMessage(),"नया कार्ड जोड़ने के लिए कृपया नीचे दिए गए विकल्पों में से अपना पसंदीदा जारीकर्ता चुनें।");
         assertTrue(addNewCardPage.isIssuerSearchBarDisplayedInHindi(),"verify if search bar is displayed in hindi");
 
-       EsignetLoginPage esignetLoginPage = addNewCardPage.clickOnDownloadViaEsignet();
+        EsignetLoginPage esignetLoginPage = addNewCardPage.clickOnDownloadViaEsignet();
         esignetLoginPage.clickOnCredentialTypeHeadingMOSIPVerifiableCredential();
 //        assertTrue(esignetLoginPage.verifyLanguageEnterUinOrVidBoxTextDisplayed("Hindi"),"verify if enter uin or vid text hindi");
         assertTrue(esignetLoginPage.verifyLanguageLoginHeaderTextDisplayed("Hindi"),"verify login text in hindi");
@@ -661,8 +661,9 @@ public class ChangeLanguageTest extends AndroidBaseTest {
         AddNewCardPage addNewCardPage = homePage.downloadCard();
         EsignetLoginPage esignetLoginPage = addNewCardPage.clickOnDownloadViaEsignet();
         esignetLoginPage.clickOnCredentialTypeHeadingMOSIPVerifiableCredential();
-        assertTrue(esignetLoginPage.verifyLanguageLoginHeaderTextDisplayed("Tamil"),"verify login text in tamil");
-        assertTrue(esignetLoginPage.verifyLanguagePleaseEnterUinHeaderTextDisplayed("Tamil"),"verify if enter uin/vid header in tamil");
+        esignetLoginPage.clickOnEsignetLoginWithOtpButton();
+        assertTrue(esignetLoginPage.verifyLanguageLoginHeaderTextDisplayed("Tamil"), "verify login text in tamil");
+        assertTrue(esignetLoginPage.verifyLanguagePleaseEnterUinHeaderTextDisplayed("Tamil"), "verify if enter uin/vid header in tamil");
     }
 
     @Test
@@ -697,8 +698,9 @@ public class ChangeLanguageTest extends AndroidBaseTest {
         AddNewCardPage addNewCardPage = homePage.downloadCard();
         EsignetLoginPage esignetLoginPage = addNewCardPage.clickOnDownloadViaEsignet();
         esignetLoginPage.clickOnCredentialTypeHeadingMOSIPVerifiableCredential();
-        assertTrue(esignetLoginPage.verifyLanguageLoginHeaderTextDisplayed("Kannada"),"verify login text in Kannada");
-        assertTrue(esignetLoginPage.verifyLanguagePleaseEnterUinHeaderTextDisplayed("Kannada"),"verify if enter uin/vid header in Kannada");
+        esignetLoginPage.clickOnEsignetLoginWithOtpButton();
+        assertTrue(esignetLoginPage.verifyLanguageLoginHeaderTextDisplayed("Kannada"), "verify login text in Kannada");
+        assertTrue(esignetLoginPage.verifyLanguagePleaseEnterUinHeaderTextDisplayed("Kannada"), "verify if enter uin/vid header in Kannada");
 
     }
 
@@ -737,8 +739,9 @@ public class ChangeLanguageTest extends AndroidBaseTest {
         AddNewCardPage addNewCardPage = homePage.downloadCard();
         EsignetLoginPage esignetLoginPage = addNewCardPage.clickOnDownloadViaEsignet();
         esignetLoginPage.clickOnCredentialTypeHeadingMOSIPVerifiableCredential();
-        assertTrue(esignetLoginPage.verifyLanguageLoginHeaderTextDisplayed("Arabic"),"verify login text in arabic");
-        assertTrue(esignetLoginPage.verifyLanguagePleaseEnterUinHeaderTextDisplayed("Arabic"),"verify if enter uin/vid header in arabic");
+        esignetLoginPage.clickOnEsignetLoginWithOtpButton();
+        assertTrue(esignetLoginPage.verifyLanguageLoginHeaderTextDisplayed("Arabic"), "verify login text in arabic");
+        assertTrue(esignetLoginPage.verifyLanguagePleaseEnterUinHeaderTextDisplayed("Arabic"), "verify if enter uin/vid header in arabic");
 
     }
 
@@ -774,8 +777,9 @@ public class ChangeLanguageTest extends AndroidBaseTest {
         AddNewCardPage addNewCardPage = homePage.downloadCard();
         EsignetLoginPage esignetLoginPage = addNewCardPage.clickOnDownloadViaEsignet();
         esignetLoginPage.clickOnCredentialTypeHeadingMOSIPVerifiableCredential();
-        assertTrue(esignetLoginPage.verifyLanguageLoginHeaderTextDisplayed("Kannada"),"verify login text in Kannada");
-        assertTrue(esignetLoginPage.verifyLanguagePleaseEnterUinHeaderTextDisplayed("Kannada"),"verify if enter uin/vid header in Kannada");
+        esignetLoginPage.clickOnEsignetLoginWithOtpButton();
+        assertTrue(esignetLoginPage.verifyLanguageLoginHeaderTextDisplayed("Kannada"), "verify login text in Kannada");
+        assertTrue(esignetLoginPage.verifyLanguagePleaseEnterUinHeaderTextDisplayed("Kannada"), "verify if enter uin/vid header in Kannada");
 
         esignetLoginPage.clickOnCloseButton();
         addNewCardPage.clickOnBack();
@@ -790,8 +794,9 @@ public class ChangeLanguageTest extends AndroidBaseTest {
         homePage.downloadCard();
         addNewCardPage.clickOnDownloadViaEsignet();
         esignetLoginPage.clickOnCredentialTypeHeadingMOSIPVerifiableCredential();
-        assertTrue(esignetLoginPage.verifyLanguageLoginHeaderTextDisplayed("Kannada"),"verify login text in Kannada");
-        assertTrue(esignetLoginPage.verifyLanguagePleaseEnterUinHeaderTextDisplayed("Kannada"),"verify if enter uin/vid header in Kannada");
+        esignetLoginPage.clickOnEsignetLoginWithOtpButton();
+        assertTrue(esignetLoginPage.verifyLanguageLoginHeaderTextDisplayed("Kannada"), "verify login text in Kannada");
+        assertTrue(esignetLoginPage.verifyLanguagePleaseEnterUinHeaderTextDisplayed("Kannada"), "verify if enter uin/vid header in Kannada");
     }
 
     @Test
@@ -826,8 +831,9 @@ public class ChangeLanguageTest extends AndroidBaseTest {
         AddNewCardPage addNewCardPage = homePage.downloadCard();
         EsignetLoginPage esignetLoginPage = addNewCardPage.clickOnDownloadViaEsignet();
         esignetLoginPage.clickOnCredentialTypeHeadingMOSIPVerifiableCredential();
-        assertTrue(esignetLoginPage.verifyLanguageLoginHeaderTextDisplayed("Kannada"),"verify login text in Kannada");
-        assertTrue(esignetLoginPage.verifyLanguagePleaseEnterUinHeaderTextDisplayed("Kannada"),"verify if enter uin/vid header in Kannada");
+        esignetLoginPage.clickOnEsignetLoginWithOtpButton();
+        assertTrue(esignetLoginPage.verifyLanguageLoginHeaderTextDisplayed("Kannada"), "verify login text in Kannada");
+        assertTrue(esignetLoginPage.verifyLanguagePleaseEnterUinHeaderTextDisplayed("Kannada"), "verify if enter uin/vid header in Kannada");
 
         esignetLoginPage.clickOnCloseButton();
         addNewCardPage.clickOnBack();
@@ -842,8 +848,267 @@ public class ChangeLanguageTest extends AndroidBaseTest {
         homePage.downloadCard();
         addNewCardPage.clickOnDownloadViaEsignet();
         esignetLoginPage.clickOnCredentialTypeHeadingMOSIPVerifiableCredential();
-        assertTrue(esignetLoginPage.verifyLanguageLoginHeaderTextDisplayed("English"),"verify login text in english");
-        assertTrue(esignetLoginPage.verifyLanguagePleaseEnterUinHeaderTextDisplayed("English"),"verify if enter uin/vid header in english");
+        esignetLoginPage.clickOnEsignetLoginWithOtpButton();
+        assertTrue(esignetLoginPage.verifyLanguageLoginHeaderTextDisplayed("English"), "verify login text in english");
+        assertTrue(esignetLoginPage.verifyLanguagePleaseEnterUinHeaderTextDisplayed("English"), "verify if enter uin/vid header in english");
+    }
+
+    @Test
+    public void verifyWelcomePagesContentEnglish() {
+
+        ChooseLanguagePage chooseLanguagePage = new ChooseLanguagePage(driver);
+        assertTrue(chooseLanguagePage.isChooseLanguagePageLoaded(), "Verify if choose language page is displayed");
+        WelcomePage welcomePage = chooseLanguagePage.clickOnSavePreference();
+
+        assertTrue(welcomePage.isWelcomePageLoaded(), "Verify if welcome page is loaded");
+        assertTrue(welcomePage.isSelectAppUnlockMethodHeaderTextDisplayed(), "Verify if select app unlock method header  displayed");
+        assertTrue(welcomePage.isWelcomePageDescriptionTextDisplayed(), "Verify if select app unlock method description  displayed");
+        assertTrue(welcomePage.isPasswordTypeDescriptionTextDisplayed(), "Verify if password type description displayed");
+        assertTrue(welcomePage.getWelcomeDescription("English"), "Keep your digital credential with you at all times. Inji helps you manage and use them effectively. To get started, add cards to your profile.");
+        welcomePage.clickOnNextButton();
+
+        SecureSharingPage secureSharingPage = new SecureSharingPage(driver);
+        assertTrue(secureSharingPage.isRequesterHeaderTextDisplayed(), "Verify if requester header displayed");
+        assertTrue(secureSharingPage.isPleaseSelectIdTextDisplayed(), "Verify if please select id text displayed");
+        assertTrue(secureSharingPage.verifyLanguageforSecureSharingPageLoaded("English"), "Secure Sharing");
+        assertTrue(secureSharingPage.getSecureSharingDescription("English"), "Share your cards securely in a hassle free way and avail various services.");
+        secureSharingPage.clickOnNextButton();
+
+        TrustedDigitalWalletPage trustedDigitalWalletPage = new TrustedDigitalWalletPage(driver);
+        assertTrue(trustedDigitalWalletPage.isInjiLogoDisplayed(), "Verify if injilogo displayed");
+        assertTrue(trustedDigitalWalletPage.isHelpTextDisplayed(), "Verify if help text displayed");
+        assertTrue(trustedDigitalWalletPage.verifyLanguageforTrustedDigitalWalletPageLoaded("English"), "Trusted Digital Wallet");
+        assertTrue(trustedDigitalWalletPage.getTrustedDigitalWalletDescription("English"), "Store and carry all your important cards in a single trusted wallet.");
+        trustedDigitalWalletPage.clickOnNextButton();
+
+        QuickAccessPage quickAccessPage = new QuickAccessPage(driver);
+        assertTrue(quickAccessPage.isHoldPhoneSteadyMessageDisplayed(), "Verify if hold phone steady message displayed");
+        assertTrue(quickAccessPage.verifyLanguageforQuickAccessTextPageLoaded("English"), "Quick Access");
+        assertTrue(quickAccessPage.getQuickAccessDescription("English"), "Authenticate yourself with ease using the stored digital credential.");
+        quickAccessPage.clickOnNextButton();
+
+        BackupDataTourPage backupDataPage = new BackupDataTourPage(driver);
+        assertTrue(backupDataPage.isAccountSectionHeaderDisplayed(), "Verify if account section header displayed");
+        assertTrue(backupDataPage.isLastBackupSectionHeaderDisplayed(), "Verify if last backup section header displayed");
+        assertTrue(backupDataPage.isBackupAndRestoreDisplayed(), "Verify if backup and restore displayed");
+        assertTrue(backupDataPage.verifyLanguageforBackupDataPageLoaded("English"), "Backup & Restore");
+        assertTrue(backupDataPage.getBackupDataPageDescription("English"), "Protect your data with ease using our Backup & Restore feature. Safely store your VCs against loss or accidents by creating regular backups and recover it effortlessly whenever needed for seamless continuity.");
+    }
+
+    @Test
+    public void verifyWelcomePagesContentInFilipino() {
+
+        ChooseLanguagePage chooseLanguagePage = new ChooseLanguagePage(driver);
+        chooseLanguagePage.clickOnFilipinoLangauge();
+        assertTrue(chooseLanguagePage.isChooseLanguagePageLoaded(), "Verify if choose language page is displayed");
+        WelcomePage welcomePage = chooseLanguagePage.clickOnSavePreference();
+
+        assertTrue(welcomePage.isWelcomePageLoaded(), "Verify if welcome page is loaded");
+        assertTrue(welcomePage.isSelectAppUnlockMethodHeaderTextDisplayed(), "Verify if select app unlock method header  displayed");
+        assertTrue(welcomePage.isWelcomePageDescriptionTextDisplayed(), "Verify if select app unlock method description  displayed");
+        assertTrue(welcomePage.isPasswordTypeDescriptionTextDisplayed(), "Verify if password type description displayed");
+        assertTrue(welcomePage.getWelcomeDescription("Filipino"), "Keep your digital credential with you at all times. Inji helps you manage and use them effectively. To get started, add cards to your profile.");
+        welcomePage.clickOnNextButton();
+
+        SecureSharingPage secureSharingPage = new SecureSharingPage(driver);
+//        assertTrue(secureSharingPage.isRequesterHeaderTextDisplayed(), "Verify if requester header displayed");
+//        assertTrue(secureSharingPage.isPleaseSelectIdTextDisplayed(), "Verify if please select id text displayed");
+        assertTrue(secureSharingPage.verifyLanguageforSecureSharingPageLoaded("Filipino"), "Secure Sharing");
+        assertTrue(secureSharingPage.getSecureSharingDescription("Filipino"), "Share your cards securely in a hassle free way and avail various services.");
+        secureSharingPage.clickOnNextButton();
+
+        TrustedDigitalWalletPage trustedDigitalWalletPage = new TrustedDigitalWalletPage(driver);
+        assertTrue(trustedDigitalWalletPage.isInjiLogoDisplayed(), "Verify if injilogo displayed");
+        assertTrue(trustedDigitalWalletPage.isHelpTextDisplayed(), "Verify if help text displayed");
+        assertTrue(trustedDigitalWalletPage.verifyLanguageforTrustedDigitalWalletPageLoaded("Filipino"), "Trusted Digital Wallet");
+        assertTrue(trustedDigitalWalletPage.getTrustedDigitalWalletDescription("Filipino"), "Store and carry all your important cards in a single trusted wallet.");
+        trustedDigitalWalletPage.clickOnNextButton();
+
+        QuickAccessPage quickAccessPage = new QuickAccessPage(driver);
+        assertTrue(quickAccessPage.isHoldPhoneSteadyMessageDisplayed(), "Verify if hold phone steady message displayed");
+        assertTrue(quickAccessPage.verifyLanguageforQuickAccessTextPageLoaded("Filipino"), "Quick Access");
+        assertTrue(quickAccessPage.getQuickAccessDescription("Filipino"), "Authenticate yourself with ease using the stored digital credential.");
+        quickAccessPage.clickOnNextButton();
+
+        BackupDataTourPage backupDataPage = new BackupDataTourPage(driver);
+        assertTrue(backupDataPage.isAccountSectionHeaderDisplayed(), "Verify if account section header displayed");
+        assertTrue(backupDataPage.isLastBackupSectionHeaderDisplayed(), "Verify if last backup section header displayed");
+//        assertTrue(backupDataPage.isBackupAndRestoreDisplayed(), "Verify if backup and restore displayed");
+        assertTrue(backupDataPage.verifyLanguageforBackupDataPageLoaded("Filipino"), "Backup & Restore");
+        assertTrue(backupDataPage.getBackupDataPageDescription("Filipino"), "Protect your data with ease using our Backup & Restore feature. Safely store your VCs against loss or accidents by creating regular backups and recover it effortlessly whenever needed for seamless continuity.");
+    }
+
+    @Test
+    public void verifyWelcomePagesContentInHindi() {
+
+        ChooseLanguagePage chooseLanguagePage = new ChooseLanguagePage(driver);
+        chooseLanguagePage.clickOnHindiLanguage();
+        assertTrue(chooseLanguagePage.isChooseLanguagePageLoaded(), "Verify if choose language page is displayed");
+        WelcomePage welcomePage = chooseLanguagePage.clickOnSavePreference();
+
+        assertTrue(welcomePage.isWelcomePageLoaded(), "Verify if welcome page is loaded");
+        assertTrue(welcomePage.isSelectAppUnlockMethodHeaderTextDisplayed(), "Verify if select app unlock method header  displayed");
+        assertTrue(welcomePage.isWelcomePageDescriptionTextDisplayed(), "Verify if select app unlock method description  displayed");
+        assertTrue(welcomePage.isPasswordTypeDescriptionTextDisplayed(), "Verify if password type description displayed");
+        assertTrue(welcomePage.getWelcomeDescription("Hindi"), "Keep your digital credential with you at all times. Inji helps you manage and use them effectively. To get started, add cards to your profile.");
+        welcomePage.clickOnNextButton();
+
+        SecureSharingPage secureSharingPage = new SecureSharingPage(driver);
+//        assertTrue(secureSharingPage.isRequesterHeaderTextDisplayed(), "Verify if requester header displayed");
+//        assertTrue(secureSharingPage.isPleaseSelectIdTextDisplayed(), "Verify if please select id text displayed");
+        assertTrue(secureSharingPage.verifyLanguageforSecureSharingPageLoaded("Hindi"), "Secure Sharing");
+        assertTrue(secureSharingPage.getSecureSharingDescription("Hindi"), "Share your cards securely in a hassle free way and avail various services.");
+        secureSharingPage.clickOnNextButton();
+
+        TrustedDigitalWalletPage trustedDigitalWalletPage = new TrustedDigitalWalletPage(driver);
+        assertTrue(trustedDigitalWalletPage.isInjiLogoDisplayed(), "Verify if injilogo displayed");
+        assertTrue(trustedDigitalWalletPage.isHelpTextDisplayed(), "Verify if help text displayed");
+        assertTrue(trustedDigitalWalletPage.verifyLanguageforTrustedDigitalWalletPageLoaded("Hindi"), "Trusted Digital Wallet");
+        assertTrue(trustedDigitalWalletPage.getTrustedDigitalWalletDescription("Hindi"), "Store and carry all your important cards in a single trusted wallet.");
+        trustedDigitalWalletPage.clickOnNextButton();
+
+        QuickAccessPage quickAccessPage = new QuickAccessPage(driver);
+        assertTrue(quickAccessPage.isHoldPhoneSteadyMessageDisplayed(), "Verify if hold phone steady message displayed");
+        assertTrue(quickAccessPage.verifyLanguageforQuickAccessTextPageLoaded("Hindi"), "Quick Access");
+        assertTrue(quickAccessPage.getQuickAccessDescription("Hindi"), "Authenticate yourself with ease using the stored digital credential.");
+        quickAccessPage.clickOnNextButton();
+
+        BackupDataTourPage backupDataPage = new BackupDataTourPage(driver);
+        assertTrue(backupDataPage.isAccountSectionHeaderDisplayed(), "Verify if account section header displayed");
+        assertTrue(backupDataPage.isLastBackupSectionHeaderDisplayed(), "Verify if last backup section header displayed");
+//        assertTrue(backupDataPage.isBackupAndRestoreDisplayed(), "Verify if backup and restore displayed");
+        assertTrue(backupDataPage.verifyLanguageforBackupDataPageLoaded("Hindi"), "Backup & Restore");
+        assertTrue(backupDataPage.getBackupDataPageDescription("Hindi"), "Protect your data with ease using our Backup & Restore feature. Safely store your VCs against loss or accidents by creating regular backups and recover it effortlessly whenever needed for seamless continuity.");
+    }
+
+    @Test
+    public void verifyWelcomePagesContentInKannada() {
+
+        ChooseLanguagePage chooseLanguagePage = new ChooseLanguagePage(driver);
+        chooseLanguagePage.clickOnKannadaLanguage();
+        assertTrue(chooseLanguagePage.isChooseLanguagePageLoaded(), "Verify if choose language page is displayed");
+        WelcomePage welcomePage = chooseLanguagePage.clickOnSavePreference();
+
+        assertTrue(welcomePage.isWelcomePageLoaded(), "Verify if welcome page is loaded");
+        assertTrue(welcomePage.isSelectAppUnlockMethodHeaderTextDisplayed(), "Verify if select app unlock method header  displayed");
+        assertTrue(welcomePage.isWelcomePageDescriptionTextDisplayed(), "Verify if select app unlock method description  displayed");
+        assertTrue(welcomePage.isPasswordTypeDescriptionTextDisplayed(), "Verify if password type description displayed");
+        assertTrue(welcomePage.getWelcomeDescription("Kannada"), "Keep your digital credential with you at all times. Inji helps you manage and use them effectively. To get started, add cards to your profile.");
+        welcomePage.clickOnNextButton();
+
+        SecureSharingPage secureSharingPage = new SecureSharingPage(driver);
+//        assertTrue(secureSharingPage.isRequesterHeaderTextDisplayed(), "Verify if requester header displayed");
+//        assertTrue(secureSharingPage.isPleaseSelectIdTextDisplayed(), "Verify if please select id text displayed");
+        assertTrue(secureSharingPage.verifyLanguageforSecureSharingPageLoaded("Kannada"), "Secure Sharing");
+        assertTrue(secureSharingPage.getSecureSharingDescription("Kannada"), "Share your cards securely in a hassle free way and avail various services.");
+        secureSharingPage.clickOnNextButton();
+
+        TrustedDigitalWalletPage trustedDigitalWalletPage = new TrustedDigitalWalletPage(driver);
+        assertTrue(trustedDigitalWalletPage.isInjiLogoDisplayed(), "Verify if injilogo displayed");
+        assertTrue(trustedDigitalWalletPage.isHelpTextDisplayed(), "Verify if help text displayed");
+        assertTrue(trustedDigitalWalletPage.verifyLanguageforTrustedDigitalWalletPageLoaded("Kannada"), "Trusted Digital Wallet");
+        assertTrue(trustedDigitalWalletPage.getTrustedDigitalWalletDescription("Kannada"), "Store and carry all your important cards in a single trusted wallet.");
+        trustedDigitalWalletPage.clickOnNextButton();
+
+        QuickAccessPage quickAccessPage = new QuickAccessPage(driver);
+        assertTrue(quickAccessPage.isHoldPhoneSteadyMessageDisplayed(), "Verify if hold phone steady message displayed");
+        assertTrue(quickAccessPage.verifyLanguageforQuickAccessTextPageLoaded("Kannada"), "Quick Access");
+        assertTrue(quickAccessPage.getQuickAccessDescription("Kannada"), "Authenticate yourself with ease using the stored digital credential.");
+        quickAccessPage.clickOnNextButton();
+
+        BackupDataTourPage backupDataPage = new BackupDataTourPage(driver);
+        assertTrue(backupDataPage.isAccountSectionHeaderDisplayed(), "Verify if account section header displayed");
+        assertTrue(backupDataPage.isLastBackupSectionHeaderDisplayed(), "Verify if last backup section header displayed");
+//        assertTrue(backupDataPage.isBackupAndRestoreDisplayed(), "Verify if backup and restore displayed");
+        assertTrue(backupDataPage.verifyLanguageforBackupDataPageLoaded("Kannada"), "Backup & Restore");
+        assertTrue(backupDataPage.getBackupDataPageDescription("Kannada"), "Protect your data with ease using our Backup & Restore feature. Safely store your VCs against loss or accidents by creating regular backups and recover it effortlessly whenever needed for seamless continuity.");
+    }
+
+
+    @Test
+    public void verifyWelcomePagesContentInTamil() {
+
+        ChooseLanguagePage chooseLanguagePage = new ChooseLanguagePage(driver);
+        chooseLanguagePage.clickOnTamilLanguage();
+        assertTrue(chooseLanguagePage.isChooseLanguagePageLoaded(), "Verify if choose language page is displayed");
+        WelcomePage welcomePage = chooseLanguagePage.clickOnSavePreference();
+
+        assertTrue(welcomePage.isWelcomePageLoaded(), "Verify if welcome page is loaded");
+        assertTrue(welcomePage.isSelectAppUnlockMethodHeaderTextDisplayed(), "Verify if select app unlock method header  displayed");
+        assertTrue(welcomePage.isWelcomePageDescriptionTextDisplayed(), "Verify if select app unlock method description  displayed");
+        assertTrue(welcomePage.isPasswordTypeDescriptionTextDisplayed(), "Verify if password type description displayed");
+        assertTrue(welcomePage.getWelcomeDescription("Tamil"), "Keep your digital credential with you at all times. Inji helps you manage and use them effectively. To get started, add cards to your profile.");
+        welcomePage.clickOnNextButton();
+
+        SecureSharingPage secureSharingPage = new SecureSharingPage(driver);
+//        assertTrue(secureSharingPage.isRequesterHeaderTextDisplayed(), "Verify if requester header displayed");
+//        assertTrue(secureSharingPage.isPleaseSelectIdTextDisplayed(), "Verify if please select id text displayed");
+        assertTrue(secureSharingPage.verifyLanguageforSecureSharingPageLoaded("Tamil"), "Secure Sharing");
+        assertTrue(secureSharingPage.getSecureSharingDescription("Tamil"), "Share your cards securely in a hassle free way and avail various services.");
+        secureSharingPage.clickOnNextButton();
+
+        TrustedDigitalWalletPage trustedDigitalWalletPage = new TrustedDigitalWalletPage(driver);
+        assertTrue(trustedDigitalWalletPage.isInjiLogoDisplayed(), "Verify if injilogo displayed");
+        assertTrue(trustedDigitalWalletPage.isHelpTextDisplayed(), "Verify if help text displayed");
+        assertTrue(trustedDigitalWalletPage.verifyLanguageforTrustedDigitalWalletPageLoaded("Tamil"), "Trusted Digital Wallet");
+        assertTrue(trustedDigitalWalletPage.getTrustedDigitalWalletDescription("Tamil"), "Store and carry all your important cards in a single trusted wallet.");
+        trustedDigitalWalletPage.clickOnNextButton();
+
+        QuickAccessPage quickAccessPage = new QuickAccessPage(driver);
+        assertTrue(quickAccessPage.isHoldPhoneSteadyMessageDisplayed(), "Verify if hold phone steady message displayed");
+        assertTrue(quickAccessPage.verifyLanguageforQuickAccessTextPageLoaded("Tamil"), "Quick Access");
+        assertTrue(quickAccessPage.getQuickAccessDescription("Tamil"), "Authenticate yourself with ease using the stored digital credential.");
+        quickAccessPage.clickOnNextButton();
+
+        BackupDataTourPage backupDataPage = new BackupDataTourPage(driver);
+        assertTrue(backupDataPage.isAccountSectionHeaderDisplayed(), "Verify if account section header displayed");
+        assertTrue(backupDataPage.isLastBackupSectionHeaderDisplayed(), "Verify if last backup section header displayed");
+//        assertTrue(backupDataPage.isBackupAndRestoreDisplayed(), "Verify if backup and restore displayed");
+        assertTrue(backupDataPage.verifyLanguageforBackupDataPageLoaded("Tamil"), "Backup & Restore");
+        assertTrue(backupDataPage.getBackupDataPageDescription("Tamil"), "Protect your data with ease using our Backup & Restore feature. Safely store your VCs against loss or accidents by creating regular backups and recover it effortlessly whenever needed for seamless continuity.");
+    }
+
+    @Test
+    public void verifyWelcomePagesContentInArabic() {
+
+        ChooseLanguagePage chooseLanguagePage = new ChooseLanguagePage(driver);
+        chooseLanguagePage.clickOnArabicLanguage();
+        assertTrue(chooseLanguagePage.isChooseLanguagePageLoaded(), "Verify if choose language page is displayed");
+        WelcomePage welcomePage = chooseLanguagePage.clickOnSavePreference();
+
+        assertTrue(welcomePage.isWelcomePageLoaded(), "Verify if welcome page is loaded");
+        assertTrue(welcomePage.isSelectAppUnlockMethodHeaderTextDisplayed(), "Verify if select app unlock method header  displayed");
+        assertTrue(welcomePage.isWelcomePageDescriptionTextDisplayed(), "Verify if select app unlock method description  displayed");
+        assertTrue(welcomePage.isPasswordTypeDescriptionTextDisplayed(), "Verify if password type description displayed");
+        assertTrue(welcomePage.getWelcomeDescription("Arabic"), "Keep your digital credential with you at all times. Inji helps you manage and use them effectively. To get started, add cards to your profile.");
+        welcomePage.clickOnNextButton();
+
+        SecureSharingPage secureSharingPage = new SecureSharingPage(driver);
+//        assertTrue(secureSharingPage.isRequesterHeaderTextDisplayed(), "Verify if requester header displayed");
+//        assertTrue(secureSharingPage.isPleaseSelectIdTextDisplayed(), "Verify if please select id text displayed");
+        assertTrue(secureSharingPage.verifyLanguageforSecureSharingPageLoaded("Arabic"), "Secure Sharing");
+        assertTrue(secureSharingPage.getSecureSharingDescription("Arabic"), "Share your cards securely in a hassle free way and avail various services.");
+        secureSharingPage.clickOnNextButton();
+
+        TrustedDigitalWalletPage trustedDigitalWalletPage = new TrustedDigitalWalletPage(driver);
+        assertTrue(trustedDigitalWalletPage.isInjiLogoDisplayed(), "Verify if injilogo displayed");
+        assertTrue(trustedDigitalWalletPage.isHelpTextDisplayed(), "Verify if help text displayed");
+        assertTrue(trustedDigitalWalletPage.verifyLanguageforTrustedDigitalWalletPageLoaded("Arabic"), "Trusted Digital Wallet");
+        assertTrue(trustedDigitalWalletPage.getTrustedDigitalWalletDescription("Arabic"), "Store and carry all your important cards in a single trusted wallet.");
+        trustedDigitalWalletPage.clickOnNextButton();
+
+        QuickAccessPage quickAccessPage = new QuickAccessPage(driver);
+        assertTrue(quickAccessPage.isHoldPhoneSteadyMessageDisplayed(), "Verify if hold phone steady message displayed");
+        assertTrue(quickAccessPage.verifyLanguageforQuickAccessTextPageLoaded("Arabic"), "Quick Access");
+        assertTrue(quickAccessPage.getQuickAccessDescription("Arabic"), "Authenticate yourself with ease using the stored digital credential.");
+        quickAccessPage.clickOnNextButton();
+
+        BackupDataTourPage backupDataPage = new BackupDataTourPage(driver);
+        assertTrue(backupDataPage.isAccountSectionHeaderDisplayed(), "Verify if account section header displayed");
+        assertTrue(backupDataPage.isLastBackupSectionHeaderDisplayed(), "Verify if last backup section header displayed");
+//        assertTrue(backupDataPage.isBackupAndRestoreDisplayed(), "Verify if backup and restore displayed");
+        assertTrue(backupDataPage.verifyLanguageforBackupDataPageLoaded("Arabic"), "Backup & Restore");
+        assertTrue(backupDataPage.getBackupDataPageDescription("Arabic"), "Protect your data with ease using our Backup & Restore feature. Safely store your VCs against loss or accidents by creating regular backups and recover it effortlessly whenever needed for seamless continuity.");
     }
 
 }

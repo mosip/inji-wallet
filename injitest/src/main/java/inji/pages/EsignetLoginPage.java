@@ -16,7 +16,7 @@ public class EsignetLoginPage extends BasePage {
     @iOSXCUITFindBy(accessibility = "Continue")
     private WebElement iosContinueButton;
 
-    @AndroidFindBy(xpath = "//*[contains(@text,'Login with OTP')]")
+    @AndroidFindBy(xpath = "//*[@resource-id='login_with_otp']")
     @iOSXCUITFindBy(accessibility = "Login with OTP")
     private WebElement esignetLoginButton;
 
@@ -80,7 +80,7 @@ public class EsignetLoginPage extends BasePage {
     private WebElement signUpwithUnifiedLoginText;
 
     @AndroidFindBy(accessibility = "Close tab")
-    @iOSXCUITFindBy(xpath ="//XCUIElementTypeButton[@name=\"Cancel\"]")
+    @iOSXCUITFindBy(xpath = "//XCUIElementTypeButton[@name=\"Cancel\"]")
     private WebElement CloseTab;
 
     @AndroidFindBy(accessibility = "credentialTypeHeading-MOSIPVerifiableCredential")

@@ -21,7 +21,7 @@ public class AboutInjiPage extends BasePage {
     @AndroidFindBy(accessibility = "arrowLeft")
     @iOSXCUITFindBy(accessibility = "arrowLeft")
     private WebElement backButton;
-    
+
     @AndroidFindBy(accessibility = "clickHere")
     @iOSXCUITFindBy(accessibility = "clickHere")
     public WebElement clickHereButton;
@@ -43,10 +43,10 @@ public class AboutInjiPage extends BasePage {
 
     public boolean isTuvaliVesionVisible() {
         String tuvaliVersion = getTextFromLocator(tuvaliVesion);
-     if(tuvaliVersion.contains("0.5.0")){
-         return true;
-     }else
-         return false;
+        if (tuvaliVersion.contains("0.5.0")) {
+            return true;
+        } else
+            return false;
     }
 
     public AboutInjiPage(AppiumDriver driver) {
@@ -66,10 +66,10 @@ public class AboutInjiPage extends BasePage {
         return this.isElementDisplayed(copy);
     }
 
-    public boolean  isMosipUrlIsDisplayedInChrome() throws InterruptedException {
+    public boolean isMosipUrlIsDisplayedInChrome() throws InterruptedException {
         Thread.sleep(5000);
-        String context= driver.getPageSource();
-        return context.contains("Inji")||context.contains("inji");
+        String context = driver.getPageSource();
+        return context.contains("Inji") || context.contains("inji");
     }
 
     public void clickOnCopyText() {
@@ -79,7 +79,7 @@ public class AboutInjiPage extends BasePage {
     public void clickOnBackButton() {
         clickOnElement(copy);
     }
-    
+
     public void clickOnClickHereButton() {
         clickOnElement(clickHereButton);
     }

@@ -12,9 +12,9 @@ import static org.testng.Assert.assertTrue;
 
 public class CredentialRegistryTest extends IosBaseTest {
 
-	@Test
-	public void downloadAndVerifyVcInNewEnv() throws InterruptedException {
-		ChooseLanguagePage chooseLanguagePage = new ChooseLanguagePage(driver);
+    @Test
+    public void downloadAndVerifyVcInNewEnv() throws InterruptedException {
+        ChooseLanguagePage chooseLanguagePage = new ChooseLanguagePage(driver);
 
         assertTrue(chooseLanguagePage.isChooseLanguagePageLoaded(), "Verify if choose language page is displayed");
         WelcomePage welcomePage = chooseLanguagePage.clickOnSavePreference();
@@ -75,11 +75,11 @@ public class CredentialRegistryTest extends IosBaseTest {
         DetailedVcViewPage detailedVcViewPage = homePage.openDetailedVcView();
         assertTrue(detailedVcViewPage.isCredentialRegistryTextDisplayed(),"Verify if is credential registry text displayed");
         assertEquals(detailedVcViewPage.getCredentialRegistryValue(), TestDataReader.readData("newEnv"), "Verify changed env is displayed in detailed vc");
-	}
+    }
 
-	@Test
+    @Test
     public void cancelChangeEnvAndVerify() throws InterruptedException {
-		ChooseLanguagePage chooseLanguagePage = new ChooseLanguagePage(driver);
+        ChooseLanguagePage chooseLanguagePage = new ChooseLanguagePage(driver);
 
         assertTrue(chooseLanguagePage.isChooseLanguagePageLoaded(), "Verify if choose language page is displayed");
         WelcomePage welcomePage = chooseLanguagePage.clickOnSavePreference();
@@ -114,11 +114,11 @@ public class CredentialRegistryTest extends IosBaseTest {
 
         settingsPage.clickOnCredentialRegistry();
         assertEquals(credentialRegistryPage.checkEnvNotChanged(),"https://api.qa-inji1.mosip.net");
-	}
+    }
 
-	@Test
-	public void downloadAndVerifyVcInInvalidEnv() throws InterruptedException {
-		ChooseLanguagePage chooseLanguagePage = new ChooseLanguagePage(driver);
+    @Test
+    public void downloadAndVerifyVcInInvalidEnv() throws InterruptedException {
+        ChooseLanguagePage chooseLanguagePage = new ChooseLanguagePage(driver);
 
         assertTrue(chooseLanguagePage.isChooseLanguagePageLoaded(), "Verify if choose language page is displayed");
         WelcomePage welcomePage = chooseLanguagePage.clickOnSavePreference();
@@ -146,11 +146,11 @@ public class CredentialRegistryTest extends IosBaseTest {
         credentialRegistryPage.setEnterIdTextBox(TestDataReader.readData("invalidenv")).clickOnSaveButton().clickOnSaveButton();
 
         assertTrue(credentialRegistryPage.isCredentialRegistryErrorMessageDisplayed(), "Verify if error message is displayed");
-	}
+    }
 
-	@Test
-	public void generateUinInNewEnv() throws InterruptedException {
-		ChooseLanguagePage chooseLanguagePage = new ChooseLanguagePage(driver);
+    @Test
+    public void generateUinInNewEnv() throws InterruptedException {
+        ChooseLanguagePage chooseLanguagePage = new ChooseLanguagePage(driver);
 
         assertTrue(chooseLanguagePage.isChooseLanguagePageLoaded(), "Verify if choose language page is displayed");
         WelcomePage welcomePage = chooseLanguagePage.clickOnSavePreference();
@@ -201,11 +201,11 @@ public class CredentialRegistryTest extends IosBaseTest {
 
         addNewCardPage.clickOnDoneButton();
         assertTrue(homePage.isCredentialTypeValueDisplayed(), "Verify if credential type value is displayed");
-	}
+    }
 
-	@Test
-	public void retrivingUinInOtherEnv() throws InterruptedException {
-		ChooseLanguagePage chooseLanguagePage = new ChooseLanguagePage(driver);
+    @Test
+    public void retrivingUinInOtherEnv() throws InterruptedException {
+        ChooseLanguagePage chooseLanguagePage = new ChooseLanguagePage(driver);
 
         assertTrue(chooseLanguagePage.isChooseLanguagePageLoaded(), "Verify if choose language page is displayed");
         WelcomePage welcomePage = chooseLanguagePage.clickOnSavePreference();
@@ -246,11 +246,11 @@ public class CredentialRegistryTest extends IosBaseTest {
         OtpVerificationPage otpVerification = generateUinOrVidPage.enterApplicationID(TestDataReader.readData("aid")).clickOnGetUinOrVidButton();
 
         assertTrue(retrieveIdPage.isAidIsNotReadyYetErrorDisplayed(), "Verify if aid is not ready displayed");
-	}
+    }
 
-	@Test
-	public void downloadAndVerifyVcInTwoEnv() throws InterruptedException {
-		ChooseLanguagePage chooseLanguagePage = new ChooseLanguagePage(driver);
+    @Test
+    public void downloadAndVerifyVcInTwoEnv() throws InterruptedException {
+        ChooseLanguagePage chooseLanguagePage = new ChooseLanguagePage(driver);
 
         assertTrue(chooseLanguagePage.isChooseLanguagePageLoaded(), "Verify if choose language page is displayed");
         WelcomePage welcomePage = chooseLanguagePage.clickOnSavePreference();
@@ -303,23 +303,23 @@ public class CredentialRegistryTest extends IosBaseTest {
         assertTrue(settingsPage.isSettingPageLoaded(), "Verify if setting page is displayed");
         credentialRegistryPage.clickOnBackArrow();
 
-         homePage.downloadCard();
+        homePage.downloadCard();
         assertTrue(addNewCardPage.isAddNewCardPageLoaded(), "Verify if add new card page is displayed");
-         addNewCardPage.clickOnDownloadViaUin();
+        addNewCardPage.clickOnDownloadViaUin();
 
         assertTrue(retrieveIdPage.isRetrieveIdPageLoaded(), "Verify if retrieve id page is displayed");
-         retrieveIdPage.setEnterIdTextBox(TestDataReader.readData("uin")).clickOnGenerateCardButton();
+        retrieveIdPage.setEnterIdTextBox(TestDataReader.readData("uin")).clickOnGenerateCardButton();
 
         assertTrue(otpVerification.isOtpVerificationPageLoaded(), "Verify if otp verification page is displayed");
         otpVerification.enterOtp(BaseTestCase.getOtp(), Target.IOS);
 
         addNewCardPage.clickOnDoneButton();
         assertTrue(homePage.isCredentialTypeValueDisplayed(), "Verify if credential type value is displayed");
-	}
+    }
 
-	@Test
-	public void downloadVcAndActivateItInOtherEnv() throws InterruptedException {
-		ChooseLanguagePage chooseLanguagePage = new ChooseLanguagePage(driver);
+    @Test
+    public void downloadVcAndActivateItInOtherEnv() throws InterruptedException {
+        ChooseLanguagePage chooseLanguagePage = new ChooseLanguagePage(driver);
 
         assertTrue(chooseLanguagePage.isChooseLanguagePageLoaded(), "Verify if choose language page is displayed");
         WelcomePage welcomePage = chooseLanguagePage.clickOnSavePreference();
@@ -381,11 +381,11 @@ public class CredentialRegistryTest extends IosBaseTest {
         OtpVerificationPage otpVerificationPage = pleaseConfirmPopupPage.clickOnConfirmButton();
 
         assertTrue(moreOptionsPage.isSomethingIsWrongPopupVisible(), "Verify if somthing went wrong please try again popup displayed");
-	}
+    }
 
-	@Test
-	public void downloadAndVerifyVcInNewEnvForEsignet() throws InterruptedException {
-		ChooseLanguagePage chooseLanguagePage = new ChooseLanguagePage(driver);
+    @Test
+    public void downloadAndVerifyVcInNewEnvForEsignet() throws InterruptedException {
+        ChooseLanguagePage chooseLanguagePage = new ChooseLanguagePage(driver);
 
         assertTrue(chooseLanguagePage.isChooseLanguagePageLoaded(), "Verify if choose language page is displayed");
         WelcomePage welcomePage = chooseLanguagePage.clickOnSavePreference();
@@ -449,11 +449,11 @@ public class CredentialRegistryTest extends IosBaseTest {
         assertEquals(detailedVcViewPage.getPhoneInDetailedVcView(), TestDataReader.readData("phoneNumber"), "Verify if phone number is displayed");
         assertEquals(detailedVcViewPage.getEmailInDetailedVcView(), TestDataReader.readData("externalemail"), "Verify if email is displayed");
         assertTrue(detailedVcViewPage.isActivateButtonDisplayed(), "Verify if activate vc button displayed");
-	}
+    }
 
-	@Test
-	public void downloadAndVerifyVcInInvalidEnvForEsignet() throws InterruptedException {
-		ChooseLanguagePage chooseLanguagePage = new ChooseLanguagePage(driver);
+    @Test
+    public void downloadAndVerifyVcInInvalidEnvForEsignet() throws InterruptedException {
+        ChooseLanguagePage chooseLanguagePage = new ChooseLanguagePage(driver);
 
         assertTrue(chooseLanguagePage.isChooseLanguagePageLoaded(), "Verify if choose language page is displayed");
         WelcomePage welcomePage = chooseLanguagePage.clickOnSavePreference();
@@ -481,41 +481,41 @@ public class CredentialRegistryTest extends IosBaseTest {
         credentialRegistryPage.setEnterIdTextBox(TestDataReader.readData("invalidenv")).enterUrlToEsignetHostTextBox(TestDataReader.readData("invalidenv")).clickOnSaveButton().clickOnSaveButton();
 
         assertTrue(credentialRegistryPage.isCredentialRegistryErrorMessageDisplayed(), "Verify if error message is displayed");
-	}
+    }
 
-	@Test
-	public void downloadAndVerifyVcInInvalidEnvForEsignetInFillpino() throws InterruptedException {
-		UnlockApplicationPage unlockApplicationPage = new UnlockApplicationPage(driver);
-		if (!unlockApplicationPage.isUnlockApplicationDisplayed()) {
-			ChooseLanguagePage chooseLanguagePage = new ChooseLanguagePage(driver);
-			assertTrue(chooseLanguagePage.isChooseLanguagePageLoaded(), "Verify if choose language page is displayed");
+    @Test
+    public void downloadAndVerifyVcInInvalidEnvForEsignetInFillpino() throws InterruptedException {
+        UnlockApplicationPage unlockApplicationPage = new UnlockApplicationPage(driver);
+        if (!unlockApplicationPage.isUnlockApplicationDisplayed()) {
+            ChooseLanguagePage chooseLanguagePage = new ChooseLanguagePage(driver);
+            assertTrue(chooseLanguagePage.isChooseLanguagePageLoaded(), "Verify if choose language page is displayed");
 
-			WelcomePage welcomePage = chooseLanguagePage.clickOnSavePreference();
+            WelcomePage welcomePage = chooseLanguagePage.clickOnSavePreference();
 
-			assertTrue(welcomePage.isWelcomePageLoaded(), "Verify if welcome page is loaded");
-			AppUnlockMethodPage appUnlockMethodPage = welcomePage.clickOnSkipButton();
+            assertTrue(welcomePage.isWelcomePageLoaded(), "Verify if welcome page is loaded");
+            AppUnlockMethodPage appUnlockMethodPage = welcomePage.clickOnSkipButton();
 
-			assertTrue(appUnlockMethodPage.isAppUnlockMethodPageLoaded(), "Verify if app unlocked page is displayed");
-			SetPasscode setPasscode = appUnlockMethodPage.clickOnUsePasscode();
+            assertTrue(appUnlockMethodPage.isAppUnlockMethodPageLoaded(), "Verify if app unlocked page is displayed");
+            SetPasscode setPasscode = appUnlockMethodPage.clickOnUsePasscode();
 
-			assertTrue(setPasscode.isSetPassCodePageLoaded(), "Verify if set passcode page is displayed");
-			ConfirmPasscode confirmPasscode = setPasscode.enterPasscode(TestDataReader.readData("passcode"),
-					Target.IOS);
+            assertTrue(setPasscode.isSetPassCodePageLoaded(), "Verify if set passcode page is displayed");
+            ConfirmPasscode confirmPasscode = setPasscode.enterPasscode(TestDataReader.readData("passcode"),
+                    Target.IOS);
 
-			assertTrue(confirmPasscode.isConfirmPassCodePageLoaded(), "Verify if confirm passcode page is displayed");
-			HomePage homePage = confirmPasscode.enterPasscodeInConfirmPasscodePage(TestDataReader.readData("passcode"), Target.IOS);
-		} else {
-			HomePage homePage = new HomePage(driver);
-			unlockApplicationPage.clickOnUnlockApplicationButton();
+            assertTrue(confirmPasscode.isConfirmPassCodePageLoaded(), "Verify if confirm passcode page is displayed");
+            HomePage homePage = confirmPasscode.enterPasscodeInConfirmPasscodePage(TestDataReader.readData("passcode"), Target.IOS);
+        } else {
+            HomePage homePage = new HomePage(driver);
+            unlockApplicationPage.clickOnUnlockApplicationButton();
 
-			ConfirmPasscode confirmPasscode = new ConfirmPasscode(driver);
-			homePage = confirmPasscode.enterPasscodeInConfirmPasscodePage(TestDataReader.readData("passcode"), Target.IOS);
-		}
+            ConfirmPasscode confirmPasscode = new ConfirmPasscode(driver);
+            homePage = confirmPasscode.enterPasscodeInConfirmPasscodePage(TestDataReader.readData("passcode"), Target.IOS);
+        }
 
-		HomePage homePage = new HomePage(driver);
+        HomePage homePage = new HomePage(driver);
         homePage.clickOnNextButtonForInjiTour();
-		assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
-		SettingsPage settingsPage = homePage.clickOnSettingIcon();
+        assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
+        SettingsPage settingsPage = homePage.clickOnSettingIcon();
 
         assertTrue(settingsPage.isSettingPageLoaded(), "Verify if setting page is displayed");
         settingsPage.clickOnLanguage().clickOnFilipinoLanguage();
@@ -527,11 +527,11 @@ public class CredentialRegistryTest extends IosBaseTest {
         credentialRegistryPage.setEnterIdTextBox(TestDataReader.readData("invalidenv")).enterUrlToEsignetHostTextBox(TestDataReader.readData("invalidenv")).clickOnSaveButton();
 
         assertTrue(credentialRegistryPage.isCredentialRegistryErrorMessageDisplayed(), "Verify if error message is displayed");
-	}
+    }
 
-	@Test
-	public void downloadVcInNewEnvAndVerifyInDetailedVcViewPage() throws InterruptedException {
-		ChooseLanguagePage chooseLanguagePage = new ChooseLanguagePage(driver);
+    @Test
+    public void downloadVcInNewEnvAndVerifyInDetailedVcViewPage() throws InterruptedException {
+        ChooseLanguagePage chooseLanguagePage = new ChooseLanguagePage(driver);
 
         assertTrue(chooseLanguagePage.isChooseLanguagePageLoaded(), "Verify if choose language page is displayed");
         WelcomePage welcomePage = chooseLanguagePage.clickOnSavePreference();
@@ -622,6 +622,6 @@ public class CredentialRegistryTest extends IosBaseTest {
         homePage.openDetailedVcView();
         assertTrue(detailedVcViewPage.isCredentialRegistryTextDisplayed(),"Verify if is credential registry text displayed");
         assertEquals(detailedVcViewPage.getCredentialRegistryValue(), TestDataReader.readData("injiEnv"), "Verify inji env is displayed in detailed vc");
-	}
+    }
 
 }

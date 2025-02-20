@@ -142,7 +142,7 @@ public class AddNewCardPage extends BasePage{
 
     public void clickOnContinueButtonInSigninPopupIos(){
         if(isElementDisplayed(continueButton))
-        clickOnElement(continueButton);
+            clickOnElement(continueButton);
     }
 
     public void clickOnCancelButtonInSigninPopupIos(){
@@ -196,17 +196,17 @@ public class AddNewCardPage extends BasePage{
             clickOnElement(credentialTypeHeadingInsuranceCredential);
         }
     }
- public void  clickOnDoneButton(){
-     try {
-         Thread.sleep(3000);
-     } catch (InterruptedException e) {
-         throw new RuntimeException(e);
-     }
-     if (isElementDisplayed(DoneButton )){
-         clickOnElement(DoneButton);
-         IosUtil.scrollToElement(driver,100,800,100,200);
-     }
- }
+    public void  clickOnDoneButton(){
+        try {
+            Thread.sleep(3000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        if (isElementDisplayed(DoneButton )){
+            clickOnElement(DoneButton);
+            IosUtil.scrollToElement(driver,100,800,100,200);
+        }
+    }
 
     public MockCertifyLoginPage clickOnDownloadViaMockCertify(){
         clickOnElement(downloadViaMockCertify);
@@ -223,4 +223,3 @@ public class AddNewCardPage extends BasePage{
     }
 
 }
-

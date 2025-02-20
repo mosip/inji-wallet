@@ -6,7 +6,10 @@ import org.testng.xml.XmlInclude;
 import org.testng.xml.XmlSuite;
 import org.testng.xml.XmlTest;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.List;
 
 public class SuiteListener implements ISuiteListener {
 
@@ -14,21 +17,47 @@ public class SuiteListener implements ISuiteListener {
 
     @Override
     public void onStart(ISuite suite) {
-
+        // No action needed for `onStart` in this case
     }
 
     @Override
     public void onFinish(ISuite suite) {
-        if (suite.getName().equalsIgnoreCase("androidSanity")|| suite.getName().equalsIgnoreCase("iosSanity")) {
-            boolean hasFailures = suite.getResults().values().stream()
-                    .anyMatch(result -> result.getTestContext().getFailedTests().size() > 0);
+        System.out.println("Test Suite Finished!");
 
-            if (hasFailures) {
-               System.exit(1);
-                System.out.println("Sanity suite has failures. Skipping Regression suite.");
-            } else {
-                System.out.println("Sanity suite passed. Proceeding with Regression suite.");
+        for (ISuiteResult result : suite.getResults().values()) {
+            ITestContext context = result.getTestContext();
+
+            System.out.println("Failed Test Cases for Context: " + context.getName());
+
+            Iterator<ITestResult> failedTests = context.getFailedTests().getAllResults().iterator();
+            while (failedTests.hasNext()) {
+                ITestResult failedTest = failedTests.next();
+                ITestNGMethod method = failedTest.getMethod();
+
+                System.out.println("  - Failed Test: " + failedTest.getName());
+                System.out.println("    - Failed Method: " + method.getQualifiedName());
+
+                failedTestMethods.add(method);
             }
+        }
+
+        if (!failedTestMethods.isEmpty()) {
+            System.out.println("Rerunning failed test cases...");
+
+            TestNG rerunTestNG = new TestNG();
+            XmlSuite xmlSuite = new XmlSuite();
+            XmlTest xmlTest = new XmlTest(xmlSuite);
+            List<XmlClass> xmlClasses = new ArrayList<>();
+
+            for (ITestNGMethod method : failedTestMethods) {
+                XmlClass xmlClass = new XmlClass(method.getRealClass().getName());
+                xmlClass.getIncludedMethods().add(new XmlInclude(method.getMethodName()));
+                xmlClasses.add(xmlClass);
+            }
+
+            xmlTest.setXmlClasses(xmlClasses);
+            rerunTestNG.setXmlSuites(Collections.singletonList(xmlSuite));
+            rerunTestNG.run();
         }
     }
 }

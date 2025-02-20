@@ -21,6 +21,27 @@ public class ChooseLanguagePage extends BasePage {
     @AndroidFindBy(accessibility = "unlockApplication")
     private WebElement unlockApplications;
 
+    @AndroidFindBy(accessibility = "fil")
+    @iOSXCUITFindBy(accessibility = "fil")
+    private WebElement filipinoLanguage;
+
+    @AndroidFindBy(accessibility = "hi")
+    @iOSXCUITFindBy(accessibility = "hi")
+    private WebElement hindiLanguage;
+
+    @AndroidFindBy(accessibility = "kn")
+    @iOSXCUITFindBy(accessibility = "kn")
+    private WebElement KannadaLanguage;
+
+    @AndroidFindBy(accessibility = "ta")
+    @iOSXCUITFindBy(accessibility = "ta")
+    private WebElement tamilLanguage;
+
+    @AndroidFindBy(accessibility = "ar")
+    @iOSXCUITFindBy(accessibility = "ar")
+    private WebElement arabicLanguage;
+
+
 
     public ChooseLanguagePage(AppiumDriver driver) {
         super(driver);
@@ -47,4 +68,27 @@ public class ChooseLanguagePage extends BasePage {
     public boolean isUnlockApplicationDisplayed() {
         return this.isElementDisplayed(unlockApplications);
     }
+
+    public void clickOnFilipinoLangauge(){
+        clickOnElement(filipinoLanguage);
+    }
+
+    public void clickOnHindiLanguage(){
+        clickOnElement(hindiLanguage);
+    }
+
+    public void clickOnKannadaLanguage(){
+        clickOnElement(KannadaLanguage);
+    }
+
+    public void clickOnTamilLanguage(){
+        clickOnElement(tamilLanguage);
+    }
+
+    public void clickOnArabicLanguage(){
+        clickOnElement(arabicLanguage);
+    }
+
+
+
 }

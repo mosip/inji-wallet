@@ -27,11 +27,11 @@ public class KeyManagementPage extends BasePage {
     private WebElement arrowleftButton;
 
 
-    @AndroidFindBy(xpath = "(//android.widget.TextView[@resource-id=\"iconIcon\"])[6]")
+    @AndroidFindBy(xpath = "//android.widget.TextView[@resource-id=\"listItemTitle\" and @text=\"RSA\"]")
     @iOSXCUITFindBy(xpath = "(//XCUIElementTypeOther[@name=\"RSA \uE25D\"])[2]")
     private WebElement RSAText;
 
-    @AndroidFindBy(xpath = "(//android.widget.TextView[@resource-id=\"iconIcon\"])[3]")
+    @AndroidFindBy(xpath = "//android.widget.TextView[@resource-id=\"listItemTitle\" and @text=\"ED25519\"]")
     @iOSXCUITFindBy(xpath = "(//XCUIElementTypeOther[@name=\"ED25519 \uE25D\"])[2]")
     private WebElement ED25519Text;
 
@@ -46,6 +46,12 @@ public class KeyManagementPage extends BasePage {
     private WebElement keyTypeVcDetailViewValue;
 
 
+    @AndroidFindBy(accessibility = "goBack")
+    @iOSXCUITFindBy(accessibility = "goBack")
+    private WebElement goBackbutton;
+
+
+
     public KeyManagementPage(AppiumDriver driver) {
         super(driver);
     }
@@ -55,7 +61,7 @@ public class KeyManagementPage extends BasePage {
     }
 
     public void clickOnDoneButton() {
-       clickOnElement (stepCountButton);
+        clickOnElement (stepCountButton);
     }
 
     public WebElement getTheCoordinatesForRSA(){
@@ -65,8 +71,8 @@ public class KeyManagementPage extends BasePage {
 
     public WebElement getTheCoordinatesED25519Text(){
 
-        ECCR1Text.isDisplayed();
-        return ECCR1Text;
+        ED25519Text.isDisplayed();
+        return ED25519Text;
     }
 
     public WebElement getTheCoordinatesECCR1TextText(){
@@ -81,6 +87,12 @@ public class KeyManagementPage extends BasePage {
     public void clickOnArrowleftButton() {
         clickOnElement (arrowleftButton);
     }
+
+    public void clickOnGoBackbutton() {
+        clickOnElement(goBackbutton);
+    }
+
+
 
     public boolean iskeyOrderingSuccessTextMessageDisplayed() {
         return this.isElementDisplayed(keyOrderingSuccessText);

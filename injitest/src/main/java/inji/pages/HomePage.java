@@ -67,7 +67,8 @@ public class HomePage extends BasePage {
     @iOSXCUITFindBy(accessibility = "share")
     private WebElement shareButton;
 
-    @AndroidFindBy(uiAutomator = "new UiSelector().className(\"android.widget.TextView\").instance(5)")// fix with accecibility
+    @AndroidFindBy(uiAutomator = "new UiSelector().className(\"android.widget.TextView\").instance(5)")
+// fix with accecibility
     @iOSXCUITFindBy(accessibility = "share")
     private WebElement shareButtonByForText;
 
@@ -90,8 +91,8 @@ public class HomePage extends BasePage {
     @iOSXCUITFindBy(accessibility = "fullNameValue")
     private WebElement fullNameValue;
 
-    @AndroidFindBy(accessibility = "credentialTypeValue")
-    @iOSXCUITFindBy(accessibility = "credentialTypeValue")
+    @AndroidFindBy(accessibility = "verificationStatus")
+    @iOSXCUITFindBy(accessibility = "verificationStatus")
     private WebElement credentialTypeValue;
 
     @AndroidFindBy(accessibility = "activationPending")
@@ -813,6 +814,6 @@ public class HomePage extends BasePage {
         return this.isElementDisplayed(credentialTypeValue);
 
 
-}
+    }
 
 }

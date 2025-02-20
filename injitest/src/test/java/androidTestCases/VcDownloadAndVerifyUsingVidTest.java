@@ -91,10 +91,10 @@ public class VcDownloadAndVerifyUsingVidTest extends AndroidBaseTest {
         homePage.downloadCard();
 
         assertTrue(addNewCardPage.isAddNewCardPageLoaded(), "Verify if add new card page is displayed");
-         addNewCardPage.clickOnDownloadViaUin();
+        addNewCardPage.clickOnDownloadViaUin();
 
         assertTrue(retrieveIdPage.isRetrieveIdPageLoaded(), "Verify if retrieve id page is displayed");
-         retrieveIdPage.clickOnVid(Target.ANDROID).setEnterIdTextBox(vid).clickOnGenerateCardButton();
+        retrieveIdPage.clickOnVid(Target.ANDROID).setEnterIdTextBox(vid).clickOnGenerateCardButton();
 
         assertTrue(otpVerification.isOtpVerificationPageLoaded(), "Verify if otp verification page is displayed");
         otpVerification.enterOtp(BaseTestCase.getOtp(), Target.ANDROID);
@@ -246,7 +246,7 @@ public class VcDownloadAndVerifyUsingVidTest extends AndroidBaseTest {
         addNewCardPage.clickOnDoneButton();
         assertTrue(homePage.isCredentialTypeValueDisplayed(), "Verify if credential type value is displayed");
 
-       //4
+        //4
         homePage.downloadCard();
 
         assertTrue(addNewCardPage.isAddNewCardPageLoaded(), "Verify if add new card page is displayed");

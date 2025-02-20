@@ -52,7 +52,7 @@ public class UnlockWithPasscodeTest extends AndroidBaseTest {
         assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
 
     }
-    
+
     @Test
     public void loginWithInvalidPasscode() {
         ChooseLanguagePage chooseLanguagePage = new ChooseLanguagePage(driver);
@@ -86,6 +86,6 @@ public class UnlockWithPasscodeTest extends AndroidBaseTest {
         enterYourPasscodePage.enterPasscodeOnPasscodePage(TestDataReader.readData("invalidpasscode"), Target.ANDROID);
 
         assertTrue(confirmPasscode.isPasscodeInvalidMessageDisplayed(), "verify if invalid passcode is displayed");
-    	
+
     }
 }

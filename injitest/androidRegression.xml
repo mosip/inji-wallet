@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite name="All Test Suite">
-    <suite-files>
+<!--    <suite-files>
         <suite-file path="androidSanity.xml"/>
-    </suite-files>
+    </suite-files>-->
 	<test verbose="2" preserve-order="true" name="android">
         <classes>
             <class name="androidTestCases.AboutInjiTest">
@@ -28,6 +28,12 @@
                     <include name="changeLanguageToTamilAndcheckInjiTour"/>
                     <include name="changeLanguageToKannadAndcheckInjiTour"/>
                     <include name="downloadVcAndChnageLangaugeVerifyVcViaSunbird"/>
+                    <include name="verifyWelcomePagesContentEnglish"/>
+                    <include name="verifyWelcomePagesContentInFilipino"/>
+                    <include name="verifyWelcomePagesContentInHindi"/>
+                    <include name="verifyWelcomePagesContentInKannada"/>
+                    <include name="verifyWelcomePagesContentInTamil"/>
+                    <include name="verifyWelcomePagesContentInArabic"/>
                 </methods>
             </class>
             <class name="androidTestCases.DeletingVcTest">

@@ -65,6 +65,5 @@ public class HelpPage extends BasePage {
     public void clickOnCrossButton(){
         clickOnElement(crossIcon);
     }
-    }
-
+}
 

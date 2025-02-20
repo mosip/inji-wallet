@@ -90,10 +90,10 @@ public class VcDownloadAndVerifyUsingVidTest extends IosBaseTest {
         homePage.downloadCard();
 
         assertTrue(addNewCardPage.isAddNewCardPageLoaded(), "Verify if add new card page is displayed");
-         addNewCardPage.clickOnDownloadViaUin();
+        addNewCardPage.clickOnDownloadViaUin();
 
         assertTrue(retrieveIdPage.isRetrieveIdPageLoaded(), "Verify if retrieve id page is displayed");
-         retrieveIdPage.clickOnVid(Target.IOS).setEnterIdTextBox(vid).clickOnGenerateCardButton();
+        retrieveIdPage.clickOnVid(Target.IOS).setEnterIdTextBox(vid).clickOnGenerateCardButton();
 
         assertTrue(otpVerification.isOtpVerificationPageLoaded(), "Verify if otp verification page is displayed");
         otpVerification.enterOtp(BaseTestCase.getOtp(), Target.IOS);

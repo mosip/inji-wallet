@@ -60,7 +60,7 @@ public class DeletingVcTest extends AndroidBaseTest {
         historyPage.verifyHistory(uin + " Removed from wallet", Target.ANDROID);
         assertTrue(historyPage.verifyDeleteHistory(uin, Target.ANDROID), "Verify if deleted history is displayed");
 
-       SharePage scanPage = homePage.clickOnShareButton();
+        SharePage scanPage = homePage.clickOnShareButton();
         assertTrue(scanPage.isNoShareableCardsMessageDisplayed(), "Verify if no shareable cards are available message is displayed");
     }
 
@@ -213,7 +213,7 @@ public class DeletingVcTest extends AndroidBaseTest {
         assertTrue(addNewCardPage.isAddNewCardPageLoaded(), "Verify if add new card page is displayed");
         assertTrue(addNewCardPage.isAddNewCardPageGuideMessageForEsignetDisplayed(), "Verify if add new card guide message displayed");
         assertTrue(addNewCardPage.isDownloadViaEsignetDisplayed(), "Verify if download via uin displayed");
-        EsignetLoginPage esignetLoginPage =  addNewCardPage.clickOnDownloadViaEsignet();
+        EsignetLoginPage esignetLoginPage = addNewCardPage.clickOnDownloadViaEsignet();
 
         esignetLoginPage.clickOnEsignetLoginWithOtpButton();
 
@@ -277,7 +277,7 @@ public class DeletingVcTest extends AndroidBaseTest {
         assertTrue(addNewCardPage.isAddNewCardPageLoaded(), "Verify if add new card page is displayed");
         assertTrue(addNewCardPage.isAddNewCardPageGuideMessageForEsignetDisplayed(), "Verify if add new card guide message displayed");
         assertTrue(addNewCardPage.isDownloadViaSunbirdDisplayed(), "Verify if download sunbird displayed");
-        SunbirdLoginPage sunbirdLoginPage =  addNewCardPage.clickOnDownloadViaSunbird();
+        SunbirdLoginPage sunbirdLoginPage = addNewCardPage.clickOnDownloadViaSunbird();
 
         addNewCardPage.clickOnCredentialTypeHeadingInsuranceCredential();
 //        assertTrue(sunbirdLoginPage.isSunbirdRCInsuranceVerifiableCredentialHeaderDisplayed(), "Verify if sunbirdRC insurance verifiable credential displayed");
