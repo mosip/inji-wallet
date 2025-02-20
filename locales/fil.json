@@ -257,9 +257,7 @@
         "six": "Ano ang isang Nabe-verify na Kredensyal?",
         "seven": "Paano magdagdag ng card?",
         "eight": "Maaari ba akong magdagdag ng maraming card?",
-        "nine": "Bakit sinasabi ng aking VC na nakabinbin ang Activation?",
         "ten": "Ano ang ibig mong sabihin sa Activated for Online login?",
-        "eleven": "Paano i-activate ang isang card para sa online na pag-login?",
         "twelve": "Paano magbahagi ng card?",
         "thirteen": "Paano mag-alis ng card mula sa wallet?",
         "fourteen": "Paano tingnan ang mga log ng aktibidad?",
@@ -298,10 +296,8 @@
         "six": "Ang Nabe-verify na Kredensyal ay isang digitally signed na piraso ng impormasyon na kumakatawan sa isang pahayag na ginawa ng issuer tungkol sa isang paksa at karaniwang may kasamang mga detalye ng demograpiko. ",
         "seven": "Maaaring ma-download ang mga ID sa INJI Mobile Wallet bilang Mga Nabe-verify na Kredensyal. ",
         "eight": "Oo, maaari kang magdagdag ng maramihang mga card sa wallet sa pamamagitan ng pag-click sa pindutang ' ' sa Home page.",
-        "nine": "Kapag na-download na ang VC sa iyong wallet, hindi pa ito nakatali sa pagkakakilanlan ng user kung kaya't sinasabi ng iyong VC na Nakabinbin ang Aktibidad. ",
         "ten-a": "1. Kapag matagumpay na na-binded ang VC sa wallet, makikita mo na ito ay Activated for Online login which means itong VC ay magagamit na para sa QR login process. ",
         "ten-b": "2. Ang Q",
-        "eleven": "Pagkatapos matagumpay na magdagdag ng card sa wallet, mag-click sa 'Activation pending for Online login' sa card. ",
         "twelve": "Mag-click sa pindutang 'Ibahagi' at i-scan ang QR code mula sa humihiling na partido. ",
         "thirteen-a": "Maaari kang mag-click sa ...(meatballs menu) sa isang card sa Home page at piliin ang Remove from Wallet na opsyon upang alisin ang isang card mula sa wallet. ",
         "thirteen-b": " Pakitandaan na, maaaring i-download muli ang parehong card.",
@@ -458,6 +454,10 @@
         "ERR_INVALID_VALIDFROM": "Ang petsa ay hindi wasto o nakatakda sa hinaharap. Tingnan kung may wastong petsa.",
         "ERR_VALID_FROM_IS_FUTURE_DATE": "Ang petsa ay hindi wasto o nakatakda sa hinaharap. Tingnan kung may wastong petsa.",
         "ERR_INVALID_VALIDUNTIL": "Di-wasto ang petsa. Tingnan kung may wastong petsa."
+      },
+      "autoWalletBindingError": {
+        "title": "May pagkakamaling naganap!",
+        "message": "Nagkaproblema habang pinoproseso ang iyong kredensyal. Pakisubukang i-download itong muli. Kung magpapatuloy ang isyu, makipag-ugnayan sa suporta para sa tulong."
       }
     }
   },

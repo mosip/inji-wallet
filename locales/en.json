@@ -258,9 +258,7 @@
         "six": "What is a Verifiable Credential?",
         "seven": "How to add a card?",
         "eight": "Can I add multiple cards?",
-        "nine": "Why does my VC say Activation is pending?",
         "ten": "What do you mean by Activated for Online login?",
-        "eleven": "How to activate a card for online login?",
         "twelve": "How to share a card?",
         "thirteen": "How to remove a card from the wallet?",
         "fourteen": "How to view activity logs?",
@@ -299,10 +297,8 @@
         "six": "A Verifiable Credential is a digitally signed piece of information that represents a statement made by the issuer about a subject and typically includes demographic details. VCs are secure and trustworthy in various online interactions.",
         "seven": "IDs can be downloaded to INJI Mobile Wallet as Verifiable Credentials. To know how to download VCs with various IDs please read",
         "eight": "Yes, you can add multiple cards to the wallet by clicking on '+' button on the Home page.",
-        "nine": "Once VC is downloaded to your wallet, it is not yet bound with the user’s identity which is why your VC says Activation Pending. Binding your VC to your wallet (with your passcode or biometrics) is crucial to ensure the highest level of security. To activate your VC, please follow the steps",
         "ten-a": "1. Once the VC is successfully binded with the wallet, you can see that it is Activated for Online login which means this VC can now be used for the QR login process. To know more about QR code login, please read",
         "ten-b": "2. The Q&A should be readable and understandable even when the user changes the language in the INJI app.",
-        "eleven": "After successfully adding a card to the wallet, click on 'Activation pending for Online login' on the card. On clicking on 'Activate', the card will be ready to be used for online login.",
         "twelve": "Click on 'Share' button and scan the QR code from the requesting party. Once the connection is established, the card will be shared.",
         "thirteen-a": "You can click on ...(meatballs menu) on a card in the Home page and choose Remove from Wallet option to remove a card from the wallet. To know more, please read",
         "thirteen-b": " Please note that, the same card can be downloaded again.",
@@ -459,6 +455,10 @@
         "ERR_INVALID_VALIDFROM": "Date is invalid or set in the future. Check for a valid date.",
         "ERR_VALID_FROM_IS_FUTURE_DATE": "Date is invalid or set in the future. Check for a valid date.",
         "ERR_INVALID_VALIDUNTIL": "Date is invalid. Check for a valid date."
+      },
+      "autoWalletBindingError": {
+        "title": "An Error Occurred!",
+        "message": "Something went wrong while processing your credential. Please try downloading it again. If the issue persists, reach out to support for help."
       }
     }
   },
