@@ -6,7 +6,7 @@ import {getJWK} from '../openId4VCI/Utils';
 import getAllConfigurations from '../api';
 
 export const OpenID4VP_Key_Ref = 'OpenID4VP_KeyPair';
-export const OpenID4VP_Proof_Sign_Algo_Suite = 'Ed25519Signature2018';
+export const OpenID4VP_Proof_Sign_Algo_Suite = 'Ed25519Signature2020';
 export const OpenID4VP_Domain = 'OpenID4VP';
 export const OpenID4VP_Proof_Sign_Algo = 'EdDSA';
 
