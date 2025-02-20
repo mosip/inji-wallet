@@ -24,6 +24,8 @@ import {KeyTypes} from './KeyTypes';
 import convertDerToRsFormat from './signFormatConverter';
 import {hasKeyPair} from '../openId4VCI/Utils';
 import {TelemetryConstants} from '../telemetry/TelemetryConstants';
+import multicodec from "multicodec";
+import * as base58btc from '@interop/base58-universal'
 import {
   sendImpressionEvent,
   getImpressionEventData,
@@ -466,3 +468,18 @@ const convertToKeyValue = items => {
   });
   return result;
 };
+
+export function generateEd25519Base58DidKey(publicKeyBase64: string): string {
+
+  const publicKeyBytes = Buffer.from(publicKeyBase64, "base64");
+      
+  // Prefix for Ed25519 (Multicodec format)
+  const multicodecPrefix = Buffer.from(multicodec.getVarintFromName("ed25519-pub"));
+  const prefixedKey = Buffer.concat([multicodecPrefix, publicKeyBytes]);
+  
+  // Encode in Multibase Base58BTC (`z` prefix)
+  const multibaseKey = "z" + base58btc.encode(prefixedKey);
+  
+  // Construct DID:key
+  return `did:key:${multibaseKey}`;
+}
