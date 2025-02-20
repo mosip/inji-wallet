@@ -1,7 +1,6 @@
 import {CACHED_API} from '../../shared/api';
-import {fetchKeyPair} from '../../shared/cryptoutil/cryptoUtil';
+import {fetchKeyPair, generateEd25519Base58DidKey} from '../../shared/cryptoutil/cryptoUtil';
 import {hasKeyPair} from '../../shared/openId4VCI/Utils';
-import base64url from 'base64url';
 import {
   constructProofJWT,
   isClientValidationRequired,
@@ -54,7 +53,7 @@ export const openID4VPServices = () => {
       const vpResponseMetadata = {
         jws: proofJWT,
         signatureAlgorithm: OpenID4VP_Proof_Sign_Algo_Suite,
-        publicKey: base64url(context.publicKey),
+        publicKey: generateEd25519Base58DidKey(context.publicKey),
         domain: OpenID4VP_Domain,
       };
       return await OpenID4VP.shareVerifiablePresentation(vpResponseMetadata);
