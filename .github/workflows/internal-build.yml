@@ -113,7 +113,7 @@ jobs:
       APPLICATION_THEME: ${{ inputs.theme }}
       BUILD_DESCRIPTION: ${{ inputs.buildName }}
       ALLOW_ENV_EDIT: ${{ inputs.allow_env_edit }}
-      LIVENESS_DETECTION: false
+      LIVENESS_DETECTION: 'false'
       APP_FLAVOR: ${{ inputs.injiFlavor }}
       SERVICE_LOCATION: '.'
       ANDROID_SERVICE_LOCATION: 'android'
