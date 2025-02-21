@@ -14,7 +14,7 @@ const locale = Localization.locale;
 const languageCodeMap = {} as {[key: string]: string};
 
 export const SUPPORTED_LANGUAGES = {
-  es: 'Española',
+  es: 'Español',
 };
 
 i18next
