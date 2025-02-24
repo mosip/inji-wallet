@@ -7,6 +7,7 @@ import inji.pages.*;
 import inji.utils.TestDataReader;
 import org.testng.annotations.Test;
 
+import static inji.api.BaseTestCase.uin;
 import static org.testng.Assert.assertTrue;
 
 public class ShareVcTest  extends IosBaseTest {
@@ -97,7 +98,7 @@ public class ShareVcTest  extends IosBaseTest {
 
         esignetLoginPage.clickOnEsignetLoginWithOtpButton();
         Thread.sleep(9000);
-        String uin = TestDataReader.readData("uin");
+//        String uin = TestDataReader.readData("uin");
         OtpVerificationPage otpVerification= esignetLoginPage.setEnterIdTextBox(uin);
 
         esignetLoginPage.clickOnGetOtpButton();

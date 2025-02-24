@@ -9,154 +9,154 @@ import org.openqa.selenium.WebElement;
 
 
 public class RetrieveIdPage extends BasePage {
-	@AndroidFindBy(accessibility = "retrieveIdHeader")
-	@iOSXCUITFindBy(accessibility = "retrieveIdHeader")
-	private WebElement retrieveIdText;
+    @AndroidFindBy(accessibility = "retrieveIdHeader")
+    @iOSXCUITFindBy(accessibility = "retrieveIdHeader")
+    private WebElement retrieveIdText;
 
-	@AndroidFindBy(uiAutomator = "new UiSelector().textContains(\"Allow\")")
-	private WebElement allowButton;
+    @AndroidFindBy(uiAutomator = "new UiSelector().textContains(\"Allow\")")
+    private WebElement allowButton;
 
-	@AndroidFindBy(accessibility = "idInputModalIndividualId")
-	@iOSXCUITFindBy(accessibility = "idInputModalIndividualId")
-	private WebElement enterIdTextBox;
+    @AndroidFindBy(accessibility = "idInputModalIndividualId")
+    @iOSXCUITFindBy(accessibility = "idInputModalIndividualId")
+    private WebElement enterIdTextBox;
 
-	@AndroidFindBy(accessibility = "generateVc")
-	@iOSXCUITFindBy(accessibility = "generateVc")
-	private WebElement generateCardButton;
+    @AndroidFindBy(accessibility = "generateVc")
+    @iOSXCUITFindBy(accessibility = "generateVc")
+    private WebElement generateCardButton;
 
-	@iOSXCUITFindBy(className = "XCUIElementTypePickerWheel")
-	private WebElement vidDropDownValueIos;
+    @iOSXCUITFindBy(className = "XCUIElementTypePickerWheel")
+    private WebElement vidDropDownValueIos;
 
-	@AndroidFindBy(xpath = "//*[contains(@text,'VID')]")
-	private WebElement vidDropDownValueAndroid;
+    @AndroidFindBy(xpath = "//*[contains(@text,'VID')]")
+    private WebElement vidDropDownValueAndroid;
 
-	@AndroidFindBy(className = "android.widget.Spinner")
-	private WebElement spinnerButton;
+    @AndroidFindBy(className = "android.widget.Spinner")
+    private WebElement spinnerButton;
 
-	@AndroidFindBy(accessibility = "getItNow")
-	@iOSXCUITFindBy(accessibility = "getItNow")
-	private WebElement getItNowText;
+    @AndroidFindBy(accessibility = "getItNow")
+    @iOSXCUITFindBy(accessibility = "getItNow")
+    private WebElement getItNowText;
 
-	@AndroidFindBy(xpath = "//*[contains(@text,'UIN invalid')]")
-	private WebElement invalidUin;
+    @AndroidFindBy(xpath = "//*[contains(@text,'UIN invalid')]")
+    private WebElement invalidUin;
 
-	@AndroidFindBy(xpath = "//*[contains(@text,'Please enter valid UIN')]")
-	@iOSXCUITFindBy(accessibility = "Please enter valid UIN")
-	private WebElement inputFormatErrorMessageUin;
+    @AndroidFindBy(xpath = "//*[contains(@text,'Please enter valid UIN')]")
+    @iOSXCUITFindBy(accessibility = "Please enter valid UIN")
+    private WebElement inputFormatErrorMessageUin;
 
-	@AndroidFindBy(xpath = "//*[contains(@text,'Please enter valid VID')]")
-	@iOSXCUITFindBy(accessibility = "Please enter valid VID")
-	private WebElement inputFormatErrorMessageVid;
+    @AndroidFindBy(xpath = "//*[contains(@text,'Please enter valid VID')]")
+    @iOSXCUITFindBy(accessibility = "Please enter valid VID")
+    private WebElement inputFormatErrorMessageVid;
 
-	@AndroidFindBy(xpath = "//*[contains(@text,'Please enter valid AID')]")
-	@iOSXCUITFindBy(accessibility = "idInputModalIndividualId")
-	private WebElement inputFormatErrorMessageAid;
+    @AndroidFindBy(xpath = "//*[contains(@text,'Please enter valid AID')]")
+    @iOSXCUITFindBy(accessibility = "idInputModalIndividualId")
+    private WebElement inputFormatErrorMessageAid;
 
-	@AndroidFindBy(xpath = "//*[contains(@text,'AID is not ready yet')]")
-	@iOSXCUITFindBy(accessibility = "AID is not ready yet")
-	private WebElement aidIsNotReadyYetMessage;
-	
-	@AndroidFindBy(xpath = "//*[contains(@text,'Select ID type and enter the MOSIP provided UIN or VID you')]")
-	@iOSXCUITFindBy(accessibility = "Select ID type and enter the MOSIP provided UIN or VID you wish to download. In the next step, you will be asked to enter OTP.")
-	private WebElement downloadIdGuideMessage;
-	
-	@AndroidFindBy(accessibility = "IdInputToolTipInfo")
-	private WebElement infoIcon;
+    @AndroidFindBy(xpath = "//*[contains(@text,'AID is not ready yet')]")
+    @iOSXCUITFindBy(accessibility = "AID is not ready yet")
+    private WebElement aidIsNotReadyYetMessage;
 
-	public RetrieveIdPage(AppiumDriver driver) {
-		super(driver);
-	}
+    @AndroidFindBy(xpath = "//*[contains(@text,'Select ID type and enter the MOSIP provided UIN or VID you')]")
+    @iOSXCUITFindBy(accessibility = "Select ID type and enter the MOSIP provided UIN or VID you wish to download. In the next step, you will be asked to enter OTP.")
+    private WebElement downloadIdGuideMessage;
 
-	public boolean isRetrieveIdPageLoaded() {
-		return this.isElementDisplayed(retrieveIdText);
-	}
-	
-	public boolean isInfoIconDisplayed() {
-		return this.isElementDisplayed(infoIcon);
-	}
-	public void clickInfoIcon() {
+    @AndroidFindBy(accessibility = "IdInputToolTipInfo")
+    private WebElement infoIcon;
+
+    public RetrieveIdPage(AppiumDriver driver) {
+        super(driver);
+    }
+
+    public boolean isRetrieveIdPageLoaded() {
+        return this.isElementDisplayed(retrieveIdText);
+    }
+
+    public boolean isInfoIconDisplayed() {
+        return this.isElementDisplayed(infoIcon);
+    }
+    public void clickInfoIcon() {
         clickOnElement(infoIcon);
     }
-	
-	public String getRetrieveIdPageHeader() {
-		return this.getTextFromLocator(retrieveIdText);
-	}
 
-	public RetrieveIdPage setEnterIdTextBox(String uinOrVid) {
-		clickOnElement(generateCardButton);
-		sendKeysToTextBox(enterIdTextBox, uinOrVid);
-		return this;
-	}
+    public String getRetrieveIdPageHeader() {
+        return this.getTextFromLocator(retrieveIdText);
+    }
 
-	public RetrieveIdPage acceptPermissionPopupBluetooth() {
-		if (isElementDisplayed(allowButton)) {
-			clickOnElement(allowButton);
-		}
-		return this;
-	}
-	public OtpVerificationPage clickOnGenerateCardButton() {
-		this.clickOnElement(generateCardButton);
-		return new OtpVerificationPage(driver);
-	}
+    public RetrieveIdPage setEnterIdTextBox(String uinOrVid) {
+        clickOnElement(generateCardButton);
+        sendKeysToTextBox(enterIdTextBox, uinOrVid);
+        return this;
+    }
 
-	public GenerateUinOrVidPage clickOnGetItNowText() {
-		this.clickOnElement(getItNowText);
-		return new GenerateUinOrVidPage(driver);
-	}
-	
-	public String verifyGetItTextDisplayed() {
-		return this.getTextFromLocator(getItNowText);
-	}
-	
-	public boolean verifyDownloadIdPageGuideMessage() {
-		return this.isElementDisplayed(downloadIdGuideMessage);
-	}
+    public RetrieveIdPage acceptPermissionPopupBluetooth() {
+        if (isElementDisplayed(allowButton)) {
+            clickOnElement(allowButton);
+        }
+        return this;
+    }
+    public OtpVerificationPage clickOnGenerateCardButton() {
+        this.clickOnElement(generateCardButton);
+        return new OtpVerificationPage(driver);
+    }
 
-	public boolean isInvalidUinMassageLoaded() {
-		return this.isElementDisplayed(invalidUin);
-	}
+    public GenerateUinOrVidPage clickOnGetItNowText() {
+        this.clickOnElement(getItNowText);
+        return new GenerateUinOrVidPage(driver);
+    }
 
-	public boolean isAidIsNotReadyYetErrorDisplayed() {
-		return this.isElementDisplayed(aidIsNotReadyYetMessage);
-	}
+    public String verifyGetItTextDisplayed() {
+        return this.getTextFromLocator(getItNowText);
+    }
 
-	public RetrieveIdPage clickOnVid(Target os) {
-		int maxRetries = 3; 
+    public boolean verifyDownloadIdPageGuideMessage() {
+        return this.isElementDisplayed(downloadIdGuideMessage);
+    }
 
-		switch (os) {
-		case ANDROID:
-			clickOnElement(spinnerButton);
-			for (int i = 0; i < maxRetries; i++) {
-				try {
-					clickOnElement(vidDropDownValueAndroid);
-					return this; 
-				} catch (StaleElementReferenceException e) {
-					if (i == maxRetries - 1) {
-						throw e; 
-					}
-				}
-			}
-			break;
-		case IOS:
-			try {
-				sendKeysToTextBox(vidDropDownValueIos, "VID");
-			} catch (StaleElementReferenceException e) {
+    public boolean isInvalidUinMassageLoaded() {
+        return this.isElementDisplayed(invalidUin);
+    }
 
-			}
-			break;
-		}
-		return this;
-	}
+    public boolean isAidIsNotReadyYetErrorDisplayed() {
+        return this.isElementDisplayed(aidIsNotReadyYetMessage);
+    }
 
-	public boolean isIncorrectInputFormatErrorUinMessageDisplayed() {
-		return isElementDisplayed(inputFormatErrorMessageUin);
-	}
+    public RetrieveIdPage clickOnVid(Target os) {
+        int maxRetries = 3;
 
-	public boolean isIncorrectInputFormatErrorVidMessageDisplayed() {
-		return isElementDisplayed(inputFormatErrorMessageVid);
-	}
+        switch (os) {
+            case ANDROID:
+                clickOnElement(spinnerButton);
+                for (int i = 0; i < maxRetries; i++) {
+                    try {
+                        clickOnElement(vidDropDownValueAndroid);
+                        return this;
+                    } catch (StaleElementReferenceException e) {
+                        if (i == maxRetries - 1) {
+                            throw e;
+                        }
+                    }
+                }
+                break;
+            case IOS:
+                try {
+                    sendKeysToTextBox(vidDropDownValueIos, "VID");
+                } catch (StaleElementReferenceException e) {
 
-	public boolean isIncorrectInputFormatErrorAidMessageDisplayed() {
-		return isElementDisplayed(inputFormatErrorMessageAid);
-	}
+                }
+                break;
+        }
+        return this;
+    }
+
+    public boolean isIncorrectInputFormatErrorUinMessageDisplayed() {
+        return isElementDisplayed(inputFormatErrorMessageUin);
+    }
+
+    public boolean isIncorrectInputFormatErrorVidMessageDisplayed() {
+        return isElementDisplayed(inputFormatErrorMessageVid);
+    }
+
+    public boolean isIncorrectInputFormatErrorAidMessageDisplayed() {
+        return isElementDisplayed(inputFormatErrorMessageAid);
+    }
 }

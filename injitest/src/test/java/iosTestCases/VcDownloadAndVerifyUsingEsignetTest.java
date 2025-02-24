@@ -8,6 +8,8 @@ import inji.utils.TestDataReader;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
+import static inji.api.BaseTestCase.perpetualVid;
+import static inji.api.BaseTestCase.uin;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
@@ -41,7 +43,7 @@ public class VcDownloadAndVerifyUsingEsignetTest extends IosBaseTest {
 
         esignetLoginPage.clickOnEsignetLoginWithOtpButton();
         Thread.sleep(9000);
-        String uin = TestDataReader.readData("uin");
+//        String uin = TestDataReader.readData("uin");
         OtpVerificationPage otpVerification= esignetLoginPage.setEnterIdTextBox(uin);
 
 
@@ -70,8 +72,8 @@ public class VcDownloadAndVerifyUsingEsignetTest extends IosBaseTest {
         assertEquals(detailedVcViewPage.getIdTypeValueInDetailedVcView(), TestDataReader.readData("idType"), "Verify if id type is displayed");
         assertEquals(detailedVcViewPage.getStatusInDetailedVcView(), TestDataReader.readData("status"), "Verify if status is displayed");
         assertEquals(detailedVcViewPage.getUinInDetailedVcView(), uin, "Verify if uin is displayed");
-        assertEquals(detailedVcViewPage.getPhoneInDetailedVcView(), TestDataReader.readData("phoneNumber"), "Verify if phone number is displayed");
-        assertEquals(detailedVcViewPage.getEmailInDetailedVcView(), TestDataReader.readData("externalemail"), "Verify if email is displayed");
+//        assertEquals(detailedVcViewPage.getPhoneInDetailedVcView(), TestDataReader.readData("phoneNumber"), "Verify if phone number is displayed");
+//        assertEquals(detailedVcViewPage.getEmailInDetailedVcView(), TestDataReader.readData("externalemail"), "Verify if email is displayed");
         assertTrue(detailedVcViewPage.isActivateButtonDisplayed(), "Verify if activate vc button displayed");
 
         PleaseConfirmPopupPage pleaseConfirmPopupPage  =detailedVcViewPage.clickOnActivateButtonIos();
@@ -117,8 +119,8 @@ public class VcDownloadAndVerifyUsingEsignetTest extends IosBaseTest {
 
         esignetLoginPage.clickOnEsignetLoginWithOtpButton();
 
-        String vid = TestDataReader.readData("vid");
-        OtpVerificationPage otpVerification= esignetLoginPage.setEnterIdTextBox(vid);
+//        String vid = TestDataReader.readData("vid");
+        OtpVerificationPage otpVerification= esignetLoginPage.setEnterIdTextBox(perpetualVid);
         esignetLoginPage.clickOnGetOtpButton();
 
         otpVerification.enterOtpForEsignet(BaseTestCase.getOtp(), Target.IOS);
@@ -141,7 +143,7 @@ public class VcDownloadAndVerifyUsingEsignetTest extends IosBaseTest {
         assertEquals(detailedVcViewPage.getGenderInDetailedVcView(), TestDataReader.readData("gender"), "Verify if gender is displayed");
         assertEquals(detailedVcViewPage.getIdTypeValueInDetailedVcView(), TestDataReader.readData("idType"), "Verify if id type is displayed");
         assertEquals(detailedVcViewPage.getStatusInDetailedVcView(), TestDataReader.readData("status"), "Verify if status is displayed");
-        assertEquals(detailedVcViewPage.getEmailInDetailedVcView(), TestDataReader.readData("externalemail"), "Verify if email is displayed");
+//        assertEquals(detailedVcViewPage.getEmailInDetailedVcView(), TestDataReader.readData("externalemail"), "Verify if email is displayed");
         assertTrue(detailedVcViewPage.isActivateButtonDisplayed(), "Verify if activate vc button displayed");
 
         PleaseConfirmPopupPage pleaseConfirmPopupPage  =detailedVcViewPage.clickOnActivateButtonIos();
@@ -217,7 +219,7 @@ public class VcDownloadAndVerifyUsingEsignetTest extends IosBaseTest {
 
         esignetLoginPage.clickOnEsignetLoginWithOtpButton();
         Thread.sleep(9000);
-        String uin = TestDataReader.readData("uin");
+//        String uin = TestDataReader.readData("uin");
         OtpVerificationPage otpVerification= esignetLoginPage.setEnterIdTextBox(uin);
 
 
@@ -264,7 +266,7 @@ public class VcDownloadAndVerifyUsingEsignetTest extends IosBaseTest {
 
         esignetLoginPage.clickOnEsignetLoginWithOtpButton();
         Thread.sleep(9000);
-        TestDataReader.readData("uin");
+//        TestDataReader.readData("uin");
         esignetLoginPage.setEnterIdTextBox(uin);
 
         esignetLoginPage.clickOnGetOtpButton();

@@ -11,7 +11,12 @@ public class BaseTest {
 
     @BeforeSuite(alwaysRun = true)
     public void beforeSuite() {
-//          BaseTestCase.intiateUINGenration();
+          BaseTestCase.intiateUINGenration();
+        try {
+            Thread.sleep(9000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @AfterSuite(alwaysRun = true)

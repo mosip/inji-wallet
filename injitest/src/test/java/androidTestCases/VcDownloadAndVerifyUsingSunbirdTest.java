@@ -65,4 +65,4 @@ public class VcDownloadAndVerifyUsingSunbirdTest extends AndroidBaseTest {
 
     }
 
-   }
+}

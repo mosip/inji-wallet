@@ -40,11 +40,11 @@ public class CredentialRegistryPage extends BasePage {
     @AndroidFindBy(accessibility = "arrowLeft")
     @iOSXCUITFindBy(accessibility = "arrowLeft")
     public WebElement backArrow;
-    
+
     @AndroidFindBy(accessibility = "credentialRegistryErrorMessage")
     @iOSXCUITFindBy(accessibility = "credentialRegistryErrorMessage")
     public WebElement credentialRegistryErrorMessage;
-    
+
 
     public CredentialRegistryPage(AppiumDriver driver) {
         super(driver);
@@ -53,7 +53,7 @@ public class CredentialRegistryPage extends BasePage {
     public boolean isCredentialRegistryTextBoxHeaderDisplayed() {
         return this.isElementDisplayed(credentialRegistryTextBoxHeader);
     }
-    
+
     public boolean isCredentialRegistryErrorMessageDisplayed() {
         return this.isElementDisplayed(credentialRegistryErrorMessage);
     }
