@@ -42,7 +42,7 @@ export const openID4VPMachine = model.createMachine(
         on: {
           AUTHENTICATE: {
             actions: [
-              'setEncodedAuthorizationRequest',
+              'setUrlEncodedAuthorizationRequest',
               'setFlowType',
               'setMiniViewShareSelectedVC',
               'setIsShareWithSelfie',

@@ -13,7 +13,7 @@
 		1E6875EB2CA554FD0086D870 /* RNOpenID4VPModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E6875EA2CA554FD0086D870 /* RNOpenID4VPModule.m */; };
 		1E6875ED2CA5550F0086D870 /* RNOpenID4VPModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E6875EC2CA5550F0086D870 /* RNOpenID4VPModule.swift */; };
 		1EC395242D50C89C0022D979 /* VCIClient in Frameworks */ = {isa = PBXBuildFile; productRef = 1EC395232D50C89C0022D979 /* VCIClient */; };
-		1EC395272D50C9150022D979 /* OpenID4VP in Frameworks */ = {isa = PBXBuildFile; productRef = 1EC395262D50C9150022D979 /* OpenID4VP */; };
+		3403A56C2D6C79EB00AD64DE /* OpenID4VP in Frameworks */ = {isa = PBXBuildFile; productRef = 3403A56B2D6C79EB00AD64DE /* OpenID4VP */; };
 		1EC3952A2D50C9470022D979 /* pixelpass in Frameworks */ = {isa = PBXBuildFile; productRef = 1EC395292D50C9470022D979 /* pixelpass */; };
 		1EC3952D2D50C9820022D979 /* ios-tuvali-library in Frameworks */ = {isa = PBXBuildFile; productRef = 1EC3952C2D50C9820022D979 /* ios-tuvali-library */; };
 		1EC395302D50C99E0022D979 /* securekeystore in Frameworks */ = {isa = PBXBuildFile; productRef = 1EC3952F2D50C99E0022D979 /* securekeystore */; };
@@ -115,7 +115,7 @@
 			files = (
 				1EC395242D50C89C0022D979 /* VCIClient in Frameworks */,
 				1EC3952A2D50C9470022D979 /* pixelpass in Frameworks */,
-				1EC395272D50C9150022D979 /* OpenID4VP in Frameworks */,
+				3403A56C2D6C79EB00AD64DE /* OpenID4VP in Frameworks */,
 				1EC395302D50C99E0022D979 /* securekeystore in Frameworks */,
 				96905EF65AED1B983A6B3ABC /* libPods-Inji.a in Frameworks */,
 				1EC3952D2D50C9820022D979 /* ios-tuvali-library in Frameworks */,
@@ -273,7 +273,7 @@
 				1E55884F2CC0EF2C00CF55B4 /* Copy FaceSDK Model */,
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
 				800E24972A6A228C8D4807E9 /* [CP] Copy Pods Resources */,
-				D11A8C363B4A5B625DB10379 /* [CP] Embed Pods Frameworks */,
+				0F2FCBA5E4517C72775B53F7 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -282,7 +282,7 @@
 			name = Inji;
 			packageProductDependencies = (
 				1EC395232D50C89C0022D979 /* VCIClient */,
-				1EC395262D50C9150022D979 /* OpenID4VP */,
+				3403A56B2D6C79EB00AD64DE /* OpenID4VP */,
 				1EC395292D50C9470022D979 /* pixelpass */,
 				1EC3952C2D50C9820022D979 /* ios-tuvali-library */,
 				1EC3952F2D50C99E0022D979 /* securekeystore */,
@@ -315,7 +315,7 @@
 			mainGroup = 83CBB9F61A601CBA00E9B192;
 			packageReferences = (
 				1EC395222D50C89C0022D979 /* XCRemoteSwiftPackageReference "inji-vci-client-ios-swift.git" */,
-				1EC395252D50C9150022D979 /* XCRemoteSwiftPackageReference "inji-openid4vp-ios-swift.git" */,
+                3403A56A2D6C79EB00AD64DE /* XCRemoteSwiftPackageReference "inji-openid4vp-ios-swift.git" */,
 				1EC395282D50C9470022D979 /* XCRemoteSwiftPackageReference "pixelpass-ios-swift.git" */,
 				1EC3952B2D50C9820022D979 /* XCRemoteSwiftPackageReference "tuvali-ios-swift.git" */,
 				1EC3952E2D50C99E0022D979 /* XCRemoteSwiftPackageReference "secure-keystore-ios-swift.git" */,
@@ -471,24 +471,24 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Inji/Pods-Inji-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		D11A8C363B4A5B625DB10379 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Inji/Pods-Inji-frameworks.sh",
-				"${PODS_XCFRAMEWORKS_BUILD_DIR}/hermes-engine/Pre-built/hermes.framework/hermes",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/hermes.framework",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Inji/Pods-Inji-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
+		0F2FCBA5E4517C72775B53F7 /* [CP] Embed Pods Frameworks */ = {
+            isa = PBXShellScriptBuildPhase;
+            buildActionMask = 2147483647;
+            files = (
+            );
+            inputPaths = (
+                "${PODS_ROOT}/Target Support Files/Pods-Inji/Pods-Inji-frameworks.sh",
+                "${PODS_XCFRAMEWORKS_BUILD_DIR}/hermes-engine/Pre-built/hermes.framework/hermes",
+            );
+            name = "[CP] Embed Pods Frameworks";
+            outputPaths = (
+                "${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/hermes.framework",
+            );
+            runOnlyForDeploymentPostprocessing = 0;
+            shellPath = /bin/sh;
+            shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Inji/Pods-Inji-frameworks.sh\"\n";
+            showEnvVarsInLog = 0;
+        };
 		FD10A7F022414F080027D42C /* Start Packager */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -574,7 +574,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = io.mosip.inji.wallet.mobileid;
 				PRODUCT_NAME = Inji;
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
@@ -803,6 +802,14 @@
 				kind = branch;
 			};
 		};
+		3403A56A2D6C79EB00AD64DE /* XCRemoteSwiftPackageReference "inji-openid4vp-ios-swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/mosip/inji-openid4vp-ios-swift";
+			requirement = {
+				branch = "release-0.2.x";
+				kind = branch;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -811,11 +818,11 @@
 			package = 1EC395222D50C89C0022D979 /* XCRemoteSwiftPackageReference "inji-vci-client-ios-swift.git" */;
 			productName = VCIClient;
 		};
-		1EC395262D50C9150022D979 /* OpenID4VP */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 1EC395252D50C9150022D979 /* XCRemoteSwiftPackageReference "inji-openid4vp-ios-swift.git" */;
-			productName = OpenID4VP;
-		};
+		3403A56B2D6C79EB00AD64DE /* OpenID4VP */ = {
+            isa = XCSwiftPackageProductDependency;
+            package = 3403A56A2D6C79EB00AD64DE /* XCRemoteSwiftPackageReference "inji-openid4vp-ios-swift" */;
+            productName = OpenID4VP;
+        };
 		1EC395292D50C9470022D979 /* pixelpass */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 1EC395282D50C9470022D979 /* XCRemoteSwiftPackageReference "pixelpass-ios-swift.git" */;
