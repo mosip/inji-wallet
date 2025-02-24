@@ -2,7 +2,7 @@
 
 Inji Wallet fetches well known response directly by hitting the endpoint url constructed using Credential Issuer by appending `/.well-known/openid-credential-issuer`
 
-## Specifications supported
+## Wellknown discovery flow
 
 - The implementation follows OpenID for Verifiable Credential Issuance. [Specification](https://openid.net/specs/openid-4-verifiable-credential-issuance-1_0.html#name-credential-issuer-metadata-).
 - Steps involved in the Well-known discovery from Inji Wallet,
