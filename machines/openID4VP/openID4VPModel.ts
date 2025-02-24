@@ -46,7 +46,7 @@ const openID4VPEvents = {
 export const openID4VPModel = createModel(
   {
     serviceRefs: {} as AppServices,
-    encodedAuthorizationRequest: '' as string,
+    urlEncodedAuthorizationRequest: '' as string,
     authenticationResponse: {},
     vcsMatchingAuthRequest: {} as Record<string, VC[]>,
     checkedAll: false as boolean,

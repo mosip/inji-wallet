@@ -17,7 +17,7 @@ class RNOpenId4VpModule: NSObject, RCTBridgeModule {
   }
   
   @objc
-  func authenticateVerifier(_ encodedAuthorizationRequest: String,
+  func authenticateVerifier(_ urlEncodedAuthorizationRequest: String,
                             trustedVerifierJSON: AnyObject,
                             shouldValidateClient: Bool,
                             resolver resolve: @escaping RCTPromiseResolveBlock,
@@ -37,7 +37,7 @@ class RNOpenId4VpModule: NSObject, RCTBridgeModule {
           return Verifier(clientId: clientId, responseUris: responseUris)
         }
         
-        let authenticationResponse: AuthorizationRequest = try await openID4VP!.authenticateVerifier(urlEncodedAuthorizationRequest: encodedAuthorizationRequest, trustedVerifierJSON: trustedVerifiersList, shouldValidateClient: shouldValidateClient)
+        let authenticationResponse: AuthorizationRequest = try await openID4VP!.authenticateVerifier(urlEncodedAuthorizationRequest: urlEncodedAuthorizationRequest, trustedVerifierJSON: trustedVerifiersList, shouldValidateClient: shouldValidateClient)
         
         let response = try toJsonString(jsonObject: authenticationResponse)
         resolve(response)

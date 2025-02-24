@@ -18,14 +18,13 @@ export class OpenID4VP {
   }
 
   static async authenticateVerifier(
-    encodedAuthorizationRequest: string,
+    urlEncodedAuthorizationRequest: string,
     trustedVerifiersList: any,
   ) {
     const shouldValidateClient = await isClientValidationRequired();
-
     const authenticationResponse =
       await OpenID4VP.InjiOpenID4VP.authenticateVerifier(
-        encodedAuthorizationRequest,
+        urlEncodedAuthorizationRequest,
         trustedVerifiersList,
         shouldValidateClient,
       );
