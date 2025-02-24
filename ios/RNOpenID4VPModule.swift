@@ -37,7 +37,7 @@ class RNOpenId4VpModule: NSObject, RCTBridgeModule {
           return Verifier(clientId: clientId, responseUris: responseUris)
         }
         
-        let authenticationResponse: AuthorizationRequest = try await openID4VP!.authenticateVerifier(encodedAuthorizationRequest: encodedAuthorizationRequest, trustedVerifierJSON: trustedVerifiersList, shouldValidateClient: shouldValidateClient)
+        let authenticationResponse: AuthorizationRequest = try await openID4VP!.authenticateVerifier(urlEncodedAuthorizationRequest: encodedAuthorizationRequest, trustedVerifierJSON: trustedVerifiersList, shouldValidateClient: shouldValidateClient)
         
         let response = try toJsonString(jsonObject: authenticationResponse)
         resolve(response)
