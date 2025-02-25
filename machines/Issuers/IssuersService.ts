@@ -1,8 +1,8 @@
 import NetInfo from '@react-native-community/netinfo';
-import { NativeModules } from 'react-native';
-import { authorize } from 'react-native-app-auth';
+import {NativeModules} from 'react-native';
+import {authorize} from 'react-native-app-auth';
 import Cloud from '../../shared/CloudBackupAndRestoreUtils';
-import { CACHED_API } from '../../shared/api';
+import {API, CACHED_API} from '../../shared/api';
 import {
   fetchKeyPair,
   generateKeyPair,
@@ -15,14 +15,14 @@ import {
   OIDCErrors,
   updateCredentialInformation,
   vcDownloadTimeout,
-  verifyCredentialData
+  verifyCredentialData,
 } from '../../shared/openId4VCI/Utils';
-import { TelemetryConstants } from '../../shared/telemetry/TelemetryConstants';
+import {TelemetryConstants} from '../../shared/telemetry/TelemetryConstants';
 import {
   getImpressionEventData,
   sendImpressionEvent,
 } from '../../shared/telemetry/TelemetryUtils';
-import { VciClient } from '../../shared/vciClient/VciClient';
+import {VciClient} from '../../shared/vciClient/VciClient';
 
 export const IssuersService = () => {
   return {
@@ -31,6 +31,11 @@ export const IssuersService = () => {
     },
     downloadIssuersList: async () => {
       return await CACHED_API.fetchIssuers();
+    },
+    downloadCredentialOfferData: async (context: any) => {
+      return await CACHED_API.fetchCredentialOfferData(
+        context.credentialOfferURI,
+      );
     },
     checkInternet: async () => await NetInfo.fetch(),
     downloadIssuerWellknown: async (context: any) => {
@@ -61,29 +66,55 @@ export const IssuersService = () => {
        * Incase of multiple entries of authorization_servers, each element is iterated and metadata check is made for support with wallet.
        * For now, its been kept as getting first entry and checking for matching grant_types_supported
        */
-      const authorizationServer =
-        context.selectedIssuerWellknownResponse['authorization_servers'][0];
-      const authorizationServerMetadata =
-        await CACHED_API.fetchIssuerAuthorizationServerMetadata(
-          authorizationServer,
-        );
+      const wellknownResponse = context.selectedIssuerWellknownResponse;
+      const authorizationServers =
+        wellknownResponse['authorization_servers'] || [];
+      const credentialIssuer = wellknownResponse['credential_issuer'];
       const SUPPORTED_GRANT_TYPES = ['authorization_code'];
-      if (
-        (
-          authorizationServerMetadata['grant_types_supported'] as Array<string>
-        ).filter(grantType => SUPPORTED_GRANT_TYPES.includes(grantType))
-          .length === 0
-      ) {
-        throw new Error(
-          OIDCErrors.AUTHORIZATION_ENDPOINT_DISCOVERY.GRANT_TYPE_NOT_SUPPORTED,
-        );
+
+      // List of servers to check (authorization servers first, then credential issuer)
+      const serversToCheck = [...authorizationServers, credentialIssuer].filter(
+        Boolean,
+      );
+
+      for (const server of serversToCheck) {
+        const authorizationServersMetadata =
+          await CACHED_API.fetchIssuerAuthorizationServerMetadata(server);
+
+        if (
+          (authorizationServersMetadata['grant_types_supported'] || []).some(
+            grant => SUPPORTED_GRANT_TYPES.includes(grant),
+          )
+        ) {
+          return authorizationServersMetadata['authorization_endpoint'];
+        }
       }
 
-      return authorizationServerMetadata['authorization_endpoint'];
+      throw new Error(
+        OIDCErrors.AUTHORIZATION_ENDPOINT_DISCOVERY.GRANT_TYPE_NOT_SUPPORTED,
+      );
     },
+
+    fetchAccessTokenWithPreAuthCode: async (context: any) => {
+      const preAuthCode = '1011086789793991645341730';
+      console.log(
+        'tokenEndpoint new ::',
+        context.selectedIssuer.token_endpoint,
+      );
+      const grant_type = 'urn:ietf:params:oauth:grant-type:pre-authorized_code';
+      const tokenResponse = await API.fetchAccessTokenWithPreAuthCode(
+        grant_type,
+        preAuthCode,
+        context.selectedIssuer.token_endpoint,
+      );
+      console.log('tokenResponse ::', tokenResponse);
+      return tokenResponse;
+    },
+
     downloadCredential: async (context: any) => {
       const downloadTimeout = await vcDownloadTimeout();
-      const accessToken: string = context.tokenResponse?.accessToken;
+      const accessToken: string = context.tokenResponse?.access_token;
+      console.log('accessToken ::', accessToken);
       const proofJWT = await constructProofJWT(
         context.publicKey,
         context.privateKey,
@@ -149,12 +180,12 @@ export const IssuersService = () => {
       const verificationResult = await verifyCredentialData(
         context.verifiableCredential?.credential,
         context.selectedCredentialType.format,
-        context.selectedIssuerId
+        context.selectedIssuerId,
       );
-       if(!verificationResult.isVerified) {
-          throw new Error(verificationResult.verificationErrorCode);
-        }
-        return verificationResult;
+      if (!verificationResult.isVerified) {
+        throw new Error(verificationResult.verificationErrorCode);
+      }
+      return verificationResult;
     },
   };
 };

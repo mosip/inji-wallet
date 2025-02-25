@@ -87,6 +87,40 @@ export const IssuersMachine = model.createMachine(
             ],
             target: 'downloadIssuerWellknown',
           },
+          SCAN_CREDENTIAL_OFFER_QR_CODE: {
+            target: 'scanCredentialOfferQrCode',
+          },
+        },
+      },
+      scanCredentialOfferQrCode: {
+        description: 'waits for the user to scan Qr Code',
+        on: {
+          QR_CODE_SCANNED: [
+            {
+              actions: 'updateCredentialOfferValues',
+              cond: 'hasCredentialOfferUri',
+              target: 'downloadCredentialOfferData',
+            },
+            {
+              actions: 'updateCredentialOfferValues',
+              target: 'selectingIssuer',
+            },
+          ],
+        },
+      },
+
+      downloadCredentialOfferData: {
+        description: 'fetches the credential offer data',
+        invoke: {
+          src: 'downloadCredentialOfferData',
+          onDone: {
+            actions: 'setCredentialOfferData',
+            target: 'selectingIssuer',
+          },
+          onError: {
+            actions: 'resetCredentialOfferValues',
+            target: 'selectingIssuer',
+          },
         },
       },
       downloadIssuerWellknown: {
@@ -140,9 +174,29 @@ export const IssuersMachine = model.createMachine(
           CANCEL: {
             target: 'displayIssuers',
           },
-          SELECTED_CREDENTIAL_TYPE: {
-            actions: 'setSelectedCredentialType',
-            target: 'fetchAuthorizationEndpoint',
+          SELECTED_CREDENTIAL_TYPE: [
+            {
+              actions: 'setSelectedCredentialType',
+              cond: 'isPreAuthFlow',
+              target: 'fetchAccessTokenWithPreAuthCode',
+            },
+            {
+              actions: 'setSelectedCredentialType',
+              target: 'fetchAuthorizationEndpoint',
+            },
+          ],
+        },
+      },
+      fetchAccessTokenWithPreAuthCode: {
+        invoke: {
+          src: 'fetchAccessTokenWithPreAuthCode',
+          onDone: {
+            actions: ['setTokenResponse', 'setLoadingReasonAsSettingUp'],
+            target: 'performAuthorization.setSelectedKey',
+          },
+          onError: {
+            actions: ['setError', 'resetLoadingReason'],
+            target: 'error',
           },
         },
       },
@@ -535,5 +589,12 @@ export interface issuerType {
   display: [displayType];
   credentialTypes: [CredentialTypes];
   authorizationEndpoint: string;
+  hasPreAuthCode: boolean;
   credential_issuer_host: string;
+}
+
+export interface CredentialOfferData {
+  credential_issuer: string;
+  credential_configuration_ids: [string];
+  grants: object;
 }

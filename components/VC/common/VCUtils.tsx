@@ -92,6 +92,7 @@ export const getFieldValue = (
       );
     default: {
       if (format === VCFormat.ldp_vc) {
+        console.log('vc :: ', verifiableCredential);
         const fieldValue = verifiableCredential?.credentialSubject[field];
         if (Array.isArray(fieldValue) && typeof fieldValue[0] !== 'object') {
           return fieldValue.join(', ');

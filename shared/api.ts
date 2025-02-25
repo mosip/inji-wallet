@@ -26,6 +26,10 @@ export const API_URLS: ApiUrls = {
     method: 'GET',
     buildURL: (): `/${string}` => '/v1/mimoto/issuers',
   },
+  credentialOfferData: {
+    method: 'GET',
+    buildURL: (credentialOfferUri: string): string => `${credentialOfferUri}`,
+  },
   issuerConfig: {
     method: 'GET',
     buildURL: (issuerId: string): `/${string}` =>
@@ -35,6 +39,10 @@ export const API_URLS: ApiUrls = {
     method: 'GET',
     buildURL: (credentialIssuer: string): string =>
       `${credentialIssuer}/.well-known/openid-credential-issuer`,
+  },
+  fetchAccessTokenWithPreAuthCode: {
+    method: 'POST',
+    buildURL: (token_endpoint: string): string => token_endpoint,
   },
   authorizationServerMetadataConfig: {
     method: 'GET',
@@ -115,6 +123,44 @@ export const API = {
     );
     return response.response.issuers || [];
   },
+  fetchCredentialOfferData: async (credentialOfferUri: string) => {
+    const response = await request(
+      API_URLS.credentialOfferData.method,
+      API_URLS.credentialOfferData.buildURL(credentialOfferUri),
+    );
+    return response;
+  },
+
+  fetchAccessTokenWithPreAuthCode: async (
+    grant_type: string,
+    preAuthCode: string,
+    token_endpoint: string,
+  ) => {
+    const body: Record<string, unknown> = {
+      grant_type,
+      'pre-authorized_code': preAuthCode,
+    };
+
+    const response = await request(
+      API_URLS.fetchAccessTokenWithPreAuthCode.method,
+      API_URLS.fetchAccessTokenWithPreAuthCode.buildURL(token_endpoint),
+      body,
+      undefined,
+      {
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+    );
+
+    return response;
+  },
+
+  fetchIssuerConfig: async (issuerId: string) => {
+    const response = await request(
+      API_URLS.issuerConfig.method,
+      API_URLS.issuerConfig.buildURL(issuerId),
+    );
+    return response.response;
+  },
   fetchIssuerWellknownConfig: async (credentialIssuer: string) => {
     const response = await request(
       API_URLS.issuerWellknownConfig.method,
@@ -161,6 +207,17 @@ export const CACHED_API = {
     generateCacheAPIFunction({
       cacheKey: API_CACHED_STORAGE_KEYS.fetchIssuers,
       fetchCall: API.fetchIssuers,
+    }),
+
+  fetchCredentialOfferData: (
+    credentialOfferUri: string,
+    isCachePreferred: boolean = false,
+  ) =>
+    generateCacheAPIFunction({
+      isCachePreferred,
+      cacheKey:
+        API_CACHED_STORAGE_KEYS.fetchCredentialOfferData(credentialOfferUri),
+      fetchCall: API.fetchCredentialOfferData.bind(null, credentialOfferUri),
     }),
 
   fetchIssuerWellknownConfig: (
@@ -331,8 +388,10 @@ type Api_Params = {
 };
 
 type ApiUrls = {
+  fetchAccessTokenWithPreAuthCode: any;
   trustedVerifiersList: Api_Params;
   issuersList: Api_Params;
+  credentialOfferData: Api_Params;
   issuerConfig: Api_Params;
   issuerWellknownConfig: Api_Params;
   authorizationServerMetadataConfig: Api_Params;

@@ -3,6 +3,8 @@ import {ErrorMessage, OIDCErrors} from '../../shared/openId4VCI/Utils';
 import {isHardwareKeystoreExists} from '../../shared/cryptoutil/cryptoUtil';
 import {BiometricCancellationError} from '../../shared/error/BiometricCancellationError';
 import {VerificationErrorType} from '../../shared/vcjs/verifyCredential';
+import {getSearchParamsFromUri} from '../../shared/Utils';
+import {CredentialOfferParams} from '../../shared/constants';
 
 export const IssuersGuards = () => {
   return {
@@ -56,6 +58,12 @@ export const IssuersGuards = () => {
     isGenericError: (_: any, event: any) => {
       const errorMessage = event.data.message;
       return errorMessage === ErrorMessage.GENERIC;
+    },
+    hasCredentialOfferUri: (_: any, event: any) => {
+      return getSearchParamsFromUri(event.data).get(CredentialOfferParams.URI);
+    },
+    isPreAuthFlow: (context: any) => {
+      return context.selectedIssuer.hasPreAuthCode;
     },
   };
 };

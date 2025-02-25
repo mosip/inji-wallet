@@ -9,6 +9,7 @@ import {
   REQUEST_TIMEOUT,
   isIOS,
   EXPIRED_VC_ERROR_CODE,
+  CredentialOfferParams,
 } from '../../shared/constants';
 import {assign, send} from 'xstate';
 import {StoreEvents} from '../store';
@@ -26,7 +27,7 @@ import {TelemetryConstants} from '../../shared/telemetry/TelemetryConstants';
 import {NativeModules} from 'react-native';
 import {KeyTypes} from '../../shared/cryptoutil/KeyTypes';
 import {VCActivityLog} from '../../components/ActivityLogEvent';
-import {isNetworkError} from '../../shared/Utils';
+import {getSearchParamsFromUri, isNetworkError} from '../../shared/Utils';
 
 const {RNSecureKeystoreModule} = NativeModules;
 export const IssuersActions = (model: any) => {
@@ -245,6 +246,45 @@ export const IssuersActions = (model: any) => {
         credential_endpoint: event.data.credential_endpoint,
         credential_configurations_supported:
           event.data.credential_configurations_supported,
+        token_endpoint: event.data.token_endpoint,
+        hasPreAuthCode: true,
+      }),
+    }),
+
+    updateCredentialOfferValues: assign((context: any, event: any) => {
+      try {
+        const searchParams = getSearchParamsFromUri(event.data);
+        if (!searchParams) return {};
+
+        const credentialOfferURI = searchParams.get(CredentialOfferParams.URI);
+        const credentialOfferEncodedData = searchParams.get(
+          CredentialOfferParams.DATA,
+        );
+
+        return {
+          ...(credentialOfferURI && {credentialOfferURI}),
+          ...(credentialOfferEncodedData && {
+            credentialOfferData: JSON.parse(
+              decodeURIComponent(credentialOfferEncodedData),
+            ),
+          }),
+        };
+      } catch (error) {
+        console.error('Error extracting credential offer:', error);
+        return {};
+      }
+    }),
+
+    setCredentialOfferData: model.assign({
+      credentialOfferData: (context: any, event: any) => ({
+        ...context.credentialOfferData,
+        ...(event.data?.credential_issuer && {
+          credential_issuer: event.data.credential_issuer,
+        }),
+        ...(event.data?.credential_configuration_ids && {
+          credential_configuration_ids: event.data.credential_configuration_ids,
+        }),
+        ...(event.data?.grants && {grants: event.data.grants}),
       }),
     }),
 
@@ -341,6 +381,11 @@ export const IssuersActions = (model: any) => {
 
     resetVerificationErrorMessage: model.assign({
       verificationErrorMessage: () => '',
+    }),
+
+    resetCredentialOfferValues: model.assign({
+      credentialOfferURI: () => '',
+      credentialOfferData: () => null,
     }),
 
     sendDownloadingFailedToVcMeta: send(

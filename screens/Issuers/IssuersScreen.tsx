@@ -29,6 +29,7 @@ import {SvgImage} from '../../components/ui/svg';
 import {Icon} from 'react-native-elements';
 import {BannerNotificationContainer} from '../../components/BannerNotificationContainer';
 import {CredentialTypeSelectionScreen} from './CredentialTypeSelectionScreen';
+import {QrScanner} from '../../components/QrScanner';
 
 export const IssuersScreen: React.FC<
   HomeRouteProps | RootRouteProps
@@ -154,6 +155,18 @@ export const IssuersScreen: React.FC<
       setClearSearchIcon(false);
     }
   };
+
+  function qrScannerComponent() {
+    return (
+      <Column crossAlign="center">
+        <QrScanner
+          onQrFound={controller.QR_CODE_SCANNED}
+          title="Scan Credential Offer QR code to add issuers"
+        />
+      </Column>
+    );
+  }
+
   if (controller.isSelectingCredentialType) {
     return <CredentialTypeSelectionScreen {...props} />;
   }
@@ -228,6 +241,10 @@ export const IssuersScreen: React.FC<
     );
   }
 
+  if (controller.isQrScanning) {
+    return qrScannerComponent();
+  }
+
   if (controller.loadingReason) {
     return (
       <Loader
@@ -240,6 +257,12 @@ export const IssuersScreen: React.FC<
   return (
     <React.Fragment>
       <BannerNotificationContainer />
+      <Button
+        testID="scanCredentialOfferQrCode"
+        type="clear"
+        title="Scan Qr Code"
+        onPress={controller.SCAN_CREDENTIAL_OFFER_QR_CODE}
+      />
       {controller.issuers.length > 0 && (
         <Column style={Theme.IssuersScreenStyles.issuerListOuterContainer}>
           <Row
