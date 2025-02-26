@@ -268,10 +268,10 @@ dependencies {
     }
     implementation("com.facebook.react:react-android")
     implementation 'com.facebook.soloader:soloader:0.10.1+'
-    implementation("io.mosip:pixelpass-aar:0.6.0-SNAPSHOT")
-    implementation("io.mosip:secure-keystore:0.3.0-SNAPSHOT")
+    implementation("io.mosip:pixelpass-aar:0.6.0")
+    implementation("io.mosip:secure-keystore:0.3.0")
     implementation("io.mosip:tuvali:0.5.2-SNAPSHOT")
-    implementation("io.mosip:inji-vci-client:0.2.0-SNAPSHOT")
+    implementation("io.mosip:inji-vci-client:0.2.0")
     implementation("com.google.code.gson:gson:2.10.1")
     implementation("io.mosip:vcverifier-aar:1.2.0-SNAPSHOT"){
         exclude group: 'org.bouncycastle', module: 'bcpkix-jdk15on'
