@@ -18,6 +18,11 @@ export interface Typegen0 {
       data: unknown;
       __tip: 'See the XState TS docs to learn how to strongly type this.';
     };
+    'done.invoke.issuersMachine.downloadCredentialOfferData:invocation[0]': {
+      type: 'done.invoke.issuersMachine.downloadCredentialOfferData:invocation[0]';
+      data: unknown;
+      __tip: 'See the XState TS docs to learn how to strongly type this.';
+    };
     'done.invoke.issuersMachine.downloadCredentialTypes:invocation[0]': {
       type: 'done.invoke.issuersMachine.downloadCredentialTypes:invocation[0]';
       data: unknown;
@@ -76,6 +81,10 @@ export interface Typegen0 {
       type: 'error.platform.issuersMachine.displayIssuers:invocation[0]';
       data: unknown;
     };
+    'error.platform.issuersMachine.downloadCredentialOfferData:invocation[0]': {
+      type: 'error.platform.issuersMachine.downloadCredentialOfferData:invocation[0]';
+      data: unknown;
+    };
     'error.platform.issuersMachine.downloadCredentialTypes:invocation[0]': {
       type: 'error.platform.issuersMachine.downloadCredentialTypes:invocation[0]';
       data: unknown;
@@ -113,6 +122,7 @@ export interface Typegen0 {
   invokeSrcNameMap: {
     checkInternet: 'done.invoke.checkInternet';
     downloadCredential: 'done.invoke.issuersMachine.downloadCredentials:invocation[0]';
+    downloadCredentialOfferData: 'done.invoke.issuersMachine.downloadCredentialOfferData:invocation[0]';
     downloadCredentialTypes: 'done.invoke.issuersMachine.downloadCredentialTypes:invocation[0]';
     downloadIssuerWellknown: 'done.invoke.issuersMachine.downloadIssuerWellknown:invocation[0]';
     downloadIssuersList: 'done.invoke.issuersMachine.displayIssuers:invocation[0]';
@@ -130,6 +140,7 @@ export interface Typegen0 {
       | 'downloadIssuerWellknown'
       | 'loadKeyPair'
       | 'logDownloaded'
+      | 'resetCredentialOfferValues'
       | 'resetError'
       | 'resetLoadingReason'
       | 'resetSelectedCredentialType'
@@ -140,6 +151,7 @@ export interface Typegen0 {
       | 'sendErrorEndEvent'
       | 'sendImpressionEvent'
       | 'sendSuccessEndEvent'
+      | 'setCredentialOfferData'
       | 'setCredentialTypeListDownloadFailureError'
       | 'setCredentialWrapper'
       | 'setError'
@@ -168,12 +180,14 @@ export interface Typegen0 {
       | 'storeVerifiableCredentialData'
       | 'storeVerifiableCredentialMeta'
       | 'updateAuthorizationEndpoint'
+      | 'updateCredentialOfferValues'
       | 'updateIssuerFromWellknown'
       | 'updateSelectedIssuerWellknownResponse'
       | 'updateVerificationErrorMessage';
     delays: never;
     guards:
       | 'canSelectIssuerAgain'
+      | 'hasCredentialOfferUri'
       | 'hasKeyPair'
       | 'hasUserCancelledBiometric'
       | 'isCustomSecureKeystore'
@@ -188,6 +202,7 @@ export interface Typegen0 {
     services:
       | 'checkInternet'
       | 'downloadCredential'
+      | 'downloadCredentialOfferData'
       | 'downloadCredentialTypes'
       | 'downloadIssuerWellknown'
       | 'downloadIssuersList'
@@ -206,6 +221,7 @@ export interface Typegen0 {
     logDownloaded:
       | 'done.invoke.issuersMachine.verifyingCredential:invocation[0]'
       | 'error.platform.issuersMachine.verifyingCredential:invocation[0]';
+    resetCredentialOfferValues: 'error.platform.issuersMachine.downloadCredentialOfferData:invocation[0]';
     resetError:
       | 'RESET_ERROR'
       | 'TRY_AGAIN'
@@ -238,6 +254,7 @@ export interface Typegen0 {
     sendErrorEndEvent: 'error.platform.issuersMachine.verifyingCredential:invocation[0]';
     sendImpressionEvent: 'done.invoke.issuersMachine.displayIssuers:invocation[0]';
     sendSuccessEndEvent: 'done.invoke.issuersMachine.verifyingCredential:invocation[0]';
+    setCredentialOfferData: 'done.invoke.issuersMachine.downloadCredentialOfferData:invocation[0]';
     setCredentialTypeListDownloadFailureError: 'error.platform.issuersMachine.downloadCredentialTypes:invocation[0]';
     setCredentialWrapper: 'done.invoke.issuersMachine.downloadCredentials:invocation[0]';
     setError:
@@ -293,6 +310,7 @@ export interface Typegen0 {
       | 'done.invoke.issuersMachine.verifyingCredential:invocation[0]'
       | 'error.platform.issuersMachine.verifyingCredential:invocation[0]';
     updateAuthorizationEndpoint: 'done.invoke.issuersMachine.fetchAuthorizationEndpoint:invocation[0]';
+    updateCredentialOfferValues: 'QR_CODE_SCANNED';
     updateIssuerFromWellknown: 'done.invoke.issuersMachine.downloadIssuerWellknown:invocation[0]';
     updateSelectedIssuerWellknownResponse: 'done.invoke.issuersMachine.downloadIssuerWellknown:invocation[0]';
     updateVerificationErrorMessage: 'error.platform.issuersMachine.verifyingCredential:invocation[0]';
@@ -300,6 +318,7 @@ export interface Typegen0 {
   eventsCausingDelays: {};
   eventsCausingGuards: {
     canSelectIssuerAgain: 'TRY_AGAIN';
+    hasCredentialOfferUri: 'QR_CODE_SCANNED';
     hasKeyPair: 'done.invoke.issuersMachine.checkKeyPair:invocation[0]';
     hasUserCancelledBiometric:
       | 'error.platform.issuersMachine.downloadCredentials:invocation[0]'
@@ -321,6 +340,7 @@ export interface Typegen0 {
     downloadCredential:
       | 'done.invoke.issuersMachine.checkKeyPair:invocation[0]'
       | 'done.invoke.issuersMachine.generateKeyPair:invocation[0]';
+    downloadCredentialOfferData: 'QR_CODE_SCANNED';
     downloadCredentialTypes: 'done.invoke.issuersMachine.downloadIssuerWellknown:invocation[0]';
     downloadIssuerWellknown: 'SELECTED_ISSUER' | 'TRY_AGAIN';
     downloadIssuersList: 'CANCEL' | 'TRY_AGAIN' | 'xstate.init';
@@ -344,6 +364,7 @@ export interface Typegen0 {
     | 'checkKeyPair'
     | 'displayIssuers'
     | 'done'
+    | 'downloadCredentialOfferData'
     | 'downloadCredentialTypes'
     | 'downloadCredentials'
     | 'downloadCredentials.idle'
@@ -361,6 +382,7 @@ export interface Typegen0 {
     | 'performAuthorization.idle'
     | 'performAuthorization.setSelectedKey'
     | 'performAuthorization.userCancelledBiometric'
+    | 'scanCredentialOfferQrCode'
     | 'selectingCredentialType'
     | 'selectingIssuer'
     | 'storing'

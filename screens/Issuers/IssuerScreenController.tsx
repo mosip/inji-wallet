@@ -14,6 +14,7 @@ import {
   selectStoring,
   selectVerificationErrorMessage,
   selectIsNonGenericError,
+  selectIsQrScanning,
 } from '../../machines/Issuers/IssuersSelectors';
 import {ActorRefFrom} from 'xstate';
 import {BOTTOM_TAB_ROUTES} from '../../routes/routesConstants';
@@ -40,6 +41,7 @@ export function useIssuerScreenController({route, navigation}) {
     isNonGenericError: useSelector(service, selectIsNonGenericError),
     loadingReason: useSelector(service, selectLoadingReason),
     isStoring: useSelector(service, selectStoring),
+    isQrScanning: useSelector(service, selectIsQrScanning),
     isSelectingCredentialType: useSelector(
       service,
       selectSelectingCredentialType,
@@ -65,6 +67,9 @@ export function useIssuerScreenController({route, navigation}) {
     },
     SELECTED_CREDENTIAL_TYPE: (credType: CredentialTypes) =>
       service.send(IssuerScreenTabEvents.SELECTED_CREDENTIAL_TYPE(credType)),
+    QR_CODE_SCANNED: (qrData: string) => {
+      service.send(IssuerScreenTabEvents.QR_CODE_SCANNED(qrData));
+    },
     RESET_VERIFY_ERROR: () => {
       service.send(IssuerScreenTabEvents.RESET_VERIFY_ERROR());
       if (isAndroid()) {
@@ -76,6 +81,9 @@ export function useIssuerScreenController({route, navigation}) {
           0,
         );
       }
+    },
+    SCAN_CREDENTIAL_OFFER_QR_CODE: () => {
+      service.send(IssuerScreenTabEvents.SCAN_CREDENTIAL_OFFER_QR_CODE());
     },
   };
 }

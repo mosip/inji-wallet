@@ -1,8 +1,8 @@
 import NetInfo from '@react-native-community/netinfo';
-import { NativeModules } from 'react-native';
-import { authorize } from 'react-native-app-auth';
+import {NativeModules} from 'react-native';
+import {authorize} from 'react-native-app-auth';
 import Cloud from '../../shared/CloudBackupAndRestoreUtils';
-import { CACHED_API } from '../../shared/api';
+import {CACHED_API} from '../../shared/api';
 import {
   fetchKeyPair,
   generateKeyPair,
@@ -15,14 +15,14 @@ import {
   OIDCErrors,
   updateCredentialInformation,
   vcDownloadTimeout,
-  verifyCredentialData
+  verifyCredentialData,
 } from '../../shared/openId4VCI/Utils';
-import { TelemetryConstants } from '../../shared/telemetry/TelemetryConstants';
+import {TelemetryConstants} from '../../shared/telemetry/TelemetryConstants';
 import {
   getImpressionEventData,
   sendImpressionEvent,
 } from '../../shared/telemetry/TelemetryUtils';
-import { VciClient } from '../../shared/vciClient/VciClient';
+import {VciClient} from '../../shared/vciClient/VciClient';
 
 export const IssuersService = () => {
   return {
@@ -31,6 +31,11 @@ export const IssuersService = () => {
     },
     downloadIssuersList: async () => {
       return await CACHED_API.fetchIssuers();
+    },
+    downloadCredentialOfferData: async (context: any) => {
+      return await CACHED_API.fetchCredentialOfferData(
+        context.credentialOfferURI,
+      );
     },
     checkInternet: async () => await NetInfo.fetch(),
     downloadIssuerWellknown: async (context: any) => {
@@ -149,12 +154,12 @@ export const IssuersService = () => {
       const verificationResult = await verifyCredentialData(
         context.verifiableCredential?.credential,
         context.selectedCredentialType.format,
-        context.selectedIssuerId
+        context.selectedIssuerId,
       );
-       if(!verificationResult.isVerified) {
-          throw new Error(verificationResult.verificationErrorCode);
-        }
-        return verificationResult;
+      if (!verificationResult.isVerified) {
+        throw new Error(verificationResult.verificationErrorCode);
+      }
+      return verificationResult;
     },
   };
 };
