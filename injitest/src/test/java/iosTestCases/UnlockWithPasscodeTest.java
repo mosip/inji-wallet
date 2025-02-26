@@ -51,7 +51,7 @@ public class UnlockWithPasscodeTest extends IosBaseTest {
         assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
 
     }
-    
+
     @Test
     public void loginWithInvalidPasscode() {
         ChooseLanguagePage chooseLanguagePage = new ChooseLanguagePage(driver);
@@ -85,6 +85,6 @@ public class UnlockWithPasscodeTest extends IosBaseTest {
         enterYourPasscodePage.enterPasscodeOnPasscodePage(TestDataReader.readData("invalidpasscode"), Target.IOS);
 
         assertTrue(confirmPasscode.isPasscodeInvalidMessageDisplayed(), "verify if invalid passcode is displayed");
-    	
+
     }
 }

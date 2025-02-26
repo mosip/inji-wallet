@@ -175,7 +175,7 @@ public class VcDownloadAndVerifyUsingUinTest extends AndroidBaseTest {
 
     @Test
     public void generateMultipleVcWithSameUin() throws InterruptedException {
-    	ChooseLanguagePage chooseLanguagePage = new ChooseLanguagePage(driver);
+        ChooseLanguagePage chooseLanguagePage = new ChooseLanguagePage(driver);
 
         assertTrue(chooseLanguagePage.isChooseLanguagePageLoaded(), "Verify if choose language page is displayed");
         WelcomePage welcomePage = chooseLanguagePage.clickOnSavePreference();
@@ -212,10 +212,10 @@ public class VcDownloadAndVerifyUsingUinTest extends AndroidBaseTest {
         homePage.downloadCard();
 
         assertTrue(addNewCardPage.isAddNewCardPageLoaded(), "Verify if add new card page is displayed");
-         addNewCardPage.clickOnDownloadViaUin();
+        addNewCardPage.clickOnDownloadViaUin();
 
         assertTrue(retrieveIdPage.isRetrieveIdPageLoaded(), "Verify if retrieve id page is displayed");
-         retrieveIdPage.setEnterIdTextBox(uin).clickOnGenerateCardButton();
+        retrieveIdPage.setEnterIdTextBox(uin).clickOnGenerateCardButton();
 
         assertTrue(otpVerification.isOtpVerificationPageLoaded(), "Verify if otp verification page is displayed");
         otpVerification.enterOtp(BaseTestCase.getOtp(), Target.ANDROID);
@@ -610,8 +610,8 @@ public class VcDownloadAndVerifyUsingUinTest extends AndroidBaseTest {
         homePage.downloadCard();
         addNewCardPage.clickOnDownloadViaUin();
 
-         TestDataReader.readData("uin");
-         retrieveIdPage.setEnterIdTextBox(uin).clickOnGenerateCardButton();
+        TestDataReader.readData("uin");
+        retrieveIdPage.setEnterIdTextBox(uin).clickOnGenerateCardButton();
 
         assertTrue(otpVerification.isOtpVerificationPageLoaded(), "Verify if otp verification page is displayed");
         otpVerification.enterOtp(BaseTestCase.getOtp(), Target.ANDROID);
