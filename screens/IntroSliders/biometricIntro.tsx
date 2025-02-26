@@ -15,8 +15,12 @@ export const StaticAuthScreen: React.FC = () => {
       backgroundColor={Theme.Colors.whiteBackgroundColor}
       style={Theme.IntroSliderStyles.biometricIntroOuterColumn}
     >
-      <View style={Theme.IntroSliderStyles.biometricIntroNotch}></View>
-      <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ flexGrow: 1 }}>
+      <View 
+        testID="notchView"
+        style={Theme.IntroSliderStyles.biometricIntroNotch}></View>
+      <ScrollView 
+        showsVerticalScrollIndicator={false} 
+        contentContainerStyle={{ flexGrow: 1 }}>
         <Column
           align='space-between'
           fill
@@ -30,7 +34,7 @@ export const StaticAuthScreen: React.FC = () => {
             {SvgImage.fingerprintIcon(66)}
             <Column margin="30 0 0 0">
               <Text
-                testID="selectAppUnlockMethod"
+                testID="header"
                 style={Theme.TextStyles.header}
                 align="center">
                 {t('header')}
@@ -53,24 +57,29 @@ export const StaticAuthScreen: React.FC = () => {
               </Text>
             </Column>
           </Column>
-          <View style={{ height: 100 }}></View>
+          <View 
+            testID="spacerView"
+            style={{ height: 100 }}></View>
           <Column>
             <Button
+              testID="useBiometricsButton"
               title={t('useBiometrics')}
               type="gradient"
               margin="0 0 8 0"
               onPress={() => { }}
             />
             <Button
-              testID="usePasscode"
+              testID="usePasscodeButton"
               type="clear"
               title={t('usePasscode')}
               disabled={false}
               onPress={() => { }}
             />
           </Column>
-          {/* height increased to enable forxce scroll */}
-          <View style={{ height: 200 }}></View>
+          {/* height increased to enable force scroll */}
+          <View 
+            testID="footerSpacerView"
+            style={{ height: 200 }}></View>
         </Column>
       </ScrollView>
     </Column>

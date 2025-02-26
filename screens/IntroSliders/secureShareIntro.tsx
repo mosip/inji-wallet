@@ -25,8 +25,14 @@ export const StaticSendVcScreen: React.FC = () => {
     const handleReject = () => { };
 
     return (
-        <Column fill backgroundColor={Theme.Colors.lightGreyBackgroundColor} style={Theme.IntroSliderStyles.secureShareIntroOuterColumn}>
-            <View style={Theme.IntroSliderStyles.introScreenNotch}></View>
+        <Column 
+            testID="sendVcScreen" 
+            fill 
+            backgroundColor={Theme.Colors.lightGreyBackgroundColor} 
+            style={Theme.IntroSliderStyles.secureShareIntroOuterColumn}>
+            <View 
+                testID="introScreenNotch" 
+                style={Theme.IntroSliderStyles.introScreenNotch}></View>
             <Row
                 align="space-between"
                 style={{
@@ -35,12 +41,18 @@ export const StaticSendVcScreen: React.FC = () => {
                     borderBottomWidth: 1,
                     borderBottomColor: Theme.Colors.lightGreyBackgroundColor,
                 }}>
-                <Text weight='bold' size="large">
+                <Text 
+                    testID="introTitle" 
+                    weight="bold" 
+                    size="large">
                     {t("SendVcScreen:introTitle")}
                 </Text>
             </Row>
             <Row style={{ paddingHorizontal: 16 }}>
-                <Text color={Theme.Colors.GrayText} size="extraSmall">
+                <Text 
+                    testID="issuerName" 
+                    color={Theme.Colors.GrayText} 
+                    size="extraSmall">
                     Philippines Government
                 </Text>
             </Row>
@@ -53,12 +65,16 @@ export const StaticSendVcScreen: React.FC = () => {
                     justifyContent: 'center',
                     backgroundColor: '#FFF2D6',
                 }}>
-                <Text color='#8B6105' size='small'>
+                <Text 
+                    testID="requestMessage" 
+                    color="#8B6105" 
+                    size="small">
                     {'<Philippines Govt.>'} {t('SendVcScreen:requestMessage')}
                     {'<Self-Authentication>'}.
                 </Text>
             </Column>
             <Text
+                testID="pleaseSelectAnId"
                 margin="0 0 8 16"
                 weight="bold"
                 color={Theme.Colors.textValue}
@@ -66,42 +82,64 @@ export const StaticSendVcScreen: React.FC = () => {
                 {t("SendVcScreen:pleaseSelectAnId")}
             </Text>
             <Row align="space-between" style={{ paddingHorizontal: 16 }}>
-                <Text margin={"3 0 10 0"}>2 {t('SendVPScreen:cardsSelected')}</Text>
-                <Text color={Theme.Colors.GradientColors[1]}>{t('SendVPScreen:unCheck')}</Text>
+                <Text 
+                    testID="cardsSelected" 
+                    margin={"3 0 10 0"}>
+                    2 {t('SendVPScreen:cardsSelected')}
+                </Text>
+                <Text 
+                    testID="uncheckText" 
+                    color={Theme.Colors.GradientColors[1]}>
+                    {t('SendVPScreen:unCheck')}
+                </Text>
             </Row>
             <Column scroll>
                 {staticCards.map(card => (
-                    <LinearGradient colors={Theme.Colors.GradientColorsLight} start={Theme.LinearGradientDirection.start} end={Theme.LinearGradientDirection.end}><Row
-                        key={card.id}
-                        style={{
-                            alignItems: 'center',
-                            padding: 16,
-                            borderBottomWidth: 1,
-                            borderBottomColor: Theme.Colors.lightGreyBackgroundColor,
-                            backgroundColor: card.selected
-                                ? Theme.Colors.GradientColorsLight[0]
-                                : Theme.Colors.whiteBackgroundColor,
-                        }}>
-                        <Column style={{ marginLeft: 5, flex: 1 }}>
-                            <Row crossAlign='center'>
-                                <View style={{ paddingRight: 10 }}>
-                                    {card.selected ? SvgImage.CheckedIcon() : SvgImage.UnCheckedIcon()}
-                                </View>
-                                <Image style={{ height: 40, width: 40, marginRight: 10 }} source={card.face} />
-                                <Column>
-                                    <Text weight='bold'>{card.name}</Text>
-                                    <Text
-                                        size='extraSmall'
-                                        style={{
-                                            color: Theme.Colors.blackIcon,
-                                        }}>
-                                        {t("VcDetails:" + card.status)}
-                                    </Text>
-                                </Column>
-                            </Row>
-                        </Column>
-                        {SvgImage.walletActivatedIcon()}
-                    </Row></LinearGradient>
+                    <LinearGradient 
+                        key={card.id} 
+                        colors={Theme.Colors.GradientColorsLight} 
+                        start={Theme.LinearGradientDirection.start} 
+                        end={Theme.LinearGradientDirection.end}>
+                        <Row
+                            testID={`cardRow-${card.id}`}
+                            style={{
+                                alignItems: 'center',
+                                padding: 16,
+                                borderBottomWidth: 1,
+                                borderBottomColor: Theme.Colors.lightGreyBackgroundColor,
+                                backgroundColor: card.selected
+                                    ? Theme.Colors.GradientColorsLight[0]
+                                    : Theme.Colors.whiteBackgroundColor,
+                            }}>
+                            <Column style={{ marginLeft: 5, flex: 1 }}>
+                                <Row crossAlign="center">
+                                    <View style={{ paddingRight: 10 }}>
+                                        {card.selected ? SvgImage.CheckedIcon() : SvgImage.UnCheckedIcon()}
+                                    </View>
+                                    <Image 
+                                        testID={`cardFace-${card.id}`} 
+                                        style={{ height: 40, width: 40, marginRight: 10 }} 
+                                        source={card.face} />
+                                    <Column>
+                                        <Text 
+                                            testID={`cardName-${card.id}`} 
+                                            weight="bold">
+                                            {card.name}
+                                        </Text>
+                                        <Text
+                                            testID={`cardStatus-${card.id}`}
+                                            size="extraSmall"
+                                            style={{
+                                                color: Theme.Colors.blackIcon,
+                                            }}>
+                                            {t("VcDetails:" + card.status)}
+                                        </Text>
+                                    </Column>
+                                </Row>
+                            </Column>
+                            {SvgImage.walletActivatedIcon()}
+                        </Row>
+                    </LinearGradient>
                 ))}
             </Column>
             <Column
@@ -110,18 +148,21 @@ export const StaticSendVcScreen: React.FC = () => {
                     backgroundColor: Theme.Colors.whiteBackgroundColor,
                 }}>
                 <Button
+                    testID="shareButton"
                     type="gradient"
                     title="Share"
                     styles={{ marginVertical: 8 }}
                     onPress={handleShare}
                 />
                 <Button
+                    testID="shareWithSelfieButton"
                     type="gradient"
                     title="Share with Selfie"
                     styles={{ marginVertical: 8 }}
                     onPress={handleShareWithSelfie}
                 />
                 <Button
+                    testID="rejectButton"
                     type="clear"
                     title="Reject"
                     onPress={handleReject}
