@@ -26,6 +26,10 @@ export const API_URLS: ApiUrls = {
     method: 'GET',
     buildURL: (): `/${string}` => '/v1/mimoto/issuers',
   },
+  credentialOfferData: {
+    method: 'GET',
+    buildURL: (credentialOfferUri: string): string => `${credentialOfferUri}`,
+  },
   issuerConfig: {
     method: 'GET',
     buildURL: (issuerId: string): `/${string}` =>
@@ -115,6 +119,13 @@ export const API = {
     );
     return response.response.issuers || [];
   },
+  fetchCredentialOfferData: async (credentialOfferUri: string) => {
+    const response = await request(
+      API_URLS.credentialOfferData.method,
+      API_URLS.credentialOfferData.buildURL(credentialOfferUri),
+    );
+    return response;
+  },
   fetchIssuerWellknownConfig: async (credentialIssuer: string) => {
     const response = await request(
       API_URLS.issuerWellknownConfig.method,
@@ -161,6 +172,17 @@ export const CACHED_API = {
     generateCacheAPIFunction({
       cacheKey: API_CACHED_STORAGE_KEYS.fetchIssuers,
       fetchCall: API.fetchIssuers,
+    }),
+
+  fetchCredentialOfferData: (
+    credentialOfferUri: string,
+    isCachePreferred: boolean = false,
+  ) =>
+    generateCacheAPIFunction({
+      isCachePreferred,
+      cacheKey:
+        API_CACHED_STORAGE_KEYS.fetchCredentialOfferData(credentialOfferUri),
+      fetchCall: API.fetchCredentialOfferData.bind(null, credentialOfferUri),
     }),
 
   fetchIssuerWellknownConfig: (
@@ -333,6 +355,7 @@ type Api_Params = {
 type ApiUrls = {
   trustedVerifiersList: Api_Params;
   issuersList: Api_Params;
+  credentialOfferData: Api_Params;
   issuerConfig: Api_Params;
   issuerWellknownConfig: Api_Params;
   authorizationServerMetadataConfig: Api_Params;
