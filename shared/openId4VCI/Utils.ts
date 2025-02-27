@@ -112,7 +112,9 @@ export const getDisplayObjectForCurrentLanguage = (
     obj => obj[languageKey] == currentLanguage,
   )[0];
   if (!displayType) {
-    displayType = display.filter(obj => obj[languageKey] === 'en')[0];
+    displayType =
+      display.filter(obj => obj[languageKey] === 'en')[0] ||
+      display.filter(obj => obj[languageKey] === 'en-US')[0];
   }
   return displayType;
 };

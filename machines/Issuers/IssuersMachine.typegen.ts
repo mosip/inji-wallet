@@ -272,6 +272,7 @@ export interface Typegen0 {
       | 'error.platform.issuersMachine.performAuthorization.getKeyPairFromKeystore:invocation[0]';
     setLoadingReasonAsSettingUp:
       | 'RESET_ERROR'
+      | 'SELECTED_CREDENTIAL_OFFER_ISSUER'
       | 'SELECTED_ISSUER'
       | 'TRY_AGAIN'
       | 'done.invoke.issuersMachine.performAuthorization:invocation[0]';
@@ -286,8 +287,8 @@ export interface Typegen0 {
     setPrivateKey: 'done.invoke.issuersMachine.generateKeyPair:invocation[0]';
     setPublicKey: 'done.invoke.issuersMachine.generateKeyPair:invocation[0]';
     setSelectedCredentialType: 'SELECTED_CREDENTIAL_TYPE';
-    setSelectedIssuerId: 'SELECTED_ISSUER';
-    setSelectedIssuers: 'SELECTED_ISSUER';
+    setSelectedIssuerId: 'SELECTED_CREDENTIAL_OFFER_ISSUER' | 'SELECTED_ISSUER';
+    setSelectedIssuers: 'SELECTED_CREDENTIAL_OFFER_ISSUER' | 'SELECTED_ISSUER';
     setSelectedKey: 'done.invoke.issuersMachine.performAuthorization.setSelectedKey:invocation[0]';
     setSupportedCredentialTypes: 'done.invoke.issuersMachine.downloadCredentialTypes:invocation[0]';
     setTokenResponse: 'done.invoke.issuersMachine.performAuthorization:invocation[0]';
@@ -342,7 +343,10 @@ export interface Typegen0 {
       | 'done.invoke.issuersMachine.generateKeyPair:invocation[0]';
     downloadCredentialOfferData: 'QR_CODE_SCANNED';
     downloadCredentialTypes: 'done.invoke.issuersMachine.downloadIssuerWellknown:invocation[0]';
-    downloadIssuerWellknown: 'SELECTED_ISSUER' | 'TRY_AGAIN';
+    downloadIssuerWellknown:
+      | 'SELECTED_CREDENTIAL_OFFER_ISSUER'
+      | 'SELECTED_ISSUER'
+      | 'TRY_AGAIN';
     downloadIssuersList: 'CANCEL' | 'TRY_AGAIN' | 'xstate.init';
     fetchAuthorizationEndpoint: 'SELECTED_CREDENTIAL_TYPE';
     generateKeyPair: 'done.invoke.issuersMachine.checkKeyPair:invocation[0]';
