@@ -9,7 +9,7 @@ import {
   OpenID4VP_Domain,
   OpenID4VP_Proof_Sign_Algo_Suite,
 } from '../../shared/openID4VP/OpenID4VP';
-import { KeyTypes } from '../../shared/cryptoutil/KeyTypes';
+import {KeyTypes} from '../../shared/cryptoutil/KeyTypes';
 
 export const openID4VPServices = () => {
   return {
@@ -24,7 +24,7 @@ export const openID4VPServices = () => {
     getAuthenticationResponse: (context: any) => async () => {
       OpenID4VP.initialize();
       const serviceRes = await OpenID4VP.authenticateVerifier(
-        context.encodedAuthorizationRequest,
+        context.urlEncodedAuthorizationRequest,
         context.trustedVerifiers,
       );
       return serviceRes;
@@ -55,7 +55,11 @@ export const openID4VPServices = () => {
       const vpResponseMetadata = {
         jws: proofJWT,
         signatureAlgorithm: OpenID4VP_Proof_Sign_Algo_Suite,
-        publicKey: "did:jwk:"+base64url(await getJWK(context.publicKey, KeyTypes.ED25519)),
+        publicKey:
+          'did:jwk:' +
+          base64url(
+            JSON.stringify(await getJWK(context.publicKey, KeyTypes.ED25519)),
+          ),
         domain: OpenID4VP_Domain,
       };
       return await OpenID4VP.shareVerifiablePresentation(vpResponseMetadata);

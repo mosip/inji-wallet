@@ -20,8 +20,8 @@ export const openID4VPActions = (model: any) => {
       authenticationResponse: (_, event) => event.data,
     }),
 
-    setEncodedAuthorizationRequest: model.assign({
-      encodedAuthorizationRequest: (_, event) => event.encodedAuthRequest,
+    setUrlEncodedAuthorizationRequest: model.assign({
+      urlEncodedAuthorizationRequest: (_, event) => event.encodedAuthRequest,
     }),
 
     setFlowType: model.assign({
