@@ -49,6 +49,11 @@ export const API_URLS: ApiUrls = {
     buildURL: (authorizationServerUrl: string): string =>
       `${authorizationServerUrl}/.well-known/oauth-authorization-server`,
   },
+  authorizationServerMetadataConfigAlternate: {
+    method: 'GET',
+    buildURL: (authorizationServerUrl: string): string =>
+      `${authorizationServerUrl}/.well-known/openid-configuration`,
+  },
   allProperties: {
     method: 'GET',
     buildURL: (): `/${string}` => '/v1/mimoto/allProperties',
@@ -75,7 +80,7 @@ export const API_URLS: ApiUrls = {
   },
   credentialRequest: {
     method: 'POST',
-    buildURL: (): `/${string}` => '/v1/mimoto/credentialshare/request',
+    buildURL: (credentialEndpoint: string): string => credentialEndpoint,
   },
   credentialStatus: {
     method: 'GET',
@@ -130,6 +135,38 @@ export const API = {
     );
     return response;
   },
+   fetchCredentialRequest : async (
+    accessToken: string, 
+    credentialConfigurationId: string,
+    proofJwt: string,
+    credentialEndpoint: string
+  ) => {
+    const requestBody = {
+      credential_configuration_id: credentialConfigurationId,
+      proof: {
+        proof_type: "jwt",
+        jwt: proofJwt,
+      },
+    };
+  
+    try {
+      const response = await request(
+        API_URLS.credentialRequest.method,
+        API_URLS.credentialRequest.buildURL(credentialEndpoint),
+        requestBody,
+        {
+          Authorization: `Bearer ${accessToken}`,
+          "Content-Type": "application/json",
+        }
+      );
+  
+      return response;
+    } catch (error) {
+      console.error("Credential request failed:", error);
+      throw error;
+    }
+  },
+  
 
   fetchAccessTokenWithPreAuthCode: async (
     grant_type: string,
@@ -169,15 +206,30 @@ export const API = {
     return response;
   },
   fetchAuthorizationServerMetadata: async (authorizationServerUrl: string) => {
-    const response = await request(
-      API_URLS.authorizationServerMetadataConfig.method,
-      API_URLS.authorizationServerMetadataConfig.buildURL(
-        authorizationServerUrl,
-      ),
-      undefined,
-      '',
-    );
-    return response;
+    try{
+      const response = await request(
+        API_URLS.authorizationServerMetadataConfig.method,
+        API_URLS.authorizationServerMetadataConfig.buildURL(
+          authorizationServerUrl,
+        ),
+        undefined,
+        '',
+      );
+      return response;
+    }
+    catch(error){
+      const response = await request(
+        API_URLS.authorizationServerMetadataConfigAlternate.method,
+        API_URLS.authorizationServerMetadataConfigAlternate.buildURL(
+          authorizationServerUrl,
+        ),
+        undefined,
+        '',
+      );
+      return response;
+    }
+    
+   
   },
   fetchAllProperties: async () => {
     const response = await request(
@@ -395,6 +447,7 @@ type ApiUrls = {
   issuerConfig: Api_Params;
   issuerWellknownConfig: Api_Params;
   authorizationServerMetadataConfig: Api_Params;
+  authorizationServerMetadataConfigAlternate: Api_Params;
   allProperties: Api_Params;
   getIndividualId: Api_Params;
   reqIndividualOTP: Api_Params;

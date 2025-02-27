@@ -38,26 +38,46 @@ export const IssuersService = () => {
       );
     },
     checkInternet: async () => await NetInfo.fetch(),
+    getAuthFlowType: async (context: any) => {
+      if (context.selectedIssuer?.grants) {
+        console.log('grants ::', context.selectedIssuer.grants);
+        return context.selectedIssuer.grants;
+      } else {
+        return [];
+      }
+    },
     downloadIssuerWellknown: async (context: any) => {
+      console.log('selectedIssuer ::', context.selectedIssuer);
       const wellknownResponse = await CACHED_API.fetchIssuerWellknownConfig(
-        context.selectedIssuer.issuer_id,
-        context.selectedIssuer.credential_issuer_host,
+        context.selectedIssuer.id,
+        context.selectedIssuer.credential_issuer_host
+          ? context.selectedIssuer.credential_issuer_host
+          : context.selectedIssuer.credential_issuer,
       );
       return wellknownResponse;
     },
     downloadCredentialTypes: async (context: any) => {
       const credentialTypes = [];
-      for (const key in context.selectedIssuer
-        .credential_configurations_supported) {
-        credentialTypes.push({
-          id: key,
-          ...context.selectedIssuer.credential_configurations_supported[key],
-        });
+      const selectedIssuer = context.selectedIssuer;
+
+      const keys =
+        selectedIssuer.credential_configuration_ids ??
+        Object.keys(selectedIssuer.credential_configurations_supported);
+
+      for (const key of keys) {
+        if (selectedIssuer.credential_configurations_supported[key]) {
+          credentialTypes.push({
+            id: key,
+            ...selectedIssuer.credential_configurations_supported[key],
+          });
+        }
       }
-      if (credentialTypes.length == 0)
+
+      if (credentialTypes.length === 0) {
         throw new Error(
-          `No credential type found for issuer ${context.selectedIssuer.issuer_id}`,
+          `No credential type found for issuer ${selectedIssuer.issuer_id}`,
         );
+      }
 
       return credentialTypes;
     },
@@ -69,6 +89,7 @@ export const IssuersService = () => {
       const wellknownResponse = context.selectedIssuerWellknownResponse;
       const authorizationServers =
         wellknownResponse['authorization_servers'] || [];
+      console.log('authorizationServers ::', authorizationServers);
       const credentialIssuer = wellknownResponse['credential_issuer'];
       const SUPPORTED_GRANT_TYPES = ['authorization_code'];
 
@@ -78,25 +99,39 @@ export const IssuersService = () => {
       );
 
       for (const server of serversToCheck) {
-        const authorizationServersMetadata =
-          await CACHED_API.fetchIssuerAuthorizationServerMetadata(server);
+        try {
+          console.log('server ::', server);
+          const authorizationServersMetadata =
+            await CACHED_API.fetchIssuerAuthorizationServerMetadata(server);
 
-        if (
-          (authorizationServersMetadata['grant_types_supported'] || []).some(
-            grant => SUPPORTED_GRANT_TYPES.includes(grant),
-          )
-        ) {
-          return authorizationServersMetadata['authorization_endpoint'];
+          if (
+            (
+              authorizationServersMetadata['grant_types_supported'] || [
+                'authorization_code',
+                'implicit',
+              ]
+            ).some(grant => SUPPORTED_GRANT_TYPES.includes(grant))
+          ) {
+            console.log(
+              'authorizationServersMetadata ::',
+              authorizationServersMetadata['authorization_endpoint'],
+            );
+            return authorizationServersMetadata['authorization_endpoint'];
+          }
+        } catch (error) {
+          console.log('error ::', error);
         }
       }
-
       throw new Error(
         OIDCErrors.AUTHORIZATION_ENDPOINT_DISCOVERY.GRANT_TYPE_NOT_SUPPORTED,
       );
     },
 
     fetchAccessTokenWithPreAuthCode: async (context: any) => {
-      const preAuthCode = '1011086789793991645341730';
+      const preAuthCode =
+        context.selectedIssuer.grants[
+          'urn:ietf:params:oauth:grant-type:pre-authorized_code'
+        ]['pre-authorized_code'];
       console.log(
         'tokenEndpoint new ::',
         context.selectedIssuer.token_endpoint,
@@ -113,7 +148,9 @@ export const IssuersService = () => {
 
     downloadCredential: async (context: any) => {
       const downloadTimeout = await vcDownloadTimeout();
-      const accessToken: string = context.tokenResponse?.access_token;
+      const accessToken: string =
+        context.tokenResponse?.access_token ||
+        context.tokenResponse?.accessToken;
       console.log('accessToken ::', accessToken);
       const proofJWT = await constructProofJWT(
         context.publicKey,
@@ -122,14 +159,11 @@ export const IssuersService = () => {
         context.selectedIssuer,
         context.keyType,
       );
-      let credential = await VciClient.downloadCredential(
-        constructIssuerMetaData(
-          context.selectedIssuer,
-          context.selectedCredentialType,
-          downloadTimeout,
-        ),
-        proofJWT,
+      let credential = await API.fetchCredentialRequest(
         accessToken,
+        context.selectedCredentialType.id,
+        proofJWT,
+        context.selectedIssuer.credential_endpoint,
       );
 
       console.info(`VC download via ${context.selectedIssuerId} is successful`);
@@ -143,12 +177,19 @@ export const IssuersService = () => {
             TelemetryConstants.Screens.webViewPage,
         ),
       );
-      return await authorize(
-        constructAuthorizationConfiguration(
-          context.selectedIssuer,
-          context.selectedCredentialType.scope,
-        ),
-      );
+      if (
+        !context.selectedIssuer.grants?.[
+          'urn:ietf:params:oauth:grant-type:pre-authorized_code'
+        ]
+      ) {
+        console.log('selectedIssuer ::', context.selectedIssuer.token_endpoint);
+        return await authorize(
+          constructAuthorizationConfiguration(
+            context.selectedIssuer,
+            context.selectedCredentialType.scope,
+          ),
+        );
+      } else return [];
     },
 
     getKeyOrderList: async () => {
@@ -156,6 +197,7 @@ export const IssuersService = () => {
       const keyOrder = JSON.parse(
         (await RNSecureKeystoreModule.getData('keyPreference'))[1],
       );
+      console.log('keyOrder ::', keyOrder);
       return keyOrder;
     },
 
@@ -165,6 +207,7 @@ export const IssuersService = () => {
     },
 
     getKeyPair: async (context: any) => {
+      console.log('keyType ::', context.keyType);
       if (context.keyType === '') {
         throw new Error('key type not found');
       } else if (!!(await hasKeyPair(context.keyType))) {

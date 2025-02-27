@@ -112,7 +112,9 @@ export const getDisplayObjectForCurrentLanguage = (
     obj => obj[languageKey] == currentLanguage,
   )[0];
   if (!displayType) {
-    displayType = display.filter(obj => obj[languageKey] === 'en')[0];
+    displayType =
+      display.filter(obj => obj[languageKey] === 'en')[0] ||
+      display.filter(obj => obj[languageKey] === 'en-US')[0];
   }
   return displayType;
 };
@@ -122,10 +124,10 @@ export const constructAuthorizationConfiguration = (
   supportedScope: string,
 ) => {
   return {
-    issuer: selectedIssuer.issuer_id,
-    clientId: selectedIssuer.client_id,
+    issuer: selectedIssuer.credential_configuration_ids[0],
+    clientId: "wallet",
     scopes: [supportedScope],
-    redirectUrl: selectedIssuer.redirect_uri,
+    redirectUrl: "io.mosip.residentapp.inji://oauthredirect",
     additionalParameters: {ui_locales: i18n.language},
     serviceConfiguration: {
       authorizationEndpoint: selectedIssuer.authorizationEndpoint,
@@ -373,7 +375,7 @@ export function selectCredentialRequestKey(
       return keyOrder[index];
     }
   }
-  return '';
+  return KeyTypes.ED25519;
 }
 
 export const constructIssuerMetaData = (

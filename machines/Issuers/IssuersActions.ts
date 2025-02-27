@@ -69,6 +69,11 @@ export const IssuersActions = (model: any) => {
     setSelectedCredentialType: model.assign({
       selectedCredentialType: (_: any, event: any) => event.credType,
       wellknownKeyTypes: (_: any, event: any) => {
+        console.log('event.credType', event.credType);
+        console.log(
+          'proofTypesSupported',
+          event.credType.proof_types_supported,
+        );
         const proofTypesSupported = event.credType.proof_types_supported;
         if (proofTypesSupported?.jwt) {
           return proofTypesSupported.jwt
@@ -226,6 +231,7 @@ export const IssuersActions = (model: any) => {
 
     setSelectedKey: model.assign({
       keyType: (context: any, event: any) => {
+        console.log('context.wellknownKeyTypes', context.wellknownKeyTypes);
         const keyType = selectCredentialRequestKey(
           context.wellknownKeyTypes,
           event.data,
@@ -235,8 +241,14 @@ export const IssuersActions = (model: any) => {
     }),
 
     setSelectedIssuers: model.assign({
-      selectedIssuer: (context: any, event: any) =>
-        context.issuers.find(issuer => issuer.issuer_id === event.id),
+      selectedIssuer: (context: any, event: any) => {
+        console.log('credentialOfferData', context.credentialOfferData);
+        if (event.id == 'credentialOfferIssuer') {
+          return context.credentialOfferData;
+        } else {
+          return context.issuers.find(issuer => issuer.issuer_id === event.id);
+        }
+      },
     }),
 
     updateIssuerFromWellknown: model.assign({
@@ -246,8 +258,8 @@ export const IssuersActions = (model: any) => {
         credential_endpoint: event.data.credential_endpoint,
         credential_configurations_supported:
           event.data.credential_configurations_supported,
-        token_endpoint: event.data.token_endpoint,
-        hasPreAuthCode: true,
+        token_endpoint: context.selectedIssuer.token_endpoint?context.selectedIssuer.token_endpoint:event.data.token_endpoint,
+        hasPreAuthCode: context.selectedIssuer.hasPreAuthCode,
       }),
     }),
 
@@ -302,7 +314,13 @@ export const IssuersActions = (model: any) => {
       selectedIssuerId: (_: any, event: any) => event.id,
     }),
     setTokenResponse: model.assign({
-      tokenResponse: (_: any, event: any) => event.data,
+      tokenResponse: (context: any, event: any) => {
+        console.log('context.token', context.tokenResponse);
+
+        return ('access_token' in context.tokenResponse)
+          ? context.tokenResponse
+          : event.data;
+      },
     }),
     setVerifiableCredential: model.assign({
       verifiableCredential: (_: any, event: any) => {

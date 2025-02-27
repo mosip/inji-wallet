@@ -90,6 +90,14 @@ export const IssuersMachine = model.createMachine(
           SCAN_CREDENTIAL_OFFER_QR_CODE: {
             target: 'scanCredentialOfferQrCode',
           },
+          SELECTED_CREDENTIAL_OFFER_ISSUER: {
+            actions: [
+              'setSelectedIssuerId',
+              'setLoadingReasonAsSettingUp',
+              'setSelectedIssuers',
+            ],
+            target: 'downloadIssuerWellknown',
+          },
         },
       },
       scanCredentialOfferQrCode: {
@@ -177,14 +185,27 @@ export const IssuersMachine = model.createMachine(
           SELECTED_CREDENTIAL_TYPE: [
             {
               actions: 'setSelectedCredentialType',
+              target: 'getAuthFlowType',
+            },
+          ],
+        },
+      },
+      getAuthFlowType: {
+        invoke: {
+          src: 'getAuthFlowType',
+          onDone: [
+            {
               cond: 'isPreAuthFlow',
               target: 'fetchAccessTokenWithPreAuthCode',
             },
             {
-              actions: 'setSelectedCredentialType',
               target: 'fetchAuthorizationEndpoint',
             },
           ],
+          onError: {
+            actions: ['setError', 'resetLoadingReason'],
+            target: 'error',
+          },
         },
       },
       fetchAccessTokenWithPreAuthCode: {
@@ -192,7 +213,7 @@ export const IssuersMachine = model.createMachine(
           src: 'fetchAccessTokenWithPreAuthCode',
           onDone: {
             actions: ['setTokenResponse', 'setLoadingReasonAsSettingUp'],
-            target: 'performAuthorization.setSelectedKey',
+            target: '#issuersMachine.performAuthorization',
           },
           onError: {
             actions: ['setError', 'resetLoadingReason'],
@@ -307,7 +328,7 @@ export const IssuersMachine = model.createMachine(
             invoke: {
               src: 'getKeyOrderList',
               onDone: {
-                actions: 'setSelectedKey',
+                actions: [ (_,event:any)=>console.log("✅ `getKeyOrderList` Completed Successfully", event.data),'setSelectedKey',],
                 target: 'getKeyPairFromKeystore',
               },
               onError: {

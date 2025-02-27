@@ -1,6 +1,6 @@
 import React, {useLayoutEffect, useState} from 'react';
 import {useTranslation} from 'react-i18next';
-import {FlatList, Pressable} from 'react-native';
+import {FlatList, Pressable, View} from 'react-native';
 import {Issuer} from '../../components/openId4VCI/Issuer';
 import {Error} from '../../components/ui/Error';
 import {Header} from '../../components/ui/Header';
@@ -10,7 +10,10 @@ import {RootRouteProps} from '../../routes';
 import {HomeRouteProps} from '../../routes/routeTypes';
 import {useIssuerScreenController} from './IssuerScreenController';
 import {Loader} from '../../components/ui/Loader';
-import {isTranslationKeyFound, removeWhiteSpace} from '../../shared/commonUtil';
+import testIDProps, {
+  isTranslationKeyFound,
+  removeWhiteSpace,
+} from '../../shared/commonUtil';
 import {
   ErrorMessage,
   getDisplayObjectForCurrentLanguage,
@@ -263,6 +266,47 @@ export const IssuersScreen: React.FC<
         title="Scan Qr Code"
         onPress={controller.SCAN_CREDENTIAL_OFFER_QR_CODE}
       />
+
+      {controller.credentialOfferData != null && (
+        <Column
+          style={[Theme.IssuersScreenStyles.issuersContainer, {height: 80}]}>
+          <Pressable
+            accessible={false}
+            {...testIDProps(
+              `issuer-${controller.credentialOfferData.credential_issuer}`,
+            )}
+            onPress={() =>
+              controller.SELECTED_CREDENTIAL_OFFER_ISSUER(
+                "credentialOfferIssuer",
+              )
+            }
+            style={({pressed}) =>
+              pressed
+                ? [
+                    Theme.IssuersScreenStyles.issuerBoxContainerPressed,
+                    Theme.Styles.boxShadow,
+                  ]
+                : [
+                    Theme.IssuersScreenStyles.issuerBoxContainer,
+                    Theme.Styles.boxShadow,
+                  ]
+            }>
+            <View style={Theme.IssuersScreenStyles.issuerBoxContent}>
+              <Text
+                testID={`issuerHeading-${controller.credentialOfferData.credential_issuer}`}
+                style={Theme.IssuersScreenStyles.issuerHeading}>
+                Credential Offer Issuer
+              </Text>
+              <Text
+                testID={`issuerDescription-${controller.credentialOfferData.credential_issuer}`}
+                style={Theme.IssuersScreenStyles.issuerDescription}>
+                Added by Scanning the QR Code
+              </Text>
+            </View>
+          </Pressable>
+        </Column>
+      )}
+
       {controller.issuers.length > 0 && (
         <Column style={Theme.IssuersScreenStyles.issuerListOuterContainer}>
           <Row

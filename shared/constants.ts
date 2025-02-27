@@ -82,6 +82,7 @@ export const SUPPORTED_KEY_TYPES = {
   'ECC K1': KeyTypes.ES256K,
   'ECC R1': KeyTypes.ES256,
   RSA: KeyTypes.RS256,
+  'EdDSA': KeyTypes.ED25519,
 };
 
 export function isAndroid(): boolean {
