@@ -337,7 +337,7 @@ export const ScanActions = (model: any) => {
 
         return ActivityLogEvents.LOG_ACTIVITY(
           VCActivityLog.getLogFromObject({
-            _vcKey: '',
+            _vcKey: vcMetadata.getVcKey(),
             issuer: vcMetadata.issuer!!,
             credentialConfigurationId:
               selectedVc.verifiableCredential.credentialConfigurationId,
