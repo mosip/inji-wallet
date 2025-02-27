@@ -15,6 +15,7 @@ import {
   selectVerificationErrorMessage,
   selectIsNonGenericError,
   selectIsQrScanning,
+  selectCredentialOfferData,
 } from '../../machines/Issuers/IssuersSelectors';
 import {ActorRefFrom} from 'xstate';
 import {BOTTOM_TAB_ROUTES} from '../../routes/routesConstants';
@@ -46,6 +47,7 @@ export function useIssuerScreenController({route, navigation}) {
       service,
       selectSelectingCredentialType,
     ),
+    credentialOfferData: useSelector(service, selectCredentialOfferData),
     supportedCredentialTypes: useSelector(
       service,
       selectSupportedCredentialTypes,
@@ -84,6 +86,9 @@ export function useIssuerScreenController({route, navigation}) {
     },
     SCAN_CREDENTIAL_OFFER_QR_CODE: () => {
       service.send(IssuerScreenTabEvents.SCAN_CREDENTIAL_OFFER_QR_CODE());
+    },
+    SELECTED_CREDENTIAL_OFFER_ISSUER: (id: string) => {
+      service.send(IssuerScreenTabEvents.SELECTED_CREDENTIAL_OFFER_ISSUER(id));
     },
   };
 }

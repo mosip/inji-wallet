@@ -90,6 +90,14 @@ export const IssuersMachine = model.createMachine(
           SCAN_CREDENTIAL_OFFER_QR_CODE: {
             target: 'scanCredentialOfferQrCode',
           },
+          SELECTED_CREDENTIAL_OFFER_ISSUER: {
+            actions: [
+              'setSelectedIssuerId',
+              'setLoadingReasonAsSettingUp',
+              'setSelectedIssuers',
+            ],
+            target: 'downloadIssuerWellknown',
+          },
         },
       },
       scanCredentialOfferQrCode: {

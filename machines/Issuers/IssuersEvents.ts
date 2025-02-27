@@ -15,4 +15,5 @@ export const IssuersEvents = {
   SELECTED_CREDENTIAL_TYPE: (credType: CredentialTypes) => ({credType}),
   SCAN_CREDENTIAL_OFFER_QR_CODE: () => ({}),
   QR_CODE_SCANNED: (data: string) => ({data}),
+  SELECTED_CREDENTIAL_OFFER_ISSUER: (id: string) => ({id}),
 };
