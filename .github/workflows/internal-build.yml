@@ -171,7 +171,7 @@ jobs:
       APP_FLAVOR: ${{ inputs.injiFlavor }}
       SERVICE_LOCATION: '.'
       IOS_SERVICE_LOCATION: 'ios'
-      SCRIPT_NAME: ${{ inputs.enable_auth == 'true' && 'fastlane beta' || 'fastlane ios_ui_automation_build' }}
+      SCRIPT_NAME: 'fastlane beta'
       IOS_ARTIFACT_NAME: "ios-artifacts"
       IOS_ARTIFACT_PATH: "ios/fastlane/Inji_artifacts/"
     secrets:
