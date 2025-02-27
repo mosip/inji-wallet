@@ -115,7 +115,7 @@
 			files = (
 				1EC395242D50C89C0022D979 /* VCIClient in Frameworks */,
 				1EC3952A2D50C9470022D979 /* pixelpass in Frameworks */,
-				3482783B2D6F221B0074938B /* OpenID4VP in Frameworks */,
+				3407B1002D706EE1003089E6 /* OpenID4VP in Frameworks */,
 				1EC395302D50C99E0022D979 /* securekeystore in Frameworks */,
 				96905EF65AED1B983A6B3ABC /* libPods-Inji.a in Frameworks */,
 				1EC3952D2D50C9820022D979 /* ios-tuvali-library in Frameworks */,
@@ -282,10 +282,10 @@
 			name = Inji;
 			packageProductDependencies = (
 				1EC395232D50C89C0022D979 /* VCIClient */,
-				3482783A2D6F221B0074938B /* OpenID4VP */,
 				1EC395292D50C9470022D979 /* pixelpass */,
 				1EC3952C2D50C9820022D979 /* ios-tuvali-library */,
 				1EC3952F2D50C99E0022D979 /* securekeystore */,
+				3407B0FF2D706EE1003089E6 /* OpenID4VP */,
 			);
 			productName = Inji;
 			productReference = 13B07F961A680F5B00A75B9A /* Inji.app */;
@@ -318,7 +318,7 @@
 				1EC395282D50C9470022D979 /* XCRemoteSwiftPackageReference "pixelpass-ios-swift" */,
 				1EC3952B2D50C9820022D979 /* XCRemoteSwiftPackageReference "tuvali-ios-swift" */,
 				1EC3952E2D50C99E0022D979 /* XCRemoteSwiftPackageReference "secure-keystore-ios-swift" */,
-				348278392D6F221B0074938B /* XCRemoteSwiftPackageReference "inji-openid4vp-ios-swift" */,
+				3407B0FE2D706EE1003089E6 /* XCRemoteSwiftPackageReference "inji-openid4vp-ios-swift" */,
 			);
 			productRefGroup = 83CBBA001A601CBA00E9B192 /* Products */;
 			projectDirPath = "";
@@ -794,11 +794,11 @@
 				version = 0.3.0;
 			};
 		};
-		348278392D6F221B0074938B /* XCRemoteSwiftPackageReference "inji-openid4vp-ios-swift" */ = {
+		3407B0FE2D706EE1003089E6 /* XCRemoteSwiftPackageReference "inji-openid4vp-ios-swift" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/mosip/inji-openid4vp-ios-swift";
 			requirement = {
-				branch = "release-0.2.x";
+				branch = develop;
 				kind = branch;
 			};
 		};
@@ -825,9 +825,9 @@
 			package = 1EC3952E2D50C99E0022D979 /* XCRemoteSwiftPackageReference "secure-keystore-ios-swift" */;
 			productName = securekeystore;
 		};
-		3482783A2D6F221B0074938B /* OpenID4VP */ = {
+		3407B0FF2D706EE1003089E6 /* OpenID4VP */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 348278392D6F221B0074938B /* XCRemoteSwiftPackageReference "inji-openid4vp-ios-swift" */;
+			package = 3407B0FE2D706EE1003089E6 /* XCRemoteSwiftPackageReference "inji-openid4vp-ios-swift" */;
 			productName = OpenID4VP;
 		};
 /* End XCSwiftPackageProductDependency section */
