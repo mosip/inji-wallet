@@ -8,6 +8,7 @@ import inji.utils.IosUtil;
 import inji.utils.TestDataReader;
 import org.testng.annotations.Test;
 
+import static inji.api.BaseTestCase.uin;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
@@ -41,7 +42,7 @@ public class PinVcTest extends IosBaseTest {
         RetrieveIdPage retrieveIdPage = addNewCardPage.clickOnDownloadViaUin();
 
         assertTrue(retrieveIdPage.isRetrieveIdPageLoaded(), "Verify if retrieve id page is displayed");
-        String uin = TestDataReader.readData("uin");
+//        String uin = TestDataReader.readData("uin");
         OtpVerificationPage otpVerification = retrieveIdPage.setEnterIdTextBox(uin).clickOnGenerateCardButton();
 
         assertTrue(otpVerification.isOtpVerificationPageLoaded(), "Verify if otp verification page is displayed");
@@ -88,7 +89,7 @@ public class PinVcTest extends IosBaseTest {
         RetrieveIdPage retrieveIdPage = addNewCardPage.clickOnDownloadViaUin();
 
         assertTrue(retrieveIdPage.isRetrieveIdPageLoaded(), "Verify if retrieve id page is displayed");
-        String uin=TestDataReader.readData("uin");
+//        String uin=TestDataReader.readData("uin");
         OtpVerificationPage otpVerification = retrieveIdPage.setEnterIdTextBox(uin).clickOnGenerateCardButton();
 
         assertTrue(otpVerification.isOtpVerificationPageLoaded(), "Verify if otp verification page is displayed");
@@ -140,7 +141,7 @@ public class PinVcTest extends IosBaseTest {
         addNewCardPage.clickOnContinueButtonInSigninPopupIos();
 
         esignetLoginPage.clickOnEsignetLoginWithOtpButton();
-        String uin = TestDataReader.readData("uin");
+//        String uin = TestDataReader.readData("uin");
         OtpVerificationPage otpVerification= esignetLoginPage.setEnterIdTextBox(uin);
         esignetLoginPage.clickOnGetOtpButton();
 
@@ -200,7 +201,7 @@ public class PinVcTest extends IosBaseTest {
         RetrieveIdPage retrieveIdPage = addNewCardPage.clickOnDownloadViaUin();
 
         assertTrue(retrieveIdPage.isRetrieveIdPageLoaded(), "Verify if retrieve id page is displayed");
-        String uin = TestDataReader.readData("uin");
+//        String uin = TestDataReader.readData("uin");
         OtpVerificationPage otpVerification = retrieveIdPage.setEnterIdTextBox(uin).clickOnGenerateCardButton();
 
         assertTrue(otpVerification.isOtpVerificationPageLoaded(), "Verify if otp verification page is displayed");
@@ -248,7 +249,7 @@ public class PinVcTest extends IosBaseTest {
         RetrieveIdPage retrieveIdPage = addNewCardPage.clickOnDownloadViaUin();
 
         assertTrue(retrieveIdPage.isRetrieveIdPageLoaded(), "Verify if retrieve id page is displayed");
-        String uin=TestDataReader.readData("uin");
+//        String uin=TestDataReader.readData("uin");
         OtpVerificationPage otpVerification = retrieveIdPage.setEnterIdTextBox(uin).clickOnGenerateCardButton();
 
         assertTrue(otpVerification.isOtpVerificationPageLoaded(), "Verify if otp verification page is displayed");
@@ -322,7 +323,7 @@ public class PinVcTest extends IosBaseTest {
         RetrieveIdPage retrieveIdPage = addNewCardPage.clickOnDownloadViaUin();
 
         assertTrue(retrieveIdPage.isRetrieveIdPageLoaded(), "Verify if retrieve id page is displayed");
-        String uin=TestDataReader.readData("uin");
+//        String uin=TestDataReader.readData("uin");
         OtpVerificationPage otpVerification = retrieveIdPage.setEnterIdTextBox(uin).clickOnGenerateCardButton();
 
         assertTrue(otpVerification.isOtpVerificationPageLoaded(), "Verify if otp verification page is displayed");
@@ -398,7 +399,7 @@ public class PinVcTest extends IosBaseTest {
 
         assertTrue(retrieveIdPage.isRetrieveIdPageLoaded(), "Verify if retrieve id page is displayed");
 
-        String uin = TestDataReader.readData("uin");
+//        String uin = TestDataReader.readData("uin");
         OtpVerificationPage otpVerification = retrieveIdPage.setEnterIdTextBox(uin).clickOnGenerateCardButton();
 
         assertTrue(otpVerification.isOtpVerificationPageLoaded(), "Verify if otp verification page is displayed");

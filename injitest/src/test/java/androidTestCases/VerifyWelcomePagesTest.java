@@ -20,27 +20,27 @@ public class VerifyWelcomePagesTest extends AndroidBaseTest {
         WelcomePage welcomePage = chooseLanguagePage.clickOnSavePreference();
 
         assertTrue(welcomePage.isWelcomePageLoaded(), "Verify if welcome page is loaded");
-        assertEquals(welcomePage.getWelcomeDescription(), "Keep your digital credential with you at all times. Inji helps you manage and use them effectively. To get started, add cards to your profile.");
+        assertTrue(welcomePage.getWelcomeDescription("English"), "Keep your digital credential with you at all times. Inji helps you manage and use them effectively. To get started, add cards to your profile.");
         welcomePage.clickOnNextButton();
 
         SecureSharingPage secureSharingPage = new SecureSharingPage(driver);
-        assertEquals(secureSharingPage.verifyLanguageforSecureSharingPageLoaded(), "Secure Sharing");
-        assertEquals(secureSharingPage.getSecureSharingDescription(), "Share your cards securely in a hassle free way and avail various services.");
+        assertTrue(secureSharingPage.verifyLanguageforSecureSharingPageLoaded("English"), "Secure Sharing");
+        assertTrue(secureSharingPage.getSecureSharingDescription("English"), "Share your cards securely in a hassle free way and avail various services.");
         secureSharingPage.clickOnNextButton();
 
         TrustedDigitalWalletPage trustedDigitalWalletPage = new TrustedDigitalWalletPage(driver);
-        assertEquals(trustedDigitalWalletPage.verifyLanguageforTrustedDigitalWalletPageLoaded(), "Trusted Digital Wallet");
-        assertEquals(trustedDigitalWalletPage.getTrustedDigitalWalletDescription(), "Store and carry all your important cards in a single trusted wallet.");
+        assertTrue(trustedDigitalWalletPage.verifyLanguageforTrustedDigitalWalletPageLoaded("English"), "Trusted Digital Wallet");
+        assertTrue(trustedDigitalWalletPage.getTrustedDigitalWalletDescription("English"), "Store and carry all your important cards in a single trusted wallet.");
         trustedDigitalWalletPage.clickOnNextButton();
 
         QuickAccessPage quickAccessPage = new QuickAccessPage(driver);
-        assertEquals(quickAccessPage.verifyLanguageforQuickAccessTextPageLoaded(), "Quick Access");
-        assertEquals(quickAccessPage.getQuickAccessDescription(), "Authenticate yourself with ease using the stored digital credential.");
+        assertTrue(quickAccessPage.verifyLanguageforQuickAccessTextPageLoaded("English"), "Quick Access");
+        assertTrue(quickAccessPage.getQuickAccessDescription("English"), "Authenticate yourself with ease using the stored digital credential.");
         quickAccessPage.clickOnNextButton();
 
         BackupDataTourPage backupDataPage = new BackupDataTourPage(driver);
-        assertEquals(backupDataPage.verifyLanguageforBackupDataPageLoaded(), "Backup & Restore");
-        assertEquals(backupDataPage.getBackupDataPageDescription(), "Protect your data with ease using our Backup & Restore feature. Safely store your VCs against loss or accidents by creating regular backups and recover it effortlessly whenever needed for seamless continuity.");
+        assertTrue(backupDataPage.verifyLanguageforBackupDataPageLoaded("English"), "Backup & Restore");
+        assertTrue(backupDataPage.getBackupDataPageDescription("English"), "Protect your data with ease using our Backup & Restore feature. Safely store your VCs against loss or accidents by creating regular backups and recover it effortlessly whenever needed for seamless continuity.");
     }
     @Test
     public void verifyWelcomePagesFromInjiTourGuide() {

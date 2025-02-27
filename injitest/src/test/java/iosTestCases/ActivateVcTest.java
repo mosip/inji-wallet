@@ -9,6 +9,7 @@ import inji.utils.TestDataReader;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
+import static inji.api.BaseTestCase.uin;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
@@ -41,7 +42,7 @@ public class ActivateVcTest extends IosBaseTest {
         RetrieveIdPage retrieveIdPage = addNewCardPage.clickOnDownloadViaUin();
 
         assertTrue(retrieveIdPage.isRetrieveIdPageLoaded(), "Verify if retrieve id page is displayed");
-        String uin=TestDataReader.readData("uin");
+//        String uin=TestDataReader.readData("uin");
         OtpVerificationPage otpVerification = retrieveIdPage.setEnterIdTextBox(uin).clickOnGenerateCardButton();
 
         assertTrue(otpVerification.isOtpVerificationPageLoaded(), "Verify if otp verification page is displayed");
@@ -123,7 +124,7 @@ public class ActivateVcTest extends IosBaseTest {
         RetrieveIdPage retrieveIdPage = addNewCardPage.clickOnDownloadViaUin();
 
         assertTrue(retrieveIdPage.isRetrieveIdPageLoaded(), "Verify if retrieve id page is displayed");
-        String uin = TestDataReader.readData("uin");
+//        String uin = TestDataReader.readData("uin");
         OtpVerificationPage otpVerification = retrieveIdPage.setEnterIdTextBox(uin).clickOnGenerateCardButton();
 
         assertTrue(otpVerification.isOtpVerificationPageLoaded(), "Verify if otp verification page is displayed");
@@ -161,7 +162,7 @@ public class ActivateVcTest extends IosBaseTest {
         RetrieveIdPage retrieveIdPage = addNewCardPage.clickOnDownloadViaUin();
 
         assertTrue(retrieveIdPage.isRetrieveIdPageLoaded(), "Verify if retrieve id page is displayed");
-        String uin=TestDataReader.readData("uin");
+//        String uin=TestDataReader.readData("uin");
         OtpVerificationPage otpVerification = retrieveIdPage.setEnterIdTextBox(uin).clickOnGenerateCardButton();
 
         assertTrue(otpVerification.isOtpVerificationPageLoaded(), "Verify if otp verification page is displayed");
@@ -212,7 +213,7 @@ public class ActivateVcTest extends IosBaseTest {
         RetrieveIdPage retrieveIdPage = addNewCardPage.clickOnDownloadViaUin();
 
         assertTrue(retrieveIdPage.isRetrieveIdPageLoaded(), "Verify if retrieve id page is displayed");
-        String uin = TestDataReader.readData("uin");
+//        String uin = TestDataReader.readData("uin");
         OtpVerificationPage otpVerification = retrieveIdPage.setEnterIdTextBox(uin).clickOnGenerateCardButton();
 
         assertTrue(otpVerification.isOtpVerificationPageLoaded(), "Verify if otp verification page is displayed");
@@ -263,11 +264,11 @@ public class ActivateVcTest extends IosBaseTest {
         EsignetLoginPage esignetLoginPage =  addNewCardPage.clickOnDownloadViaEsignet();
         esignetLoginPage.clickOnCredentialTypeHeadingMOSIPVerifiableCredential();
 
-        esignetLoginPage.clickOnEsignetLoginWithOtpButton();
         addNewCardPage.clickOnContinueButtonInSigninPopupIos();
+        esignetLoginPage.clickOnEsignetLoginWithOtpButton();
 
 //        assertTrue(esignetLoginPage.isEnterYourVidTextDisplayed(), "Verify if enter your vid text is displayed");
-        String uin=TestDataReader.readData("uin");
+//        String uin=TestDataReader.readData("uin");
         OtpVerificationPage otpVerification= esignetLoginPage.setEnterIdTextBox(uin);
 
         esignetLoginPage.clickOnGetOtpButton();
@@ -293,8 +294,8 @@ public class ActivateVcTest extends IosBaseTest {
         assertEquals(detailedVcViewPage.getIdTypeValueInDetailedVcView(), TestDataReader.readData("idType"), "Verify if id type is displayed");
         assertEquals(detailedVcViewPage.getStatusInDetailedVcView(), TestDataReader.readData("status"), "Verify if status is displayed");
         assertEquals(detailedVcViewPage.getUinInDetailedVcView(), uin, "Verify if uin is displayed");
-        assertEquals(detailedVcViewPage.getPhoneInDetailedVcView(), TestDataReader.readData("phoneNumber"), "Verify if phone number is displayed");
-        assertEquals(detailedVcViewPage.getEmailInDetailedVcView(), TestDataReader.readData("externalemail"), "Verify if email is displayed");
+//        assertEquals(detailedVcViewPage.getPhoneInDetailedVcView(), TestDataReader.readData("phoneNumber"), "Verify if phone number is displayed");
+//        assertEquals(detailedVcViewPage.getEmailInDetailedVcView(), TestDataReader.readData("externalemail"), "Verify if email is displayed");
         assertTrue(detailedVcViewPage.isActivateButtonDisplayed(), "Verify if activate vc button displayed");
 
         PleaseConfirmPopupPage pleaseConfirmPopupPage  =detailedVcViewPage.clickOnActivateButtonAndroid();

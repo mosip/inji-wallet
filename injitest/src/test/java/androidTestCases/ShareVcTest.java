@@ -7,6 +7,7 @@ import inji.pages.*;
 import inji.utils.TestDataReader;
 import org.testng.annotations.Test;
 
+import static inji.api.BaseTestCase.uin;
 import static org.testng.Assert.assertTrue;
 import static org.testng.AssertJUnit.assertEquals;
 
@@ -92,7 +93,7 @@ public class ShareVcTest  extends AndroidBaseTest {
         RetrieveIdPage retrieveIdPage = addNewCardPage.clickOnDownloadViaUin();
 
         assertTrue(retrieveIdPage.isRetrieveIdPageLoaded(), "Verify if retrieve id page is displayed");
-        String uin=TestDataReader.readData("uin");
+//        String uin=TestDataReader.readData("uin");
         OtpVerificationPage otpVerification = retrieveIdPage.setEnterIdTextBox(uin).clickOnGenerateCardButton();
 
         assertTrue(otpVerification.isOtpVerificationPageLoaded(), "Verify if otp verification page is displayed");
@@ -145,7 +146,7 @@ public class ShareVcTest  extends AndroidBaseTest {
         esignetLoginPage.clickOnEsignetLoginWithOtpButton();
 
         assertTrue(esignetLoginPage.isEnterYourVidTextDisplayed(), "Verify if enter your vid text is displayed");
-        String uin=TestDataReader.readData("uin");
+//        String uin=TestDataReader.readData("uin");
         OtpVerificationPage otpVerification= esignetLoginPage.setEnterIdTextBox(uin);
 
         esignetLoginPage.clickOnGetOtpButton();
