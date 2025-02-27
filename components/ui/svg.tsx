@@ -593,7 +593,7 @@ export class SvgImage {
 }
 
 function getIssuerLogo(props: displayType) {
-  return {uri: props.logo.url};
+  return {uri: props.logo.url || props.logo.uri};
 }
 
 interface LogoProps {

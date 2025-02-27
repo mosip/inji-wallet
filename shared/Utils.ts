@@ -61,3 +61,13 @@ export class UUID {
     return uuid();
   }
 }
+
+export const getSearchParamsFromUri = (qrData: string) => {
+  try {
+    const url = new URL(qrData);
+    return url.searchParams;
+  } catch (error) {
+    console.error('Error parsing QR data:', error);
+    return '';
+  }
+};
