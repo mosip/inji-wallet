@@ -9,7 +9,9 @@
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx --fix",
     "test": "jest",
     "test-coverage": "jest --coverage",
-    "postinstall": "patch-package && npm run jetify && sh tools/talisman/talisman-precommit.sh"
+    "postinstall": "patch-package && npm run jetify && sh tools/talisman/talisman-precommit.sh",
+    "build": "jest --coverage",
+    "sonar": "node_modules/sonar-scanner/bin/sonar-scanner"
   },
   "dependencies": {
     "@digitalbazaar/ed25519-signature-2018": "digitalbazaar/ed25519-signature-2018",
