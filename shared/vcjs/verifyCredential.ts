@@ -32,11 +32,14 @@ const vcVerifier = NativeModules.VCVerifierModule;
 
 export async function verifyCredential(
   verifiableCredential: Credential,
-  credentialFormat: string
+  credentialFormat: string,
 ): Promise<VerificationResult> {
   try {
     if (isAndroid()) {
-      return await verifyCredentialForAndroid(verifiableCredential, credentialFormat);
+      return await verifyCredentialForAndroid(
+        verifiableCredential,
+        credentialFormat,
+      );
     }
     return await verifyCredentialForIos(verifiableCredential, credentialFormat);
   } catch (error) {
@@ -52,19 +55,23 @@ export async function verifyCredential(
 
 async function verifyCredentialForAndroid(
   verifiableCredential: Credential,
-  credentialFormat: string
+  credentialFormat: string,
 ): Promise<VerificationResult> {
-  const credentialString = typeof verifiableCredential === 'string'
-    ? verifiableCredential
-    : JSON.stringify(verifiableCredential);
-  
-  const vcVerifierResult = await vcVerifier.verifyCredentials(credentialString, credentialFormat);
+  const credentialString =
+    typeof verifiableCredential === 'string'
+      ? verifiableCredential
+      : JSON.stringify(verifiableCredential);
+
+  const vcVerifierResult = await vcVerifier.verifyCredentials(
+    credentialString,
+    credentialFormat,
+  );
   return handleVcVerifierResponse(vcVerifierResult, verifiableCredential);
 }
 
 async function verifyCredentialForIos(
   verifiableCredential: Credential,
-  credentialFormat: string
+  credentialFormat: string,
 ): Promise<VerificationResult> {
   if (credentialFormat === VCFormat.mso_mdoc) {
     return createSuccessfulVerificationResult();
@@ -93,9 +100,9 @@ async function verifyCredentialForIos(
 function getPurposeFromProof(proofPurpose) {
   switch (proofPurpose) {
     case ProofPurpose.PublicKey:
-      return new vcjs.PublicKeyProofPurpose();
+      return new PublicKeyProofPurpose();
     case ProofPurpose.Assertion:
-      return new vcjs.AssertionProofPurpose();
+      return new AssertionProofPurpose();
     default:
       throw new Error('Unsupported proof purpose');
   }
@@ -159,7 +166,8 @@ function handleVcVerifierResponse(
 ): VerificationResult {
   try {
     if (!verificationResult.verificationStatus) {
-      verificationResult.verificationErrorCode = verificationResult.verificationErrorCode === ''
+      verificationResult.verificationErrorCode =
+        verificationResult.verificationErrorCode === ''
           ? VerificationErrorType.GENERIC_TECHNICAL_ERROR
           : verificationResult.verificationErrorCode;
       sendVerificationErrorEvent(
