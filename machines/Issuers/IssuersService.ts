@@ -59,20 +59,26 @@ export const IssuersService = () => {
     fetchAuthorizationEndpoint: async (context: any) => {
       const wellknownResponse = context.selectedIssuerWellknownResponse;
       const credentialIssuer = wellknownResponse['credential_issuer'];
-      const authorizationServers =
-        wellknownResponse['authorization_servers'] || [credentialIssuer];
-    
+      const authorizationServers = wellknownResponse[
+        'authorization_servers'
+      ] || [credentialIssuer];
+
       const SUPPORTED_GRANT_TYPES = ['authorization_code'];
-    
+      const DEFAULT_AUTHORIZATION_SERVER_SUPPORTED_GRANT_TYPES = [
+        'authorization_code',
+        'implicit',
+      ];
+
       for (const server of authorizationServers) {
         try {
           const authorizationServersMetadata =
             await CACHED_API.fetchIssuerAuthorizationServerMetadata(server);
-    
+
           if (
-            (authorizationServersMetadata?.['grant_types_supported'] || []).some(grant =>
-              SUPPORTED_GRANT_TYPES.includes(grant),
-            )
+            (
+              authorizationServersMetadata?.['grant_types_supported'] ||
+              DEFAULT_AUTHORIZATION_SERVER_SUPPORTED_GRANT_TYPES
+            ).some(grant => SUPPORTED_GRANT_TYPES.includes(grant))
           ) {
             return authorizationServersMetadata['authorization_endpoint'];
           }
@@ -80,9 +86,9 @@ export const IssuersService = () => {
           console.error(`Failed to fetch metadata for ${server}:`, error);
         }
       }
-    
+
       throw new Error(
-        OIDCErrors.AUTHORIZATION_ENDPOINT_DISCOVERY.GRANT_TYPE_NOT_SUPPORTED,
+        OIDCErrors.AUTHORIZATION_ENDPOINT_DISCOVERY.FAILED_TO_FETCH_AUTHORIZATION_ENDPOINT,
       );
     },
 
