@@ -7,7 +7,7 @@ import {
   ViewStyle,
 } from 'react-native';
 import {Spacing} from '../styleUtils';
-import {COPILOT_HEIGHT, isIOS} from '../../../shared/constants';
+import {COPILOT_HEIGHT, isIOS, isAndroid} from '../../../shared/constants';
 import Constants from 'expo-constants';
 import HomeScreenLogo from '../../../assets/InjiHomeLogo.svg';
 import InjiLogoSmall from '../../../assets/InjiLogo.svg';
@@ -411,14 +411,16 @@ export const DefaultTheme = {
     },
     welcomeLogo: {
       width: 185,
-      height: 71,
+      height: 100,
     },
     injiLogo: {
       width: 191.58,
-      height: 28,
+      height: 84,
     },
     injiHomeLogo: {
-      marginLeft: -24,
+      marginLeft: -30,
+      marginTop: -12,
+      marginBottom: isAndroid() ? -30 : 0,
     },
     logo: {
       height: 35,
