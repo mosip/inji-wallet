@@ -22,11 +22,9 @@ import {
 import {ProfileIcon} from '../../ProfileIcon';
 import {VCFormat} from '../../../shared/VCFormat';
 import {VCItemField} from '../common/VCItemField';
-import {addPngBase64Prefix} from '../../../shared/commonUtil';
 
 const getProfileImage = (face: any) => {
   if (face) {
-    face = addPngBase64Prefix(face);
     return (
       <Image source={{uri: face}} style={Theme.Styles.detailedViewImage} />
     );

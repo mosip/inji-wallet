@@ -18,7 +18,6 @@ import {RemoveVcWarningOverlay} from '../../../screens/Home/MyVcs/RemoveVcWarnin
 import {HistoryTab} from '../../../screens/Home/MyVcs/HistoryTab';
 import {useCopilot} from 'react-native-copilot';
 import {useTranslation} from 'react-i18next';
-import {addPngBase64Prefix} from '../../../shared/commonUtil';
 
 export const VCCardViewContent: React.FC<VCItemContentProps> = props => {
   const wellknownDisplayProperty = new Display(props.wellknown);
@@ -54,7 +53,7 @@ export const VCCardViewContent: React.FC<VCItemContentProps> = props => {
       />
     ));
   const issuerLogo = props.verifiableCredentialData.issuerLogo;
-  const faceImage = addPngBase64Prefix(props.verifiableCredentialData.face);
+  const faceImage = props.verifiableCredentialData.face;
   const {start} = useCopilot();
   const {t} = useTranslation();
 

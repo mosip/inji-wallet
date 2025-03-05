@@ -63,10 +63,6 @@ export const removeWhiteSpace = (str: string) => {
   return str ? str.replace(/\s/g, '') : str;
 };
 
-export const addPngBase64Prefix = (faceImage: string) => {
-  return faceImage ? 'data:image/png;base64,' + faceImage : faceImage;
-};
-
 export function logState(state: AnyState) {
   if (__DEV__) {
     const data = JSON.stringify(
