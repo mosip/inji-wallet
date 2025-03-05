@@ -26,8 +26,7 @@ export const QrLoginServices = {
 
   sendAuthenticate: async context => {
     let privateKey;
-    const individualId =
-      context.selectedVc.verifiableCredential.credential.credentialSubject.dni;
+    const individualId = context.selectedVc.vcMetadata.mosipIndividualId;
     const keyType = context.selectedVc.vcMetadata.downloadKeyType;
     if (!isHardwareKeystoreExists) {
       privateKey = await getPrivateKey(

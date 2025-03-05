@@ -159,7 +159,7 @@ export const getScreenHeight = () => {
 };
 
 export const getMosipIdentifier = (credentialSubject: CredentialSubject) => {
-  return credentialSubject.UIN ? credentialSubject.UIN : credentialSubject.VID;
+  return credentialSubject.dni;
 };
 
 export const isTranslationKeyFound = (
