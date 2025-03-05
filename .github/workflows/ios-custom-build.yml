@@ -5,7 +5,7 @@ on:
   workflow_dispatch:
     inputs:
       buildName:
-        description: 'Build App For'
+        description: 'Build App For UI Automation with Biometric-Off'
         required: true
         default: 'Sprint-x/QA-Inji/Release-x.x.x'
         type: string
@@ -46,14 +46,6 @@ on:
         options:
           - false
           - true
-      enable_auth:
-        description: 'Enable Authentication'
-        required: true
-        default: 'true'
-        type: choice
-        options:
-          - false
-          - true
 
 jobs:
   build-ios:
@@ -66,7 +58,7 @@ jobs:
       TESTFLIGHT_BETA_APP_DESCRIPTION: ${{ inputs.buildName }}
       ALLOW_ENV_EDIT: ${{ inputs.allow_env_edit }}
       LIVENESS_DETECTION: 'false'
-      ENABLE_AUTH: ${{ inputs.enable_auth }}
+      ENABLE_AUTH: 'false'
       TESTFLIGHT_INTERNAL_TESTERS_GROUP: 'Dev-testing'
       APP_FLAVOR: ${{ inputs.injiFlavor }}
       SERVICE_LOCATION: '.'
