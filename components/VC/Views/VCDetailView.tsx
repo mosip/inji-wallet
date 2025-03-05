@@ -29,10 +29,7 @@ const getProfileImage = (face: any) => {
     );
   }
   return (
-    <ProfileIcon
-      profileIconContainerStyles={Theme.Styles.openCardProfileIconContainer}
-      profileIconSize={40}
-    />
+   <></>
   );
 };
 
