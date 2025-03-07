@@ -50,11 +50,11 @@ public class InjiOpenID4VPModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public void authenticateVerifier(String encodedAuthorizationRequest, ReadableArray trustedVerifiers,
+    public void authenticateVerifier(String urlEncodedAuthorizationRequest, ReadableArray trustedVerifiers,
             Boolean shouldValidateClient,
             Promise promise) {
         try {
-            AuthorizationRequest authenticationResponse = openID4VP.authenticateVerifier(encodedAuthorizationRequest,
+            AuthorizationRequest authenticationResponse = openID4VP.authenticateVerifier(urlEncodedAuthorizationRequest,
                     convertReadableArrayToVerifierArray(trustedVerifiers), shouldValidateClient);
             String authenticationResponseAsJson = gson.toJson(authenticationResponse, AuthorizationRequest.class);
             promise.resolve(authenticationResponseAsJson);

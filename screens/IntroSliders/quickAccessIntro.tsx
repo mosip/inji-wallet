@@ -8,12 +8,14 @@ const QRScannerComponent: React.FC = () => (
     <Column crossAlign="center">
         <Column style={Theme.CameraEnabledStyles.scannerContainer}>
             <View
+                testID="qrScannerView"
                 style={[
                     Theme.CameraEnabledStyles.scannerContainer,
                     Theme.IntroSliderStyles.quickAccessIntroQrScanner,
                 ]}
             >
                 <Image
+                    testID="qrScannerImage"
                     source={require('../../assets/ClipPathGroup.png')}
                     style={{
                         width: '100%',
@@ -24,7 +26,7 @@ const QRScannerComponent: React.FC = () => (
             </View>
             <Column fill align="flex-start" style={{ marginTop: 24 }}>
                 <Text
-                    testID="holdPhoneSteadyMessage"
+                    testID="scanningGuideText"
                     align="center"
                     style={Theme.CameraEnabledStyles.holdPhoneSteadyText}
                 >
@@ -40,9 +42,11 @@ export const StaticScanScreen: React.FC = () => {
 
     return (
         <View
+            testID="staticScanScreen"
             style={Theme.IntroSliderStyles.quickAccessIntroOuterView}
         >
             <View
+                testID="introScreenNotch"
                 style={Theme.IntroSliderStyles.introScreenNotch}
             />
             <Column
@@ -55,6 +59,7 @@ export const StaticScanScreen: React.FC = () => {
                     backgroundColor={Theme.Colors.whiteBackgroundColor}
                 >
                     <Text
+                        testID="shareText"
                         align="left"
                         style={{ paddingBottom: 10, paddingLeft: 5 , paddingTop: 10}}
                         weight="bold"

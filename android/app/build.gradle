@@ -250,8 +250,8 @@ android {
     }
 
     packagingOptions {
-        pickFirst 'lib/arm64-v8a/liblog.so'    
-        pickFirst 'lib/armeabi-v7a/liblog.so'  
+        pickFirst 'lib/arm64-v8a/liblog.so'
+        pickFirst 'lib/armeabi-v7a/liblog.so'
         pickFirst 'lib/x86/liblog.so'
         pickFirst 'lib/x86_64/liblog.so'
         resources {
@@ -262,15 +262,18 @@ android {
 }
 
 dependencies {
-    implementation("io.mosip:inji-openid4vp:0.2.0-SNAPSHOT")
+    implementation("io.mosip:inji-openid4vp:0.2.0-SNAPSHOT"){
+        exclude group: 'org.bouncycastle', module: 'bcpkix-jdk15on'
+        exclude group: 'io.mosip', module: 'vcverifier-jar'
+    }
     implementation("com.facebook.react:react-android")
     implementation 'com.facebook.soloader:soloader:0.10.1+'
-    implementation("io.mosip:pixelpass-aar:0.6.0-SNAPSHOT")
-    implementation("io.mosip:secure-keystore:0.3.0-SNAPSHOT")
-    implementation("io.mosip:tuvali:0.5.1")
-    implementation("io.mosip:inji-vci-client:0.2.0-SNAPSHOT")
+    implementation("io.mosip:pixelpass-aar:0.6.0")
+    implementation("io.mosip:secure-keystore:0.3.0")
+    implementation("io.mosip:tuvali:0.5.2-SNAPSHOT")
+    implementation("io.mosip:inji-vci-client:0.2.0")
     implementation("com.google.code.gson:gson:2.10.1")
-    implementation("io.mosip:vcverifier-aar:1.1.0-SNAPSHOT"){
+    implementation("io.mosip:vcverifier-aar:1.2.0-SNAPSHOT"){
         exclude group: 'org.bouncycastle', module: 'bcpkix-jdk15on'
     }
 
@@ -320,8 +323,8 @@ dependencies {
 }
 
 task copyFaceSdkModel(type: Copy) {
-    from '../../assets/models/'     
-    include 'faceModel.tflite'    
+    from '../../assets/models/'
+    include 'faceModel.tflite'
     into 'src/main/assets/'
 }
 
