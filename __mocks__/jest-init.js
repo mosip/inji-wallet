@@ -3,8 +3,6 @@ import mockedConstants from 'react-native.mock';
 import mockArgon2 from 'react-native-argon2.mock';
 import mockLocalAuthentication from 'expo-local-authentication.mock';
 import mockRNLocalize from './react-native-localize.mock';
-import mockReactNativeKeychain from 'react-native-keychain.mock';
-import mockRNSecureKeyStore from 'react-native-secure-key-store.mock';
 import mockClipboard from '@react-native-clipboard/clipboard/jest/clipboard-mock.js';
 import mockLocalization from 'expo-localization.mock';
 import mockRNCNetInfo from '@react-native-community/netinfo/jest/netinfo-mock.js';
@@ -34,10 +32,6 @@ jest.mock('react-native-localize', () => mockRNLocalize);
 jest.mock('expo-localization', () => mockLocalization);
 
 jest.mock('iso-639-3');
-
-jest.mock('react-native-keychain', () => mockReactNativeKeychain);
-
-jest.mock('react-native-secure-key-store', () => mockRNSecureKeyStore);
 
 jest.mock('react-native-fs', () => require('react-native-fs.mock'));
 

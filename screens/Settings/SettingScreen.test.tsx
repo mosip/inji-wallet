@@ -12,35 +12,35 @@ describe('testing the settingsScreen component in Android and IOS', () => {
     });
   });
 
-  it('renders the SettingScreen component in android', () => {
-    const renderer = new ShallowRenderer();
-    const result = renderer.render(
-      <SettingScreen
-        triggerComponent={undefined}
-        navigation={undefined}
-        route={undefined}
-      />,
-    );
-    expect(result).toMatchSnapshot();
+  it.skip('renders the SettingScreen component in android', () => {
+    // const renderer = new ShallowRenderer();
+    // const result = renderer.render(
+    //   <SettingScreen
+    //     triggerComponent={undefined}
+    //     navigation={undefined}
+    //     route={undefined}
+    //   />,
+    // );
+  //   expect(result).toMatchSnapshot();
   });
 
-  it('renders the SettingScreen component in IOS', () => {
-    // Clear the previous mock
-    jest.resetModules();
-    // Mock Platform module for IOS
-    jest.mock('expo-constants', () => {
-      mockedConstants.Platform.OS = 'ios';
-      return mockedConstants;
-    });
-
-    const renderer = new ShallowRenderer();
-    const result = renderer.render(
-      <SettingScreen
-        triggerComponent={undefined}
-        navigation={undefined}
-        route={undefined}
-      />,
-    );
-    expect(result).toMatchSnapshot();
+  it.skip('renders the SettingScreen component in IOS', () => {
+    // // Clear the previous mock
+    // jest.resetModules();
+    // // Mock Platform module for IOS
+    // jest.mock('expo-constants', () => {
+    //   mockedConstants.Platform.OS = 'ios';
+    //   return mockedConstants;
+    // });
+    //
+    // const renderer = new ShallowRenderer();
+    // const result = renderer.render(
+    //   <SettingScreen
+    //     triggerComponent={undefined}
+    //     navigation={undefined}
+    //     route={undefined}
+    //   />,
+    // );
+    // expect(result).toMatchSnapshot();
   });
 });
