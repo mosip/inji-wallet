@@ -9,6 +9,7 @@ import {
   REQUEST_TIMEOUT,
   isIOS,
   EXPIRED_VC_ERROR_CODE,
+  CredentialOfferParams,
 } from '../../shared/constants';
 import {assign, send} from 'xstate';
 import {StoreEvents} from '../store';
@@ -26,7 +27,7 @@ import {TelemetryConstants} from '../../shared/telemetry/TelemetryConstants';
 import {NativeModules} from 'react-native';
 import {KeyTypes} from '../../shared/cryptoutil/KeyTypes';
 import {VCActivityLog} from '../../components/ActivityLogEvent';
-import {isNetworkError} from '../../shared/Utils';
+import {getSearchParamsFromUri, isNetworkError} from '../../shared/Utils';
 
 const {RNSecureKeystoreModule} = NativeModules;
 export const IssuersActions = (model: any) => {
@@ -68,6 +69,11 @@ export const IssuersActions = (model: any) => {
     setSelectedCredentialType: model.assign({
       selectedCredentialType: (_: any, event: any) => event.credType,
       wellknownKeyTypes: (_: any, event: any) => {
+        console.log('event.credType', event.credType);
+        console.log(
+          'proofTypesSupported',
+          event.credType.proof_types_supported,
+        );
         const proofTypesSupported = event.credType.proof_types_supported;
         if (proofTypesSupported?.jwt) {
           return proofTypesSupported.jwt
@@ -225,6 +231,7 @@ export const IssuersActions = (model: any) => {
 
     setSelectedKey: model.assign({
       keyType: (context: any, event: any) => {
+        console.log('context.wellknownKeyTypes', context.wellknownKeyTypes);
         const keyType = selectCredentialRequestKey(
           context.wellknownKeyTypes,
           event.data,
@@ -234,8 +241,14 @@ export const IssuersActions = (model: any) => {
     }),
 
     setSelectedIssuers: model.assign({
-      selectedIssuer: (context: any, event: any) =>
-        context.issuers.find(issuer => issuer.issuer_id === event.id),
+      selectedIssuer: (context: any, event: any) => {
+        console.log('credentialOfferData', context.credentialOfferData);
+        if (event.id == 'credentialOfferIssuer') {
+          return context.credentialOfferData;
+        } else {
+          return context.issuers.find(issuer => issuer.issuer_id === event.id);
+        }
+      },
     }),
 
     updateIssuerFromWellknown: model.assign({
@@ -245,6 +258,45 @@ export const IssuersActions = (model: any) => {
         credential_endpoint: event.data.credential_endpoint,
         credential_configurations_supported:
           event.data.credential_configurations_supported,
+        token_endpoint: context.selectedIssuer.token_endpoint?context.selectedIssuer.token_endpoint:event.data.token_endpoint,
+        hasPreAuthCode: context.selectedIssuer.hasPreAuthCode,
+      }),
+    }),
+
+    updateCredentialOfferValues: assign((context: any, event: any) => {
+      try {
+        const searchParams = getSearchParamsFromUri(event.data);
+        if (!searchParams) return {};
+
+        const credentialOfferURI = searchParams.get(CredentialOfferParams.URI);
+        const credentialOfferEncodedData = searchParams.get(
+          CredentialOfferParams.DATA,
+        );
+
+        return {
+          ...(credentialOfferURI && {credentialOfferURI}),
+          ...(credentialOfferEncodedData && {
+            credentialOfferData: JSON.parse(
+              decodeURIComponent(credentialOfferEncodedData),
+            ),
+          }),
+        };
+      } catch (error) {
+        console.error('Error extracting credential offer:', error);
+        return {};
+      }
+    }),
+
+    setCredentialOfferData: model.assign({
+      credentialOfferData: (context: any, event: any) => ({
+        ...context.credentialOfferData,
+        ...(event.data?.credential_issuer && {
+          credential_issuer: event.data.credential_issuer,
+        }),
+        ...(event.data?.credential_configuration_ids && {
+          credential_configuration_ids: event.data.credential_configuration_ids,
+        }),
+        ...(event.data?.grants && {grants: event.data.grants}),
       }),
     }),
 
@@ -262,7 +314,13 @@ export const IssuersActions = (model: any) => {
       selectedIssuerId: (_: any, event: any) => event.id,
     }),
     setTokenResponse: model.assign({
-      tokenResponse: (_: any, event: any) => event.data,
+      tokenResponse: (context: any, event: any) => {
+        console.log('context.token', context.tokenResponse);
+
+        return ('access_token' in context.tokenResponse)
+          ? context.tokenResponse
+          : event.data;
+      },
     }),
     setVerifiableCredential: model.assign({
       verifiableCredential: (_: any, event: any) => {
@@ -341,6 +399,11 @@ export const IssuersActions = (model: any) => {
 
     resetVerificationErrorMessage: model.assign({
       verificationErrorMessage: () => '',
+    }),
+
+    resetCredentialOfferValues: model.assign({
+      credentialOfferURI: () => '',
+      credentialOfferData: () => null,
     }),
 
     sendDownloadingFailedToVcMeta: send(

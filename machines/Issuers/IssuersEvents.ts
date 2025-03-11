@@ -1,3 +1,4 @@
+import { is } from 'date-fns/locale';
 import {CredentialTypes} from '../VerifiableCredential/VCMetaMachine/vc';
 
 export const IssuersEvents = {
@@ -13,4 +14,7 @@ export const IssuersEvents = {
   STORE_ERROR: (error: Error, requester?: string) => ({error, requester}),
   RESET_VERIFY_ERROR: () => ({}),
   SELECTED_CREDENTIAL_TYPE: (credType: CredentialTypes) => ({credType}),
+  SCAN_CREDENTIAL_OFFER_QR_CODE: () => ({}),
+  QR_CODE_SCANNED: (data: string) => ({data}),
+  SELECTED_CREDENTIAL_OFFER_ISSUER: (id: string) => ({id}),
 };

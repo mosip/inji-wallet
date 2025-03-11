@@ -65,3 +65,11 @@ export function selectSelectingCredentialType(state: State) {
 export function selectSupportedCredentialTypes(state: State) {
   return state.context.supportedCredentialTypes;
 }
+
+export function selectIsQrScanning(state: State) {
+  return state.matches('scanCredentialOfferQrCode');
+}
+
+export function selectCredentialOfferData(state: State) {
+  return state.context.credentialOfferData;
+}

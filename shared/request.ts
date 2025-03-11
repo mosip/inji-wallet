@@ -17,7 +17,7 @@ export class BackendResponseError extends Error {
 export async function request(
   method: HTTP_METHOD,
   path: `/${string}` | string,
-  body?: Record<string, unknown>,
+  body?: any,
   host = MIMOTO_BASE_URL,
   headers: Record<string, string> = {
     'Content-Type': 'application/json',
@@ -27,11 +27,19 @@ export async function request(
   if (path.includes('v1/mimoto')) headers['X-AppId'] = __AppId.getValue();
   let response;
   const requestUrl = path.indexOf('https://') != -1 ? path : host + path;
+  console.log(`making a web request to ${requestUrl}`);
+  let processedBody = "";
+  if (headers["Content-Type"] === "application/x-www-form-urlencoded") {
+    processedBody = Object.entries(body)
+      .map(([key, value]) => `${encodeURIComponent(key)}=${encodeURIComponent(String(value))}`)
+      .join("&");
+  }
+  console.log(`processedBody: ${processedBody}`);
   if (timeoutMillis === undefined) {
     response = await fetch(requestUrl, {
       method,
       headers,
-      body: body ? JSON.stringify(body) : undefined,
+      body: body ? processedBody != ""?processedBody: JSON.stringify(body) : undefined,
     });
   } else {
     console.log(`making a web request to ${requestUrl}`);
@@ -48,7 +56,7 @@ export async function request(
       });
     } catch (error) {
       console.error(
-        `Error occurred while making request: ${host + path}: ${error}`,
+        `Error occurred while making request: ${host + path}: ${error.message}`,
       );
       if (error.name === 'AbortError') {
         throw new Error(REQUEST_TIMEOUT);
@@ -67,7 +75,7 @@ export async function request(
         ? JSON.stringify(jsonResponse.error)
         : jsonResponse.error);
     console.error(
-      `The backend API ${backendUrl} returned error code ${response.status} with message --> ${errorMessage}`,
+      `The backend API ${backendUrl} returned error code ${response.status} with message --> ${JSON.stringify(jsonResponse)}`,
     );
     throw new Error(errorMessage);
   }

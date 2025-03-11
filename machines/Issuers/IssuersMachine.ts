@@ -87,6 +87,48 @@ export const IssuersMachine = model.createMachine(
             ],
             target: 'downloadIssuerWellknown',
           },
+          SCAN_CREDENTIAL_OFFER_QR_CODE: {
+            target: 'scanCredentialOfferQrCode',
+          },
+          SELECTED_CREDENTIAL_OFFER_ISSUER: {
+            actions: [
+              'setSelectedIssuerId',
+              'setLoadingReasonAsSettingUp',
+              'setSelectedIssuers',
+            ],
+            target: 'downloadIssuerWellknown',
+          },
+        },
+      },
+      scanCredentialOfferQrCode: {
+        description: 'waits for the user to scan Qr Code',
+        on: {
+          QR_CODE_SCANNED: [
+            {
+              actions: 'updateCredentialOfferValues',
+              cond: 'hasCredentialOfferUri',
+              target: 'downloadCredentialOfferData',
+            },
+            {
+              actions: 'updateCredentialOfferValues',
+              target: 'selectingIssuer',
+            },
+          ],
+        },
+      },
+
+      downloadCredentialOfferData: {
+        description: 'fetches the credential offer data',
+        invoke: {
+          src: 'downloadCredentialOfferData',
+          onDone: {
+            actions: 'setCredentialOfferData',
+            target: 'selectingIssuer',
+          },
+          onError: {
+            actions: 'resetCredentialOfferValues',
+            target: 'selectingIssuer',
+          },
         },
       },
       downloadIssuerWellknown: {
@@ -140,9 +182,42 @@ export const IssuersMachine = model.createMachine(
           CANCEL: {
             target: 'displayIssuers',
           },
-          SELECTED_CREDENTIAL_TYPE: {
-            actions: 'setSelectedCredentialType',
-            target: 'fetchAuthorizationEndpoint',
+          SELECTED_CREDENTIAL_TYPE: [
+            {
+              actions: 'setSelectedCredentialType',
+              target: 'getAuthFlowType',
+            },
+          ],
+        },
+      },
+      getAuthFlowType: {
+        invoke: {
+          src: 'getAuthFlowType',
+          onDone: [
+            {
+              cond: 'isPreAuthFlow',
+              target: 'fetchAccessTokenWithPreAuthCode',
+            },
+            {
+              target: 'fetchAuthorizationEndpoint',
+            },
+          ],
+          onError: {
+            actions: ['setError', 'resetLoadingReason'],
+            target: 'error',
+          },
+        },
+      },
+      fetchAccessTokenWithPreAuthCode: {
+        invoke: {
+          src: 'fetchAccessTokenWithPreAuthCode',
+          onDone: {
+            actions: ['setTokenResponse', 'setLoadingReasonAsSettingUp'],
+            target: '#issuersMachine.performAuthorization',
+          },
+          onError: {
+            actions: ['setError', 'resetLoadingReason'],
+            target: 'error',
           },
         },
       },
@@ -253,7 +328,7 @@ export const IssuersMachine = model.createMachine(
             invoke: {
               src: 'getKeyOrderList',
               onDone: {
-                actions: 'setSelectedKey',
+                actions: [ (_,event:any)=>console.log("✅ `getKeyOrderList` Completed Successfully", event.data),'setSelectedKey',],
                 target: 'getKeyPairFromKeystore',
               },
               onError: {
@@ -535,5 +610,12 @@ export interface issuerType {
   display: [displayType];
   credentialTypes: [CredentialTypes];
   authorizationEndpoint: string;
+  hasPreAuthCode: boolean;
   credential_issuer_host: string;
+}
+
+export interface CredentialOfferData {
+  credential_issuer: string;
+  credential_configuration_ids: [string];
+  grants: object;
 }

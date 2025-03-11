@@ -65,6 +65,8 @@ export const APP_ID_DICTIONARY = [
 
 export const API_CACHED_STORAGE_KEYS = {
   fetchIssuers: 'CACHE_FETCH_ISSUERS',
+  fetchCredentialOfferData: (credentialOfferUri: string) =>
+    `CACHE_FETCH_CREDENTIAL_OFFER_DATA_${credentialOfferUri}`,
   fetchIssuerWellknownConfig: (issuerId: string) =>
     `CACHE_FETCH_ISSUER_WELLKNOWN_CONFIG_${issuerId}`,
   fetchIssuerAuthorizationServerMetadata: (authorizationServerUrl: string) =>
@@ -80,6 +82,7 @@ export const SUPPORTED_KEY_TYPES = {
   'ECC K1': KeyTypes.ES256K,
   'ECC R1': KeyTypes.ES256,
   RSA: KeyTypes.RS256,
+  'EdDSA': KeyTypes.ED25519,
 };
 
 export function isAndroid(): boolean {
@@ -168,3 +171,8 @@ export const FACE_SDK_MODEL_CHECKSUM =
 export const EXPIRED_VC_ERROR_CODE = 'ERR_VC_EXPIRED';
 
 export const BASE_36 = 36;
+
+export const CredentialOfferParams = Object.freeze({
+  URI: 'credential_offer_uri',
+  DATA: 'credential_offer',
+});

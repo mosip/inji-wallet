@@ -26,6 +26,10 @@ export const API_URLS: ApiUrls = {
     method: 'GET',
     buildURL: (): `/${string}` => '/v1/mimoto/issuers',
   },
+  credentialOfferData: {
+    method: 'GET',
+    buildURL: (credentialOfferUri: string): string => `${credentialOfferUri}`,
+  },
   issuerConfig: {
     method: 'GET',
     buildURL: (issuerId: string): `/${string}` =>
@@ -36,10 +40,19 @@ export const API_URLS: ApiUrls = {
     buildURL: (credentialIssuer: string): string =>
       `${credentialIssuer}/.well-known/openid-credential-issuer`,
   },
+  fetchAccessTokenWithPreAuthCode: {
+    method: 'POST',
+    buildURL: (token_endpoint: string): string => token_endpoint,
+  },
   authorizationServerMetadataConfig: {
     method: 'GET',
     buildURL: (authorizationServerUrl: string): string =>
       `${authorizationServerUrl}/.well-known/oauth-authorization-server`,
+  },
+  authorizationServerMetadataConfigAlternate: {
+    method: 'GET',
+    buildURL: (authorizationServerUrl: string): string =>
+      `${authorizationServerUrl}/.well-known/openid-configuration`,
   },
   allProperties: {
     method: 'GET',
@@ -67,7 +80,7 @@ export const API_URLS: ApiUrls = {
   },
   credentialRequest: {
     method: 'POST',
-    buildURL: (): `/${string}` => '/v1/mimoto/credentialshare/request',
+    buildURL: (credentialEndpoint: string): string => credentialEndpoint,
   },
   credentialStatus: {
     method: 'GET',
@@ -115,6 +128,76 @@ export const API = {
     );
     return response.response.issuers || [];
   },
+  fetchCredentialOfferData: async (credentialOfferUri: string) => {
+    const response = await request(
+      API_URLS.credentialOfferData.method,
+      API_URLS.credentialOfferData.buildURL(credentialOfferUri),
+    );
+    return response;
+  },
+   fetchCredentialRequest : async (
+    accessToken: string, 
+    credentialConfigurationId: string,
+    proofJwt: string,
+    credentialEndpoint: string
+  ) => {
+    const requestBody = {
+      credential_configuration_id: credentialConfigurationId,
+      proof: {
+        proof_type: "jwt",
+        jwt: proofJwt,
+      },
+    };
+  
+    try {
+      const response = await request(
+        API_URLS.credentialRequest.method,
+        API_URLS.credentialRequest.buildURL(credentialEndpoint),
+        requestBody,
+        {
+          Authorization: `Bearer ${accessToken}`,
+          "Content-Type": "application/json",
+        }
+      );
+  
+      return response;
+    } catch (error) {
+      console.error("Credential request failed:", error);
+      throw error;
+    }
+  },
+  
+
+  fetchAccessTokenWithPreAuthCode: async (
+    grant_type: string,
+    preAuthCode: string,
+    token_endpoint: string,
+  ) => {
+    const body: Record<string, unknown> = {
+      grant_type,
+      'pre-authorized_code': preAuthCode,
+    };
+
+    const response = await request(
+      API_URLS.fetchAccessTokenWithPreAuthCode.method,
+      API_URLS.fetchAccessTokenWithPreAuthCode.buildURL(token_endpoint),
+      body,
+      undefined,
+      {
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+    );
+
+    return response;
+  },
+
+  fetchIssuerConfig: async (issuerId: string) => {
+    const response = await request(
+      API_URLS.issuerConfig.method,
+      API_URLS.issuerConfig.buildURL(issuerId),
+    );
+    return response.response;
+  },
   fetchIssuerWellknownConfig: async (credentialIssuer: string) => {
     const response = await request(
       API_URLS.issuerWellknownConfig.method,
@@ -123,15 +206,30 @@ export const API = {
     return response;
   },
   fetchAuthorizationServerMetadata: async (authorizationServerUrl: string) => {
-    const response = await request(
-      API_URLS.authorizationServerMetadataConfig.method,
-      API_URLS.authorizationServerMetadataConfig.buildURL(
-        authorizationServerUrl,
-      ),
-      undefined,
-      '',
-    );
-    return response;
+    try{
+      const response = await request(
+        API_URLS.authorizationServerMetadataConfig.method,
+        API_URLS.authorizationServerMetadataConfig.buildURL(
+          authorizationServerUrl,
+        ),
+        undefined,
+        '',
+      );
+      return response;
+    }
+    catch(error){
+      const response = await request(
+        API_URLS.authorizationServerMetadataConfigAlternate.method,
+        API_URLS.authorizationServerMetadataConfigAlternate.buildURL(
+          authorizationServerUrl,
+        ),
+        undefined,
+        '',
+      );
+      return response;
+    }
+    
+   
   },
   fetchAllProperties: async () => {
     const response = await request(
@@ -161,6 +259,17 @@ export const CACHED_API = {
     generateCacheAPIFunction({
       cacheKey: API_CACHED_STORAGE_KEYS.fetchIssuers,
       fetchCall: API.fetchIssuers,
+    }),
+
+  fetchCredentialOfferData: (
+    credentialOfferUri: string,
+    isCachePreferred: boolean = false,
+  ) =>
+    generateCacheAPIFunction({
+      isCachePreferred,
+      cacheKey:
+        API_CACHED_STORAGE_KEYS.fetchCredentialOfferData(credentialOfferUri),
+      fetchCall: API.fetchCredentialOfferData.bind(null, credentialOfferUri),
     }),
 
   fetchIssuerWellknownConfig: (
@@ -331,11 +440,14 @@ type Api_Params = {
 };
 
 type ApiUrls = {
+  fetchAccessTokenWithPreAuthCode: any;
   trustedVerifiersList: Api_Params;
   issuersList: Api_Params;
+  credentialOfferData: Api_Params;
   issuerConfig: Api_Params;
   issuerWellknownConfig: Api_Params;
   authorizationServerMetadataConfig: Api_Params;
+  authorizationServerMetadataConfigAlternate: Api_Params;
   allProperties: Api_Params;
   getIndividualId: Api_Params;
   reqIndividualOTP: Api_Params;

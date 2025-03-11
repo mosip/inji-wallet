@@ -1,6 +1,6 @@
 import React, {useLayoutEffect, useState} from 'react';
 import {useTranslation} from 'react-i18next';
-import {FlatList, Pressable} from 'react-native';
+import {FlatList, Pressable, View} from 'react-native';
 import {Issuer} from '../../components/openId4VCI/Issuer';
 import {Error} from '../../components/ui/Error';
 import {Header} from '../../components/ui/Header';
@@ -10,7 +10,10 @@ import {RootRouteProps} from '../../routes';
 import {HomeRouteProps} from '../../routes/routeTypes';
 import {useIssuerScreenController} from './IssuerScreenController';
 import {Loader} from '../../components/ui/Loader';
-import {isTranslationKeyFound, removeWhiteSpace} from '../../shared/commonUtil';
+import testIDProps, {
+  isTranslationKeyFound,
+  removeWhiteSpace,
+} from '../../shared/commonUtil';
 import {
   ErrorMessage,
   getDisplayObjectForCurrentLanguage,
@@ -29,6 +32,7 @@ import {SvgImage} from '../../components/ui/svg';
 import {Icon} from 'react-native-elements';
 import {BannerNotificationContainer} from '../../components/BannerNotificationContainer';
 import {CredentialTypeSelectionScreen} from './CredentialTypeSelectionScreen';
+import {QrScanner} from '../../components/QrScanner';
 
 export const IssuersScreen: React.FC<
   HomeRouteProps | RootRouteProps
@@ -154,6 +158,18 @@ export const IssuersScreen: React.FC<
       setClearSearchIcon(false);
     }
   };
+
+  function qrScannerComponent() {
+    return (
+      <Column crossAlign="center">
+        <QrScanner
+          onQrFound={controller.QR_CODE_SCANNED}
+          title="Scan Credential Offer QR code to add issuers"
+        />
+      </Column>
+    );
+  }
+
   if (controller.isSelectingCredentialType) {
     return <CredentialTypeSelectionScreen {...props} />;
   }
@@ -228,6 +244,10 @@ export const IssuersScreen: React.FC<
     );
   }
 
+  if (controller.isQrScanning) {
+    return qrScannerComponent();
+  }
+
   if (controller.loadingReason) {
     return (
       <Loader
@@ -240,6 +260,53 @@ export const IssuersScreen: React.FC<
   return (
     <React.Fragment>
       <BannerNotificationContainer />
+      <Button
+        testID="scanCredentialOfferQrCode"
+        type="clear"
+        title="Scan Qr Code"
+        onPress={controller.SCAN_CREDENTIAL_OFFER_QR_CODE}
+      />
+
+      {controller.credentialOfferData != null && (
+        <Column
+          style={[Theme.IssuersScreenStyles.issuersContainer, {height: 80}]}>
+          <Pressable
+            accessible={false}
+            {...testIDProps(
+              `issuer-${controller.credentialOfferData.credential_issuer}`,
+            )}
+            onPress={() =>
+              controller.SELECTED_CREDENTIAL_OFFER_ISSUER(
+                "credentialOfferIssuer",
+              )
+            }
+            style={({pressed}) =>
+              pressed
+                ? [
+                    Theme.IssuersScreenStyles.issuerBoxContainerPressed,
+                    Theme.Styles.boxShadow,
+                  ]
+                : [
+                    Theme.IssuersScreenStyles.issuerBoxContainer,
+                    Theme.Styles.boxShadow,
+                  ]
+            }>
+            <View style={Theme.IssuersScreenStyles.issuerBoxContent}>
+              <Text
+                testID={`issuerHeading-${controller.credentialOfferData.credential_issuer}`}
+                style={Theme.IssuersScreenStyles.issuerHeading}>
+                Credential Offer Issuer
+              </Text>
+              <Text
+                testID={`issuerDescription-${controller.credentialOfferData.credential_issuer}`}
+                style={Theme.IssuersScreenStyles.issuerDescription}>
+                Added by Scanning the QR Code
+              </Text>
+            </View>
+          </Pressable>
+        </Column>
+      )}
+
       {controller.issuers.length > 0 && (
         <Column style={Theme.IssuersScreenStyles.issuerListOuterContainer}>
           <Row

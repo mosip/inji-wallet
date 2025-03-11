@@ -770,6 +770,14 @@
 				kind = branch;
 			};
 		};
+		1EC395252D50C9150022D979 /* XCRemoteSwiftPackageReference "inji-openid4vp-ios-swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/mosip/inji-openid4vp-ios-swift.git";
+			requirement = {
+				branch = "release-0.2.x";
+				kind = branch;
+			};
+		};
 		1EC395282D50C9470022D979 /* XCRemoteSwiftPackageReference "pixelpass-ios-swift" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/mosip/pixelpass-ios-swift.git";
@@ -809,6 +817,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 1EC395222D50C89C0022D979 /* XCRemoteSwiftPackageReference "inji-vci-client-ios-swift" */;
 			productName = VCIClient;
+		};
+		1EC395262D50C9150022D979 /* OpenID4VP */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 1EC395252D50C9150022D979 /* XCRemoteSwiftPackageReference "inji-openid4vp-ios-swift" */;
+			productName = OpenID4VP;
 		};
 		1EC395292D50C9470022D979 /* pixelpass */ = {
 			isa = XCSwiftPackageProductDependency;
