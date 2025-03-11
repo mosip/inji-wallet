@@ -27,6 +27,7 @@ import java.util.Objects;
 import io.mosip.openID4VP.OpenID4VP;
 import io.mosip.openID4VP.authorizationRequest.AuthorizationRequest;
 import io.mosip.openID4VP.common.FormatType;
+import io.mosip.openID4VP.dto.VPResponseMetadata.VPResponseMetadata;
 import io.mosip.openID4VP.dto.VPResponseMetadata.types.LdpVPResponseMetadata;
 import io.mosip.openID4VP.dto.Verifier;
 
@@ -55,9 +56,6 @@ public class InjiOpenID4VPModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public void authenticateVerifier(String encodedAuthorizationRequest, ReadableArray trustedVerifiers,
-                                     Boolean shouldValidateClient,
-                                     Promise promise) {
     public void authenticateVerifier(String urlEncodedAuthorizationRequest, ReadableArray trustedVerifiers,
             Boolean shouldValidateClient,
             Promise promise) {
@@ -74,7 +72,7 @@ public class InjiOpenID4VPModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public void constructVerifiablePresentationToken(ReadableMap selectedVCs, Promise promise) {
         try {
-            Map<String, Map<String, List<String>>> selectedVCsMap = new HashMap<>();
+            Map<String, Map<FormatType, List<String>>> selectedVCsMap = new HashMap<>();
 
             ReadableMapKeySetIterator iterator = selectedVCs.keySetIterator();
             while (iterator.hasNextKey()) {
@@ -83,11 +81,14 @@ public class InjiOpenID4VPModule extends ReactContextBaseJavaModule {
 
                 ReadableMapKeySetIterator matchingVcsIterator = Objects.requireNonNull(matchingVcsOfDifferentFormats).keySetIterator();
 
-                Map<String, List<String>> formattedMatchingVcsOfDifferentFormats = new HashMap<>();
+                Map<FormatType, List<String>> formattedMatchingVcsOfDifferentFormats = new HashMap<>();
                 while (matchingVcsIterator.hasNextKey()) {
                     String credentialFormat = matchingVcsIterator.nextKey();
                     List<String> matchingVcsOfSpecificCredentialFormat = convertReadableArrayToList(Objects.requireNonNull(matchingVcsOfDifferentFormats.getArray(credentialFormat)));
-                    formattedMatchingVcsOfDifferentFormats.put(credentialFormat, matchingVcsOfSpecificCredentialFormat);
+                    if(credentialFormat.equals(FormatType.LDP_VC.getValue()))
+                     formattedMatchingVcsOfDifferentFormats.put(FormatType.LDP_VC, matchingVcsOfSpecificCredentialFormat);
+                    else
+                        throw new UnsupportedOperationException("Credential format - "+credentialFormat+" is not supported");
                 }
                 selectedVCsMap.put(inputDescriptorId, formattedMatchingVcsOfDifferentFormats);
             }
@@ -105,7 +106,7 @@ public class InjiOpenID4VPModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public void shareVerifiablePresentation(ReadableMap vpResponseMetadata, Promise promise) {
         try {
-            Map<String, io.mosip.openID4VP.dto.VPResponseMetadata.VPResponseMetadata> vpResMetadata = getVPResponseMetadata(vpResponseMetadata);
+            Map<FormatType, VPResponseMetadata> vpResMetadata = getVPResponseMetadata(vpResponseMetadata);
             String response = openID4VP.shareVerifiablePresentation(vpResMetadata);
             promise.resolve(response);
         } catch (Exception exception) {
@@ -118,19 +119,19 @@ public class InjiOpenID4VPModule extends ReactContextBaseJavaModule {
         openID4VP.sendErrorToVerifier(new Exception(errorMessage));
     }
 
-    private Map<String, io.mosip.openID4VP.dto.VPResponseMetadata.VPResponseMetadata> getVPResponseMetadata(ReadableMap vpResponsesMetadata) throws IllegalArgumentException {
+    private Map<FormatType, VPResponseMetadata> getVPResponseMetadata(ReadableMap vpResponsesMetadata) throws IllegalArgumentException {
         ReadableMapKeySetIterator vpResponseMetadataEntryIterator = vpResponsesMetadata.keySetIterator();
-        Map<String, io.mosip.openID4VP.dto.VPResponseMetadata.VPResponseMetadata> formattedVpResponsesMetadata = new HashMap<>();
+        Map<FormatType, VPResponseMetadata> formattedVpResponsesMetadata = new HashMap<>();
         while (vpResponseMetadataEntryIterator.hasNextKey()) {
             String credentialFormat = vpResponseMetadataEntryIterator.nextKey();
             ReadableMap responseMetadataMap = vpResponsesMetadata.getMap(credentialFormat);
-            if (credentialFormat.equals(FormatType.ldp_vc.getValue())) {
+            if (credentialFormat.equals(FormatType.LDP_VC.getValue())) {
                 String jws = responseMetadataMap.getString("jws");
                 String signatureAlgorithm = responseMetadataMap.getString("signatureAlgorithm");
                 String publicKey = responseMetadataMap.getString("publicKey");
                 String domain = responseMetadataMap.getString("domain");
                 LdpVPResponseMetadata ldpVPResponseMetadata = new LdpVPResponseMetadata(Objects.requireNonNull(jws), Objects.requireNonNull(signatureAlgorithm), Objects.requireNonNull(publicKey), Objects.requireNonNull(domain));
-                formattedVpResponsesMetadata.put(credentialFormat, ldpVPResponseMetadata);
+                formattedVpResponsesMetadata.put(FormatType.LDP_VC, ldpVPResponseMetadata);
             }
         }
 
