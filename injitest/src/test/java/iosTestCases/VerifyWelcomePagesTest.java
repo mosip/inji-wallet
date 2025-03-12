@@ -25,7 +25,7 @@ public class VerifyWelcomePagesTest extends IosBaseTest {
 
         SecureSharingPage secureSharingPage = new SecureSharingPage(driver);
         assertTrue(secureSharingPage.verifyLanguageforSecureSharingPageLoaded("English"), "Secure Sharing");
-        assertEquals(secureSharingPage.getSecureSharingDescription("English"), "Share your cards securely in a hassle free way and avail various services.");
+        assertTrue(secureSharingPage.getSecureSharingDescription("English"), "Share your cards securely in a hassle free way and avail various services.");
         secureSharingPage.clickOnNextButton();
 
         TrustedDigitalWalletPage trustedDigitalWalletPage = new TrustedDigitalWalletPage(driver);
