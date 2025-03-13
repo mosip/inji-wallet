@@ -70,6 +70,11 @@ public class AddNewCardPage extends BasePage{
     @iOSXCUITFindBy(accessibility = "issuerHeading-MockMdl")
     private WebElement downloadViaMockCertify;
 
+    @AndroidFindBy(xpath = "//*[@resource-id=\"issuerSearchBar\"]")
+    @iOSXCUITFindBy(accessibility = "issuerSearchBar")
+    private WebElement IssuerSearchBar;
+
+    //android.view.ViewGroup[@resource-id="searchIssuerIcon"]
     @AndroidFindBy(accessibility = "credentialTypeHeading-DrivingLicenseCredential")
     @iOSXCUITFindBy(accessibility = "credentialTypeHeading-DrivingLicenseCredential")
     private WebElement credentialTypeHeadingMockVerifiableCredential_mdoc;
@@ -209,8 +214,14 @@ public class AddNewCardPage extends BasePage{
     }
 
     public MockCertifyLoginPage clickOnDownloadViaMockCertify(){
-        clickOnElement(downloadViaMockCertify);
 
+        if(isElementDisplayed(IssuerSearchBar)){
+            clearTextBoxAndSendKeys(IssuerSearchBar,"mock mobile");
+        }
+        clickOnElement(downloadViaMockCertify);
+        if(isElementDisplayed(downloadViaMockCertify)){
+            clickOnElement(downloadViaMockCertify);
+        }
         try {
             Thread.sleep(3000);
         } catch (InterruptedException e) {
