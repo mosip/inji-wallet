@@ -268,7 +268,7 @@ export const getCredentialType = (
   if (supportedCredentialsWellknown.format === VCFormat.ldp_vc) {
     const types = supportedCredentialsWellknown.credential_definition
       .type as string[];
-    return types[1];
+    return types[types.length - 1];
   } else {
     return i18n.t('VcDetails:identityCard');
   }
