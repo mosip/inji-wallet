@@ -53,7 +53,7 @@ export const openID4VPServices = () => {
           const proofJWT = await constructProofJWT(
               context.publicKey,
               context.privateKey,
-              JSON.parse(value),
+              value,
               context.keyType,
           );
 

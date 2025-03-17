@@ -1,11 +1,12 @@
 package io.mosip.residentapp;
 
+import static io.mosip.openID4VP.authorizationResponse.models.vpTokenForSigning.VPTokensForSigningKt.toJsonString;
+
 import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.Promise;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
@@ -13,12 +14,12 @@ import com.facebook.react.bridge.ReactMethod;
 import com.facebook.react.bridge.ReadableArray;
 import com.facebook.react.bridge.ReadableMap;
 import com.facebook.react.bridge.ReadableMapKeySetIterator;
-import com.facebook.react.bridge.WritableMap;
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import java.util.ArrayList;
+import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -26,10 +27,11 @@ import java.util.Objects;
 
 import io.mosip.openID4VP.OpenID4VP;
 import io.mosip.openID4VP.authorizationRequest.AuthorizationRequest;
-import io.mosip.openID4VP.common.FormatType;
-import io.mosip.openID4VP.dto.VPResponseMetadata.VPResponseMetadata;
-import io.mosip.openID4VP.dto.VPResponseMetadata.types.LdpVPResponseMetadata;
+import io.mosip.openID4VP.authorizationResponse.models.vpTokenForSigning.VPTokenForSigning;
+import io.mosip.openID4VP.constants.FormatType;
 import io.mosip.openID4VP.dto.Verifier;
+import io.mosip.openID4VP.dto.vpResponseMetadata.VPResponseMetadata;
+import io.mosip.openID4VP.dto.vpResponseMetadata.types.LdpVPResponseMetadata;
 
 public class InjiOpenID4VPModule extends ReactContextBaseJavaModule {
     private OpenID4VP openID4VP;
@@ -81,7 +83,7 @@ public class InjiOpenID4VPModule extends ReactContextBaseJavaModule {
 
                 ReadableMapKeySetIterator matchingVcsIterator = Objects.requireNonNull(matchingVcsOfDifferentFormats).keySetIterator();
 
-                Map<FormatType, List<String>> formattedMatchingVcsOfDifferentFormats = new HashMap<>();
+                Map<FormatType, List<String>> formattedMatchingVcsOfDifferentFormats = new EnumMap<>(FormatType.class);
                 while (matchingVcsIterator.hasNextKey()) {
                     String credentialFormat = matchingVcsIterator.nextKey();
                     List<String> matchingVcsOfSpecificCredentialFormat = convertReadableArrayToList(Objects.requireNonNull(matchingVcsOfDifferentFormats.getArray(credentialFormat)));
@@ -92,11 +94,9 @@ public class InjiOpenID4VPModule extends ReactContextBaseJavaModule {
                 }
                 selectedVCsMap.put(inputDescriptorId, formattedMatchingVcsOfDifferentFormats);
             }
-            Map<String, String> vpToken = openID4VP.constructVerifiablePresentationToken(selectedVCsMap);
-            WritableMap vpTokenWritableMap = vpToken.entrySet().stream()
-                    .collect(Arguments::createMap, (map, entry) -> map.putString(entry.getKey(), entry.getValue()), (m1, m2) -> {});
+            Map<FormatType,VPTokenForSigning> vpTokens = openID4VP.constructVerifiablePresentationToken(selectedVCsMap);
 
-            promise.resolve(vpTokenWritableMap);
+            promise.resolve(toJsonString(vpTokens));
         } catch (Exception exception) {
             promise.reject(exception);
         }
@@ -121,7 +121,7 @@ public class InjiOpenID4VPModule extends ReactContextBaseJavaModule {
 
     private Map<FormatType, VPResponseMetadata> getVPResponseMetadata(ReadableMap vpResponsesMetadata) throws IllegalArgumentException {
         ReadableMapKeySetIterator vpResponseMetadataEntryIterator = vpResponsesMetadata.keySetIterator();
-        Map<FormatType, VPResponseMetadata> formattedVpResponsesMetadata = new HashMap<>();
+        Map<FormatType, VPResponseMetadata> formattedVpResponsesMetadata = new EnumMap<>(FormatType.class);
         while (vpResponseMetadataEntryIterator.hasNextKey()) {
             String credentialFormat = vpResponseMetadataEntryIterator.nextKey();
             ReadableMap responseMetadataMap = vpResponsesMetadata.getMap(credentialFormat);
