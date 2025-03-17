@@ -50,11 +50,11 @@ export class OpenID4VP {
   ) {
     let updatedSelectedVCs = this.stringifyValues(selectedVCs);
 
-    const vpToken =
+    const vpTokens =
       await OpenID4VP.InjiOpenID4VP.constructVerifiablePresentationToken(
         updatedSelectedVCs,
       );
-    return parseJSON(vpToken);
+    return parseJSON(vpTokens);
   }
 
   static async shareVerifiablePresentation(
