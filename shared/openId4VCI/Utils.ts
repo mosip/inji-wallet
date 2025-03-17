@@ -245,6 +245,7 @@ export const OIDCErrors = {
 
   AUTHORIZATION_ENDPOINT_DISCOVERY: {
     GRANT_TYPE_NOT_SUPPORTED: 'Grant type not supported by Wallet',
+    FAILED_TO_FETCH_AUTHORIZATION_ENDPOINT: 'Failed to fetch authorization endpoint or grant type not supported by wallet',
   },
 };
 

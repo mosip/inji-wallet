@@ -126,29 +126,38 @@ export const getFieldName = (
           'Credential definition is not available for the selected credential type',
         );
       }
-      let fieldObj = credentialDefinition?.credentialSubject[field];
+      let fieldObj = credentialDefinition?.credentialSubject?.[field];
       if (fieldObj) {
-        const newFieldObj = fieldObj.display.map(obj => {
-          return {language: obj.locale, value: obj.name};
-        });
-        return getLocalizedField(newFieldObj);
+        if (fieldObj.display && fieldObj.display.length > 0) {
+          const newFieldObj = fieldObj.display.map(obj => ({
+            language: obj.locale,
+            value: obj.name,
+          }));
+          return getLocalizedField(newFieldObj);
+        }
+        return field;
       }
     } else if (format === VCFormat.mso_mdoc) {
       const splitField = field.split('~');
       if (splitField.length > 1) {
         const [namespace, fieldName] = splitField;
-        const fieldObj = wellknown.claims[namespace][fieldName];
+        const fieldObj = wellknown.claims?.[namespace]?.[fieldName];
         if (fieldObj) {
-          const newFieldObj = fieldObj.display.map(obj => {
-            return {language: obj.locale, value: obj.name};
-          });
-          return getLocalizedField(newFieldObj);
+          if (fieldObj.display && fieldObj.display.length > 0) {
+            const newFieldObj = fieldObj.display.map(obj => ({
+              language: obj.locale,
+              value: obj.name,
+            }));
+            return getLocalizedField(newFieldObj);
+          }
+          return fieldName;
         }
       }
     }
   }
   return i18n.t(`VcDetails:${field}`);
 };
+
 
 export function getAddressFields() {
   return [
@@ -259,7 +268,7 @@ export const getCredentialType = (
   if (supportedCredentialsWellknown.format === VCFormat.ldp_vc) {
     const types = supportedCredentialsWellknown.credential_definition
       .type as string[];
-    return types[1];
+    return types[types.length - 1];
   } else {
     return i18n.t('VcDetails:identityCard');
   }
