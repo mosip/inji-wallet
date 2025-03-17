@@ -24,7 +24,7 @@ class RNVCIClientModule: NSObject, RCTBridgeModule {
                   reject(nil, "Invalid issuerMeta format", nil)
                   return
               }
-              
+
 
               guard let credentialAudience = issuerMetaDict["credentialAudience"] as? String,
                     let credentialEndpoint = issuerMetaDict["credentialEndpoint"] as? String,
@@ -34,9 +34,9 @@ class RNVCIClientModule: NSObject, RCTBridgeModule {
                   reject(nil, "Invalid issuerMeta format", nil)
                   return
               }
-            
+
             var issuerMetaObject : IssuerMeta
-            
+
             switch credentialFormat {
             case .ldp_vc:
               guard let credentialType = issuerMetaDict["credentialType"] as? [String] else {
@@ -50,7 +50,7 @@ class RNVCIClientModule: NSObject, RCTBridgeModule {
                   credentialType: credentialType,
                   credentialFormat: credentialFormat
               )
-            
+
             case .mso_mdoc:
               guard let doctype = issuerMetaDict["doctype"] as? String,
                     let claims = issuerMetaDict["claims"] as? [String:Any] else {
@@ -66,12 +66,12 @@ class RNVCIClientModule: NSObject, RCTBridgeModule {
                 claims: claims
               )
             }
-            
 
-              
+
+
 
               let response = try await vciClient!.requestCredential(issuerMeta: issuerMetaObject, proof: JWTProof(jwt: proof), accessToken: accessToken)!
-              let responseString = try response.toJSONString()
+              let responseString = try response.toJsonString()
               resolve(responseString)
           } catch {
             reject(nil,error.localizedDescription, nil)
