@@ -7,11 +7,12 @@ import {displayType} from '../../machines/Issuers/IssuersMachine';
 import {SvgImage} from '../ui/svg';
 import {getDisplayObjectForCurrentLanguage} from '../../shared/openId4VCI/Utils';
 import {CredentialTypes} from '../../machines/VerifiableCredential/VCMetaMachine/vc';
+import { getCredentialType } from '../VC/common/VCUtils';
 
 export const CredentialType: React.FC<CredentialTypeProps> = props => {
   const selectedIssuerDisplayObject = props.item.display?.length
     ? getDisplayObjectForCurrentLanguage(props.item.display)
-    : {};
+    : {name:getCredentialType(props.item)};
 
   return (
     <Pressable
@@ -40,7 +41,7 @@ export const CredentialType: React.FC<CredentialTypeProps> = props => {
         <Text
           testID={`credentialTypeHeading-${props.testID}`}
           style={Theme.IssuersScreenStyles.issuerHeading}>
-          {selectedIssuerDisplayObject?.name}
+          {selectedIssuerDisplayObject.name as string}
         </Text>
       </View>
     </Pressable>

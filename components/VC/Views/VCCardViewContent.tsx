@@ -18,6 +18,7 @@ import {RemoveVcWarningOverlay} from '../../../screens/Home/MyVcs/RemoveVcWarnin
 import {HistoryTab} from '../../../screens/Home/MyVcs/HistoryTab';
 import {useCopilot} from 'react-native-copilot';
 import {useTranslation} from 'react-i18next';
+import testIDProps from '../../../shared/commonUtil';
 
 export const VCCardViewContent: React.FC<VCItemContentProps> = props => {
   const wellknownDisplayProperty = new Display(props.wellknown);
@@ -93,6 +94,7 @@ export const VCCardViewContent: React.FC<VCItemContentProps> = props => {
 
           {isVCLoaded(props.credential, props.fields) && (
             <Image
+              {...testIDProps('issuerLogo')}
               src={issuerLogo?.url}
               alt={issuerLogo?.alt_text}
               style={Theme.Styles.issuerLogo}

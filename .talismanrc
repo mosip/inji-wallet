@@ -68,7 +68,7 @@ fileignoreconfig:
   - filename: screens/MainLayout.tsx
     checksum: dd31361997111c28461239e986112a30ee986e99432ac3016033508863b90ddd
   - filename: android/app/build.gradle
-    checksum: 251ac12b49cf226d40931a02eb1b362a1d29e74cfe8f7a60ed128d66b0fea838
+    checksum: 8d5715e179a398518e6acff82c75b27077c9f893dc90b2972c77f9a09f10be95
   - filename: .github/workflows/push-triggers.yml
     checksum: abc19ea38c8d7b79f15695d015709cc88a34a995181aaf12bc8344f940f3cbc4
   - filename: android/fastlane/Fastfile

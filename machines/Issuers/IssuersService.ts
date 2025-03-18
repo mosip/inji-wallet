@@ -1,8 +1,8 @@
 import NetInfo from '@react-native-community/netinfo';
-import { NativeModules } from 'react-native';
-import { authorize } from 'react-native-app-auth';
+import {NativeModules} from 'react-native';
+import {authorize} from 'react-native-app-auth';
 import Cloud from '../../shared/CloudBackupAndRestoreUtils';
-import { CACHED_API } from '../../shared/api';
+import {CACHED_API} from '../../shared/api';
 import {
   fetchKeyPair,
   generateKeyPair,
@@ -15,14 +15,14 @@ import {
   OIDCErrors,
   updateCredentialInformation,
   vcDownloadTimeout,
-  verifyCredentialData
+  verifyCredentialData,
 } from '../../shared/openId4VCI/Utils';
-import { TelemetryConstants } from '../../shared/telemetry/TelemetryConstants';
+import {TelemetryConstants} from '../../shared/telemetry/TelemetryConstants';
 import {
   getImpressionEventData,
   sendImpressionEvent,
 } from '../../shared/telemetry/TelemetryUtils';
-import { VciClient } from '../../shared/vciClient/VciClient';
+import {VciClient} from '../../shared/vciClient/VciClient';
 
 export const IssuersService = () => {
   return {
@@ -57,30 +57,41 @@ export const IssuersService = () => {
       return credentialTypes;
     },
     fetchAuthorizationEndpoint: async (context: any) => {
-      /**
-       * Incase of multiple entries of authorization_servers, each element is iterated and metadata check is made for support with wallet.
-       * For now, its been kept as getting first entry and checking for matching grant_types_supported
-       */
-      const authorizationServer =
-        context.selectedIssuerWellknownResponse['authorization_servers'][0];
-      const authorizationServerMetadata =
-        await CACHED_API.fetchIssuerAuthorizationServerMetadata(
-          authorizationServer,
-        );
+      const wellknownResponse = context.selectedIssuerWellknownResponse;
+      const credentialIssuer = wellknownResponse['credential_issuer'];
+      const authorizationServers = wellknownResponse[
+        'authorization_servers'
+      ] || [credentialIssuer];
+
       const SUPPORTED_GRANT_TYPES = ['authorization_code'];
-      if (
-        (
-          authorizationServerMetadata['grant_types_supported'] as Array<string>
-        ).filter(grantType => SUPPORTED_GRANT_TYPES.includes(grantType))
-          .length === 0
-      ) {
-        throw new Error(
-          OIDCErrors.AUTHORIZATION_ENDPOINT_DISCOVERY.GRANT_TYPE_NOT_SUPPORTED,
-        );
+      const DEFAULT_AUTHORIZATION_SERVER_SUPPORTED_GRANT_TYPES = [
+        'authorization_code',
+        'implicit',
+      ];
+
+      for (const server of authorizationServers) {
+        try {
+          const authorizationServersMetadata =
+            await CACHED_API.fetchIssuerAuthorizationServerMetadata(server);
+
+          if (
+            (
+              authorizationServersMetadata?.['grant_types_supported'] ||
+              DEFAULT_AUTHORIZATION_SERVER_SUPPORTED_GRANT_TYPES
+            ).some(grant => SUPPORTED_GRANT_TYPES.includes(grant))
+          ) {
+            return authorizationServersMetadata['authorization_endpoint'];
+          }
+        } catch (error) {
+          console.error(`Failed to fetch metadata for ${server}:`, error);
+        }
       }
 
-      return authorizationServerMetadata['authorization_endpoint'];
+      throw new Error(
+        OIDCErrors.AUTHORIZATION_ENDPOINT_DISCOVERY.FAILED_TO_FETCH_AUTHORIZATION_ENDPOINT,
+      );
     },
+
     downloadCredential: async (context: any) => {
       const downloadTimeout = await vcDownloadTimeout();
       const accessToken: string = context.tokenResponse?.accessToken;
@@ -149,12 +160,12 @@ export const IssuersService = () => {
       const verificationResult = await verifyCredentialData(
         context.verifiableCredential?.credential,
         context.selectedCredentialType.format,
-        context.selectedIssuerId
+        context.selectedIssuerId,
       );
-       if(!verificationResult.isVerified) {
-          throw new Error(verificationResult.verificationErrorCode);
-        }
-        return verificationResult;
+      if (!verificationResult.isVerified) {
+        throw new Error(verificationResult.verificationErrorCode);
+      }
+      return verificationResult;
     },
   };
 };

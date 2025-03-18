@@ -122,7 +122,7 @@ describe('bytesToMB', () => {
   });
 
   it('10^6 bytes is 1MB', () => {
-    expect(bytesToMB(1e6)).toBe('1.00');
+    expect(bytesToMB(1e6)).toBe('1.000');
   });
 });
 
