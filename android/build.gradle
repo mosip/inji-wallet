@@ -19,6 +19,7 @@ buildscript {
         classpath("com.android.tools.build:gradle:7.3.1")
         classpath("com.facebook.react:react-native-gradle-plugin")
         classpath("org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:3.3")
+        classpath("com.google.gms:google-services:4.3.10")
     }
 }
 

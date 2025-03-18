@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "459348193738",
+    "project_id": "crednotify-f6093",
+    "storage_bucket": "crednotify-f6093.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:459348193738:android:1a84f708bd0eb89c6e5f33",
+        "android_client_info": {
+          "package_name": "ooru.io.credissuer_wallet"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCAfxvbexBsOL15FvB3w66zW3uY-ZcIH1I"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

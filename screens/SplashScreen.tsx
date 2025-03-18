@@ -32,8 +32,8 @@ export const SplashScreen: React.FC<RootRouteProps> = props => {
         width: Dimensions.get('screen').width,
       }}>
       <Image
-        resizeMode="stretch"
-        style={{width: 400, height: 450}}
+        resizeMode="contain" // Ensures aspect ratio is maintained
+        style={{width: 630, height: 710}}
         source={imageResource}
       />
     </Column>

@@ -21,6 +21,7 @@ export const REQUEST_ROUTES = {
 
 export const SETTINGS_ROUTES = {
   KeyManagement: 'KeyManagement' as keyof SettingsStackParamList,
+  EmailManagement: 'EmailManagement' as keyof SettingsStackParamList,
 };
 
 export type ScanStackParamList = {
@@ -37,4 +38,5 @@ export type RequestStackParamList = {
 
 export type SettingsStackParamList = {
   Keymanagement: undefined;
+  EmailManagement: undefined;
 };

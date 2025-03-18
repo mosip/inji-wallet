@@ -103,7 +103,7 @@
     "errors": {
       "savingFailed": {
         "title": "Failed to save the Card",
-        "message": "Something went wrong while saving Card to the store."
+        "message": "Something went wrong while saving Certificate to the store."
       }
     },
     "shareQRCode": "Share QR Code"
@@ -132,7 +132,7 @@
   },
   "RemoveVcWarningOverlay": {
     "alert": "Remove from Wallet?",
-    "removeWarning": "You're going to remove the card from the wallet. Once removed, this action cannot be undone.\nHowever, you can download the card again to your wallet.",
+    "removeWarning": "You're going to remove the certificate from the wallet. Once removed, this action cannot be undone.\nHowever, you can download the card again to your wallet.",
     "confirm": "Yes, I confirm",
     "cancel": "Cancel"
   },
@@ -175,8 +175,8 @@
     "resetInjiProps": "Resetting Inji Props..."
   },
   "BannerNotification": {
-    "alternatePasscodeSuccess": "Success! You can now use passcode to unlock Inji app.",
-    "alternateBiometricSuccess": "Success! You can now use biometrics to unlock Inji app.",
+    "alternatePasscodeSuccess": "Success! You can now use passcode to unlock Credissuer app.",
+    "alternateBiometricSuccess": "Success! You can now use biometrics to unlock Credissuer app.",
     "activated": "Credentials are enabled for online authentication.",
     "keyPreferenceSuccess": "Your key preferences have been saved successfully!",
     "keyPreferenceError": "Sorry! Error setting your key preferences"
@@ -212,7 +212,7 @@
       },
       "biometricsCancelled": {
         "title": "Do you want to cancel download?",
-        "message": "Biometric confirmation is required to continue downloading the card."
+        "message": "Biometric confirmation is required to continue downloading the certificate."
       },
       "generic": {
         "title": "Something went wrong!",
@@ -225,8 +225,8 @@
       "verificationFailed": {
         "title": "An Error Occurred!",
         "goBackButton": "Go Back",
-        "ERR_GENERIC": "Due to Technical Error, we were unable to download the card.",
-        "ERR_NETWORK": "Due to unstable internet connection, we were unable to download the card. Please check your internet connection.",
+        "ERR_GENERIC": "Due to Technical Error, we were unable to download the certificate.",
+        "ERR_NETWORK": "Due to unstable internet connection, we were unable to download the certificate. Please check your internet connection.",
         "ERR_MISSING_ISSUANCEDATE": "Issuance date is invalid or set in the future. Check for a valid date.",
         "ERR_INVALID_ISSUANCEDATE": "Issuance date is invalid or set in the future. Check for a valid date.",
         "ERR_ISSUANCE_DATE_IS_FUTURE_DATE": "Issuance date is invalid or set in the future. Check for a valid date.",
@@ -242,7 +242,7 @@
     "here": "here",
     "questions": {
       "inji": {
-        "one": "What is a Credissuer wallet?",
+        "one": "What is a Credissuer Wallet?",
         "two": "What are the different types of ID?",
         "three": "Where can I find these IDs?",
         "four": "What is a digital certificate?",
@@ -289,16 +289,16 @@
         "four": "A digital certificate is the digital version of your physical certificate",
         "five": "You can avail various Government and private services using your digital credentials.",
         "six": "A Verifiable Credential is a digitally signed piece of information that represents a statement made by the issuer about a subject and typically includes demographic details. VCs are secure and trustworthy in various online interactions.",
-        "seven": "IDs can be downloaded to INJI Mobile Wallet as Verifiable Credentials. To know how to download VCs with various IDs please read",
+        "seven": "IDs can be downloaded to Credissuer Mobile Wallet as Verifiable Credentials. To know how to download VCs with various IDs please read",
         "eight": "Yes, you can add multiple certificates to the wallet by clicking on '+' button on the Home page.",
         "nine": "Once VC is downloaded to your wallet, it is not yet bound with the user’s identity which is why your VC says Activation Pending. Binding your VC to your wallet (with your passcode or biometrics) is crucial to ensure the highest level of security. To activate your VC, please follow the steps",
         "ten-a": "1. Once the VC is successfully binded with the wallet, you can see that it is Activated for Online login which means this VC can now be used for the QR login process. To know more about QR code login, please read",
         "ten-b": "2. The Q&A should be readable and understandable even when the user changes the language in the INJI app.",
-        "eleven": "After successfully adding a card to the wallet, click on 'Activation pending for Online login' on the card. On clicking on 'Activate', the card will be ready to be used for online login.",
+        "eleven": "After successfully adding a certificate to the wallet, click on 'Activation pending for Online login' on the certificate. On clicking on 'Activate', the card will be ready to be used for online login.",
         "twelve": "Click on 'Share' button and scan the QR code from the requesting party. Once the connection is established, the card will be shared.",
         "thirteen-a": "You can click on ...(meatballs menu) on a card in the Home page and choose Remove from Wallet option to remove a card from the wallet. To know more, please read",
-        "thirteen-b": " Please note that, the same card can be downloaded again.",
-        "fourteen": "On the Home page, click on 'History' to view the details of the user's activitie.",
+        "thirteen-b": " Please note that, the same certificate can be downloaded again.",
+        "fourteen": "On the Home page, click on 'History' to view the details of the user's activities.",
         "fifteen": "The Android keystore holds important information like private keys for identity proofs. When you change your biometrics, old keys are no longer safe. To keep things secure, we remove identity proofs signed by those old keys. You can simply download your identity proofs again, and they will be signed with the latest, safer keys.",
         "sixteen": "Sharing a credential refers to the process of securely transferring a verifiable credential by the holder from the INJI wallet to the relying party. This enables individuals to prove their identity verification in a digital way, facilitating efficient and trusted interactions in various contexts.",
         "seventeen": "Sharing a VC with selfie involves an additional layer of security in the credential-sharing process. In addition to transmitting the verifiable credential, the user is required to provide a selfie (a photograph of themselves) for facial verification. This enhances the security and integrity of the credential transfer by ensuring that the individual presenting the credential is the legitimate owner. It helps prevent impersonation and unauthorized use of the credential, thereby increasing trust and reliability in digital transactions."
@@ -363,8 +363,8 @@
     }
   },
   "DownloadingVcModal": {
-    "header": "Downloading your card",
-    "bodyText": "This may take sometime, we will notify you when your card has been downloaded and is available",
+    "header": "Downloading your certificate",
+    "bodyText": "This may take sometime, we will notify you when your certificate has been downloaded and is available",
     "backButton": "Back home"
   },
   "GetIdInputModal": {
@@ -379,7 +379,7 @@
   "IdInputModal": {
     "header": "Download your ID",
     "guideLabel": "Select ID type and enter the MOSIP provided UIN or VID you wish to download. In the next step, you will be asked to enter OTP.",
-    "generateVc": "Generate Card",
+    "generateVc": "Generate Certificate",
     "downloadID": "Download ID",
     "enterId": "Enter {{idType}}",
     "noUIN/VID": "Don’t have UIN/VID? ",
@@ -396,7 +396,7 @@
     "resendOtp": "Resend OTP",
     "confirmationDialog": {
       "title": "Do you want to cancel downloading?",
-      "message": "Once cancelled, your card will not be downloaded and you need to reinitiate the download.",
+      "message": "Once cancelled, your certificate will not be downloaded and you need to reinitiate the download.",
       "wait": "No, I’ll wait",
       "cancel": "Yes, Cancel"
     }
@@ -404,19 +404,19 @@
   "MyVcsTab": {
     "searchByName": "Search by name",
     "bringYourDigitalID": "Bring your certificates here",
-    "generateVcDescription": "Tap on \"Download card\" below to download your certificate",
+    "generateVcDescription": "Tap on \"Download certificate\" below to download your certificate",
     "generateVcFABDescription": "Tap on  \"+\" below to download your certificate",
     "downloadCard": "Download Certificate",
     "downloadingYourCard": "Downloading your certificate, this can take upto 5 minutes",
-    "downloadingVcSuccess": "Your Card has been downloaded successfully",
-    "downloadingVcFailed": "Sorry! Due to technical error we are unable to download your card now. Please try again later.",
+    "downloadingVcSuccess": "Your Certificate has been downloaded successfully",
+    "downloadingVcFailed": "Sorry! Due to technical error we are unable to download your certificate now. Please try again later.",
     "activated": "Credentials are enabled for online authentication.",
-    "noCardsTitle": "No Cards Found!",
+    "noCardsTitle": "No Certificates Found!",
     "noCardsDescription": "Sorry, we couldn’t find any results. Please try entering another search keyword.",
     "errors": {
       "savingFailed": {
-        "title": "Failed to save the Card",
-        "message": "Something went wrong while saving Card to the store."
+        "title": "Failed to save the Certificate",
+        "message": "Something went wrong while saving Certificate to the store."
       },
       "storageLimitReached": {
         "title": "Insufficient Appdata",
@@ -442,8 +442,8 @@
       "verificationFailed": {
         "title": "An Error Occurred!",
         "goBackButton": "Go Back",
-        "ERR_GENERIC": "Due to Technical Error, we were unable to download the card.",
-        "ERR_NETWORK": "Due to unstable internet connection, we were unable to download the card. Please check your internet connection.",
+        "ERR_GENERIC": "Due to Technical Error, we were unable to download the certificates.",
+        "ERR_NETWORK": "Due to unstable internet connection, we were unable to download the certificate. Please check your internet connection.",
         "ERR_MISSING_ISSUANCEDATE": "Issuance date is invalid or set in the future. Check for a valid date.",
         "ERR_INVALID_ISSUANCEDATE": "Issuance date is invalid or set in the future. Check for a valid date.",
         "ERR_ISSUANCE_DATE_IS_FUTURE_DATE": "Issuance date is invalid or set in the future. Check for a valid date.",
@@ -456,7 +456,7 @@
   },
   "OnboardingOverlay": {
     "stepOneTitle": "Welcome!",
-    "stepOneText": "Keep your digital credential with you at all times. Inji helps you manage and use them effectively. To get started, add certificates to your profile.",
+    "stepOneText": "Keep your digital credential with you at all times. Credissuer helps you manage and use them effectively. To get started, add certificates to your profile.",
     "stepTwoTitle": "Secure Sharing",
     "stepTwoText": "Share your certificates securely in a hassle free way and avail various services.",
     "stepThreeTitle": "Trusted Digital Wallet",
@@ -478,7 +478,7 @@
     "noReceivedVcsText": "Tap on Request below to receive card"
   },
   "VcVerificationBanner": {
-    "inProgress": "We are validating your card, this may take sometime. Once verified, you’ll be able to activate your card.",
+    "inProgress": "We are validating your certificate, this may take sometime. Once verified, you’ll be able to activate your certificate.",
     "success": "{{vcDetails}} is verified successfully and now available for activation.",
     "error": "Sorry, we are unable to verify the {{vcDetails}} right now. Please try again later. Until then, you won't be able to activate or share your card."
   },
@@ -519,7 +519,7 @@
     "checkDomain": "Also, check for a lock icon in the address bar.",
     "domainHead": "https://",
     "selectId": "Select an ID",
-    "noBindedVc": "There is no binded card available to verify",
+    "noBindedVc": "There is no binded certificate available to verify",
     "back": "Come back",
     "confirm": "Confirm",
     "verify": "Verify",
@@ -542,16 +542,16 @@
   },
   "ReceiveVcScreen": {
     "header": "Certificate details",
-    "save": "Save card",
+    "save": "Save certificate",
     "verifyAndSave": "Verify and save",
     "reject": "Reject",
     "discard": "Discard",
-    "goToReceivedVCTab": "View Received card",
+    "goToReceivedVCTab": "View Received certificate",
     "saving": "Card is being saved",
     "errors": {
       "savingFailed": {
-        "title": "Failed to save the card!",
-        "message": "Due to technical error, we were unable to save the card. Please request the sender to transfer again."
+        "title": "Failed to save the certificate!",
+        "message": "Due to technical error, we were unable to save the certificate. Please request the sender to transfer again."
       }
     }
   },
@@ -559,21 +559,21 @@
     "enablePermission": "Enable Permission"
   },
   "RequestScreen": {
-    "receiveCard": "Receive Card",
-    "bluetoothDenied": "Please enable Bluetooth to be able to request card",
+    "receiveCard": "Receive certificate",
+    "bluetoothDenied": "Please enable Bluetooth to be able to request certificate",
     "bluetoothStateIos": "Bluetooth is turned OFF, please turn it ON from Control center",
     "bluetoothStateAndroid": "Bluetooth is turned OFF, please turn it ON from Quick settings menu",
-    "showQrCode": "Display this QR code to request resident Card",
-    "incomingVc": "Incoming Card",
+    "showQrCode": "Display this QR code to request resident certificate",
+    "incomingVc": "Incoming certificate",
     "request": "Request",
     "errors": {
       "nearbyDevicesPermissionDenied": {
-        "message": "Nearby Devices permission is required to be able to request Card",
+        "message": "Nearby Devices permission is required to be able to request certificate",
         "button": "Allow Permission"
       },
       "storageLimitReached": {
         "title": "Insufficient Appdata",
-        "message": "You cannot add or receive cards since the Appdata is full. Clear Appdata to proceed."
+        "message": "You cannot add or receive certificates since the Appdata is full. Clear Appdata to proceed."
       }
     },
     "status": {
@@ -583,11 +583,11 @@
       },
       "accepted": {
         "title": "Success!",
-        "message": "Card has been successfully received from Wallet"
+        "message": "Certificate has been successfully received from Wallet"
       },
       "rejected": {
         "title": "Notice",
-        "message": "You discarded Wallet's Card"
+        "message": "You discarded Wallet's Certificate"
       },
       "disconnected": {
         "title": "Bluetooth connection lost!",
@@ -599,7 +599,7 @@
         "timeoutHint": "It's taking too long to exchange device info..."
       },
       "connected": {
-        "message": "Connected to the device. Waiting for card...",
+        "message": "Connected to the device. Waiting for certificate...",
         "timeoutHint": "No data received yet. Is sending device still connected?"
       },
       "offline": {
@@ -632,7 +632,7 @@
         },
         "TUV_UNK_001": {
           "title": "An Error Occured!",
-          "message": "Due to technical error, we were unable to receive the card. Please try again"
+          "message": "Due to technical error, we were unable to receive the certificate. Please try again"
         },
         "TVW_UNK_001": {
           "title": "Connection Failed!",
@@ -672,12 +672,12 @@
     "ConfirmButton": "I Understand",
     "doNotAskMessage": "Don't ask me again",
     "noShareableVcs": "No shareable certificates are available.",
-    "sharingVc": "Sharing card",
+    "sharingVc": "Sharing certificate",
     "bluetoothStateIos": "Bluetooth is turned OFF, please turn it ON from Control center",
     "bluetoothStateAndroid": "Bluetooth is turned OFF, please turn it ON from Quick settings menu",
     "enableBluetoothMessage": "Please enable bluetooth permissions to support local sharing",
     "enableBluetoothButtonText": "Allow bluetooth permissions",
-    "scanningGuide": "Hold the phone steady and scan the QR code to share your card.",
+    "scanningGuide": "Hold the phone steady and scan the QR code to share your certificate.",
     "invalidQR": "Please scan a valid QR",
     "errors": {
       "locationDisabled": {
@@ -685,16 +685,16 @@
         "button": "Enable location services"
       },
       "locationDenied": {
-        "message": "Location permission is required to share card",
+        "message": "Location permission is required to share certificate",
         "button": "Allow access to location"
       },
       "nearbyDevicesPermissionDenied": {
-        "message": "Nearby Devices permission is required to be able to share card",
+        "message": "Nearby Devices permission is required to be able to share certificate",
         "button": "Allow Permission"
       },
       "storageLimitReached": {
         "title": "Insufficient Appdata",
-        "message": "You cannot share cards since the Appdata is full. Clear Appdata to proceed."
+        "message": "You cannot share certificates since the Appdata is full. Clear Appdata to proceed."
       }
     },
     "status": {
@@ -711,11 +711,11 @@
       "exchangingDeviceInfoTimeout": "It's taking a while to exchange device info. You may have to reconnect.",
       "invalid": "Invalid QR Code",
       "offline": "Please connect to the internet to scan QR codes using Online sharing mode",
-      "sent": "Card has been sent...",
-      "sentHint": "Waiting for receiver to save or discard your Card",
+      "sent": "Certificate has been sent...",
+      "sentHint": "Waiting for receiver to save or discard your Certificate",
       "sharing": {
         "title": "Sharing in progress...",
-        "hint": "Please wait while we share the chosen card...",
+        "hint": "Please wait while we share the chosen certificate...",
         "timeoutHint": "Sharing is delayed, possibly due to a connection issue."
       },
       "accepted": {
@@ -726,7 +726,7 @@
       },
       "rejected": {
         "title": "An error occurred!",
-        "message": "Due to technical error, we were unable to share the card with the relying party. Please share again."
+        "message": "Due to technical error, we were unable to share the certificate with the relying party. Please share again."
       },
       "disconnected": {
         "title": "Bluetooth connection lost!",
@@ -826,18 +826,18 @@
       },
       "accepted": {
         "title": "Success!",
-        "message": "Your card has been successfully shared with {{receiver}}"
+        "message": "Your certificate has been successfully shared with {{receiver}}"
       },
       "rejected": {
         "title": "Pay attention",
-        "message": "Your card has been declined by {{receiver}}"
+        "message": "Your certificate has been declined by {{receiver}}"
       }
     }
   },
   "SendVPScreen": {
     "requester": "Requester",
-    "cardsSelected": "cards selected",
-    "cardSelected": "card selected",
+    "cardsSelected": "certificates selected",
+    "cardSelected": "certificate selected",
     "unCheck": "Uncheck",
     "checkAll": "Check All",
     "consentDialog": {
@@ -867,7 +867,7 @@
       },
       "genericError": {
         "title": "Oops! An Error Occured.",
-        "message": "Due to technical error, we are unable to share the card. Click on retry to re-share or click on Home to exit the sharing process."
+        "message": "Due to technical error, we are unable to share the certificate. Click on retry to re-share or click on Home to exit the sharing process."
       },
       "invalidQrCode": {
         "title": "Invalid QR code",
@@ -893,7 +893,7 @@
     "errors": {
       "invalidIdentity": {
         "title": "Face recognition failed",
-        "message": "The scanned face does not match with the photo on the card. Please try again.",
+        "message": "The scanned face does not match with the photo on the certificate. Please try again.",
         "messageNoRetry": "Face not recognised."
       }
     }
@@ -938,7 +938,7 @@
   },
   "AccountSelection": {
     "backupProcessInfo": "You’re just a few steps away from backing up your data",
-    "cloudInfo": "To initiate the data backup, please tap on the “Proceed” button to link your {{driveName}} with Inji.",
+    "cloudInfo": "To initiate the data backup, please tap on the “Proceed” button to link your {{driveName}} with Credissuer.",
     "googleDriveTitle": "Google Drive",
     "loadingSubtitle": "Loading...",
     "proceed": "Proceed",
@@ -972,7 +972,7 @@
       "decryptionFailed": "Failed to decrypt data",
       "invalidateKeyError": {
         "title": "App was Reset",
-        "message": "Due to the fingerprint / facial recognition update, app security was impacted, and downloaded cards were removed. Please download again."
+        "message": "Due to the fingerprint / facial recognition update, app security was impacted, and downloaded certificates were removed. Please download again."
       }
     },
     "ignore": "Ignore"

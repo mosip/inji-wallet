@@ -5,6 +5,8 @@ plugins {
 apply plugin: "com.android.application"
 apply plugin: "com.facebook.react"
 apply plugin: "org.sonarqube"
+apply plugin: 'com.google.gms.google-services'
+
 
 configurations.all {
     resolutionStrategy.force 'androidx.activity:activity-ktx:1.7.1','androidx.activity:activity:1.7.0', 'com.fasterxml.jackson.core:jackson-core:2.14.0'
@@ -267,6 +269,8 @@ dependencies {
     implementation 'com.facebook.soloader:soloader:0.10.1+'
     implementation("io.mosip:pixelpass-aar:0.6.0-SNAPSHOT")
     implementation("io.mosip:secure-keystore:0.3.0-SNAPSHOT")
+    implementation platform('com.google.firebase:firebase-bom:32.1.1')
+    implementation ("com.google.firebase:firebase-messaging")
     implementation("io.mosip:tuvali:0.5.1")
     implementation("io.mosip:inji-vci-client:0.2.0-SNAPSHOT")
     implementation ("org.jetbrains:annotations:16.0.2")

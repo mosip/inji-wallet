@@ -15,6 +15,7 @@ import {RequestLayout} from '../screens/Request/RequestLayout';
 import {SplashScreen} from '../screens/SplashScreen';
 import {RequestStackParamList} from './routesConstants';
 import {KeyManagementScreen} from '../screens/Settings/KeyManagementScreen';
+import {EmailManagementScreen} from '../screens/Settings/EmailManagementScreen';
 
 export const baseRoutes: Screen[] = [
   {
@@ -28,6 +29,11 @@ export const baseRoutes: Screen[] = [
     name: 'KeyManagement',
     component: KeyManagementScreen,
   },
+  {
+    name: 'EmailManagement',
+    component: EmailManagementScreen,
+  },
+
   {
     name: 'Language',
     component: SetupLanguageScreen,

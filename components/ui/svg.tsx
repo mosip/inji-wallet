@@ -54,6 +54,7 @@ import SettingsLanguage from '../../assets/Language_Icon.svg';
 import SettingsBiometric from '../../assets/biometric_unlock.svg';
 import SettingsAboutInji from '../../assets/about_inji.svg';
 import SettingsBackup from '../../assets/cloud_upload.svg';
+import SettingsEmail from '../../assets/email.svg';
 import SettingsLogOut from '../../assets/logout_icon.svg';
 import RestoreIcon from '../../assets/restoreIconBackup.svg';
 import QuestionIcon from '../../assets/questionIcon.svg';
@@ -575,6 +576,17 @@ export class SvgImage {
   static abotInjiIcon() {
     return (
       <SettingsAboutInji
+        color1={Theme.Colors.linearIconGradientStart}
+        color2={Theme.Colors.linearIconGradientEnd}
+      />
+    );
+  }
+
+  static emailIcon(height: number, width: number) {
+    return (
+      <SettingsEmail
+        height={height}
+        width={width}
         color1={Theme.Colors.linearIconGradientStart}
         color2={Theme.Colors.linearIconGradientEnd}
       />

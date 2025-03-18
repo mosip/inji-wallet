@@ -49,8 +49,8 @@
         <meta-data
             android:name="expo.modules.updates.EXPO_UPDATE_URL"
             android:value="https://exp.host/@anonymous/inji" />
-
-        <activity
+         <receiver android:name=".CopyBroadcastReceiver" android:exported="false" />
+         <activity
             android:name=".MainActivity"
             android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|screenSize|smallestScreenSize|uiMode|locale|layoutDirection"
             android:exported="true"
@@ -58,11 +58,11 @@
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize">
-
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="https" />
 
                 <data
                     android:host="wla-auth"
