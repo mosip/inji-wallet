@@ -144,7 +144,7 @@ public class MockCertifyLoginPage extends BasePage {
     }
 
     public void clickOnVerifyButtonIos() {
-        ((HidesKeyboard) driver).hideKeyboard();
+//        ((HidesKeyboard) driver).hideKeyoard();
         clickOnElement(verifyButton);
     }
 
