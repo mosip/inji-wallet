@@ -31,8 +31,6 @@ public class SunbirdLoginPage extends BasePage {
     @iOSXCUITFindBy(xpath = "//XCUIElementTypePickerWheel[@value=\"2025\"]")
     private WebElement iosCalenderWheel;
 
-
-
     @AndroidFindBy(xpath = "//android.widget.Button[@resource-id=\"android:id/button1\"]")
     @iOSXCUITFindBy(accessibility = "Done")
     private WebElement clickOnSetButton;
@@ -190,7 +188,6 @@ public class SunbirdLoginPage extends BasePage {
         clickOnElement(loginWithKBA);
     }
 
-
     public void enterPolicyNumberTextBox(String PolicyNo) {
         sendKeysToTextBox(enterPolicyTextBox, PolicyNo);
     }
@@ -212,8 +209,6 @@ public class SunbirdLoginPage extends BasePage {
 
         }
     }
-
-
     public void enterDateOfBirthTextBox() {
         clickOnElement(enterDateOfBirthTextBox);
 if (isElementDisplayed(setButton)){

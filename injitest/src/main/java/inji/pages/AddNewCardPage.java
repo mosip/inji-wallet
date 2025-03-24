@@ -78,11 +78,6 @@ public class AddNewCardPage extends BasePage{
     @iOSXCUITFindBy(accessibility = "issuerSearchBar")
     private WebElement IssuerSearchBar;
 
-
-
-
-
-
     public AddNewCardPage(AppiumDriver driver) {
         super(driver);
     }
