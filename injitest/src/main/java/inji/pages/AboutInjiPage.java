@@ -67,7 +67,6 @@ public class AboutInjiPage extends BasePage {
     }
 
     public boolean isMosipUrlIsDisplayedInChrome() throws InterruptedException {
-        Thread.sleep(5000);
         String context = driver.getPageSource();
         return context.contains("Inji") || context.contains("inji");
     }

@@ -277,7 +277,6 @@ public class HomePage extends BasePage {
     }
 
     public MoreOptionsPage clickOnMoreOptionsButton() throws InterruptedException {
-        Thread.sleep(2000);
         clickOnElement(moreOptionsButton);
         return new MoreOptionsPage(driver);
     }

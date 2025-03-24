@@ -27,8 +27,8 @@ public class WelcomePage extends BasePage {
     @iOSXCUITFindBy(accessibility = "backButton-one")
     public WebElement backButton;
 
-    @AndroidFindBy(accessibility = "selectAppUnlockMethod")
-    @iOSXCUITFindBy(accessibility = "selectAppUnlockMethod")
+    @AndroidFindBy(accessibility = "header")
+    @iOSXCUITFindBy(accessibility = "header")
     private WebElement selectAppUnlockMethodHeader;
 
     @AndroidFindBy(accessibility = "description")

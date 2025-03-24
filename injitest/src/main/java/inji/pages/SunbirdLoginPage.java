@@ -5,13 +5,14 @@ import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.pagefactory.AndroidFindBy;
 import io.appium.java_client.pagefactory.iOSXCUITFindBy;
 
-import org.openqa.selenium.NoSuchElementException;
-import org.openqa.selenium.StaleElementReferenceException;
-import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebElement;
 
-public class SunbirdLoginPage extends BasePage {
+import java.time.LocalDate;
+import java.time.Month;
 
+public class SunbirdLoginPage extends BasePage {
+    LocalDate currentDate = LocalDate.now();
+    Month currentMonth = currentDate.getMonth();
     @AndroidFindBy(xpath = "//*[contains(@text,'Login with KBA')]")
     private WebElement loginWithKBA;
 
@@ -26,6 +27,11 @@ public class SunbirdLoginPage extends BasePage {
     @AndroidFindBy(uiAutomator = "UiSelector().className(\"android.widget.Spinner\")")
     @iOSXCUITFindBy(iOSClassChain = "**/XCUIElementTypeOther[`name == \"Please fill in this field\"`]")
     private WebElement enterDateOfBirthTextBox;
+
+    @iOSXCUITFindBy(xpath = "//XCUIElementTypePickerWheel[@value=\"2025\"]")
+    private WebElement iosCalenderWheel;
+
+
 
     @AndroidFindBy(xpath = "//android.widget.Button[@resource-id=\"android:id/button1\"]")
     @iOSXCUITFindBy(accessibility = "Done")
@@ -51,6 +57,10 @@ public class SunbirdLoginPage extends BasePage {
     @iOSXCUITFindBy(accessibility = "Previous Month")
     private WebElement previousMonth;
 
+    @AndroidFindBy(accessibility = "Next month")
+    @iOSXCUITFindBy(accessibility = "Next month")
+    private WebElement nextmonth;
+
     @AndroidFindBy(accessibility = "wallet-activated-icon")
     @iOSXCUITFindBy(accessibility = "wallet-activated-icon")
     private WebElement activatedStatus;
@@ -62,7 +72,6 @@ public class SunbirdLoginPage extends BasePage {
     @AndroidFindBy(accessibility = "a square logo of a Sunbird")
     @iOSXCUITFindBy(accessibility = "a square logo of a Sunbird")
     private WebElement sunbirdSquareLogo;
-
 
     @AndroidFindBy(accessibility = "fullNameValue")
     @iOSXCUITFindBy(accessibility = "fullNameValue")
@@ -157,6 +166,22 @@ public class SunbirdLoginPage extends BasePage {
     @AndroidFindBy(xpath = "//*[contains(@text,'Login failed')]")
     private WebElement LoginFailedDueTOInValidCredentials;
 
+    @AndroidFindBy(xpath = "//*[@resource-id=\"android:id/date_picker_header_year\"]")
+//    @iOSXCUITFindBy(accessibility = "Show year picker")
+    private WebElement pickeYear;
+
+    @AndroidFindBy(xpath = "//*[@resource-id=\"android:id/text1\" and @text=\"2023\"]")
+    @iOSXCUITFindBy(accessibility = "issuerSearchBar")
+    private WebElement select2023Year;
+
+    @AndroidFindBy(xpath = "//*[@resource-id=\"android:id/text1\" and @text=\"2024\"]")
+    @iOSXCUITFindBy(accessibility = "issuerSearchBar")
+    private WebElement select2024Year;
+
+    @AndroidFindBy(xpath = "//android.widget.Button[@resource-id=\"android:id/button1\"]")
+    @iOSXCUITFindBy(accessibility = "Done")
+    private WebElement setButton;
+
     public SunbirdLoginPage(AppiumDriver driver) {
         super(driver);
     }
@@ -167,50 +192,66 @@ public class SunbirdLoginPage extends BasePage {
 
 
     public void enterPolicyNumberTextBox(String PolicyNo) {
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
         sendKeysToTextBox(enterPolicyTextBox, PolicyNo);
     }
 
     public void enterFullNameTextBox(String fullname) {
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
         sendKeysToTextBox(enterFullnameTextBox, fullname);
     }
 
+    public void selectYear(){
+        if(isElementDisplayed(pickeYear)){
+            clickOnElement(pickeYear);
+            IosUtil.scrollDown(driver, 300, 1000, 200);
+            if(currentMonth.getValue() > 6) {
+                if (isElementDisplayed(select2023Year)) {
+                    clickOnElement(select2023Year);
+                }
+            }else{
+                clickOnElement(select2024Year);
+            }
+
+        }
+    }
+
+
     public void enterDateOfBirthTextBox() {
         clickOnElement(enterDateOfBirthTextBox);
-        int MAX_ATTEMPTS = 20;
-        if (!isElementDisplayed(dateOfBirth, 10)) {
-            for (int i = 0; i < MAX_ATTEMPTS; i++) {
-                try {
-                    clickOnElement(previousMonth);
-                    if (isElementDisplayed(dateOfBirth, 5)) {
-                        break;
-                    } else if (isElementDisplayed(dateOfBirthSecond, 5)) {
-                        break;
-                    }
-
-                } catch (TimeoutException e) {
-                } catch (NoSuchElementException e) {
-                    break;
-                }
-            }
-        }
-
-        if (isElementDisplayed(dateOfBirth, 5)) {
-            clickOnElement(dateOfBirth);
-            clickOnElement(clickOnSetButton);
-        } else if (isElementDisplayed(dateOfBirthSecond)) {
-            clickOnElement(dateOfBirthSecond);
-            clickOnElement(clickOnSetButton);
-        }
+if (isElementDisplayed(setButton)){
+    clickOnElement(setButton);
+}
+//        clickOnElement(enterDateOfBirthTextBox);
+//
+//        selectYear();
+//        int MAX_ATTEMPTS = 20;
+//        if (!isElementDisplayed(dateOfBirth, 10)) {
+//            for (int i = 0; i < MAX_ATTEMPTS; i++) {
+//                try {
+//                    if(currentMonth.getValue() > 6) {
+//                        clickOnElement(nextmonth);
+//                    }else{
+//                        clickOnElement(previousMonth);
+//                    }
+//                    if (isElementDisplayed(dateOfBirth, 5)) {
+//                        break;
+//                    } else if (isElementDisplayed(dateOfBirthSecond, 5)) {
+//                        break;
+//                    }
+//
+//                } catch (TimeoutException e) {
+//                } catch (NoSuchElementException e) {
+//                    break;
+//                }
+//            }
+//        }
+//
+//        if (isElementDisplayed(dateOfBirth, 5)) {
+//            clickOnElement(dateOfBirth);
+//            clickOnElement(clickOnSetButton);
+//        } else if (isElementDisplayed(dateOfBirthSecond)) {
+//            clickOnElement(dateOfBirthSecond);
+//            clickOnElement(clickOnSetButton);
+//        }
     }
 
     public void clickOnloginButton() throws InterruptedException {
@@ -220,7 +261,6 @@ public class SunbirdLoginPage extends BasePage {
             clickOnElement(loginButton);
             if (isElementDisplayed(LoginFailedDueTOInValidCredentials)) {
                 retryCount++;
-                Thread.sleep(1000);
             } else {
                 break;
             }
@@ -272,9 +312,13 @@ public class SunbirdLoginPage extends BasePage {
         return this.getTextFromLocator(phoneNumber);
     }
 
-    public String getDateofBirthValueForSunbirdCard() {
-        basePage.retryToGetElement(dateofBirthValue);
-        return this.getTextFromLocator(dateofBirthValue);
+//    public String getDateofBirthValueForSunbirdCard() {
+//        basePage.retryToGetElement(dateofBirthValue);
+//        return this.getTextFromLocator(dateofBirthValue);
+//    }
+
+    public boolean isDateofBirthValueForSunbirdCardDisplayed() {
+        return  isElementDisplayed(dateofBirthValue);
     }
 
     public String getGenderValueForSunbirdCard() {

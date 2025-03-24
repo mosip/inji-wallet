@@ -7,6 +7,8 @@ import inji.pages.*;
 import inji.utils.TestDataReader;
 import org.testng.annotations.Test;
 
+import static inji.api.AdminTestUtil.fullName;
+import static inji.api.AdminTestUtil.policyNumber;
 import static inji.api.BaseTestCase.uin;
 import static org.testng.Assert.*;
 
@@ -284,8 +286,8 @@ public class DeletingVcTest extends AndroidBaseTest {
 //        assertTrue(sunbirdLoginPage.isSunbirdRCInsuranceVerifiableCredentialHeaderDisplayed(), "Verify if sunbirdRC insurance verifiable credential displayed");
 //        sunbirdLoginPage.clickOnMosipInsurance();
 
-        sunbirdLoginPage.enterPolicyNumberTextBox(TestDataReader.readData("policyNumberSunbird"));
-        sunbirdLoginPage.enterFullNameTextBox(TestDataReader.readData("fullNameSunbird"));
+        sunbirdLoginPage.enterPolicyNumberTextBox(policyNumber);
+        sunbirdLoginPage.enterFullNameTextBox(fullName);
         sunbirdLoginPage.enterDateOfBirthTextBox();
         sunbirdLoginPage.clickOnloginButton();
 
