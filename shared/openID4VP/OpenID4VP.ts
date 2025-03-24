@@ -45,13 +45,13 @@ export class OpenID4VP {
         ])
     );
   };
-  static async constructVerifiablePresentationToken(
+  static async constructUnsignedVPToken(
     selectedVCs: SelectedCredentialsForVPSharing,
   ) {
     let updatedSelectedVCs = this.stringifyValues(selectedVCs);
 
     const vpTokens =
-      await OpenID4VP.InjiOpenID4VP.constructVerifiablePresentationToken(
+      await OpenID4VP.InjiOpenID4VP.constructUnsignedVPToken(
         updatedSelectedVCs,
       );
     return parseJSON(vpTokens);

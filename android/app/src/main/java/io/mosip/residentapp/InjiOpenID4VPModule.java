@@ -1,6 +1,6 @@
 package io.mosip.residentapp;
 
-import static io.mosip.openID4VP.authorizationResponse.models.vpTokenForSigning.VPTokensForSigningKt.toJsonString;
+import static io.mosip.openID4VP.authorizationResponse.AuthorizationResponseUtilsKt.toJsonString;
 
 import android.util.Log;
 
@@ -27,7 +27,7 @@ import java.util.Objects;
 
 import io.mosip.openID4VP.OpenID4VP;
 import io.mosip.openID4VP.authorizationRequest.AuthorizationRequest;
-import io.mosip.openID4VP.authorizationResponse.models.vpTokenForSigning.VPTokenForSigning;
+import io.mosip.openID4VP.authorizationResponse.models.unsignedVPToken.UnsignedVPToken;
 import io.mosip.openID4VP.constants.FormatType;
 import io.mosip.openID4VP.dto.Verifier;
 import io.mosip.openID4VP.dto.vpResponseMetadata.VPResponseMetadata;
@@ -72,7 +72,7 @@ public class InjiOpenID4VPModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public void constructVerifiablePresentationToken(ReadableMap selectedVCs, Promise promise) {
+    public void constructUnsignedVPToken(ReadableMap selectedVCs, Promise promise) {
         try {
             Map<String, Map<FormatType, List<String>>> selectedVCsMap = new HashMap<>();
 
@@ -94,7 +94,7 @@ public class InjiOpenID4VPModule extends ReactContextBaseJavaModule {
                 }
                 selectedVCsMap.put(inputDescriptorId, formattedMatchingVcsOfDifferentFormats);
             }
-            Map<FormatType,VPTokenForSigning> vpTokens = openID4VP.constructVerifiablePresentationToken(selectedVCsMap);
+            Map<FormatType, UnsignedVPToken> vpTokens = openID4VP.constructUnsignedVPToken(selectedVCsMap);
 
             promise.resolve(toJsonString(vpTokens));
         } catch (Exception exception) {

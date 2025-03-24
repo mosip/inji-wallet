@@ -48,7 +48,7 @@ class RNOpenId4VpModule: NSObject, RCTBridgeModule {
   }
   
   @objc
-  func constructVerifiablePresentationToken(_ credentialsMap: AnyObject, resolver resolve: @escaping RCTPromiseResolveBlock, rejecter reject: @escaping RCTPromiseRejectBlock) {
+  func constructUnsignedVPToken(_ credentialsMap: AnyObject, resolver resolve: @escaping RCTPromiseResolveBlock, rejecter reject: @escaping RCTPromiseRejectBlock) {
     Task {
       do {
         guard let credentialsMap = credentialsMap as? [String: [String: Array<Any>]] else {
@@ -68,7 +68,7 @@ class RNOpenId4VpModule: NSObject, RCTBridgeModule {
           }
         }
         
-        let response = try await openID4VP?.constructVerifiablePresentationToken(credentialsMap: formattedCredentialsMap)
+        let response = try await openID4VP?.constructUnsignedVPToken(credentialsMap: formattedCredentialsMap)
         let encodableDict = response?.mapKeys { $0.rawValue }
           .mapValues { EncodableWrapper($0) }
         

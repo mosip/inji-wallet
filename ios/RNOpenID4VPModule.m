@@ -11,7 +11,7 @@ RCT_EXTERN_METHOD(authenticateVerifier:(NSString *)urlEncodedAuthorizationReques
                   resolver:(RCTPromiseResolveBlock)resolve
                   rejecter:(RCTPromiseRejectBlock)reject)
 
-RCT_EXTERN_METHOD(constructVerifiablePresentationToken:(id)credentialsMap
+RCT_EXTERN_METHOD(constructUnsignedVPToken:(id)credentialsMap
                   resolver:(RCTPromiseResolveBlock)resolve
                   rejecter:(RCTPromiseRejectBlock)reject)
 

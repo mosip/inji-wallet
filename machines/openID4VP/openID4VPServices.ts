@@ -42,7 +42,7 @@ export const openID4VPServices = () => {
     },
 
     sendVP: (context: any) => async () => {
-      const vpTokens = await OpenID4VP.constructVerifiablePresentationToken(
+      const vpTokens = await OpenID4VP.constructUnsignedVPToken(
         context.selectedVCs,
       );
 
