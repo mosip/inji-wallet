@@ -63,18 +63,18 @@ lane :android_build_internal do
     track: "internal",
     json_key: "play_config.json",
   )[0]
-  
+
   current_build_number = previous_build_number + 1
-  
+
   increment_version_code(
     gradle_file_path: "app/build.gradle",
     version_code: current_build_number
   )
-  
+
   git_commit = sh('git rev-parse --short HEAD').strip
   git_branch = sh('git rev-parse --abbrev-ref HEAD').strip
 
-  versionName = "0.15.0-#{git_commit}-#{git_branch}"
+  versionName = "0.17.0-#{git_commit}-#{git_branch}"
 
   gradle(task: "clean bundle#{APP_FLAVOR}Release")
   upload_to_play_store(
@@ -85,7 +85,7 @@ lane :android_build_internal do
   )
 
   slack(
-      message: "#{generate_app_name} #{versionName} (#{current_build_number}) is uploaded to Play store. Description : #{PLAY_CONSOLE_RELEASE_DESCRIPTION}.", 
+      message: "#{generate_app_name} #{versionName} (#{current_build_number}) is uploaded to Play store. Description : #{PLAY_CONSOLE_RELEASE_DESCRIPTION}.",
       success: true,
       slack_url: "#{SLACK_URL}",
       default_payloads: [:git_branch, :last_git_commit]
@@ -121,7 +121,7 @@ lane :android_build_beta do
   )
 
   slack(
-      message: "#{generate_app_name} #{versionName} is uploaded to Play store. Description : #{PLAY_CONSOLE_RELEASE_DESCRIPTION}.", 
+      message: "#{generate_app_name} #{versionName} is uploaded to Play store. Description : #{PLAY_CONSOLE_RELEASE_DESCRIPTION}.",
       success: true,
       slack_url: "#{SLACK_URL}",
       default_payloads: [:git_branch, :last_git_commit]
