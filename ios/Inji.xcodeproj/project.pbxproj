@@ -564,7 +564,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.15.0;
+				MARKETING_VERSION = 0.17.0;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -602,7 +602,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.15.0;
+				MARKETING_VERSION = 0.17.0;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -766,7 +766,7 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/mosip/inji-vci-client-ios-swift.git";
 			requirement = {
-				branch = "release-0.2.x";
+				branch = develop;
 				kind = branch;
 			};
 		};
