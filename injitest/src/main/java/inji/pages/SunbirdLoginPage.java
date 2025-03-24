@@ -202,7 +202,6 @@ public class SunbirdLoginPage extends BasePage {
     public void selectYear(){
         if(isElementDisplayed(pickeYear)){
             clickOnElement(pickeYear);
-            IosUtil.scrollDown(driver, 300, 1000, 200);
             if(currentMonth.getValue() > 6) {
                 if (isElementDisplayed(select2023Year)) {
                     clickOnElement(select2023Year);
@@ -220,38 +219,7 @@ public class SunbirdLoginPage extends BasePage {
 if (isElementDisplayed(setButton)){
     clickOnElement(setButton);
 }
-//        clickOnElement(enterDateOfBirthTextBox);
-//
-//        selectYear();
-//        int MAX_ATTEMPTS = 20;
-//        if (!isElementDisplayed(dateOfBirth, 10)) {
-//            for (int i = 0; i < MAX_ATTEMPTS; i++) {
-//                try {
-//                    if(currentMonth.getValue() > 6) {
-//                        clickOnElement(nextmonth);
-//                    }else{
-//                        clickOnElement(previousMonth);
-//                    }
-//                    if (isElementDisplayed(dateOfBirth, 5)) {
-//                        break;
-//                    } else if (isElementDisplayed(dateOfBirthSecond, 5)) {
-//                        break;
-//                    }
-//
-//                } catch (TimeoutException e) {
-//                } catch (NoSuchElementException e) {
-//                    break;
-//                }
-//            }
-//        }
-//
-//        if (isElementDisplayed(dateOfBirth, 5)) {
-//            clickOnElement(dateOfBirth);
-//            clickOnElement(clickOnSetButton);
-//        } else if (isElementDisplayed(dateOfBirthSecond)) {
-//            clickOnElement(dateOfBirthSecond);
-//            clickOnElement(clickOnSetButton);
-//        }
+
     }
 
     public void clickOnloginButton() throws InterruptedException {
