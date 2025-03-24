@@ -158,7 +158,6 @@ export const getFieldName = (
   return i18n.t(`VcDetails:${field}`);
 };
 
-
 export function getAddressFields() {
   return [
     'addressLine1',
@@ -334,6 +333,6 @@ export class Display {
   }
 
   getBackgroundImage(defaultBackgroundImage: string) {
-    return this.backgroundImage ?? defaultBackgroundImage;
+    return defaultBackgroundImage;
   }
 }

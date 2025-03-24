@@ -3,7 +3,7 @@ import {APPLICATION_THEME} from 'react-native-dotenv';
 const adaptiveImage =
   APPLICATION_THEME?.toLowerCase() === 'purple'
     ? '../assets/purpleSplashScreen.png'
-    : './assets/orangeSplashScreen.png';
+    : '../assets/images/SplashScreen.png';
 
 export default {
   name: 'Inji',
@@ -35,5 +35,5 @@ export default {
   },
   platforms: ['android', 'ios'],
   privacy: 'hidden',
-  plugins: ['expo-localization'],
+  plugins: ['expo-localization', 'expo-font'],
 };

@@ -7,21 +7,92 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		023FD41BE17D4935848E9DA1 /* orangeSplashScreen.svg in Resources */ = {isa = PBXBuildFile; fileRef = 4048B7CBDE0444DD9C614896 /* orangeSplashScreen.svg */; };
+		02C9AE728DB5436FAB9CBE6D /* Intro_Wallet.png in Resources */ = {isa = PBXBuildFile; fileRef = FB257D2AD7FD4FC784EB6DDC /* Intro_Wallet.png */; };
+		02E2B54702CF45ABB52ADADA /* Gdrive_Logo.svg in Resources */ = {isa = PBXBuildFile; fileRef = 8771A15B5746412B84D08E37 /* Gdrive_Logo.svg */; };
+		034C7D6B54EC4F1D9A79BB0A /* Wallet_UnActivated_Large_Icon.svg in Resources */ = {isa = PBXBuildFile; fileRef = 9AFB3AB2EFFB4BBAA8AFD3AB /* Wallet_UnActivated_Large_Icon.svg */; };
+		042AF38E0C3B425EBC06F5F0 /* logout_icon.svg in Resources */ = {isa = PBXBuildFile; fileRef = A06AB8C69FD94833B95273AD /* logout_icon.svg */; };
+		0897DB94737D45FBB8D6494C /* secureSharing.svg in Resources */ = {isa = PBXBuildFile; fileRef = B63FBEA0781340918E3E9ED2 /* secureSharing.svg */; };
+		0BAFCDC45C5746F08825E90E /* Magnifier_Zoom.svg in Resources */ = {isa = PBXBuildFile; fileRef = F6B262911A75458F97C952D8 /* Magnifier_Zoom.svg */; };
+		0EA865645A324EEB9ECFBFA7 /* Intro_Backup.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 4CA6EA7B278D46B6A180C16A /* Intro_Backup.jpg */; };
+		121E554D1CEF475B9584B171 /* InjiHomeLogo.svg in Resources */ = {isa = PBXBuildFile; fileRef = 324D9AD3AB5F49DC9CDE1292 /* InjiHomeLogo.svg */; };
+		1330388501A6451392DDEAAD /* purpleSplashScreen.png in Resources */ = {isa = PBXBuildFile; fileRef = 4244A96AFD8641E0A016781A /* purpleSplashScreen.png */; };
 		13B07FBC1A68108700A75B9A /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.mm */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
+		14038CEB7AEA4518A539835B /* Inter Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7C6A6C73C44C43BD999E5907 /* Inter Regular.ttf */; };
+		14431B1315414342BEDB0F13 /* Received_Cards.svg in Resources */ = {isa = PBXBuildFile; fileRef = 73BC852B84F1480080B7F4F7 /* Received_Cards.svg */; };
+		18EA1D5DB86A47F193E4BF04 /* about_inji.svg in Resources */ = {isa = PBXBuildFile; fileRef = 8E2B83DDD3964E9983573A82 /* about_inji.svg */; };
+		1BA5D14C8C5F42F88D69CED6 /* Language_Icon.svg in Resources */ = {isa = PBXBuildFile; fileRef = C4A565FBA11C4F158382E005 /* Language_Icon.svg */; };
+		1C441547C1974367BBB77FEC /* Wallet_Activated_Icon.svg in Resources */ = {isa = PBXBuildFile; fileRef = 065390F735754F868920C4BB /* Wallet_Activated_Icon.svg */; };
+		1E6875E92CA554E80086D870 /* OpenID4VP in Frameworks */ = {isa = PBXBuildFile; productRef = 1E6875E82CA554E80086D870 /* OpenID4VP */; };
 		1E6875EB2CA554FD0086D870 /* RNOpenID4VPModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E6875EA2CA554FD0086D870 /* RNOpenID4VPModule.m */; };
 		1E6875ED2CA5550F0086D870 /* RNOpenID4VPModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E6875EC2CA5550F0086D870 /* RNOpenID4VPModule.swift */; };
-		1EC395242D50C89C0022D979 /* VCIClient in Frameworks */ = {isa = PBXBuildFile; productRef = 1EC395232D50C89C0022D979 /* VCIClient */; };
-		1EC3952A2D50C9470022D979 /* pixelpass in Frameworks */ = {isa = PBXBuildFile; productRef = 1EC395292D50C9470022D979 /* pixelpass */; };
-		1EC3952D2D50C9820022D979 /* ios-tuvali-library in Frameworks */ = {isa = PBXBuildFile; productRef = 1EC3952C2D50C9820022D979 /* ios-tuvali-library */; };
-		1EC395302D50C99E0022D979 /* securekeystore in Frameworks */ = {isa = PBXBuildFile; productRef = 1EC3952F2D50C99E0022D979 /* securekeystore */; };
-		34EC7A062D93F9D800F50036 /* OpenID4VP in Frameworks */ = {isa = PBXBuildFile; productRef = 3407B0FF2D706EE1003089E6 /* OpenID4VP */; };
+		2192396FE57F4E7F868D442B /* Home_tab_icon.svg in Resources */ = {isa = PBXBuildFile; fileRef = BB77A91C4E63446191DCF692 /* Home_tab_icon.svg */; };
+		230BCA17A8DC46BBA639D809 /* biometricIntro.svg in Resources */ = {isa = PBXBuildFile; fileRef = F380DF1231244CBCAF34227C /* biometricIntro.svg */; };
+		25FD2F8235544F15BE1836F8 /* Progress_Icon1.svg in Resources */ = {isa = PBXBuildFile; fileRef = FE974C003ECA491EBD33D2EE /* Progress_Icon1.svg */; };
+		268B959AA0A64EC882A91E98 /* Card_Bg1.svg in Resources */ = {isa = PBXBuildFile; fileRef = EA5C17A2FD124C6DAF278E47 /* Card_Bg1.svg */; };
+		282B26CF121547019C098040 /* Selected_Check_Box.svg in Resources */ = {isa = PBXBuildFile; fileRef = 5A8FADF011C0464B9FA15CDC /* Selected_Check_Box.svg */; };
+		29517E011F0F49B3A4411A3D /* UnCheckedIcon.svg in Resources */ = {isa = PBXBuildFile; fileRef = A810BCD17ACD4692AE2BFF0F /* UnCheckedIcon.svg */; };
+		2A37286BDA7E40EEA91EF4BF /* google-drive-28.svg in Resources */ = {isa = PBXBuildFile; fileRef = BC0F27E89E0042BB984AEAFE /* google-drive-28.svg */; };
+		2D8ADDE2531246629C1DC2F0 /* Backup.svg in Resources */ = {isa = PBXBuildFile; fileRef = 60D80E08399141A2AE60DD08 /* Backup.svg */; };
+		2E9B768A7B4A45C5A10A653A /* Error_Message_Icon.svg in Resources */ = {isa = PBXBuildFile; fileRef = B566D36648B840ADA6EA8CC3 /* Error_Message_Icon.svg */; };
+		34873E472CD8DAF3004DE734 /* VCIClient in Frameworks */ = {isa = PBXBuildFile; productRef = 34873E462CD8DAF3004DE734 /* VCIClient */; };
+		34873E4D2CD8DD11004DE734 /* pixelpass in Frameworks */ = {isa = PBXBuildFile; productRef = 34873E4C2CD8DD11004DE734 /* pixelpass */; };
+		3867536C29B8432FBE43DB32 /* Detailed_view_kebab_icon.svg in Resources */ = {isa = PBXBuildFile; fileRef = 3D6CEBECAAB84F61BCE6A2E1 /* Detailed_view_kebab_icon.svg */; };
 		3E461D99554A48A4959DE609 /* SplashScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AA286B85B6C04FC6940260E9 /* SplashScreen.storyboard */; };
+		3EA649BE62E64CD0BAFD6004 /* Intro_Wallet.svg in Resources */ = {isa = PBXBuildFile; fileRef = 9DD2FD7920364ED3806F8FC0 /* Intro_Wallet.svg */; };
+		3F16D9A389754FCE8A5205AE /* Inji_Logo.svg in Resources */ = {isa = PBXBuildFile; fileRef = 3357BFD58F474EFA8CF0B0B3 /* Inji_Logo.svg */; };
+		3F2B1293153E41F1B9DC2A06 /* SplashScreen.png in Resources */ = {isa = PBXBuildFile; fileRef = 5AC8337F68394C50A149D463 /* SplashScreen.png */; };
+		40B4555AF4A14671BA75B07E /* trustedDigitalWallet.svg in Resources */ = {isa = PBXBuildFile; fileRef = B4851AD01BB849CB85913A0A /* trustedDigitalWallet.svg */; };
+		40E3D50F5B8245F4AC474370 /* secureSharing.png in Resources */ = {isa = PBXBuildFile; fileRef = 408F912D6D5B4E66AE9C0C24 /* secureSharing.png */; };
+		410B49AF363A48F8B0B79A27 /* CheckedIcon.svg in Resources */ = {isa = PBXBuildFile; fileRef = 3F1CA71F27D947D5AB3DFF37 /* CheckedIcon.svg */; };
+		4358E31C1B774DD3B00502E2 /* Error_Occurred.svg in Resources */ = {isa = PBXBuildFile; fileRef = 720E61728DDC40B99A958C3D /* Error_Occurred.svg */; };
+		438634B3B5114D559396BF8B /* biometricIntro.png in Resources */ = {isa = PBXBuildFile; fileRef = FCC58374166C4714B21436F2 /* biometricIntro.png */; };
+		43F2281305A443019AD7C9C1 /* Share_with_selfie.svg in Resources */ = {isa = PBXBuildFile; fileRef = 815D5A6C683E420A9D028B54 /* Share_with_selfie.svg */; };
+		47300157551B473890D1E44B /* backupRestoreIntro.svg in Resources */ = {isa = PBXBuildFile; fileRef = 74276C4FCD1E4C97B794A823 /* backupRestoreIntro.svg */; };
+		4BEB151CE32F474DA96E5021 /* Success_Message_Icon1.svg in Resources */ = {isa = PBXBuildFile; fileRef = 9CF4A8C4DA8741F690FD3FE7 /* Success_Message_Icon1.svg */; };
+		4E5777125C6A49EBA41D74DC /* Intro_Share.svg in Resources */ = {isa = PBXBuildFile; fileRef = ACB925397D264CCBA173D5CD /* Intro_Share.svg */; };
+		4FAC789096A54832984E5A7B /* Intro_Secure_Sharing.png in Resources */ = {isa = PBXBuildFile; fileRef = C836BCE01A2F4FB796648708 /* Intro_Secure_Sharing.png */; };
+		4FFB914F5B5F4C2A9DF55AD0 /* Scan_tab_icon.svg in Resources */ = {isa = PBXBuildFile; fileRef = ABE2FE8CCDCE438A8484C500 /* Scan_tab_icon.svg */; };
+		54F04D6FCA404B80BC7A4D82 /* file_copy.svg in Resources */ = {isa = PBXBuildFile; fileRef = 03062660B2ED4B7D9B1B2E2B /* file_copy.svg */; };
+		55E55C87B6B34C348C8B18A4 /* Permission_Denied.svg in Resources */ = {isa = PBXBuildFile; fileRef = C30E4FCDBCC24E9A94F4FD40 /* Permission_Denied.svg */; };
+		5E83DD728F094A0EBE9630EA /* Mosip_Logo1.svg in Resources */ = {isa = PBXBuildFile; fileRef = 1870CC6B478C4D18AB79FA06 /* Mosip_Logo1.svg */; };
+		624AE556889D4AA48525B394 /* InjiLogoNewBranding.png in Resources */ = {isa = PBXBuildFile; fileRef = 74E64CA43325409490C9A49E /* InjiLogoNewBranding.png */; };
+		644955A79BE8464DB89B4C60 /* IntroSliderBackgroundPurple.svg in Resources */ = {isa = PBXBuildFile; fileRef = 9D63C8594C434B4DBF7BB25B /* IntroSliderBackgroundPurple.svg */; };
+		648718010109456A9BE32A65 /* Outlined_Share_Icon.svg in Resources */ = {isa = PBXBuildFile; fileRef = 66CAF9B255E041C9A993ECB7 /* Outlined_Share_Icon.svg */; };
+		67377D5F72024F9F8BD9BD93 /* Intro_Unlock.svg in Resources */ = {isa = PBXBuildFile; fileRef = 35737E97FEC549219D864A08 /* Intro_Unlock.svg */; };
+		68E2AF0C9FD94067AAB63CA8 /* quickAccess.png in Resources */ = {isa = PBXBuildFile; fileRef = 548D0539F6DD4878A328A31C /* quickAccess.png */; };
+		693A3B13D2134B4B9075A281 /* History_tab_icon.svg in Resources */ = {isa = PBXBuildFile; fileRef = 71DA067B6ED24E65A4B1CA19 /* History_tab_icon.svg */; };
+		6953C793C7F242768285DBD2 /* Intro_Share.png in Resources */ = {isa = PBXBuildFile; fileRef = 689BFB53282D41F0B4B07AFA /* Intro_Share.png */; };
+		6B7ABEFF077744469E9E46E9 /* InjiHomeLogoSmall.svg in Resources */ = {isa = PBXBuildFile; fileRef = 707AA54C0309467B91A7B1EB /* InjiHomeLogoSmall.svg */; };
+		6B88A619F2D24345AD568E7D /* Receive_Card.svg in Resources */ = {isa = PBXBuildFile; fileRef = 956190AF9C7E4BC6A0286F36 /* Receive_Card.svg */; };
+		6F5E99F657134A728653529D /* Something_Went_Wrong.svg in Resources */ = {isa = PBXBuildFile; fileRef = C820E07DDBDF4810924F6797 /* Something_Went_Wrong.svg */; };
+		7017985DCBCE40E18BD0CB9B /* No_Internet_Connection.svg in Resources */ = {isa = PBXBuildFile; fileRef = 1841B653EF204EEDB7E57C5B /* No_Internet_Connection.svg */; };
+		717E6FEC33D6D8A2F9B01CBC /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 1D23B9CD47CFD7F3C87D202F /* PrivacyInfo.xcprivacy */; };
+		723D1E60E5CA43B9B3867E2A /* IntroBg.png in Resources */ = {isa = PBXBuildFile; fileRef = D3B515FE94C04082A8F6CC27 /* IntroBg.png */; };
 		73295844242A4AD3AA52D0BE /* noop-file.swift in Sources */ = {isa = PBXBuildFile; fileRef = D98B96A488E54CBDB286B26F /* noop-file.swift */; };
+		73591DAABCBF4AD6AB149E36 /* Pin_Icon.svg in Resources */ = {isa = PBXBuildFile; fileRef = FA80F8A645B64ED291AD4370 /* Pin_Icon.svg */; };
+		7482F4EDA2B444E183229849 /* Intro_Unlock.png in Resources */ = {isa = PBXBuildFile; fileRef = F1B638DFE81F4CD49FAE6C00 /* Intro_Unlock.png */; };
+		77ED2E996D85415D9F83E21B /* Lock_Icon1.svg in Resources */ = {isa = PBXBuildFile; fileRef = C0B2393702574BF0951A3760 /* Lock_Icon1.svg */; };
+		7D97BB9B1E2D481CBDDEA01F /* Camera_Capture_Icon.svg in Resources */ = {isa = PBXBuildFile; fileRef = 2678AB9C30494A38B317D87C /* Camera_Capture_Icon.svg */; };
+		7DDC4828AD0340B2B5C3229D /* quickAccess.svg in Resources */ = {isa = PBXBuildFile; fileRef = F79A27651A2B46E09B2B0BBC /* quickAccess.svg */; };
+		81E294D8013B4C1A986DAD36 /* Outlined_Pin_Icon.svg in Resources */ = {isa = PBXBuildFile; fileRef = 7CF8BAF010364DF9B87216EE /* Outlined_Pin_Icon.svg */; };
+		830A2D0CF2B24F7E8F4AD86E /* Intro_Backup.svg in Resources */ = {isa = PBXBuildFile; fileRef = A8C7EDF749C1410B938118F1 /* Intro_Backup.svg */; };
+		838F27598CC5478DB76410C8 /* Search.svg in Resources */ = {isa = PBXBuildFile; fileRef = A1F1C97692C2443485C64010 /* Search.svg */; };
+		845B2D93095741BDAEA29BA2 /* InjiLogoNewBranding.svg in Resources */ = {isa = PBXBuildFile; fileRef = 90BAFD62AFD84ACBB779F2B8 /* InjiLogoNewBranding.svg */; };
+		84D6752B98504FB3908164C8 /* Wallet_Activated_Large_Icon.svg in Resources */ = {isa = PBXBuildFile; fileRef = C07D7E543FE8483798B7D281 /* Wallet_Activated_Large_Icon.svg */; };
+		8A621EF5FBDB48B0A0BB8226 /* InjiLogo.svg in Resources */ = {isa = PBXBuildFile; fileRef = C16D4FF439F24580A65D7129 /* InjiLogo.svg */; };
+		8B4EAE91585C487DBCD45899 /* SplashScreen.svg in Resources */ = {isa = PBXBuildFile; fileRef = E53D037D76464E0392D6BD93 /* SplashScreen.svg */; };
+		8EFAA9CEEBF84E8DB1CE6902 /* Wallet_UnActivated_Icon.svg in Resources */ = {isa = PBXBuildFile; fileRef = 8245852C9DF84C3D802D204D /* Wallet_UnActivated_Icon.svg */; };
+		909CF13B285A4216B5631894 /* Intro_Secure_Sharing.svg in Resources */ = {isa = PBXBuildFile; fileRef = 5FD4E5C59B3045E7B1703650 /* Intro_Secure_Sharing.svg */; };
+		91101AE916AB47C4AEE8C768 /* Flip_Camera_Icon.svg in Resources */ = {isa = PBXBuildFile; fileRef = ECA612F7E70F458A83E51EE5 /* Flip_Camera_Icon.svg */; };
+		95242DB1895D47069832E931 /* IntroSliderBackgroundPurple.png in Resources */ = {isa = PBXBuildFile; fileRef = DDAAD8C5311C448E88245EA7 /* IntroSliderBackgroundPurple.png */; };
 		96905EF65AED1B983A6B3ABC /* libPods-Inji.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 58EEBF8E8E6FB1BC6CAF49B5 /* libPods-Inji.a */; };
+		9B29D5F286D14FCDAB7E39A5 /* Restore.svg in Resources */ = {isa = PBXBuildFile; fileRef = 3C56225CD9C84C3D9643E88C /* Restore.svg */; };
 		9C0E86B52BEE357A00E9F9F6 /* RNPixelpassModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C0E86B42BEE357A00E9F9F6 /* RNPixelpassModule.swift */; };
 		9C0E86BB2BEE36C300E9F9F6 /* RNPixelpassModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C0E86BA2BEE36C300E9F9F6 /* RNPixelpassModule.m */; };
+		9C4850432C3E5873002ECBD5 /* ios-tuvali-library in Frameworks */ = {isa = PBXBuildFile; productRef = 9C4850422C3E5873002ECBD5 /* ios-tuvali-library */; };
 		9C48504B2C3E59B5002ECBD5 /* RNWalletModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C4850442C3E59B5002ECBD5 /* RNWalletModule.swift */; };
 		9C48504D2C3E59B5002ECBD5 /* RNWalletModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C4850462C3E59B5002ECBD5 /* RNWalletModule.m */; };
 		9C48504E2C3E59B5002ECBD5 /* RNEventEmitter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C4850472C3E59B5002ECBD5 /* RNEventEmitter.swift */; };
@@ -31,10 +102,46 @@
 		9C4850532C3E59E2002ECBD5 /* RNEventEmitterProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C4850522C3E59E2002ECBD5 /* RNEventEmitterProtocol.swift */; };
 		9C7CDF3E2C7CBEDE00243A9A /* RNSecureKeystoreModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C7CDF3D2C7CBEDE00243A9A /* RNSecureKeystoreModule.swift */; };
 		9C7CDF432C7CC13500243A9A /* RNSecureKeystoreModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C7CDF422C7CC13500243A9A /* RNSecureKeystoreModule.m */; };
+		9CCCA19E2CF87A8400D5A461 /* securekeystore in Frameworks */ = {isa = PBXBuildFile; productRef = 9CCCA19D2CF87A8400D5A461 /* securekeystore */; };
+		A408DC0D9567448CBBCDE7CE /* backupRestoreIntro.png in Resources */ = {isa = PBXBuildFile; fileRef = 66E8F577D46042CAA70ECC2B /* backupRestoreIntro.png */; };
+		A4308DD5D4E6415AB3BCE268 /* Success_history_iocn.svg in Resources */ = {isa = PBXBuildFile; fileRef = 17C78E576FE047B3ABA11DBC /* Success_history_iocn.svg */; };
+		AA83FA29185242A98080FF5C /* info_FILL0_wght400_GRAD0_opsz48.svg in Resources */ = {isa = PBXBuildFile; fileRef = C2A6C117E13741C1B4C86EA0 /* info_FILL0_wght400_GRAD0_opsz48.svg */; };
+		B0FF5EC24CDB42399E6C52E3 /* Otp_Verification_Icon.svg in Resources */ = {isa = PBXBuildFile; fileRef = 80C8F1E5399E451F886B7E62 /* Otp_Verification_Icon.svg */; };
 		B18059E884C0ABDD17F3DC3D /* ExpoModulesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAC715A2D49A985799AEE119 /* ExpoModulesProvider.swift */; };
+		B5BCBC9C01F046C89DC18CB4 /* Inter SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3D9E4DF574F74CF2A7A00251 /* Inter SemiBold.ttf */; };
+		B5FA38155EC84063BAACB973 /* faceModel.tflite in Resources */ = {isa = PBXBuildFile; fileRef = 88C923E71C284947A1E5C4F0 /* faceModel.tflite */; };
+		B6BBE841FE174A37BF5A786E /* trustedDigitalWallet.png in Resources */ = {isa = PBXBuildFile; fileRef = E62919E5BDAB4CBEB350EF9C /* trustedDigitalWallet.png */; };
 		BB2F792D24A3F905000567C9 /* Expo.plist in Resources */ = {isa = PBXBuildFile; fileRef = BB2F792C24A3F905000567C9 /* Expo.plist */; };
+		BE7A05F7C9BC4C9089607E7E /* Icloud-Logo.svg in Resources */ = {isa = PBXBuildFile; fileRef = 55E4D56F53A246E496A7189C /* Icloud-Logo.svg */; };
+		C1761ADC90314A2C8545DE79 /* Card_Bg1.png in Resources */ = {isa = PBXBuildFile; fileRef = 2000FE35CC6E4F1D9AA76730 /* Card_Bg1.png */; };
+		C601B765E8BB404FBA9A8A51 /* Inter Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 491F02B0753D42D1AC4CD163 /* Inter Medium.ttf */; };
+		C7580B4145DD412498029F89 /* Outlined_Share_With_Selfie_Icon.svg in Resources */ = {isa = PBXBuildFile; fileRef = FD9C7CD8369A48B799C52D0C /* Outlined_Share_With_Selfie_Icon.svg */; };
+		CA8C9C08A77A477082E3F411 /* restoreIconBackup.svg in Resources */ = {isa = PBXBuildFile; fileRef = 87CA50BC2DCC46EAAB38F784 /* restoreIconBackup.svg */; };
+		CB1DB2D8F1D742ED9A8A16F0 /* Outlined_Delete_Icon.svg in Resources */ = {isa = PBXBuildFile; fileRef = 14E432982F83452287A1349E /* Outlined_Delete_Icon.svg */; };
+		CC7F77022CA44C4FAD3FF53C /* Outlined_Schedule_Icon.svg in Resources */ = {isa = PBXBuildFile; fileRef = EB2FAD38AB82474BBA472A2E /* Outlined_Schedule_Icon.svg */; };
+		CFF4D2E4C1C54DEAA7782D22 /* Colored_Info.svg in Resources */ = {isa = PBXBuildFile; fileRef = DEFEA9DC7FA14EAC9324E389 /* Colored_Info.svg */; };
+		D1836464301E4489B306F59C /* biometric_unlock.svg in Resources */ = {isa = PBXBuildFile; fileRef = D5663D8DC07E413E90136A33 /* biometric_unlock.svg */; };
+		D2D7747B1D744FCA9EE3EBC4 /* IntroBg.svg in Resources */ = {isa = PBXBuildFile; fileRef = 7F3412BF453A489C9802AE19 /* IntroBg.svg */; };
+		D4D858F8C93844E09B836F9F /* Info.svg in Resources */ = {isa = PBXBuildFile; fileRef = E6B7D524E5EF4B39941D5D82 /* Info.svg */; };
+		D5650C08FAF04755BE5C0F46 /* Digital_Identity_Icon1.svg in Resources */ = {isa = PBXBuildFile; fileRef = E9D18BE3D0D04CE6AB78B2CA /* Digital_Identity_Icon1.svg */; };
+		D705237BC56A4799859ECCC6 /* Adaptive_Icon.svg in Resources */ = {isa = PBXBuildFile; fileRef = 7B8DC6AE559444EFAD0932FD /* Adaptive_Icon.svg */; };
+		DA0524478F514EC9B0ED9F8B /* Intro_Backup.png in Resources */ = {isa = PBXBuildFile; fileRef = DD4EE752846C4BC4A76DB49A /* Intro_Backup.png */; };
+		DF220DE3E6A34B7A99E5C34A /* orangeSplashScreen.png in Resources */ = {isa = PBXBuildFile; fileRef = F95587E5C9614C19BDD97E57 /* orangeSplashScreen.png */; };
+		E016C011A23A4D0BAFA1102F /* Settings.svg in Resources */ = {isa = PBXBuildFile; fileRef = 9B39B1728C854DC3AFD02A2F /* Settings.svg */; };
+		E111036637264E10A48FF62C /* Adaptive_Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 83C7B923C13441AAB841A0CB /* Adaptive_Icon.png */; };
+		E15C12701ECC4C03B081A24D /* Outlined_Shielded_Icon.svg in Resources */ = {isa = PBXBuildFile; fileRef = 37B19B623EA8447FADD9867B /* Outlined_Shielded_Icon.svg */; };
+		E23ACD535BFD4EAA8B67F50D /* Success_home_iocn.svg in Resources */ = {isa = PBXBuildFile; fileRef = 506881CB00894B529B4CA074 /* Success_home_iocn.svg */; };
+		E7293C1B838241E4905CE682 /* Finger_Print_Icon.svg in Resources */ = {isa = PBXBuildFile; fileRef = 2A370B71F5944E1FA2EF610D /* Finger_Print_Icon.svg */; };
 		E86208152C0335C5007C3E24 /* RNVCIClientModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = E86208142C0335C5007C3E24 /* RNVCIClientModule.swift */; };
 		E86208172C0335EC007C3E24 /* RNVCIClientModule.m in Sources */ = {isa = PBXBuildFile; fileRef = E86208162C0335EC007C3E24 /* RNVCIClientModule.m */; };
+		EBC55578B5674E118035EE23 /* Gradient-1.svg in Resources */ = {isa = PBXBuildFile; fileRef = A4A7893368C34BFCB4E15F63 /* Gradient-1.svg */; };
+		ECAFA04CD2E947058ED90E0F /* cloud_upload.svg in Resources */ = {isa = PBXBuildFile; fileRef = D5AFD178C3D24C858EAD4BB1 /* cloud_upload.svg */; };
+		EDA7708775D4479EAE5C80B8 /* Cloud_Upload_Done_Icon.svg in Resources */ = {isa = PBXBuildFile; fileRef = FF9FFB2478DE4F5A9BEFBC29 /* Cloud_Upload_Done_Icon.svg */; };
+		F07C264702944F819178F181 /* Warning_Icon.svg in Resources */ = {isa = PBXBuildFile; fileRef = 7300D210C09E4EE7BC8FE43C /* Warning_Icon.svg */; };
+		F24906AB1D1C4F68B766738D /* purpleSplashScreen.svg in Resources */ = {isa = PBXBuildFile; fileRef = ADB1A8A81E584512ABC5DAC8 /* purpleSplashScreen.svg */; };
+		F9BB4BC6946A4D149A346030 /* Inter Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3C554747036E4F4E820D66C7 /* Inter Bold.ttf */; };
+		FA3F135B052943FF80CC9A64 /* Inji_Home_Logo.svg in Resources */ = {isa = PBXBuildFile; fileRef = A17614ABBCB14A8B9BE79648 /* Inji_Home_Logo.svg */; };
+		FD6EF8AA55444F7D8E5B59FE /* credentialRegestryStar.svg in Resources */ = {isa = PBXBuildFile; fileRef = 3A0A331712AA4ADBAA1EDED3 /* credentialRegestryStar.svg */; };
 		FD8D20B92BBAACDF009AD01C /* Fontisto.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FD8D20A62BBAACDF009AD01C /* Fontisto.ttf */; };
 		FD8D20BA2BBAACDF009AD01C /* Octicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FD8D20A72BBAACDF009AD01C /* Octicons.ttf */; };
 		FD8D20BB2BBAACDF009AD01C /* Feather.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FD8D20A82BBAACDF009AD01C /* Feather.ttf */; };
@@ -54,21 +161,88 @@
 		FD8D20C92BBAACDF009AD01C /* SimpleLineIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FD8D20B62BBAACDF009AD01C /* SimpleLineIcons.ttf */; };
 		FD8D20CA2BBAACDF009AD01C /* FontAwesome6_Brands.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FD8D20B72BBAACDF009AD01C /* FontAwesome6_Brands.ttf */; };
 		FD8D20CB2BBAACDF009AD01C /* MaterialIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FD8D20B82BBAACDF009AD01C /* MaterialIcons.ttf */; };
+		FDD1CD5DA5AC47338E9F69B1 /* questionIcon.svg in Resources */ = {isa = PBXBuildFile; fileRef = 889F6CF21E444660BE4D0280 /* questionIcon.svg */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		008F07F21AC5B25A0029DE68 /* main.jsbundle */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = main.jsbundle; sourceTree = "<group>"; };
+		03062660B2ED4B7D9B1B2E2B /* file_copy.svg */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = file_copy.svg; path = ../assets/file_copy.svg; sourceTree = "<group>"; };
+		065390F735754F868920C4BB /* Wallet_Activated_Icon.svg */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Wallet_Activated_Icon.svg; path = ../assets/Wallet_Activated_Icon.svg; sourceTree = "<group>"; };
+		10EE9891794245F9BC24ADA1 /* Intro_Wallet.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Intro_Wallet.png; path = ../assets/Intro_Wallet.png; sourceTree = "<group>"; };
 		13B07F961A680F5B00A75B9A /* Inji.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Inji.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = Inji/AppDelegate.h; sourceTree = "<group>"; };
 		13B07FB01A68108700A75B9A /* AppDelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = AppDelegate.mm; path = Inji/AppDelegate.mm; sourceTree = "<group>"; };
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = Inji/Images.xcassets; sourceTree = "<group>"; };
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = Inji/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = Inji/main.m; sourceTree = "<group>"; };
+		14E432982F83452287A1349E /* Outlined_Delete_Icon.svg */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Outlined_Delete_Icon.svg; path = ../assets/Outlined_Delete_Icon.svg; sourceTree = "<group>"; };
+		17C78E576FE047B3ABA11DBC /* Success_history_iocn.svg */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Success_history_iocn.svg; path = ../assets/Success_history_iocn.svg; sourceTree = "<group>"; };
+		1841B653EF204EEDB7E57C5B /* No_Internet_Connection.svg */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = No_Internet_Connection.svg; path = ../assets/No_Internet_Connection.svg; sourceTree = "<group>"; };
+		1870CC6B478C4D18AB79FA06 /* Mosip_Logo1.svg */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Mosip_Logo1.svg; path = ../assets/Mosip_Logo1.svg; sourceTree = "<group>"; };
+		1D23B9CD47CFD7F3C87D202F /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xml; name = PrivacyInfo.xcprivacy; path = Inji/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		1E6875EA2CA554FD0086D870 /* RNOpenID4VPModule.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RNOpenID4VPModule.m; sourceTree = "<group>"; };
 		1E6875EC2CA5550F0086D870 /* RNOpenID4VPModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RNOpenID4VPModule.swift; sourceTree = "<group>"; };
+		2000FE35CC6E4F1D9AA76730 /* Card_Bg1.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = Card_Bg1.png; path = ../assets/images/png/Card_Bg1.png; sourceTree = "<group>"; };
+		2678AB9C30494A38B317D87C /* Camera_Capture_Icon.svg */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Camera_Capture_Icon.svg; path = ../assets/Camera_Capture_Icon.svg; sourceTree = "<group>"; };
+		2A370B71F5944E1FA2EF610D /* Finger_Print_Icon.svg */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Finger_Print_Icon.svg; path = ../assets/Finger_Print_Icon.svg; sourceTree = "<group>"; };
+		324D9AD3AB5F49DC9CDE1292 /* InjiHomeLogo.svg */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = InjiHomeLogo.svg; path = ../assets/InjiHomeLogo.svg; sourceTree = "<group>"; };
+		3357BFD58F474EFA8CF0B0B3 /* Inji_Logo.svg */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Inji_Logo.svg; path = ../assets/Inji_Logo.svg; sourceTree = "<group>"; };
+		35737E97FEC549219D864A08 /* Intro_Unlock.svg */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = Intro_Unlock.svg; path = ../assets/images/svg/Intro_Unlock.svg; sourceTree = "<group>"; };
+		37B19B623EA8447FADD9867B /* Outlined_Shielded_Icon.svg */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Outlined_Shielded_Icon.svg; path = ../assets/Outlined_Shielded_Icon.svg; sourceTree = "<group>"; };
+		3A0A331712AA4ADBAA1EDED3 /* credentialRegestryStar.svg */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = credentialRegestryStar.svg; path = ../assets/credentialRegestryStar.svg; sourceTree = "<group>"; };
+		3C554747036E4F4E820D66C7 /* Inter Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Inter Bold.ttf"; path = "../assets/fonts/Inter Bold.ttf"; sourceTree = "<group>"; };
+		3C56225CD9C84C3D9643E88C /* Restore.svg */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Restore.svg; path = ../assets/Restore.svg; sourceTree = "<group>"; };
+		3D6CEBECAAB84F61BCE6A2E1 /* Detailed_view_kebab_icon.svg */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Detailed_view_kebab_icon.svg; path = ../assets/Detailed_view_kebab_icon.svg; sourceTree = "<group>"; };
+		3D9E4DF574F74CF2A7A00251 /* Inter SemiBold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Inter SemiBold.ttf"; path = "../assets/fonts/Inter SemiBold.ttf"; sourceTree = "<group>"; };
+		3F1CA71F27D947D5AB3DFF37 /* CheckedIcon.svg */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = CheckedIcon.svg; path = ../assets/CheckedIcon.svg; sourceTree = "<group>"; };
+		4048B7CBDE0444DD9C614896 /* orangeSplashScreen.svg */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = orangeSplashScreen.svg; path = ../assets/images/svg/orangeSplashScreen.svg; sourceTree = "<group>"; };
+		408F912D6D5B4E66AE9C0C24 /* secureSharing.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = secureSharing.png; path = ../assets/images/png/secureSharing.png; sourceTree = "<group>"; };
+		4244A96AFD8641E0A016781A /* purpleSplashScreen.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = purpleSplashScreen.png; path = ../assets/images/png/purpleSplashScreen.png; sourceTree = "<group>"; };
+		491F02B0753D42D1AC4CD163 /* Inter Medium.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Inter Medium.ttf"; path = "../assets/fonts/Inter Medium.ttf"; sourceTree = "<group>"; };
+		4CA6EA7B278D46B6A180C16A /* Intro_Backup.jpg */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = Intro_Backup.jpg; path = ../assets/images/png/Intro_Backup.jpg; sourceTree = "<group>"; };
+		4CDAE31359714807AD05236A /* secureSharing.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = secureSharing.png; path = ../assets/images/secureSharing.png; sourceTree = "<group>"; };
+		506881CB00894B529B4CA074 /* Success_home_iocn.svg */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Success_home_iocn.svg; path = ../assets/Success_home_iocn.svg; sourceTree = "<group>"; };
+		548D0539F6DD4878A328A31C /* quickAccess.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = quickAccess.png; path = ../assets/images/png/quickAccess.png; sourceTree = "<group>"; };
+		55E4D56F53A246E496A7189C /* Icloud-Logo.svg */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Icloud-Logo.svg"; path = "../assets/Icloud-Logo.svg"; sourceTree = "<group>"; };
 		58EEBF8E8E6FB1BC6CAF49B5 /* libPods-Inji.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Inji.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		5A8FADF011C0464B9FA15CDC /* Selected_Check_Box.svg */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Selected_Check_Box.svg; path = ../assets/Selected_Check_Box.svg; sourceTree = "<group>"; };
+		5AC8337F68394C50A149D463 /* SplashScreen.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = SplashScreen.png; path = ../assets/images/png/SplashScreen.png; sourceTree = "<group>"; };
+		5FD4E5C59B3045E7B1703650 /* Intro_Secure_Sharing.svg */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = Intro_Secure_Sharing.svg; path = ../assets/images/svg/Intro_Secure_Sharing.svg; sourceTree = "<group>"; };
+		60D80E08399141A2AE60DD08 /* Backup.svg */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Backup.svg; path = ../assets/Backup.svg; sourceTree = "<group>"; };
+		66CAF9B255E041C9A993ECB7 /* Outlined_Share_Icon.svg */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Outlined_Share_Icon.svg; path = ../assets/Outlined_Share_Icon.svg; sourceTree = "<group>"; };
+		66E8F577D46042CAA70ECC2B /* backupRestoreIntro.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = backupRestoreIntro.png; path = ../assets/images/png/backupRestoreIntro.png; sourceTree = "<group>"; };
+		689BFB53282D41F0B4B07AFA /* Intro_Share.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = Intro_Share.png; path = ../assets/images/png/Intro_Share.png; sourceTree = "<group>"; };
 		6C2E3173556A471DD304B334 /* Pods-Inji.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Inji.debug.xcconfig"; path = "Target Support Files/Pods-Inji/Pods-Inji.debug.xcconfig"; sourceTree = "<group>"; };
+		707AA54C0309467B91A7B1EB /* InjiHomeLogoSmall.svg */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = InjiHomeLogoSmall.svg; path = ../assets/InjiHomeLogoSmall.svg; sourceTree = "<group>"; };
+		70A694853D4B45F8B9816F9B /* InjiLogoNewBranding.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = InjiLogoNewBranding.png; path = ../assets/images/InjiLogoNewBranding.png; sourceTree = "<group>"; };
+		71A9E57A6A0D4F418C053DC6 /* biometricIntro.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = biometricIntro.png; path = ../assets/biometricIntro.png; sourceTree = "<group>"; };
+		71DA067B6ED24E65A4B1CA19 /* History_tab_icon.svg */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = History_tab_icon.svg; path = ../assets/History_tab_icon.svg; sourceTree = "<group>"; };
+		720E61728DDC40B99A958C3D /* Error_Occurred.svg */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Error_Occurred.svg; path = ../assets/Error_Occurred.svg; sourceTree = "<group>"; };
+		7300D210C09E4EE7BC8FE43C /* Warning_Icon.svg */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Warning_Icon.svg; path = ../assets/Warning_Icon.svg; sourceTree = "<group>"; };
+		73BC852B84F1480080B7F4F7 /* Received_Cards.svg */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Received_Cards.svg; path = ../assets/Received_Cards.svg; sourceTree = "<group>"; };
+		74276C4FCD1E4C97B794A823 /* backupRestoreIntro.svg */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = backupRestoreIntro.svg; path = ../assets/images/svg/backupRestoreIntro.svg; sourceTree = "<group>"; };
+		74E64CA43325409490C9A49E /* InjiLogoNewBranding.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = InjiLogoNewBranding.png; path = ../assets/images/png/InjiLogoNewBranding.png; sourceTree = "<group>"; };
 		7A4D352CD337FB3A3BF06240 /* Pods-Inji.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Inji.release.xcconfig"; path = "Target Support Files/Pods-Inji/Pods-Inji.release.xcconfig"; sourceTree = "<group>"; };
+		7B8DC6AE559444EFAD0932FD /* Adaptive_Icon.svg */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = Adaptive_Icon.svg; path = ../assets/images/svg/Adaptive_Icon.svg; sourceTree = "<group>"; };
+		7C6A6C73C44C43BD999E5907 /* Inter Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Inter Regular.ttf"; path = "../assets/fonts/Inter Regular.ttf"; sourceTree = "<group>"; };
+		7CF8BAF010364DF9B87216EE /* Outlined_Pin_Icon.svg */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Outlined_Pin_Icon.svg; path = ../assets/Outlined_Pin_Icon.svg; sourceTree = "<group>"; };
+		7F3412BF453A489C9802AE19 /* IntroBg.svg */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = IntroBg.svg; path = ../assets/images/svg/IntroBg.svg; sourceTree = "<group>"; };
+		80C8F1E5399E451F886B7E62 /* Otp_Verification_Icon.svg */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Otp_Verification_Icon.svg; path = ../assets/Otp_Verification_Icon.svg; sourceTree = "<group>"; };
+		815D5A6C683E420A9D028B54 /* Share_with_selfie.svg */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Share_with_selfie.svg; path = ../assets/Share_with_selfie.svg; sourceTree = "<group>"; };
+		822FC85AB7BE4FF6A1A389B2 /* Adaptive_Icon.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Adaptive_Icon.png; path = ../assets/images/Adaptive_Icon.png; sourceTree = "<group>"; };
+		8245852C9DF84C3D802D204D /* Wallet_UnActivated_Icon.svg */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Wallet_UnActivated_Icon.svg; path = ../assets/Wallet_UnActivated_Icon.svg; sourceTree = "<group>"; };
+		83C7B923C13441AAB841A0CB /* Adaptive_Icon.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = Adaptive_Icon.png; path = ../assets/images/png/Adaptive_Icon.png; sourceTree = "<group>"; };
+		8771A15B5746412B84D08E37 /* Gdrive_Logo.svg */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Gdrive_Logo.svg; path = ../assets/Gdrive_Logo.svg; sourceTree = "<group>"; };
+		87CA50BC2DCC46EAAB38F784 /* restoreIconBackup.svg */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = restoreIconBackup.svg; path = ../assets/restoreIconBackup.svg; sourceTree = "<group>"; };
+		889F6CF21E444660BE4D0280 /* questionIcon.svg */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = questionIcon.svg; path = ../assets/questionIcon.svg; sourceTree = "<group>"; };
+		88C923E71C284947A1E5C4F0 /* faceModel.tflite */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = faceModel.tflite; path = ../assets/models/faceModel.tflite; sourceTree = "<group>"; };
+		8DD09E8DCC3C4A1D97BEE45D /* Intro_Unlock.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Intro_Unlock.png; path = ../assets/Intro_Unlock.png; sourceTree = "<group>"; };
+		8E2B83DDD3964E9983573A82 /* about_inji.svg */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = about_inji.svg; path = ../assets/about_inji.svg; sourceTree = "<group>"; };
+		90BAFD62AFD84ACBB779F2B8 /* InjiLogoNewBranding.svg */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = InjiLogoNewBranding.svg; path = ../assets/images/svg/InjiLogoNewBranding.svg; sourceTree = "<group>"; };
+		90F29F6ACAAA4715BC7CC453 /* Card_Bg1.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Card_Bg1.png; path = ../assets/Card_Bg1.png; sourceTree = "<group>"; };
+		956190AF9C7E4BC6A0286F36 /* Receive_Card.svg */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Receive_Card.svg; path = ../assets/Receive_Card.svg; sourceTree = "<group>"; };
+		9AFB3AB2EFFB4BBAA8AFD3AB /* Wallet_UnActivated_Large_Icon.svg */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Wallet_UnActivated_Large_Icon.svg; path = ../assets/Wallet_UnActivated_Large_Icon.svg; sourceTree = "<group>"; };
+		9B39B1728C854DC3AFD02A2F /* Settings.svg */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Settings.svg; path = ../assets/Settings.svg; sourceTree = "<group>"; };
 		9C0E86B42BEE357A00E9F9F6 /* RNPixelpassModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RNPixelpassModule.swift; sourceTree = "<group>"; };
 		9C0E86BA2BEE36C300E9F9F6 /* RNPixelpassModule.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RNPixelpassModule.m; sourceTree = "<group>"; };
 		9C4850442C3E59B5002ECBD5 /* RNWalletModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RNWalletModule.swift; path = Inji/RNWalletModule.swift; sourceTree = "<group>"; };
@@ -80,13 +254,70 @@
 		9C4850522C3E59E2002ECBD5 /* RNEventEmitterProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RNEventEmitterProtocol.swift; path = Inji/RNEventEmitterProtocol.swift; sourceTree = "<group>"; };
 		9C7CDF3D2C7CBEDE00243A9A /* RNSecureKeystoreModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RNSecureKeystoreModule.swift; sourceTree = "<group>"; };
 		9C7CDF422C7CC13500243A9A /* RNSecureKeystoreModule.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RNSecureKeystoreModule.m; sourceTree = "<group>"; };
+		9CF4A8C4DA8741F690FD3FE7 /* Success_Message_Icon1.svg */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Success_Message_Icon1.svg; path = ../assets/Success_Message_Icon1.svg; sourceTree = "<group>"; };
+		9D63C8594C434B4DBF7BB25B /* IntroSliderBackgroundPurple.svg */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = IntroSliderBackgroundPurple.svg; path = ../assets/images/svg/IntroSliderBackgroundPurple.svg; sourceTree = "<group>"; };
+		9DD2FD7920364ED3806F8FC0 /* Intro_Wallet.svg */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = Intro_Wallet.svg; path = ../assets/images/svg/Intro_Wallet.svg; sourceTree = "<group>"; };
+		A06AB8C69FD94833B95273AD /* logout_icon.svg */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = logout_icon.svg; path = ../assets/logout_icon.svg; sourceTree = "<group>"; };
+		A17614ABBCB14A8B9BE79648 /* Inji_Home_Logo.svg */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Inji_Home_Logo.svg; path = ../assets/Inji_Home_Logo.svg; sourceTree = "<group>"; };
+		A1F1C97692C2443485C64010 /* Search.svg */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Search.svg; path = ../assets/Search.svg; sourceTree = "<group>"; };
+		A4A7893368C34BFCB4E15F63 /* Gradient-1.svg */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Gradient-1.svg"; path = "../assets/Gradient-1.svg"; sourceTree = "<group>"; };
+		A810BCD17ACD4692AE2BFF0F /* UnCheckedIcon.svg */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = UnCheckedIcon.svg; path = ../assets/UnCheckedIcon.svg; sourceTree = "<group>"; };
+		A8C7EDF749C1410B938118F1 /* Intro_Backup.svg */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = Intro_Backup.svg; path = ../assets/images/svg/Intro_Backup.svg; sourceTree = "<group>"; };
 		AA286B85B6C04FC6940260E9 /* SplashScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = SplashScreen.storyboard; path = Inji/SplashScreen.storyboard; sourceTree = "<group>"; };
+		ABE2FE8CCDCE438A8484C500 /* Scan_tab_icon.svg */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Scan_tab_icon.svg; path = ../assets/Scan_tab_icon.svg; sourceTree = "<group>"; };
+		ACB925397D264CCBA173D5CD /* Intro_Share.svg */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = Intro_Share.svg; path = ../assets/images/svg/Intro_Share.svg; sourceTree = "<group>"; };
+		ADB1A8A81E584512ABC5DAC8 /* purpleSplashScreen.svg */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = purpleSplashScreen.svg; path = ../assets/images/svg/purpleSplashScreen.svg; sourceTree = "<group>"; };
+		AFED680BF63346D3871D25BE /* quickAccess.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = quickAccess.png; path = ../assets/images/quickAccess.png; sourceTree = "<group>"; };
+		B4851AD01BB849CB85913A0A /* trustedDigitalWallet.svg */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = trustedDigitalWallet.svg; path = ../assets/images/svg/trustedDigitalWallet.svg; sourceTree = "<group>"; };
+		B566D36648B840ADA6EA8CC3 /* Error_Message_Icon.svg */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Error_Message_Icon.svg; path = ../assets/Error_Message_Icon.svg; sourceTree = "<group>"; };
+		B63FBEA0781340918E3E9ED2 /* secureSharing.svg */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = secureSharing.svg; path = ../assets/images/svg/secureSharing.svg; sourceTree = "<group>"; };
+		B9FBC4808B774BB7A4C4F287 /* SplashScreen.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = SplashScreen.png; path = ../assets/images/SplashScreen.png; sourceTree = "<group>"; };
 		BB2F792C24A3F905000567C9 /* Expo.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Expo.plist; sourceTree = "<group>"; };
+		BB77A91C4E63446191DCF692 /* Home_tab_icon.svg */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Home_tab_icon.svg; path = ../assets/Home_tab_icon.svg; sourceTree = "<group>"; };
+		BC0F27E89E0042BB984AEAFE /* google-drive-28.svg */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "google-drive-28.svg"; path = "../assets/google-drive-28.svg"; sourceTree = "<group>"; };
+		BF9A4DF15E8E4E9B95769FE4 /* purpleSplashScreen.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = purpleSplashScreen.png; path = ../assets/purpleSplashScreen.png; sourceTree = "<group>"; };
+		C07D7E543FE8483798B7D281 /* Wallet_Activated_Large_Icon.svg */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Wallet_Activated_Large_Icon.svg; path = ../assets/Wallet_Activated_Large_Icon.svg; sourceTree = "<group>"; };
+		C0B2393702574BF0951A3760 /* Lock_Icon1.svg */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Lock_Icon1.svg; path = ../assets/Lock_Icon1.svg; sourceTree = "<group>"; };
+		C16D4FF439F24580A65D7129 /* InjiLogo.svg */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = InjiLogo.svg; path = ../assets/InjiLogo.svg; sourceTree = "<group>"; };
+		C2A6C117E13741C1B4C86EA0 /* info_FILL0_wght400_GRAD0_opsz48.svg */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = info_FILL0_wght400_GRAD0_opsz48.svg; path = ../assets/info_FILL0_wght400_GRAD0_opsz48.svg; sourceTree = "<group>"; };
+		C30E4FCDBCC24E9A94F4FD40 /* Permission_Denied.svg */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Permission_Denied.svg; path = ../assets/Permission_Denied.svg; sourceTree = "<group>"; };
+		C4A565FBA11C4F158382E005 /* Language_Icon.svg */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Language_Icon.svg; path = ../assets/Language_Icon.svg; sourceTree = "<group>"; };
+		C820E07DDBDF4810924F6797 /* Something_Went_Wrong.svg */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Something_Went_Wrong.svg; path = ../assets/Something_Went_Wrong.svg; sourceTree = "<group>"; };
+		C836BCE01A2F4FB796648708 /* Intro_Secure_Sharing.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = Intro_Secure_Sharing.png; path = ../assets/images/png/Intro_Secure_Sharing.png; sourceTree = "<group>"; };
+		D3B515FE94C04082A8F6CC27 /* IntroBg.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = IntroBg.png; path = ../assets/images/png/IntroBg.png; sourceTree = "<group>"; };
+		D4F50854F7574F9A9EAA20A3 /* Intro_Secure_Sharing.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Intro_Secure_Sharing.png; path = ../assets/Intro_Secure_Sharing.png; sourceTree = "<group>"; };
+		D5663D8DC07E413E90136A33 /* biometric_unlock.svg */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = biometric_unlock.svg; path = ../assets/biometric_unlock.svg; sourceTree = "<group>"; };
+		D5AFD178C3D24C858EAD4BB1 /* cloud_upload.svg */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = cloud_upload.svg; path = ../assets/cloud_upload.svg; sourceTree = "<group>"; };
+		D627B2757D40403D92FFCB9D /* IntroBg.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = IntroBg.png; path = ../assets/images/IntroBg.png; sourceTree = "<group>"; };
 		D98B96A488E54CBDB286B26F /* noop-file.swift */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.swift; name = "noop-file.swift"; path = "Inji/noop-file.swift"; sourceTree = "<group>"; };
+		DD4EE752846C4BC4A76DB49A /* Intro_Backup.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = Intro_Backup.png; path = ../assets/images/png/Intro_Backup.png; sourceTree = "<group>"; };
+		DDAAD8C5311C448E88245EA7 /* IntroSliderBackgroundPurple.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = IntroSliderBackgroundPurple.png; path = ../assets/images/png/IntroSliderBackgroundPurple.png; sourceTree = "<group>"; };
+		DEFEA9DC7FA14EAC9324E389 /* Colored_Info.svg */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Colored_Info.svg; path = ../assets/Colored_Info.svg; sourceTree = "<group>"; };
+		E3C4DE1E530F4885B58A7FE2 /* backupRestoreIntro.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = backupRestoreIntro.png; path = ../assets/backupRestoreIntro.png; sourceTree = "<group>"; };
+		E53D037D76464E0392D6BD93 /* SplashScreen.svg */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = SplashScreen.svg; path = ../assets/images/svg/SplashScreen.svg; sourceTree = "<group>"; };
+		E5DE7589F4CD407997D43C82 /* IntroSliderBackgroundPurple.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = IntroSliderBackgroundPurple.png; path = ../assets/images/IntroSliderBackgroundPurple.png; sourceTree = "<group>"; };
+		E62919E5BDAB4CBEB350EF9C /* trustedDigitalWallet.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = trustedDigitalWallet.png; path = ../assets/images/png/trustedDigitalWallet.png; sourceTree = "<group>"; };
+		E6B7D524E5EF4B39941D5D82 /* Info.svg */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Info.svg; path = ../assets/Info.svg; sourceTree = "<group>"; };
 		E86208142C0335C5007C3E24 /* RNVCIClientModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RNVCIClientModule.swift; sourceTree = "<group>"; };
 		E86208162C0335EC007C3E24 /* RNVCIClientModule.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RNVCIClientModule.m; sourceTree = "<group>"; };
+		E9D18BE3D0D04CE6AB78B2CA /* Digital_Identity_Icon1.svg */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Digital_Identity_Icon1.svg; path = ../assets/Digital_Identity_Icon1.svg; sourceTree = "<group>"; };
+		EA2C6AD7F1864808A7EEB48E /* trustedDigitalWallet.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = trustedDigitalWallet.png; path = ../assets/trustedDigitalWallet.png; sourceTree = "<group>"; };
+		EA5C17A2FD124C6DAF278E47 /* Card_Bg1.svg */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = Card_Bg1.svg; path = ../assets/images/svg/Card_Bg1.svg; sourceTree = "<group>"; };
+		EB2FAD38AB82474BBA472A2E /* Outlined_Schedule_Icon.svg */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Outlined_Schedule_Icon.svg; path = ../assets/Outlined_Schedule_Icon.svg; sourceTree = "<group>"; };
+		EC85B7445E7A44F2B8FE64E6 /* orangeSplashScreen.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = orangeSplashScreen.png; path = ../assets/orangeSplashScreen.png; sourceTree = "<group>"; };
+		ECA612F7E70F458A83E51EE5 /* Flip_Camera_Icon.svg */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Flip_Camera_Icon.svg; path = ../assets/Flip_Camera_Icon.svg; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
+		F1B638DFE81F4CD49FAE6C00 /* Intro_Unlock.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = Intro_Unlock.png; path = ../assets/images/png/Intro_Unlock.png; sourceTree = "<group>"; };
+		F27798C0A5E542C38AFAB8D0 /* Intro_Share.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Intro_Share.png; path = ../assets/images/Intro_Share.png; sourceTree = "<group>"; };
+		F380DF1231244CBCAF34227C /* biometricIntro.svg */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = biometricIntro.svg; path = ../assets/images/svg/biometricIntro.svg; sourceTree = "<group>"; };
+		F6B262911A75458F97C952D8 /* Magnifier_Zoom.svg */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Magnifier_Zoom.svg; path = ../assets/Magnifier_Zoom.svg; sourceTree = "<group>"; };
+		F79A27651A2B46E09B2B0BBC /* quickAccess.svg */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = quickAccess.svg; path = ../assets/images/svg/quickAccess.svg; sourceTree = "<group>"; };
+		F95587E5C9614C19BDD97E57 /* orangeSplashScreen.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = orangeSplashScreen.png; path = ../assets/images/png/orangeSplashScreen.png; sourceTree = "<group>"; };
+		FA80F8A645B64ED291AD4370 /* Pin_Icon.svg */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Pin_Icon.svg; path = ../assets/Pin_Icon.svg; sourceTree = "<group>"; };
 		FAC715A2D49A985799AEE119 /* ExpoModulesProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ExpoModulesProvider.swift; path = "Pods/Target Support Files/Pods-Inji/ExpoModulesProvider.swift"; sourceTree = "<group>"; };
+		FB257D2AD7FD4FC784EB6DDC /* Intro_Wallet.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = Intro_Wallet.png; path = ../assets/images/png/Intro_Wallet.png; sourceTree = "<group>"; };
+		FC13DADA159D445581E4B969 /* Intro_Backup.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Intro_Backup.png; path = ../assets/Intro_Backup.png; sourceTree = "<group>"; };
+		FCC58374166C4714B21436F2 /* biometricIntro.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = biometricIntro.png; path = ../assets/images/png/biometricIntro.png; sourceTree = "<group>"; };
 		FD8D20A62BBAACDF009AD01C /* Fontisto.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Fontisto.ttf; sourceTree = "<group>"; };
 		FD8D20A72BBAACDF009AD01C /* Octicons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Octicons.ttf; sourceTree = "<group>"; };
 		FD8D20A82BBAACDF009AD01C /* Feather.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Feather.ttf; sourceTree = "<group>"; };
@@ -106,6 +337,9 @@
 		FD8D20B62BBAACDF009AD01C /* SimpleLineIcons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = SimpleLineIcons.ttf; sourceTree = "<group>"; };
 		FD8D20B72BBAACDF009AD01C /* FontAwesome6_Brands.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = FontAwesome6_Brands.ttf; sourceTree = "<group>"; };
 		FD8D20B82BBAACDF009AD01C /* MaterialIcons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = MaterialIcons.ttf; sourceTree = "<group>"; };
+		FD9C7CD8369A48B799C52D0C /* Outlined_Share_With_Selfie_Icon.svg */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Outlined_Share_With_Selfie_Icon.svg; path = ../assets/Outlined_Share_With_Selfie_Icon.svg; sourceTree = "<group>"; };
+		FE974C003ECA491EBD33D2EE /* Progress_Icon1.svg */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Progress_Icon1.svg; path = ../assets/Progress_Icon1.svg; sourceTree = "<group>"; };
+		FF9FFB2478DE4F5A9BEFBC29 /* Cloud_Upload_Done_Icon.svg */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Cloud_Upload_Done_Icon.svg; path = ../assets/Cloud_Upload_Done_Icon.svg; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -113,12 +347,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				34EC7A062D93F9D800F50036 /* OpenID4VP in Frameworks */,
-				1EC395242D50C89C0022D979 /* VCIClient in Frameworks */,
-				1EC3952A2D50C9470022D979 /* pixelpass in Frameworks */,
-				1EC395302D50C99E0022D979 /* securekeystore in Frameworks */,
+				34873E472CD8DAF3004DE734 /* VCIClient in Frameworks */,
+				9C4850432C3E5873002ECBD5 /* ios-tuvali-library in Frameworks */,
+				1E6875E92CA554E80086D870 /* OpenID4VP in Frameworks */,
+				9CCCA19E2CF87A8400D5A461 /* securekeystore in Frameworks */,
+				34873E4D2CD8DD11004DE734 /* pixelpass in Frameworks */,
 				96905EF65AED1B983A6B3ABC /* libPods-Inji.a in Frameworks */,
-				1EC3952D2D50C9820022D979 /* ios-tuvali-library in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -152,6 +386,7 @@
 				E86208162C0335EC007C3E24 /* RNVCIClientModule.m */,
 				1E6875EA2CA554FD0086D870 /* RNOpenID4VPModule.m */,
 				1E6875EC2CA5550F0086D870 /* RNOpenID4VPModule.swift */,
+				1D23B9CD47CFD7F3C87D202F /* PrivacyInfo.xcprivacy */,
 			);
 			name = Inji;
 			sourceTree = "<group>";
@@ -163,6 +398,138 @@
 				58EEBF8E8E6FB1BC6CAF49B5 /* libPods-Inji.a */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		462CE07025BF40E9952DCDA0 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				60D80E08399141A2AE60DD08 /* Backup.svg */,
+				2678AB9C30494A38B317D87C /* Camera_Capture_Icon.svg */,
+				90F29F6ACAAA4715BC7CC453 /* Card_Bg1.png */,
+				3F1CA71F27D947D5AB3DFF37 /* CheckedIcon.svg */,
+				FF9FFB2478DE4F5A9BEFBC29 /* Cloud_Upload_Done_Icon.svg */,
+				DEFEA9DC7FA14EAC9324E389 /* Colored_Info.svg */,
+				3D6CEBECAAB84F61BCE6A2E1 /* Detailed_view_kebab_icon.svg */,
+				E9D18BE3D0D04CE6AB78B2CA /* Digital_Identity_Icon1.svg */,
+				B566D36648B840ADA6EA8CC3 /* Error_Message_Icon.svg */,
+				720E61728DDC40B99A958C3D /* Error_Occurred.svg */,
+				2A370B71F5944E1FA2EF610D /* Finger_Print_Icon.svg */,
+				ECA612F7E70F458A83E51EE5 /* Flip_Camera_Icon.svg */,
+				8771A15B5746412B84D08E37 /* Gdrive_Logo.svg */,
+				A4A7893368C34BFCB4E15F63 /* Gradient-1.svg */,
+				71DA067B6ED24E65A4B1CA19 /* History_tab_icon.svg */,
+				BB77A91C4E63446191DCF692 /* Home_tab_icon.svg */,
+				55E4D56F53A246E496A7189C /* Icloud-Logo.svg */,
+				E6B7D524E5EF4B39941D5D82 /* Info.svg */,
+				324D9AD3AB5F49DC9CDE1292 /* InjiHomeLogo.svg */,
+				707AA54C0309467B91A7B1EB /* InjiHomeLogoSmall.svg */,
+				C16D4FF439F24580A65D7129 /* InjiLogo.svg */,
+				A17614ABBCB14A8B9BE79648 /* Inji_Home_Logo.svg */,
+				3357BFD58F474EFA8CF0B0B3 /* Inji_Logo.svg */,
+				FC13DADA159D445581E4B969 /* Intro_Backup.png */,
+				D4F50854F7574F9A9EAA20A3 /* Intro_Secure_Sharing.png */,
+				8DD09E8DCC3C4A1D97BEE45D /* Intro_Unlock.png */,
+				10EE9891794245F9BC24ADA1 /* Intro_Wallet.png */,
+				C4A565FBA11C4F158382E005 /* Language_Icon.svg */,
+				C0B2393702574BF0951A3760 /* Lock_Icon1.svg */,
+				F6B262911A75458F97C952D8 /* Magnifier_Zoom.svg */,
+				1870CC6B478C4D18AB79FA06 /* Mosip_Logo1.svg */,
+				1841B653EF204EEDB7E57C5B /* No_Internet_Connection.svg */,
+				80C8F1E5399E451F886B7E62 /* Otp_Verification_Icon.svg */,
+				14E432982F83452287A1349E /* Outlined_Delete_Icon.svg */,
+				7CF8BAF010364DF9B87216EE /* Outlined_Pin_Icon.svg */,
+				EB2FAD38AB82474BBA472A2E /* Outlined_Schedule_Icon.svg */,
+				66CAF9B255E041C9A993ECB7 /* Outlined_Share_Icon.svg */,
+				FD9C7CD8369A48B799C52D0C /* Outlined_Share_With_Selfie_Icon.svg */,
+				37B19B623EA8447FADD9867B /* Outlined_Shielded_Icon.svg */,
+				C30E4FCDBCC24E9A94F4FD40 /* Permission_Denied.svg */,
+				FA80F8A645B64ED291AD4370 /* Pin_Icon.svg */,
+				FE974C003ECA491EBD33D2EE /* Progress_Icon1.svg */,
+				956190AF9C7E4BC6A0286F36 /* Receive_Card.svg */,
+				73BC852B84F1480080B7F4F7 /* Received_Cards.svg */,
+				3C56225CD9C84C3D9643E88C /* Restore.svg */,
+				ABE2FE8CCDCE438A8484C500 /* Scan_tab_icon.svg */,
+				A1F1C97692C2443485C64010 /* Search.svg */,
+				5A8FADF011C0464B9FA15CDC /* Selected_Check_Box.svg */,
+				9B39B1728C854DC3AFD02A2F /* Settings.svg */,
+				815D5A6C683E420A9D028B54 /* Share_with_selfie.svg */,
+				C820E07DDBDF4810924F6797 /* Something_Went_Wrong.svg */,
+				9CF4A8C4DA8741F690FD3FE7 /* Success_Message_Icon1.svg */,
+				17C78E576FE047B3ABA11DBC /* Success_history_iocn.svg */,
+				506881CB00894B529B4CA074 /* Success_home_iocn.svg */,
+				A810BCD17ACD4692AE2BFF0F /* UnCheckedIcon.svg */,
+				065390F735754F868920C4BB /* Wallet_Activated_Icon.svg */,
+				C07D7E543FE8483798B7D281 /* Wallet_Activated_Large_Icon.svg */,
+				8245852C9DF84C3D802D204D /* Wallet_UnActivated_Icon.svg */,
+				9AFB3AB2EFFB4BBAA8AFD3AB /* Wallet_UnActivated_Large_Icon.svg */,
+				7300D210C09E4EE7BC8FE43C /* Warning_Icon.svg */,
+				8E2B83DDD3964E9983573A82 /* about_inji.svg */,
+				E3C4DE1E530F4885B58A7FE2 /* backupRestoreIntro.png */,
+				71A9E57A6A0D4F418C053DC6 /* biometricIntro.png */,
+				D5663D8DC07E413E90136A33 /* biometric_unlock.svg */,
+				D5AFD178C3D24C858EAD4BB1 /* cloud_upload.svg */,
+				3A0A331712AA4ADBAA1EDED3 /* credentialRegestryStar.svg */,
+				03062660B2ED4B7D9B1B2E2B /* file_copy.svg */,
+				BC0F27E89E0042BB984AEAFE /* google-drive-28.svg */,
+				C2A6C117E13741C1B4C86EA0 /* info_FILL0_wght400_GRAD0_opsz48.svg */,
+				A06AB8C69FD94833B95273AD /* logout_icon.svg */,
+				88C923E71C284947A1E5C4F0 /* faceModel.tflite */,
+				EC85B7445E7A44F2B8FE64E6 /* orangeSplashScreen.png */,
+				BF9A4DF15E8E4E9B95769FE4 /* purpleSplashScreen.png */,
+				889F6CF21E444660BE4D0280 /* questionIcon.svg */,
+				87CA50BC2DCC46EAAB38F784 /* restoreIconBackup.svg */,
+				EA2C6AD7F1864808A7EEB48E /* trustedDigitalWallet.png */,
+				3C554747036E4F4E820D66C7 /* Inter Bold.ttf */,
+				491F02B0753D42D1AC4CD163 /* Inter Medium.ttf */,
+				7C6A6C73C44C43BD999E5907 /* Inter Regular.ttf */,
+				3D9E4DF574F74CF2A7A00251 /* Inter SemiBold.ttf */,
+				822FC85AB7BE4FF6A1A389B2 /* Adaptive_Icon.png */,
+				70A694853D4B45F8B9816F9B /* InjiLogoNewBranding.png */,
+				D627B2757D40403D92FFCB9D /* IntroBg.png */,
+				E5DE7589F4CD407997D43C82 /* IntroSliderBackgroundPurple.png */,
+				F27798C0A5E542C38AFAB8D0 /* Intro_Share.png */,
+				AFED680BF63346D3871D25BE /* quickAccess.png */,
+				B9FBC4808B774BB7A4C4F287 /* SplashScreen.png */,
+				4CDAE31359714807AD05236A /* secureSharing.png */,
+				83C7B923C13441AAB841A0CB /* Adaptive_Icon.png */,
+				2000FE35CC6E4F1D9AA76730 /* Card_Bg1.png */,
+				74E64CA43325409490C9A49E /* InjiLogoNewBranding.png */,
+				D3B515FE94C04082A8F6CC27 /* IntroBg.png */,
+				DDAAD8C5311C448E88245EA7 /* IntroSliderBackgroundPurple.png */,
+				DD4EE752846C4BC4A76DB49A /* Intro_Backup.png */,
+				C836BCE01A2F4FB796648708 /* Intro_Secure_Sharing.png */,
+				689BFB53282D41F0B4B07AFA /* Intro_Share.png */,
+				F1B638DFE81F4CD49FAE6C00 /* Intro_Unlock.png */,
+				FB257D2AD7FD4FC784EB6DDC /* Intro_Wallet.png */,
+				5AC8337F68394C50A149D463 /* SplashScreen.png */,
+				66E8F577D46042CAA70ECC2B /* backupRestoreIntro.png */,
+				FCC58374166C4714B21436F2 /* biometricIntro.png */,
+				F95587E5C9614C19BDD97E57 /* orangeSplashScreen.png */,
+				4244A96AFD8641E0A016781A /* purpleSplashScreen.png */,
+				548D0539F6DD4878A328A31C /* quickAccess.png */,
+				408F912D6D5B4E66AE9C0C24 /* secureSharing.png */,
+				E62919E5BDAB4CBEB350EF9C /* trustedDigitalWallet.png */,
+				7B8DC6AE559444EFAD0932FD /* Adaptive_Icon.svg */,
+				EA5C17A2FD124C6DAF278E47 /* Card_Bg1.svg */,
+				90BAFD62AFD84ACBB779F2B8 /* InjiLogoNewBranding.svg */,
+				7F3412BF453A489C9802AE19 /* IntroBg.svg */,
+				9D63C8594C434B4DBF7BB25B /* IntroSliderBackgroundPurple.svg */,
+				A8C7EDF749C1410B938118F1 /* Intro_Backup.svg */,
+				5FD4E5C59B3045E7B1703650 /* Intro_Secure_Sharing.svg */,
+				ACB925397D264CCBA173D5CD /* Intro_Share.svg */,
+				35737E97FEC549219D864A08 /* Intro_Unlock.svg */,
+				9DD2FD7920364ED3806F8FC0 /* Intro_Wallet.svg */,
+				E53D037D76464E0392D6BD93 /* SplashScreen.svg */,
+				74276C4FCD1E4C97B794A823 /* backupRestoreIntro.svg */,
+				F380DF1231244CBCAF34227C /* biometricIntro.svg */,
+				4048B7CBDE0444DD9C614896 /* orangeSplashScreen.svg */,
+				ADB1A8A81E584512ABC5DAC8 /* purpleSplashScreen.svg */,
+				F79A27651A2B46E09B2B0BBC /* quickAccess.svg */,
+				B63FBEA0781340918E3E9ED2 /* secureSharing.svg */,
+				B4851AD01BB849CB85913A0A /* trustedDigitalWallet.svg */,
+				4CA6EA7B278D46B6A180C16A /* Intro_Backup.jpg */,
+			);
+			name = Resources;
 			sourceTree = "<group>";
 		};
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
@@ -182,6 +549,7 @@
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
 				D65327D7A22EEC0BE12398D9 /* Pods */,
 				D7E4C46ADA2E9064B798F356 /* ExpoModulesProviders */,
+				462CE07025BF40E9952DCDA0 /* Resources */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -273,7 +641,7 @@
 				1E55884F2CC0EF2C00CF55B4 /* Copy FaceSDK Model */,
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
 				800E24972A6A228C8D4807E9 /* [CP] Copy Pods Resources */,
-				0F2FCBA5E4517C72775B53F7 /* [CP] Embed Pods Frameworks */,
+				D11A8C363B4A5B625DB10379 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -281,11 +649,11 @@
 			);
 			name = Inji;
 			packageProductDependencies = (
-				1EC395232D50C89C0022D979 /* VCIClient */,
-				1EC395292D50C9470022D979 /* pixelpass */,
-				1EC3952C2D50C9820022D979 /* ios-tuvali-library */,
-				1EC3952F2D50C99E0022D979 /* securekeystore */,
-				3407B0FF2D706EE1003089E6 /* OpenID4VP */,
+				9C4850422C3E5873002ECBD5 /* ios-tuvali-library */,
+				1E6875E82CA554E80086D870 /* OpenID4VP */,
+				34873E462CD8DAF3004DE734 /* VCIClient */,
+				34873E4C2CD8DD11004DE734 /* pixelpass */,
+				9CCCA19D2CF87A8400D5A461 /* securekeystore */,
 			);
 			productName = Inji;
 			productReference = 13B07F961A680F5B00A75B9A /* Inji.app */;
@@ -314,11 +682,11 @@
 			);
 			mainGroup = 83CBB9F61A601CBA00E9B192;
 			packageReferences = (
-				1EC395222D50C89C0022D979 /* XCRemoteSwiftPackageReference "inji-vci-client-ios-swift" */,
-				1EC395282D50C9470022D979 /* XCRemoteSwiftPackageReference "pixelpass-ios-swift" */,
-				1EC3952B2D50C9820022D979 /* XCRemoteSwiftPackageReference "tuvali-ios-swift" */,
-				1EC3952E2D50C99E0022D979 /* XCRemoteSwiftPackageReference "secure-keystore-ios-swift" */,
-				3407B0FE2D706EE1003089E6 /* XCRemoteSwiftPackageReference "inji-openid4vp-ios-swift" */,
+				34873E4B2CD8DD11004DE734 /* XCRemoteSwiftPackageReference "pixelpass-ios-swift" */,
+				34873E452CD8DAF3004DE734 /* XCRemoteSwiftPackageReference "inji-vci-client-ios-swift" */,
+				9C4850412C3E5873002ECBD5 /* XCRemoteSwiftPackageReference "tuvali-ios-swift" */,
+				1E6875E72CA554E80086D870 /* XCRemoteSwiftPackageReference "inji-openid4vp-ios-swift" */,
+				9CCCA19C2CF87A8400D5A461 /* XCRemoteSwiftPackageReference "secure-keystore-ios-swift" */,
 			);
 			productRefGroup = 83CBBA001A601CBA00E9B192 /* Products */;
 			projectDirPath = "";
@@ -356,6 +724,114 @@
 				FD8D20C92BBAACDF009AD01C /* SimpleLineIcons.ttf in Resources */,
 				FD8D20C62BBAACDF009AD01C /* Zocial.ttf in Resources */,
 				3E461D99554A48A4959DE609 /* SplashScreen.storyboard in Resources */,
+				2D8ADDE2531246629C1DC2F0 /* Backup.svg in Resources */,
+				7D97BB9B1E2D481CBDDEA01F /* Camera_Capture_Icon.svg in Resources */,
+				410B49AF363A48F8B0B79A27 /* CheckedIcon.svg in Resources */,
+				EDA7708775D4479EAE5C80B8 /* Cloud_Upload_Done_Icon.svg in Resources */,
+				CFF4D2E4C1C54DEAA7782D22 /* Colored_Info.svg in Resources */,
+				3867536C29B8432FBE43DB32 /* Detailed_view_kebab_icon.svg in Resources */,
+				D5650C08FAF04755BE5C0F46 /* Digital_Identity_Icon1.svg in Resources */,
+				2E9B768A7B4A45C5A10A653A /* Error_Message_Icon.svg in Resources */,
+				4358E31C1B774DD3B00502E2 /* Error_Occurred.svg in Resources */,
+				E7293C1B838241E4905CE682 /* Finger_Print_Icon.svg in Resources */,
+				91101AE916AB47C4AEE8C768 /* Flip_Camera_Icon.svg in Resources */,
+				02E2B54702CF45ABB52ADADA /* Gdrive_Logo.svg in Resources */,
+				EBC55578B5674E118035EE23 /* Gradient-1.svg in Resources */,
+				693A3B13D2134B4B9075A281 /* History_tab_icon.svg in Resources */,
+				2192396FE57F4E7F868D442B /* Home_tab_icon.svg in Resources */,
+				BE7A05F7C9BC4C9089607E7E /* Icloud-Logo.svg in Resources */,
+				D4D858F8C93844E09B836F9F /* Info.svg in Resources */,
+				121E554D1CEF475B9584B171 /* InjiHomeLogo.svg in Resources */,
+				6B7ABEFF077744469E9E46E9 /* InjiHomeLogoSmall.svg in Resources */,
+				8A621EF5FBDB48B0A0BB8226 /* InjiLogo.svg in Resources */,
+				FA3F135B052943FF80CC9A64 /* Inji_Home_Logo.svg in Resources */,
+				3F16D9A389754FCE8A5205AE /* Inji_Logo.svg in Resources */,
+				1BA5D14C8C5F42F88D69CED6 /* Language_Icon.svg in Resources */,
+				77ED2E996D85415D9F83E21B /* Lock_Icon1.svg in Resources */,
+				0BAFCDC45C5746F08825E90E /* Magnifier_Zoom.svg in Resources */,
+				5E83DD728F094A0EBE9630EA /* Mosip_Logo1.svg in Resources */,
+				7017985DCBCE40E18BD0CB9B /* No_Internet_Connection.svg in Resources */,
+				B0FF5EC24CDB42399E6C52E3 /* Otp_Verification_Icon.svg in Resources */,
+				CB1DB2D8F1D742ED9A8A16F0 /* Outlined_Delete_Icon.svg in Resources */,
+				81E294D8013B4C1A986DAD36 /* Outlined_Pin_Icon.svg in Resources */,
+				CC7F77022CA44C4FAD3FF53C /* Outlined_Schedule_Icon.svg in Resources */,
+				648718010109456A9BE32A65 /* Outlined_Share_Icon.svg in Resources */,
+				C7580B4145DD412498029F89 /* Outlined_Share_With_Selfie_Icon.svg in Resources */,
+				E15C12701ECC4C03B081A24D /* Outlined_Shielded_Icon.svg in Resources */,
+				55E55C87B6B34C348C8B18A4 /* Permission_Denied.svg in Resources */,
+				73591DAABCBF4AD6AB149E36 /* Pin_Icon.svg in Resources */,
+				25FD2F8235544F15BE1836F8 /* Progress_Icon1.svg in Resources */,
+				6B88A619F2D24345AD568E7D /* Receive_Card.svg in Resources */,
+				14431B1315414342BEDB0F13 /* Received_Cards.svg in Resources */,
+				9B29D5F286D14FCDAB7E39A5 /* Restore.svg in Resources */,
+				4FFB914F5B5F4C2A9DF55AD0 /* Scan_tab_icon.svg in Resources */,
+				838F27598CC5478DB76410C8 /* Search.svg in Resources */,
+				282B26CF121547019C098040 /* Selected_Check_Box.svg in Resources */,
+				E016C011A23A4D0BAFA1102F /* Settings.svg in Resources */,
+				43F2281305A443019AD7C9C1 /* Share_with_selfie.svg in Resources */,
+				6F5E99F657134A728653529D /* Something_Went_Wrong.svg in Resources */,
+				4BEB151CE32F474DA96E5021 /* Success_Message_Icon1.svg in Resources */,
+				A4308DD5D4E6415AB3BCE268 /* Success_history_iocn.svg in Resources */,
+				E23ACD535BFD4EAA8B67F50D /* Success_home_iocn.svg in Resources */,
+				29517E011F0F49B3A4411A3D /* UnCheckedIcon.svg in Resources */,
+				1C441547C1974367BBB77FEC /* Wallet_Activated_Icon.svg in Resources */,
+				84D6752B98504FB3908164C8 /* Wallet_Activated_Large_Icon.svg in Resources */,
+				8EFAA9CEEBF84E8DB1CE6902 /* Wallet_UnActivated_Icon.svg in Resources */,
+				034C7D6B54EC4F1D9A79BB0A /* Wallet_UnActivated_Large_Icon.svg in Resources */,
+				F07C264702944F819178F181 /* Warning_Icon.svg in Resources */,
+				18EA1D5DB86A47F193E4BF04 /* about_inji.svg in Resources */,
+				D1836464301E4489B306F59C /* biometric_unlock.svg in Resources */,
+				ECAFA04CD2E947058ED90E0F /* cloud_upload.svg in Resources */,
+				FD6EF8AA55444F7D8E5B59FE /* credentialRegestryStar.svg in Resources */,
+				54F04D6FCA404B80BC7A4D82 /* file_copy.svg in Resources */,
+				2A37286BDA7E40EEA91EF4BF /* google-drive-28.svg in Resources */,
+				AA83FA29185242A98080FF5C /* info_FILL0_wght400_GRAD0_opsz48.svg in Resources */,
+				042AF38E0C3B425EBC06F5F0 /* logout_icon.svg in Resources */,
+				B5FA38155EC84063BAACB973 /* faceModel.tflite in Resources */,
+				FDD1CD5DA5AC47338E9F69B1 /* questionIcon.svg in Resources */,
+				CA8C9C08A77A477082E3F411 /* restoreIconBackup.svg in Resources */,
+				717E6FEC33D6D8A2F9B01CBC /* PrivacyInfo.xcprivacy in Resources */,
+				F9BB4BC6946A4D149A346030 /* Inter Bold.ttf in Resources */,
+				C601B765E8BB404FBA9A8A51 /* Inter Medium.ttf in Resources */,
+				14038CEB7AEA4518A539835B /* Inter Regular.ttf in Resources */,
+				B5BCBC9C01F046C89DC18CB4 /* Inter SemiBold.ttf in Resources */,
+				E111036637264E10A48FF62C /* Adaptive_Icon.png in Resources */,
+				C1761ADC90314A2C8545DE79 /* Card_Bg1.png in Resources */,
+				624AE556889D4AA48525B394 /* InjiLogoNewBranding.png in Resources */,
+				723D1E60E5CA43B9B3867E2A /* IntroBg.png in Resources */,
+				95242DB1895D47069832E931 /* IntroSliderBackgroundPurple.png in Resources */,
+				DA0524478F514EC9B0ED9F8B /* Intro_Backup.png in Resources */,
+				4FAC789096A54832984E5A7B /* Intro_Secure_Sharing.png in Resources */,
+				6953C793C7F242768285DBD2 /* Intro_Share.png in Resources */,
+				7482F4EDA2B444E183229849 /* Intro_Unlock.png in Resources */,
+				02C9AE728DB5436FAB9CBE6D /* Intro_Wallet.png in Resources */,
+				3F2B1293153E41F1B9DC2A06 /* SplashScreen.png in Resources */,
+				A408DC0D9567448CBBCDE7CE /* backupRestoreIntro.png in Resources */,
+				438634B3B5114D559396BF8B /* biometricIntro.png in Resources */,
+				DF220DE3E6A34B7A99E5C34A /* orangeSplashScreen.png in Resources */,
+				1330388501A6451392DDEAAD /* purpleSplashScreen.png in Resources */,
+				68E2AF0C9FD94067AAB63CA8 /* quickAccess.png in Resources */,
+				40E3D50F5B8245F4AC474370 /* secureSharing.png in Resources */,
+				B6BBE841FE174A37BF5A786E /* trustedDigitalWallet.png in Resources */,
+				D705237BC56A4799859ECCC6 /* Adaptive_Icon.svg in Resources */,
+				268B959AA0A64EC882A91E98 /* Card_Bg1.svg in Resources */,
+				845B2D93095741BDAEA29BA2 /* InjiLogoNewBranding.svg in Resources */,
+				D2D7747B1D744FCA9EE3EBC4 /* IntroBg.svg in Resources */,
+				644955A79BE8464DB89B4C60 /* IntroSliderBackgroundPurple.svg in Resources */,
+				830A2D0CF2B24F7E8F4AD86E /* Intro_Backup.svg in Resources */,
+				909CF13B285A4216B5631894 /* Intro_Secure_Sharing.svg in Resources */,
+				4E5777125C6A49EBA41D74DC /* Intro_Share.svg in Resources */,
+				67377D5F72024F9F8BD9BD93 /* Intro_Unlock.svg in Resources */,
+				3EA649BE62E64CD0BAFD6004 /* Intro_Wallet.svg in Resources */,
+				8B4EAE91585C487DBCD45899 /* SplashScreen.svg in Resources */,
+				47300157551B473890D1E44B /* backupRestoreIntro.svg in Resources */,
+				230BCA17A8DC46BBA639D809 /* biometricIntro.svg in Resources */,
+				023FD41BE17D4935848E9DA1 /* orangeSplashScreen.svg in Resources */,
+				F24906AB1D1C4F68B766738D /* purpleSplashScreen.svg in Resources */,
+				7DDC4828AD0340B2B5C3229D /* quickAccess.svg in Resources */,
+				0897DB94737D45FBB8D6494C /* secureSharing.svg in Resources */,
+				40B4555AF4A14671BA75B07E /* trustedDigitalWallet.svg in Resources */,
+				0EA865645A324EEB9ECFBFA7 /* Intro_Backup.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -396,24 +872,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		0F2FCBA5E4517C72775B53F7 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Inji/Pods-Inji-frameworks.sh",
-				"${PODS_XCFRAMEWORKS_BUILD_DIR}/hermes-engine/Pre-built/hermes.framework/hermes",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/hermes.framework",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Inji/Pods-Inji-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		1E55884F2CC0EF2C00CF55B4 /* Copy FaceSDK Model */ = {
@@ -460,33 +918,67 @@
 			);
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Inji/Pods-Inji-resources.sh",
+				"${PODS_CONFIGURATION_BUILD_DIR}/AppAuth/AppAuthCore_Privacy.bundle",
+				"${PODS_CONFIGURATION_BUILD_DIR}/EXApplication/ExpoApplication_privacy.bundle",
 				"${PODS_CONFIGURATION_BUILD_DIR}/EXConstants/EXConstants.bundle",
+				"${PODS_CONFIGURATION_BUILD_DIR}/EXConstants/ExpoConstants_privacy.bundle",
 				"${PODS_CONFIGURATION_BUILD_DIR}/EXUpdates/EXUpdates.bundle",
+				"${PODS_CONFIGURATION_BUILD_DIR}/ExpoFileSystem/ExpoFileSystem_privacy.bundle",
+				"${PODS_CONFIGURATION_BUILD_DIR}/ExpoLocalization/ExpoLocalization_privacy.bundle",
 				"${PODS_CONFIGURATION_BUILD_DIR}/GoogleDataTransport/GoogleDataTransport_Privacy.bundle",
 				"${PODS_CONFIGURATION_BUILD_DIR}/GoogleSignIn/GoogleSignIn.bundle",
 				"${PODS_CONFIGURATION_BUILD_DIR}/GoogleUtilities/GoogleUtilities_Privacy.bundle",
 				"${PODS_CONFIGURATION_BUILD_DIR}/MLKitFaceDetection/GoogleMVFaceDetectorResources.bundle",
 				"${PODS_CONFIGURATION_BUILD_DIR}/PromisesObjC/FBLPromises_Privacy.bundle",
 				"${PODS_CONFIGURATION_BUILD_DIR}/Protobuf/Protobuf_Privacy.bundle",
-				"${PODS_CONFIGURATION_BUILD_DIR}/React-Core/AccessibilityResources.bundle",
+				"${PODS_CONFIGURATION_BUILD_DIR}/RNDeviceInfo/RNDeviceInfoPrivacyInfo.bundle",
+				"${PODS_CONFIGURATION_BUILD_DIR}/ReachabilitySwift/ReachabilitySwift.bundle",
+				"${PODS_CONFIGURATION_BUILD_DIR}/React-Core/RCTI18nStrings.bundle",
+				"${PODS_CONFIGURATION_BUILD_DIR}/SDWebImage/SDWebImage.bundle",
 				"${PODS_CONFIGURATION_BUILD_DIR}/nanopb/nanopb_Privacy.bundle",
 			);
 			name = "[CP] Copy Pods Resources";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/AppAuthCore_Privacy.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/ExpoApplication_privacy.bundle",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/EXConstants.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/ExpoConstants_privacy.bundle",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/EXUpdates.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/ExpoFileSystem_privacy.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/ExpoLocalization_privacy.bundle",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GoogleDataTransport_Privacy.bundle",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GoogleSignIn.bundle",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GoogleUtilities_Privacy.bundle",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GoogleMVFaceDetectorResources.bundle",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/FBLPromises_Privacy.bundle",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Protobuf_Privacy.bundle",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/AccessibilityResources.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/RNDeviceInfoPrivacyInfo.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/ReachabilitySwift.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/RCTI18nStrings.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/SDWebImage.bundle",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/nanopb_Privacy.bundle",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Inji/Pods-Inji-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		D11A8C363B4A5B625DB10379 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Inji/Pods-Inji-frameworks.sh",
+				"${PODS_XCFRAMEWORKS_BUILD_DIR}/hermes-engine/Pre-built/hermes.framework/hermes",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/hermes.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Inji/Pods-Inji-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		FD10A7F022414F080027D42C /* Start Packager */ = {
@@ -547,11 +1039,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Inji/Inji.entitlements;
-				CODE_SIGN_IDENTITY = "Apple Distribution";
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = V2ABX7953Z;
-				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = V2ABX7953Z;
 				ENABLE_BITCODE = NO;
 				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -559,12 +1050,12 @@
 					"FB_SONARKIT_ENABLED=1",
 				);
 				INFOPLIST_FILE = Inji/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.17.0;
+				MARKETING_VERSION = 0.15.0;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -589,20 +1080,18 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Inji/InjiRelease.entitlements;
-				CODE_SIGN_IDENTITY = "Apple Distribution";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "Apple Distribution";
-				CODE_SIGN_STYLE = Manual;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = "";
-				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = V2ABX7953Z;
+				DEVELOPMENT_TEAM = V2ABX7953Z;
 				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
 				INFOPLIST_FILE = Inji/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.17.0;
+				MARKETING_VERSION = 0.15.0;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -611,8 +1100,7 @@
 				OTHER_SWIFT_FLAGS = "$(inherited) -D EXPO_CONFIGURATION_RELEASE";
 				PRODUCT_BUNDLE_IDENTIFIER = io.mosip.inji.wallet.mobileid;
 				PRODUCT_NAME = Inji;
-				PROVISIONING_PROFILE_SPECIFIER = "match AppStore io.mosip.inji.wallet.mobileid";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "match AppStore io.mosip.inji.wallet.mobileid";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -624,8 +1112,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CC = "";
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
-				CLANG_CXX_LANGUAGE_STANDARD = "c++17";
+				CLANG_CXX_LANGUAGE_STANDARD = "c++20";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
@@ -651,6 +1140,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
+				CXX = "";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = i386;
@@ -670,6 +1160,8 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				LD = "";
+				LDPLUSPLUS = "";
 				LD_RUNPATH_SEARCH_PATHS = (
 					/usr/lib/swift,
 					"$(inherited)",
@@ -677,8 +1169,13 @@
 				LIBRARY_SEARCH_PATHS = "$(SDKROOT)/usr/lib/swift\"$(inherited)\"";
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					" ",
+				);
 				REACT_NATIVE_PATH = "${PODS_ROOT}/../../node_modules/react-native";
 				SDKROOT = iphoneos;
+				USE_HERMES = true;
 			};
 			name = Debug;
 		};
@@ -686,8 +1183,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CC = "";
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
-				CLANG_CXX_LANGUAGE_STANDARD = "c++17";
+				CLANG_CXX_LANGUAGE_STANDARD = "c++20";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
@@ -714,6 +1212,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = YES;
+				CXX = "";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = i386;
@@ -726,14 +1225,21 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				LD = "";
+				LDPLUSPLUS = "";
 				LD_RUNPATH_SEARCH_PATHS = (
 					/usr/lib/swift,
 					"$(inherited)",
 				);
 				LIBRARY_SEARCH_PATHS = "$(SDKROOT)/usr/lib/swift\"$(inherited)\"";
 				MTL_ENABLE_DEBUG_INFO = NO;
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					" ",
+				);
 				REACT_NATIVE_PATH = "${PODS_ROOT}/../../node_modules/react-native";
 				SDKROOT = iphoneos;
+				USE_HERMES = true;
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -762,41 +1268,41 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		1EC395222D50C89C0022D979 /* XCRemoteSwiftPackageReference "inji-vci-client-ios-swift" */ = {
+		1E6875E72CA554E80086D870 /* XCRemoteSwiftPackageReference "inji-openid4vp-ios-swift" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/mosip/inji-vci-client-ios-swift.git";
+			repositoryURL = "https://github.com/mosip/inji-openid4vp-ios-swift";
 			requirement = {
 				branch = develop;
 				kind = branch;
 			};
 		};
-		1EC395282D50C9470022D979 /* XCRemoteSwiftPackageReference "pixelpass-ios-swift" */ = {
+		34873E452CD8DAF3004DE734 /* XCRemoteSwiftPackageReference "inji-vci-client-ios-swift" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/mosip/pixelpass-ios-swift.git";
+			repositoryURL = "https://github.com/mosip/inji-vci-client-ios-swift";
 			requirement = {
-				branch = "release-0.6.x";
+				branch = develop;
 				kind = branch;
 			};
 		};
-		1EC3952B2D50C9820022D979 /* XCRemoteSwiftPackageReference "tuvali-ios-swift" */ = {
+		34873E4B2CD8DD11004DE734 /* XCRemoteSwiftPackageReference "pixelpass-ios-swift" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/mosip/tuvali-ios-swift.git";
+			repositoryURL = "https://github.com/mosip/pixelpass-ios-swift";
 			requirement = {
-				kind = exactVersion;
-				version = 0.5.0;
+				branch = develop;
+				kind = branch;
 			};
 		};
-		1EC3952E2D50C99E0022D979 /* XCRemoteSwiftPackageReference "secure-keystore-ios-swift" */ = {
+		9C4850412C3E5873002ECBD5 /* XCRemoteSwiftPackageReference "tuvali-ios-swift" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/mosip/secure-keystore-ios-swift.git";
+			repositoryURL = "https://github.com/mosip/tuvali-ios-swift/";
 			requirement = {
-				kind = exactVersion;
-				version = 0.3.0;
+				branch = develop;
+				kind = branch;
 			};
 		};
-		3407B0FE2D706EE1003089E6 /* XCRemoteSwiftPackageReference "inji-openid4vp-ios-swift" */ = {
+		9CCCA19C2CF87A8400D5A461 /* XCRemoteSwiftPackageReference "secure-keystore-ios-swift" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/mosip/inji-openid4vp-ios-swift";
+			repositoryURL = "https://github.com/mosip/secure-keystore-ios-swift";
 			requirement = {
 				branch = develop;
 				kind = branch;
@@ -805,30 +1311,30 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		1EC395232D50C89C0022D979 /* VCIClient */ = {
+		1E6875E82CA554E80086D870 /* OpenID4VP */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 1EC395222D50C89C0022D979 /* XCRemoteSwiftPackageReference "inji-vci-client-ios-swift" */;
+			package = 1E6875E72CA554E80086D870 /* XCRemoteSwiftPackageReference "inji-openid4vp-ios-swift" */;
+			productName = OpenID4VP;
+		};
+		34873E462CD8DAF3004DE734 /* VCIClient */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 34873E452CD8DAF3004DE734 /* XCRemoteSwiftPackageReference "inji-vci-client-ios-swift" */;
 			productName = VCIClient;
 		};
-		1EC395292D50C9470022D979 /* pixelpass */ = {
+		34873E4C2CD8DD11004DE734 /* pixelpass */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 1EC395282D50C9470022D979 /* XCRemoteSwiftPackageReference "pixelpass-ios-swift" */;
+			package = 34873E4B2CD8DD11004DE734 /* XCRemoteSwiftPackageReference "pixelpass-ios-swift" */;
 			productName = pixelpass;
 		};
-		1EC3952C2D50C9820022D979 /* ios-tuvali-library */ = {
+		9C4850422C3E5873002ECBD5 /* ios-tuvali-library */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 1EC3952B2D50C9820022D979 /* XCRemoteSwiftPackageReference "tuvali-ios-swift" */;
+			package = 9C4850412C3E5873002ECBD5 /* XCRemoteSwiftPackageReference "tuvali-ios-swift" */;
 			productName = "ios-tuvali-library";
 		};
-		1EC3952F2D50C99E0022D979 /* securekeystore */ = {
+		9CCCA19D2CF87A8400D5A461 /* securekeystore */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 1EC3952E2D50C99E0022D979 /* XCRemoteSwiftPackageReference "secure-keystore-ios-swift" */;
+			package = 9CCCA19C2CF87A8400D5A461 /* XCRemoteSwiftPackageReference "secure-keystore-ios-swift" */;
 			productName = securekeystore;
-		};
-		3407B0FF2D706EE1003089E6 /* OpenID4VP */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 3407B0FE2D706EE1003089E6 /* XCRemoteSwiftPackageReference "inji-openid4vp-ios-swift" */;
-			productName = OpenID4VP;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

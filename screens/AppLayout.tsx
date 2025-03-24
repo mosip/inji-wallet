@@ -10,12 +10,10 @@ import {
 import {authRoutes, baseRoutes} from '../routes';
 import {useAppLayout} from './AppLayoutController';
 import {StatusBar} from 'react-native';
-import {useFlipper} from '@react-navigation/devtools';
 
 const {Navigator, Screen} = createNativeStackNavigator();
 export const AppLayout: React.FC = () => {
   const navigationRef = useNavigationContainerRef();
-  useFlipper(navigationRef);
 
   const controller = useAppLayout();
   const options: NativeStackNavigationOptions = {

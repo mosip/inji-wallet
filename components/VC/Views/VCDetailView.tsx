@@ -180,7 +180,7 @@ export const VCDetailView: React.FC<VCItemDetailsProps> = props => {
                       <Text
                         testID="offlineAuthDisabledHeader"
                         style={{
-                          fontFamily: 'Inter_600SemiBold',
+                          fontFamily: 'Inter SemiBold',
                           fontSize: 14,
                         }}
                         color={Theme.Colors.statusLabel}
@@ -190,7 +190,7 @@ export const VCDetailView: React.FC<VCItemDetailsProps> = props => {
                       <Text
                         testID="offlineAuthDisabledMessage"
                         style={{
-                          fontFamily: 'Inter_400Regular',
+                          fontFamily: 'Inter Regular',
                           fontSize: 12,
                         }}
                         color={Theme.Colors.statusMessage}
@@ -224,7 +224,7 @@ export const VCDetailView: React.FC<VCItemDetailsProps> = props => {
                         testID="profileAuthenticated"
                         color={Theme.Colors.statusLabel}
                         style={{
-                          fontFamily: 'Inter_600SemiBold',
+                          fontFamily: 'Inter SemiBold',
                           fontSize: 14,
                         }}
                         margin={'0 18 0 0'}>

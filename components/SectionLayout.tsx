@@ -34,7 +34,7 @@ export const SectionLayout: React.FC<SectionLayoutProps> = ({
           style={{
             justifyContent: 'center',
             paddingLeft: 12,
-            fontFamily: 'Inter_500Medium',
+            fontFamily: 'Inter Medium',
             fontWeight: '600',
             fontSize: 14,
             letterSpacing: 0,

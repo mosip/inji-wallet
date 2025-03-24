@@ -11,6 +11,14 @@ import {COPILOT_HEIGHT, isIOS, isAndroid} from '../../../shared/constants';
 import Constants from 'expo-constants';
 import HomeScreenLogo from '../../../assets/InjiHomeLogo.svg';
 import InjiLogoSmall from '../../../assets/InjiLogo.svg';
+import BiometricIntro from '../../../assets/images/svg/biometricIntro.svg';
+import SecureSharing from '../../../assets/images/svg/secureSharing.svg';
+import TrustedDigitalWallet from '../../../assets/images/svg/trustedDigitalWallet.svg';
+import QuickAccess from '../../../assets/images/quickAccess.svg';
+import BackupRestoreIntro from '../../../assets/images/svg/backupRestoreIntro.svg';
+import IntroBg from '../../../assets/images/svg/IntroBg.svg';
+import CloseCard from '../../../assets/images/Card_Bg1.svg';
+import OpenCard from '../../../assets/images/Card_Bg1.svg';
 import i18next from '../../../i18n';
 const Colors = {
   Black: '#000000',
@@ -169,12 +177,12 @@ export const DefaultTheme = {
     fieldItemTitle: {
       backgroundColor: Colors.Transparent,
       fontSize: 11,
-      fontFamily: 'Inter_400Regular',
+      fontFamily: 'Inter Regular',
     },
     fieldItemValue: {
       backgroundColor: Colors.Transparent,
       fontSize: 12,
-      fontFamily: 'Inter_600SemiBold',
+      fontFamily: 'Inter SemiBold',
       marginTop: 3,
     },
     loadingSubtitle: {
@@ -183,7 +191,7 @@ export const DefaultTheme = {
     },
     verificationStatus: {
       fontSize: 12,
-      fontFamily: 'Inter_600SemiBold',
+      fontFamily: 'Inter SemiBold',
     },
     statusLabel: {
       color: Colors.Gray30,
@@ -574,7 +582,7 @@ export const DefaultTheme = {
     detailsText: {
       fontWeight: 'bold',
       fontSize: 15,
-      fontFamily: 'Inter_700Bold',
+      fontFamily: 'Inter Bold',
     },
     idInputContainer: {
       width: Dimensions.get('window').width * 0.86,
@@ -587,7 +595,7 @@ export const DefaultTheme = {
       height: isIOS() ? 100 : 'auto',
     },
     picker: {
-      fontFamily: 'Inter_600SemiBold',
+      fontFamily: 'Inter SemiBold',
       fontSize: 18,
     },
     idInputBottom: {
@@ -608,7 +616,7 @@ export const DefaultTheme = {
       marginVertical: 6,
     },
     placeholder: {
-      fontFamily: 'Inter_600SemiBold',
+      fontFamily: 'Inter SemiBold',
     },
     hrLine: {
       borderBottomColor: Colors.Gray44,
@@ -698,7 +706,7 @@ export const DefaultTheme = {
       maxHeight: 20,
       borderRadius: 4,
       fontSize: 10,
-      fontFamily: 'Inter_700Bold',
+      fontFamily: 'Inter Bold',
       lineHeight: 12,
     },
     scanLayoutHeaderContainer: {
@@ -709,7 +717,7 @@ export const DefaultTheme = {
     },
     scanLayoutHeaderTitle: {
       fontSize: 26,
-      fontFamily: 'Inter_600SemiBold',
+      fontFamily: 'Inter SemiBold',
       paddingTop: isIOS() ? 10 : 20,
       paddingBottom: 10,
     },
@@ -726,18 +734,18 @@ export const DefaultTheme = {
     },
     sendVPHeaderTitle: {
       fontSize: 18,
-      fontFamily: 'Inter_600SemiBold',
+      fontFamily: 'Inter SemiBold',
     },
     sendVPHeaderSubTitle: {
       fontSize: 13,
-      fontFamily: 'Inter_600SemiBold',
+      fontFamily: 'Inter SemiBold',
       color: Colors.Orange,
       maxWidth: '80%',
       overflow: 'hidden',
     },
     HistoryHeaderTitleStyle: {
       fontSize: 26,
-      fontFamily: 'Inter_600SemiBold',
+      fontFamily: 'Inter SemiBold',
       marginTop: isIOS() ? 5 : 15,
     },
     tabBarIconCopilot: {
@@ -791,7 +799,7 @@ export const DefaultTheme = {
       fontSize: 12,
       lineHeight: 15,
       padding: 1,
-      fontFamily: 'Inter_600SemiBold',
+      fontFamily: 'Inter SemiBold',
     },
     dismiss: {paddingLeft: 9},
     inProgress: {
@@ -827,7 +835,7 @@ export const DefaultTheme = {
       borderTopLeftRadius: 21,
       borderTopRightRadius: 21,
       justifyContent: 'space-between',
-      fontFamily: 'Inter_700Bold',
+      fontFamily: 'Inter Bold',
       paddingBottom: 10,
       paddingRight: 15,
       paddingLeft: 130,
@@ -863,7 +871,7 @@ export const DefaultTheme = {
       color: Colors.Black,
       flex: 1,
       fontSize: 33,
-      fontFamily: 'Inter_600SemiBold',
+      fontFamily: 'Inter SemiBold',
       height: 40,
       lineHeight: 28,
       margin: 8,
@@ -874,7 +882,7 @@ export const DefaultTheme = {
       borderColor: Colors.Orange,
       color: Colors.Black,
       flex: 1,
-      fontFamily: 'Inter_700Bold',
+      fontFamily: 'Inter Bold',
       fontSize: 29,
       height: 40,
       margin: 8,
@@ -884,33 +892,33 @@ export const DefaultTheme = {
   TextStyles: StyleSheet.create({
     header: {
       color: Colors.Black,
-      fontFamily: 'Inter_700Bold',
+      fontFamily: 'Inter Bold',
       fontSize: 18,
       lineHeight: 19,
       paddingTop: 5,
     },
     subHeader: {
       color: Colors.mediumLightGrayText,
-      fontFamily: 'Inter_600SemiBold',
+      fontFamily: 'Inter SemiBold',
       lineHeight: 19,
       fontSize: 13,
       paddingTop: 4,
     },
     semiBoldHeader: {
       color: Colors.Black,
-      fontFamily: 'Inter_600SemiBold',
+      fontFamily: 'Inter SemiBold',
       fontSize: 18,
       lineHeight: 21,
       paddingTop: 4,
     },
     retrieveIdLabel: {
       color: Colors.ShadeOfGrey,
-      fontFamily: 'Inter_600SemiBold',
+      fontFamily: 'Inter SemiBold',
       lineHeight: 18,
     },
     helpHeader: {
       color: Colors.Black,
-      fontFamily: 'Inter_700Bold',
+      fontFamily: 'Inter Bold',
       fontSize: 18,
       lineHeight: 19,
       paddingTop: 5,
@@ -919,11 +927,11 @@ export const DefaultTheme = {
     helpDetails: {
       margin: 5,
       color: Colors.Gray44,
-      fontFamily: 'Inter_600SemiBold',
+      fontFamily: 'Inter SemiBold',
     },
     urlLinkText: {
       color: Colors.Orange,
-      fontFamily: 'Inter_600SemiBold',
+      fontFamily: 'Inter SemiBold',
     },
     aboutDetails: {
       color: Colors.Black,
@@ -936,7 +944,7 @@ export const DefaultTheme = {
       top: 65,
       left: 5,
       color: Colors.Red,
-      fontFamily: 'Inter_600SemiBold',
+      fontFamily: 'Inter SemiBold',
       fontSize: 12,
       minWidth: 200,
     },
@@ -946,21 +954,21 @@ export const DefaultTheme = {
       lineHeight: 18,
     },
     regular: {
-      fontFamily: 'Inter_400Regular',
+      fontFamily: 'Inter Regular',
       fontSize: 14,
     },
     regularGrey: {
-      fontFamily: 'Inter_400Regular',
+      fontFamily: 'Inter Regular',
       fontSize: 15,
       lineHeight: 19,
       color: Colors.ShadeOfGrey,
     },
     semibold: {
-      fontFamily: 'Inter_600SemiBold',
+      fontFamily: 'Inter SemiBold',
       fontSize: 15,
     },
     bold: {
-      fontFamily: 'Inter_700Bold',
+      fontFamily: 'Inter Bold',
       fontSize: 15,
       justifyContent: 'center',
     },
@@ -1150,7 +1158,7 @@ export const DefaultTheme = {
       backgroundColor: Colors.White,
       borderWidth: 0,
       marginTop: -15,
-      fontFamily: 'Inter_600SemiBold',
+      fontFamily: 'Inter SemiBold',
       padding: 0,
     },
     timeoutHintContainer: {
@@ -1238,7 +1246,7 @@ export const DefaultTheme = {
   }),
   BackupAndRestoreStyles: StyleSheet.create({
     backupProgressText: {
-      fontFamily: 'Inter_400Regular',
+      fontFamily: 'Inter Regular',
       fontSize: 14,
       color: Colors.Gray44,
     },
@@ -1248,7 +1256,7 @@ export const DefaultTheme = {
       textAlign: 'center',
       lineHeight: 22,
       fontSize: 17,
-      fontFamily: 'Inter_600SemiBold',
+      fontFamily: 'Inter SemiBold',
       marginHorizontal: 30,
     },
     actionOrLoaderContainer: {
@@ -1265,7 +1273,7 @@ export const DefaultTheme = {
       paddingHorizontal: 10,
       textAlign: 'center',
       paddingTop: 15,
-      fontFamily: 'Inter_500Medium',
+      fontFamily: 'Inter Medium',
       fontSize: 14,
       letterSpacing: 0,
       lineHeight: 17,
@@ -1311,7 +1319,7 @@ export const DefaultTheme = {
     },
     kebabHeaderStyle: {
       justifyContent: 'space-between',
-      fontFamily: 'Inter_700Bold',
+      fontFamily: 'Inter Bold',
     },
   }),
   MessageOverlayStyles: StyleSheet.create({
@@ -1409,7 +1417,7 @@ export const DefaultTheme = {
     sliderTitle: {
       color: Colors.White,
       marginBottom: 20,
-      fontFamily: 'Inter_700Bold',
+      fontFamily: 'Inter Bold',
     },
     text: {
       color: Colors.White,
@@ -1490,7 +1498,7 @@ export const DefaultTheme = {
       marginHorizontal: 9,
     },
     issuerHeading: {
-      fontFamily: 'Inter_600SemiBold',
+      fontFamily: 'Inter SemiBold',
       fontSize: 14,
       paddingHorizontal: 3,
       marginBottom: 2,
@@ -1516,7 +1524,7 @@ export const DefaultTheme = {
     image: {marginTop: -60, paddingBottom: 26},
     title: {
       color: Colors.Black,
-      fontFamily: 'Inter_600SemiBold',
+      fontFamily: 'Inter SemiBold',
       fontSize: 18,
       lineHeight: 21,
       paddingTop: 4,
@@ -1525,7 +1533,7 @@ export const DefaultTheme = {
     },
     message: {
       textAlign: 'center',
-      fontFamily: 'Inter_400Regular',
+      fontFamily: 'Inter Regular',
       fontSize: 14,
       lineHeight: 20,
       marginTop: 6,
@@ -1571,7 +1579,7 @@ export const DefaultTheme = {
     },
     heading: {
       color: 'black',
-      fontFamily: 'Inter_700Bold',
+      fontFamily: 'Inter Bold',
       fontSize: 18,
       lineHeight: 19,
       padding: 10,
@@ -1639,12 +1647,12 @@ export const DefaultTheme = {
     biometricIntroOuterColumn: {
       borderRadius: 30,
       maxHeight: 600,
-      maxWidth:350,
+      maxWidth: 350,
       minHeight: 600,
-      minWidth:350,
+      minWidth: 350,
       borderColor: Colors.Black,
       borderWidth: 12,
-      overflow: 'hidden', 
+      overflow: 'hidden',
     },
     quickAccessIntroOuterView: {
       borderRadius: 30,
@@ -1718,16 +1726,16 @@ export const DefaultTheme = {
     purposeText: {
       fontSize: 13,
       position: 'relative',
-      fontFamily: 'Inter_500Medium',
+      fontFamily: 'Inter Medium',
     },
     cardsSelectedText: {
-      fontFamily: 'Inter_500Medium',
+      fontFamily: 'Inter Medium',
       color: '#000000',
       fontSize: 14,
     },
     selectIDText: {
       position: 'relative',
-      fontFamily: 'Inter_600SemiBold',
+      fontFamily: 'Inter SemiBold',
       fontSize: 16,
     },
   }),
@@ -1747,11 +1755,11 @@ export const DefaultTheme = {
       justifyContent: 'space-between',
     },
     bannerTitle: {
-      fontFamily: 'Inter_600SemiBold',
+      fontFamily: 'Inter SemiBold',
     },
     bannerGuide: {
       opacity: 0.8,
-      fontFamily: 'Inter_400Regular',
+      fontFamily: 'Inter Regular',
     },
     bannerEnablePermissionContainer: {
       marginTop: 15,
@@ -1759,7 +1767,7 @@ export const DefaultTheme = {
     bannerEnablePermission: {
       borderBottomWidth: 1.5,
       borderBottomColor: Colors.White,
-      fontFamily: 'Inter_600SemiBold',
+      fontFamily: 'Inter SemiBold',
     },
     scannerContainer: {
       borderRadius: 24,
@@ -1814,14 +1822,14 @@ export const DefaultTheme = {
     },
     holdPhoneSteadyText: {
       color: Colors.Black,
-      fontFamily: 'Inter_600SemiBold',
+      fontFamily: 'Inter SemiBold',
       fontSize: 15,
     },
     cameraFlipIcon: {
       height: 50,
       width: 50,
     },
-    iconText: {fontFamily: 'Inter_600SemiBold', fontSize: 12, marginTop: 6},
+    iconText: {fontFamily: 'Inter SemiBold', fontSize: 12, marginTop: 6},
   }),
 
   BottomTabBarStyle: StyleSheet.create({
@@ -1829,7 +1837,7 @@ export const DefaultTheme = {
     headerLeftContainerStyle: {paddingEnd: 13},
     tabBarLabelStyle: {
       fontSize: 12,
-      fontFamily: 'Inter_600SemiBold',
+      fontFamily: 'Inter SemiBold',
     },
     tabBarStyle: {
       display: 'flex',
@@ -1910,14 +1918,14 @@ export const DefaultTheme = {
   ICON_SMALL_SIZE: 16,
   ICON_MID_SIZE: 22,
   ICON_LARGE_SIZE: 33,
-  CloseCard: require('../../../assets/Card_Bg1.png'),
-  OpenCard: require('../../../assets/Card_Bg1.png'),
-  IntroWelcome: require('../../../assets/biometricIntro.png'),
-  SecureSharing: require('../../../assets/secureSharing.png'),
-  DigitalWallet: require('../../../assets/trustedDigitalWallet.png'),
-  IntroShare: require('../../../assets/quickAccess.png'),
-  IntroBackup: require('../../../assets/backupRestoreIntro.png'),
-  IntroSliderbackground: require('../../../assets/IntroBg.png'),
+  CloseCard: require('../../../assets/images/png/Card_Bg1.png'),
+  OpenCard: require('../../../assets/images/png/Card_Bg1.png'),
+  IntroWelcome: require('../../../assets/images/png/biometricIntro.png'),
+  SecureSharing: require('../../../assets/images/png/secureSharing.png'),
+  DigitalWallet: require('../../../assets/images/png/trustedDigitalWallet.png'),
+  IntroShare: require('../../../assets/images/png/quickAccess.png'),
+  IntroBackup: require('../../../assets/images/png/backupRestoreIntro.png'),
+  IntroSliderbackground: require('../../../assets/images/png/IntroBg.png'),
   HomeScreenLogo: HomeScreenLogo,
   InjiLogoSmall: InjiLogoSmall,
   elevation(level: ElevationLevel): ViewStyle {

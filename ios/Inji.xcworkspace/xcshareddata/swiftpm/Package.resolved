@@ -1,15 +1,6 @@
 {
-  "originHash" : "89c09865ed302674a6eacbfdc15bccfb27aca83c6e960244a525461f6336a126",
+  "originHash" : "178f6c7c607eeb08b99a4966015d08339500de64791888a2e79d6b7afae53659",
   "pins" : [
-    {
-      "identity" : "alamofire",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/Alamofire/Alamofire.git",
-      "state" : {
-        "revision" : "513364f870f6bfc468f9d2ff0a95caccc10044c5",
-        "version" : "5.10.2"
-      }
-    },
     {
       "identity" : "base45-swift",
       "kind" : "remoteSourceControl",
@@ -29,15 +20,6 @@
       }
     },
     {
-      "identity" : "cryptoswift",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/krzyzanowskim/CryptoSwift.git",
-      "state" : {
-        "revision" : "729e01bc9b9dab466ac85f21fb9ee2bc1c61b258",
-        "version" : "1.8.4"
-      }
-    },
-    {
       "identity" : "gzipswift",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/1024jp/GzipSwift",
@@ -52,52 +34,34 @@
       "location" : "https://github.com/mosip/inji-openid4vp-ios-swift",
       "state" : {
         "branch" : "develop",
-        "revision" : "4142ba467387113843fc5f83a0448c6cc99731f0"
+        "revision" : "7529cd4b0342f8d5c98c37f7ed3961b7073bf730"
       }
     },
     {
       "identity" : "inji-vci-client-ios-swift",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/mosip/inji-vci-client-ios-swift.git",
+      "location" : "https://github.com/mosip/inji-vci-client-ios-swift",
       "state" : {
         "branch" : "develop",
-        "revision" : "d283c4f7951165328c6fd24b1c758baa766af74c"
-      }
-    },
-    {
-      "identity" : "jose-swift",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/beatt83/jose-swift.git",
-      "state" : {
-        "revision" : "57fe5a03c83feaf73a84b23c02e641f86482e313",
-        "version" : "4.0.2"
+        "revision" : "5fe56728106cffc8eff47e43437f288307c9d91b"
       }
     },
     {
       "identity" : "pixelpass-ios-swift",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/mosip/pixelpass-ios-swift.git",
+      "location" : "https://github.com/mosip/pixelpass-ios-swift",
       "state" : {
-        "branch" : "release-0.6.x",
-        "revision" : "15249dc4eecb7c2b6e6074193d3928b3402c9d20"
-      }
-    },
-    {
-      "identity" : "secp256k1.swift",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/GigaBitcoin/secp256k1.swift.git",
-      "state" : {
-        "revision" : "4c77c7384768acf1093d66ccaacf298d322b10b7",
-        "version" : "0.15.0"
+        "branch" : "develop",
+        "revision" : "7111692893287015599e4e0297bcade6a5375527"
       }
     },
     {
       "identity" : "secure-keystore-ios-swift",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/mosip/secure-keystore-ios-swift.git",
+      "location" : "https://github.com/mosip/secure-keystore-ios-swift",
       "state" : {
-        "revision" : "1ea5182ca985302d11010b7a16ea496167969ab3",
-        "version" : "0.3.0"
+        "branch" : "develop",
+        "revision" : "767b9dabd1a0cd374732ee97cb7cf34dd051acc1"
       }
     },
     {
@@ -105,17 +69,17 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/valpackett/SwiftCBOR",
       "state" : {
-        "revision" : "04ccff117f6549121d5721ec84fdf0162122b90e",
-        "version" : "0.5.0"
+        "branch" : "master",
+        "revision" : "ec24382864e5ffc6d3915c0818745d5ab12545a8"
       }
     },
     {
       "identity" : "tuvali-ios-swift",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/mosip/tuvali-ios-swift.git",
+      "location" : "https://github.com/mosip/tuvali-ios-swift/",
       "state" : {
-        "revision" : "2d49e123f70dfc2179983a753d370cc2212385db",
-        "version" : "0.5.0"
+        "branch" : "develop",
+        "revision" : "96bc662cd07df051cf2357691469bba57b0217e8"
       }
     },
     {
@@ -128,5 +92,5 @@
       }
     }
   ],
-  "version" : 2
+  "version" : 3
 }

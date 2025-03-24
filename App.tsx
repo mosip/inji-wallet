@@ -1,6 +1,5 @@
 import React, {useContext, useEffect} from 'react';
 import {AppLayout} from './screens/AppLayout';
-import {useFont} from './shared/hooks/useFont';
 import {GlobalContextProvider} from './components/GlobalContextProvider';
 import {GlobalContext} from './shared/GlobalContext';
 import {useSelector} from '@xstate/react';
@@ -52,7 +51,7 @@ const AppLayoutWrapper: React.FC = () => {
   const isDecryptError = useSelector(appService, selectIsDecryptError);
   const controller = useApp();
   const {t} = useTranslation('WelcomeScreen');
-
+  console.log('appstate', AppState.currentState);
   useEffect(() => {
     if (AppState.currentState === 'active') {
       appService.send(APP_EVENTS.ACTIVE());
@@ -116,7 +115,6 @@ const AppLoadingWrapper: React.FC = () => {
 const AppInitialization: React.FC = () => {
   const {appService} = useContext(GlobalContext);
   const isReady = useSelector(appService, selectIsReady);
-  const hasFontsLoaded = useFont();
   const {t} = useTranslation('common');
 
   useEffect(() => {
@@ -128,11 +126,7 @@ const AppInitialization: React.FC = () => {
     }
   }, [i18n.language]);
 
-  return isReady && hasFontsLoaded ? (
-    <AppLayoutWrapper />
-  ) : (
-    <AppLoadingWrapper />
-  );
+  return isReady ? <AppLayoutWrapper /> : <AppLoadingWrapper />;
 };
 
 export default function App() {

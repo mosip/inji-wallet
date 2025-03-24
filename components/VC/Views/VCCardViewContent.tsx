@@ -1,5 +1,6 @@
 import React from 'react';
-import {ImageBackground, Pressable, Image, View} from 'react-native';
+import {ImageBackground, Pressable, View} from 'react-native';
+import {Image} from 'expo-image';
 import {VCMetadata} from '../../../shared/VCMetadata';
 import {KebabPopUp} from '../../KebabPopUp';
 import {Credential} from '../../../machines/VerifiableCredential/VCMetaMachine/vc';
@@ -22,7 +23,8 @@ import testIDProps from '../../../shared/commonUtil';
 
 export const VCCardViewContent: React.FC<VCItemContentProps> = props => {
   const wellknownDisplayProperty = new Display(props.wellknown);
-
+  const blurhash =
+    '|rF?hV%2WCj[ayj[a|j[az_NaeWBj@ayfRayfQfQM{M|azj[azf6fQfQfQIpWXofj[ayj[j[fQayWCoeoeaya}j[ayfQa{oLj?j[WVj[ayayj[fQoff7azayj[ayj[j[ayofayayayj[fQj[ayayj[ayfjj[j[ayjuayj[';
   const vcSelectableButton =
     props.selectable &&
     (props.flow === VCItemContainerFlowType.VP_SHARE ? (
@@ -95,11 +97,10 @@ export const VCCardViewContent: React.FC<VCItemContentProps> = props => {
           {isVCLoaded(props.credential, props.fields) && (
             <Image
               {...testIDProps('issuerLogo')}
-              src={issuerLogo?.url}
+              source={require('../../../assets/images/png/IntroBg.png')}
               alt={issuerLogo?.alt_text}
               style={Theme.Styles.issuerLogo}
-              resizeMethod="scale"
-              resizeMode="contain"
+              contentFit="cover"
             />
           )}
 

@@ -11,6 +11,7 @@ import {
 } from 'react-native';
 import {Theme, ElevationLevel, Spacing} from './styleUtils';
 import testIDProps from '../../shared/commonUtil';
+import {Gesture, GestureHandlerRootView} from 'react-native-gesture-handler';
 
 function createLayout(
   direction: FlexStyle['flexDirection'],
@@ -48,12 +49,14 @@ function createLayout(
     const ViewType = props.safe ? SafeAreaView : View;
 
     return props.scroll ? (
-      <ScrollView
-        {...testIDProps(props.testID)}
-        contentContainerStyle={styles}
-        refreshControl={props.refreshControl}>
-        {props.children}
-      </ScrollView>
+      <GestureHandlerRootView>
+        <ScrollView
+          {...testIDProps(props.testID)}
+          contentContainerStyle={styles}
+          refreshControl={props.refreshControl}>
+          {props.children}
+        </ScrollView>
+      </GestureHandlerRootView>
     ) : (
       <ViewType {...testIDProps(props.testID)} style={styles}>
         {props.children}

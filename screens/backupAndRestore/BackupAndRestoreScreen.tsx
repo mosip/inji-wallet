@@ -21,7 +21,8 @@ import testIDProps, {
 import {HelpScreen} from '../../components/HelpScreen';
 import {isAndroid, isIOS} from '../../shared/constants';
 import LinearGradient from 'react-native-linear-gradient';
-import { HelpIcon } from '../../components/ui/HelpIcon';
+import {HelpIcon} from '../../components/ui/HelpIcon';
+import {GestureHandlerRootView} from 'react-native-gesture-handler';
 
 const BackupAndRestoreScreen: React.FC<BackupAndRestoreProps> = props => {
   const backupController = useBackupScreen();
@@ -210,10 +211,7 @@ const BackupAndRestoreScreen: React.FC<BackupAndRestoreProps> = props => {
       headerElevation={2}
       arrowLeft={true}
       headerRight={
-        <HelpScreen
-          source={'BackUp'}
-          triggerComponent={HelpIcon()}
-        />
+        <HelpScreen source={'BackUp'} triggerComponent={HelpIcon()} />
       }
       onDismiss={props.onBackPress}>
       <BannerNotificationContainer />
@@ -227,11 +225,13 @@ const BackupAndRestoreScreen: React.FC<BackupAndRestoreProps> = props => {
             <LoaderAnimation testID="backupAndRestoreScreen" />
           </Column>
         ) : (
-          <ScrollView>
-            {LastBackupSection}
-            {AccountSection}
-            {RestoreSection}
-          </ScrollView>
+          <GestureHandlerRootView>
+            <ScrollView>
+              {LastBackupSection}
+              {AccountSection}
+              {RestoreSection}
+            </ScrollView>
+          </GestureHandlerRootView>
         )}
       </View>
     </Modal>

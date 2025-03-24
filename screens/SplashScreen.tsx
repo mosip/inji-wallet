@@ -1,16 +1,16 @@
 import {Dimensions} from 'react-native';
 import {RootRouteProps} from '../routes';
-import {Image} from 'react-native-elements';
+import {Image} from 'react-native';
 import React, {useEffect} from 'react';
-import {APPLICATION_THEME} from 'react-native-dotenv';
+import {APPLICATION_THEME} from '@env';
 import {Column} from '../components/ui';
 import {useAppLayout} from './AppLayoutController';
 
 export const SplashScreen: React.FC<RootRouteProps> = props => {
   const imageResource =
     APPLICATION_THEME?.toLowerCase() === 'purple'
-      ? require('../assets/purpleSplashScreen.png')
-      : require('../assets/SplashScreen.png');
+      ? require('../assets/images/png/purpleSplashScreen.png')
+      : require('../assets/images/png/SplashScreen.png');
   const controller = useAppLayout();
   useEffect(() => {
     setTimeout(() => {
@@ -21,7 +21,6 @@ export const SplashScreen: React.FC<RootRouteProps> = props => {
       }
     }, 3000);
   }, [controller.isAuthorized || controller.isLanguagesetup]);
-
   return (
     <Column
       crossAlign="center"
@@ -34,7 +33,7 @@ export const SplashScreen: React.FC<RootRouteProps> = props => {
       <Image
         resizeMode="stretch"
         style={{width: 400, height: 450}}
-        source={imageResource}
+        source={17}
       />
     </Column>
   );

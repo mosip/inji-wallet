@@ -66,7 +66,10 @@ export const SendVPScreen: React.FC<ScanLayoutProps> = props => {
           <View style={Theme.Styles.sendVPHeaderContainer}>
             <Text style={Theme.Styles.sendVPHeaderTitle}>{props.children}</Text>
             {controller.vpVerifierName && (
-              <Text numLines={1} ellipsizeMode="tail" style={Theme.Styles.sendVPHeaderSubTitle}>
+              <Text
+                numLines={1}
+                ellipsizeMode="tail"
+                style={Theme.Styles.sendVPHeaderSubTitle}>
                 {controller.vpVerifierName}
               </Text>
             )}
@@ -164,7 +167,7 @@ export const SendVPScreen: React.FC<ScanLayoutProps> = props => {
               <Text
                 style={{
                   color: Theme.Colors.Icon,
-                  fontFamily: 'Inter_600SemiBold',
+                  fontFamily: 'Inter SemiBold',
                 }}
                 onPress={
                   areAllVcsChecked
