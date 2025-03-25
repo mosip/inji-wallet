@@ -8,16 +8,17 @@ import testIDProps from '../shared/commonUtil';
 import {SvgImage} from './ui/svg';
 import {NativeModules} from 'react-native';
 import {VerifiableCredential} from '../machines/VerifiableCredential/VCMetaMachine/vc';
-import {BASE64_IMAGE_PREFIX, MAX_QR_DATA_LENGTH} from '../shared/constants';
+import {MAX_QR_DATA_LENGTH} from '../shared/constants';
 import {VCMetadata} from '../shared/VCMetadata';
 import {shareImageToAllSupportedApps} from '../shared/sharing/imageUtils';
 import {ShareOptions} from 'react-native-share';
+import ShimmerPlaceholder from 'react-native-shimmer-placeholder';
+import LinearGradient from 'react-native-linear-gradient';
 
 export const QrCodeOverlay: React.FC<QrCodeOverlayProps> = props => {
   const {RNPixelpassModule} = NativeModules;
   const {t} = useTranslation('VcDetails');
   const [qrString, setQrString] = useState('');
-  const [qrError, setQrError] = useState(false);
   const base64ImageType = 'data:image/png;base64,';
   const {RNSecureKeystoreModule} = NativeModules;
 
@@ -59,17 +60,16 @@ export const QrCodeOverlay: React.FC<QrCodeOverlayProps> = props => {
   useEffect(() => {
     (async () => {
       const qrData = await getQRData();
-      setQrString(BASE64_IMAGE_PREFIX + qrData);
+      setQrString(base64ImageType + qrData);
     })();
   }, []);
   const [isQrOverlayVisible, setIsQrOverlayVisible] = useState(false);
 
   const toggleQrOverlay = () => setIsQrOverlayVisible(!isQrOverlayVisible);
   return (
-    qrString != '' &&
-    !qrError && (
-      <React.Fragment>
-        <View testID="qrCodeView" style={Theme.QrCodeStyles.QrView}>
+    <React.Fragment>
+      <View testID="qrCodeView" style={Theme.QrCodeStyles.QrView}>
+        {qrString != '' ? (
           <Pressable
             {...testIDProps('qrCodePressable')}
             accessible={false}
@@ -85,55 +85,62 @@ export const QrCodeOverlay: React.FC<QrCodeOverlayProps> = props => {
               {SvgImage.MagnifierZoom()}
             </View>
           </Pressable>
-        </View>
+        ) : (
+          <ShimmerPlaceholder
+            LinearGradient={LinearGradient}
+            width={72}
+            height={72}
+            style={{borderRadius: 5, marginTop: 5}}
+          />
+        )}
+      </View>
 
-        <Overlay
-          isVisible={isQrOverlayVisible}
-          onBackdropPress={toggleQrOverlay}
-          overlayStyle={{padding: 1, borderRadius: 21}}>
-          <Column style={Theme.QrCodeStyles.expandedQrCode}>
-            <Row pY={20} style={Theme.QrCodeStyles.QrCodeHeader}>
-              <Text
-                testID="qrCodeHeader"
-                align="center"
-                style={Theme.TextStyles.header}
-                weight="bold">
-                {t('qrCodeHeader')}
-              </Text>
-              <Icon
-                {...testIDProps('qrCodeCloseIcon')}
-                name="close"
-                onPress={toggleQrOverlay}
-                color={Theme.Colors.Details}
-                size={32}
-              />
-            </Row>
-            <Centered testID="qrCodeDetails" pY={30}>
-              <Image
-                testID="qrCodeExpandedView"
-                source={{uri: qrString}}
-                style={{width: 300, height: 300}}
-              />
-              <Button
-                testID="share"
-                styles={Theme.QrCodeStyles.shareQrCodeButton}
-                title={t('shareQRCode')}
-                type="gradient"
-                icon={
-                  <Icon
-                    name="share-variant-outline"
-                    type="material-community"
-                    size={24}
-                    color="white"
-                  />
-                }
-                onPress={handleShareQRCodePress}
-              />
-            </Centered>
-          </Column>
-        </Overlay>
-      </React.Fragment>
-    )
+      <Overlay
+        isVisible={isQrOverlayVisible}
+        onBackdropPress={toggleQrOverlay}
+        overlayStyle={{padding: 1, borderRadius: 21}}>
+        <Column style={Theme.QrCodeStyles.expandedQrCode}>
+          <Row pY={20} style={Theme.QrCodeStyles.QrCodeHeader}>
+            <Text
+              testID="qrCodeHeader"
+              align="center"
+              style={Theme.TextStyles.header}
+              weight="bold">
+              {t('qrCodeHeader')}
+            </Text>
+            <Icon
+              {...testIDProps('qrCodeCloseIcon')}
+              name="close"
+              onPress={toggleQrOverlay}
+              color={Theme.Colors.Details}
+              size={32}
+            />
+          </Row>
+          <Centered testID="qrCodeDetails" pY={30}>
+            <Image
+              testID="qrCodeExpandedView"
+              source={{uri: qrString}}
+              style={{width: 300, height: 300}}
+            />
+            <Button
+              testID="share"
+              styles={Theme.QrCodeStyles.shareQrCodeButton}
+              title={t('shareQRCode')}
+              type="gradient"
+              icon={
+                <Icon
+                  name="share-variant-outline"
+                  type="material-community"
+                  size={24}
+                  color="white"
+                />
+              }
+              onPress={handleShareQRCodePress}
+            />
+          </Centered>
+        </Column>
+      </Overlay>
+    </React.Fragment>
   );
 };
 
