@@ -2,7 +2,8 @@ package io.mosip.residentapp;
 
 import io.mosip.pixelpass.PixelPass;
 import io.mosip.pixelpass.cbor.Utils;
-
+import io.mosip.pixelpass.types.ECC;
+import io.mosip.pixelpass.exception.QrDataOverflowException;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
@@ -40,6 +41,19 @@ public class RNPixelpassModule extends ReactContextBaseJavaModule {
             promise.reject("ERROR_GENERATING_QR", "Failed to generate QR Data: " + e);
         }
     }
+
+    @ReactMethod
+    public void generateQRCodeWithinLimit(int allowedQRDataSizeLimit, String data, String header, Promise promise) {
+        try {
+            String qrData = pixelPass.generateQRCodeWithinLimit(allowedQRDataSizeLimit, data, ECC.L, header);
+            promise.resolve(qrData);
+        } catch (QrDataOverflowException e) {
+            promise.reject("QR_DATA_OVERFLOW", "QR data exceeds the allowed size limit.");
+        } catch (Exception e) {
+            promise.reject("ERROR_GENERATING_QR", "Failed to generate QR Data: " + e);
+        }
+    }
+
 
     @ReactMethod
     public void decodeBase64UrlEncodedCBORData(String data, Promise promise) {

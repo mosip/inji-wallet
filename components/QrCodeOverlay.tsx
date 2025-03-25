@@ -1,15 +1,14 @@
 import React, {useEffect, useRef, useState} from 'react';
-import {Pressable, View} from 'react-native';
+import {Image, Pressable, View} from 'react-native';
 import {Icon, Overlay} from 'react-native-elements';
 import {Centered, Column, Row, Text, Button} from './ui';
-import QRCode from 'react-native-qrcode-svg';
 import {Theme} from './ui/styleUtils';
 import {useTranslation} from 'react-i18next';
 import testIDProps from '../shared/commonUtil';
 import {SvgImage} from './ui/svg';
 import {NativeModules} from 'react-native';
 import {VerifiableCredential} from '../machines/VerifiableCredential/VCMetaMachine/vc';
-import {DEFAULT_ECL, MAX_QR_DATA_LENGTH} from '../shared/constants';
+import {BASE64_IMAGE_PREFIX, MAX_QR_DATA_LENGTH} from '../shared/constants';
 import {VCMetadata} from '../shared/VCMetadata';
 import {shareImageToAllSupportedApps} from '../shared/sharing/imageUtils';
 import {ShareOptions} from 'react-native-share';
@@ -33,7 +32,8 @@ export const QrCodeOverlay: React.FC<QrCodeOverlayProps> = props => {
       }
     } catch {
       const {credential} = props.verifiableCredential;
-      qrData = await RNPixelpassModule.generateQRData(
+      qrData = await RNPixelpassModule.generateQRCodeWithinLimit(
+        MAX_QR_DATA_LENGTH,
         JSON.stringify(credential),
         '',
       );
@@ -42,12 +42,8 @@ export const QrCodeOverlay: React.FC<QrCodeOverlayProps> = props => {
     return qrData;
   }
 
-  let qrRef = useRef(null);
-
   function handleShareQRCodePress() {
-    qrRef.current.toDataURL(dataURL => {
-      shareImage(`${base64ImageType}${dataURL}`);
-    });
+    shareImage(qrString);
   }
 
   async function shareImage(base64String: string) {
@@ -60,19 +56,10 @@ export const QrCodeOverlay: React.FC<QrCodeOverlayProps> = props => {
     }
   }
 
-  function onQRError() {
-    console.warn('Data is too big');
-    setQrError(true);
-  }
-
   useEffect(() => {
     (async () => {
       const qrData = await getQRData();
-      if (qrData?.length < MAX_QR_DATA_LENGTH) {
-        setQrString(qrData);
-      } else {
-        setQrError(true);
-      }
+      setQrString(BASE64_IMAGE_PREFIX + qrData);
     })();
   }, []);
   const [isQrOverlayVisible, setIsQrOverlayVisible] = useState(false);
@@ -87,13 +74,10 @@ export const QrCodeOverlay: React.FC<QrCodeOverlayProps> = props => {
             {...testIDProps('qrCodePressable')}
             accessible={false}
             onPress={toggleQrOverlay}>
-            <QRCode
-              {...testIDProps('qrCode')}
-              size={72}
-              value={qrString}
-              backgroundColor={Theme.Colors.QRCodeBackgroundColor}
-              ecl={DEFAULT_ECL}
-              onError={onQRError}
+            <Image
+              testID="qrCode"
+              source={{uri: qrString}}
+              style={{width: 72, height: 72}}
             />
             <View
               testID="magnifierZoom"
@@ -125,15 +109,10 @@ export const QrCodeOverlay: React.FC<QrCodeOverlayProps> = props => {
               />
             </Row>
             <Centered testID="qrCodeDetails" pY={30}>
-              <QRCode
-                {...testIDProps('qrCodeExpandedView')}
-                size={300}
-                value={qrString}
-                backgroundColor={Theme.Colors.QRCodeBackgroundColor}
-                ecl={DEFAULT_ECL}
-                quietZone={10}
-                onError={onQRError}
-                getRef={data => (qrRef.current = data)}
+              <Image
+                testID="qrCodeExpandedView"
+                source={{uri: qrString}}
+                style={{width: 300, height: 300}}
               />
               <Button
                 testID="share"
