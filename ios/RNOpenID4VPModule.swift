@@ -48,16 +48,40 @@ class RNOpenId4VpModule: NSObject, RCTBridgeModule {
   }
   
   @objc
-  func constructVerifiablePresentationToken(_ credentialsMap: AnyObject, resolver resolve: @escaping RCTPromiseResolveBlock, rejecter reject: @escaping RCTPromiseRejectBlock) {
+  func constructUnsignedVPToken(_ credentialsMap: AnyObject, resolver resolve: @escaping RCTPromiseResolveBlock, rejecter reject: @escaping RCTPromiseRejectBlock) {
     Task {
       do {
-        guard let credentialsMap = credentialsMap as? [String:[String]] else {
+        guard let credentialsMap = credentialsMap as? [String: [String: Array<Any>]] else {
           reject("OPENID4VP", "Invalid credentials map format", nil)
           return
         }
         
-        let response = try await openID4VP?.constructVerifiablePresentationToken(credentialsMap: credentialsMap)
-        resolve(response)
+        let formattedCredentialsMap = credentialsMap.mapValues { selectedVcsFormatMap -> [FormatType: [Any]] in
+          selectedVcsFormatMap.reduce(into: [:]) { result, entry in
+            let (credentialFormat, credentialsArray) = entry
+            switch FormatType(rawValue: credentialFormat) {
+            case .ldp_vc:
+              result[.ldp_vc] = credentialsArray
+            default:
+              reject("OPENID4VP", "Credential format is not supported for OVP", nil)
+            }
+          }
+        }
+        
+        let response = try await openID4VP?.constructUnsignedVPToken(credentialsMap: formattedCredentialsMap)
+        let encodableDict = response?.mapKeys { $0.rawValue }
+          .mapValues { EncodableWrapper($0) }
+        
+        do {
+          let jsonData = try JSONEncoder().encode(encodableDict) // Convert Enum to String
+          if let jsonObject = try JSONSerialization.jsonObject(with: jsonData, options: []) as? [String: Any] {
+            resolve(jsonObject)
+          } else {
+            reject("ERROR", "Failed to serialize JSON", nil)
+          }
+        } catch {
+          reject("ENCODING_ERROR", error.localizedDescription, nil)
+        }
         
       } catch {
         reject("OPENID4VP", error.localizedDescription, error)
@@ -66,26 +90,34 @@ class RNOpenId4VpModule: NSObject, RCTBridgeModule {
   }
   
   @objc
-  func shareVerifiablePresentation(_ vpResponseMetadata: AnyObject, resolver resolve: @escaping RCTPromiseResolveBlock, rejecter reject: @escaping RCTPromiseRejectBlock) {
+  func shareVerifiablePresentation(_ vpResponsesMetadata: [String: Any], resolver resolve: @escaping RCTPromiseResolveBlock, rejecter reject: @escaping RCTPromiseRejectBlock) {
     Task {
       do {
-        guard let vpResponse = vpResponseMetadata as? [String:String] else {
-          reject("OPENID4VP", "Invalid vp response meta format", nil)
-          return
+        var formattedVPResponsesMetadata: [FormatType: VPResponseMetadata] = [:]
+        
+        for (credentialFormat, vpResponseMetadata) in vpResponsesMetadata {
+          switch credentialFormat {
+          case FormatType.ldp_vc.rawValue:
+            guard let vpResponse = vpResponseMetadata as? [String:Any] else {
+              reject("OPENID4VP", "Invalid vp response meta format", nil)
+              return
+            }
+            guard let jws = vpResponse["jws"] as! String?,
+                  let signatureAlgorithm = vpResponse["signatureAlgorithm"] as! String?,
+                  let publicKey = vpResponse["publicKey"] as! String?,
+                  let domain = vpResponse["domain"] as! String?
+            else {
+              reject("OPENID4VP", "Invalid vp response metadata", nil)
+              return
+            }
+            
+            formattedVPResponsesMetadata[FormatType.ldp_vc] = LdpVPResponseMetadata(jws: jws, signatureAlgorithm: signatureAlgorithm, publicKey: publicKey, domain: domain)
+          default:
+            reject("OPENID4VP", "Invalid vp response meta format", nil)
+          }
         }
         
-        guard let jws = vpResponse["jws"] as String?,
-              let signatureAlgorithm = vpResponse["signatureAlgorithm"] as String?,
-              let publicKey = vpResponse["publicKey"] as String?,
-              let domain = vpResponse["domain"] as String?
-        else {
-          reject("OPENID4VP", "Invalid vp response metat", nil)
-          return
-        }
-        
-        let vpResponseMeta = VPResponseMetadata(jws: jws, signatureAlgorithm: signatureAlgorithm, publicKey: publicKey, domain: domain)
-        
-        let response = try await openID4VP?.shareVerifiablePresentation(vpResponseMetadata: vpResponseMeta)
+        let response = try await openID4VP?.shareVerifiablePresentation(vpResponsesMetadata: formattedVPResponsesMetadata)
         
         resolve(response)
       } catch {
@@ -123,4 +155,22 @@ class RNOpenId4VpModule: NSObject, RCTBridgeModule {
     return true
   }
   
+}
+
+struct EncodableWrapper: Encodable {
+  private let value: Encodable
+  
+  init(_ value: Encodable) {
+    self.value = value
+  }
+  
+  func encode(to encoder: Encoder) throws {
+    try value.encode(to: encoder)
+  }
+}
+
+extension Dictionary {
+  func mapKeys<T: Hashable>(_ transform: (Key) -> T) -> [T: Value] {
+    Dictionary<T, Value>(uniqueKeysWithValues: map { (transform($0.key), $0.value) })
+  }
 }

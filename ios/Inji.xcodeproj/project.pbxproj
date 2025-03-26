@@ -16,7 +16,7 @@
 		1EC3952A2D50C9470022D979 /* pixelpass in Frameworks */ = {isa = PBXBuildFile; productRef = 1EC395292D50C9470022D979 /* pixelpass */; };
 		1EC3952D2D50C9820022D979 /* ios-tuvali-library in Frameworks */ = {isa = PBXBuildFile; productRef = 1EC3952C2D50C9820022D979 /* ios-tuvali-library */; };
 		1EC395302D50C99E0022D979 /* securekeystore in Frameworks */ = {isa = PBXBuildFile; productRef = 1EC3952F2D50C99E0022D979 /* securekeystore */; };
-		3482783B2D6F221B0074938B /* OpenID4VP in Frameworks */ = {isa = PBXBuildFile; productRef = 3482783A2D6F221B0074938B /* OpenID4VP */; };
+		34EC7A062D93F9D800F50036 /* OpenID4VP in Frameworks */ = {isa = PBXBuildFile; productRef = 3407B0FF2D706EE1003089E6 /* OpenID4VP */; };
 		3E461D99554A48A4959DE609 /* SplashScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AA286B85B6C04FC6940260E9 /* SplashScreen.storyboard */; };
 		73295844242A4AD3AA52D0BE /* noop-file.swift in Sources */ = {isa = PBXBuildFile; fileRef = D98B96A488E54CBDB286B26F /* noop-file.swift */; };
 		96905EF65AED1B983A6B3ABC /* libPods-Inji.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 58EEBF8E8E6FB1BC6CAF49B5 /* libPods-Inji.a */; };
@@ -113,9 +113,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				34EC7A062D93F9D800F50036 /* OpenID4VP in Frameworks */,
 				1EC395242D50C89C0022D979 /* VCIClient in Frameworks */,
 				1EC3952A2D50C9470022D979 /* pixelpass in Frameworks */,
-				3407B1002D706EE1003089E6 /* OpenID4VP in Frameworks */,
 				1EC395302D50C99E0022D979 /* securekeystore in Frameworks */,
 				96905EF65AED1B983A6B3ABC /* libPods-Inji.a in Frameworks */,
 				1EC3952D2D50C9820022D979 /* ios-tuvali-library in Frameworks */,

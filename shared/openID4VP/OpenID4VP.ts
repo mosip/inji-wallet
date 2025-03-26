@@ -1,9 +1,10 @@
 import {NativeModules} from 'react-native';
 import {__AppId} from '../GlobalVariables';
-import {VC} from '../../machines/VerifiableCredential/VCMetaMachine/vc';
+import {SelectedCredentialsForVPSharing} from '../../machines/VerifiableCredential/VCMetaMachine/vc';
 import {getJWT} from '../cryptoutil/cryptoUtil';
 import {getJWK} from '../openId4VCI/Utils';
 import getAllConfigurations from '../api';
+import {parseJSON} from "../Utils";
 
 export const OpenID4VP_Key_Ref = 'OpenID4VP_KeyPair';
 export const OpenID4VP_Proof_Sign_Algo_Suite = 'Ed25519Signature2020';
@@ -31,28 +32,36 @@ export class OpenID4VP {
     return JSON.parse(authenticationResponse);
   }
 
-  static async constructVerifiablePresentationToken(
-    selectedVCs: Record<string, VC[]>,
+  private static  stringifyValues = (data: Record<string, Record<string, Array<any>>>): Record<string, Record<string, string[]>> => {
+    return Object.fromEntries(
+        Object.entries(data).map(([key, innerMap]) => [
+          key,
+          Object.fromEntries(
+              Object.entries(innerMap).map(([innerKey, arr]) => [
+                innerKey,
+                arr.map(item => JSON.stringify(item))
+              ])
+          )
+        ])
+    );
+  };
+  static async constructUnsignedVPToken(
+    selectedVCs: SelectedCredentialsForVPSharing,
   ) {
-    let updatedSelectedVCs = {};
-    Object.keys(selectedVCs).forEach(inputDescriptorId => {
-      updatedSelectedVCs[inputDescriptorId] = selectedVCs[
-        inputDescriptorId
-      ].map(vc => JSON.stringify(vc));
-    });
+    let updatedSelectedVCs = this.stringifyValues(selectedVCs);
 
-    const vpToken =
-      await OpenID4VP.InjiOpenID4VP.constructVerifiablePresentationToken(
+    const vpTokens =
+      await OpenID4VP.InjiOpenID4VP.constructUnsignedVPToken(
         updatedSelectedVCs,
       );
-    return vpToken;
+    return parseJSON(vpTokens);
   }
 
   static async shareVerifiablePresentation(
-    vpResponseMetadata: Record<string, string>,
+    vpResponsesMetadata: Record<string, any>,
   ) {
     return await OpenID4VP.InjiOpenID4VP.shareVerifiablePresentation(
-      vpResponseMetadata,
+      vpResponsesMetadata,
     );
   }
 
