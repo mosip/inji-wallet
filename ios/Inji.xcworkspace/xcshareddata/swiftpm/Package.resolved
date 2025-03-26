@@ -2,6 +2,15 @@
   "originHash" : "89c09865ed302674a6eacbfdc15bccfb27aca83c6e960244a525461f6336a126",
   "pins" : [
     {
+      "identity" : "alamofire",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/Alamofire/Alamofire.git",
+      "state" : {
+        "revision" : "513364f870f6bfc468f9d2ff0a95caccc10044c5",
+        "version" : "5.10.2"
+      }
+    },
+    {
       "identity" : "base45-swift",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/ehn-dcc-development/base45-swift",
@@ -43,7 +52,7 @@
       "location" : "https://github.com/mosip/inji-openid4vp-ios-swift",
       "state" : {
         "branch" : "develop",
-        "revision" : "79b8e2acd62219040a56315ab05bef33edead9c9"
+        "revision" : "4142ba467387113843fc5f83a0448c6cc99731f0"
       }
     },
     {
