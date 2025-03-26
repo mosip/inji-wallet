@@ -33,16 +33,6 @@ public class RNPixelpassModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public void generateQRData(String data, String header, Promise promise) {
-        try {
-            String qrData = pixelPass.generateQRData(data, header);
-            promise.resolve(qrData);
-        } catch (Exception e) {
-            promise.reject("ERROR_GENERATING_QR", "Failed to generate QR Data: " + e);
-        }
-    }
-
-    @ReactMethod
     public void generateQRCodeWithinLimit(int allowedQRDataSizeLimit, String data, String header, Promise promise) {
         try {
             String qrData = pixelPass.generateQRCodeWithinLimit(allowedQRDataSizeLimit, data, ECC.L, header);

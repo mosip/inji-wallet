@@ -126,7 +126,7 @@ fileignoreconfig:
   - filename: injitest/src/test/java/iosTestCases/ShareVcTest.java
     checksum: 1cf9b61d3fcea9b63b2b9f7dffe9b5a1848e196c39f77790b6c9d83f201c6197
   - filename: ios/RNPixelpassModule.swift
-    checksum: 822a2421798d5c0669f4ab1b983194eb770cbef2aa30bf212d06bd959738c4ca
+    checksum: e4eaf52f1680476bbb1d318992b39593e534604be22e639c9c8443ab30fdfd64
   - filename: components/BackupAndRestoreAllScreenBanner.tsx
     checksum: 2c98e7e83959c9dac4dd12da32f81483c3d334bd05e279637cf465475fbf54b8
   - filename: locales/en.json
