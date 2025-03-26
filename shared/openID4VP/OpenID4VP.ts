@@ -4,6 +4,7 @@ import {VC} from '../../machines/VerifiableCredential/VCMetaMachine/vc';
 import {getJWT} from '../cryptoutil/cryptoUtil';
 import {getJWK} from '../openId4VCI/Utils';
 import getAllConfigurations from '../api';
+import {walletMetadata} from './walletMetadata';
 
 export const OpenID4VP_Key_Ref = 'OpenID4VP_KeyPair';
 export const OpenID4VP_Proof_Sign_Algo_Suite = 'Ed25519Signature2020';
@@ -26,6 +27,7 @@ export class OpenID4VP {
       await OpenID4VP.InjiOpenID4VP.authenticateVerifier(
         urlEncodedAuthorizationRequest,
         trustedVerifiersList,
+        walletMetadata,
         shouldValidateClient,
       );
     return JSON.parse(authenticationResponse);
