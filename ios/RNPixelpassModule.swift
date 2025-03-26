@@ -6,7 +6,7 @@ class RNPixelpassModule: NSObject, RCTBridgeModule {
     static func moduleName() -> String {
         return "RNPixelpassModule"
     }
-    
+
     @objc
     func decode(_ parameter: String, resolve:  @escaping RCTPromiseResolveBlock, reject: @escaping RCTPromiseRejectBlock) {
         do {
@@ -18,16 +18,23 @@ class RNPixelpassModule: NSObject, RCTBridgeModule {
         }
     }
 
+
+
     @objc
-    func generateQRData(_ data: String, header: String = "", resolve: @escaping RCTPromiseResolveBlock, reject: @escaping RCTPromiseRejectBlock) {
-      if let encodedData = PixelPass().generateQRData(data) {
-            let qrData=encodedData+header
-            resolve(qrData)
-        } else {
-            reject("E_NO_IMAGE", "Unable to generate QR data", nil)
+    func generateQRCodeWithinLimit(allowedQRDataSizeLimit: Int, _ data: String, header: String = "", resolve: @escaping RCTPromiseResolveBlock, reject: @escaping RCTPromiseRejectBlock) {
+        do {
+            if let qrImageData = try PixelPass().generateQRCodeWithinLimit(allowedQRDataSizeLimit: allowedQRDataSizeLimit, data: data, header: header) {
+                resolve(qrImageData.base64EncodedString())
+            } else {
+                reject("E_NO_IMAGE", "Unable to generate QR image", nil)
+            }
+        } catch QRDataOverflowException.customError(let description) {
+            reject("E_QR_DATA_OVERFLOW", description, nil)
+        } catch {
+            reject("E_UNKNOWN_ERROR", "An unknown error occurred", nil)
         }
     }
-  
+
   @objc
   func decodeBase64UrlEncodedCBORData(_ data: String, resolve: @escaping RCTPromiseResolveBlock, reject: @escaping RCTPromiseRejectBlock) {
     do {
@@ -37,7 +44,7 @@ class RNPixelpassModule: NSObject, RCTBridgeModule {
           reject("ERROR_DECODING", "Unable to decode data", nil)
     }
   }
-   
+
   @objc
   static func requiresMainQueueSetup() -> Bool {
     return true;
