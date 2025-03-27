@@ -118,6 +118,7 @@
                     <include name="pinVcInDetailedVcView"/>
                     <include name="verifyActivationFailedRecordInHistory"/>
                     <include name="verifyActivationFailedRecordInHistoryFromDetailedView"/>
+                    <include name="verifyActivateVcWithInvalidOtp"/>
                 </methods>
             </class>
             <class name="iosTestCases.AboutInjiTest">
