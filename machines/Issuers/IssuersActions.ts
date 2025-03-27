@@ -351,5 +351,24 @@ export const IssuersActions = (model: any) => {
         to: context => context.serviceRefs.vcMeta,
       },
     ),
+
+    handleReclaimError: (context: any, event: any) => {
+      console.error('Reclaim verification failed:', event.data);
+      // Check if it's a timeout error
+      if (event.data?.message?.includes('RECLAIM_TIMEOUT')) {
+        // Special handling for timeout errors
+        context.errorMessage =
+          'Reclaim verification timed out. Please try again.';
+      } else {
+        context.errorMessage = `Reclaim verification failed: ${
+          event.data?.message || 'Unknown error'
+        }`;
+      }
+    },
+
+    setReclaimTimeoutError: model.assign({
+      errorMessage: () =>
+        'Reclaim verification timed out after 5 minutes. Please try again.',
+    }),
   };
 };

@@ -43,7 +43,11 @@
 			<key>CFBundleURLSchemes</key>
 			<array>
 				<string>io.mosip.residentapp</string>
+				<string>mosipreclaim</string>
+				<string>io.mosip.residentapp.inji</string>
 			</array>
+			<key>CFBundleURLName</key>
+			<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
