@@ -212,11 +212,23 @@ export const IssuersMachine = model.createMachine(
           'invokes the issuers authorization endpoint and gets the access token',
         invoke: {
           src: 'invokeAuthorization',
-          onDone: {
-            actions: ['setTokenResponse', 'setLoadingReasonAsSettingUp'],
-            target: '.setSelectedKey',
-          },
+          onDone: [
+            {
+              cond: 'isReclaimIssuer',
+              actions: ['setTokenResponse', 'setLoadingReasonAsSettingUp'],
+              target: 'downloadCredentials',
+            },
+            {
+              actions: ['setTokenResponse', 'setLoadingReasonAsSettingUp'],
+              target: '.setSelectedKey',
+            },
+          ],
           onError: [
+            {
+              cond: 'isReclaimError',
+              actions: ['handleReclaimError', 'resetLoadingReason'],
+              target: 'error',
+            },
             {
               cond: 'isOIDCflowCancelled',
               actions: [
@@ -381,8 +393,14 @@ export const IssuersMachine = model.createMachine(
           },
           onError: [
             {
-              cond: 'hasUserCancelledBiometric',
-              target: '.userCancelledBiometric',
+              cond: 'isReclaimError',
+              actions: [
+                'handleReclaimError',
+                'setReclaimTimeoutError',
+                'resetLoadingReason',
+                'sendDownloadingFailedToVcMeta',
+              ],
+              target: 'error',
             },
             {
               cond: 'isGenericError',

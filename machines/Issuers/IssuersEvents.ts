@@ -13,4 +13,5 @@ export const IssuersEvents = {
   STORE_ERROR: (error: Error, requester?: string) => ({error, requester}),
   RESET_VERIFY_ERROR: () => ({}),
   SELECTED_CREDENTIAL_TYPE: (credType: CredentialTypes) => ({credType}),
+  RECLAIM_TIMEOUT: () => ({}),
 };

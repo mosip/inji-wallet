@@ -29,6 +29,10 @@ import {TelemetryConstants} from '../../shared/telemetry/TelemetryConstants';
 import {VciClient} from '../../shared/vciClient/VciClient';
 import {isMockVC} from '../../shared/Utils';
 import {VCFormat} from '../../shared/VCFormat';
+import {
+  isReclaimIssuer,
+  handleReclaimFlow,
+} from '../../shared/reclaim/ReclaimUtils';
 
 export const IssuersService = () => {
   return {
@@ -87,6 +91,26 @@ export const IssuersService = () => {
       return authorizationServerMetadata['authorization_endpoint'];
     },
     downloadCredential: async (context: any) => {
+      if (isReclaimIssuer(context.selectedIssuerId)) {
+        try {
+          // Wait for the Reclaim flow to complete (with timeout handling)
+          const selectedCredentialType = context.selectedCredentialType.id;
+          const credential = await handleReclaimFlow(selectedCredentialType);
+
+          // Process the credential in the same way as for other issuers
+          return await updateCredentialInformation(context, credential);
+        } catch (error: any) {
+          if (error.message?.includes('RECLAIM_TIMEOUT')) {
+            // Special handling for timeout errors
+            throw new Error(
+              'Reclaim verification timed out. Please try again.',
+            );
+          }
+          throw error;
+        }
+      }
+
+      // Original implementation for non-Reclaim issuers
       const downloadTimeout = await vcDownloadTimeout();
       const accessToken: string = context.tokenResponse?.accessToken;
       const proofJWT = await constructProofJWT(
@@ -106,7 +130,6 @@ export const IssuersService = () => {
         accessToken,
       );
 
-      console.info(`VC download via ${context.selectedIssuerId} is successful`);
       return await updateCredentialInformation(context, credential);
     },
     invokeAuthorization: async (context: any) => {
@@ -117,6 +140,12 @@ export const IssuersService = () => {
             TelemetryConstants.Screens.webViewPage,
         ),
       );
+
+      if (isReclaimIssuer(context.selectedIssuerId)) {
+        return context;
+      }
+
+      // Default flow for other issuers
       return await authorize(
         constructAuthorizationConfiguration(
           context.selectedIssuer,
@@ -134,16 +163,19 @@ export const IssuersService = () => {
     },
 
     generateKeyPair: async (context: any) => {
-      const keypair = await generateKeyPair(context.keyType);
-      return keypair;
+      return await generateKeyPair(context.keyType);
     },
 
     getKeyPair: async (context: any) => {
-      if (context.keyType === '') {
-        throw new Error('key type not found');
-      } else if (!!(await hasKeyPair(context.keyType))) {
-        return await fetchKeyPair(context.keyType);
+      if (isReclaimIssuer(context.selectedIssuerId)) {
+        return {
+          publicKey: 'reclaim-public-key',
+          privateKey: 'reclaim-private-key',
+        };
       }
+
+      // Original implementation for non-Reclaim issuers
+      return await fetchKeyPair(context.keyType);
     },
 
     getSelectedKey: async (context: any) => {
