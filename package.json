@@ -3,7 +3,7 @@
     "prepare": "husky install",
     "jetify": "jetify",
     "start": "react-native start",
-    "android:mosip": "react-native run-android --variant=residentappDebug",
+    "android:mosip": "react-native run-android --mode=residentappDebug --terminal terminal",
     "ios": "react-native run-ios",
     "build:android:mosip": "cd android && ./gradlew :app:assembleResidentappRelease && cd ..",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx --fix",
