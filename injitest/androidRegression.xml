@@ -144,6 +144,7 @@
                     <include name="pinSubirdVcMultipleTimes" />
                     <include name="verifyActivationFailedRecordInHistory"/>
                     <include name="verifyActivationFailedRecordInHistoryFromDetailedView"/>
+                    <include name="verifyActivateVcWithInvalidOtp"/>
                 </methods>
             </class>
             <class name="androidTestCases.AboutInjiTest">
