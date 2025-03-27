@@ -144,21 +144,12 @@ public class BackupAndRestorePage extends BasePage {
     }
 
     public void enterEmailTextBox(String fullname) {
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
+
         sendKeysToTextBox(enterEmail, fullname);
     }
 
     public void enterPasswordTextBox(String fullname) {
-        try {
-            basePage.retryToGetElement(enterPassword);
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
+
         basePage.retryToGetElement(enterPassword);
         sendKeysToTextBox(enterPassword, fullname);
     }
@@ -291,7 +282,6 @@ public class BackupAndRestorePage extends BasePage {
     }
 
     public boolean  isBackupFQADisplayed() throws InterruptedException {
-        Thread.sleep(2000);
         String context= driver.getPageSource();
         return context.contains("Why should I take a backup?") && context.contains("What is data backup? ") && context.contains("How to backup to your google account?");
     }

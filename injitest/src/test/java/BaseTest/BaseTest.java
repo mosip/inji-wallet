@@ -1,6 +1,7 @@
 package BaseTest;
 
 
+import inji.api.AdminTestUtil;
 import inji.api.BaseTestCase;
 import io.appium.java_client.AppiumDriver;
 import org.testng.annotations.AfterSuite;
@@ -21,6 +22,7 @@ public class BaseTest {
 
     @AfterSuite(alwaysRun = true)
     public void afterSuite() {
+        AdminTestUtil.deleteInsurance();
     }
 
 }

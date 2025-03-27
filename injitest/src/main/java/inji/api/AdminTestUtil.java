@@ -9,10 +9,13 @@ import org.json.JSONObject;
 import javax.ws.rs.core.MediaType;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.TimeZone;
+import java.time.LocalDate;
+
 
 public class AdminTestUtil extends BaseTestCase {
 
@@ -22,6 +25,10 @@ public class AdminTestUtil extends BaseTestCase {
 	public static String tokenRoleIdRepo = "idrepo";
 	public static String tokenRoleAdmin = "admin";
 	public static boolean initialized = false;
+	public static String generateInsurance = "";
+	public static  String policyNumber = "";
+	public static String fullName = "";
+	public static String insuranceId = "";
 
 	public static String getUnUsedUIN(String role){
 
@@ -246,6 +253,74 @@ public class AdminTestUtil extends BaseTestCase {
 
 		if (responseJson.getJSONObject("response").getString("vidStatus").equalsIgnoreCase("ACTIVE")) {
 			return responseJson.getJSONObject("response").getString("VID");
+		}
+
+		return "";
+	}
+
+	public static String generateInsurance() {
+
+		if (!insuranceId.isEmpty()) {
+			return insuranceId;
+		}
+
+		Response response = null;
+		JSONArray benefitsArray = new JSONArray();
+		JSONObject requestJson = new JSONObject();
+		String currentDate = LocalDate.now().format(DateTimeFormatter.ISO_LOCAL_DATE);
+
+		requestJson.put("policyNumber", "1207205246");
+		requestJson.put("policyName", "automationtest3");
+		requestJson.put("policyExpiresOn", "2033-04-20T20:48:17.684Z");
+		requestJson.put("policyIssuedOn", "2023-04-20T20:48:17.684Z");
+		requestJson.put("fullName", "automationtest3");
+		requestJson.put("dob", currentDate);
+
+		benefitsArray.put("Critical Surgery");
+		benefitsArray.put("Full body checkup");
+
+		requestJson.put("benefits", benefitsArray);
+		requestJson.put("gender", "Male");
+		requestJson.put("mobile", "0123456789");
+		requestJson.put("email", "abcd@gmail.com");
+
+		// Trigger the API call only once
+		response = RestClient.postRequestWithCookie(insuranceUrl, requestJson.toString(), MediaType.APPLICATION_JSON,
+				MediaType.APPLICATION_JSON, BaseTestCase.COOKIENAME, token);
+		JSONObject responseJson = new JSONObject(response.asString());
+
+		System.out.println("responseJson = " + responseJson);
+
+		if (responseJson.getJSONObject("params").getString("status").equalsIgnoreCase("SUCCESSFUL")) {
+			// Set values to the static variables once the API returns a successful response
+			insuranceId = responseJson.getJSONObject("result").getJSONObject("Insurance").getString("osid");
+			policyNumber = requestJson.getString("policyNumber");
+			fullName = requestJson.getString("fullName");
+
+			return insuranceId;
+		}
+
+		return "";
+	}
+
+
+
+
+	public static String deleteInsurance() {
+
+		Response response = null;
+		JSONArray benefitsArray = new JSONArray();
+		JSONObject requestJson = new JSONObject();
+
+		response = RestClient.deleteRequestWithParam(insuranceUrl+"/"+insuranceId, "insuranceid",insuranceId,MediaType.APPLICATION_JSON,
+				MediaType.APPLICATION_JSON, BaseTestCase.COOKIENAME, token);
+		JSONObject responseJson = new JSONObject(response.asString());
+
+
+		System.out.println("responseJson = " + responseJson);
+
+		if (responseJson.getJSONObject("params").getString("status").equalsIgnoreCase("SUCCESSFUL")) {
+
 		}
 
 		return "";

@@ -19,8 +19,8 @@ public class QuickAccessPage extends BasePage {
     @iOSXCUITFindBy(accessibility = "next")
     private WebElement nextButton;
 
-    @AndroidFindBy(accessibility = "holdPhoneSteadyMessage")
-    @iOSXCUITFindBy(accessibility = "holdPhoneSteadyMessage")
+    @AndroidFindBy(accessibility = "scanningGuideText")
+    @iOSXCUITFindBy(accessibility = "scanningGuideText")
     private WebElement holdPhoneSteadyMessage;
 
     public QuickAccessPage(AppiumDriver driver) {

@@ -8,6 +8,8 @@ import inji.utils.IosUtil;
 import inji.utils.TestDataReader;
 import org.testng.annotations.Test;
 
+import static inji.api.AdminTestUtil.fullName;
+import static inji.api.AdminTestUtil.policyNumber;
 import static inji.api.BaseTestCase.uin;
 import static org.testng.Assert.assertTrue;
 
@@ -36,11 +38,8 @@ public class KeyManagmentTest extends IosBaseTest {
         SettingsPage settingsPage = homePage.clickOnSettingIcon();
 
         settingsPage.clickOnKeyManagement();
-        Thread.sleep(3000);
         KeyManagementPage keyManagementPage = new KeyManagementPage(driver);
         keyManagementPage.clickOnDoneButton();
-        Thread.sleep(3000);
-
         IosUtil.dragAndDropForIos(driver, keyManagementPage.getTheCoordinatesForRSA(), keyManagementPage.getTheCoordinatesED25519Text());
         keyManagementPage.clickOnSaveKeyOrderingPreferenceButton();
 
@@ -62,7 +61,7 @@ public class KeyManagmentTest extends IosBaseTest {
         otpVerification.enterOtpForEsignet(BaseTestCase.getOtp(), Target.IOS);
         esignetLoginPage.clickOnVerifyButtonIos();
 
-        addNewCardPage.clickOnDoneButton();
+//        addNewCardPage.clickOnDoneButton();
         assertTrue(homePage.isCredentialTypeValueDisplayed(), "Verify if credential type value is displayed");
 
         assertTrue(homePage.isCredentialTypeValueDisplayed(), "Verify if credential type value is displayed");
@@ -176,8 +175,8 @@ public class KeyManagmentTest extends IosBaseTest {
         SunbirdLoginPage sunbirdLoginPage = addNewCardPage.clickOnDownloadViaSunbird();
         addNewCardPage.clickOnCredentialTypeHeadingInsuranceCredential();
         addNewCardPage.clickOnContinueButtonInSigninPopupIos();
-        sunbirdLoginPage.enterPolicyNumberTextBox(TestDataReader.readData("policyNumberSunbird"));
-        sunbirdLoginPage.enterFullNameTextBox(TestDataReader.readData("fullNameSunbird"));
+        sunbirdLoginPage.enterPolicyNumberTextBox(policyNumber);
+        sunbirdLoginPage.enterFullNameTextBox(fullName);
         sunbirdLoginPage.enterDateOfBirthTextBox();
         IosUtil.scrollToElement(driver, 100, 800, 100, 200);
         sunbirdLoginPage.clickOnloginButton();

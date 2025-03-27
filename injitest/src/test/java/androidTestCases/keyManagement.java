@@ -9,6 +9,8 @@ import inji.utils.TestDataReader;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
+import static inji.api.AdminTestUtil.fullName;
+import static inji.api.AdminTestUtil.policyNumber;
 import static inji.api.BaseTestCase.uin;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
@@ -57,8 +59,8 @@ public class keyManagement extends AndroidBaseTest {
         EsignetLoginPage esignetLoginPage = new EsignetLoginPage(driver);
         esignetLoginPage.clickOnEsignetLoginWithOtpButton();
 
-        sunbirdLoginPage.enterPolicyNumberTextBox(TestDataReader.readData("policyNumberSunbird"));
-        sunbirdLoginPage.enterFullNameTextBox(TestDataReader.readData("fullNameSunbird"));
+        sunbirdLoginPage.enterPolicyNumberTextBox(policyNumber);
+        sunbirdLoginPage.enterFullNameTextBox(fullName);
         sunbirdLoginPage.enterDateOfBirthTextBox();
         sunbirdLoginPage.clickOnloginButton();
 

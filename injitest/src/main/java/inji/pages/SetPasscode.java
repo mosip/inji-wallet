@@ -57,11 +57,6 @@ public class SetPasscode extends BasePage {
     }
 
     private void enterOtpAndroid(char[] arr) {
-        try {
-            Thread.sleep(2000);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
         for (int i = 1; i <= 6; i++) {
             String locator = "(//*[@class='android.widget.EditText'])[" + i + "]";
             driver.findElement(By.xpath(locator)).sendKeys(String.valueOf(arr[i - 1]));

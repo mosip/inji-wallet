@@ -87,20 +87,10 @@ public class OtpVerificationPage extends BasePage {
     }
 
     public boolean invalidOtpMessageDisplayed() {
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
         return this.isElementDisplayed(invalidOtpMessage);
     }
 
     public boolean invalidOtpMessageForEsignetDisplayed() {
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
         return this.isElementDisplayed(invalidOtpMessageforEsignet);
     }
 
@@ -134,11 +124,6 @@ public class OtpVerificationPage extends BasePage {
     }
 
     public void clickOnResendButton() {
-        try {
-            Thread.sleep(2000);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
         if(isElementEnabled(resendCodeButton,30)) {
 //            ((HidesKeyboard) driver).hideKeyboard();
             clickOnElement(resendCode);

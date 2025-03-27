@@ -117,11 +117,6 @@ public class MockCertifyLoginPage extends BasePage {
     }
 
     public OtpVerificationPage setEnterIdTextBox(String uinOrVid) {
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
         sendKeysToTextBox(enterIdTextBox, uinOrVid);
         return new OtpVerificationPage(driver);
     }
@@ -216,11 +211,6 @@ public class MockCertifyLoginPage extends BasePage {
     }
 
     public void clickOnCredentialTypeHeadingMOSIPVerifiableCredential() {
-        try {
-            Thread.sleep(2000);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
         if (isElementDisplayed(credentialTypeHeadingMOSIPVerifiableCredential)) {
             clickOnElement(credentialTypeHeadingMOSIPVerifiableCredential);
         }
