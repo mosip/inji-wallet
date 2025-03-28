@@ -4,6 +4,7 @@ import {
   BarCodeScanner,
   BarCodeScannerResult,
 } from 'expo-barcode-scanner';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 import {Linking, TouchableOpacity, View, Pressable} from 'react-native';
 import {Theme} from './ui/styleUtils';
 import {Column, Text, Row} from './ui';
@@ -83,10 +84,13 @@ export const QrScanner: React.FC<QrScannerProps> = props => {
               </Text>
             </Column>
             <Pressable>
-              //TODO: why close icon moved to text?
-              <Text onPress={() => setShowCameraPermissionDeniedBanner(false)}>
-                Close
-              </Text>
+              <Icon
+                  testID="close"
+                  name="close"
+                  onPress={() => setShowCameraPermissionDeniedBanner(false)}
+                  color={Theme.Colors.whiteText}
+                  size={18}
+              />
             </Pressable>
           </Row>
           <Row

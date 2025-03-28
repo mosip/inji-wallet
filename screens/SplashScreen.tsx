@@ -2,7 +2,7 @@ import {Dimensions} from 'react-native';
 import {RootRouteProps} from '../routes';
 import {Image} from 'react-native';
 import React, {useEffect} from 'react';
-import {APPLICATION_THEME} from '@env';
+import {APPLICATION_THEME} from 'react-native-dotenv';
 import {Column} from '../components/ui';
 import {useAppLayout} from './AppLayoutController';
 
