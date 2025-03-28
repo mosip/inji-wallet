@@ -33,7 +33,7 @@ export const SplashScreen: React.FC<RootRouteProps> = props => {
       <Image
         resizeMode="stretch"
         style={{width: 400, height: 450}}
-        source={17}
+        source={imageResource}
       />
     </Column>
   );
