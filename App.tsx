@@ -28,6 +28,7 @@ import './shared/flipperConfig';
 import {CopilotProvider} from 'react-native-copilot';
 import {CopilotTooltip} from './components/CopilotTooltip';
 import {Theme} from './components/ui/styleUtils';
+import {useFont} from "./shared/hooks/useFont";
 
 const {RNSecureKeystoreModule} = NativeModules;
 // kludge: this is a bad practice but has been done temporarily to surface
@@ -114,6 +115,7 @@ const AppLoadingWrapper: React.FC = () => {
 
 const AppInitialization: React.FC = () => {
   const {appService} = useContext(GlobalContext);
+  const hasFontsLoaded = useFont()
   const isReady = useSelector(appService, selectIsReady);
   const {t} = useTranslation('common');
 
@@ -126,7 +128,7 @@ const AppInitialization: React.FC = () => {
     }
   }, [i18n.language]);
 
-  return isReady ? <AppLayoutWrapper /> : <AppLoadingWrapper />;
+  return isReady && hasFontsLoaded ? <AppLayoutWrapper /> : <AppLoadingWrapper />;
 };
 
 export default function App() {

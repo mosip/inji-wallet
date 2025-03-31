@@ -1,6 +1,6 @@
 import React from 'react';
 import {useTranslation} from 'react-i18next';
-import {Image, ImageBackground, View} from 'react-native';
+import {Image, ImageBackground, ImageBackgroundProps, View} from 'react-native';
 import {
   Credential,
   CredentialWrapper,
@@ -38,7 +38,7 @@ const getProfileImage = (face: any) => {
   );
 };
 
-export const VCDetailView: React.FC<VCItemDetailsProps> = props => {
+export const VCDetailView: React.FC<VCItemDetailsProps> = (props: VCItemDetailsProps) => {
   const {t} = useTranslation('VcDetails');
   const logo = props.verifiableCredentialData.issuerLogo;
   const face = props.verifiableCredentialData.face;
@@ -91,7 +91,7 @@ export const VCDetailView: React.FC<VCItemDetailsProps> = props => {
               ]}
               source={wellknownDisplayProperty.getBackgroundImage(
                 Theme.OpenCard,
-              )}>
+              ) as ImageBackgroundProps}>
               <Row padding="14 14 0 14" margin="0 0 0 0">
                 <Column crossAlign="center">
                   {getProfileImage(face)}
@@ -180,7 +180,7 @@ export const VCDetailView: React.FC<VCItemDetailsProps> = props => {
                       <Text
                         testID="offlineAuthDisabledHeader"
                         style={{
-                          fontFamily: 'Inter SemiBold',
+                          fontFamily: 'Inter_600SemiBold',
                           fontSize: 14,
                         }}
                         color={Theme.Colors.statusLabel}
@@ -190,7 +190,7 @@ export const VCDetailView: React.FC<VCItemDetailsProps> = props => {
                       <Text
                         testID="offlineAuthDisabledMessage"
                         style={{
-                          fontFamily: 'Inter Regular',
+                          fontFamily: 'Inter_400Regular',
                           fontSize: 12,
                         }}
                         color={Theme.Colors.statusMessage}
@@ -224,7 +224,7 @@ export const VCDetailView: React.FC<VCItemDetailsProps> = props => {
                         testID="profileAuthenticated"
                         color={Theme.Colors.statusLabel}
                         style={{
-                          fontFamily: 'Inter SemiBold',
+                          fontFamily: 'Inter_600SemiBold',
                           fontSize: 14,
                         }}
                         margin={'0 18 0 0'}>

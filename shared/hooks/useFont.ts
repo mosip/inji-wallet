@@ -1,27 +1,18 @@
-import * as Font from 'expo-font';
-import {useState, useEffect} from 'react';
+import {
+  Inter_400Regular,
+  Inter_500Medium,
+  Inter_600SemiBold,
+  Inter_700Bold,
+  useFonts,
+} from '@expo-google-fonts/inter';
 
 export function useFont() {
-  const [fontsLoaded, setFontsLoaded] = useState(false);
+  const [fontsLoaded] = useFonts({
+    Inter_400Regular,
+    Inter_500Medium,
+    Inter_600SemiBold,
+    Inter_700Bold,
+  });
 
-  useEffect(() => {
-    const loadFonts = async () => {
-      try {
-        await Font.loadAsync({
-          'Inter Regular': require('../../assets/fonts/Inter Regular.ttf'),
-          // 'Inter SemiBold',
-          // 'Inter Bold',
-          // 'Inter Medium',
-        });
-        setFontsLoaded(true);
-      } catch (error) {
-        console.error('Error loading fonts:', error);
-        setFontsLoaded(false);
-      }
-    };
-
-    loadFonts();
-  }, []);
-
-  return true;
+  return fontsLoaded;
 }

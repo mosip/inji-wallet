@@ -299,7 +299,7 @@ export const getCredentialTypeFromWellKnown = (
 export class Display {
   private readonly textColor: string | undefined = undefined;
   private readonly backgroundColor: {backgroundColor: string};
-  private readonly backgroundImage: string | undefined = undefined;
+  private readonly backgroundImage: { uri: string } | undefined = undefined;
 
   private defaultBackgroundColor = Theme.Colors.whiteBackgroundColor;
 
@@ -333,6 +333,6 @@ export class Display {
   }
 
   getBackgroundImage(defaultBackgroundImage: string) {
-    return defaultBackgroundImage;
+    return this.backgroundImage ?? defaultBackgroundImage;
   }
 }

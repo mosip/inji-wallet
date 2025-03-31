@@ -1,12 +1,4 @@
 {
-  "expo": {
-    "plugins": [
-      [
-        "expo-font",
-        {
-          "fonts": ["assets/fonts/Inter Regular.ttf"]
-        }
-      ]
-    ]
-  }
+  "name": "inji",
+  "displayName": "Inji"
 }

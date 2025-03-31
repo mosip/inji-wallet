@@ -514,7 +514,7 @@ export interface displayType {
   language: string;
   logo: logoType;
   background_color: string;
-  background_image: string;
+  background_image: { uri: string };
   text_color: string;
   title: string;
   description: string;
