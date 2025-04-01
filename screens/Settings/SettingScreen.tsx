@@ -8,7 +8,6 @@ import {useSettingsScreen} from './SettingScreenController';
 import {useTranslation} from 'react-i18next';
 import {LanguageSelector} from '../../components/LanguageSelector';
 import {ScrollView} from 'react-native-gesture-handler';
-import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import {CREDENTIAL_REGISTRY_EDIT} from 'react-native-dotenv';
 import {AboutInji} from './AboutInji';
 import {EditableListItem} from '../../components/EditableListItem';
@@ -74,7 +73,6 @@ export const SettingScreen: React.FC<
   };
 
   return (
-    <GestureHandlerRootView>
       <React.Fragment>
         <Pressable accessible={false} onPress={controller.TOGGLE_SETTINGS}>
           {props.triggerComponent}
@@ -219,7 +217,6 @@ export const SettingScreen: React.FC<
           </Column>
         </ScrollView>
       </React.Fragment>
-    </GestureHandlerRootView>
   );
 };
 

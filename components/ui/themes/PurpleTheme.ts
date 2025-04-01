@@ -1281,7 +1281,7 @@ export const PurpleTheme = {
     headerContainer: {
       alignItems: 'center',
       padding: 16,
-      backgroundColor: Theme.Colors.whiteBackgroundColor,
+      backgroundColor: Colors.White,
       borderTopLeftRadius: 6,
       borderTopRightRadius: 6,
     },
@@ -1296,7 +1296,7 @@ export const PurpleTheme = {
     },
     content: {
       padding: 16,
-      backgroundColor: Theme.Colors.whiteBackgroundColor,
+      backgroundColor: Colors.White,
       borderBottomLeftRadius: 6,
       borderBottomRightRadius: 6,
     }

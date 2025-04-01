@@ -5,7 +5,6 @@ import {Icon, Overlay} from 'react-native-elements';
 import {Button, Column, Text} from '../../components/ui';
 import {Theme} from '../../components/ui/styleUtils';
 import {useTranslation} from 'react-i18next';
-import {GestureHandlerRootView} from 'react-native-gesture-handler';
 
 export const OnboardingOverlay: React.FC<OnboardingProps> = props => {
   const slider = useRef<AppIntroSlider>();
@@ -42,7 +41,6 @@ export const OnboardingOverlay: React.FC<OnboardingProps> = props => {
   const renderItem = ({item}) => {
     return (
       <View style={Theme.OnboardingOverlayStyles.slide}>
-        <GestureHandlerRootView>
           <ScrollView showsVerticalScrollIndicator={true}>
             <Text style={Theme.OnboardingOverlayStyles.sliderTitle}>
               {item.title}
@@ -50,7 +48,6 @@ export const OnboardingOverlay: React.FC<OnboardingProps> = props => {
             <Text style={Theme.OnboardingOverlayStyles.text}>{item.text}</Text>
             {item.footer}
           </ScrollView>
-        </GestureHandlerRootView>
       </View>
     );
   };
