@@ -1,5 +1,5 @@
 import React from 'react';
-import {ImageBackground, Pressable, View, Image, ImageSourcePropType} from 'react-native';
+import {ImageBackground, Pressable, View, Image, ImageBackgroundProps} from 'react-native';
 import {VCMetadata} from '../../../shared/VCMetadata';
 import {KebabPopUp} from '../../KebabPopUp';
 import {Credential} from '../../../machines/VerifiableCredential/VCMetaMachine/vc';
@@ -61,7 +61,7 @@ export const VCCardViewContent: React.FC<VCItemContentProps> = props => {
 
   return (
     <ImageBackground
-      source={wellknownDisplayProperty.getBackgroundImage(Theme.CloseCard)}
+      source={wellknownDisplayProperty.getBackgroundImage(Theme.CloseCard) as ImageBackgroundProps}
       resizeMode="stretch"
       imageStyle={Theme.Styles.vcBg}
       style={[
@@ -96,7 +96,7 @@ export const VCCardViewContent: React.FC<VCItemContentProps> = props => {
           {isVCLoaded(props.credential, props.fields) && (
             <Image
               {...testIDProps('issuerLogo')}
-              source={require('../../../assets/images/png/IntroBg.png') as ImageSourcePropType}
+              src={issuerLogo?.url}
               alt={issuerLogo?.alt_text}
               style={Theme.Styles.issuerLogo}
               contentFit="cover"

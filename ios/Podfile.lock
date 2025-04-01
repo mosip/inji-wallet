@@ -56,13 +56,6 @@ PODS:
     - ExpoModulesCore
   - ExpoFont (12.0.10):
     - ExpoModulesCore
-  - ExpoImage (1.12.9):
-    - ExpoModulesCore
-    - libavif/libdav1d
-    - SDWebImage (~> 5.19.1)
-    - SDWebImageAVIFCoder (~> 0.11.0)
-    - SDWebImageSVGCoder (~> 1.7.0)
-    - SDWebImageWebPCoder (~> 0.14.6)
   - ExpoKeepAwake (13.0.2):
     - ExpoModulesCore
   - ExpoLocalAuthentication (14.0.1):
@@ -174,23 +167,6 @@ PODS:
   - hermes-engine/Pre-built (0.74.5)
   - ImageColors (2.4.0):
     - ExpoModulesCore
-  - libavif/core (0.11.1)
-  - libavif/libdav1d (0.11.1):
-    - libavif/core
-    - libdav1d (>= 0.6.0)
-  - libdav1d (1.2.0)
-  - libwebp (1.3.2):
-    - libwebp/demux (= 1.3.2)
-    - libwebp/mux (= 1.3.2)
-    - libwebp/sharpyuv (= 1.3.2)
-    - libwebp/webp (= 1.3.2)
-  - libwebp/demux (1.3.2):
-    - libwebp/webp
-  - libwebp/mux (1.3.2):
-    - libwebp/demux
-  - libwebp/sharpyuv (1.3.2)
-  - libwebp/webp (1.3.2):
-    - libwebp/sharpyuv
   - MLImage (1.0.0-beta2)
   - MLKitCommon (5.0.0):
     - GoogleDataTransport (~> 9.0)
@@ -1528,17 +1504,6 @@ PODS:
   - RNZipArchive/Core (6.1.0):
     - React-Core
     - SSZipArchive (~> 2.2)
-  - SDWebImage (5.19.7):
-    - SDWebImage/Core (= 5.19.7)
-  - SDWebImage/Core (5.19.7)
-  - SDWebImageAVIFCoder (0.11.0):
-    - libavif/core (>= 0.11.0)
-    - SDWebImage (~> 5.10)
-  - SDWebImageSVGCoder (1.7.0):
-    - SDWebImage/Core (~> 5.6)
-  - SDWebImageWebPCoder (0.14.6):
-    - libwebp (~> 1.0)
-    - SDWebImage/Core (~> 5.17)
   - SocketRocket (0.7.0)
   - "sqlite3 (3.45.3+1)":
     - "sqlite3/common (= 3.45.3+1)"
@@ -1578,7 +1543,6 @@ DEPENDENCIES:
   - ExpoCrypto (from `../node_modules/expo-crypto/ios`)
   - ExpoFileSystem (from `../node_modules/expo-file-system/ios`)
   - ExpoFont (from `../node_modules/expo-font/ios`)
-  - ExpoImage (from `../node_modules/expo-image/ios`)
   - ExpoKeepAwake (from `../node_modules/expo-keep-awake/ios`)
   - ExpoLocalAuthentication (from `../node_modules/expo-local-authentication/ios`)
   - ExpoLocalization (from `../node_modules/expo-localization/ios`)
@@ -1687,9 +1651,6 @@ SPEC REPOS:
     - GoogleUtilitiesComponents
     - GTMAppAuth
     - GTMSessionFetcher
-    - libavif
-    - libdav1d
-    - libwebp
     - MLImage
     - MLKitCommon
     - MLKitFaceDetection
@@ -1700,10 +1661,6 @@ SPEC REPOS:
     - PromisesObjC
     - Protobuf
     - ReachabilitySwift
-    - SDWebImage
-    - SDWebImageAVIFCoder
-    - SDWebImageSVGCoder
-    - SDWebImageWebPCoder
     - SocketRocket
     - sqlite3
     - SSZipArchive
@@ -1750,8 +1707,6 @@ EXTERNAL SOURCES:
     :path: "../node_modules/expo-file-system/ios"
   ExpoFont:
     :path: "../node_modules/expo-font/ios"
-  ExpoImage:
-    :path: "../node_modules/expo-image/ios"
   ExpoKeepAwake:
     :path: "../node_modules/expo-keep-awake/ios"
   ExpoLocalAuthentication:
@@ -1961,7 +1916,6 @@ SPEC CHECKSUMS:
   ExpoCrypto: c5c052d5f9f668c21975cb4caf072cec23c823fa
   ExpoFileSystem: 2988caaf68b7cb706e36d382829d99811d9d76a5
   ExpoFont: 38dddf823e32740c2a9f37c926a33aeca736b5c4
-  ExpoImage: eca6e116e264804be8fc0bb4ce3bae36a0e1d01c
   ExpoKeepAwake: dd02e65d49f1cfd9194640028ae2857e536eb1c9
   ExpoLocalAuthentication: b94db59f55df95350223200c746b4ddf0cb7cfc0
   ExpoLocalization: 1b4195ed48148c7f52ce790d3965cc19483fcbf2
@@ -1983,9 +1937,6 @@ SPEC CHECKSUMS:
   GTMSessionFetcher: 5595ec75acf5be50814f81e9189490412bad82ba
   hermes-engine: 8c1577f3fdb849cbe7729c2e7b5abc4b845e88f8
   ImageColors: 869f48b27ca2afb347fd0bada3257a5f698ee55e
-  libavif: 84bbb62fb232c3018d6f1bab79beea87e35de7b7
-  libdav1d: 23581a4d8ec811ff171ed5e2e05cd27bad64c39f
-  libwebp: 1786c9f4ff8a279e4dac1e8f385004d5fc253009
   MLImage: a454f9f8ecfd537783a12f9488f5be1a68820829
   MLKitCommon: 3bc17c6f7d25ce3660f030350b46ae7ec9ebca6e
   MLKitFaceDetection: 617cb847441868a8bfd4b48d751c9b33c1104948
@@ -2074,10 +2025,6 @@ SPEC CHECKSUMS:
   RNShare: 694e19d7f74ac4c04de3a8af0649e9ccc03bd8b1
   RNSVG: 0e7deccab0678200815104223aadd5ca734dd41d
   RNZipArchive: 2b0d34cfe303447f5b55ae5658ec62f1ebce4ab5
-  SDWebImage: 8a6b7b160b4d710e2a22b6900e25301075c34cb3
-  SDWebImageAVIFCoder: 00310d246aab3232ce77f1d8f0076f8c4b021d90
-  SDWebImageSVGCoder: 15a300a97ec1c8ac958f009c02220ac0402e936c
-  SDWebImageWebPCoder: e38c0a70396191361d60c092933e22c20d5b1380
   SocketRocket: abac6f5de4d4d62d24e11868d7a2f427e0ef940d
   sqlite3: 02d1f07eaaa01f80a1c16b4b31dfcbb3345ee01a
   SSZipArchive: fe6a26b2a54d5a0890f2567b5cc6de5caa600aef
@@ -2086,6 +2033,6 @@ SPEC CHECKSUMS:
   Yoga: 950bbfd7e6f04790fdb51149ed51df41f329fcc8
   ZXingObjC: 8898711ab495761b2dbbdec76d90164a6d7e14c5
 
-PODFILE CHECKSUM: 2a984134249dc66640974d56ef2e5545d547dae2
+PODFILE CHECKSUM: 4d2ee2cbf5f1553030d56659748bb7baece24998
 
 COCOAPODS: 1.16.2
