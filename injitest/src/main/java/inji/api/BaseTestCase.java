@@ -36,6 +36,8 @@ public class BaseTestCase {
 	public static String SEPRATOR = "";
 	public static String currentModule = "residentui1";
 	public final static String COOKIENAME = "Authorization";
+
+	public static String insuranceUrl;
 	public static CommonLibrary kernelCmnLib = null;
 	public static KernelAuthentication kernelAuthLib = null;
 	public String adminCookie = null;
@@ -47,6 +49,7 @@ public class BaseTestCase {
 	public static String perpetualVid="";
 	public static String onetimeuseVid="";
 	public static String temporaryVid="";
+	public static String InsuranceNum="";
 
 
 	public static void main( String[] args ) {
@@ -56,16 +59,17 @@ public class BaseTestCase {
 	}
 
 	public static void intiateUINGenration() {
-
 		uin = AdminTestUtil.generateUIN();
+		insuranceUrl= ConfigManager.getiam_Insurance_path();
+		InsuranceNum= AdminTestUtil.generateInsurance();
 
 		if (uin != null) {
 			perpetualVid = AdminTestUtil.generateVID(uin, "perpetual");
 			onetimeuseVid = AdminTestUtil.generateVID(uin, "onetimeuse");
 			temporaryVid= AdminTestUtil.generateVID(uin, "temporary");
 			
-			mockSMTPListener = new MockSMTPListener();
-			mockSMTPListener.run();
+//			mockSMTPListener = new MockSMTPListener();
+//			mockSMTPListener.run();
 		}
 	}
 
@@ -88,6 +92,7 @@ public class BaseTestCase {
 		logger.info("Environemnt is  ==== :" + environment);
 		ApplnURI = ConfigManager.getiam_apiinternalendpoint();
 		logger.info("Application URI ======" + ApplnURI);
+
 
 		logger.info("Configs from properties file are set.");
 		if (!languageList.isEmpty()) {

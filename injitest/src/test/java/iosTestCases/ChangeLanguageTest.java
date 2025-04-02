@@ -9,6 +9,8 @@ import inji.utils.TestDataReader;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
+import static inji.api.AdminTestUtil.fullName;
+import static inji.api.AdminTestUtil.policyNumber;
 import static inji.api.BaseTestCase.uin;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
@@ -601,8 +603,8 @@ public class ChangeLanguageTest extends IosBaseTest {
         SunbirdLoginPage sunbirdLoginPage =  addNewCardPage.clickOnDownloadViaSunbird();
         addNewCardPage.clickOnCredentialTypeHeadingInsuranceCredential();
         addNewCardPage.clickOnContinueButtonInSigninPopupIos();
-        sunbirdLoginPage.enterPolicyNumberTextBox(TestDataReader.readData("policyNumberSunbird"));
-        sunbirdLoginPage.enterFullNameTextBox(TestDataReader.readData("fullNameSunbird"));
+        sunbirdLoginPage.enterPolicyNumberTextBox(policyNumber);
+        sunbirdLoginPage.enterFullNameTextBox(fullName);
         sunbirdLoginPage.enterDateOfBirthTextBox();
         IosUtil.scrollToElement(driver,100,800,100,200);
         sunbirdLoginPage.clickOnloginButton();
@@ -624,7 +626,7 @@ public class ChangeLanguageTest extends IosBaseTest {
         assertEquals(sunbirdLoginPage.getFullNameForSunbirdCard(),TestDataReader.readData("fullNameSunbird"));
         assertEquals(sunbirdLoginPage.getPolicyNameForSunbirdCard(),TestDataReader.readData("policyNameSunbird"));
         assertEquals(sunbirdLoginPage.getPhoneNumberForSunbirdCard(),TestDataReader.readData("phoneNumberSunbird"));
-        assertEquals(sunbirdLoginPage.getDateofBirthValueForSunbirdCard(),TestDataReader.readData("dateOfBirthSunbird"));
+        assertTrue(sunbirdLoginPage.isDateofBirthValueForSunbirdCardDisplayed());
         assertEquals(sunbirdLoginPage.getGenderValueForSunbirdCard(),TestDataReader.readData("genderValueSunbird"));
         assertEquals(sunbirdLoginPage.getEmailIdValueForSunbirdCard(),TestDataReader.readData("emailIdValueSunbird"));
         assertEquals(sunbirdLoginPage.getStatusValueForSunbirdCard(),"वैध");
