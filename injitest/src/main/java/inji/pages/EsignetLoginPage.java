@@ -113,18 +113,12 @@ public class EsignetLoginPage extends BasePage {
     }
 
     public void clickOnEsignetLoginWithOtpButton() {
-        if(isElementDisplayed(esignetLoginButton)) {
+        if(isElementDisplayed(esignetLoginButton,2)) {
             clickOnElement(esignetLoginButton);
         }
-
     }
 
     public OtpVerificationPage setEnterIdTextBox(String uinOrVid) {
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
         sendKeysToTextBox(enterIdTextBox, uinOrVid);
         return new OtpVerificationPage(driver);
     }
@@ -219,11 +213,6 @@ public class EsignetLoginPage extends BasePage {
     }
 
     public void clickOnCredentialTypeHeadingMOSIPVerifiableCredential() {
-        try {
-            Thread.sleep(2000);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
         if (isElementDisplayed(credentialTypeHeadingMOSIPVerifiableCredential)) {
             clickOnElement(credentialTypeHeadingMOSIPVerifiableCredential);
         }

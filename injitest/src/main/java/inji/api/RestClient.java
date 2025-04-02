@@ -47,4 +47,20 @@ public class RestClient {
 		RESTCLIENT_LOGGER.info("REST-ASSURED: The response Time is: " + postResponse.time());
 		return postResponse;
 	}
+
+	public static Response deleteRequestWithParam(String url, String paramName, String paramValue,
+												  String contentHeader, String acceptHeader,
+												  String cookieName, String cookieValue) {
+		RESTCLIENT_LOGGER.info("REST-ASSURED: Sending a DELETE request to " + url);
+		RESTCLIENT_LOGGER.info("REST-ASSURED: Query Param: " + paramName + " = " + paramValue);
+
+		Response deleteResponse = given().config(config).relaxedHTTPSValidation().queryParam(paramName, paramValue).contentType(contentHeader).cookie(cookieName, cookieValue).accept(acceptHeader)
+				.log().all().when().delete(url).then().log().all().extract().response();
+
+		RESTCLIENT_LOGGER.info("REST-ASSURED: Response Code: " + deleteResponse.getStatusCode());
+		RESTCLIENT_LOGGER.info("REST-ASSURED: Response Body: " + deleteResponse.asString());
+		RESTCLIENT_LOGGER.info("REST-ASSURED: Response Time: " + deleteResponse.time() + "ms");
+
+		return deleteResponse;
+	}
 }
