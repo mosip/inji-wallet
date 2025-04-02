@@ -8,50 +8,67 @@ import {ElevationLevel, Theme} from './styleUtils';
 import testIDProps from '../../shared/commonUtil';
 import {BackButton} from './backButton/BackButton';
 
-export const Modal: React.FC<ModalProps> = props => {
+export const Modal: React.FC<ModalProps> = ({
+                                              testID,
+                                              isVisible,
+                                              requester,
+                                              showClose = true,
+                                              showHeader = true,
+                                              modalStyle = Theme.ModalStyles.defaultModal,
+                                              onDismiss,
+                                              headerTitle,
+                                              headerElevation,
+                                              headerLabel,
+                                              headerLabelColor,
+                                              headerRight,
+                                              headerLeft,
+                                              arrowLeft,
+                                              onShow,
+                                              children,
+                                            }) => {
   const controller = useSendVcScreen();
 
   return (
     <RNModal
-      {...testIDProps(props.testID)}
+      {...testIDProps(testID)}
       animationType="slide"
-      style={props.modalStyle}
-      visible={props.isVisible}
-      onShow={props.onShow}
-      onRequestClose={props.onDismiss}>
-      <Column {...(props.showHeader ? {fill: true, safe: true} : {fill: true})}>
-        {props.showHeader ? (
-          <Row elevation={props.headerElevation}>
-            <View style={props.modalStyle}>
-              {props.headerRight && !props.arrowLeft ? (
+      style={modalStyle}
+      visible={isVisible}
+      onShow={onShow}
+      onRequestClose={onDismiss}>
+      <Column {...(showHeader ? {fill: true, safe: true} : {fill: true})}>
+        {showHeader ? (
+          <Row elevation={headerElevation}>
+            <View style={modalStyle}>
+              {headerRight && !arrowLeft ? (
                 <Icon
                   {...testIDProps('closeModal')}
                   name={I18nManager.isRTL ? 'chevron-right' : 'chevron-left'}
-                  onPress={props.onDismiss}
+                  onPress={onDismiss}
                   color={Theme.Colors.Icon}
                 />
               ) : null}
-              {props.arrowLeft && props.onDismiss ? (
-                <BackButton onPress={props.onDismiss} />
+              {arrowLeft && onDismiss ? (
+                <BackButton onPress={onDismiss} />
               ) : null}
               <Row
                 fill
-                align={props.headerLeft ? 'flex-start' : 'center'}
-                margin={props.arrowLeft ? '16 0 0 -15' : '16 0 0 10'}>
+                align={headerLeft ? 'flex-start' : 'center'}
+                margin={arrowLeft ? '16 0 0 -15' : '16 0 0 10'}>
                 <Column>
-                  <Text testID={props.testID} style={Theme.TextStyles.header}>
-                    {props.headerTitle || props.headerLeft}
+                  <Text testID={testID} style={Theme.TextStyles.header}>
+                    {headerTitle || headerLeft}
                   </Text>
-                  {!props.requester ? (
+                  {!requester ? (
                     <Text
                       weight="semibold"
                       style={Theme.TextStyles.small}
                       color={
-                        props.headerLabelColor
-                          ? props.headerLabelColor
+                        headerLabelColor
+                          ? headerLabelColor
                           : Theme.Colors.textLabel
                       }>
-                      {props.headerLabel}
+                      {headerLabel}
                     </Text>
                   ) : (
                     <Text
@@ -63,31 +80,25 @@ export const Modal: React.FC<ModalProps> = props => {
                   )}
                 </Column>
               </Row>
-              {props.headerRight != null ||
-                props.arrowLeft ||
-                (props.showClose && (
+              {headerRight != null ||
+                arrowLeft ||
+                (showClose && (
                   <Icon
                     {...testIDProps('close')}
                     name="close"
-                    onPress={props.onDismiss}
+                    onPress={onDismiss}
                     color={Theme.Colors.Details}
                     size={27}
                   />
                 ))}
-              {props.headerRight && props.headerRight}
+              {headerRight && headerRight}
             </View>
           </Row>
         ) : null}
-        {props.children}
+        {children}
       </Column>
     </RNModal>
   );
-};
-
-Modal.defaultProps = {
-  modalStyle: Theme.ModalStyles.defaultModal,
-  showClose: true,
-  showHeader: true,
 };
 
 export interface ModalProps {

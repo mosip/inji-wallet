@@ -1,27 +1,31 @@
-import {VCItemContentProps} from './VC/Views/VCCardViewContent';
 import {ImageBackground} from 'react-native';
 import {Theme} from './ui/styleUtils';
 import React from 'react';
 import {ProfileIcon} from './ProfileIcon';
 import {SvgImage} from './ui/svg';
 
-export const VcItemContainerProfileImage = (props: VCItemContentProps) => {
-  const imageUri = props.verifiableCredentialData.face;
+export const VcItemContainerProfileImage = ({verifiableCredentialData, isPinned}: VcItemContainerProfileImageProps) => {
+  const imageUri = verifiableCredentialData.face;
 
   return imageUri ? (
     <ImageBackground
       imageStyle={Theme.Styles.faceImage}
       source={{uri: imageUri}}
       style={Theme.Styles.closeCardImage}>
-      {props?.isPinned && SvgImage.pinIcon()}
+      {isPinned && SvgImage.pinIcon()}
     </ImageBackground>
   ) : (
     <>
       <ProfileIcon
-        isPinned={props?.isPinned}
+        isPinned={isPinned}
         profileIconContainerStyles={Theme.Styles.ProfileIconContainer}
         profileIconSize={30}
       />
     </>
   );
 };
+
+export interface VcItemContainerProfileImageProps {
+    verifiableCredentialData: any;
+    isPinned?: boolean;
+}

@@ -20,15 +20,14 @@ import {useCopilot} from 'react-native-copilot';
 import {useTranslation} from 'react-i18next';
 import testIDProps from '../../../shared/commonUtil';
 
-export const VCCardViewContent: React.FC<VCItemContentProps> = props => {
-  const wellknownDisplayProperty = new Display(props.wellknown);
-  const blurhash =
-    '|rF?hV%2WCj[ayj[a|j[az_NaeWBj@ayfRayfQfQM{M|azj[azf6fQfQfQIpWXofj[ayj[j[fQayWCoeoeaya}j[ayfQa{oLj?j[WVj[ayayj[fQoff7azayj[ayj[j[ayofayayayj[fQj[ayayj[ayfjj[j[ayjuayj[';
-  const vcSelectableButton =
-    props.selectable &&
-    (props.flow === VCItemContainerFlowType.VP_SHARE ? (
+
+export const VCCardViewContent: React.FC<VCItemContentProps> = ({isPinned = false, context, credential, verifiableCredentialData, fields, wellknown, generatedOn, selectable, selected, service, onPress, isDownloading, flow, walletBindingResponse, KEBAB_POPUP, DISMISS, isKebabPopUp, vcMetadata, isInitialLaunch}) => {
+  const wellknownDisplayProperty = new Display(wellknown);
+    const vcSelectableButton =
+    selectable &&
+    (flow === VCItemContainerFlowType.VP_SHARE ? (
       <CheckBox
-        checked={props.selected}
+        checked={selected}
         checkedIcon={SvgImage.selectedCheckBox()}
         uncheckedIcon={
           <Icon
@@ -37,11 +36,11 @@ export const VCCardViewContent: React.FC<VCItemContentProps> = props => {
             size={22}
           />
         }
-        onPress={() => props.onPress()}
+        onPress={() => onPress()}
       />
     ) : (
       <CheckBox
-        checked={props.selected}
+        checked={selected}
         checkedIcon={
           <Icon name="check-circle" type="material" color={Theme.Colors.Icon} />
         }
@@ -51,11 +50,11 @@ export const VCCardViewContent: React.FC<VCItemContentProps> = props => {
             color={Theme.Colors.uncheckedIcon}
           />
         }
-        onPress={() => props.onPress()}
+        onPress={() => onPress()}
       />
     ));
-  const issuerLogo = props.verifiableCredentialData.issuerLogo;
-  const faceImage = props.verifiableCredentialData.face;
+  const issuerLogo = verifiableCredentialData.issuerLogo;
+  const faceImage = verifiableCredentialData.face;
   const {start} = useCopilot();
   const {t} = useTranslation();
 
@@ -70,60 +69,60 @@ export const VCCardViewContent: React.FC<VCItemContentProps> = props => {
       ]}>
       <View
         onLayout={
-          props.isInitialLaunch
+          isInitialLaunch
             ? () => start(t('copilot:cardTitle'))
             : undefined
         }>
         <Row crossAlign="center" padding="3 0 0 3">
-          {VcItemContainerProfileImage(props)}
+          <VcItemContainerProfileImage isPinned={isPinned} verifiableCredentialData={verifiableCredentialData} />
           <Column fill align={'space-around'} margin="0 10 0 10">
             <VCItemFieldValue
               key={'credentialType'}
               testID="credentialType"
-              fieldValue={getCredentialType(props.wellknown)}
+              fieldValue={getCredentialType(wellknown)}
               fieldValueColor={wellknownDisplayProperty.getTextColor(
                 Theme.Colors.Details,
               )}
             />
             <Row>
               <VCVerification
-                vcMetadata={props.verifiableCredentialData?.vcMetadata}
+                vcMetadata={verifiableCredentialData?.vcMetadata}
                 display={wellknownDisplayProperty}
               />
             </Row>
           </Column>
 
-          {isVCLoaded(props.credential, props.fields) && (
+          {isVCLoaded(credential, fields) && (
             <Image
               {...testIDProps('issuerLogo')}
               src={issuerLogo?.url}
               alt={issuerLogo?.alt_text}
               style={Theme.Styles.issuerLogo}
-              contentFit="cover"
+              resizeMode="cover"
             />
           )}
 
-          {!Object.values(VCItemContainerFlowType).includes(props.flow) && (
+          {!Object.values(VCItemContainerFlowType).includes(flow) && (
             <>
-              {!props.verifiableCredentialData?.vcMetadata.isExpired &&
-                (!props.walletBindingResponse &&
-                isActivationNeeded(props.verifiableCredentialData?.issuer)
+              {!verifiableCredentialData?.vcMetadata.isExpired &&
+                (!walletBindingResponse &&
+                isActivationNeeded(verifiableCredentialData?.issuer)
                   ? SvgImage.walletUnActivatedIcon()
                   : SvgImage.walletActivatedIcon())}
               <Pressable
-                onPress={props.KEBAB_POPUP}
+                onPress={KEBAB_POPUP}
                 accessible={false}
                 style={Theme.Styles.kebabPressableContainer}>
                 <KebabPopUp
                   iconColor={wellknownDisplayProperty.getTextColor(
                     Theme.Colors.helpText,
                   )}
-                  vcMetadata={props.vcMetadata}
+                  vcMetadata={vcMetadata}
                   iconName="dots-three-horizontal"
                   iconType="entypo"
-                  isVisible={props.isKebabPopUp}
-                  onDismiss={props.DISMISS}
-                  service={props.service}
+                  isVisible={isKebabPopUp}
+                  onDismiss={DISMISS}
+                  service={service}
                   vcHasImage={faceImage !== undefined}
                 />
               </Pressable>
@@ -132,15 +131,15 @@ export const VCCardViewContent: React.FC<VCItemContentProps> = props => {
           {vcSelectableButton}
         </Row>
 
-        <WalletBinding service={props.service} vcMetadata={props.vcMetadata} />
+        <WalletBinding service={service} vcMetadata={vcMetadata} />
 
         <RemoveVcWarningOverlay
           testID="removeVcWarningOverlay"
-          service={props.service}
-          vcMetadata={props.vcMetadata}
+          service={service}
+          vcMetadata={vcMetadata}
         />
 
-        <HistoryTab service={props.service} vcMetadata={props.vcMetadata} />
+        <HistoryTab service={service} vcMetadata={vcMetadata} />
       </View>
     </ImageBackground>
   );
@@ -157,7 +156,7 @@ export interface VCItemContentProps {
   selected: boolean;
   isPinned?: boolean;
   service: any;
-  onPress?: () => void;
+  onPress: () => void;
   isDownloading?: boolean;
   flow?: string;
   walletBindingResponse: {};
@@ -167,7 +166,3 @@ export interface VCItemContentProps {
   vcMetadata: VCMetadata;
   isInitialLaunch?: boolean;
 }
-
-VCCardViewContent.defaultProps = {
-  isPinned: false,
-};

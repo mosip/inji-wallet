@@ -9,7 +9,7 @@ export const SectionLayout: React.FC<SectionLayoutProps> = ({
   headerText,
   children,
   testId,
-  marginBottom,
+  marginBottom = 0,
 }) => {
   return (
     <View
@@ -36,10 +36,6 @@ export const SectionLayout: React.FC<SectionLayoutProps> = ({
       </Row>
     </View>
   );
-};
-
-SectionLayout.defaultProps = {
-  marginBottom: 0,
 };
 
 export type SectionLayoutProps = {
