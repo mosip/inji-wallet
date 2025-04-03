@@ -1,40 +1,28 @@
-import React, {
-  useCallback,
-  useContext,
-  useEffect,
-  useRef,
-  useState,
-} from 'react';
-import {CameraType, Camera} from 'expo-camera';
-import {Column, Text, Button} from '.././ui';
+import React, {useCallback, useContext, useEffect, useRef, useState,} from 'react';
+import {Camera, CameraType} from 'expo-camera';
+import {Button, Column, Text} from '.././ui';
 import {useInterpret, useSelector} from '@xstate/react';
 import {useTranslation} from 'react-i18next';
 import {
-  FaceScannerEvents,
-  selectIsCheckingPermission,
-  selectIsValid,
-  selectIsPermissionDenied,
-  selectIsScanning,
   createFaceScannerMachine,
-  selectIsInvalid,
-  selectIsCapturing,
-  selectIsVerifying,
+  FaceScannerEvents,
   selectCameraRef,
+  selectIsCapturing,
+  selectIsCheckingPermission,
+  selectIsInvalid,
+  selectIsPermissionDenied,
+  selectIsValid,
+  selectIsVerifying,
 } from '../../machines/faceScanner';
 import {GlobalContext} from '../../shared/GlobalContext';
 import {selectIsActive} from '../../machines/app';
 import {Theme} from '.././ui/styleUtils';
 import {getRandomInt} from '../../shared/commonUtil';
-import {
-  checkBlink,
-  cropEyeAreaFromFace,
-  faceDetectorConfig,
-  getFaceBounds,
-  imageCaptureConfig,
-} from './FaceScannerHelper';
+import {cropEyeAreaFromFace, faceDetectorConfig, getFaceBounds, imageCaptureConfig,} from './FaceScannerHelper';
 import LivenessDetection from './LivenessDetection';
 import FaceCompare from './FaceCompare';
 import {LIVENESS_CHECK} from '../../shared/constants';
+import {CameraPosition} from "../../shared/Utils";
 
 export const FaceScanner: React.FC<FaceScannerProps> = props => {
   const {t} = useTranslation('FaceScanner');
@@ -44,7 +32,7 @@ export const FaceScanner: React.FC<FaceScannerProps> = props => {
   const machine = useRef(createFaceScannerMachine(props.vcImages));
   const service = useInterpret(machine.current);
 
-  const [cameraType, setCameraType] = useState(CameraType.front);
+  const [cameraType, setCameraType] = useState<CameraType>(CameraPosition.FRONT);
   const cameraRef = useSelector(service, selectCameraRef);
 
   const isPermissionDenied = useSelector(service, selectIsPermissionDenied);
@@ -77,7 +65,7 @@ export const FaceScanner: React.FC<FaceScannerProps> = props => {
 
   const flipCamera = () => {
     setCameraType(prevType =>
-      prevType === CameraType.front ? CameraType.back : CameraType.front,
+      prevType === CameraPosition.FRONT ? CameraPosition.BACK : CameraPosition.FRONT,
     );
   };
 
