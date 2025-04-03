@@ -1,5 +1,6 @@
 import React, {useContext, useEffect} from 'react';
 import {AppLayout} from './screens/AppLayout';
+import {useFont} from "./shared/hooks/useFont";
 import {GlobalContextProvider} from './components/GlobalContextProvider';
 import {GlobalContext} from './shared/GlobalContext';
 import {useSelector} from '@xstate/react';
@@ -28,7 +29,6 @@ import './shared/flipperConfig';
 import {CopilotProvider} from 'react-native-copilot';
 import {CopilotTooltip} from './components/CopilotTooltip';
 import {Theme} from './components/ui/styleUtils';
-import {useFont} from "./shared/hooks/useFont";
 
 const {RNSecureKeystoreModule} = NativeModules;
 // kludge: this is a bad practice but has been done temporarily to surface
@@ -52,7 +52,6 @@ const AppLayoutWrapper: React.FC = () => {
   const isDecryptError = useSelector(appService, selectIsDecryptError);
   const controller = useApp();
   const {t} = useTranslation('WelcomeScreen');
-  console.log('appstate', AppState.currentState);
   useEffect(() => {
     if (AppState.currentState === 'active') {
       appService.send(APP_EVENTS.ACTIVE());
@@ -128,7 +127,11 @@ const AppInitialization: React.FC = () => {
     }
   }, [i18n.language]);
 
-  return isReady && hasFontsLoaded ? <AppLayoutWrapper /> : <AppLoadingWrapper />;
+  return isReady && hasFontsLoaded ? (
+      <AppLayoutWrapper />
+  ) : (
+      <AppLoadingWrapper />
+  );
 };
 
 export default function App() {

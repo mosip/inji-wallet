@@ -4,7 +4,6 @@ import {Theme} from '../../components/ui/styleUtils';
 import {useTranslation} from 'react-i18next';
 import {useQrLogin} from './QrLoginController';
 import {QrLoginRef} from '../../machines/QrLogin/QrLoginMachine';
-import {Icon} from 'react-native-elements';
 import {Modal} from '../../components/ui/Modal';
 import {VcItemContainer} from '../../components/VC/VcItemContainer';
 import {

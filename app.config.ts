@@ -2,9 +2,8 @@ import {APPLICATION_THEME} from 'react-native-dotenv';
 
 const adaptiveImage =
   APPLICATION_THEME?.toLowerCase() === 'purple'
-    ? '../assets/purple_splash_screen.png'
-    : '../assets/images/splash_screen.png';
-
+    ?  ('./assets/images/png/purpleSplashScreen.png')
+      : ('./assets/images/png/SplashScreen.png');
 export default {
   name: 'Inji',
   slug: 'inji',

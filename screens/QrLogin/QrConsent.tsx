@@ -3,13 +3,13 @@ import {useTranslation} from 'react-i18next';
 import {Button, Column, Row, Text} from '../../components/ui';
 import {Theme} from '../../components/ui/styleUtils';
 import {useQrLogin} from './QrLoginController';
-import {Image, View} from 'react-native';
-import {Icon, ListItem, Switch} from 'react-native-elements';
+import {Image} from 'react-native';
+import {ListItem, Switch} from 'react-native-elements';
 import {Modal} from '../../components/ui/Modal';
 import {QrLoginRef} from '../../machines/QrLogin/QrLoginMachine';
 import {ScrollView} from 'react-native';
 import {getClientNameForCurrentLanguage} from '../../i18n';
-import {Gesture, GestureHandlerRootView} from 'react-native-gesture-handler';
+import {GestureHandlerRootView} from 'react-native-gesture-handler';
 
 export const QrConsent: React.FC<QrConsentProps> = props => {
   const {t} = useTranslation('QrLogin');

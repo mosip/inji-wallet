@@ -13,14 +13,12 @@ import {ProfileInfo} from '../../shared/CloudBackupAndRestoreUtils';
 import {useBackupScreen} from './BackupController';
 import {BannerNotificationContainer} from '../../components/BannerNotificationContainer';
 import {useBackupRestoreScreen} from '../Settings/BackupRestoreController';
-import {Icon, colors} from 'react-native-elements';
 import testIDProps, {
   getAccountType,
   getDriveName,
 } from '../../shared/commonUtil';
 import {HelpScreen} from '../../components/HelpScreen';
-import {isAndroid, isIOS} from '../../shared/constants';
-import LinearGradient from 'react-native-linear-gradient';
+import {isIOS} from '../../shared/constants';
 import {HelpIcon} from '../../components/ui/HelpIcon';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
 
