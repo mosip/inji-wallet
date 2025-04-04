@@ -61,7 +61,7 @@ export const IssuersGuards = () => {
     isReclaimError: (context: any, event: any) => {
       return (
         isReclaimIssuer(context.selectedIssuerId) &&
-        event.data?.message?.includes('reclaim')
+        event.data?.message?.toLowerCase()?.includes('reclaim')
       );
     },
     isReclaimIssuer: (context: any) => {

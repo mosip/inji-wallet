@@ -105,11 +105,11 @@ export const IssuersService = () => {
 
           // Process the credential in the same way as for other issuers
           return await updateCredentialInformation(context, credential);
-        } catch (error: any) {
-          if (error.message?.includes('RECLAIM_TIMEOUT')) {
-            // Special handling for timeout errors
+        } catch (error) {
+          // check if reclaim error with case insensitive
+          if (error.message.toLowerCase().includes('reclaim')) {
             throw new Error(
-              'Reclaim verification timed out. Please try again.',
+              `Reclaim flow failed: ${error.message || 'Unknown error'}`,
             );
           }
           throw error;
@@ -147,11 +147,6 @@ export const IssuersService = () => {
         ),
       );
 
-      if (isReclaimIssuer(context.selectedIssuerId)) {
-        return context;
-      }
-
-      // Default flow for other issuers
       return await authorize(
         constructAuthorizationConfiguration(
           context.selectedIssuer,
@@ -173,14 +168,6 @@ export const IssuersService = () => {
     },
 
     getKeyPair: async (context: any) => {
-      if (isReclaimIssuer(context.selectedIssuerId)) {
-        return {
-          publicKey: 'reclaim-public-key',
-          privateKey: 'reclaim-private-key',
-        };
-      }
-
-      // Original implementation for non-Reclaim issuers
       return await fetchKeyPair(context.keyType);
     },
 

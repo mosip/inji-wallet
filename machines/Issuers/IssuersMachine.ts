@@ -140,10 +140,20 @@ export const IssuersMachine = model.createMachine(
           CANCEL: {
             target: 'displayIssuers',
           },
-          SELECTED_CREDENTIAL_TYPE: {
-            actions: 'setSelectedCredentialType',
-            target: 'fetchAuthorizationEndpoint',
-          },
+          SELECTED_CREDENTIAL_TYPE: [
+            {
+              cond: 'isReclaimIssuer',
+              actions: [
+                'setSelectedCredentialType',
+                'setLoadingReasonAsDownloadingCredentials',
+              ],
+              target: 'downloadCredentials',
+            },
+            {
+              actions: 'setSelectedCredentialType',
+              target: 'fetchAuthorizationEndpoint',
+            },
+          ],
         },
       },
       fetchAuthorizationEndpoint: {
@@ -214,11 +224,6 @@ export const IssuersMachine = model.createMachine(
           src: 'invokeAuthorization',
           onDone: [
             {
-              cond: 'isReclaimIssuer',
-              actions: ['setTokenResponse', 'setLoadingReasonAsSettingUp'],
-              target: 'downloadCredentials',
-            },
-            {
               actions: ['setTokenResponse', 'setLoadingReasonAsSettingUp'],
               target: '.setSelectedKey',
             },
@@ -226,7 +231,7 @@ export const IssuersMachine = model.createMachine(
           onError: [
             {
               cond: 'isReclaimError',
-              actions: ['handleReclaimError', 'resetLoadingReason'],
+              actions: ['setError', 'resetLoadingReason'],
               target: 'error',
             },
             {
@@ -395,8 +400,7 @@ export const IssuersMachine = model.createMachine(
             {
               cond: 'isReclaimError',
               actions: [
-                'handleReclaimError',
-                'setReclaimTimeoutError',
+                'setError',
                 'resetLoadingReason',
                 'sendDownloadingFailedToVcMeta',
               ],

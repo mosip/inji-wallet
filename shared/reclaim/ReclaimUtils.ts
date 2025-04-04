@@ -1,11 +1,6 @@
 import {Linking} from 'react-native';
-
-// Import the Reclaim SDK (adjust the import path as needed)
-import {
-  ReclaimProofRequest,
-  Proof,
-  ProviderClaimData,
-} from '@reclaimprotocol/reactnative-sdk';
+import {ReclaimProofRequest, Proof} from '@reclaimprotocol/reactnative-sdk';
+import {request} from '../request';
 
 // Check if an issuer is a Reclaim Protocol issuer
 export const isReclaimIssuer = (issuerId: string): boolean => {
@@ -14,55 +9,69 @@ export const isReclaimIssuer = (issuerId: string): boolean => {
 
 const RECLAIM_CONFIG_URL = 'https://inji.reclaimprotocol.org/config/inji';
 const RECLAIM_SESSION_URL = 'https://api.reclaimprotocol.org/api/sdk/session';
-const RECLAIM_CREDENTIAL_URL = 'https://vc.reclaimprotocol.org/credential';
+const RECLAIM_CREDENTIAL_URL = 'https://vc.reclaimprotocol.org';
 
 // Initialize the Reclaim proof request
-export const initializeReclaimProofRequest = async (credentialType: string) => {
+const initializeReclaimProofRequest = async (
+  selectedCredentialType: string,
+) => {
   try {
     // make an api call to get config
-    const response = await fetch(RECLAIM_CONFIG_URL, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({selectedCredentialType: credentialType}),
+    const response = await request('POST', RECLAIM_CONFIG_URL, {
+      selectedCredentialType: selectedCredentialType,
     });
 
-    if (!response.ok) {
-      throw new Error('Failed to fetch config');
+    if (response.reclaimProofRequestConfig) {
+      const reclaimProofRequest = await ReclaimProofRequest.fromJsonString(
+        response.reclaimProofRequestConfig,
+      );
+
+      return reclaimProofRequest;
+    } else {
+      throw new Error(
+        `Failed to fetch reclaim proof request config for credential type: ${selectedCredentialType}. Response: ${JSON.stringify(
+          response,
+        )}`,
+      );
     }
-
-    const {reclaimProofRequestConfig} = await response.json();
-    const reclaimProofRequest = await ReclaimProofRequest.fromJsonString(
-      reclaimProofRequestConfig,
-    );
-
-    return reclaimProofRequest;
   } catch (error) {
-    console.error('Error initializing Reclaim proof request:', error);
-    throw error;
+    console.error(
+      `Error initializing Reclaim proof request for credential type: ${selectedCredentialType}:`,
+      error,
+    );
+    throw new Error(
+      `Failed to initialize Reclaim proof request: ${
+        error.message || 'Unknown error'
+      }`,
+    );
   }
 };
 
 // Generate a request URL for the Reclaim proof request
-export const generateReclaimRequestUrl = async (
+const generateReclaimRequestUrl = async (
   reclaimProofRequest: any,
 ): Promise<{url: string; sessionId: string}> => {
   try {
-    const jsonString = reclaimProofRequest.toJsonString();
-    const jsonObject = JSON.parse(jsonString);
-    const sessionId = jsonObject.sessionId;
+    const reclaimProofRequestConfigString = reclaimProofRequest.toJsonString();
+    const reclaimProofRequestConfigObject = JSON.parse(
+      reclaimProofRequestConfigString,
+    );
+    const sessionId = reclaimProofRequestConfigObject.sessionId;
 
     const url = await reclaimProofRequest.getRequestUrl();
     return {url, sessionId};
   } catch (error) {
     console.error('[Reclaim] Error generating Reclaim request URL:', error);
-    throw error;
+    throw new Error(
+      `Failed to generate Reclaim request URL: ${
+        error.message || 'Unknown error'
+      }. Session ID: ${error.sessionId || 'Not available'}`,
+    );
   }
 };
 
 // Parse the deeplink URL to extract the session ID
-export const parseReclaimDeepLinkURL = (url: string) => {
+const parseReclaimDeepLinkURL = (url: string) => {
   try {
     // Check if this is a reclaim-callback deep link
     if (url.includes('mosipreclaim://callback')) {
@@ -74,7 +83,6 @@ export const parseReclaimDeepLinkURL = (url: string) => {
       if (sessionId) {
         return {
           sessionId,
-          fullUrl: url,
         };
       }
 
@@ -88,7 +96,6 @@ export const parseReclaimDeepLinkURL = (url: string) => {
         if (sessionId) {
           return {
             sessionId,
-            fullUrl: url,
           };
         }
       }
@@ -96,16 +103,13 @@ export const parseReclaimDeepLinkURL = (url: string) => {
 
     return null;
   } catch (error) {
-    console.error('[Reclaim] Error parsing deep link URL:', error);
+    console.error(`[Reclaim] Error parsing deep link URL: ${url}`, error);
     return null;
   }
 };
 
 // Wait for deeplink with timeout
-export const waitForReclaimDeeplink = (
-  sessionId: string,
-  timeoutMinutes = 5,
-): Promise<string> => {
+const waitForReclaimDeeplink = (sessionId: string): Promise<void> => {
   return new Promise((resolve, reject) => {
     let linkingSubscription: any = null;
     let timeoutId: NodeJS.Timeout;
@@ -117,10 +121,10 @@ export const waitForReclaimDeeplink = (
       }
       reject(
         new Error(
-          'RECLAIM_TIMEOUT: Timed out waiting for Reclaim verification',
+          `RECLAIM_TIMEOUT: Timed out waiting for Reclaim verification after 7 minutes. Session ID: ${sessionId}`,
         ),
       );
-    }, timeoutMinutes * 60 * 1000);
+    }, 7 * 60 * 1000); // 7 minutes
 
     // Function to clean up listeners
     const cleanup = () => {
@@ -136,10 +140,10 @@ export const waitForReclaimDeeplink = (
       const parsedData = parseReclaimDeepLinkURL(url);
       if (parsedData && parsedData.sessionId === sessionId) {
         cleanup();
-        resolve(sessionId);
+        resolve();
         return true;
       }
-
+      cleanup();
       return false;
     };
 
@@ -158,64 +162,76 @@ export const waitForReclaimDeeplink = (
 // Fetch proof data using the session ID
 export const fetchProofData = async (sessionId: string): Promise<Proof[]> => {
   try {
-    const response = await fetch(`${RECLAIM_SESSION_URL}/${sessionId}`);
-    const data = await response.json();
-    if (response.ok) {
-      if (data.session.proofs.length > 0) {
-        return data.session.proofs;
-      } else {
-        throw new Error('Failed to fetch proof data');
-      }
+    const response = await request(
+      'GET',
+      `${RECLAIM_SESSION_URL}/${sessionId}`,
+    );
+
+    if (
+      response.session &&
+      response.session.proofs &&
+      response.session.proofs.length > 0
+    ) {
+      return response.session.proofs;
     } else {
-      throw new Error('Failed to fetch proof data');
+      throw new Error(
+        `Failed to fetch proof data for session ID: ${sessionId}. Response: ${JSON.stringify(
+          response,
+        )}`,
+      );
     }
   } catch (error) {
-    console.error('Error fetching proof data:', error);
-    throw error;
+    console.error(
+      `Error fetching proof data for session ID: ${sessionId}:`,
+      error,
+    );
+    throw new Error(
+      `Failed to fetch proof data: ${error.message || 'Unknown error'}`,
+    );
   }
 };
 
 // Call a backend service to convert Reclaim proof to OpenID4VC format
 const convertReclaimProofToCredential = async (
   proofs: Proof[],
-  selectedCredential: string,
+  selectedCredentialType: string,
 ): Promise<any> => {
   try {
-    // POST request to the Reclaim credential endpoint
-    const stringifiedProofs = JSON.stringify({
-      proofs: proofs,
-      selectedCredentialType: selectedCredential,
-    });
-    const apiKey = 'test-reclaim-token';
-    const response = await fetch(RECLAIM_CREDENTIAL_URL, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${apiKey}`,
+    const response = await request(
+      'POST',
+      `/credential`,
+      {
+        proofs: proofs,
+        selectedCredentialType: selectedCredentialType,
       },
-      body: stringifiedProofs,
-    });
+      RECLAIM_CREDENTIAL_URL,
+      {
+        'Content-Type': 'application/json',
+      },
+    );
 
-    if (!response.ok) {
-      throw new Error('Failed to convert Reclaim proof to credential');
-    }
-
-    const data = await response.json();
-    return data;
+    return response;
   } catch (error) {
-    console.error('Error converting Reclaim proof to credential:', error);
-    throw error;
+    console.error(
+      `Error converting Reclaim proof to credential for type: ${selectedCredentialType}:`,
+      error,
+    );
+    throw new Error(
+      `Failed to convert Reclaim proof to credential: ${
+        error.message || 'Unknown error'
+      }`,
+    );
   }
 };
 
 // Main function to handle the entire Reclaim flow with timeout
 export const handleReclaimFlow = async (
-  selectedCredential: string,
+  selectedCredentialType: string,
 ): Promise<any> => {
   try {
     // Initialize Reclaim
     const reclaimProofRequest = await initializeReclaimProofRequest(
-      selectedCredential,
+      selectedCredentialType,
     );
 
     // Generate request URL and get sessionId
@@ -226,7 +242,7 @@ export const handleReclaimFlow = async (
     // Open the URL in the browser
     await Linking.openURL(requestUrl);
 
-    // Wait for the deeplink callback (with 5-minute timeout)
+    // Wait for the deeplink callback (with 7-minute timeout)
     await waitForReclaimDeeplink(sessionId);
 
     // Now that we have confirmation via deeplink, fetch the proof data
@@ -235,18 +251,21 @@ export const handleReclaimFlow = async (
     // Convert the proof to a verifiable credential format
     const credential = await convertReclaimProofToCredential(
       proofData,
-      selectedCredential,
+      selectedCredentialType,
     );
 
     return credential;
   } catch (error) {
-    console.error('[Reclaim] Error in Reclaim flow:', error);
+    console.error(
+      `[Reclaim] Error in Reclaim flow for credential type: ${selectedCredentialType}:`,
+      error,
+    );
     // Rethrow with a specific prefix to identify timeout errors
     if (error.message?.includes('RECLAIM_TIMEOUT')) {
       throw new Error(
-        'RECLAIM_TIMEOUT: Verification process timed out. Please try again.',
+        `RECLAIM_TIMEOUT: Verification process timed out for credential type: ${selectedCredentialType}. Please try again.`,
       );
     }
-    throw error;
+    throw new Error(`Reclaim flow failed: ${error.message || 'Unknown error'}`);
   }
 };

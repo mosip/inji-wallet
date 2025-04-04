@@ -246,7 +246,8 @@ export const OIDCErrors = {
 
   AUTHORIZATION_ENDPOINT_DISCOVERY: {
     GRANT_TYPE_NOT_SUPPORTED: 'Grant type not supported by Wallet',
-    FAILED_TO_FETCH_AUTHORIZATION_ENDPOINT: 'Failed to fetch authorization endpoint or grant type not supported by wallet',
+    FAILED_TO_FETCH_AUTHORIZATION_ENDPOINT:
+      'Failed to fetch authorization endpoint or grant type not supported by wallet',
   },
 };
 
@@ -260,6 +261,7 @@ export enum ErrorMessage {
   TECHNICAL_DIFFICULTIES = 'technicalDifficulty',
   CREDENTIAL_TYPE_DOWNLOAD_FAILURE = 'credentialTypeListDownloadFailure',
   AUTHORIZATION_GRANT_TYPE_NOT_SUPPORTED = 'authorizationGrantTypeNotSupportedByWallet',
+  RECLAIM_ERROR = 'reclaimError',
 }
 
 export async function constructProofJWT(
