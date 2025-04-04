@@ -9,7 +9,6 @@ import {Modal} from '../../components/ui/Modal';
 import {QrLoginRef} from '../../machines/QrLogin/QrLoginMachine';
 import {ScrollView} from 'react-native';
 import {getClientNameForCurrentLanguage} from '../../i18n';
-import {GestureHandlerRootView} from 'react-native-gesture-handler';
 
 export const QrConsent: React.FC<QrConsentProps> = props => {
   const {t} = useTranslation('QrLogin');
@@ -45,78 +44,76 @@ export const QrConsent: React.FC<QrConsentProps> = props => {
             {t('access')}
           </Text>
         </Column>
-        <GestureHandlerRootView>
-          <ScrollView>
-            <Column>
-              {
+        <ScrollView>
+          <Column>
+            {
+              <Text
+                style={Theme.TextStyles.small}
+                weight="bold"
+                margin={'10 0 0 0'}>
+                {t('essentialClaims')}
+              </Text>
+            }
+
+            {controller.essentialClaims.map((claim, index) => (
+              <Row key={index} align={'space-between'} margin={'10 20 0 15'}>
                 <Text
+                  color={Theme.Colors.Details}
+                  style={Theme.TextStyles.base}>
+                  {t(claim[0].toUpperCase() + claim.slice(1))
+                    .split('_')
+                    .join(' ')}
+                </Text>
+                <Text
+                  color={Theme.Colors.GrayIcon}
                   style={Theme.TextStyles.small}
                   weight="bold"
-                  margin={'10 0 0 0'}>
-                  {t('essentialClaims')}
+                  margin={'10 0 10 6'}>
+                  {t('required')}
                 </Text>
-              }
+              </Row>
+            ))}
+          </Column>
 
-              {controller.essentialClaims.map((claim, index) => (
-                <Row key={index} align={'space-between'} margin={'10 20 0 15'}>
-                  <Text
-                    color={Theme.Colors.Details}
-                    style={Theme.TextStyles.base}>
-                    {t(claim[0].toUpperCase() + claim.slice(1))
-                      .split('_')
-                      .join(' ')}
-                  </Text>
-                  <Text
-                    color={Theme.Colors.GrayIcon}
-                    style={Theme.TextStyles.small}
-                    weight="bold"
-                    margin={'10 0 10 6'}>
-                    {t('required')}
-                  </Text>
-                </Row>
-              ))}
-            </Column>
+          <Column>
+            {
+              <Text
+                style={Theme.TextStyles.small}
+                weight="bold"
+                margin={'10 0 0 0'}>
+                {t('voluntaryClaims')}
+              </Text>
+            }
 
-            <Column>
-              {
-                <Text
-                  style={Theme.TextStyles.small}
-                  weight="bold"
-                  margin={'10 0 0 0'}>
-                  {t('voluntaryClaims')}
-                </Text>
-              }
+            {controller.voluntaryClaims.map((claim, index) => (
+              <ListItem
+                key={index}
+                bottomDivider
+                containerStyle={Theme.claimsContainer.container}>
+                <ListItem.Content>
+                  <ListItem.Title>
+                    <Text color={Theme.Colors.Details}>
+                      {t(claim[0].toUpperCase() + claim.slice(1))
+                        .split('_')
+                        .join(' ')}
+                    </Text>
+                  </ListItem.Title>
+                </ListItem.Content>
 
-              {controller.voluntaryClaims.map((claim, index) => (
-                <ListItem
-                  key={index}
-                  bottomDivider
-                  containerStyle={Theme.claimsContainer.container}>
-                  <ListItem.Content>
-                    <ListItem.Title>
-                      <Text color={Theme.Colors.Details}>
-                        {t(claim[0].toUpperCase() + claim.slice(1))
-                          .split('_')
-                          .join(' ')}
-                      </Text>
-                    </ListItem.Title>
-                  </ListItem.Content>
-
-                  <Switch
-                    value={controller.isShare[claim]}
-                    onValueChange={() =>
-                      controller.SELECT_CONSENT(
-                        controller.isShare[claim],
-                        claim,
-                      )
-                    }
-                    color={Theme.Colors.Icon}
-                  />
-                </ListItem>
-              ))}
-            </Column>
-          </ScrollView>
-        </GestureHandlerRootView>
+                <Switch
+                  value={controller.isShare[claim]}
+                  onValueChange={() =>
+                    controller.SELECT_CONSENT(
+                      controller.isShare[claim],
+                      claim,
+                    )
+                  }
+                  color={Theme.Colors.Icon}
+                />
+              </ListItem>
+            ))}
+          </Column>
+        </ScrollView>
         <Column
           margin={'0 -20 0 -20'}
           style={Theme.Styles.bottomButtonsContainer}
