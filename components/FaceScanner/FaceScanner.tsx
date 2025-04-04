@@ -39,6 +39,7 @@ export const FaceScanner: React.FC<FaceScannerProps> = props => {
   const isValid = useSelector(service, selectIsValid);
   const isInvalid = useSelector(service, selectIsInvalid);
   const isCheckingPermission = useSelector(service, selectIsCheckingPermission);
+  const isScanning = useSelector(service, selectIsScanning);
   const isCapturing = useSelector(service, selectIsCapturing);
   const isVerifying = useSelector(service, selectIsVerifying);
 
@@ -136,7 +137,7 @@ export const FaceScanner: React.FC<FaceScannerProps> = props => {
   }, [isActive, service]);
 
   if (isCheckingPermission) {
-    return <Column />;
+    return <Column children={undefined} />;
   }
 
   if (isPermissionDenied) {

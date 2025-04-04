@@ -25,7 +25,7 @@ export const VcItemContainerProfileImage = ({verifiableCredentialData, isPinned}
   );
 };
 
-export interface VcItemContainerProfileImageProps {
+interface VcItemContainerProfileImageProps {
     verifiableCredentialData: any;
     isPinned?: boolean;
 }

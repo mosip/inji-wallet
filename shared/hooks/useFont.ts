@@ -7,12 +7,12 @@ import {
 } from '@expo-google-fonts/inter';
 
 export function useFont() {
-  const [fontsLoaded] = useFonts({
+  const [hasFontsLoaded] = useFonts({
     Inter_400Regular,
     Inter_500Medium,
     Inter_600SemiBold,
     Inter_700Bold,
   });
 
-  return fontsLoaded;
+  return hasFontsLoaded;
 }
