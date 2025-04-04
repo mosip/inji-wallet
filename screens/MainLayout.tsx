@@ -42,7 +42,6 @@ export const MainLayout: React.FC = () => {
 
   useEffect(() => {
     if (linkCode != '') {
-      console.log('Use effect qr');
       navigation.navigate(BOTTOM_TAB_ROUTES.share);
     }
   }, [linkCode]);
