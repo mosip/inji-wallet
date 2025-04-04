@@ -3,10 +3,11 @@ import {ErrorMessage, OIDCErrors} from '../../shared/openId4VCI/Utils';
 import {isHardwareKeystoreExists} from '../../shared/cryptoutil/cryptoUtil';
 import {BiometricCancellationError} from '../../shared/error/BiometricCancellationError';
 import {VerificationErrorType} from '../../shared/vcjs/verifyCredential';
+import {isReclaimIssuer} from '../../shared/reclaim/ReclaimUtils';
 
 export const IssuersGuards = () => {
   return {
-    isVerificationPendingBecauseOfNetworkIssue: (_context, event) =>
+    isVerificationPendingBecauseOfNetworkIssue: (_context: any, event: any) =>
       (event.data as Error).message == VerificationErrorType.NETWORK_ERROR,
     isSignedIn: (_: any, event: any) =>
       (event.data as isSignedInResult).isSignedIn,
@@ -56,6 +57,15 @@ export const IssuersGuards = () => {
     isGenericError: (_: any, event: any) => {
       const errorMessage = event.data.message;
       return errorMessage === ErrorMessage.GENERIC;
+    },
+    isReclaimError: (context: any, event: any) => {
+      return (
+        isReclaimIssuer(context.selectedIssuerId) &&
+        event.data?.message?.toLowerCase()?.includes('reclaim')
+      );
+    },
+    isReclaimIssuer: (context: any) => {
+      return isReclaimIssuer(context.selectedIssuerId);
     },
   };
 };

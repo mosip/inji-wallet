@@ -140,10 +140,20 @@ export const IssuersMachine = model.createMachine(
           CANCEL: {
             target: 'displayIssuers',
           },
-          SELECTED_CREDENTIAL_TYPE: {
-            actions: 'setSelectedCredentialType',
-            target: 'fetchAuthorizationEndpoint',
-          },
+          SELECTED_CREDENTIAL_TYPE: [
+            {
+              cond: 'isReclaimIssuer',
+              actions: [
+                'setSelectedCredentialType',
+                'setLoadingReasonAsDownloadingCredentials',
+              ],
+              target: 'downloadCredentials',
+            },
+            {
+              actions: 'setSelectedCredentialType',
+              target: 'fetchAuthorizationEndpoint',
+            },
+          ],
         },
       },
       fetchAuthorizationEndpoint: {
@@ -212,11 +222,18 @@ export const IssuersMachine = model.createMachine(
           'invokes the issuers authorization endpoint and gets the access token',
         invoke: {
           src: 'invokeAuthorization',
-          onDone: {
-            actions: ['setTokenResponse', 'setLoadingReasonAsSettingUp'],
-            target: '.setSelectedKey',
-          },
+          onDone: [
+            {
+              actions: ['setTokenResponse', 'setLoadingReasonAsSettingUp'],
+              target: '.setSelectedKey',
+            },
+          ],
           onError: [
+            {
+              cond: 'isReclaimError',
+              actions: ['setError', 'resetLoadingReason'],
+              target: 'error',
+            },
             {
               cond: 'isOIDCflowCancelled',
               actions: [
@@ -381,8 +398,13 @@ export const IssuersMachine = model.createMachine(
           },
           onError: [
             {
-              cond: 'hasUserCancelledBiometric',
-              target: '.userCancelledBiometric',
+              cond: 'isReclaimError',
+              actions: [
+                'setError',
+                'resetLoadingReason',
+                'sendDownloadingFailedToVcMeta',
+              ],
+              target: 'error',
             },
             {
               cond: 'isGenericError',

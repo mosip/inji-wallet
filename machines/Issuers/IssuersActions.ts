@@ -121,6 +121,9 @@ export const IssuersActions = (model: any) => {
         ) {
           return ErrorMessage.AUTHORIZATION_GRANT_TYPE_NOT_SUPPORTED;
         }
+        if (error.toLowerCase().includes('reclaim')) {
+          return `${ErrorMessage.RECLAIM_ERROR}:${error}`;
+        }
         return ErrorMessage.GENERIC;
       },
     }),
