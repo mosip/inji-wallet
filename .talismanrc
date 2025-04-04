@@ -238,7 +238,7 @@ fileignoreconfig:
   - filename: __mocks__/en.mock.json
     checksum: b34340a3f40c691f06698f7758b8c068a09ed7215098a0d11baed191c0972e04
   - filename: ios/Inji/Info.plist
-    checksum: 9237e54ac8bbc0a4ad4c5d82ffe5b1ae4ccadfce6745f59cee1260c469212701
+    checksum: 9e313b05f9cfa32f2b68e45a9c71734f1acde6cfb854021d2232def881f10b65
   - filename: machines/backupAndRestore/backupRestore.ts
     checksum: 60a55a1d0ef6e79f7b9fa1e61ed31b933364afb429bff03cebbc56339c764499
   - filename: machines/backupAndRestore/backupRestore.typegen.ts
@@ -272,7 +272,7 @@ fileignoreconfig:
   - filename: injitest/automation_trigger.sh
     checksum: f2f34839c99cb1b871dde17aed8508a071345d22738796e005ff709d2dab8644
   - filename: machines/Issuers/IssuersService.ts
-    checksum: e3832dff27687abc28609d2b281e570b4b0017995b7cfb56627a6b96949c469a
+    checksum: 92ec90ab6aca5509283bd08cf260d906ea902ee0a889568d96423a2ca0e1a7a5
   - filename: screens/Home/ViewVcModal.tsx
     checksum: cfb25d562185488432b76287c4ef93359c1c64d8e29f5755d4c0a726c1485442
   - filename: injitest/src/main/resources/TestData.json
@@ -398,4 +398,6 @@ fileignoreconfig:
     checksum: 6600a3d75033af4d702dd8c9663e12ad7c2c096a529bac2771bb856cc75a5ed0
   - filename: machines/openID4VP/openID4VPModel.ts
     checksum: 5d1ed430f84852d6c85bc439c47641cfb5b19cbd1a03faf8918429685db51e07
+  - filename: shared/reclaim/ReclaimUtils.ts
+    checksum: edc6dd1932d96148c16e458877e272cf38c250cad46b5b4073934489d85f219c
     version: ""
