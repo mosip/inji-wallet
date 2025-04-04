@@ -1,5 +1,5 @@
 import React, {useCallback, useContext, useEffect, useRef, useState,} from 'react';
-import {Camera, CameraType} from 'expo-camera';
+import { CameraType} from 'expo-camera';
 import {Button, Column, Text} from '.././ui';
 import {useInterpret, useSelector} from '@xstate/react';
 import {useTranslation} from 'react-i18next';
@@ -10,7 +10,7 @@ import {
   selectIsCapturing,
   selectIsCheckingPermission,
   selectIsInvalid,
-  selectIsPermissionDenied,
+  selectIsPermissionDenied, selectIsScanning,
   selectIsValid,
   selectIsVerifying,
 } from '../../machines/faceScanner';
