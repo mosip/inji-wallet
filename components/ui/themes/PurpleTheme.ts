@@ -6,7 +6,7 @@ import {
   StyleSheet,
   ViewStyle,
 } from 'react-native';
-import {Spacing, Theme} from '../styleUtils';
+import {Spacing} from '../styleUtils';
 import {COPILOT_HEIGHT, isIOS} from '../../../shared/constants';
 import Constants from 'expo-constants';
 import HomeScreenLogo from '../../../assets/Inji_Home_Logo.svg';
@@ -1940,8 +1940,6 @@ export const PurpleTheme = {
   ICON_LARGE_SIZE: 33,
   CloseCard: require('../../../assets/images/png/Card_Bg1.png'),
   OpenCard: require('../../../assets/images/png/Card_Bg1.png'),
-  IntroWelcome: require('../../../assets/images/svg/Intro_Unlock.svg'),
-  IntroSliderbackground: require('../../../assets/images/png/IntroSliderBackgroundPurple.png'),
   HomeScreenLogo: HomeScreenLogo,
   InjiLogoSmall: InjiLogoSmall,
   elevation(level: ElevationLevel): ViewStyle {

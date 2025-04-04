@@ -6,19 +6,11 @@ import {
   StyleSheet,
   ViewStyle,
 } from 'react-native';
-import {Spacing, Theme} from '../styleUtils';
+import {Spacing} from '../styleUtils';
 import {COPILOT_HEIGHT, isIOS, isAndroid} from '../../../shared/constants';
 import Constants from 'expo-constants';
 import HomeScreenLogo from '../../../assets/InjiHomeLogo.svg';
 import InjiLogoSmall from '../../../assets/InjiLogo.svg';
-import BiometricIntro from '../../../assets/images/svg/biometricIntro.svg';
-import SecureSharing from '../../../assets/images/svg/secureSharing.svg';
-import TrustedDigitalWallet from '../../../assets/images/svg/trustedDigitalWallet.svg';
-import QuickAccess from '../../../assets/images/quickAccess.svg';
-import BackupRestoreIntro from '../../../assets/images/svg/backupRestoreIntro.svg';
-import IntroBg from '../../../assets/images/svg/IntroBg.svg';
-import CloseCard from '../../../assets/images/Card_Bg1.svg';
-import OpenCard from '../../../assets/images/Card_Bg1.svg';
 import i18next from '../../../i18n';
 const Colors = {
   Black: '#000000',
@@ -1944,12 +1936,6 @@ export const DefaultTheme = {
   ICON_LARGE_SIZE: 33,
   CloseCard: require('../../../assets/images/png/Card_Bg1.png'),
   OpenCard: require('../../../assets/images/png/Card_Bg1.png'),
-  IntroWelcome: require('../../../assets/images/png/biometricIntro.png'),
-  SecureSharing: require('../../../assets/images/png/secureSharing.png'),
-  DigitalWallet: require('../../../assets/images/png/trustedDigitalWallet.png'),
-  IntroShare: require('../../../assets/images/png/quickAccess.png'),
-  IntroBackup: require('../../../assets/images/png/backupRestoreIntro.png'),
-  IntroSliderbackground: require('../../../assets/images/png/IntroBg.png'),
   HomeScreenLogo: HomeScreenLogo,
   InjiLogoSmall: InjiLogoSmall,
   elevation(level: ElevationLevel): ViewStyle {
