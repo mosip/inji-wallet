@@ -19,6 +19,7 @@ class RNOpenId4VpModule: NSObject, RCTBridgeModule {
   @objc
   func authenticateVerifier(_ urlEncodedAuthorizationRequest: String,
                             trustedVerifierJSON: AnyObject,
+                            walletMetadata: AnyObject?,
                             shouldValidateClient: Bool,
                             resolver resolve: @escaping RCTPromiseResolveBlock,
                             rejecter reject: @escaping RCTPromiseRejectBlock) {
@@ -37,7 +38,34 @@ class RNOpenId4VpModule: NSObject, RCTBridgeModule {
           return Verifier(clientId: clientId, responseUris: responseUris)
         }
         
-        let authenticationResponse: AuthorizationRequest = try await openID4VP!.authenticateVerifier(urlEncodedAuthorizationRequest: urlEncodedAuthorizationRequest, trustedVerifierJSON: trustedVerifiersList, shouldValidateClient: shouldValidateClient)
+        let walletMetadataObject: WalletMetadata? = {
+          guard let metadata = walletMetadata as? [String: Any] else { return nil }
+          guard let vpFormatsSupportedDict = metadata["vp_formats_supported"] as? [String: [String: Any]] else { return nil }
+          
+          let vpFormatsSupported: [String: VPFormatSupported] = {
+            guard let ldpVcDict = vpFormatsSupportedDict["ldp_vc"] as? [String: Any] else {
+              return [:]
+            }
+            let algValuesSupported = ldpVcDict["alg_values_supported"] as? [String]
+            return ["ldp_vc": VPFormatSupported(algValuesSupported: algValuesSupported)]
+          }()
+          
+          return WalletMetadata(
+            presentationDefinitionURISupported: metadata["presentation_definition_uri_supported"] as? Bool ?? true,
+            vpFormatsSupported: vpFormatsSupported,
+            clientIdSchemesSupported: metadata["client_id_schemes_supported"] as? [String] ?? [ClientIdScheme.preRegistered.rawValue],
+            requestObjectSigningAlgValuesSupported: metadata["request_object_signing_alg_values_supported"] as? [String],
+            authorizationEncryptionAlgValuesSupported: metadata["authorization_encryption_alg_values_supported"] as? [String],
+            authorizationEncryptionEncValuesSupported: metadata["authorization_encryption_enc_values_supported"] as? [String]
+          )
+        }()
+        
+        let authenticationResponse: AuthorizationRequest = try await openID4VP!.authenticateVerifier(
+          urlEncodedAuthorizationRequest: urlEncodedAuthorizationRequest,
+          trustedVerifierJSON: trustedVerifiersList,
+          walletMetadata: walletMetadataObject,
+          shouldValidateClient: shouldValidateClient
+        )
         
         let response = try toJsonString(jsonObject: authenticationResponse)
         resolve(response)
