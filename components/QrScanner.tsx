@@ -10,14 +10,14 @@ import {useTranslation} from 'react-i18next';
 import testIDProps from '../shared/commonUtil';
 import {SvgImage} from './ui/svg';
 import {isAndroid} from '../shared/constants';
-import {CameraType} from 'expo-camera/build/legacy/Camera.types';
-import {CameraView, useCameraPermissions, PermissionStatus, BarcodeScanningResult, BarcodeType} from 'expo-camera';
+import {CameraView, useCameraPermissions, PermissionStatus, BarcodeScanningResult, CameraType} from 'expo-camera';
+import {CameraPosition} from "../shared/Utils";
 
 export const QrScanner: React.FC<QrScannerProps> = props => {
   const {t} = useTranslation('QrScanner');
   const {appService} = useContext(GlobalContext);
   const [scanned, setScanned] = useState(false);
-  const [cameraType, setCameraType] = useState(CameraType.back);
+  const [cameraType, setCameraType] = useState<CameraType>(CameraPosition.BACK);
   const [hasCameraPermission, setHasCameraPermission] = useState<
     boolean | null
   >(null);
