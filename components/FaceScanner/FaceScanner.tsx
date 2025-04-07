@@ -1,5 +1,5 @@
 import React, {useCallback, useContext, useEffect, useRef, useState,} from 'react';
-import { CameraType} from 'expo-camera';
+import {CameraType, CameraView} from 'expo-camera';
 import {Button, Column, Text} from '.././ui';
 import {useInterpret, useSelector} from '@xstate/react';
 import {useTranslation} from 'react-i18next';
@@ -56,7 +56,7 @@ export const FaceScanner: React.FC<FaceScannerProps> = props => {
   const [infoText, setInfoText] = useState<string>(t('livenessCaptureGuide'));
 
   const setCameraRef = useCallback(
-    (node: Camera) => {
+    (node: CameraView) => {
       if (node != null && !isScanning) {
         service.send(FaceScannerEvents.READY(node));
       }
