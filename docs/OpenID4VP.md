@@ -10,7 +10,7 @@ requesting and presenting Verifiable Credentials.
 - Below are the fields we expect in the Authorization Request:
 
   - client_id
-  - client_id_scheme
+  - client_id_scheme (Optional | Default value : pre-registered)
   - presentation_definition/presentation_definition_uri
   - response_type
   - response_mode
