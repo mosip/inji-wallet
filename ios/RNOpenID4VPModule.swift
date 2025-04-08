@@ -40,29 +40,31 @@ class RNOpenId4VpModule: NSObject, RCTBridgeModule {
         
         let walletMetadataObject: WalletMetadata? = {
           guard let metadata = walletMetadata as? [String: Any] else { return nil }
-          guard let vpFormatsSupportedDict = metadata["vp_formats_supported"] as? [String: [String: Any]] else { return nil }
           
-          let vpFormatsSupported: [String: VPFormatSupported] = {
-            guard let ldpVcDict = vpFormatsSupportedDict["ldp_vc"] as? [String: Any] else {
-              return [:]
-            }
+          var vpFormatsSupported: [String: VPFormatSupported] = [:]
+          if
+            let vpFormatsSupportedDict = metadata["vp_formats_supported"] as? [String: Any],
+            let ldpVcDict = vpFormatsSupportedDict["ldp_vc"] as? [String: Any]
+          {
             let algValuesSupported = ldpVcDict["alg_values_supported"] as? [String]
-            return ["ldp_vc": VPFormatSupported(algValuesSupported: algValuesSupported)]
-          }()
+            vpFormatsSupported["ldp_vc"] = VPFormatSupported(algValuesSupported: algValuesSupported)
+          } else {
+            vpFormatsSupported["ldp_vc"] = VPFormatSupported(algValuesSupported: nil)
+          }
           
-          // Extract clientIdSchemesSupported and check if it's nil or empty
           let clientIdSchemesSupported = metadata["client_id_schemes_supported"] as? [String]
+          let requestObjectSigningAlgValuesSupported = metadata["request_object_signing_alg_values_supported"] as? [String]
+          let authorizationEncryptionAlgValuesSupported = metadata["authorization_encryption_alg_values_supported"] as? [String]
+          let authorizationEncryptionEncValuesSupported = metadata["authorization_encryption_enc_values_supported"] as? [String]
           
-          // Create WalletMetadata conditionally
           var walletMetadata = WalletMetadata(
-            presentationDefinitionURISupported: metadata["presentation_definition_uri_supported"] as? Bool ?? true,
+            presentationDefinitionURISupported: metadata["presentation_definition_uri_supported"] as? Bool,
             vpFormatsSupported: vpFormatsSupported,
-            requestObjectSigningAlgValuesSupported: metadata["request_object_signing_alg_values_supported"] as? [String],
-            authorizationEncryptionAlgValuesSupported: metadata["authorization_encryption_alg_values_supported"] as? [String],
-            authorizationEncryptionEncValuesSupported: metadata["authorization_encryption_enc_values_supported"] as? [String]
+            requestObjectSigningAlgValuesSupported: requestObjectSigningAlgValuesSupported,
+            authorizationEncryptionAlgValuesSupported: authorizationEncryptionAlgValuesSupported,
+            authorizationEncryptionEncValuesSupported: authorizationEncryptionEncValuesSupported
           )
           
-          // Assign clientIdSchemesSupported only if it's non-nil and non-empty
           if let clientIdSchemes = clientIdSchemesSupported, !clientIdSchemes.isEmpty {
             walletMetadata.clientIdSchemesSupported = clientIdSchemes
           }
