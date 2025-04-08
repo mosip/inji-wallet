@@ -1,9 +1,12 @@
 package io.mosip.residentapp;
 
 import static io.mosip.openID4VP.authorizationResponse.AuthorizationResponseUtilsKt.toJsonString;
+
 import android.util.Log;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+
 import com.facebook.react.bridge.Promise;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
@@ -14,6 +17,7 @@ import com.facebook.react.bridge.ReadableMapKeySetIterator;
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+
 import java.util.ArrayList;
 import java.util.EnumMap;
 import java.util.HashMap;
@@ -63,7 +67,7 @@ public class InjiOpenID4VPModule extends ReactContextBaseJavaModule {
         try {
             WalletMetadata walletMetadataObj = getWalletMetadataFromReadableMap(walletMetadata);
             AuthorizationRequest authenticationResponse = openID4VP.authenticateVerifier(urlEncodedAuthorizationRequest,
-                    convertReadableArrayToVerifierArray(trustedVerifiers),walletMetadataObj, shouldValidateClient);
+                    convertReadableArrayToVerifierArray(trustedVerifiers), walletMetadataObj, shouldValidateClient);
             String authenticationResponseAsJson = gson.toJson(authenticationResponse, AuthorizationRequest.class);
             promise.resolve(authenticationResponseAsJson);
         } catch (Exception exception) {
@@ -87,10 +91,10 @@ public class InjiOpenID4VPModule extends ReactContextBaseJavaModule {
                 while (matchingVcsIterator.hasNextKey()) {
                     String credentialFormat = matchingVcsIterator.nextKey();
                     List<String> matchingVcsOfSpecificCredentialFormat = convertReadableArrayToList(Objects.requireNonNull(matchingVcsOfDifferentFormats.getArray(credentialFormat)));
-                    if(credentialFormat.equals(FormatType.LDP_VC.getValue()))
-                     formattedMatchingVcsOfDifferentFormats.put(FormatType.LDP_VC, matchingVcsOfSpecificCredentialFormat);
+                    if (credentialFormat.equals(FormatType.LDP_VC.getValue()))
+                        formattedMatchingVcsOfDifferentFormats.put(FormatType.LDP_VC, matchingVcsOfSpecificCredentialFormat);
                     else
-                        throw new UnsupportedOperationException("Credential format - "+credentialFormat+" is not supported");
+                        throw new UnsupportedOperationException("Credential format - " + credentialFormat + " is not supported");
                 }
                 selectedVCsMap.put(inputDescriptorId, formattedMatchingVcsOfDifferentFormats);
             }
@@ -162,6 +166,9 @@ public class InjiOpenID4VPModule extends ReactContextBaseJavaModule {
     }
 
     private WalletMetadata getWalletMetadataFromReadableMap(ReadableMap walletMetadata) {
+        Boolean presentationDefinitionUriSupported = walletMetadata.hasKey("presentation_definition_uri_supported")
+                ? walletMetadata.getBoolean("presentation_definition_uri_supported") : null;
+
         Map<String, VPFormatSupported> vpFormatsSupportedMap = new HashMap<>();
         ReadableMap vpFormatsMap = walletMetadata.getMap("vp_formats_supported");
 
@@ -176,35 +183,24 @@ public class InjiOpenID4VPModule extends ReactContextBaseJavaModule {
                 }
 
                 vpFormatsSupportedMap.put("ldp_vc", new VPFormatSupported(algValuesList));
+            } else {
+                vpFormatsSupportedMap.put("ldp_vc", new VPFormatSupported(null));
             }
         }
 
-        List<String> clientIdSchemes = Optional.ofNullable(walletMetadata.getArray("client_id_schemes_supported"))
-                .map(this::convertReadableArrayToStringList)
-                .filter(list -> !list.isEmpty())
-                .orElse(List.of(ClientIdScheme.PRE_REGISTERED.getValue()));
-
         return new WalletMetadata(
-                walletMetadata.getBoolean("presentation_definition_uri_supported"),
+                presentationDefinitionUriSupported,
                 vpFormatsSupportedMap,
-                clientIdSchemes,
+                extractStringListOrNull(walletMetadata, "client_id_schemes_supported"),
                 extractStringListOrNull(walletMetadata, "request_object_signing_alg_values_supported"),
                 extractStringListOrNull(walletMetadata, "authorization_encryption_alg_values_supported"),
                 extractStringListOrNull(walletMetadata, "authorization_encryption_enc_values_supported")
         );
     }
 
-    private List<String> convertReadableArrayToStringList(ReadableArray array) {
-        List<String> stringList = new ArrayList<>(array.size());
-        for (int i = 0; i < array.size(); i++) {
-            stringList.add(array.getString(i));
-        }
-        return stringList;
-    }
-
     private List<String> extractStringListOrNull(ReadableMap readableMap, String key) {
         return Optional.ofNullable(readableMap.getArray(key))
-                .map(this::convertReadableArrayToStringList)
+                .map(this::convertReadableArrayToList)
                 .filter(list -> !list.isEmpty())
                 .orElse(null);
     }
