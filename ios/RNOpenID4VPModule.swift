@@ -50,14 +50,23 @@ class RNOpenId4VpModule: NSObject, RCTBridgeModule {
             return ["ldp_vc": VPFormatSupported(algValuesSupported: algValuesSupported)]
           }()
           
-          return WalletMetadata(
+          // Extract clientIdSchemesSupported and check if it's nil or empty
+          let clientIdSchemesSupported = metadata["client_id_schemes_supported"] as? [String]
+          
+          // Create WalletMetadata conditionally
+          var walletMetadata = WalletMetadata(
             presentationDefinitionURISupported: metadata["presentation_definition_uri_supported"] as? Bool ?? true,
             vpFormatsSupported: vpFormatsSupported,
-            clientIdSchemesSupported: metadata["client_id_schemes_supported"] as? [String] ?? [ClientIdScheme.preRegistered.rawValue],
             requestObjectSigningAlgValuesSupported: metadata["request_object_signing_alg_values_supported"] as? [String],
             authorizationEncryptionAlgValuesSupported: metadata["authorization_encryption_alg_values_supported"] as? [String],
             authorizationEncryptionEncValuesSupported: metadata["authorization_encryption_enc_values_supported"] as? [String]
           )
+          
+          // Assign clientIdSchemesSupported only if it's non-nil and non-empty
+          if let clientIdSchemes = clientIdSchemesSupported, !clientIdSchemes.isEmpty {
+            walletMetadata.clientIdSchemesSupported = clientIdSchemes
+          }
+          return walletMetadata
         }()
         
         let authenticationResponse: AuthorizationRequest = try await openID4VP!.authenticateVerifier(
