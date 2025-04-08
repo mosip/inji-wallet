@@ -4,7 +4,7 @@ import {assign, EventFrom, StateFrom} from 'xstate';
 import {createModel} from 'xstate/lib/model';
 
 import {faceCompare} from '@iriscan/biometric-sdk-react-native';
-import {ImageType} from "expo-camera/build/legacy/Camera.types";
+import { ImageType } from '../components/FaceScanner/FaceScannerHelper';
 
 const model = createModel(
   {

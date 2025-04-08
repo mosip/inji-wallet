@@ -165,8 +165,5 @@
   },
   "engines": {
     "node": ">=16"
-  },
-  "resolutions": {
-
   }
 }
