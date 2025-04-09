@@ -38,8 +38,10 @@ class RNOpenId4VpModule: NSObject, RCTBridgeModule {
           return Verifier(clientId: clientId, responseUris: responseUris)
         }
         
-        let walletMetadataObject: WalletMetadata? = {
-          guard let metadata = walletMetadata as? [String: Any] else { return nil }
+        let walletMetadataObject: WalletMetadata = {
+          guard let metadata = walletMetadata as? [String: Any] else {
+            reject("OPENID4VP", "Invalid wallet metadata format", nil)
+          }
           
           var vpFormatsSupported: [String: VPFormatSupported] = [:]
           if
@@ -53,12 +55,12 @@ class RNOpenId4VpModule: NSObject, RCTBridgeModule {
           }
           
           let clientIdSchemesSupported = metadata["client_id_schemes_supported"] as? [String]
+          let presentationDefinitionURISupported = metadata["presentation_definition_uri_supported"] as? Bool
           let requestObjectSigningAlgValuesSupported = metadata["request_object_signing_alg_values_supported"] as? [String]
           let authorizationEncryptionAlgValuesSupported = metadata["authorization_encryption_alg_values_supported"] as? [String]
           let authorizationEncryptionEncValuesSupported = metadata["authorization_encryption_enc_values_supported"] as? [String]
           
           var walletMetadata = WalletMetadata(
-            presentationDefinitionURISupported: metadata["presentation_definition_uri_supported"] as? Bool,
             vpFormatsSupported: vpFormatsSupported,
             requestObjectSigningAlgValuesSupported: requestObjectSigningAlgValuesSupported,
             authorizationEncryptionAlgValuesSupported: authorizationEncryptionAlgValuesSupported,
@@ -67,6 +69,9 @@ class RNOpenId4VpModule: NSObject, RCTBridgeModule {
           
           if let clientIdSchemes = clientIdSchemesSupported, !clientIdSchemes.isEmpty {
             walletMetadata.clientIdSchemesSupported = clientIdSchemes
+          }
+          if let presentationDefinitionURI = presentationDefinitionURISupported {
+            walletMetadata.presentationDefinitionURISupported = presentationDefinitionURI
           }
           return walletMetadata
         }()
