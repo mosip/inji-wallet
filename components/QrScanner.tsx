@@ -26,6 +26,13 @@ export const QrScanner: React.FC<QrScannerProps> = props => {
     setShowCameraPermissionDeniedBanner,
   ] = useState(false);
   const [_, requestCameraPermission, getCameraPermissionsAsync] = useCameraPermissions();
+  const [isCameraActive, setIsCameraActive] = useState<boolean>(true);
+
+  useEffect(() => {
+    return () => {
+      setIsCameraActive(false);
+    };
+  }, []);
 
   const isActive = useSelector(appService, selectIsActive);
 
@@ -124,6 +131,7 @@ export const QrScanner: React.FC<QrScannerProps> = props => {
               }}
               onBarcodeScanned={scanned ? undefined : onBarcodeScanned}
               facing={cameraType}
+              active={isCameraActive}
             />
           </View>
           <Column fill align="space-between" style={{marginTop: 24}}>
