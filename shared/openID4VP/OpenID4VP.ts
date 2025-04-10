@@ -4,7 +4,8 @@ import {SelectedCredentialsForVPSharing} from '../../machines/VerifiableCredenti
 import {getJWT} from '../cryptoutil/cryptoUtil';
 import {getJWK} from '../openId4VCI/Utils';
 import getAllConfigurations from '../api';
-import {parseJSON} from "../Utils";
+import {parseJSON} from '../Utils';
+import {walletMetadata} from './walletMetadata';
 
 export const OpenID4VP_Key_Ref = 'OpenID4VP_KeyPair';
 export const OpenID4VP_Proof_Sign_Algo_Suite = 'Ed25519Signature2020';
@@ -23,26 +24,31 @@ export class OpenID4VP {
     trustedVerifiersList: any,
   ) {
     const shouldValidateClient = await isClientValidationRequired();
+    const metadata = await getWalletMetadata() || walletMetadata;
+
     const authenticationResponse =
       await OpenID4VP.InjiOpenID4VP.authenticateVerifier(
         urlEncodedAuthorizationRequest,
         trustedVerifiersList,
+        metadata,
         shouldValidateClient,
       );
     return JSON.parse(authenticationResponse);
   }
 
-  private static  stringifyValues = (data: Record<string, Record<string, Array<any>>>): Record<string, Record<string, string[]>> => {
+  private static stringifyValues = (
+    data: Record<string, Record<string, Array<any>>>,
+  ): Record<string, Record<string, string[]>> => {
     return Object.fromEntries(
-        Object.entries(data).map(([key, innerMap]) => [
-          key,
-          Object.fromEntries(
-              Object.entries(innerMap).map(([innerKey, arr]) => [
-                innerKey,
-                arr.map(item => JSON.stringify(item))
-              ])
-          )
-        ])
+      Object.entries(data).map(([key, innerMap]) => [
+        key,
+        Object.fromEntries(
+          Object.entries(innerMap).map(([innerKey, arr]) => [
+            innerKey,
+            arr.map(item => JSON.stringify(item)),
+          ]),
+        ),
+      ]),
     );
   };
   static async constructUnsignedVPToken(
@@ -50,10 +56,9 @@ export class OpenID4VP {
   ) {
     let updatedSelectedVCs = this.stringifyValues(selectedVCs);
 
-    const vpTokens =
-      await OpenID4VP.InjiOpenID4VP.constructUnsignedVPToken(
-        updatedSelectedVCs,
-      );
+    const vpTokens = await OpenID4VP.InjiOpenID4VP.constructUnsignedVPToken(
+      updatedSelectedVCs,
+    );
     return parseJSON(vpTokens);
   }
 
@@ -106,4 +111,9 @@ function createJwtPayload(vpToken: {[key: string]: any}) {
 export async function isClientValidationRequired() {
   const config = await getAllConfigurations();
   return config.openid4vpClientValidation === 'true';
+}
+
+export async function getWalletMetadata() {
+  const config = await getAllConfigurations();
+  return config.walletMetadata;
 }

@@ -21,6 +21,8 @@ import org.testng.annotations.Test;
 import com.google.common.collect.ImmutableMap;
 import org.testng.asserts.SoftAssert;
 
+import static inji.api.AdminTestUtil.fullName;
+import static inji.api.AdminTestUtil.policyNumber;
 import static inji.api.BaseTestCase.uin;
 import static org.testng.Assert.*;
 
@@ -504,8 +506,8 @@ public class VcDownloadAndVerifyUsingUinTest extends AndroidBaseTest {
         homePage.downloadCard();
         SunbirdLoginPage sunbirdLoginPage =  addNewCardPage.clickOnDownloadViaSunbird();
 
-        sunbirdLoginPage.enterPolicyNumberTextBox(TestDataReader.readData("policyNumberSunbird"));
-        sunbirdLoginPage.enterFullNameTextBox(TestDataReader.readData("fullNameSunbird"));
+        sunbirdLoginPage.enterPolicyNumberTextBox(policyNumber);
+        sunbirdLoginPage.enterFullNameTextBox(fullName);
         sunbirdLoginPage.enterDateOfBirthTextBox();
         sunbirdLoginPage.clickOnloginButton();
 

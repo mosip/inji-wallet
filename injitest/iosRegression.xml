@@ -11,6 +11,26 @@
                     <include name="copyAppId"/>
                 </methods>
             </class>
+            <class name="iosTestCases.MosipOtpAlternativeFlow">
+                <methods>
+                    <include name="verifyInvalidOtpMessage"/>
+                    <include name="activateVcFromDetailedViewPage"/>
+                    <include name="verifyActiveVcAndWaitForOtpTimeOut"/>
+                    <include name="cancelDeleteVc"/>
+                    <include name="DownloadingDeletedVc"/>
+                    <include name="deleteDownloadedVcInOfflineMode"/>
+                    <include name="openQrOffline"/>
+                    <include name="verifyVcIssuerListWithoutNetwork"/>
+                    <!--                    <include name="VerifyCameraOpenAfterPinVc"/>      // out of scope -->
+                </methods>
+            </class>
+            <class name="iosTestCases.MosipOtpAlternativeFlowForHistoryAndPin">
+                <methods>
+                    <include name="pinVcInDetailedVcView"/>
+                    <include name="verifyActivationFailedRecordInHistory"/>
+                    <include name="verifyActivationFailedRecordInHistoryFromDetailedView"/>
+                </methods>
+            </class>
             <class name="iosTestCases.ActivateVcTest">
                 <methods>
                     <include name="noPreDownloadedVCAndNoHistoryInFreshInstallation"/>
@@ -104,20 +124,11 @@
                     <include name="verifyWelcomePagesFromInjiTourGuideAfterDeleteTheCard"/>
                 </methods>
             </class>
-            <class name="iosTestCases.MosipOtpAlternativeFlow">
+            <class name="iosTestCases.KeyManagmentTest">
                 <methods>
-                    <include name="verifyInvalidOtpMessage"/>
-                    <include name="activateVcFromDetailedViewPage"/>
-                    <include name="verifyActiveVcAndWaitForOtpTimeOut"/>
-                    <include name="cancelDeleteVc"/>
-                    <include name="DownloadingDeletedVc"/>
-                    <include name="deleteDownloadedVcInOfflineMode"/>
-                    <include name="openQrOffline"/>
-                    <include name="verifyVcIssuerListWithoutNetwork"/>
-                    <!--                    <include name="VerifyCameraOpenAfterPinVc"/>      // out of scope -->
-                    <include name="pinVcInDetailedVcView"/>
-                    <include name="verifyActivationFailedRecordInHistory"/>
-                    <include name="verifyActivationFailedRecordInHistoryFromDetailedView"/>
+                    <include name="downloadAndVerifyVcUsingUinViaEsignet"/>
+                    <include name="downloadAndVerifyVcUsingUinViaMocke"/>
+                    <include name="downloadAndVerifyVcUsingUinViaSunbird"/>
                 </methods>
             </class>
             <class name="iosTestCases.AboutInjiTest">
@@ -131,13 +142,7 @@
                     <include name="downloadAndVerifyVcUsingUinViaMocke"/>
                 </methods>
             </class>
-            <class name="iosTestCases.KeyManagmentTest">
-                <methods>
-                    <include name="downloadAndVerifyVcUsingUinViaEsignet"/>
-                    <include name="downloadAndVerifyVcUsingUinViaMocke"/>
-                    <include name="downloadAndVerifyVcUsingUinViaSunbird"/>
-                </methods>
-            </class>
+
         </classes>
     </test>
 </suite>

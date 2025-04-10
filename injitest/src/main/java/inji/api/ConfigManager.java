@@ -81,7 +81,7 @@ public class ConfigManager {
 	private static final String IAM_REALM_ID = "keycloak-realm-id";
 	private static final String IAM_USERS_TO_CREATE = "iam-users-to-create";
 	private static final String IAM_USERS_PASSWORD = "iam-users-password";
-
+	private static final String IAM_INSURANCEURL = "InsuranceUrl";
 	private static final String AUTH_DEMO_SERVICE_PORT = "authDemoServicePort";
 	private static final String AUTH_DEMO_SERVICE_BASE_URL = "authDemoServiceBaseURL";
 	private static final String MOUNT_PATH = "mountPath";
@@ -146,6 +146,7 @@ public class ConfigManager {
 	private static String master_db_pass;
 	private static String master_db_schema;
 
+	private static String iam_insuranceurl;
 	private static String iam_external_url;
 	private static String iam_realm_id;
 	private static String iam_users_to_create;
@@ -199,6 +200,7 @@ public class ConfigManager {
 		s3_user_key = getValueForKey(S3_USER_KEY);
 		s3_secret_key = getValueForKey(S3_SECRET_KEY);
 		s3_account = getValueForKey(S3_ACCOUNT);
+		iam_insuranceurl = getValueForKey(IAM_INSURANCEURL);
 
 		iam_adminportal_path =System.getenv(IAM_ADMINPORTAL_PATH) == null
 				? propsKernel.getProperty(IAM_ADMINPORTAL_PATH)
@@ -538,6 +540,10 @@ public class ConfigManager {
 
 	public static String getMasterDbSchema() {
 		return master_db_schema;
+	}
+
+	public static String getiam_Insurance_path() {
+		return iam_insuranceurl;
 	}
 
 	// from docker env getting only host url

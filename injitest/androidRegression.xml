@@ -6,6 +6,28 @@
         </suite-files>-->
     <test verbose="2" preserve-order="true" name="android">
         <classes>
+            <class name="androidTestCases.MosipOtpAlternativeFlow">
+                <methods>
+                    <include name="verifyInvalidOtpMessage" />
+                    <include name="activateVcFromDetailedViewPage" />
+                    <include name="verifyActiveVcAndWaitForOtpTimeOut" />
+                    <include name="cancelDeleteVc" />
+                    <include name="DownloadingDeletedVc" />
+                    <include name="deleteDownloadedVcInOfflineMode" />
+                    <include name="openQrOffline" />
+                    <include name="verifyVcIssuerListWithoutNetwork" />
+                    <include name="verifyMessageAfterDenyBluetoothPopup" />
+                </methods>
+            </class>
+            <class name="androidTestCases.MosipOtpAlternativeFlowForHistoryAndPin">
+                <methods>
+                    <include name="pinVcInDetailedVcView" />
+                    <include name="pinEsignetVcMultipleTimes" />
+                    <include name="pinSubirdVcMultipleTimes" />
+                    <include name="verifyActivationFailedRecordInHistory"/>
+                    <include name="verifyActivationFailedRecordInHistoryFromDetailedView"/>
+                </methods>
+            </class>
             <class name="androidTestCases.AboutInjiTest">
                 <methods>
                     <include name="copyAppId"/>
@@ -128,24 +150,7 @@
                     <include name="verifyClickOnBackFromInjiTourGuide"/>
                 </methods>
             </class>
-            <class name="androidTestCases.MosipOtpAlternativeFlow">
-                <methods>
-                    <include name="verifyInvalidOtpMessage" />
-                    <include name="activateVcFromDetailedViewPage" />
-                    <include name="verifyActiveVcAndWaitForOtpTimeOut" />
-                    <include name="cancelDeleteVc" />
-                    <include name="DownloadingDeletedVc" />
-                    <include name="deleteDownloadedVcInOfflineMode" />
-                    <include name="openQrOffline" />
-                    <include name="verifyVcIssuerListWithoutNetwork" />
-                    <include name="verifyMessageAfterDenyBluetoothPopup" />
-                    <include name="pinVcInDetailedVcView" />
-                    <include name="pinEsignetVcMultipleTimes" />
-                    <include name="pinSubirdVcMultipleTimes" />
-                    <include name="verifyActivationFailedRecordInHistory"/>
-                    <include name="verifyActivationFailedRecordInHistoryFromDetailedView"/>
-                </methods>
-            </class>
+
             <class name="androidTestCases.AboutInjiTest">
                 <methods>
                     <include name="copyAppId"/>
