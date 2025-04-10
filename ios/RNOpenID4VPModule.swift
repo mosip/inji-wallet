@@ -19,6 +19,7 @@ class RNOpenId4VpModule: NSObject, RCTBridgeModule {
   @objc
   func authenticateVerifier(_ urlEncodedAuthorizationRequest: String,
                             trustedVerifierJSON: AnyObject,
+                            walletMetadata: AnyObject?,
                             shouldValidateClient: Bool,
                             resolver resolve: @escaping RCTPromiseResolveBlock,
                             rejecter reject: @escaping RCTPromiseRejectBlock) {
@@ -37,7 +38,14 @@ class RNOpenId4VpModule: NSObject, RCTBridgeModule {
           return Verifier(clientId: clientId, responseUris: responseUris)
         }
         
-        let authenticationResponse: AuthorizationRequest = try await openID4VP!.authenticateVerifier(urlEncodedAuthorizationRequest: urlEncodedAuthorizationRequest, trustedVerifierJSON: trustedVerifiersList, shouldValidateClient: shouldValidateClient)
+        let walletMetadataObject = try getWalletMetadataFromDict(walletMetadata as Any, reject: reject)
+        
+        let authenticationResponse: AuthorizationRequest = try await openID4VP!.authenticateVerifier(
+          urlEncodedAuthorizationRequest: urlEncodedAuthorizationRequest,
+          trustedVerifierJSON: trustedVerifiersList,
+          walletMetadata: walletMetadataObject,
+          shouldValidateClient: shouldValidateClient
+        )
         
         let response = try toJsonString(jsonObject: authenticationResponse)
         resolve(response)
@@ -174,3 +182,37 @@ extension Dictionary {
     Dictionary<T, Value>(uniqueKeysWithValues: map { (transform($0.key), $0.value) })
   }
 }
+
+func getWalletMetadataFromDict(
+  _ walletMetadata: Any,
+  reject: RCTPromiseRejectBlock
+) throws -> WalletMetadata {
+  
+  guard let metadata = walletMetadata as? [String: Any] else {
+    reject("OPENID4VP", "Invalid wallet metadata format", nil)
+    throw NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "Invalid Wallet Metadata data"])
+  }
+  
+  var vpFormatsSupported: [String: VPFormatSupported] = [:]
+  if
+    let vpFormatsSupportedDict = metadata["vp_formats_supported"] as? [String: Any],
+    let ldpVcDict = vpFormatsSupportedDict["ldp_vc"] as? [String: Any]
+  {
+    let algValuesSupported = ldpVcDict["alg_values_supported"] as? [String]
+    vpFormatsSupported["ldp_vc"] = VPFormatSupported(algValuesSupported: algValuesSupported)
+  } else {
+    vpFormatsSupported["ldp_vc"] = VPFormatSupported(algValuesSupported: nil)
+  }
+  
+  let walletMetadataObject = try WalletMetadata(
+    presentationDefinitionURISupported: metadata["presentation_definition_uri_supported"] as? Bool,
+    vpFormatsSupported: vpFormatsSupported,
+    clientIdSchemesSupported: metadata["client_id_schemes_supported"] as? [String],
+    requestObjectSigningAlgValuesSupported: metadata["request_object_signing_alg_values_supported"] as? [String],
+    authorizationEncryptionAlgValuesSupported: metadata["authorization_encryption_alg_values_supported"] as? [String],
+    authorizationEncryptionEncValuesSupported: metadata["authorization_encryption_enc_values_supported"] as? [String]
+  )
+  
+  return walletMetadataObject
+}
+
