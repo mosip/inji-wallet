@@ -80,16 +80,24 @@ export const HomeScreenLayout: React.FC<RootRouteProps> = props => {
 
   const [isRTL] = useState(I18nManager.isRTL);
 
-  var HomeScreenOptions = {
+  const HomeScreenOptions = {
     headerLeft: () =>
-      isIOS() || !isRTL
-        ? <View style={Theme.Styles.injiHomeLogo}>{SvgImage.InjiLogo(Theme.Styles.injiLogo)}</View>
-        : screenOptions,
+      isIOS() || !isRTL ? (
+        <View style={Theme.Styles.injiHomeLogo}>
+          {SvgImage.InjiLogo(Theme.Styles.injiLogo)}
+        </View>
+      ) : (
+        screenOptions
+      ),
     headerTitle: '',
     headerRight: () =>
-      isIOS() || !isRTL
-        ? screenOptions
-        : <View style={Theme.Styles.injiHomeLogo}>{SvgImage.InjiLogo(Theme.Styles.injiLogo)}</View>,
+      isIOS() || !isRTL ? (
+        screenOptions
+      ) : (
+        <View style={Theme.Styles.injiHomeLogo}>
+          {SvgImage.InjiLogo(Theme.Styles.injiLogo)}
+        </View>
+      ),
   };
 
   return (

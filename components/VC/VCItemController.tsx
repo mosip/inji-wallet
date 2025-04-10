@@ -9,20 +9,20 @@ import {
   selectCredential,
 } from '../../machines/VerifiableCredential/VCItemMachine/VCItemSelectors';
 import {useInterpret, useSelector} from '@xstate/react';
-import {VCItemProps} from './Views/VCCardView';
 import {
   createVCItemMachine,
   VCItemEvents,
 } from '../../machines/VerifiableCredential/VCItemMachine/VCItemMachine';
 import {selectIsSavingFailedInIdle} from '../../screens/Home/MyVcsTabMachine';
 import {selectIsTourGuide} from '../../machines/auth';
+import {VCMetadata} from "../../shared/VCMetadata";
 
-export function useVcItemController(props: VCItemProps) {
+export function useVcItemController(vcMetadata: VCMetadata) {
   const {appService} = useContext(GlobalContext);
   const machine = useRef(
     createVCItemMachine(
       appService.getSnapshot().context.serviceRefs,
-      props.vcMetadata,
+      vcMetadata,
     ),
   );
   const VCItemService = useInterpret(machine.current, {devTools: __DEV__});

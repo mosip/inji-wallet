@@ -1277,6 +1277,30 @@ export const PurpleTheme = {
       minHeight: 50,
     },
   }),
+  SectionLayoutStyles: StyleSheet.create({
+    headerContainer: {
+      alignItems: 'center',
+      padding: 16,
+      backgroundColor: Colors.White,
+      borderTopLeftRadius: 6,
+      borderTopRightRadius: 6,
+    },
+    headerText: {
+      justifyContent: 'center',
+      paddingLeft: 12,
+      fontFamily: 'Inter_500Medium',
+      fontWeight: '600',
+      fontSize: 14,
+      letterSpacing: 0,
+      lineHeight: 17,
+    },
+    content: {
+      padding: 16,
+      backgroundColor: Colors.White,
+      borderBottomLeftRadius: 6,
+      borderBottomRightRadius: 6,
+    }
+  }),
   TextEditOverlayStyles: StyleSheet.create({
     overlay: {
       elevation: 5,
@@ -1645,12 +1669,12 @@ export const PurpleTheme = {
     biometricIntroOuterColumn: {
       borderRadius: 30,
       maxHeight: 600,
-      maxWidth:350,
+      maxWidth: 350,
       minHeight: 600,
-      minWidth:350,
+      minWidth: 350,
       borderColor: Colors.Black,
       borderWidth: 12,
-      overflow: 'hidden', 
+      overflow: 'hidden',
     },
     quickAccessIntroOuterView: {
       borderRadius: 30,
@@ -1914,14 +1938,8 @@ export const PurpleTheme = {
   ICON_SMALL_SIZE: 16,
   ICON_MID_SIZE: 22,
   ICON_LARGE_SIZE: 33,
-  CloseCard: require('../../../assets/Card_Bg1.png'),
-  OpenCard: require('../../../assets/Card_Bg1.png'),
-  IntroWelcome: require('../../../assets/Intro_Unlock.png'),
-  SecureSharing: require('../../../assets/Intro_Secure_Sharing.png'),
-  DigitalWallet: require('../../../assets/Intro_Wallet.png'),
-  IntroShare: require('../../../assets/Intro_Share.png'),
-  IntroBackup: require('../../../assets/Intro_Backup.png'),
-  IntroSliderbackground: require('../../../assets/IntroSliderBackgroundPurple.png'),
+  CloseCard: require('../../../assets/images/png/Card_Bg1.png'),
+  OpenCard: require('../../../assets/images/png/Card_Bg1.png'),
   HomeScreenLogo: HomeScreenLogo,
   InjiLogoSmall: InjiLogoSmall,
   elevation(level: ElevationLevel): ViewStyle {

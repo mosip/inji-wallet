@@ -158,7 +158,6 @@ export const getFieldName = (
   return i18n.t(`VcDetails:${field}`);
 };
 
-
 export function getAddressFields() {
   return [
     'addressLine1',
@@ -300,7 +299,7 @@ export const getCredentialTypeFromWellKnown = (
 export class Display {
   private readonly textColor: string | undefined = undefined;
   private readonly backgroundColor: {backgroundColor: string};
-  private readonly backgroundImage: string | undefined = undefined;
+  private readonly backgroundImage: { uri: string } | undefined = undefined;
 
   private defaultBackgroundColor = Theme.Colors.whiteBackgroundColor;
 

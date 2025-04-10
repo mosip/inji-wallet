@@ -1,5 +1,5 @@
-import React from 'react';
-import {Camera, CameraType} from 'expo-camera';
+import React, {useEffect, useState} from 'react';
+import {CameraType, CameraView} from 'expo-camera';
 import {View, TouchableOpacity} from 'react-native';
 import {SvgImage} from '../ui/svg';
 import {Text, Column, Row, Centered} from '../ui';
@@ -16,16 +16,25 @@ const FaceCompare: React.FC<FaceCompareProps> = ({
   service,
   t,
 }) => {
+  const [isCameraActive, setIsCameraActive] = useState<boolean>(true);
+
+  useEffect(() => {
+    return () => {
+      setIsCameraActive(false);
+    };
+  }, []);
+
   return (
     <Column fill align="space-between" style={{backgroundColor: '#ffffff'}}>
       <View style={{flex: 2, marginTop: 15}}>
         <View style={Theme.CameraEnabledStyles.scannerContainer}>
           <View>
-            <Camera
+            <CameraView
               {...testIDProps('camera')}
               style={Theme.CameraEnabledStyles.scanner}
-              type={whichCamera}
+              facing={whichCamera}
               ref={setCameraRef}
+              active={isCameraActive}
             />
           </View>
         </View>
@@ -74,7 +83,7 @@ export default FaceCompare;
 
 interface FaceCompareProps {
   whichCamera: CameraType;
-  setCameraRef: (node: Camera) => void;
+  setCameraRef: (node: CameraView) => void;
   isCapturing: boolean;
   isVerifying: boolean;
   flipCamera: () => void;

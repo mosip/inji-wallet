@@ -3,7 +3,6 @@ import {LIVENESS_THRESHOLD, isAndroid} from '../../shared/constants';
 import {closest} from 'color-diff';
 import * as FaceDetector from 'expo-face-detector';
 import ImageEditor from '@react-native-community/image-editor';
-import {ImageType} from 'expo-camera';
 import {getColors} from 'react-native-image-colors';
 import {faceCompare} from '@iriscan/biometric-sdk-react-native';
 
@@ -38,6 +37,10 @@ const colorComparePalette = [
   {R: 0, G: 255, B: 0},
   {R: 0, G: 0, B: 255},
 ];
+
+export enum ImageType {
+  jpg = 'jpg',
+}
 
 export const imageCaptureConfig = {
   base64: true,
