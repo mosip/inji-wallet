@@ -1,6 +1,5 @@
 import React from 'react';
 import {useTranslation} from 'react-i18next';
-import {Logo} from '../components/Logo';
 import {Button, HorizontallyCentered, Column} from '../components/ui';
 import {Theme} from '../components/ui/styleUtils';
 import {RootRouteProps} from '../routes';

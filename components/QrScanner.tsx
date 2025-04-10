@@ -1,10 +1,8 @@
 import React, {useContext, useEffect, useState} from 'react';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import {Camera} from 'expo-camera';
-import {BarCodeEvent, BarCodeScanner} from 'expo-barcode-scanner';
-import {Linking, TouchableOpacity, View, Pressable} from 'react-native';
+import {Linking, Pressable, TouchableOpacity, View} from 'react-native';
 import {Theme} from './ui/styleUtils';
-import {Column, Text, Row} from './ui';
+import {Column, Row, Text} from './ui';
 import {GlobalContext} from '../shared/GlobalContext';
 import {useSelector} from '@xstate/react';
 import {selectIsActive} from '../machines/app';
@@ -12,12 +10,14 @@ import {useTranslation} from 'react-i18next';
 import testIDProps from '../shared/commonUtil';
 import {SvgImage} from './ui/svg';
 import {isAndroid} from '../shared/constants';
+import {CameraView, useCameraPermissions, PermissionStatus, BarcodeScanningResult, CameraType} from 'expo-camera';
+import {CameraPosition} from "../shared/Utils";
 
 export const QrScanner: React.FC<QrScannerProps> = props => {
   const {t} = useTranslation('QrScanner');
   const {appService} = useContext(GlobalContext);
   const [scanned, setScanned] = useState(false);
-  const [cameraType, setCameraType] = useState(Camera.Constants.Type.back);
+  const [cameraType, setCameraType] = useState<CameraType>(CameraPosition.BACK);
   const [hasCameraPermission, setHasCameraPermission] = useState<
     boolean | null
   >(null);
@@ -25,6 +25,14 @@ export const QrScanner: React.FC<QrScannerProps> = props => {
     showCameraPermissionDeniedBanner,
     setShowCameraPermissionDeniedBanner,
   ] = useState(false);
+  const [_, requestCameraPermission, getCameraPermissionsAsync] = useCameraPermissions();
+  const [isCameraActive, setIsCameraActive] = useState<boolean>(true);
+
+  useEffect(() => {
+    return () => {
+      setIsCameraActive(false);
+    };
+  }, []);
 
   const isActive = useSelector(appService, selectIsActive);
 
@@ -40,16 +48,16 @@ export const QrScanner: React.FC<QrScannerProps> = props => {
     if (isActive && !Boolean(hasCameraPermission)) {
       (async () => {
         setShowCameraPermissionDeniedBanner(false);
-        const cameraPermissionResult = await Camera.getCameraPermissionsAsync();
-        if (cameraPermissionResult.status === 'undetermined') {
-          const response = await Camera.requestCameraPermissionsAsync();
+        const cameraPermissionResult = await getCameraPermissionsAsync();
+        if (cameraPermissionResult.status === PermissionStatus.UNDETERMINED) {
+          const response = await requestCameraPermission();
           setHasCameraPermission(response.granted);
           if (response.granted === false) {
             setShowCameraPermissionDeniedBanner(true);
           }
-        } else if (cameraPermissionResult.status === 'granted') {
+        } else if (cameraPermissionResult.status === PermissionStatus.GRANTED) {
           setHasCameraPermission(true);
-        } else if (cameraPermissionResult.status === 'denied') {
+        } else {
           setHasCameraPermission(false);
           setShowCameraPermissionDeniedBanner(true);
         }
@@ -85,11 +93,11 @@ export const QrScanner: React.FC<QrScannerProps> = props => {
             </Column>
             <Pressable>
               <Icon
-                testID="close"
-                name="close"
-                onPress={() => setShowCameraPermissionDeniedBanner(false)}
-                color={Theme.Colors.whiteText}
-                size={18}
+                  testID="close"
+                  name="close"
+                  onPress={() => setShowCameraPermissionDeniedBanner(false)}
+                  color={Theme.Colors.whiteText}
+                  size={18}
               />
             </Pressable>
           </Row>
@@ -109,19 +117,21 @@ export const QrScanner: React.FC<QrScannerProps> = props => {
       </View>
     );
   };
+
   return (
     <>
       {hasCameraPermission ? (
         <Column style={Theme.CameraEnabledStyles.container}>
           <View style={Theme.CameraEnabledStyles.scannerContainer}>
-            <Camera
+            <CameraView
               {...testIDProps('camera')}
               style={Theme.CameraEnabledStyles.scanner}
-              barCodeScannerSettings={{
-                barcodeTypes: [BarCodeScanner.Constants.BarCodeType.qr],
+              barcodeScannerSettings={{
+                barcodeTypes: [BarCodeTypes.QR],
               }}
-              onBarCodeScanned={scanned ? undefined : onBarcodeScanned}
-              type={cameraType}
+              onBarcodeScanned={scanned ? undefined : onBarcodeScanned}
+              facing={cameraType}
+              active={isCameraActive}
             />
           </View>
           <Column fill align="space-between" style={{marginTop: 24}}>
@@ -138,9 +148,9 @@ export const QrScanner: React.FC<QrScannerProps> = props => {
               <TouchableOpacity
                 onPress={() => {
                   setCameraType(
-                    cameraType === Camera.Constants.Type.back
-                      ? Camera.Constants.Type.front
-                      : Camera.Constants.Type.back,
+                    cameraType === CameraType.back
+                      ? CameraType.front
+                      : CameraType.back,
                   );
                 }}>
                 {SvgImage.FlipCameraIcon()}
@@ -160,7 +170,7 @@ export const QrScanner: React.FC<QrScannerProps> = props => {
     </>
   );
 
-  function onBarcodeScanned(event: BarCodeEvent) {
+  function onBarcodeScanned(event: BarcodeScanningResult) {
     props.onQrFound(event.data);
     setScanned(true);
   }
@@ -169,4 +179,8 @@ export const QrScanner: React.FC<QrScannerProps> = props => {
 interface QrScannerProps {
   onQrFound: (data: string) => void;
   title?: string;
+}
+
+enum BarCodeTypes {
+  QR = 'qr',
 }

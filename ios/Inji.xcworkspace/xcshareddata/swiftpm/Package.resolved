@@ -1,5 +1,5 @@
 {
-  "originHash" : "89c09865ed302674a6eacbfdc15bccfb27aca83c6e960244a525461f6336a126",
+  "originHash" : "178f6c7c607eeb08b99a4966015d08339500de64791888a2e79d6b7afae53659",
   "pins" : [
     {
       "identity" : "alamofire",
@@ -58,10 +58,10 @@
     {
       "identity" : "inji-vci-client-ios-swift",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/mosip/inji-vci-client-ios-swift.git",
+      "location" : "https://github.com/mosip/inji-vci-client-ios-swift",
       "state" : {
         "branch" : "develop",
-        "revision" : "d283c4f7951165328c6fd24b1c758baa766af74c"
+        "revision" : "02f367bd2527f249145393a533f5175918c1fc8a"
       }
     },
     {
@@ -76,7 +76,7 @@
     {
       "identity" : "pixelpass-ios-swift",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/mosip/pixelpass-ios-swift.git",
+      "location" : "https://github.com/mosip/pixelpass-ios-swift",
       "state" : {
         "branch" : "release-0.6.x",
         "revision" : "15249dc4eecb7c2b6e6074193d3928b3402c9d20"
@@ -94,7 +94,7 @@
     {
       "identity" : "secure-keystore-ios-swift",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/mosip/secure-keystore-ios-swift.git",
+      "location" : "https://github.com/mosip/secure-keystore-ios-swift",
       "state" : {
         "revision" : "1ea5182ca985302d11010b7a16ea496167969ab3",
         "version" : "0.3.0"
@@ -112,7 +112,7 @@
     {
       "identity" : "tuvali-ios-swift",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/mosip/tuvali-ios-swift.git",
+      "location" : "https://github.com/mosip/tuvali-ios-swift/",
       "state" : {
         "revision" : "2d49e123f70dfc2179983a753d370cc2212385db",
         "version" : "0.5.0"

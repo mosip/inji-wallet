@@ -13,7 +13,6 @@ import BackupAndRestoreScreen from '../backupAndRestore/BackupAndRestoreScreen';
 import testIDProps, {getDriveName} from '../../shared/commonUtil';
 import {useOverlayVisibleAfterTimeout} from '../../shared/hooks/useOverlayVisibleAfterTimeout';
 import {isAndroid, isIOS} from '../../shared/constants';
-import LinearGradient from 'react-native-linear-gradient';
 
 export const DataBackupAndRestore: React.FC = ({} = () => {
   const controller = useBackupAndRestoreSetup();

@@ -34,7 +34,7 @@ export interface Typegen0 {
     resetQRLoginDeepLinkData: 'done.invoke.app.ready.focus.active:invocation[1]';
   };
   missingImplementations: {
-    actions: 'forwardToServices';
+    actions: never;
     delays: never;
     guards: never;
     services: never;

@@ -6,7 +6,7 @@ import testIDProps from '../../shared/commonUtil';
 import {SvgImage} from './svg';
 
 export const LoaderAnimation: React.FC<LoaderAnimationProps> = ({
-  showLogo,
+  showLogo = true,
   testID,
 }) => {
   return (
@@ -21,10 +21,6 @@ export const LoaderAnimation: React.FC<LoaderAnimationProps> = ({
       </View>
     </Fragment>
   );
-};
-
-LoaderAnimation.defaultProps = {
-  showLogo: true,
 };
 
 interface LoaderAnimationProps {

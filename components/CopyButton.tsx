@@ -1,8 +1,6 @@
 import React, {useState} from 'react';
 import {Pressable} from 'react-native';
-import {Theme} from './ui/styleUtils';
 import Clipboard from '@react-native-clipboard/clipboard';
-import {Icon} from 'react-native-elements';
 import {Row, Text} from './ui';
 import {useTranslation} from 'react-i18next';
 import testIDProps from '../shared/commonUtil';

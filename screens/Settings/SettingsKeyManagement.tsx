@@ -1,4 +1,4 @@
-import React, {useTransition} from 'react';
+import React from 'react';
 import {Pressable} from 'react-native';
 import {ListItem, Icon} from 'react-native-elements';
 import {Row} from '../../components/ui';
