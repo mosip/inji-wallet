@@ -38,8 +38,7 @@ class RNOpenId4VpModule: NSObject, RCTBridgeModule {
           return Verifier(clientId: clientId, responseUris: responseUris)
         }
         
-        let walletMetadataObject = try getWalletMetadataFromJson(walletMetadata as Any, reject: reject)
-        
+        let walletMetadataObject = try getWalletMetadataFromDict(walletMetadata as Any, reject: reject)
         
         let authenticationResponse: AuthorizationRequest = try await openID4VP!.authenticateVerifier(
           urlEncodedAuthorizationRequest: urlEncodedAuthorizationRequest,
@@ -184,7 +183,7 @@ extension Dictionary {
   }
 }
 
-func getWalletMetadataFromJson(
+func getWalletMetadataFromDict(
   _ walletMetadata: Any,
   reject: RCTPromiseRejectBlock
 ) throws -> WalletMetadata {
