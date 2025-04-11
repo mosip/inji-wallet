@@ -47,7 +47,7 @@
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url options:(NSDictionary<UIApplicationOpenURLOptionsKey,id> *)options {
   if ([url.absoluteString hasPrefix:@"io.mosip.residentapp.inji"]) {
     IntentData *intentData = [IntentData shared];
-    [intentData updateQrData:url.absoluteString];
+    [intentData setQrData:url.absoluteString];
   }
   return [super application:application openURL:url options:options] || [RCTLinkingManager application:application openURL:url options:options];
 }

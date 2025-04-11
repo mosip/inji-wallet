@@ -17,18 +17,9 @@ import Foundation
         return data
     }
 
-    @objc public func updateQrData(_ newValue: String) {
+    @objc public func setQrData(_ newValue: String) {
         syncQueue.async(flags: .barrier) {
             self._qrData = newValue
-        }
-    }
-
-    @objc public var qrData: String {
-        get {
-            return getQrData()
-        }
-        set {
-            updateQrData(newValue)
         }
     }
 }
