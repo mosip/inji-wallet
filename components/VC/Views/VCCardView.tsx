@@ -1,5 +1,5 @@
 import * as React from 'react';
-import  {useEffect, useState} from 'react';
+import {useEffect, useState} from 'react';
 import {Pressable} from 'react-native';
 import {ActorRefFrom} from 'xstate';
 import {ErrorMessageOverlay} from '../../MessageOverlay';
@@ -18,18 +18,18 @@ import {Copilot} from '../../ui/Copilot';
 import {VCProcessor} from '../common/VCProcessor';
 
 export const VCCardView: React.FC<VCItemProps> = ({
-                                                    vcMetadata,
-                                                    margin,
-                                                    selectable,
-                                                    selected,
-                                                    onPress,
-                                                    onShow,
-                                                    isDownloading,
-                                                    isPinned,
-                                                    flow,
-                                                    isInitialLaunch = false,
-                                                    isTopCard = false,
-                                                  }) => {
+  vcMetadata,
+  margin,
+  selectable,
+  selected,
+  onPress,
+  onShow,
+  isDownloading,
+  isPinned,
+  flow,
+  isInitialLaunch = false,
+  isTopCard = false,
+}) => {
   const controller = useVcItemController(vcMetadata);
   const {t} = useTranslation();
 
@@ -38,7 +38,7 @@ export const VCCardView: React.FC<VCItemProps> = ({
   const generatedOn = -controller.generatedOn;
 
   let formattedDate =
-      generatedOn && format(new Date(generatedOn), 'MM/dd/yyyy');
+    generatedOn && format(new Date(generatedOn), 'MM/dd/yyyy');
 
   useEffect(() => {
     controller.UPDATE_VC_METADATA(vcMetadata);
@@ -52,8 +52,8 @@ export const VCCardView: React.FC<VCItemProps> = ({
     async function loadVc() {
       if (!isDownloading) {
         const processedData = await VCProcessor.processForRendering(
-            controller.credential,
-            controller.verifiableCredentialData.format,
+          controller.credential,
+          controller.verifiableCredentialData.format,
         );
         setVc(processedData);
       }
@@ -68,24 +68,24 @@ export const VCCardView: React.FC<VCItemProps> = ({
       credentialConfigurationId,
       vcMetadata: {format},
     } = verifiableCredentialData;
-    if (props.vcMetadata.issuerHost) {
+    if (vcMetadata.issuerHost) {
       getCredentialIssuersWellKnownConfig(
-          issuer,
-          CARD_VIEW_DEFAULT_FIELDS,
-          credentialConfigurationId,
-          format,
-          vcMetadata.issuerHost,
+        issuer,
+        CARD_VIEW_DEFAULT_FIELDS,
+        credentialConfigurationId,
+        format,
+        vcMetadata.issuerHost,
       )
-          .then(response => {
-            setWellknown(response.matchingCredentialIssuerMetadata);
-            setFields(response.fields);
-          })
-          .catch(error => {
-            console.error(
-                'Error occurred while fetching wellknown for viewing VC ',
-                error,
-            );
-          });
+        .then(response => {
+          setWellknown(response.matchingCredentialIssuerMetadata);
+          setFields(response.fields);
+        })
+        .catch(error => {
+          console.error(
+            'Error occurred while fetching wellknown for viewing VC ',
+            error,
+          );
+        });
     }
   }, [verifiableCredentialData?.vcMetadata]);
 
@@ -94,59 +94,59 @@ export const VCCardView: React.FC<VCItemProps> = ({
   }
 
   const CardViewContent = () => (
-      <VCCardViewContent
-          vcMetadata={vcMetadata}
-          context={controller.context}
-          walletBindingResponse={controller.walletBindingResponse}
-          credential={vc}
-          verifiableCredentialData={verifiableCredentialData}
-          fields={fields}
-          wellknown={wellknown}
-          generatedOn={formattedDate}
-          selectable={selectable}
-          selected={selected}
-          service={service}
-          isPinned={isPinned}
-          onPress={() => onPress(service)}
-          isDownloading={isDownloading}
-          flow={flow}
-          isKebabPopUp={controller.isKebabPopUp}
-          DISMISS={controller.DISMISS}
-          KEBAB_POPUP={controller.KEBAB_POPUP}
-          isInitialLaunch={isInitialLaunch}
-      />
+    <VCCardViewContent
+      vcMetadata={vcMetadata}
+      context={controller.context}
+      walletBindingResponse={controller.walletBindingResponse}
+      credential={vc}
+      verifiableCredentialData={verifiableCredentialData}
+      fields={fields}
+      wellknown={wellknown}
+      generatedOn={formattedDate}
+      selectable={selectable}
+      selected={selected}
+      service={service}
+      isPinned={isPinned}
+      onPress={() => onPress(service)}
+      isDownloading={isDownloading}
+      flow={flow}
+      isKebabPopUp={controller.isKebabPopUp}
+      DISMISS={controller.DISMISS}
+      KEBAB_POPUP={controller.KEBAB_POPUP}
+      isInitialLaunch={isInitialLaunch}
+    />
   );
 
   const wrapTopCard = () => (
-      <Copilot
-          description={t('copilot:cardMessage')}
-          order={6}
-          title={t('copilot:cardTitle')}
-          children={CardViewContent()}
-      />
+    <Copilot
+      description={t('copilot:cardMessage')}
+      order={6}
+      title={t('copilot:cardTitle')}
+      children={CardViewContent()}
+    />
   );
 
   return (
-      <React.Fragment>
-        <Pressable
-            accessible={false}
-            onPress={() => onPress(service)}
-            style={
-              selected
-                  ? Theme.Styles.selectedBindedVc
-                  : Theme.Styles.closeCardBgContainer
-            }>
-          {(isInitialLaunch || controller.isTourGuide) && isTopCard
-              ? wrapTopCard()
-              : CardViewContent()}
-        </Pressable>
-        <ErrorMessageOverlay
-            isVisible={controller.isSavingFailedInIdle}
-            error={controller.storeErrorTranslationPath}
-            onDismiss={controller.DISMISS}
-            translationPath={'VcDetails'}
-        />
-      </React.Fragment>
+    <React.Fragment>
+      <Pressable
+        accessible={false}
+        onPress={() => onPress(service)}
+        style={
+          selected
+            ? Theme.Styles.selectedBindedVc
+            : Theme.Styles.closeCardBgContainer
+        }>
+        {(isInitialLaunch || controller.isTourGuide) && isTopCard
+          ? wrapTopCard()
+          : CardViewContent()}
+      </Pressable>
+      <ErrorMessageOverlay
+        isVisible={controller.isSavingFailedInIdle}
+        error={controller.storeErrorTranslationPath}
+        onDismiss={controller.DISMISS}
+        translationPath={'VcDetails'}
+      />
+    </React.Fragment>
   );
 };
 
