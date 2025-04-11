@@ -45,7 +45,7 @@
 
 // Linking API
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url options:(NSDictionary<UIApplicationOpenURLOptionsKey,id> *)options {
-  if ([url.absoluteString hasPrefix:@"io.mosip.residentapp.inji"]) {
+  if ([url.scheme isEqualToString:@"io.mosip.residentapp.inji"]) {
     IntentData *intentData = [IntentData shared];
     [intentData setQrData:url.absoluteString];
   }
