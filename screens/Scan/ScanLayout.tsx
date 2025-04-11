@@ -170,6 +170,7 @@ export const ScanLayout: React.FC = () => {
         image={SvgImage.SuccessLogo()}
         goToHome={controller.GOTO_HOME}
         goToHistory={controller.GOTO_HISTORY}
+        hidebutton={controller.isOVPViaDeepLink}
       />
 
       {controller.errorStatusOverlay && (

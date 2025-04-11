@@ -168,3 +168,13 @@ export const FACE_SDK_MODEL_CHECKSUM =
 export const EXPIRED_VC_ERROR_CODE = 'ERR_VC_EXPIRED';
 
 export const BASE_36 = 36;
+
+export const OVP_ERROR_MESSAGES = {
+  NO_MATCHING_VCS: 'No matching credentials found to fulfill the request.',
+  DECLINED: 'The user has declined to share their credentials at this time.',
+};
+
+export const DEEPLINK_FLOWS = {
+  QR_LOGIN: 'qrLoginFlow',
+  OVP: 'ovpFlow',
+};

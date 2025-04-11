@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {useTranslation} from 'react-i18next';
 import {
   ErrorMessageOverlay,
@@ -10,8 +10,12 @@ import {Theme} from '../../components/ui/styleUtils';
 import {QrLogin} from '../QrLogin/QrLogin';
 import {useScanScreen} from './ScanScreenController';
 import BluetoothStateManager from 'react-native-bluetooth-state-manager';
-import {Linking} from 'react-native';
-import {isIOS, LIVENESS_CHECK} from '../../shared/constants';
+import {BackHandler, Linking} from 'react-native';
+import {
+  isIOS,
+  LIVENESS_CHECK,
+  OVP_ERROR_MESSAGES,
+} from '../../shared/constants';
 import {BannerNotificationContainer} from '../../components/BannerNotificationContainer';
 import {SharingStatusModal} from './SharingStatusModal';
 import {SvgImage} from '../../components/ui/svg';
@@ -23,6 +27,9 @@ import {Error} from '../../components/ui/Error';
 import {VPShareOverlay} from './VPShareOverlay';
 import {VerifyIdentityOverlay} from '../VerifyIdentityOverlay';
 import {VCShareFlowType} from '../../shared/Utils';
+import {APP_EVENTS} from '../../machines/app';
+import {GlobalContext} from '../../shared/GlobalContext';
+import {OpenID4VP} from '../../shared/openID4VP/OpenID4VP';
 
 export const ScanScreen: React.FC = () => {
   const {t} = useTranslation('ScanScreen');
@@ -37,6 +44,8 @@ export const ScanScreen: React.FC = () => {
         VCShareFlowType.MINI_VIEW_SHARE_OPENID4VP ||
         sendVPScreenController.flowType ===
           VCShareFlowType.MINI_VIEW_SHARE_WITH_SELFIE_OPENID4VP));
+
+  const {appService} = useContext(GlobalContext);
 
   useEffect(() => {
     (async () => {
@@ -62,6 +71,21 @@ export const ScanScreen: React.FC = () => {
   useEffect(() => {
     if (scanScreenController.isQuickShareDone) scanScreenController.GOTO_HOME();
   }, [scanScreenController.isQuickShareDone]);
+
+  useEffect(() => {
+    if (
+      scanScreenController.isEmpty &&
+      scanScreenController.authorizationRequest != ''
+    ) {
+      setTimeout(() => {
+        OpenID4VP.initialize();
+        OpenID4VP.sendErrorToVerifier(OVP_ERROR_MESSAGES.NO_MATCHING_VCS);
+        scanScreenController.GOTO_HOME();
+        appService.send(APP_EVENTS.RESET_AUTHORIZATION_REQUEST());
+        BackHandler.exitApp();
+      }, 2000);
+    }
+  }, [scanScreenController.isEmpty, scanScreenController.authorizationRequest]);
 
   const openSettings = () => {
     Linking.openSettings();

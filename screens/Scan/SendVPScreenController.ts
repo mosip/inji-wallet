@@ -18,6 +18,7 @@ import {
   selectIsGetVCsSatisfyingAuthRequest,
   selectIsGetVPSharingConsent,
   selectIsInvalidIdentity,
+  selectIsOVPViaDeeplink,
   selectIsSelectingVcs,
   selectIsSharingVP,
   selectIsShowLoadingScreen,
@@ -267,6 +268,7 @@ export function useSendVPScreen() {
       openID4VPService,
       selectIsFaceVerificationConsent,
     ),
+    isOVPViaDeepLink: useSelector(openID4VPService, selectIsOVPViaDeeplink),
     credentials: useSelector(openID4VPService, selectCredentials),
     verifiableCredentialsData: useSelector(
       openID4VPService,

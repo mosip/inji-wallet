@@ -27,6 +27,7 @@ import {selectIsMinimumStorageRequiredForAuditEntryLimitReached} from '../../mac
 import {BOTTOM_TAB_ROUTES} from '../../routes/routesConstants';
 import {MainBottomTabParamList} from '../../routes/routeTypes';
 import {useNavigation, NavigationProp} from '@react-navigation/native';
+import {selectAuthorizationRequest} from '../../machines/app';
 
 export function useScanScreen() {
   const {t} = useTranslation('ScanScreen');
@@ -113,5 +114,6 @@ export function useScanScreen() {
     ALLOWED,
     DENIED,
     isLocalPermissionRational,
+    authorizationRequest: useSelector(appService, selectAuthorizationRequest),
   };
 }

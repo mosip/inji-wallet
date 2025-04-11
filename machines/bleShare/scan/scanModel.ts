@@ -61,6 +61,7 @@ const ScanEvents = {
   IN_PROGRESS: () => ({}),
   TIMEOUT: () => ({}),
   QRLOGIN_VIA_DEEP_LINK: (linkCode: string) => ({linkCode}),
+  OVP_VIA_DEEP_LINK: (linkCode: string) => ({linkCode}),
 };
 
 export const ScanModel = createModel(
@@ -81,8 +82,10 @@ export const ScanModel = createModel(
     OpenId4VPRef: {} as ActorRefFrom<typeof openID4VPMachine>,
     showQuickShareSuccessBanner: false,
     linkCode: '',
+    authorizationRequest: '',
     quickShareData: {},
     isQrLoginViaDeepLink: false,
+    isOVPViaDeepLink: false,
     showFaceAuthConsent: true as boolean,
     readyForBluetoothStateCheck: false,
     showFaceCaptureSuccessBanner: false,

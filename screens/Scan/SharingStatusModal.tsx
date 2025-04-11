@@ -1,15 +1,33 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {useTranslation} from 'react-i18next';
 import {Theme} from '../../components/ui/styleUtils';
 import {Modal} from '../../components/ui/Modal';
-import {Pressable, Dimensions, View} from 'react-native';
+import {Pressable, Dimensions, BackHandler} from 'react-native';
 import {Button, Column, Row, Text} from '../../components/ui';
 import testIDProps from '../../shared/commonUtil';
 import {SvgImage} from '../../components/ui/svg';
 
 export const SharingStatusModal: React.FC<SharingStatusModalProps> = props => {
   const {t} = useTranslation('ScanScreen');
+  const resetAndExit = () => {
+    BackHandler.exitApp();
+    props.goToHome();
+  };
 
+  useEffect(() => {
+    let timeoutId: NodeJS.Timeout | undefined;
+
+    if (props.isVisible && props.hidebutton === true) {
+      timeoutId = setTimeout(() => {
+        resetAndExit();
+      }, 2000);
+    }
+    return () => {
+      if (timeoutId) {
+        clearTimeout(timeoutId);
+      }
+    };
+  }, [props.isVisible, props.hidebutton]);
   return (
     <React.Fragment>
       <Modal
@@ -37,7 +55,7 @@ export const SharingStatusModal: React.FC<SharingStatusModalProps> = props => {
             {props.message}
           </Text>
         </Column>
-        {props.buttonStatus === 'homeAndHistoryIcons' ? (
+        {props.buttonStatus === 'homeAndHistoryIcons' && !props.hidebutton ? (
           <Row
             align="space-evenly"
             style={{marginBottom: Dimensions.get('screen').height * 0.06}}>
@@ -108,4 +126,5 @@ interface SharingStatusModalProps {
   goToHistory?: () => void;
   onGradientButton?: () => void;
   onClearButton?: () => void;
+  hidebutton?: boolean;
 }

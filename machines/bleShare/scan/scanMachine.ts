@@ -73,6 +73,14 @@ export const scanMachine =
           ],
           target: '#scan.checkStorage',
         },
+        OVP_VIA_DEEP_LINK: {
+          actions: [
+            'setLinkCodeFromDeepLink',
+            'setIsOVPViaDeepLink',
+            'setOpenId4VPFlowType',
+          ],
+          target: '#scan.checkStorage',
+        },
       },
       states: {
         inactive: {
@@ -113,6 +121,10 @@ export const scanMachine =
         startPermissionCheck: {
           on: {
             START_PERMISSION_CHECK: [
+              {
+                cond: 'isOVPViaDeepLink',
+                target: '#scan.checkFaceAuthConsent',
+              },
               {
                 cond: 'uptoAndroid11',
                 target: '#scan.checkBluetoothPermission',
@@ -316,15 +328,19 @@ export const scanMachine =
           on: {
             STORE_RESPONSE: {
               actions: 'updateShowFaceAuthConsent',
-              target: '#scan.checkQrLoginViaDeepLink',
+              target: '#scan.checkForDeepLinkFlow',
             },
           },
         },
-        checkQrLoginViaDeepLink: {
+        checkForDeepLinkFlow: {
           always: [
             {
               cond: 'isQrLoginViaDeepLinking',
               target: '#scan.showQrLogin',
+            },
+            {
+              cond: 'isOVPViaDeepLink',
+              target: '#scan.startVPSharing',
             },
             {
               target: '#scan.findingConnection',
@@ -393,7 +409,7 @@ export const scanMachine =
             DISMISS: [
               {
                 cond: 'isFlowTypeSimpleShare',
-                actions: 'resetOpenID4VPFlowType',
+                actions: ['resetIsOVPViaDeepLink', 'resetOpenID4VPFlowType'],
                 target: 'checkStorage',
               },
               {

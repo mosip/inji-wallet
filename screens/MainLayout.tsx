@@ -20,7 +20,7 @@ import {Copilot} from '../components/ui/Copilot';
 import LinearGradient from 'react-native-linear-gradient';
 import {useNavigation} from '@react-navigation/native';
 import {useSelector} from '@xstate/react';
-import {selectIsLinkCode} from '../machines/app';
+import {selectAuthorizationRequest, selectIsLinkCode} from '../machines/app';
 import {BOTTOM_TAB_ROUTES} from '../routes/routesConstants';
 
 const {Navigator, Screen} = createBottomTabNavigator();
@@ -40,11 +40,16 @@ export const MainLayout: React.FC = () => {
 
   const linkCode = useSelector(appService, selectIsLinkCode);
 
+  const authorizationRequest = useSelector(
+    appService,
+    selectAuthorizationRequest,
+  );
+
   useEffect(() => {
-    if (linkCode != '') {
+    if (linkCode !== '' || authorizationRequest !== '') {
       navigation.navigate(BOTTOM_TAB_ROUTES.share);
     }
-  }, [linkCode]);
+  }, [linkCode, authorizationRequest]);
 
   return (
     <CopilotProvider
