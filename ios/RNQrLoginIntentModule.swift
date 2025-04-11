@@ -14,7 +14,7 @@ class RNQrLoginIntentModule: NSObject, RCTBridgeModule {
   }
   
   @objc func resetQRLoginDeepLinkData() {
-    IntentData.shared.updateQrData("")
+    IntentData.shared.setQrData("")
   }
   
   @objc static func requiresMainQueueSetup() -> Bool {
