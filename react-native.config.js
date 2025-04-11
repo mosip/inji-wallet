@@ -5,10 +5,6 @@ module.exports = {
         ios: null,
       },
     },
-    'react-native-flipper': {
-      platforms: {
-        ios: null,
-      },
-    },
   },
+  assets: ['./assets/images'],
 };

@@ -84,8 +84,8 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = props => {
         const credentialSubject =
           vc.verifiableCredential.credentialSubject ||
           vc.verifiableCredential.credential.credentialSubject;
-        if(isStringAndContains(searchText,vc['vcMetadata'].credentialType))
-          isVcFound=true
+        if (isStringAndContains(searchText, vc['vcMetadata'].credentialType))
+          isVcFound = true;
         else if (credentialSubject) {
           isVcFound = searchNestedCredentialFields(
             searchTextLower,

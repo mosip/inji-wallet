@@ -14,16 +14,16 @@ for more details refer [here](https://docs.mosip.io/inji/inji-wallet/overview)
 
 Be sure to have the following build tools installed before proceeding:
 
-- [React Native 0.71.8](https://reactnative.dev/docs/0.71/getting-started)
+- [React Native 0.74.5](https://reactnative.dev/docs/0.74/getting-started)
   - Hermes Engine enabled
-- [Expo 49.0.23](https://docs.expo.dev/get-started/installation/)
-- [node v16.19.0](https://nodejs.org/en/blog/release/v16.19.0)
+- [Expo 51.0.0](https://docs.expo.dev/get-started/installation/)
+- [node v18.17.1](https://nodejs.org/en/blog/release/v18.17.1)
 - [npm 8.19.3](https://www.npmjs.com/package/npm/v/8.19.3)
 
 ### Android
 
 - [Java 17](https://openjdk.org/projects/jdk/17/)
-- [Gradle 7.5.1](https://gradle.org/install/)
+- [Gradle 8.2](https://gradle.org/install/)
 - [Android SDK](https://developer.android.com/)
 - minSdkVersion = 24
 - compileSdkVersion = 34
@@ -34,7 +34,7 @@ Be sure to have the following build tools installed before proceeding:
 ### iOS
 
 - [XCode](https://developer.apple.com/xcode/) = >15
-- Minimum Deployment Target = 13.0
+- Minimum Deployment Target = 14.0
 - cocoapods > 1.12
 - Ruby >= 2.6.10
 
@@ -54,7 +54,7 @@ ESIGNET_HOST =  https://esignet.collab.mosip.net/
 OBSRV_HOST = https://dataset-api.obsrv.mosip.net
 Telemetry Dashboard = https://druid.obsrv.mosip.net/unified-console.html#workbench
 
-#Application Theme can be ( grdaient | purple ), defaults to grdaient theme
+#Application Theme can be ( gradient | purple ), defaults to gradient theme
 APPLICATION_THEME=grdaient
 
 #environment can be changed if it is toggled
@@ -87,6 +87,11 @@ More info here:
 - [React Native - Publishing to the App Store](https://reactnative.dev/docs/publishing-to-app-store)
 - [Apple Developer - Distributing Your App for Beta Testing and Releases](https://developer.apple.com/documentation/xcode/distributing-your-app-for-beta-testing-and-releases)
 
+### Note 
+
+When application is built via IDE, metro need to be started manually (For instance, if building app via XCode open metro manually, as metro hook has been removed from building via XCode - [reference](https://github.com/facebook/react-native/issues/42173#issuecomment-1921091973)). 
+However, if app is built via npm commands, metro starts automatically (For instance, `npm run android:mosip` or `npm run ios`)
+
 ## Contributions
 
 Please refer [here](https://docs.mosip.io/inji/inji-mobile-wallet/contribution) for contributing to Inji
@@ -98,16 +103,13 @@ Credits listed [here](/Credits.md)
 ## Troubleshooting
 
 If you can't get this to work, see the [Troubleshooting](https://reactnative.dev/docs/troubleshooting) page.
-this project runtime can be debugged using [Flipper](https://fbflipper.com/).
 
 ## Learn More
 
 To learn more about React Native, take a look at the following resources:
 
 - [React Native Website](https://reactnative.dev) - learn more about React Native.
-- [Getting Started](https://reactnative.dev/docs/environment-setup) - an **overview** of React Native and how setup
-  your  
-  environment.
+- [Getting Started](https://reactnative.dev/docs/environment-setup) - an **overview** of React Native and how to setup your environment.
 - [Learn the Basics](https://reactnative.dev/docs/getting-started) - a **guided tour** of the React Native **basics**.
 - [Blog](https://reactnative.dev/blog) - read the latest official React Native **Blog** posts.
 - [`@facebook/react-native`](https://github.com/facebook/react-native) - the Open Source; GitHub **repository** for  

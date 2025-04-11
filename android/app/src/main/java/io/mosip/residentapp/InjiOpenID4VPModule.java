@@ -1,9 +1,12 @@
 package io.mosip.residentapp;
 
+import static io.mosip.openID4VP.authorizationResponse.AuthorizationResponseUtilsKt.toJsonString;
+
 import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+
 import com.facebook.react.bridge.Promise;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
@@ -16,14 +19,23 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import java.util.ArrayList;
+import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
+import java.util.Optional;
 
 import io.mosip.openID4VP.OpenID4VP;
 import io.mosip.openID4VP.authorizationRequest.AuthorizationRequest;
-import io.mosip.openID4VP.dto.VPResponseMetadata;
+import io.mosip.openID4VP.authorizationRequest.VPFormatSupported;
+import io.mosip.openID4VP.authorizationRequest.WalletMetadata;
+import io.mosip.openID4VP.authorizationResponse.models.unsignedVPToken.UnsignedVPToken;
+import io.mosip.openID4VP.constants.ClientIdScheme;
+import io.mosip.openID4VP.constants.FormatType;
 import io.mosip.openID4VP.dto.Verifier;
+import io.mosip.openID4VP.dto.vpResponseMetadata.VPResponseMetadata;
+import io.mosip.openID4VP.dto.vpResponseMetadata.types.LdpVPResponseMetadata;
 
 public class InjiOpenID4VPModule extends ReactContextBaseJavaModule {
     private OpenID4VP openID4VP;
@@ -51,11 +63,11 @@ public class InjiOpenID4VPModule extends ReactContextBaseJavaModule {
 
     @ReactMethod
     public void authenticateVerifier(String urlEncodedAuthorizationRequest, ReadableArray trustedVerifiers,
-            Boolean shouldValidateClient,
-            Promise promise) {
+                                     ReadableMap walletMetadata, Boolean shouldValidateClient, Promise promise) {
         try {
+            WalletMetadata walletMetadataObj = getWalletMetadataFromReadableMap(walletMetadata);
             AuthorizationRequest authenticationResponse = openID4VP.authenticateVerifier(urlEncodedAuthorizationRequest,
-                    convertReadableArrayToVerifierArray(trustedVerifiers), shouldValidateClient);
+                    convertReadableArrayToVerifierArray(trustedVerifiers), walletMetadataObj, shouldValidateClient);
             String authenticationResponseAsJson = gson.toJson(authenticationResponse, AuthorizationRequest.class);
             promise.resolve(authenticationResponseAsJson);
         } catch (Exception exception) {
@@ -64,24 +76,31 @@ public class InjiOpenID4VPModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public void constructVerifiablePresentationToken(ReadableMap selectedVCs, Promise promise) {
+    public void constructUnsignedVPToken(ReadableMap selectedVCs, Promise promise) {
         try {
-            Map<String, List<String>> selectedVCsMap = new HashMap<>();
+            Map<String, Map<FormatType, List<String>>> selectedVCsMap = new HashMap<>();
 
             ReadableMapKeySetIterator iterator = selectedVCs.keySetIterator();
             while (iterator.hasNextKey()) {
-                String key = iterator.nextKey();
-                ReadableArray valueArray = selectedVCs.getArray(key);
+                String inputDescriptorId = iterator.nextKey();
+                ReadableMap matchingVcsOfDifferentFormats = selectedVCs.getMap(inputDescriptorId);
 
-                List<String> valueList = new ArrayList<>();
-                for (int i = 0; i < valueArray.size(); i++) {
-                    valueList.add(valueArray.getString(i));
+                ReadableMapKeySetIterator matchingVcsIterator = Objects.requireNonNull(matchingVcsOfDifferentFormats).keySetIterator();
+
+                Map<FormatType, List<String>> formattedMatchingVcsOfDifferentFormats = new EnumMap<>(FormatType.class);
+                while (matchingVcsIterator.hasNextKey()) {
+                    String credentialFormat = matchingVcsIterator.nextKey();
+                    List<String> matchingVcsOfSpecificCredentialFormat = convertReadableArrayToList(Objects.requireNonNull(matchingVcsOfDifferentFormats.getArray(credentialFormat)));
+                    if (credentialFormat.equals(FormatType.LDP_VC.getValue()))
+                        formattedMatchingVcsOfDifferentFormats.put(FormatType.LDP_VC, matchingVcsOfSpecificCredentialFormat);
+                    else
+                        throw new UnsupportedOperationException("Credential format - " + credentialFormat + " is not supported");
                 }
-
-                selectedVCsMap.put(key, valueList);
+                selectedVCsMap.put(inputDescriptorId, formattedMatchingVcsOfDifferentFormats);
             }
-            String vpToken = openID4VP.constructVerifiablePresentationToken(selectedVCsMap);
-            promise.resolve(vpToken);
+            Map<FormatType, UnsignedVPToken> vpTokens = openID4VP.constructUnsignedVPToken(selectedVCsMap);
+
+            promise.resolve(toJsonString(vpTokens));
         } catch (Exception exception) {
             promise.reject(exception);
         }
@@ -91,7 +110,7 @@ public class InjiOpenID4VPModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public void shareVerifiablePresentation(ReadableMap vpResponseMetadata, Promise promise) {
         try {
-            VPResponseMetadata vpResMetadata = getVPResponseMetadata(vpResponseMetadata);
+            Map<FormatType, VPResponseMetadata> vpResMetadata = getVPResponseMetadata(vpResponseMetadata);
             String response = openID4VP.shareVerifiablePresentation(vpResMetadata);
             promise.resolve(response);
         } catch (Exception exception) {
@@ -104,13 +123,31 @@ public class InjiOpenID4VPModule extends ReactContextBaseJavaModule {
         openID4VP.sendErrorToVerifier(new Exception(errorMessage));
     }
 
-    private VPResponseMetadata getVPResponseMetadata(ReadableMap vpResponseMetadata) throws IllegalArgumentException {
-        String jws = vpResponseMetadata.getString("jws");
-        String signatureAlgorithm = vpResponseMetadata.getString("signatureAlgorithm");
-        String publicKey = vpResponseMetadata.getString("publicKey");
-        String domain = vpResponseMetadata.getString("domain");
+    private Map<FormatType, VPResponseMetadata> getVPResponseMetadata(ReadableMap vpResponsesMetadata) throws IllegalArgumentException {
+        ReadableMapKeySetIterator vpResponseMetadataEntryIterator = vpResponsesMetadata.keySetIterator();
+        Map<FormatType, VPResponseMetadata> formattedVpResponsesMetadata = new EnumMap<>(FormatType.class);
+        while (vpResponseMetadataEntryIterator.hasNextKey()) {
+            String credentialFormat = vpResponseMetadataEntryIterator.nextKey();
+            ReadableMap responseMetadataMap = vpResponsesMetadata.getMap(credentialFormat);
+            if (credentialFormat.equals(FormatType.LDP_VC.getValue())) {
+                String jws = responseMetadataMap.getString("jws");
+                String signatureAlgorithm = responseMetadataMap.getString("signatureAlgorithm");
+                String publicKey = responseMetadataMap.getString("publicKey");
+                String domain = responseMetadataMap.getString("domain");
+                LdpVPResponseMetadata ldpVPResponseMetadata = new LdpVPResponseMetadata(Objects.requireNonNull(jws), Objects.requireNonNull(signatureAlgorithm), Objects.requireNonNull(publicKey), Objects.requireNonNull(domain));
+                formattedVpResponsesMetadata.put(FormatType.LDP_VC, ldpVPResponseMetadata);
+            }
+        }
 
-        return new VPResponseMetadata(jws, signatureAlgorithm, publicKey, domain);
+        return formattedVpResponsesMetadata;
+    }
+
+    private List<String> convertReadableArrayToList(ReadableArray readableArray) {
+        List<String> convertedList = new ArrayList<>();
+        for (int i = 0; i < readableArray.size(); i++) {
+            convertedList.add(readableArray.getString(i));
+        }
+        return convertedList;
     }
 
     public List<Verifier> convertReadableArrayToVerifierArray(ReadableArray readableArray) {
@@ -127,4 +164,45 @@ public class InjiOpenID4VPModule extends ReactContextBaseJavaModule {
         }
         return trustedVerifiersList;
     }
+
+    private WalletMetadata getWalletMetadataFromReadableMap(ReadableMap walletMetadata) {
+        Boolean presentationDefinitionUriSupported = walletMetadata.hasKey("presentation_definition_uri_supported")
+                ? walletMetadata.getBoolean("presentation_definition_uri_supported") : null;
+
+        Map<String, VPFormatSupported> vpFormatsSupportedMap = new HashMap<>();
+        ReadableMap vpFormatsMap = walletMetadata.getMap("vp_formats_supported");
+
+        if (vpFormatsMap != null && vpFormatsMap.hasKey("ldp_vc")) {
+            ReadableMap ldpVc = vpFormatsMap.getMap("ldp_vc");
+            if (ldpVc != null && ldpVc.hasKey("alg_values_supported")) {
+                ReadableArray ldpVcAlgArray = ldpVc.getArray("alg_values_supported");
+                List<String> algValuesList = new ArrayList<>(ldpVcAlgArray.size());
+
+                for (int i = 0; i < ldpVcAlgArray.size(); i++) {
+                    algValuesList.add(ldpVcAlgArray.getString(i));
+                }
+
+                vpFormatsSupportedMap.put("ldp_vc", new VPFormatSupported(algValuesList));
+            } else {
+                vpFormatsSupportedMap.put("ldp_vc", new VPFormatSupported(null));
+            }
+        }
+
+        return new WalletMetadata(
+                presentationDefinitionUriSupported,
+                vpFormatsSupportedMap,
+                extractStringListOrNull(walletMetadata, "client_id_schemes_supported"),
+                extractStringListOrNull(walletMetadata, "request_object_signing_alg_values_supported"),
+                extractStringListOrNull(walletMetadata, "authorization_encryption_alg_values_supported"),
+                extractStringListOrNull(walletMetadata, "authorization_encryption_enc_values_supported")
+        );
+    }
+
+    private List<String> extractStringListOrNull(ReadableMap readableMap, String key) {
+        return Optional.ofNullable(readableMap.getArray(key))
+                .map(this::convertReadableArrayToList)
+                .filter(list -> !list.isEmpty())
+                .orElse(null);
+    }
+
 }

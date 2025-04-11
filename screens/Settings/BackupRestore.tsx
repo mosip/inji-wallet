@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {Pressable} from 'react-native';
 import {Icon, ListItem} from 'react-native-elements';
 import {Text} from '../../components/ui';

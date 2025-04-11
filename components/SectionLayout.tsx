@@ -9,7 +9,7 @@ export const SectionLayout: React.FC<SectionLayoutProps> = ({
   headerText,
   children,
   testId,
-  marginBottom,
+  marginBottom = 0,
 }) => {
   return (
     <View
@@ -22,43 +22,20 @@ export const SectionLayout: React.FC<SectionLayoutProps> = ({
         rowGap: 2,
       }}>
       <Row
-        style={{
-          alignItems: 'center',
-          padding: 16,
-          backgroundColor: Theme.Colors.whiteBackgroundColor,
-          borderTopLeftRadius: 6,
-          borderTopRightRadius: 6,
-        }}>
+        style={Theme.SectionLayoutStyles.headerContainer}>
         {headerIcon}
         <Text
-          style={{
-            justifyContent: 'center',
-            paddingLeft: 12,
-            fontFamily: 'Inter_500Medium',
-            fontWeight: '600',
-            fontSize: 14,
-            letterSpacing: 0,
-            lineHeight: 17,
-          }}
+          style={Theme.SectionLayoutStyles.headerText}
           testID={`${testId}Header`}>
           {headerText}
         </Text>
       </Row>
       <Row
-        style={{
-          padding: 16,
-          backgroundColor: Theme.Colors.whiteBackgroundColor,
-          borderBottomLeftRadius: 6,
-          borderBottomRightRadius: 6,
-        }}>
+        style={Theme.SectionLayoutStyles.content}>
         <Column fill>{children}</Column>
       </Row>
     </View>
   );
-};
-
-SectionLayout.defaultProps = {
-  marginBottom: 0,
 };
 
 export type SectionLayoutProps = {

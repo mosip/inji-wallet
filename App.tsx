@@ -1,6 +1,6 @@
 import React, {useContext, useEffect} from 'react';
 import {AppLayout} from './screens/AppLayout';
-import {useFont} from './shared/hooks/useFont';
+import {useFont} from "./shared/hooks/useFont";
 import {GlobalContextProvider} from './components/GlobalContextProvider';
 import {GlobalContext} from './shared/GlobalContext';
 import {useSelector} from '@xstate/react';
@@ -25,7 +25,6 @@ import {MessageOverlay} from './components/MessageOverlay';
 import {NativeModules} from 'react-native';
 import {isHardwareKeystoreExists} from './shared/cryptoutil/cryptoUtil';
 import i18n from './i18n';
-import './shared/flipperConfig';
 import {CopilotProvider} from 'react-native-copilot';
 import {CopilotTooltip} from './components/CopilotTooltip';
 import {Theme} from './components/ui/styleUtils';
@@ -52,7 +51,6 @@ const AppLayoutWrapper: React.FC = () => {
   const isDecryptError = useSelector(appService, selectIsDecryptError);
   const controller = useApp();
   const {t} = useTranslation('WelcomeScreen');
-
   useEffect(() => {
     if (AppState.currentState === 'active') {
       appService.send(APP_EVENTS.ACTIVE());
@@ -115,8 +113,8 @@ const AppLoadingWrapper: React.FC = () => {
 
 const AppInitialization: React.FC = () => {
   const {appService} = useContext(GlobalContext);
+  const hasFontsLoaded = useFont()
   const isReady = useSelector(appService, selectIsReady);
-  const hasFontsLoaded = useFont();
   const {t} = useTranslation('common');
 
   useEffect(() => {
@@ -129,9 +127,9 @@ const AppInitialization: React.FC = () => {
   }, [i18n.language]);
 
   return isReady && hasFontsLoaded ? (
-    <AppLayoutWrapper />
+      <AppLayoutWrapper />
   ) : (
-    <AppLoadingWrapper />
+      <AppLoadingWrapper />
   );
 };
 

@@ -8,7 +8,21 @@ import {Modal} from './Modal';
 import {BannerNotification} from '../../components/BannerNotification';
 import {BannerStatusType} from '../../components/BannerNotification';
 
-export const Loader: React.FC<LoaderProps> = props => {
+export const Loader: React.FC<LoaderProps> = ({
+                                                title,
+                                                subTitle,
+                                                isModal = false,
+                                                hint,
+                                                onStayInProgress,
+                                                isHintVisible,
+                                                onCancel,
+                                                onRetry,
+                                                showBanner,
+                                                bannerMessage,
+                                                onBannerClose,
+                                                bannerType,
+                                                bannerTestID,
+                                              }) => {
   const {t} = useTranslation('ScanScreen');
 
   useEffect(() => {
@@ -28,37 +42,37 @@ export const Loader: React.FC<LoaderProps> = props => {
         <Column margin="24 0" align="space-around">
           <LoaderAnimation testID={'loader'} />
         </Column>
-        {(props.isHintVisible || props.onCancel) && (
+        {(isHintVisible || onCancel) && (
           <Column style={Theme.SelectVcOverlayStyles.timeoutHintContainer}>
-            {props.hint && (
+            {hint && (
               <Text
                 align="center"
                 margin="10"
                 color={Theme.Colors.TimeoutHintText}
                 size="small"
                 style={Theme.TextStyles.bold}>
-                {props.hint}
+                {hint}
               </Text>
             )}
-            {props.onStayInProgress && (
+            {onStayInProgress && (
               <Button
                 type="clear"
                 title={t('status.stayOnTheScreen')}
-                onPress={props.onStayInProgress}
+                onPress={onStayInProgress}
               />
             )}
-            {props.onRetry && (
+            {onRetry && (
               <Button
                 type="clear"
                 title={t('status.retry')}
-                onPress={props.onRetry}
+                onPress={onRetry}
               />
             )}
-            {props.onCancel && (
+            {onCancel && (
               <Button
                 type="clear"
                 title={t('common:cancel')}
-                onPress={props.onCancel}
+                onPress={onCancel}
               />
             )}
           </Column>
@@ -69,10 +83,10 @@ export const Loader: React.FC<LoaderProps> = props => {
 
   return (
     <Fragment>
-      {props.isModal ? (
+      {isModal ? (
         <Modal
-          headerTitle={props.title}
-          isVisible={props.isModal}
+          headerTitle={title}
+          isVisible={isModal}
           headerElevation={3}
           headerLeft={<Fragment></Fragment>}
           showClose={false}>
@@ -95,14 +109,14 @@ export const Loader: React.FC<LoaderProps> = props => {
                   <Text
                     style={Theme.TextStyles.semiBoldHeader}
                     testID="loaderTitle">
-                    {props.title}
+                    {title}
                   </Text>
-                  {props.subTitle && (
+                  {subTitle && (
                     <Text
                       style={Theme.TextStyles.subHeader}
                       color={Theme.Colors.textLabel}
                       testID="loaderSubTitle">
-                      {props.subTitle}
+                      {subTitle}
                     </Text>
                   )}
                 </View>
@@ -110,26 +124,22 @@ export const Loader: React.FC<LoaderProps> = props => {
             </SafeAreaView>
           </Row>
           <View style={Theme.Styles.hrLineFill}></View>
-          {props.showBanner && (
+          {showBanner && (
             <BannerNotification
               type={
-                props.bannerType ? props.bannerType : BannerStatusType.SUCCESS
+                bannerType ? bannerType : BannerStatusType.SUCCESS
               }
-              message={props.bannerMessage as string}
-              onClosePress={props.onBannerClose as () => void}
-              testId={props.bannerTestID as string}
+              message={bannerMessage as string}
+              onClosePress={onBannerClose as () => void}
+              testId={bannerTestID as string}
             />
           )}
 
-          {loaderContent()}
-        </Fragment>
-      )}
-    </Fragment>
+              {loaderContent()}
+            </Fragment>
+        )}
+      </Fragment>
   );
-};
-
-Loader.defaultProps = {
-  isModal: false,
 };
 
 export interface LoaderProps {

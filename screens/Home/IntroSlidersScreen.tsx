@@ -10,11 +10,11 @@ import LinearGradient from 'react-native-linear-gradient';
 import {SvgImage} from '../../components/ui/svg';
 import testIDProps from '../../shared/commonUtil';
 import {INTRO_SLIDER_LOGO_MARGIN} from '../../shared/constants';
-import { StaticAuthScreen } from '../IntroSliders/biometricIntro';
-import { StaticScanScreen } from '../IntroSliders/quickAccessIntro';
+import {StaticAuthScreen} from '../IntroSliders/biometricIntro';
+import {StaticScanScreen} from '../IntroSliders/quickAccessIntro';
 import StaticBackupAndRestoreScreen from '../IntroSliders/backupRestoreIntro';
-import { StaticHomeScreen } from '../IntroSliders/trustedDigitalWalletIntro';
-import { StaticSendVcScreen } from '../IntroSliders/secureShareIntro';
+import {StaticHomeScreen} from '../IntroSliders/trustedDigitalWalletIntro';
+import {StaticSendVcScreen} from '../IntroSliders/secureShareIntro';
 
 export const IntroSlidersScreen: React.FC<RootRouteProps> = props => {
   const slider = useRef<AppIntroSlider>();
@@ -28,31 +28,31 @@ export const IntroSlidersScreen: React.FC<RootRouteProps> = props => {
       key: 'one',
       title: t('stepOneTitle'),
       text: t('stepOneText'),
-      component: <StaticAuthScreen />, 
+      component: <StaticAuthScreen />,
     },
     {
       key: 'two',
       title: t('stepTwoTitle'),
       text: t('stepTwoText'),
-      component: <StaticSendVcScreen />, 
+      component: <StaticSendVcScreen />,
     },
     {
       key: 'three',
       title: t('stepThreeTitle'),
       text: t('stepThreeText'),
-      component: <StaticHomeScreen />, 
+      component: <StaticHomeScreen />,
     },
     {
       key: 'four',
       title: t('stepFourTitle'),
       text: t('stepFourText'),
-      component: <StaticScanScreen />, 
+      component: <StaticScanScreen />,
     },
     {
       key: 'five',
       title: t('stepFiveTitle'),
       text: t('stepFiveText'),
-      component: <StaticBackupAndRestoreScreen />, 
+      component: <StaticBackupAndRestoreScreen />,
     },
   ];
 
@@ -60,7 +60,7 @@ export const IntroSlidersScreen: React.FC<RootRouteProps> = props => {
 
   const renderItem = ({item}) => {
     return (
-      <ImageBackground source={Theme.IntroSliderbackground}>
+      <ImageBackground source={require('./IntroBg.png')}>
         <Centered>
           <Row align="space-between" style={Theme.Styles.introSliderHeader}>
             <Column style={{marginLeft: INTRO_SLIDER_LOGO_MARGIN}}>
@@ -81,7 +81,9 @@ export const IntroSlidersScreen: React.FC<RootRouteProps> = props => {
               />
             )}
           </Row>
-          <View style={{width:300, height:600}}><Centered fill>{item.component}</Centered></View>
+          <View style={{width: 300, height: 600}}>
+            <Centered fill>{item.component}</Centered>
+          </View>
           <Column
             testID={`introSlide-${item.key}`}
             style={Theme.OnboardingOverlayStyles.bottomContainer}

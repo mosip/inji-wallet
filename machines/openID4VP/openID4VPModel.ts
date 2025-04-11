@@ -1,6 +1,6 @@
 import {createModel} from 'xstate/lib/model';
 import {AppServices} from '../../shared/GlobalContext';
-import {VC} from '../VerifiableCredential/VCMetaMachine/vc';
+import {SelectedCredentialsForVPSharing, VC} from '../VerifiableCredential/VCMetaMachine/vc';
 import {KeyTypes} from '../../shared/cryptoutil/KeyTypes';
 import {VPActivityLogType} from '../../components/VPShareActivityLogEvent';
 
@@ -50,7 +50,7 @@ export const openID4VPModel = createModel(
     authenticationResponse: {},
     vcsMatchingAuthRequest: {} as Record<string, VC[]>,
     checkedAll: false as boolean,
-    selectedVCs: {} as Record<string, VC[]>,
+    selectedVCs: {} as SelectedCredentialsForVPSharing,
     isShareWithSelfie: false as boolean,
     showFaceAuthConsent: true as boolean,
     purpose: '' as string,

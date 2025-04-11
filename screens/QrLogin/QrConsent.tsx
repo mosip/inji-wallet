@@ -3,8 +3,8 @@ import {useTranslation} from 'react-i18next';
 import {Button, Column, Row, Text} from '../../components/ui';
 import {Theme} from '../../components/ui/styleUtils';
 import {useQrLogin} from './QrLoginController';
-import {Image, View} from 'react-native';
-import {Icon, ListItem, Switch} from 'react-native-elements';
+import {Image} from 'react-native';
+import {ListItem, Switch} from 'react-native-elements';
 import {Modal} from '../../components/ui/Modal';
 import {QrLoginRef} from '../../machines/QrLogin/QrLoginMachine';
 import {ScrollView} from 'react-native';
@@ -103,7 +103,10 @@ export const QrConsent: React.FC<QrConsentProps> = props => {
                 <Switch
                   value={controller.isShare[claim]}
                   onValueChange={() =>
-                    controller.SELECT_CONSENT(controller.isShare[claim], claim)
+                    controller.SELECT_CONSENT(
+                      controller.isShare[claim],
+                      claim,
+                    )
                   }
                   color={Theme.Colors.Icon}
                 />
