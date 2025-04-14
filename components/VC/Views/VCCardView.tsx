@@ -63,10 +63,11 @@ export const VCCardView: React.FC<VCItemProps> = ({
   }, [isDownloading, controller.credential]);
 
   useEffect(() => {
+    if (!verifiableCredentialData || !verifiableCredentialData.vcMetadata) return;
     const {
       issuer,
       credentialConfigurationId,
-      vcMetadata: {format},
+      vcMetadata: { format },
     } = verifiableCredentialData;
     if (vcMetadata.issuerHost) {
       getCredentialIssuersWellKnownConfig(
@@ -87,12 +88,12 @@ export const VCCardView: React.FC<VCItemProps> = ({
           );
         });
     }
-  }, [verifiableCredentialData?.vcMetadata]);
+  }, [verifiableCredentialData]);
 
-  if (!isVCLoaded(controller.credential, fields)) {
+  if (!isVCLoaded(controller.credential, fields) || !wellknown || !vc) {
     return <VCCardSkeleton />;
   }
-
+  
   const CardViewContent = () => (
     <VCCardViewContent
       vcMetadata={vcMetadata}
