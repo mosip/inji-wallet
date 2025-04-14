@@ -92,6 +92,21 @@ More info here:
 When application is built via IDE, metro need to be started manually (For instance, if building app via XCode open metro manually, as metro hook has been removed from building via XCode - [reference](https://github.com/facebook/react-native/issues/42173#issuecomment-1921091973)). 
 However, if app is built via npm commands, metro starts automatically (For instance, `npm run android:mosip` or `npm run ios`)
 
+## Known Issues
+
+- **Terminal Configuration Error**
+   
+  When attempting to build the application using certain terminals via npm commands, you may encounter the following error:
+
+    ```
+    Cannot start server in new windows because no terminal app was specified, use --terminal to specify, or start a dev server manually by running npm start or yarn start in other terminal window.
+    ```
+  **Cause:** 
+    - This issue occurs due to missing or incorrect terminal configuration or environment settings.
+  
+  **Workaround:**
+  - Start the development server manually by running `npm start` in a separate terminal window. 
+
 ## Contributions
 
 Please refer [here](https://docs.mosip.io/inji/inji-mobile-wallet/contribution) for contributing to Inji
