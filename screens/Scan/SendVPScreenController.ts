@@ -35,7 +35,7 @@ import {selectShareableVcs} from '../../machines/VerifiableCredential/VCMetaMach
 import {RootRouteProps} from '../../routes';
 import {BOTTOM_TAB_ROUTES} from '../../routes/routesConstants';
 import {GlobalContext} from '../../shared/GlobalContext';
-import {isMosipVC} from '../../shared/Utils';
+import {formatForDisplay, isMosipVC} from '../../shared/Utils';
 import {VCMetadata} from '../../shared/VCMetadata';
 import {VPShareOverlayProps} from './VPShareOverlay';
 import {ActivityLogEvents} from '../../machines/activityLog';
@@ -225,7 +225,7 @@ export function useSendVPScreen() {
       title: t('consentDialog.title'),
       titleTestID: 'consentTitle',
       message: t('consentDialog.message', {
-        verifierName: vpVerifierName,
+        verifierName: formatForDisplay(vpVerifierName),
         interpolation: {escapeValue: false},
       }),
       messageTestID: 'consentMsg',

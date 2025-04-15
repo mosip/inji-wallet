@@ -66,3 +66,11 @@ export class UUID {
     return uuid();
   }
 }
+
+export const formatForDisplay = (value: String)=> {
+  const limit = 15;
+  if (value.length > limit) {
+    return value.substring(0, limit) + '...';
+  }
+  return value;
+}
