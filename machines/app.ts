@@ -41,7 +41,7 @@ import {
   generateKeyPairsAndStoreOrder,
 } from '../shared/cryptoutil/cryptoUtil';
 
-const QrLoginIntent = NativeModules.QrLoginIntent;
+const DeepLinkIntent = NativeModules.DeepLinkIntent;
 
 const model = createModel(
   {
@@ -414,11 +414,11 @@ export const appMachine = model.createMachine(
 
     services: {
       isQrLoginByDeepLink: () => async () => {
-        const data = await QrLoginIntent.isQrLoginByDeepLink();
+        const data = await DeepLinkIntent.getDeepLinkIntentData();
         return data;
       },
       resetQRLoginDeepLinkData: () => async () => {
-        return await QrLoginIntent.resetQRLoginDeepLinkData();
+        return await DeepLinkIntent.resetDeepLinkIntentData();
       },
 
       getAppInfo: () => async callback => {

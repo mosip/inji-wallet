@@ -45,11 +45,15 @@
 
 // Linking API
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url options:(NSDictionary<UIApplicationOpenURLOptionsKey,id> *)options {
+  [self handleIntent:url];
+  return [super application:application openURL:url options:options] || [RCTLinkingManager application:application openURL:url options:options];
+}
+
+- (void)handleIntent:(NSURL *)url {
   if ([url.scheme isEqualToString:@"io.mosip.residentapp.inji"]) {
     IntentData *intentData = [IntentData shared];
     [intentData setQrData:url.absoluteString];
   }
-  return [super application:application openURL:url options:options] || [RCTLinkingManager application:application openURL:url options:options];
 }
 
 // Universal Links
