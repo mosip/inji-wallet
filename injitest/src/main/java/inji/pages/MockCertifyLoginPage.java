@@ -6,6 +6,8 @@ import io.appium.java_client.pagefactory.AndroidFindBy;
 import io.appium.java_client.pagefactory.iOSXCUITFindBy;
 import org.openqa.selenium.WebElement;
 
+import java.time.Duration;
+
 public class MockCertifyLoginPage extends BasePage {
 
     @iOSXCUITFindBy(iOSClassChain = "**/XCUIElementTypeStaticText[`label == \"“Inji” Wants to Use “mosip.net” to Sign In\"`]")
@@ -58,7 +60,8 @@ public class MockCertifyLoginPage extends BasePage {
     @AndroidFindBy(accessibility = "loaderSubTitle")
     private WebElement settingUpTextOrDownloadingCredentials;
 
-    @AndroidFindBy(xpath = "//*[@text=\"OTP is invalid\"]")
+    @AndroidFindBy(xpath = "//*[@text=\"Incorrect OTP. Please try again.\"]")
+    @iOSXCUITFindBy(accessibility = "Incorrect OTP. Please try again.")
     private WebElement invalidOtpText;
 
     @AndroidFindBy(uiAutomator = "UiSelector().className(\"android.widget.TextView\").instance(1)")
@@ -84,6 +87,10 @@ public class MockCertifyLoginPage extends BasePage {
     @AndroidFindBy(accessibility = "credentialTypeHeading-MOSIPVerifiableCredential")
     @iOSXCUITFindBy(accessibility = "credentialTypeHeading-MOSIPVerifiableCredential")
     private WebElement credentialTypeHeadingMOSIPVerifiableCredential;
+
+    @AndroidFindBy(xpath = "//android.widget.TextView[@text=\"Invalid Individual ID\"]")
+    @iOSXCUITFindBy(accessibility = "Invalid Individual ID")
+    private WebElement invalidIndividualIdText;
 
 
     public MockCertifyLoginPage(AppiumDriver driver) {
@@ -117,6 +124,11 @@ public class MockCertifyLoginPage extends BasePage {
     }
 
     public OtpVerificationPage setEnterIdTextBox(String uinOrVid) {
+        try {
+            Thread.sleep(3000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
         sendKeysToTextBox(enterIdTextBox, uinOrVid);
         return new OtpVerificationPage(driver);
     }
@@ -216,5 +228,8 @@ public class MockCertifyLoginPage extends BasePage {
         }
     }
 
+    public boolean isInvalidIndividualIdTextDisplayed(){
+        return isElementDisplayed(invalidIndividualIdText);
+    }
 
 }

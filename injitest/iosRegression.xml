@@ -113,6 +113,8 @@
                     <include name="downloadAndVerifyHistoryUsingVidViaEsignet"/>
                     <include name="downloadAndVerifyHistoryForSunbird"/>
                     <include name="downloadVcAndVerifyActivityLog"/>
+                    <include name="downloadAndVerifyVcUsingMdlDeleteAndVerifyHistory"/>
+                    <include name="downloadAndVerifyVcUsingMockDeleteAndVerifyHistory"/>
                 </methods>
             </class>
             <class name="iosTestCases.VerifyWelcomePagesTest">
@@ -137,9 +139,13 @@
                     <include name="verifyAppId"/>
                 </methods>
             </class>
-            <class name="iosTestCases.VcDownloadAndVerifyUsingMockIdentityTest">
+            <class name="iosTestCases.VcDownloadAndVerifyUsingMdl">
                 <methods>
-                    <include name="downloadAndVerifyVcUsingUinViaMocke"/>
+                    <include name="downloadAndVerifyVcUsingMdl"/>
+                    <include name="downloadAndVerifyVcUsingInvalidCredentials"/>
+                    <include name="downloadAndVerifyVcUsingInvalidOtp"/>
+                    <include name="downloadAndVerifyVcUsingViaMdlAndPinAndUnpin"/>
+                    <include name="downloadAndVerifyVcUsingViaMdlMultipleTimes"/>
                 </methods>
             </class>
 

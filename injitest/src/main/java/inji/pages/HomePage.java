@@ -31,6 +31,10 @@ public class HomePage extends BasePage {
     @AndroidFindBy(accessibility = "ellipsis")
     private WebElement moreOptionsButton;
 
+    @iOSXCUITFindBy(accessibility = "iconIcon")
+    @AndroidFindBy(accessibility = "iconIcon")
+    private WebElement iconIconButton;
+
     @iOSXCUITFindBy(xpath = "(//XCUIElementTypeOther[@name=\"ellipsis\"])[2]")
     @AndroidFindBy(xpath = "(//android.view.ViewGroup[@content-desc=\"ellipsis\"])[2]")
     private WebElement moreOptionsButtonForSecondVc;
@@ -240,6 +244,12 @@ public class HomePage extends BasePage {
     @AndroidFindBy(accessibility = "cardViewDescription")
     @iOSXCUITFindBy(accessibility = "cardViewDescription")
     private WebElement cardViewDescription;
+
+    @AndroidFindBy(accessibility = "injiLogo")
+    @iOSXCUITFindBy(accessibility = "injiLogo")
+    private WebElement injiLogo;
+
+
 
 
     public HomePage(AppiumDriver driver) {
@@ -812,7 +822,13 @@ public class HomePage extends BasePage {
         }
         return this.isElementDisplayed(credentialTypeValue);
 
+    }
+    public boolean isInjiLogoDisplayed() {
+        return  isElementDisplayed(injiLogo);
+    }
 
+    public void clickOnCrossIconButton() {
+        clickOnElement(iconIconButton);
     }
 
 }

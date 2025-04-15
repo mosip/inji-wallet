@@ -102,6 +102,8 @@ public class TestDataReader {
                 return "true";
             case "MockVc":
                 return "9261481024";
+            case "Mock":
+                return "1231231231";
             case "idTypeForMobileDrivingLicense":
                 return "Mobile Driving License";
             default:

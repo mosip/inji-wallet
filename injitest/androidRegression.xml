@@ -140,6 +140,7 @@
                 <methods>
                     <include name="downloadAndVerifyHistoryUsingUinViaEsignet"/>
                     <include name="downloadAndVerifyHistoryForSunbird"/>
+                    <include name="downloadAndVerifyVcUsingMdlDeleteAndVerifyHistory"/>
                 </methods>
             </class>
             <class name="androidTestCases.VerifyWelcomePagesTest">
@@ -158,9 +159,13 @@
                     <!-- <include name="verifyTuvaliVersion"/> invalid testcase-->
                 </methods>
             </class>
-            <class name="androidTestCases.VcDownloadAndVerifyUsingMockIdentity">
+            <class name="androidTestCases.VcDownloadAndVerifyUsingMdl">
                 <methods>
                     <include name="downloadAndVerifyVcUsingUinViaMockIdentity"/>
+                    <include name="downloadAndVerifyVcUsingInvalidCredentials"/>
+                    <include name="downloadAndVerifyVcUsingInvalidOtp"/>
+                    <include name="downloadAndVerifyVcUsingViaMdlAndPinAndUnpin"/>
+                    <include name="downloadAndVerifyVcUsingUinViaMdlMultipleTime"/>
                 </methods>
             </class>
             <class name="androidTestCases.keyManagement">

@@ -74,9 +74,18 @@ public class AddNewCardPage extends BasePage{
     @iOSXCUITFindBy(accessibility = "credentialTypeHeading-DrivingLicenseCredential")
     private WebElement credentialTypeHeadingMockVerifiableCredential_mdoc;
 
+    @AndroidFindBy(accessibility = "credentialTypeHeading-MockVerifiableCredential")
+    @iOSXCUITFindBy(accessibility = "credentialTypeHeading-MockVerifiableCredential")
+    private WebElement credentialTypeHeadingMockVerifiableCredential;
+
     @AndroidFindBy(xpath = "//*[@resource-id=\"issuerSearchBar\"]")
     @iOSXCUITFindBy(accessibility = "issuerSearchBar")
     private WebElement IssuerSearchBar;
+
+    @AndroidFindBy(accessibility = "issuerHeading-Mock(Collab)")
+    @iOSXCUITFindBy(accessibility = "issuerHeading-Mock(Collab)")
+    private WebElement downloadViaMock;
+
 
     public AddNewCardPage(AppiumDriver driver) {
         super(driver);
@@ -222,4 +231,23 @@ public class AddNewCardPage extends BasePage{
         return new MockCertifyLoginPage(driver);
     }
 
+    public void  clickOnDownloadViaMock() {
+        if (isElementDisplayed(IssuerSearchBar)) {
+            clearTextBoxAndSendKeys(IssuerSearchBar, "mock");
+        }
+        clickOnElement(downloadViaMock);
+        if (isElementDisplayed(downloadViaMock)) {
+            clickOnElement(downloadViaMock);
+        }
+
+        try {
+            Thread.sleep(3000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        if (isElementDisplayed(credentialTypeHeadingMockVerifiableCredential)) {
+            clickOnElement(credentialTypeHeadingMockVerifiableCredential);
+        }
+
+    }
 }
