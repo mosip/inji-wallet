@@ -158,7 +158,7 @@ export const getScreenHeight = () => {
   return {isSmallScreen, screenHeight};
 };
 
-export const getMosipIdentifier = (credentialSubject: CredentialSubject) => {
+export const getIdentifier = (credentialSubject: CredentialSubject) => {
   return credentialSubject.UIN ? credentialSubject.UIN : credentialSubject.VID;
 };
 

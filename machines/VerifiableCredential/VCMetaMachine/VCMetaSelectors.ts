@@ -68,6 +68,10 @@ export function selectWalletBindingSuccess(state: State) {
   return state.context.walletBindingSuccess;
 }
 
+export function selectAutoWalletBindingSuccess(state: State) {
+  return state.context.autoWalletBindingSuccess;
+}
+
 export function selectIsTampered(state: State) {
   return state.matches('ready.tamperedVCs');
 }

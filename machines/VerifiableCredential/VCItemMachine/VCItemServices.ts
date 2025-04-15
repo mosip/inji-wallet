@@ -59,7 +59,7 @@ export const VCItemServices = model => {
           request: {
             authFactorType: 'WLA',
             format: 'jwt',
-            individualId: context.vcMetadata.mosipIndividualId,
+            individualId: context.vcMetadata.individualId,
             transactionId: context.bindingTransactionId,
             publicKey: context.publicKey,
             challengeList: [
@@ -103,7 +103,7 @@ export const VCItemServices = model => {
         {
           requestTime: String(new Date().toISOString()),
           request: {
-            individualId: context.vcMetadata.mosipIndividualId,
+            individualId: context.vcMetadata.individualId,
             otpChannels: ['EMAIL', 'PHONE'],
           },
         },
@@ -175,7 +175,7 @@ export const VCItemServices = model => {
             API_URLS.credentialDownload.method,
             API_URLS.credentialDownload.buildURL(),
             {
-              individualId: context.vcMetadata.mosipIndividualId,
+              individualId: context.vcMetadata.individualId,
               requestId: context.vcMetadata.requestId,
             },
           );

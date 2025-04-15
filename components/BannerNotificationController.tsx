@@ -8,6 +8,7 @@ import {useContext} from 'react';
 import {GlobalContext} from '../shared/GlobalContext';
 import {VcMetaEvents} from '../machines/VerifiableCredential/VCMetaMachine/VCMetaMachine';
 import {
+  selectAutoWalletBindingSuccess,
   selectIsDownloadingFailed,
   selectIsDownloadingSuccess,
   selectWalletBindingSuccess,
@@ -21,11 +22,18 @@ export const UseBannerNotification = () => {
 
   return {
     isBindingSuccess: useSelector(vcMetaService, selectWalletBindingSuccess),
+    isAutoWalletBindingSuccess: useSelector(
+      vcMetaService,
+      selectAutoWalletBindingSuccess,
+    ),
     verificationStatus: useSelector(vcMetaService, selectVerificationStatus),
     isPasscodeUnlock: useSelector(settingsService, selectIsPasscodeUnlock),
 
     isBiometricUnlock: useSelector(settingsService, selectIsBiometricUnlock),
-    isDownloadingSuccess: useSelector(vcMetaService, selectIsDownloadingSuccess),
+    isDownloadingSuccess: useSelector(
+      vcMetaService,
+      selectIsDownloadingSuccess,
+    ),
     isDownloadingFailed: useSelector(vcMetaService, selectIsDownloadingFailed),
     DISMISS: () => {
       settingsService.send(SettingsEvents.DISMISS());
