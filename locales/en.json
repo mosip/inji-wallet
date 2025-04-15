@@ -683,7 +683,7 @@
     "shareWithSelfieMessageQrLogin": "In order to access the portal, you’ll need to share your Verifiable Credentials and verify your identity securely using face verification. By continuing, you consent to Inji using your camera for this purpose. \n\n Your facial data will only be used for verification and will not be shared. After successful verification, you can choose which details to share.",
     "ConfirmButton": "I Understand",
     "doNotAskMessage": "Don't ask me again",
-    "noShareableVcs": "No shareable cards are available.",
+    "noShareableVcs": "No cards are available for sharing.",
     "sharingVc": "Sharing card",
     "bluetoothStateIos": "Bluetooth is turned OFF, please turn it ON from Control center",
     "bluetoothStateAndroid": "Bluetooth is turned OFF, please turn it ON from Quick settings menu",
@@ -988,6 +988,10 @@
         "title": "App was Reset",
         "message": "Due to the fingerprint / facial recognition update, app security was impacted, and downloaded cards were removed. Please download again."
       }
+    },
+    "qrLoginOverlay": {
+      "title": "Setup incomplete",
+      "message": "Please finish the initial setup to proceed."
     },
     "ignore": "Ignore"
   },
