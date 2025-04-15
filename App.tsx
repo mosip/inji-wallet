@@ -68,6 +68,10 @@ const AppLayoutWrapper: React.FC = () => {
     }
   }, []);
 
+  useEffect(() => {
+    setOverlayVisible(isQrLogin !== '');
+  }, [isQrLogin]);
+
   if (isDecryptError) {
     DecryptErrorAlert(controller, t);
   }
