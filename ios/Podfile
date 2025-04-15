@@ -8,8 +8,8 @@ podfile_properties = JSON.parse(File.read(File.join(__dir__, 'Podfile.properties
 ENV['RCT_NEW_ARCH_ENABLED'] = podfile_properties['newArchEnabled'] == 'true' ? '1' : '0'
 ENV['EX_DEV_CLIENT_NETWORK_INSPECTOR'] = '1' if podfile_properties['EX_DEV_CLIENT_NETWORK_INSPECTOR'] == 'true'
 
-platform :ios, podfile_properties['ios.deploymentTarget'] || '13.4'
-install! 'cocoapods', 
+platform :ios, podfile_properties['ios.deploymentTarget'] || '14'
+install! 'cocoapods',
   :deterministic_uuids => false
 
 prepare_react_native_project!
@@ -25,18 +25,6 @@ prepare_react_native_project!
 #   }
 # }
 # ```
-flipper_config = FlipperConfiguration.disabled
-if ENV['NO_FLIPPER'] == '1' then
-  # Explicitly disabled through environment variables
-  flipper_config = FlipperConfiguration.disabled
-elsif podfile_properties.key?('ios.flipper') then
-  # Configure Flipper in Podfile.properties.json
-  if podfile_properties['ios.flipper'] == 'true' then
-    flipper_config = FlipperConfiguration.enabled(["Debug", "Release"])
-  elsif podfile_properties['ios.flipper'] != 'false' then
-    flipper_config = FlipperConfiguration.enabled(["Debug", "Release"], { 'Flipper' => podfile_properties['ios.flipper'] })
-  end
-end
 
 target 'Inji' do
   use_expo_modules!
@@ -55,7 +43,6 @@ target 'Inji' do
     # An absolute path to your application root.
     :app_path => "#{Pod::Config.instance.installation_root}/..",
     # Note that if you have use_frameworks! enabled, Flipper will not work if enabled
-    :flipper_configuration => flipper_config
   )
 
   post_install do |installer|
@@ -75,7 +62,7 @@ target 'Inji' do
       # necessary for Mac Catalyst builds
       :mac_catalyst_enabled => false
     )
-    __apply_Xcode_12_5_M1_post_install_workaround(installer)
+
 
     # This is necessary for Xcode 14, because it signs resource bundles by default
     # when building for devices.
@@ -126,7 +113,7 @@ target 'Inji' do
         end
       end
       target.build_configurations.each do |config|
-        config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '13.0'
+        config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '14.0'
         config.build_settings["EXCLUDED_ARCHS[sdk=iphonesimulator*]"] =  "arm64"
       end
     end
@@ -150,7 +137,7 @@ target 'Inji' do
     end
 
   # https://github.com/CocoaPods/CocoaPods/issues/8122#issuecomment-428677119
-  # Workaround for removing the multiple Assets added to the project due to react native auto-linkage  
+  # Workaround for removing the multiple Assets added to the project due to react native auto-linkage
     project_path = './Inji.xcodeproj'
     project = Xcodeproj::Project.open(project_path)
     project.targets.each do |target|

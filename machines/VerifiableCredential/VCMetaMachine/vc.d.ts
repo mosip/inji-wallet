@@ -14,6 +14,8 @@ export interface VC {
   vcMetadata: VCMetadata;
 }
 
+export type SelectedCredentialsForVPSharing = Record<string,Record<string, Array<any>>;
+
 export type VcIdType = 'UIN' | 'VID';
 
 export interface DecodedCredential {

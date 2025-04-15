@@ -6,18 +6,7 @@ import {ActorRefFrom} from 'xstate';
 import {Theme} from '../../components/ui/styleUtils';
 import {selectIsCancelling} from '../../machines/bleShare/commonSelectors';
 import {ScanEvents} from '../../machines/bleShare/scan/scanMachine';
-import {
-  selectFlowType,
-  selectIsSendingVPError,
-} from '../../machines/bleShare/scan/scanSelectors';
-import {
-  selectIsShowLoadingScreen,
-  selectOpenID4VPRetryCount,
-  selectRequestedClaimsByVerifier,
-  selectSelectedVCs,
-  selectVerifierNameInVPSharing,
-} from '../../machines/openID4VP/openID4VPSelectors';
-import {OpenID4VPEvents} from '../../machines/openID4VP/openID4VPMachine';
+import {selectFlowType, selectIsSendingVPError,} from '../../machines/bleShare/scan/scanSelectors';
 import {
   selectAreAllVCsChecked,
   selectCredentials,
@@ -28,12 +17,18 @@ import {
   selectIsInvalidIdentity,
   selectIsSelectingVcs,
   selectIsSharingVP,
+  selectIsShowLoadingScreen,
   selectIsVerifyingIdentity,
+  selectOpenID4VPRetryCount,
   selectPurpose,
+  selectRequestedClaimsByVerifier,
+  selectSelectedVCs,
   selectShowConfirmationPopup,
   selectVCsMatchingAuthRequest,
   selectVerifiableCredentialsData,
+  selectVerifierNameInVPSharing,
 } from '../../machines/openID4VP/openID4VPSelectors';
+import {OpenID4VPEvents} from '../../machines/openID4VP/openID4VPMachine';
 import {selectMyVcs} from '../../machines/QrLogin/QrLoginSelectors';
 import {VCItemMachine} from '../../machines/VerifiableCredential/VCItemMachine/VCItemMachine';
 import {selectShareableVcs} from '../../machines/VerifiableCredential/VCMetaMachine/VCMetaSelectors';
@@ -45,6 +40,7 @@ import {VCMetadata} from '../../shared/VCMetadata';
 import {VPShareOverlayProps} from './VPShareOverlay';
 import {ActivityLogEvents} from '../../machines/activityLog';
 import {VPShareActivityLog} from '../../components/VPShareActivityLogEvent';
+import {SelectedCredentialsForVPSharing} from "../../machines/VerifiableCredential/VCMetaMachine/vc";
 
 type MyVcsTabNavigation = NavigationProp<RootRouteProps>;
 
@@ -89,7 +85,7 @@ export function useSendVPScreen() {
     const hasImage = Object.values(vcs)
       .flatMap(vc => vc)
       .some(vc => {
-        return isMosipVC(vc.vcMetadata.issuer);
+        return isMosipVC(vc.vcMetadata?.issuer);
       });
     return hasImage;
   };
@@ -102,11 +98,21 @@ export function useSendVPScreen() {
   };
 
   const getSelectedVCs = () => {
-    var selectedVcsData = {};
+    const selectedVcsData: SelectedCredentialsForVPSharing = {};
     Object.entries(selectedVCKeys).map(([vcKey, inputDescriptorId]) => {
       const vcData = myVcs[vcKey];
-      selectedVcsData[inputDescriptorId] ??= [];
-      selectedVcsData[inputDescriptorId].push(vcData);
+        const credentialFormat = vcData.format;
+      if (selectedVcsData.hasOwnProperty(inputDescriptorId)) {
+        let matchingVcsOfInputDescriptor = selectedVcsData[inputDescriptorId]
+        if (matchingVcsOfInputDescriptor.hasOwnProperty(credentialFormat)) {
+          matchingVcsOfInputDescriptor[credentialFormat] = [...matchingVcsOfInputDescriptor[credentialFormat], vcData]
+        } else {
+          matchingVcsOfInputDescriptor[credentialFormat] = [vcData]
+        }
+        selectedVcsData[inputDescriptorId] = matchingVcsOfInputDescriptor
+      } else {
+        selectedVcsData[inputDescriptorId] = {[credentialFormat]: [vcData]}
+      }
     });
     return selectedVcsData;
   };

@@ -48,12 +48,12 @@ function createLayout(
     const ViewType = props.safe ? SafeAreaView : View;
 
     return props.scroll ? (
-      <ScrollView
-        {...testIDProps(props.testID)}
-        contentContainerStyle={styles}
-        refreshControl={props.refreshControl}>
-        {props.children}
-      </ScrollView>
+        <ScrollView
+          {...testIDProps(props.testID)}
+          contentContainerStyle={styles}
+          refreshControl={props.refreshControl}>
+          {props.children}
+        </ScrollView>
     ) : (
       <ViewType {...testIDProps(props.testID)} style={styles}>
         {props.children}

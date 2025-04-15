@@ -4,7 +4,6 @@ import {useTranslation} from 'react-i18next';
 import {SetupPicker} from '../components/ui/SetupPicker';
 import {Button, Column, Text} from '../components/ui';
 import {Theme} from '../components/ui/styleUtils';
-import {Icon} from 'react-native-elements';
 import {RootRouteProps} from '../routes';
 import {useWelcomeScreen} from './WelcomeScreenController';
 import {changeLanguage} from '../components/LanguageSelector';

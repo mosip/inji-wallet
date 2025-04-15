@@ -46,7 +46,7 @@ jobs:
     uses: mosip/kattu/.github/workflows/npm-sonar-analysis.yml@master-java21
     with:
       SERVICE_LOCATION: '.'
-      NODE_VERSION: '16.x'
+      NODE_VERSION: '18.x'
       NPM_BUILD_TYPE: 'BOB'
       SONAR_SOURCES: '.'
       SONAR_TESTS: '.'

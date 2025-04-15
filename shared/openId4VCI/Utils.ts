@@ -83,7 +83,6 @@ export const updateCredentialInformation = async (
   }
   const verifiableCredential = {
     ...credential,
-    wellKnown: context.selectedIssuer['wellknown_endpoint'],
     credentialConfigurationId: context.selectedCredentialType.id,
     issuerLogo: getDisplayObjectForCurrentLanguage(
       context.selectedIssuer.display,

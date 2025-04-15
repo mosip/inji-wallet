@@ -28,6 +28,11 @@ export enum VCItemContainerFlowType {
   VP_SHARE = 'vp share',
 }
 
+export enum CameraPosition {
+  FRONT = 'front',
+  BACK = 'back',
+}
+
 export interface CommunicationDetails {
   phoneNumber: string;
   emailId: string;

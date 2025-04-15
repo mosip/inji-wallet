@@ -9,6 +9,7 @@ import {
   OpenID4VP_Domain,
   OpenID4VP_Proof_Sign_Algo_Suite,
 } from '../../shared/openID4VP/OpenID4VP';
+import {VCFormat} from "../../shared/VCFormat";
 import {KeyTypes} from '../../shared/cryptoutil/KeyTypes';
 
 export const openID4VPServices = () => {
@@ -41,28 +42,35 @@ export const openID4VPServices = () => {
     },
 
     sendVP: (context: any) => async () => {
-      const vpToken = await OpenID4VP.constructVerifiablePresentationToken(
+      const vpTokens = await OpenID4VP.constructUnsignedVPToken(
         context.selectedVCs,
       );
 
-      const proofJWT = await constructProofJWT(
-        context.publicKey,
-        context.privateKey,
-        JSON.parse(vpToken),
-        context.keyType,
-      );
+      let vpResponsesMetadata: Record<string, any> = {}
+      for (const formatType in vpTokens){
+        const value = vpTokens[formatType]
+        if(formatType === VCFormat.ldp_vc.valueOf()){
+          const proofJWT = await constructProofJWT(
+              context.publicKey,
+              context.privateKey,
+              value,
+              context.keyType,
+          );
 
-      const vpResponseMetadata = {
-        jws: proofJWT,
-        signatureAlgorithm: OpenID4VP_Proof_Sign_Algo_Suite,
-        publicKey:
-          'did:jwk:' +
-          base64url(
-            JSON.stringify(await getJWK(context.publicKey, KeyTypes.ED25519)),
-          ),
-        domain: OpenID4VP_Domain,
-      };
-      return await OpenID4VP.shareVerifiablePresentation(vpResponseMetadata);
+          vpResponsesMetadata[formatType] = {
+            jws: proofJWT,
+            signatureAlgorithm: OpenID4VP_Proof_Sign_Algo_Suite,
+            publicKey:
+                'did:jwk:' +
+                base64url(
+                    JSON.stringify(await getJWK(context.publicKey, KeyTypes.ED25519)),
+                ),
+            domain: OpenID4VP_Domain,
+          }
+        }
+      }
+
+      return await OpenID4VP.shareVerifiablePresentation(vpResponsesMetadata);
     },
   };
 };

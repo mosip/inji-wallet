@@ -266,7 +266,7 @@ export const appMachine = model.createMachine(
       resetLinkCode: assign({
         linkCode: '',
       }),
-      forwardToSerices: pure((context, event) =>
+      forwardToServices: pure((context, event) =>
         Object.values(context.serviceRefs).map(serviceRef =>
           send({...event, type: `APP_${event.type}`}, {to: serviceRef}),
         ),

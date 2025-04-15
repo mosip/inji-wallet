@@ -1,7 +1,6 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import {useTranslation} from 'react-i18next';
 import {TouchableOpacity} from 'react-native';
-import {Icon} from 'react-native-elements';
 import {Button, Centered, Column} from '../components/ui';
 import {Theme} from '../components/ui/styleUtils';
 import {RootRouteProps} from '../routes';

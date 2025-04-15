@@ -60,8 +60,7 @@ public class MockCertifyLoginPage extends BasePage {
     @AndroidFindBy(accessibility = "loaderSubTitle")
     private WebElement settingUpTextOrDownloadingCredentials;
 
-    @AndroidFindBy(xpath = "//*[@text=\"Incorrect OTP. Please try again.\"]")
-    @iOSXCUITFindBy(accessibility = "Incorrect OTP. Please try again.")
+    @AndroidFindBy(xpath = "//*[@text=\"OTP is invalid\"]")
     private WebElement invalidOtpText;
 
     @AndroidFindBy(uiAutomator = "UiSelector().className(\"android.widget.TextView\").instance(1)")
@@ -125,7 +124,7 @@ public class MockCertifyLoginPage extends BasePage {
 
     public OtpVerificationPage setEnterIdTextBox(String uinOrVid) {
         try {
-            Thread.sleep(3000);
+            Thread.sleep(1000);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
@@ -231,5 +230,4 @@ public class MockCertifyLoginPage extends BasePage {
     public boolean isInvalidIndividualIdTextDisplayed(){
         return isElementDisplayed(invalidIndividualIdText);
     }
-
 }

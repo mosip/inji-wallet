@@ -13,15 +13,13 @@ import {ProfileInfo} from '../../shared/CloudBackupAndRestoreUtils';
 import {useBackupScreen} from './BackupController';
 import {BannerNotificationContainer} from '../../components/BannerNotificationContainer';
 import {useBackupRestoreScreen} from '../Settings/BackupRestoreController';
-import {Icon, colors} from 'react-native-elements';
-import testIDProps, {
+import {
   getAccountType,
   getDriveName,
 } from '../../shared/commonUtil';
 import {HelpScreen} from '../../components/HelpScreen';
-import {isAndroid, isIOS} from '../../shared/constants';
-import LinearGradient from 'react-native-linear-gradient';
-import { HelpIcon } from '../../components/ui/HelpIcon';
+import {isIOS} from '../../shared/constants';
+import {HelpIcon} from '../../components/ui/HelpIcon';
 
 const BackupAndRestoreScreen: React.FC<BackupAndRestoreProps> = props => {
   const backupController = useBackupScreen();
@@ -210,10 +208,7 @@ const BackupAndRestoreScreen: React.FC<BackupAndRestoreProps> = props => {
       headerElevation={2}
       arrowLeft={true}
       headerRight={
-        <HelpScreen
-          source={'BackUp'}
-          triggerComponent={HelpIcon()}
-        />
+        <HelpScreen source={'BackUp'} triggerComponent={HelpIcon()} />
       }
       onDismiss={props.onBackPress}>
       <BannerNotificationContainer />
@@ -227,11 +222,11 @@ const BackupAndRestoreScreen: React.FC<BackupAndRestoreProps> = props => {
             <LoaderAnimation testID="backupAndRestoreScreen" />
           </Column>
         ) : (
-          <ScrollView>
-            {LastBackupSection}
-            {AccountSection}
-            {RestoreSection}
-          </ScrollView>
+            <ScrollView>
+              {LastBackupSection}
+              {AccountSection}
+              {RestoreSection}
+            </ScrollView>
         )}
       </View>
     </Modal>
