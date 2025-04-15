@@ -29,7 +29,7 @@ import i18n from './i18n';
 import {CopilotProvider} from 'react-native-copilot';
 import {CopilotTooltip} from './components/CopilotTooltip';
 import {Theme} from './components/ui/styleUtils';
-import { selectIsOnboarding } from './machines/auth';
+import { selectAppSetupComplete } from './machines/auth';
 
 const {RNSecureKeystoreModule} = NativeModules;
 // kludge: this is a bad practice but has been done temporarily to surface
@@ -56,7 +56,7 @@ const AppLayoutWrapper: React.FC = () => {
   const {t} = useTranslation('WelcomeScreen');
 
   const authService = appService.children.get('auth');
-  const isOnboardingDone = useSelector(authService, selectIsOnboarding);
+  const isAppSetupComplete = useSelector(authService, selectAppSetupComplete);
   
   const [isOverlayVisible, setOverlayVisible] = useState(isQrLogin !== '');
   
@@ -81,7 +81,7 @@ const AppLayoutWrapper: React.FC = () => {
       <AppLayout />
 
       <MessageOverlay
-        isVisible={isOverlayVisible && isOnboardingDone}
+        isVisible={isOverlayVisible && !isAppSetupComplete}
         title={t('qrLoginOverlay.title')}
         message={t('qrLoginOverlay.message')}
         onButtonPress={() => {setOverlayVisible(false)}}

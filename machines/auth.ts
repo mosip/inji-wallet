@@ -18,6 +18,7 @@ const model = createModel(
     isOnboarding: true,
     isInitialDownload: true,
     isTourGuide: false,
+    appInitialSetupDone: false,
   },
   {
     events: {
@@ -123,11 +124,11 @@ export const authMachine = model.createMachine(
         on: {
           SETUP_PASSCODE: {
             target: 'authorized',
-            actions: ['setPasscode', 'setLanguage', 'storeContext'],
-          },
+            actions: ['setPasscode', 'setLanguage', 'setAppSetupComplete', 'storeContext'],
+          }, 
           SETUP_BIOMETRICS: {
             target: 'authorized',
-            actions: ['setBiometrics', 'setLanguage', 'storeContext'],
+            actions: ['setBiometrics', 'setLanguage', 'setAppSetupComplete', 'storeContext'],
           },
         },
       },
@@ -193,6 +194,10 @@ export const authMachine = model.createMachine(
         selectLanguage: context => true,
       }),
 
+      setAppSetupComplete: assign({
+        appInitialSetupDone: context => true,
+      }),
+
       setPasscodeSalt: assign({
         passcodeSalt: (context, event) => {
           return event.data as string;
@@ -249,6 +254,10 @@ type State = StateFrom<typeof authMachine>;
 
 export function selectPasscode(state: State) {
   return state?.context?.passcode;
+}
+
+export function selectAppSetupComplete(state: State) {
+  return state?.context?.appInitialSetupDone;
 }
 
 export function selectPasscodeSalt(state: State) {
