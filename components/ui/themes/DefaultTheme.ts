@@ -414,12 +414,12 @@ export const DefaultTheme = {
       height: 100,
     },
     injiLogo: {
-      width: 191.58,
-      height: 84,
+      width: 100,
+      height: 40,
     },
     injiHomeLogo: {
-      marginLeft: -30,
-      marginTop: -12,
+      marginLeft: 5,
+      marginTop: -25,
       marginBottom: isAndroid() ? -30 : 0,
     },
     logo: {
