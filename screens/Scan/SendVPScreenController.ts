@@ -6,7 +6,10 @@ import {ActorRefFrom} from 'xstate';
 import {Theme} from '../../components/ui/styleUtils';
 import {selectIsCancelling} from '../../machines/bleShare/commonSelectors';
 import {ScanEvents} from '../../machines/bleShare/scan/scanMachine';
-import {selectFlowType, selectIsSendingVPError,} from '../../machines/bleShare/scan/scanSelectors';
+import {
+  selectFlowType,
+  selectIsSendingVPError,
+} from '../../machines/bleShare/scan/scanSelectors';
 import {
   selectAreAllVCsChecked,
   selectCredentials,
@@ -40,7 +43,7 @@ import {VCMetadata} from '../../shared/VCMetadata';
 import {VPShareOverlayProps} from './VPShareOverlay';
 import {ActivityLogEvents} from '../../machines/activityLog';
 import {VPShareActivityLog} from '../../components/VPShareActivityLogEvent';
-import {SelectedCredentialsForVPSharing} from "../../machines/VerifiableCredential/VCMetaMachine/vc";
+import {SelectedCredentialsForVPSharing} from '../../machines/VerifiableCredential/VCMetaMachine/vc';
 
 type MyVcsTabNavigation = NavigationProp<RootRouteProps>;
 
@@ -97,22 +100,14 @@ export function useSendVPScreen() {
     return hasImage;
   };
 
-  const getSelectedVCs = () => {
-    const selectedVcsData: SelectedCredentialsForVPSharing = {};
-    Object.entries(selectedVCKeys).map(([vcKey, inputDescriptorId]) => {
+  const getSelectedVCs = (): Record<string, any[]> => {
+    let selectedVcsData: Record<string, any[]> = {};
+    Object.entries(selectedVCKeys).forEach(([vcKey, inputDescriptorId]) => {
       const vcData = myVcs[vcKey];
-        const credentialFormat = vcData.format;
-      if (selectedVcsData.hasOwnProperty(inputDescriptorId)) {
-        let matchingVcsOfInputDescriptor = selectedVcsData[inputDescriptorId]
-        if (matchingVcsOfInputDescriptor.hasOwnProperty(credentialFormat)) {
-          matchingVcsOfInputDescriptor[credentialFormat] = [...matchingVcsOfInputDescriptor[credentialFormat], vcData]
-        } else {
-          matchingVcsOfInputDescriptor[credentialFormat] = [vcData]
-        }
-        selectedVcsData[inputDescriptorId] = matchingVcsOfInputDescriptor
-      } else {
-        selectedVcsData[inputDescriptorId] = {[credentialFormat]: [vcData]}
+      if (!selectedVcsData[inputDescriptorId]) {
+        selectedVcsData[inputDescriptorId] = [];
       }
+      selectedVcsData[inputDescriptorId].push(vcData);
     });
     return selectedVcsData;
   };

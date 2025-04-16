@@ -222,6 +222,7 @@ export const SendVPScreen: React.FC<ScanLayoutProps> = props => {
                   onPress={controller.ACCEPT_REQUEST}
                 />
               )}
+              {/*If one of the selected vc has image, it needs to sent only after biometric authentication (Share with Selfie)*/}
               {controller.checkIfAnyVCHasImage(
                 controller.vcsMatchingAuthRequest,
               ) && (

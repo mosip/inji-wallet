@@ -1,6 +1,9 @@
 import {NativeModules} from 'react-native';
 import {__AppId} from '../GlobalVariables';
-import {SelectedCredentialsForVPSharing} from '../../machines/VerifiableCredential/VCMetaMachine/vc';
+import {
+  SelectedCredentialsForVPSharing,
+  VC,
+} from '../../machines/VerifiableCredential/VCMetaMachine/vc';
 import {getJWT} from '../cryptoutil/cryptoUtil';
 import {getJWK} from '../openId4VCI/Utils';
 import getAllConfigurations from '../api';
@@ -24,7 +27,7 @@ export class OpenID4VP {
     trustedVerifiersList: any,
   ) {
     const shouldValidateClient = await isClientValidationRequired();
-    const metadata = await getWalletMetadata() || walletMetadata;
+    const metadata = (await getWalletMetadata()) || walletMetadata;
 
     const authenticationResponse =
       await OpenID4VP.InjiOpenID4VP.authenticateVerifier(
@@ -36,25 +39,10 @@ export class OpenID4VP {
     return JSON.parse(authenticationResponse);
   }
 
-  private static stringifyValues = (
-    data: Record<string, Record<string, Array<any>>>,
-  ): Record<string, Record<string, string[]>> => {
-    return Object.fromEntries(
-      Object.entries(data).map(([key, innerMap]) => [
-        key,
-        Object.fromEntries(
-          Object.entries(innerMap).map(([innerKey, arr]) => [
-            innerKey,
-            arr.map(item => JSON.stringify(item)),
-          ]),
-        ),
-      ]),
+  static async constructUnsignedVPToken(selectedVCs: Record<string, VC[]>) {
+    let updatedSelectedVCs = this.stringifyValues(
+      this.processSelectedVCs(selectedVCs),
     );
-  };
-  static async constructUnsignedVPToken(
-    selectedVCs: SelectedCredentialsForVPSharing,
-  ) {
-    let updatedSelectedVCs = this.stringifyValues(selectedVCs);
 
     const vpTokens = await OpenID4VP.InjiOpenID4VP.constructUnsignedVPToken(
       updatedSelectedVCs,
@@ -72,6 +60,38 @@ export class OpenID4VP {
 
   static sendErrorToVerifier(error: string) {
     OpenID4VP.InjiOpenID4VP.sendErrorToVerifier(error);
+  }
+
+  private static stringifyValues = (
+    data: Record<string, Record<string, Array<any>>>,
+  ): Record<string, Record<string, string[]>> => {
+    return Object.fromEntries(
+      Object.entries(data).map(([key, innerMap]) => [
+        key,
+        Object.fromEntries(
+          Object.entries(innerMap).map(([innerKey, arr]) => [
+            innerKey,
+            arr.map(item => JSON.stringify(item)),
+          ]),
+        ),
+      ]),
+    );
+  };
+  private static processSelectedVCs(selectedVCs: Record<string, VC[]>) {
+    const selectedVcsData: SelectedCredentialsForVPSharing = {};
+    Object.entries(selectedVCs).forEach(([inputDescriptorId, vcsArray]) => {
+      vcsArray.forEach(vcData => {
+        const credentialFormat = vcData.vcMetadata.format;
+        if (!selectedVcsData[inputDescriptorId]) {
+          selectedVcsData[inputDescriptorId] = {};
+        }
+        if (!selectedVcsData[inputDescriptorId][credentialFormat]) {
+          selectedVcsData[inputDescriptorId][credentialFormat] = [];
+        }
+        selectedVcsData[inputDescriptorId][credentialFormat].push(vcData);
+      });
+    });
+    return selectedVcsData;
   }
 }
 
