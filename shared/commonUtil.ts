@@ -159,7 +159,7 @@ export const getScreenHeight = () => {
 };
 
 export const getIdentifier = (credentialSubject: CredentialSubject) => {
-  return credentialSubject.UIN ? credentialSubject.UIN : credentialSubject.VID;
+  return credentialSubject.nationalIDNumber;
 };
 
 export const isTranslationKeyFound = (
