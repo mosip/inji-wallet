@@ -472,6 +472,10 @@
     "stepFourText": "I-authenticate ang iyong sarili nang madali gamit ang nakaimbak na digital na kredensyal.",
     "stepFiveTitle": "Backup & Ibalik",
     "stepFiveText": "Protektahan ang iyong data nang madali gamit ang aming Backup",
+    "stepSixTitle": "Nakasentro ng Gumagamit",
+    "stepSixText": "Binuo sa paligid ng iyong mga pangangailangan – nagbibigay sa iyo ng kapangyarihang magpasya. Pamahalaan ang iyong data nang may kumpletong transparency.",
+    "stepSevenTitle": "Ibahagi Sa QR Code",
+    "stepSevenText": "Instant na pagbabahagi sa iyong mga kamay - mabilis at walang problema",
     "getStarted": "Magsimula",
     "goBack": "Bumalik ka",
     "back": "Bumalik",
@@ -500,7 +504,7 @@
       "pending": {
         "title": "Nakabinbing Katayuan:",
         "description": "Kasalukuyang nakabinbin ang pag-verify dahil sa mga teknikal na isyu."
-      }, 
+      },
       "expired": {
         "title": "Nag-expire na Katayuan:",
         "description": "Nag-expire na ang kredensyal."
