@@ -50,7 +50,7 @@ const Colors = {
   walletbindingLabel: '#000000',
   LightOrange: '#F7EDF3',
   GradientColors: ['#FF671F', '#FF671F'],
-  GradientColorsLight: ['#FF5300' + 14, '#5B03AD' + 14],
+  GradientColorsLight: ['#FF671F' + 14, '#FF671F' + 14],
   DisabledColors: ['#C7C7C7', '#C7C7C7'],
   TimeoutHintBoxColor: '#FFF7E5',
   TimeoutHintBoxBorder: '#FFF2D6',
