@@ -419,7 +419,7 @@ export const DefaultTheme = {
     },
     injiHomeLogo: {
       marginLeft: 5,
-      marginTop: -25,
+      marginTop: isAndroid() ? -25 : -10,
       marginBottom: isAndroid() ? -30 : 0,
     },
     logo: {
