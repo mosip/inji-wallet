@@ -2,7 +2,7 @@
 version: 2
 updates:
   - package-ecosystem: "gradle"
-    directory: "/andriod"
+    directory: "/android"
     schedule:
       interval: "daily"
     target-branch: "develop"
