@@ -81,9 +81,11 @@ export function useScanScreen() {
     scanService,
     selectIsLocationPermissionRationale,
   );
+  const isNoSharableVCs = !shareableVcsMetadata.length;
+
   return {
     locationError,
-    isEmpty: !shareableVcsMetadata.length,
+    isNoSharableVCs,
     isBluetoothPermissionDenied,
     isNearByDevicesPermissionDenied,
     isLocationDisabled,

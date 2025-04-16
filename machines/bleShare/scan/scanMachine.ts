@@ -111,6 +111,10 @@ export const scanMachine =
                 target: 'restrictSharingVc',
               },
               {
+                cond: 'isOVPViaDeepLink',
+                target: '#scan.checkFaceAuthConsent',
+              },
+              {
                 target: 'startPermissionCheck',
               },
             ],
@@ -121,10 +125,6 @@ export const scanMachine =
         startPermissionCheck: {
           on: {
             START_PERMISSION_CHECK: [
-              {
-                cond: 'isOVPViaDeepLink',
-                target: '#scan.checkFaceAuthConsent',
-              },
               {
                 cond: 'uptoAndroid11',
                 target: '#scan.checkBluetoothPermission',

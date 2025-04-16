@@ -63,7 +63,7 @@ export const ScanScreen: React.FC = () => {
   useEffect(() => {
     if (
       scanScreenController.isStartPermissionCheck &&
-      !scanScreenController.isEmpty
+      !scanScreenController.isNoSharableVCs
     )
       scanScreenController.START_PERMISSION_CHECK();
   });
@@ -74,7 +74,7 @@ export const ScanScreen: React.FC = () => {
 
   useEffect(() => {
     if (
-      scanScreenController.isEmpty &&
+      scanScreenController.isNoSharableVCs &&
       scanScreenController.authorizationRequest != ''
     ) {
       setTimeout(() => {
@@ -85,7 +85,10 @@ export const ScanScreen: React.FC = () => {
         BackHandler.exitApp();
       }, 2000);
     }
-  }, [scanScreenController.isEmpty, scanScreenController.authorizationRequest]);
+  }, [
+    scanScreenController.isNoSharableVCs,
+    scanScreenController.authorizationRequest,
+  ]);
 
   const openSettings = () => {
     Linking.openSettings();
@@ -199,7 +202,7 @@ export const ScanScreen: React.FC = () => {
   }
 
   function loadQRScanner() {
-    if (scanScreenController.isEmpty) {
+    if (scanScreenController.isNoSharableVCs) {
       return noShareableVcText();
     }
     if (scanScreenController.selectIsInvalid) {
@@ -239,7 +242,7 @@ export const ScanScreen: React.FC = () => {
 
   function displayStorageLimitReachedError(): React.ReactNode {
     return (
-      !scanScreenController.isEmpty && (
+      !scanScreenController.isNoSharableVCs && (
         <ErrorMessageOverlay
           testID="storageLimitReachedError"
           isVisible={
@@ -255,7 +258,7 @@ export const ScanScreen: React.FC = () => {
 
   function displayInvalidQRpopup(): React.ReactNode {
     return (
-      !scanScreenController.isEmpty && (
+      !scanScreenController.isNoSharableVCs && (
         <SharingStatusModal
           isVisible={scanScreenController.selectIsInvalid}
           testId={'invalidQrPopup'}

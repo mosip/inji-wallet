@@ -173,8 +173,3 @@ export const OVP_ERROR_MESSAGES = {
   NO_MATCHING_VCS: 'No matching credentials found to fulfill the request.',
   DECLINED: 'The user has declined to share their credentials at this time.',
 };
-
-export const DEEPLINK_FLOWS = {
-  QR_LOGIN: 'qrLoginFlow',
-  OVP: 'ovpFlow',
-};

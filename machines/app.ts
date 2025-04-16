@@ -14,13 +14,12 @@ import {
 import {createScanMachine, scanMachine} from './bleShare/scan/scanMachine';
 import {pure, respond} from 'xstate/lib/actions';
 import {AppServices} from '../shared/GlobalContext';
+import {DEEPLINK_FLOWS} from '../shared/Utils';
 import {
   changeCrendetialRegistry,
   changeEsignetUrl,
-  DEEPLINK_FLOWS,
   ESIGNET_BASE_URL,
   isAndroid,
-  isIOS,
   MIMOTO_BASE_URL,
   SETTINGS_STORE_KEY,
 } from '../shared/constants';

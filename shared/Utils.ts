@@ -73,3 +73,8 @@ export const formatTextWithGivenLimit = (value: string, limit: number = 15) => {
   }
   return value;
 };
+
+export enum DEEPLINK_FLOWS {
+    QR_LOGIN = 'qrLoginFlow',
+    OVP = 'ovpFlow',
+}
