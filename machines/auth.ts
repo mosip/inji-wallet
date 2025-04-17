@@ -18,7 +18,7 @@ const model = createModel(
     isOnboarding: true,
     isInitialDownload: true,
     isTourGuide: false,
-    appInitialSetupDone: false,
+    isAppSetupComplete: false,
   },
   {
     events: {
@@ -66,7 +66,7 @@ export const authMachine = model.createMachine(
         actions: 'setTourGuide',
       },
       BIOMETRIC_CANCELLED: {
-        target: 'init'
+        target: 'init',
       },
     },
     states: {
@@ -81,9 +81,11 @@ export const authMachine = model.createMachine(
             },
             {target: 'savingDefaults'},
           ],
-          BIOMETRIC_CANCELLED: [{
-            target: 'init'
-          }],
+          BIOMETRIC_CANCELLED: [
+            {
+              target: 'init',
+            },
+          ],
         },
       },
       savingDefaults: {
@@ -124,11 +126,21 @@ export const authMachine = model.createMachine(
         on: {
           SETUP_PASSCODE: {
             target: 'authorized',
-            actions: ['setPasscode', 'setLanguage', 'setAppSetupComplete', 'storeContext'],
-          }, 
+            actions: [
+              'setPasscode',
+              'setLanguage',
+              'setAppSetupComplete',
+              'storeContext',
+            ],
+          },
           SETUP_BIOMETRICS: {
             target: 'authorized',
-            actions: ['setBiometrics', 'setLanguage', 'setAppSetupComplete', 'storeContext'],
+            actions: [
+              'setBiometrics',
+              'setLanguage',
+              'setAppSetupComplete',
+              'storeContext',
+            ],
           },
         },
       },
@@ -159,6 +171,10 @@ export const authMachine = model.createMachine(
   },
   {
     actions: {
+      setAppSetupComplete: assign({
+        isAppSetupComplete: context => true,
+      }),
+
       requestStoredContext: send(StoreEvents.GET('auth'), {
         to: context => context.serviceRefs.store,
       }),
@@ -192,10 +208,6 @@ export const authMachine = model.createMachine(
 
       setLanguage: assign({
         selectLanguage: context => true,
-      }),
-
-      setAppSetupComplete: assign({
-        appInitialSetupDone: context => true,
       }),
 
       setPasscodeSalt: assign({
@@ -256,10 +268,6 @@ export function selectPasscode(state: State) {
   return state?.context?.passcode;
 }
 
-export function selectAppSetupComplete(state: State) {
-  return state.context.appInitialSetupDone;
-}
-
 export function selectPasscodeSalt(state: State) {
   return state.context.passcodeSalt;
 }
@@ -308,4 +316,8 @@ export function selectIsBiometricToggleFromSettings(state: State) {
     return state.context.toggleFromSettings;
   }
   return false;
+}
+
+export function selectAppSetupComplete(state: State) {
+  return state.context.isAppSetupComplete;
 }

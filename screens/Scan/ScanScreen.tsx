@@ -73,25 +73,34 @@ export const ScanScreen: React.FC = () => {
   }, [scanScreenController.isQuickShareDone]);
 
   useEffect(() => {
-    if (
-      scanScreenController.isNoSharableVCs &&
-      scanScreenController.authorizationRequest != ''
-    ) {
-      setTimeout(() => {
-        OpenID4VP.initialize();
-        OpenID4VP.sendErrorToVerifier(OVP_ERROR_MESSAGES.NO_MATCHING_VCS);
-        BackHandler.exitApp();
-        scanScreenController.GOTO_HOME();
-        appService.send(APP_EVENTS.RESET_AUTHORIZATION_REQUEST());
-      }, 2000);
+    if (scanScreenController.isEmpty) {
+      if (scanScreenController.authorizationRequest !== '') {
+        handleDeepLinkFlow('authorizationRequest');
+      } else if (scanScreenController.linkcode !== '') {
+        handleDeepLinkFlow('linkCode');
+      }
     }
   }, [
-    scanScreenController.isNoSharableVCs,
+    scanScreenController.isEmpty,
     scanScreenController.authorizationRequest,
+    scanScreenController.linkcode,
   ]);
 
   const openSettings = () => {
     Linking.openSettings();
+  };
+
+  const handleDeepLinkFlow = (type: 'authorizationRequest' | 'linkCode') => {
+    if (type === 'authorizationRequest') {
+      appService.send(APP_EVENTS.RESET_AUTHORIZATION_REQUEST());
+    } else if (type === 'linkCode') {
+      appService.send(APP_EVENTS.RESET_LINKCODE());
+    }
+
+    setTimeout(() => {
+      scanScreenController.GOTO_HOME();
+      BackHandler.exitApp();
+    }, 2000);
   };
 
   const handleTextButtonEvent = () => {

@@ -570,3 +570,9 @@ export function selectIsLinkCode(state: State) {
 export function selectAuthorizationRequest(state: State) {
   return state.context.authorizationRequest;
 }
+
+export function selectIsDeepLinkDetected(state: State) {
+  return !!(
+    state.context.authorizationRequest !== '' || state.context.linkCode !== ''
+  );
+}

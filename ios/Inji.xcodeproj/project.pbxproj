@@ -10,6 +10,9 @@
 		13B07FBC1A68108700A75B9A /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.mm */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
+		1E55C2072DB12044009DF38B /* IntentData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E55C2062DB12044009DF38B /* IntentData.swift */; };
+		1E55C20B2DB120C2009DF38B /* RNDeepLinkIntentModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E55C20A2DB120C2009DF38B /* RNDeepLinkIntentModule.swift */; };
+		1E55C20D2DB120E7009DF38B /* RNDeepLinkIntentModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E55C20C2DB120E7009DF38B /* RNDeepLinkIntentModule.m */; };
 		1E6875E92CA554E80086D870 /* OpenID4VP in Frameworks */ = {isa = PBXBuildFile; productRef = 1E6875E82CA554E80086D870 /* OpenID4VP */; };
 		1E6875EB2CA554FD0086D870 /* RNOpenID4VPModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E6875EA2CA554FD0086D870 /* RNOpenID4VPModule.m */; };
 		1E6875ED2CA5550F0086D870 /* RNOpenID4VPModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E6875EC2CA5550F0086D870 /* RNOpenID4VPModule.swift */; };
@@ -69,6 +72,9 @@
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = Inji/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = Inji/main.m; sourceTree = "<group>"; };
 		1D23B9CD47CFD7F3C87D202F /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xml; name = PrivacyInfo.xcprivacy; path = Inji/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
+		1E55C2062DB12044009DF38B /* IntentData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntentData.swift; sourceTree = "<group>"; };
+		1E55C20A2DB120C2009DF38B /* RNDeepLinkIntentModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RNDeepLinkIntentModule.swift; sourceTree = "<group>"; };
+		1E55C20C2DB120E7009DF38B /* RNDeepLinkIntentModule.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RNDeepLinkIntentModule.m; sourceTree = "<group>"; };
 		1E6875EA2CA554FD0086D870 /* RNOpenID4VPModule.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RNOpenID4VPModule.m; sourceTree = "<group>"; };
 		1E6875EC2CA5550F0086D870 /* RNOpenID4VPModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RNOpenID4VPModule.swift; sourceTree = "<group>"; };
 		1EED69F82DA913D30042EAFC /* IntentData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntentData.swift; sourceTree = "<group>"; };
@@ -552,6 +558,7 @@
 			files = (
 				1EED69FD2DA914D00042EAFC /* RNDeepLinkIntentModule.m in Sources */,
 				1E6875ED2CA5550F0086D870 /* RNOpenID4VPModule.swift in Sources */,
+				1E55C20B2DB120C2009DF38B /* RNDeepLinkIntentModule.swift in Sources */,
 				9C48504F2C3E59B5002ECBD5 /* RNVersionModule.swift in Sources */,
 				13B07FBC1A68108700A75B9A /* AppDelegate.mm in Sources */,
 				9C0E86BB2BEE36C300E9F9F6 /* RNPixelpassModule.m in Sources */,

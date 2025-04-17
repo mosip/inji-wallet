@@ -1,6 +1,6 @@
 import React, {useContext, useEffect, useState} from 'react';
 import {AppLayout} from './screens/AppLayout';
-import {useFont} from "./shared/hooks/useFont";
+import {useFont} from './shared/hooks/useFont';
 import {GlobalContextProvider} from './components/GlobalContextProvider';
 import {GlobalContext} from './shared/GlobalContext';
 import {useSelector} from '@xstate/react';
@@ -9,7 +9,7 @@ import {
   APP_EVENTS,
   selectIsDecryptError,
   selectIsKeyInvalidateError,
-  selectIsLinkCode,
+  selectIsDeepLinkDetected,
   selectIsReadError,
   selectIsReady,
 } from './machines/app';
@@ -29,7 +29,7 @@ import i18n from './i18n';
 import {CopilotProvider} from 'react-native-copilot';
 import {CopilotTooltip} from './components/CopilotTooltip';
 import {Theme} from './components/ui/styleUtils';
-import { selectAppSetupComplete } from './machines/auth';
+import {selectAppSetupComplete} from './machines/auth';
 
 const {RNSecureKeystoreModule} = NativeModules;
 // kludge: this is a bad practice but has been done temporarily to surface
@@ -51,15 +51,15 @@ const DecryptErrorAlert = (controller, t) => {
 const AppLayoutWrapper: React.FC = () => {
   const {appService} = useContext(GlobalContext);
   const isDecryptError = useSelector(appService, selectIsDecryptError);
-  const isQrLogin = useSelector(appService, selectIsLinkCode);
+  const isDeepLinkFlow = useSelector(appService, selectIsDeepLinkDetected);
   const controller = useApp();
   const {t} = useTranslation('WelcomeScreen');
 
   const authService = appService.children.get('auth');
   const isAppSetupComplete = useSelector(authService, selectAppSetupComplete);
-  
-  const [isOverlayVisible, setOverlayVisible] = useState(isQrLogin !== '');
-  
+
+  const [isOverlayVisible, setOverlayVisible] = useState(isDeepLinkFlow);
+
   useEffect(() => {
     if (AppState.currentState === 'active') {
       appService.send(APP_EVENTS.ACTIVE());
@@ -69,8 +69,8 @@ const AppLayoutWrapper: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    setOverlayVisible(isQrLogin !== '');
-  }, [isQrLogin]);
+    setOverlayVisible(isDeepLinkFlow);
+  }, [isDeepLinkFlow]);
 
   if (isDecryptError) {
     DecryptErrorAlert(controller, t);
@@ -84,7 +84,9 @@ const AppLayoutWrapper: React.FC = () => {
         isVisible={isOverlayVisible && !isAppSetupComplete}
         title={t('qrLoginOverlay.title')}
         message={t('qrLoginOverlay.message')}
-        onButtonPress={() => {setOverlayVisible(false)}}
+        onButtonPress={() => {
+          setOverlayVisible(false);
+        }}
         buttonText={t('common:ok')}
         minHeight={'auto'}
       />
@@ -139,7 +141,7 @@ const AppLoadingWrapper: React.FC = () => {
 
 const AppInitialization: React.FC = () => {
   const {appService} = useContext(GlobalContext);
-  const hasFontsLoaded = useFont()
+  const hasFontsLoaded = useFont();
   const isReady = useSelector(appService, selectIsReady);
   const {t} = useTranslation('common');
 
@@ -153,9 +155,9 @@ const AppInitialization: React.FC = () => {
   }, [i18n.language]);
 
   return isReady && hasFontsLoaded ? (
-      <AppLayoutWrapper />
+    <AppLayoutWrapper />
   ) : (
-      <AppLoadingWrapper />
+    <AppLoadingWrapper />
   );
 };
 
