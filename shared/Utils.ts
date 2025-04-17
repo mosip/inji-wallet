@@ -67,10 +67,9 @@ export class UUID {
   }
 }
 
-export const formatForDisplay = (value: String)=> {
-  const limit = 15;
+export const formatTextWithGivenLimit = (value: string, limit: number = 15) => {
   if (value.length > limit) {
     return value.substring(0, limit) + '...';
   }
   return value;
-}
+};
