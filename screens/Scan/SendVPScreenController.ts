@@ -43,7 +43,6 @@ import {VCMetadata} from '../../shared/VCMetadata';
 import {VPShareOverlayProps} from './VPShareOverlay';
 import {ActivityLogEvents} from '../../machines/activityLog';
 import {VPShareActivityLog} from '../../components/VPShareActivityLogEvent';
-import {SelectedCredentialsForVPSharing} from '../../machines/VerifiableCredential/VCMetaMachine/vc';
 
 type MyVcsTabNavigation = NavigationProp<RootRouteProps>;
 
@@ -85,19 +84,17 @@ export function useSendVPScreen() {
   );
 
   const checkIfAnyVCHasImage = vcs => {
-    const hasImage = Object.values(vcs)
+    return Object.values(vcs)
       .flatMap(vc => vc)
       .some(vc => {
         return isMosipVC(vc.vcMetadata?.issuer);
       });
-    return hasImage;
   };
 
   const checkIfAllVCsHasImage = vcs => {
-    const hasImage = Object.values(vcs)
+    return Object.values(vcs)
       .flatMap(vc => vc)
       .every(vc => isMosipVC(vc.vcMetadata.issuer));
-    return hasImage;
   };
 
   const getSelectedVCs = (): Record<string, any[]> => {
@@ -295,8 +292,8 @@ export function useSendVPScreen() {
     SELECT_VC_ITEM:
       (vcKey: string, inputDescriptorId: string) =>
       (vcRef: ActorRefFrom<typeof VCItemMachine>) => {
-        var selectedVcs = {...selectedVCKeys};
-        var isVCSelected = !!!selectedVcs[vcKey];
+        let selectedVcs = {...selectedVCKeys};
+        const isVCSelected = !!!selectedVcs[vcKey];
         if (isVCSelected) {
           selectedVcs[vcKey] = inputDescriptorId;
         } else {
@@ -312,7 +309,7 @@ export function useSendVPScreen() {
     },
 
     CHECK_ALL: () => {
-      var updatedVCsList = {};
+      let updatedVCsList = {};
       Object.entries(vcsMatchingAuthRequest).map(([inputDescriptorId, vcs]) => {
         vcs.map(vcData => {
           const vcKey = VCMetadata.fromVcMetadataString(

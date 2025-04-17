@@ -1,9 +1,6 @@
 import {createModel} from 'xstate/lib/model';
 import {AppServices} from '../../shared/GlobalContext';
-import {
-  SelectedCredentialsForVPSharing,
-  VC,
-} from '../VerifiableCredential/VCMetaMachine/vc';
+import {VC} from '../VerifiableCredential/VCMetaMachine/vc';
 import {KeyTypes} from '../../shared/cryptoutil/KeyTypes';
 import {VPActivityLogType} from '../../components/VPShareActivityLogEvent';
 
