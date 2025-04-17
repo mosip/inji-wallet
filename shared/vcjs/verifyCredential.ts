@@ -10,7 +10,7 @@ import {
 } from '../../machines/VerifiableCredential/VCMetaMachine/vc';
 import {getErrorEventData, sendErrorEvent} from '../telemetry/TelemetryUtils';
 import {TelemetryConstants} from '../telemetry/TelemetryConstants';
-import {getMosipIdentifier} from '../commonUtil';
+import {getIdentifier} from '../commonUtil';
 import {NativeModules} from 'react-native';
 import {isAndroid} from '../constants';
 import {VCFormat} from '../VCFormat';
@@ -198,7 +198,7 @@ function sendVerificationErrorEvent(
   //Add only UIN / VID in the credential into telemetry error message and not document_number or other identifiers to avoid sensitivity issues
   let detailedError = errorMessage;
   if (verifiableCredential.credentialSubject)
-    detailedError += `-${getMosipIdentifier(
+    detailedError += `-${getIdentifier(
       verifiableCredential.credentialSubject,
     )}`;
 

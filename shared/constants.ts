@@ -70,7 +70,7 @@ export const API_CACHED_STORAGE_KEYS = {
   fetchIssuerWellknownConfig: (issuerId: string) =>
     `CACHE_FETCH_ISSUER_WELLKNOWN_CONFIG_${issuerId}`,
   fetchIssuerAuthorizationServerMetadata: (authorizationServerUrl: string) =>
-      `CACHE_FETCH_ISSUER_AUTHORIZATION_SERVER_METADATA_${authorizationServerUrl}`,
+    `CACHE_FETCH_ISSUER_AUTHORIZATION_SERVER_METADATA_${authorizationServerUrl}`,
   fetchTrustedVerifiers: 'CACHE_FETCH_TRUSTED_VERIFIERS',
 };
 
@@ -146,7 +146,7 @@ export const DEFAULT_ECL = 'L';
 export const DEFAULT_QR_HEADER = 'INJIQUICKSHARE://';
 export const MAX_QR_DATA_LENGTH = 4296;
 
-export const INTRO_SLIDER_LOGO_MARGIN = Dimensions.get('screen').width * 0.45;
+export const INTRO_SLIDER_LOGO_MARGIN = Dimensions.get('screen').width * 0.28;
 
 export const COPILOT_PRE_FINAL_STEP: number = 5;
 export const COPILOT_FINAL_STEP: number = 6;
@@ -170,3 +170,5 @@ export const FACE_SDK_MODEL_CHECKSUM =
 export const EXPIRED_VC_ERROR_CODE = 'ERR_VC_EXPIRED';
 
 export const BASE_36 = 36;
+
+export const DEFAULT_OTP = '111111';

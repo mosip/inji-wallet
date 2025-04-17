@@ -107,8 +107,8 @@ export function useMyVcsTab(props: HomeScreenTabProps) {
 
     DELETE_VC: () => vcMetaService?.send(VcMetaEvents.DELETE_VC()),
 
-    RESET_VERIFY_ERROR: () => {
-      vcMetaService?.send(VcMetaEvents.RESET_VERIFY_ERROR());
+    RESET_ERROR_SCREEN: () => {
+      vcMetaService?.send(VcMetaEvents.RESET_ERROR_SCREEN());
     },
     SET_TOUR_GUIDE: set => {
       authService?.send(AuthEvents.SET_TOUR_GUIDE(set));

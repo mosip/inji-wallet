@@ -31,12 +31,6 @@ export const IntroSlidersScreen: React.FC<RootRouteProps> = props => {
       image: Theme.IntroWelcome,
     },
     {
-      key: 'two',
-      title: t('stepTwoTitle'),
-      text: t('stepTwoText'),
-      image: Theme.SecureSharing,
-    },
-    {
       key: 'three',
       title: t('stepThreeTitle'),
       text: t('stepThreeText'),
@@ -47,6 +41,24 @@ export const IntroSlidersScreen: React.FC<RootRouteProps> = props => {
       title: t('stepFourTitle'),
       text: t('stepFourText'),
       image: Theme.IntroShare,
+    },
+    {
+      key: 'two',
+      title: t('stepTwoTitle'),
+      text: t('stepTwoText'),
+      image: Theme.SecureSharing,
+    },
+    {
+      key: 'six',
+      title: t('stepSixTitle'),
+      text: t('stepSixText'),
+      image: Theme.IntroShareWithSelfie,
+    },
+    {
+      key: 'seven',
+      title: t('stepSevenTitle'),
+      text: t('stepSevenText'),
+      image: Theme.IntroShareQrCode,
     },
     {
       key: 'five',

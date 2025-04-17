@@ -1829,6 +1829,8 @@ export const PurpleTheme = {
   DigitalWallet: require('../../../assets/Intro_Wallet.png'),
   IntroShare: require('../../../assets/Intro_Share.png'),
   IntroBackup: require('../../../assets/Intro_Backup.png'),
+  IntroShareWithSelfie: require('../../../assets/shareWithSelfieIntro.png'),
+  IntroShareQrCode: require('../../../assets/shareQrCodeIntro.png'),
   IntroSliderbackground: require('../../../assets/IntroSliderBackgroundPurple.png'),
   HomeScreenLogo: HomeScreenLogo,
   InjiLogoSmall: InjiLogoSmall,
