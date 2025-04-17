@@ -98,7 +98,7 @@ export const VCItemFieldValue = ({
         testID={`${testID}Value`}
         color={textColor}
         style={Theme.Styles.fieldItemValue}>
-        {fieldValue}
+        {fieldValue != null && fieldValue !== 'null' ? fieldValue : '-'}
       </Text>
     </>
   );
