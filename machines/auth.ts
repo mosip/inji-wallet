@@ -257,7 +257,7 @@ export function selectPasscode(state: State) {
 }
 
 export function selectAppSetupComplete(state: State) {
-  return state?.context?.appInitialSetupDone;
+  return state.context.appInitialSetupDone;
 }
 
 export function selectPasscodeSalt(state: State) {
