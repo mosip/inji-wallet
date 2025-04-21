@@ -107,7 +107,7 @@ export const VCDetailView: React.FC<VCItemDetailsProps> = props => {
                     <Image
                       src={logo?.url}
                       alt={logo?.alt_text}
-                      style={Theme.Styles.issuerLogo}
+                      style={Theme.Styles.issuerLogoDetailsScreen}
                       resizeMethod="scale"
                       resizeMode="contain"
                     />
