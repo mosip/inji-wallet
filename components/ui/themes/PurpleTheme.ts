@@ -434,6 +434,11 @@ export const PurpleTheme = {
       aspectRatio: 1,
       height: 35,
     },
+    issuerLogoDetailsScreen: {
+      resizeMode: 'contain',
+      aspectRatio: 1,
+      height: 80,
+    },
     vcDetailsLogo: {
       height: 65,
       width: 65,
