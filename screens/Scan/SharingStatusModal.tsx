@@ -17,7 +17,7 @@ export const SharingStatusModal: React.FC<SharingStatusModalProps> = props => {
   useEffect(() => {
     let timeoutId: NodeJS.Timeout | undefined;
 
-    if (props.isVisible && props.hidebutton === true) {
+    if (props.isVisible && props.buttonStatus === 'none') {
       timeoutId = setTimeout(() => {
         resetAndExit();
       }, 2000);
@@ -27,7 +27,7 @@ export const SharingStatusModal: React.FC<SharingStatusModalProps> = props => {
         clearTimeout(timeoutId);
       }
     };
-  }, [props.isVisible, props.hidebutton]);
+  }, [props.isVisible, props.buttonStatus]);
   return (
     <React.Fragment>
       <Modal
@@ -55,7 +55,7 @@ export const SharingStatusModal: React.FC<SharingStatusModalProps> = props => {
             {props.message}
           </Text>
         </Column>
-        {props.buttonStatus === 'homeAndHistoryIcons' && !props.hidebutton ? (
+        {props.buttonStatus === 'homeAndHistoryIcons' ? (
           <Row
             align="space-evenly"
             style={{marginBottom: Dimensions.get('screen').height * 0.06}}>
@@ -126,5 +126,4 @@ interface SharingStatusModalProps {
   goToHistory?: () => void;
   onGradientButton?: () => void;
   onClearButton?: () => void;
-  hidebutton?: boolean;
 }

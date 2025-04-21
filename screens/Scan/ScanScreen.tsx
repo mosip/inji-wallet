@@ -80,9 +80,9 @@ export const ScanScreen: React.FC = () => {
       setTimeout(() => {
         OpenID4VP.initialize();
         OpenID4VP.sendErrorToVerifier(OVP_ERROR_MESSAGES.NO_MATCHING_VCS);
+        BackHandler.exitApp();
         scanScreenController.GOTO_HOME();
         appService.send(APP_EVENTS.RESET_AUTHORIZATION_REQUEST());
-        BackHandler.exitApp();
       }, 2000);
     }
   }, [

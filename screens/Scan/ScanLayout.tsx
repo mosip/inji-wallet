@@ -164,13 +164,14 @@ export const ScanLayout: React.FC = () => {
       <SharingStatusModal
         isVisible={controller.isAccepted || controller.isVPSharingSuccess}
         testId={'sharingSuccessModal'}
-        buttonStatus={'homeAndHistoryIcons'}
+        buttonStatus={
+          controller.isOVPViaDeepLink ? 'none' : 'homeAndHistoryIcons'
+        }
         title={t('status.accepted.title')}
         message={t('status.accepted.message')}
         image={SvgImage.SuccessLogo()}
         goToHome={controller.GOTO_HOME}
         goToHistory={controller.GOTO_HISTORY}
-        hidebutton={controller.isOVPViaDeepLink}
       />
 
       {controller.errorStatusOverlay && (
