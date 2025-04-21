@@ -116,7 +116,7 @@ export const SharingStatusModal: React.FC<SharingStatusModalProps> = props => {
 interface SharingStatusModalProps {
   isVisible: boolean;
   testId: string;
-  buttonStatus?: String;
+  buttonStatus?: 'homeAndHistoryIcons' | 'none';
   title: String;
   message: String;
   image: React.ReactElement;
