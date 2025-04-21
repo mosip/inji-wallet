@@ -82,8 +82,8 @@ const AppLayoutWrapper: React.FC = () => {
 
       <MessageOverlay
         isVisible={isOverlayVisible && !isAppSetupComplete}
-        title={t('qrLoginOverlay.title')}
-        message={t('qrLoginOverlay.message')}
+        title={t('errors.appSetupIncomplete.title')}
+        message={t('errors.appSetupIncomplete.message')}
         onButtonPress={() => {
           setOverlayVisible(false);
         }}

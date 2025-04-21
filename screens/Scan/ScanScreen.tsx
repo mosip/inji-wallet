@@ -91,14 +91,13 @@ export const ScanScreen: React.FC = () => {
   };
 
   const handleDeepLinkFlow = (type: 'authorizationRequest' | 'linkCode') => {
-    if (type === 'authorizationRequest') {
-      appService.send(APP_EVENTS.RESET_AUTHORIZATION_REQUEST());
-    } else if (type === 'linkCode') {
-      appService.send(APP_EVENTS.RESET_LINKCODE());
-    }
-
     setTimeout(() => {
       scanScreenController.GOTO_HOME();
+      if (type === 'authorizationRequest') {
+        appService.send(APP_EVENTS.RESET_AUTHORIZATION_REQUEST());
+      } else if (type === 'linkCode') {
+        appService.send(APP_EVENTS.RESET_LINKCODE());
+      }
       BackHandler.exitApp();
     }, 2000);
   };

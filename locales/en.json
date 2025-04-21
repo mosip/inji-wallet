@@ -826,7 +826,7 @@
   "SendVcScreen": {
     "reasonForSharing": "Reason for sharing (optional)",
     "introTitle": "Requester",
-    "requestMessage":"is requesting your digital ID for the purpose",
+    "requestMessage": "is requesting your digital ID for the purpose",
     "acceptRequest": "Share",
     "acceptRequestAndVerify": "Share with Selfie",
     "reject": "Reject",
@@ -987,6 +987,10 @@
       "invalidateKeyError": {
         "title": "App was Reset",
         "message": "Due to the fingerprint / facial recognition update, app security was impacted, and downloaded cards were removed. Please download again."
+      },
+      "appSetupIncomplete": {
+        "title": "Setup incomplete",
+        "message": "Please finish the initial setup to proceed."
       }
     },
     "qrLoginOverlay": {

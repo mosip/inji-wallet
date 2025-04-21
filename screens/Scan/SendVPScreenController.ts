@@ -286,9 +286,9 @@ export function useSendVPScreen() {
     RETRY_VERIFICATION: () =>
       openID4VPService.send(OpenID4VPEvents.RETRY_VERIFICATION()),
     GO_TO_HOME: () => {
-      navigation.navigate(BOTTOM_TAB_ROUTES.home, {screen: 'HomeScreen'});
-      scanService.send(ScanEvents.DISMISS());
       openID4VPService.send(OpenID4VPEvents.RESET_ERROR());
+      scanService.send(ScanEvents.RESET());
+      navigation.navigate(BOTTOM_TAB_ROUTES.home, {screen: 'HomeScreen'});
       changeTabBarVisible('flex');
     },
     SELECT_VC_ITEM:

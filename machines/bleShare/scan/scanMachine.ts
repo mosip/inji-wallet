@@ -51,6 +51,7 @@ export const scanMachine =
             'resetFlowType',
             'resetSelectedVc',
             'resetIsQrLoginViaDeepLink',
+            'resetIsOVPViaDeepLink',
           ],
           target: '.checkStorage',
         },
@@ -125,6 +126,10 @@ export const scanMachine =
         startPermissionCheck: {
           on: {
             START_PERMISSION_CHECK: [
+              {
+                cond: 'isFlowTypeDeepLink',
+                target: '#scan.checkFaceAuthConsent',
+              },
               {
                 cond: 'uptoAndroid11',
                 target: '#scan.checkBluetoothPermission',
