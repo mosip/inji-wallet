@@ -78,10 +78,10 @@ export function isIOS(): boolean {
   return Platform.OS === 'ios';
 }
 export const SUPPORTED_KEY_TYPES = {
+  RSA: KeyTypes.RS256,
   ED25519: KeyTypes.ED25519,
   'ECC K1': KeyTypes.ES256K,
   'ECC R1': KeyTypes.ES256,
-  RSA: KeyTypes.RS256,
 };
 
 export function isAndroid(): boolean {

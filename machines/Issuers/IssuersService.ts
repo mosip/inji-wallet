@@ -193,11 +193,10 @@ export const IssuersService = () => {
       }
       return response;
     },
-
-    fetchKeyPair: async () => {
-      return await fetchKeyPair(KeyTypes.RS256);
+    fetchKeyPair: async context => {
+      const keyType = context.vcMetadata?.downloadKeyType;
+      return await fetchKeyPair(keyType);
     },
-
     addWalletBindingId: async context => {
       const response = await request(
         API_URLS.walletBinding.method,
