@@ -272,7 +272,7 @@ fileignoreconfig:
   - filename: injitest/automation_trigger.sh
     checksum: f2f34839c99cb1b871dde17aed8508a071345d22738796e005ff709d2dab8644
   - filename: machines/Issuers/IssuersService.ts
-    checksum: 79bb89fb0dd90f50a25b3cdecea0bda46b4fca46752db2254ac3b6ee552b207d
+    checksum: 880c77c31b0ead3e4bce572cdd3d6313faa88d42d3a608ece9c6b445efc1bef6
   - filename: screens/Home/ViewVcModal.tsx
     checksum: cfb25d562185488432b76287c4ef93359c1c64d8e29f5755d4c0a726c1485442
   - filename: injitest/src/main/resources/TestData.json

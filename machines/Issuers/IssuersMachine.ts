@@ -454,7 +454,7 @@ export const IssuersMachine = model.createMachine(
                 'setVerificationResult',
                 'setVCMetadata',
               ],
-              target: 'storing',
+              target: 'requestingBindingOTP',
             },
           ],
           onError: [

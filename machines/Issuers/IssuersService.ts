@@ -31,6 +31,7 @@ import {isMockVC} from '../../shared/Utils';
 import {VCFormat} from '../../shared/VCFormat';
 import {request} from '../../shared/request';
 import {WalletBindingResponse} from '../VerifiableCredential/VCMetaMachine/vc';
+import {KeyTypes} from '../../shared/cryptoutil/KeyTypes';
 
 export const IssuersService = () => {
   return {
@@ -193,9 +194,8 @@ export const IssuersService = () => {
       return response;
     },
 
-    fetchKeyPair: async context => {
-      const keyType = context.vcMetadata?.downloadKeyType;
-      return await fetchKeyPair(keyType);
+    fetchKeyPair: async () => {
+      return await fetchKeyPair(KeyTypes.RS256);
     },
 
     addWalletBindingId: async context => {
