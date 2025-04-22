@@ -274,7 +274,7 @@ fileignoreconfig:
   - filename: machines/Issuers/IssuersService.ts
     checksum: a87c0b8c73e0282e4c3075cef64effed9ecc456abaa369e9265f2c54e109e325
   - filename: screens/Home/ViewVcModal.tsx
-    checksum: cfb25d562185488432b76287c4ef93359c1c64d8e29f5755d4c0a726c1485442
+    checksum: 8965eddfed8058739e434161678ed2c4c39689926e38e235686d8369aabf1955
   - filename: injitest/src/main/resources/TestData.json
     checksum: 1b5af14c96b456898259b4cb7a5607b006404cf0360274bdc204d7d065698e3c
   - filename: injitest/src/test/java/androidTestCases/ActivateVcTest.java
@@ -398,4 +398,8 @@ fileignoreconfig:
     checksum: 6600a3d75033af4d702dd8c9663e12ad7c2c096a529bac2771bb856cc75a5ed0
   - filename: locales/es.json
     checksum: a03fae655b13342afb45ab2b79998f3e06afcb02346c2ddf6aaacacf3b027209
+  - filename: components/VC/Views/VCCardView.tsx
+    checksum: 0cab3ca20753328c19bb9681a0d7353dfece6bc6f9aefbf90cf7b36f2504bc53
+  - filename: screens/Request/ReceiveVcScreen.tsx
+    checksum: ad4e831d935483d7ec8626b822cf36e431aef7dcdd914ec98f49bfe134b16b19
     version: ""

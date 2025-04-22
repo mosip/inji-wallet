@@ -54,3 +54,12 @@ export const parseJSON = (input: any) => {
 export const isNetworkError = (error: string) => {
   return error.includes(NETWORK_REQUEST_FAILED);
 };
+
+export function toStarCaseLabel(str: string): string {
+  if (str.includes(' ')) return str;
+
+  return str
+    .replace(/([a-z])([A-Z])/g, '$1 $2')
+    .replace(/([A-Z]+)([A-Z][a-z])/g, '$1 $2')
+    .replace(/\b\w/g, char => char.toUpperCase());
+}

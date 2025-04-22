@@ -9,9 +9,12 @@ import {useOverlayVisibleAfterTimeout} from '../../shared/hooks/useOverlayVisibl
 import {VcDetailsContainer} from '../../components/VC/VcDetailsContainer';
 import {SharingStatusModal} from '../Scan/SharingStatusModal';
 import {SvgImage} from '../../components/ui/svg';
-import {DETAIL_VIEW_DEFAULT_FIELDS} from '../../components/VC/common/VCUtils';
+import {
+  DETAIL_VIEW_ADD_ON_FIELDS,
+  DETAIL_VIEW_DEFAULT_FIELDS,
+} from '../../components/VC/common/VCUtils';
 import {getDetailedViewFields} from '../../shared/openId4VCI/Utils';
-import { VCProcessor } from '../../components/VC/common/VCProcessor';
+import {VCProcessor} from '../../components/VC/common/VCProcessor';
 
 export const ReceiveVcScreen: React.FC = () => {
   const {t} = useTranslation('ReceiveVcScreen');
@@ -23,6 +26,8 @@ export const ReceiveVcScreen: React.FC = () => {
   );
   const verifiableCredentialData = controller.verifiableCredentialData;
   const profileImage = verifiableCredentialData.face;
+
+  const verifiableCredential = controller.credential;
 
   const [credential, setCredential] = useState(null);
 
@@ -46,14 +51,21 @@ export const ReceiveVcScreen: React.FC = () => {
       verifiableCredentialData.credentialConfigurationId,
       DETAIL_VIEW_DEFAULT_FIELDS,
       verifiableCredentialData.vcMetadata.format,
-    ).then(response => {
-      setWellknown(response.matchingCredentialIssuerMetadata);
-      setFields(response.fields);
-      controller.STORE_INCOMING_VC_WELLKNOWN_CONFIG(
-        verifiableCredentialData?.issuer,
-        response.wellknownResponse,
-      );
-    });
+    )
+      .then(response => {
+        setWellknown(response.matchingCredentialIssuerMetadata);
+        setFields(response.fields);
+        controller.STORE_INCOMING_VC_WELLKNOWN_CONFIG(
+          verifiableCredentialData?.issuer,
+          response.wellknownResponse,
+        );
+      })
+      .catch(() => {
+        const fields = Object.keys(
+          verifiableCredential.credential.credentialSubject,
+        ).filter(key => key !== 'id' && key != 'face');
+        setFields(fields.concat(DETAIL_VIEW_ADD_ON_FIELDS));
+      });
   }, [verifiableCredentialData?.wellKnown]);
 
   return (
