@@ -6,7 +6,10 @@ import {ActorRefFrom} from 'xstate';
 import {Theme} from '../../components/ui/styleUtils';
 import {selectIsCancelling} from '../../machines/bleShare/commonSelectors';
 import {ScanEvents} from '../../machines/bleShare/scan/scanMachine';
-import {selectFlowType, selectIsSendingVPError,} from '../../machines/bleShare/scan/scanSelectors';
+import {
+  selectFlowType,
+  selectIsSendingVPError,
+} from '../../machines/bleShare/scan/scanSelectors';
 import {
   selectAreAllVCsChecked,
   selectCredentials,
@@ -35,12 +38,11 @@ import {selectShareableVcs} from '../../machines/VerifiableCredential/VCMetaMach
 import {RootRouteProps} from '../../routes';
 import {BOTTOM_TAB_ROUTES} from '../../routes/routesConstants';
 import {GlobalContext} from '../../shared/GlobalContext';
-import {isMosipVC} from '../../shared/Utils';
+import {formatTextWithGivenLimit, isMosipVC} from '../../shared/Utils';
 import {VCMetadata} from '../../shared/VCMetadata';
 import {VPShareOverlayProps} from './VPShareOverlay';
 import {ActivityLogEvents} from '../../machines/activityLog';
 import {VPShareActivityLog} from '../../components/VPShareActivityLogEvent';
-import {SelectedCredentialsForVPSharing} from "../../machines/VerifiableCredential/VCMetaMachine/vc";
 
 type MyVcsTabNavigation = NavigationProp<RootRouteProps>;
 
@@ -82,37 +84,27 @@ export function useSendVPScreen() {
   );
 
   const checkIfAnyVCHasImage = vcs => {
-    const hasImage = Object.values(vcs)
+    return Object.values(vcs)
       .flatMap(vc => vc)
       .some(vc => {
         return isMosipVC(vc.vcMetadata?.issuer);
       });
-    return hasImage;
   };
 
   const checkIfAllVCsHasImage = vcs => {
-    const hasImage = Object.values(vcs)
+    return Object.values(vcs)
       .flatMap(vc => vc)
       .every(vc => isMosipVC(vc.vcMetadata.issuer));
-    return hasImage;
   };
 
-  const getSelectedVCs = () => {
-    const selectedVcsData: SelectedCredentialsForVPSharing = {};
-    Object.entries(selectedVCKeys).map(([vcKey, inputDescriptorId]) => {
+  const getSelectedVCs = (): Record<string, any[]> => {
+    let selectedVcsData: Record<string, any[]> = {};
+    Object.entries(selectedVCKeys).forEach(([vcKey, inputDescriptorId]) => {
       const vcData = myVcs[vcKey];
-        const credentialFormat = vcData.format;
-      if (selectedVcsData.hasOwnProperty(inputDescriptorId)) {
-        let matchingVcsOfInputDescriptor = selectedVcsData[inputDescriptorId]
-        if (matchingVcsOfInputDescriptor.hasOwnProperty(credentialFormat)) {
-          matchingVcsOfInputDescriptor[credentialFormat] = [...matchingVcsOfInputDescriptor[credentialFormat], vcData]
-        } else {
-          matchingVcsOfInputDescriptor[credentialFormat] = [vcData]
-        }
-        selectedVcsData[inputDescriptorId] = matchingVcsOfInputDescriptor
-      } else {
-        selectedVcsData[inputDescriptorId] = {[credentialFormat]: [vcData]}
+      if (!selectedVcsData[inputDescriptorId]) {
+        selectedVcsData[inputDescriptorId] = [];
       }
+      selectedVcsData[inputDescriptorId].push(vcData);
     });
     return selectedVcsData;
   };
@@ -225,7 +217,7 @@ export function useSendVPScreen() {
       title: t('consentDialog.title'),
       titleTestID: 'consentTitle',
       message: t('consentDialog.message', {
-        verifierName: vpVerifierName,
+        verifierName: formatTextWithGivenLimit(vpVerifierName),
         interpolation: {escapeValue: false},
       }),
       messageTestID: 'consentMsg',
@@ -300,8 +292,8 @@ export function useSendVPScreen() {
     SELECT_VC_ITEM:
       (vcKey: string, inputDescriptorId: string) =>
       (vcRef: ActorRefFrom<typeof VCItemMachine>) => {
-        var selectedVcs = {...selectedVCKeys};
-        var isVCSelected = !!!selectedVcs[vcKey];
+        let selectedVcs = {...selectedVCKeys};
+        const isVCSelected = !!!selectedVcs[vcKey];
         if (isVCSelected) {
           selectedVcs[vcKey] = inputDescriptorId;
         } else {
@@ -317,7 +309,7 @@ export function useSendVPScreen() {
     },
 
     CHECK_ALL: () => {
-      var updatedVCsList = {};
+      let updatedVCsList = {};
       Object.entries(vcsMatchingAuthRequest).map(([inputDescriptorId, vcs]) => {
         vcs.map(vcData => {
           const vcKey = VCMetadata.fromVcMetadataString(

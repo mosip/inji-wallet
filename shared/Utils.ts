@@ -66,3 +66,10 @@ export class UUID {
     return uuid();
   }
 }
+
+export const formatTextWithGivenLimit = (value: string, limit: number = 15) => {
+  if (value.length > limit) {
+    return value.substring(0, limit) + '...';
+  }
+  return value;
+};
