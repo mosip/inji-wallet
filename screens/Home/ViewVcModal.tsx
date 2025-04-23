@@ -23,6 +23,7 @@ import {RemoveVcWarningOverlay} from './MyVcs/RemoveVcWarningOverlay';
 import {HistoryTab} from './MyVcs/HistoryTab';
 import {getDetailedViewFields} from '../../shared/openId4VCI/Utils';
 import {
+  DETAIL_VIEW_ADD_ON_FIELDS,
   DETAIL_VIEW_DEFAULT_FIELDS,
   isVCLoaded,
 } from '../../components/VC/common/VCUtils';
@@ -41,6 +42,8 @@ export const ViewVcModal: React.FC<ViewVcModalProps> = props => {
   const profileImage = controller.verifiableCredentialData.face;
   const verificationStatus = controller.verificationStatus;
   const [verifiableCredential, setVerifiableCredential] = useState(null);
+
+  const credential = controller.credential;
 
   useEffect(() => {
     async function processVC() {
@@ -79,10 +82,17 @@ export const ViewVcModal: React.FC<ViewVcModalProps> = props => {
       verifiableCredentialData.credentialConfigurationId,
       DETAIL_VIEW_DEFAULT_FIELDS,
       verifiableCredentialData.vcMetadata.format,
-    ).then(response => {
-      setWellknown(response.matchingCredentialIssuerMetadata);
-      setFields(response.fields);
-    });
+    )
+      .then(response => {
+        setWellknown(response.matchingCredentialIssuerMetadata);
+        setFields(response.fields);
+      })
+      .catch(() => {
+        const fields = Object.keys(
+          credential.credential.credentialSubject,
+        ).filter(key => key !== 'id' && key != 'face');
+        setFields(fields.concat(DETAIL_VIEW_ADD_ON_FIELDS));
+      });
   }, [verifiableCredentialData?.wellKnown]);
 
   const headerRight = flow => {
