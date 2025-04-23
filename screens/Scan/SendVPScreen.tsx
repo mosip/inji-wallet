@@ -1,11 +1,11 @@
 import {useFocusEffect} from '@react-navigation/native';
-import React, {useEffect, useLayoutEffect} from 'react';
+import React, {useEffect, useLayoutEffect, useState} from 'react';
 import {useTranslation} from 'react-i18next';
 import {BackHandler, I18nManager, View} from 'react-native';
 import {Button, Column, Row, Text} from '../../components/ui';
 import {Theme} from '../../components/ui/styleUtils';
 import {VcItemContainer} from '../../components/VC/VcItemContainer';
-import {LIVENESS_CHECK} from '../../shared/constants';
+import {LIVENESS_CHECK, OVP_ERROR_MESSAGES} from '../../shared/constants';
 import {TelemetryConstants} from '../../shared/telemetry/TelemetryConstants';
 import {
   getImpressionEventData,
@@ -23,12 +23,31 @@ import {SvgImage} from '../../components/ui/svg';
 import {Loader} from '../../components/ui/Loader';
 import {Icon} from 'react-native-elements';
 import {ScanLayoutProps} from '../../routes/routeTypes';
+import {OpenID4VP} from '../../shared/openID4VP/OpenID4VP';
 
 export const SendVPScreen: React.FC<ScanLayoutProps> = props => {
   const {t} = useTranslation('SendVPScreen');
   const controller = useSendVPScreen();
 
   const vcsMatchingAuthRequest = controller.vcsMatchingAuthRequest;
+  const [triggerExitFlow, setTriggerExitFlow] = useState(false);
+
+  useEffect(() => {
+    if (controller.errorModal.show && controller.isOVPViaDeepLink) {
+      const timeout = setTimeout(() => {
+        setTriggerExitFlow(true);
+      }, 2000);
+
+      return () => clearTimeout(timeout);
+    }
+  }, [controller.errorModal.show, controller.isOVPViaDeepLink]);
+
+  useEffect(() => {
+    if (triggerExitFlow) {
+      controller.GO_TO_HOME();
+      BackHandler.exitApp();
+    }
+  }, [triggerExitFlow]);
 
   useEffect(() => {
     sendImpressionEvent(
@@ -51,6 +70,26 @@ export const SendVPScreen: React.FC<ScanLayoutProps> = props => {
       return () => disableBackHandler.remove();
     }, []),
   );
+
+  const handleDismiss = () => {
+    if (controller.isOVPViaDeepLink) {
+      controller.GO_TO_HOME();
+      OpenID4VP.sendErrorToVerifier(OVP_ERROR_MESSAGES.DECLINED);
+      BackHandler.exitApp();
+    } else {
+      controller.DISMISS();
+    }
+  };
+
+  const handleRejectButtonEvent = () => {
+    if (controller.isOVPViaDeepLink) {
+      controller.GO_TO_HOME();
+      OpenID4VP.sendErrorToVerifier(OVP_ERROR_MESSAGES.DECLINED);
+      BackHandler.exitApp();
+    } else {
+      controller.CANCEL();
+    }
+  };
 
   useLayoutEffect(() => {
     if (controller.showLoadingScreen) {
@@ -80,7 +119,7 @@ export const SendVPScreen: React.FC<ScanLayoutProps> = props => {
             <Icon
               name="close"
               color={Theme.Colors.blackIcon}
-              onPress={controller.DISMISS}
+              onPress={handleDismiss}
             />
           ),
         headerLeft: () =>
@@ -88,12 +127,16 @@ export const SendVPScreen: React.FC<ScanLayoutProps> = props => {
             <Icon
               name="close"
               color={Theme.Colors.blackIcon}
-              onPress={controller.DISMISS}
+              onPress={handleDismiss}
             />
           ),
       });
     }
-  }, [controller.showLoadingScreen, controller.vpVerifierName]);
+  }, [
+    controller.showLoadingScreen,
+    controller.vpVerifierName,
+    controller.isOVPViaDeepLink,
+  ]);
 
   if (controller.showLoadingScreen) {
     return (
@@ -107,6 +150,17 @@ export const SendVPScreen: React.FC<ScanLayoutProps> = props => {
   const handleTextButtonEvent = () => {
     controller.GO_TO_HOME();
     controller.RESET_RETRY_COUNT();
+  };
+
+  const getPrimaryButtonEvent = () => {
+    if (controller.showConfirmationPopup && controller.isOVPViaDeepLink) {
+      return () => {
+        OpenID4VP.sendErrorToVerifier(OVP_ERROR_MESSAGES.DECLINED);
+        controller.GO_TO_HOME();
+        BackHandler.exitApp();
+      };
+    }
+    return controller.overlayDetails?.primaryButtonEvent;
   };
 
   const getVcKey = vcData => {
@@ -244,7 +298,7 @@ export const SendVPScreen: React.FC<ScanLayoutProps> = props => {
                 type="clear"
                 loading={controller.isCancelling}
                 title={t('SendVcScreen:reject')}
-                onPress={controller.CANCEL}
+                onPress={handleRejectButtonEvent}
               />
             </Column>
           </Column>
@@ -272,7 +326,7 @@ export const SendVPScreen: React.FC<ScanLayoutProps> = props => {
                 controller.overlayDetails.primaryButtonTestID
               }
               primaryButtonText={controller.overlayDetails.primaryButtonText}
-              primaryButtonEvent={controller.overlayDetails.primaryButtonEvent}
+              primaryButtonEvent={getPrimaryButtonEvent()}
               secondaryButtonTestID={
                 controller.overlayDetails.secondaryButtonTestID
               }
@@ -310,7 +364,11 @@ export const SendVPScreen: React.FC<ScanLayoutProps> = props => {
         }
         primaryButtonEvent={controller.RETRY}
         textButtonTestID={'home'}
-        textButtonText={t('ScanScreen:status.accepted.home')}
+        textButtonText={
+          !controller.isOVPViaDeepLink
+            ? t('ScanScreen:status.accepted.home')
+            : undefined
+        }
         textButtonEvent={handleTextButtonEvent}
         customImageStyles={{paddingBottom: 0, marginBottom: -6}}
         customStyles={{marginTop: '30%'}}

@@ -46,6 +46,7 @@ export const openID4VPMachine = model.createMachine(
               'setFlowType',
               'setMiniViewShareSelectedVC',
               'setIsShareWithSelfie',
+              'setIsOVPViaDeepLink',
             ],
             target: 'checkFaceAuthConsent',
           },

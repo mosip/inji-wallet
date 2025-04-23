@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {useTranslation} from 'react-i18next';
 import {
   ErrorMessageOverlay,
@@ -10,8 +10,12 @@ import {Theme} from '../../components/ui/styleUtils';
 import {QrLogin} from '../QrLogin/QrLogin';
 import {useScanScreen} from './ScanScreenController';
 import BluetoothStateManager from 'react-native-bluetooth-state-manager';
-import {Linking} from 'react-native';
-import {isIOS, LIVENESS_CHECK} from '../../shared/constants';
+import {BackHandler, Linking} from 'react-native';
+import {
+  isIOS,
+  LIVENESS_CHECK,
+  OVP_ERROR_MESSAGES,
+} from '../../shared/constants';
 import {BannerNotificationContainer} from '../../components/BannerNotificationContainer';
 import {SharingStatusModal} from './SharingStatusModal';
 import {SvgImage} from '../../components/ui/svg';
@@ -23,6 +27,9 @@ import {Error} from '../../components/ui/Error';
 import {VPShareOverlay} from './VPShareOverlay';
 import {VerifyIdentityOverlay} from '../VerifyIdentityOverlay';
 import {VCShareFlowType} from '../../shared/Utils';
+import {APP_EVENTS} from '../../machines/app';
+import {GlobalContext} from '../../shared/GlobalContext';
+import {OpenID4VP} from '../../shared/openID4VP/OpenID4VP';
 
 export const ScanScreen: React.FC = () => {
   const {t} = useTranslation('ScanScreen');
@@ -37,6 +44,8 @@ export const ScanScreen: React.FC = () => {
         VCShareFlowType.MINI_VIEW_SHARE_OPENID4VP ||
         sendVPScreenController.flowType ===
           VCShareFlowType.MINI_VIEW_SHARE_WITH_SELFIE_OPENID4VP));
+
+  const {appService} = useContext(GlobalContext);
 
   useEffect(() => {
     (async () => {
@@ -54,7 +63,7 @@ export const ScanScreen: React.FC = () => {
   useEffect(() => {
     if (
       scanScreenController.isStartPermissionCheck &&
-      !scanScreenController.isEmpty
+      !scanScreenController.isNoSharableVCs
     )
       scanScreenController.START_PERMISSION_CHECK();
   });
@@ -62,6 +71,24 @@ export const ScanScreen: React.FC = () => {
   useEffect(() => {
     if (scanScreenController.isQuickShareDone) scanScreenController.GOTO_HOME();
   }, [scanScreenController.isQuickShareDone]);
+
+  useEffect(() => {
+    if (
+      scanScreenController.isNoSharableVCs &&
+      scanScreenController.authorizationRequest != ''
+    ) {
+      setTimeout(() => {
+        OpenID4VP.initialize();
+        OpenID4VP.sendErrorToVerifier(OVP_ERROR_MESSAGES.NO_MATCHING_VCS);
+        BackHandler.exitApp();
+        scanScreenController.GOTO_HOME();
+        appService.send(APP_EVENTS.RESET_AUTHORIZATION_REQUEST());
+      }, 2000);
+    }
+  }, [
+    scanScreenController.isNoSharableVCs,
+    scanScreenController.authorizationRequest,
+  ]);
 
   const openSettings = () => {
     Linking.openSettings();
@@ -175,7 +202,7 @@ export const ScanScreen: React.FC = () => {
   }
 
   function loadQRScanner() {
-    if (scanScreenController.isEmpty) {
+    if (scanScreenController.isNoSharableVCs) {
       return noShareableVcText();
     }
     if (scanScreenController.selectIsInvalid) {
@@ -215,7 +242,7 @@ export const ScanScreen: React.FC = () => {
 
   function displayStorageLimitReachedError(): React.ReactNode {
     return (
-      !scanScreenController.isEmpty && (
+      !scanScreenController.isNoSharableVCs && (
         <ErrorMessageOverlay
           testID="storageLimitReachedError"
           isVisible={
@@ -231,7 +258,7 @@ export const ScanScreen: React.FC = () => {
 
   function displayInvalidQRpopup(): React.ReactNode {
     return (
-      !scanScreenController.isEmpty && (
+      !scanScreenController.isNoSharableVCs && (
         <SharingStatusModal
           isVisible={scanScreenController.selectIsInvalid}
           testId={'invalidQrPopup'}
@@ -334,7 +361,11 @@ export const ScanScreen: React.FC = () => {
           }
           primaryButtonEvent={sendVPScreenController.RETRY}
           textButtonTestID={'home'}
-          textButtonText={t('ScanScreen:status.accepted.home')}
+          textButtonText={
+            sendVPScreenController.isOVPViaDeepLink
+              ? undefined
+              : t('ScanScreen:status.accepted.home')
+          }
           textButtonEvent={handleTextButtonEvent}
           customImageStyles={{paddingBottom: 0, marginBottom: -6}}
           customStyles={{marginTop: '30%'}}

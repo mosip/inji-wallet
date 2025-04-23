@@ -107,6 +107,7 @@ export const ScanActions = (model: any) => {
         encodedAuthRequest: context.linkCode,
         flowType: context.openID4VPFlowType,
         selectedVC: context.selectedVc,
+        isOVPViaDeepLink: context.isOVPViaDeepLink,
       }),
 
     openBluetoothSettings: () => {
@@ -290,6 +291,14 @@ export const ScanActions = (model: any) => {
 
     resetIsQrLoginViaDeepLink: assign({
       isQrLoginViaDeepLink: false,
+    }),
+
+    setIsOVPViaDeepLink: assign({
+      isOVPViaDeepLink: true,
+    }),
+
+    resetIsOVPViaDeepLink: assign({
+      isOVPViaDeepLink: false,
     }),
 
     setQuickShareData: assign({

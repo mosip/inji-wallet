@@ -149,3 +149,7 @@ export function selectIsMinimumStorageRequiredForAuditEntryLimitReached(
 export function selectIsFaceVerificationConsent(state: State) {
   return state.matches('reviewing.faceVerificationConsent');
 }
+
+export function selectIsOVPViaDeepLink(state: State) {
+  return state.context.isOVPViaDeepLink;
+}

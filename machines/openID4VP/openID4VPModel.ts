@@ -9,7 +9,8 @@ const openID4VPEvents = {
     encodedAuthRequest: string,
     flowType: string,
     selectedVC: any,
-  ) => ({encodedAuthRequest, flowType, selectedVC}),
+    isOVPViaDeepLink: boolean,
+  ) => ({encodedAuthRequest, flowType, selectedVC, isOVPViaDeepLink}),
   DOWNLOADED_VCS: (vcs: VC[]) => ({vcs}),
   SELECT_VC: (vcKey: string, inputDescriptorId: any) => ({
     vcKey,
@@ -66,6 +67,7 @@ export const openID4VPModel = createModel(
     isFaceVerificationRetryAttempt: false as boolean,
     requestedClaims: '' as string,
     showLoadingScreen: false as boolean,
+    isOVPViaDeepLink: false,
   },
   {events: openID4VPEvents},
 );

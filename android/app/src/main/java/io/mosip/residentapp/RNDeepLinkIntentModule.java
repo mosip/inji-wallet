@@ -5,24 +5,24 @@ import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
 
-public class RNQrLoginIntentModule extends ReactContextBaseJavaModule {
+public class RNDeepLinkIntentModule extends ReactContextBaseJavaModule {
 
 
   @Override
   public String getName() {
-    return "QrLoginIntent";
+    return "DeepLinkIntent";
   }
 
-  RNQrLoginIntentModule(ReactApplicationContext context) {
+  RNDeepLinkIntentModule(ReactApplicationContext context) {
     super(context);
   }
 
   @ReactMethod
-  public void isQrLoginByDeepLink(Promise promise) {
+  public void getDeepLinkIntentData(String flowType, Promise promise) {
     try {
-
       IntentData intentData = IntentData.getInstance();
-      promise.resolve(intentData.getQrData());
+      String result = intentData.getDataByFlow(flowType);
+      promise.resolve(result);
 
     } catch (Exception e) {
       promise.reject("E_UNKNOWN", e.getMessage());
@@ -30,9 +30,10 @@ public class RNQrLoginIntentModule extends ReactContextBaseJavaModule {
   }
 
   @ReactMethod
-  public void resetQRLoginDeepLinkData(){
-    IntentData intentData = IntentData.getInstance();
-    intentData.setQrData("");
+  public void resetDeepLinkIntentData(String flowType) {
+      IntentData intentData = IntentData.getInstance();
+      intentData.resetDataByFlow(flowType);
   }
 
 }
+

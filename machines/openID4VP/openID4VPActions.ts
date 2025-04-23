@@ -1,6 +1,9 @@
 import {assign} from 'xstate';
 import {send, sendParent} from 'xstate/lib/actions';
-import {SHOW_FACE_AUTH_CONSENT_SHARE_FLOW} from '../../shared/constants';
+import {
+  OVP_ERROR_MESSAGES,
+  SHOW_FACE_AUTH_CONSENT_SHARE_FLOW,
+} from '../../shared/constants';
 import {VC} from '../VerifiableCredential/VCMetaMachine/vc';
 import {StoreEvents} from '../store';
 import {JSONPath} from 'jsonpath-plus';
@@ -77,6 +80,9 @@ export const openID4VPActions = (model: any) => {
         if (!anyInputDescriptorHasFormatOrConstraints) {
           matchingVCs[presentationDefinition['input_descriptors'][0].id] = vcs;
         }
+        if (Object.keys(matchingVCs).length === 0) {
+          OpenID4VP.sendErrorToVerifier(OVP_ERROR_MESSAGES.NO_MATCHING_VCS);
+        }
         return matchingVCs;
       },
       requestedClaims: () => Array.from(requestedClaimsByVerifier).join(','),
@@ -95,15 +101,15 @@ export const openID4VPActions = (model: any) => {
       selectedVCs: context => {
         const matchingVcs = {};
         Object.entries(context.vcsMatchingAuthRequest).map(
-            ([inputDescriptorId, vcs]) =>
-                (vcs as VC[]).map(vcData => {
-                  if (
-                      vcData.vcMetadata.requestId ===
-                      context.miniViewSelectedVC.vcMetadata.requestId
-                  ) {
-                    matchingVcs[inputDescriptorId] = [vcData];
-                  }
-                }),
+          ([inputDescriptorId, vcs]) =>
+            (vcs as VC[]).map(vcData => {
+              if (
+                vcData.vcMetadata.requestId ===
+                context.miniViewSelectedVC.vcMetadata.requestId
+              ) {
+                matchingVcs[inputDescriptorId] = [vcData];
+              }
+            }),
         );
         return matchingVcs;
       },
@@ -117,6 +123,14 @@ export const openID4VPActions = (model: any) => {
       isShareWithSelfie: (_, event) =>
         event.flowType ===
         VCShareFlowType.MINI_VIEW_SHARE_WITH_SELFIE_OPENID4VP,
+    }),
+
+    setIsOVPViaDeepLink: model.assign({
+      isOVPViaDeepLink: (_, event) => event.isOVPViaDeepLink,
+    }),
+
+    resetIsOVPViaDeepLink: model.assign({
+      isOVPViaDeepLink: () => false,
     }),
 
     setShowFaceAuthConsent: model.assign({
@@ -246,9 +260,7 @@ export const openID4VPActions = (model: any) => {
     ),
 
     shareDeclineStatus: () => {
-      OpenID4VP.sendErrorToVerifier(
-        'The user has declined to share their credentials at this time',
-      );
+      OpenID4VP.sendErrorToVerifier(OVP_ERROR_MESSAGES.DECLINED);
     },
 
     setIsFaceVerificationRetryAttempt: model.assign({

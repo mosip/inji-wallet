@@ -75,6 +75,10 @@
                 <data
                     android:host="wla-auth"
                     android:scheme="io.mosip.residentapp.inji" />
+
+                <data
+                        android:scheme="openid4vp"
+                        android:host="authorize" />
             </intent-filter>
 
             <intent-filter>

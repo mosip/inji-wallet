@@ -43,20 +43,33 @@ public class MainActivity extends ReactActivity {
     setTheme(R.style.AppTheme);
     super.onCreate(null);
     Intent intent = getIntent();
-    readAndSetQRLoginIntentData(intent);
+    handleIntent(intent);
   }
 
   @Override
   public void onNewIntent(Intent intent) {
     super.onNewIntent(intent);
-    readAndSetQRLoginIntentData(intent);
+    handleIntent(intent);
   }
 
-  private void readAndSetQRLoginIntentData(Intent intent){
+  private void handleIntent(Intent intent) {
+    if (intent == null || intent.getData() == null) return;
+
     Uri data = intent.getData();
-    if(data != null && Objects.equals(data.getScheme(), "io.mosip.residentapp.inji")){
-      IntentData intentData = IntentData.getInstance();
-      intentData.setQrData(String.valueOf(data));
+    String scheme = data.getScheme();
+    IntentData intentData = IntentData.getInstance();
+
+    if (scheme == null) return;
+
+    switch (scheme) {
+      case "io.mosip.residentapp.inji":
+        intentData.setQrData(data.toString());
+        break;
+      case "openid4vp":
+        intentData.setOVPQrData(data.toString());
+        break;
+      default:
+        break;
     }
   }
 

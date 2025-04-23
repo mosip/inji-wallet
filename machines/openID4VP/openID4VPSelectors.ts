@@ -2,7 +2,10 @@ import {StateFrom} from 'xstate';
 import {openID4VPMachine} from './openID4VPMachine';
 import {VCMetadata} from '../../shared/VCMetadata';
 import {getMosipLogo} from '../../components/VC/common/VCUtils';
-import {Credential, VerifiableCredentialData} from '../VerifiableCredential/VCMetaMachine/vc';
+import {
+  Credential,
+  VerifiableCredentialData,
+} from '../VerifiableCredential/VCMetaMachine/vc';
 
 type State = StateFrom<typeof openID4VPMachine>;
 
@@ -48,20 +51,23 @@ export function selectIsShowLoadingScreen(state: State) {
 
 export function selectCredentials(state: State) {
   const processCredential = (vcData: any) =>
-      vcData?.verifiableCredential?.credential ||
-      vcData?.verifiableCredential
-  let selectedCredentials: Credential[] = Object.values(state.context.selectedVCs)
-      .flatMap(innerMap => Object.values(innerMap)) // Extract arrays
-      .flat()
-      .map(processCredential);
+    vcData?.verifiableCredential?.credential || vcData?.verifiableCredential;
+  let selectedCredentials: Credential[] = Object.values(
+    state.context.selectedVCs,
+  )
+    .flatMap(innerMap => Object.values(innerMap)) // Extract arrays
+    .flat()
+    .map(processCredential);
   return selectCredentials.length === 0 ? undefined : selectedCredentials;
 }
 
 export function selectVerifiableCredentialsData(state: State) {
   let verifiableCredentialsData: VerifiableCredentialData[] = [];
-  let selectedCredentials: Credential[] = Object.values(state.context.selectedVCs)
-      .flatMap(innerMap => Object.values(innerMap))
-      .flat();
+  let selectedCredentials: Credential[] = Object.values(
+    state.context.selectedVCs,
+  )
+    .flatMap(innerMap => Object.values(innerMap))
+    .flat();
   selectedCredentials.map(vcData => {
     const vcMetadata = new VCMetadata(vcData.vcMetadata);
     verifiableCredentialsData.push({
@@ -69,12 +75,12 @@ export function selectVerifiableCredentialsData(state: State) {
       issuer: vcMetadata.issuer,
       issuerLogo: vcData?.verifiableCredential?.issuerLogo || getMosipLogo(),
       face:
-          vcData?.verifiableCredential?.credential?.credentialSubject?.face ||
-          vcData?.credential?.biometrics?.face,
+        vcData?.verifiableCredential?.credential?.credentialSubject?.face ||
+        vcData?.credential?.biometrics?.face,
       wellKnown: vcData?.verifiableCredential?.wellKnown,
       credentialTypes: vcData?.verifiableCredential?.credentialTypes,
     });
-    return verifiableCredentialsData
+    return verifiableCredentialsData;
   });
 
   return verifiableCredentialsData;
@@ -98,6 +104,10 @@ export function selectIsError(state: State) {
 
 export function selectOpenID4VPRetryCount(state: State) {
   return state.context.openID4VPRetryCount;
+}
+
+export function selectIsOVPViaDeeplink(state: State) {
+  return state.context.isOVPViaDeepLink;
 }
 
 export function selectIsFaceVerifiedInVPSharing(state: State) {

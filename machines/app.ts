@@ -14,12 +14,12 @@ import {
 import {createScanMachine, scanMachine} from './bleShare/scan/scanMachine';
 import {pure, respond} from 'xstate/lib/actions';
 import {AppServices} from '../shared/GlobalContext';
+import {DEEPLINK_FLOWS} from '../shared/Utils';
 import {
   changeCrendetialRegistry,
   changeEsignetUrl,
   ESIGNET_BASE_URL,
   isAndroid,
-  isIOS,
   MIMOTO_BASE_URL,
   SETTINGS_STORE_KEY,
 } from '../shared/constants';
@@ -41,7 +41,7 @@ import {
   generateKeyPairsAndStoreOrder,
 } from '../shared/cryptoutil/cryptoUtil';
 
-const QrLoginIntent = NativeModules.QrLoginIntent;
+const DeepLinkIntent = NativeModules.DeepLinkIntent;
 
 const model = createModel(
   {
@@ -51,6 +51,7 @@ const model = createModel(
     isDecryptError: false,
     isKeyInvalidateError: false,
     linkCode: '',
+    authorizationRequest: '',
   },
   {
     events: {
@@ -68,6 +69,7 @@ const model = createModel(
       STORE_RESPONSE: (response: unknown) => ({response}),
       RESET_KEY_INVALIDATE_ERROR_DISMISS: () => ({}),
       RESET_LINKCODE: () => ({}),
+      RESET_AUTHORIZATION_REQUEST: () => ({}),
       BIOMETRIC_CANCELLED: () => ({}),
     },
   },
@@ -93,6 +95,9 @@ export const appMachine = model.createMachine(
       },
       RESET_LINKCODE: {
         actions: ['resetLinkCode'],
+      },
+      RESET_AUTHORIZATION_REQUEST: {
+        actions: ['resetAuthorizationRequest'],
       },
       DECRYPT_ERROR_DISMISS: {
         actions: ['unsetIsDecryptError'],
@@ -215,13 +220,22 @@ export const appMachine = model.createMachine(
                 entry: ['forwardToServices'],
                 invoke: [
                   {
-                    src: 'isQrLoginByDeepLink',
+                    src: 'getQrLoginDeepLinkIntent',
                     onDone: {
                       actions: ['setLinkCode'],
                     },
                   },
                   {
-                    src: 'resetQRLoginDeepLinkData',
+                    src: 'resetQrLoginDeepLinkIntent',
+                  },
+                  {
+                    src: 'getOVPDeepLinkIntent',
+                    onDone: {
+                      actions: ['setAuthorizationRequest'],
+                    },
+                  },
+                  {
+                    src: 'resetOVPDeepLinkIntent',
                   },
                 ],
               },
@@ -266,7 +280,13 @@ export const appMachine = model.createMachine(
       resetLinkCode: assign({
         linkCode: '',
       }),
-      forwardToServices: pure((context, event) =>
+      setAuthorizationRequest: assign({
+        authorizationRequest: (_, event) => event.data || '',
+      }),
+      resetAuthorizationRequest: assign({
+        authorizationRequest: '',
+      }),
+      forwardToSerices: pure((context, event) =>
         Object.values(context.serviceRefs).map(serviceRef =>
           send({...event, type: `APP_${event.type}`}, {to: serviceRef}),
         ),
@@ -413,14 +433,26 @@ export const appMachine = model.createMachine(
     },
 
     services: {
-      isQrLoginByDeepLink: () => async () => {
-        const data = await QrLoginIntent.isQrLoginByDeepLink();
+      getQrLoginDeepLinkIntent: () => async () => {
+        const data = await DeepLinkIntent.getDeepLinkIntentData(
+          DEEPLINK_FLOWS.QR_LOGIN,
+        );
         return data;
       },
-      resetQRLoginDeepLinkData: () => async () => {
-        return await QrLoginIntent.resetQRLoginDeepLinkData();
+      resetQrLoginDeepLinkIntent: () => async () => {
+        return await DeepLinkIntent.resetDeepLinkIntentData(
+          DEEPLINK_FLOWS.QR_LOGIN,
+        );
       },
-
+      getOVPDeepLinkIntent: () => async () => {
+        const data = await DeepLinkIntent.getDeepLinkIntentData(
+          DEEPLINK_FLOWS.OVP,
+        );
+        return data;
+      },
+      resetOVPDeepLinkIntent: () => async () => {
+        return await DeepLinkIntent.resetDeepLinkIntentData(DEEPLINK_FLOWS.OVP);
+      },
       getAppInfo: () => async callback => {
         const appInfo = {
           deviceId: getDeviceId(),
@@ -533,4 +565,8 @@ export function selectIsKeyInvalidateError(state: State) {
 
 export function selectIsLinkCode(state: State) {
   return state.context.linkCode;
+}
+
+export function selectAuthorizationRequest(state: State) {
+  return state.context.authorizationRequest;
 }

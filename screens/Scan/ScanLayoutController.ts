@@ -29,6 +29,7 @@ import {
   selectIsQrLoginDoneViaDeeplink,
   selectOpenID4VPFlowType,
   selectIsSendingVPSuccess,
+  selectIsOVPViaDeepLink,
 } from '../../machines/bleShare/scan/scanSelectors';
 import {
   selectBleError,
@@ -48,12 +49,17 @@ import {BOTTOM_TAB_ROUTES, SCAN_ROUTES} from '../../routes/routesConstants';
 import {ScanStackParamList} from '../../routes/routesConstants';
 import {VCShareFlowType} from '../../shared/Utils';
 import {Theme} from '../../components/ui/styleUtils';
-import {APP_EVENTS, selectIsLinkCode} from '../../machines/app';
+import {
+  APP_EVENTS,
+  selectAuthorizationRequest,
+  selectIsLinkCode,
+} from '../../machines/app';
 import {
   selectIsFaceVerifiedInVPSharing,
   selectVerifierNameInVPSharing,
 } from '../../machines/openID4VP/openID4VPSelectors';
 import {OpenID4VPEvents} from '../../machines/openID4VP/openID4VPMachine';
+import {selectShareableVcsMetadata} from '../../machines/VerifiableCredential/VCMetaMachine/VCMetaSelectors';
 
 type ScanLayoutNavigation = NavigationProp<
   ScanStackParamList & MainBottomTabParamList
@@ -136,6 +142,10 @@ export function useScanLayout() {
     selectIsExchangingDeviceInfoTimeout,
   );
   const linkCode = useSelector(appService, selectIsLinkCode);
+  const authorizationRequest = useSelector(
+    appService,
+    selectAuthorizationRequest,
+  );
   const isAccepted = useSelector(scanService, selectIsAccepted);
   const isRejected = useSelector(scanService, selectIsRejected);
   const isSent = useSelector(scanService, selectIsSent);
@@ -284,10 +294,22 @@ export function useScanLayout() {
     selectIsQrLoginDoneViaDeeplink,
   );
 
+  const vcMetaService = appService.children.get('vcMeta')!!;
+
+  const shareableVcsMetadata = useSelector(
+    vcMetaService,
+    selectShareableVcsMetadata,
+  );
+
+  const isOVPViaDeepLink = useSelector(scanService, selectIsOVPViaDeepLink);
+
   useEffect(() => {
     if (linkCode != '') {
       scanService.send(ScanEvents.QRLOGIN_VIA_DEEP_LINK(linkCode));
       appService.send(APP_EVENTS.RESET_LINKCODE());
+    } else if (authorizationRequest != '' && shareableVcsMetadata.length) {
+      scanService.send(ScanEvents.OVP_VIA_DEEP_LINK(authorizationRequest));
+      appService.send(APP_EVENTS.RESET_AUTHORIZATION_REQUEST());
     } else if (isQrLoginDoneViaDeeplink) {
       changeTabBarVisible('flex');
       navigation.navigate(BOTTOM_TAB_ROUTES.home);
@@ -322,6 +344,7 @@ export function useScanLayout() {
     isAccepted,
     linkCode,
     isQrLoginDoneViaDeeplink,
+    authorizationRequest,
   ]);
 
   return {
@@ -361,5 +384,6 @@ export function useScanLayout() {
     isFaceVerifiedInVPSharing,
     CLOSE_BANNER,
     VP_SHARE_CLOSE_BANNER,
+    isOVPViaDeepLink,
   };
 }
