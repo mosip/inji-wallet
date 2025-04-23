@@ -43,9 +43,36 @@ export const ScanScreen: React.FC = () => {
       (sendVPScreenController.flowType ===
         VCShareFlowType.MINI_VIEW_SHARE_OPENID4VP ||
         sendVPScreenController.flowType ===
-          VCShareFlowType.MINI_VIEW_SHARE_WITH_SELFIE_OPENID4VP));
+          VCShareFlowType.MINI_VIEW_SHARE_WITH_SELFIE_OPENID4VP ||
+        sendVPScreenController.flowType === VCShareFlowType.OPENID4VP));
 
   const {appService} = useContext(GlobalContext);
+  const [triggerExitFlow, setTriggerExitFlow] = useState(false);
+
+  useEffect(() => {
+    if (showErrorModal && sendVPScreenController.isOVPViaDeepLink) {
+      const timeout = setTimeout(
+        () => {
+          OpenID4VP.sendErrorToVerifier(OVP_ERROR_MESSAGES.NO_MATCHING_VCS);
+          setTriggerExitFlow(true);
+        },
+        isIOS() ? 4000 : 2000,
+      );
+
+      return () => clearTimeout(timeout);
+    }
+  }, [showErrorModal, sendVPScreenController.isOVPViaDeepLink]);
+
+  useEffect(() => {
+    if (triggerExitFlow) {
+      sendVPScreenController.RESET_LOGGED_ERROR();
+      sendVPScreenController.GO_TO_HOME();
+      sendVPScreenController.RESET_RETRY_COUNT();
+      appService.send(APP_EVENTS.RESET_AUTHORIZATION_REQUEST());
+      setTriggerExitFlow(false);
+      BackHandler.exitApp();
+    }
+  }, [triggerExitFlow]);
 
   useEffect(() => {
     (async () => {
@@ -61,11 +88,16 @@ export const ScanScreen: React.FC = () => {
 
   // TODO(kludge): skip running this hook on every render
   useEffect(() => {
-    if (
-      scanScreenController.isStartPermissionCheck &&
-      !scanScreenController.isNoSharableVCs
-    )
-      scanScreenController.START_PERMISSION_CHECK();
+    if (scanScreenController.isStartPermissionCheck) {
+      if (
+        scanScreenController.authorizationRequest !== '' &&
+        scanScreenController.isEmpty
+      ) {
+        scanScreenController.START_PERMISSION_CHECK();
+      } else if (!scanScreenController.isEmpty) {
+        scanScreenController.START_PERMISSION_CHECK();
+      }
+    }
   });
 
   useEffect(() => {
@@ -73,33 +105,16 @@ export const ScanScreen: React.FC = () => {
   }, [scanScreenController.isQuickShareDone]);
 
   useEffect(() => {
-    if (scanScreenController.isEmpty) {
-      if (scanScreenController.authorizationRequest !== '') {
-        handleDeepLinkFlow('authorizationRequest');
-      } else if (scanScreenController.linkcode !== '') {
-        handleDeepLinkFlow('linkCode');
-      }
-    }
-  }, [
-    scanScreenController.isEmpty,
-    scanScreenController.authorizationRequest,
-    scanScreenController.linkcode,
-  ]);
+    if (scanScreenController.isEmpty && scanScreenController.linkcode !== '')
+      setTimeout(() => {
+        scanScreenController.GOTO_HOME();
+        appService.send(APP_EVENTS.RESET_LINKCODE());
+        BackHandler.exitApp();
+      }, 2000);
+  }, [scanScreenController.isEmpty, scanScreenController.linkcode]);
 
   const openSettings = () => {
     Linking.openSettings();
-  };
-
-  const handleDeepLinkFlow = (type: 'authorizationRequest' | 'linkCode') => {
-    setTimeout(() => {
-      scanScreenController.GOTO_HOME();
-      if (type === 'authorizationRequest') {
-        appService.send(APP_EVENTS.RESET_AUTHORIZATION_REQUEST());
-      } else if (type === 'linkCode') {
-        appService.send(APP_EVENTS.RESET_LINKCODE());
-      }
-      BackHandler.exitApp();
-    }, 2000);
   };
 
   const handleTextButtonEvent = () => {
@@ -210,7 +225,10 @@ export const ScanScreen: React.FC = () => {
   }
 
   function loadQRScanner() {
-    if (scanScreenController.isNoSharableVCs) {
+    if (
+      scanScreenController.isEmpty &&
+      scanScreenController.authorizationRequest === ''
+    ) {
       return noShareableVcText();
     }
     if (scanScreenController.selectIsInvalid) {
@@ -370,9 +388,9 @@ export const ScanScreen: React.FC = () => {
           primaryButtonEvent={sendVPScreenController.RETRY}
           textButtonTestID={'home'}
           textButtonText={
-            sendVPScreenController.isOVPViaDeepLink
-              ? undefined
-              : t('ScanScreen:status.accepted.home')
+            !(scanScreenController.authorizationRequest !== '')
+              ? t('ScanScreen:status.accepted.home')
+              : undefined
           }
           textButtonEvent={handleTextButtonEvent}
           customImageStyles={{paddingBottom: 0, marginBottom: -6}}

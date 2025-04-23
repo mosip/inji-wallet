@@ -22,6 +22,7 @@ export const Error: React.FC<ErrorProps> = props => {
     alignActionsOnEnd = false,
     title,
     message,
+    additionalMessage,
     helpText,
     image,
     goBack,
@@ -76,6 +77,16 @@ export const Error: React.FC<ErrorProps> = props => {
             </Text>
             <Text style={Theme.ErrorStyles.message} testID={`${testID}Message`}>
               {message}
+            </Text>
+            <Text
+              style={Theme.ErrorStyles.additionalMessage}
+              testID={`${testID}Message`}>
+              {additionalMessage}
+            </Text>
+            <Text
+              style={Theme.ErrorStyles.additionalMessage}
+              testID={`${testID}Message`}>
+              {additionalMessage}
             </Text>
           </View>
           {!alignActionsOnEnd && (
@@ -193,6 +204,7 @@ export interface ErrorProps {
   alignActionsOnEnd?: boolean;
   title: string;
   message: string;
+  additionalMessage?: string;
   helpText?: string;
   image: React.ReactElement;
   goBack?: () => void;

@@ -1,11 +1,15 @@
 import {useFocusEffect} from '@react-navigation/native';
-import React, {useEffect, useLayoutEffect, useState} from 'react';
+import React, {useContext, useEffect, useLayoutEffect, useState} from 'react';
 import {useTranslation} from 'react-i18next';
 import {BackHandler, I18nManager, View} from 'react-native';
 import {Button, Column, Row, Text} from '../../components/ui';
 import {Theme} from '../../components/ui/styleUtils';
 import {VcItemContainer} from '../../components/VC/VcItemContainer';
-import {LIVENESS_CHECK, OVP_ERROR_MESSAGES} from '../../shared/constants';
+import {
+  isIOS,
+  LIVENESS_CHECK,
+  OVP_ERROR_MESSAGES,
+} from '../../shared/constants';
 import {TelemetryConstants} from '../../shared/telemetry/TelemetryConstants';
 import {
   getImpressionEventData,
@@ -24,19 +28,26 @@ import {Loader} from '../../components/ui/Loader';
 import {Icon} from 'react-native-elements';
 import {ScanLayoutProps} from '../../routes/routeTypes';
 import {OpenID4VP} from '../../shared/openID4VP/OpenID4VP';
+import {GlobalContext} from '../../shared/GlobalContext';
+import {APP_EVENTS} from '../../machines/app';
 
 export const SendVPScreen: React.FC<ScanLayoutProps> = props => {
   const {t} = useTranslation('SendVPScreen');
   const controller = useSendVPScreen();
+
+  const {appService} = useContext(GlobalContext);
 
   const vcsMatchingAuthRequest = controller.vcsMatchingAuthRequest;
   const [triggerExitFlow, setTriggerExitFlow] = useState(false);
 
   useEffect(() => {
     if (controller.errorModal.show && controller.isOVPViaDeepLink) {
-      const timeout = setTimeout(() => {
-        setTriggerExitFlow(true);
-      }, 2000);
+      const timeout = setTimeout(
+        () => {
+          setTriggerExitFlow(true);
+        },
+        isIOS() ? 4000 : 2000,
+      );
 
       return () => clearTimeout(timeout);
     }
@@ -44,8 +55,11 @@ export const SendVPScreen: React.FC<ScanLayoutProps> = props => {
 
   useEffect(() => {
     if (triggerExitFlow) {
+      OpenID4VP.sendErrorToVerifier(OVP_ERROR_MESSAGES.NO_MATCHING_VCS);
+      controller.RESET_LOGGED_ERROR();
       controller.GO_TO_HOME();
-      BackHandler.exitApp();
+      appService.send(APP_EVENTS.RESET_AUTHORIZATION_REQUEST()),
+        BackHandler.exitApp();
     }
   }, [triggerExitFlow]);
 
@@ -354,6 +368,7 @@ export const SendVPScreen: React.FC<ScanLayoutProps> = props => {
         isVisible={controller.errorModal.show}
         title={controller.errorModal.title}
         message={controller.errorModal.message}
+        additionalMessage={controller.errorModal.additionalMessage}
         image={SvgImage.PermissionDenied()}
         primaryButtonTestID={'retry'}
         primaryButtonText={

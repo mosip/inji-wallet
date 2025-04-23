@@ -169,6 +169,11 @@ export const ScanLayout: React.FC = () => {
         }
         title={t('status.accepted.title')}
         message={t('status.accepted.message')}
+        additionalMessage={
+          controller.isOVPViaDeepLink
+            ? t('status.accepted.additionalMessage')
+            : ''
+        }
         image={SvgImage.SuccessLogo()}
         goToHome={controller.GOTO_HOME}
         goToHistory={controller.GOTO_HISTORY}

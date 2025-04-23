@@ -1270,7 +1270,7 @@ export const DefaultTheme = {
       letterSpacing: 0,
       lineHeight: 17,
       minHeight: 50,
-    }
+    },
   }),
   SectionLayoutStyles: StyleSheet.create({
     headerContainer: {
@@ -1294,7 +1294,7 @@ export const DefaultTheme = {
       backgroundColor: Colors.White,
       borderBottomLeftRadius: 6,
       borderBottomRightRadius: 6,
-    }
+    },
   }),
   TextEditOverlayStyles: StyleSheet.create({
     overlay: {
@@ -1556,6 +1556,15 @@ export const DefaultTheme = {
       marginBottom: 25,
       marginHorizontal: 26,
       color: Colors.mediumDarkGrey,
+    },
+    additionalMessage: {
+      color: Colors.Black,
+      fontFamily: 'Inter_600SemiBold',
+      fontSize: 18,
+      lineHeight: 21,
+      paddingTop: 4,
+      textAlign: 'center',
+      marginBottom: 10,
     },
   }),
   SetupLanguageScreenStyle: StyleSheet.create({
