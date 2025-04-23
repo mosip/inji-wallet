@@ -1,6 +1,12 @@
 import React, {useRef} from 'react';
 import AppIntroSlider from 'react-native-app-intro-slider';
-import {Dimensions, ImageBackground, StatusBar, View} from 'react-native';
+import {
+  Dimensions,
+  ImageBackground,
+  StatusBar,
+  View,
+  ScrollView,
+} from 'react-native';
 import {Centered, Column, Row, Text, Button} from '../../components/ui';
 import {Theme} from '../../components/ui/styleUtils';
 import {useTranslation} from 'react-i18next';
@@ -97,14 +103,23 @@ export const IntroSlidersScreen: React.FC<RootRouteProps> = props => {
               margin="0 0 18 0">
               {item.title}
             </Text>
-            <Text
-              testID={`introText-${item.key}`}
-              style={{paddingTop: 7}}
-              margin="0 0 150 0"
-              size="large"
-              color={Theme.Colors.GrayText}>
-              {item.text}
-            </Text>
+            <ScrollView
+              style={{
+                maxHeight: 60,
+                width: '100%',
+                paddingHorizontal: 10,
+                marginBottom: 280,
+              }}
+              showsVerticalScrollIndicator={true}
+              persistentScrollbar={true}>
+              <Text
+                testID={`introText-${item.key}`}
+                style={{paddingTop: 7}}
+                size="large"
+                color={Theme.Colors.GrayText}>
+                {item.text}
+              </Text>
+            </ScrollView>
           </Column>
         </Centered>
       </ImageBackground>
@@ -169,9 +184,9 @@ export const IntroSlidersScreen: React.FC<RootRouteProps> = props => {
         activeDotStyle={{
           backgroundColor: Theme.Colors.Icon,
           width: 30,
-          marginBottom: 47,
+          marginBottom: 10,
         }}
-        dotStyle={{backgroundColor: Theme.Colors.dotColor, marginBottom: 47}}
+        dotStyle={{backgroundColor: Theme.Colors.dotColor, marginBottom: 10}}
         renderItem={renderItem}
         onDone={() =>
           controller.isPasscodeSet() ? controller.BACK() : controller.NEXT()
