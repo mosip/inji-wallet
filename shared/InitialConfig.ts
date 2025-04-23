@@ -15,7 +15,7 @@ export const INITIAL_CONFIG = {
     allowedAuthType: 'demo,otp,bio-Finger,bio-Iris,bio-Face',
     allowedEkycAuthType: 'demo,otp,bio-Finger,bio-Iris,bio-Face',
     warningDomainName: '',
-    aboutInjiUrl: 'https://docs.mosip.io/inji',
+    aboutInjiUrl: 'https://docs.mosip.io/inji/inji-wallet/inji-mobile',
     faceSdkModelUrl: '',
     openId4VCIDownloadVCTimeout: '30000',
   },
