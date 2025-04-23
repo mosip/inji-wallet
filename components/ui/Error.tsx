@@ -1,5 +1,5 @@
 import {useFocusEffect} from '@react-navigation/native';
-import React, {Fragment} from 'react';
+import React, {Fragment, useEffect, useState} from 'react';
 import {useTranslation} from 'react-i18next';
 import {BackHandler, Dimensions, View} from 'react-native';
 import {ButtonProps as RNEButtonProps} from 'react-native-elements';
@@ -11,54 +11,70 @@ import {Modal} from './Modal';
 
 export const Error: React.FC<ErrorProps> = props => {
   const {t} = useTranslation('common');
-    const {
-        testID,
-        customStyles = {},
-        customImageStyles = {},
-        goBackType,
-        isModal = false,
-        isVisible,
-        showClose = true,
-        alignActionsOnEnd = false,
-        title,
-        message,
-        helpText,
-        image,
-        goBack,
-        goBackButtonVisible = false,
-        tryAgain,
-        onDismiss,
-        primaryButtonText,
-        primaryButtonEvent,
-        testIDTextButton,
-        textButtonText,
-        textButtonEvent,
-        primaryButtonTestID,
-        textButtonTestID,
-    } = props;
+  const {
+    testID,
+    customStyles = {},
+    customImageStyles = {},
+    goBackType,
+    isModal = false,
+    isVisible,
+    showClose = true,
+    alignActionsOnEnd = false,
+    title,
+    message,
+    helpText,
+    image,
+    goBack,
+    goBackButtonVisible = false,
+    tryAgain,
+    onDismiss,
+    primaryButtonText,
+    primaryButtonEvent,
+    testIDTextButton,
+    textButtonText,
+    textButtonEvent,
+    primaryButtonTestID,
+    textButtonTestID,
+  } = props;
+
+  const [triggerExitFlow, setTriggerExitFlow] = useState(false);
+
+  useEffect(() => {
+    if (
+      props.isVisible &&
+      props.textButtonText === undefined &&
+      props.primaryButtonText === undefined
+    ) {
+      const timeout = setTimeout(() => {
+        setTriggerExitFlow(true);
+      }, 2000);
+
+      return () => clearTimeout(timeout);
+    }
+  }, [props.isVisible, props.textButtonText, props.primaryButtonText]);
+
+  useEffect(() => {
+    if (triggerExitFlow) {
+      props.textButtonEvent();
+      BackHandler.exitApp();
+    }
+  }, [triggerExitFlow]);
 
   const errorContent = () => {
     return (
       <Fragment>
         <View
-          style={[
-            {alignItems: 'center', marginHorizontal: 1},
-            customStyles,
-          ]}>
+          style={[{alignItems: 'center', marginHorizontal: 1}, customStyles]}>
           <View>
             <Row
               align="center"
               style={[Theme.ErrorStyles.image, customImageStyles]}>
               {image}
             </Row>
-            <Text
-              style={Theme.ErrorStyles.title}
-              testID={`${testID}Title`}>
+            <Text style={Theme.ErrorStyles.title} testID={`${testID}Title`}>
               {title}
             </Text>
-            <Text
-              style={Theme.ErrorStyles.message}
-              testID={`${testID}Message`}>
+            <Text style={Theme.ErrorStyles.message} testID={`${testID}Message`}>
               {message}
             </Text>
           </View>
@@ -69,9 +85,7 @@ export const Error: React.FC<ErrorProps> = props => {
                   onPress={primaryButtonEvent}
                   title={t(primaryButtonText)}
                   type={
-                    primaryButtonText === 'tryAgain'
-                      ? 'outline'
-                      : 'gradient'
+                    primaryButtonText === 'tryAgain' ? 'outline' : 'gradient'
                   }
                   width={
                     primaryButtonText === 'tryAgain'

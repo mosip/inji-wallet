@@ -361,7 +361,11 @@ export const ScanScreen: React.FC = () => {
           }
           primaryButtonEvent={sendVPScreenController.RETRY}
           textButtonTestID={'home'}
-          textButtonText={t('ScanScreen:status.accepted.home')}
+          textButtonText={
+            sendVPScreenController.isOVPViaDeepLink
+              ? undefined
+              : t('ScanScreen:status.accepted.home')
+          }
           textButtonEvent={handleTextButtonEvent}
           customImageStyles={{paddingBottom: 0, marginBottom: -6}}
           customStyles={{marginTop: '30%'}}
