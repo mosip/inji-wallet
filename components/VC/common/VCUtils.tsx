@@ -20,7 +20,7 @@ import {
 } from '../../../shared/openId4VCI/Utils';
 import {VCFormat} from '../../../shared/VCFormat';
 import {displayType} from '../../../machines/Issuers/IssuersMachine';
-import {toStarCaseLabel} from '../../../shared/Utils';
+import {toTitleCaseLabel, toTitleCaseLabel} from '../../../shared/Utils';
 
 export const CARD_VIEW_DEFAULT_FIELDS = ['fullName'];
 export const DETAIL_VIEW_DEFAULT_FIELDS = [
@@ -147,7 +147,7 @@ export const getFieldName = (
       }
     }
   }
-  return toStarCaseLabel(i18n.t(`VcDetails:${field}`));
+  return toTitleCaseLabel(i18n.t(`VcDetails:${field}`));
 };
 
 export function getAddressFields() {

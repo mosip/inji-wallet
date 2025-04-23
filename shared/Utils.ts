@@ -55,7 +55,7 @@ export const isNetworkError = (error: string) => {
   return error.includes(NETWORK_REQUEST_FAILED);
 };
 
-export function toStarCaseLabel(str: string): string {
+export function toTitleCaseLabel(str: string): string {
   if (str.includes(' ')) return str;
 
   return str
