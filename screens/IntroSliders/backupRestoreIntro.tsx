@@ -36,6 +36,8 @@ const StaticBackupAndRestoreScreen: React.FC = () => {
                         style={{
                             fontSize: 16,
                             color: Theme.Colors.blackIcon,
+                            paddingTop:5,
+                            maxWidth:185
                         }}
                         testID="screenTitle">
                         {t('title')}
@@ -51,7 +53,7 @@ const StaticBackupAndRestoreScreen: React.FC = () => {
                                     <View
                                         testID="helpIcon"
                                         style={Theme.HelpScreenStyle.iconStyle}>
-                                        {SvgImage.info()}
+                                        {SvgImage.coloredInfo()}
                                     </View>
                                     <Text
                                         testID="helpText"

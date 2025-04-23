@@ -44,7 +44,7 @@ export const StaticSendVcScreen: React.FC = () => {
                 <Text 
                     testID="introTitle" 
                     weight="bold" 
-                    size="large">
+                    size="small">
                     {t("SendVcScreen:introTitle")}
                 </Text>
             </Row>
@@ -52,7 +52,7 @@ export const StaticSendVcScreen: React.FC = () => {
                 <Text 
                     testID="issuerName" 
                     color={Theme.Colors.GrayText} 
-                    size="extraSmall">
+                    size="smaller">
                     Philippines Government
                 </Text>
             </Row>
@@ -77,6 +77,7 @@ export const StaticSendVcScreen: React.FC = () => {
                 testID="pleaseSelectAnId"
                 margin="0 0 8 16"
                 weight="bold"
+                size = "small"
                 color={Theme.Colors.textValue}
                 style={{ position: 'relative' }}>
                 {t("SendVcScreen:pleaseSelectAnId")}
