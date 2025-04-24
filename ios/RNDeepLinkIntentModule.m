@@ -3,7 +3,7 @@
 
 @interface RCT_EXTERN_MODULE(DeepLinkIntent,NSObject)
 
-RCT_EXTERN_METHOD(getDeepLinkIntentData:(RCTPromiseResolveBlock)resolve rejecter:(RCTPromiseRejectBlock)reject)
-RCT_EXTERN_METHOD(resetDeepLinkIntentData)
+RCT_EXTERN_METHOD(getDeepLinkIntentData:(NSString *)flowType resolve:(RCTPromiseResolveBlock)resolve rejecter:(RCTPromiseRejectBlock)reject)
+RCT_EXTERN_METHOD(resetDeepLinkIntentData:(NSString *)flowType)
 
 @end

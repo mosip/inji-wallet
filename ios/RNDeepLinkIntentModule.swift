@@ -8,13 +8,14 @@ class RNDeepLinkIntentModule: NSObject, RCTBridgeModule {
     return "DeepLinkIntent"
   }
   
-  @objc func getDeepLinkIntentData(_ resolve: @escaping RCTPromiseResolveBlock, rejecter reject: @escaping RCTPromiseRejectBlock) {
-    let qrData = IntentData.shared.getQrData()
-    resolve(qrData)
+  @objc func getDeepLinkIntentData(_ flowType: String, resolve: @escaping RCTPromiseResolveBlock, rejecter reject: @escaping RCTPromiseRejectBlock) {
+    let intentData = IntentData.shared
+    let result = intentData.getDataByFlow(flowType)
+    resolve(result)
   }
   
-  @objc func resetDeepLinkIntentData() {
-    IntentData.shared.setQrData("")
+  @objc func resetDeepLinkIntentData(_ flowType: String) {
+    IntentData.shared.resetDataByFlow(flowType)
   }
   
   @objc static func requiresMainQueueSetup() -> Bool {

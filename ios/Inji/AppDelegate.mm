@@ -8,6 +8,12 @@
 
 @implementation AppDelegate
 
+typedef NS_ENUM(NSInteger, URLScheme) {
+    URLSchemeInji,
+    URLSchemeOpenID4VP,
+    URLSchemeUnknown
+};
+
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
   self.moduleName = @"main";
@@ -50,10 +56,29 @@
 }
 
 - (void)handleIntent:(NSURL *)url {
-  if ([url.scheme isEqualToString:@"io.mosip.residentapp.inji"]) {
+    
+    URLScheme scheme = [self schemeFromURL:url];
     IntentData *intentData = [IntentData shared];
-    [intentData setQrData:url.absoluteString];
-  }
+      
+    switch (scheme) {
+        case URLSchemeInji:
+            [intentData setQrData:url.absoluteString];
+            break;
+        case URLSchemeOpenID4VP:
+            [intentData setOvpQrData:url.absoluteString];
+            break;
+        case URLSchemeUnknown:
+            break;
+    }
+}
+
+- (URLScheme)schemeFromURL:(NSURL *)url {
+    if ([url.scheme isEqualToString:@"io.mosip.residentapp.inji"]) {
+        return URLSchemeInji;
+    } else if ([url.scheme isEqualToString:@"openid4vp"]) {
+        return URLSchemeOpenID4VP;
+    }
+    return URLSchemeUnknown;
 }
 
 // Universal Links
