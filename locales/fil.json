@@ -471,7 +471,7 @@
     "stepFourTitle": "Mabilis na pagpasok",
     "stepFourText": "I-authenticate ang iyong sarili nang madali gamit ang nakaimbak na digital na kredensyal.",
     "stepFiveTitle": "Backup & Ibalik",
-    "stepFiveText": "Protektahan ang iyong data nang madali gamit ang aming Backup",
+    "stepFiveText": "Madaling i-back up ang iyong mga kredensyal gamit ang comPASS Wallet upang maiwasan ang pagkawala ng data. I-restore anumang oras para sa maayos, secure na access kapag kinakailangan.",
     "stepSixTitle": "Nakasentro ng Gumagamit",
     "stepSixText": "Binuo sa paligid ng iyong mga pangangailangan – nagbibigay sa iyo ng kapangyarihang magpasya. Pamahalaan ang iyong data nang may kumpletong transparency.",
     "stepSevenTitle": "Ibahagi Sa QR Code",
@@ -548,7 +548,7 @@
     "ok": "OK",
     "allow": "Payagan",
     "cancel": "Kanselahin",
-    "essentialClaims": "Mahahalagang Claim",
+    "essentialClaims": "Mga Mandatoryong Claim",
     "voluntaryClaims": "Mga Kusang-loob na Claim",
     "required": "Kailangan"
   },
@@ -557,7 +557,7 @@
     "save": "I-save ang card",
     "reject": "Tanggihan",
     "discard": "Itapon",
-    "goToReceivedVCTab": "Tingnan ang Natanggap na card",
+    "goToReceivedVCTab": "Tingnan ang Mga Natanggap na Card",
     "saving": "Sine-save ang card",
     "errors": {
       "savingFailed": {
@@ -679,7 +679,7 @@
     "shareWithSelfie": "Ibahagi sa Selfie",
     "shareWithSelfieQrLogin": "Pag-login sa QR Code",
     "shareWithSelfieMessage": "Para ibahagi ang iyong Mga Nabe-verify na Kredensyal, secure naming ive-verify ang iyong pagkakakilanlan gamit ang pag-verify sa mukha. Sa pagpapatuloy, pumapayag ka sa INJI na gamitin ang iyong camera para sa layuning ito. \n\n Gagamitin lang ang iyong facial data para sa pag-verify at hindi ibabahagi sa anumang third party.",
-    "shareWithSelfieMessageQrLogin": "Upang ma-access ang portal, kakailanganin mong ibahagi ang iyong Mga Na-verify na Kredensyal at secure na i-verify ang iyong pagkakakilanlan gamit ang pag-verify sa mukha. Sa pagpapatuloy, pumapayag ka sa Inji na gamitin ang iyong camera para sa layuning ito. \n\n Gagamitin lang ang iyong facial data para sa pag-verify at hindi ibabahagi. Pagkatapos ng matagumpay na pag-verify, maaari mong piliin kung aling mga detalye ang ibabahagi.",
+    "shareWithSelfieMessageQrLogin": "Upang ma-access ang portal, kakailanganin mong ibahagi ang iyong Mga Na-verify na Kredensyal at i-verify ang iyong pagkakakilanlan gamit ang pag-verify sa mukha. Sa pagpapatuloy, sumasang-ayon kang payagan ang comPASS Wallet na gamitin ang iyong camera para sa layuning ito. \n\n Makatitiyak, ang iyong data sa mukha ay gagamitin lamang para sa pag-verify at hindi ibabahagi. Pagkatapos ng matagumpay na pag-verify, mapipili mo kung aling mga detalye ang ibabahagi.",
     "ConfirmButton": "Naiintindihan ko",
     "doNotAskMessage": "Huwag mo na akong tanungin",
     "noShareableVcs": "Walang magagamit na mga card na maibabahagi.",

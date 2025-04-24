@@ -472,7 +472,7 @@
     "stepFourTitle": "Quick Access",
     "stepFourText": "Authenticate yourself with ease using the stored digital credential.",
     "stepFiveTitle": "Backup & Restore",
-    "stepFiveText": "Protect your data with ease using our Backup & Restore feature. Safely store your VCs against loss or accidents by creating regular backups and recover it effortlessly whenever needed for seamless continuity.",
+    "stepFiveText": "Easily back up your credentials with comPASS Wallet to prevent data loss. Restore anytime for smooth, secure access when needed.",
     "stepSixTitle": "User Centric",
     "stepSixText": "Built around your needs – giving you the power to decide. Manage your data with complete transparency.",
     "stepSevenTitle": "Share With QR Code",
@@ -549,7 +549,7 @@
     "ok": "OK",
     "allow": "Allow",
     "cancel": "Cancel",
-    "essentialClaims": "Important Claims",
+    "essentialClaims": "Mandatory Claims",
     "voluntaryClaims": "Voluntary Claims",
     "required": "It is necessary",
     "errors": {
@@ -562,7 +562,7 @@
     "verifyAndSave": "Verify and save",
     "reject": "Reject",
     "discard": "Discard",
-    "goToReceivedVCTab": "View Received card",
+    "goToReceivedVCTab": "View Received Cards",
     "saving": "Card is being saved",
     "errors": {
       "savingFailed": {
@@ -684,7 +684,7 @@
     "shareWithSelfie": "Share with Selfie",
     "shareWithSelfieQrLogin": "QR Code Login",
     "shareWithSelfieMessage": "To share your Verifiable Credentials, we’ll securely verify your identity using face verification. By continuing, you consent to INJI using your camera for this purpose. \n\n Your facial data will only be used for verification and will not be shared with any third parties.",
-    "shareWithSelfieMessageQrLogin": "In order to access the portal, you’ll need to share your Verifiable Credentials and verify your identity securely using face verification. By continuing, you consent to Inji using your camera for this purpose. \n\n Your facial data will only be used for verification and will not be shared. After successful verification, you can choose which details to share.",
+    "shareWithSelfieMessageQrLogin": "To access the portal, you will need to share your Verifiable Credentials and verify your identity using face verification. By continuing, you agree to allow comPASS Wallet to use your camera for this purpose. \n\n Rest assured, your facial data will only be used for verification and will not be shared. After successful verification, you'll be able to choose which details to share.",
     "ConfirmButton": "I Understand",
     "doNotAskMessage": "Don't ask me again",
     "noShareableVcs": "No shareable cards are available.",
