@@ -63,12 +63,12 @@ public class SunbirdLoginPage extends BasePage {
     @iOSXCUITFindBy(accessibility = "wallet-activated-icon")
     private WebElement activatedStatus;
 
-    @AndroidFindBy(accessibility = "a Veridonia logo")
-    @iOSXCUITFindBy(accessibility = "a Veridonia logo")
+    @AndroidFindBy(accessibility = "issuerLogo")
+    @iOSXCUITFindBy(accessibility = "issuerLogo")
     private WebElement sunbirdLogo;
 
-    @AndroidFindBy(accessibility = "a square logo of a Sunbird")
-    @iOSXCUITFindBy(accessibility = "a square logo of a Sunbird")
+    @AndroidFindBy(accessibility = "issuerLogo")
+    @iOSXCUITFindBy(accessibility = "issuerLogo")
     private WebElement sunbirdSquareLogo;
 
     @AndroidFindBy(accessibility = "fullNameValue")
