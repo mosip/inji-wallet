@@ -554,7 +554,7 @@
     "verifyAndSave": "تحقق وحفظ",
     "reject": "يرفض",
     "discard": "ينبذ",
-    "goToReceivedVCTab": "عرض البطاقة المستلمة",
+    "goToReceivedVCTab": "عرض البطاقات المستلمة",
     "saving": "جارٍ حفظ البطاقة",
     "errors": {
       "savingFailed": {

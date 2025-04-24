@@ -560,7 +560,7 @@
     "verifyAndSave": "सत्यापित करें और सहेजें",
     "reject": "अस्वीकार",
     "discard": "खारिज करना",
-    "goToReceivedVCTab": "प्राप्त कार्ड्स देखें",
+    "goToReceivedVCTab": "प्राप्त कार्ड देखें",
     "saving": "कार्ड सहेजा जा रहा है",
     "errors": {
       "savingFailed": {

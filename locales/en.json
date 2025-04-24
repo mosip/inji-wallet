@@ -562,7 +562,7 @@
     "verifyAndSave": "Verify and save",
     "reject": "Reject",
     "discard": "Discard",
-    "goToReceivedVCTab": "View Received card",
+    "goToReceivedVCTab": "View Received Cards",
     "saving": "Card is being saved",
     "errors": {
       "savingFailed": {
