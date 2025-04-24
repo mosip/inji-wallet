@@ -148,9 +148,7 @@ export const QrScanner: React.FC<QrScannerProps> = props => {
               <TouchableOpacity
                 onPress={() => {
                   setCameraType(
-                    cameraType === CameraType.back
-                      ? CameraType.front
-                      : CameraType.back,
+                    cameraType === CameraPosition.FRONT ? CameraPosition.BACK : CameraPosition.FRONT,
                   );
                 }}>
                 {SvgImage.FlipCameraIcon()}
