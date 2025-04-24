@@ -549,7 +549,7 @@
     "ok": "OK",
     "allow": "Allow",
     "cancel": "Cancel",
-    "essentialClaims": "Important Claims",
+    "essentialClaims": "Mandatory Claims",
     "voluntaryClaims": "Voluntary Claims",
     "required": "It is necessary",
     "errors": {
