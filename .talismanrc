@@ -138,7 +138,7 @@ fileignoreconfig:
   - filename: locales/ara.json
     checksum: 89e413bc5884783f0601f8a22855f3da0cdd0ac9e9f80a1edd4e6a5fb10d94d4
   - filename: locales/tam.json
-    checksum: 260b368df8b4aac6001014ab573b0b2d90daa9a8bc2e85d9f83803e2b745d4cf
+    checksum: 49a286ed3f5c6240df65133252e2c2f00485af8f43f5c634414320355b2cd538
   - filename: locales/spa.json
     checksum: a03c5fa839d761f7bf5bbf0ea9bbd48da57116430a99e1d22f0e7184435d468c
   - filename: locales/fil.json
