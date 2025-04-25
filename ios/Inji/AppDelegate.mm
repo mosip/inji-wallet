@@ -3,7 +3,16 @@
 #import <React/RCTBundleURLProvider.h>
 #import <React/RCTLinkingManager.h>
 
+#import <ExpoModulesCore-Swift.h>
+#import "Inji-Swift.h"
+
 @implementation AppDelegate
+
+typedef NS_ENUM(NSInteger, URLScheme) {
+    URLSchemeInji,
+    URLSchemeOpenID4VP,
+    URLSchemeUnknown
+};
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
@@ -42,7 +51,34 @@
 
 // Linking API
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url options:(NSDictionary<UIApplicationOpenURLOptionsKey,id> *)options {
+  [self handleIntent:url];
   return [super application:application openURL:url options:options] || [RCTLinkingManager application:application openURL:url options:options];
+}
+
+- (void)handleIntent:(NSURL *)url {
+    
+    URLScheme scheme = [self schemeFromURL:url];
+    IntentData *intentData = [IntentData shared];
+      
+    switch (scheme) {
+        case URLSchemeInji:
+            [intentData setQrData:url.absoluteString];
+            break;
+        case URLSchemeOpenID4VP:
+            [intentData setOvpQrData:url.absoluteString];
+            break;
+        case URLSchemeUnknown:
+            break;
+    }
+}
+
+- (URLScheme)schemeFromURL:(NSURL *)url {
+    if ([url.scheme isEqualToString:@"io.mosip.residentapp.inji"]) {
+        return URLSchemeInji;
+    } else if ([url.scheme isEqualToString:@"openid4vp"]) {
+        return URLSchemeOpenID4VP;
+    }
+    return URLSchemeUnknown;
 }
 
 // Universal Links

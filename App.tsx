@@ -1,4 +1,4 @@
-import React, {useContext, useEffect} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {AppLayout} from './screens/AppLayout';
 import {useFont} from "./shared/hooks/useFont";
 import {GlobalContextProvider} from './components/GlobalContextProvider';
@@ -9,6 +9,7 @@ import {
   APP_EVENTS,
   selectIsDecryptError,
   selectIsKeyInvalidateError,
+  selectIsLinkCode,
   selectIsReadError,
   selectIsReady,
 } from './machines/app';
@@ -28,6 +29,7 @@ import i18n from './i18n';
 import {CopilotProvider} from 'react-native-copilot';
 import {CopilotTooltip} from './components/CopilotTooltip';
 import {Theme} from './components/ui/styleUtils';
+import { selectAppSetupComplete } from './machines/auth';
 
 const {RNSecureKeystoreModule} = NativeModules;
 // kludge: this is a bad practice but has been done temporarily to surface
@@ -49,8 +51,15 @@ const DecryptErrorAlert = (controller, t) => {
 const AppLayoutWrapper: React.FC = () => {
   const {appService} = useContext(GlobalContext);
   const isDecryptError = useSelector(appService, selectIsDecryptError);
+  const isQrLogin = useSelector(appService, selectIsLinkCode);
   const controller = useApp();
   const {t} = useTranslation('WelcomeScreen');
+
+  const authService = appService.children.get('auth');
+  const isAppSetupComplete = useSelector(authService, selectAppSetupComplete);
+  
+  const [isOverlayVisible, setOverlayVisible] = useState(isQrLogin !== '');
+  
   useEffect(() => {
     if (AppState.currentState === 'active') {
       appService.send(APP_EVENTS.ACTIVE());
@@ -59,11 +68,28 @@ const AppLayoutWrapper: React.FC = () => {
     }
   }, []);
 
+  useEffect(() => {
+    setOverlayVisible(isQrLogin !== '');
+  }, [isQrLogin]);
+
   if (isDecryptError) {
     DecryptErrorAlert(controller, t);
   }
   configureTelemetry();
-  return <AppLayout />;
+  return (
+    <>
+      <AppLayout />
+
+      <MessageOverlay
+        isVisible={isOverlayVisible && !isAppSetupComplete}
+        title={t('qrLoginOverlay.title')}
+        message={t('qrLoginOverlay.message')}
+        onButtonPress={() => {setOverlayVisible(false)}}
+        buttonText={t('common:ok')}
+        minHeight={'auto'}
+      />
+    </>
+  );
 };
 
 const AppLoadingWrapper: React.FC = () => {
