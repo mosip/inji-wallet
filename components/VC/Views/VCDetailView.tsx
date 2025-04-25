@@ -20,9 +20,9 @@ import {
   KEY_TYPE_FIELD,
   fieldItemIterator,
 } from '../common/VCUtils';
-import {ProfileIcon} from '../../ProfileIcon';
 import {VCFormat} from '../../../shared/VCFormat';
 import {VCItemField} from '../common/VCItemField';
+import testIDProps from '../../../shared/commonUtil';
 
 const getProfileImage = (face: any) => {
   if (face) {
@@ -104,6 +104,7 @@ export const VCDetailView: React.FC<VCItemDetailsProps> = (props: VCItemDetailsP
                     crossAlign="center"
                     margin="12 0 0 0">
                     <Image
+                      {...testIDProps('issuerLogo')}
                       src={logo?.url}
                       alt={logo?.alt_text}
                       style={Theme.Styles.issuerLogo}
