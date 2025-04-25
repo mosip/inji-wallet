@@ -464,7 +464,7 @@
   },
   "OnboardingOverlay": {
     "stepOneTitle": "Welcome!",
-    "stepOneText": "Keep your digital credential with you at all times. Inji helps you manage and use them effectively. To get started, add cards to your profile.",
+    "stepOneText": "Keep your digital credential with you at all times. comPASS Wallet helps you manage and use them effectively. To get started, add cards to your profile.",
     "stepTwoTitle": "Secure Sharing",
     "stepTwoText": "Share your cards securely in a hassle free way and avail various services.",
     "stepThreeTitle": "Trusted Digital Wallet",
@@ -683,7 +683,7 @@
   "ScanScreen": {
     "shareWithSelfie": "Share with Selfie",
     "shareWithSelfieQrLogin": "QR Code Login",
-    "shareWithSelfieMessage": "To share your Verifiable Credentials, we’ll securely verify your identity using face verification. By continuing, you consent to INJI using your camera for this purpose. \n\n Your facial data will only be used for verification and will not be shared with any third parties.",
+    "shareWithSelfieMessage": "To share your Verifiable Credentials, we’ll securely verify your identity using face verification. By continuing, you consent to comPASS Wallet using your camera for this purpose. \n\n Your facial data will only be used for verification and will not be shared with any third parties.",
     "shareWithSelfieMessageQrLogin": "To access the portal, you will need to share your Verifiable Credentials and verify your identity using face verification. By continuing, you agree to allow comPASS Wallet to use your camera for this purpose. \n\n Rest assured, your facial data will only be used for verification and will not be shared. After successful verification, you'll be able to choose which details to share.",
     "ConfirmButton": "I Understand",
     "doNotAskMessage": "Don't ask me again",
