@@ -117,7 +117,7 @@ public class keyManagement extends AndroidBaseTest {
 
         assertTrue(mockCertifyLoginPage.isEnterYourVidTextDisplayed(), "Verify if enter your vid text is displayed");
 
-        OtpVerificationPage otpVerification = mockCertifyLoginPage.setEnterIdTextBox(TestDataReader.readData("MockVc"));
+        OtpVerificationPage otpVerification = mockCertifyLoginPage.setEnterIdTextBox("9261481024");
 
         mockCertifyLoginPage.clickOnGetOtpButton();
         assertTrue(mockCertifyLoginPage.isOtpHasSendMessageDisplayed(), "verify if otp page is displayed");

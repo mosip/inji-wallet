@@ -6,6 +6,7 @@ import inji.pages.*;
 import inji.utils.TestDataReader;
 import org.testng.annotations.Test;
 
+import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
 public class AboutInjiTest extends AndroidBaseTest {
@@ -36,7 +37,7 @@ public class AboutInjiTest extends AndroidBaseTest {
         AboutInjiPage aboutInjiPage = settingsPage.clickOnAbouInji();
 
         assertTrue(aboutInjiPage.isAboutInjiHeaderDisplayed(), "Verify id about inji page displayed");
-
+        assertEquals(aboutInjiPage.getAboutInjiHeader(),"ABOUT INJI WALLET");
         aboutInjiPage.clickOnCopyText();
         assertTrue(aboutInjiPage.isAppIdCopiedTextDisplayed(), "verify if app id is copied");
 

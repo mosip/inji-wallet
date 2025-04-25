@@ -83,8 +83,8 @@ public class DetailedVcViewPage extends BasePage{
     @iOSXCUITFindBy(accessibility = "credentialRegistryValue")
     private WebElement credentialRegistryValue;
 
-    @AndroidFindBy(accessibility = "mosip-logo")
-    @iOSXCUITFindBy(accessibility = "mosip-logo")
+    @AndroidFindBy(accessibility = "issuerLogo")
+    @iOSXCUITFindBy(accessibility = "issuerLogo")
     private WebElement esignetLogo;
 
     @AndroidFindBy(accessibility = "goBack")

@@ -6,6 +6,8 @@ import io.appium.java_client.pagefactory.AndroidFindBy;
 import io.appium.java_client.pagefactory.iOSXCUITFindBy;
 import org.openqa.selenium.WebElement;
 
+import java.time.Duration;
+
 public class MockCertifyLoginPage extends BasePage {
 
     @iOSXCUITFindBy(iOSClassChain = "**/XCUIElementTypeStaticText[`label == \"“Inji” Wants to Use “mosip.net” to Sign In\"`]")
@@ -85,6 +87,10 @@ public class MockCertifyLoginPage extends BasePage {
     @iOSXCUITFindBy(accessibility = "credentialTypeHeading-MOSIPVerifiableCredential")
     private WebElement credentialTypeHeadingMOSIPVerifiableCredential;
 
+    @AndroidFindBy(xpath = "//android.widget.TextView[@text=\"Invalid Individual ID\"]")
+    @iOSXCUITFindBy(accessibility = "Invalid Individual ID")
+    private WebElement invalidIndividualIdText;
+
 
     public MockCertifyLoginPage(AppiumDriver driver) {
         super(driver);
@@ -117,6 +123,11 @@ public class MockCertifyLoginPage extends BasePage {
     }
 
     public OtpVerificationPage setEnterIdTextBox(String uinOrVid) {
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
         sendKeysToTextBox(enterIdTextBox, uinOrVid);
         return new OtpVerificationPage(driver);
     }
@@ -216,5 +227,7 @@ public class MockCertifyLoginPage extends BasePage {
         }
     }
 
-
+    public boolean isInvalidIndividualIdTextDisplayed(){
+        return isElementDisplayed(invalidIndividualIdText);
+    }
 }

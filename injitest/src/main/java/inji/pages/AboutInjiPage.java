@@ -6,6 +6,7 @@ import io.appium.java_client.pagefactory.iOSXCUITFindBy;
 import org.openqa.selenium.WebElement;
 
 public class AboutInjiPage extends BasePage {
+    BasePage basePage = new BasePage(driver);
     @AndroidFindBy(accessibility = "aboutInji")
     @iOSXCUITFindBy(accessibility = "aboutInji")
     private WebElement aboutInjiHeader;
@@ -57,7 +58,10 @@ public class AboutInjiPage extends BasePage {
         return this.isElementDisplayed(aboutInjiHeader);
     }
 
-
+    public String getAboutInjiHeader() {
+        basePage.retryToGetElement(aboutInjiHeader);
+        return this.getTextFromLocator(aboutInjiHeader);
+    }
     public boolean isAppIdCopiedTextDisplayed() {
         return this.isElementDisplayed(copied);
     }

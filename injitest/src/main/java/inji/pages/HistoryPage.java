@@ -22,6 +22,11 @@ public class HistoryPage extends BasePage {
     @iOSXCUITFindBy(className = "android.widget.TextView")
     private WebElement activityLogHeader;
 
+    @iOSXCUITFindBy(accessibility = "Mobile Driving License is downloaded.")
+    private WebElement mdlHistoryMessage;
+
+
+
 
     public HistoryPage(AppiumDriver driver) {
         super(driver);
@@ -47,6 +52,25 @@ public class HistoryPage extends BasePage {
 
     private boolean verifyHistoryAndroidforInsuranceCard(String vcNumber) {
         By locator = By.xpath("//*[contains(@text,'Health Insurance is downloaded.')]");
+        return this.isElementDisplayed(locator);
+    }
+
+    private boolean verifyHistoryAndroidformdl() {
+        By locator = By.xpath("//*[contains(@text,'Mobile Driving License is downloaded.')]");
+        return this.isElementDisplayed(locator);
+    }
+
+    private boolean verifyHistoryAndroidforMock() {
+        By locator = By.xpath("//*[@name=\"Mock Verifiable Credential is downloaded.\"]");
+        return this.isElementDisplayed(locator);
+    }
+
+    private boolean verifyHistoryIosMock() {
+        By locator = By.xpath("//*[@name=\"Mock Verifiable Credential is downloaded.\"]");
+        return this.isElementDisplayed(locator);
+    }
+    private boolean verifyHistoryIosmdl() {
+        By locator = By.xpath("//XCUIElementTypeStaticText[@name=\"Mobile Driving License is downloaded.\"]");
         return this.isElementDisplayed(locator);
     }
 
@@ -102,6 +126,28 @@ public class HistoryPage extends BasePage {
         }
         return false;
     }
+
+    public boolean verifyHistory( Target os) {
+        switch (os) {
+            case ANDROID:
+                return verifyHistoryAndroidformdl();
+            case IOS:
+                return verifyHistoryIosmdl();
+        }
+        return false;
+    }
+
+    public boolean verifyHistoryForMock( Target os) {
+        switch (os) {
+            case ANDROID:
+                return verifyHistoryAndroidforMock();
+            case IOS:
+                return verifyHistoryIosMock();
+        }
+        return false;
+    }
+
+
 
     public boolean verifyHistoryForInsuranceCard(String vcNumber, Target os) {
         switch (os) {
