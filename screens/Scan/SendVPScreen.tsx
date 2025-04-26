@@ -35,33 +35,7 @@ export const SendVPScreen: React.FC<ScanLayoutProps> = props => {
   const {t} = useTranslation('SendVPScreen');
   const controller = useSendVPScreen();
 
-  const {appService} = useContext(GlobalContext);
-
   const vcsMatchingAuthRequest = controller.vcsMatchingAuthRequest;
-  const [triggerExitFlow, setTriggerExitFlow] = useState(false);
-
-  useEffect(() => {
-    if (controller.errorModal.show && controller.isOVPViaDeepLink) {
-      const timeout = setTimeout(
-        () => {
-          setTriggerExitFlow(true);
-        },
-        isIOS() ? 4000 : 2000,
-      );
-
-      return () => clearTimeout(timeout);
-    }
-  }, [controller.errorModal.show, controller.isOVPViaDeepLink]);
-
-  useEffect(() => {
-    if (triggerExitFlow) {
-      OpenID4VP.sendErrorToVerifier(OVP_ERROR_MESSAGES.NO_MATCHING_VCS);
-      controller.RESET_LOGGED_ERROR();
-      controller.GO_TO_HOME();
-      appService.send(APP_EVENTS.RESET_AUTHORIZATION_REQUEST()),
-        BackHandler.exitApp();
-    }
-  }, [triggerExitFlow]);
 
   useEffect(() => {
     sendImpressionEvent(
@@ -380,9 +354,9 @@ export const SendVPScreen: React.FC<ScanLayoutProps> = props => {
         primaryButtonEvent={controller.RETRY}
         textButtonTestID={'home'}
         textButtonText={
-          !controller.isOVPViaDeepLink
-            ? t('ScanScreen:status.accepted.home')
-            : undefined
+          controller.isOVPViaDeepLink
+              ? undefined
+              : t('ScanScreen:status.accepted.home')
         }
         textButtonEvent={handleTextButtonEvent}
         customImageStyles={{paddingBottom: 0, marginBottom: -6}}

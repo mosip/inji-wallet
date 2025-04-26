@@ -88,7 +88,7 @@ export function useScanScreen() {
 
   return {
     locationError,
-    isNoSharableVCs,
+    isEmpty: !shareableVcsMetadata.length,
     isBluetoothPermissionDenied,
     isNearByDevicesPermissionDenied,
     isLocationDisabled,

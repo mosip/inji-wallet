@@ -8,6 +8,7 @@ import {Header} from './Header';
 import {Theme} from './styleUtils';
 import testIDProps from '../../shared/commonUtil';
 import {Modal} from './Modal';
+import {isIOS} from '../../shared/constants';
 
 export const Error: React.FC<ErrorProps> = props => {
   const {t} = useTranslation('common');
@@ -46,9 +47,12 @@ export const Error: React.FC<ErrorProps> = props => {
       props.textButtonText === undefined &&
       props.primaryButtonText === undefined
     ) {
-      const timeout = setTimeout(() => {
-        setTriggerExitFlow(true);
-      }, 2000);
+      const timeout = setTimeout(
+        () => {
+          setTriggerExitFlow(true);
+        },
+        isIOS() ? 4000 : 2000,
+      );
 
       return () => clearTimeout(timeout);
     }
@@ -78,14 +82,7 @@ export const Error: React.FC<ErrorProps> = props => {
             <Text style={Theme.ErrorStyles.message} testID={`${testID}Message`}>
               {message}
             </Text>
-            <Text
-              style={Theme.ErrorStyles.additionalMessage}
-              testID={`${testID}Message`}>
-              {additionalMessage}
-            </Text>
-            <Text
-              style={Theme.ErrorStyles.additionalMessage}
-              testID={`${testID}Message`}>
+            <Text style={Theme.ErrorStyles.additionalMessage} testID={`${testID}AdditionalMessage`}>
               {additionalMessage}
             </Text>
           </View>

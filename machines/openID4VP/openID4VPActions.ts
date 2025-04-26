@@ -80,9 +80,6 @@ export const openID4VPActions = (model: any) => {
         if (!anyInputDescriptorHasFormatOrConstraints) {
           matchingVCs[presentationDefinition['input_descriptors'][0].id] = vcs;
         }
-        if (Object.keys(matchingVCs).length === 0) {
-          OpenID4VP.sendErrorToVerifier(OVP_ERROR_MESSAGES.NO_MATCHING_VCS);
-        }
         return matchingVCs;
       },
       requestedClaims: () => Array.from(requestedClaimsByVerifier).join(','),

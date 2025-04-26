@@ -115,10 +115,6 @@ export const scanMachine =
                 target: 'restrictSharingVc',
               },
               {
-                cond: 'isOVPViaDeepLink',
-                target: '#scan.checkFaceAuthConsent',
-              },
-              {
                 target: 'startPermissionCheck',
               },
             ],

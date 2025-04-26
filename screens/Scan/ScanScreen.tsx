@@ -48,7 +48,6 @@ export const ScanScreen: React.FC = () => {
 
   const {appService} = useContext(GlobalContext);
   const [triggerExitFlow, setTriggerExitFlow] = useState(false);
-
   useEffect(() => {
     if (showErrorModal && sendVPScreenController.isOVPViaDeepLink) {
       const timeout = setTimeout(
@@ -377,6 +376,13 @@ export const ScanScreen: React.FC = () => {
           isVisible={showErrorModal}
           title={sendVPScreenController.errorModal.title}
           message={sendVPScreenController.errorModal.message}
+          additionalMessage={
+            !(sendVPScreenController.errorModal.showRetryButton && 
+              sendVPScreenController.openID4VPRetryCount < 3) &&
+            sendVPScreenController.isOVPViaDeepLink
+              ? sendVPScreenController.errorModal.additionalMessage
+              : undefined
+          }
           image={SvgImage.PermissionDenied()}
           primaryButtonTestID={'retry'}
           primaryButtonText={
@@ -388,9 +394,9 @@ export const ScanScreen: React.FC = () => {
           primaryButtonEvent={sendVPScreenController.RETRY}
           textButtonTestID={'home'}
           textButtonText={
-            !(scanScreenController.authorizationRequest !== '')
-              ? t('ScanScreen:status.accepted.home')
-              : undefined
+            sendVPScreenController.isOVPViaDeepLink
+              ? undefined
+              : t('ScanScreen:status.accepted.home')
           }
           textButtonEvent={handleTextButtonEvent}
           customImageStyles={{paddingBottom: 0, marginBottom: -6}}
