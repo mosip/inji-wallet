@@ -299,6 +299,35 @@ export const ScanScreen: React.FC = () => {
     );
   }
 
+  const getAdditionalMessage = () => {
+    if (
+      sendVPScreenController.isOVPViaDeepLink &&
+      !(
+        sendVPScreenController.errorModal.showRetryButton &&
+        sendVPScreenController.openID4VPRetryCount < 3
+      )
+    ) {
+      return sendVPScreenController.errorModal.additionalMessage;
+    }
+    return undefined;
+  };
+
+  const getPrimaryButtonText = () => {
+    if (
+      sendVPScreenController.errorModal.showRetryButton &&
+      sendVPScreenController.openID4VPRetryCount < 3
+    ) {
+      return t('ScanScreen:status.retry');
+    }
+    return undefined;
+  };
+
+  const getTextButtonText = () => {
+    return sendVPScreenController.isOVPViaDeepLink
+      ? undefined
+      : t('ScanScreen:status.accepted.home');
+  };
+
   const faceVerificationController = sendVPScreenController.flowType.startsWith(
     'OpenID4VP',
   )
@@ -376,28 +405,13 @@ export const ScanScreen: React.FC = () => {
           isVisible={showErrorModal}
           title={sendVPScreenController.errorModal.title}
           message={sendVPScreenController.errorModal.message}
-          additionalMessage={
-            !(sendVPScreenController.errorModal.showRetryButton && 
-              sendVPScreenController.openID4VPRetryCount < 3) &&
-            sendVPScreenController.isOVPViaDeepLink
-              ? sendVPScreenController.errorModal.additionalMessage
-              : undefined
-          }
+          additionalMessage={getAdditionalMessage()}
           image={SvgImage.PermissionDenied()}
           primaryButtonTestID={'retry'}
-          primaryButtonText={
-            sendVPScreenController.errorModal.showRetryButton &&
-            sendVPScreenController.openID4VPRetryCount < 3
-              ? t('ScanScreen:status.retry')
-              : undefined
-          }
+          primaryButtonText={getPrimaryButtonText()}
           primaryButtonEvent={sendVPScreenController.RETRY}
           textButtonTestID={'home'}
-          textButtonText={
-            sendVPScreenController.isOVPViaDeepLink
-              ? undefined
-              : t('ScanScreen:status.accepted.home')
-          }
+          textButtonText={getTextButtonText()}
           textButtonEvent={handleTextButtonEvent}
           customImageStyles={{paddingBottom: 0, marginBottom: -6}}
           customStyles={{marginTop: '30%'}}

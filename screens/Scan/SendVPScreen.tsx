@@ -5,11 +5,7 @@ import {BackHandler, I18nManager, View} from 'react-native';
 import {Button, Column, Row, Text} from '../../components/ui';
 import {Theme} from '../../components/ui/styleUtils';
 import {VcItemContainer} from '../../components/VC/VcItemContainer';
-import {
-  isIOS,
-  LIVENESS_CHECK,
-  OVP_ERROR_MESSAGES,
-} from '../../shared/constants';
+import {LIVENESS_CHECK, OVP_ERROR_MESSAGES} from '../../shared/constants';
 import {TelemetryConstants} from '../../shared/telemetry/TelemetryConstants';
 import {
   getImpressionEventData,
@@ -149,6 +145,19 @@ export const SendVPScreen: React.FC<ScanLayoutProps> = props => {
       };
     }
     return controller.overlayDetails?.primaryButtonEvent;
+  };
+
+  const getPrimaryButtonText = () => {
+    return controller.errorModal.showRetryButton &&
+      controller.openID4VPRetryCount < 3
+      ? t('ScanScreen:status.retry')
+      : undefined;
+  };
+
+  const getTextButtonText = () => {
+    return controller.isOVPViaDeepLink
+      ? undefined
+      : t('ScanScreen:status.accepted.home');
   };
 
   const getVcKey = vcData => {
@@ -345,19 +354,10 @@ export const SendVPScreen: React.FC<ScanLayoutProps> = props => {
         additionalMessage={controller.errorModal.additionalMessage}
         image={SvgImage.PermissionDenied()}
         primaryButtonTestID={'retry'}
-        primaryButtonText={
-          controller.errorModal.showRetryButton &&
-          controller.openID4VPRetryCount < 3
-            ? t('ScanScreen:status.retry')
-            : undefined
-        }
+        primaryButtonText={getPrimaryButtonText()}
         primaryButtonEvent={controller.RETRY}
         textButtonTestID={'home'}
-        textButtonText={
-          controller.isOVPViaDeepLink
-              ? undefined
-              : t('ScanScreen:status.accepted.home')
-        }
+        textButtonText={getTextButtonText()}
         textButtonEvent={handleTextButtonEvent}
         customImageStyles={{paddingBottom: 0, marginBottom: -6}}
         customStyles={{marginTop: '30%'}}

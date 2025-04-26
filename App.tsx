@@ -58,7 +58,7 @@ const AppLayoutWrapper: React.FC = () => {
   const authService = appService.children.get('auth');
   const isAppSetupComplete = useSelector(authService, selectAppSetupComplete);
 
-  const [isOverlayVisible, setOverlayVisible] = useState(isDeepLinkFlow);
+  const [isDeepLinkOverlayVisible, setDeepLinkOverlayVisible] = useState(isDeepLinkFlow);
 
   useEffect(() => {
     if (AppState.currentState === 'active') {
@@ -69,7 +69,7 @@ const AppLayoutWrapper: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    setOverlayVisible(isDeepLinkFlow);
+    setDeepLinkOverlayVisible(isDeepLinkFlow);
   }, [isDeepLinkFlow]);
 
   if (isDecryptError) {
@@ -81,11 +81,11 @@ const AppLayoutWrapper: React.FC = () => {
       <AppLayout />
 
       <MessageOverlay
-        isVisible={isOverlayVisible && !isAppSetupComplete}
+        isVisible={isDeepLinkOverlayVisible && !isAppSetupComplete}
         title={t('errors.appSetupIncomplete.title')}
         message={t('errors.appSetupIncomplete.message')}
         onButtonPress={() => {
-          setOverlayVisible(false);
+          setDeepLinkOverlayVisible(false);
         }}
         buttonText={t('common:ok')}
         minHeight={'auto'}
