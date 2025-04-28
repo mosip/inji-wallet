@@ -102,7 +102,8 @@ export const SendVcScreen: React.FC = () => {
         <Column
           style={Theme.SendVcScreenStyles.shareOptionButtonsContainer}
           backgroundColor={Theme.Colors.whiteBackgroundColor}>
-          {isMosipVC(controller.verifiableCredentialData[0].issuer) && (
+          {(isMosipVC(controller.verifiableCredentialData[0].issuer) ||
+            controller.verifiableCredentialData[0].face != null) && (
             <Button
               type="gradient"
               title={t('acceptRequestAndVerify')}
