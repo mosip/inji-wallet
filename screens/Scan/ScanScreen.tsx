@@ -90,10 +90,10 @@ export const ScanScreen: React.FC = () => {
     if (scanScreenController.isStartPermissionCheck) {
       if (
         scanScreenController.authorizationRequest !== '' &&
-        scanScreenController.isEmpty
+        scanScreenController.isNoSharableVCs
       ) {
         scanScreenController.START_PERMISSION_CHECK();
-      } else if (!scanScreenController.isEmpty) {
+      } else if (!scanScreenController.isNoSharableVCs) {
         scanScreenController.START_PERMISSION_CHECK();
       }
     }
@@ -104,13 +104,13 @@ export const ScanScreen: React.FC = () => {
   }, [scanScreenController.isQuickShareDone]);
 
   useEffect(() => {
-    if (scanScreenController.isEmpty && scanScreenController.linkcode !== '')
+    if (scanScreenController.isNoSharableVCs && scanScreenController.linkcode !== '')
       setTimeout(() => {
         scanScreenController.GOTO_HOME();
         appService.send(APP_EVENTS.RESET_LINKCODE());
         BackHandler.exitApp();
       }, 2000);
-  }, [scanScreenController.isEmpty, scanScreenController.linkcode]);
+  }, [scanScreenController.isNoSharableVCs, scanScreenController.linkcode]);
 
   const openSettings = () => {
     Linking.openSettings();
@@ -225,7 +225,7 @@ export const ScanScreen: React.FC = () => {
 
   function loadQRScanner() {
     if (
-      scanScreenController.isEmpty &&
+      scanScreenController.isNoSharableVCs &&
       scanScreenController.authorizationRequest === ''
     ) {
       return noShareableVcText();
