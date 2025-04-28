@@ -15,7 +15,7 @@ import {SvgImage} from '../../components/ui/svg';
 import {View, I18nManager} from 'react-native';
 import {Text} from './../../components/ui';
 import {BannerStatusType} from '../../components/BannerNotification';
-import {LIVENESS_CHECK} from '../../shared/constants';
+import {isIOS, LIVENESS_CHECK} from '../../shared/constants';
 import {SendVPScreen} from './SendVPScreen';
 
 const ScanStack = createNativeStackNavigator();
@@ -170,7 +170,7 @@ export const ScanLayout: React.FC = () => {
         title={t('status.accepted.title')}
         message={t('status.accepted.message')}
         additionalMessage={
-          controller.isOVPViaDeepLink
+          controller.isOVPViaDeepLink && isIOS()
             ? t('status.accepted.additionalMessage')
             : ''
         }
