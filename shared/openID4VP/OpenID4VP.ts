@@ -135,5 +135,6 @@ export async function isClientValidationRequired() {
 
 export async function getWalletMetadata() {
   const config = await getAllConfigurations();
-  return config.walletMetadata;
+  const walletMetadata = JSON.parse(config.walletMetadata);
+  return walletMetadata;
 }
