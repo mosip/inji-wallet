@@ -172,3 +172,5 @@ export const EXPIRED_VC_ERROR_CODE = 'ERR_VC_EXPIRED';
 export const BASE_36 = 36;
 
 export const DEFAULT_OTP = '111111';
+
+export const ACRONYMS = new Set(['id']);
