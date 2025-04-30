@@ -9,7 +9,7 @@ import {Modal} from '../../components/ui/Modal';
 import {QrLoginRef} from '../../machines/QrLogin/QrLoginMachine';
 import {ScrollView} from 'react-native';
 import {getClientNameForCurrentLanguage} from '../../i18n';
-import {CLAIM_DISPLAY_NAMES} from '../../shared/constants';
+import {ACRONYMS} from '../../shared/constants';
 
 export const QrConsent: React.FC<QrConsentProps> = props => {
   const {t} = useTranslation('QrLogin');
@@ -62,13 +62,15 @@ export const QrConsent: React.FC<QrConsentProps> = props => {
                   color={Theme.Colors.Details}
                   style={Theme.TextStyles.base}>
                   {t(
-                    CLAIM_DISPLAY_NAMES[claim] ||
-                      claim
-                        .split('_')
-                        .map(
-                          word => word.charAt(0).toUpperCase() + word.slice(1),
-                        )
-                        .join(' '),
+                    claim
+                      .split('_')
+                      .map(word => {
+                        const lower = word.toLowerCase();
+                        return ACRONYMS.has(lower)
+                          ? lower.toUpperCase()
+                          : word.charAt(0).toUpperCase() + word.slice(1);
+                      })
+                      .join(' '),
                   )}
                 </Text>
                 <Text
@@ -101,14 +103,15 @@ export const QrConsent: React.FC<QrConsentProps> = props => {
                   <ListItem.Title>
                     <Text color={Theme.Colors.Details}>
                       {t(
-                        CLAIM_DISPLAY_NAMES[claim] ||
-                          claim
-                            .split('_')
-                            .map(
-                              word =>
-                                word.charAt(0).toUpperCase() + word.slice(1),
-                            )
-                            .join(' '),
+                        claim
+                          .split('_')
+                          .map(word => {
+                            const lower = word.toLowerCase();
+                            return ACRONYMS.has(lower)
+                              ? lower.toUpperCase()
+                              : word.charAt(0).toUpperCase() + word.slice(1);
+                          })
+                          .join(' '),
                       )}
                     </Text>
                   </ListItem.Title>

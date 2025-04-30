@@ -173,12 +173,4 @@ export const BASE_36 = 36;
 
 export const DEFAULT_OTP = '111111';
 
-export const CLAIM_DISPLAY_NAMES = {
-  first_name: 'First Name',
-  last_name: 'Last Name',
-  national_id: 'National ID',
-  birthdate: 'Date of Birth',
-  email: 'Email ID',
-  picture: 'Photo',
-  gender: 'Gender',
-};
+export const ACRONYMS = new Set(['id']);
