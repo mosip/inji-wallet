@@ -29,7 +29,6 @@ import {VerifyIdentityOverlay} from '../VerifyIdentityOverlay';
 import {VCShareFlowType} from '../../shared/Utils';
 import {APP_EVENTS} from '../../machines/app';
 import {GlobalContext} from '../../shared/GlobalContext';
-import {OpenID4VP} from '../../shared/openID4VP/OpenID4VP';
 
 export const ScanScreen: React.FC = () => {
   const {t} = useTranslation('ScanScreen');
@@ -43,35 +42,9 @@ export const ScanScreen: React.FC = () => {
       (sendVPScreenController.flowType ===
         VCShareFlowType.MINI_VIEW_SHARE_OPENID4VP ||
         sendVPScreenController.flowType ===
-          VCShareFlowType.MINI_VIEW_SHARE_WITH_SELFIE_OPENID4VP ||
-        sendVPScreenController.flowType === VCShareFlowType.OPENID4VP));
+          VCShareFlowType.MINI_VIEW_SHARE_WITH_SELFIE_OPENID4VP));
 
   const {appService} = useContext(GlobalContext);
-  const [triggerExitFlow, setTriggerExitFlow] = useState(false);
-  useEffect(() => {
-    if (showErrorModal && sendVPScreenController.isOVPViaDeepLink) {
-      const timeout = setTimeout(
-        () => {
-          OpenID4VP.sendErrorToVerifier(OVP_ERROR_MESSAGES.NO_MATCHING_VCS);
-          setTriggerExitFlow(true);
-        },
-        isIOS() ? 4000 : 2000,
-      );
-
-      return () => clearTimeout(timeout);
-    }
-  }, [showErrorModal, sendVPScreenController.isOVPViaDeepLink]);
-
-  useEffect(() => {
-    if (triggerExitFlow) {
-      sendVPScreenController.RESET_LOGGED_ERROR();
-      sendVPScreenController.GO_TO_HOME();
-      sendVPScreenController.RESET_RETRY_COUNT();
-      appService.send(APP_EVENTS.RESET_AUTHORIZATION_REQUEST());
-      setTriggerExitFlow(false);
-      BackHandler.exitApp();
-    }
-  }, [triggerExitFlow]);
 
   useEffect(() => {
     (async () => {
@@ -104,7 +77,10 @@ export const ScanScreen: React.FC = () => {
   }, [scanScreenController.isQuickShareDone]);
 
   useEffect(() => {
-    if (scanScreenController.isNoSharableVCs && scanScreenController.linkcode !== '')
+    if (
+      scanScreenController.isNoSharableVCs &&
+      scanScreenController.linkcode !== ''
+    )
       setTimeout(() => {
         scanScreenController.GOTO_HOME();
         appService.send(APP_EVENTS.RESET_LINKCODE());
@@ -299,19 +275,6 @@ export const ScanScreen: React.FC = () => {
     );
   }
 
-  const getAdditionalMessage = () => {
-    if (
-      sendVPScreenController.isOVPViaDeepLink &&
-      !(
-        sendVPScreenController.errorModal.showRetryButton &&
-        sendVPScreenController.openID4VPRetryCount < 3
-      )
-    ) {
-      return sendVPScreenController.errorModal.additionalMessage;
-    }
-    return undefined;
-  };
-
   const getPrimaryButtonText = () => {
     if (
       sendVPScreenController.errorModal.showRetryButton &&
@@ -405,7 +368,6 @@ export const ScanScreen: React.FC = () => {
           isVisible={showErrorModal}
           title={sendVPScreenController.errorModal.title}
           message={sendVPScreenController.errorModal.message}
-          additionalMessage={getAdditionalMessage()}
           image={SvgImage.PermissionDenied()}
           primaryButtonTestID={'retry'}
           primaryButtonText={getPrimaryButtonText()}

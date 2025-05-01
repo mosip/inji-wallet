@@ -5,7 +5,11 @@ import {BackHandler, I18nManager, View} from 'react-native';
 import {Button, Column, Row, Text} from '../../components/ui';
 import {Theme} from '../../components/ui/styleUtils';
 import {VcItemContainer} from '../../components/VC/VcItemContainer';
-import {LIVENESS_CHECK, OVP_ERROR_MESSAGES} from '../../shared/constants';
+import {
+  isIOS,
+  LIVENESS_CHECK,
+  OVP_ERROR_MESSAGES,
+} from '../../shared/constants';
 import {TelemetryConstants} from '../../shared/telemetry/TelemetryConstants';
 import {
   getImpressionEventData,
@@ -26,12 +30,42 @@ import {ScanLayoutProps} from '../../routes/routeTypes';
 import {OpenID4VP} from '../../shared/openID4VP/OpenID4VP';
 import {GlobalContext} from '../../shared/GlobalContext';
 import {APP_EVENTS} from '../../machines/app';
+import {useScanScreen} from './ScanScreenController';
 
 export const SendVPScreen: React.FC<ScanLayoutProps> = props => {
   const {t} = useTranslation('SendVPScreen');
   const controller = useSendVPScreen();
+  const scanScreenController = useScanScreen();
 
   const vcsMatchingAuthRequest = controller.vcsMatchingAuthRequest;
+
+  const {appService} = useContext(GlobalContext);
+  const [triggerExitFlow, setTriggerExitFlow] = useState(false);
+
+  useEffect(() => {
+    if (controller.errorModal.show && controller.isOVPViaDeepLink) {
+      const timeout = setTimeout(
+        () => {
+          OpenID4VP.sendErrorToVerifier(OVP_ERROR_MESSAGES.NO_MATCHING_VCS);
+          setTriggerExitFlow(true);
+        },
+        isIOS() ? 4000 : 2000,
+      );
+
+      return () => clearTimeout(timeout);
+    }
+  }, [controller.errorModal.show, controller.isOVPViaDeepLink]);
+
+  useEffect(() => {
+    if (triggerExitFlow) {
+      controller.RESET_LOGGED_ERROR();
+      controller.GO_TO_HOME();
+      controller.RESET_RETRY_COUNT();
+      appService.send(APP_EVENTS.RESET_AUTHORIZATION_REQUEST());
+      setTriggerExitFlow(false);
+      BackHandler.exitApp();
+    }
+  }, [triggerExitFlow]);
 
   useEffect(() => {
     sendImpressionEvent(
@@ -55,6 +89,19 @@ export const SendVPScreen: React.FC<ScanLayoutProps> = props => {
     }, []),
   );
 
+  useEffect(() => {
+    if (scanScreenController.isStartPermissionCheck) {
+      if (
+        scanScreenController.authorizationRequest !== '' &&
+        scanScreenController.isNoSharableVCs
+      ) {
+        scanScreenController.START_PERMISSION_CHECK();
+      } else if (!scanScreenController.isNoSharableVCs) {
+        scanScreenController.START_PERMISSION_CHECK();
+      }
+    }
+  });
+
   const handleDismiss = () => {
     if (controller.isOVPViaDeepLink) {
       controller.GO_TO_HOME();
@@ -73,6 +120,19 @@ export const SendVPScreen: React.FC<ScanLayoutProps> = props => {
     } else {
       controller.CANCEL();
     }
+  };
+
+  const getAdditionalMessage = () => {
+    if (
+      controller.isOVPViaDeepLink &&
+      !(
+        controller.errorModal.showRetryButton &&
+        controller.openID4VPRetryCount < 3
+      )
+    ) {
+      return controller.errorModal.additionalMessage;
+    }
+    return undefined;
   };
 
   useLayoutEffect(() => {
@@ -351,7 +411,7 @@ export const SendVPScreen: React.FC<ScanLayoutProps> = props => {
         isVisible={controller.errorModal.show}
         title={controller.errorModal.title}
         message={controller.errorModal.message}
-        additionalMessage={controller.errorModal.additionalMessage}
+        additionalMessage={getAdditionalMessage()}
         image={SvgImage.PermissionDenied()}
         primaryButtonTestID={'retry'}
         primaryButtonText={getPrimaryButtonText()}

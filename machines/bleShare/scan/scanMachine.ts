@@ -344,6 +344,7 @@ export const scanMachine =
             },
             {
               cond: 'isOVPViaDeepLink',
+              actions: ['setOpenId4VPFlowType'],
               target: '#scan.startVPSharing',
             },
             {
