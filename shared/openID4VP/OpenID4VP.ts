@@ -82,6 +82,10 @@ export class OpenID4VP {
     Object.entries(selectedVCs).forEach(([inputDescriptorId, vcsArray]) => {
       vcsArray.forEach(vcData => {
         const credentialFormat = vcData.vcMetadata.format;
+        //TODO: this should be done irrespective of the format.
+        if (credentialFormat === 'mso_mdoc') {
+          vcData = vcData.verifiableCredential.credential;
+        }
         if (!selectedVcsData[inputDescriptorId]) {
           selectedVcsData[inputDescriptorId] = {};
         }
