@@ -36,6 +36,7 @@ import io.mosip.openID4VP.authorizationResponse.models.unsignedVPToken.UnsignedV
 import io.mosip.openID4VP.constants.FormatType;
 import io.mosip.openID4VP.dto.Verifier;
 import io.mosip.openID4VP.dto.vpResponseMetadata.VPResponseMetadata;
+import io.mosip.openID4VP.dto.vpResponseMetadata.types.DeviceAuthentication;
 import io.mosip.openID4VP.dto.vpResponseMetadata.types.LdpVPResponseMetadata;
 import io.mosip.openID4VP.dto.vpResponseMetadata.types.MdocVPResponseMetadata;
 
@@ -115,7 +116,6 @@ public class InjiOpenID4VPModule extends ReactContextBaseJavaModule {
     public void sendErrorToVerifier(String errorMessage) {
         openID4VP.sendErrorToVerifier(new Exception(errorMessage));
     }
-
 
 
     private WalletMetadata parseWalletMetadata(ReadableMap walletMetadata) {
@@ -226,18 +226,22 @@ public class InjiOpenID4VPModule extends ReactContextBaseJavaModule {
                 String signatureAlgorithm = requireNonNullString(metadata, "signatureAlgorithm");
                 String publicKey = requireNonNullString(metadata, "publicKey");
                 String domain = requireNonNullString(metadata, "domain");
-
                 return new LdpVPResponseMetadata(jws, signatureAlgorithm, publicKey, domain);
             }
             case MSO_MDOC: {
-                Map<String, Map<String, String>> signatureData = new HashMap<>();
+                Map<String, DeviceAuthentication> signatureData = new HashMap<>();
                 ReadableMapKeySetIterator docTypeIterator = metadata.keySetIterator();
                 while (docTypeIterator.hasNextKey()) {
                     String docType = docTypeIterator.nextKey();
-                    ReadableMap docTypeData = metadata.getMap(docType);
-                    if (docTypeData != null) {
-                        Map<String, String> docTypeMap = parseDocTypeMap(docTypeData);
-                        signatureData.put(docType, docTypeMap);
+                    ReadableMap deviceAuthenticationMap = metadata.getMap(docType);
+                    if (deviceAuthenticationMap != null) {
+                        String signature = requireNonNullString(deviceAuthenticationMap, "signature");
+                        String algorithm = requireNonNullString(deviceAuthenticationMap, "mdocAuthenticationAlgorithm");
+                        DeviceAuthentication deviceAuthentication = new DeviceAuthentication(
+                                signature = signature,
+                                algorithm = algorithm
+                        );
+                        signatureData.put(docType, deviceAuthentication);
                     }
                 }
                 return new MdocVPResponseMetadata(signatureData);
@@ -245,20 +249,6 @@ public class InjiOpenID4VPModule extends ReactContextBaseJavaModule {
             default:
                 return null;
         }
-    }
-
-    private Map<String, String> parseDocTypeMap(ReadableMap docTypeData) {
-        Map<String, String> docTypeMap = new HashMap<>();
-        ReadableMapKeySetIterator iterator = docTypeData.keySetIterator();
-        while (iterator.hasNextKey()) {
-            String key = iterator.nextKey();
-            String value = docTypeData.getString(key);
-            if (value != null) {
-                docTypeMap.put(key, value);
-            }
-        }
-
-        return docTypeMap;
     }
 
     private FormatType getFormatType(String formatStr) {
