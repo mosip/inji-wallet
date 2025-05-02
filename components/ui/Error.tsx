@@ -82,9 +82,13 @@ export const Error: React.FC<ErrorProps> = props => {
             <Text style={Theme.ErrorStyles.message} testID={`${testID}Message`}>
               {message}
             </Text>
-            <Text style={Theme.ErrorStyles.additionalMessage} testID={`${testID}AdditionalMessage`}>
-              {additionalMessage}
-            </Text>
+            {additionalMessage && (
+              <Text
+                style={Theme.ErrorStyles.additionalMessage}
+                testID={`${testID}AdditionalMessage`}>
+                {additionalMessage}
+              </Text>
+            )}
           </View>
           {!alignActionsOnEnd && (
             <Fragment>

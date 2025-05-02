@@ -107,23 +107,7 @@ export const ScanLayout: React.FC = () => {
               }}
             />
           )}
-        {controller.openID4VPFlowType !== VCShareFlowType.OPENID4VP && (
-          <ScanStack.Screen
-            name={SCAN_ROUTES.ScanScreen}
-            component={ScanScreen}
-            options={{
-              title: t('MainLayout:share'),
-              headerTitle: props => (
-                <View style={Theme.Styles.scanLayoutHeaderContainer}>
-                  <Text style={Theme.Styles.scanLayoutHeaderTitle}>
-                    {props.children}
-                  </Text>
-                </View>
-              ),
-            }}
-          />
-        )}
-        {controller.openID4VPFlowType === VCShareFlowType.OPENID4VP && (
+        {controller.openID4VPFlowType === VCShareFlowType.OPENID4VP ? (
           <ScanStack.Screen
             name={SCAN_ROUTES.SendVPScreen}
             component={SendVPScreen}
@@ -158,6 +142,21 @@ export const ScanLayout: React.FC = () => {
                     onPress={controller.DISMISS}
                   />
                 ),
+            }}
+          />
+        ) : (
+          <ScanStack.Screen
+            name={SCAN_ROUTES.ScanScreen}
+            component={ScanScreen}
+            options={{
+              title: t('MainLayout:share'),
+              headerTitle: props => (
+                <View style={Theme.Styles.scanLayoutHeaderContainer}>
+                  <Text style={Theme.Styles.scanLayoutHeaderTitle}>
+                    {props.children}
+                  </Text>
+                </View>
+              ),
             }}
           />
         )}

@@ -64,7 +64,7 @@ export const ScanActions = (model: any) => {
       linkcode: '',
     }),
 
-    resetAuthCode: model.assign({
+    resetAuthorizationRequest: model.assign({
       authorizationRequest: '',
     }),
 

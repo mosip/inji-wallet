@@ -53,7 +53,7 @@ export const scanMachine =
             'resetSelectedVc',
             'resetIsQrLoginViaDeepLink',
             'resetIsOVPViaDeepLink',
-            'resetAuthCode',
+            'resetAuthorizationRequest',
             'resetLinkCode',
           ],
           target: '.checkStorage',
