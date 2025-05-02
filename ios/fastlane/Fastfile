@@ -214,12 +214,12 @@ platform :ios do
     )
 
     # copy IPA to the folder
-    sh("cp -R '../#{generate_app_name}.ipa' '#{output_directory}'")
+    sh("cp -R '../Inji.ipa' '#{output_directory}'")
 
     pilot(
        app_identifier: "#{generate_app_bundle_id}",
        api_key: api_key,
-       ipa: "./#{generate_app_name}.ipa",
+       ipa: "./Inji.ipa",
        changelog: "#{TESTFLIGHT_BETA_APP_DESCRIPTION}",
        localized_build_info: {
           "default": {
