@@ -92,13 +92,9 @@ export const openID4VPServices = () => {
 
           await Promise.all(
             Object.entries(credentials.unsignedDeviceAuth).map(
-              async ([docType, value]) => {
-                const {payload} = value as {
-                  signingAlgorithm: string;
-                  payload: string;
-                };
+              async ([docType, payload]) => {
                 const cred = mdocCredentialsByDocType[docType];
-
+                
                 if (!cred) return;
 
                 const mdocAuthenticationAlgorithm =

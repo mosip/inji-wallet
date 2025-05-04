@@ -5,6 +5,7 @@ import static io.mosip.openID4VP.constants.FormatType.LDP_VC;
 import static io.mosip.openID4VP.constants.FormatType.MSO_MDOC;
 
 import android.util.Log;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
@@ -31,14 +32,14 @@ import java.util.Optional;
 import io.mosip.openID4VP.OpenID4VP;
 import io.mosip.openID4VP.authorizationRequest.AuthorizationRequest;
 import io.mosip.openID4VP.authorizationRequest.VPFormatSupported;
+import io.mosip.openID4VP.authorizationRequest.Verifier;
 import io.mosip.openID4VP.authorizationRequest.WalletMetadata;
-import io.mosip.openID4VP.authorizationResponse.models.unsignedVPToken.UnsignedVPToken;
+import io.mosip.openID4VP.authorizationResponse.authenticationContainer.AuthenticationContainer;
+import io.mosip.openID4VP.authorizationResponse.authenticationContainer.types.DeviceAuthentication;
+import io.mosip.openID4VP.authorizationResponse.authenticationContainer.types.LdpAuthenticationContainer;
+import io.mosip.openID4VP.authorizationResponse.authenticationContainer.types.MdocAuthenticationContainer;
+import io.mosip.openID4VP.authorizationResponse.unsignedVPToken.UnsignedVPToken;
 import io.mosip.openID4VP.constants.FormatType;
-import io.mosip.openID4VP.dto.Verifier;
-import io.mosip.openID4VP.dto.vpResponseMetadata.VPResponseMetadata;
-import io.mosip.openID4VP.dto.vpResponseMetadata.types.DeviceAuthentication;
-import io.mosip.openID4VP.dto.vpResponseMetadata.types.LdpVPResponseMetadata;
-import io.mosip.openID4VP.dto.vpResponseMetadata.types.MdocVPResponseMetadata;
 
 public class InjiOpenID4VPModule extends ReactContextBaseJavaModule {
     private static final String TAG = "InjiOpenID4VPModule";
@@ -102,10 +103,10 @@ public class InjiOpenID4VPModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public void shareVerifiablePresentation(ReadableMap vpResponseMetadata, Promise promise) {
+    public void shareVerifiablePresentation(ReadableMap authenticationContainer, Promise promise) {
         try {
-            Map<FormatType, VPResponseMetadata> vpResMetadata = parseVPResponseMetadata(vpResponseMetadata);
-            String response = openID4VP.shareVerifiablePresentation(vpResMetadata);
+            Map<FormatType, AuthenticationContainer> authContainer = parseAuthenticationContainer(authenticationContainer);
+            String response = openID4VP.shareVerifiablePresentation(authContainer);
             promise.resolve(response);
         } catch (Exception e) {
             promise.reject(e);
@@ -197,36 +198,36 @@ public class InjiOpenID4VPModule extends ReactContextBaseJavaModule {
         return selectedVCsMap;
     }
 
-    private Map<FormatType, VPResponseMetadata> parseVPResponseMetadata(ReadableMap vpResponsesMetadata) {
-        if (vpResponsesMetadata == null) {
+    private Map<FormatType, AuthenticationContainer> parseAuthenticationContainer(ReadableMap authenticationContainerMap) {
+        if (authenticationContainerMap == null) {
             return Collections.emptyMap();
         }
-        Map<FormatType, VPResponseMetadata> formattedMetadata = new EnumMap<>(FormatType.class);
-        ReadableMapKeySetIterator iterator = vpResponsesMetadata.keySetIterator();
+        Map<FormatType, AuthenticationContainer> formattedMetadata = new EnumMap<>(FormatType.class);
+        ReadableMapKeySetIterator iterator = authenticationContainerMap.keySetIterator();
         while (iterator.hasNextKey()) {
             String formatStr = iterator.nextKey();
-            ReadableMap metadata = vpResponsesMetadata.getMap(formatStr);
+            ReadableMap metadata = authenticationContainerMap.getMap(formatStr);
             if (metadata == null) {
                 continue;
             }
             FormatType formatType = getFormatType(formatStr);
-            VPResponseMetadata responseMetadata = createVPResponseMetadata(formatType, metadata);
-            if (responseMetadata != null) {
-                formattedMetadata.put(formatType, responseMetadata);
+            AuthenticationContainer authenticationContainer = createAuthenticationContainer(formatType, metadata);
+            if (authenticationContainer != null) {
+                formattedMetadata.put(formatType, authenticationContainer);
             }
         }
 
         return formattedMetadata;
     }
 
-    private VPResponseMetadata createVPResponseMetadata(FormatType formatType, ReadableMap metadata) {
+    private AuthenticationContainer createAuthenticationContainer(FormatType formatType, ReadableMap metadata) {
         switch (formatType) {
             case LDP_VC: {
                 String jws = requireNonNullString(metadata, "jws");
                 String signatureAlgorithm = requireNonNullString(metadata, "signatureAlgorithm");
                 String publicKey = requireNonNullString(metadata, "publicKey");
                 String domain = requireNonNullString(metadata, "domain");
-                return new LdpVPResponseMetadata(jws, signatureAlgorithm, publicKey, domain);
+                return new LdpAuthenticationContainer(jws, signatureAlgorithm, publicKey, domain);
             }
             case MSO_MDOC: {
                 Map<String, DeviceAuthentication> signatureData = new HashMap<>();
@@ -244,7 +245,7 @@ public class InjiOpenID4VPModule extends ReactContextBaseJavaModule {
                         signatureData.put(docType, deviceAuthentication);
                     }
                 }
-                return new MdocVPResponseMetadata(signatureData);
+                return new MdocAuthenticationContainer(signatureData);
             }
             default:
                 return null;
