@@ -140,7 +140,6 @@ export const GOOGLE_DRIVE_NAME = 'Google Drive';
 export const GMAIL = 'gmail';
 export const APPLE = 'Apple';
 export const ICLOUD_DRIVE_NAME = 'iCloud';
-export const DEFAULT_ECL = 'L';
 export const DEFAULT_QR_HEADER = 'INJIQUICKSHARE://';
 export const MAX_QR_DATA_LENGTH = 4296;
 
