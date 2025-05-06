@@ -45,17 +45,17 @@ export class OpenID4VP {
       this.processSelectedVCs(selectedVCs),
     );
 
-    const vpTokens = await OpenID4VP.InjiOpenID4VP.constructUnsignedVPToken(
+    const unSignedVpTokens = await OpenID4VP.InjiOpenID4VP.constructUnsignedVPToken(
       updatedSelectedVCs,
     );
-    return parseJSON(vpTokens);
+    return parseJSON(unSignedVpTokens);
   }
 
   static async shareVerifiablePresentation(
-    vpResponsesMetadata: Record<string, any>,
+    vpTokenSigningResultMap: Record<string, any>,
   ) {
     return await OpenID4VP.InjiOpenID4VP.shareVerifiablePresentation(
-      vpResponsesMetadata,
+      vpTokenSigningResultMap,
     );
   }
 

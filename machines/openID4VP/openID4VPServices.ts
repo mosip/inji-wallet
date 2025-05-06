@@ -46,12 +46,13 @@ export const openID4VPServices = () => {
     },
 
     sendVP: (context: any) => async () => {
-      const vpTokens = await OpenID4VP.constructUnsignedVPToken(
+      const unSignedVpTokens = await OpenID4VP.constructUnsignedVPToken(
         context.selectedVCs,
       );
-      let vpResponsesMetadata: Record<any, any> = {};
-      for (const formatType in vpTokens) {
-        const credentials = vpTokens[formatType];
+
+      let vpTokenSigningResultMap: Record<any, any> = {};
+      for (const formatType in unSignedVpTokens) {
+        const credentials = unSignedVpTokens[formatType];
 
         if (formatType === VCFormat.ldp_vc.valueOf()) {
           const proofJWT = await constructProofJWT(
@@ -61,7 +62,7 @@ export const openID4VPServices = () => {
             context.keyType,
           );
 
-          vpResponsesMetadata[formatType] = {
+          vpTokenSigningResultMap[formatType] = {
             jws: proofJWT,
             signatureAlgorithm: OpenID4VP_Proof_Sign_Algo_Suite,
             publicKey:
@@ -129,10 +130,10 @@ export const openID4VPServices = () => {
             ),
           );
 
-          vpResponsesMetadata[formatType] = signedData;
+          vpTokenSigningResultMap[formatType] = signedData;
         }
       }
-      return await OpenID4VP.shareVerifiablePresentation(vpResponsesMetadata);
+      return await OpenID4VP.shareVerifiablePresentation(vpTokenSigningResultMap);
     },
   };
 };
