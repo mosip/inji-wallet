@@ -35,9 +35,9 @@ import io.mosip.openID4VP.authorizationRequest.VPFormatSupported;
 import io.mosip.openID4VP.authorizationRequest.Verifier;
 import io.mosip.openID4VP.authorizationRequest.WalletMetadata;
 import io.mosip.openID4VP.authorizationResponse.authenticationContainer.AuthenticationContainer;
-import io.mosip.openID4VP.authorizationResponse.authenticationContainer.types.DeviceAuthentication;
-import io.mosip.openID4VP.authorizationResponse.authenticationContainer.types.LdpAuthenticationContainer;
-import io.mosip.openID4VP.authorizationResponse.authenticationContainer.types.MdocAuthenticationContainer;
+import io.mosip.openID4VP.authorizationResponse.authenticationContainer.types.ldp.LdpAuthenticationContainer;
+import io.mosip.openID4VP.authorizationResponse.authenticationContainer.types.mdoc.DeviceAuthentication;
+import io.mosip.openID4VP.authorizationResponse.authenticationContainer.types.mdoc.MdocAuthenticationContainer;
 import io.mosip.openID4VP.authorizationResponse.unsignedVPToken.UnsignedVPToken;
 import io.mosip.openID4VP.constants.FormatType;
 
