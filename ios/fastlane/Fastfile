@@ -39,6 +39,8 @@ def generate_app_bundle_id()
     return "io.mosip.inji.mobile.synergy"
   when "mec"
     return "io.mosip.inji.mec"
+  when "compass"
+    return "io.compass.wallet"
   end
 end
 
@@ -72,6 +74,8 @@ def generate_app_name()
     return "Inji Wallet Synergy"
   when "mec"
     return "Inji Wallet Mec"
+  when "compass"
+    return "comPASS Credentials Wallet"
   end
 end
 
@@ -174,9 +178,6 @@ platform :ios do
       app_identifier: "#{generate_app_bundle_id}",
       plist_path: "Inji/Info.plist"
     )
-    # replace bundle ID
-    s = "s/wallet.mobileid/#{map_flavour_tosuffix}/g"
-    sh("sed -i '' -e #{s} ../Inji.xcodeproj/project.pbxproj")
 
     # replace Product name
     p = "s|PRODUCT_NAME = Inji|PRODUCT_NAME = \"#{generate_app_name}\"|"

@@ -36,17 +36,6 @@ on:
         required: true
         default: 'https://api.sandbox.mosip.net'
         type: string
-      injiFlavor:
-        description: 'Select Inji flavor'
-        required: true
-        default: 'Inji'
-        type: choice
-        options:
-          - residentapp
-          - inji
-          - collab
-          - synergy
-          - mec
       internal-testers:
         description: 'Internal Testers Group'
         required: true
@@ -96,7 +85,7 @@ jobs:
           cd .github/scripts
           ./set-google-clientid.sh "$INJI_FLAVOR"
         env:
-          INJI_FLAVOR: ${{ github.event.inputs.injiFlavor }}
+          INJI_FLAVOR: 'compass'
 
   build-android:
     if: ${{ inputs.buildFor == 'Both[Android and IOS]' || inputs.buildFor == 'Android'}}
@@ -113,13 +102,13 @@ jobs:
       BUILD_DESCRIPTION: ${{ inputs.buildName }}
       ALLOW_ENV_EDIT: ${{ inputs.allow_env_edit }}
       LIVENESS_DETECTION: 'false'
-      APP_FLAVOR: ${{ inputs.injiFlavor }}
+      APP_FLAVOR: 'compass'
       SERVICE_LOCATION: '.'
       ANDROID_SERVICE_LOCATION: 'android'
       BUILD_SCRIPT_LOCATION: 'scripts'
       SCRIPT_NAME: "./${{ inputs.release }}.sh"
       ANDROID_ARTIFACT_NAME: ${{ inputs.buildname }}
-      ANDROID_ARTIFACT_PATH: "android/app/build/outputs/apk/${{ inputs.injiFlavor }}/release/Inji_universal.apk"
+      ANDROID_ARTIFACT_PATH: "android/app/build/outputs/apk/compass/release/Inji_universal.apk"
     secrets:
       ANDROID_KEYSTORE_FILE: ${{ secrets.INJI_ANDROID_RELEASE_KEYSTORE }}
       RELEASE_KEYSTORE_PASSWORD: '${{ secrets.INJI_ANDROID_RELEASE_STOREPASS }}'
@@ -168,7 +157,7 @@ jobs:
       LIVENESS_DETECTION: ${{ inputs.liveness_detection }}
       ENABLE_AUTH: ${{ inputs.enable_auth }}
       TESTFLIGHT_INTERNAL_TESTERS_GROUP: ${{ inputs.internal-testers }}
-      APP_FLAVOR: ${{ inputs.injiFlavor }}
+      APP_FLAVOR: 'compass'
       SERVICE_LOCATION: '.'
       IOS_SERVICE_LOCATION: 'ios'
       SCRIPT_NAME: "fastlane beta"

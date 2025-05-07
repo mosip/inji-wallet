@@ -2,7 +2,7 @@
 
 flavor="$1"
 
-if [[ "$flavor" == "residentapp" ]]; then
+if [[ "$flavor" == "residentapp" || "$flavor" == "compass" ]]; then
   echo "CLIENT_ID=INJI_GOOGLE_CLIENT_ID" >> $GITHUB_OUTPUT
 elif [[ "$flavor" == "collab" ]]; then
   echo "CLIENT_ID=COLLAB_ORG_KEY" >> $GITHUB_OUTPUT

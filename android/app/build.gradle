@@ -229,6 +229,12 @@ android {
             dimension "inji"
             resValue "string", "app_name", "Inji Wallet Mec"
         }
+        compass {
+            applicationId "io.compass.wallet"
+            versionName defaultConfig.versionName
+            dimension "inji"
+            resValue "string", "app_name", "comPASS Credentials Wallet"
+        }
     }
 
     android.applicationVariants.all { variant ->
