@@ -63,6 +63,11 @@ export const ScanActions = (model: any) => {
     resetLinkCode: model.assign({
       linkcode: '',
     }),
+
+    resetAuthorizationRequest: model.assign({
+      authorizationRequest: '',
+    }),
+
     updateShowFaceAuthConsent: model.assign({
       showFaceAuthConsent: (_, event) => {
         return event.response || event.response === null;
@@ -104,7 +109,7 @@ export const ScanActions = (model: any) => {
     sendVPScanData: context =>
       context.OpenId4VPRef.send({
         type: 'AUTHENTICATE',
-        encodedAuthRequest: context.linkCode,
+        encodedAuthRequest: context.authorizationRequest,
         flowType: context.openID4VPFlowType,
         selectedVC: context.selectedVc,
         isOVPViaDeepLink: context.isOVPViaDeepLink,
@@ -283,6 +288,12 @@ export const ScanActions = (model: any) => {
 
     setLinkCodeFromDeepLink: assign({
       linkCode: (_, event) => event.linkCode,
+    }),
+
+    setAuthRequestFromDeepLink: assign({
+      authorizationRequest: (_, event) => {
+        return event.params ?? event.authorizationRequest;
+      },
     }),
 
     setIsQrLoginViaDeepLink: assign({

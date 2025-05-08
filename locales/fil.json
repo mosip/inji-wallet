@@ -728,6 +728,7 @@
       "accepted": {
         "title": "Matagumpay na naibahagi ang ID!",
         "message": "Ang iyong ID ay matagumpay na naibahagi",
+        "additionalMessage": "Maaari ka na ngayong bumalik sa Verifier.",
         "home": "Bahay",
         "history": "Kasaysayan"
       },
@@ -881,7 +882,8 @@
       "noImage": {
         "title": "Isang Error ang Naganap!",
         "message": "Ang pag-verify ng mukha ay nangangailangan ng larawan sa napiling (mga) kredensyal. Pakigamit ang opsyong Ibahagi o pumili ng kredensyal na may kasamang larawan."
-      }
+      },
+      "additionalMessage": "Mangyaring bumalik sa verifier app."
     },
     "loaders": {
       "loading": "Naglo-load...",

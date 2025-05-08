@@ -29,7 +29,6 @@ import {VerifyIdentityOverlay} from '../VerifyIdentityOverlay';
 import {VCShareFlowType} from '../../shared/Utils';
 import {APP_EVENTS} from '../../machines/app';
 import {GlobalContext} from '../../shared/GlobalContext';
-import {OpenID4VP} from '../../shared/openID4VP/OpenID4VP';
 
 export const ScanScreen: React.FC = () => {
   const {t} = useTranslation('ScanScreen');
@@ -61,11 +60,16 @@ export const ScanScreen: React.FC = () => {
 
   // TODO(kludge): skip running this hook on every render
   useEffect(() => {
-    if (
-      scanScreenController.isStartPermissionCheck &&
-      !scanScreenController.isNoSharableVCs
-    )
-      scanScreenController.START_PERMISSION_CHECK();
+    if (scanScreenController.isStartPermissionCheck) {
+      if (
+        scanScreenController.authorizationRequest !== '' &&
+        scanScreenController.isNoSharableVCs
+      ) {
+        scanScreenController.START_PERMISSION_CHECK();
+      } else if (!scanScreenController.isNoSharableVCs) {
+        scanScreenController.START_PERMISSION_CHECK();
+      }
+    }
   });
 
   useEffect(() => {
@@ -75,20 +79,14 @@ export const ScanScreen: React.FC = () => {
   useEffect(() => {
     if (
       scanScreenController.isNoSharableVCs &&
-      scanScreenController.authorizationRequest != ''
-    ) {
+      scanScreenController.linkcode !== ''
+    )
       setTimeout(() => {
-        OpenID4VP.initialize();
-        OpenID4VP.sendErrorToVerifier(OVP_ERROR_MESSAGES.NO_MATCHING_VCS);
-        BackHandler.exitApp();
         scanScreenController.GOTO_HOME();
-        appService.send(APP_EVENTS.RESET_AUTHORIZATION_REQUEST());
+        appService.send(APP_EVENTS.RESET_LINKCODE());
+        BackHandler.exitApp();
       }, 2000);
-    }
-  }, [
-    scanScreenController.isNoSharableVCs,
-    scanScreenController.authorizationRequest,
-  ]);
+  }, [scanScreenController.isNoSharableVCs, scanScreenController.linkcode]);
 
   const openSettings = () => {
     Linking.openSettings();
@@ -202,7 +200,10 @@ export const ScanScreen: React.FC = () => {
   }
 
   function loadQRScanner() {
-    if (scanScreenController.isNoSharableVCs) {
+    if (
+      scanScreenController.isNoSharableVCs &&
+      scanScreenController.authorizationRequest === ''
+    ) {
       return noShareableVcText();
     }
     if (scanScreenController.selectIsInvalid) {
@@ -273,6 +274,22 @@ export const ScanScreen: React.FC = () => {
       )
     );
   }
+
+  const getPrimaryButtonText = () => {
+    if (
+      sendVPScreenController.errorModal.showRetryButton &&
+      sendVPScreenController.openID4VPRetryCount < 3
+    ) {
+      return t('ScanScreen:status.retry');
+    }
+    return undefined;
+  };
+
+  const getTextButtonText = () => {
+    return sendVPScreenController.isOVPViaDeepLink
+      ? undefined
+      : t('ScanScreen:status.accepted.home');
+  };
 
   const faceVerificationController = sendVPScreenController.flowType.startsWith(
     'OpenID4VP',
@@ -353,19 +370,10 @@ export const ScanScreen: React.FC = () => {
           message={sendVPScreenController.errorModal.message}
           image={SvgImage.PermissionDenied()}
           primaryButtonTestID={'retry'}
-          primaryButtonText={
-            sendVPScreenController.errorModal.showRetryButton &&
-            sendVPScreenController.openID4VPRetryCount < 3
-              ? t('ScanScreen:status.retry')
-              : undefined
-          }
+          primaryButtonText={getPrimaryButtonText()}
           primaryButtonEvent={sendVPScreenController.RETRY}
           textButtonTestID={'home'}
-          textButtonText={
-            sendVPScreenController.isOVPViaDeepLink
-              ? undefined
-              : t('ScanScreen:status.accepted.home')
-          }
+          textButtonText={getTextButtonText()}
           textButtonEvent={handleTextButtonEvent}
           customImageStyles={{paddingBottom: 0, marginBottom: -6}}
           customStyles={{marginTop: '30%'}}

@@ -307,9 +307,11 @@ export function useScanLayout() {
     if (linkCode != '') {
       scanService.send(ScanEvents.QRLOGIN_VIA_DEEP_LINK(linkCode));
       appService.send(APP_EVENTS.RESET_LINKCODE());
-    } else if (authorizationRequest != '' && shareableVcsMetadata.length) {
+    } else if (authorizationRequest != '') {
       scanService.send(ScanEvents.OVP_VIA_DEEP_LINK(authorizationRequest));
-      appService.send(APP_EVENTS.RESET_AUTHORIZATION_REQUEST());
+      if (shareableVcsMetadata.length !== 0) {
+        appService.send(APP_EVENTS.RESET_AUTHORIZATION_REQUEST());
+      }
     } else if (isQrLoginDoneViaDeeplink) {
       changeTabBarVisible('flex');
       navigation.navigate(BOTTOM_TAB_ROUTES.home);

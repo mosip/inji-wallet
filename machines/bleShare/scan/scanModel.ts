@@ -61,7 +61,7 @@ const ScanEvents = {
   IN_PROGRESS: () => ({}),
   TIMEOUT: () => ({}),
   QRLOGIN_VIA_DEEP_LINK: (linkCode: string) => ({linkCode}),
-  OVP_VIA_DEEP_LINK: (linkCode: string) => ({linkCode}),
+  OVP_VIA_DEEP_LINK: (authorizationRequest: string) => ({authorizationRequest}),
 };
 
 export const ScanModel = createModel(

@@ -15,7 +15,7 @@ import {SvgImage} from '../../components/ui/svg';
 import {View, I18nManager} from 'react-native';
 import {Text} from './../../components/ui';
 import {BannerStatusType} from '../../components/BannerNotification';
-import {LIVENESS_CHECK} from '../../shared/constants';
+import {isIOS, LIVENESS_CHECK} from '../../shared/constants';
 import {SendVPScreen} from './SendVPScreen';
 
 const ScanStack = createNativeStackNavigator();
@@ -107,21 +107,7 @@ export const ScanLayout: React.FC = () => {
               }}
             />
           )}
-        <ScanStack.Screen
-          name={SCAN_ROUTES.ScanScreen}
-          component={ScanScreen}
-          options={{
-            title: t('MainLayout:share'),
-            headerTitle: props => (
-              <View style={Theme.Styles.scanLayoutHeaderContainer}>
-                <Text style={Theme.Styles.scanLayoutHeaderTitle}>
-                  {props.children}
-                </Text>
-              </View>
-            ),
-          }}
-        />
-        {controller.openID4VPFlowType === VCShareFlowType.OPENID4VP && (
+        {controller.openID4VPFlowType === VCShareFlowType.OPENID4VP ? (
           <ScanStack.Screen
             name={SCAN_ROUTES.SendVPScreen}
             component={SendVPScreen}
@@ -158,6 +144,21 @@ export const ScanLayout: React.FC = () => {
                 ),
             }}
           />
+        ) : (
+          <ScanStack.Screen
+            name={SCAN_ROUTES.ScanScreen}
+            component={ScanScreen}
+            options={{
+              title: t('MainLayout:share'),
+              headerTitle: props => (
+                <View style={Theme.Styles.scanLayoutHeaderContainer}>
+                  <Text style={Theme.Styles.scanLayoutHeaderTitle}>
+                    {props.children}
+                  </Text>
+                </View>
+              ),
+            }}
+          />
         )}
       </ScanStack.Navigator>
 
@@ -169,6 +170,11 @@ export const ScanLayout: React.FC = () => {
         }
         title={t('status.accepted.title')}
         message={t('status.accepted.message')}
+        additionalMessage={
+          controller.isOVPViaDeepLink && isIOS()
+            ? t('status.accepted.additionalMessage')
+            : ''
+        }
         image={SvgImage.SuccessLogo()}
         goToHome={controller.GOTO_HOME}
         goToHistory={controller.GOTO_HISTORY}

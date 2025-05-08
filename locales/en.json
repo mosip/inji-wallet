@@ -733,6 +733,7 @@
       "accepted": {
         "title": "ID shared successfully!",
         "message": "Your ID has been successfully shared.",
+        "additionalMessage": "You can now go back to the Verifier.",
         "home": "Home",
         "history": "History"
       },
@@ -826,7 +827,7 @@
   "SendVcScreen": {
     "reasonForSharing": "Reason for sharing (optional)",
     "introTitle": "Requester",
-    "requestMessage":"is requesting your digital ID for the purpose",
+    "requestMessage": "is requesting your digital ID for the purpose",
     "acceptRequest": "Share",
     "acceptRequestAndVerify": "Share with Selfie",
     "reject": "Reject",
@@ -890,7 +891,8 @@
       "noImage": {
         "title": "An Error Occured!",
         "message": "Face verification requires a photo in the selected credential(s). Please use the Share option or select a credential that includes an image."
-      }
+      },
+      "additionalMessage": "Please go back to the verifier app."
     },
     "loaders": {
       "loading": "Loading...",
@@ -987,6 +989,10 @@
       "invalidateKeyError": {
         "title": "App was Reset",
         "message": "Due to the fingerprint / facial recognition update, app security was impacted, and downloaded cards were removed. Please download again."
+      },
+      "appSetupIncomplete": {
+        "title": "Setup incomplete",
+        "message": "Please finish the initial setup to proceed."
       }
     },
     "qrLoginOverlay": {

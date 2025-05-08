@@ -49,8 +49,12 @@ export const scanMachine =
           actions: [
             'removeLoggers',
             'resetFlowType',
+            'resetOpenID4VPFlowType',
             'resetSelectedVc',
             'resetIsQrLoginViaDeepLink',
+            'resetIsOVPViaDeepLink',
+            'resetAuthorizationRequest',
+            'resetLinkCode',
           ],
           target: '.checkStorage',
         },
@@ -75,7 +79,7 @@ export const scanMachine =
         },
         OVP_VIA_DEEP_LINK: {
           actions: [
-            'setLinkCodeFromDeepLink',
+            'setAuthRequestFromDeepLink',
             'setIsOVPViaDeepLink',
             'setOpenId4VPFlowType',
           ],
@@ -111,10 +115,6 @@ export const scanMachine =
                 target: 'restrictSharingVc',
               },
               {
-                cond: 'isOVPViaDeepLink',
-                target: '#scan.checkFaceAuthConsent',
-              },
-              {
                 target: 'startPermissionCheck',
               },
             ],
@@ -125,6 +125,10 @@ export const scanMachine =
         startPermissionCheck: {
           on: {
             START_PERMISSION_CHECK: [
+              {
+                cond: 'isFlowTypeDeepLink',
+                target: '#scan.checkFaceAuthConsent',
+              },
               {
                 cond: 'uptoAndroid11',
                 target: '#scan.checkBluetoothPermission',
@@ -340,6 +344,7 @@ export const scanMachine =
             },
             {
               cond: 'isOVPViaDeepLink',
+              actions: ['setOpenId4VPFlowType'],
               target: '#scan.startVPSharing',
             },
             {
@@ -373,7 +378,7 @@ export const scanMachine =
               {
                 target: 'startVPSharing',
                 cond: 'isOnlineSharing',
-                actions: ['setOpenId4VPFlowType', 'setLinkCode'],
+                actions: ['setOpenId4VPFlowType', 'setAuthRequestFromDeepLink'],
               },
               {
                 target: 'decodeQuickShareData',
