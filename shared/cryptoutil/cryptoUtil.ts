@@ -198,7 +198,6 @@ export async function getJWT(
       header,
       payLoad,
     );
-    if (keyType == KeyTypes.ES256 && isIOS()) return signature64;
     return header64 + '.' + payLoad64 + '.' + signature64;
   } catch (error) {
     console.error('Exception Occurred While Constructing JWT ', error);
@@ -299,8 +298,12 @@ export async function createSignatureECR1(
     {format: 'compact', fields: header},
     {key, reference: false},
   );
-  const jws = await signer.update(JSON.stringify(payload)).final();
-  return jws;
+  const jws = await signer.update(JSON.stringify(payload), 'base64').final();
+  const parts = jws.split('.');
+  if (parts.length !== 3) {
+    throw new Error('Invalid JWS format');
+  }
+  return parts[2];
 }
 
 export function replaceCharactersInB64(encodedB64: string) {
