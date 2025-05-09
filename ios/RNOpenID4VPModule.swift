@@ -145,7 +145,7 @@ class RNOpenId4VpModule: NSObject, RCTBridgeModule {
           }
         }
         
-        let response = try await openID4VP?.shareVerifiablePresentation(vpResponsesMetadata: formattedVPTokenSigningResults)
+        let response = try await openID4VP?.shareVerifiablePresentation(vpTokenSigningResults: formattedVPTokenSigningResults)
         
         resolve(response)
       } catch {
