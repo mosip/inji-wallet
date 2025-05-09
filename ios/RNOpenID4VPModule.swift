@@ -123,7 +123,7 @@ class RNOpenId4VpModule: NSObject, RCTBridgeModule {
             
             formattedVPTokenSigningResults[FormatType.ldp_vc] = LdpVPTokenSigningResult(jws: jws, signatureAlgorithm: signatureAlgorithm, publicKey: publicKey, domain: domain)
           case FormatType.mso_mdoc.rawValue:
-            var deviceAuthenticationBytesSignature : [String: DeviceAuthentication] = [:]
+            var docTypeToDeviceAuthentication : [String: DeviceAuthentication] = [:]
             guard let vpResponse = vpTokenSigningResult as? [String:[String: String]] else {
               reject("OPENID4VP", "Invalid VP token signing result format", nil)
               return
@@ -135,9 +135,9 @@ class RNOpenId4VpModule: NSObject, RCTBridgeModule {
                 return
               }
               
-              deviceAuthenticationBytesSignature[docType] = DeviceAuthentication(signature: signature, algorithm: algorithm)
+              docTypeToDeviceAuthentication[docType] = DeviceAuthentication(signature: signature, algorithm: algorithm)
             }
-            formattedVPTokenSigningResults[.mso_mdoc] = MdocVPTokenSigningResult(deviceAuthenticationBytesSigned: deviceAuthenticationBytesSignature)
+            formattedVPTokenSigningResults[.mso_mdoc] = MdocVPTokenSigningResult(docTypeToDeviceAuthentication: docTypeToDeviceAuthentication)
             
             
           default:
