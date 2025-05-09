@@ -9,7 +9,7 @@ import {getJWK} from '../openId4VCI/Utils';
 import getAllConfigurations from '../api';
 import {parseJSON} from '../Utils';
 import {walletMetadata} from './walletMetadata';
-import { VCFormat } from '../VCFormat';
+import {VCFormat} from '../VCFormat';
 
 export const OpenID4VP_Key_Ref = 'OpenID4VP_KeyPair';
 export const OpenID4VP_Proof_Sign_Algo_Suite = 'Ed25519Signature2020';
@@ -45,9 +45,10 @@ export class OpenID4VP {
       this.processSelectedVCs(selectedVCs),
     );
 
-    const unSignedVpTokens = await OpenID4VP.InjiOpenID4VP.constructUnsignedVPToken(
-      updatedSelectedVCs,
-    );
+    const unSignedVpTokens =
+      await OpenID4VP.InjiOpenID4VP.constructUnsignedVPToken(
+        updatedSelectedVCs,
+      );
     return parseJSON(unSignedVpTokens);
   }
 
@@ -63,17 +64,16 @@ export class OpenID4VP {
     OpenID4VP.InjiOpenID4VP.sendErrorToVerifier(error);
   }
 
-  private static stringifyValues= (
+  private static stringifyValues = (
     data: Record<string, Record<string, Array<any>>>,
   ): Record<string, Record<string, string[]>> => {
     const result = {};
     for (const [outerKey, innerObject] of Object.entries(data)) {
       result[outerKey] = {};
       for (const [innerKey, array] of Object.entries(innerObject)) {
-        if(innerKey === VCFormat.ldp_vc.valueOf()) 
+        if (innerKey === VCFormat.ldp_vc.valueOf())
           result[outerKey][innerKey] = array.map(item => JSON.stringify(item));
-        else 
-        result[outerKey][innerKey] = array
+        else result[outerKey][innerKey] = array;
       }
     }
     return result;
@@ -141,6 +141,9 @@ export async function isClientValidationRequired() {
 
 export async function getWalletMetadata() {
   const config = await getAllConfigurations();
+  if (!config.walletMetadata) {
+    return null;
+  }
   const walletMetadata = JSON.parse(config.walletMetadata);
   return walletMetadata;
 }

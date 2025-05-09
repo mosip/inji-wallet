@@ -326,8 +326,8 @@ function areVCFormatAndProofTypeMatchingRequest(
     return Object.entries(requestFormat).some(
       ([type, value]) =>
         type === vcFormatType &&
-        value.proof_type.includes(issuerAuthenticationAlgorithm) &&
-        value.proof_type.includes(mdocAuthenticationAlgorithm),
+        value.alg.includes(issuerAuthenticationAlgorithm) &&
+        value.alg.includes(mdocAuthenticationAlgorithm),
     );
   }
 

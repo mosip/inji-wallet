@@ -36,10 +36,10 @@ import io.mosip.openID4VP.authorizationRequest.VPFormatSupported;
 import io.mosip.openID4VP.authorizationRequest.Verifier;
 import io.mosip.openID4VP.authorizationRequest.WalletMetadata;
 import io.mosip.openID4VP.authorizationResponse.unsignedVPToken.UnsignedVPToken;
-import io.mosip.openID4VP.authorizationResponse.vpTokenSigningResult.VpTokenSigningResult;
-import io.mosip.openID4VP.authorizationResponse.vpTokenSigningResult.types.ldp.LdpVpTokenSigningResult;
+import io.mosip.openID4VP.authorizationResponse.vpTokenSigningResult.VPTokenSigningResult;
+import io.mosip.openID4VP.authorizationResponse.vpTokenSigningResult.types.ldp.LdpVPTokenSigningResult;
 import io.mosip.openID4VP.authorizationResponse.vpTokenSigningResult.types.mdoc.DeviceAuthentication;
-import io.mosip.openID4VP.authorizationResponse.vpTokenSigningResult.types.mdoc.MdocVpTokenSigningResult;
+import io.mosip.openID4VP.authorizationResponse.vpTokenSigningResult.types.mdoc.MdocVPTokenSigningResult;
 import io.mosip.openID4VP.constants.FormatType;
 
 public class InjiOpenID4VPModule extends ReactContextBaseJavaModule {
@@ -106,7 +106,7 @@ public class InjiOpenID4VPModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public void shareVerifiablePresentation(ReadableMap vpTokenSigningResultMap, Promise promise) {
         try {
-            Map<FormatType, VpTokenSigningResult> authContainer = parseVpTokenSigningResult(vpTokenSigningResultMap);
+            Map<FormatType, VPTokenSigningResult> authContainer = parseVPTokenSigningResult(vpTokenSigningResultMap);
             String response = openID4VP.shareVerifiablePresentation(authContainer);
             promise.resolve(response);
         } catch (Exception e) {
@@ -199,11 +199,11 @@ public class InjiOpenID4VPModule extends ReactContextBaseJavaModule {
         return selectedVCsMap;
     }
 
-    private Map<FormatType, VpTokenSigningResult> parseVpTokenSigningResult(ReadableMap vpTokenSigningResultMap) {
+    private Map<FormatType, VPTokenSigningResult> parseVPTokenSigningResult(ReadableMap vpTokenSigningResultMap) {
         if (vpTokenSigningResultMap == null) {
             return Collections.emptyMap();
         }
-        Map<FormatType, VpTokenSigningResult> formattedMetadata = new EnumMap<>(FormatType.class);
+        Map<FormatType, VPTokenSigningResult> formattedMetadata = new EnumMap<>(FormatType.class);
         ReadableMapKeySetIterator iterator = vpTokenSigningResultMap.keySetIterator();
         while (iterator.hasNextKey()) {
             String formatStr = iterator.nextKey();
@@ -212,7 +212,7 @@ public class InjiOpenID4VPModule extends ReactContextBaseJavaModule {
                 continue;
             }
             FormatType formatType = getFormatType(formatStr);
-            VpTokenSigningResult vpTokenSigningResult = createVpTokenSigningResult(formatType, metadata);
+            VPTokenSigningResult vpTokenSigningResult = createVPTokenSigningResult(formatType, metadata);
             if (vpTokenSigningResult != null) {
                 formattedMetadata.put(formatType, vpTokenSigningResult);
             }
@@ -221,14 +221,14 @@ public class InjiOpenID4VPModule extends ReactContextBaseJavaModule {
         return formattedMetadata;
     }
 
-    private VpTokenSigningResult createVpTokenSigningResult(FormatType formatType, ReadableMap metadata) {
+    private VPTokenSigningResult createVPTokenSigningResult(FormatType formatType, ReadableMap metadata) {
         switch (formatType) {
             case LDP_VC: {
                 String jws = requireNonNullString(metadata, "jws");
                 String signatureAlgorithm = requireNonNullString(metadata, "signatureAlgorithm");
                 String publicKey = requireNonNullString(metadata, "publicKey");
                 String domain = requireNonNullString(metadata, "domain");
-                return new LdpVpTokenSigningResult(jws, signatureAlgorithm, publicKey, domain);
+                return new LdpVPTokenSigningResult(jws, signatureAlgorithm, publicKey, domain);
             }
             case MSO_MDOC: {
                 Map<String, DeviceAuthentication> signatureData = new HashMap<>();
@@ -246,7 +246,7 @@ public class InjiOpenID4VPModule extends ReactContextBaseJavaModule {
                         signatureData.put(docType, deviceAuthentication);
                     }
                 }
-                return new MdocVpTokenSigningResult(signatureData);
+                return new MdocVPTokenSigningResult(signatureData);
             }
             default:
                 return null;

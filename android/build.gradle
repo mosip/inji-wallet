@@ -13,6 +13,7 @@ buildscript {
     repositories {
         google()
         jcenter()
+        mavenLocal()
         mavenCentral()
     }
     dependencies {
@@ -28,6 +29,7 @@ def expoCameraMavenPath = new File(["node", "--print", "require.resolve('expo-ca
 allprojects { repositories { 
     maven{url("https://oss.sonatype.org/content/repositories/snapshots/")}
     maven { url(expoCameraMavenPath) }
+    mavenLocal()
     mavenCentral()
     maven {url("https://repo.danubetech.com/repository/maven-public/")}
     configurations.all {

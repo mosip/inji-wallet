@@ -92,10 +92,10 @@ export const openID4VPServices = () => {
             }, {});
 
           await Promise.all(
-            Object.entries(credentials.unsignedDeviceAuth).map(
+            Object.entries(credentials.docTypeToDeviceAuthenticationBytes).map(
               async ([docType, payload]) => {
                 const cred = mdocCredentialsByDocType[docType];
-                
+
                 if (!cred) return;
 
                 const mdocAuthenticationAlgorithm =
@@ -133,7 +133,9 @@ export const openID4VPServices = () => {
           vpTokenSigningResultMap[formatType] = signedData;
         }
       }
-      return await OpenID4VP.shareVerifiablePresentation(vpTokenSigningResultMap);
+      return await OpenID4VP.shareVerifiablePresentation(
+        vpTokenSigningResultMap,
+      );
     },
   };
 };
